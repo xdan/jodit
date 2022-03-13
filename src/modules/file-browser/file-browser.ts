@@ -28,7 +28,8 @@ import type {
 	IUploaderOptions,
 	IDialog,
 	CanUndef,
-	IViewOptions
+	IViewOptions,
+	CallbackFunction
 } from 'jodit/types';
 
 import { Storage } from 'jodit/core/storage';
@@ -90,8 +91,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	dataProvider!: IFileBrowserDataProvider;
 
 	// eslint-disable-next-line no-unused-vars
-	private onSelect(callback?: (_: IFileBrowserCallBackData) => void) {
-		return () => {
+	private onSelect(
+		callback?: (_: IFileBrowserCallBackData) => void
+	): CallbackFunction {
+		return (): boolean => {
 			if (this.state.activeElements.length) {
 				const files: string[] = [];
 				const isImages: boolean[] = [];
@@ -124,7 +127,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		};
 	}
 
-	private errorHandler = (resp: Error | IFileBrowserAnswer) => {
+	private errorHandler = (resp: Error | IFileBrowserAnswer): void => {
 		if (resp instanceof Error) {
 			this.status(this.i18n(resp.message));
 		} else {
@@ -258,7 +261,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		});
 	}
 
-	private initUploader(editor?: IFileBrowser | IJodit) {
+	private initUploader(editor?: IFileBrowser | IJodit): void {
 		const self = this,
 			options = editor?.options?.uploader,
 			uploaderOptions: IUploaderOptions<IUploader> = ConfigProto(
@@ -266,7 +269,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 				Config.defaultOptions.uploader
 			) as IUploaderOptions<IUploader>;
 
-		const uploadHandler = () => loadItems(this);
+		const uploadHandler = (): Promise<any> => loadItems(this);
 
 		self.uploader = self.getInstance('Uploader', uploaderOptions);
 		self.uploader
@@ -399,7 +402,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		self.setStatus(STATUSES.ready);
 	}
 
-	private proxyDialogEvents(self: FileBrowser) {
+	private proxyDialogEvents(self: FileBrowser): void {
 		['afterClose', 'beforeOpen'].forEach(proxyEvent => {
 			self.dialog.events.on(self.dialog, proxyEvent, () => {
 				this.e.fire(proxyEvent);

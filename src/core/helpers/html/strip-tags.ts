@@ -63,8 +63,9 @@ export function safeHTML(
 		return;
 	}
 
-	const removeOnError = (elm: HTMLElement) => attr(elm, 'onerror', null),
-		safeLink = (elm: HTMLElement) => {
+	const removeOnError = (elm: HTMLElement): void =>
+			attr(elm, 'onerror', null),
+		safeLink = (elm: HTMLElement): void => {
 			const href = elm.getAttribute('href');
 
 			if (href && href.trim().indexOf('javascript') === 0) {

@@ -17,7 +17,7 @@ import { loadItems } from 'jodit/modules/file-browser/fetch/load-items';
  * Loads a list of directories
  */
 export async function loadTree(fb: IFileBrowser): Promise<any> {
-	const errorUni = (e: string | Error) => {
+	const errorUni = (e: string | Error): Error => {
 		throw e instanceof Error ? e : error(e);
 	};
 

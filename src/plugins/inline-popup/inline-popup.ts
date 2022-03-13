@@ -219,12 +219,12 @@ export class inlinePopup extends Plugin {
 	private snapRange: Nullable<Range> = null;
 
 	@autobind
-	private onSelectionStart() {
+	private onSelectionStart(): void {
 		this.snapRange = this.j.s.range.cloneRange();
 	}
 
 	@autobind
-	private onSelectionEnd(e: MouseEvent) {
+	private onSelectionEnd(e: MouseEvent): void {
 		if (
 			e &&
 			e.target &&
@@ -327,11 +327,11 @@ export class inlinePopup extends Plugin {
 			.join(' ');
 	}
 
-	private addListenersForElements() {
+	private addListenersForElements(): void {
 		this.j.e.on(this._eventsList(), this.onClick);
 	}
 
-	private removeListenersForElements() {
+	private removeListenersForElements(): void {
 		this.j.e.off(this._eventsList(), this.onClick);
 	}
 
@@ -339,7 +339,7 @@ export class inlinePopup extends Plugin {
 	 * Show the inline WYSIWYG toolbar editor.
 	 */
 	@autobind
-	private showInlineToolbar(bound?: IBound) {
+	private showInlineToolbar(bound?: IBound): void {
 		this.showPopup(() => {
 			if (bound) {
 				return bound;

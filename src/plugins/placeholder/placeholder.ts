@@ -94,7 +94,7 @@ export class placeholder extends Plugin {
 		this.addEvents();
 	}
 
-	private addNativeListeners = () => {
+	private addNativeListeners = (): void => {
 		this.j.e
 			.off(this.j.editor, 'input.placeholder keydown.placeholder')
 			.on(
@@ -104,7 +104,7 @@ export class placeholder extends Plugin {
 			);
 	};
 
-	private addEvents = () => {
+	private addEvents = (): void => {
 		const editor = this.j;
 
 		if (
@@ -191,7 +191,7 @@ export class placeholder extends Plugin {
 	}
 
 	@debounce(ctx => ctx.defaultTimeout / 10, true)
-	private toggle() {
+	private toggle(): void {
 		const editor = this.j;
 
 		if (!editor.editor || editor.isInDestruct) {

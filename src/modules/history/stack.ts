@@ -21,7 +21,7 @@ export class Stack implements IStack {
 		return this.commands.length;
 	}
 
-	private clearRedo() {
+	private clearRedo(): void {
 		this.commands.length = this.stackPosition + 1;
 	}
 

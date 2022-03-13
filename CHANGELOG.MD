@@ -24,6 +24,7 @@
 
 -   Renamed `wrap-text-nodes` plugin to `wrap-nodes`
 -   Option `spellcheck` = false by default. This is due to the fact that the built-in spell check slows down the editor very much on large tests.
+-   Enabled `@typescript-eslint/explicit-function-return-type` in eslint
 
 #### :bug: Bug Fix
 
@@ -1217,11 +1218,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                           	{ value: "", text: "" },
--                                                                                                                                                                                           	{ value: "val1", text: "text1" },
--                                                                                                                                                                                           	{ value: "val2", text: "text2" },
--                                                                                                                                                                                           	{ value: "val3", text: "text3" }
--                                                                                                                                                                                           ]
+-                                                                                                                                                                                             	{ value: "", text: "" },
+-                                                                                                                                                                                             	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                             	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                             	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                             ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

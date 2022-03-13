@@ -88,7 +88,7 @@ export const appendStyleAsync = cacheLoaders(
 			link.media = 'all';
 			link.crossOrigin = 'anonymous';
 
-			const callback = () => resolve(link);
+			const callback = (): void => resolve(link);
 
 			!jodit.isInDestruct &&
 				jodit.e.on(link, 'load', callback).on(link, 'error', reject);

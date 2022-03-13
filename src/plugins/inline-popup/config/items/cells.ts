@@ -34,7 +34,7 @@ export default [
 				return false;
 			}
 
-			const makeColorPicker = (key: string) =>
+			const makeColorPicker = (key: string): HTMLElement =>
 				ColorPickerWidget(
 					editor,
 					(value: string) => {
@@ -64,8 +64,8 @@ export default [
 	{
 		name: 'valign',
 		list: ['Top', 'Middle', 'Bottom', 'Normal'],
-		childTemplate: (_, __, value: string) => value,
-		exec: (editor, table, { control }) => {
+		childTemplate: (_, __, value: string): string => value,
+		exec: (editor, table, { control }): void => {
 			const command = cmd(control);
 
 			editor
@@ -105,7 +105,7 @@ export default [
 			tableaddcolumnbefore: 'Insert column before',
 			tableaddcolumnafter: 'Insert column after'
 		},
-		exec: (editor, table, { control }) => {
+		exec: (editor, table, { control }): void => {
 			if (!isJoditObject(editor)) {
 				return;
 			}
@@ -122,7 +122,7 @@ export default [
 			tableaddrowbefore: 'Insert row above',
 			tableaddrowafter: 'Insert row below'
 		},
-		exec: (editor, table, { control }) => {
+		exec: (editor, table, { control }): void => {
 			if (!isJoditObject(editor)) {
 				return;
 			}
@@ -142,7 +142,7 @@ export default [
 			tablebincolumn: 'Delete column',
 			tableempty: 'Empty cell'
 		},
-		exec: (editor, table, { control }) => {
+		exec: (editor, table, { control }): void => {
 			if (!isJoditObject(editor)) {
 				return;
 			}

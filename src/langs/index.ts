@@ -63,7 +63,7 @@ if (!process.env.EXCLUDE_LANGS) {
 }
 
 /* Unpack array to hash */
-const get = (value: IDictionary) => value.default || value,
+const get = (value: IDictionary): IDictionary => value.default || value,
 	hashLang: IDictionary = {};
 
 if (isArray(get(en))) {

@@ -216,7 +216,7 @@ export class cleanHtml extends Plugin {
 				elm = trim(elm);
 				const attr: RegExpExecArray | null = attributesReg.exec(elm),
 					allowAttributes: IDictionary<string | boolean> = {},
-					attributeMap = (attrName: string) => {
+					attributeMap = (attrName: string): void => {
 						attrName = trim(attrName);
 
 						const val: string[] | null = attrReg.exec(attrName);
@@ -265,7 +265,7 @@ export class cleanHtml extends Plugin {
 	/**
 	 * Remove invisible chars if node has another chars
 	 */
-	private onKeyUpCleanUp = () => {
+	private onKeyUpCleanUp = (): void => {
 		const editor = this.j;
 
 		if (!this.allowEdit()) {

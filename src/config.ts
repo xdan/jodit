@@ -162,7 +162,6 @@ export class Config implements IViewOptions {
 	 */
 	saveModeInStorage: boolean = false;
 
-
 	/**
 	 * Class name that can be appended to the editor
 	 *

@@ -197,7 +197,7 @@ export class selectCells extends Plugin {
 		e.stopPropagation();
 
 		// Hack for FireFox for force redraw selection
-		(() => {
+		((): void => {
 			const n = this.j.createInside.fromHTML(
 				'<div style="color:rgba(0,0,0,0.01);width:0;height:0">&nbsp;</div>'
 			);
@@ -299,7 +299,7 @@ export class selectCells extends Plugin {
 	/**
 	 * Remove selection for all cells
 	 */
-	private unselectCells(currentCell?: Nullable<HTMLTableCellElement>) {
+	private unselectCells(currentCell?: Nullable<HTMLTableCellElement>): void {
 		const module = this.module;
 		const cells = module.getAllSelectedCells();
 

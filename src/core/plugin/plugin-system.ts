@@ -104,7 +104,7 @@ export class PluginSystem implements IPluginSystem {
 			promiseList: IDictionary<PluginInstance | undefined> = {},
 			plugins: PluginInstance[] = [],
 			pluginsMap: IDictionary<PluginInstance> = {},
-			makeAndInit = ([name, plugin]: [string, PluginType]) => {
+			makeAndInit = ([name, plugin]: [string, PluginType]): void => {
 				if (
 					disableList.includes(name) ||
 					doneList.includes(name) ||
@@ -203,7 +203,7 @@ export class PluginSystem implements IPluginSystem {
 		instance: PluginInstance,
 		doneList: string[],
 		promiseList: IDictionary<PluginInstance | undefined>
-	) {
+	): void {
 		const initPlugin = (name: string, plugin: PluginInstance): boolean => {
 			if (isInitable(plugin)) {
 				const req = (plugin as IPlugin).requires;
@@ -264,7 +264,7 @@ export class PluginSystem implements IPluginSystem {
 	private addListenerOnBeforeDestruct(
 		jodit: IJodit,
 		plugins: PluginInstance[]
-	) {
+	): void {
 		jodit.e.on('beforeDestruct', () => {
 			plugins.forEach(instance => {
 				if (isDestructable(instance)) {
@@ -282,7 +282,7 @@ export class PluginSystem implements IPluginSystem {
 	 * Download plugins
 	 */
 	private load(jodit: IJodit, pluginList: IExtraPlugin[]): Promise<any> {
-		const reflect = (p: Promise<any>) =>
+		const reflect = (p: Promise<any>): Promise<any> =>
 			p.then(
 				(v: any) => ({ v, status: 'fulfilled' }),
 				(e: any) => ({ e, status: 'rejected' })

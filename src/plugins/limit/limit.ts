@@ -111,7 +111,7 @@ export class limit extends Plugin {
 	 * Check if some external changing should be prevented
 	 */
 	@autobind
-	private checkPreventChanging(newValue: string, oldValue: string) {
+	private checkPreventChanging(newValue: string, oldValue: string): void {
 		const { jodit } = this;
 		const { limitWords, limitChars } = jodit.o;
 

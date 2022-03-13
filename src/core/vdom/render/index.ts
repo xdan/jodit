@@ -14,13 +14,17 @@ import { domToVDom } from '../helpers';
 import { Async } from 'jodit/core/async';
 import autobind from 'autobind-decorator';
 
-const isProperty = (key: string) => key !== 'children';
+const isProperty = (key: string): boolean => key !== 'children';
 
-const isNew = (prev: IDictionary, next: IDictionary) => (key: string) =>
-	prev[key] !== next[key];
+const isNew =
+	(prev: IDictionary, next: IDictionary) =>
+	(key: string): boolean =>
+		prev[key] !== next[key];
 
-const isGone = (prev: IDictionary, next: IDictionary) => (key: string) =>
-	!(key in next);
+const isGone =
+	(prev: IDictionary, next: IDictionary) =>
+	(key: string): boolean =>
+		!(key in next);
 
 const updateDom = (
 	dom: Node,
@@ -59,7 +63,7 @@ const createDom = (fiber: IFiber): Node => {
 export class VDomRender {
 	private async: Async = new Async();
 
-	private commitRoot() {
+	private commitRoot(): void {
 		this.deletions.forEach(this.commitWork);
 		this.deletions.length = 0;
 		this.commitWork(this.wipRoot?.child);
@@ -67,7 +71,7 @@ export class VDomRender {
 		this.wipRoot = undefined;
 	}
 
-	private commitWork(fiber: CanUndef<IFiber>) {
+	private commitWork(fiber: CanUndef<IFiber>): void {
 		if (!fiber) {
 			return;
 		}
@@ -92,7 +96,7 @@ export class VDomRender {
 		this.commitWork(fiber?.sibling);
 	}
 
-	private commitDeletion(fiber: CanUndef<IFiber>, domParent: Node) {
+	private commitDeletion(fiber: CanUndef<IFiber>, domParent: Node): void {
 		if (fiber?.dom) {
 			domParent.removeChild(fiber.dom);
 		} else {

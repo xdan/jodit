@@ -13,31 +13,32 @@ import type { BooleanFunction, IStorage, StorageValueType } from 'jodit/types';
 /**
  * Check if user disable local storages/cookie etc.
  */
-export const canUsePersistentStorage: BooleanFunction = (() => {
-	const canUse = () => {
-		const tmpKey = '___Jodit___' + Math.random().toString();
+export const canUsePersistentStorage: BooleanFunction =
+	((): BooleanFunction => {
+		const canUse = (): boolean => {
+			const tmpKey = '___Jodit___' + Math.random().toString();
 
-		try {
-			localStorage.setItem(tmpKey, '1');
-			const result = localStorage.getItem(tmpKey) === '1';
-			localStorage.removeItem(tmpKey);
+			try {
+				localStorage.setItem(tmpKey, '1');
+				const result = localStorage.getItem(tmpKey) === '1';
+				localStorage.removeItem(tmpKey);
+
+				return result;
+			} catch {}
+
+			return false;
+		};
+
+		let result: boolean | undefined;
+
+		return () => {
+			if (result === undefined) {
+				result = canUse();
+			}
 
 			return result;
-		} catch {}
-
-		return false;
-	};
-
-	let result: boolean | undefined;
-
-	return () => {
-		if (result === undefined) {
-			result = canUse();
-		}
-
-		return result;
-	};
-})();
+		};
+	})();
 
 /**
  * Persistent storage in localStorage

@@ -279,7 +279,7 @@ export class UIInput extends UIElement implements IUIInput {
 	/**
 	 * Set `focused` mod on change focus
 	 */
-	private onChangeFocus() {
+	private onChangeFocus(): void {
 		this.setMod('focused', this.isFocused);
 	}
 }

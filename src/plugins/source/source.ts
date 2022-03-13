@@ -156,11 +156,11 @@ export class source extends Plugin {
 		return this.sourceEditor?.getValue() || '';
 	}
 
-	private setMirrorValue(value: string) {
+	private setMirrorValue(value: string): void {
 		this.sourceEditor?.setValue(value);
 	}
 
-	private setFocusToMirror() {
+	private setFocusToMirror(): void {
 		this.sourceEditor?.focus();
 	}
 
@@ -317,7 +317,7 @@ export class source extends Plugin {
 			.on('beautifyHTML', html => html);
 
 		if (editor.o.beautifyHTML) {
-			const addEventListener = () => {
+			const addEventListener = (): boolean => {
 				const html_beautify = (editor.ow as any).html_beautify;
 
 				if (html_beautify && !editor.isInDestruct) {
@@ -343,7 +343,7 @@ export class source extends Plugin {
 	}
 
 	@autobind
-	private syncValueFromWYSIWYG(force: boolean = false) {
+	private syncValueFromWYSIWYG(force: boolean = false): void {
 		const editor = this.j;
 
 		if (

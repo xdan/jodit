@@ -99,7 +99,7 @@ export class UIList<T extends IViewBased = IViewBased>
 
 		let group: IUIGroup;
 
-		const addButton = (control: IControlTypeStrong) => {
+		const addButton = (control: IControlTypeStrong): void => {
 			let elm: Nullable<IUIElement> = null;
 
 			switch (control.name) {
@@ -146,7 +146,7 @@ export class UIList<T extends IViewBased = IViewBased>
 			}
 		};
 
-		const isNotRemoved = (b: IControlTypeStrong) =>
+		const isNotRemoved = (b: IControlTypeStrong): boolean =>
 			!this.removeButtons.includes(b.name);
 
 		items.forEach(item => {

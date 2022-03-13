@@ -44,7 +44,7 @@ export function media(editor: IJodit): void {
 
 	const { mediaFakeTag, mediaBlocks, mediaInFakeBlock } = editor.options;
 
-	const wrap = (element: HTMLElement) => {
+	const wrap = (element: HTMLElement): void => {
 		if (
 			element.parentNode &&
 			attr(element.parentNode as HTMLElement, 'data-jodit_iframe_wrapper')

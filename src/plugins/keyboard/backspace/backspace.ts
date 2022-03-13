@@ -157,7 +157,7 @@ export class Backspace extends Plugin {
 	/**
 	 * Remove node and replace cursor position out of it
 	 */
-	private safeRemoveEmptyNode(fakeNode: Node) {
+	private safeRemoveEmptyNode(fakeNode: Node): void {
 		const { range } = this.j.s;
 
 		if (range.startContainer === fakeNode) {

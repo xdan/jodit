@@ -19,22 +19,22 @@ export class AceEditor
 {
 	override className = 'jodit_ace_editor';
 
-	private aceExists() {
+	private aceExists(): boolean {
 		return (this.j.ow as any).ace !== undefined;
 	}
 
 	/**
 	 * Proxy Method
 	 */
-	private proxyOnBlur = (e: MouseEvent) => {
+	private proxyOnBlur = (e: MouseEvent): void => {
 		this.j.e.fire('blur', e);
 	};
 
-	private proxyOnFocus = (e: MouseEvent) => {
+	private proxyOnFocus = (e: MouseEvent): void => {
 		this.j.e.fire('focus', e);
 	};
 
-	private proxyOnMouseDown = (e: MouseEvent) => {
+	private proxyOnMouseDown = (e: MouseEvent): void => {
 		this.j.e.fire('mousedown', e);
 	};
 
@@ -84,7 +84,7 @@ export class AceEditor
 		return { row, column };
 	}
 
-	private setSelectionRangeIndices(start: number, end: number) {
+	private setSelectionRangeIndices(start: number, end: number): void {
 		const startRowColumn = this.getRowColumnIndices(start);
 		const endRowColumn = this.getRowColumnIndices(end);
 
@@ -101,7 +101,7 @@ export class AceEditor
 	}
 
 	init(editor: IJodit): any {
-		const tryInitAceEditor = () => {
+		const tryInitAceEditor = (): void => {
 			if (this.instance !== undefined || !this.aceExists()) {
 				return;
 			}

@@ -60,7 +60,7 @@ export class Async implements IAsync {
 		return timer;
 	}
 
-	private clearLabel(label: string) {
+	private clearLabel(label: string): void {
 		if (label && this.timers.has(label)) {
 			clearTimeout(this.timers.get(label) as number);
 			this.timers.delete(label);
@@ -100,14 +100,14 @@ export class Async implements IAsync {
 
 		const promises: Function[] = [];
 
-		const callFn = (...args: any[]) => {
+		const callFn = (...args: any[]): void => {
 			if (!fired) {
 				timer = 0;
 				const res = fn(...args);
 				fired = true;
 
 				if (promises.length) {
-					const runPromises = () => {
+					const runPromises = (): void => {
 						promises.forEach(res => res());
 						promises.length = 0;
 					};
@@ -117,7 +117,7 @@ export class Async implements IAsync {
 			}
 		};
 
-		const onFire = (...args: any[]) => {
+		const onFire = (...args: any[]): void => {
 			fired = false;
 
 			if (!timeout) {
@@ -139,7 +139,7 @@ export class Async implements IAsync {
 		};
 
 		return isPlainObject(timeout) && timeout.promisify
-			? (...args: any[]) => {
+			? (...args: any[]): Promise<any> => {
 					const promise = this.promise(res => {
 						promises.push(res);
 					});
@@ -183,7 +183,7 @@ export class Async implements IAsync {
 			}
 
 			if (!timer) {
-				callee = () => {
+				callee = (): void => {
 					if (needInvoke) {
 						fn(...lastArgs);
 						needInvoke = false;
@@ -220,7 +220,9 @@ export class Async implements IAsync {
 		});
 
 		if (!promise.finally && process.env.TARGET_ES !== 'es2018') {
-			promise.finally = (onfinally?: (() => void) | undefined | null) => {
+			promise.finally = (
+				onfinally?: (() => void) | undefined | null
+			): Promise<T> => {
 				promise.then(onfinally).catch(onfinally);
 				return promise;
 			};

@@ -35,7 +35,7 @@ export class lineHeight extends Plugin {
 	}
 
 	@autobind
-	private applyLineHeight(ignore: string, ignoreA: any, value: any) {
+	private applyLineHeight(ignore: string, ignoreA: any, value: any): void {
 		const { s, createInside: c, editor: root, o } = this.j;
 
 		if (!s.isFocused()) {

@@ -47,7 +47,7 @@ export class size extends Plugin {
 	/**
 	 * Set editor size by options
 	 */
-	private initialize() {
+	private initialize(): void {
 		const { j } = this;
 
 		if (j.o.inline) {
@@ -82,7 +82,7 @@ export class size extends Plugin {
 	/**
 	 * Manually change height
 	 */
-	private setHeight(height: number | string) {
+	private setHeight(height: number | string): void {
 		if (isNumber(height)) {
 			const { minHeight, maxHeight } = this.j.o;
 
@@ -107,7 +107,7 @@ export class size extends Plugin {
 	/**
 	 * Manually change width
 	 */
-	private setWidth(width: number | string) {
+	private setWidth(width: number | string): void {
 		if (isNumber(width)) {
 			const { minWidth, maxWidth } = this.j.o;
 
@@ -140,7 +140,7 @@ export class size extends Plugin {
 	 * Calculate workspace height
 	 */
 	@autobind
-	private resizeWorkspaceImd() {
+	private resizeWorkspaceImd(): void {
 		if (!this.j || this.j.isDestructed || !this.j.o || this.j.o.inline) {
 			return;
 		}

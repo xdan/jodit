@@ -34,7 +34,7 @@ export function ApplyStyle(jodit: IJodit, cs: CommitStyle): void {
 
 	const fsm = new FiniteStateMachine('start', {
 		start: {
-			start() {
+			start(): void {
 				sel.save();
 				normalizeNode(editor.firstChild); // FF fix for test "commandsTest - Exec command "bold"
 				this.setState('generator');
@@ -42,7 +42,7 @@ export function ApplyStyle(jodit: IJodit, cs: CommitStyle): void {
 		},
 
 		generator: {
-			initGenerator() {
+			initGenerator(): Generator {
 				return jodit.s.wrapInTagGen();
 			},
 
@@ -174,13 +174,13 @@ export function ApplyStyle(jodit: IJodit, cs: CommitStyle): void {
 		},
 
 		endProcess: {
-			toggleStyles() {
+			toggleStyles(): void {
 				this.setState('generator');
 			}
 		},
 
 		end: {
-			finalize() {
+			finalize(): void {
 				sel.restore();
 			}
 		}

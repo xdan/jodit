@@ -102,11 +102,11 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 		const request = this.prepareRequest();
 
 		return this.j.async.promise((resolve, reject) => {
-			const onReject = () => {
+			const onReject = (): void => {
 				reject(error('Connection error'));
 			};
 
-			const onResolve = () => {
+			const onResolve = (): void => {
 				this.resolved = true;
 
 				resolve(
@@ -138,7 +138,7 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 				this.options.onProgress?.(percentComplete);
 			};
 
-			xhr.onreadystatechange = () => {
+			xhr.onreadystatechange = (): void => {
 				this.options.onProgress?.(10);
 
 				if (xhr.readyState === XMLHttpRequest.DONE) {

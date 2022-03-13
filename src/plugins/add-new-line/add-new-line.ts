@@ -91,7 +91,7 @@ export class addNewLine extends Plugin {
 	private lineInFocus: boolean = false;
 	private isShown: boolean = false;
 
-	private show() {
+	private show(): void {
 		if (this.isShown || this.j.o.readonly || this.j.isLocked) {
 			return;
 		}
@@ -104,7 +104,7 @@ export class addNewLine extends Plugin {
 		this.line.style.width = this.j.editor.clientWidth + 'px';
 	}
 
-	private hideForce = () => {
+	private hideForce = (): void => {
 		if (!this.isShown) {
 			return;
 		}
@@ -115,7 +115,7 @@ export class addNewLine extends Plugin {
 		Dom.safeRemove(this.line);
 	};
 
-	private hide = () => {
+	private hide = (): void => {
 		if (!this.isShown || this.lineInFocus) {
 			return;
 		}
@@ -157,7 +157,7 @@ export class addNewLine extends Plugin {
 		this.addEventListeners();
 	}
 
-	private addEventListeners() {
+	private addEventListeners(): void {
 		const editor = this.j;
 
 		editor.e
@@ -181,7 +181,7 @@ export class addNewLine extends Plugin {
 			);
 	}
 
-	private onClickLine = (e: MouseEvent) => {
+	private onClickLine = (e: MouseEvent): void => {
 		const editor = this.j;
 		const p = editor.createInside.element(editor.o.enter);
 
@@ -200,7 +200,7 @@ export class addNewLine extends Plugin {
 		e.preventDefault();
 	};
 
-	private onDblClickEditor = (e: MouseEvent) => {
+	private onDblClickEditor = (e: MouseEvent): void => {
 		const editor = this.j;
 
 		if (
@@ -237,7 +237,7 @@ export class addNewLine extends Plugin {
 		}
 	};
 
-	private onMouseMove = (e: MouseEvent) => {
+	private onMouseMove = (e: MouseEvent): void => {
 		const editor = this.j;
 
 		let currentElement: HTMLElement | null = editor.ed.elementFromPoint(

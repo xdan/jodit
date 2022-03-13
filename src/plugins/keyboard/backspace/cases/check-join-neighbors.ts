@@ -65,7 +65,7 @@ function checkMoveListContent(
 	// Process UL/LI/OL cases
 	const siblingIsList = Dom.isTag(sibling, ['ol', 'ul']);
 	const boxIsList = Dom.isTag(mainClosestBox, ['ol', 'ul']);
-	const elementChild = (elm: Element, side: boolean) =>
+	const elementChild = (elm: Element, side: boolean): Nullable<Node> =>
 		side ? elm.firstElementChild : elm.lastElementChild;
 
 	if (boxIsList) {

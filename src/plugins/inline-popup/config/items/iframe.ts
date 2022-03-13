@@ -15,7 +15,7 @@ export default [
 	{
 		name: 'bin',
 		tooltip: 'Delete',
-		exec: (editor: IJodit, image) => {
+		exec: (editor: IJodit, image): void => {
 			image && editor.s.removeNode(image);
 		}
 	},

@@ -47,12 +47,12 @@ export class resizeCells extends Plugin {
 	private resizeDelta: number = 0;
 	private resizeHandler!: HTMLElement;
 
-	private showResizeHandle() {
+	private showResizeHandle(): void {
 		this.j.async.clearTimeout(this.hideTimeout);
 		this.j.workplace.appendChild(this.resizeHandler);
 	}
 
-	private hideResizeHandle() {
+	private hideResizeHandle(): void {
 		this.hideTimeout = this.j.async.setTimeout(
 			() => {
 				Dom.safeRemove(this.resizeHandler);
@@ -64,7 +64,7 @@ export class resizeCells extends Plugin {
 		);
 	}
 
-	private createResizeHandle = () => {
+	private createResizeHandle = (): void => {
 		if (!this.resizeHandler) {
 			this.resizeHandler = this.j.c.div('jodit-table-resizer');
 
@@ -97,7 +97,7 @@ export class resizeCells extends Plugin {
 	 * Click on resize handle
 	 */
 	@autobind
-	private onHandleMouseDown(event: MouseEvent) {
+	private onHandleMouseDown(event: MouseEvent): boolean | void {
 		if (this.j.isLocked) {
 			return;
 		}
@@ -166,7 +166,7 @@ export class resizeCells extends Plugin {
 	 * Mouse move after click on resize handle
 	 */
 	@autobind
-	private onMouseMove(event: MouseEvent) {
+	private onMouseMove(event: MouseEvent): void {
 		if (!this.drag) {
 			return;
 		}
@@ -242,7 +242,7 @@ export class resizeCells extends Plugin {
 	/**
 	 * Resize only one column
 	 */
-	private resizeColumns() {
+	private resizeColumns(): void {
 		const delta = this.resizeDelta;
 
 		const marked: HTMLTableCellElement[] = [];
@@ -274,7 +274,7 @@ export class resizeCells extends Plugin {
 	/**
 	 * Resize whole table
 	 */
-	private resizeTable() {
+	private resizeTable(): void {
 		const delta = this.resizeDelta * (this.isRTL ? -1 : 1);
 
 		const width = this.workTable.offsetWidth,
@@ -316,7 +316,7 @@ export class resizeCells extends Plugin {
 	private setWorkCell(
 		cell: HTMLTableCellElement,
 		wholeTable: boolean | null = null
-	) {
+	): void {
 		this.wholeTable = wholeTable;
 
 		this.workCell = cell;
@@ -336,7 +336,7 @@ export class resizeCells extends Plugin {
 		cell: HTMLTableCellElement,
 		offsetX: number = 0,
 		delta: number = 0
-	) {
+	): void {
 		const box = offset(cell, this.j, this.j.ed);
 
 		if (offsetX > consts.NEARBY && offsetX < box.width - consts.NEARBY) {
@@ -435,7 +435,7 @@ export class resizeCells extends Plugin {
 	 * Add to every Table listeners
 	 */
 	@autobind
-	private observe(table: HTMLTableElement) {
+	private observe(table: HTMLTableElement): void {
 		if (dataBind(table, key)) {
 			return;
 		}

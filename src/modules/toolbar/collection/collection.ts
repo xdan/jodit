@@ -112,7 +112,7 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		this.initEvents();
 	}
 
-	private initEvents() {
+	private initEvents(): void {
 		this.j.e
 			.on(this.listenEvents, this.update)
 			.on('afterSetMode focus', this.immediateUpdate);

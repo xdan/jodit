@@ -79,7 +79,7 @@ export class tooltip extends Plugin {
 		this.setPosition(getPoint);
 	}
 
-	private setPosition(getPoint: () => IPoint) {
+	private setPosition(getPoint: () => IPoint): void {
 		const point = getPoint();
 
 		css(this.container, {

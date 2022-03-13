@@ -51,7 +51,7 @@ export function attr(elm: Element, key: string): null | string;
 /**
  * Remove attribute
  */
-export function attr(elm: Element, key: string, value: null): null | string;
+export function attr(elm: Element, key: string, value: null): void;
 
 /**
  * Set attribute
@@ -200,11 +200,11 @@ export const loadImage = (
 ): RejectablePromise<HTMLImageElement> =>
 	jodit.async.promise<HTMLImageElement>((res, rej) => {
 		const image = new Image(),
-			onError = () => {
+			onError = (): void => {
 				jodit.e.off(image);
 				rej?.();
 			},
-			onSuccess = () => {
+			onSuccess = (): void => {
 				jodit.e.off(image);
 				res(image);
 			};

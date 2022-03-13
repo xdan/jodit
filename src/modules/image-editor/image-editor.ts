@@ -147,7 +147,7 @@ export class ImageEditor extends ViewComponent {
 		return valueNbr || 0;
 	};
 
-	private calcCropBox = () => {
+	private calcCropBox = (): void => {
 		const node = this.crop_box.parentNode as HTMLElement,
 			w = node.offsetWidth * 0.8,
 			h = node.offsetHeight * 0.8;
@@ -174,7 +174,7 @@ export class ImageEditor extends ViewComponent {
 		});
 	};
 
-	private showCrop = () => {
+	private showCrop = (): void => {
 		if (!this.cropImage) {
 			return;
 		}
@@ -213,7 +213,7 @@ export class ImageEditor extends ViewComponent {
 		this.j.e.fire(this.cropHandler, 'updatesize');
 	};
 
-	private updateCropBox = () => {
+	private updateCropBox = (): void => {
 		if (!this.cropImage) {
 			return;
 		}
@@ -230,12 +230,12 @@ export class ImageEditor extends ViewComponent {
 			this.cropBox.w.toFixed(0) + 'x' + this.cropBox.h.toFixed(0);
 	};
 
-	private updateResizeBox = () => {
+	private updateResizeBox = (): void => {
 		this.resizeBox.w = this.image.offsetWidth || this.naturalWidth;
 		this.resizeBox.h = this.image.offsetHeight || this.naturalHeight;
 	};
 
-	private setHandlers = () => {
+	private setHandlers = (): void => {
 		const self: ImageEditor = this;
 
 		const { widthInput, heightInput } = refs<HTMLInputElement>(this.editor);
@@ -439,7 +439,7 @@ export class ImageEditor extends ViewComponent {
 
 	@debounce()
 	@autobind
-	private onChangeSizeInput(e: MouseEvent) {
+	private onChangeSizeInput(e: MouseEvent): void {
 		const self = this,
 			input = e.target as HTMLInputElement,
 			{ widthInput, heightInput } = refs<HTMLInputElement>(this.editor),
@@ -674,7 +674,7 @@ export class ImageEditor extends ViewComponent {
 				this.editor
 			);
 
-			const onload = () => {
+			const onload = (): void => {
 				if (this.isDestructed) {
 					return;
 				}

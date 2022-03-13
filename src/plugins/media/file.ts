@@ -24,7 +24,7 @@ Config.prototype.controls.file = {
 		self: IControlType,
 		close
 	) => {
-		const insert = (url: string, title: string = '') => {
+		const insert = (url: string, title: string = ''): void => {
 			editor.s.insertNode(
 				editor.createInside.fromHTML(
 					`<a href="${url}" title="${title}">${title || url}</a>`

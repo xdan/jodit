@@ -53,7 +53,7 @@ export const ColorPickerWidget = (
 		iconPalette: string = editor.o.textIcons
 			? `<span>${editor.i18n('palette')}</span>`
 			: Icon.get('palette'),
-		eachColor = (colors: string[] | IDictionary<string[]>) => {
+		eachColor = (colors: string[] | IDictionary<string[]>): string => {
 			const stack: string[] = [];
 
 			if (isPlainObject(colors)) {

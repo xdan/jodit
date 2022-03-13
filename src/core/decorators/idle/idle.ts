@@ -35,7 +35,7 @@ export function idle<V = IViewComponent | IViewBased>(): DecoratorHandler {
 
 			const originalMethod = (component as any)[propertyKey];
 
-			(component as any)[propertyKey] = (...args: unknown[]) =>
+			(component as any)[propertyKey] = (...args: unknown[]): number =>
 				view.async.requestIdleCallback(
 					originalMethod.bind(component, ...args)
 				);

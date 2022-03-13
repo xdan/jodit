@@ -31,7 +31,7 @@ Config.prototype.showXPathInStatusbar = true;
  * Show path to current element in status bar
  */
 export class xpath extends Plugin {
-	private onContext = (bindElement: Node, event: MouseEvent) => {
+	private onContext = (bindElement: Node, event: MouseEvent): boolean => {
 		if (!this.menu) {
 			this.menu = new ContextMenu(this.j);
 		}
@@ -40,7 +40,7 @@ export class xpath extends Plugin {
 			{
 				icon: 'bin',
 				title: bindElement === this.j.editor ? 'Clear' : 'Remove',
-				exec: () => {
+				exec: (): void => {
 					if (bindElement !== this.j.editor) {
 						Dom.safeRemove(bindElement);
 					} else {
@@ -52,7 +52,7 @@ export class xpath extends Plugin {
 			{
 				icon: 'select-all',
 				title: 'Select',
-				exec: () => {
+				exec: (): void => {
 					this.j.s.select(bindElement);
 				}
 			}
@@ -61,7 +61,7 @@ export class xpath extends Plugin {
 		return false;
 	};
 
-	private onSelectPath = (bindElement: Node, event: MouseEvent) => {
+	private onSelectPath = (bindElement: Node, event: MouseEvent): boolean => {
 		this.j.s.focus();
 
 		const path = attr(event.target as HTMLElement, '-path') || '/';
@@ -110,14 +110,14 @@ export class xpath extends Plugin {
 
 	private selectAllButton?: IToolbarButton;
 
-	private removeSelectAll = () => {
+	private removeSelectAll = (): void => {
 		if (this.selectAllButton) {
 			this.selectAllButton.destruct();
 			delete this.selectAllButton;
 		}
 	};
 
-	private appendSelectAll = () => {
+	private appendSelectAll = (): void => {
 		this.removeSelectAll();
 
 		this.selectAllButton = makeButton(this.j, {
@@ -134,7 +134,7 @@ export class xpath extends Plugin {
 			);
 	};
 
-	private calcPathImd = () => {
+	private calcPathImd = (): void => {
 		if (this.isDestructed) {
 			return;
 		}

@@ -114,7 +114,7 @@ Config.prototype.controls.copyformat = {
 
 			const format = getStyles(editor, box, defaultStyles);
 
-			const onMouseUp = () => {
+			const onMouseUp = (): void => {
 				editor.buffer.delete(pluginKey);
 
 				const currentNode = editor.s.current();

@@ -663,7 +663,8 @@ export class Dom {
 	static findSibling(
 		node: Node,
 		left: boolean = true,
-		cond: (n: Node) => boolean = (n: Node) => !Dom.isEmptyTextNode(n)
+		cond: (n: Node) => boolean = (n: Node): boolean =>
+			!Dom.isEmptyTextNode(n)
 	): Nullable<Node> {
 		let sibling = Dom.sibling(node, left);
 
@@ -746,14 +747,16 @@ export class Dom {
 		if (isFunction(tagsOrCondition)) {
 			condition = tagsOrCondition;
 		} else if (isArray(tagsOrCondition)) {
-			condition = (tag: Node | null) =>
-				tag &&
-				tagsOrCondition.includes(
-					tag.nodeName.toLowerCase() as HTMLTagNames
+			condition = (tag: Node | null): boolean =>
+				Boolean(
+					tag &&
+						tagsOrCondition.includes(
+							tag.nodeName.toLowerCase() as HTMLTagNames
+						)
 				);
 		} else {
-			condition = (tag: Node | null) =>
-				tag && tagsOrCondition === tag.nodeName.toLowerCase();
+			condition = (tag: Node | null): boolean =>
+				Boolean(tag && tagsOrCondition === tag.nodeName.toLowerCase());
 		}
 
 		return Dom.up(node, condition, root);

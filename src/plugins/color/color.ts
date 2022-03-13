@@ -19,7 +19,7 @@ Config.prototype.controls.brush = {
 		const color = dataBind(button, 'color');
 		const editor = button.j as IJodit;
 
-		const update = (key: string, value: string) => {
+		const update = (key: string, value: string): void => {
 			if (value && value !== css(editor.editor, key).toString()) {
 				button.state.icon.fill = value;
 				return;

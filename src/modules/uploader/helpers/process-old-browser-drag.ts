@@ -34,7 +34,7 @@ export function processOldBrowserDrag(
 		getContainer(self.j, self.constructor).appendChild(div);
 
 		const selection = isJoditObject(self.j) ? self.j.s.save() : null,
-			restore = () =>
+			restore = (): void | null | boolean =>
 				selection && isJoditObject(self.j) && self.j.s.restore();
 
 		div.focus();

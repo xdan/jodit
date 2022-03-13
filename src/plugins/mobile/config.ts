@@ -56,7 +56,7 @@ Config.prototype.controls.dots = {
 		if (store === undefined) {
 			store = {
 				toolbar: makeCollection(editor),
-				rebuild: () => {
+				rebuild: (): void => {
 					if (button) {
 						const buttons: CanUndef<Array<string | IControlType>> =
 							editor.e.fire(

@@ -179,7 +179,7 @@ export class Select implements ISelect {
 		try {
 			const rng = this.createRange();
 
-			(() => {
+			((): void => {
 				if (this.doc.caretPositionFromPoint) {
 					const caret = this.doc.caretPositionFromPoint(x, y);
 
@@ -286,7 +286,7 @@ export class Select implements ISelect {
 	restore(): void {
 		let range: Range | false = false;
 
-		const markAttr = (start: boolean) =>
+		const markAttr = (start: boolean): string =>
 			`span[data-${consts.MARKER_CLASS}=${start ? 'start' : 'end'}]`;
 
 		const start = this.area.querySelector(markAttr(true)),
@@ -725,7 +725,7 @@ export class Select implements ISelect {
 			css(image, styles);
 		}
 
-		const onload = () => {
+		const onload = (): void => {
 			if (
 				image.naturalHeight < image.offsetHeight ||
 				image.naturalWidth < image.offsetWidth
@@ -806,7 +806,7 @@ export class Select implements ISelect {
 				end = end.previousSibling;
 			}
 
-			const checkElm = (node: Nullable<Node>) => {
+			const checkElm = (node: Nullable<Node>): void => {
 				if (
 					node &&
 					node !== root &&
@@ -900,8 +900,8 @@ export class Select implements ISelect {
 		const container = start ? range.startContainer : range.endContainer;
 		const offset = start ? range.startOffset : range.endOffset;
 
-		const check = (elm: Node | null) =>
-			elm && !Dom.isTag(elm, 'br') && !Dom.isEmptyTextNode(elm);
+		const check = (elm: Node | null): boolean =>
+			Boolean(elm && !Dom.isTag(elm, 'br') && !Dom.isEmptyTextNode(elm));
 
 		// check right offset
 		if (Dom.isText(container)) {
@@ -1318,7 +1318,7 @@ export class Select implements ISelect {
 				const clearBR = (
 					start: Node,
 					getNext: (node: Node) => Node | null
-				) => {
+				): void => {
 					let next = getNext(start);
 
 					while (next) {
@@ -1373,7 +1373,7 @@ export class Select implements ISelect {
 			}
 
 			// After splitting some part can be empty
-			const fillFakeParent = (fake: Node) => {
+			const fillFakeParent = (fake: Node): void => {
 				if (
 					fake?.parentNode?.firstChild === fake?.parentNode?.lastChild
 				) {

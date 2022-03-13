@@ -8,7 +8,7 @@
  * @module plugins/link
  */
 
-import type { IJodit, IUIForm } from 'jodit/types';
+import type { IJodit, IUIElement, IUIForm, Nullable } from 'jodit/types';
 import {
 	UIBlock,
 	UICheckbox,
@@ -54,7 +54,7 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 		),
 		modeClassName
 			? new UIBlock(editor, [
-					(() => {
+					((): Nullable<IUIElement> => {
 						if (modeClassName === 'input') {
 							return new UIInput(editor, {
 								name: 'className',

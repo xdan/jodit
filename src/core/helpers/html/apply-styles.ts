@@ -12,7 +12,7 @@ import { Dom } from 'jodit/core/dom';
 import { $$ } from 'jodit/core/helpers/utils';
 import { trim } from '../string';
 
-function normalizeCSS(s: string) {
+function normalizeCSS(s: string): string {
 	return s
 		.replace(/mso-[a-z-]+:[\s]*[^;]+;/gi, '')
 		.replace(/mso-[a-z-]+:[\s]*[^";']+$/gi, '')

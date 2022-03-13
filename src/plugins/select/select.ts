@@ -56,7 +56,7 @@ export class select extends Plugin {
 	}
 
 	@autobind
-	private onStartSelection(e: MouseEvent) {
+	private onStartSelection(e: MouseEvent): void {
 		const { j } = this;
 
 		let result,

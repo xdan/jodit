@@ -384,11 +384,8 @@ describe('Search plugin', function () {
 
 					clickButton('find', editor);
 
-					expect(
-						editor.container.querySelector(
-							'.jodit-search.jodit-search'
-						)
-					).is.not.null;
+					expect(editor.container.querySelector('.jodit-ui-search'))
+						.is.not.null;
 				});
 			});
 
@@ -403,7 +400,7 @@ describe('Search plugin', function () {
 
 					expect(
 						editor.container.querySelector(
-							'.jodit-search.jodit-search.jodit-ui-search_replace_true'
+							'.jodit-ui-search.jodit-ui-search_replace_true'
 						)
 					).is.not.null;
 				});

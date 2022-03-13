@@ -36,7 +36,7 @@ export class VDomJodit {
 		return new VDomJodit(elm);
 	}
 
-	private preventAllInputEvents() {
+	private preventAllInputEvents(): void {
 		this.container.addEventListener('keydown', e => {
 			e.preventDefault();
 		});

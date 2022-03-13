@@ -114,17 +114,7 @@ export class search extends Plugin {
 		const range = this.j.s.range,
 			bounds = await this.find(this.walker, query);
 
-		let currentIndex = bounds.findIndex(
-			bound =>
-				bound.startContainer === range.startContainer &&
-				bound.startOffset === range.startOffset &&
-				bound.endContainer === range.startContainer &&
-				bound.endOffset === range.endOffset
-		);
-
-		if (currentIndex === -1) {
-			currentIndex = 0;
-		}
+		const currentIndex = this.findCurrentIndexInRanges(bounds, range);
 
 		const bound = bounds[currentIndex];
 
@@ -172,31 +162,21 @@ export class search extends Plugin {
 			return false;
 		}
 
-		let currentIndex = bounds.findIndex(
-			bound =>
-				bound.startContainer === range.startContainer &&
-				bound.startOffset === range.startOffset &&
-				bound.endContainer === range.startContainer &&
-				bound.endOffset === range.endOffset
-		);
+		let currentIndex = this.findCurrentIndexInRanges(bounds, range);
 
-		if (currentIndex === -1) {
-			currentIndex = 0;
+		if (next) {
+			currentIndex =
+				currentIndex === bounds.length - 1 ? 0 : currentIndex + 1;
 		} else {
-			if (next) {
-				currentIndex =
-					currentIndex === bounds.length - 1 ? 0 : currentIndex + 1;
-			} else {
-				currentIndex =
-					currentIndex === 0 ? bounds.length - 1 : currentIndex - 1;
-			}
+			currentIndex =
+				currentIndex === 0 ? bounds.length - 1 : currentIndex - 1;
 		}
 
 		this.ui.currentIndex = currentIndex + 1;
 
 		const bound = bounds[currentIndex];
 
-		if (bound && bound.startContainer && bound.endContainer) {
+		if (bound) {
 			const rng = this.j.ed.createRange();
 
 			try {
@@ -215,6 +195,25 @@ export class search extends Plugin {
 		}
 
 		return false;
+	}
+
+	private findCurrentIndexInRanges(
+		bounds: ISelectionRange[],
+		range: Range
+	): number {
+		let currentIndex = bounds.findIndex(
+			bound =>
+				bound.startContainer === range.startContainer &&
+				bound.startOffset === range.startOffset &&
+				bound.endContainer === range.startContainer &&
+				bound.endOffset === range.endOffset
+		);
+
+		if (currentIndex === -1) {
+			currentIndex = 0;
+		}
+
+		return currentIndex;
 	}
 
 	walker: Nullable<LazyWalker> = null;
@@ -308,9 +307,9 @@ export class search extends Plugin {
 						)
 						.catch(() => {});
 				})
-				.on('search.search', (value: string, next: boolean = true) => {
-					editor.execCommand('search', value, next);
-				});
+				.on('search.search', (value: string, next: boolean = true) =>
+					self.findAndSelect(value || '', next).catch(() => {})
+				);
 
 			editor
 				.registerCommand('search', {
@@ -319,7 +318,8 @@ export class search extends Plugin {
 						value?: string,
 						next: boolean = true
 					) => {
-						self.findAndSelect(value || '', next).catch(() => {});
+						value &&
+							self.findAndSelect(value, next).catch(() => {});
 
 						return false;
 					}

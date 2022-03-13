@@ -50,7 +50,7 @@ export function focus(editor: IJodit): void {
 			});
 	}
 
-	const focus = () => {
+	const focus = (): void => {
 		editor.s.focus();
 
 		if (editor.o.cursorAfterAutofocus === 'end') {

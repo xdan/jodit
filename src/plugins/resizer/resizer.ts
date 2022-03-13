@@ -121,7 +121,7 @@ export class resizer extends Plugin {
 		}
 	}
 
-	private addEventListeners() {
+	private addEventListeners(): void {
 		const editor = this.j;
 
 		editor.e
@@ -197,7 +197,7 @@ export class resizer extends Plugin {
 		);
 	}
 
-	private onResize = (e: MouseEvent) => {
+	private onResize = (e: MouseEvent): void => {
 		if (this.isResized) {
 			if (!this.element) {
 				return;
@@ -283,7 +283,7 @@ export class resizer extends Plugin {
 		}
 	}
 
-	private onClickOutside = (e: MouseEvent) => {
+	private onClickOutside = (e: MouseEvent): void => {
 		if (this.isShown) {
 			if (this.isResized) {
 				this.j.unlock();
@@ -302,7 +302,7 @@ export class resizer extends Plugin {
 		}
 	};
 
-	private onDelete(e: KeyboardEvent) {
+	private onDelete(e: KeyboardEvent): void {
 		if (!this.element) {
 			return;
 		}
@@ -317,7 +317,7 @@ export class resizer extends Plugin {
 	}
 
 	@debounce()
-	private onChangeEditor() {
+	private onChangeEditor(): void {
 		if (this.isShown) {
 			if (!this.element || !this.element.parentNode) {
 				this.hide();
@@ -404,7 +404,7 @@ export class resizer extends Plugin {
 		}
 	}
 
-	private onClickElement = (element: HTMLElement) => {
+	private onClickElement = (element: HTMLElement): void => {
 		if (this.isResized) {
 			return;
 		}
@@ -420,7 +420,7 @@ export class resizer extends Plugin {
 		}
 	};
 
-	private updateSize = () => {
+	private updateSize = (): void => {
 		if (this.isInDestruct || !this.isShown) {
 			return;
 		}
@@ -462,7 +462,7 @@ export class resizer extends Plugin {
 		}
 	};
 
-	private showSizeViewer(w: number, h: number) {
+	private showSizeViewer(w: number, h: number): void {
 		if (!this.j.o.resizer.showSize) {
 			return;
 		}
@@ -487,7 +487,7 @@ export class resizer extends Plugin {
 	/**
 	 * Show resizer
 	 */
-	private show() {
+	private show(): void {
 		if (this.j.o.readonly || this.isShown) {
 			return;
 		}
@@ -519,7 +519,7 @@ export class resizer extends Plugin {
 		}
 	}
 
-	private hideSizeViewer = () => {
+	private hideSizeViewer = (): void => {
 		this.sizeViewer.style.opacity = '0';
 	};
 

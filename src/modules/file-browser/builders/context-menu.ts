@@ -8,7 +8,7 @@
  * @module modules/file-browser
  */
 
-import type { IFileBrowser } from 'jodit/types';
+import type { IDialog, IFileBrowser } from 'jodit/types';
 import { Dialog } from 'jodit/modules/dialog';
 
 import { Dom } from 'jodit/core/dom';
@@ -22,7 +22,7 @@ import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
 import { deleteFile } from 'jodit/modules/file-browser/fetch/delete-file';
 
 const CLASS_PREVIEW = 'jodit-filebrowser-preview',
-	preview_tpl_next = (next = 'next', right = 'right') =>
+	preview_tpl_next = (next = 'next', right = 'right'): string =>
 		`<div class="${CLASS_PREVIEW}__navigation ${CLASS_PREVIEW}__navigation_arrow_${next}">` +
 		'' +
 		Icon.get('angle-' + right) +
@@ -45,7 +45,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 		let item: HTMLElement = a;
 
 		const opt = self.options,
-			ga = (key: string) => attr(item, key) || '';
+			ga = (key: string): string => attr(item, key) || '';
 
 		self.async.setTimeout(() => {
 			const selectedItem = elementToItem(a, elementsMap(self));
@@ -64,15 +64,14 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 					? {
 							icon: 'pencil',
 							title: 'Edit',
-							exec: () => {
-								return openImageEditor.call(
+							exec: (): Promise<IDialog> =>
+								openImageEditor.call(
 									self,
 									ga('href'),
 									ga('data-name'),
 									ga('data-path'),
 									ga('data-source')
-								);
-							}
+								)
 					  }
 					: false,
 
@@ -80,7 +79,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 					? {
 							icon: 'italic',
 							title: 'Rename',
-							exec: async () => {
+							exec: (): void => {
 								self.e.fire(
 									'fileRename.filebrowser',
 									ga('data-name'),
@@ -95,7 +94,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 					? {
 							icon: 'bin',
 							title: 'Delete',
-							exec: async () => {
+							exec: async (): Promise<void> => {
 								try {
 									await deleteFile(
 										self,
@@ -117,7 +116,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 					? {
 							icon: 'eye',
 							title: 'Preview',
-							exec: () => {
+							exec: (): void => {
 								const preview = new Dialog({
 										fullsize: self.o.fullsize,
 										language: self.o.language,
@@ -134,12 +133,12 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 									prev = self.c.fromHTML(
 										preview_tpl_next('prev', 'left')
 									),
-									addLoadHandler = (src: string) => {
+									addLoadHandler = (src: string): void => {
 										const image = self.c.element('img');
 
 										image.setAttribute('src', src);
 
-										const onload = () => {
+										const onload = (): void => {
 											if (self.isInDestruct) {
 												return;
 											}
@@ -250,7 +249,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 				{
 					icon: 'upload',
 					title: 'Download',
-					exec: () => {
+					exec: (): void => {
 						const url = ga('href');
 
 						if (url) {

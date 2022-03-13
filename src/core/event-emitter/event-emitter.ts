@@ -52,7 +52,7 @@ export class EventEmitter implements IEventEmitter {
 	private eachEvent(
 		events: string,
 		callback: (event: string, namespace: string) => void
-	) {
+	): void {
 		const eventParts: string[] = events.split(/[\s,]+/);
 
 		eventParts.forEach((eventNameSpace: string) => {
@@ -82,7 +82,7 @@ export class EventEmitter implements IEventEmitter {
 		return subject[this.__key];
 	}
 
-	private clearStore(subject: any) {
+	private clearStore(subject: any): void {
 		if (subject[this.__key] !== undefined) {
 			delete subject[this.__key];
 		}
@@ -90,7 +90,7 @@ export class EventEmitter implements IEventEmitter {
 
 	private prepareEvent = (
 		event: TouchEvent | MouseEvent | ClipboardEvent
-	) => {
+	): void => {
 		if (event.cancelBubble) {
 			return;
 		}
@@ -133,7 +133,7 @@ export class EventEmitter implements IEventEmitter {
 	private triggerNativeEvent(
 		element: Document | Element | HTMLElement | Window,
 		event: string | Event | MouseEvent
-	) {
+	): void {
 		const evt: Event = this.doc.createEvent('HTMLEvents');
 
 		if (typeof event === 'string') {
@@ -365,7 +365,7 @@ export class EventEmitter implements IEventEmitter {
 			callback = eventsOrCallback as CallbackFunction;
 		}
 
-		const newCallback = (...args: any) => {
+		const newCallback = (...args: any): void => {
 			this.off(subject, events, newCallback);
 			return callback(...args);
 		};
@@ -439,7 +439,7 @@ export class EventEmitter implements IEventEmitter {
 		}
 
 		const isDOMElement = isFunction((subject as any).removeEventListener),
-			removeEventListener = (block: EventHandlerBlock) => {
+			removeEventListener = (block: EventHandlerBlock): void => {
 				if (isDOMElement) {
 					(subject as HTMLElement).removeEventListener(
 						block.event,
@@ -451,7 +451,7 @@ export class EventEmitter implements IEventEmitter {
 			removeCallbackFromNameSpace = (
 				event: string,
 				namespace: string
-			) => {
+			): void => {
 				if (event !== '') {
 					const blocks: EventHandlerBlock[] | void = store.get(
 						event,
@@ -540,7 +540,7 @@ export class EventEmitter implements IEventEmitter {
 
 	private __stopped: EventHandlerBlock[][] = [];
 
-	private removeStop(currentBlocks: EventHandlerBlock[]) {
+	private removeStop(currentBlocks: EventHandlerBlock[]): void {
 		if (currentBlocks) {
 			const index: number = this.__stopped.indexOf(currentBlocks);
 			index !== -1 && this.__stopped.splice(0, index + 1);

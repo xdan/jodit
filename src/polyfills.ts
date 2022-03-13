@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IDictionary } from 'jodit/types';
+import type { CanUndef, IDictionary } from 'jodit/types';
 
 import 'classlist-polyfill';
 import 'es6-promise/auto';
@@ -25,7 +25,7 @@ if (!Array.from) {
 
 // for ie11
 if (!Array.prototype.includes) {
-	Array.prototype.includes = function (value: any) {
+	Array.prototype.includes = function (value: any): boolean {
 		return this.indexOf(value) > -1;
 	};
 }
@@ -70,13 +70,13 @@ if (typeof Object.assign !== 'function') {
 }
 
 if (!Array.prototype.find) {
-	Array.prototype.find = function (value: any) {
+	Array.prototype.find = function <T>(value: T): CanUndef<T> {
 		return this.indexOf(value) > -1 ? value : undefined;
 	};
 }
 
 if (!String.prototype.endsWith) {
-	String.prototype.endsWith = function (value: any) {
+	String.prototype.endsWith = function (value: any): boolean {
 		return this[this.length - 1] === value;
 	};
 }

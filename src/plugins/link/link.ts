@@ -182,7 +182,7 @@ export class link extends Plugin {
 	}
 
 	@autobind
-	private onDblClickOnLink(e: MouseEvent) {
+	private onDblClickOnLink(e: MouseEvent): void {
 		if (!Dom.isTag(e.target, 'a')) {
 			return;
 		}
@@ -280,7 +280,7 @@ export class link extends Plugin {
 
 		let link: false | HTMLAnchorElement;
 
-		const getSelectionText = () =>
+		const getSelectionText = (): string =>
 			link
 				? link.innerText
 				: stripTags(jodit.s.range.cloneContents(), jodit.ed);

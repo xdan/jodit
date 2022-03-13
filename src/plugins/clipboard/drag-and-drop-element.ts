@@ -74,8 +74,10 @@ export class DragAndDropElement extends Plugin {
 			return;
 		}
 
-		const matched = (node: Nullable<Node>) =>
-			node && this.dragList.includes(node.nodeName.toLowerCase());
+		const matched = (node: Nullable<Node>): boolean =>
+			Boolean(
+				node && this.dragList.includes(node.nodeName.toLowerCase())
+			);
 
 		let lastTarget: Nullable<HTMLElement> =
 			(Dom.furthest(target, matched, this.j.editor) as HTMLElement) ||

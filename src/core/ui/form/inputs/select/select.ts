@@ -49,7 +49,7 @@ export class UISelect extends UIInput implements IUISelect {
 		const { j } = this,
 			{ nativeInput } = this;
 
-		const opt = () => j.create.element('option');
+		const opt = (): HTMLOptionElement => j.create.element('option');
 
 		if (state.placeholder !== undefined) {
 			const option = opt();

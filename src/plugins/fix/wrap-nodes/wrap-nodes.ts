@@ -43,7 +43,7 @@ export class WrapNodes extends Plugin {
 	 * Process changed value
 	 */
 	@autobind
-	private postProcessSetEditorValue() {
+	private postProcessSetEditorValue(): void {
 		const { jodit } = this;
 
 		if (!jodit.isEditorMode()) {

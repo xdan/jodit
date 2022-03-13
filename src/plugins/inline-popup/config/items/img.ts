@@ -50,13 +50,13 @@ export default [
 		name: 'delete',
 		icon: 'bin',
 		tooltip: 'Delete',
-		exec: (editor: IJodit, image) => {
+		exec: (editor: IJodit, image): void => {
 			image && editor.s.removeNode(image);
 		}
 	},
 	{
 		name: 'pencil',
-		exec(editor: IJodit, current) {
+		exec(editor: IJodit, current): void {
 			const tagName = (current as HTMLElement).tagName.toLowerCase();
 
 			if (tagName === 'img') {

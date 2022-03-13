@@ -1160,7 +1160,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 				instances[this.id] = this;
 
-				const init = () => {
+				const init = (): void => {
 					if (this.e) {
 						this.e.fire('afterInit', this);
 					}
@@ -1313,7 +1313,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		const opt = this.options;
 
-		const init = () => {
+		const init = (): void => {
 			if (
 				opt.enableDragAndDropFileToEditor &&
 				opt.uploader &&
@@ -1480,7 +1480,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Attach some native event listeners
 	 */
 	@autobind
-	private prepareWYSIWYGEditor() {
+	private prepareWYSIWYGEditor(): void {
 		const { editor } = this;
 
 		// direction

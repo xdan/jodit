@@ -73,7 +73,7 @@ export function mobile(editor: IJodit): void {
 						editor.container.parentElement ?? editor.container
 					).offsetWidth;
 
-					const newStore = (() => {
+					const newStore = ((): ReturnType<typeof splitArray> => {
 						if (width >= editor.o.sizeLG) {
 							return splitArray(editor.o.buttons);
 						}

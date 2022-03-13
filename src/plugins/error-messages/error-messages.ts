@@ -44,7 +44,7 @@ export function errorMessages(editor: IJodit): void {
 	if (editor.o.showMessageErrors) {
 		const activeClass = editor.getFullElName(ELM_NAME, 'active', true),
 			messagesBox = editor.c.div(editor.getFullElName(ELM_NAME)),
-			calcOffsets = () => {
+			calcOffsets = (): void => {
 				let height = 5;
 
 				toArray(

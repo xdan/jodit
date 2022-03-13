@@ -24,7 +24,7 @@ import { UIElement } from 'jodit/core/ui';
 
 let temp = 1;
 
-const $$temp = () => {
+const $$temp = (): number => {
 	temp++;
 	return temp;
 };

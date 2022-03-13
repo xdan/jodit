@@ -111,15 +111,15 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	private startY: number = 0;
 	private startPoint = { x: 0, y: 0, w: 0, h: 0 };
 
-	private lockSelect = () => {
+	private lockSelect = (): void => {
 		this.setMod('moved', true);
 	};
 
-	private unlockSelect = () => {
+	private unlockSelect = (): void => {
 		this.setMod('moved', false);
 	};
 
-	private setElements(root: HTMLElement, elements: Content) {
+	private setElements(root: HTMLElement, elements: Content): void {
 		const elements_list: HTMLElement[] = [];
 
 		asArray<ContentItem | ContentItem[] | IContainer>(elements).forEach(
@@ -215,7 +215,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	}
 
 	@autobind
-	private onMouseMove(e: MouseEvent) {
+	private onMouseMove(e: MouseEvent): void {
 		if (this.draggable && this.o.draggable) {
 			this.setPosition(
 				this.startPoint.x + e.clientX - this.startX,
@@ -276,7 +276,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		}
 	}
 
-	private onResize = () => {
+	private onResize = (): void => {
 		if (
 			this.options &&
 			this.o.resizable &&
@@ -290,7 +290,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	};
 
 	@autobind
-	private onResizerMouseDown(e: MouseEvent) {
+	private onResizerMouseDown(e: MouseEvent): void {
 		this.resizable = true;
 		this.startX = e.clientX;
 		this.startY = e.clientY;

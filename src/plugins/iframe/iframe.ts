@@ -100,9 +100,9 @@ export function iframe(editor: IJodit): void {
 				editor
 			);
 
-			const init = () => {
+			const init = (): boolean => {
 				if (!editor.iframe) {
-					return;
+					return false;
 				}
 
 				const doc = (editor.iframe.contentWindow as Window).document;
@@ -110,7 +110,7 @@ export function iframe(editor: IJodit): void {
 
 				const docMode = opt.editHTMLDocumentMode;
 
-				const toggleEditable = () => {
+				const toggleEditable = (): void => {
 					attr(
 						doc.body,
 						'contenteditable',

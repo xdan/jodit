@@ -71,8 +71,8 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	closest<T extends IUIElement>(type: Function | T): Nullable<T> {
 		const c =
 			typeof type === 'object'
-				? (pe: IUIElement) => pe === type
-				: (pe: IUIElement) => pe instanceof type;
+				? (pe: IUIElement): boolean => pe === type
+				: (pe: IUIElement): boolean => pe instanceof type;
 
 		let pe = this.__parentElement;
 

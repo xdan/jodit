@@ -62,7 +62,7 @@ export function css(
 			elm: HTMLElement,
 			_key: string,
 			_value: StyleValue
-		) => {
+		): void => {
 			if (
 				!isVoid(_value) &&
 				numberFieldsReg.test(_key) &&

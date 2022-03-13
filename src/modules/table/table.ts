@@ -922,7 +922,7 @@ export class Table extends ViewComponent<IJodit> {
 		key: string,
 		value: string | number | null,
 		marked: HTMLTableCellElement[]
-	) {
+	): void {
 		marked.push(cell);
 
 		const dict = markedValue.get(cell) ?? {};
@@ -930,7 +930,7 @@ export class Table extends ViewComponent<IJodit> {
 		markedValue.set(cell, dict);
 	}
 
-	private static unmark(marked: HTMLTableCellElement[]) {
+	private static unmark(marked: HTMLTableCellElement[]): void {
 		marked.forEach(cell => {
 			const dict = markedValue.get(cell);
 

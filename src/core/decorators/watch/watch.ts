@@ -56,7 +56,7 @@ export function watch(
 			throw error('Handler must be a Function');
 		}
 
-		const process = (component: IComponent) => {
+		const process = (component: IComponent): void => {
 			const callback = (key: string, ...args: any[]): void | any => {
 				if (!component.isInDestruct) {
 					return (component as any)[propertyKey](key, ...args);

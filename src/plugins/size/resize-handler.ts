@@ -69,7 +69,7 @@ export class resizeHandler extends Plugin {
 	/**
 	 * Handler: Click on handle - start resizing
 	 */
-	private onHandleResizeStart(e: MouseEvent) {
+	private onHandleResizeStart(e: MouseEvent): void {
 		this.isResized = true;
 
 		this.start.x = e.clientX;
@@ -87,7 +87,7 @@ export class resizeHandler extends Plugin {
 	/**
 	 * Handler: Mouse move after start resizing
 	 */
-	private onHandleResize(e: MouseEvent) {
+	private onHandleResize(e: MouseEvent): void {
 		if (!this.isResized) {
 			return;
 		}
@@ -106,7 +106,7 @@ export class resizeHandler extends Plugin {
 	/**
 	 * End of resizing
 	 */
-	private onHandleResizeEnd() {
+	private onHandleResizeEnd(): void {
 		if (this.isResized) {
 			this.isResized = false;
 

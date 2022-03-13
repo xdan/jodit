@@ -56,7 +56,7 @@ export function findMostNestedNeighbor(
 	root: HTMLElement,
 	onlyInlide: boolean = false
 ): Nullable<Node> {
-	const nextChild = (node: Node) =>
+	const nextChild = (node: Node): Nullable<Node> =>
 		right ? node.firstChild : node.lastChild;
 
 	let next = findNotEmptyNeighbor(node, !right, root);

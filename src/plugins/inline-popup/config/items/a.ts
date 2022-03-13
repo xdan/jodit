@@ -15,7 +15,7 @@ export default [
 	{
 		name: 'eye',
 		tooltip: 'Open link',
-		exec: (editor: IJodit, current) => {
+		exec: (editor: IJodit, current): void => {
 			const href = attr(current as HTMLElement, 'href');
 
 			if (current && href) {

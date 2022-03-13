@@ -20,7 +20,7 @@ export function wrapUnwrappedText(
 ): HTMLElement {
 	const root = jodit.editor,
 		ci = jodit.createInside,
-		edge = (n: Node, key: keyof Node = 'previousSibling') => {
+		edge = (n: Node, key: keyof Node = 'previousSibling'): Node => {
 			let edgeNode: Node = n,
 				node: Nullable<Node> = n;
 

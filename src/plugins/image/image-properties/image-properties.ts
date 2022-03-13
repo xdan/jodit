@@ -327,11 +327,11 @@ export class imageProperties extends Plugin {
 			lockSize
 		} = refs<HTMLInputElement>(this.form);
 
-		const updateLock = () => {
+		const updateLock = (): void => {
 				lockMargin.checked = this.state.marginIsLocked;
 				lockSize.checked = this.state.sizeIsLocked;
 			},
-			updateAlign = () => {
+			updateAlign = (): void => {
 				if (
 					image.style.cssFloat &&
 					['left', 'right'].indexOf(
@@ -349,24 +349,24 @@ export class imageProperties extends Plugin {
 					}
 				}
 			},
-			updateBorderRadius = () => {
+			updateBorderRadius = (): void => {
 				borderRadius.value = (
 					parseInt(image.style.borderRadius || '0', 10) || '0'
 				).toString();
 			},
-			updateId = () => {
+			updateId = (): void => {
 				id.value = attr(image, 'id') || '';
 			},
-			updateStyle = () => {
+			updateStyle = (): void => {
 				style.value = attr(image, 'style') || '';
 			},
-			updateClasses = () => {
+			updateClasses = (): void => {
 				classes.value = (attr(image, 'class') || '').replace(
 					/jodit_focused_image[\s]*/,
 					''
 				);
 			},
-			updateMargins = () => {
+			updateMargins = (): void => {
 				if (!opt.image.editMargins) {
 					return;
 				}
@@ -406,7 +406,7 @@ export class imageProperties extends Plugin {
 
 				this.state.marginIsLocked = equal;
 			},
-			updateSizes = () => {
+			updateSizes = (): void => {
 				const width =
 						attr(image, 'width') ||
 						css(image, 'width', true) ||
@@ -440,7 +440,7 @@ export class imageProperties extends Plugin {
 					return Math.abs(w - h * this.state.ratio) < 1;
 				})();
 			},
-			updateText = () => {
+			updateText = (): void => {
 				imageTitle.value = attr(image, 'title') || '';
 
 				imageAlt.value = attr(image, 'alt') || '';
@@ -457,7 +457,7 @@ export class imageProperties extends Plugin {
 					imageLinkOpenInNewTab.checked = false;
 				}
 			},
-			updateSrc = () => {
+			updateSrc = (): void => {
 				imageSrc.value = attr(image, 'src') || '';
 
 				if (imageViewSrc) {
@@ -612,7 +612,7 @@ export class imageProperties extends Plugin {
 	private openImageEditor(): void {
 		const url: string = attr(this.state.image, 'src') || '',
 			a = this.j.c.element('a'),
-			loadExternal = () => {
+			loadExternal = (): void => {
 				if (a.host !== location.host) {
 					Confirm(
 						this.j.i18n(

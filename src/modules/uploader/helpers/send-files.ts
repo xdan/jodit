@@ -58,7 +58,7 @@ export function sendFiles(
 					promises.push(
 						uploader.j.async.promise((resolve, reject) => {
 							reader.onerror = reject;
-							reader.onloadend = () => {
+							reader.onloadend = (): void => {
 								const resp = {
 									baseurl: '',
 									files: [reader.result],

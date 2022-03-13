@@ -48,7 +48,7 @@ Config.prototype.controls.video = {
 				])
 			]),
 			tabs: TabOption[] = [],
-			insertCode = (code: string) => {
+			insertCode = (code: string): void => {
 				editor.s.restore();
 				editor.s.insertHTML(code);
 				close();

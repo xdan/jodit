@@ -30,7 +30,7 @@ Config.prototype.controls.print = {
 
 		getContainer(editor, Config).appendChild(iframe);
 
-		const afterFinishPrint = () => {
+		const afterFinishPrint = (): void => {
 			editor.e.off(editor.ow, 'mousemove', afterFinishPrint);
 			Dom.safeRemove(iframe);
 		};

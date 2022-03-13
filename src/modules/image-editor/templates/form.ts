@@ -14,7 +14,7 @@ import { Icon } from 'jodit/core/ui';
 const jie = 'jodit-image-editor';
 const gi = Icon.get.bind(Icon);
 
-const act = (el: boolean, className = 'jodti-image-editor_active') =>
+const act = (el: boolean, className = 'jodti-image-editor_active'): string =>
 	el ? className : '';
 
 export const form = (
@@ -27,7 +27,7 @@ export const form = (
 		label: string,
 		ref: string,
 		active: boolean = true
-	) => `<div class="jodit-form__group">
+	): string => `<div class="jodit-form__group">
 			<label>${i(label)}</label>
 
 			<label class='jodit-switcher'>
