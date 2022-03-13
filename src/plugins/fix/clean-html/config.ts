@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/fix/clean-html
+ */
+
 import type { HTMLTagNames, IDictionary } from 'jodit/types';
 import { Config } from 'jodit/config';
 
