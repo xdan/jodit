@@ -156,16 +156,13 @@ export function askInsertTypeDialog(
 
 	markOwner(jodit, dialog.container);
 
-	const buttons = buttonList
-		.map(({ text, value }) =>
-			Button(jodit, '', text).onAction(() =>
-				callback(value as InsertMode)
-			)
-		)
-		.map(btn => {
-			btn.state.tabIndex = 0;
-			return btn;
-		});
+	const buttons = buttonList.map(({ text, value }) =>
+		Button(jodit, {
+			text,
+			name: text.toLowerCase(),
+			tabIndex: 0
+		}).onAction(() => callback(value as InsertMode))
+	);
 
 	const cancel = Button(jodit, {
 		text: 'Cancel',

@@ -948,7 +948,6 @@ describe('Clipboard text', function () {
 					expect(editor.value).equals('');
 
 					const dialog = getOpenedDialog(editor);
-
 					simulateEvent('click', getButton('keep', dialog));
 
 					expect(sortAttributes(editor.value)).equals(
