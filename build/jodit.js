@@ -985,6 +985,7 @@ const TEMP_ATTR = 'data-jodit-temp';
 __webpack_require__.d(__webpack_exports__, {
   "vp": function() { return /* reexport */ EventEmitter; },
   "DG": function() { return /* reexport */ EventHandlersStore; },
+  "aN": function() { return /* reexport */ eventify/* Eventify */.a; },
   "rO": function() { return /* reexport */ defaultNameSpace; },
   "LO": function() { return /* reexport */ observable; }
 });
@@ -1439,10 +1440,12 @@ class EventEmitter {
     }
 }
 
+// EXTERNAL MODULE: ./src/core/event-emitter/eventify.ts
+var eventify = __webpack_require__(20);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
+var helpers = __webpack_require__(21);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(29);
+var decorators = __webpack_require__(31);
 ;// CONCATENATED MODULE: ./src/core/event-emitter/observable.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1563,6 +1566,7 @@ function observable(obj) {
 
 
 
+
 /***/ }),
 /* 16 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -1640,6 +1644,51 @@ function isArray(elm) {
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "a": function() { return /* binding */ Eventify; }
+/* harmony export */ });
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+class Eventify {
+    constructor() {
+        this.map = new Map();
+    }
+    on(name, func) {
+        var _a;
+        if (!this.map.has(name)) {
+            this.map.set(name, new Set());
+        }
+        (_a = this.map.get(name)) === null || _a === void 0 ? void 0 : _a.add(func);
+        return this;
+    }
+    off(name, func) {
+        var _a;
+        if (this.map.has(name)) {
+            (_a = this.map.get(name)) === null || _a === void 0 ? void 0 : _a.delete(func);
+        }
+        return this;
+    }
+    emit(name, ...args) {
+        var _a;
+        let result;
+        if (this.map.has(name)) {
+            (_a = this.map.get(name)) === null || _a === void 0 ? void 0 : _a.forEach(cb => {
+                result = cb(...args);
+            });
+        }
+        return result;
+    }
+}
+
+
+/***/ }),
+/* 21 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
@@ -1676,6 +1725,7 @@ __webpack_require__.d(__webpack_exports__, {
   "defaultLanguage": function() { return /* reexport */ utils/* defaultLanguage */.X9; },
   "error": function() { return /* reexport */ utils/* error */.vU; },
   "fastClone": function() { return /* reexport */ utils/* fastClone */.V8; },
+  "fuzzySearchIndex": function() { return /* reexport */ string/* fuzzySearchIndex */.Qy; },
   "get": function() { return /* reexport */ utils/* get */.U2; },
   "getClassName": function() { return /* reexport */ utils/* getClassName */.gj; },
   "getContentWidth": function() { return /* reexport */ getContentWidth; },
@@ -1754,12 +1804,12 @@ __webpack_require__.d(__webpack_exports__, {
   "val": function() { return /* reexport */ utils/* val */.P0; }
 });
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
-var utils = __webpack_require__(21);
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 17 modules
+var utils = __webpack_require__(22);
 // EXTERNAL MODULE: ./src/core/helpers/array/index.ts + 1 modules
-var array = __webpack_require__(50);
+var array = __webpack_require__(55);
 // EXTERNAL MODULE: ./src/core/helpers/async/set-timeout.ts
-var set_timeout = __webpack_require__(75);
+var set_timeout = __webpack_require__(80);
 ;// CONCATENATED MODULE: ./src/core/helpers/async/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1769,9 +1819,9 @@ var set_timeout = __webpack_require__(75);
 
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 11 modules
-var checker = __webpack_require__(30);
+var checker = __webpack_require__(32);
 // EXTERNAL MODULE: ./src/core/helpers/color/color-to-hex.ts
-var color_to_hex = __webpack_require__(48);
+var color_to_hex = __webpack_require__(52);
 ;// CONCATENATED MODULE: ./src/core/helpers/color/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1780,10 +1830,10 @@ var color_to_hex = __webpack_require__(48);
  */
 
 
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 // EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 3 modules
-var string = __webpack_require__(43);
+var string = __webpack_require__(46);
 ;// CONCATENATED MODULE: ./src/core/helpers/html/apply-styles.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1876,9 +1926,9 @@ function applyStyles(html) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
-var trim = __webpack_require__(45);
+var trim = __webpack_require__(49);
 // EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(51);
+var to_array = __webpack_require__(56);
 ;// CONCATENATED MODULE: ./src/core/helpers/html/clean-from-word.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2040,7 +2090,7 @@ function nl2br(html) {
 
 
 // EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts + 9 modules
-var normalize = __webpack_require__(47);
+var normalize = __webpack_require__(51);
 ;// CONCATENATED MODULE: ./src/core/helpers/size/get-content-width.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2207,14 +2257,14 @@ function size(subject) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  "$$": function() { return /* reexport */ $$; },
+  "$$": function() { return /* reexport */ selector.$$; },
   "tp": function() { return /* reexport */ ConfigFlatten; },
   "II": function() { return /* reexport */ ConfigProto; },
   "lI": function() { return /* reexport */ LimitedStack; },
@@ -2232,7 +2282,7 @@ __webpack_require__.d(__webpack_exports__, {
   "WO": function() { return /* reexport */ completeUrl; },
   "UU": function() { return /* reexport */ convertMediaUrlToVideoEmbed; },
   "iv": function() { return /* reexport */ css/* css */.i; },
-  "iN": function() { return /* reexport */ cssPath; },
+  "iN": function() { return /* reexport */ selector/* cssPath */.iN; },
   "kT": function() { return /* reexport */ ctrlKey; },
   "qI": function() { return /* reexport */ data_bind/* dataBind */.q; },
   "X9": function() { return /* reexport */ defaultLanguage; },
@@ -2240,7 +2290,7 @@ __webpack_require__.d(__webpack_exports__, {
   "V8": function() { return /* reexport */ fastClone; },
   "U2": function() { return /* reexport */ get/* get */.U; },
   "gj": function() { return /* reexport */ get_class_name/* getClassName */.g; },
-  "BR": function() { return /* reexport */ getXPathByElement; },
+  "BR": function() { return /* reexport */ selector/* getXPathByElement */.BR; },
   "wx": function() { return /* reexport */ humanSizeToBytes; },
   "jF": function() { return /* reexport */ inView; },
   "J8": function() { return /* reexport */ isAtom; },
@@ -2254,9 +2304,9 @@ __webpack_require__.d(__webpack_exports__, {
   "MN": function() { return /* reexport */ utils/* markOwner */.MN; },
   "u3": function() { return /* reexport */ utils/* memorizeExec */.u3; },
   "mB": function() { return /* reexport */ parseQuery; },
-  "xL": function() { return /* reexport */ refs; },
+  "xL": function() { return /* reexport */ selector/* refs */.xL; },
   "mc": function() { return /* reexport */ utils/* reset */.mc; },
-  "W2": function() { return /* reexport */ resolveElement; },
+  "W2": function() { return /* reexport */ selector/* resolveElement */.W2; },
   "n5": function() { return /* reexport */ scrollIntoViewIfNeeded; },
   "t8": function() { return /* reexport */ set; },
   "P0": function() { return /* reexport */ val; }
@@ -2297,17 +2347,17 @@ function markDeprecated(method, names = [''], ctx = null) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/utils.ts
-var utils = __webpack_require__(22);
+var utils = __webpack_require__(23);
 // EXTERNAL MODULE: ./src/core/helpers/utils/get.ts
-var get = __webpack_require__(49);
+var get = __webpack_require__(53);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
 var is_string = __webpack_require__(17);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-numeric.ts
-var is_numeric = __webpack_require__(33);
+var is_numeric = __webpack_require__(35);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
 var is_array = __webpack_require__(19);
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 11 modules
-var checker = __webpack_require__(30);
+var checker = __webpack_require__(32);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/set.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2337,7 +2387,7 @@ function set(chain, value, obj) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/get-class-name.ts
-var get_class_name = __webpack_require__(42);
+var get_class_name = __webpack_require__(45);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/stack.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2500,7 +2550,7 @@ const buildQuery = (data, prefix) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/string/stringify.ts
-var stringify = __webpack_require__(31);
+var stringify = __webpack_require__(33);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/extend.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2646,7 +2696,7 @@ const convertMediaUrlToVideoEmbed = (url, width = 400, height = 345) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/css.ts
-var css = __webpack_require__(46);
+var css = __webpack_require__(50);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/ctrl-key.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2667,7 +2717,7 @@ const ctrlKey = (e) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/data-bind.ts
-var data_bind = __webpack_require__(23);
+var data_bind = __webpack_require__(24);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/default-language.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2738,120 +2788,8 @@ const scrollIntoViewIfNeeded = (elm, root, doc) => {
     }
 };
 
-// EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(14);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
-// EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 3 modules
-var string = __webpack_require__(43);
-// EXTERNAL MODULE: ./src/core/helpers/array/index.ts + 1 modules
-var array = __webpack_require__(50);
-// EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(52);
-;// CONCATENATED MODULE: ./src/core/helpers/utils/selector.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-let temp = 1;
-const $$temp = () => {
-    temp++;
-    return temp;
-};
-function $$(selector, root) {
-    let result;
-    if (false) {}
-    else {
-        result = root.querySelectorAll(selector);
-    }
-    return [].slice.call(result);
-}
-const getXPathByElement = (element, root) => {
-    if (!element || element.nodeType !== Node.ELEMENT_NODE) {
-        return '';
-    }
-    if (!element.parentNode || root === element) {
-        return '';
-    }
-    if (element.id) {
-        return "//*[@id='" + element.id + "']";
-    }
-    const sames = [].filter.call(element.parentNode.childNodes, (x) => x.nodeName === element.nodeName);
-    return (getXPathByElement(element.parentNode, root) +
-        '/' +
-        element.nodeName.toLowerCase() +
-        (sames.length > 1
-            ? '[' + ((0,array/* toArray */.qo)(sames).indexOf(element) + 1) + ']'
-            : ''));
-};
-const refs = (root) => {
-    if (root instanceof ui/* UIElement */.u1) {
-        root = root.container;
-    }
-    return $$('[ref],[data-ref]', root).reduce((def, child) => {
-        const key = (0,utils/* attr */.Lj)(child, '-ref');
-        if (key && (0,checker/* isString */.HD)(key)) {
-            def[(0,string/* camelCase */.eV)(key)] = child;
-            def[key] = child;
-        }
-        return def;
-    }, {});
-};
-const cssPath = (el) => {
-    if (!dom/* Dom.isElement */.i.isElement(el)) {
-        return null;
-    }
-    const path = [];
-    let start = el;
-    while (start && start.nodeType === Node.ELEMENT_NODE) {
-        let selector = start.nodeName.toLowerCase();
-        if (start.id) {
-            selector += '#' + start.id;
-            path.unshift(selector);
-            break;
-        }
-        else {
-            let sib = start, nth = 1;
-            do {
-                sib = sib.previousElementSibling;
-                if (sib && sib.nodeName.toLowerCase() === selector) {
-                    nth++;
-                }
-            } while (sib);
-            selector += ':nth-of-type(' + nth + ')';
-        }
-        path.unshift(selector);
-        start = start.parentNode;
-    }
-    return path.join(' > ');
-};
-function resolveElement(element, od) {
-    let resolved = element;
-    if ((0,checker/* isString */.HD)(element)) {
-        try {
-            resolved = od.querySelector(element);
-        }
-        catch (_a) {
-            throw (0,error/* error */.v)('String "' + element + '" should be valid HTML selector');
-        }
-    }
-    if (!resolved ||
-        typeof resolved !== 'object' ||
-        !dom/* Dom.isElement */.i.isElement(resolved) ||
-        !resolved.cloneNode) {
-        throw (0,error/* error */.v)('Element "' + element + '" should be string or HTMLElement instance');
-    }
-    return resolved;
-}
-
+// EXTERNAL MODULE: ./src/core/helpers/utils/selector.ts
+var selector = __webpack_require__(54);
 // EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
 var error = __webpack_require__(16);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/val.ts
@@ -2904,7 +2842,7 @@ const val = (elm, selector, value) => {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2919,13 +2857,13 @@ const val = (elm, selector, value) => {
 /* harmony export */   "u3": function() { return /* binding */ memorizeExec; }
 /* harmony export */ });
 /* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(18);
-/* harmony import */ var _checker_is_promise__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(38);
-/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(49);
-/* harmony import */ var _data_bind__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(23);
-/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(32);
-/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(30);
-/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
-/* harmony import */ var _string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(43);
+/* harmony import */ var _checker_is_promise__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(40);
+/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(53);
+/* harmony import */ var _data_bind__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24);
+/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(34);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32);
+/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(50);
+/* harmony import */ var _string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(46);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3061,15 +2999,15 @@ const memorizeExec = (editor, _, { control }, preProcessValue) => {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "q": function() { return /* binding */ dataBind; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24);
-/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(30);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(25);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3104,7 +3042,7 @@ const dataBind = (elm, key, value) => {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3130,9 +3068,9 @@ const STATUSES = {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
+var helpers = __webpack_require__(21);
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(25);
+var global = __webpack_require__(26);
 ;// CONCATENATED MODULE: ./src/core/component/component.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3285,7 +3223,7 @@ class ViewComponent extends Component {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3299,12 +3237,12 @@ class ViewComponent extends Component {
 /* harmony export */   "qz": function() { return /* binding */ modules; }
 /* harmony export */ });
 /* unused harmony export extendLang */
-/* harmony import */ var _plugin_plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(26);
-/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27);
+/* harmony import */ var _plugin_plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
 /* harmony import */ var _event_emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(15);
-/* harmony import */ var _helpers_checker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30);
-/* harmony import */ var _helpers_utils_get_class_name__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(42);
-/* harmony import */ var _helpers_string__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(43);
+/* harmony import */ var _helpers_checker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(32);
+/* harmony import */ var _helpers_utils_get_class_name__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(45);
+/* harmony import */ var _helpers_string__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(46);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3386,14 +3324,14 @@ const eventEmitter = new _event_emitter__WEBPACK_IMPORTED_MODULE_2__/* .EventEmi
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "h": function() { return /* binding */ PluginSystem; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(21);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3569,23 +3507,36 @@ PluginSystem.styles = new Set();
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "b": function() { return /* reexport safe */ _lazy_walker__WEBPACK_IMPORTED_MODULE_1__.b; },
+/* harmony export */   "i": function() { return /* reexport safe */ _dom__WEBPACK_IMPORTED_MODULE_0__.i; }
+/* harmony export */ });
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(29);
+/* harmony import */ var _lazy_walker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(44);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "i": function() { return /* reexport */ Dom; }
-});
 
-// EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(14);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
-// EXTERNAL MODULE: ./src/core/selection/index.ts + 19 modules
-var selection = __webpack_require__(28);
-;// CONCATENATED MODULE: ./src/core/dom/dom.ts
+
+
+/***/ }),
+/* 29 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "i": function() { return /* binding */ Dom; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
+/* harmony import */ var jodit_core_selection__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(30);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3621,7 +3572,7 @@ class Dom {
                 last = tmp;
             }
         } while (needFindNext);
-        const wrapper = (0,helpers.isString)(tag) ? editor.createInside.element(tag) : tag;
+        const wrapper = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(tag) ? editor.createInside.element(tag) : tag;
         if (first.parentNode) {
             first.parentNode.insertBefore(wrapper, first);
         }
@@ -3638,12 +3589,19 @@ class Dom {
         return wrapper;
     }
     static wrap(current, tag, create) {
-        const wrapper = (0,helpers.isString)(tag) ? create.element(tag) : tag;
-        if (!current.parentNode) {
-            throw (0,helpers.error)('Element should be in DOM');
+        const wrapper = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(tag) ? create.element(tag) : tag;
+        if (Dom.isNode(current)) {
+            if (!current.parentNode) {
+                throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.error)('Element should be in DOM');
+            }
+            current.parentNode.insertBefore(wrapper, current);
+            wrapper.appendChild(current);
         }
-        current.parentNode.insertBefore(wrapper, current);
-        wrapper.appendChild(current);
+        else {
+            const fragment = current.extractContents();
+            current.insertNode(wrapper);
+            wrapper.appendChild(fragment);
+        }
         return wrapper;
     }
     static unwrap(node) {
@@ -3672,10 +3630,10 @@ class Dom {
         }
     }
     static replace(elm, newTagName, create, withAttributes = false, notMoveContent = false) {
-        if ((0,helpers.isHTML)(newTagName)) {
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isHTML)(newTagName)) {
             newTagName = create.fromHTML(newTagName);
         }
-        const tag = (0,helpers.isString)(newTagName)
+        const tag = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(newTagName)
             ? create.element(newTagName)
             : newTagName;
         if (!notMoveContent) {
@@ -3684,7 +3642,7 @@ class Dom {
             }
         }
         if (withAttributes) {
-            (0,helpers.toArray)(elm.attributes).forEach(attr => {
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.toArray)(elm.attributes).forEach(attr => {
                 tag.setAttribute(attr.name, attr.value);
             });
         }
@@ -3697,7 +3655,7 @@ class Dom {
         return (Dom.isText(node) &&
             (!node.nodeValue ||
                 node.nodeValue
-                    .replace(constants.INVISIBLE_SPACE_REG_EXP(), '')
+                    .replace(jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP(), '')
                     .trim().length === 0));
     }
     static isEmptyContent(node) {
@@ -3713,13 +3671,13 @@ class Dom {
             return true;
         }
         if (Dom.isText(node)) {
-            return node.nodeValue == null || (0,helpers.trim)(node.nodeValue).length === 0;
+            return node.nodeValue == null || (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)(node.nodeValue).length === 0;
         }
         return (!condNoEmptyElement.test(node.nodeName.toLowerCase()) &&
             Dom.each(node, (elm) => {
                 if ((Dom.isText(elm) &&
                     elm.nodeValue != null &&
-                    (0,helpers.trim)(elm.nodeValue).length !== 0) ||
+                    (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)(elm.nodeValue).length !== 0) ||
                     (Dom.isElement(elm) &&
                         condNoEmptyElement.test(elm.nodeName.toLowerCase()))) {
                     return false;
@@ -3728,10 +3686,10 @@ class Dom {
     }
     static isNode(object) {
         return Boolean(object &&
-            (0,helpers.isString)(object.nodeName) &&
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(object.nodeName) &&
             typeof object.nodeType === 'number' &&
             object.childNodes &&
-            (0,helpers.isFunction)(object.appendChild));
+            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isFunction)(object.appendChild));
     }
     static isCell(elm) {
         return Dom.isNode(elm) && /^(td|th)$/i.test(elm.nodeName);
@@ -3740,10 +3698,10 @@ class Dom {
         return (Dom.isNode(elm) && /^(img|svg|picture|canvas)$/i.test(elm.nodeName));
     }
     static isBlock(node) {
-        return (!(0,helpers.isVoid)(node) &&
+        return (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isVoid)(node) &&
             typeof node === 'object' &&
             Dom.isNode(node) &&
-            constants.IS_BLOCK.test(node.nodeName));
+            jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.IS_BLOCK.test(node.nodeName));
     }
     static isText(node) {
         return Boolean(node && node.nodeType === Node.TEXT_NODE);
@@ -3767,10 +3725,10 @@ class Dom {
     static isInlineBlock(node) {
         return (Dom.isElement(node) &&
             !/^(BR|HR)$/i.test(node.tagName) &&
-            ['inline', 'inline-block'].indexOf((0,helpers.css)(node, 'display').toString()) !== -1);
+            ['inline', 'inline-block'].indexOf((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(node, 'display').toString()) !== -1);
     }
     static canSplitBlock(node) {
-        return (!(0,helpers.isVoid)(node) &&
+        return (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isVoid)(node) &&
             Dom.isHTMLElement(node) &&
             Dom.isBlock(node) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
@@ -3860,9 +3818,6 @@ class Dom {
     static *runInStack(start, stack, leftToRight, withChild = true) {
         while (stack.length) {
             const item = stack.pop();
-            if (start !== item) {
-                yield item;
-            }
             if (withChild) {
                 let child = leftToRight ? item.lastChild : item.firstChild;
                 while (child) {
@@ -3871,6 +3826,9 @@ class Dom {
                         ? child.previousSibling
                         : child.nextSibling;
                 }
+            }
+            if (start !== item) {
+                yield item;
             }
         }
     }
@@ -3926,15 +3884,15 @@ class Dom {
     }
     static closest(node, tagsOrCondition, root) {
         let condition;
-        if ((0,helpers.isFunction)(tagsOrCondition)) {
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isFunction)(tagsOrCondition)) {
             condition = tagsOrCondition;
         }
-        else if ((0,helpers.isArray)(tagsOrCondition)) {
-            condition = (tag) => tag &&
-                tagsOrCondition.includes(tag.nodeName.toLowerCase());
+        else if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isArray)(tagsOrCondition)) {
+            condition = (tag) => Boolean(tag &&
+                tagsOrCondition.includes(tag.nodeName.toLowerCase()));
         }
         else {
-            condition = (tag) => tag && tagsOrCondition === tag.nodeName.toLowerCase();
+            condition = (tag) => Boolean(tag && tagsOrCondition === tag.nodeName.toLowerCase());
         }
         return Dom.up(node, condition, root);
     }
@@ -3980,7 +3938,7 @@ class Dom {
         root.insertBefore(newElement, root.firstChild);
     }
     static append(root, newElement) {
-        if ((0,helpers.isArray)(newElement)) {
+        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isArray)(newElement)) {
             newElement.forEach(node => {
                 this.append(root, node);
             });
@@ -3991,7 +3949,7 @@ class Dom {
     }
     static moveContent(from, to, inStart = false) {
         const fragment = (from.ownerDocument || document).createDocumentFragment();
-        (0,helpers.toArray)(from.childNodes).forEach((node) => {
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.toArray)(from.childNodes).forEach((node) => {
             fragment.appendChild(node);
         });
         if (!inStart || !to.firstChild) {
@@ -4002,7 +3960,7 @@ class Dom {
         }
     }
     static all(node, condition, prev = false) {
-        let nodes = node.childNodes ? (0,helpers.toArray)(node.childNodes) : [];
+        let nodes = node.childNodes ? (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.toArray)(node.childNodes) : [];
         if (condition(node)) {
             return node;
         }
@@ -4029,20 +3987,20 @@ class Dom {
         if (!node) {
             return;
         }
-        (0,helpers.dataBind)(node, '__old_display', node.style.display);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.dataBind)(node, '__old_display', node.style.display);
         node.style.display = 'none';
     }
     static show(node) {
         if (!node) {
             return;
         }
-        const display = (0,helpers.dataBind)(node, '__old_display');
+        const display = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.dataBind)(node, '__old_display');
         if (node.style.display === 'none') {
             node.style.display = display || '';
         }
     }
     static isTag(node, tagNames) {
-        const tags = (0,helpers.asArray)(tagNames).map(String);
+        const tags = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.asArray)(tagNames).map(String);
         for (let i = 0; i < tags.length; i += 1) {
             if (this.isElement(node) &&
                 node.tagName.toLowerCase() === tags[i].toLowerCase()) {
@@ -4052,35 +4010,27 @@ class Dom {
         return false;
     }
     static markTemporary(element, attributes) {
-        attributes && (0,helpers.attr)(element, attributes);
-        (0,helpers.attr)(element, constants.TEMP_ATTR, true);
+        attributes && (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(element, attributes);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(element, jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR, true);
         return element;
     }
     static isTemporary(element) {
         if (!Dom.isElement(element)) {
             return false;
         }
-        return selection/* Select.isMarker */.Ph.isMarker(element) || (0,helpers.attr)(element, constants.TEMP_ATTR) === 'true';
+        return jodit_core_selection__WEBPACK_IMPORTED_MODULE_2__/* .Select.isMarker */ .Ph.isMarker(element) || (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(element, jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR) === 'true';
     }
     static replaceTemporaryFromString(value) {
         return value.replace(/<([a-z]+)[^>]+data-jodit-temp[^>]+>(.+?)<\/\1>/gi, '$2');
     }
     static temporaryList(root) {
-        return (0,helpers.$$)(`[${constants.TEMP_ATTR}]`, root);
+        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.$$)(`[${jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR}]`, root);
     }
 }
 
-;// CONCATENATED MODULE: ./src/core/dom/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4096,11 +4046,11 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: ./src/core/constants.ts
 var constants = __webpack_require__(14);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+var helpers = __webpack_require__(21);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(25);
+var global = __webpack_require__(26);
 ;// CONCATENATED MODULE: ./src/core/selection/style/api/toggle/toggle-css.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4186,11 +4136,11 @@ function getNativeCSSValue(jodit, elm, key) {
 }
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(41);
+var tslib_es6 = __webpack_require__(43);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(29);
+var decorators = __webpack_require__(31);
 // EXTERNAL MODULE: ./src/core/selection/helpers/index.ts + 2 modules
-var selection_helpers = __webpack_require__(40);
+var selection_helpers = __webpack_require__(42);
 ;// CONCATENATED MODULE: ./src/core/selection/select.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4714,7 +4664,7 @@ class Select {
         }
         const container = start ? range.startContainer : range.endContainer;
         const offset = start ? range.startOffset : range.endOffset;
-        const check = (elm) => elm && !dom/* Dom.isTag */.i.isTag(elm, 'br') && !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm);
+        const check = (elm) => Boolean(elm && !dom/* Dom.isTag */.i.isTag(elm, 'br') && !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm));
         if (dom/* Dom.isText */.i.isText(container)) {
             const text = ((_b = container.nodeValue) === null || _b === void 0 ? void 0 : _b.length) ? container.nodeValue : '';
             if (end && text.replace((0,constants.INVISIBLE_SPACE_REG_EXP_END)(), '').length > offset) {
@@ -5720,7 +5670,7 @@ class CommitStyle {
 
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5744,7 +5694,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
+var helpers = __webpack_require__(21);
 ;// CONCATENATED MODULE: ./src/core/decorators/cache/cache.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5801,9 +5751,9 @@ function component(constructorFunction) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 11 modules
-var checker = __webpack_require__(30);
+var checker = __webpack_require__(32);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
-var core_component = __webpack_require__(24);
+var core_component = __webpack_require__(25);
 // EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
 var error = __webpack_require__(16);
 ;// CONCATENATED MODULE: ./src/core/decorators/debounce/debounce.ts
@@ -5961,7 +5911,7 @@ function wait(condition) {
 // EXTERNAL MODULE: ./src/core/event-emitter/index.ts + 3 modules
 var event_emitter = __webpack_require__(15);
 // EXTERNAL MODULE: ./src/core/helpers/array/split-array.ts
-var split_array = __webpack_require__(39);
+var split_array = __webpack_require__(41);
 ;// CONCATENATED MODULE: ./src/core/decorators/watch/watch.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5995,22 +5945,23 @@ function watch(observeFields, context) {
             (0,split_array/* splitArray */.C)(observeFields).forEach(field => {
                 if (/:/.test(field)) {
                     const [objectPath, eventName] = field.split(':');
+                    let ctx = context;
                     const view = (0,checker/* isViewObject */.f2)(component)
                         ? component
                         : component.jodit;
                     if (objectPath.length) {
-                        context = component.get(objectPath);
+                        ctx = component.get(objectPath);
                     }
-                    if ((0,checker/* isFunction */.mf)(context)) {
-                        context = context(component);
+                    if ((0,checker/* isFunction */.mf)(ctx)) {
+                        ctx = ctx(component);
                     }
-                    view.events.on(context || component, eventName, callback);
-                    if (!context) {
+                    view.events.on(ctx || component, eventName, callback);
+                    if (!ctx) {
                         view.events.on(eventName, callback);
                     }
                     view.hookStatus('beforeDestruct', () => {
                         view.events
-                            .off(context || component, eventName, callback)
+                            .off(ctx || component, eventName, callback)
                             .off(eventName, callback);
                     });
                     return;
@@ -6145,7 +6096,7 @@ function autobind() {
 
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6212,7 +6163,7 @@ function isBoolean(elm) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/string/stringify.ts
-var stringify = __webpack_require__(31);
+var stringify = __webpack_require__(33);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-equal.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6253,10 +6204,10 @@ function isHtmlFromWord(data) {
         (data.search(/style="[^"]*mso-/) !== -1 && data.search(/<font/) !== -1));
 }
 
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-void.ts
-var is_void = __webpack_require__(32);
+var is_void = __webpack_require__(34);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-imp-interface.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6277,7 +6228,7 @@ function hasContainer(value) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-numeric.ts
-var is_numeric = __webpack_require__(33);
+var is_numeric = __webpack_require__(35);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-int.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6294,7 +6245,7 @@ function isInt(value) {
 }
 
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(25);
+var global = __webpack_require__(26);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-jodit-object.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6329,13 +6280,13 @@ const isLicense = (license) => (0,is_string/* isString */.H)(license) &&
     /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license);
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-native-function.ts
-var is_native_function = __webpack_require__(34);
+var is_native_function = __webpack_require__(36);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-number.ts
-var is_number = __webpack_require__(35);
+var is_number = __webpack_require__(37);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-plain-object.ts
-var is_plain_object = __webpack_require__(36);
+var is_plain_object = __webpack_require__(38);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-promise.ts
-var is_promise = __webpack_require__(38);
+var is_promise = __webpack_require__(40);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-url.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6374,7 +6325,7 @@ function isValidName(name) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-window.ts
-var is_window = __webpack_require__(37);
+var is_window = __webpack_require__(39);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6405,7 +6356,7 @@ var is_window = __webpack_require__(37);
 
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6440,7 +6391,7 @@ function stringify(value, options = {}) {
 
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6458,7 +6409,7 @@ function isVoid(value) {
 
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6484,7 +6435,7 @@ function isNumeric(value) {
 
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6505,7 +6456,7 @@ function isNativeFunction(f) {
 
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6523,14 +6474,14 @@ function isNumber(value) {
 
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "P": function() { return /* binding */ isPlainObject; }
 /* harmony export */ });
-/* harmony import */ var _is_window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(37);
+/* harmony import */ var _is_window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6547,7 +6498,7 @@ function isPlainObject(obj) {
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6565,7 +6516,7 @@ function isWindow(obj) {
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6583,7 +6534,7 @@ function isPromise(val) {
 
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6603,7 +6554,7 @@ function splitArray(a) {
 
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6614,8 +6565,8 @@ __webpack_require__.d(__webpack_exports__, {
   "f": function() { return /* reexport */ moveTheNodeAlongTheEdgeOutward; }
 });
 
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 // EXTERNAL MODULE: ./src/core/constants.ts
 var constants = __webpack_require__(14);
 ;// CONCATENATED MODULE: ./src/core/selection/helpers/move-node-inside-start.ts
@@ -6676,7 +6627,7 @@ function moveTheNodeAlongTheEdgeOutward(node, start, root) {
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7001,7 +6952,118 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
 
 
 /***/ }),
-/* 42 */
+/* 44 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "b": function() { return /* binding */ LazyWalker; }
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(43);
+/* harmony import */ var jodit_core_event_emitter_eventify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(20);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(31);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(29);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+class LazyWalker extends jodit_core_event_emitter_eventify__WEBPACK_IMPORTED_MODULE_2__/* .Eventify */ .a {
+    constructor(async, options = {}) {
+        super();
+        this.async = async;
+        this.options = options;
+        this.workNodes = null;
+        this.hadAffect = false;
+        this.isWorked = false;
+        this.isFinished = false;
+        this.idleId = 0;
+    }
+    setWork(root) {
+        if (this.isWorked) {
+            this.break();
+        }
+        this.workNodes = jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.eachGen */ .i.eachGen(root, !this.options.reverse);
+        this.isFinished = false;
+        this.startIdleRequest();
+        return this;
+    }
+    startIdleRequest() {
+        var _a;
+        this.idleId = this.async.requestIdleCallback(this.workPerform, {
+            timeout: (_a = this.options.timeout) !== null && _a !== void 0 ? _a : 10
+        });
+    }
+    break(reason) {
+        if (this.isWorked) {
+            this.stop();
+            this.emit('break', reason);
+        }
+    }
+    end() {
+        if (this.isWorked) {
+            this.stop();
+            this.emit('end', this.hadAffect);
+            this.hadAffect = false;
+        }
+    }
+    stop() {
+        this.isWorked = false;
+        this.isFinished = true;
+        this.workNodes = null;
+        this.async.cancelIdleCallback(this.idleId);
+    }
+    destruct() {
+        this.stop();
+    }
+    workPerform(deadline) {
+        var _a;
+        if (this.workNodes) {
+            this.isWorked = true;
+            let count = 0;
+            const chunkSize = (_a = this.options.timeoutChunkSize) !== null && _a !== void 0 ? _a : 50;
+            while (!this.isFinished &&
+                (deadline.timeRemaining() > 0 ||
+                    (deadline.didTimeout && count <= chunkSize))) {
+                const item = this.workNodes.next();
+                count += 1;
+                if (this.visitNode(item.value)) {
+                    this.hadAffect = true;
+                }
+                if (item.done) {
+                    this.end();
+                    return;
+                }
+            }
+        }
+        else {
+            this.end();
+        }
+        if (!this.isFinished) {
+            this.startIdleRequest();
+        }
+    }
+    visitNode(nodeElm) {
+        var _a;
+        if (!nodeElm ||
+            (this.options.whatToShow !== undefined &&
+                nodeElm.nodeType !== this.options.whatToShow)) {
+            return false;
+        }
+        return (_a = this.emit('visit', nodeElm)) !== null && _a !== void 0 ? _a : false;
+    }
+}
+(0,tslib__WEBPACK_IMPORTED_MODULE_3__/* .__decorate */ .gn)([
+    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_0__.autobind
+], LazyWalker.prototype, "workPerform", null);
+
+
+/***/ }),
+/* 45 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7036,7 +7098,7 @@ const getClassName = (obj) => {
 
 
 /***/ }),
-/* 43 */
+/* 46 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7045,6 +7107,7 @@ const getClassName = (obj) => {
 __webpack_require__.d(__webpack_exports__, {
   "gP": function() { return /* reexport */ CamelCaseToKebabCase; },
   "eV": function() { return /* reexport */ camel_case/* camelCase */.e; },
+  "Qy": function() { return /* reexport */ fuzzy_search_index/* fuzzySearchIndex */.Q; },
   "ag": function() { return /* reexport */ i18n; },
   "GL": function() { return /* reexport */ kebabCase; },
   "gB": function() { return /* reexport */ sprintf; },
@@ -7055,52 +7118,17 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/string/camel-case.ts
-var camel_case = __webpack_require__(44);
-// EXTERNAL MODULE: ./src/core/helpers/string/stringify.ts
-var stringify = __webpack_require__(31);
-;// CONCATENATED MODULE: ./src/core/helpers/string/kebab-case.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const kebabCase = (key) => {
-    return key
-        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
-        .replace(/([a-z])([A-Z])/g, '$1-$2')
-        .replace(/[\s_]+/g, '-')
-        .toLowerCase();
-};
-const CamelCaseToKebabCase = (key) => {
-    return key
-        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
-        .replace(/([a-z])([A-Z])/g, '$1-$2')
-        .toLowerCase();
-};
-
-// EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
-var trim = __webpack_require__(45);
-;// CONCATENATED MODULE: ./src/core/helpers/string/ucfirst.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function ucfirst(value) {
-    if (!value.length) {
-        return '';
-    }
-    return value[0].toUpperCase() + value.substr(1);
-}
-
+var camel_case = __webpack_require__(47);
+// EXTERNAL MODULE: ./src/core/helpers/string/fuzzy-search-index.ts
+var fuzzy_search_index = __webpack_require__(48);
 // EXTERNAL MODULE: ./src/config.ts
 var config = __webpack_require__(13);
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
-var utils = __webpack_require__(21);
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 17 modules
+var utils = __webpack_require__(22);
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 11 modules
-var checker = __webpack_require__(30);
+var checker = __webpack_require__(32);
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(25);
+var global = __webpack_require__(26);
 ;// CONCATENATED MODULE: ./src/core/helpers/string/i18n.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7184,6 +7212,43 @@ const i18n = (key, params, options) => {
     return parse(key);
 };
 
+;// CONCATENATED MODULE: ./src/core/helpers/string/kebab-case.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const kebabCase = (key) => {
+    return key
+        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .replace(/[\s_]+/g, '-')
+        .toLowerCase();
+};
+const CamelCaseToKebabCase = (key) => {
+    return key
+        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .toLowerCase();
+};
+
+// EXTERNAL MODULE: ./src/core/helpers/string/stringify.ts
+var stringify = __webpack_require__(33);
+// EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
+var trim = __webpack_require__(49);
+;// CONCATENATED MODULE: ./src/core/helpers/string/ucfirst.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+function ucfirst(value) {
+    if (!value.length) {
+        return '';
+    }
+    return value[0].toUpperCase() + value.substr(1);
+}
+
 ;// CONCATENATED MODULE: ./src/core/helpers/string/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7198,8 +7263,9 @@ const i18n = (key, params, options) => {
 
 
 
+
 /***/ }),
-/* 44 */
+/* 47 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7219,7 +7285,53 @@ const camelCase = (key) => {
 
 
 /***/ }),
-/* 45 */
+/* 48 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Q": function() { return /* binding */ fuzzySearchIndex; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function fuzzySearchIndex(needle, haystack, offset = 0, maxDistance = 1) {
+    let i = 0, j = 0, startIndex = -1, len = 0, errorDistance = 0;
+    for (j = offset; i < needle.length && j < haystack.length;) {
+        if (needle[i].toLowerCase() === haystack[j].toLowerCase()) {
+            i++;
+            len++;
+            errorDistance = 0;
+            if (startIndex === -1) {
+                startIndex = j;
+            }
+        }
+        else if (i > 0) {
+            if (errorDistance >= maxDistance &&
+                haystack[j] !== jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE) {
+                i = 0;
+                startIndex = -1;
+                len = 0;
+                errorDistance = 0;
+                j--;
+            }
+            else {
+                errorDistance++;
+                len++;
+            }
+        }
+        j++;
+    }
+    return i === needle.length ? [startIndex, len] : [-1, 0];
+}
+
+
+/***/ }),
+/* 49 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7247,7 +7359,7 @@ function trimInv(value) {
 
 
 /***/ }),
-/* 46 */
+/* 50 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7255,9 +7367,9 @@ function trimInv(value) {
 /* harmony export */   "b": function() { return /* binding */ clearCenterAlign; },
 /* harmony export */   "i": function() { return /* binding */ css; }
 /* harmony export */ });
-/* harmony import */ var _checker___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30);
-/* harmony import */ var _normalize___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(47);
-/* harmony import */ var _string___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(43);
+/* harmony import */ var _checker___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(32);
+/* harmony import */ var _normalize___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51);
+/* harmony import */ var _string___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(46);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7324,7 +7436,7 @@ const clearCenterAlign = (image) => {
 
 
 /***/ }),
-/* 47 */
+/* 51 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7343,7 +7455,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 3 modules
-var string = __webpack_require__(43);
+var string = __webpack_require__(46);
 // EXTERNAL MODULE: ./src/core/constants.ts
 var constants = __webpack_require__(14);
 ;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-key-aliases.ts
@@ -7383,8 +7495,8 @@ const normalizeLicense = (license, count = 8) => {
     return parts.join('-');
 };
 
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 ;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-node.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7492,9 +7604,9 @@ const normalizeUrl = (...urls) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 11 modules
-var checker = __webpack_require__(30);
+var checker = __webpack_require__(32);
 // EXTERNAL MODULE: ./src/core/helpers/color/color-to-hex.ts
-var color_to_hex = __webpack_require__(48);
+var color_to_hex = __webpack_require__(52);
 ;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-css-value.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7573,7 +7685,7 @@ const normalizeColor = (colorInput) => {
 
 
 /***/ }),
-/* 48 */
+/* 52 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7610,7 +7722,7 @@ const colorToHex = (color) => {
 
 
 /***/ }),
-/* 49 */
+/* 53 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7618,7 +7730,7 @@ const colorToHex = (color) => {
 /* harmony export */   "U": function() { return /* binding */ get; }
 /* harmony export */ });
 /* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
-/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32);
+/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7651,7 +7763,130 @@ function get(chain, obj) {
 
 
 /***/ }),
-/* 50 */
+/* 54 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "$$": function() { return /* binding */ $$; },
+/* harmony export */   "BR": function() { return /* binding */ getXPathByElement; },
+/* harmony export */   "W2": function() { return /* binding */ resolveElement; },
+/* harmony export */   "iN": function() { return /* binding */ cssPath; },
+/* harmony export */   "xL": function() { return /* binding */ refs; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(22);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(28);
+/* harmony import */ var jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(46);
+/* harmony import */ var jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(55);
+/* harmony import */ var jodit_core_ui__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(57);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+let temp = 1;
+const $$temp = () => {
+    temp++;
+    return temp;
+};
+function $$(selector, root) {
+    let result;
+    if (false) {}
+    else {
+        result = root.querySelectorAll(selector);
+    }
+    return [].slice.call(result);
+}
+const getXPathByElement = (element, root) => {
+    if (!element || element.nodeType !== Node.ELEMENT_NODE) {
+        return '';
+    }
+    if (!element.parentNode || root === element) {
+        return '';
+    }
+    if (element.id) {
+        return "//*[@id='" + element.id + "']";
+    }
+    const sames = [].filter.call(element.parentNode.childNodes, (x) => x.nodeName === element.nodeName);
+    return (getXPathByElement(element.parentNode, root) +
+        '/' +
+        element.nodeName.toLowerCase() +
+        (sames.length > 1
+            ? '[' + ((0,jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_5__/* .toArray */ .qo)(sames).indexOf(element) + 1) + ']'
+            : ''));
+};
+const refs = (root) => {
+    if (root instanceof jodit_core_ui__WEBPACK_IMPORTED_MODULE_6__/* .UIElement */ .u1) {
+        root = root.container;
+    }
+    return $$('[ref],[data-ref]', root).reduce((def, child) => {
+        const key = (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__/* .attr */ .Lj)(child, '-ref');
+        if (key && (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isString */ .HD)(key)) {
+            def[(0,jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_4__/* .camelCase */ .eV)(key)] = child;
+            def[key] = child;
+        }
+        return def;
+    }, {});
+};
+const cssPath = (el) => {
+    if (!jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__/* .Dom.isElement */ .i.isElement(el)) {
+        return null;
+    }
+    const path = [];
+    let start = el;
+    while (start && start.nodeType === Node.ELEMENT_NODE) {
+        let selector = start.nodeName.toLowerCase();
+        if (start.id) {
+            selector += '#' + start.id;
+            path.unshift(selector);
+            break;
+        }
+        else {
+            let sib = start, nth = 1;
+            do {
+                sib = sib.previousElementSibling;
+                if (sib && sib.nodeName.toLowerCase() === selector) {
+                    nth++;
+                }
+            } while (sib);
+            selector += ':nth-of-type(' + nth + ')';
+        }
+        path.unshift(selector);
+        start = start.parentNode;
+    }
+    return path.join(' > ');
+};
+function resolveElement(element, od) {
+    let resolved = element;
+    if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isString */ .HD)(element)) {
+        try {
+            resolved = od.querySelector(element);
+        }
+        catch (_a) {
+            throw (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__/* .error */ .vU)('String "' + element + '" should be valid HTML selector');
+        }
+    }
+    if (!resolved ||
+        typeof resolved !== 'object' ||
+        !jodit_core_dom__WEBPACK_IMPORTED_MODULE_3__/* .Dom.isElement */ .i.isElement(resolved) ||
+        !resolved.cloneNode) {
+        throw (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__/* .error */ .vU)('Element "' + element + '" should be string or HTMLElement instance');
+    }
+    return resolved;
+}
+
+
+/***/ }),
+/* 55 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7675,9 +7910,9 @@ var is_array = __webpack_require__(19);
 const asArray = (a) => ((0,is_array/* isArray */.k)(a) ? a : [a]);
 
 // EXTERNAL MODULE: ./src/core/helpers/array/split-array.ts
-var split_array = __webpack_require__(39);
+var split_array = __webpack_require__(41);
 // EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(51);
+var to_array = __webpack_require__(56);
 ;// CONCATENATED MODULE: ./src/core/helpers/array/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7690,15 +7925,15 @@ var to_array = __webpack_require__(51);
 
 
 /***/ }),
-/* 51 */
+/* 56 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "q": function() { return /* binding */ toArray; }
 /* harmony export */ });
-/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(22);
-/* harmony import */ var _checker_is_native_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
+/* harmony import */ var _utils_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(23);
+/* harmony import */ var _checker_is_native_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7716,7 +7951,7 @@ const toArray = function toArray(...args) {
 
 
 /***/ }),
-/* 52 */
+/* 57 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7744,17 +7979,17 @@ __webpack_require__.d(__webpack_exports__, {
 // UNUSED EXPORTS: UIButtonGroup, UIButtonState, UISpacer
 
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(53);
+var ui_element = __webpack_require__(58);
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(56);
+var ui_button = __webpack_require__(61);
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 2 modules
-var popup = __webpack_require__(65);
+var popup = __webpack_require__(70);
 // EXTERNAL MODULE: ./src/core/ui/group/index.ts + 7 modules
-var group = __webpack_require__(60);
+var group = __webpack_require__(65);
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 17 modules
-var ui_form = __webpack_require__(67);
+var ui_form = __webpack_require__(72);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var icon = __webpack_require__(55);
+var icon = __webpack_require__(60);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(1);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -7774,7 +8009,7 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 var styleTagTransform = __webpack_require__(6);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/progress-bar/progress-bar.less
-var progress_bar = __webpack_require__(74);
+var progress_bar = __webpack_require__(79);
 ;// CONCATENATED MODULE: ./src/core/ui/progress-bar/progress-bar.less
 
       
@@ -7804,8 +8039,8 @@ var update = injectStylesIntoStyleTag_default()(progress_bar/* default */.Z, opt
 
        /* harmony default export */ var progress_bar_progress_bar = (progress_bar/* default */.Z && progress_bar/* default.locals */.Z.locals ? progress_bar/* default.locals */.Z.locals : undefined);
 
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 ;// CONCATENATED MODULE: ./src/core/ui/progress-bar/progress-bar.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7857,18 +8092,18 @@ class ProgressBar extends ui_element/* UIElement */.u {
 
 
 /***/ }),
-/* 53 */
+/* 58 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "u": function() { return /* binding */ UIElement; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24);
-/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(27);
-/* harmony import */ var jodit_core_traits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(54);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(20);
-/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(55);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(25);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28);
+/* harmony import */ var jodit_core_traits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(59);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(21);
+/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(60);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7991,7 +8226,7 @@ class UIElement extends jodit_core_component__WEBPACK_IMPORTED_MODULE_0__/* .Vie
 
 
 /***/ }),
-/* 54 */
+/* 59 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8003,7 +8238,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(51);
+var to_array = __webpack_require__(56);
 ;// CONCATENATED MODULE: ./src/core/traits/elms.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -8021,7 +8256,7 @@ class Elms {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-void.ts
-var is_void = __webpack_require__(32);
+var is_void = __webpack_require__(34);
 ;// CONCATENATED MODULE: ./src/core/traits/mods.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -8064,14 +8299,14 @@ class Mods {
 
 
 /***/ }),
-/* 55 */
+/* 60 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "J": function() { return /* binding */ Icon; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(21);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -8132,7 +8367,7 @@ Icon.icons = {};
 
 
 /***/ }),
-/* 56 */
+/* 61 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8147,9 +8382,9 @@ __webpack_require__.d(__webpack_exports__, {
 // UNUSED EXPORTS: UIButtonGroup
 
 // EXTERNAL MODULE: ./src/core/ui/button/button/button.ts + 1 modules
-var button_button = __webpack_require__(57);
+var button_button = __webpack_require__(62);
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(41);
+var tslib_es6 = __webpack_require__(43);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(1);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -8169,7 +8404,7 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 var styleTagTransform = __webpack_require__(6);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/button/group/group.less
-var group = __webpack_require__(59);
+var group = __webpack_require__(64);
 ;// CONCATENATED MODULE: ./src/core/ui/button/group/group.less
 
       
@@ -8200,11 +8435,11 @@ var update = injectStylesIntoStyleTag_default()(group/* default */.Z, options);
        /* harmony default export */ var group_group = (group/* default */.Z && group/* default.locals */.Z.locals ? group/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./src/core/ui/group/index.ts + 7 modules
-var ui_group = __webpack_require__(60);
+var ui_group = __webpack_require__(65);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(29);
+var decorators = __webpack_require__(31);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
+var helpers = __webpack_require__(21);
 ;// CONCATENATED MODULE: ./src/core/ui/button/group/group.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -8286,7 +8521,7 @@ UIButtonGroup = (0,tslib_es6/* __decorate */.gn)([
 
 
 /***/ }),
-/* 57 */
+/* 62 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8299,7 +8534,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(41);
+var tslib_es6 = __webpack_require__(43);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(1);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -8319,7 +8554,7 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 var styleTagTransform = __webpack_require__(6);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/button/button/button.less
-var button_button = __webpack_require__(58);
+var button_button = __webpack_require__(63);
 ;// CONCATENATED MODULE: ./src/core/ui/button/button/button.less
 
       
@@ -8350,15 +8585,15 @@ var update = injectStylesIntoStyleTag_default()(button_button/* default */.Z, op
        /* harmony default export */ var button_button_button = (button_button/* default */.Z && button_button/* default.locals */.Z.locals ? button_button/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(52);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+var ui = __webpack_require__(57);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
+var helpers = __webpack_require__(21);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(29);
+var decorators = __webpack_require__(31);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
-var component = __webpack_require__(24);
+var component = __webpack_require__(25);
 ;// CONCATENATED MODULE: ./src/core/ui/button/button/button.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -8567,7 +8802,7 @@ function Button(jodit, stateOrText, text, variant) {
 
 
 /***/ }),
-/* 58 */
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8586,7 +8821,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 59 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8605,7 +8840,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".jodit-ui-button-group {\n  margin-bot
 
 
 /***/ }),
-/* 60 */
+/* 65 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8620,7 +8855,7 @@ __webpack_require__.d(__webpack_exports__, {
 // UNUSED EXPORTS: UISpacer
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(41);
+var tslib_es6 = __webpack_require__(43);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(1);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -8640,7 +8875,7 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 var styleTagTransform = __webpack_require__(6);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/group/group.less
-var group = __webpack_require__(61);
+var group = __webpack_require__(66);
 ;// CONCATENATED MODULE: ./src/core/ui/group/group.less
 
       
@@ -8671,13 +8906,13 @@ var update = injectStylesIntoStyleTag_default()(group/* default */.Z, options);
        /* harmony default export */ var group_group = (group/* default */.Z && group/* default.locals */.Z.locals ? group/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(53);
+var ui_element = __webpack_require__(58);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(29);
+var decorators = __webpack_require__(31);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+var helpers = __webpack_require__(21);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 ;// CONCATENATED MODULE: ./src/core/ui/group/group.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -8787,7 +9022,7 @@ UIGroup = UIGroup_1 = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/group/list.less
-var list = __webpack_require__(62);
+var list = __webpack_require__(67);
 ;// CONCATENATED MODULE: ./src/core/ui/group/list.less
 
       
@@ -8818,11 +9053,11 @@ var list_update = injectStylesIntoStyleTag_default()(list/* default */.Z, list_o
        /* harmony default export */ var group_list = (list/* default */.Z && list/* default.locals */.Z.locals ? list/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./src/core/ui/helpers/get-control-type.ts
-var get_control_type = __webpack_require__(63);
+var get_control_type = __webpack_require__(68);
 // EXTERNAL MODULE: ./src/config.ts
 var config = __webpack_require__(13);
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 11 modules
-var checker = __webpack_require__(30);
+var checker = __webpack_require__(32);
 ;// CONCATENATED MODULE: ./src/core/ui/helpers/get-strong-control-types.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -8863,7 +9098,7 @@ UISeparator = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(52);
+var ui = __webpack_require__(57);
 ;// CONCATENATED MODULE: ./src/core/ui/group/spacer.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -8884,11 +9119,11 @@ UISpacer = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./src/core/ui/button/button/button.ts + 1 modules
-var button_button = __webpack_require__(57);
+var button_button = __webpack_require__(62);
 // EXTERNAL MODULE: ./src/core/ui/helpers/buttons.ts
-var buttons = __webpack_require__(64);
+var buttons = __webpack_require__(69);
 // EXTERNAL MODULE: ./src/core/helpers/array/index.ts + 1 modules
-var array = __webpack_require__(50);
+var array = __webpack_require__(55);
 ;// CONCATENATED MODULE: ./src/core/ui/group/list.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9029,7 +9264,7 @@ UIList = (0,tslib_es6/* __decorate */.gn)([
 
 
 /***/ }),
-/* 61 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9048,7 +9283,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 62 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9067,7 +9302,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 63 */
+/* 68 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9075,7 +9310,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 /* harmony export */   "Y": function() { return /* binding */ getControlType; },
 /* harmony export */   "z": function() { return /* binding */ findControlType; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(21);
 /* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(13);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9128,7 +9363,7 @@ function findControlType(path, controls) {
 
 
 /***/ }),
-/* 64 */
+/* 69 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9136,7 +9371,7 @@ function findControlType(path, controls) {
 /* harmony export */   "A": function() { return /* binding */ isButtonGroup; },
 /* harmony export */   "q": function() { return /* binding */ flatButtonsSet; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(32);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -9165,7 +9400,7 @@ function flatButtonsSet(buttons, jodit) {
 
 
 /***/ }),
-/* 65 */
+/* 70 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9176,7 +9411,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(41);
+var tslib_es6 = __webpack_require__(43);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(1);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -9196,7 +9431,7 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 var styleTagTransform = __webpack_require__(6);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/popup/popup.less
-var popup = __webpack_require__(66);
+var popup = __webpack_require__(71);
 ;// CONCATENATED MODULE: ./src/core/ui/popup/popup.less
 
       
@@ -9226,16 +9461,16 @@ var update = injectStylesIntoStyleTag_default()(popup/* default */.Z, options);
 
        /* harmony default export */ var popup_popup = (popup/* default */.Z && popup/* default.locals */.Z.locals ? popup/* default.locals */.Z.locals : undefined);
 
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
+var helpers = __webpack_require__(21);
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(25);
+var global = __webpack_require__(26);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(52);
+var ui = __webpack_require__(57);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(29);
+var decorators = __webpack_require__(31);
 ;// CONCATENATED MODULE: ./src/core/ui/popup/popup.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9531,7 +9766,7 @@ class Popup extends ui/* UIElement */.u1 {
 
 
 /***/ }),
-/* 66 */
+/* 71 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9550,7 +9785,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 67 */
+/* 72 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9575,13 +9810,13 @@ __webpack_require__.d(validators_input_namespaceObject, {
 });
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(41);
+var tslib_es6 = __webpack_require__(43);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(52);
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
-var utils = __webpack_require__(21);
+var ui = __webpack_require__(57);
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 17 modules
+var utils = __webpack_require__(22);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(29);
+var decorators = __webpack_require__(31);
 ;// CONCATENATED MODULE: ./src/core/ui/form/form.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9665,7 +9900,7 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 var styleTagTransform = __webpack_require__(6);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/form/inputs/input/input.less
-var input = __webpack_require__(68);
+var input = __webpack_require__(73);
 ;// CONCATENATED MODULE: ./src/core/ui/form/inputs/input/input.less
 
       
@@ -9696,13 +9931,13 @@ var update = injectStylesIntoStyleTag_default()(input/* default */.Z, options);
        /* harmony default export */ var input_input = (input/* default */.Z && input/* default.locals */.Z.locals ? input/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(53);
+var ui_element = __webpack_require__(58);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+var helpers = __webpack_require__(21);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var ui_icon = __webpack_require__(55);
+var ui_icon = __webpack_require__(60);
 ;// CONCATENATED MODULE: ./src/core/ui/form/validators/input.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9960,7 +10195,7 @@ UIInput = UIInput_1 = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/form/inputs/area/area.less
-var area_area = __webpack_require__(69);
+var area_area = __webpack_require__(74);
 ;// CONCATENATED MODULE: ./src/core/ui/form/inputs/area/area.less
 
       
@@ -10029,7 +10264,7 @@ UITextArea = UITextArea_1 = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/form/inputs/checkbox/checkbox.less
-var checkbox_checkbox = __webpack_require__(70);
+var checkbox_checkbox = __webpack_require__(75);
 ;// CONCATENATED MODULE: ./src/core/ui/form/inputs/checkbox/checkbox.less
 
       
@@ -10129,7 +10364,7 @@ UICheckbox = UICheckbox_1 = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/form/inputs/select/select.less
-var select_select = __webpack_require__(71);
+var select_select = __webpack_require__(76);
 ;// CONCATENATED MODULE: ./src/core/ui/form/inputs/select/select.less
 
       
@@ -10229,7 +10464,7 @@ UISelect = UISelect_1 = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/form/inputs/file/file.less
-var file = __webpack_require__(72);
+var file = __webpack_require__(77);
 ;// CONCATENATED MODULE: ./src/core/ui/form/inputs/file/file.less
 
       
@@ -10260,7 +10495,7 @@ var file_update = injectStylesIntoStyleTag_default()(file/* default */.Z, file_o
        /* harmony default export */ var file_file = (file/* default */.Z && file/* default.locals */.Z.locals ? file/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(56);
+var ui_button = __webpack_require__(61);
 ;// CONCATENATED MODULE: ./src/core/ui/form/inputs/file/file.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -10331,7 +10566,7 @@ UIFileInput = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/ui/form/block/block.less
-var block = __webpack_require__(73);
+var block = __webpack_require__(78);
 ;// CONCATENATED MODULE: ./src/core/ui/form/block/block.less
 
       
@@ -10362,7 +10597,7 @@ var block_update = injectStylesIntoStyleTag_default()(block/* default */.Z, bloc
        /* harmony default export */ var block_block = (block/* default */.Z && block/* default.locals */.Z.locals ? block/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./src/core/ui/group/index.ts + 7 modules
-var group = __webpack_require__(60);
+var group = __webpack_require__(65);
 ;// CONCATENATED MODULE: ./src/core/ui/form/block/block.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -10409,7 +10644,7 @@ UIBlock = (0,tslib_es6/* __decorate */.gn)([
 
 
 /***/ }),
-/* 68 */
+/* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10428,7 +10663,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".jodit-ui-label {\n  display: block;\n
 
 
 /***/ }),
-/* 69 */
+/* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10447,7 +10682,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".jodit-ui-text-area {\n  display: flex
 
 
 /***/ }),
-/* 70 */
+/* 75 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10466,7 +10701,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".jodit-ui-checkbox {\n  display: flex;
 
 
 /***/ }),
-/* 71 */
+/* 76 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10490,7 +10725,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".jodit-ui-select {\n  display: flex;\n
 
 
 /***/ }),
-/* 72 */
+/* 77 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10509,7 +10744,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".jodit-ui-file-input {\n  position: re
 
 
 /***/ }),
-/* 73 */
+/* 78 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10528,7 +10763,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".jodit-ui-block {\n  display: flex;\n 
 
 
 /***/ }),
-/* 74 */
+/* 79 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10547,7 +10782,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 75 */
+/* 80 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10575,7 +10810,7 @@ function clearTimeout(timer) {
 
 
 /***/ }),
-/* 76 */
+/* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10594,7 +10829,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 77 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10613,7 +10848,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 78 */
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10632,7 +10867,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 79 */
+/* 84 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10651,7 +10886,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 80 */
+/* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10670,7 +10905,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 81 */
+/* 86 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10689,7 +10924,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 82 */
+/* 87 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10708,7 +10943,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 83 */
+/* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10727,7 +10962,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 84 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10751,7 +10986,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".jodit-filebrowser-files {\n  position
 
 
 /***/ }),
-/* 85 */
+/* 90 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10775,7 +11010,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ":root {\n  --jd-color-folder-title: #b
 
 
 /***/ }),
-/* 86 */
+/* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10794,7 +11029,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 87 */
+/* 92 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10813,7 +11048,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 88 */
+/* 93 */
 /***/ (function(module) {
 
 /*!
@@ -10830,7 +11065,7 @@ module.exports = {
 
 
 /***/ }),
-/* 89 */
+/* 94 */
 /***/ (function(module) {
 
 /*!
@@ -11057,12 +11292,13 @@ module.exports = {
 	'Word Paste Detected': 'كلمة لصق الكشف عن',
 	Clean: 'نظيفة',
 	'Insert className': 'أدخل اسم الفصل',
-	'Line height': 'ارتفاع الخط'
+	'Line height': 'ارتفاع الخط',
+	Spellchecking: 'التدقيق الإملائي'
 };
 
 
 /***/ }),
-/* 90 */
+/* 95 */
 /***/ (function(module) {
 
 /*!
@@ -11291,12 +11527,13 @@ module.exports = {
 	'Find Previous': 'Najít Předchozí',
 	'Find Next': 'Najít Další',
 	'Insert className': 'Vložte název třídy',
-	'Line height': 'Výška čáry'
+	'Line height': 'Výška čáry',
+	Spellchecking: 'Kontrola pravopisu'
 };
 
 
 /***/ }),
-/* 91 */
+/* 96 */
 /***/ (function(module) {
 
 /*!
@@ -11530,12 +11767,13 @@ module.exports = {
 	'Find Previous': 'Suche vorherige',
 	'Find Next': 'Weitersuchen',
 	'Insert className': 'className (CSS) einfügen',
-	'Line height': 'Zeilenhöhe'
+	'Line height': 'Zeilenhöhe',
+	Spellchecking: 'Rechtschreibprüfung'
 };
 
 
 /***/ }),
-/* 92 */
+/* 97 */
 /***/ (function(module) {
 
 /*!
@@ -11768,12 +12006,13 @@ module.exports = {
 	'Find Previous': 'Buscar Anterior',
 	'Find Next': 'Buscar Siguiente',
 	'Insert className': 'Insertar nombre de clase',
-	'Line height': 'Altura de la línea'
+	'Line height': 'Altura de la línea',
+	Spellchecking: 'Corrección ortográfica'
 };
 
 
 /***/ }),
-/* 93 */
+/* 98 */
 /***/ (function(module) {
 
 /*!
@@ -11997,12 +12236,13 @@ module.exports = {
 	'Find Previous': 'Trouvez Précédente',
 	'Find Next': 'Suivant',
 	'Insert className': 'Insérer un nom de classe',
-	'Line height': 'Hauteur de ligne'
+	'Line height': 'Hauteur de ligne',
+	Spellchecking: 'Vérification Orthographique'
 };
 
 
 /***/ }),
-/* 94 */
+/* 99 */
 /***/ (function(module) {
 
 /*!
@@ -12230,12 +12470,13 @@ module.exports = {
 	'Find Previous': 'מצא את הקודם',
 	'Find Next': 'חפש את הבא',
 	'Insert className': 'הכנס את שם הכיתה',
-	'Line height': 'גובה שורה'
+	'Line height': 'גובה שורה',
+	Spellchecking: 'בדיקת איות'
 };
 
 
 /***/ }),
-/* 95 */
+/* 100 */
 /***/ (function(module) {
 
 /*!
@@ -12465,12 +12706,13 @@ module.exports = {
 	'Find Previous': 'Megtalálja Előző',
 	'Find Next': 'Következő Keresése',
 	'Insert className': 'Helyezze be az osztály nevét',
-	'Line height': 'Vonal magassága'
+	'Line height': 'Vonal magassága',
+	Spellchecking: 'Helyesírás-ellenőrzés'
 };
 
 
 /***/ }),
-/* 96 */
+/* 101 */
 /***/ (function(module) {
 
 /*!
@@ -12699,12 +12941,13 @@ module.exports = {
 	'Find Previous': 'Menemukan Sebelumnya',
 	'Find Next': 'Menemukan Berikutnya',
 	'Insert className': 'Masukkan nama kelas',
-	'Line height': 'Tinggi baris'
+	'Line height': 'Tinggi baris',
+	Spellchecking: 'Spellchecking'
 };
 
 
 /***/ }),
-/* 97 */
+/* 102 */
 /***/ (function(module) {
 
 /*!
@@ -12933,12 +13176,13 @@ module.exports = {
 	'Find Previous': 'Trova Precedente',
 	'Find Next': 'Trova Successivo',
 	'Insert className': 'Inserisci il nome della classe',
-	'Line height': 'Altezza linea'
+	'Line height': 'Altezza linea',
+	Spellchecking: 'Controllo ortografico'
 };
 
 
 /***/ }),
-/* 98 */
+/* 103 */
 /***/ (function(module) {
 
 /*!
@@ -13170,12 +13414,13 @@ module.exports = {
 	'Upper Alpha': '英大文字',
 	'Upper Roman': 'ローマ数字大文字',
 	'Insert className': 'クラス名を挿入',
-	'Line height': 'ラインの高さ'
+	'Line height': 'ラインの高さ',
+	Spellchecking: 'スペルチェック'
 };
 
 
 /***/ }),
-/* 99 */
+/* 104 */
 /***/ (function(module) {
 
 /*!
@@ -13402,12 +13647,13 @@ module.exports = {
 	'Find Previous': '이전 찾기',
 	'Find Next': '다음 찾기',
 	'Insert className': 'className 입력',
-	'Line height': '선 높이'
+	'Line height': '선 높이',
+	Spellchecking: '맞춤법 검사'
 };
 
 
 /***/ }),
-/* 100 */
+/* 105 */
 /***/ (function(module) {
 
 /*!
@@ -13637,12 +13883,13 @@ module.exports = {
 	'Find Previous': 'Vorige Zoeken',
 	'Find Next': 'Volgende Zoeken',
 	'Insert className': 'Voeg de klassenaam in',
-	'Line height': 'Lijnhoogte'
+	'Line height': 'Lijnhoogte',
+	Spellchecking: 'Spellingcontrole'
 };
 
 
 /***/ }),
-/* 101 */
+/* 106 */
 /***/ (function(module) {
 
 /*!
@@ -13872,12 +14119,13 @@ module.exports = {
 	'Find Previous': 'Znaleźć Poprzednie',
 	'Find Next': 'Znajdź Dalej',
 	'Insert className': 'Wstaw nazwę zajęć',
-	'Line height': 'Wysokość linii'
+	'Line height': 'Wysokość linii',
+	Spellchecking: 'Sprawdzanie pisowni'
 };
 
 
 /***/ }),
-/* 102 */
+/* 107 */
 /***/ (function(module) {
 
 /*!
@@ -14110,12 +14358,13 @@ module.exports = {
 	'Find Previous': 'Encontrar Anteriores',
 	'Find Next': 'Localizar Próxima',
 	'Insert className': 'Insira o nome da classe',
-	'Line height': 'Altura da linha'
+	'Line height': 'Altura da linha',
+	Spellchecking: 'Verificação ortográfica'
 };
 
 
 /***/ }),
-/* 103 */
+/* 108 */
 /***/ (function(module) {
 
 /*!
@@ -14343,12 +14592,13 @@ module.exports = {
 	'Find Previous': 'Найти Предыдущие',
 	'Find Next': 'Найти Далее',
 	'Insert className': 'Вставить название класса',
-	'Line height': 'Высота линии'
+	'Line height': 'Высота линии',
+	Spellchecking: 'Проверка орфографии'
 };
 
 
 /***/ }),
-/* 104 */
+/* 109 */
 /***/ (function(module) {
 
 /*!
@@ -14576,12 +14826,13 @@ module.exports = {
 	'Find Previous': 'Öncekini Bul',
 	'Find Next': 'Sonrakini Bul',
 	'Insert className': 'Sınıf adı girin',
-	'Line height': 'Çizgi yüksekliği'
+	'Line height': 'Çizgi yüksekliği',
+	Spellchecking: 'Yazım denetimi'
 };
 
 
 /***/ }),
-/* 105 */
+/* 110 */
 /***/ (function(module) {
 
 /*!
@@ -14809,12 +15060,13 @@ module.exports = {
 	'Find Previous': '查找上一个',
 	'Find Next': '查找下一个',
 	'Insert className': '插入班级名称',
-	'Line height': '线高'
+	'Line height': '线高',
+	Spellchecking: '拼写检查'
 };
 
 
 /***/ }),
-/* 106 */
+/* 111 */
 /***/ (function(module) {
 
 /*!
@@ -15040,12 +15292,13 @@ module.exports = {
 	'Find Previous': 'ค้นหาก่อนหน้านี้',
 	'Find Next': 'ค้นหาถัดไป',
 	'Insert className': 'ใส่ชื่อคลาส',
-	'Line height': 'ความสูงเส้น'
+	'Line height': 'ความสูงเส้น',
+	Spellchecking: 'สะกดคำ'
 };
 
 
 /***/ }),
-/* 107 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15064,7 +15317,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 108 */
+/* 113 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15083,13 +15336,13 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 109 */
+/* 114 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M36 4h-24c-2.21 0-4 1.79-4 4v32c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4v-32c0-2.21-1.79-4-4-4zm-24 4h10v16l-5-3-5 3v-16z\"/> </svg>"
 
 /***/ }),
-/* 110 */
+/* 115 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15108,7 +15361,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 111 */
+/* 116 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15139,7 +15392,7 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 var styleTagTransform = __webpack_require__(6);
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/widget/color-picker/color-picker.less
-var color_picker = __webpack_require__(112);
+var color_picker = __webpack_require__(117);
 ;// CONCATENATED MODULE: ./src/modules/widget/color-picker/color-picker.less
 
       
@@ -15170,11 +15423,11 @@ var update = injectStylesIntoStyleTag_default()(color_picker/* default */.Z, opt
        /* harmony default export */ var color_picker_color_picker = (color_picker/* default */.Z && color_picker/* default.locals */.Z.locals ? color_picker/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
+var helpers = __webpack_require__(21);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(52);
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+var ui = __webpack_require__(57);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 ;// CONCATENATED MODULE: ./src/modules/widget/color-picker/color-picker.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -15249,7 +15502,7 @@ const ColorPickerWidget = (editor, callback, coldColor) => {
 };
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/widget/tabs/tabs.less
-var tabs = __webpack_require__(113);
+var tabs = __webpack_require__(118);
 ;// CONCATENATED MODULE: ./src/modules/widget/tabs/tabs.less
 
       
@@ -15475,7 +15728,7 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
 
 
 /***/ }),
-/* 112 */
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15494,7 +15747,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 113 */
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15513,7 +15766,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 114 */
+/* 119 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15532,7 +15785,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 115 */
+/* 120 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15551,7 +15804,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 116 */
+/* 121 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15570,14 +15823,14 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 117 */
+/* 122 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "z": function() { return /* binding */ hAlignElement; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(21);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -15610,7 +15863,7 @@ const hAlignElement = (image, align) => {
 
 
 /***/ }),
-/* 118 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15629,11 +15882,11 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 119 */
+/* 124 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(21);
+/* harmony import */ var _core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(22);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -15663,17 +15916,17 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 120 */
+/* 125 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "A": function() { return /* binding */ align; }
 /* harmony export */ });
-/* harmony import */ var _core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
-/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(30);
-/* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(20);
-/* harmony import */ var _image_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(117);
+/* harmony import */ var _core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(28);
+/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32);
+/* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(21);
+/* harmony import */ var _image_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(122);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -15748,13 +16001,13 @@ const align = {
 
 
 /***/ }),
-/* 121 */
+/* 126 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30);
-/* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(20);
-/* harmony import */ var _modules_widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(111);
+/* harmony import */ var _core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(32);
+/* harmony import */ var _core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21);
+/* harmony import */ var _modules_widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(116);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -15883,7 +16136,7 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 
 
 /***/ }),
-/* 122 */
+/* 127 */
 /***/ (function(__unused_webpack_module, __webpack_exports__) {
 
 "use strict";
@@ -15922,11 +16175,11 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 
 
 /***/ }),
-/* 123 */
+/* 128 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _img__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(120);
+/* harmony import */ var _img__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(125);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -15946,7 +16199,7 @@ const cmd = (control) => control.args && (0,_core_helpers_checker__WEBPACK_IMPOR
 
 
 /***/ }),
-/* 124 */
+/* 129 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15965,7 +16218,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 125 */
+/* 130 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15984,88 +16237,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 126 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n:root {\n  --jd-height-search: 30px;\n  --jd-width-search: 320px;\n  --jd-width-search-input-box: 60%;\n  --jd-width-search-count-box: 15%;\n  --jd-transform-button-active: 0.95;\n  --jd-timeout-button-active: 0.1s;\n}\n.jodit-search {\n  position: absolute;\n  top: 0;\n  right: 0;\n  width: 0;\n  height: 0;\n}\n.jodit-search_sticky {\n  position: fixed;\n}\n.jodit-search .jodit-search__box {\n  position: absolute;\n  right: 0;\n  display: flex;\n  width: var(--jd-width-search);\n  max-width: 100vw;\n  padding: calc(var(--jd-padding-default) / 2);\n  border: solid var(--jd-color-border);\n  border-width: 0 0 1px 1px;\n  background-color: var(--jd-color-panel);\n}\n.jodit-search .jodit-search__box input {\n  width: 100%;\n  height: 100%;\n  padding: 0 var(--jd-padding-default);\n  border: 0;\n  margin: 0;\n  background-color: transparent;\n  outline: none;\n}\n.jodit-search .jodit-search__box input[data-ref='replace'] {\n  display: none;\n}\n.jodit-search .jodit-search__box input:not(:focus) + input:not(:focus) {\n  border-top: 1px solid var(--jd-color-border);\n}\n.jodit-search .jodit-search__box .jodit-search__buttons,\n.jodit-search .jodit-search__box .jodit-search__counts,\n.jodit-search .jodit-search__box .jodit-search__inputs {\n  height: var(--jd-height-search);\n}\n.jodit-search .jodit-search__box .jodit-search__inputs {\n  width: var(--jd-width-search-input-box);\n  padding-right: calc(var(--jd-padding-default) / 2);\n}\n.jodit-search .jodit-search__box .jodit-search__counts {\n  display: flex;\n  width: var(--jd-width-search-count-box);\n  align-items: center;\n  justify-content: center;\n  border-left: 1px solid var(--jd-color-border);\n  color: var(--jd-color-border);\n}\n.jodit-search .jodit-search__box .jodit-search__buttons {\n  display: flex;\n  flex: 1;\n  align-items: center;\n  justify-content: center;\n  padding-left: 0;\n}\n.jodit-search .jodit-search__box .jodit-search__buttons button {\n  width: 32%;\n  height: 100%;\n  border: 1px solid transparent;\n  margin-right: 1%;\n  background-color: transparent;\n}\n.jodit-search .jodit-search__box .jodit-search__buttons button[data-ref='replace-btn'] {\n  display: none;\n  width: 100%;\n  border: 1px solid var(--jd-color-border);\n  margin-top: 2px;\n}\n.jodit-search .jodit-search__box .jodit-search__buttons button:hover {\n  background-color: var(--jd-color-background-button-hover);\n}\n.jodit-search .jodit-search__box .jodit-search__buttons button:focus {\n  border: 1px solid var(--jd-color-background-selection_opacity50);\n}\n.jodit-search .jodit-search__box .jodit-search__buttons button:active {\n  border: 1px solid var(--jd-color-background-selection);\n  transform: scale(var(--jd-transform-button-active), var(--jd-transform-button-active));\n}\n.jodit-search.jodit-search_replace .jodit-search__counts,\n.jodit-search.jodit-search_replace .jodit-search__inputs {\n  height: calc(var(--jd-height-search) * 2);\n}\n.jodit-search.jodit-search_replace .jodit-search__counts input,\n.jodit-search.jodit-search_replace .jodit-search__inputs input {\n  height: 50%;\n  transition: background-color var(--jd-timeout-button-active) linear;\n}\n.jodit-search.jodit-search_replace .jodit-search__counts input:focus,\n.jodit-search.jodit-search_replace .jodit-search__inputs input:focus {\n  box-shadow: inset 0 0 3px 0 var(--jd-color-border);\n}\n.jodit-search.jodit-search_replace .jodit-search__buttons {\n  flex-wrap: wrap;\n}\n.jodit-search.jodit-search_replace .jodit-search__inputs input[data-ref='replace'],\n.jodit-search.jodit-search_replace .jodit-search__buttons button[data-ref='replace-btn'] {\n  display: block;\n}\n", ""]);
-// Exports
-/* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-/* 127 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit-container:not(.jodit_inline) {\n  min-height: 100px;\n}\n.jodit-container:not(.jodit_inline) .jodit-workplace {\n  display: flex;\n  overflow: hidden;\n  height: auto;\n  min-height: 50px;\n  flex-direction: column;\n}\n.jodit-container:not(.jodit_inline) .jodit-editor__resize {\n  position: relative;\n}\n.jodit-container:not(.jodit_inline) .jodit-editor__resize svg {\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  width: 12px;\n  height: 12px;\n  cursor: nwse-resize;\n  fill: var(--jd-color-gray-dark);\n  user-select: none;\n}\n", ""]);
-// Exports
-/* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-/* 128 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit-source {\n  position: relative;\n  display: none;\n  overflow: auto;\n  min-height: 100%;\n  flex: auto;\n  background-color: var(--jd-color-source-area);\n}\n.jodit-source .jodit-source__mirror-fake {\n  min-height: 100%;\n}\n.jodit-source * {\n  font: 12px / normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;\n}\n.jodit-container.jodit-source__mode .jodit-wysiwyg,\n.jodit-container.jodit-source__mode .jodit-wysiwyg_iframe {\n  display: none !important;\n}\n.jodit-container.jodit-source__mode .jodit-source {\n  display: block !important;\n}\n.jodit-container.jodit_split_mode .jodit-workplace {\n  flex-direction: row;\n  flex-wrap: nowrap;\n}\n.jodit-container.jodit_split_mode .jodit-wysiwyg,\n.jodit-container.jodit_split_mode .jodit-wysiwyg_iframe,\n.jodit-container.jodit_split_mode .jodit-source {\n  display: block !important;\n  width: 50%;\n  flex: 1;\n}\n.jodit-source__mirror {\n  z-index: 2;\n  overflow: auto;\n  width: 100%;\n  height: 100%;\n  min-height: 100%;\n  box-sizing: border-box;\n  padding: var(--jd-padding-default);\n  border: 0;\n  margin: 0;\n  background: var(--jd-color-source-area);\n  box-shadow: none;\n  color: #f0f0f0;\n  line-height: 1.5;\n  outline: none;\n  resize: none;\n  tab-size: 2em;\n  font: 12px / normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;\n  white-space: pre-wrap;\n}\n.jodit-source__mirror::selection {\n  background: var(--jd-color-selection-area);\n}\n", ""]);
-// Exports
-/* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-/* 129 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit_sticky-dummy_toolbar {\n  display: none;\n}\n.jodit_sticky > .jodit-toolbar__box {\n  position: fixed;\n  position: sticky;\n  z-index: 3;\n  top: 0;\n  left: auto;\n  border-bottom: 1px solid var(--jd-color-border);\n}\n.jodit_sticky .jodit_sticky-dummy_toolbar {\n  display: block;\n}\n", ""]);
-// Exports
-/* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-/* 130 */
-/***/ (function(module) {
-
-module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89 32h4.18L18.86 6h-3.71L4.93 32h4.18l2.25-6h11.29l2.24 6zM12.86 22L17 10.95 21.14 22h-8.28zm30.31 1.17L27 39.34 19.66 32l-2.83 2.83L27 45l19-19-2.83-2.83z\"/> </svg>"
-
-/***/ }),
 /* 131 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16079,7 +16250,7 @@ module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit-symbols {\n  width: 460px;\n  padding: var(--jd-padding-default);\n}\n.jodit-symbols__container {\n  display: flex;\n}\n.jodit-symbols__container_table {\n  width: 88%;\n}\n.jodit-symbols__container_preview {\n  width: 12%;\n}\n.jodit-symbols__preview {\n  padding: 20px 0;\n  border: 1px solid var(--jd-color-border);\n  font-size: 34px;\n  text-align: center;\n}\n.jodit-symbols__table {\n  border: 0;\n  border-spacing: 0;\n  table-layout: fixed;\n}\n.jodit-symbols__table td {\n  padding: 0;\n}\n.jodit-symbols__table td a {\n  display: inline-block;\n  width: calc(var(--jd-width_element_default) * 1.2);\n  height: calc(var(--jd-height_element_default) * 1.2);\n  box-sizing: border-box;\n  border: 1px solid transparent;\n  color: var(--jd-color-default);\n  cursor: pointer;\n  font-size: 16px;\n  line-height: calc(var(--jd-height_element_default) * 1.2);\n  text-align: center;\n  text-decoration: none;\n  vertical-align: top;\n}\n.jodit-symbols__table td a:hover,\n.jodit-symbols__table td a:focus {\n  outline: 2px solid var(--jd-color-border);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n:root {\n  --jd-height-search: 30px;\n  --jd-width-search: 320px;\n  --jd-width-search-input-box: 60%;\n  --jd-width-search-count-box: 15%;\n  --jd-transform-button-active: 0.95;\n  --jd-timeout-button-active: 0.1s;\n}\n.jodit-ui-search {\n  position: absolute;\n  top: 0;\n  right: 0;\n  width: 0;\n  height: 0;\n}\n.jodit-ui-search_sticky_true {\n  position: fixed;\n}\n.jodit-ui-search__box {\n  position: absolute;\n  right: 0;\n  display: flex;\n  width: var(--jd-width-search);\n  max-width: 100vw;\n  padding: calc(var(--jd-padding-default) / 2);\n  border: solid var(--jd-color-border);\n  border-width: 0 0 1px 1px;\n  background-color: var(--jd-color-panel);\n}\n.jodit-ui-search__box input {\n  width: 100%;\n  height: 100%;\n  padding: 0 var(--jd-padding-default);\n  border: 0;\n  margin: 0;\n  background-color: transparent;\n  outline: none;\n}\n.jodit-ui-search__box input[data-ref='replace'] {\n  display: none;\n}\n.jodit-ui-search__box input:not(:focus) + input:not(:focus) {\n  border-top: 1px solid var(--jd-color-border);\n}\n.jodit-ui-search__buttons,\n.jodit-ui-search__counts,\n.jodit-ui-search__inputs {\n  height: var(--jd-height-search);\n}\n.jodit-ui-search__inputs {\n  width: var(--jd-width-search-input-box);\n  padding-right: calc(var(--jd-padding-default) / 2);\n}\n.jodit-ui-search__counts {\n  display: flex;\n  width: var(--jd-width-search-count-box);\n  align-items: center;\n  justify-content: center;\n  border-left: 1px solid var(--jd-color-border);\n  color: var(--jd-color-border);\n}\n.jodit-ui-search__buttons {\n  display: flex;\n  flex: 1;\n  align-items: center;\n  justify-content: center;\n  padding-left: 0;\n}\n.jodit-ui-search__buttons button {\n  width: 32%;\n  height: 100%;\n  border: 1px solid transparent;\n  margin-right: 1%;\n  background-color: transparent;\n}\n.jodit-ui-search__buttons button[data-ref='replace-btn'] {\n  display: none;\n  width: 100%;\n  border: 1px solid var(--jd-color-border);\n  margin-top: 2px;\n}\n.jodit-ui-search__buttons button:hover {\n  background-color: var(--jd-color-background-button-hover);\n}\n.jodit-ui-search__buttons button:focus {\n  border: 1px solid var(--jd-color-background-selection_opacity50);\n}\n.jodit-ui-search__buttons button:active {\n  border: 1px solid var(--jd-color-background-selection);\n  transform: scale(var(--jd-transform-button-active), var(--jd-transform-button-active));\n}\n.jodit-ui-search_empty-query_true [data-ref='next'],\n.jodit-ui-search_empty-query_true [data-ref='prev'] {\n  opacity: 0.5;\n}\n.jodit-ui-search_replace_true .jodit-ui-search__counts,\n.jodit-ui-search_replace_true .jodit-ui-search__inputs {\n  height: calc(var(--jd-height-search) * 2);\n}\n.jodit-ui-search_replace_true .jodit-ui-search__counts input,\n.jodit-ui-search_replace_true .jodit-ui-search__inputs input {\n  height: 50%;\n  transition: background-color var(--jd-timeout-button-active) linear;\n}\n.jodit-ui-search_replace_true .jodit-ui-search__counts input:focus,\n.jodit-ui-search_replace_true .jodit-ui-search__inputs input:focus {\n  box-shadow: inset 0 0 3px 0 var(--jd-color-border);\n}\n.jodit-ui-search_replace_true .jodit-ui-search__counts input[data-ref='replace'],\n.jodit-ui-search_replace_true .jodit-ui-search__inputs input[data-ref='replace'] {\n  display: block;\n}\n.jodit-ui-search_replace_true .jodit-ui-search__buttons {\n  flex-wrap: wrap;\n}\n.jodit-ui-search_replace_true .jodit-ui-search__buttons button[data-ref='replace-btn'] {\n  display: block;\n}\n[jd-tmp-selection] {\n  background-color: aquamarine;\n}\n", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
 
@@ -16098,7 +16269,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit-table-resizer {\n  position: absolute;\n  z-index: 3;\n  padding-right: calc(var(--jd-padding-default) / 2);\n  padding-left: calc(var(--jd-padding-default) / 2);\n  margin-left: calc(var(--jd-padding-default) / -2);\n  cursor: col-resize;\n}\n.jodit-table-resizer::after {\n  display: block;\n  width: 0;\n  height: 100%;\n  border: 0;\n  content: '';\n}\n.jodit-table-resizer_moved {\n  z-index: 2;\n  background-color: var(--jd-color-background-selection);\n}\n.jodit-table-resizer_moved::after {\n  border-right: 1px solid var(--jd-color-border) moved;\n}\n.jodit-wysiwyg table {\n  max-width: 100%;\n  border: none;\n  margin-top: 1em;\n  margin-bottom: 1em;\n  border-collapse: collapse;\n  empty-cells: show;\n}\n.jodit-wysiwyg table tr {\n  user-select: none;\n}\n.jodit-wysiwyg table tr th,\n.jodit-wysiwyg table tr td {\n  min-width: 2em;\n  padding: 0.4em;\n  border: 1px solid var(--jd-color-border);\n  user-select: text;\n  vertical-align: middle;\n}\n.jodit-form__inserter .jodit-form__table-creator-box {\n  display: flex;\n}\n@media (max-width: 768px) {\n  .jodit-form__inserter .jodit-form__table-creator-box {\n    flex-direction: column;\n  }\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container {\n  min-width: 180px;\n  padding: 0;\n  margin: 0;\n  font-size: 0;\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span {\n  display: inline-block;\n  width: var(--jd-width_element_default);\n  height: var(--jd-height_element_default);\n  box-sizing: border-box;\n  border: 1px solid var(--jd-color-border);\n  margin-bottom: 2px;\n  margin-left: 2px;\n  vertical-align: top;\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span:first-child {\n  margin-left: 0;\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span.jodit_hovered {\n  border-color: var(--jd-color-background-hover);\n  background: var(--jd-color-background-hover);\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options {\n  font-size: var(--jd-font-size-default);\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options label {\n  padding-top: 0;\n  text-align: left;\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options label input {\n  margin-right: var(--jd-padding-default);\n}\n.jodit-form__inserter label {\n  padding: 8px;\n  margin: 0;\n  font-size: 14px;\n  text-align: center;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit-container:not(.jodit_inline) {\n  min-height: 100px;\n}\n.jodit-container:not(.jodit_inline) .jodit-workplace {\n  display: flex;\n  overflow: hidden;\n  height: auto;\n  min-height: 50px;\n  flex-direction: column;\n}\n.jodit-container:not(.jodit_inline) .jodit-editor__resize {\n  position: relative;\n}\n.jodit-container:not(.jodit_inline) .jodit-editor__resize svg {\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  width: 12px;\n  height: 12px;\n  cursor: nwse-resize;\n  fill: var(--jd-color-gray-dark);\n  user-select: none;\n}\n", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
 
@@ -16117,7 +16288,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit-tooltip {\n  position: fixed;\n  z-index: var(--jd-z-index-tooltip);\n  width: auto;\n  max-width: 120px;\n  padding: calc(var(--jd-padding-default) / 4) calc(var(--jd-padding-default) / 2);\n  background: #727171;\n  background-clip: padding-box;\n  border-radius: 2px;\n  color: #fff;\n  font-family: var(--jd-font-default);\n  font-size: var(--jd-font-size-default);\n  font-size: 11px;\n  line-height: 1.4;\n  opacity: 0;\n  text-rendering: optimizeLegibility;\n  transition: opacity 0.2s ease 0s;\n  user-select: none;\n  white-space: normal;\n}\n@media (max-width: 768px) {\n  .jodit-tooltip {\n    display: none;\n  }\n}\n.jodit-tooltip.jodit-tooltip_visible {\n  opacity: 1;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit-source {\n  position: relative;\n  display: none;\n  overflow: auto;\n  min-height: 100%;\n  flex: auto;\n  background-color: var(--jd-color-source-area);\n}\n.jodit-source .jodit-source__mirror-fake {\n  min-height: 100%;\n}\n.jodit-source * {\n  font: 12px / normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;\n}\n.jodit-container.jodit-source__mode .jodit-wysiwyg,\n.jodit-container.jodit-source__mode .jodit-wysiwyg_iframe {\n  display: none !important;\n}\n.jodit-container.jodit-source__mode .jodit-source {\n  display: block !important;\n}\n.jodit-container.jodit_split_mode .jodit-workplace {\n  flex-direction: row;\n  flex-wrap: nowrap;\n}\n.jodit-container.jodit_split_mode .jodit-wysiwyg,\n.jodit-container.jodit_split_mode .jodit-wysiwyg_iframe,\n.jodit-container.jodit_split_mode .jodit-source {\n  display: block !important;\n  width: 50%;\n  flex: 1;\n}\n.jodit-source__mirror {\n  z-index: 2;\n  overflow: auto;\n  width: 100%;\n  height: 100%;\n  min-height: 100%;\n  box-sizing: border-box;\n  padding: var(--jd-padding-default);\n  border: 0;\n  margin: 0;\n  background: var(--jd-color-source-area);\n  box-shadow: none;\n  color: #f0f0f0;\n  line-height: 1.5;\n  outline: none;\n  resize: none;\n  tab-size: 2em;\n  font: 12px / normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;\n  white-space: pre-wrap;\n}\n.jodit-source__mirror::selection {\n  background: var(--jd-color-selection-area);\n}\n", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
 
@@ -16136,13 +16307,95 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".jodit__preview-box table {\n  max-width: 100%;\n  border: none;\n  margin-top: 1em;\n  margin-bottom: 1em;\n  border-collapse: collapse;\n  empty-cells: show;\n}\n.jodit__preview-box table tr {\n  user-select: none;\n}\n.jodit__preview-box table tr th,\n.jodit__preview-box table tr td {\n  min-width: 2em;\n  padding: 0.4em;\n  border: 1px solid var(--jd-color-border);\n  user-select: text;\n  vertical-align: middle;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit_sticky-dummy_toolbar {\n  display: none;\n}\n.jodit_sticky > .jodit-toolbar__box {\n  position: fixed;\n  position: sticky;\n  z-index: 3;\n  top: 0;\n  left: auto;\n  border-bottom: 1px solid var(--jd-color-border);\n}\n.jodit_sticky .jodit_sticky-dummy_toolbar {\n  display: block;\n}\n", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 /* 135 */
+/***/ (function(module) {
+
+module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89 32h4.18L18.86 6h-3.71L4.93 32h4.18l2.25-6h11.29l2.24 6zM12.86 22L17 10.95 21.14 22h-8.28zm30.31 1.17L27 39.34 19.66 32l-2.83 2.83L27 45l19-19-2.83-2.83z\"/> </svg>"
+
+/***/ }),
+/* 136 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit-symbols {\n  width: 460px;\n  padding: var(--jd-padding-default);\n}\n.jodit-symbols__container {\n  display: flex;\n}\n.jodit-symbols__container_table {\n  width: 88%;\n}\n.jodit-symbols__container_preview {\n  width: 12%;\n}\n.jodit-symbols__preview {\n  padding: 20px 0;\n  border: 1px solid var(--jd-color-border);\n  font-size: 34px;\n  text-align: center;\n}\n.jodit-symbols__table {\n  border: 0;\n  border-spacing: 0;\n  table-layout: fixed;\n}\n.jodit-symbols__table td {\n  padding: 0;\n}\n.jodit-symbols__table td a {\n  display: inline-block;\n  width: calc(var(--jd-width_element_default) * 1.2);\n  height: calc(var(--jd-height_element_default) * 1.2);\n  box-sizing: border-box;\n  border: 1px solid transparent;\n  color: var(--jd-color-default);\n  cursor: pointer;\n  font-size: 16px;\n  line-height: calc(var(--jd-height_element_default) * 1.2);\n  text-align: center;\n  text-decoration: none;\n  vertical-align: top;\n}\n.jodit-symbols__table td a:hover,\n.jodit-symbols__table td a:focus {\n  outline: 2px solid var(--jd-color-border);\n}\n", ""]);
+// Exports
+/* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+/* 137 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit-table-resizer {\n  position: absolute;\n  z-index: 3;\n  padding-right: calc(var(--jd-padding-default) / 2);\n  padding-left: calc(var(--jd-padding-default) / 2);\n  margin-left: calc(var(--jd-padding-default) / -2);\n  cursor: col-resize;\n}\n.jodit-table-resizer::after {\n  display: block;\n  width: 0;\n  height: 100%;\n  border: 0;\n  content: '';\n}\n.jodit-table-resizer_moved {\n  z-index: 2;\n  background-color: var(--jd-color-background-selection);\n}\n.jodit-table-resizer_moved::after {\n  border-right: 1px solid var(--jd-color-border) moved;\n}\n.jodit-wysiwyg table {\n  max-width: 100%;\n  border: none;\n  margin-top: 1em;\n  margin-bottom: 1em;\n  border-collapse: collapse;\n  empty-cells: show;\n}\n.jodit-wysiwyg table tr {\n  user-select: none;\n}\n.jodit-wysiwyg table tr th,\n.jodit-wysiwyg table tr td {\n  min-width: 2em;\n  padding: 0.4em;\n  border: 1px solid var(--jd-color-border);\n  user-select: text;\n  vertical-align: middle;\n}\n.jodit-form__inserter .jodit-form__table-creator-box {\n  display: flex;\n}\n@media (max-width: 768px) {\n  .jodit-form__inserter .jodit-form__table-creator-box {\n    flex-direction: column;\n  }\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container {\n  min-width: 180px;\n  padding: 0;\n  margin: 0;\n  font-size: 0;\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span {\n  display: inline-block;\n  width: var(--jd-width_element_default);\n  height: var(--jd-height_element_default);\n  box-sizing: border-box;\n  border: 1px solid var(--jd-color-border);\n  margin-bottom: 2px;\n  margin-left: 2px;\n  vertical-align: top;\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span:first-child {\n  margin-left: 0;\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__container > div > span.jodit_hovered {\n  border-color: var(--jd-color-background-hover);\n  background: var(--jd-color-background-hover);\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options {\n  font-size: var(--jd-font-size-default);\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options label {\n  padding-top: 0;\n  text-align: left;\n}\n.jodit-form__inserter .jodit-form__table-creator-box .jodit-form__options label input {\n  margin-right: var(--jd-padding-default);\n}\n.jodit-form__inserter label {\n  padding: 8px;\n  margin: 0;\n  font-size: 14px;\n  text-align: center;\n}\n", ""]);
+// Exports
+/* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+/* 138 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.net/jodit/)\n * Released under MIT see LICENSE.txt in the project root for license information.\n * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net\n */\n.jodit-tooltip {\n  position: fixed;\n  z-index: var(--jd-z-index-tooltip);\n  width: auto;\n  max-width: 120px;\n  padding: calc(var(--jd-padding-default) / 4) calc(var(--jd-padding-default) / 2);\n  background: #727171;\n  background-clip: padding-box;\n  border-radius: 2px;\n  color: #fff;\n  font-family: var(--jd-font-default);\n  font-size: var(--jd-font-size-default);\n  font-size: 11px;\n  line-height: 1.4;\n  opacity: 0;\n  text-rendering: optimizeLegibility;\n  transition: opacity 0.2s ease 0s;\n  user-select: none;\n  white-space: normal;\n}\n@media (max-width: 768px) {\n  .jodit-tooltip {\n    display: none;\n  }\n}\n.jodit-tooltip.jodit-tooltip_visible {\n  opacity: 1;\n}\n", ""]);
+// Exports
+/* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+/* 139 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".jodit__preview-box table {\n  max-width: 100%;\n  border: none;\n  margin-top: 1em;\n  margin-bottom: 1em;\n  border-collapse: collapse;\n  empty-cells: show;\n}\n.jodit__preview-box table tr {\n  user-select: none;\n}\n.jodit__preview-box table tr th,\n.jodit__preview-box table tr td {\n  min-width: 2em;\n  padding: 0.4em;\n  border: 1px solid var(--jd-color-border);\n  user-select: text;\n  vertical-align: middle;\n}\n", ""]);
+// Exports
+/* harmony default export */ __webpack_exports__["Z"] = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+/* 140 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16161,499 +16414,499 @@ ___CSS_LOADER_EXPORT___.push([module.id, "/*!\n * Jodit Editor (https://xdsoft.n
 
 
 /***/ }),
-/* 136 */
+/* 141 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg>"
 
 /***/ }),
-/* 137 */
+/* 142 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </svg>"
 
 /***/ }),
-/* 138 */
+/* 143 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
 
 /***/ }),
-/* 139 */
+/* 144 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 140 */
+/* 145 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 141 */
+/* 146 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 142 */
+/* 147 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
-/* 143 */
+/* 148 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg>"
 
 /***/ }),
-/* 144 */
+/* 149 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/> </svg>"
 
 /***/ }),
-/* 145 */
+/* 150 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/> </svg>"
 
 /***/ }),
-/* 146 */
+/* 151 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
-/* 147 */
+/* 152 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/> </svg>"
 
 /***/ }),
-/* 148 */
+/* 153 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/> </svg>"
 
 /***/ }),
-/* 149 */
+/* 154 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"> <g stroke=\"none\" stroke-width=\"1\"> <path d=\"M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z\"/> </g> </svg>"
 
 /***/ }),
-/* 150 */
+/* 155 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
-/* 151 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
-
-/***/ }),
-/* 152 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/> </svg>"
-
-/***/ }),
-/* 153 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
-
-/***/ }),
-/* 154 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg>"
-
-/***/ }),
-/* 155 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
-
-/***/ }),
 /* 156 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
 
 /***/ }),
 /* 157 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/> </svg>"
 
 /***/ }),
 /* 158 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
 
 /***/ }),
 /* 159 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg>"
 
 /***/ }),
 /* 160 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
 
 /***/ }),
 /* 161 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
 /* 162 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
 
 /***/ }),
 /* 163 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
 
 /***/ }),
 /* 164 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 165 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
 
 /***/ }),
 /* 166 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
 
 /***/ }),
 /* 167 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
 
 /***/ }),
 /* 168 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/> </svg>"
 
 /***/ }),
 /* 169 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
 
 /***/ }),
 /* 170 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg>"
 
 /***/ }),
 /* 171 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
 
 /***/ }),
 /* 172 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
 
 /***/ }),
 /* 173 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
 
 /***/ }),
 /* 174 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
 /* 175 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
 
 /***/ }),
 /* 176 */
 /***/ (function(module) {
 
-module.exports = "<svg fill=\"none\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.09668 6.99707H7.17358L4.17358 3.99707L1.17358 6.99707H3.09668V17.0031H1.15881L4.15881 20.0031L7.15881 17.0031H5.09668V6.99707Z\"/> <path d=\"M22.8412 7H8.84119V5H22.8412V7Z\"/> <path d=\"M22.8412 11H8.84119V9H22.8412V11Z\"/> <path d=\"M8.84119 15H22.8412V13H8.84119V15Z\"/> <path d=\"M22.8412 19H8.84119V17H22.8412V19Z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 177 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
 
 /***/ }),
 /* 178 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
 
 /***/ }),
 /* 179 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 180 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 181 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
+module.exports = "<svg fill=\"none\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.09668 6.99707H7.17358L4.17358 3.99707L1.17358 6.99707H3.09668V17.0031H1.15881L4.15881 20.0031L7.15881 17.0031H5.09668V6.99707Z\"/> <path d=\"M22.8412 7H8.84119V5H22.8412V7Z\"/> <path d=\"M22.8412 11H8.84119V9H22.8412V11Z\"/> <path d=\"M8.84119 15H22.8412V13H8.84119V15Z\"/> <path d=\"M22.8412 19H8.84119V17H22.8412V19Z\"/> </svg>"
 
 /***/ }),
 /* 182 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
 
 /***/ }),
 /* 183 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 184 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
 
 /***/ }),
 /* 185 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
 
 /***/ }),
 /* 186 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
 
 /***/ }),
 /* 187 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 188 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
 
 /***/ }),
 /* 189 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 190 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
 
 /***/ }),
 /* 191 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
 
 /***/ }),
 /* 192 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
+module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
 
 /***/ }),
 /* 193 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.9814 11.8049C5.59087 11.4144 5.59087 10.7812 5.9814 10.3907L10.224 6.14806C10.6146 5.75754 11.2477 5.75754 11.6383 6.14806C12.0288 6.53859 12.0288 7.17175 11.6383 7.56228L7.39561 11.8049C7.00509 12.1954 6.37192 12.1954 5.9814 11.8049Z\"/> <path d=\"M0.707107 12.0208C0.316582 11.6303 0.316582 10.9971 0.707107 10.6066L10.6066 0.707121C10.9971 0.316597 11.6303 0.316596 12.0208 0.707121C12.4113 1.09764 12.4113 1.73081 12.0208 2.12133L2.12132 12.0208C1.7308 12.4114 1.09763 12.4114 0.707107 12.0208Z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
 
 /***/ }),
 /* 194 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
 
 /***/ }),
 /* 195 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
 
 /***/ }),
 /* 196 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
 
 /***/ }),
 /* 197 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
 
 /***/ }),
 /* 198 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.9814 11.8049C5.59087 11.4144 5.59087 10.7812 5.9814 10.3907L10.224 6.14806C10.6146 5.75754 11.2477 5.75754 11.6383 6.14806C12.0288 6.53859 12.0288 7.17175 11.6383 7.56228L7.39561 11.8049C7.00509 12.1954 6.37192 12.1954 5.9814 11.8049Z\"/> <path d=\"M0.707107 12.0208C0.316582 11.6303 0.316582 10.9971 0.707107 10.6066L10.6066 0.707121C10.9971 0.316597 11.6303 0.316596 12.0208 0.707121C12.4113 1.09764 12.4113 1.73081 12.0208 2.12133L2.12132 12.0208C1.7308 12.4114 1.09763 12.4114 0.707107 12.0208Z\"/> </svg>"
 
 /***/ }),
 /* 199 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
 
 /***/ }),
 /* 200 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 201 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
 
 /***/ }),
 /* 202 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
 
 /***/ }),
 /* 203 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
 
 /***/ }),
 /* 204 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
 
 /***/ }),
 /* 205 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 206 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
 
 /***/ }),
 /* 207 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
 /* 208 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
 
 /***/ }),
 /* 209 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
 
 /***/ }),
 /* 210 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
 
 /***/ }),
 /* 211 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
 
 /***/ }),
 /* 212 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
 
 /***/ }),
 /* 213 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
 /* 214 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
 
 /***/ }),
 /* 215 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 216 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
 
 /***/ }),
 /* 217 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
 
 /***/ }),
 /* 218 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
+
+/***/ }),
+/* 219 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg>"
+
+/***/ }),
+/* 220 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg>"
+
+/***/ }),
+/* 221 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg>"
+
+/***/ }),
+/* 222 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
+
+/***/ }),
+/* 223 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/> </svg>"
@@ -16784,11 +17037,13 @@ __webpack_require__.d(modules_namespaceObject, {
   "Dom": function() { return dom/* Dom */.i; },
   "EventEmitter": function() { return event_emitter/* EventEmitter */.vp; },
   "EventHandlersStore": function() { return event_emitter/* EventHandlersStore */.DG; },
+  "Eventify": function() { return event_emitter/* Eventify */.aN; },
   "FileBrowser": function() { return FileBrowser; },
   "Helpers": function() { return helpers; },
   "History": function() { return History; },
   "Icon": function() { return ui/* Icon */.JO; },
   "ImageEditor": function() { return ImageEditor; },
+  "LazyWalker": function() { return dom/* LazyWalker */.b; },
   "Plugin": function() { return Plugin; },
   "PluginSystem": function() { return plugin_system/* PluginSystem */.h; },
   "Popup": function() { return ui/* Popup */.GI; },
@@ -16867,13 +17122,13 @@ __webpack_require__.d(plugins_namespaceObject, {
   "pasteStorage": function() { return pasteStorage; },
   "placeholder": function() { return placeholder_placeholder_placeholder; },
   "poweredByJodit": function() { return poweredByJodit; },
-  "preview": function() { return preview_preview; },
+  "preview": function() { return preview_preview_preview; },
   "print": function() { return print; },
   "redoUndo": function() { return redoUndo; },
   "resizeCells": function() { return resizeCells; },
   "resizeHandler": function() { return resizeHandler; },
   "resizer": function() { return resizer_resizer_resizer; },
-  "search": function() { return search_search_search; },
+  "search": function() { return search_search; },
   "select": function() { return select_select; },
   "selectCells": function() { return selectCells; },
   "size": function() { return size_size_size; },
@@ -17029,7 +17284,7 @@ var update = injectStylesIntoStyleTag_default()(styles/* default */.Z, options);
        /* harmony default export */ var src_styles = (styles/* default */.Z && styles/* default.locals */.Z.locals ? styles/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(41);
+var tslib_es6 = __webpack_require__(43);
 // EXTERNAL MODULE: ./src/config.ts
 var config = __webpack_require__(13);
 // EXTERNAL MODULE: ./src/core/constants.ts
@@ -17037,17 +17292,17 @@ var constants = __webpack_require__(14);
 // EXTERNAL MODULE: ./src/core/event-emitter/index.ts + 3 modules
 var event_emitter = __webpack_require__(15);
 // EXTERNAL MODULE: ./src/core/helpers/async/set-timeout.ts
-var set_timeout = __webpack_require__(75);
+var set_timeout = __webpack_require__(80);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
 var is_function = __webpack_require__(18);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-plain-object.ts
-var is_plain_object = __webpack_require__(36);
+var is_plain_object = __webpack_require__(38);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-promise.ts
-var is_promise = __webpack_require__(38);
+var is_promise = __webpack_require__(40);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
 var is_string = __webpack_require__(17);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-number.ts
-var is_number = __webpack_require__(35);
+var is_number = __webpack_require__(37);
 ;// CONCATENATED MODULE: ./src/core/async/async.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -17066,6 +17321,7 @@ class Async {
         this.timers = new Map();
         this.promisesRejections = new Set();
         this.requestsIdle = new Set();
+        this.requestsRaf = new Set();
         this.requestIdleCallbackNative = (_b = (_a = window['requestIdleCallback']) === null || _a === void 0 ? void 0 : _a.bind(window)) !== null && _b !== void 0 ? _b : ((callback, options) => {
             var _a;
             const start = Date.now();
@@ -17228,17 +17484,21 @@ class Async {
         this.requestsIdle.delete(request);
         return this.cancelIdleCallbackNative(request);
     }
+    requestAnimationFrame(callback) {
+        const request = requestAnimationFrame(callback);
+        this.requestsRaf.add(request);
+        return request;
+    }
+    cancelAnimationFrame(request) {
+        this.requestsRaf.delete(request);
+        cancelAnimationFrame(request);
+    }
     clear() {
-        this.requestsIdle.forEach(key => {
-            this.cancelIdleCallback(key);
-        });
-        this.timers.forEach(key => {
-            (0,set_timeout/* clearTimeout */.g)(this.timers.get(key));
-        });
+        this.requestsIdle.forEach(key => this.cancelIdleCallback(key));
+        this.requestsRaf.forEach(key => this.cancelAnimationFrame(key));
+        this.timers.forEach(key => (0,set_timeout/* clearTimeout */.g)(this.timers.get(key)));
         this.timers.clear();
-        this.promisesRejections.forEach(reject => {
-            reject();
-        });
+        this.promisesRejections.forEach(reject => reject());
         this.promisesRejections.clear();
     }
     destruct() {
@@ -17248,7 +17508,7 @@ class Async {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 15 modules
-var helpers = __webpack_require__(20);
+var helpers = __webpack_require__(21);
 ;// CONCATENATED MODULE: ./src/core/request/response.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -17447,9 +17707,9 @@ Ajax.log = [];
 
 
 // EXTERNAL MODULE: ./src/core/component/index.ts + 3 modules
-var component = __webpack_require__(24);
+var component = __webpack_require__(25);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/context-menu/context-menu.less
-var context_menu = __webpack_require__(76);
+var context_menu = __webpack_require__(81);
 ;// CONCATENATED MODULE: ./src/modules/context-menu/context-menu.less
 
       
@@ -17480,11 +17740,11 @@ var context_menu_update = injectStylesIntoStyleTag_default()(context_menu/* defa
        /* harmony default export */ var context_menu_context_menu = (context_menu/* default */.Z && context_menu/* default.locals */.Z.locals ? context_menu/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts + 2 modules
-var popup = __webpack_require__(65);
+var popup = __webpack_require__(70);
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(56);
+var ui_button = __webpack_require__(61);
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 11 modules
-var checker = __webpack_require__(30);
+var checker = __webpack_require__(32);
 ;// CONCATENATED MODULE: ./src/modules/context-menu/context-menu.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -17526,7 +17786,7 @@ class ContextMenu extends popup/* Popup */.G {
 }
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/dialog/dialog.less
-var dialog = __webpack_require__(77);
+var dialog = __webpack_require__(82);
 ;// CONCATENATED MODULE: ./src/modules/dialog/dialog.less
 
       
@@ -17557,7 +17817,7 @@ var dialog_update = injectStylesIntoStyleTag_default()(dialog/* default */.Z, di
        /* harmony default export */ var dialog_dialog = (dialog/* default */.Z && dialog/* default.locals */.Z.locals ? dialog/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/core/view/view-with-toolbar.less
-var view_with_toolbar = __webpack_require__(78);
+var view_with_toolbar = __webpack_require__(83);
 ;// CONCATENATED MODULE: ./src/core/view/view-with-toolbar.less
 
       
@@ -17743,11 +18003,11 @@ class Storage {
 
 
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(25);
+var global = __webpack_require__(26);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 10 modules
-var decorators = __webpack_require__(29);
+var decorators = __webpack_require__(31);
 // EXTERNAL MODULE: ./src/core/traits/index.ts + 2 modules
-var traits = __webpack_require__(54);
+var traits = __webpack_require__(59);
 ;// CONCATENATED MODULE: ./src/core/view/view.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -17952,10 +18212,10 @@ View.defaultOptions = {
     globalFullSize: true
 };
 
-// EXTERNAL MODULE: ./src/core/dom/index.ts + 1 modules
-var dom = __webpack_require__(27);
+// EXTERNAL MODULE: ./src/core/dom/index.ts
+var dom = __webpack_require__(28);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/toolbar/collection/collection.less
-var collection = __webpack_require__(79);
+var collection = __webpack_require__(84);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/collection/collection.less
 
       
@@ -17986,7 +18246,7 @@ var collection_update = injectStylesIntoStyleTag_default()(collection/* default 
        /* harmony default export */ var collection_collection = (collection/* default */.Z && collection/* default.locals */.Z.locals ? collection/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(52);
+var ui = __webpack_require__(57);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/collection/collection.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -18190,7 +18450,7 @@ ToolbarEditorCollection = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/toolbar/button/button.less
-var button_button = __webpack_require__(80);
+var button_button = __webpack_require__(85);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/button/button.less
 
       
@@ -18221,7 +18481,7 @@ var button_update = injectStylesIntoStyleTag_default()(button_button/* default *
        /* harmony default export */ var toolbar_button_button = (button_button/* default */.Z && button_button/* default.locals */.Z.locals ? button_button/* default.locals */.Z.locals : undefined);
 
 // EXTERNAL MODULE: ./src/core/ui/helpers/get-control-type.ts
-var get_control_type = __webpack_require__(63);
+var get_control_type = __webpack_require__(68);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/button/button.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -18571,7 +18831,7 @@ ToolbarButton = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/toolbar/button/content.less
-var content = __webpack_require__(81);
+var content = __webpack_require__(86);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/button/content.less
 
       
@@ -18677,7 +18937,7 @@ function makeButton(jodit, control, target = null) {
 }
 
 // EXTERNAL MODULE: ./src/core/ui/helpers/buttons.ts
-var helpers_buttons = __webpack_require__(64);
+var helpers_buttons = __webpack_require__(69);
 ;// CONCATENATED MODULE: ./src/core/view/view-with-toolbar.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -19366,7 +19626,7 @@ const Confirm = (msg, title, callback) => {
 
 
 // EXTERNAL MODULE: ./src/core/plugin/plugin-system.ts
-var plugin_system = __webpack_require__(26);
+var plugin_system = __webpack_require__(27);
 ;// CONCATENATED MODULE: ./src/core/plugin/plugin.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -19538,7 +19798,7 @@ class Create {
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/file-browser/styles/index.less
-var file_browser_styles = __webpack_require__(82);
+var file_browser_styles = __webpack_require__(87);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/styles/index.less
 
       
@@ -20255,7 +20515,7 @@ function makeContextMenu(parent) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts + 9 modules
-var normalize = __webpack_require__(47);
+var normalize = __webpack_require__(51);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/builders/elements-map.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -20475,7 +20735,7 @@ function stateListeners() {
 }
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/image-editor/image-editor.less
-var image_editor = __webpack_require__(83);
+var image_editor = __webpack_require__(88);
 ;// CONCATENATED MODULE: ./src/modules/image-editor/image-editor.less
 
       
@@ -21210,16 +21470,14 @@ const CLASS_PREVIEW = 'jodit-filebrowser-preview', preview_tpl_next = (next = 'n
                     ? {
                         icon: 'pencil',
                         title: 'Edit',
-                        exec: () => {
-                            return openImageEditor.call(self, ga('href'), ga('data-name'), ga('data-path'), ga('data-source'));
-                        }
+                        exec: () => openImageEditor.call(self, ga('href'), ga('data-name'), ga('data-path'), ga('data-source'))
                     }
                     : false,
                 self.dataProvider.canI('FileRename')
                     ? {
                         icon: 'italic',
                         title: 'Rename',
-                        exec: async () => {
+                        exec: () => {
                             self.e.fire('fileRename.filebrowser', ga('data-name'), ga('data-path'), ga('data-source'));
                         }
                     }
@@ -21552,7 +21810,7 @@ function selfListeners() {
 }
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/file-browser/ui/files/files.less
-var files = __webpack_require__(84);
+var files = __webpack_require__(89);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/ui/files/files.less
 
       
@@ -21597,7 +21855,7 @@ class FileBrowserFiles extends ui/* UIGroup */.qe {
 }
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/file-browser/ui/tree/tree.less
-var tree = __webpack_require__(85);
+var tree = __webpack_require__(90);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/ui/tree/tree.less
 
       
@@ -22290,9 +22548,9 @@ class History extends component/* ViewComponent */.Hr {
 ], History.prototype, "onChange", null);
 
 // EXTERNAL MODULE: ./src/core/selection/index.ts + 19 modules
-var selection = __webpack_require__(28);
+var selection = __webpack_require__(30);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/status-bar/status-bar.less
-var status_bar = __webpack_require__(86);
+var status_bar = __webpack_require__(91);
 ;// CONCATENATED MODULE: ./src/modules/status-bar/status-bar.less
 
       
@@ -22994,7 +23252,7 @@ const instance = (j) => j.getInstance('Table', j.o);
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/modules/uploader/uploader.less
-var uploader = __webpack_require__(87);
+var uploader = __webpack_require__(92);
 ;// CONCATENATED MODULE: ./src/modules/uploader/uploader.less
 
       
@@ -24391,6 +24649,7 @@ Jodit.plugins = global/* pluginSystem */.pw;
 Jodit.modules = global/* modules */.qz;
 Jodit.ns = global/* modules */.qz;
 Jodit.decorators = {};
+Jodit.constants = constants;
 Jodit.instances = global/* instances */.as;
 Jodit.lang = global/* lang */.KQ;
 Jodit.core = {
@@ -24419,29 +24678,29 @@ Jodit.core = {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const en = __webpack_require__(88);
+const en = __webpack_require__(93);
 let exp = {
     en
 };
 if (true) {
-    const ar = __webpack_require__(89);
-    const cs_cz = __webpack_require__(90);
-    const de = __webpack_require__(91);
-    const es = __webpack_require__(92);
-    const fr = __webpack_require__(93);
-    const he = __webpack_require__(94);
-    const hu = __webpack_require__(95);
-    const id = __webpack_require__(96);
-    const it = __webpack_require__(97);
-    const ja = __webpack_require__(98);
-    const ko = __webpack_require__(99);
-    const nl = __webpack_require__(100);
-    const pl = __webpack_require__(101);
-    const pt_br = __webpack_require__(102);
-    const ru = __webpack_require__(103);
-    const tr = __webpack_require__(104);
-    const zh_cn = __webpack_require__(105);
-    const zh_tw = __webpack_require__(106);
+    const ar = __webpack_require__(94);
+    const cs_cz = __webpack_require__(95);
+    const de = __webpack_require__(96);
+    const es = __webpack_require__(97);
+    const fr = __webpack_require__(98);
+    const he = __webpack_require__(99);
+    const hu = __webpack_require__(100);
+    const id = __webpack_require__(101);
+    const it = __webpack_require__(102);
+    const ja = __webpack_require__(103);
+    const ko = __webpack_require__(104);
+    const nl = __webpack_require__(105);
+    const pl = __webpack_require__(106);
+    const pt_br = __webpack_require__(107);
+    const ru = __webpack_require__(108);
+    const tr = __webpack_require__(109);
+    const zh_cn = __webpack_require__(110);
+    const zh_tw = __webpack_require__(111);
     exp = {
         ar,
         cs_cz,
@@ -24482,7 +24741,7 @@ Object.keys(exp).forEach((lang) => {
 /* harmony default export */ var langs = (exp);
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/add-new-line/add-new-line.less
-var add_new_line = __webpack_require__(107);
+var add_new_line = __webpack_require__(112);
 ;// CONCATENATED MODULE: ./src/plugins/add-new-line/add-new-line.less
 
       
@@ -24707,7 +24966,7 @@ class addNewLine extends Plugin {
 }
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/about/about.less
-var about = __webpack_require__(108);
+var about = __webpack_require__(113);
 ;// CONCATENATED MODULE: ./src/plugins/about/about.less
 
       
@@ -24859,7 +25118,7 @@ function focus_focus(editor) {
 
 config/* Config.prototype.controls.classSpan */.D.prototype.controls.classSpan = {
     command: 'applyClassName',
-    icon: __webpack_require__(109),
+    icon: __webpack_require__(114),
     exec: helpers.memorizeExec,
     list: [
         'enabled',
@@ -24922,10 +25181,10 @@ class classSpan extends Plugin {
     beforeDestruct() { }
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 18 modules
-var utils = __webpack_require__(21);
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts + 17 modules
+var utils = __webpack_require__(22);
 // EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 3 modules
-var string = __webpack_require__(43);
+var string = __webpack_require__(46);
 ;// CONCATENATED MODULE: ./src/plugins/keyboard/helpers.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -25059,7 +25318,7 @@ function checkRemoveUnbreakableElement(jodit, fakeNode, backspace) {
 }
 
 // EXTERNAL MODULE: ./src/core/selection/helpers/index.ts + 2 modules
-var selection_helpers = __webpack_require__(40);
+var selection_helpers = __webpack_require__(42);
 ;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-remove-content-not-editable.ts
 
 
@@ -25593,6 +25852,8 @@ function bold(editor) {
     });
 }
 
+// EXTERNAL MODULE: ./src/core/dom/lazy-walker.ts
+var lazy_walker = __webpack_require__(44);
 ;// CONCATENATED MODULE: ./src/plugins/fix/clean-html/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -25633,6 +25894,7 @@ config/* Config.prototype.controls.eraser */.D.prototype.controls.eraser = {
 
 
 
+
 class cleanHtml extends Plugin {
     constructor() {
         super(...arguments);
@@ -25642,10 +25904,10 @@ class cleanHtml extends Plugin {
                 group: 'font-style'
             }
         ];
-        this.workNodes = [];
-        this.hasChangesAfterWork = false;
-        this.isWorked = false;
         this.currentSelectionNode = null;
+        this.walker = new lazy_walker/* LazyWalker */.b(this.j.async, {
+            timeout: this.j.o.cleanHTML.timeout
+        });
         this.allowTagsHash = cleanHtml.getHash(this.j.o.cleanHTML.allowTags);
         this.denyTagsHash = cleanHtml.getHash(this.j.o.cleanHTML.denyTags);
         this.onKeyUpCleanUp = () => {
@@ -25718,54 +25980,26 @@ class cleanHtml extends Plugin {
                 }
             }
         }
-        this.hasChangesAfterWork = false;
-        this.workNodes = [editor.editor.firstChild];
+        this.walker.setWork(editor.editor);
         this.currentSelectionNode = current;
     }
-    restartWorker() {
-        const { timeout } = this.j.o.cleanHTML;
-        this.j.async.requestIdleCallback(this.workPerform, {
-            timeout
+    startWalker() {
+        this.walker
+            .on('visit', this.visitNode)
+            .on('end', (affected) => {
+            this.j.e.fire(affected
+                ? 'internalChange finishedCleanHTMLWorker'
+                : 'finishedCleanHTMLWorker');
         });
-    }
-    workPerform(deadline) {
-        if (this.workNodes.length) {
-            this.isWorked = true;
-            while ((deadline.timeRemaining() > 0 || deadline.didTimeout) &&
-                this.workNodes.length) {
-                if (this.visitNode(this.workNodes.pop())) {
-                    this.hasChangesAfterWork = true;
-                }
-            }
-        }
-        else if (this.hasChangesAfterWork) {
-            this.hasChangesAfterWork = false;
-            this.isWorked = false;
-            this.j.e.fire('internalChange finishedCleanHTMLWorker');
-        }
-        else if (this.isWorked) {
-            this.isWorked = false;
-            this.j.e.fire('finishedCleanHTMLWorker');
-        }
-        this.restartWorker();
-    }
-    allowEdit() {
-        return !(this.j.isInDestruct ||
-            !this.j.isEditorMode() ||
-            this.j.getReadOnly());
     }
     visitNode(nodeElm) {
         let hasChanges = false;
-        if (!nodeElm) {
-            return hasChanges;
-        }
         const newNodeElm = this.replaceIfMatched(nodeElm);
         if (nodeElm !== newNodeElm) {
             nodeElm = newNodeElm;
             hasChanges = true;
         }
         if (this.isRemovableNode(nodeElm, this.currentSelectionNode)) {
-            this.workNodes.push(nodeElm.nextSibling);
             dom/* Dom.safeRemove */.i.safeRemove(nodeElm);
             return true;
         }
@@ -25797,8 +26031,12 @@ class cleanHtml extends Plugin {
                 });
             }
         }
-        this.workNodes.push(nodeElm.firstChild, nodeElm.nextSibling);
         return hasChanges;
+    }
+    allowEdit() {
+        return !(this.j.isInDestruct ||
+            !this.j.isEditorMode() ||
+            this.j.getReadOnly());
     }
     static getHash(tags) {
         const attributesReg = /([^[]*)\[([^\]]+)]/;
@@ -25961,6 +26199,7 @@ class cleanHtml extends Plugin {
     }
     beforeDestruct() {
         this.j.e.off('.cleanHtml');
+        this.walker.destruct();
     }
 }
 (0,tslib_es6/* __decorate */.gn)([
@@ -25968,10 +26207,10 @@ class cleanHtml extends Plugin {
 ], cleanHtml.prototype, "onChangeCleanHTML", null);
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.hook)('ready')
-], cleanHtml.prototype, "restartWorker", null);
+], cleanHtml.prototype, "startWalker", null);
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
-], cleanHtml.prototype, "workPerform", null);
+], cleanHtml.prototype, "visitNode", null);
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], cleanHtml.prototype, "isInlineBlock", null);
@@ -26099,7 +26338,7 @@ config/* Config.prototype.controls.selectall */.D.prototype.controls.selectall =
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/utils.ts
-var utils_utils = __webpack_require__(22);
+var utils_utils = __webpack_require__(23);
 ;// CONCATENATED MODULE: ./src/plugins/clipboard/paste/helpers.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -26553,7 +26792,7 @@ class PasteFromWord extends Plugin {
 ], PasteFromWord.prototype, "processWordHTML", null);
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/clipboard/paste-storage/paste-storage.less
-var paste_storage = __webpack_require__(110);
+var paste_storage = __webpack_require__(115);
 ;// CONCATENATED MODULE: ./src/plugins/clipboard/paste-storage/paste-storage.less
 
       
@@ -26861,7 +27100,7 @@ function copyFormat(editor) {
 
 
 // EXTERNAL MODULE: ./src/modules/widget/index.ts + 5 modules
-var widget = __webpack_require__(111);
+var widget = __webpack_require__(116);
 ;// CONCATENATED MODULE: ./src/plugins/color/color.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -27221,7 +27460,7 @@ class DragAndDropElement extends Plugin {
         if (!this.dragList.length || !target) {
             return;
         }
-        const matched = (node) => node && this.dragList.includes(node.nodeName.toLowerCase());
+        const matched = (node) => Boolean(node && this.dragList.includes(node.nodeName.toLowerCase()));
         let lastTarget = dom/* Dom.furthest */.i.furthest(target, matched, this.j.editor) ||
             (matched(target) ? target : null);
         if (!lastTarget) {
@@ -27579,7 +27818,7 @@ class KeyArrowOutside extends Plugin {
 ], KeyArrowOutside.prototype, "onKeyDownArrow", null);
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/error-messages/errors-messages.less
-var errors_messages = __webpack_require__(114);
+var errors_messages = __webpack_require__(119);
 ;// CONCATENATED MODULE: ./src/plugins/error-messages/errors-messages.less
 
       
@@ -27869,7 +28108,7 @@ function formatBlock(editor) {
 }
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/fullsize/fullsize.less
-var fullsize = __webpack_require__(115);
+var fullsize = __webpack_require__(120);
 ;// CONCATENATED MODULE: ./src/plugins/fullsize/fullsize.less
 
       
@@ -28284,7 +28523,7 @@ function iframe(editor) {
         const result = editor.e.fire('generateDocumentStructure.iframe', null, editor);
         const init = () => {
             if (!editor.iframe) {
-                return;
+                return false;
             }
             const doc = editor.iframe.contentWindow.document;
             editor.editorWindow = editor.iframe.contentWindow;
@@ -28386,7 +28625,7 @@ function iframe(editor) {
 }
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/image/image-properties/image-properties.less
-var image_properties = __webpack_require__(116);
+var image_properties = __webpack_require__(121);
 ;// CONCATENATED MODULE: ./src/plugins/image/image-properties/image-properties.less
 
       
@@ -28556,7 +28795,7 @@ function positionTab(editor) {
 
 
 // EXTERNAL MODULE: ./src/plugins/image/helpers.ts
-var image_helpers = __webpack_require__(117);
+var image_helpers = __webpack_require__(122);
 ;// CONCATENATED MODULE: ./src/plugins/image/image-properties/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -29260,7 +29499,7 @@ function hr(editor) {
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/inline-popup/inline-popup.less
-var inline_popup = __webpack_require__(118);
+var inline_popup = __webpack_require__(123);
 ;// CONCATENATED MODULE: ./src/plugins/inline-popup/inline-popup.less
 
       
@@ -29302,13 +29541,13 @@ config/* Config.prototype.toolbarInlineForSelection */.D.prototype.toolbarInline
 config/* Config.prototype.toolbarInlineDisableFor */.D.prototype.toolbarInlineDisableFor = [];
 config/* Config.prototype.toolbarInlineDisabledButtons */.D.prototype.toolbarInlineDisabledButtons = ['source'];
 config/* Config.prototype.popup */.D.prototype.popup = {
-    a: (__webpack_require__(119)/* ["default"] */ .Z),
-    img: (__webpack_require__(120)/* ["default"] */ .Z),
-    cells: (__webpack_require__(121)/* ["default"] */ .Z),
-    toolbar: (__webpack_require__(122)/* ["default"] */ .Z),
-    jodit: (__webpack_require__(123)/* ["default"] */ .Z),
-    iframe: (__webpack_require__(123)/* ["default"] */ .Z),
-    'jodit-media': (__webpack_require__(123)/* ["default"] */ .Z),
+    a: (__webpack_require__(124)/* ["default"] */ .Z),
+    img: (__webpack_require__(125)/* ["default"] */ .Z),
+    cells: (__webpack_require__(126)/* ["default"] */ .Z),
+    toolbar: (__webpack_require__(127)/* ["default"] */ .Z),
+    jodit: (__webpack_require__(128)/* ["default"] */ .Z),
+    iframe: (__webpack_require__(128)/* ["default"] */ .Z),
+    'jodit-media': (__webpack_require__(128)/* ["default"] */ .Z),
     selection: [
         'bold',
         'underline',
@@ -29848,7 +30087,7 @@ class lineHeight extends Plugin {
 ], lineHeight.prototype, "applyLineHeight", null);
 
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 17 modules
-var ui_form = __webpack_require__(67);
+var ui_form = __webpack_require__(72);
 ;// CONCATENATED MODULE: ./src/plugins/link/template.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -30568,7 +30807,7 @@ function mobile(editor) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/data-bind.ts
-var data_bind = __webpack_require__(23);
+var data_bind = __webpack_require__(24);
 ;// CONCATENATED MODULE: ./src/plugins/ordered-list/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -30681,7 +30920,7 @@ function poweredByJodit(jodit) {
 }
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/placeholder/placeholder.less
-var placeholder = __webpack_require__(124);
+var placeholder = __webpack_require__(129);
 ;// CONCATENATED MODULE: ./src/plugins/placeholder/placeholder.less
 
       
@@ -30915,7 +31154,7 @@ class redoUndo extends Plugin {
 }
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/resizer/resizer.less
-var resizer = __webpack_require__(125);
+var resizer = __webpack_require__(130);
 ;// CONCATENATED MODULE: ./src/plugins/resizer/resizer.less
 
       
@@ -31329,9 +31568,167 @@ class resizer_resizer_resizer extends Plugin {
     decorators.autobind
 ], resizer_resizer_resizer.prototype, "hide", null);
 
-// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/search/search.less
-var search = __webpack_require__(126);
-;// CONCATENATED MODULE: ./src/plugins/search/search.less
+// EXTERNAL MODULE: ./src/core/helpers/string/fuzzy-search-index.ts
+var fuzzy_search_index = __webpack_require__(48);
+;// CONCATENATED MODULE: ./src/plugins/search/helpers/sentence-finder.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+class SentenceFinder {
+    constructor(searchIndex = fuzzy_search_index/* fuzzySearchIndex */.Q) {
+        this.searchIndex = searchIndex;
+        this.queue = [];
+        this.value = '';
+    }
+    add(node) {
+        var _a;
+        const value = ((_a = node.nodeValue) !== null && _a !== void 0 ? _a : '').toLowerCase();
+        if (!value.length) {
+            return;
+        }
+        const index = this.value.length;
+        this.queue.push({
+            startIndex: index,
+            endIndex: index + value.length,
+            node
+        });
+        this.value += value;
+    }
+    ranges(needle, position = 0) {
+        const results = [];
+        let index = position, len = 0, startQueueIndex = 0;
+        do {
+            [index, len] = this.searchIndex(needle, this.value, index);
+            if (index !== -1) {
+                let startContainer, startOffset = 0, endContainer, endOffset = 0;
+                for (let i = startQueueIndex; i < this.queue.length; i += 1) {
+                    if (!startContainer && this.queue[i].endIndex > index) {
+                        startContainer = this.queue[i].node;
+                        startOffset = index - this.queue[i].startIndex;
+                    }
+                    if (startContainer &&
+                        this.queue[i].endIndex >= index + len) {
+                        endContainer = this.queue[i].node;
+                        endOffset = index + len - this.queue[i].startIndex;
+                        startQueueIndex = i;
+                        break;
+                    }
+                }
+                if (startContainer && endContainer) {
+                    results.push({
+                        startContainer,
+                        startOffset,
+                        endContainer,
+                        endOffset
+                    });
+                }
+                index += len;
+            }
+        } while (index !== -1);
+        return results.length === 0 ? null : results;
+    }
+}
+
+// EXTERNAL MODULE: ./src/core/helpers/utils/selector.ts
+var selector = __webpack_require__(54);
+;// CONCATENATED MODULE: ./src/plugins/search/helpers/wrap-ranges-texts-in-tmp-span.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+const TMP_ATTR = 'jd-tmp-selection';
+function wrapRangesTextsInTmpSpan(rng, restRanges, ci, root) {
+    if (rng.startContainer.nodeValue == null ||
+        rng.endContainer.nodeValue == null) {
+        return;
+    }
+    const span = ci.element('span', {
+        [TMP_ATTR]: true
+    });
+    const startText = rng.startContainer.nodeValue;
+    let diff = 0;
+    if (rng.startOffset !== 0) {
+        const text = ci.text(startText.substring(0, rng.startOffset));
+        rng.startContainer.nodeValue = startText.substring(rng.startOffset);
+        dom/* Dom.before */.i.before(rng.startContainer, text);
+        if (rng.startContainer === rng.endContainer) {
+            diff = rng.startOffset;
+            rng.endOffset -= diff;
+        }
+        rng.startOffset = 0;
+    }
+    const endText = rng.endContainer.nodeValue;
+    if (rng.endOffset !== endText.length) {
+        const text = ci.text(endText.substring(rng.endOffset));
+        rng.endContainer.nodeValue = endText.substring(0, rng.endOffset);
+        dom/* Dom.after */.i.after(rng.endContainer, text);
+        for (const range of restRanges) {
+            if (range.startContainer === rng.endContainer) {
+                range.startContainer = text;
+                range.startOffset = range.startOffset - rng.endOffset - diff;
+                if (range.endContainer === rng.endContainer) {
+                    range.endContainer = text;
+                    range.endOffset = range.endOffset - rng.endOffset - diff;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        rng.endOffset = rng.endContainer.nodeValue.length;
+    }
+    let next = rng.startContainer;
+    do {
+        if (!next) {
+            break;
+        }
+        if (dom/* Dom.isText */.i.isText(next) && !isSelectionWrapper(next.parentNode)) {
+            dom/* Dom.wrap */.i.wrap(next, span.cloneNode(), ci);
+        }
+        if (next === rng.endContainer) {
+            break;
+        }
+        let step = next.firstChild || next.nextSibling;
+        if (!step) {
+            while (next && !next.nextSibling && next !== root) {
+                next = next.parentNode;
+            }
+            step = next === null || next === void 0 ? void 0 : next.nextSibling;
+        }
+        next = step;
+    } while (next && next !== root);
+}
+function getSelectionWrappers(root) {
+    return (0,selector.$$)(`[${TMP_ATTR}]`, root);
+}
+function clearSelectionWrappers(root) {
+    getSelectionWrappers(root).forEach(span => dom/* Dom.unwrap */.i.unwrap(span));
+}
+function clearSelectionWrappersFromHTML(root) {
+    return root.replace(RegExp(`<span[^>]+${TMP_ATTR}[^>]+>(.*?)</span>`, 'g'), '$1');
+}
+function isSelectionWrapper(node) {
+    return dom/* Dom.isElement */.i.isElement(node) && node.hasAttribute(TMP_ATTR);
+}
+
+;// CONCATENATED MODULE: ./src/plugins/search/helpers/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/search/ui/search.less
+var search = __webpack_require__(131);
+;// CONCATENATED MODULE: ./src/plugins/search/ui/search.less
 
       
       
@@ -31358,11 +31755,9 @@ var search_update = injectStylesIntoStyleTag_default()(search/* default */.Z, se
 
 
 
-       /* harmony default export */ var search_search = (search/* default */.Z && search/* default.locals */.Z.locals ? search/* default.locals */.Z.locals : undefined);
+       /* harmony default export */ var ui_search = (search/* default */.Z && search/* default.locals */.Z.locals ? search/* default.locals */.Z.locals : undefined);
 
-// EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
-var trim = __webpack_require__(45);
-;// CONCATENATED MODULE: ./src/plugins/search/helpers/find-some-part-of-string.ts
+;// CONCATENATED MODULE: ./src/plugins/search/ui/search.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -31370,89 +31765,193 @@ var trim = __webpack_require__(45);
  */
 
 
-function findSomePartOfString(needle, haystack, start = true, getIndex = false) {
-    needle = (0,trim/* trim */.f)(needle.toLowerCase().replace(constants.SPACE_REG_EXP(), ' '));
-    haystack = haystack.toLowerCase();
-    let i = start ? 0 : haystack.length - 1, needleStart = start ? 0 : needle.length - 1, tmpEqualLength = 0, startAtIndex = null;
-    const inc = start ? 1 : -1, tmp = [];
-    for (; haystack[i] !== undefined; i += inc) {
-        const some = needle[needleStart] === haystack[i];
-        if (some ||
-            (startAtIndex != null && constants.SPACE_REG_EXP().test(haystack[i]))) {
-            if (startAtIndex == null || !start) {
-                startAtIndex = i;
+
+
+
+
+
+
+let UISearch = class UISearch extends ui/* UIElement */.u1 {
+    constructor(jodit) {
+        super(jodit);
+        this.selInfo = null;
+        this._currentIndex = 0;
+        this.isOpened = false;
+        const { query, replace, cancel, next, prev, replaceBtn, current, count } = (0,helpers.refs)(this.container);
+        this.queryInput = query;
+        this.replaceInput = replace;
+        this.closeButton = cancel;
+        this.replaceButton = replaceBtn;
+        this.currentBox = current;
+        this.countBox = count;
+        jodit.e
+            .on(this.closeButton, 'pointerdown', () => {
+            this.close();
+            return false;
+        })
+            .on(this.queryInput, 'input', () => {
+            this.currentIndex = 0;
+        })
+            .on(this.queryInput, 'pointerdown', () => {
+            if (jodit.s.isFocused()) {
+                jodit.s.removeMarkers();
+                this.selInfo = jodit.s.save();
             }
-            tmp.push(haystack[i]);
-            if (some) {
-                tmpEqualLength += 1;
-                needleStart += inc;
+        })
+            .on(this.replaceButton, 'pointerdown', () => {
+            jodit.e.fire(this, 'pressReplaceButton');
+            return false;
+        })
+            .on(next, 'pointerdown', () => {
+            jodit.e.fire('searchNext');
+            return false;
+        })
+            .on(prev, 'pointerdown', () => {
+            jodit.e.fire('searchPrevious');
+            return false;
+        })
+            .on(this.queryInput, 'input', () => {
+            this.setMod('empty-query', !(0,helpers.trim)(this.queryInput.value).length);
+        })
+            .on(this.queryInput, 'keydown', this.j.async.debounce((e) => {
+            switch (e.key) {
+                case constants.KEY_ENTER:
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    if (jodit.e.fire('searchNext')) {
+                        this.close();
+                    }
+                    break;
+                default:
+                    jodit.e.fire(this, 'needUpdateCounters');
+                    break;
             }
-        }
-        else {
-            startAtIndex = null;
-            tmp.length = 0;
-            tmpEqualLength = 0;
-            needleStart = start ? 0 : needle.length - 1;
-        }
-        if (tmpEqualLength === needle.length) {
-            return getIndex ? startAtIndex : true;
-        }
+        }, this.j.defaultTimeout));
     }
-    if (getIndex) {
-        return startAtIndex !== null && startAtIndex !== void 0 ? startAtIndex : false;
+    className() {
+        return 'UISearch';
     }
-    if (tmp.length) {
-        return start ? tmp.join('') : tmp.reverse().join('');
-    }
-    return false;
-}
-
-;// CONCATENATED MODULE: ./src/plugins/search/helpers/get-some-part-of-string-index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function getSomePartOfStringIndex(needle, haystack, start = true) {
-    return findSomePartOfString(needle, haystack, start, true);
-}
-
-;// CONCATENATED MODULE: ./src/plugins/search/helpers/template.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function template(j) {
-    return `<div class="jodit-search">
-			<div class="jodit-search__box">
-				<div class="jodit-search__inputs">
-					<input data-ref="query" tabindex="0" placeholder="${j.i18n('Search for')}" type="text"/>
-					<input data-ref="replace" tabindex="0" placeholder="${j.i18n('Replace with')}" type="text"/>
+    render() {
+        return `<div>
+			<div class="&__box">
+				<div class="&__inputs">
+					<input data-ref="query" tabindex="0" placeholder="~Search for~" type="text"/>
+					<input data-ref="replace" tabindex="0" placeholder="~Replace with~" type="text"/>
 				</div>
-				<div class="jodit-search__counts">
-					<span data-ref="counter-box">0/0</span>
+				<div class="&__counts">
+					<span data-ref="counter-box">
+						<span data-ref="current">0</span><span>/</span><span data-ref="count">0</span>
+					</span>
 				</div>
-				<div class="jodit-search__buttons">
+				<div class="&__buttons">
 					<button data-ref="next" tabindex="0" type="button">${ui/* Icon.get */.JO.get('angle-down')}</button>
 					<button data-ref="prev" tabindex="0" type="button">${ui/* Icon.get */.JO.get('angle-up')}</button>
 					<button data-ref="cancel" tabindex="0" type="button">${ui/* Icon.get */.JO.get('cancel')}</button>
-					<button data-ref="replace-btn" tabindex="0" type="button" class="jodit-ui-button">${j.i18n('Replace')}</button>
+					<button data-ref="replace-btn" tabindex="0" type="button" class="jodit-ui-button">~Replace~</button>
 				</div>
 			</div>
 		</div>`;
-}
-
-;// CONCATENATED MODULE: ./src/plugins/search/helpers/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
+    }
+    get currentIndex() {
+        return this._currentIndex;
+    }
+    set currentIndex(value) {
+        this._currentIndex = value;
+        this.currentBox.innerText = value.toString();
+    }
+    set count(value) {
+        this.countBox.innerText = value.toString();
+    }
+    get query() {
+        return this.queryInput.value;
+    }
+    get replace() {
+        return this.replaceInput.value;
+    }
+    onEditorKeyDown(e) {
+        if (!this.isOpened) {
+            return;
+        }
+        const { j } = this;
+        if (j.getRealMode() !== constants.MODE_WYSIWYG) {
+            return;
+        }
+        switch (e.key) {
+            case constants.KEY_ESC:
+                this.close();
+                break;
+            case constants.KEY_F3:
+                if (this.queryInput.value) {
+                    j.e.fire(!e.shiftKey ? 'searchNext' : 'searchPrevious');
+                    e.preventDefault();
+                }
+                break;
+        }
+    }
+    open(searchAndReplace = false) {
+        if (!this.isOpened) {
+            this.j.workplace.appendChild(this.container);
+            this.isOpened = true;
+        }
+        this.calcSticky(this.j.e.fire('getStickyState.sticky') || false);
+        this.j.e.fire('hidePopup');
+        this.setMod('replace', searchAndReplace);
+        const selStr = (this.j.s.sel || '').toString();
+        if (selStr) {
+            this.queryInput.value = selStr;
+        }
+        this.setMod('empty-query', !selStr.length);
+        this.j.e.fire(this, 'needUpdateCounters');
+        if (selStr) {
+            this.queryInput.select();
+        }
+        else {
+            this.queryInput.focus();
+        }
+    }
+    close() {
+        if (!this.isOpened) {
+            return;
+        }
+        this.j.s.restore();
+        dom/* Dom.safeRemove */.i.safeRemove(this.container);
+        this.isOpened = false;
+        this.j.e.fire(this, 'afterClose');
+    }
+    calcSticky(enabled) {
+        if (this.isOpened) {
+            this.setMod('sticky', enabled);
+            if (enabled) {
+                const pos = (0,helpers.position)(this.j.toolbarContainer);
+                (0,helpers.css)(this.container, {
+                    top: pos.top + pos.height,
+                    left: pos.left + pos.width
+                });
+            }
+            else {
+                (0,helpers.css)(this.container, {
+                    top: null,
+                    left: null
+                });
+            }
+        }
+    }
+};
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)([':keydown', 'queryInput:keydown'])
+], UISearch.prototype, "onEditorKeyDown", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], UISearch.prototype, "open", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], UISearch.prototype, "close", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)(':toggleSticky')
+], UISearch.prototype, "calcSticky", null);
+UISearch = (0,tslib_es6/* __decorate */.gn)([
+    decorators.component
+], UISearch);
 
 
 ;// CONCATENATED MODULE: ./src/plugins/search/config.ts
@@ -31463,6 +31962,9 @@ function template(j) {
  */
 
 config/* Config.prototype.useSearch */.D.prototype.useSearch = true;
+config/* Config.prototype.search */.D.prototype.search = {
+    lazyIdleTimeout: 0
+};
 config/* Config.prototype.controls.find */.D.prototype.controls.find = {
     tooltip: 'Find',
     icon: 'search',
@@ -31505,9 +32007,7 @@ config/* Config.prototype.controls.find */.D.prototype.controls.find = {
 
 
 
-
-
-class search_search_search extends Plugin {
+class search_search extends Plugin {
     constructor() {
         super(...arguments);
         this.buttons = [
@@ -31516,83 +32016,112 @@ class search_search_search extends Plugin {
                 group: 'search'
             }
         ];
-        this.isOpened = false;
-        this.selInfo = null;
-        this.current = null;
+        this.previousQuery = '';
+        this.drawPromise = null;
+        this.walker = null;
+        this.walkerCount = null;
+        this.cache = {};
+        this.wrapFrameRequest = 0;
     }
-    eachMap(node, callback, next) {
-        dom/* Dom.findWithCurrent */.i.findWithCurrent(node, (child) => Boolean(child && callback(child)), this.j.editor, next ? 'nextSibling' : 'previousSibling', next ? 'firstChild' : 'lastChild');
+    get ui() {
+        return new UISearch(this.j);
     }
-    updateCounters() {
-        if (!this.isOpened) {
+    async updateCounters() {
+        if (!this.ui.isOpened) {
             return;
         }
-        this.counterBox.style.display = this.queryInput.value.length
-            ? 'inline-block'
-            : 'none';
-        const range = this.j.s.range, counts = this.calcCounts(this.queryInput.value, range);
-        this.counterBox.textContent = counts.join('/');
+        this.ui.count = await this.calcCounts(this.ui.query);
     }
-    boundAlreadyWas(current, bounds) {
-        return bounds.some((bound) => {
-            return (bound.startContainer === current.startContainer &&
-                bound.endContainer === current.endContainer &&
-                bound.startOffset === current.startOffset &&
-                bound.endOffset === current.endOffset);
-        }, false);
+    onPressReplaceButton() {
+        this.findAndReplace(this.ui.query);
+        this.updateCounters();
     }
     tryScrollToElement(startContainer) {
         let parentBox = dom/* Dom.closest */.i.closest(startContainer, dom/* Dom.isElement */.i.isElement, this.j.editor);
         if (!parentBox) {
             parentBox = dom/* Dom.prev */.i.prev(startContainer, dom/* Dom.isElement */.i.isElement, this.j.editor);
         }
-        parentBox && parentBox !== this.j.editor && parentBox.scrollIntoView();
+        parentBox &&
+            parentBox !== this.j.editor &&
+            (0,helpers.scrollIntoViewIfNeeded)(parentBox, this.j.editor, this.j.ed);
     }
-    calcCounts(query, current = false) {
-        const bounds = [];
-        let currentIndex = 0, count = 0, bound = false, start = this.j.editor.firstChild;
-        while (start && query.length) {
-            bound = this.find(start, query, true, 0, bound || this.j.ed.createRange());
-            if (bound) {
-                if (this.boundAlreadyWas(bound, bounds)) {
-                    break;
-                }
-                bounds.push(bound);
-                start = bound.startContainer;
-                count += 1;
-                if (current && this.boundAlreadyWas(current, [bound])) {
-                    currentIndex = count;
-                }
-            }
-            else {
-                start = null;
-            }
+    async calcCounts(query) {
+        if (this.walkerCount) {
+            this.walkerCount.break();
         }
-        return [currentIndex, count];
+        this.walkerCount = new dom/* LazyWalker */.b(this.j.async, {
+            timeout: this.j.o.search.lazyIdleTimeout
+        });
+        const result = await this.find(this.walkerCount, query);
+        return result.length;
     }
-    findAndReplace(start, query) {
-        const range = this.j.s.range, bound = this.find(start, query, true, 0, range);
-        if (bound && bound.startContainer && bound.endContainer) {
-            const rng = this.j.ed.createRange();
+    async findAndReplace(query) {
+        if (this.walker) {
+            this.walker.break();
+        }
+        this.walker = new dom/* LazyWalker */.b(this.j.async, {
+            timeout: this.j.o.search.lazyIdleTimeout
+        });
+        const range = this.j.s.range, bounds = await this.find(this.walker, query);
+        let currentIndex = this.findCurrentIndexInRanges(bounds, range);
+        if (currentIndex === -1) {
+            currentIndex = 0;
+        }
+        const bound = bounds[currentIndex];
+        if (bound) {
             try {
-                if (bound && bound.startContainer && bound.endContainer) {
-                    rng.setStart(bound.startContainer, bound.startOffset);
-                    rng.setEnd(bound.endContainer, bound.endOffset);
-                    rng.deleteContents();
-                    const textNode = this.j.createInside.text(this.replaceInput.value);
-                    rng.insertNode(textNode);
-                    this.j.s.select(textNode);
-                    this.tryScrollToElement(textNode);
-                }
+                const rng = this.j.ed.createRange();
+                rng.setStart(bound.startContainer, bound.startOffset);
+                rng.setEnd(bound.endContainer, bound.endOffset);
+                rng.deleteContents();
+                const textNode = this.j.createInside.text(this.ui.replace);
+                rng.insertNode(textNode);
+                this.j.s.select(textNode);
+                this.tryScrollToElement(textNode);
+                this.cache = {};
+                this.j.synchronizeValues();
             }
             catch (_a) { }
+            this.j.e.fire('afterFindAndReplace');
             return true;
         }
         return false;
     }
-    findAndSelect(start, query, next) {
-        const range = this.j.s.range, bound = this.find(start, query, next, 0, range);
-        if (bound && bound.startContainer && bound.endContainer) {
+    async findAndSelect(query, next) {
+        var _a;
+        if (this.walker) {
+            this.walker.break();
+        }
+        this.walker = new dom/* LazyWalker */.b(this.j.async, {
+            timeout: this.j.defaultTimeout
+        });
+        const bounds = await this.find(this.walker, query);
+        if (!bounds.length) {
+            return false;
+        }
+        if (this.previousQuery !== query ||
+            !getSelectionWrappers(this.j.editor).length) {
+            (_a = this.drawPromise) === null || _a === void 0 ? void 0 : _a.rejectCallback();
+            this.j.async.cancelAnimationFrame(this.wrapFrameRequest);
+            clearSelectionWrappers(this.j.editor);
+            this.drawPromise = this.drawSelectionRanges(bounds);
+        }
+        this.previousQuery = query;
+        let currentIndex = this.ui.currentIndex - 1;
+        if (currentIndex === -1) {
+            currentIndex = 0;
+        }
+        else if (next) {
+            currentIndex =
+                currentIndex === bounds.length - 1 ? 0 : currentIndex + 1;
+        }
+        else {
+            currentIndex =
+                currentIndex === 0 ? bounds.length - 1 : currentIndex - 1;
+        }
+        this.ui.currentIndex = currentIndex + 1;
+        const bound = bounds[currentIndex];
+        if (bound) {
             const rng = this.j.ed.createRange();
             try {
                 rng.setStart(bound.startContainer, bound.startOffset);
@@ -31601,230 +32130,139 @@ class search_search_search extends Plugin {
             }
             catch (e) { }
             this.tryScrollToElement(bound.startContainer);
-            this.current = bound.startContainer;
-            this.updateCounters();
+            await this.updateCounters();
+            await this.drawPromise;
+            this.j.e.fire('afterFindAndSelect');
             return true;
         }
         return false;
     }
-    find(start, query, next, deep, range) {
-        if (start && query.length) {
-            let sentence = '', bound = {
-                startContainer: null,
-                startOffset: null,
-                endContainer: null,
-                endOffset: null
-            };
-            this.eachMap(start, (elm) => {
-                var _a;
-                if (dom/* Dom.isText */.i.isText(elm) && ((_a = elm.nodeValue) === null || _a === void 0 ? void 0 : _a.length)) {
-                    let value = elm.nodeValue;
-                    if (!next && elm === range.startContainer) {
-                        value = !deep
-                            ? value.substring(0, range.startOffset)
-                            : value.substring(range.endOffset);
-                    }
-                    else if (next && elm === range.endContainer) {
-                        value = !deep
-                            ? value.substring(range.endOffset)
-                            : value.substring(0, range.startOffset);
-                    }
-                    const tmpSentence = next
-                        ? sentence + value
-                        : value + sentence;
-                    const part = findSomePartOfString(query, tmpSentence, next);
-                    if (part !== false) {
-                        let currentPart = findSomePartOfString(query, value, next);
-                        if (currentPart === true) {
-                            currentPart = (0,helpers.trim)(query);
-                        }
-                        else if (currentPart === false) {
-                            currentPart = findSomePartOfString(value, query, next);
-                            if (currentPart === true) {
-                                currentPart = (0,helpers.trim)(value);
-                            }
-                        }
-                        let currentPartIndex = getSomePartOfStringIndex(query, value, next) ||
-                            0;
-                        if (((next && !deep) || (!next && deep)) &&
-                            elm.nodeValue.length - value.length > 0) {
-                            currentPartIndex +=
-                                elm.nodeValue.length - value.length;
-                        }
-                        if (bound.startContainer == null) {
-                            bound.startContainer = elm;
-                            bound.startOffset = currentPartIndex;
-                        }
-                        if (part !== true) {
-                            sentence = tmpSentence;
-                        }
-                        else {
-                            bound.endContainer = elm;
-                            bound.endOffset = currentPartIndex;
-                            bound.endOffset += currentPart.length;
-                            return true;
-                        }
-                    }
-                    else {
-                        sentence = '';
-                        bound = {
-                            startContainer: null,
-                            startOffset: null,
-                            endContainer: null,
-                            endOffset: null
-                        };
-                    }
-                }
-                else if (dom/* Dom.isBlock */.i.isBlock(elm) && sentence !== '') {
-                    sentence = next ? sentence + ' ' : ' ' + sentence;
+    findCurrentIndexInRanges(bounds, range) {
+        return bounds.findIndex(bound => bound.startContainer === range.startContainer &&
+            bound.startOffset === range.startOffset &&
+            bound.endContainer === range.startContainer &&
+            bound.endOffset === range.endOffset);
+    }
+    async isValidCache(promise) {
+        const res = await promise;
+        return res.every(r => {
+            var _a, _b, _c, _d;
+            return r.startContainer.isConnected &&
+                r.startOffset <= ((_b = (_a = r.startContainer.nodeValue) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0) &&
+                r.endContainer.isConnected &&
+                r.endOffset <= ((_d = (_c = r.endContainer.nodeValue) === null || _c === void 0 ? void 0 : _c.length) !== null && _d !== void 0 ? _d : 0);
+        });
+    }
+    async find(walker, query) {
+        if (!query.length) {
+            return [];
+        }
+        const cache = this.cache[query];
+        if (cache && (await this.isValidCache(cache))) {
+            return cache;
+        }
+        const sentence = new SentenceFinder(this.j.o.search.fuzzySearch);
+        this.cache[query] = this.j.async.promise(resolve => {
+            walker
+                .on('break', () => {
+                resolve([]);
+            })
+                .on('visit', (elm) => {
+                if (dom/* Dom.isText */.i.isText(elm)) {
+                    sentence.add(elm);
                 }
                 return false;
-            }, next);
-            if (bound.startContainer && bound.endContainer) {
-                return bound;
-            }
-            if (!deep) {
-                this.current = next
-                    ? this.j.editor.firstChild
-                    : this.j.editor.lastChild;
-                return this.find(this.current, query, next, deep + 1, range);
-            }
-        }
-        return false;
+            })
+                .on('end', () => {
+                var _a;
+                resolve((_a = sentence.ranges(query)) !== null && _a !== void 0 ? _a : []);
+            })
+                .setWork(this.j.editor);
+        });
+        return this.cache[query];
     }
-    open(searchAndReplace = false) {
-        if (!this.isOpened) {
-            this.j.workplace.appendChild(this.searchBox);
-            this.isOpened = true;
-        }
-        this.calcSticky(this.j.e.fire('getStickyState.sticky') || false);
-        this.j.e.fire('hidePopup');
-        this.searchBox.classList.toggle('jodit-search_replace', searchAndReplace);
-        this.current = this.j.s.current();
-        const selStr = (this.j.s.sel || '').toString();
-        if (selStr) {
-            this.queryInput.value = selStr;
-        }
-        this.updateCounters();
-        if (selStr) {
-            this.queryInput.select();
-        }
-        else {
-            this.queryInput.focus();
-        }
+    drawSelectionRanges(ranges) {
+        const { async, createInside: ci, editor } = this.j;
+        async.cancelAnimationFrame(this.wrapFrameRequest);
+        const parts = [...ranges];
+        let sRange, total = 0;
+        return async.promise(resolve => {
+            const drawParts = () => {
+                do {
+                    sRange = parts.shift();
+                    if (sRange) {
+                        wrapRangesTextsInTmpSpan(sRange, parts, ci, editor);
+                    }
+                    total += 1;
+                } while (sRange && total <= 5);
+                if (parts.length) {
+                    this.wrapFrameRequest =
+                        async.requestAnimationFrame(drawParts);
+                }
+                else {
+                    resolve();
+                }
+            };
+            drawParts();
+        });
     }
-    close() {
-        if (!this.isOpened) {
-            return;
-        }
-        this.j.s.restore();
-        dom/* Dom.safeRemove */.i.safeRemove(this.searchBox);
-        this.isOpened = false;
+    onAfterGetValueFromEditor(data) {
+        data.value = clearSelectionWrappersFromHTML(data.value);
     }
     afterInit(editor) {
         if (editor.o.useSearch) {
             const self = this;
-            self.searchBox = editor.c.fromHTML(template(editor));
-            const { query, replace, cancel, next, prev, replaceBtn, counterBox } = (0,helpers.refs)(self.searchBox);
-            self.queryInput = query;
-            self.replaceInput = replace;
-            self.closeButton = cancel;
-            self.nextButton = next;
-            self.prevButton = prev;
-            self.replaceButton = replaceBtn;
-            self.counterBox = counterBox;
-            const onInit = () => {
-                editor.e
-                    .off(this.j.container, 'keydown.search')
-                    .on(this.j.container, 'keydown.search', (e) => {
-                    if (editor.getRealMode() !== constants.MODE_WYSIWYG) {
-                        return;
-                    }
-                    switch (e.key) {
-                        case constants.KEY_ESC:
-                            this.close();
-                            break;
-                        case constants.KEY_F3:
-                            if (self.queryInput.value) {
-                                editor.e.fire(!e.shiftKey
-                                    ? 'searchNext'
-                                    : 'searchPrevious');
-                                e.preventDefault();
-                            }
-                            break;
-                    }
-                });
-            };
-            onInit();
             editor.e
-                .on('changePlace', onInit)
-                .on(self.closeButton, 'click', this.close)
-                .on(self.queryInput, 'mousedown', () => {
-                if (editor.s.isFocused()) {
-                    editor.s.removeMarkers();
-                    self.selInfo = editor.s.save();
-                }
-            })
-                .on(self.replaceButton, 'click', (e) => {
-                self.findAndReplace(editor.s.current() || editor.editor.firstChild, self.queryInput.value);
-                this.updateCounters();
-                e.preventDefault();
-                e.stopImmediatePropagation();
-            })
-                .on([self.nextButton, self.prevButton], 'click', function (e) {
-                editor.e.fire(self.nextButton === this
-                    ? 'searchNext'
-                    : 'searchPrevious');
-                e.preventDefault();
-                e.stopImmediatePropagation();
-            })
-                .on(this.queryInput, 'keydown', this.j.async.debounce((e) => {
-                switch (e.key) {
-                    case constants.KEY_ENTER:
-                        e.preventDefault();
-                        e.stopImmediatePropagation();
-                        if (editor.e.fire('searchNext')) {
-                            this.close();
-                        }
-                        break;
-                    default:
-                        this.updateCounters();
-                        break;
-                }
-            }, this.j.defaultTimeout))
                 .on('beforeSetMode.search', () => {
-                this.close();
+                this.ui.close();
             })
-                .on('keydown.search mousedown.search', () => {
-                if (this.selInfo) {
+                .on(this.ui, 'afterClose', () => {
+                clearSelectionWrappers(editor.editor);
+                this.ui.currentIndex = 0;
+                this.ui.count = 0;
+                this.cache = {};
+            })
+                .on('click', () => {
+                this.ui.currentIndex = 0;
+                clearSelectionWrappers(editor.editor);
+            })
+                .on('change.search', () => {
+                this.cache = {};
+            })
+                .on('keydown.search mousedown.search', editor.async.debounce(() => {
+                if (this.ui.selInfo) {
                     editor.s.removeMarkers();
-                    this.selInfo = null;
+                    this.ui.selInfo = null;
                 }
-                if (this.isOpened) {
-                    this.current = this.j.s.current();
+                if (this.ui.isOpened) {
                     this.updateCounters();
                 }
-            })
+            }, editor.defaultTimeout))
                 .on('searchNext.search searchPrevious.search', () => {
-                if (!self.isOpened) {
-                    return self.open();
+                if (!this.ui.isOpened) {
+                    this.ui.open();
                 }
-                return self.findAndSelect(editor.s.current() || editor.editor.firstChild, self.queryInput.value, editor.e.current === 'searchNext');
+                return self
+                    .findAndSelect(self.ui.query, editor.e.current === 'searchNext')
+                    .catch(() => { });
             })
                 .on('search.search', (value, next = true) => {
-                editor.execCommand('search', value, next);
-            })
-                .on('toggleSticky.search', this.calcSticky);
+                this.ui.currentIndex = 0;
+                return self
+                    .findAndSelect(value || '', next)
+                    .catch(() => { });
+            });
             editor
                 .registerCommand('search', {
                 exec: (command, value, next = true) => {
-                    self.findAndSelect(editor.s.current() || editor.editor.firstChild, value || '', next);
+                    value &&
+                        self.findAndSelect(value, next).catch(() => { });
                     return false;
                 }
             })
                 .registerCommand('openSearchDialog', {
                 exec: () => {
-                    self.open();
+                    self.ui.open();
                     return false;
                 },
                 hotkeys: ['ctrl+f', 'cmd+f']
@@ -31832,7 +32270,7 @@ class search_search_search extends Plugin {
                 .registerCommand('openReplaceDialog', {
                 exec: () => {
                     if (!editor.o.readonly) {
-                        self.open(true);
+                        self.ui.open(true);
                     }
                     return false;
                 },
@@ -31841,55 +32279,34 @@ class search_search_search extends Plugin {
         }
     }
     beforeDestruct(jodit) {
-        dom/* Dom.safeRemove */.i.safeRemove(this.searchBox);
+        this.ui.destruct();
         jodit.e.off('.search');
-    }
-    calcSticky(enabled) {
-        if (this.isOpened) {
-            this.searchBox.classList.toggle('jodit-search_sticky', enabled);
-            if (enabled) {
-                const pos = (0,helpers.position)(this.j.toolbarContainer);
-                (0,helpers.css)(this.searchBox, {
-                    top: pos.top + pos.height,
-                    left: pos.left + pos.width
-                });
-            }
-            else {
-                (0,helpers.css)(this.searchBox, {
-                    top: null,
-                    left: null
-                });
-            }
-        }
     }
 }
 (0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
-], search_search_search.prototype, "eachMap", null);
+    decorators.cache
+], search_search.prototype, "ui", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)('ui:needUpdateCounters')
+], search_search.prototype, "updateCounters", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)('ui:pressReplaceButton')
+], search_search.prototype, "onPressReplaceButton", null);
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
-], search_search_search.prototype, "updateCounters", null);
+], search_search.prototype, "findAndReplace", null);
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
-], search_search_search.prototype, "findAndReplace", null);
+], search_search.prototype, "findAndSelect", null);
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
-], search_search_search.prototype, "findAndSelect", null);
+], search_search.prototype, "find", null);
 (0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
-], search_search_search.prototype, "find", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
-], search_search_search.prototype, "open", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
-], search_search_search.prototype, "close", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
-], search_search_search.prototype, "calcSticky", null);
+    (0,decorators.watch)(':afterGetValueFromEditor')
+], search_search.prototype, "onAfterGetValueFromEditor", null);
 
 // EXTERNAL MODULE: ./src/core/helpers/string/camel-case.ts
-var camel_case = __webpack_require__(44);
+var camel_case = __webpack_require__(47);
 ;// CONCATENATED MODULE: ./src/plugins/select/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -32093,7 +32510,7 @@ resizeHandler = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/size/size.less
-var size = __webpack_require__(127);
+var size = __webpack_require__(132);
 ;// CONCATENATED MODULE: ./src/plugins/size/size.less
 
       
@@ -32296,7 +32713,7 @@ config/* Config.prototype.controls.source */.D.prototype.controls.source = {
 };
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/source/source.less
-var source = __webpack_require__(128);
+var source = __webpack_require__(133);
 ;// CONCATENATED MODULE: ./src/plugins/source/source.less
 
       
@@ -33071,7 +33488,7 @@ class stat extends Plugin {
 }
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/sticky/sticky.less
-var sticky = __webpack_require__(129);
+var sticky = __webpack_require__(134);
 ;// CONCATENATED MODULE: ./src/plugins/sticky/sticky.less
 
       
@@ -33204,7 +33621,7 @@ config/* Config.prototype.controls.spellcheck */.D.prototype.controls.spellcheck
     isActive(e) {
         return e.o.spellcheck;
     },
-    icon: __webpack_require__(130),
+    icon: __webpack_require__(135),
     name: 'spellcheck',
     command: 'toggleSpellcheck',
     tooltip: 'Spellchecking'
@@ -33232,7 +33649,7 @@ class spellcheck extends Plugin {
         ];
     }
     afterInit(jodit) {
-        jodit.e.on('afterInit afterAddPlace', this.toggleSpellcheck);
+        jodit.e.on('afterInit afterAddPlace prepareWYSIWYGEditor', this.toggleSpellcheck);
         this.toggleSpellcheck();
         jodit.registerCommand('toggleSpellcheck', () => {
             this.jodit.o.spellcheck = !this.jodit.o.spellcheck;
@@ -33250,7 +33667,7 @@ class spellcheck extends Plugin {
 ], spellcheck.prototype, "toggleSpellcheck", null);
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/symbols/symbols.less
-var symbols = __webpack_require__(131);
+var symbols = __webpack_require__(136);
 ;// CONCATENATED MODULE: ./src/plugins/symbols/symbols.less
 
       
@@ -33798,7 +34215,7 @@ config/* Config.prototype.controls.table */.D.prototype.controls.table = {
 };
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/table/table.less
-var table = __webpack_require__(132);
+var table = __webpack_require__(137);
 ;// CONCATENATED MODULE: ./src/plugins/table/table.less
 
       
@@ -34512,7 +34929,7 @@ function table_table_table(editor) {
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/tooltip/tooltip.less
-var tooltip = __webpack_require__(133);
+var tooltip = __webpack_require__(138);
 ;// CONCATENATED MODULE: ./src/plugins/tooltip/tooltip.less
 
       
@@ -34698,9 +35115,9 @@ class tab extends Plugin {
     (0,decorators.watch)(':keydown.tab')
 ], tab.prototype, "onTab", null);
 
-// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/print/preview.less
-var preview = __webpack_require__(134);
-;// CONCATENATED MODULE: ./src/plugins/print/preview.less
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/print/preview/preview.less
+var preview = __webpack_require__(139);
+;// CONCATENATED MODULE: ./src/plugins/print/preview/preview.less
 
       
       
@@ -34727,7 +35144,7 @@ var preview_update = injectStylesIntoStyleTag_default()(preview/* default */.Z, 
 
 
 
-       /* harmony default export */ var print_preview = (preview/* default */.Z && preview/* default.locals */.Z.locals ? preview/* default.locals */.Z.locals : undefined);
+       /* harmony default export */ var preview_preview = (preview/* default */.Z && preview/* default.locals */.Z.locals ? preview/* default.locals */.Z.locals : undefined);
 
 ;// CONCATENATED MODULE: ./src/plugins/print/helpers.ts
 /*!
@@ -34772,14 +35189,17 @@ function fixedAssetsSizeAndAbsoluteLinks(editor, points) {
     }
     return restoreAttributes;
 }
-function previewBox(editor, defaultValue, points = 'px') {
+function previewBox(editor, defaultValue, points = 'px', container = null) {
     const restoreAttributes = fixedAssetsSizeAndAbsoluteLinks(editor, points);
     try {
         const res = editor.e.fire('beforePreviewBox', defaultValue, points);
         if (res != null) {
             return res;
         }
-        const div = editor.c.div('jodit__preview-box');
+        let div = editor.c.div('jodit__preview-box');
+        if (container) {
+            container.appendChild(div);
+        }
         (0,helpers.css)(div, {
             position: 'relative',
             padding: 16
@@ -34794,9 +35214,10 @@ function previewBox(editor, defaultValue, points = 'px') {
                 border: 0
             });
             div.appendChild(iframe);
-            const mywindow = iframe.contentWindow;
-            if (mywindow) {
-                editor.e.fire('generateDocumentStructure.iframe', mywindow.document, editor);
+            const myWindow = iframe.contentWindow;
+            if (myWindow) {
+                editor.e.fire('generateDocumentStructure.iframe', myWindow.document, editor);
+                div = myWindow.document.body;
             }
         }
         else {
@@ -34813,7 +35234,7 @@ function previewBox(editor, defaultValue, points = 'px') {
             }
             for (let i = 0; i < dv.children.length; i += 1) {
                 const c = dv.children[i];
-                const newNode = document.createElement(c.nodeName);
+                const newNode = box.ownerDocument.createElement(c.nodeName);
                 for (let j = 0; j < c.attributes.length; j += 1) {
                     (0,helpers.attr)(newNode, c.attributes[j].nodeName, c.attributes[j].nodeValue);
                 }
@@ -34849,12 +35270,13 @@ function previewBox(editor, defaultValue, points = 'px') {
     }
 }
 
-;// CONCATENATED MODULE: ./src/plugins/print/preview.ts
+;// CONCATENATED MODULE: ./src/plugins/print/preview/preview.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 
@@ -34865,20 +35287,20 @@ config/* Config.prototype.controls.preview */.D.prototype.controls.preview = {
     mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG,
     tooltip: 'Preview'
 };
-function preview_preview(editor) {
+function preview_preview_preview(editor) {
     editor.registerButton({
         name: 'preview'
     });
     editor.registerCommand('preview', (_, _1, defaultValue) => {
-        const dialog = editor.getInstance('Dialog', {
+        const dialog = new Dialog({
             language: editor.o.language,
             theme: editor.o.theme
         });
-        const div = previewBox(editor, defaultValue);
         dialog
             .setSize(1024, 600)
-            .open(div, editor.i18n('Preview'))
+            .open('', editor.i18n('Preview'))
             .setModal(true);
+        previewBox(editor, defaultValue, 'px', dialog.getElm('content'));
     });
 }
 
@@ -34909,26 +35331,33 @@ config/* Config.prototype.controls.print */.D.prototype.controls.print = {
             editor.e.off(editor.ow, 'mousemove', afterFinishPrint);
             dom/* Dom.safeRemove */.i.safeRemove(iframe);
         };
-        const mywindow = iframe.contentWindow;
-        if (mywindow) {
+        const myWindow = iframe.contentWindow;
+        if (myWindow) {
             editor.e
-                .on(mywindow, 'onbeforeunload onafterprint', afterFinishPrint)
+                .on(myWindow, 'onbeforeunload onafterprint', afterFinishPrint)
                 .on(editor.ow, 'mousemove', afterFinishPrint);
             if (editor.o.iframe) {
-                editor.e.fire('generateDocumentStructure.iframe', mywindow.document, editor);
-                mywindow.document.body.innerHTML = editor.value;
+                editor.e.fire('generateDocumentStructure.iframe', myWindow.document, editor);
+                myWindow.document.body.innerHTML = editor.value;
             }
             else {
-                mywindow.document.write('<!doctype html><html lang="' +
+                myWindow.document.write('<!doctype html><html lang="' +
                     (0,helpers.defaultLanguage)(editor.o.language) +
                     '"><head><title></title></head>' +
                     '<body>' +
                     editor.value +
                     '</body></html>');
-                mywindow.document.close();
+                myWindow.document.close();
             }
-            mywindow.focus();
-            mywindow.print();
+            const style = myWindow.document.createElement('style');
+            style.innerHTML = `@media print {
+					body {
+							-webkit-print-color-adjust: exact;
+					}
+			}`;
+            myWindow.document.head.appendChild(style);
+            myWindow.focus();
+            myWindow.print();
         }
     },
     mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG,
@@ -34950,7 +35379,7 @@ function print(editor) {
 
 
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./build-system/loaders/css-variables-prefixes.js!./node_modules/less-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/plugins/xpath/xpath.less
-var xpath = __webpack_require__(135);
+var xpath = __webpack_require__(140);
 ;// CONCATENATED MODULE: ./src/plugins/xpath/xpath.less
 
       
@@ -35185,171 +35614,171 @@ class xpath_xpath_xpath extends Plugin {
 
 
 // EXTERNAL MODULE: ./src/styles/icons/about.svg
-var icons_about = __webpack_require__(136);
+var icons_about = __webpack_require__(141);
 // EXTERNAL MODULE: ./src/styles/icons/addcolumn.svg
-var addcolumn = __webpack_require__(137);
+var addcolumn = __webpack_require__(142);
 // EXTERNAL MODULE: ./src/styles/icons/addrow.svg
-var addrow = __webpack_require__(138);
+var addrow = __webpack_require__(143);
 // EXTERNAL MODULE: ./src/styles/icons/angle-down.svg
-var angle_down = __webpack_require__(139);
+var angle_down = __webpack_require__(144);
 // EXTERNAL MODULE: ./src/styles/icons/angle-left.svg
-var angle_left = __webpack_require__(140);
+var angle_left = __webpack_require__(145);
 // EXTERNAL MODULE: ./src/styles/icons/angle-right.svg
-var angle_right = __webpack_require__(141);
+var angle_right = __webpack_require__(146);
 // EXTERNAL MODULE: ./src/styles/icons/angle-up.svg
-var angle_up = __webpack_require__(142);
+var angle_up = __webpack_require__(147);
 // EXTERNAL MODULE: ./src/styles/icons/arrows-alt.svg
-var arrows_alt = __webpack_require__(143);
+var arrows_alt = __webpack_require__(148);
 // EXTERNAL MODULE: ./src/styles/icons/arrows-h.svg
-var arrows_h = __webpack_require__(144);
+var arrows_h = __webpack_require__(149);
 // EXTERNAL MODULE: ./src/styles/icons/attachment.svg
-var attachment = __webpack_require__(145);
+var attachment = __webpack_require__(150);
 // EXTERNAL MODULE: ./src/styles/icons/bin.svg
-var bin = __webpack_require__(146);
+var bin = __webpack_require__(151);
 // EXTERNAL MODULE: ./src/styles/icons/bold.svg
-var icons_bold = __webpack_require__(147);
+var icons_bold = __webpack_require__(152);
 // EXTERNAL MODULE: ./src/styles/icons/brush.svg
-var brush = __webpack_require__(148);
+var brush = __webpack_require__(153);
 // EXTERNAL MODULE: ./src/styles/icons/cancel.svg
-var cancel = __webpack_require__(149);
+var cancel = __webpack_require__(154);
 // EXTERNAL MODULE: ./src/styles/icons/center.svg
-var center = __webpack_require__(150);
+var center = __webpack_require__(155);
 // EXTERNAL MODULE: ./src/styles/icons/chain-broken.svg
-var chain_broken = __webpack_require__(151);
+var chain_broken = __webpack_require__(156);
 // EXTERNAL MODULE: ./src/styles/icons/check.svg
-var check = __webpack_require__(152);
+var check = __webpack_require__(157);
 // EXTERNAL MODULE: ./src/styles/icons/check-square.svg
-var check_square = __webpack_require__(153);
+var check_square = __webpack_require__(158);
 // EXTERNAL MODULE: ./src/styles/icons/chevron.svg
-var chevron = __webpack_require__(154);
+var chevron = __webpack_require__(159);
 // EXTERNAL MODULE: ./src/styles/icons/copyformat.svg
-var copyformat = __webpack_require__(155);
+var copyformat = __webpack_require__(160);
 // EXTERNAL MODULE: ./src/styles/icons/crop.svg
-var crop = __webpack_require__(156);
+var crop = __webpack_require__(161);
 // EXTERNAL MODULE: ./src/styles/icons/copy.svg
-var copy = __webpack_require__(157);
+var copy = __webpack_require__(162);
 // EXTERNAL MODULE: ./src/styles/icons/cut.svg
-var cut = __webpack_require__(158);
+var cut = __webpack_require__(163);
 // EXTERNAL MODULE: ./src/styles/icons/dedent.svg
-var dedent = __webpack_require__(159);
+var dedent = __webpack_require__(164);
 // EXTERNAL MODULE: ./src/styles/icons/dots.svg
-var dots = __webpack_require__(160);
+var dots = __webpack_require__(165);
 // EXTERNAL MODULE: ./src/styles/icons/enter.svg
-var icons_enter = __webpack_require__(161);
+var icons_enter = __webpack_require__(166);
 // EXTERNAL MODULE: ./src/styles/icons/eraser.svg
-var eraser = __webpack_require__(162);
+var eraser = __webpack_require__(167);
 // EXTERNAL MODULE: ./src/styles/icons/eye.svg
-var eye = __webpack_require__(163);
+var eye = __webpack_require__(168);
 // EXTERNAL MODULE: ./src/styles/icons/file.svg
-var icons_file = __webpack_require__(164);
+var icons_file = __webpack_require__(169);
 // EXTERNAL MODULE: ./src/styles/icons/folder.svg
-var folder = __webpack_require__(165);
+var folder = __webpack_require__(170);
 // EXTERNAL MODULE: ./src/styles/icons/font.svg
-var icons_font = __webpack_require__(166);
+var icons_font = __webpack_require__(171);
 // EXTERNAL MODULE: ./src/styles/icons/fontsize.svg
-var fontsize = __webpack_require__(167);
+var fontsize = __webpack_require__(172);
 // EXTERNAL MODULE: ./src/styles/icons/fullsize.svg
-var icons_fullsize = __webpack_require__(168);
+var icons_fullsize = __webpack_require__(173);
 // EXTERNAL MODULE: ./src/styles/icons/hr.svg
-var icons_hr = __webpack_require__(169);
+var icons_hr = __webpack_require__(174);
 // EXTERNAL MODULE: ./src/styles/icons/image.svg
-var icons_image = __webpack_require__(170);
+var icons_image = __webpack_require__(175);
 // EXTERNAL MODULE: ./src/styles/icons/indent.svg
-var icons_indent = __webpack_require__(171);
+var icons_indent = __webpack_require__(176);
 // EXTERNAL MODULE: ./src/styles/icons/info-circle.svg
-var info_circle = __webpack_require__(172);
+var info_circle = __webpack_require__(177);
 // EXTERNAL MODULE: ./src/styles/icons/italic.svg
-var italic = __webpack_require__(173);
+var italic = __webpack_require__(178);
 // EXTERNAL MODULE: ./src/styles/icons/justify.svg
-var icons_justify = __webpack_require__(174);
+var icons_justify = __webpack_require__(179);
 // EXTERNAL MODULE: ./src/styles/icons/left.svg
-var left = __webpack_require__(175);
+var left = __webpack_require__(180);
 // EXTERNAL MODULE: ./src/styles/icons/line-height.svg
-var line_height = __webpack_require__(176);
+var line_height = __webpack_require__(181);
 // EXTERNAL MODULE: ./src/styles/icons/link.svg
-var icons_link = __webpack_require__(177);
+var icons_link = __webpack_require__(182);
 // EXTERNAL MODULE: ./src/styles/icons/lock.svg
-var lock = __webpack_require__(178);
+var lock = __webpack_require__(183);
 // EXTERNAL MODULE: ./src/styles/icons/menu.svg
-var menu = __webpack_require__(179);
+var menu = __webpack_require__(184);
 // EXTERNAL MODULE: ./src/styles/icons/merge.svg
-var merge = __webpack_require__(180);
+var merge = __webpack_require__(185);
 // EXTERNAL MODULE: ./src/styles/icons/ok.svg
-var ok = __webpack_require__(181);
+var ok = __webpack_require__(186);
 // EXTERNAL MODULE: ./src/styles/icons/ol.svg
-var ol = __webpack_require__(182);
+var ol = __webpack_require__(187);
 // EXTERNAL MODULE: ./src/styles/icons/omega.svg
-var omega = __webpack_require__(183);
+var omega = __webpack_require__(188);
 // EXTERNAL MODULE: ./src/styles/icons/outdent.svg
-var outdent = __webpack_require__(184);
+var outdent = __webpack_require__(189);
 // EXTERNAL MODULE: ./src/styles/icons/palette.svg
-var palette = __webpack_require__(185);
+var palette = __webpack_require__(190);
 // EXTERNAL MODULE: ./src/styles/icons/paragraph.svg
-var paragraph = __webpack_require__(186);
+var paragraph = __webpack_require__(191);
 // EXTERNAL MODULE: ./src/styles/icons/paste.svg
-var icons_paste = __webpack_require__(187);
+var icons_paste = __webpack_require__(192);
 // EXTERNAL MODULE: ./src/styles/icons/pencil.svg
-var pencil = __webpack_require__(188);
+var pencil = __webpack_require__(193);
 // EXTERNAL MODULE: ./src/styles/icons/plus.svg
-var plus = __webpack_require__(189);
+var plus = __webpack_require__(194);
 // EXTERNAL MODULE: ./src/styles/icons/print.svg
-var icons_print = __webpack_require__(190);
+var icons_print = __webpack_require__(195);
 // EXTERNAL MODULE: ./src/styles/icons/redo.svg
-var redo = __webpack_require__(191);
+var redo = __webpack_require__(196);
 // EXTERNAL MODULE: ./src/styles/icons/resize.svg
-var resize = __webpack_require__(192);
+var resize = __webpack_require__(197);
 // EXTERNAL MODULE: ./src/styles/icons/resize-handler.svg
-var resize_handler = __webpack_require__(193);
+var resize_handler = __webpack_require__(198);
 // EXTERNAL MODULE: ./src/styles/icons/resizer.svg
-var icons_resizer = __webpack_require__(194);
+var icons_resizer = __webpack_require__(199);
 // EXTERNAL MODULE: ./src/styles/icons/right.svg
-var right = __webpack_require__(195);
+var right = __webpack_require__(200);
 // EXTERNAL MODULE: ./src/styles/icons/save.svg
-var save = __webpack_require__(196);
+var save = __webpack_require__(201);
 // EXTERNAL MODULE: ./src/styles/icons/search.svg
-var icons_search = __webpack_require__(197);
+var icons_search = __webpack_require__(202);
 // EXTERNAL MODULE: ./src/styles/icons/settings.svg
-var settings = __webpack_require__(198);
+var settings = __webpack_require__(203);
 // EXTERNAL MODULE: ./src/styles/icons/select-all.svg
-var select_all = __webpack_require__(199);
+var select_all = __webpack_require__(204);
 // EXTERNAL MODULE: ./src/styles/icons/shrink.svg
-var shrink = __webpack_require__(200);
+var shrink = __webpack_require__(205);
 // EXTERNAL MODULE: ./src/styles/icons/source.svg
-var icons_source = __webpack_require__(201);
+var icons_source = __webpack_require__(206);
 // EXTERNAL MODULE: ./src/styles/icons/splitg.svg
-var splitg = __webpack_require__(202);
+var splitg = __webpack_require__(207);
 // EXTERNAL MODULE: ./src/styles/icons/splitv.svg
-var splitv = __webpack_require__(203);
+var splitv = __webpack_require__(208);
 // EXTERNAL MODULE: ./src/styles/icons/strikethrough.svg
-var strikethrough = __webpack_require__(204);
+var strikethrough = __webpack_require__(209);
 // EXTERNAL MODULE: ./src/styles/icons/subscript.svg
-var subscript = __webpack_require__(205);
+var subscript = __webpack_require__(210);
 // EXTERNAL MODULE: ./src/styles/icons/superscript.svg
-var superscript = __webpack_require__(206);
+var superscript = __webpack_require__(211);
 // EXTERNAL MODULE: ./src/styles/icons/table.svg
-var icons_table = __webpack_require__(207);
+var icons_table = __webpack_require__(212);
 // EXTERNAL MODULE: ./src/styles/icons/th.svg
-var th = __webpack_require__(208);
+var th = __webpack_require__(213);
 // EXTERNAL MODULE: ./src/styles/icons/th-list.svg
-var th_list = __webpack_require__(209);
+var th_list = __webpack_require__(214);
 // EXTERNAL MODULE: ./src/styles/icons/ul.svg
-var ul = __webpack_require__(210);
+var ul = __webpack_require__(215);
 // EXTERNAL MODULE: ./src/styles/icons/underline.svg
-var underline = __webpack_require__(211);
+var underline = __webpack_require__(216);
 // EXTERNAL MODULE: ./src/styles/icons/undo.svg
-var undo = __webpack_require__(212);
+var undo = __webpack_require__(217);
 // EXTERNAL MODULE: ./src/styles/icons/unlink.svg
-var unlink = __webpack_require__(213);
+var unlink = __webpack_require__(218);
 // EXTERNAL MODULE: ./src/styles/icons/unlock.svg
-var unlock = __webpack_require__(214);
+var unlock = __webpack_require__(219);
 // EXTERNAL MODULE: ./src/styles/icons/update.svg
-var icons_update = __webpack_require__(215);
+var icons_update = __webpack_require__(220);
 // EXTERNAL MODULE: ./src/styles/icons/upload.svg
-var upload = __webpack_require__(216);
+var upload = __webpack_require__(221);
 // EXTERNAL MODULE: ./src/styles/icons/valign.svg
-var valign = __webpack_require__(217);
+var valign = __webpack_require__(222);
 // EXTERNAL MODULE: ./src/styles/icons/video.svg
-var icons_video = __webpack_require__(218);
+var icons_video = __webpack_require__(223);
 ;// CONCATENATED MODULE: ./src/styles/icons/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)

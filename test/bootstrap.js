@@ -672,6 +672,8 @@ function sortAttributes(html) {
 				.replace(/[ ]{2,}/, ' ');
 		});
 
+		newTag = newTag.replace(/<([^>]+)\s+>/, '<$1>');
+
 		tags.push({
 			name: tagMatch[0],
 			value: newTag
