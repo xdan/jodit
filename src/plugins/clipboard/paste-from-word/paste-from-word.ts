@@ -51,7 +51,8 @@ export class PasteFromWord extends Plugin {
 				processPasteFromWord,
 				askBeforePasteFromWord,
 				defaultActionOnPasteFromWord,
-				defaultActionOnPaste
+				defaultActionOnPaste,
+				pasteFromWordActionList
 			} = j.o;
 
 		if (processPasteFromWord && isHtmlFromWord(text)) {
@@ -63,7 +64,8 @@ export class PasteFromWord extends Plugin {
 					'Word Paste Detected',
 					insertType => {
 						this.insertFromWordByType(e, text, insertType);
-					}
+					},
+					pasteFromWordActionList
 				);
 			} else {
 				this.insertFromWordByType(

@@ -8,7 +8,7 @@
  * @module plugins/clipboard/paste
  */
 
-import type { IJodit, Nullable } from 'jodit/types';
+import type { IJodit, IUIOption, Nullable } from 'jodit/types';
 import type {
 	PasteEvent,
 	InsertMode
@@ -21,12 +21,7 @@ import {
 } from 'jodit/core/helpers/checker';
 
 import { Dom } from 'jodit/core/dom';
-import {
-	INSERT_AS_HTML,
-	INSERT_AS_TEXT,
-	INSERT_ONLY_TEXT,
-	TEXT_PLAIN
-} from 'jodit/core/constants';
+import { TEXT_PLAIN } from 'jodit/core/constants';
 
 import { Confirm, Dialog } from 'jodit/modules';
 import { Button } from 'jodit/core/ui';
@@ -136,8 +131,7 @@ export function askInsertTypeDialog(
 	msg: string,
 	title: string,
 	callback: (yes: InsertMode) => void,
-	clearButton: string = 'Clean',
-	insertText: string = 'Insert only Text'
+	buttonList: IUIOption[]
 ): Dialog | void {
 	if (
 		jodit.e.fire(
@@ -145,8 +139,7 @@ export function askInsertTypeDialog(
 			msg,
 			title,
 			callback,
-			clearButton,
-			insertText
+			buttonList
 		) === false
 	) {
 		return;
@@ -163,50 +156,28 @@ export function askInsertTypeDialog(
 
 	markOwner(jodit, dialog.container);
 
-	const keep = Button(jodit, {
-		text: 'Keep',
-		name: 'keep',
-		variant: 'primary',
-		tabIndex: 0
-	});
-
-	const clear = Button(jodit, {
-		text: clearButton,
-		tabIndex: 0
-	});
-
-	const clear2 = Button(jodit, {
-		text: insertText,
-		tabIndex: 0
-	});
+	const buttons = buttonList
+		.map(({ text, value }) =>
+			Button(jodit, '', text).onAction(() =>
+				callback(value as InsertMode)
+			)
+		)
+		.map(btn => {
+			btn.state.tabIndex = 0;
+			return btn;
+		});
 
 	const cancel = Button(jodit, {
 		text: 'Cancel',
 		tabIndex: 0
 	});
 
-	keep.onAction(() => {
-		dialog.close();
-		callback(INSERT_AS_HTML);
-	});
+	dialog.setFooter(
+		[...buttons, cancel].map(btn => btn.onAction(() => dialog.close()))
+	);
 
-	clear.onAction(() => {
-		dialog.close();
-		callback(INSERT_AS_TEXT);
-	});
-
-	clear2.onAction(() => {
-		dialog.close();
-		callback(INSERT_ONLY_TEXT);
-	});
-
-	cancel.onAction(() => {
-		dialog.close();
-	});
-
-	dialog.setFooter([keep, clear, insertText ? clear2 : '', cancel]);
-
-	keep.focus();
+	buttons[0].focus();
+	buttons[0].state.variant = 'primary';
 
 	jodit.e.fire(
 		'afterOpenPasteDialog',
@@ -214,8 +185,7 @@ export function askInsertTypeDialog(
 		msg,
 		title,
 		callback,
-		clearButton,
-		insertText
+		buttonList
 	);
 
 	return dialog;

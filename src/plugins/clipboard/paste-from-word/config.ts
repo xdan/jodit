@@ -10,6 +10,12 @@
 
 import type { InsertMode } from 'jodit/plugins/clipboard/paste/interface';
 import { Config } from 'jodit/config';
+import type { IUIOption } from 'jodit/types';
+import {
+	INSERT_AS_HTML,
+	INSERT_AS_TEXT,
+	INSERT_ONLY_TEXT
+} from 'jodit/core/constants';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -33,9 +39,20 @@ declare module 'jodit/config' {
 		 * ```
 		 */
 		defaultActionOnPasteFromWord: InsertMode | null;
+
+		/**
+		 * Options when inserting data from Word
+		 */
+		pasteFromWordActionList: IUIOption[];
 	}
 }
 
 Config.prototype.askBeforePasteFromWord = true;
 Config.prototype.processPasteFromWord = true;
 Config.prototype.defaultActionOnPasteFromWord = null;
+
+Config.prototype.pasteFromWordActionList = [
+	{ value: INSERT_AS_HTML, text: 'Keep' },
+	{ value: INSERT_AS_TEXT, text: 'Clean' },
+	{ value: INSERT_ONLY_TEXT, text: 'Insert only Text' }
+];

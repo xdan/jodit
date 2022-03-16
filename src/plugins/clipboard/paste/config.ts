@@ -8,13 +8,18 @@
  * @module plugins/clipboard/paste
  */
 
-import { INSERT_AS_HTML, TEXT_PLAIN } from 'jodit/core/constants';
+import type { IControlType, IJodit, IUIOption } from 'jodit/types';
+import type { InsertMode } from 'jodit/plugins/clipboard/paste/interface';
+import {
+	INSERT_AS_HTML,
+	INSERT_AS_TEXT,
+	INSERT_ONLY_TEXT,
+	TEXT_PLAIN
+} from 'jodit/core/constants';
 import { Config } from 'jodit/config';
-import type { IControlType, IJodit } from 'jodit/types';
 import { pluginKey as clipboardPluginKey } from '../clipboard';
 import { pasteInsertHtml } from './helpers';
 import { Alert } from 'jodit/modules/dialog/alert';
-import type { InsertMode } from 'jodit/plugins/clipboard/paste/interface';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -49,11 +54,22 @@ declare module 'jodit/config' {
 		 * Draggable elements
 		 */
 		draggableTags: string | string[];
+
+		/**
+		 * Options when inserting HTML string
+		 */
+		pasteHTMLActionList: IUIOption[];
 	}
 }
 
 Config.prototype.askBeforePasteHTML = true;
 Config.prototype.processPasteHTML = true;
+
+Config.prototype.pasteHTMLActionList = [
+	{ value: INSERT_AS_HTML, text: 'Keep' },
+	{ value: INSERT_AS_TEXT, text: 'Insert as Text' },
+	{ value: INSERT_ONLY_TEXT, text: 'Insert only Text' }
+];
 
 Config.prototype.memorizeChoiceWhenPasteFragment = false;
 

@@ -161,7 +161,7 @@ export class paste extends Plugin {
 				insertType => {
 					this.insertByType(e, html, insertType);
 				},
-				'Insert as Text'
+				this.j.o.pasteHTMLActionList
 			);
 
 			return true;
