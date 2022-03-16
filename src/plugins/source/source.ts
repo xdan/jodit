@@ -307,6 +307,19 @@ export class source extends Plugin {
 			this.fromWYSIWYG
 		);
 
+		editor.registerCommand(
+			'escapeSourceEditor',
+			{
+				exec: () => {
+					this.sourceEditor?.blur();
+				},
+				hotkeys: ['esc']
+			},
+			{
+				stopPropagation: false
+			}
+		);
+
 		this.onReadonlyReact();
 
 		editor.e

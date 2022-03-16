@@ -723,7 +723,9 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.e
 			.off(shortcuts)
 			.on(shortcuts, (type: string, stop: { shouldStop: boolean }) => {
-				stop.shouldStop = shouldStop ?? true;
+				if (stop) {
+					stop.shouldStop = shouldStop ?? true;
+				}
 				return this.execCommand(commandName); // because need `beforeCommand`
 			});
 	}

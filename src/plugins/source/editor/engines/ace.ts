@@ -231,6 +231,10 @@ export class AceEditor
 		this.instance.focus();
 	}
 
+	blur(): void {
+		this.instance.blur();
+	}
+
 	getSelectionStart(): number {
 		const range = this.instance.selection.getRange();
 
