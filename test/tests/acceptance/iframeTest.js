@@ -114,7 +114,7 @@ describe('Iframe mode', function () {
 						).equals(
 							'<!DOCTYPE html><html lang="en">' +
 								'<head><title>Hi</title></head>' +
-								'<body  spellcheck="false"></body>' +
+								'<body spellcheck="false"></body>' +
 								'</html>'
 						);
 					});
@@ -133,7 +133,7 @@ describe('Iframe mode', function () {
 							).equals(
 								'<!DOCTYPE html><html lang="en">' +
 									'<head><title>Hi</title></head>' +
-									'<body  spellcheck="false">' +
+									'<body spellcheck="false">' +
 									'<p><strong>Test</strong></p></body></html>'
 							);
 						});

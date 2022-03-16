@@ -664,10 +664,12 @@ function sortAttributes(html) {
 		});
 
 		attrs.forEach(function (elm, i) {
-			newTag = newTag.replace(
-				'attribute:' + (i + 1),
-				elm.name + '="' + elm.value + '"'
-			);
+			newTag = newTag
+				.replace(
+					'attribute:' + (i + 1),
+					elm.name.trim() + '="' + elm.value + '"'
+				)
+				.replace(/[ ]{2,}/, ' ');
 		});
 
 		tags.push({
