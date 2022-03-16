@@ -175,16 +175,34 @@ describe('Search plugin', function () {
 					expect(1).equals(sel.rangeCount);
 					const range = sel.getRangeAt(0);
 
-					expect(editor.editor.firstChild.firstChild).equals(
-						range.startContainer
-					);
+					expect(
+						editor.editor.firstChild.firstChild.nextElementSibling
+							.firstChild
+					).equals(range.startContainer);
+					expect(0).equals(range.startOffset);
+					expect(
+						editor.editor.firstChild.firstChild.nextElementSibling
+							.firstChild
+					).equals(range.endContainer);
+					expect(4).equals(range.endOffset);
+					done();
+				});
+			});
+		});
 
-					expect(5).equals(range.startOffset);
+		describe('Select and return value', function (done) {
+			it('Should select all found substring and value should be clean', function (done) {
+				const editor = getJodit();
 
-					expect(editor.editor.firstChild.firstChild).equals(
-						range.endContainer
-					);
-					expect(9).equals(range.endOffset);
+				editor.value = '<p>|test| test test</p>';
+				setCursorToChar(editor);
+
+				editor.events.fire('searchNext').then(() => {
+					expect(editor.value).eq('<p>test test test</p>');
+					expect(
+						editor.editor.querySelectorAll('[jd-tmp-selection]')
+							.length
+					).eq(3);
 					done();
 				});
 			});
@@ -220,13 +238,12 @@ describe('Search plugin', function () {
 
 			editor.events.fire('searchNext').then(() => {
 				const list = [
-					[3, 4],
-					[5, 6],
-					[8, 9],
-					[10, 11],
-					[13, 14],
 					[0, 1],
-					[3, 4]
+					[0, 1],
+					[0, 1],
+					[0, 1],
+					[0, 1],
+					[0, 1]
 				];
 
 				list.forEach(function (pars, index) {
@@ -262,11 +279,8 @@ describe('Search plugin', function () {
 					}
 				});
 
-				editor.value = 'test test test';
-
-				let range = editor.s.createRange(true);
-				range.setStart(editor.editor.firstChild.firstChild, 0);
-				range.setEnd(editor.editor.firstChild.firstChild, 4);
+				editor.value = '<p>|test| test test</p>';
+				setCursorToChar(editor);
 
 				// press ctrl(cmd) + f
 				simulateEvent(
@@ -297,23 +311,22 @@ describe('Search plugin', function () {
 						function (options) {
 							options.shiftKey = true;
 						}
-					); //
+					);
 
 					editor.e.on('afterFindAndSelect', () => {
 						const sel = editor.s.sel;
 
 						expect(1).equals(sel.rangeCount);
 						range = sel.getRangeAt(0);
+						expect(
+							editor.editor.firstChild.lastChild.firstChild
+						).equals(range.startContainer);
+						expect(0).equals(range.startOffset);
 
-						expect(editor.editor.firstChild.firstChild).equals(
-							range.startContainer
-						);
-						expect(10).equals(range.startOffset);
-
-						expect(editor.editor.firstChild.firstChild).equals(
-							range.endContainer
-						);
-						expect(14).equals(range.endOffset);
+						expect(
+							editor.editor.firstChild.lastChild.firstChild
+						).equals(range.endContainer);
+						expect(4).equals(range.endOffset);
 						done();
 					});
 				});

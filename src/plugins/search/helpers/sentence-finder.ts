@@ -4,9 +4,17 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CanUndef, ISelectionRange, Nullable } from 'jodit/types';
-import { trim } from 'jodit/core/helpers';
-import * as consts from 'jodit/core/constants';
+/**
+ * @module plugins/search
+ */
+
+import type {
+	CanUndef,
+	FuzzySearch,
+	ISelectionRange,
+	Nullable
+} from 'jodit/types';
+import { fuzzySearchIndex } from 'jodit/src/core/helpers/string/fuzzy-search-index';
 
 export interface State {
 	query: string;
@@ -19,15 +27,14 @@ interface QueueItem {
 	node: Text;
 }
 
-const n = (s: string): string =>
-	trim(s.toLowerCase().replace(consts.SPACE_REG_EXP(), ' '));
-
 export class SentenceFinder {
 	private queue: QueueItem[] = [];
 	private value: string = '';
 
+	constructor(private readonly searchIndex: FuzzySearch = fuzzySearchIndex) {}
+
 	add(node: Text): void {
-		const value = node.nodeValue ?? '';
+		const value = (node.nodeValue ?? '').toLowerCase();
 
 		if (!value.length) {
 			return;
@@ -45,20 +52,15 @@ export class SentenceFinder {
 	}
 
 	ranges(needle: string, position: number = 0): Nullable<ISelectionRange[]> {
-		needle = n(needle);
-
-		if (!this.value.includes(needle, position)) {
-			return null;
-		}
-
 		const results: ISelectionRange[] = [];
 
 		let index = position,
+			len = 0,
 			startQueueIndex = 0;
 
 		// Find all ranges in substring
 		do {
-			index = this.value.indexOf(needle, index);
+			[index, len] = this.searchIndex(needle, this.value, index);
 
 			if (index !== -1) {
 				let startContainer: CanUndef<Text>,
@@ -74,11 +76,10 @@ export class SentenceFinder {
 
 					if (
 						startContainer &&
-						this.queue[i].endIndex >= index + needle.length
+						this.queue[i].endIndex >= index + len
 					) {
 						endContainer = this.queue[i].node;
-						endOffset =
-							index + needle.length - this.queue[i].startIndex;
+						endOffset = index + len - this.queue[i].startIndex;
 						startQueueIndex = i;
 						break;
 					}
@@ -93,7 +94,7 @@ export class SentenceFinder {
 					});
 				}
 
-				index += needle.length;
+				index += len;
 			}
 		} while (index !== -1);
 

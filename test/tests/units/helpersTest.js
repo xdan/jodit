@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Test helpers', function () {
 	describe('Normalizers', function () {
 		describe('normalizeKeyAliases', function () {
@@ -385,6 +386,93 @@ describe('Test helpers', function () {
 							)
 						);
 					}
+				});
+			});
+		});
+
+		describe('fuzzySearchIndex', () => {
+			const fuzzySearchIndex = Jodit.modules.Helpers.fuzzySearchIndex;
+			const I = Jodit.INVISIBLE_SPACE;
+
+			[
+				['needle', 'haystack', 0, -1, 0],
+				['eel', 'needle', 0, 1, 4],
+				['eel', 'needle', 3, -1, 0],
+				['test', 'needle plus test stack', 3, 12, 4],
+				['test', 'needle plus te st stack', 3, 12, 5],
+				['test', 'needle plus te  st stack', 3, -1, 0],
+				[
+					'test',
+					`invisible char te${I}${I}${I}${I}${I}s${I}t stack`,
+					3,
+					15,
+					10
+				]
+			].forEach(([needle, haystack, offset, index, len]) => {
+				describe(`search "${needle}" in "${haystack}" with offset ${offset}`, () => {
+					it(`should return index ${index} and length ${len}`, () => {
+						expect(
+							fuzzySearchIndex(needle, haystack, offset)
+						).deep.eq([index, len]);
+					});
+				});
+			});
+
+			it('should find all substrings', () => {
+				const haystack = 'SPAs were a mistake spsa';
+				const needle = 'spa';
+				const res = fuzzySearchIndex(needle, haystack);
+
+				expect(res).deep.eq([0, 3]);
+
+				const res2 = fuzzySearchIndex(
+					needle,
+					haystack,
+					res[0] + res[1],
+					1
+				);
+				expect(res2).deep.eq([20, 4]);
+			});
+
+			it('should find all substrings 2', () => {
+				const haystack = 'testtest test';
+				const needle = 'te';
+				const res = fuzzySearchIndex(needle, haystack);
+
+				expect(res).deep.eq([0, 2]);
+
+				const res2 = fuzzySearchIndex(
+					needle,
+					haystack,
+					res[0] + res[1],
+					0
+				);
+				expect(res2).deep.eq([4, 2]);
+
+				const res3 = fuzzySearchIndex(
+					needle,
+					haystack,
+					res2[0] + res2[1],
+					0
+				);
+				expect(res3).deep.eq([9, 2]);
+			});
+
+			it('should find all substrings 2', () => {
+				const haystack = '|t|est test test';
+				const needle = 't';
+				let res = [0, 0];
+
+				[
+					[1, 1],
+					[5, 1],
+					[7, 1],
+					[10, 1],
+					[12, 1],
+					[15, 1]
+				].forEach(s => {
+					res = fuzzySearchIndex(needle, haystack, res[0] + res[1]);
+					expect(res).deep.eq(s);
 				});
 			});
 		});

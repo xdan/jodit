@@ -275,3 +275,10 @@ declare global {
 		buffer?: IDictionary;
 	}
 }
+
+export interface FuzzySearch {
+	(needle: string, haystack: string, offset?: number, maxDistance?: number): [
+		number,
+		number
+	];
+}

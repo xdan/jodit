@@ -8,7 +8,7 @@
  * @module plugins/search
  */
 
-import type { IControlType, IJodit } from 'jodit/types';
+import type { FuzzySearch, IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
@@ -21,6 +21,22 @@ declare module 'jodit/config' {
 
 		search: {
 			lazyIdleTimeout: number;
+
+			/**
+			 * Function to search for a string within a substring. The default implementation is [[fuzzySearchIndex]]
+			 * But you can write your own. It must implement the [[FuzzySearch]] interface.
+			 *
+			 * ```ts
+			 * Jodit.make('#editor', {
+			 *   search: {
+			 *     fuzzySearch: (needle, haystack, offset) => {
+			 *       return [haystack.indexOf(needle, offset), needle.length];
+			 *     }
+			 *   }
+			 * })
+			 * ```
+			 */
+			fuzzySearch?: FuzzySearch;
 		};
 	}
 }

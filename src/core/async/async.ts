@@ -276,6 +276,7 @@ export class Async implements IAsync {
 	}
 
 	private requestsIdle: Set<number> = new Set();
+	private requestsRaf: Set<number> = new Set();
 
 	private requestIdleCallbackNative =
 		(window as any)['requestIdleCallback']?.bind(window) ??
@@ -324,20 +325,28 @@ export class Async implements IAsync {
 		return this.cancelIdleCallbackNative(request);
 	}
 
-	clear(): void {
-		this.requestsIdle.forEach(key => {
-			this.cancelIdleCallback(key);
-		});
+	requestAnimationFrame(callback: FrameRequestCallback): number {
+		const request = requestAnimationFrame(callback);
+		this.requestsRaf.add(request);
+		return request;
+	}
 
-		this.timers.forEach(key => {
-			clearTimeout(this.timers.get(key) as number);
-		});
+	cancelAnimationFrame(request: number): void {
+		this.requestsRaf.delete(request);
+		cancelAnimationFrame(request);
+	}
+
+	clear(): void {
+		this.requestsIdle.forEach(key => this.cancelIdleCallback(key));
+		this.requestsRaf.forEach(key => this.cancelAnimationFrame(key));
+
+		this.timers.forEach(key =>
+			clearTimeout(this.timers.get(key) as number)
+		);
 
 		this.timers.clear();
 
-		this.promisesRejections.forEach(reject => {
-			reject();
-		});
+		this.promisesRejections.forEach(reject => reject());
 
 		this.promisesRejections.clear();
 	}

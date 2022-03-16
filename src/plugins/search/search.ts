@@ -16,15 +16,23 @@ import type {
 	Nullable,
 	IPlugin,
 	IDictionary,
-	CanUndef
+	CanUndef,
+	RejectablePromise
 } from 'jodit/types';
 import { Dom, LazyWalker } from 'jodit/core/dom';
 import { Plugin } from 'jodit/core/plugin';
 import { autobind, cache, watch } from 'jodit/core/decorators';
-import { SentenceFinder } from 'jodit/plugins/search/helpers';
+import {
+	clearSelectionWrappers,
+	clearSelectionWrappersFromHTML,
+	getSelectionWrappers,
+	SentenceFinder,
+	wrapRangesTextsInTmpSpan
+} from 'jodit/plugins/search/helpers';
 import { UISearch } from 'jodit/plugins/search/ui/search';
 
 import './config';
+import { scrollIntoViewIfNeeded } from 'jodit/core/helpers';
 
 /**
  * Search plugin. it is used for custom search in text
@@ -60,12 +68,12 @@ export class search extends Plugin {
 			return;
 		}
 
-		this.ui.count = await this.calcCounts(this.ui.queryInput.value);
+		this.ui.count = await this.calcCounts(this.ui.query);
 	}
 
 	@watch('ui:pressReplaceButton')
 	protected onPressReplaceButton(): void {
-		this.findAndReplace(this.ui.queryInput.value);
+		this.findAndReplace(this.ui.query);
 		this.updateCounters();
 	}
 
@@ -85,7 +93,9 @@ export class search extends Plugin {
 			) as HTMLElement | false;
 		}
 
-		parentBox && parentBox !== this.j.editor && parentBox.scrollIntoView();
+		parentBox &&
+			parentBox !== this.j.editor &&
+			scrollIntoViewIfNeeded(parentBox, this.j.editor, this.j.ed);
 	}
 
 	protected async calcCounts(query: string): Promise<number> {
@@ -114,7 +124,11 @@ export class search extends Plugin {
 		const range = this.j.s.range,
 			bounds = await this.find(this.walker, query);
 
-		const currentIndex = this.findCurrentIndexInRanges(bounds, range);
+		let currentIndex = this.findCurrentIndexInRanges(bounds, range);
+
+		if (currentIndex === -1) {
+			currentIndex = 0;
+		}
 
 		const bound = bounds[currentIndex];
 
@@ -126,9 +140,7 @@ export class search extends Plugin {
 				rng.setEnd(bound.endContainer, bound.endOffset);
 				rng.deleteContents();
 
-				const textNode = this.j.createInside.text(
-					this.ui.replaceInput.value
-				);
+				const textNode = this.j.createInside.text(this.ui.replace);
 
 				rng.insertNode(textNode);
 				this.j.s.select(textNode);
@@ -145,6 +157,9 @@ export class search extends Plugin {
 		return false;
 	}
 
+	private previousQuery: string = '';
+	private drawPromise: RejectablePromise<void> | null = null;
+
 	@autobind
 	async findAndSelect(query: string, next: boolean): Promise<boolean> {
 		if (this.walker) {
@@ -155,16 +170,29 @@ export class search extends Plugin {
 			timeout: this.j.defaultTimeout
 		});
 
-		const range = this.j.s.range,
-			bounds = await this.find(this.walker, query);
+		const bounds = await this.find(this.walker, query);
 
 		if (!bounds.length) {
 			return false;
 		}
 
-		let currentIndex = this.findCurrentIndexInRanges(bounds, range);
+		if (
+			this.previousQuery !== query ||
+			!getSelectionWrappers(this.j.editor).length
+		) {
+			this.drawPromise?.rejectCallback();
+			this.j.async.cancelAnimationFrame(this.wrapFrameRequest);
+			clearSelectionWrappers(this.j.editor);
+			this.drawPromise = this.drawSelectionRanges(bounds);
+		}
 
-		if (next) {
+		this.previousQuery = query;
+
+		let currentIndex = this.ui.currentIndex - 1;
+
+		if (currentIndex === -1) {
+			currentIndex = 0;
+		} else if (next) {
 			currentIndex =
 				currentIndex === bounds.length - 1 ? 0 : currentIndex + 1;
 		} else {
@@ -188,7 +216,7 @@ export class search extends Plugin {
 			this.tryScrollToElement(bound.startContainer);
 
 			await this.updateCounters();
-
+			await this.drawPromise;
 			this.j.e.fire('afterFindAndSelect');
 
 			return true;
@@ -201,19 +229,13 @@ export class search extends Plugin {
 		bounds: ISelectionRange[],
 		range: Range
 	): number {
-		let currentIndex = bounds.findIndex(
+		return bounds.findIndex(
 			bound =>
 				bound.startContainer === range.startContainer &&
 				bound.startOffset === range.startOffset &&
 				bound.endContainer === range.startContainer &&
 				bound.endOffset === range.endOffset
 		);
-
-		if (currentIndex === -1) {
-			currentIndex = 0;
-		}
-
-		return currentIndex;
 	}
 
 	walker: Nullable<LazyWalker> = null;
@@ -248,7 +270,7 @@ export class search extends Plugin {
 			return cache;
 		}
 
-		const sentence = new SentenceFinder();
+		const sentence = new SentenceFinder(this.j.o.search.fuzzySearch);
 
 		this.cache[query] = this.j.async.promise(resolve => {
 			walker
@@ -259,6 +281,7 @@ export class search extends Plugin {
 					if (Dom.isText(elm)) {
 						sentence.add(elm);
 					}
+
 					return false;
 				})
 				.on('end', (): void => {
@@ -270,6 +293,49 @@ export class search extends Plugin {
 		return this.cache[query] as Promise<ISelectionRange[]>;
 	}
 
+	private wrapFrameRequest: number = 0;
+
+	private drawSelectionRanges(
+		ranges: ISelectionRange[]
+	): RejectablePromise<void> {
+		const { async, createInside: ci, editor } = this.j;
+
+		async.cancelAnimationFrame(this.wrapFrameRequest);
+
+		const parts = [...ranges];
+
+		let sRange: CanUndef<ISelectionRange>,
+			total = 0;
+
+		return async.promise(resolve => {
+			const drawParts = (): void => {
+				do {
+					sRange = parts.shift();
+
+					if (sRange) {
+						wrapRangesTextsInTmpSpan(sRange, parts, ci, editor);
+					}
+
+					total += 1;
+				} while (sRange && total <= 5);
+
+				if (parts.length) {
+					this.wrapFrameRequest =
+						async.requestAnimationFrame(drawParts);
+				} else {
+					resolve();
+				}
+			};
+
+			drawParts();
+		});
+	}
+
+	@watch(':afterGetValueFromEditor')
+	protected onAfterGetValueFromEditor(data: { value: string }): void {
+		data.value = clearSelectionWrappersFromHTML(data.value);
+	}
+
 	/** @override */
 	afterInit(editor: IJodit): void {
 		if (editor.o.useSearch) {
@@ -278,6 +344,16 @@ export class search extends Plugin {
 			editor.e
 				.on('beforeSetMode.search', () => {
 					this.ui.close();
+				})
+				.on(this.ui, 'afterClose', () => {
+					clearSelectionWrappers(editor.editor);
+					this.ui.currentIndex = 0;
+					this.ui.count = 0;
+					this.cache = {};
+				})
+				.on('click', () => {
+					this.ui.currentIndex = 0;
+					clearSelectionWrappers(editor.editor);
 				})
 				.on('change.search', () => {
 					this.cache = {};
@@ -297,19 +373,22 @@ export class search extends Plugin {
 				)
 				.on('searchNext.search searchPrevious.search', () => {
 					if (!this.ui.isOpened) {
-						return this.ui.open();
+						this.ui.open();
 					}
 
 					return self
 						.findAndSelect(
-							self.ui.queryInput.value,
+							self.ui.query,
 							editor.e.current === 'searchNext'
 						)
 						.catch(() => {});
 				})
-				.on('search.search', (value: string, next: boolean = true) =>
-					self.findAndSelect(value || '', next).catch(() => {})
-				);
+				.on('search.search', (value: string, next: boolean = true) => {
+					this.ui.currentIndex = 0;
+					return self
+						.findAndSelect(value || '', next)
+						.catch(() => {});
+				});
 
 			editor
 				.registerCommand('search', {

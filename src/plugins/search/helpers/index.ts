@@ -8,6 +8,5 @@
  * @module plugins/search
  */
 
-// export * from './find-some-part-of-string';
 export * from './sentence-finder';
-// export * from './find-in-string';
+export * from './wrap-ranges-texts-in-tmp-span';

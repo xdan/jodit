@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/search
+ */
+
 import './search.less';
 
 import type { IJodit, MarkerInfo, Nullable } from 'jodit/types';
@@ -20,8 +24,8 @@ export class UISearch extends UIElement<IJodit> {
 		return 'UISearch';
 	}
 
-	queryInput: HTMLInputElement;
-	replaceInput: HTMLInputElement;
+	private queryInput: HTMLInputElement;
+	private replaceInput: HTMLInputElement;
 	selInfo: Nullable<MarkerInfo[]> = null;
 
 	private closeButton: HTMLButtonElement;
@@ -57,12 +61,27 @@ export class UISearch extends UIElement<IJodit> {
 		</div>`;
 	}
 
+	private _currentIndex: number = 0;
+
+	get currentIndex(): number {
+		return this._currentIndex;
+	}
+
 	set currentIndex(value: number) {
+		this._currentIndex = value;
 		this.currentBox.innerText = value.toString();
 	}
 
 	set count(value: number) {
 		this.countBox.innerText = value.toString();
+	}
+
+	get query(): string {
+		return this.queryInput.value;
+	}
+
+	get replace(): string {
+		return this.replaceInput.value;
 	}
 
 	constructor(jodit: IJodit) {
@@ -91,6 +110,9 @@ export class UISearch extends UIElement<IJodit> {
 			.on(this.closeButton, 'pointerdown', () => {
 				this.close();
 				return false;
+			})
+			.on(this.queryInput, 'input', () => {
+				this.currentIndex = 0;
 			})
 			.on(this.queryInput, 'pointerdown', () => {
 				if (jodit.s.isFocused()) {
@@ -204,6 +226,8 @@ export class UISearch extends UIElement<IJodit> {
 
 		Dom.safeRemove(this.container);
 		this.isOpened = false;
+
+		this.j.e.fire(this, 'afterClose');
 	}
 
 	/**

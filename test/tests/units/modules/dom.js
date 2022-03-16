@@ -596,5 +596,50 @@ describe('Test Dom module', function () {
 				walker.setWork(div);
 			});
 		});
+
+		describe('After unwrap element', () => {
+			it('should walk normal in his children', done => {
+				const walker = new LazyWalker(new Async(), {
+					timeout: 100
+				});
+				const names = [];
+
+				walker
+					.on('visit', node => {
+						const name = node.nodeName.toLowerCase();
+						if (name === 'span' || name === 'i') {
+							Dom.unwrap(node);
+						} else {
+							names.push(
+								Dom.isText(node) ? node.nodeValue : name
+							);
+						}
+					})
+					.on('end', () => {
+						expect(names).deep.eq([
+							'ul',
+							'li',
+							'strong',
+							'str',
+							'sp',
+							'u',
+							'unn',
+							'li',
+							'ill',
+							'b',
+							'bit',
+							'u',
+							'ula',
+							'img'
+						]);
+						done();
+					});
+
+				const div = document.createElement('div');
+				div.innerHTML =
+					"<ul><li><strong>str</strong><span>sp</span><u>unn</u></li><li><i>ill</i><b>bit</b><u>ula</u><img src='' alt=''></li></ul>";
+				walker.setWork(div);
+			});
+		});
 	});
 });
