@@ -31,7 +31,7 @@ import type {
 } from './types';
 
 import { Config } from './config';
-import * as consts from './core/constants';
+import * as constants from './core/constants';
 
 import {
 	Create,
@@ -174,6 +174,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	static readonly ns: IDictionary<Function> = modules;
 
 	static readonly decorators: IDictionary<Function> = {};
+	static readonly constants: typeof constants = constants;
 	static readonly instances: IDictionary<IJodit> = instances;
 
 	static readonly lang: any = lang;
@@ -377,7 +378,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		return jodit.getInstance<IFileBrowser>('FileBrowser', options);
 	}
 
-	private __mode: Modes = consts.MODE_WYSIWYG;
+	private __mode: Modes = constants.MODE_WYSIWYG;
 
 	/**
 	 * Editor's mode
@@ -463,7 +464,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		value = this.getNativeEditorValue().replace(
-			consts.INVISIBLE_SPACE_REG_EXP(),
+			constants.INVISIBLE_SPACE_REG_EXP(),
 			''
 		);
 
@@ -559,7 +560,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		if (
 			!this.isSilentChange &&
 			old_value !== new_value &&
-			this.__callChangeCount < consts.SAFE_COUNT_CHANGE_CALL
+			this.__callChangeCount < constants.SAFE_COUNT_CHANGE_CALL
 		) {
 			this.setElementValue(new_value);
 			this.__callChangeCount += 1;
@@ -887,7 +888,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	isEditorMode(): boolean {
-		return this.getRealMode() === consts.MODE_WYSIWYG;
+		return this.getRealMode() === constants.MODE_WYSIWYG;
 	}
 
 	/**
@@ -902,7 +903,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * ```
 	 */
 	getRealMode(): Modes {
-		if (this.getMode() !== consts.MODE_SPLIT) {
+		if (this.getMode() !== constants.MODE_SPLIT) {
 			return this.getMode();
 		}
 
@@ -914,10 +915,10 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 				Dom.isOrContains(this.editor, active) ||
 				Dom.isOrContains(this.toolbar.container, active))
 		) {
-			return consts.MODE_WYSIWYG;
+			return constants.MODE_WYSIWYG;
 		}
 
-		return consts.MODE_SOURCE;
+		return constants.MODE_SOURCE;
 	}
 
 	/**
@@ -951,12 +952,12 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		this.__mode = [
-			consts.MODE_SOURCE,
-			consts.MODE_WYSIWYG,
-			consts.MODE_SPLIT
+			constants.MODE_SOURCE,
+			constants.MODE_WYSIWYG,
+			constants.MODE_SPLIT
 		].includes(data.mode)
 			? data.mode
-			: consts.MODE_WYSIWYG;
+			: constants.MODE_WYSIWYG;
 
 		if (this.o.saveModeInStorage) {
 			this.storage.set('jodit_default_mode', this.mode);
@@ -997,14 +998,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (
 			[
-				consts.MODE_SOURCE,
-				consts.MODE_WYSIWYG,
-				this.o.useSplitMode ? consts.MODE_SPLIT : 9
+				constants.MODE_SOURCE,
+				constants.MODE_WYSIWYG,
+				this.o.useSplitMode ? constants.MODE_SPLIT : 9
 			].includes(mode + 1)
 		) {
 			mode += 1;
 		} else {
-			mode = consts.MODE_WYSIWYG;
+			mode = constants.MODE_WYSIWYG;
 		}
 
 		this.setMode(mode);
@@ -1347,7 +1348,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		}
 
 		if (!this.isEditorMode()) {
-			this.setMode(consts.MODE_WYSIWYG);
+			this.setMode(constants.MODE_WYSIWYG);
 		}
 
 		this.currentPlace = place;

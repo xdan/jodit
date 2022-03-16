@@ -19,6 +19,8 @@
 -   Added a new class for working with DOM without blocking the main thread `LazyWalker`
 -   Search engine replace on `LazyWalker`
 -   CleanHTML plugin engine replace on `LazyWalker`
+-   Search plugin now highlights all found options https://github.com/xdan/jodit/issues/798
+-   Added `Jodit.constants` https://github.com/xdan/jodit/issues/806
 
 #### :boom: Breaking Change
 
@@ -30,6 +32,7 @@
 
 -   Fixed a bug in the `watch` decorator, when multiple watchers were set, it used only one context
 -   [Default is not working for insert ordered list and insert unordered list #799](https://github.com/xdan/jodit/issues/799)
+-   [In print preview, table border color and background color is not showing #803](https://github.com/xdan/jodit/issues/803)
 
 #### :house: Internal
 
@@ -1218,11 +1221,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                             	{ value: "", text: "" },
--                                                                                                                                                                                             	{ value: "val1", text: "text1" },
--                                                                                                                                                                                             	{ value: "val2", text: "text2" },
--                                                                                                                                                                                             	{ value: "val3", text: "text3" }
--                                                                                                                                                                                             ]
+-                                                                                                                                                                                               	{ value: "", text: "" },
+-                                                                                                                                                                                               	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                               	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                               	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                               ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

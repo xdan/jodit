@@ -23,14 +23,14 @@ import { Jodit as DefaultJodit } from './jodit';
 import Languages from './langs/';
 
 import * as decorators from './core/decorators';
-import * as consts from './core/constants';
+import * as constants from './core/constants';
 import * as Modules from './modules/';
 import * as Plugins from './plugins/';
 import * as Icons from './styles/icons/';
 
 // copy constants in Jodit
-Object.keys(consts).forEach((key: string) => {
-	(DefaultJodit as any)[key] = (consts as any)[key];
+Object.keys(constants).forEach((key: string) => {
+	(DefaultJodit as any)[key] = (constants as any)[key];
 });
 
 const esFilter = (key: string): boolean => key !== '__esModule';
