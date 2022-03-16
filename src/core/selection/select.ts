@@ -750,7 +750,7 @@ export class Select implements ISelect {
 		 * {@link FileBrowser|FileBrowser} or {@link Uploader|Uploader}
 		 * @example
 		 * ```javascript
-		 * var editor = new Jodit("#redactor");
+		 * var editor = Jodit.make("#redactor");
 		 * editor.e.on('afterInsertImage', function (image) {
 		 *     image.className = 'bloghead4';
 		 * });
@@ -1117,7 +1117,7 @@ export class Select implements ISelect {
 	 * Return current selected HTML
 	 * @example
 	 * ```javascript
-	 * const editor = new jodit();
+	 * const editor = Jodit.make();
 	 * console.log(editor.s.html); // html
 	 * console.log(Jodit.modules.Helpers.stripTags(editor.s.html)); // plain text
 	 * ```

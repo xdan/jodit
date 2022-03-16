@@ -9,7 +9,7 @@ describe('Test Inline mode', function () {
 		describe('For TEXTAREA', function () {
 			it('Should hide textarea like standart mode', function () {
 				const area = appendTestArea(),
-					editor = new Jodit(area, {
+					editor = Jodit.make(area, {
 						inline: true
 					});
 
@@ -29,7 +29,7 @@ describe('Test Inline mode', function () {
 
 				div.innerHTML = value;
 
-				const editor = new Jodit(div, {
+				const editor = Jodit.make(div, {
 					inline: true,
 					history: {
 						timeout: 0
@@ -59,7 +59,7 @@ describe('Test Inline mode', function () {
 
 				getBox().appendChild(div);
 
-				const editor = new Jodit(div, {
+				const editor = Jodit.make(div, {
 					disablePlugins: ['WrapNodes'],
 					inline: true,
 					history: {
@@ -88,7 +88,7 @@ describe('Test Inline mode', function () {
 		describe('For TEXTAREA', function () {
 			it('Should show textarea like standart mode', function () {
 				const area = appendTestArea(),
-					editor = new Jodit(area, {
+					editor = Jodit.make(area, {
 						inline: true
 					});
 
@@ -104,7 +104,7 @@ describe('Test Inline mode', function () {
 				div.style.display = 'block';
 				div.innerHTML = value;
 
-				const editor = new Jodit(div, {
+				const editor = Jodit.make(div, {
 					inline: true,
 					history: {
 						timeout: 0
@@ -325,7 +325,7 @@ describe('Test Inline mode', function () {
 
 		describe('Click on link', function () {
 			it('Should show inline popup', function () {
-				const editor = new Jodit(appendTestDiv());
+				const editor = Jodit.make(appendTestDiv());
 				editor.value = '<p>test <a href="#test">test</a> test</p>';
 				const a = editor.editor.querySelector('a');
 				simulateEvent('click', 0, a);
@@ -336,7 +336,7 @@ describe('Test Inline mode', function () {
 			describe('Disable with toolbarInlineDisableFor', function () {
 				describe('Option like string', function () {
 					it('Should now show inline popup for link', function () {
-						const editor = new Jodit(appendTestDiv(), {
+						const editor = Jodit.make(appendTestDiv(), {
 							toolbarInline: true,
 							toolbarInlineDisableFor: 'a,IMG'
 						});
@@ -365,7 +365,7 @@ describe('Test Inline mode', function () {
 
 				describe('Option like array', function () {
 					it('Should now show inline popup for link', function () {
-						const editor = new Jodit(appendTestDiv(), {
+						const editor = Jodit.make(appendTestDiv(), {
 							toolbarInline: true,
 							toolbarInlineDisableFor: ['A', 'cells']
 						});

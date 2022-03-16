@@ -31,19 +31,19 @@ declare module 'jodit/config' {
  *
  * @example
  * ```javascript
- * new Jodit('.editor', {
+ * Jodit.make('.editor', {
  *    width: '100%',
  * })
  * ```
  * @example
  * ```javascript
- * new Jodit('.editor', {
+ * Jodit.make('.editor', {
  *    width: 600, // equivalent for '600px'
  * })
  * ```
  * @example
  * ```javascript
- * new Jodit('.editor', {
+ * Jodit.make('.editor', {
  *    width: 'auto', // autosize
  * })
  * ```
@@ -61,19 +61,19 @@ Config.prototype.allowResizeY = true;
  *
  * @example
  * ```javascript
- * new Jodit('.editor', {
+ * Jodit.make('.editor', {
  *    height: '100%',
  * })
  * ```
  * @example
  * ```javascript
- * new Jodit('.editor', {
+ * Jodit.make('.editor', {
  *    height: 600, // equivalent for '600px'
  * })
  * ```
  * @example
  * ```javascript
- * new Jodit('.editor', {
+ * Jodit.make('.editor', {
  *    height: 'auto', // default - autosize
  * })
  * ```
@@ -85,13 +85,13 @@ Config.prototype.height = 'auto';
  *
  * @example
  * ```javascript
- * new Jodit('.editor', {
+ * Jodit.make('.editor', {
  *    minHeight: '30%' //min-height: 30%
  * })
  * ```
  * @example
  * ```javascript
- * new Jodit('.editor', {
+ * Jodit.make('.editor', {
  *    minHeight: 200 //min-height: 200px
  * })
  * ```

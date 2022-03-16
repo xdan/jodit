@@ -19,7 +19,7 @@ describe('Resize plugin', function () {
 
 				document.body.appendChild(div);
 
-				const editor = new Jodit('#text__area0');
+				const editor = Jodit.make('#text__area0');
 				simulateEvent('click', 0, editor.editor.querySelector('img'));
 
 				const resizer = document.querySelector(
@@ -53,7 +53,7 @@ describe('Resize plugin', function () {
 
 				document.body.appendChild(div);
 
-				const editor = new Jodit(
+				const editor = Jodit.make(
 					document.getElementById('text__area1')
 				);
 				simulateEvent(

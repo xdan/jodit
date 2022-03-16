@@ -21,13 +21,13 @@ declare module 'jodit/config' {
 		 * Open WYSIWYG in full screen
 		 * @example
 		 * ```javascript
-		 * var editor = new jodit({
+		 * var editor = Jodit.make({
 		 *     fullsize: true // fullsize editor
 		 * });
 		 * ```
 		 * @example
 		 * ```javascript
-		 * var editor = new Jodit();
+		 * var editor = Jodit.make();
 		 * editor.e.fire('toggleFullSize');
 		 * editor.e.fire('toggleFullSize', true); // fullsize
 		 * editor.e.fire('toggleFullSize', false); // usual mode

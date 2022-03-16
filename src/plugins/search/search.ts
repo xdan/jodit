@@ -40,11 +40,11 @@ import { scrollIntoViewIfNeeded } from 'jodit/core/helpers';
  *
  * @example
  * ```typescript
- * var jodit = new Jodit('#editor', {
+ * var jodit = Jodit.make('#editor', {
  *  useSearch: false
  * });
  * // or
- * var jodit = new Jodit('#editor', {
+ * var jodit = Jodit.make('#editor', {
  *  disablePlugins: 'search'
  * });
  * ```

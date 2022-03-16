@@ -37,7 +37,7 @@
         </code></pre>
         <h3>JavaScript</h3>
         <pre><code class="language-javascript">
-            var editor = new Jodit('#editor', {
+            var editor = Jodit.make('#editor', {
                 zIndex: 0,
                 readonly: false,
                 activeButtonsInReadOnly: ['source', 'fullsize', 'print', 'about', 'dots'],
@@ -147,7 +147,7 @@
 <script src="assets/prism.js"></script>
 <script src="assets/app.js"></script>
 <script>
-    var editor = new Jodit('#area_editor', {
+    var editor = Jodit.make('#area_editor', {
         textIcons: false,
 				toolbarButtonSize: 'small',
         iframe: false,

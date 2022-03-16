@@ -58,7 +58,7 @@ describe('Iframe mode', function () {
 
 				area.value = 'stop';
 
-				const editor = new Jodit(area, {
+				const editor = Jodit.make(area, {
 					iframe: true
 				});
 
@@ -290,7 +290,7 @@ describe('Editor inside iframe', function () {
 			);
 			doc.close();
 
-			const editor = new Jodit('#editor', {
+			const editor = Jodit.make('#editor', {
 				ownerWindow: win,
 				ownerDocument: doc
 			});

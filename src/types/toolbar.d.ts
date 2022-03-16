@@ -44,7 +44,7 @@ interface IControlType<
 	 * @see copyformat plugin
 	 * @example
 	 * ```javascript
-	 * var editor = new Jodit('.selectorclass', {
+	 * var editor = Jodit.make('.selectorclass', {
 	 *     buttons: {
 	 *          checkbox: {
 	 *              data: {
@@ -82,7 +82,7 @@ interface IControlType<
 	 * @see copyformat plugin
 	 * @example
 	 * ```javascript
-	 * var editor = new Jodit('.selectorclass', {
+	 * var editor = Jodit.make('.selectorclass', {
 	 *     buttons: {
 	 *          checkbox: {
 	 *              data: {
@@ -117,7 +117,7 @@ interface IControlType<
 	 * (or array value) (see .[[Jodit.execCommand]] or define 'exec' function. See example
 	 * @example
 	 * ```javascript
-	 * new Jodit('#editor2', {
+	 * Jodit.make('#editor2', {
 	 *     buttons: Jodit.defaultOptions.buttons.concat([{
 	 *        name: 'listsss',
 	 *        iconURL: 'stuf/dummy.png',
@@ -164,7 +164,7 @@ interface IControlType<
 	 * String name for existing icons.
 	 * @example
 	 * ```javascript
-	 * var editor = new Jodit('.editor', {
+	 * var editor = Jodit.make('.editor', {
 	 *  buttons: [
 	 *      {
 	 *          icon: 'source',
@@ -216,7 +216,7 @@ interface IControlType<
 	 * After click on the button it will show popup element which consist value that this function returned
 	 * @example
 	 * ```javascript
-	 * var editor = new Jodit('.editor', {
+	 * var editor = Jodit.make('.editor', {
 	 *    buttons: [
 	 *      {
 	 *          icon: "insertCode",

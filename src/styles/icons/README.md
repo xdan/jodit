@@ -63,7 +63,7 @@ Create input element
 And define event `getIcon`:
 
 ```js
-const editor = new Jodit('#editor', {
+const editor = Jodit.make('#editor', {
 	events: {
 		getIcon: function (name, control, clearName) {
 			var code = name;
@@ -88,7 +88,7 @@ const editor = new Jodit('#editor', {
 For full replacing you can copy this code:
 
 ```js
-const editor = new Jodit('#editor', {
+const editor = Jodit.make('#editor', {
 	events: {
 		getIcon: function (name, control, clearName) {
 			var code = clearName;

@@ -170,7 +170,7 @@ describe('Test states', function () {
 
 				area.setAttribute('readonly', 'true');
 
-				const editor = new Jodit(area);
+				const editor = Jodit.make(area);
 
 				expect(editor.editor.hasAttribute('contenteditable')).is.false;
 				expect(editor.getReadOnly()).is.true;
@@ -182,7 +182,7 @@ describe('Test states', function () {
 
 					area.setAttribute('readonly', '');
 
-					const editor = new Jodit(area);
+					const editor = Jodit.make(area);
 
 					expect(editor.editor.hasAttribute('contenteditable')).is
 						.false;
@@ -267,7 +267,7 @@ describe('Test states', function () {
 
 				area.setAttribute('disabled', 'true');
 
-				const editor = new Jodit(area);
+				const editor = Jodit.make(area);
 
 				expect(editor.container.classList.contains('jodit_disabled')).is
 					.true;
@@ -283,7 +283,7 @@ describe('Test states', function () {
 				area.setAttribute('disabled', 'true');
 				area.setAttribute('readonly', 'true');
 
-				const editor = new Jodit(area);
+				const editor = Jodit.make(area);
 
 				expect(editor.getReadOnly()).is.true;
 				expect(editor.getDisabled()).is.true;

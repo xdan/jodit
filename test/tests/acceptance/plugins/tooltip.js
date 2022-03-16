@@ -8,7 +8,7 @@ describe('Tooltip plugin tests', function () {
 		it('Should have different tooltip for each language', function () {
 			const area = appendTestArea();
 
-			const editor = new Jodit(area, {
+			const editor = Jodit.make(area, {
 				toolbarAdaptive: false,
 				useNativeTooltip: true,
 				buttons: 'indent,outdent',
@@ -26,7 +26,7 @@ describe('Tooltip plugin tests', function () {
 
 			editor.destruct();
 
-			const editor2 = new Jodit(area, {
+			const editor2 = Jodit.make(area, {
 				toolbarAdaptive: false,
 				useNativeTooltip: true,
 				buttons: 'indent,outdent',
@@ -51,7 +51,7 @@ describe('Tooltip plugin tests', function () {
 		it('Should have different tooltip for each language', function () {
 			const area = appendTestArea();
 
-			let editor = new Jodit(area, {
+			let editor = Jodit.make(area, {
 				toolbarAdaptive: false,
 				useNativeTooltip: false,
 				buttons: 'indent,outdent',
@@ -70,7 +70,7 @@ describe('Tooltip plugin tests', function () {
 			const title = tooltip.textContent;
 			editor.destruct();
 
-			editor = new Jodit(area, {
+			editor = Jodit.make(area, {
 				toolbarAdaptive: false,
 				useNativeTooltip: false,
 				showTooltipDelay: 0,

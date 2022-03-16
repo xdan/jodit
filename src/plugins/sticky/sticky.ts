@@ -22,7 +22,7 @@ declare module 'jodit/config' {
 		/**
 		 * @example
 		 * ```javascript
-		 * var editor = new Jodit('#someid', {
+		 * var editor = Jodit.make('#someid', {
 		 *  toolbarSticky: false
 		 * })
 		 * ```
@@ -37,7 +37,7 @@ declare module 'jodit/config' {
 		 *
 		 * @example
 		 * ```javascript
-		 * var editor = new Jodit('#someid', {
+		 * var editor = Jodit.make('#someid', {
 		 *  toolbarStickyOffset: 100
 		 * })
 		 * ```

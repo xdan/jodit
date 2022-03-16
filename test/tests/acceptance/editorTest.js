@@ -19,7 +19,7 @@ describe('Jodit Editor Tests', function () {
 				it('Should be valid selector', function () {
 					const area = appendTestArea('editor');
 
-					const editor = new Jodit('#editor');
+					const editor = Jodit.make('#editor');
 					expect(editor.element).equals(area);
 					editor.destruct();
 				});
@@ -29,48 +29,48 @@ describe('Jodit Editor Tests', function () {
 				it('Should be not valid selector', function () {
 					expect(function () {
 						// eslint-disable-next-line no-new
-						new Jodit(0);
+						Jodit.make(0);
 					}).to.throw(Error);
 
 					expect(function () {
 						// eslint-disable-next-line no-new
-						new Jodit();
+						Jodit.make();
 					}).to.throw(Error);
 
 					expect(function () {
 						// eslint-disable-next-line no-new
-						new Jodit(null);
+						Jodit.make(null);
 					}).to.throw(Error);
 
 					expect(function () {
 						// eslint-disable-next-line no-new
-						new Jodit(false);
+						Jodit.make(false);
 					}).to.throw(Error);
 
 					expect(function () {
 						// eslint-disable-next-line no-new
-						new Jodit('.salomon');
+						Jodit.make('.salomon');
 					}).to.throw(Error);
 
 					expect(function () {
 						// eslint-disable-next-line no-new
-						new Jodit('>asdsad.salomon');
+						Jodit.make('>asdsad.salomon');
 					}).to.throw(Error);
 
 					expect(function () {
 						// eslint-disable-next-line no-new
-						new Jodit(function () {});
+						Jodit.make(function () {});
 					}).to.throw(Error);
 
 					expect(function () {
 						// eslint-disable-next-line no-new
-						new Jodit(233);
+						Jodit.make(233);
 					}).to.throw(Error);
 
 					const elm = document.createTextNode('stop');
 					expect(function () {
 						// eslint-disable-next-line no-new
-						new Jodit(elm);
+						Jodit.make(elm);
 					}).to.throw(Error);
 				});
 			});

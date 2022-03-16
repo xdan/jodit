@@ -90,7 +90,7 @@ interface IJodit extends IViewWithToolbar {
 	 *
 	 * @example
 	 * ```javascript
-	 * var editor = new Jodit('#editor');
+	 * var editor = Jodit.make('#editor');
 	 * console.log(editor.getRealMode());
 	 * ```
 	 */

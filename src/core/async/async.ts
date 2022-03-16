@@ -84,7 +84,7 @@ export class Async implements IAsync {
 	 *
 	 * @example
 	 * ```javascript
-	 * var jodit = new Jodit('.editor');
+	 * var jodit = Jodit.make('.editor');
 	 * jodit.e.on('mousemove', jodit.async.debounce(() => {
 	 * 	// Do expensive things
 	 * }, 100));
@@ -157,7 +157,7 @@ export class Async implements IAsync {
 	 *
 	 * @example
 	 * ```javascript
-	 * var jodit = new Jodit('.editor');
+	 * var jodit = Jodit.make('.editor');
 	 * jodit.e.on(document.body, 'scroll', jodit.async.throttle(function() {
 	 * 	// Do expensive things
 	 * }, 100));

@@ -46,7 +46,7 @@ export const sprintf = (str: string, args?: Array<string | number>): string => {
  * Internationalization method. Uses Jodit.lang object
  * @example
  * ```javascript
- * var editor = new Jodit("#redactor", {
+ * var editor = Jodit.make("#redactor", {
  *      language: 'ru'
  * });
  * console.log(editor.i18n('Cancel')) //Отмена;

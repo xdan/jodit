@@ -615,7 +615,7 @@ export class ImageEditor extends ViewComponent {
 	 * Open image editor
 	 * @example
 	 * ```javascript
-	 * var jodit = new Jodit('.editor', {
+	 * var jodit = Jodit.make('.editor', {
 	 *		 imageeditor: {
 	 *				 crop: false,
 	 *				 closeAfterSave: true,

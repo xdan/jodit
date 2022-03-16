@@ -170,7 +170,7 @@ export class Config implements IViewOptions {
 	 *
 	 * @example
 	 * ```javascript
-	 * new Jodit('#editor', {
+	 * Jodit.make('#editor', {
 	 *    editorCssClass: 'some_my_class'
 	 * });
 	 * ```
@@ -189,7 +189,7 @@ export class Config implements IViewOptions {
 	 *
 	 * @example
 	 * ```javascript
-	 * new Jodit('#editor', {
+	 * Jodit.make('#editor', {
 	 * 		style: {
 	 * 		 font: '12px Arial'
 	 * 		}
@@ -203,7 +203,7 @@ export class Config implements IViewOptions {
 	 *
 	 * @example
 	 * ```javascript
-	 * var editor = new Jodit('#editor');
+	 * var editor = Jodit.make('#editor');
 	 * document.getElementById('editor').addEventListener('change', function () {
 	 *      console.log(this.value);
 	 * })
@@ -218,7 +218,7 @@ export class Config implements IViewOptions {
 	 * 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
 	 * @example
 	 * ```javascript
-	 * new Jodit('.editor', {
+	 * Jodit.make('.editor', {
 	 *    direction: 'rtl'
 	 * })
 	 * ```
@@ -235,7 +235,7 @@ export class Config implements IViewOptions {
 	 * <!-- include in you page lang file -->
 	 * <script src="jodit/lang/de.js"></script>
 	 * <script>
-	 * var editor = new Jodit('.editor', {
+	 * var editor = Jodit.make('.editor', {
 	 *    language: 'de'
 	 * });
 	 * </script>
@@ -249,7 +249,7 @@ export class Config implements IViewOptions {
 	 * @example
 	 * ```html
 	 * <script>
-	 * var editor = new Jodit('.editor', {
+	 * var editor = Jodit.make('.editor', {
 	 *    debugLanguage: true
 	 * });
 	 *
@@ -264,7 +264,7 @@ export class Config implements IViewOptions {
 	 *
 	 * @example
 	 * ```javascript
-	 * var editor = new Jodit('#editor', {
+	 * var editor = Jodit.make('#editor', {
 	 *     language: 'ru',
 	 *     i18n: {
 	 *         ru: {
@@ -333,7 +333,7 @@ export class Config implements IViewOptions {
 	 * Jodit.MODE_SOURCE syntax highlighting source editor
 	 * @example
 	 * ```javascript
-	 * var editor = new Jodit('#editor', {
+	 * var editor = Jodit.make('#editor', {
 	 *     defaultMode: Jodit.MODE_SPLIT
 	 * });
 	 * console.log(editor.getRealMode())
@@ -350,7 +350,7 @@ export class Config implements IViewOptions {
 	 * The colors in HEX representation to select a color for the background and for the text in colorpicker
 	 * @example
 	 * ```javascript
-	 *  new Jodit('#editor', {
+	 *  Jodit.make('#editor', {
 	 *     colors: ['#ff0000', '#00ff00', '#0000ff']
 	 * })
 	 * ```
@@ -448,7 +448,7 @@ export class Config implements IViewOptions {
 	 * The default tab color picker
 	 * @example
 	 * ```javascript
-	 *  new Jodit('#editor2', {
+	 * Jodit.make('#editor2', {
 	 *     colorPickerDefaultTab: 'color'
 	 * })
 	 * ```
@@ -475,11 +475,11 @@ export class Config implements IViewOptions {
 	 * Do not init these plugins
 	 * @example
 	 * ```typescript
-	 * var editor = new Jodit('.editor', {
+	 * var editor = Jodit.make('.editor', {
 	 *    disablePlugins: 'table,iframe'
 	 * });
 	 * //or
-	 * var editor = new Jodit('.editor', {
+	 * var editor = Jodit.make('.editor', {
 	 *    disablePlugins: ['table', 'iframe']
 	 * });
 	 * ```
@@ -490,7 +490,7 @@ export class Config implements IViewOptions {
 	 * Init and download extra plugins
 	 * @example
 	 * ```typescript
-	 * var editor = new Jodit('.editor', {
+	 * var editor = Jodit.make('.editor', {
 	 *    extraPlugins: ['emoji']
 	 * });
 	 * ```
@@ -504,7 +504,7 @@ export class Config implements IViewOptions {
 	basePath?: string;
 
 	/**
-	 * This buttons list will be added to option.buttons
+	 * These buttons list will be added to option.buttons
 	 */
 	extraButtons: Array<string | IControlType> = [];
 
@@ -548,6 +548,41 @@ export class Config implements IViewOptions {
 
 	/**
 	 * Default attributes for created inside editor elements
+	 * @example
+	 * ```js
+	 * const editor2 = Jodit.make('#editor', {
+	 * 	createAttributes: {
+	 * 		div: {
+	 * 			class: 'test'
+	 * 		},
+	 * 		ul: function (ul) {
+	 * 			ul.classList.add('ui-test');
+	 * 		}
+	 * 	}
+	 * });
+	 *
+	 * const div2 = editor2.createInside.div();
+	 * expect(div2.className).equals('test');
+	 *
+	 * const ul = editor2.createInside.element('ul');
+	 * expect(ul.className).equals('ui-test');
+	 * ```
+	 * Or JSX in React
+	 * @example
+	 * ```jsx
+	 * import React, {useState, useRef} from 'react';
+	 * import JoditEditor from "jodit-react";
+	 *
+	 * const config = {
+	 * 	createAttributes: {
+	 * 		div: {
+	 * 			class: 'align-center'
+	 * 		}
+	 * 	}
+	 * };
+	 *
+	 * <JoditEditor config={config}/>
+	 * ```
 	 */
 	createAttributes: IDictionary<Attributes | NodeFunction> = {};
 
@@ -571,7 +606,7 @@ export class Config implements IViewOptions {
 	 * Note - this is not the width of the device, the width of the editor
 	 * @example
 	 * ```javascript
-	 * new Jodit('#editor', {
+	 * Jodit.make('#editor', {
 	 *     buttons: ['bold', 'italic', 'source'],
 	 *     buttonsMD: ['bold', 'italic'],
 	 *     buttonsXS: ['bold', 'fullsize'],
@@ -579,32 +614,31 @@ export class Config implements IViewOptions {
 	 * ```
 	 * @example
 	 * ```javascript
-	 * new Jodit('#editor2', {
+	 * Jodit.make('#editor2', {
 	 *     buttons: [{
-	 *         name: 'enty',
+	 *         name: 'empty',
 	 *         icon: 'source',
-	 *         exec: function () {
-	 *             var dialog = new Jodit.modules.Dialog(this),
-	 *                 div = document.createElement('div'),
-	 *                 text = document.createElement('textarea');
-	 *             div.textContent = this.val();
+	 *         exec: function (editor) {
+	 *             const dialog = new Jodit.modules.Dialog({}),
+	 *                 text = editor.c.element('textarea');
+	 *
 	 *             dialog.setHeader('Source code');
 	 *             dialog.setContent(text);
 	 *             dialog.setSize(400, 300);
-	 *             dom(text)
-	 *                 .css({
-	 *                     width: '100%',
-	 *                     height: '100%'
-	 *                 })
-	 *                 .val(div.innerHTML.replace(/<br>/g, '\n'));
-	 *             dialog.{@link module:Dialog~open|open}();
+	 *
+	 *             Jodit.modules.Helpers.css(elm, {
+	 *                 width: '100%',
+	 *                 height: '100%'
+	 *             })
+
+	 *             dialog.open();
 	 *         }
 	 *     }]
 	 * });
 	 * ```
 	 * @example
 	 * ```javascript
-	 * new Jodit('#editor2', {
+	 * Jodit.make('#editor2', {
 	 *     buttons: Jodit.defaultOptions.buttons.concat([{
 	 *        name: 'listsss',
 	 *        iconURL: 'stuf/dummy.png',

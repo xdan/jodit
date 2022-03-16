@@ -30,7 +30,7 @@ declare module 'jodit/config' {
  *
  * @example
  * ```js
- * var jodit = new Jodit('#editor', {
+ * var jodit = Jodit.make('#editor', {
  *  commandToHotkeys: {
  *      bold: 'ctrl+shift+b',
  *      italic: ['ctrl+i', 'ctrl+b'],

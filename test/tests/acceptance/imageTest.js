@@ -723,7 +723,7 @@ describe('Test image', function () {
 				describe('width and height were not changed', function () {
 					it('should not set style', function (done) {
 						const area = appendTestArea();
-						const editor = new Jodit(area);
+						const editor = Jodit.make(area);
 
 						editor.value = '<p><img src="tests/artio.jpg"/></p>';
 						const img = editor.editor.querySelector('img');
@@ -765,7 +765,7 @@ describe('Test image', function () {
 				});
 				it('should create inputs contains width and height', function (done) {
 					const area = appendTestArea();
-					const editor = new Jodit(area);
+					const editor = Jodit.make(area);
 
 					editor.value = '<img src="tests/artio.jpg"/>';
 					const img = editor.editor.querySelector('img');
@@ -822,7 +822,7 @@ describe('Test image', function () {
 				describe('image has width in attributes', function () {
 					it('should put this width in input, inside height should be auto', function (done) {
 						const area = appendTestArea();
-						const editor = new Jodit(area);
+						const editor = Jodit.make(area);
 
 						editor.value =
 							'<img width="100px" src="tests/artio.jpg"/>';
@@ -866,7 +866,7 @@ describe('Test image', function () {
 					describe('same in style', function () {
 						it('should put this width in input, inside height should be auto', function (done) {
 							const area = appendTestArea();
-							const editor = new Jodit(area);
+							const editor = Jodit.make(area);
 
 							editor.value =
 								'<img style="width:100px" src="tests/artio.jpg"/>';
@@ -915,7 +915,7 @@ describe('Test image', function () {
 						describe('Attributes has not pixel value', function () {
 							it('should put these values in inputs', function (done) {
 								const area = appendTestArea();
-								const editor = new Jodit(area);
+								const editor = Jodit.make(area);
 
 								editor.value =
 									'<img style="width:100%;height:30rem" src="tests/artio.jpg"/>';
@@ -961,7 +961,7 @@ describe('Test image', function () {
 				describe('image has width and height attributes', function () {
 					it('should put these attributes in inputs and lock button should be switch off', function (done) {
 						const area = appendTestArea();
-						const editor = new Jodit(area);
+						const editor = Jodit.make(area);
 
 						editor.value =
 							'<img width="100px" height="200px" src="tests/artio.jpg"/>';
@@ -1010,7 +1010,7 @@ describe('Test image', function () {
 					describe('same in style', function () {
 						it('should put these values in inputs and lock button should be switch off', function (done) {
 							const area = appendTestArea();
-							const editor = new Jodit(area);
+							const editor = Jodit.make(area);
 
 							editor.value =
 								'<img style="width:100px;height:200px" src="tests/artio.jpg"/>';
@@ -1234,7 +1234,7 @@ describe('Test image', function () {
 				};
 
 				it('should not show buttons', function () {
-					const editor = new Jodit(appendTestArea(), settings);
+					const editor = Jodit.make(appendTestArea(), settings);
 
 					editor.value = '<img src="tests/artio.jpg"/>';
 					simulateEvent(
@@ -1253,7 +1253,7 @@ describe('Test image', function () {
 
 				describe('Click on filebrowser button', function () {
 					it('should open popup', function () {
-						const editor = new Jodit(appendTestArea(), settings);
+						const editor = Jodit.make(appendTestArea(), settings);
 
 						editor.value = '<img src="tests/artio.jpg"/>';
 
@@ -1278,7 +1278,7 @@ describe('Test image', function () {
 				describe('Click on edit button', function () {
 					describe('When photo it is not my', function () {
 						it('should open image editor', function (done) {
-							const editor = new Jodit(
+							const editor = Jodit.make(
 								appendTestArea(),
 								settings
 							);

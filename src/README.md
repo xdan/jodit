@@ -24,7 +24,7 @@ console.log(jodit.isReady);
 This is almost equivalent to
 
 ```js
-const jodit = new Jodit('#editor');
+const jodit = Jodit.make('#editor');
 console.log(jodit.isReady);
 ```
 

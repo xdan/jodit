@@ -32,7 +32,7 @@ describe('Test editor size plugin', function () {
 		describe('Set fixed height', function () {
 			it('Should set editor height by option', function () {
 				const area = appendTestArea();
-				const editor = new Jodit(area, {
+				const editor = Jodit.make(area, {
 					height: 300
 				});
 

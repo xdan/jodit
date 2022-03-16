@@ -9,10 +9,10 @@
  */
 
 import type { IControlType, IJodit } from 'jodit/types';
-import { Dom } from '../../../../core/dom';
-import { isString } from '../../../../core/helpers/checker';
-import { css } from '../../../../core/helpers';
-import { hAlignElement } from '../../../image/helpers';
+import { Dom } from 'jodit/core/dom';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { css } from 'jodit/core/helpers/utils/css';
+import { hAlignElement } from 'jodit/plugins/image/helpers';
 
 export const align: IControlType<IJodit> = {
 	name: 'left',

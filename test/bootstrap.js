@@ -488,7 +488,7 @@ function appendTestArea(id, noput) {
  * @return {Jodit}
  */
 function getJodit(options, element) {
-	const editor = new Jodit(element || appendTestArea(), options);
+	const editor = Jodit.make(element || appendTestArea(), options);
 
 	window.scrollTo(
 		0,

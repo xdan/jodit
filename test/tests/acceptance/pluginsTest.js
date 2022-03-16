@@ -458,7 +458,7 @@ describe('Test plugins', function () {
 				describe('Enable ratio', function () {
 					it('Should deny crop image without ratio', function (done) {
 						const area = appendTestArea();
-						const editor = new Jodit(area, {
+						const editor = Jodit.make(area, {
 							history: {
 								timeout: 0
 							},
@@ -601,7 +601,7 @@ describe('Test plugins', function () {
 					it('Should allow crop image without ratio', function (done) {
 						const area = appendTestArea();
 
-						const editor = new Jodit(area, {
+						const editor = Jodit.make(area, {
 							history: {
 								timeout: 0
 							},
@@ -752,7 +752,7 @@ describe('Test plugins', function () {
 				describe('Enable ratio', function () {
 					it('Should deny resize image without ratio', function (done) {
 						const area = appendTestArea();
-						const editor = new Jodit(area, {
+						const editor = Jodit.make(area, {
 							history: {
 								timeout: 0
 							},
@@ -887,7 +887,7 @@ describe('Test plugins', function () {
 				describe('Disable ratio', function () {
 					it('Should allow resize image without ratio', function (done) {
 						const area = appendTestArea();
-						const editor = new Jodit(area, {
+						const editor = Jodit.make(area, {
 							history: {
 								timeout: 0
 							},
@@ -1031,7 +1031,7 @@ describe('Test plugins', function () {
 	describe('Symbols plugin', function () {
 		it('Should create symbol button in toolbar and after click open dialog with symbols', function () {
 			const area = appendTestArea();
-			const editor = new Jodit(area, {
+			const editor = Jodit.make(area, {
 				toolbarAdaptive: false,
 				buttons: 'symbol'
 			});

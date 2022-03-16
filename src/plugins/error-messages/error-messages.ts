@@ -65,7 +65,7 @@ export function errorMessages(editor: IJodit): void {
 		 * options.showMessageErrorTime = 2000
 		 * @example
 		 * ```javascript
-		 * const editor = new Jodit('#editors');
+		 * const editor = Jodit.make('#editors');
 		 * editor.e.fire('errorMessage', 'Error 123. File has not been upload');
 		 * editor.e.fire('errorMessage', 'You can upload file', 'info', 4000);
 		 * editor.e.fire('errorMessage', 'File was uploaded', 'success', 4000);

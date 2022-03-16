@@ -449,7 +449,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * If returned not undefined getEditorValue will return this value
 		 * @example
 		 * ```javascript
-		 * var editor = new Jodit("#redactor");
+		 * var editor = Jodit.make("#redactor");
 		 * editor.e.on('beforeGetValueFromEditor', function () {
 		 *     return editor.editor.innerHTML.replace(/a/g, 'b');
 		 * });
@@ -485,7 +485,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 *
 		 * @example
 		 * ```javascript
-		 * var editor = new Jodit("#redactor");
+		 * var editor = Jodit.make("#redactor");
 		 * editor.e.on('afterGetValueFromEditor', function (new_value) {
 		 *     new_value.value = new_value.value.replace('a', 'b');
 		 * });
@@ -514,7 +514,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * Triggered before getEditorValue set value to wysiwyg.
 		 * @example
 		 * ```javascript
-		 * var editor = new Jodit("#redactor");
+		 * var editor = Jodit.make("#redactor");
 		 * editor.e.on('beforeSetValueToEditor', function (old_value) {
 		 *     return old_value.value.replace('a', 'b');
 		 * });
@@ -623,7 +623,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * @example
 	 * ```javascript
-	 * var jodit = new Jodit('#editor);
+	 * var jodit = Jodit.make('#editor);
 	 *
 	 * jodit.setEditorValue('test test test');
 	 *
@@ -898,7 +898,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * @example
 	 * ```javascript
-	 * var editor = new Jodit('#editor');
+	 * var editor = Jodit.make('#editor');
 	 * console.log(editor.getRealMode());
 	 * ```
 	 */
@@ -941,7 +941,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * @param data - PlainObject `{mode: {string}}` In handler you can change data.mode
 		 * @example
 		 * ```javascript
-		 * var editor = new Jodit("#redactor");
+		 * var editor = Jodit.make("#redactor");
 		 * editor.e.on('beforeSetMode', function (data) {
 		 *     data.mode = Jodit.MODE_SOURCE; // not respond to the mode change. Always make the source code mode
 		 * });
@@ -973,7 +973,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * Triggered after setMode executed
 		 * @example
 		 * ```javascript
-		 * var editor = new Jodit("#redactor");
+		 * var editor = Jodit.make("#redactor");
 		 * editor.e.on('afterSetMode', function () {
 		 *     editor.setEditorValue(''); // clear editor's value after change mode
 		 * });
@@ -989,7 +989,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * @example
 	 * ```javascript
-	 * var editor = new Jodit('#editor');
+	 * var editor = Jodit.make('#editor');
 	 * editor.toggleMode();
 	 * ```
 	 */
@@ -1101,6 +1101,8 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 *
 	 * @param element - Selector or HTMLElement
 	 * @param options - Editor's options
+	 *
+	 * @deprecated - Instead use `Jodit.make`
 	 */
 	constructor(element: HTMLElement | string, options?: object) {
 		super(options as IViewOptions, true);

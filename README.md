@@ -71,7 +71,7 @@ And some `<textarea>` element
 After this, you can init Jodit plugin
 
 ```javascript
-var editor = new Jodit('#editor');
+var editor = Jodit.make('#editor');
 editor.value = '<p>start</p>';
 ```
 
@@ -86,7 +86,7 @@ with jQuery
 
 ```javascript
 $('textarea').each(function () {
-	var editor = new Jodit(this);
+	var editor = Jodit.make(this);
 	editor.value = '<p>start</p>';
 });
 ```
@@ -156,7 +156,7 @@ php -S localhost:8181 -t ./
 and set options for Jodit:
 
 ```javascript
-var editor = new Jodit('#editor', {
+var editor = Jodit.make('#editor', {
 	uploader: {
 		url: 'http://localhost:8181/index-test.php?action=fileUpload'
 	},
@@ -181,7 +181,7 @@ Jodit.plugins.yourplugin = function (editor) {
 ### Add custom button
 
 ```javascript
-var editor = new Jodit('.someselector', {
+var editor = Jodit.make('.someselector', {
 	extraButtons: [
 		{
 			name: 'insertDate',
@@ -197,7 +197,7 @@ var editor = new Jodit('.someselector', {
 or
 
 ```javascript
-var editor = new Jodit('.someselector', {
+var editor = Jodit.make('.someselector', {
 	buttons: ['bold', 'insertDate'],
 	controls: {
 		insertDate: {
@@ -253,7 +253,7 @@ Jodit.plugins.add(
 	}
 );
 
-var editor = new Jodit('.someselector', {
+var editor = Jodit.make('.someselector', {
 	buttons: ['bold', 'insertText'],
 	controls: {
 		insertText: {

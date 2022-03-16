@@ -8,11 +8,11 @@
  * @module plugins/inline-popup
  */
 
-import type { Table } from '../../../../modules';
 import type { IControlType } from 'jodit/types';
-import { isJoditObject, isString } from '../../../../core/helpers/checker';
-import { css } from '../../../../core/helpers';
-import { ColorPickerWidget, TabsWidget } from '../../../../modules/widget';
+import type { Table } from 'jodit/modules/table/table';
+import { isJoditObject, isString } from 'jodit/core/helpers/checker';
+import { css } from 'jodit/core/helpers/utils/css';
+import { ColorPickerWidget, TabsWidget } from 'jodit/modules/widget';
 
 const cmd = (control: IControlType): string =>
 	control.args && isString(control.args[0])
