@@ -8,7 +8,7 @@
  * @module plugins/print
  */
 
-import type { IJodit } from 'jodit/types';
+import type { IJodit, Nullable } from 'jodit/types';
 import { $$, attr, css, isString } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
 
@@ -67,7 +67,8 @@ function fixedAssetsSizeAndAbsoluteLinks(
 export function previewBox(
 	editor: IJodit,
 	defaultValue?: string,
-	points: 'pt' | 'px' | '' = 'px'
+	points: 'pt' | 'px' | '' = 'px',
+	container: Nullable<HTMLElement> = null
 ): HTMLElement {
 	const restoreAttributes = fixedAssetsSizeAndAbsoluteLinks(editor, points);
 
@@ -77,7 +78,11 @@ export function previewBox(
 			return res;
 		}
 
-		const div = editor.c.div('jodit__preview-box');
+		let div: HTMLElement = editor.c.div('jodit__preview-box');
+		if (container) {
+			container.appendChild(div);
+		}
+
 		css(div, {
 			position: 'relative',
 			padding: 16
@@ -100,14 +105,16 @@ export function previewBox(
 
 			div.appendChild(iframe);
 
-			const mywindow = iframe.contentWindow;
+			const myWindow = iframe.contentWindow;
 
-			if (mywindow) {
+			if (myWindow) {
 				editor.e.fire(
 					'generateDocumentStructure.iframe',
-					mywindow.document,
+					myWindow.document,
 					editor
 				);
+
+				div = myWindow.document.body;
 			}
 		} else {
 			css(div, {
@@ -127,7 +134,7 @@ export function previewBox(
 			for (let i = 0; i < dv.children.length; i += 1) {
 				const c = dv.children[i];
 
-				const newNode = document.createElement(c.nodeName);
+				const newNode = box.ownerDocument.createElement(c.nodeName);
 
 				for (let j = 0; j < c.attributes.length; j += 1) {
 					attr(

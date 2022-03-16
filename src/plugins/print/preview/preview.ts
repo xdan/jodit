@@ -5,20 +5,21 @@
  */
 
 /**
- * @module plugins/print
+ * @module plugins/print/preview
  */
 
 import './preview.less';
 
-import type { IControlType, IDialog, IJodit } from 'jodit/types';
+import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
-import * as consts from 'jodit/core/constants';
+import { MODE_SOURCE, MODE_WYSIWYG } from 'jodit/core/constants';
 import { previewBox } from 'jodit/plugins/print/helpers';
+import { Dialog } from 'jodit/modules/dialog/dialog';
 
 Config.prototype.controls.preview = {
 	icon: 'eye',
 	command: 'preview',
-	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
+	mode: MODE_SOURCE + MODE_WYSIWYG,
 	tooltip: 'Preview'
 } as IControlType;
 
@@ -30,17 +31,17 @@ export function preview(editor: IJodit): void {
 	editor.registerCommand(
 		'preview',
 		(_: any, _1: any, defaultValue: string) => {
-			const dialog = <IDialog>editor.getInstance('Dialog', {
+			const dialog = new Dialog({
 				language: editor.o.language,
 				theme: editor.o.theme
 			});
 
-			const div = previewBox(editor, defaultValue);
-
 			dialog
 				.setSize(1024, 600)
-				.open(div, editor.i18n('Preview'))
+				.open('', editor.i18n('Preview'))
 				.setModal(true);
+
+			previewBox(editor, defaultValue, 'px', dialog.getElm('content'));
 		}
 	);
 }
