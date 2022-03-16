@@ -111,29 +111,40 @@ export class Dom {
 		return wrapper as HTMLElement;
 	}
 
-	/**
-	 * Wrap node inside another node
-	 */
 	static wrap<K extends HTMLTagNames>(
-		current: Node,
+		current: Node | Range,
+		tag: HTMLElement,
+		create: ICreate
+	): HTMLElementTagNameMap[K];
+
+	static wrap<K extends HTMLTagNames>(
+		current: Node | Range,
 		tag: K,
 		create: ICreate
 	): HTMLElementTagNameMap[K];
 
+	/**
+	 * Wrap node inside another node
+	 */
 	static wrap(
-		current: Node,
+		current: Node | Range,
 		tag: HTMLElement | HTMLTagNames,
 		create: ICreate
 	): HTMLElement {
 		const wrapper = isString(tag) ? create.element(tag) : tag;
 
-		if (!current.parentNode) {
-			throw error('Element should be in DOM');
+		if (Dom.isNode(current)) {
+			if (!current.parentNode) {
+				throw error('Element should be in DOM');
+			}
+
+			current.parentNode.insertBefore(wrapper, current);
+			wrapper.appendChild(current);
+		} else {
+			const fragment = current.extractContents();
+			current.insertNode(wrapper);
+			wrapper.appendChild(fragment);
 		}
-
-		current.parentNode.insertBefore(wrapper, current);
-
-		wrapper.appendChild(current);
 
 		return wrapper;
 	}
@@ -597,10 +608,6 @@ export class Dom {
 		while (stack.length) {
 			const item = <Node>stack.pop();
 
-			if (start !== item) {
-				yield item;
-			}
-
 			if (withChild) {
 				let child = leftToRight ? item.lastChild : item.firstChild;
 
@@ -610,6 +617,10 @@ export class Dom {
 						? child.previousSibling
 						: child.nextSibling;
 				}
+			}
+
+			if (start !== item) {
+				yield item;
 			}
 		}
 	}
