@@ -9,6 +9,12 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.16.2
+
+#### :bug: Bug Fix
+
+-   ["Uncaught TypeError: this.setEditorValue is not a function" with Japanese input method #807](https://github.com/xdan/jodit/issues/807)
+
 ## 3.16.1
 
 #### :rocket: New Feature
@@ -1222,11 +1228,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                 	{ value: "", text: "" },
--                                                                                                                                                                                                 	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                 	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                 	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                 ]
+-                                                                                                                                                                                                   	{ value: "", text: "" },
+-                                                                                                                                                                                                   	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                   	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                   	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                   ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

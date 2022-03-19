@@ -719,6 +719,7 @@ describe('Jodit FileBrowser Tests', function () {
 		describe('Drag and drop image from filebrowser', function () {
 			it('Should create IMG element in editor', function (done) {
 				const editor = getJodit({
+					defaultTimeout: 0,
 					filebrowser: {
 						ajax: {
 							url: 'https://xdsoft.net/jodit/connector/index.php'
@@ -757,15 +758,18 @@ describe('Jodit FileBrowser Tests', function () {
 							});
 						});
 
-						expect(editor.value).equals(
-							'<p><img src="https://xdsoft.net/jodit/files/images.jpg"></p>'
-						);
+						simulateEvent('change', window);
+						editor.async.requestIdleCallback(() => {
+							expect(editor.value).equals(
+								'<p><img src="https://xdsoft.net/jodit/files/images.jpg"></p>'
+							);
 
-						simulateEvent('drop', window);
+							simulateEvent('drop', window);
 
-						filebrowser.destruct();
+							filebrowser.destruct();
 
-						done();
+							done();
+						});
 					})
 					.catch(function (e) {
 						throw e;

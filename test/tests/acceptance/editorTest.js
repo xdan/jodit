@@ -898,6 +898,19 @@ describe('Jodit Editor Tests', function () {
 				});
 			});
 
+			describe('Composition event', () => {
+				it('should handled normal', () => {
+					const jodit = getJodit({
+						defaultTimeout: 0
+					});
+
+					jodit.value = '<p>test</p>';
+
+					simulateEvent('compositionend', jodit.editor);
+					expect(jodit.value).eq('<p>test</p>');
+				});
+			});
+
 			describe('Async init', () => {
 				it('Should return resolved promise', done => {
 					unmockPromise();

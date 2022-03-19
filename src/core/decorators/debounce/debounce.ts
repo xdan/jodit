@@ -34,8 +34,9 @@ export function debounce<V = IViewComponent | IViewBased>(
 	return <T extends Component & IDictionary>(
 		target: IDictionary,
 		propertyKey: string
-	): void => {
-		if (!isFunction(target[propertyKey])) {
+	): PropertyDescriptor => {
+		const fn = target[propertyKey];
+		if (!isFunction(fn)) {
 			throw error('Handler must be a Function');
 		}
 
@@ -48,14 +49,24 @@ export function debounce<V = IViewComponent | IViewBased>(
 				? timeout(component)
 				: timeout;
 
-			(component as any)[propertyKey] = view.async[method](
-				(component as any)[propertyKey].bind(component),
-				isNumber(realTimeout) || isPlainObject(realTimeout)
-					? realTimeout
-					: view.defaultTimeout,
-				firstCallImmediately
-			);
+			Object.defineProperty(component, propertyKey, {
+				configurable: true,
+				value: view.async[method](
+					(component as any)[propertyKey].bind(component),
+					isNumber(realTimeout) || isPlainObject(realTimeout)
+						? realTimeout
+						: view.defaultTimeout,
+					firstCallImmediately
+				)
+			});
 		});
+
+		return {
+			configurable: true,
+			get(): typeof fn {
+				return fn.bind(this);
+			}
+		};
 	};
 }
 

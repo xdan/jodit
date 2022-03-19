@@ -11,7 +11,12 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import type { InsertMode, PastedValue, PasteEvent } from './interface';
+import type {
+	InsertMode,
+	PastedData,
+	PastedValue,
+	PasteEvent
+} from './interface';
 import { Plugin } from 'jodit/core/plugin';
 import {
 	askInsertTypeDialog,
@@ -27,7 +32,8 @@ import {
 	INSERT_CLEAR_HTML,
 	INSERT_ONLY_TEXT,
 	TEXT_HTML,
-	TEXT_PLAIN
+	TEXT_PLAIN,
+	TEXT_RTF
 } from 'jodit/core/constants';
 
 import {
@@ -93,13 +99,21 @@ export class paste extends Plugin {
 		}
 
 		const dt = getDataTransfer(e),
-			texts = [dt?.getData(TEXT_HTML), dt?.getData(TEXT_PLAIN)];
+			texts: PastedData = {
+				html: dt?.getData(TEXT_HTML),
+				plain: dt?.getData(TEXT_PLAIN),
+				rtf: dt?.getData(TEXT_RTF)
+			};
 
-		for (const text of texts) {
+		let key: keyof PastedData;
+
+		for (key in texts) {
+			const value = texts[key];
+
 			if (
-				isHTML(text) &&
-				(this.j.e.fire('processHTML', e, text) ||
-					this.processHTML(e, text))
+				isHTML(value) &&
+				(this.j.e.fire('processHTML', e, value, texts) ||
+					this.processHTML(e, value))
 			) {
 				return false;
 			}

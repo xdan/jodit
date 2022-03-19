@@ -119,6 +119,7 @@ describe('Search plugin', function () {
 				replace.value = 'w';
 
 				simulateEvent('pointerdown', replaceButton);
+				debugger
 
 				let cnt = 1;
 				editor.e.on('afterFindAndReplace', () => {

@@ -33,6 +33,7 @@ import {
 	askInsertTypeDialog,
 	pasteInsertHtml
 } from 'jodit/plugins/clipboard/paste/helpers';
+import type { PastedData } from 'jodit/plugins/clipboard/paste/interface';
 import { watch } from 'jodit/src/core/decorators';
 
 import './config';
@@ -45,7 +46,11 @@ export class PasteFromWord extends Plugin {
 	 * Try if text is Word's document fragment and try process this
 	 */
 	@watch(':processHTML')
-	protected processWordHTML(e: PasteEvent, text: string): boolean {
+	protected processWordHTML(
+		e: PasteEvent,
+		text: string,
+		texts: PastedData
+	): boolean {
 		const { j } = this,
 			{
 				processPasteFromWord,
@@ -63,7 +68,7 @@ export class PasteFromWord extends Plugin {
 						'Do you want to keep the format or clean it up?',
 					'Word Paste Detected',
 					insertType => {
-						this.insertFromWordByType(e, text, insertType);
+						this.insertFromWordByType(e, text, insertType, texts);
 					},
 					pasteFromWordActionList
 				);
@@ -71,7 +76,8 @@ export class PasteFromWord extends Plugin {
 				this.insertFromWordByType(
 					e,
 					text,
-					defaultActionOnPasteFromWord || defaultActionOnPaste
+					defaultActionOnPasteFromWord || defaultActionOnPaste,
+					texts
 				);
 			}
 
@@ -87,7 +93,8 @@ export class PasteFromWord extends Plugin {
 	protected insertFromWordByType(
 		e: PasteEvent,
 		html: string,
-		insertType: InsertMode
+		insertType: InsertMode,
+		texts: PastedData
 	): void {
 		switch (insertType) {
 			case INSERT_AS_HTML: {

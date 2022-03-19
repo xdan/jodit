@@ -71,12 +71,29 @@ describe('Test object observer', function () {
 		return A;
 	};
 
+	function decorate(decorators, target, key) {
+		let r = Object.getOwnPropertyDescriptor(target, key);
+
+		for (let i = decorators.length - 1; i >= 0; i--) {
+			const d = decorators[i];
+
+			if (d) {
+				r = d(target, key, r) || r;
+			}
+		}
+
+		r && Object.defineProperty(target, key, r);
+	}
 	describe('Test debounce decorator', function () {
 		it('Should call method only once in time', function (done) {
 			const result = [],
 				AClass = A(result, 'state.editable');
 
-			Jodit.decorators.debounce(100)(AClass.prototype, 'callTime');
+			decorate(
+				[Jodit.decorators.debounce(100)],
+				AClass.prototype,
+				'callTime'
+			);
 
 			const a = new AClass();
 
@@ -98,9 +115,15 @@ describe('Test object observer', function () {
 				const result = [],
 					AClass = A(result, 'state.editable');
 
-				Jodit.decorators.debounce({
-					timeout: 100
-				})(AClass.prototype, 'callTime');
+				decorate(
+					[
+						Jodit.decorators.debounce({
+							timeout: 100
+						})
+					],
+					AClass.prototype,
+					'callTime'
+				);
 
 				const a = new AClass();
 
@@ -125,10 +148,16 @@ describe('Test object observer', function () {
 				const result = [],
 					AClass = A(result, 'state.editable');
 
-				Jodit.decorators.debounce({
-					timeout: 100,
-					promisify: true
-				})(AClass.prototype, 'callPromiseTime');
+				decorate(
+					[
+						Jodit.decorators.debounce({
+							timeout: 100,
+							promisify: true
+						})
+					],
+					AClass.prototype,
+					'callPromiseTime'
+				);
 
 				const a = new AClass();
 
@@ -164,7 +193,11 @@ describe('Test object observer', function () {
 			const result = [],
 				AClass = A(result, 'state.editable');
 
-			Jodit.decorators.watch('state')(AClass.prototype, 'methodA');
+			decorate(
+				[Jodit.decorators.watch('state')],
+				AClass.prototype,
+				'methodA'
+			);
 
 			const a = new AClass();
 
@@ -186,7 +219,8 @@ describe('Test object observer', function () {
 			const result = [],
 				AClass = A(result, 'state.some.element.enable');
 
-			Jodit.decorators.watch('state.some.element.enable')(
+			decorate(
+				[Jodit.decorators.watch('state.some.element.enable')],
 				AClass.prototype,
 				'methodA'
 			);
@@ -208,7 +242,8 @@ describe('Test object observer', function () {
 					const result = [],
 						AClass = A(result, 'state.some.element.enable');
 
-					Jodit.decorators.watch('state.some.element.enable')(
+					decorate(
+						[Jodit.decorators.watch('state.some.element.enable')],
 						AClass.prototype,
 						'methodA'
 					);
@@ -241,12 +276,14 @@ describe('Test object observer', function () {
 							'state.some.element.two'
 						);
 
-					Jodit.decorators.watch('state.some.element.one')(
+					decorate(
+						[Jodit.decorators.watch('state.some.element.one')],
 						AClass.prototype,
 						'methodA'
 					);
 
-					Jodit.decorators.watch('state.some.element.two')(
+					decorate(
+						[Jodit.decorators.watch('state.some.element.two')],
 						AClass.prototype,
 						'methodB'
 					);
@@ -271,7 +308,8 @@ describe('Test object observer', function () {
 				const result = [],
 					AClass = A(result, 'state.some.element.one');
 
-				Jodit.decorators.watch('state.some')(
+				decorate(
+					[Jodit.decorators.watch('state.some')],
 					AClass.prototype,
 					'methodA'
 				);
@@ -291,7 +329,8 @@ describe('Test object observer', function () {
 				const result = [],
 					AClass = A(result, 'state.some.element.one');
 
-				Jodit.decorators.watch('state.some')(
+				decorate(
+					[Jodit.decorators.watch('state.some')],
 					AClass.prototype,
 					'methodC'
 				);
