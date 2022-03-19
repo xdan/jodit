@@ -9,6 +9,10 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.16.3
+
+* Fixed composition `wait` and `debounce` decorators
+
 ## 3.16.2
 
 #### :bug: Bug Fix

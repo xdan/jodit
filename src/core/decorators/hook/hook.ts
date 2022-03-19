@@ -33,7 +33,7 @@ export function hook(status: ComponentStatus) {
 		}
 
 		target.hookStatus(status, (component: IViewComponent | IViewBased) => {
-			target[propertyKey].call(component);
+			(component as any)[propertyKey].call(component);
 		});
 	};
 }

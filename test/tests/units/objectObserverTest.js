@@ -110,6 +110,48 @@ describe('Test object observer', function () {
 			}, 500);
 		});
 
+		describe('Compose with `wait`', () => {
+			it('Should work correct', function (done) {
+				const result = [],
+					AClass = A(result, 'state.editable');
+
+				decorate(
+					[
+						Jodit.decorators.debounce(100),
+						Jodit.decorators.wait(ctx => ctx.someFlag > 2)
+					],
+					AClass.prototype,
+					'callTime'
+				);
+
+				const a = new AClass();
+
+				a.callTime();
+				expect(a.countCall).eq(0);
+				a.callTime();
+				expect(a.countCall).eq(0);
+				a.callTime();
+				expect(a.countCall).eq(0);
+
+				setTimeout(() => {
+					expect(a.countCall).eq(0);
+					a.someFlag = 4;
+
+					a.callTime();
+					expect(a.countCall).eq(0);
+					a.callTime();
+					expect(a.countCall).eq(0);
+					a.callTime();
+					expect(a.countCall).eq(0);
+
+					setTimeout(() => {
+						expect(a.countCall).eq(2);
+						done();
+					}, 500);
+				}, 500);
+			});
+		});
+
 		describe('Options', function () {
 			it('Should call method only once in time', function (done) {
 				const result = [],
