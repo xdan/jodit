@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.16.2
+ * Version: v3.16.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -9948,7 +9948,7 @@ function hook(status) {
             throw (0, error_1.error)('Handler must be a Function');
         }
         target.hookStatus(status, function (component) {
-            target[propertyKey].call(component);
+            component[propertyKey].call(component);
         });
     };
 }
@@ -10038,7 +10038,8 @@ var helpers_1 = __webpack_require__(146);
 var component_1 = __webpack_require__(154);
 function wait(condition) {
     return function (target, propertyKey) {
-        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
+        var fn = target[propertyKey];
+        if (!(0, helpers_1.isFunction)(fn)) {
             throw (0, helpers_1.error)('Handler must be a Function');
         }
         target.hookStatus(component_1.STATUSES.ready, function (component) {
@@ -10047,19 +10048,22 @@ function wait(condition) {
                 : component.j.async;
             var realMethod = component[propertyKey];
             var timeout = 0;
-            component[propertyKey] = function callProxy() {
-                var args = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    args[_i] = arguments[_i];
+            Object.defineProperty(component, propertyKey, {
+                configurable: true,
+                value: function callProxy() {
+                    var args = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        args[_i] = arguments[_i];
+                    }
+                    async.clearTimeout(timeout);
+                    if (condition(component)) {
+                        realMethod.apply(component, args);
+                    }
+                    else {
+                        timeout = async.setTimeout(function () { return callProxy.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(args), false)); }, 10);
+                    }
                 }
-                async.clearTimeout(timeout);
-                if (condition(component)) {
-                    realMethod.apply(component, args);
-                }
-                else {
-                    timeout = async.setTimeout(function () { return callProxy.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(args), false)); }, 10);
-                }
-            };
+            });
         });
     };
 }
@@ -16303,7 +16307,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.16.2";
+        _this.version = "3.16.3";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -16450,10 +16454,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.16.2";
+        return "3.16.3";
     };
     View.getVersion = function () {
-        return "3.16.2";
+        return "3.16.3";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));

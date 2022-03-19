@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.16.2
+ * Version: v3.16.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -5384,7 +5384,7 @@ function hook(status) {
             throw (0,error/* error */.v)('Handler must be a Function');
         }
         target.hookStatus(status, (component) => {
-            target[propertyKey].call(component);
+            component[propertyKey].call(component);
         });
     };
 }
@@ -5446,7 +5446,8 @@ function persistent(target, propertyKey) {
 
 function wait(condition) {
     return (target, propertyKey) => {
-        if (!(0,helpers.isFunction)(target[propertyKey])) {
+        const fn = target[propertyKey];
+        if (!(0,helpers.isFunction)(fn)) {
             throw (0,helpers.error)('Handler must be a Function');
         }
         target.hookStatus(core_component/* STATUSES.ready */.n$.ready, (component) => {
@@ -5455,15 +5456,18 @@ function wait(condition) {
                 : component.j.async;
             const realMethod = component[propertyKey];
             let timeout = 0;
-            component[propertyKey] = function callProxy(...args) {
-                async.clearTimeout(timeout);
-                if (condition(component)) {
-                    realMethod.apply(component, args);
+            Object.defineProperty(component, propertyKey, {
+                configurable: true,
+                value: function callProxy(...args) {
+                    async.clearTimeout(timeout);
+                    if (condition(component)) {
+                        realMethod.apply(component, args);
+                    }
+                    else {
+                        timeout = async.setTimeout(() => callProxy(...args), 10);
+                    }
                 }
-                else {
-                    timeout = async.setTimeout(() => callProxy(...args), 10);
-                }
-            };
+            });
         });
     };
 }
@@ -11754,7 +11758,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.16.2";
+        this.version = "3.16.3";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -11852,10 +11856,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.16.2";
+        return "3.16.3";
     }
     static getVersion() {
-        return "3.16.2";
+        return "3.16.3";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
