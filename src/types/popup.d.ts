@@ -24,7 +24,11 @@ export interface IPopup extends IUIElement, IDestructible {
 	strategy: PopupStrategy;
 	viewBound: () => IBound;
 
-	open(getBound: () => IBound, keepPosition?: boolean): this;
+	open(
+		getBound: () => IBound,
+		keepPosition?: boolean,
+		parentContainer?: HTMLElement
+	): this;
 
 	setContent(content: IUIElement | HTMLElement | string): this;
 	updatePosition(): this;

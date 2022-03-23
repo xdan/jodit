@@ -113,7 +113,11 @@ export class Popup extends UIElement implements IPopup {
 	/**
 	 * Open popup near with some bound
 	 */
-	open(getBound: getBoundFunc, keepPosition: boolean = false): this {
+	open(
+		getBound: getBoundFunc,
+		keepPosition: boolean = false,
+		parentContainer?: HTMLElement
+	): this {
 		markOwner(this.jodit, this.container);
 
 		this.calculateZIndex();
@@ -125,10 +129,14 @@ export class Popup extends UIElement implements IPopup {
 			? getBound
 			: this.getKeepBound(getBound);
 
-		const parentContainer = getContainer(this.jodit, Popup);
-
-		if (parentContainer !== this.container.parentElement) {
+		if (parentContainer) {
 			parentContainer.appendChild(this.container);
+		} else {
+			const popupContainer = getContainer(this.jodit, Popup);
+
+			if (parentContainer !== this.container.parentElement) {
+				popupContainer.appendChild(this.container);
+			}
 		}
 
 		this.updatePosition();

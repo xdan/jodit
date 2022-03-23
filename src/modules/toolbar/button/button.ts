@@ -368,7 +368,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 						.setContent(
 							isString(elm) ? this.j.c.fromHTML(elm) : elm
 						)
-						.open(() => position(this.container));
+						.open(
+							() => position(this.container),
+							false,
+							this.j.o.allowTabNavigation
+								? this.container
+								: undefined
+						);
 				}
 			}
 
@@ -450,7 +456,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			this.target
 		);
 
-		menu.setContent(toolbar.container).open(() => position(this.container));
+		menu.setContent(toolbar.container).open(
+			() => position(this.container),
+			false,
+			this.j.o.allowTabNavigation ? this.container : undefined
+		);
 
 		this.state.activated = true;
 	}

@@ -389,6 +389,29 @@ describe('Jodit Editor Tests', function () {
 				expect(popup.parentNode.parentNode === root).is.true;
 			});
 
+			it('Should create toolbar button popups elements outside the shadow root for keyboard tab navigation ', function () {
+				const app = appendTestDiv();
+				app.attachShadow({ mode: 'open' });
+				const root = app.shadowRoot;
+
+				root.innerHTML = '<div id="edit"></div>';
+
+				const editor = getJodit(
+					{
+						globalFullSize: false,
+						shadowRoot: root,
+						allowTabNavigation: true
+					},
+					root.getElementById('edit')
+				);
+
+				clickButton('brush', editor);
+
+				const popup = getOpenedPopup(editor);
+
+				expect(popup.parentNode.parentNode !== root).is.true;
+			});
+
 			describe('Select element inside', function () {
 				it('Should use Selection from shadow root', function () {
 					const app = appendTestDiv();
