@@ -97,6 +97,16 @@ describe('Apply style', () => {
 					'<p>test<span style="background-color:yellow;color:yellow">|stop|</span></p>'
 				],
 				[
+					'<p>|test <span style="color: red; font-size: 12px;">test</span> test|</p>\n',
+					{ style: { fontSize: '8px' } },
+					'<p>|<span style="font-size:8px">test <span style="color:red">test</span> test</span>|</p>'
+				],
+				[
+					'<p>|test <strong><span style="color: red; font-size: 12px;">test</span></strong> test|</p>\n',
+					{ style: { fontSize: '8px' } },
+					'<p>|<span style="font-size:8px">test <strong><span style="color:red">test</span></strong> test</span>|</p>'
+				],
+				[
 					'<p>|test</p><style>.a {color: red}</style><p>stop|</p>',
 					{ style: { fontFamily: 'Helvetica,sans-serif' } },
 					'<p>|<span style="font-family:Helvetica,sans-serif">test</span></p><style>.a {color: red}</style><p><span style="font-family:Helvetica,sans-serif">stop</span>|</p>'

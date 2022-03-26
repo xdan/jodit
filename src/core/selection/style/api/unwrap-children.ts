@@ -9,6 +9,7 @@ import type { IDictionary } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { isSameStyleChild, isSuitElement } from './is-suit-element';
 import { attr, css } from 'jodit/core/helpers';
+import { elementHasSameStyleKeys } from 'jodit/core/selection/style/api/element-has-same-style';
 
 /**
  * Unwrap all suit elements inside
@@ -30,7 +31,10 @@ export function unwrapChildren(style: CommitStyle, font: HTMLElement): boolean {
 		while (!item.done) {
 			const elm = item.value;
 
-			if (isSuitElement(style, elm as HTMLElement, true)) {
+			if (
+				isSuitElement(style, elm as HTMLElement, true) &&
+				(!cssStyle || elementHasSameStyleKeys(elm, cssStyle))
+			) {
 				if (firstElementSuit === undefined) {
 					firstElementSuit = true;
 				}
@@ -54,7 +58,10 @@ export function unwrapChildren(style: CommitStyle, font: HTMLElement): boolean {
 						attr(elm, 'style', null);
 					}
 
-					if (elm.nodeName.toLowerCase() === style.element) {
+					if (
+						!attr(elm, 'style') &&
+						elm.nodeName.toLowerCase() === style.element
+					) {
 						needUnwrap.push(elm);
 					}
 				});

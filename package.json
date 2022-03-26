@@ -23,7 +23,7 @@
 		"test-debug": "karma start --browsers Chrome karma.conf.js  --single-run false",
 		"test-chrome": "karma start --browsers Chrome karma.conf.js",
 		"test-only-run": "karma start --browsers FirefoxHeadless karma.conf.js",
-		"jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-pro && npm run newversion && cd ../jodit-joomla && npm run newversion && cd ../jodit-master && npm run newversion",
+		"jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-pro && npm run newversion && cd ../jodit-joomla && npm run newversion",
 		"types": "rm -rf types && mkdir -p ./types && cp -r ./src/types ./types && tsc --project . --declaration --declarationDir types --outDir types --emitDeclarationOnly --removeComments false",
 		"pretty": "npx prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less} ./src/**/**/**/*.{ts,less} ./src/**/**/**/**/*.{ts,less}",
 		"fix": "npx eslint ./src/ ./test/ --fix && npm run pretty",
