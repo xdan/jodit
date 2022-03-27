@@ -13,12 +13,13 @@
 
 #### :bug: Bug Fix
 
-[Sass compile error Css3 min() #809](https://github.com/xdan/jodit/issues/809)
-[The preview popup has double scrollbars #808](https://github.com/xdan/jodit/issues/808)
+-   [Sass compile error Css3 min() #809](https://github.com/xdan/jodit/issues/809)
+-   [The preview popup has double scrollbars #808](https://github.com/xdan/jodit/issues/808)
+-   Fixed bug with sync editor size with iframe mode (Works only with [ResizeObserver](https://caniuse.com/resizeobserver))
 
 ## 3.16.3
 
-* Fixed composition `wait` and `debounce` decorators
+-   Fixed composition `wait` and `debounce` decorators
 
 ## 3.16.2
 
@@ -1239,11 +1240,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                   	{ value: "", text: "" },
--                                                                                                                                                                                                   	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                   	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                   	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                   ]
+-                                                                                                                                                                                                       	{ value: "", text: "" },
+-                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                       ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

@@ -270,6 +270,11 @@ export function iframe(editor: IJodit): void {
 							'readystatechange DOMContentLoaded',
 							resizeIframe
 						);
+
+					if (typeof ResizeObserver === 'function') {
+						const resizeObserver = new ResizeObserver(resizeIframe);
+						resizeObserver.observe(doc.body);
+					}
 				}
 
 				// throw events in our world
