@@ -1655,10 +1655,12 @@ describe('Test image', function () {
 						'<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="/></p>';
 
 					expect(
-						editor.value.replace(
-							/[0-9abcdef-]{36}/,
-							'03377cf0-6260-4351-82ad-8a8901ea104f'
-						)
+						editor.value
+							.replace(/127\.0\.0\.1:[0-9]+/, 'localhost:2000')
+							.replace(
+								/[0-9abcdef-]{36}/,
+								'03377cf0-6260-4351-82ad-8a8901ea104f'
+							)
 					).eq(
 						'<p><img src="blob:http://localhost:2000/03377cf0-6260-4351-82ad-8a8901ea104f"></p>'
 					);
