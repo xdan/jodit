@@ -14,6 +14,7 @@
 #### :bug: Bug Fix
 
 [Sass compile error Css3 min() #809](https://github.com/xdan/jodit/issues/809)
+[The preview popup has double scrollbars #808](https://github.com/xdan/jodit/issues/808)
 
 ## 3.16.3
 

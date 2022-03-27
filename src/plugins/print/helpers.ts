@@ -115,6 +115,15 @@ export function previewBox(
 				);
 
 				div = myWindow.document.body;
+
+				if (typeof ResizeObserver === 'function') {
+					const resizeObserver = new ResizeObserver(entries => {
+						iframe.style.height =
+							myWindow.document.body.offsetHeight + 20 + 'px';
+					});
+
+					resizeObserver.observe(myWindow.document.body);
+				}
 			}
 		} else {
 			css(div, {
