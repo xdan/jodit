@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.16.4
+ * Version: v3.16.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -15999,7 +15999,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.16.4";
+        this.version = "3.16.5";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -16097,10 +16097,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.16.4";
+        return "3.16.5";
     }
     static getVersion() {
-        return "3.16.4";
+        return "3.16.5";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -20194,7 +20194,7 @@ class History extends component/* ViewComponent */.Hr {
                 }
                 this.startValue = this.snapshot.make();
                 editor.events
-                    .on('internalChange', () => {
+                    .on('internalChange internalUpdate', () => {
                     this.startValue = this.snapshot.make();
                 })
                     .on(editor.editor, [
@@ -21741,6 +21741,9 @@ class Jodit extends ViewWithToolbar {
         this.setEditorValue(html);
         this.history.processChanges();
     }
+    synchronizeValues() {
+        this.setEditorValue();
+    }
     getEditorValue(removeSelectionMarkers = true, consumer) {
         let value;
         value = this.e.fire('beforeGetValueFromEditor', consumer);
@@ -21758,9 +21761,6 @@ class Jodit extends ViewWithToolbar {
         this.e.fire('afterGetValueFromEditor', new_value, consumer);
         return new_value.value;
     }
-    synchronizeValues() {
-        this.setEditorValue();
-    }
     setEditorValue(value) {
         const newValue = this.e.fire('beforeSetValueToEditor', value);
         if (newValue === false) {
@@ -21771,7 +21771,7 @@ class Jodit extends ViewWithToolbar {
         }
         if (!this.editor) {
             if (value !== undefined) {
-                this.setElementValue(value);
+                this.__setElementValue(value);
             }
             return;
         }
@@ -21786,8 +21786,9 @@ class Jodit extends ViewWithToolbar {
         if (!this.isSilentChange &&
             old_value !== new_value &&
             this.__callChangeCount < constants.SAFE_COUNT_CHANGE_CALL) {
-            this.setElementValue(new_value);
+            this.__setElementValue(new_value);
             this.__callChangeCount += 1;
+            if (false) {}
             try {
                 this.history.upTick();
                 this.e.fire('change', new_value, old_value);
@@ -21799,7 +21800,7 @@ class Jodit extends ViewWithToolbar {
         }
     }
     updateElementValue() {
-        this.setElementValue(this.getEditorValue());
+        this.__setElementValue(this.getEditorValue());
     }
     getElementValue() {
         return this.element.value !== undefined
@@ -21807,24 +21808,32 @@ class Jodit extends ViewWithToolbar {
             : this.element.innerHTML;
     }
     setElementValue(value) {
-        if (!(0,helpers.isString)(value) && value !== undefined) {
-            throw (0,helpers.error)('value must be string');
-        }
-        if (value !== undefined) {
-            if (this.element !== this.container) {
-                if (this.element.value !== undefined) {
-                    this.element.value = value;
-                }
-                else {
-                    this.element.innerHTML = value;
-                }
+        const oldValue = this.getElementValue();
+        if (value === undefined || ((0,helpers.isString)(value) && value !== oldValue)) {
+            value !== null && value !== void 0 ? value : (value = oldValue);
+            if (value !== this.getEditorValue()) {
+                this.setEditorValue(value);
             }
         }
-        else {
-            value = this.getElementValue();
+        return this.__setElementValue(value);
+    }
+    __setElementValue(value) {
+        if (!(0,helpers.isString)(value)) {
+            throw (0,helpers.error)('value must be string');
         }
-        if (value !== this.getEditorValue()) {
-            this.setEditorValue(value);
+        if (this.element !== this.container &&
+            value !== this.getElementValue()) {
+            const data = { value };
+            const res = this.e.fire('beforeSetElementValue', data);
+            (0,helpers.callPromise)(res, () => {
+                if (this.element.value !== undefined) {
+                    this.element.value = data.value;
+                }
+                else {
+                    this.element.innerHTML = data.value;
+                }
+                this.e.fire('afterSetElementValue', data);
+            });
         }
     }
     registerCommand(commandNameOriginal, command, options) {
@@ -21960,7 +21969,7 @@ class Jodit extends ViewWithToolbar {
         return constants.MODE_SOURCE;
     }
     setMode(mode) {
-        const oldmode = this.getMode();
+        const oldMode = this.getMode();
         const data = {
             mode: parseInt(mode.toString(), 10)
         }, modeClasses = [
@@ -21985,7 +21994,7 @@ class Jodit extends ViewWithToolbar {
             this.container.classList.remove(className);
         });
         this.container.classList.add(modeClasses[this.mode - 1]);
-        if (oldmode !== this.getMode()) {
+        if (oldMode !== this.getMode()) {
             this.e.fire('afterSetMode');
         }
     }
@@ -22163,7 +22172,10 @@ class Jodit extends ViewWithToolbar {
                 return;
             }
             if (this.element !== this.container) {
-                this.setElementValue();
+                const value = this.getElementValue();
+                if (value !== this.getEditorValue()) {
+                    this.setEditorValue(value);
+                }
             }
             else {
                 buffer != null && this.setEditorValue(buffer);
@@ -26135,6 +26147,9 @@ function iframe(editor) {
                 if (typeof ResizeObserver === 'function') {
                     const resizeObserver = new ResizeObserver(resizeIframe);
                     resizeObserver.observe(doc.body);
+                    editor.e.on('beforeDestruct', () => {
+                        resizeObserver.unobserve(doc.body);
+                    });
                 }
             }
             if (doc.documentElement) {
@@ -26780,35 +26795,130 @@ class imageProperties extends Plugin {
     decorators.autobind
 ], imageProperties.prototype, "openImagePopup", null);
 
-;// CONCATENATED MODULE: ./src/plugins/image/image-processor.ts
+;// CONCATENATED MODULE: ./src/plugins/image/image-processor/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+config/* Config.prototype.imageProcessor */.D.prototype.imageProcessor = {
+    replaceDataURIToBlobIdInView: true
+};
+
+;// CONCATENATED MODULE: ./src/plugins/source/const.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+const SOURCE_CONSUMER = 'source-consumer';
+
+;// CONCATENATED MODULE: ./src/plugins/image/image-processor/image-processor.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
-function imageProcessor(editor) {
-    editor.e.on('change afterInit changePlace', editor.async.debounce(() => {
-        if (editor.editor) {
-            (0,helpers.$$)('img', editor.editor).forEach(elm => {
-                if (!(0,helpers.dataBind)(elm, JODIT_IMAGE_PROCESSOR_BINDED)) {
-                    (0,helpers.dataBind)(elm, JODIT_IMAGE_PROCESSOR_BINDED, true);
-                    if (!elm.complete) {
-                        editor.e.on(elm, 'load', function ElementOnLoad() {
-                            var _a;
-                            !editor.isInDestruct &&
-                                ((_a = editor.e) === null || _a === void 0 ? void 0 : _a.fire('resize'));
-                            editor.e.off(elm, 'load', ElementOnLoad);
-                        });
-                    }
-                    editor.e.on(elm, 'mousedown touchstart', () => {
-                        editor.s.select(elm);
+const JODIT_IMAGE_BLOB_ID = JODIT_IMAGE_PROCESSOR_BINDED + 'blob-id';
+class imageProcessor extends Plugin {
+    afterInit(jodit) { }
+    beforeDestruct(jodit) {
+        const list = jodit.buffer.get(JODIT_IMAGE_BLOB_ID);
+        if (list) {
+            const keys = Object.keys(list);
+            for (const uri of keys) {
+                URL.revokeObjectURL(uri);
+            }
+            jodit.buffer.delete(JODIT_IMAGE_BLOB_ID);
+        }
+    }
+    onAfterGetValueFromEditor(data, consumer) {
+        if (consumer !== SOURCE_CONSUMER) {
+            return this.onBeforeSetElementValue(data);
+        }
+    }
+    onBeforeSetElementValue(data) {
+        const { jodit: editor } = this;
+        if (!editor.o.imageProcessor.replaceDataURIToBlobIdInView) {
+            return;
+        }
+        const list = editor.buffer.get(JODIT_IMAGE_BLOB_ID);
+        if (list) {
+            const keys = Object.keys(list);
+            for (const uri of keys) {
+                while (data.value.includes(uri)) {
+                    data.value = data.value.replace(uri, list[uri]);
+                }
+            }
+        }
+    }
+    async afterChange(data) {
+        const { jodit: editor } = this;
+        if (!editor.editor) {
+            return;
+        }
+        (0,helpers.$$)('img', editor.editor).forEach(elm => {
+            if (!(0,helpers.dataBind)(elm, JODIT_IMAGE_PROCESSOR_BINDED)) {
+                (0,helpers.dataBind)(elm, JODIT_IMAGE_PROCESSOR_BINDED, true);
+                if (!elm.complete) {
+                    editor.e.on(elm, 'load', function ElementOnLoad() {
+                        var _a;
+                        !editor.isInDestruct && ((_a = editor.e) === null || _a === void 0 ? void 0 : _a.fire('resize'));
+                        editor.e.off(elm, 'load', ElementOnLoad);
                     });
                 }
-            });
-        }
-    }, editor.defaultTimeout));
+                if (elm.src && /^data:/.test(elm.src)) {
+                    replaceDataURIToBlobUUID(editor, elm);
+                }
+                editor.e.on(elm, 'mousedown touchstart', () => {
+                    editor.s.select(elm);
+                });
+            }
+        });
+    }
+}
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)(':afterGetValueFromEditor')
+], imageProcessor.prototype, "onAfterGetValueFromEditor", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)(':beforeSetElementValue')
+], imageProcessor.prototype, "onBeforeSetElementValue", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)([':change', ':afterInit', ':changePlace']),
+    (0,decorators.debounce)()
+], imageProcessor.prototype, "afterChange", null);
+function replaceDataURIToBlobUUID(editor, elm) {
+    if (!editor.o.imageProcessor.replaceDataURIToBlobIdInView) {
+        return;
+    }
+    if (typeof ArrayBuffer === 'undefined' || typeof URL === 'undefined') {
+        return;
+    }
+    const dataUri = elm.src, blob = image_processor_dataURItoBlob(dataUri);
+    elm.src = URL.createObjectURL(blob);
+    editor.e.fire('internalUpdate');
+    const { buffer } = editor;
+    const list = buffer.get(JODIT_IMAGE_BLOB_ID) || {};
+    list[elm.src] = dataUri;
+    editor.buffer.set(JODIT_IMAGE_BLOB_ID, list);
+}
+function image_processor_dataURItoBlob(dataURI) {
+    const byteString = atob(dataURI.split(',')[1]);
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: mimeString });
 }
 
 ;// CONCATENATED MODULE: ./src/plugins/image/image.ts
@@ -29431,7 +29541,7 @@ class search extends Plugin {
         this.walkerCount = new dom/* LazyWalker */.b(this.j.async, {
             timeout: this.j.o.search.lazyIdleTimeout
         });
-        const result = await this.find(this.walkerCount, query);
+        const result = await this.find(this.walkerCount, query).catch(() => []);
         return result.length;
     }
     async findAndReplace(query) {
@@ -29441,7 +29551,7 @@ class search extends Plugin {
         this.walker = new dom/* LazyWalker */.b(this.j.async, {
             timeout: this.j.o.search.lazyIdleTimeout
         });
-        const range = this.j.s.range, bounds = await this.find(this.walker, query);
+        const range = this.j.s.range, bounds = await this.find(this.walker, query).catch(() => []);
         let currentIndex = this.findCurrentIndexInRanges(bounds, range);
         if (currentIndex === -1) {
             currentIndex = 0;
@@ -30430,14 +30540,6 @@ function createSourceEditor(type, editor, container, toWYSIWYG, fromWYSIWYG) {
     });
     return sourceEditor;
 }
-
-;// CONCATENATED MODULE: ./src/plugins/source/const.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-const SOURCE_CONSUMER = 'source-consumer';
 
 ;// CONCATENATED MODULE: ./src/plugins/source/source.ts
 /*!
@@ -32386,6 +32488,9 @@ function previewBox(editor, defaultValue, points = 'px', container = null) {
                             myWindow.document.body.offsetHeight + 20 + 'px';
                     });
                     resizeObserver.observe(myWindow.document.body);
+                    editor.e.on('beforeDestruct', () => {
+                        resizeObserver.unobserve(myWindow.document.body);
+                    });
                 }
             }
         }

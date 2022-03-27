@@ -37,6 +37,25 @@ console.log(editor.getNativeEditorValue()); // <p><img src="blob:http://localhos
 
 -   Method `Jodit.setElementValue` marked us deprecated and will be removed in next major release.
 
+#### :house: Internal
+
+-   Update
+
+```
+@types/node                       ^17.0.21  →  ^17.0.23
+@typescript-eslint/eslint-plugin   ^5.14.0  →   ^5.16.0
+@typescript-eslint/parser          ^5.14.0  →   ^5.16.0
+autoprefixer                       ^10.4.2  →   ^10.4.4
+cssnano-preset-advanced             ^5.2.4  →    ^5.3.1
+eslint                             ^8.11.0  →   ^8.12.0
+lint-staged                        ^12.3.5  →   ^12.3.7
+postcss                            >=8.4.8  →  >=8.4.12
+prettier                            ^2.5.1  →    ^2.6.1
+stylelint                          ^14.5.3  →   ^14.6.1
+typescript                          ^4.6.2  →    ^4.6.3
+yargs                              ^17.3.1  →   ^17.4.0
+```
+
 ## 3.16.4
 
 #### :bug: Bug Fix
@@ -1268,11 +1287,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                     	{ value: "", text: "" },
--                                                                                                                                                                                                                     	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                     	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                     	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                     ]
+-                                                                                                                                                                                                                         	{ value: "", text: "" },
+-                                                                                                                                                                                                                         	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                         	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                         	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                         ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

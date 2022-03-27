@@ -6,7 +6,10 @@ You can help us by fixing bugs, reporting them, or translating the editor interf
 ## TL;DR
 
 ```bash
-git clone git@github.com:xdan/jodit.git && cd jodit && npm install
+git clone git@github.com:xdan/jodit.git
+cd jodit
+nvm use
+npm install
 ```
 
 Change code + add autotest in `test/tests/` folder. Run
