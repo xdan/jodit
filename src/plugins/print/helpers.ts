@@ -123,6 +123,10 @@ export function previewBox(
 					});
 
 					resizeObserver.observe(myWindow.document.body);
+
+					editor.e.on('beforeDestruct', () => {
+						resizeObserver.unobserve(myWindow.document.body);
+					});
 				}
 			}
 		} else {

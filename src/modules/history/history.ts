@@ -98,7 +98,7 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 
 				editor.events
 					// save selection
-					.on('internalChange', () => {
+					.on('internalChange internalUpdate', () => {
 						this.startValue = this.snapshot.make();
 					})
 					.on(

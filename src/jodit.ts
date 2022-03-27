@@ -538,7 +538,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (!this.editor) {
 			if (value !== undefined) {
-				this.setElementValue(value);
+				this.__setElementValue(value);
 			}
 
 			return; // try change value before init or after destruct
@@ -562,7 +562,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			old_value !== new_value &&
 			this.__callChangeCount < constants.SAFE_COUNT_CHANGE_CALL
 		) {
-			this.setElementValue(new_value);
+			this.__setElementValue(new_value);
 			this.__callChangeCount += 1;
 
 			try {
@@ -580,7 +580,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 */
 	@watch(':internalChange')
 	protected updateElementValue(): void {
-		this.setElementValue(this.getEditorValue());
+		this.__setElementValue(this.getEditorValue());
 	}
 
 	/**
@@ -593,28 +593,44 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	}
 
 	/**
-	 * Set source element value and if set sync fill editor value
-	 * When method was called without arguments - it is simple way to synchronize element to editor
+	 * @deprecated Use `Jodit.value` instead
 	 */
-	setElementValue(value?: string): void {
-		if (!isString(value) && value !== undefined) {
+	setElementValue(value?: string): CanPromise<void> {
+		const oldValue = this.getElementValue();
+
+		if (value === undefined || (isString(value) && value !== oldValue)) {
+			value ??= oldValue;
+
+			if (value !== this.getEditorValue()) {
+				this.setEditorValue(value);
+			}
+		}
+
+		return this.__setElementValue(value);
+	}
+
+	private __setElementValue(value: string): CanPromise<void> {
+		if (!isString(value)) {
 			throw error('value must be string');
 		}
 
-		if (value !== undefined) {
-			if (this.element !== this.container) {
-				if ((this.element as HTMLInputElement).value !== undefined) {
-					(this.element as HTMLInputElement).value = value;
-				} else {
-					this.element.innerHTML = value;
-				}
-			}
-		} else {
-			value = this.getElementValue();
-		}
+		if (
+			this.element !== this.container &&
+			value !== this.getElementValue()
+		) {
+			const data = { value };
 
-		if (value !== this.getEditorValue()) {
-			this.setEditorValue(value);
+			const res = this.e.fire('beforeSetElementValue', data);
+
+			callPromise(res, () => {
+				if ((this.element as HTMLInputElement).value !== undefined) {
+					(this.element as HTMLInputElement).value = data.value;
+				} else {
+					this.element.innerHTML = data.value;
+				}
+
+				this.e.fire('afterSetElementValue', data);
+			});
 		}
 	}
 
@@ -1372,7 +1388,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 			// syncro
 			if (this.element !== this.container) {
-				this.setElementValue();
+				const value = this.getElementValue();
+
+				if (value !== this.getEditorValue()) {
+					this.setEditorValue(value);
+				}
 			} else {
 				buffer != null && this.setEditorValue(buffer); // inline mode
 			}

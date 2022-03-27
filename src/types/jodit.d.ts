@@ -47,6 +47,11 @@ interface IJodit extends IViewWithToolbar {
 	setEditorValue(value?: string): void;
 	synchronizeValues(): void;
 
+	/**
+	 * Only getter
+	 */
+	getElementValue(): string;
+
 	getReadOnly(): boolean;
 	setReadOnly(enable: boolean): void;
 

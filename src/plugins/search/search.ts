@@ -107,7 +107,7 @@ export class search extends Plugin {
 			timeout: this.j.o.search.lazyIdleTimeout
 		});
 
-		const result = await this.find(this.walkerCount, query);
+		const result = await this.find(this.walkerCount, query).catch(() => []);
 		return result.length;
 	}
 
@@ -122,7 +122,7 @@ export class search extends Plugin {
 		});
 
 		const range = this.j.s.range,
-			bounds = await this.find(this.walker, query);
+			bounds = await this.find(this.walker, query).catch(() => []);
 
 		let currentIndex = this.findCurrentIndexInRanges(bounds, range);
 

@@ -9,6 +9,9 @@ describe('Test uploader module', function () {
 			it('Should insert image with SRC in base64', function (done) {
 				const file = new FileImage(),
 					editor = getJodit({
+						imageProcessor: {
+							replaceDataURIToBlobIdInView: false
+						},
 						resizer: {
 							forImageChangeAttributes: true
 						},

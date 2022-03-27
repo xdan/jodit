@@ -9,6 +9,34 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.16.5
+
+#### :rocket: New Feature
+
+-   imageProcessor.replaceDataURIToBlobIdInView
+    The `imageProcessor` plugin has added the functionality of replacing data-uri objects in the `src` of images with `blob-url`.
+    This allows you to more conveniently work with an HTML document without loading the processor.
+    Checks if the `imageProcessor.replaceDataURIToBlobIdInView` option is enabled then converts image src which has `data:base64`
+    to [blob-object-uri](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL)
+
+In this case, `Jodit.value` returns images with `blob-object-uri`. And only in the original `textarea` itself does the reverse replacement take place.
+To get the value of the editor with the src replaced, call `Jodit.getElementValue`
+
+```js
+const editor = Jodit.make('#editor', {
+	imageProcessor: {
+		replaceDataURIToBlobIdInView: true // This is the default value, but for examples we set it
+	}
+});
+
+editor.value =
+	'<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="/></p>';
+console.log(editor.value); // <p><img src="blob:http://localhost:2000/03377cf0-6260-4351-82ad-8a8901ea104f"></p>
+console.log(editor.getElementValue()); // '<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="/></p>'
+```
+
+-   Method `Jodit.setElementValue` marked us deprecated and will be removed in next major release.
+
 ## 3.16.4
 
 #### :bug: Bug Fix
@@ -1240,11 +1268,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                       	{ value: "", text: "" },
--                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                       ]
+-                                                                                                                                                                                                                     	{ value: "", text: "" },
+-                                                                                                                                                                                                                     	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                     	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                     	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                     ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

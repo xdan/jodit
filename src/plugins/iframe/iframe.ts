@@ -274,6 +274,9 @@ export function iframe(editor: IJodit): void {
 					if (typeof ResizeObserver === 'function') {
 						const resizeObserver = new ResizeObserver(resizeIframe);
 						resizeObserver.observe(doc.body);
+						editor.e.on('beforeDestruct', () => {
+							resizeObserver.unobserve(doc.body);
+						});
 					}
 				}
 

@@ -118,9 +118,8 @@ describe('Search plugin', function () {
 				query.value = 't';
 				replace.value = 'w';
 
-				simulateEvent('pointerdown', replaceButton);
-
 				let cnt = 1;
+
 				editor.e.on('afterFindAndReplace', () => {
 					if (cnt < 4) {
 						cnt++;
@@ -130,6 +129,8 @@ describe('Search plugin', function () {
 						done();
 					}
 				});
+
+				simulateEvent('pointerdown', replaceButton);
 			});
 		});
 	});
