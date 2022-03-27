@@ -746,7 +746,7 @@ describe('Link plugin', function () {
 								});
 
 								editor.value =
-									'test <img style="width: 100px;height: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""> stop';
+									'test <img style="width: 100px;height: 100px" src="https://xdsoft.net/jodit/files/artio.jpg" alt=""> stop';
 
 								editor.s.select(
 									editor.editor.querySelector('img')
@@ -776,7 +776,7 @@ describe('Link plugin', function () {
 							});
 
 							editor.value =
-								'test <img style="width: 100px;height: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""> stop';
+								'test <img style="width: 100px;height: 100px" src="https://xdsoft.net/jodit/files/artio.jpg" alt=""> stop';
 
 							editor.s.select(editor.editor.querySelector('img'));
 
@@ -806,7 +806,7 @@ describe('Link plugin', function () {
 							);
 
 							expect(sortAttributes(editor.value)).equals(
-								'<p>test <a href="tests/artio.jpg"><img alt="" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:100px;width:100px"></a> stop</p>'
+								'<p>test <a href="tests/artio.jpg"><img alt="" src="https://xdsoft.net/jodit/files/artio.jpg" style="height:100px;width:100px"></a> stop</p>'
 							);
 
 							simulateEvent('mousedown', 0, editor.editor);
@@ -930,7 +930,7 @@ describe('Link plugin', function () {
 									'<table>' +
 									'<tbody>' +
 									'<tr>' +
-									'<td><img src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="test"></td>' +
+									'<td><img src="https://xdsoft.net/jodit/files/artio.jpg" alt="test"></td>' +
 									'</tr>' +
 									'</tbody>' +
 									'</table>';
@@ -980,7 +980,7 @@ describe('Link plugin', function () {
 										'<table>' +
 										'<tbody>' +
 										'<tr>' +
-										'<td><a href="./shapiro"><img alt="test" src="https://xdsoft.net/jodit/build/images/artio.jpg"></a></td>' +
+										'<td><a href="./shapiro"><img alt="test" src="https://xdsoft.net/jodit/files/artio.jpg"></a></td>' +
 										'</tr>' +
 										'</tbody>' +
 										'</table>'
@@ -994,7 +994,7 @@ describe('Link plugin', function () {
 							const editor = getJodit();
 
 							editor.value =
-								'<p>one green <img src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="test"> under wall</p>';
+								'<p>one green <img src="https://xdsoft.net/jodit/files/artio.jpg" alt="test"> under wall</p>';
 
 							editor.s.select(editor.editor.querySelector('img'));
 
@@ -1028,7 +1028,7 @@ describe('Link plugin', function () {
 							);
 
 							expect(sortAttributes(editor.value)).equals(
-								'<p>one green <a href="https://xdsoft.net"><img alt="test" src="https://xdsoft.net/jodit/build/images/artio.jpg"></a> under wall</p>'
+								'<p>one green <a href="https://xdsoft.net"><img alt="test" src="https://xdsoft.net/jodit/files/artio.jpg"></a> under wall</p>'
 							);
 						});
 					});
@@ -1038,7 +1038,7 @@ describe('Link plugin', function () {
 							const editor = getJodit();
 
 							editor.value =
-								'<p>one green <a href="https://xdan.ru"><img src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="test"></a> under wall</p>';
+								'<p>one green <a href="https://xdan.ru"><img src="https://xdsoft.net/jodit/files/artio.jpg" alt="test"></a> under wall</p>';
 
 							editor.s.focus({ preventScroll: false });
 							editor.s.select(editor.editor.querySelector('img'));
@@ -1075,7 +1075,7 @@ describe('Link plugin', function () {
 							);
 
 							expect(sortAttributes(editor.value)).equals(
-								'<p>one green <a href="https://xdsoft.net"><img alt="test" src="https://xdsoft.net/jodit/build/images/artio.jpg"></a> under wall</p>'
+								'<p>one green <a href="https://xdsoft.net"><img alt="test" src="https://xdsoft.net/jodit/files/artio.jpg"></a> under wall</p>'
 							);
 						});
 					});

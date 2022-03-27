@@ -141,7 +141,7 @@ describe('Dialog system tests', function () {
 					}
 				});
 				editor.value =
-					'<img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="margin:10px;border:1px solid red;width:100px;height:100px;"/>';
+					'<img src="https://xdsoft.net/jodit/files/artio.jpg" style="margin:10px;border:1px solid red;width:100px;height:100px;"/>';
 				simulateEvent(
 					'dblclick',
 					0,
@@ -168,7 +168,7 @@ describe('Dialog system tests', function () {
 					}
 				});
 				editor.value =
-					'<img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="margin:10px 5px;border:1px solid red;width:100px;height:100px;"/>';
+					'<img src="https://xdsoft.net/jodit/files/artio.jpg" style="margin:10px 5px;border:1px solid red;width:100px;height:100px;"/>';
 				simulateEvent(
 					'dblclick',
 					0,

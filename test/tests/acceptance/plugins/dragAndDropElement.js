@@ -19,7 +19,7 @@ describe('Drag and drop element inside Editor', function () {
 						editor.value =
 							'<p>1111</p>' +
 							'<p>2222</p>' +
-							'<img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt="">' +
+							'<img style="width: 100px" src="https://xdsoft.net/jodit/files/artio.jpg" alt="">' +
 							'<p>3333</p>' +
 							'<p>4444</p>';
 
@@ -55,7 +55,7 @@ describe('Drag and drop element inside Editor', function () {
 
 						const result =
 							'<p>1111</p>' +
-							'<p>22<img alt="" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:100px">22</p>' +
+							'<p>22<img alt="" src="https://xdsoft.net/jodit/files/artio.jpg" style="width:100px">22</p>' +
 							'<p>3333</p>' +
 							'<p>4444</p>';
 
@@ -73,7 +73,7 @@ describe('Drag and drop element inside Editor', function () {
 					editor.value =
 						'<p>1111</p>' +
 						'<p>2222</p>' +
-						'<a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""></a>' +
+						'<a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/files/artio.jpg" alt=""></a>' +
 						'<p>3333</p>' +
 						'<p>4444</p>';
 
@@ -100,7 +100,7 @@ describe('Drag and drop element inside Editor', function () {
 					});
 
 					expect(editor.value.replace(/2+/g, '2')).equals(
-						'<p>1111</p><p>22<a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""></a>22</p><p>3333</p><p>4444</p>'.replace(
+						'<p>1111</p><p>22<a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/files/artio.jpg" alt=""></a>22</p><p>3333</p><p>4444</p>'.replace(
 							/2+/g,
 							'2'
 						)
@@ -115,7 +115,7 @@ describe('Drag and drop element inside Editor', function () {
 					editor.value = `<table>
 								<tbody>
 									<tr>
-										<td class='first'><img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""></td>
+										<td class='first'><img style="width: 100px" src="https://xdsoft.net/jodit/files/artio.jpg" alt=""></td>
 										<td class='second'><br/></td>
 									</tr>
 								</tbody>
@@ -146,7 +146,7 @@ describe('Drag and drop element inside Editor', function () {
 					expect(
 						sortAttributes(editor.value.replace(/\t/g, ''))
 					).equals(
-						'<table>\n<tbody>\n<tr>\n<td class="first"></td>\n<td class="second"><img alt="" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:100px"><br></td>\n</tr>\n</tbody>\n</table>'
+						'<table>\n<tbody>\n<tr>\n<td class="first"></td>\n<td class="second"><img alt="" src="https://xdsoft.net/jodit/files/artio.jpg" style="width:100px"><br></td>\n</tr>\n</tbody>\n</table>'
 					);
 				});
 			});
@@ -160,7 +160,7 @@ describe('Drag and drop element inside Editor', function () {
 					const defaultValue =
 						'<p>1111</p>' +
 						'<p>2222</p>' +
-						'<p><a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/build/images/artio.jpg" alt=""></a></p>' +
+						'<p><a href="#test"><img style="width: 100px" src="https://xdsoft.net/jodit/files/artio.jpg" alt=""></a></p>' +
 						'<p>3333</p>' +
 						'<p>4444</p>';
 

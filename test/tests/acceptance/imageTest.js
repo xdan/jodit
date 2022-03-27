@@ -1284,7 +1284,7 @@ describe('Test image', function () {
 							);
 
 							editor.value =
-								'<img src="https://xdsoft.net/jodit/build/images/artio.jpg"/>';
+								'<img src="https://xdsoft.net/jodit/files/artio.jpg"/>';
 
 							simulateEvent(
 								'dblclick',
@@ -1414,7 +1414,7 @@ describe('Test image', function () {
 					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
 					'        wrong image selection\n' +
 					'        <div style="position:relative;text-align: left">\n' +
-					'            <textarea id="text__area0"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/><br/><br/><br/><br/><br/><br/></textarea>\n' +
+					'            <textarea id="text__area0"> <img src="https://xdsoft.net/jodit/files/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/><br/><br/><br/><br/><br/><br/></textarea>\n' +
 					'        </div>\n' +
 					'    </div>';
 

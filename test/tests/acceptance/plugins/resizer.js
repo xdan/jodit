@@ -13,7 +13,7 @@ describe('Resize plugin', function () {
 					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
 					'        wrong image selection\n' +
 					'        <div style="position:relative;text-align: left">\n' +
-					'            <textarea id="text__area0"> <img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/></textarea>\n' +
+					'            <textarea id="text__area0"> <img src="https://xdsoft.net/jodit/files/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/></textarea>\n' +
 					'        </div>\n' +
 					'    </div>';
 
@@ -47,7 +47,7 @@ describe('Resize plugin', function () {
 					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
 					'        wrong image selection\n' +
 					'        <div style="position:relative;text-align: left">\n' +
-					'            <textarea id="text__area1"> &lt;img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/&gt;</textarea>\n' +
+					'            <textarea id="text__area1"> &lt;img src="https://xdsoft.net/jodit/files/artio.jpg" style="border:1px solid red;width:100px;height:100px;"/&gt;</textarea>\n' +
 					'        </div>\n' +
 					'    </div>';
 
@@ -259,7 +259,7 @@ describe('Resize plugin', function () {
 							});
 
 							editor.value =
-								'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width: 301px;"/></p>';
+								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width: 301px;"/></p>';
 
 							onLoadImage(
 								editor.editor.querySelector('img'),
@@ -267,7 +267,7 @@ describe('Resize plugin', function () {
 									resizeImage(editor);
 
 									expect(sortAttributes(editor.value)).eq(
-										'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:175px;width:311px"></p>'
+										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:175px;width:311px"></p>'
 									);
 									done();
 								}
@@ -288,7 +288,7 @@ describe('Resize plugin', function () {
 								});
 
 								editor.value =
-									'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg"/></p>';
+									'<p><img src="https://xdsoft.net/jodit/files/artio.jpg"/></p>';
 
 								onLoadImage(
 									editor.editor.querySelector('img'),
@@ -296,7 +296,7 @@ describe('Resize plugin', function () {
 										resizeImage(editor);
 
 										expect(sortAttributes(editor.value)).eq(
-											'<p><img height="287" src="https://xdsoft.net/jodit/build/images/artio.jpg" width="510"></p>'
+											'<p><img height="287" src="https://xdsoft.net/jodit/files/artio.jpg" width="510"></p>'
 										);
 										done();
 									}
@@ -317,7 +317,7 @@ describe('Resize plugin', function () {
 									});
 
 									editor.value =
-										'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:300px"/></p>';
+										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width:300px"/></p>';
 
 									onLoadImage(
 										editor.editor.querySelector('img'),
@@ -327,7 +327,7 @@ describe('Resize plugin', function () {
 											expect(
 												sortAttributes(editor.value)
 											).eq(
-												'<p><img height="175" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:310px" width="310"></p>'
+												'<p><img height="175" src="https://xdsoft.net/jodit/files/artio.jpg" style="width:310px" width="310"></p>'
 											);
 											done();
 										}
@@ -347,7 +347,7 @@ describe('Resize plugin', function () {
 									});
 
 									editor.value =
-										'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:300px"/></p>';
+										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:300px"/></p>';
 
 									onLoadImage(
 										editor.editor.querySelector('img'),
@@ -357,7 +357,7 @@ describe('Resize plugin', function () {
 											expect(
 												sortAttributes(editor.value)
 											).eq(
-												'<p><img height="306" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:306px" width="544"></p>'
+												'<p><img height="306" src="https://xdsoft.net/jodit/files/artio.jpg" style="height:306px" width="544"></p>'
 											);
 											done();
 										}
@@ -377,7 +377,7 @@ describe('Resize plugin', function () {
 									});
 
 									editor.value =
-										'<p><img src="https://xdsoft.net/jodit/build/images/artio.jpg" style="width:300px;height:300px"/></p>';
+										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width:300px;height:300px"/></p>';
 
 									onLoadImage(
 										editor.editor.querySelector('img'),
@@ -387,7 +387,7 @@ describe('Resize plugin', function () {
 											expect(
 												sortAttributes(editor.value)
 											).eq(
-												'<p><img height="310" src="https://xdsoft.net/jodit/build/images/artio.jpg" style="height:310px;width:310px" width="310"></p>'
+												'<p><img height="310" src="https://xdsoft.net/jodit/files/artio.jpg" style="height:310px;width:310px" width="310"></p>'
 											);
 											done();
 										}
