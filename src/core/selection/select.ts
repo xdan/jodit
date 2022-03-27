@@ -677,9 +677,7 @@ export class Select implements ISelect {
 			this.setCursorIn(fragment);
 		}
 
-		if (this.j.e) {
-			this.j.e.fire('synchro');
-		}
+		this.j.synchronizeValues();
 	}
 
 	/**
