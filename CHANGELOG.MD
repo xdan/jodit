@@ -9,6 +9,12 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.16.4
+
+#### :bug: Bug Fix
+
+[Sass compile error Css3 min() #809](https://github.com/xdan/jodit/issues/809)
+
 ## 3.16.3
 
 * Fixed composition `wait` and `debounce` decorators
