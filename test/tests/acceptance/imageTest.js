@@ -1647,27 +1647,42 @@ describe('Test image', function () {
 	});
 
 	describe('Replace data:base64 to blob-object-uri', () => {
+		const source =
+			'<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="></p>';
+
+		const fix = value =>
+			value
+				.replace(/127\.0\.0\.1:[0-9]+/, 'localhost:2000')
+				.replace(
+					/[0-9abcdef-]{36}/,
+					'03377cf0-6260-4351-82ad-8a8901ea104f'
+				);
+
 		describe('set imageProcessor.replaceDataURIToBlobIdInView', () => {
 			describe('to true', () => {
 				it('should replace data:base64 to blob-object-uri', () => {
-					const editor = getJodit();
-					editor.value =
-						'<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="/></p>';
+					const editor = getJodit({
+						sourceEditor: 'area'
+					});
 
-					expect(
-						editor.value
-							.replace(/127\.0\.0\.1:[0-9]+/, 'localhost:2000')
-							.replace(
-								/[0-9abcdef-]{36}/,
-								'03377cf0-6260-4351-82ad-8a8901ea104f'
-							)
-					).eq(
+					editor.value = source;
+					editor.setMode(Jodit.MODE_SOURCE);
+
+					const mirror = editor.container.querySelector(
+						'textarea.jodit-source__mirror'
+					);
+
+					expect(fix(mirror.value)).eq(
 						'<p><img src="blob:http://localhost:2000/03377cf0-6260-4351-82ad-8a8901ea104f"></p>'
 					);
 
-					expect(sortAttributes(editor.getElementValue())).eq(
-						'<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="></p>'
+					expect(fix(editor.getNativeEditorValue())).eq(
+						'<p><img src="blob:http://localhost:2000/03377cf0-6260-4351-82ad-8a8901ea104f"></p>'
 					);
+
+					expect(sortAttributes(editor.value)).eq(source);
+
+					expect(sortAttributes(editor.getElementValue())).eq(source);
 				});
 			});
 
@@ -1678,16 +1693,21 @@ describe('Test image', function () {
 							replaceDataURIToBlobIdInView: false
 						}
 					});
-					editor.value =
-						'<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="/></p>';
+					editor.value = source;
 
-					expect(sortAttributes(editor.value)).eq(
-						'<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="></p>'
+					expect(sortAttributes(editor.value)).eq(source);
+
+					editor.setMode(Jodit.MODE_SOURCE);
+
+					const mirror = editor.container.querySelector(
+						'textarea.jodit-source__mirror'
 					);
 
-					expect(sortAttributes(editor.getElementValue())).eq(
-						'<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="></p>'
-					);
+					expect(fix(mirror.value)).eq(source);
+
+					expect(fix(editor.getNativeEditorValue())).eq(source);
+
+					expect(sortAttributes(editor.getElementValue())).eq(source);
 				});
 			});
 		});

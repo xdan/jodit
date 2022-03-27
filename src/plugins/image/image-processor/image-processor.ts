@@ -10,12 +10,13 @@
  * @module plugins/image-processor
  */
 
-import type { CanPromise, IDictionary, IJodit } from 'jodit/types';
+import type { IDictionary, IJodit } from 'jodit/types';
 import { $$, dataBind } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { debounce, watch } from 'jodit/core/decorators';
 
 import './config';
+import { SOURCE_CONSUMER } from 'jodit/plugins/source/const';
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 const JODIT_IMAGE_BLOB_ID = JODIT_IMAGE_PROCESSOR_BINDED + 'blob-id';
@@ -40,8 +41,18 @@ export class imageProcessor extends Plugin {
 		}
 	}
 
+	@watch(':afterGetValueFromEditor')
+	protected onAfterGetValueFromEditor(
+		data: { value: string },
+		consumer?: string
+	): void {
+		if (consumer !== SOURCE_CONSUMER) {
+			return this.onBeforeSetElementValue(data);
+		}
+	}
+
 	@watch(':beforeSetElementValue')
-	protected beforeSetElementValue(data: { value: string }): CanPromise<void> {
+	protected onBeforeSetElementValue(data: { value: string }): void {
 		const { jodit: editor } = this;
 
 		if (!editor.o.imageProcessor.replaceDataURIToBlobIdInView) {
@@ -53,25 +64,11 @@ export class imageProcessor extends Plugin {
 		if (list) {
 			const keys = Object.keys(list);
 
-			const promises = [];
-
 			for (const uri of keys) {
-				if (data.value.includes(uri)) {
-					promises.push(
-						blobToBase64(list[uri]).then(dataUri => {
-							data.value = data.value.replace(uri, dataUri);
-						})
-					);
+				while (data.value.includes(uri)) {
+					data.value = data.value.replace(uri, list[uri]);
 				}
 			}
-
-			if (!promises.length) {
-				return;
-			}
-
-			return Promise.all(promises).then(() => {
-				return;
-			});
 		}
 	}
 
@@ -117,7 +114,9 @@ function replaceDataURIToBlobUUID(editor: IJodit, elm: HTMLImageElement): void {
 		return;
 	}
 
-	const blob = dataURItoBlob(elm.src);
+	const dataUri = elm.src,
+		blob = dataURItoBlob(dataUri);
+
 	elm.src = URL.createObjectURL(blob);
 	editor.e.fire('internalUpdate');
 
@@ -126,7 +125,7 @@ function replaceDataURIToBlobUUID(editor: IJodit, elm: HTMLImageElement): void {
 	const list: IDictionary =
 		buffer.get<IDictionary>(JODIT_IMAGE_BLOB_ID) || {};
 
-	list[elm.src] = blob;
+	list[elm.src] = dataUri;
 
 	editor.buffer.set(JODIT_IMAGE_BLOB_ID, list);
 }
@@ -153,12 +152,4 @@ function dataURItoBlob(dataURI: string): Blob {
 
 	// write the ArrayBuffer to a blob, and you're done
 	return new Blob([ab], { type: mimeString });
-}
-
-function blobToBase64(blob: Blob): Promise<string> {
-	return new Promise((resolve, _) => {
-		const reader = new FileReader();
-		reader.onloadend = (): void => resolve(reader.result as string);
-		reader.readAsDataURL(blob);
-	});
 }

@@ -437,6 +437,11 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		this.history.processChanges();
 	}
 
+	@throttle()
+	synchronizeValues(): void {
+		this.setEditorValue();
+	}
+
 	/**
 	 * Return editor value
 	 */
@@ -500,11 +505,6 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	private __callChangeCount = 0;
 
-	@throttle()
-	synchronizeValues(): void {
-		this.setEditorValue();
-	}
-
 	/**
 	 * Set editor html value and if set sync fill source element value
 	 * When method was called without arguments - it is simple way to synchronize editor to element
@@ -564,6 +564,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		) {
 			this.__setElementValue(new_value);
 			this.__callChangeCount += 1;
+
+			if (!isProd && this.__callChangeCount > 4) {
+				console.warn(
+					'Too many recursive changes',
+					new_value,
+					old_value
+				);
+			}
 
 			try {
 				this.history.upTick();
@@ -941,7 +949,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	 * Set current mode
 	 */
 	setMode(mode: number | string): void {
-		const oldmode: Modes = this.getMode();
+		const oldMode: Modes = this.getMode();
 
 		const data = {
 				mode: parseInt(mode.toString(), 10) as Modes
@@ -995,7 +1003,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 		 * });
 		 * ```
 		 */
-		if (oldmode !== this.getMode()) {
+		if (oldMode !== this.getMode()) {
 			this.e.fire('afterSetMode');
 		}
 	}

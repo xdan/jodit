@@ -19,8 +19,7 @@
     Checks if the `imageProcessor.replaceDataURIToBlobIdInView` option is enabled then converts image src which has `data:base64`
     to [blob-object-uri](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL)
 
-In this case, `Jodit.value` returns images with `blob-object-uri`. And only in the original `textarea` itself does the reverse replacement take place.
-To get the value of the editor with the src replaced, call `Jodit.getElementValue`
+In this case, `Jodit.value` returns images with `data-uri`. And original `textarea` itself does the reverse replacement take place.
 
 ```js
 const editor = Jodit.make('#editor', {
@@ -31,8 +30,9 @@ const editor = Jodit.make('#editor', {
 
 editor.value =
 	'<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="/></p>';
-console.log(editor.value); // <p><img src="blob:http://localhost:2000/03377cf0-6260-4351-82ad-8a8901ea104f"></p>
+console.log(editor.value); // <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="/></p>
 console.log(editor.getElementValue()); // '<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="/></p>'
+console.log(editor.getNativeEditorValue()); // <p><img src="blob:http://localhost:2000/03377cf0-6260-4351-82ad-8a8901ea104f"></p>
 ```
 
 -   Method `Jodit.setElementValue` marked us deprecated and will be removed in next major release.
