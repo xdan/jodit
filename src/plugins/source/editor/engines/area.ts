@@ -98,6 +98,10 @@ export class TextAreaEditor
 		this.instance.focus();
 	}
 
+	blur(): void {
+		this.instance.blur();
+	}
+
 	setPlaceHolder(title: string): void {
 		this.instance.setAttribute('placeholder', title);
 	}
