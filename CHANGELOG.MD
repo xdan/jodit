@@ -13,8 +13,8 @@
 
 #### :bug: Bug Fix
 
--   "Uncaught TypeError: Cannot redefine property: \_\_activeTab" occurs when I use 'brush' button twice in inline-popup for a element. #815
-    Issue: https://github.com/xdan/jodit/issues/815
+-   [Keyboard Trap in Source Code mode #817](https://github.com/xdan/jodit/issues/817) Author: @haruanm
+-   ["Uncaught TypeError: Cannot redefine property: \_\_activeTab" occurs when I use 'brush' button twice in inline-popup for a element. #815](https://github.com/xdan/jodit/issues/815)
 
 ## 3.16.5
 
@@ -1294,11 +1294,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                           	{ value: "", text: "" },
--                                                                                                                                                                                                                           	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                           	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                           	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                           ]
+-                                                                                                                                                                                                                             	{ value: "", text: "" },
+-                                                                                                                                                                                                                             	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                             	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                             	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                             ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
