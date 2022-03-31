@@ -146,7 +146,10 @@ export const TabsWidget = (
 
 	if (state) {
 		let __activeTab = state.__activeTab;
+
 		Object.defineProperty(state, '__activeTab', {
+			configurable: true,
+			enumerable: false,
 			get() {
 				return __activeTab;
 			},
