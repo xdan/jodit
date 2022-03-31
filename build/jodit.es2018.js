@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.16.5
+ * Version: v3.16.6
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -4096,9 +4096,7 @@ class Select {
         else {
             this.setCursorIn(fragment);
         }
-        if (this.j.e) {
-            this.j.e.fire('synchro');
-        }
+        this.j.synchronizeValues();
     }
     insertImage(url, styles = null, defaultWidth = null) {
         const image = (0,helpers.isString)(url) ? this.j.createInside.element('img') : url;
@@ -14078,6 +14076,8 @@ const TabsWidget = (jodit, tabs, state) => {
     if (state) {
         let __activeTab = state.__activeTab;
         Object.defineProperty(state, '__activeTab', {
+            configurable: true,
+            enumerable: false,
             get() {
                 return __activeTab;
             },
@@ -15999,7 +15999,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.16.5";
+        this.version = "3.16.6";
         this.async = new Async();
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
@@ -16097,10 +16097,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.16.5";
+        return "3.16.6";
     }
     static getVersion() {
-        return "3.16.5";
+        return "3.16.6";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -21862,7 +21862,9 @@ class Jodit extends ViewWithToolbar {
         this.e
             .off(shortcuts)
             .on(shortcuts, (type, stop) => {
-            stop.shouldStop = shouldStop !== null && shouldStop !== void 0 ? shouldStop : true;
+            if (stop) {
+                stop.shouldStop = shouldStop !== null && shouldStop !== void 0 ? shouldStop : true;
+            }
             return this.execCommand(commandName);
         });
     }
@@ -30272,6 +30274,9 @@ class TextAreaEditor extends SourceEditor {
     focus() {
         this.instance.focus();
     }
+    blur() {
+        this.instance.blur();
+    }
     setPlaceHolder(title) {
         this.instance.setAttribute('placeholder', title);
     }
@@ -30458,6 +30463,9 @@ class AceEditor extends SourceEditor {
     }
     focus() {
         this.instance.focus();
+    }
+    blur() {
+        this.instance.blur();
     }
     getSelectionStart() {
         const range = this.instance.selection.getRange();
@@ -30747,6 +30755,15 @@ class source extends Plugin {
             editor.workplace.appendChild(this.mirrorContainer);
         });
         this.sourceEditor = createSourceEditor('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+        editor.registerCommand('escapeSourceEditor', {
+            exec: () => {
+                var _a;
+                (_a = this.sourceEditor) === null || _a === void 0 ? void 0 : _a.blur();
+            },
+            hotkeys: ['esc']
+        }, {
+            stopPropagation: false
+        });
         this.onReadonlyReact();
         editor.e
             .on('placeholder.source', (text) => {

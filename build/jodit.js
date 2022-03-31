@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.16.5
+ * Version: v3.16.6
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -4617,7 +4617,9 @@ var Jodit = (function (_super) {
         this.e
             .off(shortcuts)
             .on(shortcuts, function (type, stop) {
-            stop.shouldStop = shouldStop !== null && shouldStop !== void 0 ? shouldStop : true;
+            if (stop) {
+                stop.shouldStop = shouldStop !== null && shouldStop !== void 0 ? shouldStop : true;
+            }
             return _this.execCommand(commandName);
         });
     };
@@ -8793,9 +8795,7 @@ var Select = (function () {
         else {
             this.setCursorIn(fragment);
         }
-        if (this.j.e) {
-            this.j.e.fire('synchro');
-        }
+        this.j.synchronizeValues();
     };
     Select.prototype.insertImage = function (url, styles, defaultWidth) {
         if (styles === void 0) { styles = null; }
@@ -16328,7 +16328,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.16.5";
+        _this.version = "3.16.6";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -16475,10 +16475,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.16.5";
+        return "3.16.6";
     };
     View.getVersion = function () {
-        return "3.16.5";
+        return "3.16.6";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -29547,6 +29547,8 @@ var TabsWidget = function (jodit, tabs, state) {
     if (state) {
         var __activeTab_1 = state.__activeTab;
         Object.defineProperty(state, '__activeTab', {
+            configurable: true,
+            enumerable: false,
             get: function () {
                 return __activeTab_1;
             },
@@ -36345,6 +36347,15 @@ var source = (function (_super) {
             editor.workplace.appendChild(_this.mirrorContainer);
         });
         this.sourceEditor = (0, factory_1.createSourceEditor)('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
+        editor.registerCommand('escapeSourceEditor', {
+            exec: function () {
+                var _a;
+                (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.blur();
+            },
+            hotkeys: ['esc']
+        }, {
+            stopPropagation: false
+        });
         this.onReadonlyReact();
         editor.e
             .on('placeholder.source', function (text) {
@@ -36586,6 +36597,9 @@ var TextAreaEditor = (function (_super) {
     };
     TextAreaEditor.prototype.focus = function () {
         this.instance.focus();
+    };
+    TextAreaEditor.prototype.blur = function () {
+        this.instance.blur();
     };
     TextAreaEditor.prototype.setPlaceHolder = function (title) {
         this.instance.setAttribute('placeholder', title);
@@ -36836,6 +36850,9 @@ var AceEditor = (function (_super) {
     };
     AceEditor.prototype.focus = function () {
         this.instance.focus();
+    };
+    AceEditor.prototype.blur = function () {
+        this.instance.blur();
     };
     AceEditor.prototype.getSelectionStart = function () {
         var range = this.instance.selection.getRange();
