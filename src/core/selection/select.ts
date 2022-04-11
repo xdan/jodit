@@ -630,7 +630,10 @@ export class Select implements ISelect {
 	 * parent.s.insertHTML('<img src="image.png"/>');
 	 * ```
 	 */
-	insertHTML(html: number | string | Node): void {
+	insertHTML(
+		html: number | string | Node,
+		insertCursorAfter: boolean = true
+	): void {
 		if (html === '') {
 			return;
 		}
@@ -671,10 +674,12 @@ export class Select implements ISelect {
 
 		this.insertNode(fragment, false, false);
 
-		if (lastChild) {
-			this.setCursorAfter(lastChild);
-		} else {
-			this.setCursorIn(fragment);
+		if (insertCursorAfter) {
+			if (lastChild) {
+				this.setCursorAfter(lastChild);
+			} else {
+				this.setCursorIn(fragment);
+			}
 		}
 
 		this.j.synchronizeValues();
