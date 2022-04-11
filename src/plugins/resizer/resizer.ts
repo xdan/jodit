@@ -10,7 +10,7 @@
 
 import './resizer.less';
 
-import type { IBound, Nullable } from 'jodit/types';
+import type { HTMLTagNames, IBound, Nullable } from 'jodit/types';
 import type { IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { IS_IE } from 'jodit/core/constants';
@@ -335,7 +335,13 @@ export class resizer extends Plugin {
 	 */
 	@autobind
 	private bind(element: HTMLElement): void {
-		if (!Dom.isHTMLElement(element) || dataBind(element, keyBInd)) {
+		if (
+			!Dom.isHTMLElement(element) ||
+			!this.j.o.allowResizeTags.includes(
+				element.tagName.toLowerCase() as HTMLTagNames
+			) ||
+			dataBind(element, keyBInd)
+		) {
 			return;
 		}
 
@@ -351,14 +357,12 @@ export class resizer extends Plugin {
 			) {
 				element = element.parentNode;
 			} else {
-				wrapper = this.j.createInside.fromHTML(
-					'<jodit ' +
-						'data-jodit-temp="1" ' +
-						'contenteditable="false" ' +
-						'draggable="true" ' +
-						'data-jodit_iframe_wrapper="1"' +
-						'></jodit>'
-				);
+				wrapper = this.j.createInside.element('jodit', {
+					'data-jodit-temp': 1,
+					contenteditable: false,
+					draggable: true,
+					'data-jodit_iframe_wrapper': 1
+				});
 
 				attr(wrapper, 'style', attr(element, 'style'));
 
@@ -376,6 +380,9 @@ export class resizer extends Plugin {
 				}
 
 				wrapper.appendChild(element);
+				this.j.e.on(wrapper, 'click', () => {
+					attr(wrapper, 'data-jodit-wrapper_active', true);
+				});
 
 				element = wrapper;
 			}
@@ -415,7 +422,7 @@ export class resizer extends Plugin {
 			this.show();
 
 			if (Dom.isTag(this.element, 'img') && !this.element.complete) {
-				this.j.e.on(this.element, 'load', this.updateSize);
+				this.j.e.one(this.element, 'load', this.updateSize);
 			}
 		}
 	};
@@ -516,6 +523,9 @@ export class resizer extends Plugin {
 			this.isShown = false;
 			this.element = null;
 			Dom.safeRemove(this.rect);
+			$$("[data-jodit-wrapper_active='true']", this.j.editor).forEach(
+				elm => attr(elm, 'data-jodit-wrapper_active', false)
+			);
 		}
 	}
 

@@ -1,0 +1,30 @@
+[data-jodit_iframe_wrapper] {
+	position: relative;
+	display: block;
+	user-select: none;
+
+	iframe {
+		position: relative;
+	}
+
+	&::after {
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		display: block;
+		background: rgba(0, 0, 0, 0);
+		content: '';
+		cursor: pointer;
+	}
+
+	&[data-jodit-wrapper_active='true'] iframe {
+		z-index: 2;
+	}
+}
+
+.jodit_lock &[data-jodit-wrapper_active='true'] iframe {
+	z-index: 1;
+}

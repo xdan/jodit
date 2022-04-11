@@ -5,6 +5,7 @@
  */
 
 @import (reference) '../../styles/variables';
+@import './resizer.common';
 
 :root {
 	--viewer_width: 70px;
@@ -13,25 +14,6 @@
 	--resizer-border-color: #98c1f1;
 	--resizer-handle-color: #5ba4f3;
 	--resizer-handle-hover-color: #537ebb;
-}
-
-[data-jodit_iframe_wrapper] {
-	position: relative;
-	display: block;
-	user-select: none;
-
-	&::after {
-		position: absolute;
-		z-index: 1;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		display: block;
-		background: rgba(0, 0, 0, 0);
-		content: '';
-		cursor: pointer;
-	}
 }
 
 .jodit-resizer {

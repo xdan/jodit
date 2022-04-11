@@ -33,6 +33,10 @@ elm.className() === A.prototype.className(); // true
 In most cases, this entailed new bugs, so in 3.17 we decided to remove this heuristic.
 If something broke in your assembly, please create an [issue on github](https://github.com/xdan/jodit/issues/new).
 
+#### :bug: Bug Fix
+
+-   Fixed processing of inserting videos from YouTube. Now you can start playing the video.
+
 #### :house: Internal
 
 -   Update
@@ -1334,11 +1338,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                 	{ value: "", text: "" },
--                                                                                                                                                                                                                                 	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                 	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                 	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                 ]
+-                                                                                                                                                                                                                                   	{ value: "", text: "" },
+-                                                                                                                                                                                                                                   	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                   	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                   	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                   ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
