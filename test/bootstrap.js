@@ -1206,3 +1206,17 @@ function strCompare(str1, str2, len = 30) {
 
 	return true;
 }
+
+function decorate(decorators, target, key) {
+	let r = Object.getOwnPropertyDescriptor(target, key);
+
+	for (let i = decorators.length - 1; i >= 0; i--) {
+		const d = decorators[i];
+
+		if (d) {
+			r = d(target, key, r) || r;
+		}
+	}
+
+	r && Object.defineProperty(target, key, r);
+}

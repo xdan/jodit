@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 describe('Test object observer', function () {
-	function getTestObject() {
+	const getTestObject = function () {
 		return {
 			editable: true,
 			disabled: false,
@@ -16,7 +16,7 @@ describe('Test object observer', function () {
 				}
 			}
 		};
-	}
+	};
 
 	const get = Jodit.modules.Helpers.get;
 	const stringify = Jodit.modules.Helpers.stringify;
@@ -71,19 +71,6 @@ describe('Test object observer', function () {
 		return A;
 	};
 
-	function decorate(decorators, target, key) {
-		let r = Object.getOwnPropertyDescriptor(target, key);
-
-		for (let i = decorators.length - 1; i >= 0; i--) {
-			const d = decorators[i];
-
-			if (d) {
-				r = d(target, key, r) || r;
-			}
-		}
-
-		r && Object.defineProperty(target, key, r);
-	}
 	describe('Test debounce decorator', function () {
 		it('Should call method only once in time', function (done) {
 			const result = [],

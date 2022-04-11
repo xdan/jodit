@@ -267,4 +267,11 @@ export abstract class Component implements IComponent {
 
 		list[status].push(callback);
 	}
+
+	static isInstanceOf<T extends IComponent>(
+		c: unknown | IComponent,
+		constructorFunc: Function
+	): c is T {
+		return c instanceof constructorFunc;
+	}
 }

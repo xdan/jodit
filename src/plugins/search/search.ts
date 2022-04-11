@@ -171,7 +171,6 @@ export class search extends Plugin {
 		});
 
 		const bounds = await this.find(this.walker, query);
-
 		if (!bounds.length) {
 			return false;
 		}

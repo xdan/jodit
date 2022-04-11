@@ -136,7 +136,13 @@ describe('Search plugin', function () {
 	});
 
 	describe('F3 after search', function () {
+		beforeEach(() => {
+			unmockPromise();
+		});
+
 		it('Should find a next match', function (done) {
+			unmockPromise();
+
 			const editor = getJodit({
 				defaultTimeout: 0
 			});
@@ -186,6 +192,7 @@ describe('Search plugin', function () {
 							.firstChild
 					).equals(range.endContainer);
 					expect(4).equals(range.endOffset);
+					editor.destruct();
 					done();
 				});
 			});

@@ -23,6 +23,7 @@ import { UIElement } from '../element';
 import { component, watch } from 'jodit/core/decorators';
 import { assert, isArray } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
+import { Component } from 'jodit/core/component';
 
 @component
 export class UIGroup<T extends IViewBased = IViewBased>
@@ -56,7 +57,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 
 			if (isArray(elm)) {
 				stack.push(...elm);
-			} else if (elm instanceof UIGroup) {
+			} else if (Component.isInstanceOf<UIGroup>(elm, UIGroup)) {
 				stack.push(...elm.elements);
 			} else {
 				elm && result.push(elm);

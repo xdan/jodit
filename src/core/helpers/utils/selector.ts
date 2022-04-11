@@ -21,6 +21,7 @@ import { Dom } from 'jodit/core/dom';
 import { camelCase } from 'jodit/core/helpers/string';
 import { toArray } from 'jodit/core/helpers/array';
 import { UIElement } from 'jodit/core/ui';
+import { Component } from 'jodit/core/component';
 
 let temp = 1;
 
@@ -126,7 +127,7 @@ export const getXPathByElement = (
 export const refs = <T extends HTMLElement>(
 	root: HTMLElement | IUIElement
 ): IDictionary<T> => {
-	if (root instanceof UIElement) {
+	if (Component.isInstanceOf(root, UIElement)) {
 		root = root.container;
 	}
 

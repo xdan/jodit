@@ -9,13 +9,18 @@ describe('Jodit Editor Tests', function () {
 			expect(window.Jodit).is.a('function');
 		});
 
+		it('Constructor Jodit should have version and esnext field', function () {
+			expect(/\d+\.\d+\.\d+/.test(Jodit.prototype.getVersion())).is.true;
+			expect(typeof Jodit.esNext).eq('boolean');
+		});
+
 		it('Constructor default should not be in global scope', function () {
 			expect(window.default).is.not.a('function');
 			expect(window.default).does.not.equal(window.Jodit);
 		});
 
 		describe('First argument', function () {
-			describe('String #id', function () {
+			describe('String 	#id', function () {
 				it('Should be valid selector', function () {
 					const area = appendTestArea('editor');
 

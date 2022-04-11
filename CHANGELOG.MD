@@ -9,6 +9,46 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.17.1
+
+#### :boom: Breaking Change
+
+Some minifier configurations do not correctly handle inheritance in the `component` decorator,
+we added some helper code earlier to make this work correctly.
+We tried to determine belonging by the name of the component and not by its constructor or prototype.
+Because in some build system(ex. create-react-app):
+
+```js
+@component
+class A extends Component {
+	className() {
+		return 'A';
+	}
+}
+const a = new A();
+a instanceof Component; // false - only in some cases
+elm.className() === A.prototype.className(); // true
+```
+
+In most cases, this entailed new bugs, so in 3.17 we decided to remove this heuristic.
+If something broke in your assembly, please create an [issue on github](https://github.com/xdan/jodit/issues/new).
+
+#### :house: Internal
+
+-   Update
+
+```
+@typescript-eslint/eslint-plugin  ^5.16.0  →  ^5.19.0
+@typescript-eslint/parser         ^5.16.0  →  ^5.19.0
+cssnano-preset-advanced            ^5.3.1  →   ^5.3.3
+eslint                            ^8.12.0  →  ^8.13.0
+eslint-plugin-tsdoc               ^0.2.14  →  ^0.2.16
+prettier                           ^2.6.1  →   ^2.6.2
+webpack                           ^5.70.0  →  ^5.72.0
+webpack-dev-server                 ^4.7.4  →   ^4.8.1
+yargs                             ^17.4.0  →  ^17.4.1
+```
+
 ## 3.16.6
 
 #### :bug: Bug Fix
@@ -1294,11 +1334,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                             	{ value: "", text: "" },
--                                                                                                                                                                                                                             	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                             	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                             	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                             ]
+-                                                                                                                                                                                                                                 	{ value: "", text: "" },
+-                                                                                                                                                                                                                                 	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                 	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                 	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                 ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

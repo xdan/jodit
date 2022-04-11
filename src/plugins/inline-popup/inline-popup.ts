@@ -34,7 +34,9 @@ import {
 	keys,
 	camelCase
 } from 'jodit/core/helpers';
-import { Dom, Table, ToolbarCollection, UIElement } from '../../modules';
+import { Dom } from 'jodit/core/dom';
+import { UIElement } from 'jodit/core/ui';
+import type { Table } from 'jodit/modules/table/table';
 import { debounce, wait, autobind, watch } from 'jodit/core/decorators';
 
 /**
@@ -160,7 +162,7 @@ export class inlinePopup extends Plugin {
 		this.j.e
 			.on(
 				'getDiffButtons.mobile',
-				(toolbar: ToolbarCollection): void | Buttons => {
+				(toolbar: IToolbarCollection): void | Buttons => {
 					if (this.toolbar === toolbar) {
 						const names = this.toolbar.getButtonsNames();
 

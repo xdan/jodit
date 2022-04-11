@@ -15,6 +15,7 @@ import './tabs.less';
 import type { IDictionary, IJodit, IUIButton } from 'jodit/types';
 import { $$, isFunction } from 'jodit/core/helpers';
 import { Button, UIElement } from 'jodit/core/ui';
+import { Component } from 'jodit/core/component';
 
 export interface TabOption {
 	icon?: string;
@@ -99,7 +100,9 @@ export const TabsWidget = (
 
 		if (!isFunction(content)) {
 			tab.appendChild(
-				content instanceof UIElement ? content.container : content
+				Component.isInstanceOf(content, UIElement)
+					? content.container
+					: content
 			);
 		} else {
 			tab.appendChild(jodit.c.div('jodit-tab_empty'));

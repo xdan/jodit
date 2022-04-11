@@ -95,6 +95,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	}
 
 	readonly version: string = appVersion; // from webpack.config.js
+	static readonly esNext: boolean = isESNext; // from webpack.config.js
 
 	/**
 	 * Return default timeout period in milliseconds for some debounce or throttle functions.

@@ -310,7 +310,6 @@ describe('Toolbar', function () {
 				const editor = getJodit();
 
 				clickButton('dots', editor);
-
 				const popup = getOpenedPopup(editor);
 
 				expect(popup).is.not.null;

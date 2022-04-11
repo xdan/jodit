@@ -37,6 +37,7 @@ import {
 import { eventEmitter, getContainer } from 'jodit/core/global';
 import { UIElement } from 'jodit/core/ui';
 import { autobind, throttle } from 'jodit/core/decorators';
+import { Component } from 'jodit/core/component';
 
 type getBoundFunc = () => IBound;
 
@@ -62,7 +63,7 @@ export class Popup extends UIElement implements IPopup {
 
 	/** @override */
 	override updateParentElement(target: IUIElement): this {
-		if (target !== this && target instanceof Popup) {
+		if (target !== this && Component.isInstanceOf<Popup>(target, Popup)) {
 			this.childrenPopups.forEach(popup => {
 				if (!target.closest(popup) && popup.isOpened) {
 					popup.close();
@@ -91,9 +92,9 @@ export class Popup extends UIElement implements IPopup {
 
 		let elm: HTMLElement;
 
-		if (content instanceof UIElement) {
+		debugger
+		if (Component.isInstanceOf(content, UIElement)) {
 			elm = content.container;
-			// @ts-ignore
 			content.parentElement = this;
 		} else if (isString(content)) {
 			elm = this.j.c.fromHTML(content);

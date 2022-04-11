@@ -29,6 +29,7 @@ import { UIButton } from 'jodit/core/ui/button/button/button';
 import { isButtonGroup } from 'jodit/core/ui/helpers/buttons';
 import { getControlType } from 'jodit/core/ui/helpers/get-control-type';
 import { splitArray } from 'jodit/core/helpers/array';
+import { Component } from 'jodit/core/component';
 
 @component
 export class UIList<T extends IViewBased = IViewBased>
@@ -65,8 +66,8 @@ export class UIList<T extends IViewBased = IViewBased>
 	 * All buttons from list
 	 */
 	get buttons(): IUIButton[] {
-		return this.allChildren.filter(
-			elm => elm instanceof UIButton
+		return this.allChildren.filter(elm =>
+			Component.isInstanceOf(elm, UIButton)
 		) as IUIButton[];
 	}
 

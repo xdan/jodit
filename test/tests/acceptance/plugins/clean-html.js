@@ -333,6 +333,8 @@ describe('Clean html plugin', function () {
 
 		describe('Time checking', function () {
 			it('Should work fast', function (done) {
+				unmockPromise();
+
 				const editor = getJodit({
 					cleanHTML: {
 						allowTags: {

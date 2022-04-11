@@ -17,8 +17,8 @@ import type {
 	IToolbarCollection
 } from 'jodit/types';
 import { makeCollection } from 'jodit/modules/toolbar/factory';
-import { UIList } from 'jodit/core/ui';
 import { splitArray } from 'jodit/core/helpers';
+import { ToolbarCollection } from 'jodit/modules/toolbar/collection/collection';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -61,7 +61,7 @@ Config.prototype.controls.dots = {
 						const buttons: CanUndef<Array<string | IControlType>> =
 							editor.e.fire(
 								'getDiffButtons.mobile',
-								button.closest(UIList)
+								button.closest(ToolbarCollection)
 							);
 
 						if (buttons && store) {
