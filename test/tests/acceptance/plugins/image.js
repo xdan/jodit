@@ -47,6 +47,26 @@ describe('Process Images plugins', function () {
 				expect(list.parentNode).is.null;
 			});
 
+			describe('Insert src without protocol', () => {
+				it('Should add double slashes.', function () {
+					const editor = getJodit();
+
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
+					clickButton('image', editor);
+					const list = getOpenedPopup(editor);
+
+					list.querySelector('input[name=url]').value =
+						'xdsoft.net/jodit/images/artio.jpg';
+
+					simulateEvent('submit', list.querySelector('form'));
+
+					expect(sortAttributes(editor.value)).equals(
+						'<p>test<img alt="" src="//xdsoft.net/jodit/images/artio.jpg" style="width:300px"></p>'
+					);
+				});
+			});
+
 			describe('When the cursor in the middle of some text', function () {
 				it('Should insert image in this position after submit', function () {
 					const editor = getJodit();

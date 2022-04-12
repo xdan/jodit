@@ -92,7 +92,6 @@ export class Popup extends UIElement implements IPopup {
 
 		let elm: HTMLElement;
 
-		debugger
 		if (Component.isInstanceOf(content, UIElement)) {
 			elm = content.container;
 			content.parentElement = this;
