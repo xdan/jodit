@@ -37,6 +37,7 @@ If something broke in your assembly, please create an [issue on github](https://
 
 -   Fixed processing of inserting videos from YouTube. Now you can start playing the video.
 -   [selection.insertHTML causes infinite blur loop when Jodit editor not active](https://github.com/xdan/jodit/issues/819) Added `insertCursorAfter` argument.
+-   [Preview missing non styled content in a paragraph when there is any styled text in that paragraph #823](https://github.com/xdan/jodit/issues/823)
 
 ```js
 const editor = Jodit.make('#editor');

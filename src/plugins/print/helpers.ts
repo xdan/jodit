@@ -144,40 +144,46 @@ export function previewBox(
 				dv.innerHTML = value;
 			}
 
-			for (let i = 0; i < dv.children.length; i += 1) {
-				const c = dv.children[i];
+			for (let i = 0; i < dv.childNodes.length; i += 1) {
+				const c = dv.childNodes[i];
 
-				const newNode = box.ownerDocument.createElement(c.nodeName);
+				if (Dom.isElement(c)) {
+					const newNode = box.ownerDocument.createElement(c.nodeName);
 
-				for (let j = 0; j < c.attributes.length; j += 1) {
-					attr(
-						newNode,
-						c.attributes[j].nodeName,
-						c.attributes[j].nodeValue
-					);
-				}
-
-				if (c.children.length === 0 || Dom.isTag(c, ['table'])) {
-					switch (c.nodeName) {
-						case 'SCRIPT':
-							if (c.textContent) {
-								newNode.textContent = c.textContent;
-							}
-							break;
-
-						default:
-							if (c.innerHTML) {
-								newNode.innerHTML = c.innerHTML;
-							}
-							break;
+					for (let j = 0; j < c.attributes.length; j += 1) {
+						attr(
+							newNode,
+							c.attributes[j].nodeName,
+							c.attributes[j].nodeValue
+						);
 					}
-				} else {
-					setHTML(newNode, c);
-				}
 
-				try {
-					box.appendChild(newNode);
-				} catch {}
+					if (c.childNodes.length === 0 || Dom.isTag(c, ['table'])) {
+						switch (c.nodeName) {
+							case 'SCRIPT':
+								if (c.textContent) {
+									newNode.textContent = c.textContent;
+								}
+								break;
+
+							default:
+								if (c.innerHTML) {
+									newNode.innerHTML = c.innerHTML;
+								}
+								break;
+						}
+					} else {
+						setHTML(newNode, c);
+					}
+
+					try {
+						box.appendChild(newNode);
+					} catch {}
+				} else {
+					try {
+						box.appendChild(c.cloneNode(true));
+					} catch {}
+				}
 			}
 		};
 
