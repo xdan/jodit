@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.16.6
+ * Version: v3.17.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -7003,6 +7003,9 @@ var Component = (function () {
         }
         list[status].push(callback);
     };
+    Component.isInstanceOf = function (c, constructorFunc) {
+        return c instanceof constructorFunc;
+    };
     Component.STATUSES = statuses_1.STATUSES;
     return Component;
 }());
@@ -8760,7 +8763,8 @@ var Select = (function () {
             this.j.e.fire('afterInsertNode', node);
         }
     };
-    Select.prototype.insertHTML = function (html) {
+    Select.prototype.insertHTML = function (html, insertCursorAfter) {
+        if (insertCursorAfter === void 0) { insertCursorAfter = true; }
         if (html === '') {
             return;
         }
@@ -8789,11 +8793,13 @@ var Select = (function () {
             fragment.appendChild(node.firstChild);
         }
         this.insertNode(fragment, false, false);
-        if (lastChild) {
-            this.setCursorAfter(lastChild);
-        }
-        else {
-            this.setCursorIn(fragment);
+        if (insertCursorAfter) {
+            if (lastChild) {
+                this.setCursorAfter(lastChild);
+            }
+            else {
+                this.setCursorIn(fragment);
+            }
         }
         this.j.synchronizeValues();
     };
@@ -9418,10 +9424,6 @@ exports.cache = cache;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.component = void 0;
 var tslib_1 = __webpack_require__(1);
-var helpers_1 = __webpack_require__(146);
-var cn = function (elm) {
-    return (0, helpers_1.isFunction)(elm.className) ? elm.className() : NaN;
-};
 function component(constructorFunction) {
     var newConstructorFunction = (function (_super) {
         tslib_1.__extends(newConstructorFunction, _super);
@@ -9431,19 +9433,17 @@ function component(constructorFunction) {
                 args[_i] = arguments[_i];
             }
             var _this = _super.apply(this, tslib_1.__spreadArray([], tslib_1.__read(args), false)) || this;
-            var isSamePrototype = Object.getPrototypeOf(_this) ===
-                newConstructorFunction.prototype;
-            var isSameClassName = cn(_this) ===
-                cn(newConstructorFunction.prototype);
-            if (false) {}
-            if (isSamePrototype || isSameClassName) {
+            var isRootConstructor = _this.constructor === newConstructorFunction;
+            if (isRootConstructor) {
+                if (!(_this instanceof newConstructorFunction)) {
+                    Object.setPrototypeOf(_this, newConstructorFunction.prototype);
+                }
                 _this.setStatus('ready');
             }
             return _this;
         }
         return newConstructorFunction;
     }(constructorFunction));
-    newConstructorFunction.prototype.constructor = constructorFunction;
     return newConstructorFunction;
 }
 exports.component = component;
@@ -12289,6 +12289,7 @@ var dom_1 = __webpack_require__(159);
 var string_1 = __webpack_require__(212);
 var array_1 = __webpack_require__(248);
 var ui_1 = __webpack_require__(251);
+var component_1 = __webpack_require__(154);
 var temp = 1;
 var $$temp = function () {
     temp++;
@@ -12335,7 +12336,7 @@ var getXPathByElement = function (element, root) {
 };
 exports.getXPathByElement = getXPathByElement;
 var refs = function (root) {
-    if (root instanceof ui_1.UIElement) {
+    if (component_1.Component.isInstanceOf(root, ui_1.UIElement)) {
         root = root.container;
     }
     return $$('[ref],[data-ref]', root).reduce(function (def, child) {
@@ -12554,7 +12555,7 @@ var UIElement = (function (_super) {
     UIElement.prototype.closest = function (type) {
         var c = typeof type === 'object'
             ? function (pe) { return pe === type; }
-            : function (pe) { return pe instanceof type; };
+            : function (pe) { return component_1.Component.isInstanceOf(pe, type); };
         var pe = this.__parentElement;
         while (pe) {
             if (c(pe)) {
@@ -12573,7 +12574,7 @@ var UIElement = (function (_super) {
         var elm = dom_1.Dom.up(node, function (elm) {
             if (elm) {
                 var component = elm.component;
-                return component && component instanceof type;
+                return component && component_1.Component.isInstanceOf(component, type);
             }
             return false;
         });
@@ -13162,6 +13163,7 @@ var element_1 = __webpack_require__(252);
 var decorators_1 = __webpack_require__(169);
 var helpers_1 = __webpack_require__(146);
 var dom_1 = __webpack_require__(159);
+var component_1 = __webpack_require__(154);
 var UIGroup = (function (_super) {
     tslib_1.__extends(UIGroup, _super);
     function UIGroup(jodit, elements, options) {
@@ -13189,7 +13191,7 @@ var UIGroup = (function (_super) {
                 if ((0, helpers_1.isArray)(elm)) {
                     stack.push.apply(stack, tslib_1.__spreadArray([], tslib_1.__read(elm), false));
                 }
-                else if (elm instanceof UIGroup_1) {
+                else if (component_1.Component.isInstanceOf(elm, UIGroup_1)) {
                     stack.push.apply(stack, tslib_1.__spreadArray([], tslib_1.__read(elm.elements), false));
                 }
                 else {
@@ -13299,6 +13301,7 @@ var button_1 = __webpack_require__(258);
 var buttons_1 = __webpack_require__(271);
 var get_control_type_1 = __webpack_require__(268);
 var array_1 = __webpack_require__(248);
+var component_1 = __webpack_require__(154);
 var UIList = (function (_super) {
     tslib_1.__extends(UIList, _super);
     function UIList(jodit) {
@@ -13319,7 +13322,9 @@ var UIList = (function (_super) {
     };
     Object.defineProperty(UIList.prototype, "buttons", {
         get: function () {
-            return this.allChildren.filter(function (elm) { return elm instanceof button_1.UIButton; });
+            return this.allChildren.filter(function (elm) {
+                return component_1.Component.isInstanceOf(elm, button_1.UIButton);
+            });
         },
         enumerable: false,
         configurable: true
@@ -13650,6 +13655,7 @@ var helpers_1 = __webpack_require__(146);
 var global_1 = __webpack_require__(157);
 var ui_1 = __webpack_require__(251);
 var decorators_1 = __webpack_require__(169);
+var component_1 = __webpack_require__(154);
 var Popup = (function (_super) {
     tslib_1.__extends(Popup, _super);
     function Popup(jodit, smart) {
@@ -13673,7 +13679,7 @@ var Popup = (function (_super) {
     };
     Popup.prototype.updateParentElement = function (target) {
         var _this = this;
-        if (target !== this && target instanceof Popup) {
+        if (target !== this && component_1.Component.isInstanceOf(target, Popup)) {
             this.childrenPopups.forEach(function (popup) {
                 if (!target.closest(popup) && popup.isOpened) {
                     popup.close();
@@ -13692,7 +13698,7 @@ var Popup = (function (_super) {
         dom_1.Dom.detach(this.container);
         var box = this.j.c.div("".concat(this.componentName, "__content"));
         var elm;
-        if (content instanceof ui_1.UIElement) {
+        if (component_1.Component.isInstanceOf(content, ui_1.UIElement)) {
             elm = content.container;
             content.parentElement = this;
         }
@@ -13961,7 +13967,7 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
 tslib_1.__exportStar(__webpack_require__(276), exports);
-tslib_1.__exportStar(__webpack_require__(277), exports);
+tslib_1.__exportStar(__webpack_require__(284), exports);
 tslib_1.__exportStar(__webpack_require__(291), exports);
 
 
@@ -13979,9 +13985,12 @@ tslib_1.__exportStar(__webpack_require__(291), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UIForm = void 0;
 var tslib_1 = __webpack_require__(1);
-var ui_1 = __webpack_require__(251);
+var group_1 = __webpack_require__(263);
+var input_1 = __webpack_require__(277);
+var select_1 = __webpack_require__(282);
 var utils_1 = __webpack_require__(147);
-var decorators_1 = __webpack_require__(169);
+var component_1 = __webpack_require__(171);
+var component_2 = __webpack_require__(154);
 var UIForm = (function (_super) {
     tslib_1.__extends(UIForm, _super);
     function UIForm() {
@@ -14005,7 +14014,9 @@ var UIForm = (function (_super) {
     };
     UIForm.prototype.validate = function () {
         var e_1, _a, e_2, _b;
-        var inputs = this.allChildren.filter(function (elm) { return elm instanceof ui_1.UIInput; });
+        var inputs = this.allChildren.filter(function (elm) {
+            return component_2.Component.isInstanceOf(elm, input_1.UIInput);
+        });
         try {
             for (var inputs_1 = tslib_1.__values(inputs), inputs_1_1 = inputs_1.next(); !inputs_1_1.done; inputs_1_1 = inputs_1.next()) {
                 var input = inputs_1_1.value;
@@ -14021,7 +14032,9 @@ var UIForm = (function (_super) {
             }
             finally { if (e_1) throw e_1.error; }
         }
-        var selects = this.allChildren.filter(function (elm) { return elm instanceof ui_1.UISelect; });
+        var selects = this.allChildren.filter(function (elm) {
+            return component_2.Component.isInstanceOf(elm, select_1.UISelect);
+        });
         try {
             for (var selects_1 = tslib_1.__values(selects), selects_1_1 = selects_1.next(); !selects_1_1.done; selects_1_1 = selects_1.next()) {
                 var select = selects_1_1.value;
@@ -14042,7 +14055,9 @@ var UIForm = (function (_super) {
     UIForm.prototype.onSubmit = function (handler) {
         var _this = this;
         this.j.e.on(this.container, 'submit', function () {
-            var inputs = _this.allChildren.filter(function (elm) { return elm instanceof ui_1.UIInput; });
+            var inputs = _this.allChildren.filter(function (elm) {
+                return component_2.Component.isInstanceOf(elm, input_1.UIInput);
+            });
             if (!_this.validate()) {
                 return false;
             }
@@ -14060,10 +14075,10 @@ var UIForm = (function (_super) {
         return form;
     };
     UIForm = tslib_1.__decorate([
-        decorators_1.component
+        component_1.component
     ], UIForm);
     return UIForm;
-}(ui_1.UIGroup));
+}(group_1.UIGroup));
 exports.UIForm = UIForm;
 
 
@@ -14079,35 +14094,15 @@ exports.UIForm = UIForm;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(278), exports);
-tslib_1.__exportStar(__webpack_require__(283), exports);
-tslib_1.__exportStar(__webpack_require__(285), exports);
-tslib_1.__exportStar(__webpack_require__(287), exports);
-tslib_1.__exportStar(__webpack_require__(289), exports);
-
-
-/***/ }),
-/* 278 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UIInput = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(279);
+__webpack_require__(278);
 var element_1 = __webpack_require__(252);
 var helpers_1 = __webpack_require__(146);
 var dom_1 = __webpack_require__(159);
 var decorators_1 = __webpack_require__(169);
 var icon_1 = __webpack_require__(256);
-var validators_1 = __webpack_require__(280);
+var validators_1 = __webpack_require__(279);
 var UIInput = (function (_super) {
     tslib_1.__extends(UIInput, _super);
     function UIInput(jodit, options) {
@@ -14322,7 +14317,7 @@ exports.UIInput = UIInput;
 
 
 /***/ }),
-/* 279 */
+/* 278 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14331,7 +14326,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 280 */
+/* 279 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -14343,12 +14338,12 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.selectValidators = exports.inputValidators = void 0;
-exports.inputValidators = __webpack_require__(281);
-exports.selectValidators = __webpack_require__(282);
+exports.inputValidators = __webpack_require__(280);
+exports.selectValidators = __webpack_require__(281);
 
 
 /***/ }),
-/* 281 */
+/* 280 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -14378,7 +14373,7 @@ exports.url = function (input) {
 
 
 /***/ }),
-/* 282 */
+/* 281 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -14401,7 +14396,112 @@ exports.required = function (select) {
 
 
 /***/ }),
+/* 282 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UISelect = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(283);
+var helpers_1 = __webpack_require__(146);
+var decorators_1 = __webpack_require__(169);
+var input_1 = __webpack_require__(277);
+var validators_1 = __webpack_require__(279);
+var UISelect = (function (_super) {
+    tslib_1.__extends(UISelect, _super);
+    function UISelect(jodit, state) {
+        var _this = _super.call(this, jodit, state) || this;
+        _this.state = tslib_1.__assign({}, UISelect_1.defaultState);
+        Object.assign(_this.state, state);
+        return _this;
+    }
+    UISelect_1 = UISelect;
+    UISelect.prototype.className = function () {
+        return 'UISelect';
+    };
+    UISelect.prototype.createContainer = function (state) {
+        var _a;
+        var container = _super.prototype.createContainer.call(this, state);
+        var j = this.j, nativeInput = this.nativeInput;
+        var opt = function () { return j.create.element('option'); };
+        if (state.placeholder !== undefined) {
+            var option = opt();
+            option.value = '';
+            option.text = j.i18n(state.placeholder);
+            nativeInput.add(option);
+        }
+        (_a = state.options) === null || _a === void 0 ? void 0 : _a.forEach(function (element) {
+            var option = opt();
+            option.value = element.value.toString();
+            option.text = j.i18n(element.text);
+            nativeInput.add(option);
+        });
+        if (state.size && state.size > 0) {
+            (0, helpers_1.attr)(nativeInput, 'size', state.size);
+        }
+        if (state.multiple) {
+            (0, helpers_1.attr)(nativeInput, 'multiple', '');
+        }
+        return container;
+    };
+    UISelect.prototype.createNativeInput = function () {
+        return this.j.create.element('select');
+    };
+    UISelect.prototype.updateValidators = function () {
+        _super.prototype.updateValidators.call(this);
+        if (this.state.required) {
+            this.validators.delete(validators_1.inputValidators.required);
+            this.validators.add(validators_1.selectValidators.required);
+        }
+    };
+    var UISelect_1;
+    UISelect.defaultState = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { options: [], size: 1, multiple: false });
+    UISelect = UISelect_1 = tslib_1.__decorate([
+        decorators_1.component
+    ], UISelect);
+    return UISelect;
+}(input_1.UIInput));
+exports.UISelect = UISelect;
+
+
+/***/ }),
 /* 283 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 284 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(277), exports);
+tslib_1.__exportStar(__webpack_require__(285), exports);
+tslib_1.__exportStar(__webpack_require__(287), exports);
+tslib_1.__exportStar(__webpack_require__(282), exports);
+tslib_1.__exportStar(__webpack_require__(289), exports);
+
+
+/***/ }),
+/* 285 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -14414,8 +14514,8 @@ exports.required = function (select) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UITextArea = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(284);
-var input_1 = __webpack_require__(278);
+__webpack_require__(286);
+var input_1 = __webpack_require__(277);
 var decorators_1 = __webpack_require__(169);
 var UITextArea = (function (_super) {
     tslib_1.__extends(UITextArea, _super);
@@ -14447,7 +14547,7 @@ exports.UITextArea = UITextArea;
 
 
 /***/ }),
-/* 284 */
+/* 286 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14456,7 +14556,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 285 */
+/* 287 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -14469,8 +14569,8 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UICheckbox = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(286);
-var input_1 = __webpack_require__(278);
+__webpack_require__(288);
+var input_1 = __webpack_require__(277);
 var decorators_1 = __webpack_require__(169);
 var dom_1 = __webpack_require__(159);
 var UICheckbox = (function (_super) {
@@ -14533,91 +14633,6 @@ exports.UICheckbox = UICheckbox;
 
 
 /***/ }),
-/* 286 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 287 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UISelect = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(288);
-var helpers_1 = __webpack_require__(146);
-var decorators_1 = __webpack_require__(169);
-var input_1 = __webpack_require__(278);
-var validators_1 = __webpack_require__(280);
-var UISelect = (function (_super) {
-    tslib_1.__extends(UISelect, _super);
-    function UISelect(jodit, state) {
-        var _this = _super.call(this, jodit, state) || this;
-        _this.state = tslib_1.__assign({}, UISelect_1.defaultState);
-        Object.assign(_this.state, state);
-        return _this;
-    }
-    UISelect_1 = UISelect;
-    UISelect.prototype.className = function () {
-        return 'UISelect';
-    };
-    UISelect.prototype.createContainer = function (state) {
-        var _a;
-        var container = _super.prototype.createContainer.call(this, state);
-        var j = this.j, nativeInput = this.nativeInput;
-        var opt = function () { return j.create.element('option'); };
-        if (state.placeholder !== undefined) {
-            var option = opt();
-            option.value = '';
-            option.text = j.i18n(state.placeholder);
-            nativeInput.add(option);
-        }
-        (_a = state.options) === null || _a === void 0 ? void 0 : _a.forEach(function (element) {
-            var option = opt();
-            option.value = element.value.toString();
-            option.text = j.i18n(element.text);
-            nativeInput.add(option);
-        });
-        if (state.size && state.size > 0) {
-            (0, helpers_1.attr)(nativeInput, 'size', state.size);
-        }
-        if (state.multiple) {
-            (0, helpers_1.attr)(nativeInput, 'multiple', '');
-        }
-        return container;
-    };
-    UISelect.prototype.createNativeInput = function () {
-        return this.j.create.element('select');
-    };
-    UISelect.prototype.updateValidators = function () {
-        _super.prototype.updateValidators.call(this);
-        if (this.state.required) {
-            this.validators.delete(validators_1.inputValidators.required);
-            this.validators.add(validators_1.selectValidators.required);
-        }
-    };
-    var UISelect_1;
-    UISelect.defaultState = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { options: [], size: 1, multiple: false });
-    UISelect = UISelect_1 = tslib_1.__decorate([
-        decorators_1.component
-    ], UISelect);
-    return UISelect;
-}(input_1.UIInput));
-exports.UISelect = UISelect;
-
-
-/***/ }),
 /* 288 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -14641,7 +14656,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UIFileInput = void 0;
 var tslib_1 = __webpack_require__(1);
 __webpack_require__(290);
-var input_1 = __webpack_require__(278);
+var input_1 = __webpack_require__(277);
 var decorators_1 = __webpack_require__(169);
 var button_1 = __webpack_require__(257);
 var UIFileInput = (function (_super) {
@@ -16328,7 +16343,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.16.6";
+        _this.version = "3.17.1";
         _this.async = new async_1.Async();
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
@@ -16475,10 +16490,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.16.6";
+        return "3.17.1";
     };
     View.getVersion = function () {
-        return "3.16.6";
+        return "3.17.1";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -16541,6 +16556,7 @@ var View = (function (_super) {
         modules_1.Dom.safeRemove(this.container);
         _super.prototype.destruct.call(this);
     };
+    View.esNext = false;
     tslib_1.__decorate([
         (0, decorators_1.hook)(modules_1.STATUSES.beforeDestruct)
     ], View.prototype, "beforeDestruct", null);
@@ -29481,6 +29497,7 @@ exports.TabsWidget = void 0;
 __webpack_require__(445);
 var helpers_1 = __webpack_require__(146);
 var ui_1 = __webpack_require__(251);
+var component_1 = __webpack_require__(154);
 var TabsWidget = function (jodit, tabs, state) {
     var box = jodit.c.div('jodit-tabs'), tabBox = jodit.c.div('jodit-tabs__wrapper'), buttons = jodit.c.div('jodit-tabs__buttons'), nameToTab = {}, buttonList = [];
     var firstTab = '', tabCount = 0;
@@ -29512,7 +29529,9 @@ var TabsWidget = function (jodit, tabs, state) {
         buttonList.push(button);
         button.container.classList.add('jodit-tabs__button', 'jodit-tabs__button_columns_' + tabs.length);
         if (!(0, helpers_1.isFunction)(content)) {
-            tab.appendChild(content instanceof ui_1.UIElement ? content.container : content);
+            tab.appendChild(component_1.Component.isInstanceOf(content, ui_1.UIElement)
+                ? content.container
+                : content);
         }
         else {
             tab.appendChild(jodit.c.div('jodit-tab_empty'));
@@ -32033,6 +32052,9 @@ config_1.Config.prototype.controls.image = {
                     switch (_a.label) {
                         case 0:
                             editor.s.restore();
+                            if (/^[a-z\d_-]+(\.[a-z\d_-]+)+/i.test(url)) {
+                                url = '//' + url;
+                            }
                             image = sourceImage || editor.createInside.element('img');
                             image.setAttribute('src', url);
                             image.setAttribute('alt', text);
@@ -32237,7 +32259,8 @@ var plugin_1 = __webpack_require__(336);
 var factory_1 = __webpack_require__(325);
 var popup_1 = __webpack_require__(272);
 var helpers_1 = __webpack_require__(146);
-var modules_1 = __webpack_require__(138);
+var dom_1 = __webpack_require__(159);
+var ui_1 = __webpack_require__(251);
 var decorators_1 = __webpack_require__(169);
 var inlinePopup = (function (_super) {
     tslib_1.__extends(inlinePopup, _super);
@@ -32253,9 +32276,9 @@ var inlinePopup = (function (_super) {
     }
     inlinePopup.prototype.onClick = function (node) {
         var _this = this;
-        var elements = this.elmsList, target = modules_1.Dom.isTag(node, 'img')
+        var elements = this.elmsList, target = dom_1.Dom.isTag(node, 'img')
             ? node
-            : modules_1.Dom.closest(node, elements, this.j.editor);
+            : dom_1.Dom.closest(node, elements, this.j.editor);
         if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
             this.showPopup(function () { return (0, helpers_1.position)(target, _this.j); }, target.nodeName.toLowerCase(), target);
             return false;
@@ -32349,7 +32372,7 @@ var inlinePopup = (function (_super) {
     inlinePopup.prototype.onSelectionEnd = function (e) {
         if (e &&
             e.target &&
-            modules_1.UIElement.closestElement(e.target, popup_1.Popup)) {
+            ui_1.UIElement.closestElement(e.target, popup_1.Popup)) {
             return;
         }
         var snapRange = this.snapRange, range = this.j.s.range;
@@ -32383,9 +32406,9 @@ var inlinePopup = (function (_super) {
     };
     inlinePopup.prototype.isSelectedTarget = function (r) {
         var sc = r.startContainer;
-        return (modules_1.Dom.isElement(sc) &&
+        return (dom_1.Dom.isElement(sc) &&
             sc === r.endContainer &&
-            modules_1.Dom.isTag(sc.childNodes[r.startOffset], (0, helpers_1.keys)(this.j.o.popup, false)) &&
+            dom_1.Dom.isTag(sc.childNodes[r.startOffset], (0, helpers_1.keys)(this.j.o.popup, false)) &&
             r.startOffset === r.endOffset - 1);
     };
     Object.defineProperty(inlinePopup.prototype, "tableModule", {
@@ -33965,8 +33988,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(136);
 var consts = __webpack_require__(137);
 var factory_1 = __webpack_require__(325);
-var ui_1 = __webpack_require__(251);
 var helpers_1 = __webpack_require__(146);
+var collection_1 = __webpack_require__(326);
 config_1.Config.prototype.mobileTapTimeout = 300;
 config_1.Config.prototype.toolbarAdaptive = true;
 config_1.Config.prototype.controls.dots = {
@@ -33979,7 +34002,7 @@ config_1.Config.prototype.controls.dots = {
                 rebuild: function () {
                     var _a;
                     if (button) {
-                        var buttons = editor.e.fire('getDiffButtons.mobile', button.closest(ui_1.UIList));
+                        var buttons = editor.e.fire('getDiffButtons.mobile', button.closest(collection_1.ToolbarCollection));
                         if (buttons && store) {
                             store.toolbar.build((0, helpers_1.splitArray)(buttons));
                             var w = ((_a = editor.toolbar.firstButton) === null || _a === void 0 ? void 0 : _a.container.offsetWidth) || 36;
@@ -34497,7 +34520,7 @@ var resizer = (function (_super) {
                 _this.element = element;
                 _this.show();
                 if (dom_1.Dom.isTag(_this.element, 'img') && !_this.element.complete) {
-                    _this.j.e.on(_this.element, 'load', _this.updateSize);
+                    _this.j.e.one(_this.element, 'load', _this.updateSize);
                 }
             }
         };
@@ -34650,7 +34673,9 @@ var resizer = (function (_super) {
     };
     resizer.prototype.bind = function (element) {
         var _this = this;
-        if (!dom_1.Dom.isHTMLElement(element) || (0, helpers_1.dataBind)(element, keyBInd)) {
+        if (!dom_1.Dom.isHTMLElement(element) ||
+            !this.j.o.allowResizeTags.includes(element.tagName.toLowerCase()) ||
+            (0, helpers_1.dataBind)(element, keyBInd)) {
             return;
         }
         (0, helpers_1.dataBind)(element, keyBInd, true);
@@ -34662,12 +34687,12 @@ var resizer = (function (_super) {
                 element = element.parentNode;
             }
             else {
-                wrapper = this.j.createInside.fromHTML('<jodit ' +
-                    'data-jodit-temp="1" ' +
-                    'contenteditable="false" ' +
-                    'draggable="true" ' +
-                    'data-jodit_iframe_wrapper="1"' +
-                    '></jodit>');
+                wrapper = this.j.createInside.element('jodit', {
+                    'data-jodit-temp': 1,
+                    contenteditable: false,
+                    draggable: true,
+                    'data-jodit_iframe_wrapper': 1
+                });
                 (0, helpers_1.attr)(wrapper, 'style', (0, helpers_1.attr)(element, 'style'));
                 (0, helpers_1.css)(wrapper, {
                     display: element.style.display === 'inline-block'
@@ -34680,6 +34705,9 @@ var resizer = (function (_super) {
                     element.parentNode.insertBefore(wrapper, element);
                 }
                 wrapper.appendChild(element);
+                this.j.e.on(wrapper, 'click', function () {
+                    (0, helpers_1.attr)(wrapper, 'data-jodit-wrapper_active', true);
+                });
                 element = wrapper;
             }
             this.j.e
@@ -34738,6 +34766,7 @@ var resizer = (function (_super) {
             this.isShown = false;
             this.element = null;
             dom_1.Dom.safeRemove(this.rect);
+            (0, helpers_1.$$)("[data-jodit-wrapper_active='true']", this.j.editor).forEach(function (elm) { return (0, helpers_1.attr)(elm, 'data-jodit-wrapper_active', false); });
         }
     };
     resizer.prototype.beforeDestruct = function (jodit) {
@@ -38880,33 +38909,41 @@ function previewBox(editor, defaultValue, points, container) {
             if ((0, helpers_1.isString)(value)) {
                 dv.innerHTML = value;
             }
-            for (var i = 0; i < dv.children.length; i += 1) {
-                var c = dv.children[i];
-                var newNode = box.ownerDocument.createElement(c.nodeName);
-                for (var j = 0; j < c.attributes.length; j += 1) {
-                    (0, helpers_1.attr)(newNode, c.attributes[j].nodeName, c.attributes[j].nodeValue);
-                }
-                if (c.children.length === 0 || dom_1.Dom.isTag(c, ['table'])) {
-                    switch (c.nodeName) {
-                        case 'SCRIPT':
-                            if (c.textContent) {
-                                newNode.textContent = c.textContent;
-                            }
-                            break;
-                        default:
-                            if (c.innerHTML) {
-                                newNode.innerHTML = c.innerHTML;
-                            }
-                            break;
+            for (var i = 0; i < dv.childNodes.length; i += 1) {
+                var c = dv.childNodes[i];
+                if (dom_1.Dom.isElement(c)) {
+                    var newNode = box.ownerDocument.createElement(c.nodeName);
+                    for (var j = 0; j < c.attributes.length; j += 1) {
+                        (0, helpers_1.attr)(newNode, c.attributes[j].nodeName, c.attributes[j].nodeValue);
                     }
+                    if (c.childNodes.length === 0 || dom_1.Dom.isTag(c, ['table'])) {
+                        switch (c.nodeName) {
+                            case 'SCRIPT':
+                                if (c.textContent) {
+                                    newNode.textContent = c.textContent;
+                                }
+                                break;
+                            default:
+                                if (c.innerHTML) {
+                                    newNode.innerHTML = c.innerHTML;
+                                }
+                                break;
+                        }
+                    }
+                    else {
+                        setHTML_1(newNode, c);
+                    }
+                    try {
+                        box.appendChild(newNode);
+                    }
+                    catch (_a) { }
                 }
                 else {
-                    setHTML_1(newNode, c);
+                    try {
+                        box.appendChild(c.cloneNode(true));
+                    }
+                    catch (_b) { }
                 }
-                try {
-                    box.appendChild(newNode);
-                }
-                catch (_a) { }
             }
         };
         setHTML_1(div, value);
