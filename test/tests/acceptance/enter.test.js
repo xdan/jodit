@@ -1095,6 +1095,18 @@ describe('Enter behavior Jodit Editor Tests', function () {
 				[
 					'<ul><li>test</li><li>|<br></li></ul>',
 					'<ul><li>test</li></ul><p>|<br></p>'
+				],
+				[
+					'<ul><li>test</li><li><ul><li>test2|</li></ul></li></ul>',
+					'<ul><li>test</li><li><ul><li>test2</li><li>|<br></li></ul></li></ul>'
+				],
+				[
+					'<ul><li>test</li><li><ul><li>test2</li><li>|<br></li></ul></li></ul>',
+					'<ul><li>test</li><li><ul><li>test2</li></ul></li><li>|<br></li></ul>'
+				],
+				[
+					'<ul><li>test</li><li><ul><li>test2</li></ul></li><li>|<br></li></ul>',
+					'<ul><li>test</li><li><ul><li>test2</li></ul></li></ul><p>|<br></p>'
 				]
 			].forEach(([source, result]) => {
 				describe('For source: ' + source, () => {
