@@ -15,7 +15,7 @@ import type {
 	DecoratorHandler,
 	IComponent,
 	IDictionary,
-	IViewComponent
+	IViewBased
 } from 'jodit/types';
 import {
 	isFunction,
@@ -70,7 +70,7 @@ export function watch(
 
 					const view = isViewObject(component)
 						? component
-						: (component as unknown as IViewComponent).jodit;
+						: (component as unknown as { jodit: IViewBased }).jodit;
 
 					if (objectPath.length) {
 						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -87,7 +87,7 @@ export function watch(
 						view.events.on(eventName, callback);
 					}
 
-					view.hookStatus('beforeDestruct', () => {
+					component.hookStatus('beforeDestruct', () => {
 						view.events
 							.off(ctx || component, eventName, callback)
 							.off(eventName, callback);

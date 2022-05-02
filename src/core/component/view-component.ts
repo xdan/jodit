@@ -20,15 +20,15 @@ export abstract class ViewComponent<T extends IViewBased = IViewBased>
 	 */
 	jodit!: T;
 
-	get defaultTimeout(): number {
-		return this.j.defaultTimeout;
-	}
-
 	/**
 	 * Shortcut for `this.jodit`
 	 */
 	get j(): T {
 		return this.jodit;
+	}
+
+	get defaultTimeout(): number {
+		return this.j.defaultTimeout;
 	}
 
 	i18n(text: string, ...params: Array<string | number>): string {

@@ -115,7 +115,7 @@ Config.prototype.uploader = {
 	},
 
 	contentType(this: IUploader, requestData: any) {
-		return (this.j.ow as any).FormData !== undefined &&
+		return (this.ow as any).FormData !== undefined &&
 			typeof requestData !== 'string'
 			? false
 			: 'application/x-www-form-urlencoded; charset=UTF-8';

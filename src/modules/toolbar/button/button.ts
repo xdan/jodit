@@ -87,8 +87,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		state.disabled = this.calculateDisabledStatus(tc);
 		state.activated = this.calculateActivatedStatus(tc);
 
-		if (isFunction(control.update)) {
-			control.update(this);
+		if (isFunction(control.update) && tc) {
+			control.update(this, tc.jodit);
 		}
 
 		super.update();

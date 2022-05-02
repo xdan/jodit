@@ -35,7 +35,7 @@ interface IControlType<
 	hotkeys?: string | string[];
 	data?: IDictionary;
 
-	update?: (button: B) => void;
+	update?: (button: B, editor: T) => void;
 	isInput?: boolean;
 
 	/**
@@ -297,8 +297,6 @@ interface IToolbarButton extends IUIButton {
 }
 
 interface IToolbarCollection extends IUIList {
-	jodit: IViewBased;
-
 	setDirection(direction: 'rtl' | 'ltr'): void;
 
 	firstButton: Nullable<IToolbarButton>;
@@ -313,8 +311,6 @@ interface IToolbarCollection extends IUIList {
 }
 
 export interface IStatusBar extends IComponent, IMods {
-	jodit: IViewBased;
-
 	show(): void;
 	hide(): void;
 	isShown: boolean;

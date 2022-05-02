@@ -22,9 +22,8 @@ import { memorizeExec } from 'jodit/core/helpers';
 
 Config.prototype.controls.paragraph = {
 	command: 'formatBlock',
-	update(button): boolean {
-		const editor = button.j as IJodit,
-			control = button.control,
+	update(button, editor: IJodit): boolean {
+		const control = button.control,
 			current = editor.s.current();
 
 		if (current && editor.o.textIcons) {

@@ -8,7 +8,8 @@
  * @module types
  */
 
-import type { IViewBased } from './view';
+import type { IViewBased } from 'jodit/types/view';
+import type { IAsync } from 'jodit/types/async';
 
 export interface IDictionary<T = any, K = string> {
 	[key: string]: T;
@@ -37,14 +38,15 @@ export interface IContainer {
 }
 
 interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
-	ownerDocument: Document;
-	od: this['ownerDocument'];
-	ownerWindow: Window;
-	ow: this['ownerWindow'];
+	readonly async: IAsync;
+	readonly ownerDocument: Document;
+	readonly od: this['ownerDocument'];
+	readonly ownerWindow: Window;
+	readonly ow: this['ownerWindow'];
 
 	get<T>(chain: string, obj?: IDictionary): Nullable<T>;
 
-	componentName: string;
+	readonly componentName: string;
 	className(): string;
 
 	getFullElName(elementName: string): string;
@@ -55,12 +57,12 @@ interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 		modValue?: boolean | string
 	): string;
 
-	uid: string;
-	isDestructed: boolean;
-	isInDestruct: boolean;
-	isReady: boolean;
+	readonly uid: string;
+	readonly isDestructed: boolean;
+	readonly isInDestruct: boolean;
+	readonly isReady: boolean;
 
-	componentStatus: ComponentStatus;
+	readonly componentStatus: ComponentStatus;
 	setStatus(componentStatus: ComponentStatus): void;
 
 	hookStatus(
@@ -73,10 +75,10 @@ interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 
 interface IViewComponent<T extends IViewBased = IViewBased> extends IComponent {
 	jodit: T;
-	j: this['jodit'];
+	readonly j: T;
 	setParentView(jodit: T): this;
-	i18n: T['i18n'];
-	defaultTimeout: number;
+	readonly i18n: T['i18n'];
+	readonly defaultTimeout: number;
 }
 
 export type NodeCondition<T extends Node = Node> = (

@@ -10,7 +10,7 @@
  * @module decorators/persistent
  */
 
-import type { IComponent, IDictionary, IViewComponent } from 'jodit/types';
+import type { IComponent, IDictionary, IViewBased } from 'jodit/types';
 import { STATUSES } from 'jodit/core/component';
 import { isViewObject } from 'jodit/core/helpers';
 
@@ -21,7 +21,7 @@ export function persistent<T extends IComponent>(
 	target.hookStatus(STATUSES.ready, (component: T) => {
 		const jodit = isViewObject(component)
 				? component
-				: (component as unknown as IViewComponent).jodit,
+				: (component as unknown as {jodit: IViewBased}).jodit,
 			storageKey = `${jodit.options.namespace}${component.componentName}_prop_${propertyKey}`,
 			initialValue = (component as IDictionary)[propertyKey];
 

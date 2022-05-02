@@ -110,7 +110,7 @@ export class DragAndDropElement extends Plugin {
 	/**
 	 * Mouse move handler handler
 	 */
-	@throttle<IViewComponent>(ctx => ctx.j.defaultTimeout / 10)
+	@throttle<IViewComponent>(ctx => ctx.defaultTimeout / 10)
 	private onDrag(event: DragEvent): void {
 		if (!this.draggable || this.state === DragState.IDLE) {
 			return;

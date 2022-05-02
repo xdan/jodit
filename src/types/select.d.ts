@@ -22,15 +22,14 @@ export interface MarkerInfo {
 export type WindowSelection = Selection;
 
 export interface ISelect {
-	area: HTMLElement;
+	readonly sel: WindowSelection | null;
+	readonly range: Range;
+	readonly isInsideArea: boolean;
+	readonly html: string;
 
-	sel: WindowSelection | null;
-
-	range: Range;
 	createRange(select?: boolean): Range;
 	clear(): void;
 
-	html: string;
 
 	current(checkChild?: boolean): Nullable<Node>;
 	focus(options?: FocusOptions): boolean;

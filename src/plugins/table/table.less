@@ -6,6 +6,7 @@
 
 @import (reference) '../../styles/mixins';
 @import (reference) '../../styles/variables';
+@import './table.common';
 
 .jodit-table-resizer {
 	position: absolute;
@@ -30,12 +31,6 @@
 		&::after {
 			border-right: 1px solid var(--color-border)-moved;
 		}
-	}
-}
-
-.jodit-wysiwyg {
-	table {
-		.jodit-tablet-style();
 	}
 }
 

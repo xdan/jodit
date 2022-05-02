@@ -162,14 +162,16 @@ export class Popup extends UIElement implements IPopup {
 			return false;
 		};
 
-		if (checkView(this.j)) {
+		const { j } = this;
+
+		if (checkView(j)) {
 			return;
 		}
 
 		let pe = this.parentElement;
 
 		while (pe) {
-			if (checkView(pe.j)) {
+			if (checkView(j)) {
 				return;
 			}
 

@@ -9,6 +9,7 @@
  */
 
 import type { IDictionary, IViewComponent } from './types';
+import type { IViewBased } from 'jodit/types/view';
 
 interface IUploaderData {
 	messages?: string[];
@@ -70,6 +71,9 @@ export interface IUploaderOptions<T> {
 }
 
 export interface IUploader extends IViewComponent {
+	readonly jodit: IViewBased;
+	readonly j: this['jodit'];
+
 	readonly options: IUploaderOptions<IUploader>;
 	readonly o: this['options'];
 

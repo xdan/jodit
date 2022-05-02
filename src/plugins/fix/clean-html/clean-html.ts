@@ -10,13 +10,7 @@
  * @module plugins/fix/clean-html
  */
 
-import type {
-	HTMLTagNames,
-	IDictionary,
-	IJodit,
-	Nullable,
-	IPlugin
-} from 'jodit/types';
+import type { HTMLTagNames, IDictionary, IJodit, Nullable } from 'jodit/types';
 import {
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
 	IS_INLINE,
@@ -85,7 +79,7 @@ export class cleanHtml extends Plugin {
 	/**
 	 * Clean HTML code on every change
 	 */
-	@debounce<IPlugin<IJodit>>(ctx => ctx.jodit.o.cleanHTML.timeout)
+	@debounce<Plugin>(ctx => ctx.jodit.o.cleanHTML.timeout)
 	private onChangeCleanHTML(): void {
 		if (!this.allowEdit()) {
 			return;
@@ -376,7 +370,7 @@ export class cleanHtml extends Plugin {
 	 * Remove formatting for all selected elements
 	 */
 	private removeFormatForSelection(): void {
-		const { s } = this.j,
+		const { s, editor } = this.j,
 			{ range } = s,
 			left = range.cloneRange(),
 			right = range.cloneRange(),
@@ -417,7 +411,7 @@ export class cleanHtml extends Plugin {
 			if (!findNotEmptySibling(node, left)) {
 				const pn = node.parentNode as Element;
 
-				if (pn && pn !== s.area && attr(pn, 'style')) {
+				if (pn && pn !== editor && attr(pn, 'style')) {
 					attr(pn, 'style', null);
 					clearParent(pn, left);
 

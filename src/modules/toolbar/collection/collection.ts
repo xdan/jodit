@@ -41,8 +41,6 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		return 'ToolbarCollection';
 	}
 
-	override jodit!: T;
-
 	readonly listenEvents =
 		'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
 		'selectionchange changeSelection focus afterSetMode touchstart focus blur';

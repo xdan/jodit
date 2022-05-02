@@ -20,7 +20,6 @@ import type {
 import type { IComponent, IContainer, IDictionary, Nullable } from './types';
 import type { Attributes, ICreate } from './create';
 import type { IStorage } from './storage';
-import type { IAsync } from './async';
 import type { IUIButtonState } from './ui';
 import type { IEventEmitter } from './events';
 import type { IPluginButton } from './plugin';
@@ -114,8 +113,6 @@ interface IViewBased<T = IViewOptions>
 
 	readonly events: IEventEmitter;
 	readonly e: this['events'];
-
-	readonly async: IAsync;
 
 	readonly create: ICreate;
 	readonly c: this['create'];

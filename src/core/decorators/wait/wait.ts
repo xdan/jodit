@@ -11,7 +11,7 @@
  */
 
 import type { IViewBased, IViewComponent } from 'jodit/types';
-import { error, isFunction, isViewObject } from 'jodit/core/helpers';
+import { error, isFunction } from 'jodit/core/helpers';
 import { STATUSES } from 'jodit/core/component';
 
 export function wait<T extends IViewBased>(
@@ -32,9 +32,7 @@ export function wait<T extends IViewComponent | IViewBased>(
 		target.hookStatus(
 			STATUSES.ready,
 			(component: IViewBased | IViewComponent) => {
-				const async = isViewObject(component)
-					? component.async
-					: component.j.async;
+				const { async } = component;
 
 				const realMethod = (component as any)[propertyKey];
 

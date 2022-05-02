@@ -12,7 +12,6 @@
 
 import type {
 	IDictionary,
-	IViewBased,
 	IViewComponent,
 	IAsyncParams,
 	DecoratorHandler
@@ -20,13 +19,13 @@ import type {
 import {
 	isFunction,
 	isNumber,
-	isPlainObject,
-	isViewObject
+	isPlainObject
 } from 'jodit/core/helpers/checker';
 import { Component, STATUSES } from 'jodit/core/component';
 import { error } from 'jodit/core/helpers/utils/error';
+import { assert } from 'jodit/core/helpers';
 
-export function debounce<V = IViewComponent | IViewBased>(
+export function debounce<V extends IViewComponent = IViewComponent>(
 	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,
 	firstCallImmediately: boolean = false,
 	method: 'debounce' | 'throttle' = 'debounce'
@@ -41,9 +40,14 @@ export function debounce<V = IViewComponent | IViewBased>(
 		}
 
 		target.hookStatus(STATUSES.ready, (component: V) => {
-			const view = isViewObject(component)
-				? component
-				: (component as unknown as IViewComponent).jodit;
+			const { async } = component;
+
+			assert(
+				async != null,
+				`Component ${
+					component.componentName || component.constructor.name
+				} should have "async:IAsync" field`
+			);
 
 			const realTimeout = isFunction(timeout)
 				? timeout(component)
@@ -51,11 +55,11 @@ export function debounce<V = IViewComponent | IViewBased>(
 
 			Object.defineProperty(component, propertyKey, {
 				configurable: true,
-				value: view.async[method](
+				value: async[method](
 					(component as any)[propertyKey].bind(component),
 					isNumber(realTimeout) || isPlainObject(realTimeout)
 						? realTimeout
-						: view.defaultTimeout,
+						: component.defaultTimeout,
 					firstCallImmediately
 				)
 			});
@@ -73,7 +77,7 @@ export function debounce<V = IViewComponent | IViewBased>(
 /**
  * Wrap function in throttle wrapper
  */
-export function throttle<V = IViewComponent | IViewBased>(
+export function throttle<V extends IViewComponent = IViewComponent>(
 	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,
 	firstCallImmediately: boolean = false
 ): DecoratorHandler {

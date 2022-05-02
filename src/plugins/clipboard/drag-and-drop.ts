@@ -105,7 +105,7 @@ export class DragAndDrop extends Plugin {
 			);
 	}
 
-	@throttle<IViewComponent>(ctx => ctx.j.defaultTimeout / 10)
+	@throttle<IViewComponent>(ctx => ctx.defaultTimeout / 10)
 	private onDrag(event: DragEvent): void {
 		if (this.draggable) {
 			this.j.e.fire('hidePopup');

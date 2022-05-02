@@ -17,7 +17,7 @@ import { Button } from 'jodit/core/ui/button';
 
 Config.prototype.controls.video = {
 	popup: (editor: IJodit, current, control, close) => {
-		const bylink: IUIForm = new UIForm(editor, [
+		const formLink: IUIForm = new UIForm(editor, [
 				new UIBlock(editor, [
 					new UIInput(editor, {
 						name: 'url',
@@ -29,11 +29,11 @@ Config.prototype.controls.video = {
 				]),
 				new UIBlock(editor, [
 					Button(editor, '', 'Insert', 'primary').onAction(() =>
-						bylink.submit()
+						formLink.submit()
 					)
 				])
 			]),
-			bycode: IUIForm = new UIForm(editor, [
+			formCode: IUIForm = new UIForm(editor, [
 				new UIBlock(editor, [
 					new UITextArea(editor, {
 						name: 'code',
@@ -43,7 +43,7 @@ Config.prototype.controls.video = {
 				]),
 				new UIBlock(editor, [
 					Button(editor, '', 'Insert', 'primary').onAction(() =>
-						bycode.submit()
+						formCode.submit()
 					)
 				])
 			]),
@@ -60,20 +60,20 @@ Config.prototype.controls.video = {
 			{
 				icon: 'link',
 				name: 'Link',
-				content: bylink.container
+				content: formLink.container
 			},
 			{
 				icon: 'source',
 				name: 'Code',
-				content: bycode.container
+				content: formCode.container
 			}
 		);
 
-		bylink.onSubmit(data => {
+		formLink.onSubmit(data => {
 			insertCode(convertMediaUrlToVideoEmbed(data.url));
 		});
 
-		bycode.onSubmit(data => {
+		formCode.onSubmit(data => {
 			insertCode(data.code);
 		});
 

@@ -19,7 +19,7 @@ export function buildData(
 		return uploader.o.buildData.call(uploader, data);
 	}
 
-	const FD: typeof FormData = (uploader.j.ow as any).FormData;
+	const FD: typeof FormData = (uploader.ow as any).FormData;
 
 	if (FD !== undefined) {
 		if (data instanceof FD) {

@@ -45,9 +45,9 @@ export const TabsWidget = (
 	tabs: TabOption[],
 	state?: { __activeTab: string }
 ): HTMLDivElement => {
-	const box: HTMLDivElement = jodit.c.div('jodit-tabs'),
-		tabBox: HTMLDivElement = jodit.c.div('jodit-tabs__wrapper'),
-		buttons: HTMLDivElement = jodit.c.div('jodit-tabs__buttons'),
+	const box = jodit.c.div('jodit-tabs'),
+		tabBox = jodit.c.div('jodit-tabs__wrapper'),
+		buttons = jodit.c.div('jodit-tabs__buttons'),
 		nameToTab: IDictionary<{
 			button: IUIButton;
 			tab: HTMLElement;

@@ -56,7 +56,7 @@ export class Select implements ISelect {
 	/**
 	 * Short alias for this.jodit
 	 */
-	get j(): this['jodit'] {
+	private get j(): this['jodit'] {
 		return this.jodit;
 	}
 
@@ -72,7 +72,7 @@ export class Select implements ISelect {
 	/**
 	 * Return current work place - for Jodit is Editor
 	 */
-	get area(): HTMLElement {
+	private get area(): HTMLElement {
 		return this.j.editor;
 	}
 
@@ -111,6 +111,16 @@ export class Select implements ISelect {
 		const sel = this.sel;
 
 		return sel && sel.rangeCount ? sel.getRangeAt(0) : this.createRange();
+	}
+
+	/**
+	 * Checks if the selected text is currently inside the editor
+	 */
+	get isInsideArea(): boolean {
+		const { sel } = this;
+		const range = sel?.rangeCount ? sel.getRangeAt(0) : null;
+
+		return !(!range || !Dom.isOrContains(this.area, range.startContainer));
 	}
 
 	/**

@@ -25,6 +25,7 @@ describe('Test object observer', function () {
 	const A = function (result, keyA, keyB) {
 		function A() {
 			this.jodit = getJodit();
+			this.async = this.jodit.async;
 			this.setStatus('ready');
 		}
 

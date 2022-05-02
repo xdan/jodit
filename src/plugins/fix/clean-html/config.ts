@@ -39,7 +39,7 @@ declare module 'jodit/config' {
 			 * edited text when the editor saves. You can use this limit the returned HTML.
 			 * @example
 			 * ```javascript
-			 * var jodit = new Jodit('#editor', {
+			 * const jodit = new Jodit.make('#editor', {
 			 *    cleanHTML: {
 			 *       cleanOnPaste: false
 			 *    }
@@ -47,7 +47,7 @@ declare module 'jodit/config' {
 			 * ```
 			 * @example
 			 * ```javascript
-			 * var editor = Jodit('#editor', {
+			 * const editor = Jodit.make('#editor', {
 			 *     cleanHTML: {
 			 *         allowTags: 'p,a[href],table,tr,td, img[src=1.png]' // allow only <p>,<a>,<table>,<tr>,<td>,<img> tags and
 			 *         for <a> allow only `href` attribute and <img> allow only `src` attribute == '1.png'
@@ -60,7 +60,7 @@ declare module 'jodit/config' {
 			 *
 			 * @example
 			 * ```javascript
-			 * var editor = Jodit('#editor', {
+			 * const editor = Jodit.make('#editor', {
 			 *     cleanHTML: {
 			 *         allowTags: {
 			 *             p: true,
