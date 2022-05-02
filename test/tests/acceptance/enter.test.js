@@ -1084,5 +1084,34 @@ describe('Enter behavior Jodit Editor Tests', function () {
 				});
 			});
 		});
+
+		describe('Cases', () => {
+			[
+				['<p>test|</p>', '<p>test</p><p>|<br></p>'],
+				[
+					'<ul><li>test|</li></ul>',
+					'<ul><li>test</li><li>|<br></li></ul>'
+				],
+				[
+					'<ul><li>test</li><li>|<br></li></ul>',
+					'<ul><li>test</li></ul><p>|<br></p>'
+				]
+			].forEach(([source, result]) => {
+				describe('For source: ' + source, () => {
+					it('Should be result: ' + result, () => {
+						const editor = getJodit();
+						editor.value = source;
+						setCursorToChar(editor);
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor
+						);
+						replaceCursorToChar(editor);
+						expect(editor.value).eq(result);
+					});
+				});
+			});
+		});
 	});
 });
