@@ -10,18 +10,7 @@ import 'classlist-polyfill';
 import 'es6-promise/auto';
 import 'core-js/es/symbol';
 import 'core-js/es/array/find-index';
-
-if (!Array.from) {
-	Array.from = <T>(object: T[]): T[] => {
-		if (object instanceof Set) {
-			const res: T[] = [];
-			object.forEach(a => res.push(a));
-			return res;
-		}
-
-		return [].slice.call(object);
-	};
-}
+import 'core-js/es/array/from';
 
 // for ie11
 if (!Array.prototype.includes) {
