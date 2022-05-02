@@ -70,11 +70,12 @@ export class EventEmitter implements IEventEmitter {
 		}
 
 		if (subject[this.__key] === undefined) {
-			const store: EventHandlersStore = new EventHandlersStore();
+			const store = new EventHandlersStore();
 
 			Object.defineProperty(subject, this.__key, {
 				enumerable: false,
 				configurable: true,
+				writable: true,
 				value: store
 			});
 		}
@@ -82,9 +83,14 @@ export class EventEmitter implements IEventEmitter {
 		return subject[this.__key];
 	}
 
-	private clearStore(subject: any): void {
+	private removeStoreFromSubject(subject: any): void {
 		if (subject[this.__key] !== undefined) {
-			delete subject[this.__key];
+			Object.defineProperty(subject, this.__key, {
+				enumerable: false,
+				configurable: true,
+				writable: true,
+				value: undefined
+			});
 		}
 	}
 
@@ -251,7 +257,7 @@ export class EventEmitter implements IEventEmitter {
 			callback = eventsOrCallback as CallbackFunction;
 		}
 
-		const store: EventHandlersStore = this.getStore(subject);
+		const store = this.getStore(subject);
 
 		if (!isString(events) || events === '') {
 			throw error('Need events names');
@@ -416,11 +422,12 @@ export class EventEmitter implements IEventEmitter {
 		const subject: object = isString(subjectOrEvents)
 			? this
 			: subjectOrEvents;
+
 		const events: string = isString(eventsOrCallback)
 			? eventsOrCallback
 			: (subjectOrEvents as string);
 
-		const store: EventHandlersStore = this.getStore(subject);
+		const store = this.getStore(subject);
 
 		let callback: () => void = handler as () => void;
 
@@ -428,9 +435,7 @@ export class EventEmitter implements IEventEmitter {
 			store.namespaces().forEach((namespace: string) => {
 				this.off(subject, '.' + namespace);
 			});
-
-			this.clearStore(subject);
-
+			this.removeStoreFromSubject(subject);
 			return this;
 		}
 
@@ -452,45 +457,52 @@ export class EventEmitter implements IEventEmitter {
 				event: string,
 				namespace: string
 			): void => {
-				if (event !== '') {
-					const blocks: EventHandlerBlock[] | void = store.get(
-						event,
-						namespace
-					);
-					if (blocks && blocks.length) {
-						if (!isFunction(callback)) {
-							blocks.forEach(removeEventListener);
-							blocks.length = 0;
-						} else {
-							const index: number | false = store.indexOf(
-								event,
-								namespace,
-								callback
-							);
-							if (index !== false) {
-								removeEventListener(blocks[index]);
-								blocks.splice(index, 1);
-							}
-						}
-					}
-				} else {
+				if (event === '') {
 					store.events(namespace).forEach((eventName: string) => {
 						if (eventName !== '') {
 							removeCallbackFromNameSpace(eventName, namespace);
 						}
 					});
+					return;
+				}
+
+				const blocks = store.get(event, namespace);
+
+				if (!blocks || !blocks.length) {
+					return;
+				}
+
+				if (!isFunction(callback)) {
+					blocks.forEach(removeEventListener);
+					blocks.length = 0;
+					store.clearEvents(namespace, event);
+				} else {
+					const index = store.indexOf(event, namespace, callback);
+
+					if (index !== false) {
+						removeEventListener(blocks[index]);
+						blocks.splice(index, 1);
+
+						if (!blocks.length) {
+							store.clearEvents(namespace, event);
+						}
+					}
 				}
 			};
 
-		this.eachEvent(events, (event: string, namespace: string): void => {
+		this.eachEvent(events, (event, namespace): void => {
 			if (namespace === defaultNameSpace) {
-				store.namespaces().forEach((name: string) => {
-					removeCallbackFromNameSpace(event, name);
+				store.namespaces().forEach(namespace => {
+					removeCallbackFromNameSpace(event, namespace);
 				});
 			} else {
 				removeCallbackFromNameSpace(event, namespace);
 			}
 		});
+
+		if (store.isEmpty()) {
+			this.removeStoreFromSubject(subject);
+		}
 
 		return this;
 	}
@@ -516,7 +528,7 @@ export class EventEmitter implements IEventEmitter {
 			throw error('Need event names');
 		}
 
-		const store: EventHandlersStore = this.getStore(subject);
+		const store = this.getStore(subject);
 
 		this.eachEvent(events, (event: string, namespace: string): void => {
 			const blocks: EventHandlerBlock[] | void = store.get(
@@ -612,7 +624,7 @@ export class EventEmitter implements IEventEmitter {
 			throw error('Need events names');
 		}
 
-		const store: EventHandlersStore = this.getStore(subject);
+		const store = this.getStore(subject);
 
 		if (!isString(events) && isDOMElement) {
 			this.triggerNativeEvent(subject as HTMLElement, eventsList);
@@ -621,10 +633,7 @@ export class EventEmitter implements IEventEmitter {
 				if (isDOMElement) {
 					this.triggerNativeEvent(subject as HTMLElement, event);
 				} else {
-					const blocks: EventHandlerBlock[] | void = store.get(
-						event,
-						namespace
-					);
+					const blocks = store.get(event, namespace);
 
 					if (blocks) {
 						try {
@@ -701,6 +710,6 @@ export class EventEmitter implements IEventEmitter {
 		this.off(this);
 
 		this.getStore(this).clear();
-		delete (this as any)[this.__key];
+		this.removeStoreFromSubject(this);
 	}
 }

@@ -32,3 +32,4 @@ export * from './scroll-into-view';
 export * from './selector';
 export * from './error';
 export * from './val';
+export * from './reset';

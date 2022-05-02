@@ -10,7 +10,6 @@
 
 import type { IJodit, IViewBased } from 'jodit/types';
 import { isFunction } from './is-function';
-import { modules } from '../../global';
 
 /**
  * Check if element is instance of Jodit
@@ -37,3 +36,5 @@ export function isViewObject(jodit: unknown): jodit is IViewBased {
 			(jodit instanceof modules.View || (jodit as IViewBased).isView)
 	);
 }
+
+import { modules } from '../../global';

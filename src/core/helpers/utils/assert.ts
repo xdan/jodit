@@ -16,7 +16,10 @@ class AssertionError extends Error {
 }
 
 /** Asserts that condition is truthy (or evaluates to true). */
-function assert(condition: boolean, message: string): asserts condition {
+function assert<T>(
+	condition: T | false | 0 | '' | null | undefined,
+	message: string
+): asserts condition {
 	if (!condition) {
 		throw new AssertionError(`Assertion failed: ${message}`);
 	}

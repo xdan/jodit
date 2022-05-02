@@ -8,9 +8,9 @@
  * @module helpers/normalize
  */
 
-import { isNumeric } from '../checker/';
-import { kebabCase } from '../string';
-import { colorToHex } from '../color';
+import { isNumeric } from '../checker/is-numeric';
+import { kebabCase } from '../string/kebab-case';
+import { colorToHex } from '../color/color-to-hex';
 
 export function normalizeCssValue(
 	key: string,

@@ -13,15 +13,19 @@ import type {
 	EventHandlerBlock,
 	IDictionary
 } from 'jodit/types';
+import { assert } from 'jodit/core/helpers/utils/assert';
+import { toArray } from 'jodit/core/helpers/array/to-array';
 
 export const defaultNameSpace = 'JoditEventDefaultNamespace';
 
 export class EventHandlersStore {
-	private __store: IDictionary<IDictionary<EventHandlerBlock[]>> = {};
+	private __store: Map<string, IDictionary<EventHandlerBlock[]>> = new Map();
 
 	get(event: string, namespace: string): EventHandlerBlock[] | void {
-		if (this.__store[namespace] !== undefined) {
-			return this.__store[namespace][event];
+		if (this.__store.has(namespace)) {
+			const ns = this.__store.get(namespace);
+			assert(ns, '-');
+			return ns[event];
 		}
 	}
 
@@ -44,14 +48,13 @@ export class EventHandlersStore {
 	}
 
 	namespaces(withoutDefault: boolean = false): string[] {
-		const nss = Object.keys(this.__store);
+		const nss = toArray(this.__store.keys());
 		return withoutDefault ? nss.filter(ns => ns !== defaultNameSpace) : nss;
 	}
 
 	events(namespace: string): string[] {
-		return this.__store[namespace]
-			? Object.keys(this.__store[namespace])
-			: [];
+		const ns = this.__store.get(namespace);
+		return ns ? Object.keys(ns) : [];
 	}
 
 	set(
@@ -60,22 +63,40 @@ export class EventHandlersStore {
 		data: EventHandlerBlock,
 		onTop: boolean = false
 	): void {
-		if (this.__store[namespace] === undefined) {
-			this.__store[namespace] = {};
+		let ns = this.__store.get(namespace);
+		if (!ns) {
+			ns = {};
+			this.__store.set(namespace, ns);
 		}
 
-		if (this.__store[namespace][event] === undefined) {
-			this.__store[namespace][event] = [];
+		if (ns[event] === undefined) {
+			ns[event] = [];
 		}
 
 		if (!onTop) {
-			this.__store[namespace][event].push(data);
+			ns[event].push(data);
 		} else {
-			this.__store[namespace][event].unshift(data);
+			ns[event].unshift(data);
 		}
 	}
 
 	clear(): void {
-		this.__store = {};
+		this.__store.clear();
+	}
+
+	clearEvents(namespace: string, event: string): void {
+		const ns = this.__store.get(namespace);
+
+		if (ns && ns[event]) {
+			delete ns[event];
+
+			if (!Object.keys(ns).length) {
+				this.__store.delete(namespace);
+			}
+		}
+	}
+
+	isEmpty(): boolean {
+		return this.__store.size === 0;
 	}
 }

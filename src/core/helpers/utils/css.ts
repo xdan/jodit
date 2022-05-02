@@ -9,9 +9,13 @@
  */
 
 import type { IStyle, StyleValue } from 'jodit/types';
-import { isPlainObject, isNumeric, isVoid, isBoolean } from '../checker/';
-import { normalizeCssValue } from '../normalize/';
-import { camelCase, kebabCase } from '../string/';
+import { isPlainObject } from '../checker/is-plain-object';
+import { isNumeric } from '../checker/is-numeric';
+import { isVoid } from '../checker/is-void';
+import { isBoolean } from '../checker/is-boolean';
+import { normalizeCssValue } from '../normalize/normalize-css-value';
+import { camelCase } from '../string/camel-case';
+import { kebabCase } from '../string/kebab-case';
 
 export function css(
 	element: HTMLElement,
