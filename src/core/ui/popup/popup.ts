@@ -25,6 +25,7 @@ import type {
 } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import {
+	assert,
 	attr,
 	css,
 	isFunction,
@@ -435,11 +436,15 @@ export class Popup extends UIElement implements IPopup {
 
 		this.j.e
 			.off('closeAllPopups', this.close)
-
 			.off('resize', up)
 			.off(this.container, 'scroll mousewheel', up)
 			.off(ow, 'scroll', up)
 			.off(ow, 'resize', up);
+
+		assert(
+			this.j.container.isConnected,
+			'The container must be built into the DOM'
+		);
 
 		Dom.up(this.j.container, box => {
 			box && this.j.e.off(box, 'scroll mousewheel', up);
