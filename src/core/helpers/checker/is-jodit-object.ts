@@ -37,4 +37,4 @@ export function isViewObject(jodit: unknown): jodit is IViewBased {
 	);
 }
 
-import { modules } from '../../global';
+import { modules } from 'jodit/core/global';

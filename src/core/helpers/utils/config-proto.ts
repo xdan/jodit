@@ -10,9 +10,13 @@
 
 import type { IDictionary } from 'jodit/types';
 import { isAtom } from './extend';
-import { isArray, isPlainObject, isString, isVoid } from '../checker';
+import { isArray } from '../checker/is-array';
+import { isPlainObject } from '../checker/is-plain-object';
+import { isString } from '../checker/is-string';
+import { isVoid } from '../checker/is-void';
 import { Config } from 'jodit/config';
 import { keys } from './utils';
+
 /**
  * @example
  * ```js

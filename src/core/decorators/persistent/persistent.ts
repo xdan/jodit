@@ -21,7 +21,7 @@ export function persistent<T extends IComponent>(
 	target.hookStatus(STATUSES.ready, (component: T) => {
 		const jodit = isViewObject(component)
 				? component
-				: (component as unknown as {jodit: IViewBased}).jodit,
+				: (component as unknown as { jodit: IViewBased }).jodit,
 			storageKey = `${jodit.options.namespace}${component.componentName}_prop_${propertyKey}`,
 			initialValue = (component as IDictionary)[propertyKey];
 

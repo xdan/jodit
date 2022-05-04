@@ -10,7 +10,11 @@
 
 /* eslint-disable tsdoc/syntax */
 
-import type { CallbackFunction, IDestructible } from './types';
+import type { CallbackFunction, CanArray, IDestructible } from './types';
+
+interface IEventEmitterOnOptions {
+	top?: boolean;
+}
 
 interface IEventEmitter extends IDestructible {
 	/**
@@ -70,42 +74,22 @@ interface IEventEmitter extends IDestructible {
 	 * ```
 	 */
 	on(
-		events: string,
-		handler: CallbackFunction,
-		handlerOrSelector?: void,
-		onTop?: boolean
-	): IEventEmitter;
+		events: CanArray<string>,
+		callback: CallbackFunction,
+		options?: IEventEmitterOnOptions
+	): this;
 
 	on(
-		subject: HTMLElement,
-		events: string,
-		handler: CallbackFunction,
-		onTop?: boolean
-	): IEventEmitter;
-
-	on(
-		subject: object,
-		events: string,
-		handler: CallbackFunction,
-		onTop?: boolean
-	): IEventEmitter;
-
-	on(
-		subjectOrEvents: object | string,
-		eventsOrCallback: string | CallbackFunction,
-		handlerOrSelector?: CallbackFunction | void,
-		onTop?: boolean
-	): IEventEmitter;
+		subject: CanArray<Window | HTMLElement | object>,
+		events: CanArray<string>,
+		callback: CallbackFunction,
+		options?: IEventEmitterOnOptions
+	): this;
 
 	one(...args: Parameters<IEventEmitter['on']>): IEventEmitter;
 
 	/**
 	 * Disable all handlers specified event ( Event List ) for a given element. Either a specific event handler.
-	 *
-	 * @param {object} subjectOrEvents - The object which is disabled handlers
-	 * @param {string|Function} [eventsOrCallback] - List of events, separated by a space or comma , which is necessary
-	 * to disable the handlers for a given object
-	 * @param {function} [handler] - Specific event handler to be removed
 	 *
 	 * @example
 	 * ```javascript
@@ -130,16 +114,15 @@ interface IEventEmitter extends IDestructible {
 	 * parent.e.off('someGlobalEvents');
 	 * ```
 	 */
-	off(events: string, eventsOrCallback?: CallbackFunction): IEventEmitter;
 	off(
-		subject: object,
-		events?: string,
-		handler?: CallbackFunction
+		events: CanArray<string>,
+		callback?: CallbackFunction
 	): IEventEmitter;
+
 	off(
-		subjectOrEvents: object | string,
-		eventsOrCallback?: string | (() => void),
-		handler?: CallbackFunction
+		subjects: CanArray<Window | HTMLElement | object>,
+		events?: CanArray<string>,
+		callback?: CallbackFunction
 	): IEventEmitter;
 
 	stopPropagation(
@@ -172,11 +155,7 @@ interface IEventEmitter extends IDestructible {
 	 * ```
 	 */
 	fire(eventsList: string, ...args: any[]): any;
-	fire(
-		subject: object,
-		eventsList: string | Event,
-		...args: any[]
-	): any;
+	fire(subject: object, eventsList: string | Event, ...args: any[]): any;
 	fire(
 		subjectOrEvents: object | string,
 		eventsList?: string | any | Event,

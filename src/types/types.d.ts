@@ -17,6 +17,7 @@ export interface IDictionary<T = any, K = string> {
 
 export type CanPromise<T> = T | Promise<T>;
 export type CanUndef<T> = T | undefined;
+export type CanArray<T> = T | Array<T>;
 export type Nullable<T> = T | null;
 
 export interface IInitable {

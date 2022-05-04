@@ -14,9 +14,8 @@ import {
 	defaultLanguage as defineLanguage,
 	error
 } from 'jodit/core/helpers/utils';
-import { isString } from 'jodit/core/helpers/checker';
-import { ucfirst } from 'jodit/core/helpers/string';
-import { lang } from 'jodit/core/global';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { ucfirst } from 'jodit/core/helpers/string/ucfirst';
 
 /**
  * Simple variant sprintf function
@@ -157,3 +156,5 @@ export const i18n = (
 
 	return parse(key);
 };
+
+import { lang } from 'jodit/core/global';

@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import { isURL } from '../checker/';
+import { isURL } from '../checker/is-url';
 import { parseQuery } from './parse-query';
 
 /**

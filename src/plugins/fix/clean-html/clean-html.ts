@@ -10,20 +10,24 @@
  * @module plugins/fix/clean-html
  */
 
-import type { HTMLTagNames, IDictionary, IJodit, Nullable } from 'jodit/types';
+import type { HTMLTagNames, IJodit, Nullable } from 'jodit/types';
 import {
 	INVISIBLE_SPACE_REG_EXP as INV_REG,
 	IS_INLINE,
 	INSEPARABLE_TAGS
 } from 'jodit/core/constants';
 import { Dom } from 'jodit/modules';
-import { attr, isString, keys, safeHTML, trim } from 'jodit/core/helpers';
+import { attr, keys, safeHTML, trim } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { watch, autobind, debounce, hook } from 'jodit/core/decorators';
 import { findNotEmptySibling } from 'jodit/plugins/keyboard/helpers';
 import { LazyWalker } from 'jodit/core/dom/lazy-walker';
 
 import './config';
+import {
+	getHash,
+	hasNotEmptyTextSibling
+} from 'jodit/plugins/fix/clean-html/helpers';
 
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
@@ -42,7 +46,13 @@ export class cleanHtml extends Plugin {
 		jodit.e
 			.off('.cleanHtml')
 			.on(
-				'change.cleanHtml afterSetMode.cleanHtml afterInit.cleanHtml mousedown.cleanHtml keydown.cleanHtml',
+				[
+					'change.cleanHtml',
+					'afterSetMode.cleanHtml',
+					'afterInit.cleanHtml',
+					'mousedown.cleanHtml',
+					'keydown.cleanHtml'
+				],
 				this.onChangeCleanHTML
 			)
 			.on('keyup.cleanHtml', this.onKeyUpCleanUp)
@@ -196,70 +206,14 @@ export class cleanHtml extends Plugin {
 		);
 	}
 
-	private static getHash(
-		tags: false | string | IDictionary<string>
-	): IDictionary | false {
-		const attributesReg = /([^[]*)\[([^\]]+)]/;
-		const separator = /[\s]*,[\s]*/,
-			attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
-
-		const tagsHash: IDictionary = {};
-
-		if (isString(tags)) {
-			tags.split(separator).map((elm: string) => {
-				elm = trim(elm);
-				const attr: RegExpExecArray | null = attributesReg.exec(elm),
-					allowAttributes: IDictionary<string | boolean> = {},
-					attributeMap = (attrName: string): void => {
-						attrName = trim(attrName);
-
-						const val: string[] | null = attrReg.exec(attrName);
-
-						if (val) {
-							allowAttributes[val[1]] = val[2];
-						} else {
-							allowAttributes[attrName] = true;
-						}
-					};
-
-				if (attr) {
-					const attr2: string[] = attr[2].split(separator);
-
-					if (attr[1]) {
-						attr2.forEach(attributeMap);
-						tagsHash[attr[1].toUpperCase()] = allowAttributes;
-					}
-				} else {
-					tagsHash[elm.toUpperCase()] = true;
-				}
-			});
-
-			return tagsHash;
-		}
-
-		if (tags) {
-			Object.keys(tags).forEach(tagName => {
-				tagsHash[tagName.toUpperCase()] = tags[tagName];
-			});
-
-			return tagsHash;
-		}
-
-		return false;
-	}
-
-	private allowTagsHash: IDictionary | false = cleanHtml.getHash(
-		this.j.o.cleanHTML.allowTags
-	);
-
-	private denyTagsHash: IDictionary | false = cleanHtml.getHash(
-		this.j.o.cleanHTML.denyTags
-	);
+	private allowTagsHash = getHash(this.j.o.cleanHTML.allowTags);
+	private denyTagsHash = getHash(this.j.o.cleanHTML.denyTags);
 
 	/**
 	 * Remove invisible chars if node has another chars
 	 */
-	private onKeyUpCleanUp = (): void => {
+	@autobind
+	private onKeyUpCleanUp(): void {
 		const editor = this.j;
 
 		if (!this.allowEdit()) {
@@ -299,7 +253,7 @@ export class cleanHtml extends Plugin {
 				});
 			}
 		}
-	};
+	}
 
 	private beforeCommand = (command: string): void | false => {
 		if (command.toLowerCase() === 'removeformat') {
@@ -445,8 +399,8 @@ export class cleanHtml extends Plugin {
 		if (
 			current &&
 			Dom.isTag(node, 'br') &&
-			cleanHtml.hasNotEmptyTextSibling(node) &&
-			!cleanHtml.hasNotEmptyTextSibling(node, true) &&
+			hasNotEmptyTextSibling(node) &&
+			!hasNotEmptyTextSibling(node, true) &&
 			Dom.up(node, Dom.isBlock, this.j.editor) !==
 				Dom.up(current, Dom.isBlock, this.j.editor)
 		) {
@@ -464,20 +418,6 @@ export class cleanHtml extends Plugin {
 		);
 	}
 
-	private static hasNotEmptyTextSibling(node: Node, next = false): boolean {
-		let prev: Node | null = next ? node.nextSibling : node.previousSibling;
-
-		while (prev) {
-			if (Dom.isElement(prev) || !Dom.isEmptyTextNode(prev)) {
-				return true;
-			}
-
-			prev = next ? prev.nextSibling : prev.previousSibling;
-		}
-
-		return false;
-	}
-
 	/**
 	 * Event handler when manually assigning a value to the HTML editor.
 	 */
@@ -487,7 +427,6 @@ export class cleanHtml extends Plugin {
 		sandBox.innerHTML = data.value;
 		this.onSafeHTML(sandBox);
 		data.value = sandBox.innerHTML;
-
 		return false;
 	}
 

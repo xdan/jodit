@@ -14,8 +14,10 @@ import type {
 	CallbackFunction,
 	IDictionary
 } from 'jodit/types';
-import { isArray, isFastEqual, isPlainObject } from 'jodit/core/helpers';
-import { getPropertyDescriptor } from 'jodit/core/decorators';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
+import { isFastEqual } from 'jodit/core/helpers/checker/is-equal';
+import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
+import { getPropertyDescriptor } from 'jodit/core/decorators/watch/watch';
 
 const OBSERVABLE_OBJECT = Symbol('observable-object');
 

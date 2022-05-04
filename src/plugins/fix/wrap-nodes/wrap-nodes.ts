@@ -13,7 +13,7 @@
 import type { IJodit, Nullable } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
 import { Dom } from 'jodit/core/dom';
-import { isString } from 'jodit/core/helpers/checker';
+import { isString } from 'jodit/core/helpers/checker/is-string';
 import { autobind } from 'jodit/core/decorators';
 
 import './config';

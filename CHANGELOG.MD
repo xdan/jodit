@@ -11,6 +11,48 @@
 
 ## 3.17.2
 
+#### :boom: Breaking Change
+
+The on/one/off methods of the Jodit Event System have been greatly simplified:
+
+instead:
+
+```js
+editor.e.on(
+	'click',
+	() => {
+		alert('Clicked!');
+	},
+	undefined,
+	true
+);
+```
+
+Now:
+
+```js
+editor.e.on(
+	'click',
+	() => {
+		alert('Clicked!');
+	},
+	{
+		top: true
+	}
+);
+```
+
+Также методы теперь поддерживают массив событий:
+
+```js
+editor.e.on('click mousedown mouseup', () => {
+	alert('Some event!');
+});
+editor.e.on(['click', 'mousedown', 'mouseup'], () => {
+	alert('Some event!');
+});
+```
+
 #### :rocket: New Feature
 
 -   All components have their own instance of the Async module. What used to be `this.j.async` is now `this.async`.
@@ -22,6 +64,27 @@
 #### :house: Internal
 
 -   Instead of a self-written truncated polyfill for `Array.from`, the core-js module is used
+-   Update deps
+
+    ```
+     @types/node                       ^17.0.23  →  ^17.0.31
+     @typescript-eslint/eslint-plugin   ^5.19.0  →   ^5.22.0
+     @typescript-eslint/parser          ^5.19.0  →   ^5.22.0
+     autoprefixer                       ^10.4.4  →   ^10.4.7
+     axios                              ^0.26.1  →   ^0.27.2
+     eslint                             ^8.13.0  →   ^8.14.0
+     express                            ^4.17.3  →   ^4.18.1
+     karma                              ^6.3.17  →   ^6.3.19
+     lint-staged                        ^12.3.7  →   ^12.4.1
+     mocha                               ^9.2.2  →   ^10.0.0
+     postcss                           >=8.4.12  →  >=8.4.13
+     stylelint                          ^14.6.1  →   ^14.8.2
+     ts-loader                           ^9.2.8  →    ^9.3.0
+     tslib                               ^2.3.1  →    ^2.4.0
+     typescript                          ^4.6.3  →    ^4.6.4
+     webpack-dev-server                  ^4.8.1  →    ^4.9.0
+     core-js                            ^3.21.1  →   ^3.22.4
+    ```
 
 ## 3.17.1
 
@@ -1360,11 +1423,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                             	{ value: "", text: "" },
--                                                                                                                                                                                                                                             	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                             	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                             	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                             ]
+-                                                                                                                                                                                                                                                     	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                     	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                     	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                     	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                     ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
