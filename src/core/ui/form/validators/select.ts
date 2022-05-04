@@ -9,7 +9,7 @@
  */
 
 import type { IUIInputValidator } from 'jodit/types';
-import { trim } from 'jodit/core/helpers';
+import { trim } from 'jodit/core/helpers/string/trim';
 
 /**
  * Select is required

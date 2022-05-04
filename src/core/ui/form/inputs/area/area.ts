@@ -12,7 +12,7 @@ import './area.less';
 
 import type { IUITextArea, IViewBased } from 'jodit/types';
 import { UIInput } from 'jodit/core/ui/form/inputs/input/input';
-import { component } from 'jodit/core/decorators';
+import { component } from 'jodit/core/decorators/component/component';
 
 @component
 export class UITextArea extends UIInput implements IUITextArea {

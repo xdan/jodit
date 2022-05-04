@@ -22,8 +22,8 @@ import type { IDictionary } from 'jodit/types';
 import { UIElement } from '../element';
 import { component, watch } from 'jodit/core/decorators';
 import { assert, isArray } from 'jodit/core/helpers';
-import { Dom } from 'jodit/core/dom';
-import { Component } from 'jodit/core/component';
+import { Dom } from 'jodit/core/dom/dom';
+import { Component } from 'jodit/core/component/component';
 
 @component
 export class UIGroup<T extends IViewBased = IViewBased>

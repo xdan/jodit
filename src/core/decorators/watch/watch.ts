@@ -19,7 +19,7 @@ import type {
 } from 'jodit/types';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
-import { isViewObject } from 'jodit/core/helpers/checker/is-jodit-object';
+import { isViewObject } from 'jodit/core/helpers/checker/is-view-object';
 import { observable } from 'jodit/core/event-emitter/observable';
 import { STATUSES } from 'jodit/core/component/statuses';
 import { splitArray } from 'jodit/core/helpers/array/split-array';

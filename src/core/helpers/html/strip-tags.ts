@@ -11,7 +11,7 @@
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { $$ } from 'jodit/core/helpers/utils';
 import { trim } from 'jodit/core/helpers/string/trim';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { attr } from 'jodit/core/helpers/utils';
 
 /**

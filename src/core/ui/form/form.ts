@@ -16,7 +16,7 @@ import { UIInput } from 'jodit/core/ui/form/inputs/input/input';
 import { UISelect } from 'jodit/core/ui/form/inputs/select/select';
 import { attr } from 'jodit/core/helpers/utils';
 import { component } from 'jodit/core/decorators/component/component';
-import { Component } from 'jodit/core/component';
+import { Component } from 'jodit/core/component/component';
 
 @component
 export class UIForm extends UIGroup implements IUIForm {

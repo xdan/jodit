@@ -40,7 +40,7 @@ import {
 	Dom,
 	ViewComponent
 } from '../../modules';
-import { modules } from '../global';
+import { modules, lang } from '../global';
 import { hook } from 'jodit/core/decorators';
 import { Elms, Mods } from '../traits';
 import { EventEmitter } from '../event-emitter';
@@ -159,7 +159,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	 * Internationalization method. Uses Jodit.lang object
 	 */
 	i18n(text: string, ...params: Array<string | number>): string {
-		return i18n(text, params, this.options);
+		return i18n(text, lang, params, this.options);
 	}
 
 	private __isFullSize: boolean = false;

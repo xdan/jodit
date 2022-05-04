@@ -13,7 +13,7 @@ import './checkbox.less';
 import type { IViewBased, IUICheckBox } from 'jodit/types';
 import { UIInput } from 'jodit/core/ui/form/inputs/input/input';
 import { component, watch, hook } from 'jodit/core/decorators';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 
 @component
 export class UICheckbox extends UIInput implements IUICheckBox {

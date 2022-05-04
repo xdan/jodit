@@ -8,7 +8,7 @@
  * @module helpers/html
  */
 
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { trim } from 'jodit/core/helpers/string/trim';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 

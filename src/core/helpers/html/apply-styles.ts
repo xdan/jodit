@@ -8,9 +8,9 @@
  * @module helpers/html
  */
 
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { $$ } from 'jodit/core/helpers/utils';
-import { trim } from '../string';
+import { trim } from '../string/trim';
 
 function normalizeCSS(s: string): string {
 	return s

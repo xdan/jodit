@@ -11,8 +11,8 @@
 import './select.less';
 
 import type { IUISelect, IViewBased } from 'jodit/types';
-import { attr } from 'jodit/core/helpers';
-import { component } from 'jodit/core/decorators';
+import { attr } from 'jodit/core/helpers/utils/utils';
+import { component } from 'jodit/core/decorators/component/component';
 import { UIInput } from 'jodit/core/ui/form/inputs/input/input';
 import {
 	inputValidators,

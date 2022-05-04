@@ -13,7 +13,7 @@
 import './progress-bar.less';
 
 import type { IJodit, IProgressBar } from 'jodit/types';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { UIElement } from '../element';
 
 export class ProgressBar extends UIElement implements IProgressBar {

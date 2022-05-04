@@ -23,7 +23,7 @@ import type {
 	Nullable,
 	PopupStrategy
 } from 'jodit/types';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import {
 	assert,
 	attr,
@@ -35,10 +35,10 @@ import {
 	position,
 	ucfirst
 } from 'jodit/core/helpers';
-import { eventEmitter, getContainer } from 'jodit/core/global';
-import { UIElement } from 'jodit/core/ui';
+import { UIElement } from 'jodit/core/ui/element';
 import { autobind, throttle } from 'jodit/core/decorators';
-import { Component } from 'jodit/core/component';
+import { Component } from 'jodit/core/component/component';
+import { eventEmitter, getContainer } from 'jodit/core/global';
 
 type getBoundFunc = () => IBound;
 

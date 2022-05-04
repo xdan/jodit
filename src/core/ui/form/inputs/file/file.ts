@@ -12,8 +12,8 @@ import './file.less';
 
 import type { IUIButton, IUIInput, IViewBased } from 'jodit/types';
 import { UIInput } from 'jodit/core/ui/form/inputs/input/input';
-import { component } from 'jodit/core/decorators';
-import { UIButton } from 'jodit/core/ui/button';
+import { component } from 'jodit/core/decorators/component/component';
+import { UIButton } from 'jodit/core/ui/button/button/button';
 
 @component
 export class UIFileInput extends UIInput {

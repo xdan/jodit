@@ -26,7 +26,7 @@ import type {
 import { UIButton, UIButtonState } from 'jodit/core/ui/button';
 import { autobind, component, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
-import { Popup } from 'jodit/core/ui/popup/';
+import { Popup } from 'jodit/core/ui/popup/popup';
 import { makeCollection } from 'jodit/modules/toolbar/factory';
 import {
 	isFunction,
@@ -39,9 +39,9 @@ import {
 	isArray,
 	keys
 } from 'jodit/core/helpers';
-import { Icon } from 'jodit/core/ui';
+import { Icon } from 'jodit/core/ui/icon';
 import { ToolbarCollection } from 'jodit/modules/toolbar/collection/collection';
-import { STATUSES } from 'jodit/core/component';
+import { STATUSES } from 'jodit/core/component/statuses';
 import { findControlType } from 'jodit/core/ui/helpers/get-control-type';
 
 @component

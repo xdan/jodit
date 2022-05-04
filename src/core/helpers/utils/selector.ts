@@ -17,7 +17,7 @@ import type {
 import { IS_IE } from 'jodit/core/constants';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { attr, error } from 'jodit/core/helpers/utils';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 import { UIElement } from 'jodit/core/ui/element';

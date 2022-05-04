@@ -8,19 +8,17 @@
  * @module helpers/checker
  */
 
-import type { IJodit } from 'jodit/types';
+import type { IViewBased } from 'jodit/types';
 import { isFunction } from './is-function';
 
 /**
- * Check if element is instance of Jodit
+ * Check if element is instance of View
  */
-export function isJoditObject(jodit: unknown): jodit is IJodit {
+export function isViewObject(jodit: unknown): jodit is IViewBased {
 	return Boolean(
 		jodit &&
 			jodit instanceof Object &&
 			isFunction(jodit.constructor) &&
-			// @ts-ignore
-			((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
-				(jodit as IJodit).isJodit)
+			(jodit as IViewBased).isView
 	);
 }

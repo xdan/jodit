@@ -23,6 +23,7 @@ import { isString, isStringArray } from 'jodit/core/helpers/checker/is-string';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { error } from 'jodit/core/helpers/utils/error';
+import { splitArray } from 'jodit/core/helpers/array/split-array';
 
 /**
  * The module editor's event manager
@@ -56,9 +57,7 @@ export class EventEmitter implements IEventEmitter {
 		events: CanArray<string>,
 		callback: (event: string, namespace: string) => void
 	): void {
-		const eventParts = (isArray(events) ? events : events.split(/\s+/)).map(
-			e => e.trim()
-		);
+		const eventParts = splitArray(events).map(e => e.trim());
 
 		eventParts.forEach(eventNameSpace => {
 			const eventAndNameSpace = eventNameSpace.split('.');

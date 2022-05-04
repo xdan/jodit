@@ -66,11 +66,12 @@ export const sprintf = (str: string, args?: Array<string | number>): string => {
  * console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')) //Hello mr.Perkins Good day
  * ```
  */
-export const i18n = (
+export function i18n(
 	key: string,
+	lang: IDictionary<IDictionary<string>>,
 	params?: Array<string | number>,
 	options?: ILanguageOptions
-): string => {
+): string {
 	if (!isString(key)) {
 		throw error('i18n: Need string in first argument');
 	}
@@ -155,6 +156,4 @@ export const i18n = (
 	}
 
 	return parse(key);
-};
-
-import { lang } from 'jodit/core/global';
+}

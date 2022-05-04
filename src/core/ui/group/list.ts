@@ -28,8 +28,8 @@ import { UISpacer } from 'jodit/core/ui/group/spacer';
 import { UIButton } from 'jodit/core/ui/button/button/button';
 import { isButtonGroup } from 'jodit/core/ui/helpers/buttons';
 import { getControlType } from 'jodit/core/ui/helpers/get-control-type';
-import { splitArray } from 'jodit/core/helpers/array';
-import { Component } from 'jodit/core/component';
+import { splitArray } from 'jodit/core/helpers/array/split-array';
+import { Component } from 'jodit/core/component/component';
 
 @component
 export class UIList<T extends IViewBased = IViewBased>
