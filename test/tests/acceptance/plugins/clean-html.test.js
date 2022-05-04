@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Clean html plugin', function () {
 	describe('Click remove format button', function () {
 		describe('For range selection', function () {
@@ -390,6 +391,29 @@ describe('Clean html plugin', function () {
 					done();
 				});
 			});
+		});
+	});
+
+	describe('Remove extra BR', () => {
+		it('should not remove necessary BR', function (done) {
+			const editor = getJodit();
+
+			editor.value =
+				'<p><strong>Text<br> </strong>New line with text</p>\n<p>test test test test test </p>';
+
+			simulateEvent('mousedown', editor.editor.querySelectorAll('p')[1]);
+			simulateEvent('mouseup', editor.editor.querySelectorAll('p')[1]);
+			simulateEvent('click', editor.editor.querySelectorAll('p')[1]);
+			simulateEvent('focus', editor.editor.querySelectorAll('p')[1]);
+
+			setTimeout(() => {
+				expect(editor.value).equals('<p>test</p>');
+				done();
+			}, 1000);
+			// editor.e.on('finishedCleanHTMLWorker', () => {
+			// 	expect(editor.value).equals('<p>test</p>');
+			// 	done();
+			// });
 		});
 	});
 });

@@ -5,43 +5,47 @@
  */
 describe('Jodit Events system Tests', function () {
 	describe('Native Events', function () {
-		it('Create simple event handler on some DOM element', function () {
-			const editor = getJodit(),
-				div = document.createElement('button');
+		describe('Create simple event handler', function () {
+			it('should handle it events', function () {
+				const editor = getJodit(),
+					div = document.createElement('button');
 
-			let work = false;
+				let work = false;
 
-			document.body.appendChild(div);
+				document.body.appendChild(div);
 
-			editor.events.on(div, 'click', function () {
-				work = true;
+				editor.events.on(div, 'click', function () {
+					work = true;
+				});
+
+				simulateEvent('click', 0, div);
+
+				expect(work).is.true;
+
+				div.remove();
 			});
-
-			simulateEvent('click', 0, div);
-
-			expect(work).is.true;
-
-			div.parentNode.removeChild(div);
 		});
 
-		it('Create simple event handler on some DOM element on few events', function () {
-			const editor = getJodit(),
-				div = document.createElement('button');
+		describe('Create simple event handler on some DOM element on few events', function () {
+			it('Should handle all events on that element', function () {
+				const editor = getJodit(),
+					div = document.createElement('button');
 
-			let work = 0;
+				let work = 0;
 
-			document.body.appendChild(div);
+				document.body.appendChild(div);
 
-			editor.events.on(div, 'click dblclick keydown', function () {
-				work++;
+				editor.events.on(div, 'click dblclick keydown', function () {
+					work++;
+				});
+
+				simulateEvent('click', 0, div);
+				simulateEvent('dblclick', 0, div);
+				simulateEvent('keydown', 0, div);
+
+				expect(work).equals(3);
+				div.remove();
 			});
-
-			simulateEvent('click', 0, div);
-			simulateEvent('dblclick', 0, div);
-			simulateEvent('keydown', 0, div);
-
-			expect(work).equals(3);
-			div.parentNode.removeChild(div);
 		});
 
 		it('Add and remove event handler', function () {
@@ -310,7 +314,7 @@ describe('Jodit Events system Tests', function () {
 					function () {
 						clicked.push(4);
 					},
-					true
+					{ top: true }
 				);
 
 				eventEmitter.fire(simpleObject, 'click');
@@ -354,7 +358,7 @@ describe('Jodit Events system Tests', function () {
 						function () {
 							clicked.push(4);
 						},
-						true
+						{ top: true }
 					);
 
 					eventEmitter.fire(simpleObject, 'click');
@@ -398,8 +402,7 @@ describe('Jodit Events system Tests', function () {
 							function () {
 								clicked.push(4);
 							},
-							undefined,
-							true
+							{ top: true }
 						);
 
 						eventEmitter.fire('click');
