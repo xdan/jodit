@@ -567,10 +567,9 @@ export class Dom {
 	 * @param callback - It called for each item found
 	 * @example
 	 * ```javascript
-	 * Jodit.modules.Dom.each(parent.s.current(), function (node) {
+	 * Jodit.modules.Dom.each(editor.s.current(), function (node) {
 	 *  if (node.nodeType === Node.TEXT_NODE) {
-	 *      node.nodeValue = node.nodeValue.replace(Jodit.INVISIBLE_SPACE_REG_EX, '') // remove all of
-	 *      the text element codes invisible character
+	 *      node.nodeValue = node.nodeValue.replace(Jodit.INVISIBLE_SPACE_REG_EX, '') // remove all of the text element codes invisible character
 	 *  }
 	 * });
 	 * ```
@@ -887,31 +886,6 @@ export class Dom {
 		} else {
 			to.insertBefore(fragment, to.firstChild);
 		}
-	}
-
-	/**
-	 * Call callback condition function for all elements of node
-	 */
-	static all(
-		node: Node,
-		condition: NodeCondition,
-		prev: boolean = false
-	): Nullable<Node> {
-		let nodes: Node[] = node.childNodes ? toArray(node.childNodes) : [];
-
-		if (condition(node)) {
-			return node;
-		}
-
-		if (prev) {
-			nodes = nodes.reverse();
-		}
-
-		nodes.forEach(child => {
-			Dom.all(child, condition, prev);
-		});
-
-		return null;
 	}
 
 	/**

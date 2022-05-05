@@ -34,7 +34,7 @@ export function cleanFromWord(html: string): string {
 		const marks: Node[] = [];
 
 		if (div.firstChild) {
-			Dom.all(div, node => {
+			Dom.each(div, node => {
 				if (!node) {
 					return;
 				}

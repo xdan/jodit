@@ -4,5 +4,8 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './has-not-empty-text-sibling';
 export * from './get-hash';
+export * from './remove-format-for-collapsed-selection';
+export * from './remove-format-for-selection';
+export * from './remove-inv-text-nodes';
+export * from './visitor/visit-node-walker';
