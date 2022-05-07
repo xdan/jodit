@@ -20,5 +20,5 @@ declare module 'jodit/config' {
 }
 
 Config.prototype.wrapNodes = {
-	exclude: ['hr', 'style']
+	exclude: ['hr', 'style', 'br']
 };

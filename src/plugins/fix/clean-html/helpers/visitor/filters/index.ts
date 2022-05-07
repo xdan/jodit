@@ -8,7 +8,13 @@
  * @module plugins/fix/clean-html
  */
 
-export * from './get-hash';
-export * from './remove-format/remove-format-for-collapsed-selection';
-export * from './remove-format/remove-format-for-selection';
-export * from './visitor/visit-node-walker';
+/**
+ * @private
+ */
+
+export * from './replace-old-tags';
+export * from './allow-attributes';
+export * from './fill-empty-paragraph';
+export * from './try-remove-node';
+export * from './remove-inv-text-nodes';
+export * from './sanitize-attributes';

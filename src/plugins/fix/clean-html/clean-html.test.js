@@ -406,14 +406,12 @@ describe('Clean html plugin', function () {
 			simulateEvent('click', editor.editor.querySelectorAll('p')[1]);
 			simulateEvent('focus', editor.editor.querySelectorAll('p')[1]);
 
-			setTimeout(() => {
-				expect(editor.value).equals('<p>test</p>');
+			editor.e.on('finishedCleanHTMLWorker', () => {
+				expect(editor.value).equals(
+					'<p><strong>Text<br> </strong>New line with text</p>\n<p>test test test test test </p>'
+				);
 				done();
-			}, 1000);
-			// editor.e.on('finishedCleanHTMLWorker', () => {
-			// 	expect(editor.value).equals('<p>test</p>');
-			// 	done();
-			// });
+			});
 		});
 	});
 });

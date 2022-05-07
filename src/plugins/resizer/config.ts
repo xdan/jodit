@@ -26,6 +26,21 @@ declare module 'jodit/config' {
 			hideSizeTimeout: number;
 
 			/**
+			 * Save width and height proportions when resizing
+			 * ```js
+			 * Jodit.make('#editor', {
+			 *   allowResizeTags: ['img', 'iframe', 'table', 'jodit'],
+			 *   resizer: {
+			 *     useAspectRatio: false, // don't save,
+			 *     useAspectRatio: ['img'], // save only for images (default value)
+			 *     useAspectRatio: true // save for all
+			 *   }
+			 * });
+			 * ```
+			 */
+			useAspectRatio: boolean | HTMLTagNames[];
+
+			/**
 			 * When resizing images, change not the styles but the width and height attributes
 			 */
 			forImageChangeAttributes: boolean;
@@ -50,5 +65,6 @@ Config.prototype.resizer = {
 	hideSizeTimeout: 1000,
 	forImageChangeAttributes: true,
 	min_width: 10,
-	min_height: 10
+	min_height: 10,
+	useAspectRatio: ['img']
 };

@@ -96,6 +96,34 @@ describe('Resize plugin', function () {
 		});
 
 		describe('Resize image', function () {
+			const resizeImage = function (editor) {
+				const img = editor.editor.querySelector('img');
+
+				simulateEvent(['mousedown', 'mouseup', 'click'], img);
+
+				const resizer = document.querySelector(
+					'.jodit-resizer[data-editor_id=' + editor.id + ']'
+				);
+
+				const handle = resizer.getElementsByTagName('div')[1],
+					pos = offset(handle);
+
+				simulateEvent('mousedown', handle, data => {
+					data.clientX = pos.left;
+					data.clientY = pos.top;
+				});
+
+				simulateEvent('mousemove', editor.ow, data => {
+					data.clientX = pos.left + 10;
+					data.clientY = pos.top + 10;
+				});
+
+				simulateEvent('mouseup', editor.ow, data => {
+					data.clientX = pos.left + 10;
+					data.clientY = pos.top + 10;
+				});
+			};
+
 			describe('Size box', function () {
 				it('Should show size for image', function (done) {
 					const editor = getJodit({
@@ -221,35 +249,84 @@ describe('Resize plugin', function () {
 					});
 				});
 
+				describe('Save aspect ratio', () => {
+					describe('Disable useAspectRatio option', () => {
+						it("should don't save it", done => {
+							const editor = getJodit({
+								resizer: {
+									useAspectRatio: false
+								}
+							});
+
+							editor.value =
+								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width: 301px;"/></p>';
+
+							onLoadImage(
+								editor.editor.querySelector('img'),
+								() => {
+									resizeImage(editor);
+
+									expect(sortAttributes(editor.value)).eq(
+										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:159px;width:311px"></p>'
+									);
+									done();
+								}
+							);
+						});
+					});
+
+					describe('Enable useAspectRatio only for table', () => {
+						it("should don't save it for images", done => {
+							const editor = getJodit({
+								resizer: {
+									useAspectRatio: Jodit.atom(['table'])
+								}
+							});
+
+							editor.value =
+								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width: 301px;"/></p>';
+
+							onLoadImage(
+								editor.editor.querySelector('img'),
+								() => {
+									resizeImage(editor);
+
+									expect(sortAttributes(editor.value)).eq(
+										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:159px;width:311px"></p>'
+									);
+									done();
+								}
+							);
+						});
+					});
+
+					describe('Enable useAspectRatio for all', () => {
+						it('should save it for all', done => {
+							const editor = getJodit({
+								resizer: {
+									useAspectRatio: true
+								}
+							});
+
+							editor.value =
+								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width: 301px;"/></p>';
+
+							onLoadImage(
+								editor.editor.querySelector('img'),
+								() => {
+									resizeImage(editor);
+
+									expect(sortAttributes(editor.value)).eq(
+										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:175px;width:311px"></p>'
+									);
+									done();
+								}
+							);
+						});
+					});
+				});
+
 				describe('For styled image', () => {
-					function resizeImage(editor) {
-						const img = editor.editor.querySelector('img');
-
-						simulateEvent(['mousedown', 'mouseup', 'click'], img);
-
-						const resizer = document.querySelector(
-							'.jodit-resizer[data-editor_id=' + editor.id + ']'
-						);
-
-						const handle = resizer.getElementsByTagName('div')[1],
-							pos = offset(handle);
-
-						simulateEvent('mousedown', handle, data => {
-							data.clientX = pos.left;
-							data.clientY = pos.top;
-						});
-
-						simulateEvent('mousemove', editor.ow, data => {
-							data.clientX = pos.left + 10;
-							data.clientY = pos.top + 10;
-						});
-
-						simulateEvent('mouseup', editor.ow, data => {
-							data.clientX = pos.left + 10;
-							data.clientY = pos.top + 10;
-						});
-					}
-
 					describe('Disable forImageChangeAttributes', () => {
 						it('Should change only styles width and height', done => {
 							const editor = getJodit({

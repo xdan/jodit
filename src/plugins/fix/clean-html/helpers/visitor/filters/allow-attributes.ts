@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/fix/clean-html
+ */
+
 import type { IDictionary, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 
@@ -13,7 +17,7 @@ import { Dom } from 'jodit/core/dom/dom';
 export function allowAttributes(
 	jodit: IJodit,
 	nodeElm: Node,
-	hasChanges: boolean,
+	hadEffect: boolean,
 	allow: IDictionary | false
 ): boolean {
 	if (allow && Dom.isElement(nodeElm) && allow[nodeElm.nodeName] !== true) {
@@ -31,7 +35,7 @@ export function allowAttributes(
 			}
 
 			if (removeAttrs.length) {
-				hasChanges = true;
+				hadEffect = true;
 			}
 
 			removeAttrs.forEach(attr => {
@@ -40,5 +44,5 @@ export function allowAttributes(
 		}
 	}
 
-	return hasChanges;
+	return hadEffect;
 }

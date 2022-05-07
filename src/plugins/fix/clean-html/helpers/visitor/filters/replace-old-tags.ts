@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/fix/clean-html
+ */
+
 import type { HTMLTagNames, IDictionary, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 
@@ -13,7 +17,7 @@ import { Dom } from 'jodit/core/dom/dom';
 export function replaceOldTags(
 	jodit: IJodit,
 	nodeElm: Node,
-	hasChanges: boolean
+	hadEffect: boolean
 ): boolean {
 	const newNodeElm = replaceIfMatched(
 		jodit,
@@ -26,7 +30,7 @@ export function replaceOldTags(
 		return true;
 	}
 
-	return hasChanges;
+	return hadEffect;
 }
 
 /**

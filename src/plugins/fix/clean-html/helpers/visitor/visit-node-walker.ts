@@ -4,32 +4,48 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, Nullable, IDictionary } from 'jodit/types';
-import { replaceOldTags } from 'jodit/plugins/fix/clean-html/helpers/visitor/cases/replace-old-tags';
-import { tryRemoveNode } from 'jodit/plugins/fix/clean-html/helpers/visitor/cases/try-remove-node';
-import { fillEmptyParagraph } from 'jodit/plugins/fix/clean-html/helpers/visitor/cases/fill-empty-paragraph';
-import { allowAttributes } from 'jodit/plugins/fix/clean-html/helpers/visitor/cases/allow-attributes';
+/**
+ * @module plugins/fix/clean-html
+ */
 
+import type { IJodit, Nullable, IDictionary } from 'jodit/types';
+import * as filters from 'jodit/plugins/fix/clean-html/helpers/visitor/filters';
+
+type Filter = keyof typeof filters;
+const keys = Object.keys(filters) as Filter[];
+
+/**
+ * @private
+ */
 export function visitNodeWalker(
 	jodit: IJodit,
 	nodeElm: Node,
-	currentSelectionNode: Nullable<Node>,
 	allowTags: IDictionary | false,
-	denyTags: IDictionary | false
+	denyTags: IDictionary | false,
+	currentSelectionNode: Nullable<Node>
 ): boolean {
-	let hasChanges = false;
+	let hadEffect = false;
+	for (const key of keys) {
+		const filter = filters[key];
 
-	hasChanges = replaceOldTags(jodit, nodeElm, hasChanges);
+		const t = hadEffect;
+		hadEffect = filter(
+			jodit,
+			nodeElm,
+			hadEffect,
+			allowTags,
+			denyTags,
+			currentSelectionNode
+		);
 
-	if (
-		tryRemoveNode(jodit, nodeElm, currentSelectionNode, allowTags, denyTags)
-	) {
-		return true;
+		if (!t && hadEffect) {
+			console.warn(`Effect from ${key} filter`);
+		}
+
+		if (!nodeElm.isConnected) {
+			return true;
+		}
 	}
 
-	hasChanges = fillEmptyParagraph(jodit, nodeElm, hasChanges);
-
-	hasChanges = allowAttributes(jodit, nodeElm, hasChanges, allowTags);
-
-	return hasChanges;
+	return hadEffect;
 }

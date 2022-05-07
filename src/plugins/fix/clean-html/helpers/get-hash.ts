@@ -4,9 +4,16 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/fix/clean-html
+ */
+
 import type { IDictionary } from 'jodit/types';
 import { isString, trim } from 'jodit/core/helpers';
 
+/**
+ * @private
+ */
 export function getHash(
 	tags: false | string | IDictionary<string>
 ): IDictionary | false {

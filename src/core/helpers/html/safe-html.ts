@@ -21,23 +21,33 @@ export function safeHTML(
 		return;
 	}
 
-	const removeOnError = (elm: HTMLElement): void =>
-			attr(elm, 'onerror', null),
-		safeLink = (elm: HTMLElement): void => {
-			const href = elm.getAttribute('href');
-
-			if (href && href.trim().indexOf('javascript') === 0) {
-				attr(elm, 'href', location.protocol + '//' + href);
-			}
-		};
-
 	if (options.removeOnError) {
-		removeOnError(box);
-		$$('[onerror]', box).forEach(removeOnError);
+		sanitizeHTMLElement(box);
+		$$('[onerror]', box).forEach(sanitizeHTMLElement);
 	}
 
 	if (options.safeJavaScriptLink) {
-		safeLink(box);
-		$$<HTMLAnchorElement>('a[href^="javascript"]', box).forEach(safeLink);
+		sanitizeHTMLElement(box);
+		$$<HTMLAnchorElement>('a[href^="javascript"]', box).forEach(
+			sanitizeHTMLElement
+		);
 	}
+}
+
+export function sanitizeHTMLElement(elm: Element): boolean {
+	let effected = false;
+
+	if (elm.hasAttribute('onerror')) {
+		attr(elm, 'onerror', null);
+		effected = true;
+	}
+
+	const href = elm.getAttribute('href');
+
+	if (href && href.trim().indexOf('javascript') === 0) {
+		attr(elm, 'href', location.protocol + '//' + href);
+		effected = true;
+	}
+
+	return effected;
 }

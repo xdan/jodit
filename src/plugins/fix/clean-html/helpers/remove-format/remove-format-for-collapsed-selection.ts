@@ -4,12 +4,17 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/fix/clean-html
+ */
+
 import type { IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { INSEPARABLE_TAGS } from 'jodit/core/constants';
 
 /**
  * For collapsed selection move cursor outside or split inline block
+ * @private
  */
 export function removeFormatForCollapsedSelection(
 	jodit: IJodit,

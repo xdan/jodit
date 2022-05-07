@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/fix/clean-html
+ */
+
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 
@@ -13,7 +17,7 @@ import { Dom } from 'jodit/core/dom/dom';
 export function fillEmptyParagraph(
 	jodit: IJodit,
 	nodeElm: Node,
-	hasChanges: boolean
+	hadEffect: boolean
 ): boolean {
 	if (
 		jodit.o.cleanHTML.fillEmptyParagraph &&
@@ -25,5 +29,5 @@ export function fillEmptyParagraph(
 		return true;
 	}
 
-	return hasChanges;
+	return hadEffect;
 }

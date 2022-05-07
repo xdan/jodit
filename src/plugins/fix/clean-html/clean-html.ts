@@ -13,11 +13,10 @@
 import type { IJodit, Nullable } from 'jodit/types';
 import { safeHTML } from 'jodit/core/helpers/html/safe-html';
 import { Plugin } from 'jodit/core/plugin/plugin';
-import { watch, debounce, hook } from 'jodit/core/decorators';
+import { watch, hook } from 'jodit/core/decorators';
 import { LazyWalker } from 'jodit/core/dom/lazy-walker';
 import {
 	getHash,
-	removeInvTextNodes,
 	removeFormatForCollapsedSelection,
 	removeFormatForSelection,
 	visitNodeWalker
@@ -49,31 +48,15 @@ export class cleanHtml extends Plugin {
 	}
 
 	/**
-	 * Remove invisible chars if node has another chars
-	 */
-	@watch(':keyup')
-	@debounce<Plugin>(ctx => ctx.jodit.o.cleanHTML.timeout)
-	protected onKeyUpCleanUp(): void {
-		if (!this.isEditMode) {
-			return;
-		}
-
-		removeInvTextNodes(this.j);
-	}
-
-	/**
 	 * Clean HTML code on every change
 	 */
 	@watch([':change', ':afterSetMode', ':afterInit', ':mousedown', ':keydown'])
-	@debounce<Plugin>(ctx => ctx.jodit.o.cleanHTML.timeout)
 	protected onChangeCleanHTML(): void {
 		if (!this.isEditMode) {
 			return;
 		}
 
 		const editor = this.j;
-
-		this.onSafeHTML(editor.editor);
 
 		this.walker.setWork(editor.editor);
 		this.currentSelectionNode = editor.s.current();
@@ -88,6 +71,7 @@ export class cleanHtml extends Plugin {
 	@hook('ready')
 	protected startWalker(): void {
 		const { jodit } = this;
+
 		const allow = getHash(this.j.o.cleanHTML.allowTags);
 		const deny = getHash(this.j.o.cleanHTML.denyTags);
 
@@ -96,9 +80,9 @@ export class cleanHtml extends Plugin {
 				visitNodeWalker(
 					jodit,
 					node,
-					this.currentSelectionNode,
 					allow,
-					deny
+					deny,
+					this.currentSelectionNode
 				)
 			)
 			.on('end', (affected: boolean): void => {

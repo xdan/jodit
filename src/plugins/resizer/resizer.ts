@@ -219,7 +219,12 @@ export class resizer extends Plugin {
 			let new_w = 0,
 				new_h = 0;
 
-			if (Dom.isTag(this.element, 'img')) {
+			const uar = this.j.o.resizer.useAspectRatio;
+
+			if (
+				uar === true ||
+				(Array.isArray(uar) && Dom.isTag(this.element, uar))
+			) {
 				if (diff_x) {
 					new_w =
 						this.width +

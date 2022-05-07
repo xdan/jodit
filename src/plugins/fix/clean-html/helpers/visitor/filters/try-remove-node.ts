@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/fix/clean-html
+ */
+
 import type { IDictionary, IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { IS_INLINE } from 'jodit/core/constants';
@@ -12,9 +16,10 @@ import { trim } from 'jodit/core/helpers/string/trim';
 export function tryRemoveNode(
 	jodit: IJodit,
 	nodeElm: Node,
-	currentSelectionNode: Nullable<Node>,
+	hadEffect: boolean,
 	allowTags: IDictionary | false,
-	denyTags: IDictionary | false
+	denyTags: IDictionary | false,
+	currentSelectionNode: Nullable<Node>
 ): boolean {
 	if (
 		isRemovableNode(
@@ -29,7 +34,7 @@ export function tryRemoveNode(
 		return true;
 	}
 
-	return false;
+	return hadEffect;
 }
 
 function isRemovableNode(
@@ -46,27 +51,35 @@ function isRemovableNode(
 		return true;
 	}
 
-	// remove extra br
-	if (
-		current &&
-		Dom.isTag(node, 'br') &&
-		hasNotEmptyTextSibling(node) &&
-		!hasNotEmptyTextSibling(node, true) &&
-		Dom.up(node, Dom.isBlock, jodit.editor) !==
-			Dom.up(current, Dom.isBlock, jodit.editor)
-	) {
-		return true;
-	}
-
 	return (
 		jodit.o.cleanHTML.removeEmptyElements &&
-		current != null &&
 		Dom.isElement(node) &&
 		node.nodeName.match(IS_INLINE) != null &&
 		!Dom.isTemporary(node) &&
 		trim((node as Element).innerHTML).length === 0 &&
-		!Dom.isOrContains(node, current)
+		(current == null || !Dom.isOrContains(node, current))
 	);
+}
+
+// @ts-ignore
+function removeExtraBR(
+	jodit: IJodit,
+	node: Node,
+	current: Nullable<Node>
+): boolean {
+	// remove extra br
+	if (
+		Dom.isTag(node, 'br') &&
+		hasNotEmptyTextSibling(node) &&
+		!hasNotEmptyTextSibling(node, true) &&
+		(current == null ||
+			Dom.up(node, Dom.isBlock, jodit.editor) !==
+				Dom.up(current, Dom.isBlock, jodit.editor))
+	) {
+		return true;
+	}
+
+	return false;
 }
 
 function hasNotEmptyTextSibling(node: Node, next = false): boolean {

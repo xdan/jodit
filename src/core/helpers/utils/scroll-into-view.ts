@@ -13,8 +13,9 @@ export const inView = (
 	root: HTMLElement,
 	doc: Document
 ): boolean => {
-	let rect: ClientRect = elm.getBoundingClientRect(),
+	let rect = elm.getBoundingClientRect(),
 		el: HTMLElement | null = elm as HTMLElement | null;
+
 	const top: number = rect.top,
 		height: number = rect.height;
 
@@ -22,6 +23,7 @@ export const inView = (
 		if (el && el.parentNode) {
 			el = el.parentNode as HTMLElement;
 			rect = el.getBoundingClientRect();
+
 			if (!(top <= rect.bottom)) {
 				return false;
 			}
@@ -44,10 +46,13 @@ export const scrollIntoViewIfNeeded = (
 	root: HTMLElement,
 	doc: Document
 ): void => {
+	console.log(elm, !inView(elm, root, doc));
+
 	if (!inView(elm, root, doc)) {
 		if (root.clientHeight !== root.scrollHeight) {
 			root.scrollTop = elm.offsetTop;
 		}
+
 		if (!inView(elm, root, doc)) {
 			elm.scrollIntoView();
 		}
