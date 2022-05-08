@@ -4,6 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import { Dom } from 'jodit/core/dom/dom';
+import type { Nullable } from 'jodit/types';
+
 /**
  * @module helpers/utils
  */
@@ -41,14 +44,12 @@ export const inView = (
 	);
 };
 
-export const scrollIntoViewIfNeeded = (
-	elm: HTMLElement,
+export function scrollIntoViewIfNeeded(
+	elm: Nullable<Node>,
 	root: HTMLElement,
 	doc: Document
-): void => {
-	console.log(elm, !inView(elm, root, doc));
-
-	if (!inView(elm, root, doc)) {
+): void {
+	if (Dom.isHTMLElement(elm) && !inView(elm, root, doc)) {
 		if (root.clientHeight !== root.scrollHeight) {
 			root.scrollTop = elm.offsetTop;
 		}
@@ -57,4 +58,4 @@ export const scrollIntoViewIfNeeded = (
 			elm.scrollIntoView();
 		}
 	}
-};
+}

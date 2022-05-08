@@ -167,7 +167,8 @@ export class enter extends Plugin {
 			return;
 		}
 
-		sel.splitSelection(currentBox);
+		const newP = sel.splitSelection(currentBox);
+		scrollIntoViewIfNeeded(newP, editor.editor, editor.ed);
 	}
 
 	private getBlockWrapper(
