@@ -65,6 +65,7 @@ editor.e.on(['click', 'mousedown', 'mouseup'], () => {
 -   [Bold removing line break in table #838](https://github.com/xdan/jodit/issues/838)
 -   [Cleans <br> that should be there #835](https://github.com/xdan/jodit/issues/835)
 -   [Cursor goes out of edit box when moving to a new line #824](https://github.com/xdan/jodit/issues/824)
+-   [Couldn't click next line button, when table is resized. #831](https://github.com/xdan/jodit/issues/831)
 
 #### :house: Internal
 

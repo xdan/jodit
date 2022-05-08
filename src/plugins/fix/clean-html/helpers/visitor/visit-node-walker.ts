@@ -28,7 +28,8 @@ export function visitNodeWalker(
 	for (const key of keys) {
 		const filter = filters[key];
 
-		const t = hadEffect;
+		const tmp = hadEffect;
+
 		hadEffect = filter(
 			jodit,
 			nodeElm,
@@ -38,8 +39,8 @@ export function visitNodeWalker(
 			currentSelectionNode
 		);
 
-		if (!t && hadEffect) {
-			console.warn(`Effect from ${key} filter`);
+		if (!isProd && !tmp && hadEffect) {
+			console.warn(`CleanHTML: Effect "${key}"`);
 		}
 
 		if (!nodeElm.isConnected) {
