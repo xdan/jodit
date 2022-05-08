@@ -80,6 +80,11 @@ describe('LineHeight plugin test', () => {
 				'<p>|test</p><p>test</p>',
 				1.5,
 				'<p style="line-height:1.5">|test</p><p>test</p>'
+			],
+			[
+				'<p>|One&nbsp;<em><span style="font-family: Verdana, Geneva, sans-serif; font-size: 18px; color: rgb(204, 0, 0);">{Two.Three}</span> </em>four five six seven eight {Nine.Ten} One {Two.Three} Four Five Six Seven Eight <strong>{Nine.Ten}.|</strong></p>',
+				1.5,
+				'<p style="line-height:1.5">|One <em><span style="color:#CC0000;font-family:Verdana,Geneva,sans-serif;font-size:18px">{Two.Three}</span> </em>four five six seven eight {Nine.Ten} One {Two.Three} Four Five Six Seven Eight <strong>{Nine.Ten}.|</strong></p>'
 			]
 		].forEach(([value, lineHeight, result]) => {
 			describe('For text: ' + value + ' apply: ' + lineHeight, () => {
