@@ -66,6 +66,7 @@ editor.e.on(['click', 'mousedown', 'mouseup'], () => {
 -   [Cleans <br> that should be there #835](https://github.com/xdan/jodit/issues/835)
 -   [Cursor goes out of edit box when moving to a new line #824](https://github.com/xdan/jodit/issues/824)
 -   [Couldn't click next line button, when table is resized. #831](https://github.com/xdan/jodit/issues/831)
+-   [Unable to add line height for Html pasted content. #830](https://github.com/xdan/jodit/issues/830)
 
 #### :house: Internal
 
@@ -1429,11 +1430,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                         	{ value: "", text: "" },
--                                                                                                                                                                                                                                                         	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                         	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                         	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                         ]
+-                                                                                                                                                                                                                                                           	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                           	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                           	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                           	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                           ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

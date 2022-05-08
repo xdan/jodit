@@ -540,7 +540,7 @@ export class Dom {
 	): Generator<Node> {
 		const stack: Node[] = [];
 
-		let currentNode = start;
+		let currentNode: Nullable<Node> = start;
 
 		do {
 			let next = leftToRight
@@ -554,8 +554,8 @@ export class Dom {
 
 			yield* this.runInStack(start, stack, leftToRight, withChild);
 
-			currentNode = <Node>currentNode.parentNode;
-		} while (currentNode !== root);
+			currentNode = currentNode.parentNode;
+		} while (currentNode && currentNode !== root);
 
 		return null;
 	}

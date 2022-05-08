@@ -832,7 +832,7 @@ export class Select implements ISelect {
 
 			checkElm(start);
 
-			if (start !== end) {
+			if (start !== end && Dom.isOrContains(root, start, true)) {
 				Dom.find(
 					start,
 					node => {
