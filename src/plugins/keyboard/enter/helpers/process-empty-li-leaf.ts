@@ -58,7 +58,7 @@ export function processEmptyLILeaf(jodit: IJodit, li: HTMLElement): void {
 		return;
 	}
 
-	if (Dom.isTag(container, 'li')) {
+	if (listInsideLeaf) {
 		newLi.appendChild(rightPart);
 	} else {
 		Dom.after(newLi, rightPart);
