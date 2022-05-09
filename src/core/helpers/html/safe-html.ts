@@ -4,20 +4,20 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Dom } from 'jodit/core/dom/dom';
 import { $$, attr } from '../utils';
+import { Dom } from 'jodit/core/dom/dom';
 
 /**
  * Removes dangerous constructs from HTML
  */
 export function safeHTML(
-	box: HTMLElement,
+	box: HTMLElement | DocumentFragment,
 	options: {
 		removeOnError: boolean;
 		safeJavaScriptLink: boolean;
 	}
 ): void {
-	if (!Dom.isElement(box)) {
+	if (!Dom.isElement(box) && !Dom.isFragment(box)) {
 		return;
 	}
 
@@ -34,7 +34,11 @@ export function safeHTML(
 	}
 }
 
-export function sanitizeHTMLElement(elm: Element): boolean {
+export function sanitizeHTMLElement(elm: Element | DocumentFragment): boolean {
+	if (!Dom.isElement(elm)) {
+		return false;
+	}
+
 	let effected = false;
 
 	if (elm.hasAttribute('onerror')) {

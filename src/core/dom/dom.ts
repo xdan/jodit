@@ -373,6 +373,19 @@ export class Dom {
 	}
 
 	/**
+	 * Check if element is document fragment
+	 */
+	static isFragment(node: unknown): node is DocumentFragment {
+		if (!Dom.isNode(node)) {
+			return false;
+		}
+
+		const win = node.ownerDocument?.defaultView;
+
+		return Boolean(win && node.nodeType === Node.DOCUMENT_FRAGMENT_NODE);
+	}
+
+	/**
 	 * Check if element is HTMLElement node
 	 */
 	static isHTMLElement(node: unknown): node is HTMLElement {
@@ -948,17 +961,17 @@ export class Dom {
 	 * Check if element is some tag
 	 */
 	static isTag<K extends keyof HTMLElementTagNameMap>(
-		node: Node | null | false | EventTarget,
+		node: Node | null | undefined | false | EventTarget,
 		tagName: K
 	): node is HTMLElementTagNameMap[K];
 
 	static isTag<K extends keyof HTMLElementTagNameMap>(
-		node: Node | null | false | EventTarget,
+		node: Node | null | undefined | false | EventTarget,
 		tagNames: K[]
 	): node is HTMLElementTagNameMap[K];
 
 	static isTag<K extends keyof HTMLElementTagNameMap>(
-		node: Node | null | false | EventTarget,
+		node: Node | null | undefined | false | EventTarget,
 		tagNames: K[] | K
 	): node is HTMLElementTagNameMap[K] {
 		const tags = asArray(tagNames).map(String);

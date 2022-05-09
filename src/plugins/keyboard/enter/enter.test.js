@@ -1097,16 +1097,32 @@ describe('Enter behavior Jodit Editor Tests', function () {
 					'<ul><li>test</li></ul><p>|<br></p>'
 				],
 				[
-					'<ul><li>test</li><li><ul><li>test2|</li></ul></li></ul>',
-					'<ul><li>test</li><li><ul><li>test2</li><li>|<br></li></ul></li></ul>'
+					'<ul><li>|<br></li><li>test</li></ul>',
+					'<p>|<br></p><ul><li>test</li></ul>'
 				],
 				[
-					'<ul><li>test</li><li><ul><li>test2</li><li>|<br></li></ul></li></ul>',
-					'<ul><li>test</li><li><ul><li>test2</li></ul></li><li>|<br></li></ul>'
+					'<ul><li>1</li><li><ul><li>2|</li></ul></li></ul>',
+					'<ul><li>1</li><li><ul><li>2</li><li>|<br></li></ul></li></ul>'
 				],
 				[
-					'<ul><li>test</li><li><ul><li>test2</li></ul></li><li>|<br></li></ul>',
-					'<ul><li>test</li><li><ul><li>test2</li></ul></li></ul><p>|<br></p>'
+					'<ul><li>1</li><li><ul><li>2</li><li>|<br></li></ul></li></ul>',
+					'<ul><li>1</li><li><ul><li>2</li></ul></li><li>|<br></li></ul>'
+				],
+				[
+					'<ul><li>1</li><li><br><ul><li>|<br></li><li>2</li></ul></li></ul>',
+					'<ul><li>1</li><li><br></li><li>|<br><ul><li>2</li></ul></li></ul>'
+				],
+				[
+					'<ul><li>1</li><li><br><ul><li>2</li><li>|<br></li></ul></li></ul>',
+					'<ul><li>1</li><li><br><ul><li>2</li></ul></li><li>|<br></li></ul>'
+				],
+				[
+					'<ul><li>1</li><li><ul><li>2</li><li>|<br></li><li>3</li></ul></li></ul>',
+					'<ul><li>1</li><li><ul><li>2</li></ul></li><li>|<br><ul><li>3</li></ul></li></ul>'
+				],
+				[
+					'<ul><li>1</li><li><ul><li>2</li></ul></li><li>|<br></li></ul>',
+					'<ul><li>1</li><li><ul><li>2</li></ul></li></ul><p>|<br></p>'
 				]
 			].forEach(([source, result]) => {
 				describe('For source: ' + source, () => {

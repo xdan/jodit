@@ -16,6 +16,7 @@ import {
 } from 'jodit/core/helpers/utils';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { ucfirst } from 'jodit/core/helpers/string/ucfirst';
+import { lang } from 'jodit/core/constants';
 
 /**
  * Simple variant sprintf function
@@ -68,7 +69,6 @@ export const sprintf = (str: string, args?: Array<string | number>): string => {
  */
 export function i18n(
 	key: string,
-	lang: IDictionary<IDictionary<string>>,
 	params?: Array<string | number>,
 	options?: ILanguageOptions
 ): string {

@@ -67,7 +67,8 @@ import { Storage } from './core/storage/';
 
 import { ViewWithToolbar } from './core/view/view-with-toolbar';
 
-import { instances, pluginSystem, modules, lang } from './core/global';
+import { lang } from 'jodit/core/constants';
+import { instances, pluginSystem, modules } from './core/global';
 import { autobind, cache, throttle, watch } from './core/decorators';
 
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';

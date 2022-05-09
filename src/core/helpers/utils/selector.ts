@@ -46,17 +46,17 @@ const $$temp = (): number => {
  */
 export function $$<K extends HTMLTagNames>(
 	selector: K,
-	root: HTMLElement | HTMLDocument
+	root: HTMLElement | HTMLDocument | DocumentFragment
 ): Array<HTMLElementTagNameMap[K]>;
 
 export function $$<T extends HTMLElement>(
 	selector: string,
-	root: HTMLElement | HTMLDocument
+	root: HTMLElement | HTMLDocument | DocumentFragment
 ): T[];
 
 export function $$<T extends Element>(
 	selector: string | HTMLTagNames,
-	root: HTMLElement | HTMLDocument
+	root: HTMLElement | HTMLDocument | DocumentFragment
 ): T[] {
 	let result: NodeList;
 
