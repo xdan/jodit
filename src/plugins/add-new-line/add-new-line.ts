@@ -20,7 +20,7 @@ import {
 	call,
 	scrollIntoViewIfNeeded
 } from 'jodit/core/helpers';
-import { debounce, watch } from 'jodit/core/decorators';
+import { autobind, debounce, watch } from 'jodit/core/decorators';
 
 import './config';
 
@@ -75,7 +75,15 @@ export class addNewLine extends Plugin {
 		this.line.style.setProperty('--jd-offset-handle', '0');
 	};
 
-	private hide = (): void => {
+	@watch(':lock')
+	protected onLock(isLocked: true): void {
+		if (isLocked && this.isShown) {
+			this.hideForce();
+		}
+	}
+
+	@autobind
+	private hide(): void {
 		if (!this.isShown || this.lineInFocus) {
 			return;
 		}
@@ -84,7 +92,7 @@ export class addNewLine extends Plugin {
 			timeout: 500,
 			label: 'add-new-line-hide'
 		});
-	};
+	}
 
 	private canGetFocus = (elm: Node | null): boolean => {
 		return (
@@ -128,7 +136,6 @@ export class addNewLine extends Plugin {
 				'scroll' + '.' + ns,
 				this.hideForce
 			)
-			.on(editor.editor, 'dblclick' + '.' + ns, this.onDblClickEditor)
 			.on(editor.editor, 'click' + '.' + ns, this.hide)
 			.on(editor.container, 'mouseleave' + '.' + ns, this.hide)
 			.on(editor.editor, 'mousemove' + '.' + ns, this.onMouseMove);
@@ -158,7 +165,7 @@ export class addNewLine extends Plugin {
 	};
 
 	@watch(':dblclick')
-	private onDblClickEditor(e: MouseEvent): void {
+	protected onDblClickEditor(e: MouseEvent): void {
 		const editor = this.j;
 
 		if (
@@ -195,7 +202,7 @@ export class addNewLine extends Plugin {
 		}
 	}
 
-	@debounce()
+	@debounce(ctx => ctx.defaultTimeout * 5)
 	private onMouseMove(e: MouseEvent): void {
 		const editor = this.j;
 

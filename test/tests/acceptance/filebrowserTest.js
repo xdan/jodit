@@ -1231,7 +1231,7 @@ describe('Jodit FileBrowser Tests', function () {
 							),
 							pos = Jodit.modules.Helpers.position(item);
 
-						simulateEvent('contextmenu', 0, item, function (o) {
+						simulateEvent('contextmenu', item, function (o) {
 							Object.assign(o, {
 								clientX: pos.left + 10,
 								clientY: pos.top + 10

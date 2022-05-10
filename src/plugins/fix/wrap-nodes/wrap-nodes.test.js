@@ -87,6 +87,26 @@ describe('WrapNodes plugin test', function () {
 		});
 	});
 
+	describe('BR', function () {
+		it('Should not wrap them', function () {
+			const editor = getJodit();
+			editor.value = 'test <br>test <br>test <br>test <br>';
+			expect(editor.value).equals(
+				'<p>test </p><br><p>test </p><br><p>test </p><br><p>test </p><br>'
+			);
+		});
+
+		describe('Several BR without texts', function () {
+			it('Should not wrap inside one block', function () {
+				const editor = getJodit({
+					enter: 'div'
+				});
+				editor.value = '<br><br><br>';
+				expect(editor.value).equals('<br><br><br>');
+			});
+		});
+	});
+
 	describe('History', function () {
 		it('Should not change history stack length', function () {
 			const editor = getJodit();

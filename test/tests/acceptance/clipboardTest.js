@@ -1073,7 +1073,7 @@ describe('Clipboard text', function () {
 						};
 					});
 
-					expect(editor.value).equals('<p>test<br>test<br>test</p>');
+					expect(editor.value).equals('<p>test</p><br><p>test</p><br><p>test</p>');
 				});
 			});
 
@@ -1250,7 +1250,7 @@ describe('Clipboard text', function () {
 				simulateEvent('paste', editor.editor, emulatePasteEvent);
 
 				expect(editor.value).equals(
-					'<p>test<br>test<br>test<br>test<br>test<br></p>'
+					'<p>test</p><br><p>test</p><br><p>test</p><br><p>test</p><br><p>test</p><br>'
 				);
 			});
 		});
