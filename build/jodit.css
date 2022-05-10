@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.17.1
+ * Version: v3.18.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.17.1
+ * Version: v3.18.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -1050,6 +1050,113 @@ svg.jodit-icon {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+.jodit-context-menu {
+  position: static;
+  width: auto;
+  max-width: none;
+  height: auto;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: 0 0;
+  float: none;
+  outline: 0;
+  position: fixed;
+  z-index: 10000001;
+  display: inline-block;
+  -webkit-box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
+		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
+          box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
+		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  z-index: 30000005;
+}
+.jodit-context-menu__content {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  overflow: auto;
+  max-height: 300px;
+  padding: 8px;
+  background: #fff;
+  overflow-scrolling: touch;
+}
+.jodit-context-menu_padding_false .jodit-context-menu__content {
+  padding: 0;
+}
+.jodit-context-menu_max-height_false .jodit-context-menu__content {
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+}
+.jodit-context-menu .jodit-ui-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.jodit-context-menu__actions {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+}
+.jodit-context-menu__actions button {
+  width: 100%;
+}
+.jodit-context-menu_theme_dark .jodit-context-menu__content {
+  background-color: #575757;
+}
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+.jodit-popup {
+  position: static;
+  width: auto;
+  max-width: none;
+  height: auto;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: 0 0;
+  float: none;
+  outline: 0;
+  position: fixed;
+  z-index: 10000001;
+  display: inline-block;
+  -webkit-box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
+		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
+          box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
+		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+.jodit-popup__content {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  overflow: auto;
+  max-height: 300px;
+  padding: 8px;
+  background: #fff;
+  overflow-scrolling: touch;
+}
+.jodit-popup_padding_false .jodit-popup__content {
+  padding: 0;
+}
+.jodit-popup_max-height_false .jodit-popup__content {
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+}
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 .jodit-ui-button-icon-text__icon {
   display: none;
 }
@@ -1754,82 +1861,6 @@ svg.jodit-icon {
   outline: 1px dashed #bd2130;
 }
 
-.jodit-ui-button-group {
-  margin-bottom: 8px;
-}
-.jodit-ui-button-group__label {
-  display: block;
-  margin-bottom: calc(8px / 4);
-  color: #a5a5a5;
-  font-size: 0.8em;
-}
-.jodit-ui-button-group__options {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-}
-.jodit-ui-button-group .jodit-ui-button:not(:last-child) {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
-.jodit-ui-button-group .jodit-ui-button + .jodit-ui-button {
-  border-left: 1px solid rgba(220, 220, 220, 0.4);
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-}
-.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) {
-  border-left: 0;
-  background-color: #dcdcdc;
-  -webkit-box-shadow: inset 0 0 3px 0 #4c4c4c;
-          box-shadow: inset 0 0 3px 0 #4c4c4c;
-  color: #4c4c4c;
-  outline: 0;
-}
-.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) + .jodit-ui-button {
-  border: 0;
-}
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-.jodit-ui-group {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  max-width: 100%;
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 auto;
-          flex: 0 0 auto;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-}
-.jodit-ui-group_line_true {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: stretch;
-      -ms-flex-pack: stretch;
-          justify-content: stretch;
-}
-.jodit-ui-group_separated_true:not(:last-child):not(.jodit-ui-group_before-spacer_true):after {
-  content: '';
-  padding: 0;
-  border-right: 1px solid #dadada;
-  border-left: 0;
-  margin: 2px;
-  cursor: default;
-}
-.jodit-ui-group:last-child {
-  border-bottom: 0;
-}
-
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -1892,44 +1923,608 @@ svg.jodit-icon {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-.jodit-popup {
-  position: static;
-  width: auto;
-  max-width: none;
-  height: auto;
-  padding: 0;
-  border: 0;
-  margin: 0;
-  background: 0 0;
-  float: none;
-  outline: 0;
-  position: fixed;
-  z-index: 10000001;
-  display: inline-block;
-  -webkit-box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
-		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
-          box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
-		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0);
+.jodit-ui-group {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  max-width: 100%;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
-.jodit-popup__content {
+.jodit-ui-group_line_true {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
+}
+.jodit-ui-group_separated_true:not(:last-child):not(.jodit-ui-group_before-spacer_true):after {
+  content: '';
+  padding: 0;
+  border-right: 1px solid #dadada;
+  border-left: 0;
+  margin: 2px;
+  cursor: default;
+}
+.jodit-ui-group:last-child {
+  border-bottom: 0;
+}
+
+.jodit-ui-button-group {
+  margin-bottom: 8px;
+}
+.jodit-ui-button-group__label {
+  display: block;
+  margin-bottom: calc(8px / 4);
+  color: #a5a5a5;
+  font-size: 0.8em;
+}
+.jodit-ui-button-group__options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.jodit-ui-button-group .jodit-ui-button:not(:last-child) {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.jodit-ui-button-group .jodit-ui-button + .jodit-ui-button {
+  border-left: 1px solid rgba(220, 220, 220, 0.4);
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) {
+  border-left: 0;
+  background-color: #dcdcdc;
+  -webkit-box-shadow: inset 0 0 3px 0 #4c4c4c;
+          box-shadow: inset 0 0 3px 0 #4c4c4c;
+  color: #4c4c4c;
+  outline: 0;
+}
+.jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) + .jodit-ui-button {
+  border: 0;
+}
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+.jodit-dialog {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   font-size: 14px;
+  position: absolute;
+  display: none;
+  width: 0;
+  height: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 0;
+  will-change: left, top, width, height;
+}
+.jodit-dialog_moved_true {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.jodit-dialog * {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.jodit-dialog .jodit_elfinder,
+.jodit-dialog .jodit_elfinder * {
+  -webkit-box-sizing: initial;
+          box-sizing: initial;
+}
+.jodit-dialog__overlay {
+  position: fixed;
+  z-index: 20000003;
+  top: 0;
+  left: 0;
+  display: none;
   overflow: auto;
-  max-height: 300px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  white-space: nowrap;
+}
+.jodit-dialog_static_true .jodit-dialog__overlay {
+  display: none;
+}
+.jodit-dialog_modal_true .jodit-dialog__overlay {
+  display: block;
+}
+.jodit-dialog_active_true {
+  display: block;
+}
+.jodit-dialog__panel {
+  position: fixed;
+  z-index: 20000004;
+  top: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-width: 200px;
+  max-width: 100%;
+  min-height: 100px;
+  max-height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  background-color: #fff;
+  -webkit-box-shadow: 0 8px calc(8px * 2) rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+          box-shadow: 0 8px calc(8px * 2) rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  text-align: left;
+  white-space: normal;
+}
+@media (max-width: 480px) {
+  .jodit-dialog:not(.jodit-dialog_adaptive_false) .jodit-dialog__panel {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 100%;
+    height: 100% !important;
+  }
+}
+.jodit-dialog_static_true {
+  position: static;
+  display: block;
+  width: auto;
+  height: auto;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.jodit-dialog_static_true .jodit-dialog__panel {
+  position: relative;
+  top: auto !important;
+  left: auto !important;
+  width: 100% !important;
+}
+.jodit-dialog_theme_dark {
+  background-color: #353535;
+  color: #fff;
+}
+.jodit-dialog_theme_dark .jodit-dialog__panel {
+  background-color: #353535;
+  color: #fff;
+}
+.jodit-dialog__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 50px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-bottom: 1px solid #dadada;
+  cursor: move;
+  text-align: left;
+}
+.jodit-dialog__header-toolbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-negative: 3;
+      flex-shrink: 3;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 8px;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 48px;
+  vertical-align: top;
+}
+.jodit-dialog__header-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-negative: 3;
+      flex-shrink: 3;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 8px;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 48px;
+  vertical-align: top;
+}
+@media (max-width: 480px) {
+  .jodit-dialog__header-toolbar {
+    padding-left: 0;
+  }
+}
+.jodit-dialog__header-button {
+  height: 48px;
+  -ms-flex-preferred-size: 48px;
+      flex-basis: 48px;
+  color: #222;
+  font-size: 28px;
+  line-height: 48px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-transition: background-color 0.2s ease 0s;
+  -o-transition: background-color 0.2s ease 0s;
+  transition: background-color 0.2s ease 0s;
+}
+.jodit-dialog__header-button:hover {
+  background-color: #ecebe9;
+}
+.jodit-dialog__header .jodit_toolbar {
+  border: 0;
+  background: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+.jodit-dialog__header .jodit_toolbar > li.jodit-toolbar-button .jodit-input {
+  width: auto;
+  padding-left: 8px;
+}
+@media (max-width: 480px) {
+  .jodit-dialog:not(.jodit-dialog_adaptive_false) .jodit-dialog__header {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+.jodit-dialog_slim_true .jodit-dialog__header {
+  min-height: 10px;
+}
+.jodit-dialog_slim_true .jodit-dialog__header-toolbar {
+  padding: 0 calc(8px / 4);
+}
+.jodit-dialog_slim_true .jodit-dialog__header-title {
+  padding: 0 calc(8px / 4);
+}
+.jodit-dialog_theme_dark .jodit-dialog__header {
+  border-color: #4c4c4c;
+}
+.jodit-dialog_fullsize_true .jodit-dialog__header {
+  cursor: default;
+}
+.jodit-dialog__content {
+  overflow: auto;
+  min-height: 100px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+.jodit-dialog__content .jodit-form__group {
+  padding: 0 8px;
+  margin-bottom: calc(8px * 1.5);
+}
+.jodit-dialog__content .jodit-form__group:first-child {
+  margin-top: 8px;
+}
+.jodit-dialog__content .jodit-form__group label + .jodit-select {
+  margin-top: calc(8px / 2);
+}
+.jodit-dialog__content .jodit-form__group label + .jodit-grid {
+  margin-top: calc(8px / 2);
+}
+.jodit-dialog__content .jodit-form__group label + .jodit-input_group {
+  margin-top: calc(8px / 2);
+}
+.jodit-dialog__content .jodit-form__group label + input {
+  margin-top: calc(8px / 2);
+}
+.jodit-dialog__content .jodit-form__group .jodit-input_group {
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+}
+.jodit-dialog__content .jodit-form__group .jodit-input_group > * {
+  display: table-cell;
+  height: 34px;
+  vertical-align: middle;
+}
+.jodit-dialog__content .jodit-form__group .jodit-input_group > input {
+  margin: 0 !important;
+}
+.jodit-dialog__content .jodit-form__group .jodit-input_group > input:not([class*='col-']) {
+  width: 100%;
+}
+.jodit-dialog__content .jodit-form__group .jodit-input_group-buttons {
+  width: 1%;
+  font-size: 0;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.jodit-dialog__content .jodit-form__group .jodit-input_group-buttons > .jodit-button {
+  height: 34px;
+  border: 1px solid #dadada;
+  margin-left: -1px;
+  border-radius: 0;
+  line-height: 34px;
+}
+.jodit-dialog__footer {
+  display: none;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: 8px;
-  background: #fff;
-  overflow-scrolling: touch;
 }
-.jodit-popup_padding_false .jodit-popup__content {
+.jodit-dialog__footer button {
+  margin-right: calc(8px / 2);
+}
+.jodit-dialog__footer button:last-child {
+  margin-right: 0;
+}
+.jodit-dialog__column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.jodit-dialog__resizer {
+  display: none;
+  position: relative;
+}
+.jodit-dialog__resizer svg {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  width: 12px;
+  height: 12px;
+  cursor: nwse-resize;
+  fill: #a5a5a5;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.jodit-dialog_resizable_true .jodit-dialog__resizer {
+  display: block;
+}
+@media (max-width: 480px) {
+  .jodit-dialog__resizer {
+    display: none;
+  }
+}
+.jodit-dialog_prompt {
+  min-width: 200px;
+  max-width: 300px;
+  padding: 8px;
+  word-break: break-all;
+}
+.jodit-dialog_prompt label {
+  display: block;
+  margin-bottom: calc(8px / 2);
+}
+.jodit-dialog_alert {
+  min-width: 200px;
+  max-width: 300px;
+  padding: 8px;
+  word-break: break-all;
+}
+.jodit-dialog_footer_true .jodit-dialog__footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.jodit_fullsize .jodit-dialog__panel {
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+.jodit_fullsize .jodit-dialog__panel .jodit-dialog__resizer {
+  display: none;
+}
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+.jodit-toolbar__box:not(:empty) {
+  overflow: hidden;
+  border-bottom: 1px solid #dadada;
+  background-color: #f9f9f9;
+  border-radius: 3px 3px 0 0;
+}
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+.jodit-toolbar-collection,
+.jodit-toolbar-editor-collection {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.jodit-toolbar-collection_mode_horizontal {
+  position: relative;
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent calc(calc(14px + calc((14px - 4px) * 2) + 2px * 2) - 1px), #dadada calc(14px + calc((14px - 4px) * 2) + 2px * 2));
+  background-image: repeating-linear-gradient(transparent 0, transparent calc(calc(14px + calc((14px - 4px) * 2) + 2px * 2) - 1px), #dadada calc(14px + calc((14px - 4px) * 2) + 2px * 2));
+}
+.jodit-toolbar-editor-collection_mode_horizontal {
+  position: relative;
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent calc(calc(14px + calc((14px - 4px) * 2) + 2px * 2) - 1px), #dadada calc(14px + calc((14px - 4px) * 2) + 2px * 2));
+  background-image: repeating-linear-gradient(transparent 0, transparent calc(calc(14px + calc((14px - 4px) * 2) + 2px * 2) - 1px), #dadada calc(14px + calc((14px - 4px) * 2) + 2px * 2));
+}
+.jodit-toolbar-collection_mode_horizontal:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #fff;
+  content: '';
+}
+.jodit-toolbar-editor-collection_mode_horizontal:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #fff;
+  content: '';
+}
+.jodit-toolbar-collection_size_tiny.jodit-toolbar-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
+}
+.jodit-toolbar-editor-collection_size_tiny.jodit-toolbar-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
+}
+.jodit-toolbar-collection_size_tiny.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
+}
+.jodit-toolbar-editor-collection_size_tiny.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
+}
+.jodit-toolbar-collection_size_xsmall.jodit-toolbar-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
+}
+.jodit-toolbar-editor-collection_size_xsmall.jodit-toolbar-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
+}
+.jodit-toolbar-collection_size_xsmall.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
+}
+.jodit-toolbar-editor-collection_size_xsmall.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
+}
+.jodit-toolbar-collection_size_small.jodit-toolbar-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
+}
+.jodit-toolbar-editor-collection_size_small.jodit-toolbar-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
+}
+.jodit-toolbar-collection_size_small.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
+}
+.jodit-toolbar-editor-collection_size_small.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
+}
+.jodit-toolbar-collection_size_middle.jodit-toolbar-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
+}
+.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
+}
+.jodit-toolbar-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
+}
+.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
+}
+.jodit-toolbar-collection_size_large.jodit-toolbar-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
+}
+.jodit-toolbar-editor-collection_size_large.jodit-toolbar-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
+}
+.jodit-toolbar-collection_size_large.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
+}
+.jodit-toolbar-editor-collection_size_large.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: -o-repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
+  background-image: repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
+}
+.jodit-toolbar-collection_mode_vertical .jodit-ui-group,
+.jodit-toolbar-editor-collection_mode_vertical .jodit-ui-group {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: 0;
+  background-color: transparent;
+}
+.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button {
+  height: auto;
+  min-height: calc(14px + calc((14px - 4px) * 2) + 2px * 2);
+}
+.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button {
+  height: auto;
+  min-height: calc(14px + calc((14px - 4px) * 2) + 2px * 2);
+}
+.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button__button {
+  width: 100%;
+  height: auto;
+  min-height: calc(14px + calc((14px - 4px) * 2) + 2px * 2);
+  cursor: pointer;
+}
+.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button__button {
+  width: 100%;
+  height: auto;
+  min-height: calc(14px + calc((14px - 4px) * 2) + 2px * 2);
+  cursor: pointer;
+}
+.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button__text:not(:empty),
+.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button__text:not(:empty) {
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+}
+.jodit-toolbar-collection .jodit-toolbar-content {
   padding: 0;
+  margin: 2px 1px;
 }
-.jodit-popup_max-height_false .jodit-popup__content {
-  max-height: -webkit-fit-content;
-  max-height: -moz-fit-content;
-  max-height: fit-content;
+.jodit-toolbar-editor-collection .jodit-toolbar-content {
+  padding: 0;
+  margin: 2px 1px;
+}
+.jodit-toolbar-collection .jodit-toolbar-button {
+  padding: 0;
+  margin: 2px 1px;
+}
+.jodit-toolbar-editor-collection .jodit-toolbar-button {
+  padding: 0;
+  margin: 2px 1px;
+}
+.jodit-dialog .jodit-toolbar-collection_mode_horizontal,
+.jodit-dialog .jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: none;
 }
 
 .jodit-ui-label {
@@ -2576,601 +3171,6 @@ svg.jodit-icon {
   right: 0;
   width: 20px;
   clip: rect(-6px, 22px, 14px, 8px);
-}
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-.jodit-context-menu {
-  position: static;
-  width: auto;
-  max-width: none;
-  height: auto;
-  padding: 0;
-  border: 0;
-  margin: 0;
-  background: 0 0;
-  float: none;
-  outline: 0;
-  position: fixed;
-  z-index: 10000001;
-  display: inline-block;
-  -webkit-box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
-		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
-          box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
-		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0);
-  z-index: 30000005;
-}
-.jodit-context-menu__content {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-  font-size: 14px;
-  overflow: auto;
-  max-height: 300px;
-  padding: 8px;
-  background: #fff;
-  overflow-scrolling: touch;
-}
-.jodit-context-menu_padding_false .jodit-context-menu__content {
-  padding: 0;
-}
-.jodit-context-menu_max-height_false .jodit-context-menu__content {
-  max-height: -webkit-fit-content;
-  max-height: -moz-fit-content;
-  max-height: fit-content;
-}
-.jodit-context-menu .jodit-ui-button {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.jodit-context-menu__actions {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-  font-size: 14px;
-}
-.jodit-context-menu__actions button {
-  width: 100%;
-}
-.jodit-context-menu_theme_dark .jodit-context-menu__content {
-  background-color: #575757;
-}
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-.jodit-dialog {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-  font-size: 14px;
-  position: absolute;
-  display: none;
-  width: 0;
-  height: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  border: 0;
-  will-change: left, top, width, height;
-}
-.jodit-dialog_moved_true {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-.jodit-dialog * {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-.jodit-dialog .jodit_elfinder,
-.jodit-dialog .jodit_elfinder * {
-  -webkit-box-sizing: initial;
-          box-sizing: initial;
-}
-.jodit-dialog__overlay {
-  position: fixed;
-  z-index: 20000003;
-  top: 0;
-  left: 0;
-  display: none;
-  overflow: auto;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  text-align: center;
-  white-space: nowrap;
-}
-.jodit-dialog_static_true .jodit-dialog__overlay {
-  display: none;
-}
-.jodit-dialog_modal_true .jodit-dialog__overlay {
-  display: block;
-}
-.jodit-dialog_active_true {
-  display: block;
-}
-.jodit-dialog__panel {
-  position: fixed;
-  z-index: 20000004;
-  top: 0;
-  left: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  min-width: 200px;
-  max-width: 100%;
-  min-height: 100px;
-  max-height: 100%;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
-  background-color: #fff;
-  -webkit-box-shadow: 0 8px calc(8px * 2) rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-          box-shadow: 0 8px calc(8px * 2) rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  text-align: left;
-  white-space: normal;
-}
-@media (max-width: 480px) {
-  .jodit-dialog:not(.jodit-dialog_adaptive_false) .jodit-dialog__panel {
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    max-width: 100%;
-    height: 100% !important;
-  }
-}
-.jodit-dialog_static_true {
-  position: static;
-  display: block;
-  width: auto;
-  height: auto;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-.jodit-dialog_static_true .jodit-dialog__panel {
-  position: relative;
-  top: auto !important;
-  left: auto !important;
-  width: 100% !important;
-}
-.jodit-dialog_theme_dark {
-  background-color: #353535;
-  color: #fff;
-}
-.jodit-dialog_theme_dark .jodit-dialog__panel {
-  background-color: #353535;
-  color: #fff;
-}
-.jodit-dialog__header {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  min-height: 50px;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  border-bottom: 1px solid #dadada;
-  cursor: move;
-  text-align: left;
-}
-.jodit-dialog__header-toolbar {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-negative: 3;
-      flex-shrink: 3;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 0 8px;
-  margin: 0;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 48px;
-  vertical-align: top;
-}
-.jodit-dialog__header-title {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-negative: 3;
-      flex-shrink: 3;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 0 8px;
-  margin: 0;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 48px;
-  vertical-align: top;
-}
-@media (max-width: 480px) {
-  .jodit-dialog__header-toolbar {
-    padding-left: 0;
-  }
-}
-.jodit-dialog__header-button {
-  height: 48px;
-  -ms-flex-preferred-size: 48px;
-      flex-basis: 48px;
-  color: #222;
-  font-size: 28px;
-  line-height: 48px;
-  text-align: center;
-  text-decoration: none;
-  -webkit-transition: background-color 0.2s ease 0s;
-  -o-transition: background-color 0.2s ease 0s;
-  transition: background-color 0.2s ease 0s;
-}
-.jodit-dialog__header-button:hover {
-  background-color: #ecebe9;
-}
-.jodit-dialog__header .jodit_toolbar {
-  border: 0;
-  background: transparent;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-}
-.jodit-dialog__header .jodit_toolbar > li.jodit-toolbar-button .jodit-input {
-  width: auto;
-  padding-left: 8px;
-}
-@media (max-width: 480px) {
-  .jodit-dialog:not(.jodit-dialog_adaptive_false) .jodit-dialog__header {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-  }
-}
-.jodit-dialog_slim_true .jodit-dialog__header {
-  min-height: 10px;
-}
-.jodit-dialog_slim_true .jodit-dialog__header-toolbar {
-  padding: 0 calc(8px / 4);
-}
-.jodit-dialog_slim_true .jodit-dialog__header-title {
-  padding: 0 calc(8px / 4);
-}
-.jodit-dialog_theme_dark .jodit-dialog__header {
-  border-color: #4c4c4c;
-}
-.jodit-dialog_fullsize_true .jodit-dialog__header {
-  cursor: default;
-}
-.jodit-dialog__content {
-  overflow: auto;
-  min-height: 100px;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-}
-.jodit-dialog__content .jodit-form__group {
-  padding: 0 8px;
-  margin-bottom: calc(8px * 1.5);
-}
-.jodit-dialog__content .jodit-form__group:first-child {
-  margin-top: 8px;
-}
-.jodit-dialog__content .jodit-form__group label + .jodit-select {
-  margin-top: calc(8px / 2);
-}
-.jodit-dialog__content .jodit-form__group label + .jodit-grid {
-  margin-top: calc(8px / 2);
-}
-.jodit-dialog__content .jodit-form__group label + .jodit-input_group {
-  margin-top: calc(8px / 2);
-}
-.jodit-dialog__content .jodit-form__group label + input {
-  margin-top: calc(8px / 2);
-}
-.jodit-dialog__content .jodit-form__group .jodit-input_group {
-  display: table;
-  width: 100%;
-  border-collapse: separate;
-}
-.jodit-dialog__content .jodit-form__group .jodit-input_group > * {
-  display: table-cell;
-  height: 34px;
-  vertical-align: middle;
-}
-.jodit-dialog__content .jodit-form__group .jodit-input_group > input {
-  margin: 0 !important;
-}
-.jodit-dialog__content .jodit-form__group .jodit-input_group > input:not([class*='col-']) {
-  width: 100%;
-}
-.jodit-dialog__content .jodit-form__group .jodit-input_group-buttons {
-  width: 1%;
-  font-size: 0;
-  vertical-align: middle;
-  white-space: nowrap;
-}
-.jodit-dialog__content .jodit-form__group .jodit-input_group-buttons > .jodit-button {
-  height: 34px;
-  border: 1px solid #dadada;
-  margin-left: -1px;
-  border-radius: 0;
-  line-height: 34px;
-}
-.jodit-dialog__footer {
-  display: none;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: 8px;
-}
-.jodit-dialog__footer button {
-  margin-right: calc(8px / 2);
-}
-.jodit-dialog__footer button:last-child {
-  margin-right: 0;
-}
-.jodit-dialog__column {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.jodit-dialog__resizer {
-  display: none;
-  position: relative;
-}
-.jodit-dialog__resizer svg {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-  width: 12px;
-  height: 12px;
-  cursor: nwse-resize;
-  fill: #a5a5a5;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-.jodit-dialog_resizable_true .jodit-dialog__resizer {
-  display: block;
-}
-@media (max-width: 480px) {
-  .jodit-dialog__resizer {
-    display: none;
-  }
-}
-.jodit-dialog_prompt {
-  min-width: 200px;
-  max-width: 300px;
-  padding: 8px;
-  word-break: break-all;
-}
-.jodit-dialog_prompt label {
-  display: block;
-  margin-bottom: calc(8px / 2);
-}
-.jodit-dialog_alert {
-  min-width: 200px;
-  max-width: 300px;
-  padding: 8px;
-  word-break: break-all;
-}
-.jodit-dialog_footer_true .jodit-dialog__footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.jodit_fullsize .jodit-dialog__panel {
-  top: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-.jodit_fullsize .jodit-dialog__panel .jodit-dialog__resizer {
-  display: none;
-}
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-.jodit-toolbar__box:not(:empty) {
-  overflow: hidden;
-  border-bottom: 1px solid #dadada;
-  background-color: #f9f9f9;
-  border-radius: 3px 3px 0 0;
-}
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-.jodit-toolbar-collection,
-.jodit-toolbar-editor-collection {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-.jodit-toolbar-collection_mode_horizontal {
-  position: relative;
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent calc(calc(14px + calc((14px - 4px) * 2) + 2px * 2) - 1px), #dadada calc(14px + calc((14px - 4px) * 2) + 2px * 2));
-  background-image: repeating-linear-gradient(transparent 0, transparent calc(calc(14px + calc((14px - 4px) * 2) + 2px * 2) - 1px), #dadada calc(14px + calc((14px - 4px) * 2) + 2px * 2));
-}
-.jodit-toolbar-editor-collection_mode_horizontal {
-  position: relative;
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent calc(calc(14px + calc((14px - 4px) * 2) + 2px * 2) - 1px), #dadada calc(14px + calc((14px - 4px) * 2) + 2px * 2));
-  background-image: repeating-linear-gradient(transparent 0, transparent calc(calc(14px + calc((14px - 4px) * 2) + 2px * 2) - 1px), #dadada calc(14px + calc((14px - 4px) * 2) + 2px * 2));
-}
-.jodit-toolbar-collection_mode_horizontal:after {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 1px;
-  background-color: #fff;
-  content: '';
-}
-.jodit-toolbar-editor-collection_mode_horizontal:after {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 1px;
-  background-color: #fff;
-  content: '';
-}
-.jodit-toolbar-collection_size_tiny.jodit-toolbar-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
-}
-.jodit-toolbar-editor-collection_size_tiny.jodit-toolbar-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
-}
-.jodit-toolbar-collection_size_tiny.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
-}
-.jodit-toolbar-editor-collection_size_tiny.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 19px, #dadada 20px);
-}
-.jodit-toolbar-collection_size_xsmall.jodit-toolbar-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
-}
-.jodit-toolbar-editor-collection_size_xsmall.jodit-toolbar-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
-}
-.jodit-toolbar-collection_size_xsmall.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
-}
-.jodit-toolbar-editor-collection_size_xsmall.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 25px, #dadada 26px);
-}
-.jodit-toolbar-collection_size_small.jodit-toolbar-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
-}
-.jodit-toolbar-editor-collection_size_small.jodit-toolbar-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
-}
-.jodit-toolbar-collection_size_small.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
-}
-.jodit-toolbar-editor-collection_size_small.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 31px, #dadada 32px);
-}
-.jodit-toolbar-collection_size_middle.jodit-toolbar-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
-}
-.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
-}
-.jodit-toolbar-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
-}
-.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 37px, #dadada 38px);
-}
-.jodit-toolbar-collection_size_large.jodit-toolbar-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
-}
-.jodit-toolbar-editor-collection_size_large.jodit-toolbar-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
-}
-.jodit-toolbar-collection_size_large.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
-}
-.jodit-toolbar-editor-collection_size_large.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: -o-repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
-  background-image: repeating-linear-gradient(transparent 0, transparent 43px, #dadada 44px);
-}
-.jodit-toolbar-collection_mode_vertical .jodit-ui-group,
-.jodit-toolbar-editor-collection_mode_vertical .jodit-ui-group {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  border: 0;
-  background-color: transparent;
-}
-.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button {
-  height: auto;
-  min-height: calc(14px + calc((14px - 4px) * 2) + 2px * 2);
-}
-.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button {
-  height: auto;
-  min-height: calc(14px + calc((14px - 4px) * 2) + 2px * 2);
-}
-.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button__button {
-  width: 100%;
-  height: auto;
-  min-height: calc(14px + calc((14px - 4px) * 2) + 2px * 2);
-  cursor: pointer;
-}
-.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button__button {
-  width: 100%;
-  height: auto;
-  min-height: calc(14px + calc((14px - 4px) * 2) + 2px * 2);
-  cursor: pointer;
-}
-.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button__text:not(:empty),
-.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button__text:not(:empty) {
-  -webkit-box-pack: left;
-      -ms-flex-pack: left;
-          justify-content: left;
-}
-.jodit-toolbar-collection .jodit-toolbar-content {
-  padding: 0;
-  margin: 2px 1px;
-}
-.jodit-toolbar-editor-collection .jodit-toolbar-content {
-  padding: 0;
-  margin: 2px 1px;
-}
-.jodit-toolbar-collection .jodit-toolbar-button {
-  padding: 0;
-  margin: 2px 1px;
-}
-.jodit-toolbar-editor-collection .jodit-toolbar-button {
-  padding: 0;
-  margin: 2px 1px;
-}
-.jodit-dialog .jodit-toolbar-collection_mode_horizontal,
-.jodit-dialog .jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: none;
 }
 
 /*!
@@ -4721,19 +4721,19 @@ a + .jodit-filebrowser-tree__source-title {
 }
 .jodit-add-new-line::after {
   display: block;
-  width: calc(100% - 30px);
+  width: 100%;
   height: 1px;
   background-color: #6b6b6b;
   content: '';
 }
 .jodit-add-new-line span {
   position: absolute;
-  right: 0;
+  left: calc(100% - 30px);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   width: 30px;
-  height: calc(8px * 2);
+  height: 30px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -5583,27 +5583,8 @@ html.jodit_fullsize-box_true {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-.jodit-table-resizer {
-  position: absolute;
-  z-index: 3;
-  padding-right: calc(8px / 2);
-  padding-left: calc(8px / 2);
-  margin-left: calc(8px / -2);
-  cursor: col-resize;
-}
-.jodit-table-resizer::after {
-  display: block;
-  width: 0;
-  height: 100%;
-  border: 0;
-  content: '';
-}
-.jodit-table-resizer_moved {
-  z-index: 2;
-  background-color: #b5d6fd;
-}
-.jodit-table-resizer_moved::after {
-  border-right: 1px solid #dadada moved;
+td[style*='border'] {
+  border-style: double !important;
 }
 .jodit-wysiwyg table {
   max-width: 100%;
@@ -5638,6 +5619,28 @@ html.jodit_fullsize-box_true {
       -ms-user-select: text;
           user-select: text;
   vertical-align: middle;
+}
+.jodit-table-resizer {
+  position: absolute;
+  z-index: 3;
+  padding-right: calc(8px / 2);
+  padding-left: calc(8px / 2);
+  margin-left: calc(8px / -2);
+  cursor: col-resize;
+}
+.jodit-table-resizer::after {
+  display: block;
+  width: 0;
+  height: 100%;
+  border: 0;
+  content: '';
+}
+.jodit-table-resizer_moved {
+  z-index: 2;
+  background-color: #b5d6fd;
+}
+.jodit-table-resizer_moved::after {
+  border-right: 1px solid #dadada moved;
 }
 .jodit-form__inserter .jodit-form__table-creator-box {
   display: -webkit-box;

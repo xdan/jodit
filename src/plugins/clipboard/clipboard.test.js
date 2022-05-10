@@ -1073,7 +1073,9 @@ describe('Clipboard text', function () {
 						};
 					});
 
-					expect(editor.value).equals('<p>test</p><br><p>test</p><br><p>test</p>');
+					expect(editor.value).equals(
+						'<p>test</p><br><p>test</p><br><p>test</p>'
+					);
 				});
 			});
 

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.17.1
+ * Version: v3.18.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -24,22 +24,8 @@ return /******/ (function() { // webpackBootstrap
 
 "use strict";
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.__classPrivateFieldSet = exports.__classPrivateFieldGet = exports.__importDefault = exports.__importStar = exports.__makeTemplateObject = exports.__asyncValues = exports.__asyncDelegator = exports.__asyncGenerator = exports.__await = exports.__spreadArray = exports.__spreadArrays = exports.__spread = exports.__read = exports.__values = exports.__exportStar = exports.__createBinding = exports.__generator = exports.__awaiter = exports.__metadata = exports.__param = exports.__decorate = exports.__rest = exports.__assign = exports.__extends = void 0;
+exports.__classPrivateFieldIn = exports.__classPrivateFieldSet = exports.__classPrivateFieldGet = exports.__importDefault = exports.__importStar = exports.__makeTemplateObject = exports.__asyncValues = exports.__asyncDelegator = exports.__asyncGenerator = exports.__await = exports.__spreadArray = exports.__spreadArrays = exports.__spread = exports.__read = exports.__values = exports.__exportStar = exports.__createBinding = exports.__generator = exports.__awaiter = exports.__metadata = exports.__param = exports.__decorate = exports.__rest = exports.__assign = exports.__extends = void 0;
 var extendStatics = function (d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -195,7 +181,11 @@ exports.__generator = __generator;
 exports.__createBinding = Object.create ? (function (o, m, k, k2) {
     if (k2 === undefined)
         k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function () { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function (o, m, k, k2) {
     if (k2 === undefined)
         k2 = k;
@@ -363,6 +353,12 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 exports.__classPrivateFieldSet = __classPrivateFieldSet;
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function"))
+        throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+exports.__classPrivateFieldIn = __classPrivateFieldIn;
 
 
 /***/ }),
@@ -403,7 +399,7 @@ var is_function_1 = __webpack_require__(9);
 var is_plain_object_1 = __webpack_require__(10);
 var is_promise_1 = __webpack_require__(12);
 var is_string_1 = __webpack_require__(13);
-var is_number_1 = __webpack_require__(14);
+var is_number_1 = __webpack_require__(15);
 var Async = (function () {
     function Async() {
         var _this = this;
@@ -769,6 +765,30 @@ exports.isPromise = isPromise;
 
 /***/ }),
 /* 13 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isStringArray = exports.isString = void 0;
+var is_array_1 = __webpack_require__(14);
+function isString(value) {
+    return typeof value === 'string';
+}
+exports.isString = isString;
+function isStringArray(value) {
+    return (0, is_array_1.isArray)(value) && isString(value[0]);
+}
+exports.isStringArray = isStringArray;
+
+
+/***/ }),
+/* 14 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -779,15 +799,15 @@ exports.isPromise = isPromise;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isString = void 0;
-function isString(value) {
-    return typeof value === 'string';
+exports.isArray = void 0;
+function isArray(elm) {
+    return Array.isArray(elm);
 }
-exports.isString = isString;
+exports.isArray = isArray;
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -806,7 +826,7 @@ exports.isNumber = isNumber;
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -885,10 +905,10 @@ exports["default"] = autobind;
 
 
 /***/ }),
-/* 16 */,
 /* 17 */,
 /* 18 */,
-/* 19 */
+/* 19 */,
+/* 20 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -897,7 +917,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -908,20 +928,11 @@ __webpack_require__.r(__webpack_exports__);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-__webpack_require__(21);
 __webpack_require__(22);
-__webpack_require__(24);
-__webpack_require__(131);
-if (!Array.from) {
-    Array.from = function (object) {
-        if (object instanceof Set) {
-            var res_1 = [];
-            object.forEach(function (a) { return res_1.push(a); });
-            return res_1;
-        }
-        return [].slice.call(object);
-    };
-}
+__webpack_require__(23);
+__webpack_require__(25);
+__webpack_require__(140);
+__webpack_require__(144);
 if (!Array.prototype.includes) {
     Array.prototype.includes = function (value) {
         return this.indexOf(value) > -1;
@@ -963,7 +974,7 @@ if (!String.prototype.endsWith) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function() {
 
 "use strict";
@@ -1121,16 +1132,16 @@ if ("document" in window.self) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-module.exports = (__webpack_require__(23).polyfill)();
+module.exports = (__webpack_require__(24).polyfill)();
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
@@ -1702,23 +1713,14 @@ module.exports = (__webpack_require__(23).polyfill)();
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-__webpack_require__(25);
-__webpack_require__(96);
+__webpack_require__(26);
 __webpack_require__(98);
-__webpack_require__(114);
-__webpack_require__(115);
-__webpack_require__(116);
-__webpack_require__(117);
-__webpack_require__(118);
-__webpack_require__(119);
-__webpack_require__(120);
-__webpack_require__(121);
-__webpack_require__(122);
+__webpack_require__(100);
 __webpack_require__(123);
 __webpack_require__(124);
 __webpack_require__(125);
@@ -1727,28 +1729,37 @@ __webpack_require__(127);
 __webpack_require__(128);
 __webpack_require__(129);
 __webpack_require__(130);
-var path = __webpack_require__(110);
+__webpack_require__(131);
+__webpack_require__(132);
+__webpack_require__(133);
+__webpack_require__(134);
+__webpack_require__(135);
+__webpack_require__(136);
+__webpack_require__(137);
+__webpack_require__(138);
+__webpack_require__(139);
+var path = __webpack_require__(111);
 module.exports = path.Symbol;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var $ = __webpack_require__(26);
-var global = __webpack_require__(27);
-var fails = __webpack_require__(30);
-var isArray = __webpack_require__(88);
-var isObject = __webpack_require__(42);
-var toObject = __webpack_require__(61);
-var lengthOfArrayLike = __webpack_require__(83);
-var createProperty = __webpack_require__(89);
-var arraySpeciesCreate = __webpack_require__(90);
-var arrayMethodHasSpeciesSupport = __webpack_require__(95);
-var wellKnownSymbol = __webpack_require__(55);
-var V8_VERSION = __webpack_require__(49);
+var $ = __webpack_require__(27);
+var global = __webpack_require__(28);
+var fails = __webpack_require__(31);
+var isArray = __webpack_require__(90);
+var isObject = __webpack_require__(43);
+var toObject = __webpack_require__(62);
+var lengthOfArrayLike = __webpack_require__(85);
+var createProperty = __webpack_require__(91);
+var arraySpeciesCreate = __webpack_require__(92);
+var arrayMethodHasSpeciesSupport = __webpack_require__(97);
+var wellKnownSymbol = __webpack_require__(56);
+var V8_VERSION = __webpack_require__(50);
 var IS_CONCAT_SPREADABLE = wellKnownSymbol('isConcatSpreadable');
 var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
 var MAXIMUM_ALLOWED_INDEX_EXCEEDED = 'Maximum allowed index exceeded';
@@ -1766,7 +1777,7 @@ var isConcatSpreadable = function (O) {
     return spreadable !== undefined ? !!spreadable : isArray(O);
 };
 var FORCED = !IS_CONCAT_SPREADABLE_SUPPORT || !SPECIES_SUPPORT;
-$({ target: 'Array', proto: true, forced: FORCED }, {
+$({ target: 'Array', proto: true, arity: 1, forced: FORCED }, {
     concat: function concat(arg) {
         var O = toObject(this);
         var A = arraySpeciesCreate(O, 0);
@@ -1795,18 +1806,18 @@ $({ target: 'Array', proto: true, forced: FORCED }, {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var getOwnPropertyDescriptor = (__webpack_require__(28).f);
-var createNonEnumerableProperty = __webpack_require__(65);
-var redefine = __webpack_require__(69);
-var setGlobal = __webpack_require__(59);
-var copyConstructorProperties = __webpack_require__(76);
-var isForced = __webpack_require__(87);
+var global = __webpack_require__(28);
+var getOwnPropertyDescriptor = (__webpack_require__(29).f);
+var createNonEnumerableProperty = __webpack_require__(66);
+var defineBuiltIn = __webpack_require__(70);
+var setGlobal = __webpack_require__(60);
+var copyConstructorProperties = __webpack_require__(78);
+var isForced = __webpack_require__(89);
 module.exports = function (options, source) {
     var TARGET = options.target;
     var GLOBAL = options.global;
@@ -1839,13 +1850,13 @@ module.exports = function (options, source) {
             if (options.sham || (targetProperty && targetProperty.sham)) {
                 createNonEnumerableProperty(sourceProperty, 'sham', true);
             }
-            redefine(target, key, sourceProperty, options);
+            defineBuiltIn(target, key, sourceProperty, options);
         }
 };
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
@@ -1862,19 +1873,19 @@ module.exports =
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
-var DESCRIPTORS = __webpack_require__(29);
-var call = __webpack_require__(31);
-var propertyIsEnumerableModule = __webpack_require__(33);
-var createPropertyDescriptor = __webpack_require__(34);
-var toIndexedObject = __webpack_require__(35);
-var toPropertyKey = __webpack_require__(40);
-var hasOwn = __webpack_require__(60);
-var IE8_DOM_DEFINE = __webpack_require__(63);
+var DESCRIPTORS = __webpack_require__(30);
+var call = __webpack_require__(32);
+var propertyIsEnumerableModule = __webpack_require__(34);
+var createPropertyDescriptor = __webpack_require__(35);
+var toIndexedObject = __webpack_require__(36);
+var toPropertyKey = __webpack_require__(41);
+var hasOwn = __webpack_require__(61);
+var IE8_DOM_DEFINE = __webpack_require__(64);
 var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
 exports.f = DESCRIPTORS ? $getOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
     O = toIndexedObject(O);
@@ -1890,19 +1901,19 @@ exports.f = DESCRIPTORS ? $getOwnPropertyDescriptor : function getOwnPropertyDes
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var fails = __webpack_require__(30);
+var fails = __webpack_require__(31);
 module.exports = !fails(function () {
     return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
 });
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module) {
 
 "use strict";
@@ -1918,12 +1929,12 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var NATIVE_BIND = __webpack_require__(32);
+var NATIVE_BIND = __webpack_require__(33);
 var call = Function.prototype.call;
 module.exports = NATIVE_BIND ? call.bind(call) : function () {
     return call.apply(call, arguments);
@@ -1931,12 +1942,12 @@ module.exports = NATIVE_BIND ? call.bind(call) : function () {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var fails = __webpack_require__(30);
+var fails = __webpack_require__(31);
 module.exports = !fails(function () {
     var test = (function () { }).bind();
     return typeof test != 'function' || test.hasOwnProperty('prototype');
@@ -1944,7 +1955,7 @@ module.exports = !fails(function () {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -1959,7 +1970,7 @@ exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module) {
 
 "use strict";
@@ -1975,28 +1986,28 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var IndexedObject = __webpack_require__(36);
-var requireObjectCoercible = __webpack_require__(39);
+var IndexedObject = __webpack_require__(37);
+var requireObjectCoercible = __webpack_require__(40);
 module.exports = function (it) {
     return IndexedObject(requireObjectCoercible(it));
 };
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var uncurryThis = __webpack_require__(37);
-var fails = __webpack_require__(30);
-var classof = __webpack_require__(38);
+var global = __webpack_require__(28);
+var uncurryThis = __webpack_require__(38);
+var fails = __webpack_require__(31);
+var classof = __webpack_require__(39);
 var Object = global.Object;
 var split = uncurryThis(''.split);
 module.exports = fails(function () {
@@ -2007,12 +2018,12 @@ module.exports = fails(function () {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var NATIVE_BIND = __webpack_require__(32);
+var NATIVE_BIND = __webpack_require__(33);
 var FunctionPrototype = Function.prototype;
 var bind = FunctionPrototype.bind;
 var call = FunctionPrototype.call;
@@ -2027,31 +2038,16 @@ module.exports = NATIVE_BIND ? function (fn) {
 
 
 /***/ }),
-/* 38 */
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(37);
-var toString = uncurryThis({}.toString);
-var stringSlice = uncurryThis(''.slice);
-module.exports = function (it) {
-    return stringSlice(toString(it), 8, -1);
-};
-
-
-/***/ }),
 /* 39 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var TypeError = global.TypeError;
+var uncurryThis = __webpack_require__(38);
+var toString = uncurryThis({}.toString);
+var stringSlice = uncurryThis(''.slice);
 module.exports = function (it) {
-    if (it == undefined)
-        throw TypeError("Can't call method on " + it);
-    return it;
+    return stringSlice(toString(it), 8, -1);
 };
 
 
@@ -2061,11 +2057,12 @@ module.exports = function (it) {
 
 "use strict";
 
-var toPrimitive = __webpack_require__(41);
-var isSymbol = __webpack_require__(44);
-module.exports = function (argument) {
-    var key = toPrimitive(argument, 'string');
-    return isSymbol(key) ? key : key + '';
+var global = __webpack_require__(28);
+var TypeError = global.TypeError;
+module.exports = function (it) {
+    if (it == undefined)
+        throw TypeError("Can't call method on " + it);
+    return it;
 };
 
 
@@ -2075,13 +2072,27 @@ module.exports = function (argument) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var call = __webpack_require__(31);
-var isObject = __webpack_require__(42);
-var isSymbol = __webpack_require__(44);
-var getMethod = __webpack_require__(51);
-var ordinaryToPrimitive = __webpack_require__(54);
-var wellKnownSymbol = __webpack_require__(55);
+var toPrimitive = __webpack_require__(42);
+var isSymbol = __webpack_require__(45);
+module.exports = function (argument) {
+    var key = toPrimitive(argument, 'string');
+    return isSymbol(key) ? key : key + '';
+};
+
+
+/***/ }),
+/* 42 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(28);
+var call = __webpack_require__(32);
+var isObject = __webpack_require__(43);
+var isSymbol = __webpack_require__(45);
+var getMethod = __webpack_require__(52);
+var ordinaryToPrimitive = __webpack_require__(55);
+var wellKnownSymbol = __webpack_require__(56);
 var TypeError = global.TypeError;
 var TO_PRIMITIVE = wellKnownSymbol('toPrimitive');
 module.exports = function (input, pref) {
@@ -2104,19 +2115,19 @@ module.exports = function (input, pref) {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var isCallable = __webpack_require__(43);
+var isCallable = __webpack_require__(44);
 module.exports = function (it) {
     return typeof it == 'object' ? it !== null : isCallable(it);
 };
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module) {
 
 "use strict";
@@ -2127,16 +2138,16 @@ module.exports = function (argument) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var getBuiltIn = __webpack_require__(45);
-var isCallable = __webpack_require__(43);
-var isPrototypeOf = __webpack_require__(46);
-var USE_SYMBOL_AS_UID = __webpack_require__(47);
+var global = __webpack_require__(28);
+var getBuiltIn = __webpack_require__(46);
+var isCallable = __webpack_require__(44);
+var isPrototypeOf = __webpack_require__(47);
+var USE_SYMBOL_AS_UID = __webpack_require__(48);
 var Object = global.Object;
 module.exports = USE_SYMBOL_AS_UID ? function (it) {
     return typeof it == 'symbol';
@@ -2147,13 +2158,13 @@ module.exports = USE_SYMBOL_AS_UID ? function (it) {
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var isCallable = __webpack_require__(43);
+var global = __webpack_require__(28);
+var isCallable = __webpack_require__(44);
 var aFunction = function (argument) {
     return isCallable(argument) ? argument : undefined;
 };
@@ -2163,25 +2174,13 @@ module.exports = function (namespace, method) {
 
 
 /***/ }),
-/* 46 */
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(37);
-module.exports = uncurryThis({}.isPrototypeOf);
-
-
-/***/ }),
 /* 47 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var NATIVE_SYMBOL = __webpack_require__(48);
-module.exports = NATIVE_SYMBOL
-    && !Symbol.sham
-    && typeof Symbol.iterator == 'symbol';
+var uncurryThis = __webpack_require__(38);
+module.exports = uncurryThis({}.isPrototypeOf);
 
 
 /***/ }),
@@ -2190,13 +2189,10 @@ module.exports = NATIVE_SYMBOL
 
 "use strict";
 
-var V8_VERSION = __webpack_require__(49);
-var fails = __webpack_require__(30);
-module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
-    var symbol = Symbol();
-    return !String(symbol) || !(Object(symbol) instanceof Symbol) ||
-        !Symbol.sham && V8_VERSION && V8_VERSION < 41;
-});
+var NATIVE_SYMBOL = __webpack_require__(49);
+module.exports = NATIVE_SYMBOL
+    && !Symbol.sham
+    && typeof Symbol.iterator == 'symbol';
 
 
 /***/ }),
@@ -2205,8 +2201,23 @@ module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var userAgent = __webpack_require__(50);
+var V8_VERSION = __webpack_require__(50);
+var fails = __webpack_require__(31);
+module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
+    var symbol = Symbol();
+    return !String(symbol) || !(Object(symbol) instanceof Symbol) ||
+        !Symbol.sham && V8_VERSION && V8_VERSION < 41;
+});
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(28);
+var userAgent = __webpack_require__(51);
 var process = global.process;
 var Deno = global.Deno;
 var versions = process && process.versions || Deno && Deno.version;
@@ -2228,26 +2239,13 @@ module.exports = version;
 
 
 /***/ }),
-/* 50 */
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var getBuiltIn = __webpack_require__(45);
-module.exports = getBuiltIn('navigator', 'userAgent') || '';
-
-
-/***/ }),
 /* 51 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var aCallable = __webpack_require__(52);
-module.exports = function (V, P) {
-    var func = V[P];
-    return func == null ? undefined : aCallable(func);
-};
+var getBuiltIn = __webpack_require__(46);
+module.exports = getBuiltIn('navigator', 'userAgent') || '';
 
 
 /***/ }),
@@ -2256,14 +2254,10 @@ module.exports = function (V, P) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var isCallable = __webpack_require__(43);
-var tryToString = __webpack_require__(53);
-var TypeError = global.TypeError;
-module.exports = function (argument) {
-    if (isCallable(argument))
-        return argument;
-    throw TypeError(tryToString(argument) + ' is not a function');
+var aCallable = __webpack_require__(53);
+module.exports = function (V, P) {
+    var func = V[P];
+    return func == null ? undefined : aCallable(func);
 };
 
 
@@ -2273,7 +2267,24 @@ module.exports = function (argument) {
 
 "use strict";
 
-var global = __webpack_require__(27);
+var global = __webpack_require__(28);
+var isCallable = __webpack_require__(44);
+var tryToString = __webpack_require__(54);
+var TypeError = global.TypeError;
+module.exports = function (argument) {
+    if (isCallable(argument))
+        return argument;
+    throw TypeError(tryToString(argument) + ' is not a function');
+};
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(28);
 var String = global.String;
 module.exports = function (argument) {
     try {
@@ -2286,15 +2297,15 @@ module.exports = function (argument) {
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var call = __webpack_require__(31);
-var isCallable = __webpack_require__(43);
-var isObject = __webpack_require__(42);
+var global = __webpack_require__(28);
+var call = __webpack_require__(32);
+var isCallable = __webpack_require__(44);
+var isObject = __webpack_require__(43);
 var TypeError = global.TypeError;
 module.exports = function (input, pref) {
     var fn, val;
@@ -2309,17 +2320,17 @@ module.exports = function (input, pref) {
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var shared = __webpack_require__(56);
-var hasOwn = __webpack_require__(60);
-var uid = __webpack_require__(62);
-var NATIVE_SYMBOL = __webpack_require__(48);
-var USE_SYMBOL_AS_UID = __webpack_require__(47);
+var global = __webpack_require__(28);
+var shared = __webpack_require__(57);
+var hasOwn = __webpack_require__(61);
+var uid = __webpack_require__(63);
+var NATIVE_SYMBOL = __webpack_require__(49);
+var USE_SYMBOL_AS_UID = __webpack_require__(48);
 var WellKnownSymbolsStore = shared('wks');
 var Symbol = global.Symbol;
 var symbolFor = Symbol && Symbol['for'];
@@ -2342,26 +2353,26 @@ module.exports = function (name) {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var IS_PURE = __webpack_require__(57);
-var store = __webpack_require__(58);
+var IS_PURE = __webpack_require__(58);
+var store = __webpack_require__(59);
 (module.exports = function (key, value) {
     return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
-    version: '3.21.1',
+    version: '3.22.4',
     mode: IS_PURE ? 'pure' : 'global',
     copyright: '© 2014-2022 Denis Pushkarev (zloirock.ru)',
-    license: 'https://github.com/zloirock/core-js/blob/v3.21.1/LICENSE',
+    license: 'https://github.com/zloirock/core-js/blob/v3.22.4/LICENSE',
     source: 'https://github.com/zloirock/core-js'
 });
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module) {
 
 "use strict";
@@ -2370,25 +2381,25 @@ module.exports = false;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var setGlobal = __webpack_require__(59);
+var global = __webpack_require__(28);
+var setGlobal = __webpack_require__(60);
 var SHARED = '__core-js_shared__';
 var store = global[SHARED] || setGlobal(SHARED, {});
 module.exports = store;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
+var global = __webpack_require__(28);
 var defineProperty = Object.defineProperty;
 module.exports = function (key, value) {
     try {
@@ -2402,30 +2413,16 @@ module.exports = function (key, value) {
 
 
 /***/ }),
-/* 60 */
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(37);
-var toObject = __webpack_require__(61);
-var hasOwnProperty = uncurryThis({}.hasOwnProperty);
-module.exports = Object.hasOwn || function hasOwn(it, key) {
-    return hasOwnProperty(toObject(it), key);
-};
-
-
-/***/ }),
 /* 61 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var requireObjectCoercible = __webpack_require__(39);
-var Object = global.Object;
-module.exports = function (argument) {
-    return Object(requireObjectCoercible(argument));
+var uncurryThis = __webpack_require__(38);
+var toObject = __webpack_require__(62);
+var hasOwnProperty = uncurryThis({}.hasOwnProperty);
+module.exports = Object.hasOwn || function hasOwn(it, key) {
+    return hasOwnProperty(toObject(it), key);
 };
 
 
@@ -2435,12 +2432,11 @@ module.exports = function (argument) {
 
 "use strict";
 
-var uncurryThis = __webpack_require__(37);
-var id = 0;
-var postfix = Math.random();
-var toString = uncurryThis(1.0.toString);
-module.exports = function (key) {
-    return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString(++id + postfix, 36);
+var global = __webpack_require__(28);
+var requireObjectCoercible = __webpack_require__(40);
+var Object = global.Object;
+module.exports = function (argument) {
+    return Object(requireObjectCoercible(argument));
 };
 
 
@@ -2450,14 +2446,13 @@ module.exports = function (key) {
 
 "use strict";
 
-var DESCRIPTORS = __webpack_require__(29);
-var fails = __webpack_require__(30);
-var createElement = __webpack_require__(64);
-module.exports = !DESCRIPTORS && !fails(function () {
-    return Object.defineProperty(createElement('div'), 'a', {
-        get: function () { return 7; }
-    }).a != 7;
-});
+var uncurryThis = __webpack_require__(38);
+var id = 0;
+var postfix = Math.random();
+var toString = uncurryThis(1.0.toString);
+module.exports = function (key) {
+    return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString(++id + postfix, 36);
+};
 
 
 /***/ }),
@@ -2466,13 +2461,14 @@ module.exports = !DESCRIPTORS && !fails(function () {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var isObject = __webpack_require__(42);
-var document = global.document;
-var EXISTS = isObject(document) && isObject(document.createElement);
-module.exports = function (it) {
-    return EXISTS ? document.createElement(it) : {};
-};
+var DESCRIPTORS = __webpack_require__(30);
+var fails = __webpack_require__(31);
+var createElement = __webpack_require__(65);
+module.exports = !DESCRIPTORS && !fails(function () {
+    return Object.defineProperty(createElement('div'), 'a', {
+        get: function () { return 7; }
+    }).a != 7;
+});
 
 
 /***/ }),
@@ -2481,9 +2477,24 @@ module.exports = function (it) {
 
 "use strict";
 
-var DESCRIPTORS = __webpack_require__(29);
-var definePropertyModule = __webpack_require__(66);
-var createPropertyDescriptor = __webpack_require__(34);
+var global = __webpack_require__(28);
+var isObject = __webpack_require__(43);
+var document = global.document;
+var EXISTS = isObject(document) && isObject(document.createElement);
+module.exports = function (it) {
+    return EXISTS ? document.createElement(it) : {};
+};
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(30);
+var definePropertyModule = __webpack_require__(67);
+var createPropertyDescriptor = __webpack_require__(35);
 module.exports = DESCRIPTORS ? function (object, key, value) {
     return definePropertyModule.f(object, key, createPropertyDescriptor(1, value));
 } : function (object, key, value) {
@@ -2493,17 +2504,17 @@ module.exports = DESCRIPTORS ? function (object, key, value) {
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var DESCRIPTORS = __webpack_require__(29);
-var IE8_DOM_DEFINE = __webpack_require__(63);
-var V8_PROTOTYPE_DEFINE_BUG = __webpack_require__(67);
-var anObject = __webpack_require__(68);
-var toPropertyKey = __webpack_require__(40);
+var global = __webpack_require__(28);
+var DESCRIPTORS = __webpack_require__(30);
+var IE8_DOM_DEFINE = __webpack_require__(64);
+var V8_PROTOTYPE_DEFINE_BUG = __webpack_require__(68);
+var anObject = __webpack_require__(69);
+var toPropertyKey = __webpack_require__(41);
 var TypeError = global.TypeError;
 var $defineProperty = Object.defineProperty;
 var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
@@ -2544,13 +2555,13 @@ exports.f = DESCRIPTORS ? V8_PROTOTYPE_DEFINE_BUG ? function defineProperty(O, P
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var DESCRIPTORS = __webpack_require__(29);
-var fails = __webpack_require__(30);
+var DESCRIPTORS = __webpack_require__(30);
+var fails = __webpack_require__(31);
 module.exports = DESCRIPTORS && fails(function () {
     return Object.defineProperty(function () { }, 'prototype', {
         value: 42,
@@ -2560,13 +2571,13 @@ module.exports = DESCRIPTORS && fails(function () {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var isObject = __webpack_require__(42);
+var global = __webpack_require__(28);
+var isObject = __webpack_require__(43);
 var String = global.String;
 var TypeError = global.TypeError;
 module.exports = function (argument) {
@@ -2577,46 +2588,29 @@ module.exports = function (argument) {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var isCallable = __webpack_require__(43);
-var hasOwn = __webpack_require__(60);
-var createNonEnumerableProperty = __webpack_require__(65);
-var setGlobal = __webpack_require__(59);
-var inspectSource = __webpack_require__(70);
-var InternalStateModule = __webpack_require__(71);
-var CONFIGURABLE_FUNCTION_NAME = (__webpack_require__(75).CONFIGURABLE);
-var getInternalState = InternalStateModule.get;
-var enforceInternalState = InternalStateModule.enforce;
-var TEMPLATE = String(String).split('String');
-(module.exports = function (O, key, value, options) {
+var global = __webpack_require__(28);
+var isCallable = __webpack_require__(44);
+var createNonEnumerableProperty = __webpack_require__(66);
+var makeBuiltIn = __webpack_require__(71);
+var setGlobal = __webpack_require__(60);
+module.exports = function (O, key, value, options) {
     var unsafe = options ? !!options.unsafe : false;
     var simple = options ? !!options.enumerable : false;
     var noTargetGet = options ? !!options.noTargetGet : false;
     var name = options && options.name !== undefined ? options.name : key;
-    var state;
-    if (isCallable(value)) {
-        if (String(name).slice(0, 7) === 'Symbol(') {
-            name = '[' + String(name).replace(/^Symbol\(([^)]*)\)/, '$1') + ']';
-        }
-        if (!hasOwn(value, 'name') || (CONFIGURABLE_FUNCTION_NAME && value.name !== name)) {
-            createNonEnumerableProperty(value, 'name', name);
-        }
-        state = enforceInternalState(value);
-        if (!state.source) {
-            state.source = TEMPLATE.join(typeof name == 'string' ? name : '');
-        }
-    }
+    if (isCallable(value))
+        makeBuiltIn(value, name, options);
     if (O === global) {
         if (simple)
             O[key] = value;
         else
             setGlobal(key, value);
-        return;
+        return O;
     }
     else if (!unsafe) {
         delete O[key];
@@ -2628,20 +2622,83 @@ var TEMPLATE = String(String).split('String');
         O[key] = value;
     else
         createNonEnumerableProperty(O, key, value);
-})(Function.prototype, 'toString', function toString() {
-    return isCallable(this) && getInternalState(this).source || inspectSource(this);
-});
+    return O;
+};
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var uncurryThis = __webpack_require__(37);
-var isCallable = __webpack_require__(43);
-var store = __webpack_require__(58);
+var fails = __webpack_require__(31);
+var isCallable = __webpack_require__(44);
+var hasOwn = __webpack_require__(61);
+var defineProperty = (__webpack_require__(67).f);
+var CONFIGURABLE_FUNCTION_NAME = (__webpack_require__(72).CONFIGURABLE);
+var inspectSource = __webpack_require__(73);
+var InternalStateModule = __webpack_require__(74);
+var enforceInternalState = InternalStateModule.enforce;
+var getInternalState = InternalStateModule.get;
+var CONFIGURABLE_LENGTH = !fails(function () {
+    return defineProperty(function () { }, 'length', { value: 8 }).length !== 8;
+});
+var TEMPLATE = String(String).split('String');
+var makeBuiltIn = module.exports = function (value, name, options) {
+    if (String(name).slice(0, 7) === 'Symbol(') {
+        name = '[' + String(name).replace(/^Symbol\(([^)]*)\)/, '$1') + ']';
+    }
+    if (options && options.getter)
+        name = 'get ' + name;
+    if (options && options.setter)
+        name = 'set ' + name;
+    if (!hasOwn(value, 'name') || (CONFIGURABLE_FUNCTION_NAME && value.name !== name)) {
+        defineProperty(value, 'name', { value: name, configurable: true });
+    }
+    if (CONFIGURABLE_LENGTH && options && hasOwn(options, 'arity') && value.length !== options.arity) {
+        defineProperty(value, 'length', { value: options.arity });
+    }
+    var state = enforceInternalState(value);
+    if (!hasOwn(state, 'source')) {
+        state.source = TEMPLATE.join(typeof name == 'string' ? name : '');
+    }
+    return value;
+};
+Function.prototype.toString = makeBuiltIn(function toString() {
+    return isCallable(this) && getInternalState(this).source || inspectSource(this);
+}, 'toString');
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(30);
+var hasOwn = __webpack_require__(61);
+var FunctionPrototype = Function.prototype;
+var getDescriptor = DESCRIPTORS && Object.getOwnPropertyDescriptor;
+var EXISTS = hasOwn(FunctionPrototype, 'name');
+var PROPER = EXISTS && (function something() { }).name === 'something';
+var CONFIGURABLE = EXISTS && (!DESCRIPTORS || (DESCRIPTORS && getDescriptor(FunctionPrototype, 'name').configurable));
+module.exports = {
+    EXISTS: EXISTS,
+    PROPER: PROPER,
+    CONFIGURABLE: CONFIGURABLE
+};
+
+
+/***/ }),
+/* 73 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(38);
+var isCallable = __webpack_require__(44);
+var store = __webpack_require__(59);
 var functionToString = uncurryThis(Function.toString);
 if (!isCallable(store.inspectSource)) {
     store.inspectSource = function (it) {
@@ -2652,20 +2709,20 @@ module.exports = store.inspectSource;
 
 
 /***/ }),
-/* 71 */
+/* 74 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var NATIVE_WEAK_MAP = __webpack_require__(72);
-var global = __webpack_require__(27);
-var uncurryThis = __webpack_require__(37);
-var isObject = __webpack_require__(42);
-var createNonEnumerableProperty = __webpack_require__(65);
-var hasOwn = __webpack_require__(60);
-var shared = __webpack_require__(58);
-var sharedKey = __webpack_require__(73);
-var hiddenKeys = __webpack_require__(74);
+var NATIVE_WEAK_MAP = __webpack_require__(75);
+var global = __webpack_require__(28);
+var uncurryThis = __webpack_require__(38);
+var isObject = __webpack_require__(43);
+var createNonEnumerableProperty = __webpack_require__(66);
+var hasOwn = __webpack_require__(61);
+var shared = __webpack_require__(59);
+var sharedKey = __webpack_require__(76);
+var hiddenKeys = __webpack_require__(77);
 var OBJECT_ALREADY_INITIALIZED = 'Object already initialized';
 var TypeError = global.TypeError;
 var WeakMap = global.WeakMap;
@@ -2728,59 +2785,16 @@ module.exports = {
 
 
 /***/ }),
-/* 72 */
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var global = __webpack_require__(27);
-var isCallable = __webpack_require__(43);
-var inspectSource = __webpack_require__(70);
-var WeakMap = global.WeakMap;
-module.exports = isCallable(WeakMap) && /native code/.test(inspectSource(WeakMap));
-
-
-/***/ }),
-/* 73 */
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var shared = __webpack_require__(56);
-var uid = __webpack_require__(62);
-var keys = shared('keys');
-module.exports = function (key) {
-    return keys[key] || (keys[key] = uid(key));
-};
-
-
-/***/ }),
-/* 74 */
-/***/ (function(module) {
-
-"use strict";
-
-module.exports = {};
-
-
-/***/ }),
 /* 75 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var DESCRIPTORS = __webpack_require__(29);
-var hasOwn = __webpack_require__(60);
-var FunctionPrototype = Function.prototype;
-var getDescriptor = DESCRIPTORS && Object.getOwnPropertyDescriptor;
-var EXISTS = hasOwn(FunctionPrototype, 'name');
-var PROPER = EXISTS && (function something() { }).name === 'something';
-var CONFIGURABLE = EXISTS && (!DESCRIPTORS || (DESCRIPTORS && getDescriptor(FunctionPrototype, 'name').configurable));
-module.exports = {
-    EXISTS: EXISTS,
-    PROPER: PROPER,
-    CONFIGURABLE: CONFIGURABLE
-};
+var global = __webpack_require__(28);
+var isCallable = __webpack_require__(44);
+var inspectSource = __webpack_require__(73);
+var WeakMap = global.WeakMap;
+module.exports = isCallable(WeakMap) && /native code/.test(inspectSource(WeakMap));
 
 
 /***/ }),
@@ -2789,10 +2803,33 @@ module.exports = {
 
 "use strict";
 
-var hasOwn = __webpack_require__(60);
-var ownKeys = __webpack_require__(77);
-var getOwnPropertyDescriptorModule = __webpack_require__(28);
-var definePropertyModule = __webpack_require__(66);
+var shared = __webpack_require__(57);
+var uid = __webpack_require__(63);
+var keys = shared('keys');
+module.exports = function (key) {
+    return keys[key] || (keys[key] = uid(key));
+};
+
+
+/***/ }),
+/* 77 */
+/***/ (function(module) {
+
+"use strict";
+
+module.exports = {};
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var hasOwn = __webpack_require__(61);
+var ownKeys = __webpack_require__(79);
+var getOwnPropertyDescriptorModule = __webpack_require__(29);
+var definePropertyModule = __webpack_require__(67);
 module.exports = function (target, source, exceptions) {
     var keys = ownKeys(source);
     var defineProperty = definePropertyModule.f;
@@ -2807,16 +2844,16 @@ module.exports = function (target, source, exceptions) {
 
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var getBuiltIn = __webpack_require__(45);
-var uncurryThis = __webpack_require__(37);
-var getOwnPropertyNamesModule = __webpack_require__(78);
-var getOwnPropertySymbolsModule = __webpack_require__(86);
-var anObject = __webpack_require__(68);
+var getBuiltIn = __webpack_require__(46);
+var uncurryThis = __webpack_require__(38);
+var getOwnPropertyNamesModule = __webpack_require__(80);
+var getOwnPropertySymbolsModule = __webpack_require__(88);
+var anObject = __webpack_require__(69);
 var concat = uncurryThis([].concat);
 module.exports = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
     var keys = getOwnPropertyNamesModule.f(anObject(it));
@@ -2826,13 +2863,13 @@ module.exports = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
 
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
-var internalObjectKeys = __webpack_require__(79);
-var enumBugKeys = __webpack_require__(85);
+var internalObjectKeys = __webpack_require__(81);
+var enumBugKeys = __webpack_require__(87);
 var hiddenKeys = enumBugKeys.concat('length', 'prototype');
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
     return internalObjectKeys(O, hiddenKeys);
@@ -2840,16 +2877,16 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var uncurryThis = __webpack_require__(37);
-var hasOwn = __webpack_require__(60);
-var toIndexedObject = __webpack_require__(35);
-var indexOf = (__webpack_require__(80).indexOf);
-var hiddenKeys = __webpack_require__(74);
+var uncurryThis = __webpack_require__(38);
+var hasOwn = __webpack_require__(61);
+var toIndexedObject = __webpack_require__(36);
+var indexOf = (__webpack_require__(82).indexOf);
+var hiddenKeys = __webpack_require__(77);
 var push = uncurryThis([].push);
 module.exports = function (object, names) {
     var O = toIndexedObject(object);
@@ -2867,14 +2904,14 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var toIndexedObject = __webpack_require__(35);
-var toAbsoluteIndex = __webpack_require__(81);
-var lengthOfArrayLike = __webpack_require__(83);
+var toIndexedObject = __webpack_require__(36);
+var toAbsoluteIndex = __webpack_require__(83);
+var lengthOfArrayLike = __webpack_require__(85);
 var createMethod = function (IS_INCLUDES) {
     return function ($this, el, fromIndex) {
         var O = toIndexedObject($this);
@@ -2902,12 +2939,12 @@ module.exports = {
 
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var toIntegerOrInfinity = __webpack_require__(82);
+var toIntegerOrInfinity = __webpack_require__(84);
 var max = Math.max;
 var min = Math.min;
 module.exports = function (index, length) {
@@ -2917,7 +2954,7 @@ module.exports = function (index, length) {
 
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module) {
 
 "use strict";
@@ -2931,24 +2968,24 @@ module.exports = function (argument) {
 
 
 /***/ }),
-/* 83 */
+/* 85 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var toLength = __webpack_require__(84);
+var toLength = __webpack_require__(86);
 module.exports = function (obj) {
     return toLength(obj.length);
 };
 
 
 /***/ }),
-/* 84 */
+/* 86 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var toIntegerOrInfinity = __webpack_require__(82);
+var toIntegerOrInfinity = __webpack_require__(84);
 var min = Math.min;
 module.exports = function (argument) {
     return argument > 0 ? min(toIntegerOrInfinity(argument), 0x1FFFFFFFFFFFFF) : 0;
@@ -2956,7 +2993,7 @@ module.exports = function (argument) {
 
 
 /***/ }),
-/* 85 */
+/* 87 */
 /***/ (function(module) {
 
 "use strict";
@@ -2973,7 +3010,7 @@ module.exports = [
 
 
 /***/ }),
-/* 86 */
+/* 88 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -2982,13 +3019,13 @@ exports.f = Object.getOwnPropertySymbols;
 
 
 /***/ }),
-/* 87 */
+/* 89 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var fails = __webpack_require__(30);
-var isCallable = __webpack_require__(43);
+var fails = __webpack_require__(31);
+var isCallable = __webpack_require__(44);
 var replacement = /#|\.prototype\./;
 var isForced = function (feature, detection) {
     var value = data[normalize(feature)];
@@ -3007,26 +3044,26 @@ module.exports = isForced;
 
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var classof = __webpack_require__(38);
+var classof = __webpack_require__(39);
 module.exports = Array.isArray || function isArray(argument) {
     return classof(argument) == 'Array';
 };
 
 
 /***/ }),
-/* 89 */
+/* 91 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var toPropertyKey = __webpack_require__(40);
-var definePropertyModule = __webpack_require__(66);
-var createPropertyDescriptor = __webpack_require__(34);
+var toPropertyKey = __webpack_require__(41);
+var definePropertyModule = __webpack_require__(67);
+var createPropertyDescriptor = __webpack_require__(35);
 module.exports = function (object, key, value) {
     var propertyKey = toPropertyKey(key);
     if (propertyKey in object)
@@ -3037,28 +3074,28 @@ module.exports = function (object, key, value) {
 
 
 /***/ }),
-/* 90 */
+/* 92 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var arraySpeciesConstructor = __webpack_require__(91);
+var arraySpeciesConstructor = __webpack_require__(93);
 module.exports = function (originalArray, length) {
     return new (arraySpeciesConstructor(originalArray))(length === 0 ? 0 : length);
 };
 
 
 /***/ }),
-/* 91 */
+/* 93 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var isArray = __webpack_require__(88);
-var isConstructor = __webpack_require__(92);
-var isObject = __webpack_require__(42);
-var wellKnownSymbol = __webpack_require__(55);
+var global = __webpack_require__(28);
+var isArray = __webpack_require__(90);
+var isConstructor = __webpack_require__(94);
+var isObject = __webpack_require__(43);
+var wellKnownSymbol = __webpack_require__(56);
 var SPECIES = wellKnownSymbol('species');
 var Array = global.Array;
 module.exports = function (originalArray) {
@@ -3078,17 +3115,17 @@ module.exports = function (originalArray) {
 
 
 /***/ }),
-/* 92 */
+/* 94 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var uncurryThis = __webpack_require__(37);
-var fails = __webpack_require__(30);
-var isCallable = __webpack_require__(43);
-var classof = __webpack_require__(93);
-var getBuiltIn = __webpack_require__(45);
-var inspectSource = __webpack_require__(70);
+var uncurryThis = __webpack_require__(38);
+var fails = __webpack_require__(31);
+var isCallable = __webpack_require__(44);
+var classof = __webpack_require__(95);
+var getBuiltIn = __webpack_require__(46);
+var inspectSource = __webpack_require__(73);
 var noop = function () { };
 var empty = [];
 var construct = getBuiltIn('Reflect', 'construct');
@@ -3132,16 +3169,16 @@ module.exports = !construct || fails(function () {
 
 
 /***/ }),
-/* 93 */
+/* 95 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var TO_STRING_TAG_SUPPORT = __webpack_require__(94);
-var isCallable = __webpack_require__(43);
-var classofRaw = __webpack_require__(38);
-var wellKnownSymbol = __webpack_require__(55);
+var global = __webpack_require__(28);
+var TO_STRING_TAG_SUPPORT = __webpack_require__(96);
+var isCallable = __webpack_require__(44);
+var classofRaw = __webpack_require__(39);
+var wellKnownSymbol = __webpack_require__(56);
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
 var Object = global.Object;
 var CORRECT_ARGUMENTS = classofRaw(function () { return arguments; }()) == 'Arguments';
@@ -3161,12 +3198,12 @@ module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
 
 
 /***/ }),
-/* 94 */
+/* 96 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var wellKnownSymbol = __webpack_require__(55);
+var wellKnownSymbol = __webpack_require__(56);
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
 var test = {};
 test[TO_STRING_TAG] = 'z';
@@ -3174,14 +3211,14 @@ module.exports = String(test) === '[object z]';
 
 
 /***/ }),
-/* 95 */
+/* 97 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var fails = __webpack_require__(30);
-var wellKnownSymbol = __webpack_require__(55);
-var V8_VERSION = __webpack_require__(49);
+var fails = __webpack_require__(31);
+var wellKnownSymbol = __webpack_require__(56);
+var V8_VERSION = __webpack_require__(50);
 var SPECIES = wellKnownSymbol('species');
 module.exports = function (METHOD_NAME) {
     return V8_VERSION >= 51 || !fails(function () {
@@ -3196,85 +3233,90 @@ module.exports = function (METHOD_NAME) {
 
 
 /***/ }),
-/* 96 */
+/* 98 */
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var TO_STRING_TAG_SUPPORT = __webpack_require__(94);
-var redefine = __webpack_require__(69);
-var toString = __webpack_require__(97);
+var TO_STRING_TAG_SUPPORT = __webpack_require__(96);
+var defineBuiltIn = __webpack_require__(70);
+var toString = __webpack_require__(99);
 if (!TO_STRING_TAG_SUPPORT) {
-    redefine(Object.prototype, 'toString', toString, { unsafe: true });
+    defineBuiltIn(Object.prototype, 'toString', toString, { unsafe: true });
 }
 
 
 /***/ }),
-/* 97 */
+/* 99 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var TO_STRING_TAG_SUPPORT = __webpack_require__(94);
-var classof = __webpack_require__(93);
+var TO_STRING_TAG_SUPPORT = __webpack_require__(96);
+var classof = __webpack_require__(95);
 module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
     return '[object ' + classof(this) + ']';
 };
 
 
 /***/ }),
-/* 98 */
+/* 100 */
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var $ = __webpack_require__(26);
-var global = __webpack_require__(27);
-var getBuiltIn = __webpack_require__(45);
-var apply = __webpack_require__(99);
-var call = __webpack_require__(31);
-var uncurryThis = __webpack_require__(37);
-var IS_PURE = __webpack_require__(57);
-var DESCRIPTORS = __webpack_require__(29);
-var NATIVE_SYMBOL = __webpack_require__(48);
-var fails = __webpack_require__(30);
-var hasOwn = __webpack_require__(60);
-var isArray = __webpack_require__(88);
-var isCallable = __webpack_require__(43);
-var isObject = __webpack_require__(42);
-var isPrototypeOf = __webpack_require__(46);
-var isSymbol = __webpack_require__(44);
-var anObject = __webpack_require__(68);
-var toObject = __webpack_require__(61);
-var toIndexedObject = __webpack_require__(35);
-var toPropertyKey = __webpack_require__(40);
-var $toString = __webpack_require__(100);
-var createPropertyDescriptor = __webpack_require__(34);
-var nativeObjectCreate = __webpack_require__(101);
-var objectKeys = __webpack_require__(103);
-var getOwnPropertyNamesModule = __webpack_require__(78);
-var getOwnPropertyNamesExternal = __webpack_require__(105);
-var getOwnPropertySymbolsModule = __webpack_require__(86);
-var getOwnPropertyDescriptorModule = __webpack_require__(28);
-var definePropertyModule = __webpack_require__(66);
-var definePropertiesModule = __webpack_require__(102);
-var propertyIsEnumerableModule = __webpack_require__(33);
-var arraySlice = __webpack_require__(107);
-var redefine = __webpack_require__(69);
-var shared = __webpack_require__(56);
-var sharedKey = __webpack_require__(73);
-var hiddenKeys = __webpack_require__(74);
-var uid = __webpack_require__(62);
-var wellKnownSymbol = __webpack_require__(55);
-var wrappedWellKnownSymbolModule = __webpack_require__(108);
-var defineWellKnownSymbol = __webpack_require__(109);
-var setToStringTag = __webpack_require__(111);
-var InternalStateModule = __webpack_require__(71);
-var $forEach = (__webpack_require__(112).forEach);
+__webpack_require__(101);
+__webpack_require__(116);
+__webpack_require__(118);
+__webpack_require__(119);
+__webpack_require__(122);
+
+
+/***/ }),
+/* 101 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(27);
+var global = __webpack_require__(28);
+var call = __webpack_require__(32);
+var uncurryThis = __webpack_require__(38);
+var IS_PURE = __webpack_require__(58);
+var DESCRIPTORS = __webpack_require__(30);
+var NATIVE_SYMBOL = __webpack_require__(49);
+var fails = __webpack_require__(31);
+var hasOwn = __webpack_require__(61);
+var isPrototypeOf = __webpack_require__(47);
+var anObject = __webpack_require__(69);
+var toIndexedObject = __webpack_require__(36);
+var toPropertyKey = __webpack_require__(41);
+var $toString = __webpack_require__(102);
+var createPropertyDescriptor = __webpack_require__(35);
+var nativeObjectCreate = __webpack_require__(103);
+var objectKeys = __webpack_require__(105);
+var getOwnPropertyNamesModule = __webpack_require__(80);
+var getOwnPropertyNamesExternal = __webpack_require__(107);
+var getOwnPropertySymbolsModule = __webpack_require__(88);
+var getOwnPropertyDescriptorModule = __webpack_require__(29);
+var definePropertyModule = __webpack_require__(67);
+var definePropertiesModule = __webpack_require__(104);
+var propertyIsEnumerableModule = __webpack_require__(34);
+var defineBuiltIn = __webpack_require__(70);
+var shared = __webpack_require__(57);
+var sharedKey = __webpack_require__(76);
+var hiddenKeys = __webpack_require__(77);
+var uid = __webpack_require__(63);
+var wellKnownSymbol = __webpack_require__(56);
+var wrappedWellKnownSymbolModule = __webpack_require__(109);
+var defineWellKnownSymbol = __webpack_require__(110);
+var defineSymbolToPrimitive = __webpack_require__(112);
+var setToStringTag = __webpack_require__(113);
+var InternalStateModule = __webpack_require__(74);
+var $forEach = (__webpack_require__(114).forEach);
 var HIDDEN = sharedKey('hidden');
 var SYMBOL = 'Symbol';
 var PROTOTYPE = 'prototype';
-var TO_PRIMITIVE = wellKnownSymbol('toPrimitive');
 var setInternalState = InternalStateModule.set;
 var getInternalState = InternalStateModule.getterFor(SYMBOL);
 var ObjectPrototype = Object[PROTOTYPE];
@@ -3282,7 +3324,6 @@ var $Symbol = global.Symbol;
 var SymbolPrototype = $Symbol && $Symbol[PROTOTYPE];
 var TypeError = global.TypeError;
 var QObject = global.QObject;
-var $stringify = getBuiltIn('JSON', 'stringify');
 var nativeGetOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
 var nativeDefineProperty = definePropertyModule.f;
 var nativeGetOwnPropertyNames = getOwnPropertyNamesExternal.f;
@@ -3290,8 +3331,6 @@ var nativePropertyIsEnumerable = propertyIsEnumerableModule.f;
 var push = uncurryThis([].push);
 var AllSymbols = shared('symbols');
 var ObjectPrototypeSymbols = shared('op-symbols');
-var StringToSymbolRegistry = shared('string-to-symbol-registry');
-var SymbolToStringRegistry = shared('symbol-to-string-registry');
 var WellKnownSymbolsStore = shared('wks');
 var USE_SETTER = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
 var setSymbolDescriptor = DESCRIPTORS && fails(function () {
@@ -3380,7 +3419,7 @@ var $getOwnPropertyNames = function getOwnPropertyNames(O) {
     });
     return result;
 };
-var $getOwnPropertySymbols = function getOwnPropertySymbols(O) {
+var $getOwnPropertySymbols = function (O) {
     var IS_OBJECT_PROTOTYPE = O === ObjectPrototype;
     var names = nativeGetOwnPropertyNames(IS_OBJECT_PROTOTYPE ? ObjectPrototypeSymbols : toIndexedObject(O));
     var result = [];
@@ -3409,10 +3448,10 @@ if (!NATIVE_SYMBOL) {
         return wrap(tag, description);
     };
     SymbolPrototype = $Symbol[PROTOTYPE];
-    redefine(SymbolPrototype, 'toString', function toString() {
+    defineBuiltIn(SymbolPrototype, 'toString', function toString() {
         return getInternalState(this).tag;
     });
-    redefine($Symbol, 'withoutSetter', function (description) {
+    defineBuiltIn($Symbol, 'withoutSetter', function (description) {
         return wrap(uid(description), description);
     });
     propertyIsEnumerableModule.f = $propertyIsEnumerable;
@@ -3432,7 +3471,7 @@ if (!NATIVE_SYMBOL) {
             }
         });
         if (!IS_PURE) {
-            redefine(ObjectPrototype, 'propertyIsEnumerable', $propertyIsEnumerable, { unsafe: true });
+            defineBuiltIn(ObjectPrototype, 'propertyIsEnumerable', $propertyIsEnumerable, { unsafe: true });
         }
     }
 }
@@ -3443,21 +3482,6 @@ $forEach(objectKeys(WellKnownSymbolsStore), function (name) {
     defineWellKnownSymbol(name);
 });
 $({ target: SYMBOL, stat: true, forced: !NATIVE_SYMBOL }, {
-    'for': function (key) {
-        var string = $toString(key);
-        if (hasOwn(StringToSymbolRegistry, string))
-            return StringToSymbolRegistry[string];
-        var symbol = $Symbol(string);
-        StringToSymbolRegistry[string] = symbol;
-        SymbolToStringRegistry[symbol] = string;
-        return symbol;
-    },
-    keyFor: function keyFor(sym) {
-        if (!isSymbol(sym))
-            throw TypeError(sym + ' is not a symbol');
-        if (hasOwn(SymbolToStringRegistry, sym))
-            return SymbolToStringRegistry[sym];
-    },
     useSetter: function () { USE_SETTER = true; },
     useSimple: function () { USE_SETTER = false; }
 });
@@ -3468,72 +3492,21 @@ $({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL, sham: !DESCRIPTORS }, 
     getOwnPropertyDescriptor: $getOwnPropertyDescriptor
 });
 $({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL }, {
-    getOwnPropertyNames: $getOwnPropertyNames,
-    getOwnPropertySymbols: $getOwnPropertySymbols
+    getOwnPropertyNames: $getOwnPropertyNames
 });
-$({ target: 'Object', stat: true, forced: fails(function () { getOwnPropertySymbolsModule.f(1); }) }, {
-    getOwnPropertySymbols: function getOwnPropertySymbols(it) {
-        return getOwnPropertySymbolsModule.f(toObject(it));
-    }
-});
-if ($stringify) {
-    var FORCED_JSON_STRINGIFY = !NATIVE_SYMBOL || fails(function () {
-        var symbol = $Symbol();
-        return $stringify([symbol]) != '[null]'
-            || $stringify({ a: symbol }) != '{}'
-            || $stringify(Object(symbol)) != '{}';
-    });
-    $({ target: 'JSON', stat: true, forced: FORCED_JSON_STRINGIFY }, {
-        stringify: function stringify(it, replacer, space) {
-            var args = arraySlice(arguments);
-            var $replacer = replacer;
-            if (!isObject(replacer) && it === undefined || isSymbol(it))
-                return;
-            if (!isArray(replacer))
-                replacer = function (key, value) {
-                    if (isCallable($replacer))
-                        value = call($replacer, this, key, value);
-                    if (!isSymbol(value))
-                        return value;
-                };
-            args[1] = replacer;
-            return apply($stringify, null, args);
-        }
-    });
-}
-if (!SymbolPrototype[TO_PRIMITIVE]) {
-    var valueOf = SymbolPrototype.valueOf;
-    redefine(SymbolPrototype, TO_PRIMITIVE, function (hint) {
-        return call(valueOf, this);
-    });
-}
+defineSymbolToPrimitive();
 setToStringTag($Symbol, SYMBOL);
 hiddenKeys[HIDDEN] = true;
 
 
 /***/ }),
-/* 99 */
+/* 102 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var NATIVE_BIND = __webpack_require__(32);
-var FunctionPrototype = Function.prototype;
-var apply = FunctionPrototype.apply;
-var call = FunctionPrototype.call;
-module.exports = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND ? call.bind(apply) : function () {
-    return call.apply(apply, arguments);
-});
-
-
-/***/ }),
-/* 100 */
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var global = __webpack_require__(27);
-var classof = __webpack_require__(93);
+var global = __webpack_require__(28);
+var classof = __webpack_require__(95);
 var String = global.String;
 module.exports = function (argument) {
     if (classof(argument) === 'Symbol')
@@ -3543,18 +3516,18 @@ module.exports = function (argument) {
 
 
 /***/ }),
-/* 101 */
+/* 103 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var anObject = __webpack_require__(68);
-var definePropertiesModule = __webpack_require__(102);
-var enumBugKeys = __webpack_require__(85);
-var hiddenKeys = __webpack_require__(74);
-var html = __webpack_require__(104);
-var documentCreateElement = __webpack_require__(64);
-var sharedKey = __webpack_require__(73);
+var anObject = __webpack_require__(69);
+var definePropertiesModule = __webpack_require__(104);
+var enumBugKeys = __webpack_require__(87);
+var hiddenKeys = __webpack_require__(77);
+var html = __webpack_require__(106);
+var documentCreateElement = __webpack_require__(65);
+var sharedKey = __webpack_require__(76);
 var GT = '>';
 var LT = '<';
 var PROTOTYPE = 'prototype';
@@ -3616,17 +3589,17 @@ module.exports = Object.create || function create(O, Properties) {
 
 
 /***/ }),
-/* 102 */
+/* 104 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
-var DESCRIPTORS = __webpack_require__(29);
-var V8_PROTOTYPE_DEFINE_BUG = __webpack_require__(67);
-var definePropertyModule = __webpack_require__(66);
-var anObject = __webpack_require__(68);
-var toIndexedObject = __webpack_require__(35);
-var objectKeys = __webpack_require__(103);
+var DESCRIPTORS = __webpack_require__(30);
+var V8_PROTOTYPE_DEFINE_BUG = __webpack_require__(68);
+var definePropertyModule = __webpack_require__(67);
+var anObject = __webpack_require__(69);
+var toIndexedObject = __webpack_require__(36);
+var objectKeys = __webpack_require__(105);
 exports.f = DESCRIPTORS && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : function defineProperties(O, Properties) {
     anObject(O);
     var props = toIndexedObject(Properties);
@@ -3641,38 +3614,38 @@ exports.f = DESCRIPTORS && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : 
 
 
 /***/ }),
-/* 103 */
+/* 105 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var internalObjectKeys = __webpack_require__(79);
-var enumBugKeys = __webpack_require__(85);
+var internalObjectKeys = __webpack_require__(81);
+var enumBugKeys = __webpack_require__(87);
 module.exports = Object.keys || function keys(O) {
     return internalObjectKeys(O, enumBugKeys);
 };
 
 
 /***/ }),
-/* 104 */
+/* 106 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var getBuiltIn = __webpack_require__(45);
+var getBuiltIn = __webpack_require__(46);
 module.exports = getBuiltIn('document', 'documentElement');
 
 
 /***/ }),
-/* 105 */
+/* 107 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var classof = __webpack_require__(38);
-var toIndexedObject = __webpack_require__(35);
-var $getOwnPropertyNames = (__webpack_require__(78).f);
-var arraySlice = __webpack_require__(106);
+var classof = __webpack_require__(39);
+var toIndexedObject = __webpack_require__(36);
+var $getOwnPropertyNames = (__webpack_require__(80).f);
+var arraySlice = __webpack_require__(108);
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
     ? Object.getOwnPropertyNames(window) : [];
 var getWindowNames = function (it) {
@@ -3691,15 +3664,15 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 
 /***/ }),
-/* 106 */
+/* 108 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var toAbsoluteIndex = __webpack_require__(81);
-var lengthOfArrayLike = __webpack_require__(83);
-var createProperty = __webpack_require__(89);
+var global = __webpack_require__(28);
+var toAbsoluteIndex = __webpack_require__(83);
+var lengthOfArrayLike = __webpack_require__(85);
+var createProperty = __webpack_require__(91);
 var Array = global.Array;
 var max = Math.max;
 module.exports = function (O, start, end) {
@@ -3715,35 +3688,25 @@ module.exports = function (O, start, end) {
 
 
 /***/ }),
-/* 107 */
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var uncurryThis = __webpack_require__(37);
-module.exports = uncurryThis([].slice);
-
-
-/***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
-var wellKnownSymbol = __webpack_require__(55);
+var wellKnownSymbol = __webpack_require__(56);
 exports.f = wellKnownSymbol;
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var path = __webpack_require__(110);
-var hasOwn = __webpack_require__(60);
-var wrappedWellKnownSymbolModule = __webpack_require__(108);
-var defineProperty = (__webpack_require__(66).f);
+var path = __webpack_require__(111);
+var hasOwn = __webpack_require__(61);
+var wrappedWellKnownSymbolModule = __webpack_require__(109);
+var defineProperty = (__webpack_require__(67).f);
 module.exports = function (NAME) {
     var Symbol = path.Symbol || (path.Symbol = {});
     if (!hasOwn(Symbol, NAME))
@@ -3754,24 +3717,47 @@ module.exports = function (NAME) {
 
 
 /***/ }),
-/* 110 */
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var global = __webpack_require__(27);
-module.exports = global;
-
-
-/***/ }),
 /* 111 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var defineProperty = (__webpack_require__(66).f);
-var hasOwn = __webpack_require__(60);
-var wellKnownSymbol = __webpack_require__(55);
+var global = __webpack_require__(28);
+module.exports = global;
+
+
+/***/ }),
+/* 112 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var call = __webpack_require__(32);
+var getBuiltIn = __webpack_require__(46);
+var wellKnownSymbol = __webpack_require__(56);
+var defineBuiltIn = __webpack_require__(70);
+module.exports = function () {
+    var Symbol = getBuiltIn('Symbol');
+    var SymbolPrototype = Symbol && Symbol.prototype;
+    var valueOf = SymbolPrototype && SymbolPrototype.valueOf;
+    var TO_PRIMITIVE = wellKnownSymbol('toPrimitive');
+    if (SymbolPrototype && !SymbolPrototype[TO_PRIMITIVE]) {
+        defineBuiltIn(SymbolPrototype, TO_PRIMITIVE, function (hint) {
+            return call(valueOf, this);
+        }, { arity: 1 });
+    }
+};
+
+
+/***/ }),
+/* 113 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineProperty = (__webpack_require__(67).f);
+var hasOwn = __webpack_require__(61);
+var wellKnownSymbol = __webpack_require__(56);
 var TO_STRING_TAG = wellKnownSymbol('toStringTag');
 module.exports = function (target, TAG, STATIC) {
     if (target && !STATIC)
@@ -3783,17 +3769,17 @@ module.exports = function (target, TAG, STATIC) {
 
 
 /***/ }),
-/* 112 */
+/* 114 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var bind = __webpack_require__(113);
-var uncurryThis = __webpack_require__(37);
-var IndexedObject = __webpack_require__(36);
-var toObject = __webpack_require__(61);
-var lengthOfArrayLike = __webpack_require__(83);
-var arraySpeciesCreate = __webpack_require__(90);
+var bind = __webpack_require__(115);
+var uncurryThis = __webpack_require__(38);
+var IndexedObject = __webpack_require__(37);
+var toObject = __webpack_require__(62);
+var lengthOfArrayLike = __webpack_require__(85);
+var arraySpeciesCreate = __webpack_require__(92);
 var push = uncurryThis([].push);
 var createMethod = function (TYPE) {
     var IS_MAP = TYPE == 1;
@@ -3849,14 +3835,14 @@ module.exports = {
 
 
 /***/ }),
-/* 113 */
+/* 115 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var uncurryThis = __webpack_require__(37);
-var aCallable = __webpack_require__(52);
-var NATIVE_BIND = __webpack_require__(32);
+var uncurryThis = __webpack_require__(38);
+var aCallable = __webpack_require__(53);
+var NATIVE_BIND = __webpack_require__(33);
 var bind = uncurryThis(uncurryThis.bind);
 module.exports = function (fn, that) {
     aCallable(fn);
@@ -3867,31 +3853,207 @@ module.exports = function (fn, that) {
 
 
 /***/ }),
-/* 114 */
+/* 116 */
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var defineWellKnownSymbol = __webpack_require__(109);
+var $ = __webpack_require__(27);
+var getBuiltIn = __webpack_require__(46);
+var hasOwn = __webpack_require__(61);
+var toString = __webpack_require__(102);
+var shared = __webpack_require__(57);
+var NATIVE_SYMBOL_REGISTRY = __webpack_require__(117);
+var StringToSymbolRegistry = shared('string-to-symbol-registry');
+var SymbolToStringRegistry = shared('symbol-to-string-registry');
+$({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY }, {
+    'for': function (key) {
+        var string = toString(key);
+        if (hasOwn(StringToSymbolRegistry, string))
+            return StringToSymbolRegistry[string];
+        var symbol = getBuiltIn('Symbol')(string);
+        StringToSymbolRegistry[string] = symbol;
+        SymbolToStringRegistry[symbol] = string;
+        return symbol;
+    }
+});
+
+
+/***/ }),
+/* 117 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var NATIVE_SYMBOL = __webpack_require__(49);
+module.exports = NATIVE_SYMBOL && !!Symbol['for'] && !!Symbol.keyFor;
+
+
+/***/ }),
+/* 118 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(27);
+var hasOwn = __webpack_require__(61);
+var isSymbol = __webpack_require__(45);
+var tryToString = __webpack_require__(54);
+var shared = __webpack_require__(57);
+var NATIVE_SYMBOL_REGISTRY = __webpack_require__(117);
+var SymbolToStringRegistry = shared('symbol-to-string-registry');
+$({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY }, {
+    keyFor: function keyFor(sym) {
+        if (!isSymbol(sym))
+            throw TypeError(tryToString(sym) + ' is not a symbol');
+        if (hasOwn(SymbolToStringRegistry, sym))
+            return SymbolToStringRegistry[sym];
+    }
+});
+
+
+/***/ }),
+/* 119 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(27);
+var getBuiltIn = __webpack_require__(46);
+var apply = __webpack_require__(120);
+var call = __webpack_require__(32);
+var uncurryThis = __webpack_require__(38);
+var fails = __webpack_require__(31);
+var isArray = __webpack_require__(90);
+var isCallable = __webpack_require__(44);
+var isObject = __webpack_require__(43);
+var isSymbol = __webpack_require__(45);
+var arraySlice = __webpack_require__(121);
+var NATIVE_SYMBOL = __webpack_require__(49);
+var $stringify = getBuiltIn('JSON', 'stringify');
+var exec = uncurryThis(/./.exec);
+var charAt = uncurryThis(''.charAt);
+var charCodeAt = uncurryThis(''.charCodeAt);
+var replace = uncurryThis(''.replace);
+var numberToString = uncurryThis(1.0.toString);
+var tester = /[\uD800-\uDFFF]/g;
+var low = /^[\uD800-\uDBFF]$/;
+var hi = /^[\uDC00-\uDFFF]$/;
+var WRONG_SYMBOLS_CONVERSION = !NATIVE_SYMBOL || fails(function () {
+    var symbol = getBuiltIn('Symbol')();
+    return $stringify([symbol]) != '[null]'
+        || $stringify({ a: symbol }) != '{}'
+        || $stringify(Object(symbol)) != '{}';
+});
+var ILL_FORMED_UNICODE = fails(function () {
+    return $stringify('\uDF06\uD834') !== '"\\udf06\\ud834"'
+        || $stringify('\uDEAD') !== '"\\udead"';
+});
+var stringifyWithSymbolsFix = function (it, replacer) {
+    var args = arraySlice(arguments);
+    var $replacer = replacer;
+    if (!isObject(replacer) && it === undefined || isSymbol(it))
+        return;
+    if (!isArray(replacer))
+        replacer = function (key, value) {
+            if (isCallable($replacer))
+                value = call($replacer, this, key, value);
+            if (!isSymbol(value))
+                return value;
+        };
+    args[1] = replacer;
+    return apply($stringify, null, args);
+};
+var fixIllFormed = function (match, offset, string) {
+    var prev = charAt(string, offset - 1);
+    var next = charAt(string, offset + 1);
+    if ((exec(low, match) && !exec(hi, next)) || (exec(hi, match) && !exec(low, prev))) {
+        return '\\u' + numberToString(charCodeAt(match, 0), 16);
+    }
+    return match;
+};
+if ($stringify) {
+    $({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE }, {
+        stringify: function stringify(it, replacer, space) {
+            var args = arraySlice(arguments);
+            var result = apply(WRONG_SYMBOLS_CONVERSION ? stringifyWithSymbolsFix : $stringify, null, args);
+            return ILL_FORMED_UNICODE && typeof result == 'string' ? replace(result, tester, fixIllFormed) : result;
+        }
+    });
+}
+
+
+/***/ }),
+/* 120 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var NATIVE_BIND = __webpack_require__(33);
+var FunctionPrototype = Function.prototype;
+var apply = FunctionPrototype.apply;
+var call = FunctionPrototype.call;
+module.exports = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND ? call.bind(apply) : function () {
+    return call.apply(apply, arguments);
+});
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(38);
+module.exports = uncurryThis([].slice);
+
+
+/***/ }),
+/* 122 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(27);
+var NATIVE_SYMBOL = __webpack_require__(49);
+var fails = __webpack_require__(31);
+var getOwnPropertySymbolsModule = __webpack_require__(88);
+var toObject = __webpack_require__(62);
+var FORCED = !NATIVE_SYMBOL || fails(function () { getOwnPropertySymbolsModule.f(1); });
+$({ target: 'Object', stat: true, forced: FORCED }, {
+    getOwnPropertySymbols: function getOwnPropertySymbols(it) {
+        var $getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+        return $getOwnPropertySymbols ? $getOwnPropertySymbols(toObject(it)) : [];
+    }
+});
+
+
+/***/ }),
+/* 123 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(110);
 defineWellKnownSymbol('asyncIterator');
 
 
 /***/ }),
-/* 115 */
+/* 124 */
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var $ = __webpack_require__(26);
-var DESCRIPTORS = __webpack_require__(29);
-var global = __webpack_require__(27);
-var uncurryThis = __webpack_require__(37);
-var hasOwn = __webpack_require__(60);
-var isCallable = __webpack_require__(43);
-var isPrototypeOf = __webpack_require__(46);
-var toString = __webpack_require__(100);
-var defineProperty = (__webpack_require__(66).f);
-var copyConstructorProperties = __webpack_require__(76);
+var $ = __webpack_require__(27);
+var DESCRIPTORS = __webpack_require__(30);
+var global = __webpack_require__(28);
+var uncurryThis = __webpack_require__(38);
+var hasOwn = __webpack_require__(61);
+var isCallable = __webpack_require__(44);
+var isPrototypeOf = __webpack_require__(47);
+var toString = __webpack_require__(102);
+var defineProperty = (__webpack_require__(67).f);
+var copyConstructorProperties = __webpack_require__(78);
 var NativeSymbol = global.Symbol;
 var SymbolPrototype = NativeSymbol && NativeSymbol.prototype;
 if (DESCRIPTORS && isCallable(NativeSymbol) && (!('description' in SymbolPrototype) ||
@@ -3933,103 +4095,13 @@ if (DESCRIPTORS && isCallable(NativeSymbol) && (!('description' in SymbolPrototy
 
 
 /***/ }),
-/* 116 */
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('hasInstance');
-
-
-/***/ }),
-/* 117 */
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('isConcatSpreadable');
-
-
-/***/ }),
-/* 118 */
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('iterator');
-
-
-/***/ }),
-/* 119 */
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('match');
-
-
-/***/ }),
-/* 120 */
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('matchAll');
-
-
-/***/ }),
-/* 121 */
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('replace');
-
-
-/***/ }),
-/* 122 */
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('search');
-
-
-/***/ }),
-/* 123 */
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('species');
-
-
-/***/ }),
-/* 124 */
-/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('split');
-
-
-/***/ }),
 /* 125 */
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('toPrimitive');
+var defineWellKnownSymbol = __webpack_require__(110);
+defineWellKnownSymbol('hasInstance');
 
 
 /***/ }),
@@ -4038,8 +4110,8 @@ defineWellKnownSymbol('toPrimitive');
 
 "use strict";
 
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('toStringTag');
+var defineWellKnownSymbol = __webpack_require__(110);
+defineWellKnownSymbol('isConcatSpreadable');
 
 
 /***/ }),
@@ -4048,8 +4120,8 @@ defineWellKnownSymbol('toStringTag');
 
 "use strict";
 
-var defineWellKnownSymbol = __webpack_require__(109);
-defineWellKnownSymbol('unscopables');
+var defineWellKnownSymbol = __webpack_require__(110);
+defineWellKnownSymbol('iterator');
 
 
 /***/ }),
@@ -4058,9 +4130,8 @@ defineWellKnownSymbol('unscopables');
 
 "use strict";
 
-var global = __webpack_require__(27);
-var setToStringTag = __webpack_require__(111);
-setToStringTag(global.JSON, 'JSON', true);
+var defineWellKnownSymbol = __webpack_require__(110);
+defineWellKnownSymbol('match');
 
 
 /***/ }),
@@ -4069,8 +4140,8 @@ setToStringTag(global.JSON, 'JSON', true);
 
 "use strict";
 
-var setToStringTag = __webpack_require__(111);
-setToStringTag(Math, 'Math', true);
+var defineWellKnownSymbol = __webpack_require__(110);
+defineWellKnownSymbol('matchAll');
 
 
 /***/ }),
@@ -4079,22 +4150,18 @@ setToStringTag(Math, 'Math', true);
 
 "use strict";
 
-var $ = __webpack_require__(26);
-var global = __webpack_require__(27);
-var setToStringTag = __webpack_require__(111);
-$({ global: true }, { Reflect: {} });
-setToStringTag(global.Reflect, 'Reflect', true);
+var defineWellKnownSymbol = __webpack_require__(110);
+defineWellKnownSymbol('replace');
 
 
 /***/ }),
 /* 131 */
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-__webpack_require__(132);
-var entryUnbind = __webpack_require__(134);
-module.exports = entryUnbind('Array', 'findIndex');
+var defineWellKnownSymbol = __webpack_require__(110);
+defineWellKnownSymbol('search');
 
 
 /***/ }),
@@ -4103,9 +4170,109 @@ module.exports = entryUnbind('Array', 'findIndex');
 
 "use strict";
 
-var $ = __webpack_require__(26);
-var $findIndex = (__webpack_require__(112).findIndex);
-var addToUnscopables = __webpack_require__(133);
+var defineWellKnownSymbol = __webpack_require__(110);
+defineWellKnownSymbol('species');
+
+
+/***/ }),
+/* 133 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(110);
+defineWellKnownSymbol('split');
+
+
+/***/ }),
+/* 134 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(110);
+var defineSymbolToPrimitive = __webpack_require__(112);
+defineWellKnownSymbol('toPrimitive');
+defineSymbolToPrimitive();
+
+
+/***/ }),
+/* 135 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var getBuiltIn = __webpack_require__(46);
+var defineWellKnownSymbol = __webpack_require__(110);
+var setToStringTag = __webpack_require__(113);
+defineWellKnownSymbol('toStringTag');
+setToStringTag(getBuiltIn('Symbol'), 'Symbol');
+
+
+/***/ }),
+/* 136 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(110);
+defineWellKnownSymbol('unscopables');
+
+
+/***/ }),
+/* 137 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(28);
+var setToStringTag = __webpack_require__(113);
+setToStringTag(global.JSON, 'JSON', true);
+
+
+/***/ }),
+/* 138 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var setToStringTag = __webpack_require__(113);
+setToStringTag(Math, 'Math', true);
+
+
+/***/ }),
+/* 139 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(27);
+var global = __webpack_require__(28);
+var setToStringTag = __webpack_require__(113);
+$({ global: true }, { Reflect: {} });
+setToStringTag(global.Reflect, 'Reflect', true);
+
+
+/***/ }),
+/* 140 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+__webpack_require__(141);
+var entryUnbind = __webpack_require__(143);
+module.exports = entryUnbind('Array', 'findIndex');
+
+
+/***/ }),
+/* 141 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(27);
+var $findIndex = (__webpack_require__(114).findIndex);
+var addToUnscopables = __webpack_require__(142);
 var FIND_INDEX = 'findIndex';
 var SKIPS_HOLES = true;
 if (FIND_INDEX in [])
@@ -4119,14 +4286,14 @@ addToUnscopables(FIND_INDEX);
 
 
 /***/ }),
-/* 133 */
+/* 142 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var wellKnownSymbol = __webpack_require__(55);
-var create = __webpack_require__(101);
-var definePropertyModule = __webpack_require__(66);
+var wellKnownSymbol = __webpack_require__(56);
+var create = __webpack_require__(103);
+var definePropertyModule = __webpack_require__(67);
 var UNSCOPABLES = wellKnownSymbol('unscopables');
 var ArrayPrototype = Array.prototype;
 if (ArrayPrototype[UNSCOPABLES] == undefined) {
@@ -4141,20 +4308,586 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 134 */
+/* 143 */
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
-var global = __webpack_require__(27);
-var uncurryThis = __webpack_require__(37);
+var global = __webpack_require__(28);
+var uncurryThis = __webpack_require__(38);
 module.exports = function (CONSTRUCTOR, METHOD) {
     return uncurryThis(global[CONSTRUCTOR].prototype[METHOD]);
 };
 
 
 /***/ }),
-/* 135 */
+/* 144 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+__webpack_require__(145);
+__webpack_require__(155);
+var path = __webpack_require__(111);
+module.exports = path.Array.from;
+
+
+/***/ }),
+/* 145 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var charAt = (__webpack_require__(146).charAt);
+var toString = __webpack_require__(102);
+var InternalStateModule = __webpack_require__(74);
+var defineIterator = __webpack_require__(147);
+var STRING_ITERATOR = 'String Iterator';
+var setInternalState = InternalStateModule.set;
+var getInternalState = InternalStateModule.getterFor(STRING_ITERATOR);
+defineIterator(String, 'String', function (iterated) {
+    setInternalState(this, {
+        type: STRING_ITERATOR,
+        string: toString(iterated),
+        index: 0
+    });
+}, function next() {
+    var state = getInternalState(this);
+    var string = state.string;
+    var index = state.index;
+    var point;
+    if (index >= string.length)
+        return { value: undefined, done: true };
+    point = charAt(string, index);
+    state.index += point.length;
+    return { value: point, done: false };
+});
+
+
+/***/ }),
+/* 146 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(38);
+var toIntegerOrInfinity = __webpack_require__(84);
+var toString = __webpack_require__(102);
+var requireObjectCoercible = __webpack_require__(40);
+var charAt = uncurryThis(''.charAt);
+var charCodeAt = uncurryThis(''.charCodeAt);
+var stringSlice = uncurryThis(''.slice);
+var createMethod = function (CONVERT_TO_STRING) {
+    return function ($this, pos) {
+        var S = toString(requireObjectCoercible($this));
+        var position = toIntegerOrInfinity(pos);
+        var size = S.length;
+        var first, second;
+        if (position < 0 || position >= size)
+            return CONVERT_TO_STRING ? '' : undefined;
+        first = charCodeAt(S, position);
+        return first < 0xD800 || first > 0xDBFF || position + 1 === size
+            || (second = charCodeAt(S, position + 1)) < 0xDC00 || second > 0xDFFF
+            ? CONVERT_TO_STRING
+                ? charAt(S, position)
+                : first
+            : CONVERT_TO_STRING
+                ? stringSlice(S, position, position + 2)
+                : (first - 0xD800 << 10) + (second - 0xDC00) + 0x10000;
+    };
+};
+module.exports = {
+    codeAt: createMethod(false),
+    charAt: createMethod(true)
+};
+
+
+/***/ }),
+/* 147 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(27);
+var call = __webpack_require__(32);
+var IS_PURE = __webpack_require__(58);
+var FunctionName = __webpack_require__(72);
+var isCallable = __webpack_require__(44);
+var createIteratorConstructor = __webpack_require__(148);
+var getPrototypeOf = __webpack_require__(150);
+var setPrototypeOf = __webpack_require__(153);
+var setToStringTag = __webpack_require__(113);
+var createNonEnumerableProperty = __webpack_require__(66);
+var defineBuiltIn = __webpack_require__(70);
+var wellKnownSymbol = __webpack_require__(56);
+var Iterators = __webpack_require__(152);
+var IteratorsCore = __webpack_require__(149);
+var PROPER_FUNCTION_NAME = FunctionName.PROPER;
+var CONFIGURABLE_FUNCTION_NAME = FunctionName.CONFIGURABLE;
+var IteratorPrototype = IteratorsCore.IteratorPrototype;
+var BUGGY_SAFARI_ITERATORS = IteratorsCore.BUGGY_SAFARI_ITERATORS;
+var ITERATOR = wellKnownSymbol('iterator');
+var KEYS = 'keys';
+var VALUES = 'values';
+var ENTRIES = 'entries';
+var returnThis = function () { return this; };
+module.exports = function (Iterable, NAME, IteratorConstructor, next, DEFAULT, IS_SET, FORCED) {
+    createIteratorConstructor(IteratorConstructor, NAME, next);
+    var getIterationMethod = function (KIND) {
+        if (KIND === DEFAULT && defaultIterator)
+            return defaultIterator;
+        if (!BUGGY_SAFARI_ITERATORS && KIND in IterablePrototype)
+            return IterablePrototype[KIND];
+        switch (KIND) {
+            case KEYS: return function keys() { return new IteratorConstructor(this, KIND); };
+            case VALUES: return function values() { return new IteratorConstructor(this, KIND); };
+            case ENTRIES: return function entries() { return new IteratorConstructor(this, KIND); };
+        }
+        return function () { return new IteratorConstructor(this); };
+    };
+    var TO_STRING_TAG = NAME + ' Iterator';
+    var INCORRECT_VALUES_NAME = false;
+    var IterablePrototype = Iterable.prototype;
+    var nativeIterator = IterablePrototype[ITERATOR]
+        || IterablePrototype['@@iterator']
+        || DEFAULT && IterablePrototype[DEFAULT];
+    var defaultIterator = !BUGGY_SAFARI_ITERATORS && nativeIterator || getIterationMethod(DEFAULT);
+    var anyNativeIterator = NAME == 'Array' ? IterablePrototype.entries || nativeIterator : nativeIterator;
+    var CurrentIteratorPrototype, methods, KEY;
+    if (anyNativeIterator) {
+        CurrentIteratorPrototype = getPrototypeOf(anyNativeIterator.call(new Iterable()));
+        if (CurrentIteratorPrototype !== Object.prototype && CurrentIteratorPrototype.next) {
+            if (!IS_PURE && getPrototypeOf(CurrentIteratorPrototype) !== IteratorPrototype) {
+                if (setPrototypeOf) {
+                    setPrototypeOf(CurrentIteratorPrototype, IteratorPrototype);
+                }
+                else if (!isCallable(CurrentIteratorPrototype[ITERATOR])) {
+                    defineBuiltIn(CurrentIteratorPrototype, ITERATOR, returnThis);
+                }
+            }
+            setToStringTag(CurrentIteratorPrototype, TO_STRING_TAG, true, true);
+            if (IS_PURE)
+                Iterators[TO_STRING_TAG] = returnThis;
+        }
+    }
+    if (PROPER_FUNCTION_NAME && DEFAULT == VALUES && nativeIterator && nativeIterator.name !== VALUES) {
+        if (!IS_PURE && CONFIGURABLE_FUNCTION_NAME) {
+            createNonEnumerableProperty(IterablePrototype, 'name', VALUES);
+        }
+        else {
+            INCORRECT_VALUES_NAME = true;
+            defaultIterator = function values() { return call(nativeIterator, this); };
+        }
+    }
+    if (DEFAULT) {
+        methods = {
+            values: getIterationMethod(VALUES),
+            keys: IS_SET ? defaultIterator : getIterationMethod(KEYS),
+            entries: getIterationMethod(ENTRIES)
+        };
+        if (FORCED)
+            for (KEY in methods) {
+                if (BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME || !(KEY in IterablePrototype)) {
+                    defineBuiltIn(IterablePrototype, KEY, methods[KEY]);
+                }
+            }
+        else
+            $({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
+    }
+    if ((!IS_PURE || FORCED) && IterablePrototype[ITERATOR] !== defaultIterator) {
+        defineBuiltIn(IterablePrototype, ITERATOR, defaultIterator, { name: DEFAULT });
+    }
+    Iterators[NAME] = defaultIterator;
+    return methods;
+};
+
+
+/***/ }),
+/* 148 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var IteratorPrototype = (__webpack_require__(149).IteratorPrototype);
+var create = __webpack_require__(103);
+var createPropertyDescriptor = __webpack_require__(35);
+var setToStringTag = __webpack_require__(113);
+var Iterators = __webpack_require__(152);
+var returnThis = function () { return this; };
+module.exports = function (IteratorConstructor, NAME, next, ENUMERABLE_NEXT) {
+    var TO_STRING_TAG = NAME + ' Iterator';
+    IteratorConstructor.prototype = create(IteratorPrototype, { next: createPropertyDescriptor(+!ENUMERABLE_NEXT, next) });
+    setToStringTag(IteratorConstructor, TO_STRING_TAG, false, true);
+    Iterators[TO_STRING_TAG] = returnThis;
+    return IteratorConstructor;
+};
+
+
+/***/ }),
+/* 149 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fails = __webpack_require__(31);
+var isCallable = __webpack_require__(44);
+var create = __webpack_require__(103);
+var getPrototypeOf = __webpack_require__(150);
+var defineBuiltIn = __webpack_require__(70);
+var wellKnownSymbol = __webpack_require__(56);
+var IS_PURE = __webpack_require__(58);
+var ITERATOR = wellKnownSymbol('iterator');
+var BUGGY_SAFARI_ITERATORS = false;
+var IteratorPrototype, PrototypeOfArrayIteratorPrototype, arrayIterator;
+if ([].keys) {
+    arrayIterator = [].keys();
+    if (!('next' in arrayIterator))
+        BUGGY_SAFARI_ITERATORS = true;
+    else {
+        PrototypeOfArrayIteratorPrototype = getPrototypeOf(getPrototypeOf(arrayIterator));
+        if (PrototypeOfArrayIteratorPrototype !== Object.prototype)
+            IteratorPrototype = PrototypeOfArrayIteratorPrototype;
+    }
+}
+var NEW_ITERATOR_PROTOTYPE = IteratorPrototype == undefined || fails(function () {
+    var test = {};
+    return IteratorPrototype[ITERATOR].call(test) !== test;
+});
+if (NEW_ITERATOR_PROTOTYPE)
+    IteratorPrototype = {};
+else if (IS_PURE)
+    IteratorPrototype = create(IteratorPrototype);
+if (!isCallable(IteratorPrototype[ITERATOR])) {
+    defineBuiltIn(IteratorPrototype, ITERATOR, function () {
+        return this;
+    });
+}
+module.exports = {
+    IteratorPrototype: IteratorPrototype,
+    BUGGY_SAFARI_ITERATORS: BUGGY_SAFARI_ITERATORS
+};
+
+
+/***/ }),
+/* 150 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(28);
+var hasOwn = __webpack_require__(61);
+var isCallable = __webpack_require__(44);
+var toObject = __webpack_require__(62);
+var sharedKey = __webpack_require__(76);
+var CORRECT_PROTOTYPE_GETTER = __webpack_require__(151);
+var IE_PROTO = sharedKey('IE_PROTO');
+var Object = global.Object;
+var ObjectPrototype = Object.prototype;
+module.exports = CORRECT_PROTOTYPE_GETTER ? Object.getPrototypeOf : function (O) {
+    var object = toObject(O);
+    if (hasOwn(object, IE_PROTO))
+        return object[IE_PROTO];
+    var constructor = object.constructor;
+    if (isCallable(constructor) && object instanceof constructor) {
+        return constructor.prototype;
+    }
+    return object instanceof Object ? ObjectPrototype : null;
+};
+
+
+/***/ }),
+/* 151 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fails = __webpack_require__(31);
+module.exports = !fails(function () {
+    function F() { }
+    F.prototype.constructor = null;
+    return Object.getPrototypeOf(new F()) !== F.prototype;
+});
+
+
+/***/ }),
+/* 152 */
+/***/ (function(module) {
+
+"use strict";
+
+module.exports = {};
+
+
+/***/ }),
+/* 153 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(38);
+var anObject = __webpack_require__(69);
+var aPossiblePrototype = __webpack_require__(154);
+module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
+    var CORRECT_SETTER = false;
+    var test = {};
+    var setter;
+    try {
+        setter = uncurryThis(Object.getOwnPropertyDescriptor(Object.prototype, '__proto__').set);
+        setter(test, []);
+        CORRECT_SETTER = test instanceof Array;
+    }
+    catch (error) { }
+    return function setPrototypeOf(O, proto) {
+        anObject(O);
+        aPossiblePrototype(proto);
+        if (CORRECT_SETTER)
+            setter(O, proto);
+        else
+            O.__proto__ = proto;
+        return O;
+    };
+}() : undefined);
+
+
+/***/ }),
+/* 154 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(28);
+var isCallable = __webpack_require__(44);
+var String = global.String;
+var TypeError = global.TypeError;
+module.exports = function (argument) {
+    if (typeof argument == 'object' || isCallable(argument))
+        return argument;
+    throw TypeError("Can't set " + String(argument) + ' as a prototype');
+};
+
+
+/***/ }),
+/* 155 */
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(27);
+var from = __webpack_require__(156);
+var checkCorrectnessOfIteration = __webpack_require__(162);
+var INCORRECT_ITERATION = !checkCorrectnessOfIteration(function (iterable) {
+    Array.from(iterable);
+});
+$({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
+    from: from
+});
+
+
+/***/ }),
+/* 156 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(28);
+var bind = __webpack_require__(115);
+var call = __webpack_require__(32);
+var toObject = __webpack_require__(62);
+var callWithSafeIterationClosing = __webpack_require__(157);
+var isArrayIteratorMethod = __webpack_require__(159);
+var isConstructor = __webpack_require__(94);
+var lengthOfArrayLike = __webpack_require__(85);
+var createProperty = __webpack_require__(91);
+var getIterator = __webpack_require__(160);
+var getIteratorMethod = __webpack_require__(161);
+var Array = global.Array;
+module.exports = function from(arrayLike) {
+    var O = toObject(arrayLike);
+    var IS_CONSTRUCTOR = isConstructor(this);
+    var argumentsLength = arguments.length;
+    var mapfn = argumentsLength > 1 ? arguments[1] : undefined;
+    var mapping = mapfn !== undefined;
+    if (mapping)
+        mapfn = bind(mapfn, argumentsLength > 2 ? arguments[2] : undefined);
+    var iteratorMethod = getIteratorMethod(O);
+    var index = 0;
+    var length, result, step, iterator, next, value;
+    if (iteratorMethod && !(this == Array && isArrayIteratorMethod(iteratorMethod))) {
+        iterator = getIterator(O, iteratorMethod);
+        next = iterator.next;
+        result = IS_CONSTRUCTOR ? new this() : [];
+        for (; !(step = call(next, iterator)).done; index++) {
+            value = mapping ? callWithSafeIterationClosing(iterator, mapfn, [step.value, index], true) : step.value;
+            createProperty(result, index, value);
+        }
+    }
+    else {
+        length = lengthOfArrayLike(O);
+        result = IS_CONSTRUCTOR ? new this(length) : Array(length);
+        for (; length > index; index++) {
+            value = mapping ? mapfn(O[index], index) : O[index];
+            createProperty(result, index, value);
+        }
+    }
+    result.length = index;
+    return result;
+};
+
+
+/***/ }),
+/* 157 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var anObject = __webpack_require__(69);
+var iteratorClose = __webpack_require__(158);
+module.exports = function (iterator, fn, value, ENTRIES) {
+    try {
+        return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
+    }
+    catch (error) {
+        iteratorClose(iterator, 'throw', error);
+    }
+};
+
+
+/***/ }),
+/* 158 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var call = __webpack_require__(32);
+var anObject = __webpack_require__(69);
+var getMethod = __webpack_require__(52);
+module.exports = function (iterator, kind, value) {
+    var innerResult, innerError;
+    anObject(iterator);
+    try {
+        innerResult = getMethod(iterator, 'return');
+        if (!innerResult) {
+            if (kind === 'throw')
+                throw value;
+            return value;
+        }
+        innerResult = call(innerResult, iterator);
+    }
+    catch (error) {
+        innerError = true;
+        innerResult = error;
+    }
+    if (kind === 'throw')
+        throw value;
+    if (innerError)
+        throw innerResult;
+    anObject(innerResult);
+    return value;
+};
+
+
+/***/ }),
+/* 159 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var wellKnownSymbol = __webpack_require__(56);
+var Iterators = __webpack_require__(152);
+var ITERATOR = wellKnownSymbol('iterator');
+var ArrayPrototype = Array.prototype;
+module.exports = function (it) {
+    return it !== undefined && (Iterators.Array === it || ArrayPrototype[ITERATOR] === it);
+};
+
+
+/***/ }),
+/* 160 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(28);
+var call = __webpack_require__(32);
+var aCallable = __webpack_require__(53);
+var anObject = __webpack_require__(69);
+var tryToString = __webpack_require__(54);
+var getIteratorMethod = __webpack_require__(161);
+var TypeError = global.TypeError;
+module.exports = function (argument, usingIterator) {
+    var iteratorMethod = arguments.length < 2 ? getIteratorMethod(argument) : usingIterator;
+    if (aCallable(iteratorMethod))
+        return anObject(call(iteratorMethod, argument));
+    throw TypeError(tryToString(argument) + ' is not iterable');
+};
+
+
+/***/ }),
+/* 161 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var classof = __webpack_require__(95);
+var getMethod = __webpack_require__(52);
+var Iterators = __webpack_require__(152);
+var wellKnownSymbol = __webpack_require__(56);
+var ITERATOR = wellKnownSymbol('iterator');
+module.exports = function (it) {
+    if (it != undefined)
+        return getMethod(it, ITERATOR)
+            || getMethod(it, '@@iterator')
+            || Iterators[classof(it)];
+};
+
+
+/***/ }),
+/* 162 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var wellKnownSymbol = __webpack_require__(56);
+var ITERATOR = wellKnownSymbol('iterator');
+var SAFE_CLOSING = false;
+try {
+    var called = 0;
+    var iteratorWithReturn = {
+        next: function () {
+            return { done: !!called++ };
+        },
+        'return': function () {
+            SAFE_CLOSING = true;
+        }
+    };
+    iteratorWithReturn[ITERATOR] = function () {
+        return this;
+    };
+    Array.from(iteratorWithReturn, function () { throw 2; });
+}
+catch (error) { }
+module.exports = function (exec, SKIP_CLOSING) {
+    if (!SKIP_CLOSING && !SAFE_CLOSING)
+        return false;
+    var ITERATION_SUPPORT = false;
+    try {
+        var object = {};
+        object[ITERATOR] = function () {
+            return {
+                next: function () {
+                    return { done: ITERATION_SUPPORT = true };
+                }
+            };
+        };
+        exec(object);
+    }
+    catch (error) { }
+    return ITERATION_SUPPORT;
+};
+
+
+/***/ }),
+/* 163 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -4167,14 +4900,15 @@ module.exports = function (CONSTRUCTOR, METHOD) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Jodit = void 0;
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var constants = __webpack_require__(137);
-var modules_1 = __webpack_require__(138);
-var helpers_1 = __webpack_require__(146);
-var storage_1 = __webpack_require__(321);
-var view_with_toolbar_1 = __webpack_require__(318);
-var global_1 = __webpack_require__(157);
-var decorators_1 = __webpack_require__(169);
+var config_1 = __webpack_require__(164);
+var constants = __webpack_require__(165);
+var modules_1 = __webpack_require__(166);
+var helpers_1 = __webpack_require__(187);
+var storage_1 = __webpack_require__(329);
+var view_with_toolbar_1 = __webpack_require__(326);
+var constants_1 = __webpack_require__(165);
+var global_1 = __webpack_require__(239);
+var decorators_1 = __webpack_require__(233);
 var __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 var __defaultClassesKey = 'data-jodit-default-classes';
 var Jodit = (function (_super) {
@@ -5125,7 +5859,7 @@ var Jodit = (function (_super) {
     Jodit.decorators = {};
     Jodit.constants = constants;
     Jodit.instances = global_1.instances;
-    Jodit.lang = global_1.lang;
+    Jodit.lang = constants_1.lang;
     Jodit.core = {
         Plugin: modules_1.Plugin
     };
@@ -5150,7 +5884,7 @@ exports.Jodit = Jodit;
 
 
 /***/ }),
-/* 136 */
+/* 164 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -5162,7 +5896,7 @@ exports.Jodit = Jodit;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Config = void 0;
-var consts = __webpack_require__(137);
+var consts = __webpack_require__(165);
 var Config = (function () {
     function Config() {
         this.defaultTimeout = 100;
@@ -5488,7 +6222,7 @@ Config.prototype.controls = {};
 
 
 /***/ }),
-/* 137 */
+/* 165 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -5499,7 +6233,7 @@ Config.prototype.controls = {};
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TEMP_ATTR = exports.BASE_PATH = exports.KEY_ALIASES = exports.IS_MAC = exports.SAFE_COUNT_CHANGE_CALL = exports.INSERT_ONLY_TEXT = exports.INSERT_AS_TEXT = exports.INSERT_CLEAR_HTML = exports.INSERT_AS_HTML = exports.EMULATE_DBLCLICK_TIMEOUT = exports.MARKER_CLASS = exports.TEXT_RTF = exports.TEXT_HTML = exports.TEXT_PLAIN = exports.IS_IE = exports.MODE_SPLIT = exports.MODE_SOURCE = exports.MODE_WYSIWYG = exports.PARAGRAPH = exports.BR = exports.COMMAND_KEYS = exports.ACCURACY = exports.NEARBY = exports.KEY_F3 = exports.KEY_DELETE = exports.KEY_SPACE = exports.KEY_DOWN = exports.KEY_RIGHT = exports.KEY_UP = exports.KEY_LEFT = exports.KEY_ESC = exports.KEY_ENTER = exports.KEY_TAB = exports.KEY_BACKSPACE = exports.MAY_BE_REMOVED_WITH_KEY = exports.INSEPARABLE_TAGS = exports.IS_INLINE = exports.IS_BLOCK = exports.SPACE_REG_EXP_END = exports.SPACE_REG_EXP_START = exports.SPACE_REG_EXP = exports.INVISIBLE_SPACE_REG_EXP_START = exports.INVISIBLE_SPACE_REG_EXP_END = exports.INVISIBLE_SPACE_REG_EXP = exports.NBSP_SPACE = exports.INVISIBLE_SPACE = void 0;
+exports.lang = exports.TEMP_ATTR = exports.BASE_PATH = exports.KEY_ALIASES = exports.IS_MAC = exports.SAFE_COUNT_CHANGE_CALL = exports.INSERT_ONLY_TEXT = exports.INSERT_AS_TEXT = exports.INSERT_CLEAR_HTML = exports.INSERT_AS_HTML = exports.EMULATE_DBLCLICK_TIMEOUT = exports.MARKER_CLASS = exports.TEXT_RTF = exports.TEXT_HTML = exports.TEXT_PLAIN = exports.IS_IE = exports.MODE_SPLIT = exports.MODE_SOURCE = exports.MODE_WYSIWYG = exports.PARAGRAPH = exports.BR = exports.COMMAND_KEYS = exports.ACCURACY = exports.NEARBY = exports.KEY_F3 = exports.KEY_DELETE = exports.KEY_SPACE = exports.KEY_DOWN = exports.KEY_RIGHT = exports.KEY_UP = exports.KEY_LEFT = exports.KEY_ESC = exports.KEY_ENTER = exports.KEY_TAB = exports.KEY_BACKSPACE = exports.MAY_BE_REMOVED_WITH_KEY = exports.INSEPARABLE_TAGS = exports.IS_INLINE = exports.IS_BLOCK = exports.SPACE_REG_EXP_END = exports.SPACE_REG_EXP_START = exports.SPACE_REG_EXP = exports.INVISIBLE_SPACE_REG_EXP_START = exports.INVISIBLE_SPACE_REG_EXP_END = exports.INVISIBLE_SPACE_REG_EXP = exports.NBSP_SPACE = exports.INVISIBLE_SPACE = void 0;
 exports.INVISIBLE_SPACE = '\uFEFF';
 exports.NBSP_SPACE = '\u00A0';
 var INVISIBLE_SPACE_REG_EXP = function () { return /[\uFEFF]/g; };
@@ -5619,10 +6353,11 @@ exports.BASE_PATH = (function () {
     return window.location.href;
 })();
 exports.TEMP_ATTR = 'data-jodit-temp';
+exports.lang = {};
 
 
 /***/ }),
-/* 138 */
+/* 166 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -5635,25 +6370,25 @@ exports.TEMP_ATTR = 'data-jodit-temp';
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PluginSystem = exports.Uploader = exports.ToolbarCollection = exports.ToolbarEditorCollection = exports.Table = exports.StatusBar = exports.CommitStyle = exports.Select = exports.Snapshot = exports.History = exports.ImageEditor = exports.Helpers = exports.ViewWithToolbar = exports.View = exports.Icon = exports.ProgressBar = exports.UIBlock = exports.UICheckbox = exports.UITextArea = exports.UIInput = exports.UIForm = exports.UIList = exports.UIGroup = exports.UISeparator = exports.Popup = exports.UIButton = exports.UIElement = exports.Create = exports.Plugin = exports.LazyWalker = exports.Dom = exports.ContextMenu = exports.STATUSES = exports.ViewComponent = exports.Component = exports.Async = void 0;
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(139), exports);
+tslib_1.__exportStar(__webpack_require__(167), exports);
 var async_1 = __webpack_require__(5);
 Object.defineProperty(exports, "Async", ({ enumerable: true, get: function () { return async_1.Async; } }));
-tslib_1.__exportStar(__webpack_require__(309), exports);
-var component_1 = __webpack_require__(154);
+tslib_1.__exportStar(__webpack_require__(185), exports);
+var component_1 = __webpack_require__(237);
 Object.defineProperty(exports, "Component", ({ enumerable: true, get: function () { return component_1.Component; } }));
 Object.defineProperty(exports, "ViewComponent", ({ enumerable: true, get: function () { return component_1.ViewComponent; } }));
 Object.defineProperty(exports, "STATUSES", ({ enumerable: true, get: function () { return component_1.STATUSES; } }));
-var context_menu_1 = __webpack_require__(313);
+var context_menu_1 = __webpack_require__(304);
 Object.defineProperty(exports, "ContextMenu", ({ enumerable: true, get: function () { return context_menu_1.ContextMenu; } }));
-tslib_1.__exportStar(__webpack_require__(315), exports);
-var dom_1 = __webpack_require__(159);
+tslib_1.__exportStar(__webpack_require__(323), exports);
+var dom_1 = __webpack_require__(231);
 Object.defineProperty(exports, "Dom", ({ enumerable: true, get: function () { return dom_1.Dom; } }));
 Object.defineProperty(exports, "LazyWalker", ({ enumerable: true, get: function () { return dom_1.LazyWalker; } }));
-var plugin_1 = __webpack_require__(336);
+var plugin_1 = __webpack_require__(366);
 Object.defineProperty(exports, "Plugin", ({ enumerable: true, get: function () { return plugin_1.Plugin; } }));
-var create_1 = __webpack_require__(338);
+var create_1 = __webpack_require__(368);
 Object.defineProperty(exports, "Create", ({ enumerable: true, get: function () { return create_1.Create; } }));
-var ui_1 = __webpack_require__(251);
+var ui_1 = __webpack_require__(336);
 Object.defineProperty(exports, "UIElement", ({ enumerable: true, get: function () { return ui_1.UIElement; } }));
 Object.defineProperty(exports, "UIButton", ({ enumerable: true, get: function () { return ui_1.UIButton; } }));
 Object.defineProperty(exports, "Popup", ({ enumerable: true, get: function () { return ui_1.Popup; } }));
@@ -5667,39 +6402,39 @@ Object.defineProperty(exports, "UICheckbox", ({ enumerable: true, get: function 
 Object.defineProperty(exports, "UIBlock", ({ enumerable: true, get: function () { return ui_1.UIBlock; } }));
 Object.defineProperty(exports, "ProgressBar", ({ enumerable: true, get: function () { return ui_1.ProgressBar; } }));
 Object.defineProperty(exports, "Icon", ({ enumerable: true, get: function () { return ui_1.Icon; } }));
-var view_1 = __webpack_require__(320);
+var view_1 = __webpack_require__(328);
 Object.defineProperty(exports, "View", ({ enumerable: true, get: function () { return view_1.View; } }));
-var view_with_toolbar_1 = __webpack_require__(318);
+var view_with_toolbar_1 = __webpack_require__(326);
 Object.defineProperty(exports, "ViewWithToolbar", ({ enumerable: true, get: function () { return view_with_toolbar_1.ViewWithToolbar; } }));
-tslib_1.__exportStar(__webpack_require__(340), exports);
-var Helpers = __webpack_require__(146);
+tslib_1.__exportStar(__webpack_require__(370), exports);
+var Helpers = __webpack_require__(187);
 exports.Helpers = Helpers;
-var image_editor_1 = __webpack_require__(353);
+var image_editor_1 = __webpack_require__(383);
 Object.defineProperty(exports, "ImageEditor", ({ enumerable: true, get: function () { return image_editor_1.ImageEditor; } }));
-var history_1 = __webpack_require__(364);
+var history_1 = __webpack_require__(394);
 Object.defineProperty(exports, "History", ({ enumerable: true, get: function () { return history_1.History; } }));
-var snapshot_1 = __webpack_require__(365);
+var snapshot_1 = __webpack_require__(395);
 Object.defineProperty(exports, "Snapshot", ({ enumerable: true, get: function () { return snapshot_1.Snapshot; } }));
-var selection_1 = __webpack_require__(161);
+var selection_1 = __webpack_require__(216);
 Object.defineProperty(exports, "Select", ({ enumerable: true, get: function () { return selection_1.Select; } }));
 Object.defineProperty(exports, "CommitStyle", ({ enumerable: true, get: function () { return selection_1.CommitStyle; } }));
-var status_bar_1 = __webpack_require__(368);
+var status_bar_1 = __webpack_require__(398);
 Object.defineProperty(exports, "StatusBar", ({ enumerable: true, get: function () { return status_bar_1.StatusBar; } }));
-var table_1 = __webpack_require__(370);
+var table_1 = __webpack_require__(400);
 Object.defineProperty(exports, "Table", ({ enumerable: true, get: function () { return table_1.Table; } }));
-var editor_collection_1 = __webpack_require__(328);
+var editor_collection_1 = __webpack_require__(358);
 Object.defineProperty(exports, "ToolbarEditorCollection", ({ enumerable: true, get: function () { return editor_collection_1.ToolbarEditorCollection; } }));
-var collection_1 = __webpack_require__(326);
+var collection_1 = __webpack_require__(334);
 Object.defineProperty(exports, "ToolbarCollection", ({ enumerable: true, get: function () { return collection_1.ToolbarCollection; } }));
-tslib_1.__exportStar(__webpack_require__(371), exports);
-var uploader_1 = __webpack_require__(372);
+tslib_1.__exportStar(__webpack_require__(401), exports);
+var uploader_1 = __webpack_require__(402);
 Object.defineProperty(exports, "Uploader", ({ enumerable: true, get: function () { return uploader_1.Uploader; } }));
-var plugin_system_1 = __webpack_require__(158);
+var plugin_system_1 = __webpack_require__(240);
 Object.defineProperty(exports, "PluginSystem", ({ enumerable: true, get: function () { return plugin_system_1.PluginSystem; } }));
 
 
 /***/ }),
-/* 139 */
+/* 167 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -5711,14 +6446,14 @@ Object.defineProperty(exports, "PluginSystem", ({ enumerable: true, get: functio
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(140), exports);
-tslib_1.__exportStar(__webpack_require__(144), exports);
-tslib_1.__exportStar(__webpack_require__(145), exports);
-tslib_1.__exportStar(__webpack_require__(141), exports);
+tslib_1.__exportStar(__webpack_require__(168), exports);
+tslib_1.__exportStar(__webpack_require__(178), exports);
+tslib_1.__exportStar(__webpack_require__(179), exports);
+tslib_1.__exportStar(__webpack_require__(169), exports);
 
 
 /***/ }),
-/* 140 */
+/* 168 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -5731,11 +6466,12 @@ tslib_1.__exportStar(__webpack_require__(141), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.EventEmitter = void 0;
 var tslib_1 = __webpack_require__(1);
-var store_1 = __webpack_require__(141);
+var store_1 = __webpack_require__(169);
 var is_string_1 = __webpack_require__(13);
 var is_function_1 = __webpack_require__(9);
-var is_array_1 = __webpack_require__(142);
-var error_1 = __webpack_require__(143);
+var is_array_1 = __webpack_require__(14);
+var error_1 = __webpack_require__(176);
+var split_array_1 = __webpack_require__(177);
 var EventEmitter = (function () {
     function EventEmitter(doc) {
         var _this = this;
@@ -5796,7 +6532,7 @@ var EventEmitter = (function () {
     };
     EventEmitter.prototype.eachEvent = function (events, callback) {
         var _this = this;
-        var eventParts = events.split(/[\s,]+/);
+        var eventParts = (0, split_array_1.splitArray)(events).map(function (e) { return e.trim(); });
         eventParts.forEach(function (eventNameSpace) {
             var eventAndNameSpace = eventNameSpace.split('.');
             var namespace = eventAndNameSpace[1] || store_1.defaultNameSpace;
@@ -5812,19 +6548,25 @@ var EventEmitter = (function () {
             Object.defineProperty(subject, this.__key, {
                 enumerable: false,
                 configurable: true,
+                writable: true,
                 value: store
             });
         }
         return subject[this.__key];
     };
-    EventEmitter.prototype.clearStore = function (subject) {
+    EventEmitter.prototype.removeStoreFromSubject = function (subject) {
         if (subject[this.__key] !== undefined) {
-            delete subject[this.__key];
+            Object.defineProperty(subject, this.__key, {
+                enumerable: false,
+                configurable: true,
+                writable: true,
+                value: undefined
+            });
         }
     };
     EventEmitter.prototype.triggerNativeEvent = function (element, event) {
         var evt = this.doc.createEvent('HTMLEvents');
-        if (typeof event === 'string') {
+        if ((0, is_string_1.isString)(event)) {
             evt.initEvent(event, true, true);
         }
         else {
@@ -5860,30 +6602,39 @@ var EventEmitter = (function () {
         enumerable: false,
         configurable: true
     });
-    EventEmitter.prototype.on = function (subjectOrEvents, eventsOrCallback, handlerOrSelector, onTop) {
+    EventEmitter.prototype.on = function (eventsOrSubjects, callbackOrEvents, optionsOrCallback, opts) {
         var _this = this;
-        if (onTop === void 0) { onTop = false; }
-        var subject = (0, is_string_1.isString)(subjectOrEvents) ? this : subjectOrEvents;
-        var events = (0, is_string_1.isString)(eventsOrCallback)
-            ? eventsOrCallback
-            : subjectOrEvents;
-        var callback = handlerOrSelector;
-        if (callback === undefined && (0, is_function_1.isFunction)(eventsOrCallback)) {
-            callback = eventsOrCallback;
+        var subjects;
+        var events;
+        var callback;
+        var options;
+        if ((0, is_string_1.isString)(eventsOrSubjects) || (0, is_string_1.isStringArray)(eventsOrSubjects)) {
+            subjects = this;
+            events = eventsOrSubjects;
+            callback = callbackOrEvents;
+            options = optionsOrCallback;
         }
-        var store = this.getStore(subject);
-        if (!(0, is_string_1.isString)(events) || events === '') {
+        else {
+            subjects = eventsOrSubjects;
+            events = callbackOrEvents;
+            callback = optionsOrCallback;
+            options = opts;
+        }
+        if (!((0, is_string_1.isString)(events) || (0, is_string_1.isStringArray)(events)) ||
+            events.length === 0) {
             throw (0, error_1.error)('Need events names');
         }
         if (!(0, is_function_1.isFunction)(callback)) {
             throw (0, error_1.error)('Need event handler');
         }
-        if ((0, is_array_1.isArray)(subject)) {
-            subject.forEach(function (subj) {
-                _this.on(subj, events, callback, onTop);
+        if ((0, is_array_1.isArray)(subjects)) {
+            subjects.forEach(function (subj) {
+                _this.on(subj, events, callback, options);
             });
             return this;
         }
+        var subject = subjects;
+        var store = this.getStore(subject);
         var isDOMElement = (0, is_function_1.isFunction)(subject.addEventListener), self = this;
         var syntheticCallback = function (event) {
             var args = [];
@@ -5910,7 +6661,7 @@ var EventEmitter = (function () {
             };
         }
         this.eachEvent(events, function (event, namespace) {
-            if (event === '') {
+            if (event.length === 0) {
                 throw (0, error_1.error)('Need event name');
             }
             if (store.indexOf(event, namespace, callback) === false) {
@@ -5919,9 +6670,9 @@ var EventEmitter = (function () {
                     originalCallback: callback,
                     syntheticCallback: syntheticCallback
                 };
-                store.set(event, namespace, block, onTop);
+                store.set(event, namespace, block, options === null || options === void 0 ? void 0 : options.top);
                 if (isDOMElement) {
-                    var options = [
+                    var options_1 = [
                         'touchstart',
                         'touchend',
                         'scroll',
@@ -5933,93 +6684,118 @@ var EventEmitter = (function () {
                             passive: true
                         }
                         : false;
-                    subject.addEventListener(event, syntheticCallback, options);
+                    subject.addEventListener(event, syntheticCallback, options_1);
                 }
             }
         });
         return this;
     };
-    EventEmitter.prototype.one = function (subjectOrEvents, eventsOrCallback, handlerOrSelector, onTop) {
+    EventEmitter.prototype.one = function (eventsOrSubjects, callbackOrEvents, optionsOrCallback, opts) {
         var _this = this;
-        if (onTop === void 0) { onTop = false; }
-        var subject = (0, is_string_1.isString)(subjectOrEvents) ? this : subjectOrEvents;
-        var events = (0, is_string_1.isString)(eventsOrCallback)
-            ? eventsOrCallback
-            : subjectOrEvents;
-        var callback = handlerOrSelector;
-        if (callback === undefined && (0, is_function_1.isFunction)(eventsOrCallback)) {
-            callback = eventsOrCallback;
+        var subjects;
+        var events;
+        var callback;
+        var options;
+        if ((0, is_string_1.isString)(eventsOrSubjects) || (0, is_string_1.isStringArray)(eventsOrSubjects)) {
+            subjects = this;
+            events = eventsOrSubjects;
+            callback = callbackOrEvents;
+            options = optionsOrCallback;
+        }
+        else {
+            subjects = eventsOrSubjects;
+            events = callbackOrEvents;
+            callback = optionsOrCallback;
+            options = opts;
         }
         var newCallback = function () {
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
             }
-            _this.off(subject, events, newCallback);
+            _this.off(subjects, events, newCallback);
             return callback.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(args), false));
         };
-        this.on(subject, events, newCallback, onTop);
+        this.on(subjects, events, newCallback, options);
         return this;
     };
-    EventEmitter.prototype.off = function (subjectOrEvents, eventsOrCallback, handler) {
+    EventEmitter.prototype.off = function (eventsOrSubjects, callbackOrEvents, handler) {
         var _this = this;
-        var subject = (0, is_string_1.isString)(subjectOrEvents)
-            ? this
-            : subjectOrEvents;
-        var events = (0, is_string_1.isString)(eventsOrCallback)
-            ? eventsOrCallback
-            : subjectOrEvents;
+        var subjects;
+        var events;
+        var callback;
+        if ((0, is_string_1.isString)(eventsOrSubjects) || (0, is_string_1.isStringArray)(eventsOrSubjects)) {
+            subjects = this;
+            events = eventsOrSubjects;
+            callback = callbackOrEvents;
+        }
+        else {
+            subjects = eventsOrSubjects;
+            events = callbackOrEvents;
+            callback = handler;
+        }
+        if ((0, is_array_1.isArray)(subjects)) {
+            subjects.forEach(function (subj) {
+                _this.off(subj, events, callback);
+            });
+            return this;
+        }
+        var subject = subjects;
         var store = this.getStore(subject);
-        var callback = handler;
-        if (!(0, is_string_1.isString)(events) || !events) {
+        if (!((0, is_string_1.isString)(events) || (0, is_string_1.isStringArray)(events)) ||
+            events.length === 0) {
             store.namespaces().forEach(function (namespace) {
                 _this.off(subject, '.' + namespace);
             });
-            this.clearStore(subject);
+            this.removeStoreFromSubject(subject);
             return this;
-        }
-        if (callback === undefined && (0, is_function_1.isFunction)(eventsOrCallback)) {
-            callback = eventsOrCallback;
         }
         var isDOMElement = (0, is_function_1.isFunction)(subject.removeEventListener), removeEventListener = function (block) {
             if (isDOMElement) {
                 subject.removeEventListener(block.event, block.syntheticCallback, false);
             }
         }, removeCallbackFromNameSpace = function (event, namespace) {
-            if (event !== '') {
-                var blocks = store.get(event, namespace);
-                if (blocks && blocks.length) {
-                    if (!(0, is_function_1.isFunction)(callback)) {
-                        blocks.forEach(removeEventListener);
-                        blocks.length = 0;
-                    }
-                    else {
-                        var index = store.indexOf(event, namespace, callback);
-                        if (index !== false) {
-                            removeEventListener(blocks[index]);
-                            blocks.splice(index, 1);
-                        }
-                    }
-                }
-            }
-            else {
+            if (event === '') {
                 store.events(namespace).forEach(function (eventName) {
                     if (eventName !== '') {
                         removeCallbackFromNameSpace(eventName, namespace);
                     }
                 });
+                return;
+            }
+            var blocks = store.get(event, namespace);
+            if (!blocks || !blocks.length) {
+                return;
+            }
+            if (!(0, is_function_1.isFunction)(callback)) {
+                blocks.forEach(removeEventListener);
+                blocks.length = 0;
+                store.clearEvents(namespace, event);
+            }
+            else {
+                var index = store.indexOf(event, namespace, callback);
+                if (index !== false) {
+                    removeEventListener(blocks[index]);
+                    blocks.splice(index, 1);
+                    if (!blocks.length) {
+                        store.clearEvents(namespace, event);
+                    }
+                }
             }
         };
         this.eachEvent(events, function (event, namespace) {
             if (namespace === store_1.defaultNameSpace) {
-                store.namespaces().forEach(function (name) {
-                    removeCallbackFromNameSpace(event, name);
+                store.namespaces().forEach(function (namespace) {
+                    removeCallbackFromNameSpace(event, namespace);
                 });
             }
             else {
                 removeCallbackFromNameSpace(event, namespace);
             }
         });
+        if (store.isEmpty()) {
+            this.removeStoreFromSubject(subject);
+        }
         return this;
     };
     EventEmitter.prototype.stopPropagation = function (subjectOrEvents, eventsList) {
@@ -6135,7 +6911,7 @@ var EventEmitter = (function () {
         this.isDestructed = true;
         this.off(this);
         this.getStore(this).clear();
-        delete this[this.__key];
+        this.removeStoreFromSubject(this);
     };
     return EventEmitter;
 }());
@@ -6143,8 +6919,8 @@ exports.EventEmitter = EventEmitter;
 
 
 /***/ }),
-/* 141 */
-/***/ (function(__unused_webpack_module, exports) {
+/* 169 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -6155,14 +6931,18 @@ exports.EventEmitter = EventEmitter;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.EventHandlersStore = exports.defaultNameSpace = void 0;
+var assert_1 = __webpack_require__(170);
+var to_array_1 = __webpack_require__(171);
 exports.defaultNameSpace = 'JoditEventDefaultNamespace';
 var EventHandlersStore = (function () {
     function EventHandlersStore() {
-        this.__store = {};
+        this.__store = new Map();
     }
     EventHandlersStore.prototype.get = function (event, namespace) {
-        if (this.__store[namespace] !== undefined) {
-            return this.__store[namespace][event];
+        if (this.__store.has(namespace)) {
+            var ns = this.__store.get(namespace);
+            (0, assert_1.assert)(ns, '-');
+            return ns[event];
         }
     };
     EventHandlersStore.prototype.indexOf = function (event, namespace, originalCallback) {
@@ -6178,31 +6958,44 @@ var EventHandlersStore = (function () {
     };
     EventHandlersStore.prototype.namespaces = function (withoutDefault) {
         if (withoutDefault === void 0) { withoutDefault = false; }
-        var nss = Object.keys(this.__store);
+        var nss = (0, to_array_1.toArray)(this.__store.keys());
         return withoutDefault ? nss.filter(function (ns) { return ns !== exports.defaultNameSpace; }) : nss;
     };
     EventHandlersStore.prototype.events = function (namespace) {
-        return this.__store[namespace]
-            ? Object.keys(this.__store[namespace])
-            : [];
+        var ns = this.__store.get(namespace);
+        return ns ? Object.keys(ns) : [];
     };
     EventHandlersStore.prototype.set = function (event, namespace, data, onTop) {
         if (onTop === void 0) { onTop = false; }
-        if (this.__store[namespace] === undefined) {
-            this.__store[namespace] = {};
+        var ns = this.__store.get(namespace);
+        if (!ns) {
+            ns = {};
+            this.__store.set(namespace, ns);
         }
-        if (this.__store[namespace][event] === undefined) {
-            this.__store[namespace][event] = [];
+        if (ns[event] === undefined) {
+            ns[event] = [];
         }
         if (!onTop) {
-            this.__store[namespace][event].push(data);
+            ns[event].push(data);
         }
         else {
-            this.__store[namespace][event].unshift(data);
+            ns[event].unshift(data);
         }
     };
     EventHandlersStore.prototype.clear = function () {
-        this.__store = {};
+        this.__store.clear();
+    };
+    EventHandlersStore.prototype.clearEvents = function (namespace, event) {
+        var ns = this.__store.get(namespace);
+        if (ns && ns[event]) {
+            delete ns[event];
+            if (!Object.keys(ns).length) {
+                this.__store.delete(namespace);
+            }
+        }
+    };
+    EventHandlersStore.prototype.isEmpty = function () {
+        return this.__store.size === 0;
     };
     return EventHandlersStore;
 }());
@@ -6210,7 +7003,161 @@ exports.EventHandlersStore = EventHandlersStore;
 
 
 /***/ }),
-/* 142 */
+/* 170 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.assert = void 0;
+var tslib_1 = __webpack_require__(1);
+var AssertionError = (function (_super) {
+    tslib_1.__extends(AssertionError, _super);
+    function AssertionError(message) {
+        var _this = _super.call(this, message) || this;
+        _this.name = 'AssertionError';
+        return _this;
+    }
+    return AssertionError;
+}(Error));
+function assert(condition, message) {
+    if (!condition) {
+        throw new AssertionError("Assertion failed: ".concat(message));
+    }
+}
+exports.assert = assert;
+
+
+/***/ }),
+/* 171 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.toArray = void 0;
+var reset_1 = __webpack_require__(172);
+var is_native_function_1 = __webpack_require__(175);
+exports.toArray = function toArray() {
+    var _a;
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    var func = (0, is_native_function_1.isNativeFunction)(Array.from)
+        ? Array.from
+        : (_a = (0, reset_1.reset)('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
+    return func.apply(Array, args);
+};
+
+
+/***/ }),
+/* 172 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.reset = void 0;
+var get_1 = __webpack_require__(173);
+var is_function_1 = __webpack_require__(9);
+var map = {};
+var reset = function (key) {
+    var _a, _b;
+    if (!(key in map)) {
+        var iframe = document.createElement('iframe');
+        try {
+            iframe.src = 'about:blank';
+            document.body.appendChild(iframe);
+            if (!iframe.contentWindow) {
+                return null;
+            }
+            var func = (0, get_1.get)(key, iframe.contentWindow), bind = (0, get_1.get)(key.split('.').slice(0, -1).join('.'), iframe.contentWindow);
+            if ((0, is_function_1.isFunction)(func)) {
+                map[key] = func.bind(bind);
+            }
+        }
+        catch (e) {
+            if (false) {}
+        }
+        finally {
+            (_a = iframe.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(iframe);
+        }
+    }
+    return (_b = map[key]) !== null && _b !== void 0 ? _b : null;
+};
+exports.reset = reset;
+
+
+/***/ }),
+/* 173 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.get = void 0;
+var tslib_1 = __webpack_require__(1);
+var is_string_1 = __webpack_require__(13);
+var is_void_1 = __webpack_require__(174);
+function get(chain, obj) {
+    var e_1, _a;
+    if (!(0, is_string_1.isString)(chain) || !chain.length) {
+        return null;
+    }
+    var parts = chain.split('.');
+    var result = obj;
+    try {
+        try {
+            for (var parts_1 = tslib_1.__values(parts), parts_1_1 = parts_1.next(); !parts_1_1.done; parts_1_1 = parts_1.next()) {
+                var part = parts_1_1.value;
+                if ((0, is_void_1.isVoid)(result[part])) {
+                    return null;
+                }
+                result = result[part];
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (parts_1_1 && !parts_1_1.done && (_a = parts_1.return)) _a.call(parts_1);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+    }
+    catch (_b) {
+        return null;
+    }
+    if ((0, is_void_1.isVoid)(result)) {
+        return null;
+    }
+    return result;
+}
+exports.get = get;
+
+
+/***/ }),
+/* 174 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -6221,15 +7168,37 @@ exports.EventHandlersStore = EventHandlersStore;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isArray = void 0;
-function isArray(elm) {
-    return Array.isArray(elm);
+exports.isVoid = void 0;
+function isVoid(value) {
+    return value === undefined || value === null;
 }
-exports.isArray = isArray;
+exports.isVoid = isVoid;
 
 
 /***/ }),
-/* 143 */
+/* 175 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isNativeFunction = void 0;
+function isNativeFunction(f) {
+    return (Boolean(f) &&
+        (typeof f).toLowerCase() === 'function' &&
+        (f === Function.prototype ||
+            /^\s*function\s*(\b[a-z$_][a-z0-9$_]*\b)*\s*\((|([a-z$_][a-z0-9$_]*)(\s*,[a-z$_][a-z0-9$_]*)*)\)\s*{\s*\[native code]\s*}\s*$/i.test(String(f))));
+}
+exports.isNativeFunction = isNativeFunction;
+
+
+/***/ }),
+/* 176 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -6248,7 +7217,26 @@ exports.error = error;
 
 
 /***/ }),
-/* 144 */
+/* 177 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.splitArray = void 0;
+function splitArray(a) {
+    return Array.isArray(a) ? a : a.split(/[,\s]+/);
+}
+exports.splitArray = splitArray;
+
+
+/***/ }),
+/* 178 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -6300,7 +7288,7 @@ exports.Eventify = Eventify;
 
 
 /***/ }),
-/* 145 */
+/* 179 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -6313,8 +7301,10 @@ exports.Eventify = Eventify;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.observable = void 0;
 var tslib_1 = __webpack_require__(1);
-var helpers_1 = __webpack_require__(146);
-var decorators_1 = __webpack_require__(169);
+var is_array_1 = __webpack_require__(14);
+var is_equal_1 = __webpack_require__(180);
+var is_plain_object_1 = __webpack_require__(10);
+var watch_1 = __webpack_require__(182);
 var OBSERVABLE_OBJECT = Symbol('observable-object');
 function isObservableObject(obj) {
     return obj[OBSERVABLE_OBJECT] !== undefined;
@@ -6326,7 +7316,7 @@ function observable(obj) {
     var __lockEvent = {};
     var __onEvents = {};
     var on = function (event, callback) {
-        if ((0, helpers_1.isArray)(event)) {
+        if ((0, is_array_1.isArray)(event)) {
             event.map(function (e) { return on(e, callback); });
             return obj;
         }
@@ -6341,7 +7331,7 @@ function observable(obj) {
         for (var _i = 1; _i < arguments.length; _i++) {
             attr[_i - 1] = arguments[_i];
         }
-        if ((0, helpers_1.isArray)(event)) {
+        if ((0, is_array_1.isArray)(event)) {
             event.map(function (e) { return fire.apply(void 0, tslib_1.__spreadArray([e], tslib_1.__read(attr), false)); });
             return;
         }
@@ -6369,16 +7359,16 @@ function observable(obj) {
             var key = _key;
             var prefix = prefixes.concat(key).filter(function (a) { return a.length; });
             store[key] = dict[key];
-            var descriptor = (0, decorators_1.getPropertyDescriptor)(dict, key);
+            var descriptor = (0, watch_1.getPropertyDescriptor)(dict, key);
             Object.defineProperty(dict, key, {
                 set: function (value) {
                     var oldValue = store[key];
-                    if (!(0, helpers_1.isFastEqual)(store[key], value)) {
+                    if (!(0, is_equal_1.isFastEqual)(store[key], value)) {
                         fire([
                             'beforeChange',
                             "beforeChange.".concat(prefix.join('.'))
                         ], key, value);
-                        if ((0, helpers_1.isPlainObject)(value)) {
+                        if ((0, is_plain_object_1.isPlainObject)(value)) {
                             initAccessors(value, prefix);
                         }
                         if (descriptor && descriptor.set) {
@@ -6408,7 +7398,7 @@ function observable(obj) {
                 enumerable: true,
                 configurable: true
             });
-            if ((0, helpers_1.isPlainObject)(store[key])) {
+            if ((0, is_plain_object_1.isPlainObject)(store[key])) {
                 initAccessors(store[key], prefix);
             }
         });
@@ -6423,7 +7413,7 @@ exports.observable = observable;
 
 
 /***/ }),
-/* 146 */
+/* 180 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -6434,90 +7424,456 @@ exports.observable = observable;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(147), exports);
-tslib_1.__exportStar(__webpack_require__(248), exports);
-tslib_1.__exportStar(__webpack_require__(7), exports);
-tslib_1.__exportStar(__webpack_require__(173), exports);
-tslib_1.__exportStar(__webpack_require__(230), exports);
-tslib_1.__exportStar(__webpack_require__(296), exports);
-tslib_1.__exportStar(__webpack_require__(221), exports);
-tslib_1.__exportStar(__webpack_require__(302), exports);
-tslib_1.__exportStar(__webpack_require__(212), exports);
-
-
-/***/ }),
-/* 147 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(148), exports);
-tslib_1.__exportStar(__webpack_require__(149), exports);
-tslib_1.__exportStar(__webpack_require__(150), exports);
-tslib_1.__exportStar(__webpack_require__(151), exports);
-tslib_1.__exportStar(__webpack_require__(233), exports);
-tslib_1.__exportStar(__webpack_require__(211), exports);
-tslib_1.__exportStar(__webpack_require__(234), exports);
-tslib_1.__exportStar(__webpack_require__(235), exports);
-tslib_1.__exportStar(__webpack_require__(237), exports);
-tslib_1.__exportStar(__webpack_require__(238), exports);
-tslib_1.__exportStar(__webpack_require__(236), exports);
-tslib_1.__exportStar(__webpack_require__(239), exports);
-tslib_1.__exportStar(__webpack_require__(241), exports);
-tslib_1.__exportStar(__webpack_require__(220), exports);
-tslib_1.__exportStar(__webpack_require__(243), exports);
-tslib_1.__exportStar(__webpack_require__(153), exports);
-tslib_1.__exportStar(__webpack_require__(244), exports);
-tslib_1.__exportStar(__webpack_require__(240), exports);
-tslib_1.__exportStar(__webpack_require__(245), exports);
-tslib_1.__exportStar(__webpack_require__(242), exports);
-tslib_1.__exportStar(__webpack_require__(246), exports);
-tslib_1.__exportStar(__webpack_require__(247), exports);
-tslib_1.__exportStar(__webpack_require__(143), exports);
-tslib_1.__exportStar(__webpack_require__(295), exports);
-
-
-/***/ }),
-/* 148 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.assert = void 0;
-var tslib_1 = __webpack_require__(1);
-var AssertionError = (function (_super) {
-    tslib_1.__extends(AssertionError, _super);
-    function AssertionError(message) {
-        var _this = _super.call(this, message) || this;
-        _this.name = 'AssertionError';
-        return _this;
-    }
-    return AssertionError;
-}(Error));
-function assert(condition, message) {
-    if (!condition) {
-        throw new AssertionError("Assertion failed: ".concat(message));
-    }
+exports.isFastEqual = exports.isEqual = void 0;
+var stringify_1 = __webpack_require__(181);
+function isEqual(a, b) {
+    return a === b || (0, stringify_1.stringify)(a) === (0, stringify_1.stringify)(b);
 }
-exports.assert = assert;
+exports.isEqual = isEqual;
+function isFastEqual(a, b) {
+    return a === b;
+}
+exports.isFastEqual = isFastEqual;
 
 
 /***/ }),
-/* 149 */
+/* 181 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.stringify = void 0;
+function stringify(value, options) {
+    if (options === void 0) { options = {}; }
+    if (typeof value !== 'object') {
+        return String(value);
+    }
+    var excludeKeys = new Set(options.excludeKeys);
+    var map = new WeakMap();
+    var r = function (k, v) {
+        if (excludeKeys.has(k)) {
+            return;
+        }
+        if (typeof v === 'object' && v != null) {
+            if (map.get(v)) {
+                return '[refObject]';
+            }
+            map.set(v, true);
+        }
+        return v;
+    };
+    return JSON.stringify(value, r, options.prettify);
+}
+exports.stringify = stringify;
+
+
+/***/ }),
+/* 182 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.watch = exports.getPropertyDescriptor = void 0;
+var tslib_1 = __webpack_require__(1);
+var is_function_1 = __webpack_require__(9);
+var is_plain_object_1 = __webpack_require__(10);
+var is_view_object_1 = __webpack_require__(183);
+var observable_1 = __webpack_require__(179);
+var statuses_1 = __webpack_require__(184);
+var split_array_1 = __webpack_require__(177);
+var error_1 = __webpack_require__(176);
+function getPropertyDescriptor(obj, prop) {
+    var desc;
+    do {
+        desc = Object.getOwnPropertyDescriptor(obj, prop);
+        obj = Object.getPrototypeOf(obj);
+    } while (!desc && obj);
+    return desc;
+}
+exports.getPropertyDescriptor = getPropertyDescriptor;
+function watch(observeFields, context) {
+    return function (target, propertyKey) {
+        if (!(0, is_function_1.isFunction)(target[propertyKey])) {
+            throw (0, error_1.error)('Handler must be a Function');
+        }
+        var process = function (component) {
+            var callback = function (key) {
+                var _a;
+                var args = [];
+                for (var _i = 1; _i < arguments.length; _i++) {
+                    args[_i - 1] = arguments[_i];
+                }
+                if (!component.isInDestruct) {
+                    return (_a = component)[propertyKey].apply(_a, tslib_1.__spreadArray([key], tslib_1.__read(args), false));
+                }
+            };
+            (0, split_array_1.splitArray)(observeFields).forEach(function (field) {
+                if (/:/.test(field)) {
+                    var _a = tslib_1.__read(field.split(':'), 2), objectPath = _a[0], eventName_1 = _a[1];
+                    var ctx_1 = context;
+                    var view_1 = (0, is_view_object_1.isViewObject)(component)
+                        ? component
+                        : component.jodit;
+                    if (objectPath.length) {
+                        ctx_1 = component.get(objectPath);
+                    }
+                    if ((0, is_function_1.isFunction)(ctx_1)) {
+                        ctx_1 = ctx_1(component);
+                    }
+                    view_1.events.on(ctx_1 || component, eventName_1, callback);
+                    if (!ctx_1) {
+                        view_1.events.on(eventName_1, callback);
+                    }
+                    component.hookStatus('beforeDestruct', function () {
+                        view_1.events
+                            .off(ctx_1 || component, eventName_1, callback)
+                            .off(eventName_1, callback);
+                    });
+                    return;
+                }
+                var parts = field.split('.'), _b = tslib_1.__read(parts, 1), key = _b[0], teil = parts.slice(1);
+                var value = component[key];
+                if ((0, is_plain_object_1.isPlainObject)(value)) {
+                    var observableValue = (0, observable_1.observable)(value);
+                    observableValue.on("change.".concat(teil.join('.')), callback);
+                }
+                var descriptor = getPropertyDescriptor(target, key);
+                Object.defineProperty(component, key, {
+                    configurable: true,
+                    set: function (v) {
+                        var oldValue = value;
+                        if (oldValue === v) {
+                            return;
+                        }
+                        value = v;
+                        if (descriptor && descriptor.set) {
+                            descriptor.set.call(component, v);
+                        }
+                        if ((0, is_plain_object_1.isPlainObject)(value)) {
+                            value = (0, observable_1.observable)(value);
+                            value.on("change.".concat(teil.join('.')), callback);
+                        }
+                        callback(key, oldValue, value);
+                    },
+                    get: function () {
+                        if (descriptor && descriptor.get) {
+                            return descriptor.get.call(component);
+                        }
+                        return value;
+                    }
+                });
+            });
+        };
+        if ((0, is_function_1.isFunction)(target.hookStatus)) {
+            target.hookStatus(statuses_1.STATUSES.ready, process);
+        }
+        else {
+            process(target);
+        }
+    };
+}
+exports.watch = watch;
+exports["default"] = watch;
+
+
+/***/ }),
+/* 183 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isViewObject = void 0;
+var is_function_1 = __webpack_require__(9);
+function isViewObject(jodit) {
+    return Boolean(jodit &&
+        jodit instanceof Object &&
+        (0, is_function_1.isFunction)(jodit.constructor) &&
+        jodit.isView);
+}
+exports.isViewObject = isViewObject;
+
+
+/***/ }),
+/* 184 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.STATUSES = void 0;
+exports.STATUSES = {
+    beforeInit: 'beforeInit',
+    ready: 'ready',
+    beforeDestruct: 'beforeDestruct',
+    destructed: 'destructed'
+};
+
+
+/***/ }),
+/* 185 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(186), exports);
+tslib_1.__exportStar(__webpack_require__(302), exports);
+
+
+/***/ }),
+/* 186 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Ajax = void 0;
+var tslib_1 = __webpack_require__(1);
+var config_1 = __webpack_require__(164);
+var helpers_1 = __webpack_require__(187);
+var response_1 = __webpack_require__(302);
+__webpack_require__(303);
+var Ajax = (function () {
+    function Ajax(jodit, options) {
+        var _this = this;
+        this.jodit = jodit;
+        this.resolved = false;
+        this.activated = false;
+        this.options = (0, helpers_1.ConfigProto)(options || {}, config_1.Config.prototype.defaultAjaxOptions);
+        this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
+        jodit && jodit.e && jodit.e.on('beforeDestruct', function () { return _this.destruct(); });
+    }
+    Ajax.prototype.__buildParams = function (obj, prefix) {
+        if ((0, helpers_1.isFunction)(this.o.queryBuild)) {
+            return this.o.queryBuild.call(this, obj, prefix);
+        }
+        if ((0, helpers_1.isString)(obj) ||
+            (this.j.ow.FormData &&
+                obj instanceof this.j.ow.FormData)) {
+            return obj;
+        }
+        return (0, helpers_1.buildQuery)(obj);
+    };
+    Object.defineProperty(Ajax.prototype, "o", {
+        get: function () {
+            return this.options;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Ajax.prototype, "j", {
+        get: function () {
+            return this.jodit;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Ajax.prototype.abort = function () {
+        try {
+            this.xhr.abort();
+        }
+        catch (_a) { }
+        return this;
+    };
+    Ajax.prototype.send = function () {
+        var _this = this;
+        this.activated = true;
+        var _a = this, xhr = _a.xhr, o = _a.o;
+        var request = this.prepareRequest();
+        return this.j.async.promise(function (resolve, reject) {
+            var _a;
+            var onReject = function () {
+                reject((0, helpers_1.error)('Connection error'));
+            };
+            var onResolve = function () {
+                _this.resolved = true;
+                resolve(new response_1.Response(request, xhr.status, xhr.statusText, !xhr.responseType ? xhr.responseText : xhr.response));
+            };
+            xhr.onload = onResolve;
+            xhr.onabort = onReject;
+            xhr.onerror = onReject;
+            xhr.ontimeout = onReject;
+            if (o.responseType) {
+                xhr.responseType = o.responseType;
+            }
+            xhr.onprogress = function (e) {
+                var _a, _b;
+                var percentComplete = 0;
+                if (e.lengthComputable) {
+                    percentComplete = (e.loaded / e.total) * 100;
+                }
+                (_b = (_a = _this.options).onProgress) === null || _b === void 0 ? void 0 : _b.call(_a, percentComplete);
+            };
+            xhr.onreadystatechange = function () {
+                var _a, _b;
+                (_b = (_a = _this.options).onProgress) === null || _b === void 0 ? void 0 : _b.call(_a, 10);
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (o.successStatuses.includes(xhr.status)) {
+                        onResolve();
+                    }
+                    else {
+                        reject((0, helpers_1.error)(xhr.statusText || 'Connection error'));
+                    }
+                }
+            };
+            xhr.withCredentials = (_a = o.withCredentials) !== null && _a !== void 0 ? _a : false;
+            var url = request.url, data = request.data, method = request.method;
+            xhr.open(method, url, true);
+            if (o.contentType && xhr.setRequestHeader) {
+                xhr.setRequestHeader('Content-type', o.contentType);
+            }
+            var headers = o.headers;
+            if (headers && xhr.setRequestHeader) {
+                Object.keys(headers).forEach(function (key) {
+                    xhr.setRequestHeader(key, headers[key]);
+                });
+            }
+            _this.j.async.setTimeout(function () {
+                xhr.send(data ? _this.__buildParams(data) : undefined);
+            }, 0);
+        });
+    };
+    Ajax.prototype.prepareRequest = function () {
+        if (!this.o.url) {
+            throw (0, helpers_1.error)('Need URL for AJAX request');
+        }
+        var url = this.o.url;
+        var data = this.o.data;
+        var method = (this.o.method || 'get').toLowerCase();
+        if (method === 'get' && data && (0, helpers_1.isPlainObject)(data)) {
+            var qIndex = url.indexOf('?');
+            if (qIndex !== -1) {
+                var urlData = (0, helpers_1.parseQuery)(url);
+                url =
+                    url.substr(0, qIndex) +
+                        '?' +
+                        (0, helpers_1.buildQuery)(tslib_1.__assign(tslib_1.__assign({}, urlData), data));
+            }
+            else {
+                url += '?' + (0, helpers_1.buildQuery)(this.o.data);
+            }
+        }
+        var request = {
+            url: url,
+            method: method,
+            data: data
+        };
+        Ajax.log.splice(100);
+        Ajax.log.push(request);
+        return request;
+    };
+    Ajax.prototype.destruct = function () {
+        if (this.activated && !this.resolved) {
+            this.abort();
+            this.resolved = true;
+        }
+    };
+    Ajax.log = [];
+    return Ajax;
+}());
+exports.Ajax = Ajax;
+
+
+/***/ }),
+/* 187 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(188), exports);
+tslib_1.__exportStar(__webpack_require__(272), exports);
+tslib_1.__exportStar(__webpack_require__(7), exports);
+tslib_1.__exportStar(__webpack_require__(222), exports);
+tslib_1.__exportStar(__webpack_require__(274), exports);
+tslib_1.__exportStar(__webpack_require__(275), exports);
+tslib_1.__exportStar(__webpack_require__(283), exports);
+tslib_1.__exportStar(__webpack_require__(296), exports);
+tslib_1.__exportStar(__webpack_require__(288), exports);
+
+
+/***/ }),
+/* 188 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(170), exports);
+tslib_1.__exportStar(__webpack_require__(189), exports);
+tslib_1.__exportStar(__webpack_require__(190), exports);
+tslib_1.__exportStar(__webpack_require__(173), exports);
+tslib_1.__exportStar(__webpack_require__(199), exports);
+tslib_1.__exportStar(__webpack_require__(200), exports);
+tslib_1.__exportStar(__webpack_require__(201), exports);
+tslib_1.__exportStar(__webpack_require__(202), exports);
+tslib_1.__exportStar(__webpack_require__(204), exports);
+tslib_1.__exportStar(__webpack_require__(205), exports);
+tslib_1.__exportStar(__webpack_require__(203), exports);
+tslib_1.__exportStar(__webpack_require__(206), exports);
+tslib_1.__exportStar(__webpack_require__(208), exports);
+tslib_1.__exportStar(__webpack_require__(192), exports);
+tslib_1.__exportStar(__webpack_require__(211), exports);
+tslib_1.__exportStar(__webpack_require__(191), exports);
+tslib_1.__exportStar(__webpack_require__(212), exports);
+tslib_1.__exportStar(__webpack_require__(207), exports);
+tslib_1.__exportStar(__webpack_require__(213), exports);
+tslib_1.__exportStar(__webpack_require__(210), exports);
+tslib_1.__exportStar(__webpack_require__(214), exports);
+tslib_1.__exportStar(__webpack_require__(265), exports);
+tslib_1.__exportStar(__webpack_require__(176), exports);
+tslib_1.__exportStar(__webpack_require__(271), exports);
+tslib_1.__exportStar(__webpack_require__(172), exports);
+
+
+/***/ }),
+/* 189 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -6548,7 +7904,7 @@ exports.markDeprecated = markDeprecated;
 
 
 /***/ }),
-/* 150 */
+/* 190 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -6559,16 +7915,16 @@ exports.markDeprecated = markDeprecated;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.memorizeExec = exports.keys = exports.loadImage = exports.reset = exports.callPromise = exports.markOwner = exports.attr = exports.call = void 0;
+exports.memorizeExec = exports.keys = exports.loadImage = exports.callPromise = exports.markOwner = exports.attr = exports.call = void 0;
 var tslib_1 = __webpack_require__(1);
 var is_function_1 = __webpack_require__(9);
 var is_promise_1 = __webpack_require__(12);
-var get_1 = __webpack_require__(151);
-var data_bind_1 = __webpack_require__(153);
-var is_void_1 = __webpack_require__(152);
-var checker_1 = __webpack_require__(173);
-var css_1 = __webpack_require__(220);
-var string_1 = __webpack_require__(212);
+var is_void_1 = __webpack_require__(174);
+var is_plain_object_1 = __webpack_require__(10);
+var is_string_1 = __webpack_require__(13);
+var data_bind_1 = __webpack_require__(191);
+var css_1 = __webpack_require__(192);
+var kebab_case_1 = __webpack_require__(196);
 function call(func) {
     var args = [];
     for (var _i = 1; _i < arguments.length; _i++) {
@@ -6581,10 +7937,10 @@ function attr(elm, keyOrAttributes, value) {
     if (!elm || !(0, is_function_1.isFunction)(elm.getAttribute)) {
         return null;
     }
-    if (!(0, checker_1.isString)(keyOrAttributes)) {
+    if (!(0, is_string_1.isString)(keyOrAttributes)) {
         Object.keys(keyOrAttributes).forEach(function (key) {
             var value = keyOrAttributes[key];
-            if ((0, checker_1.isPlainObject)(value) && key === 'style') {
+            if ((0, is_plain_object_1.isPlainObject)(value) && key === 'style') {
                 (0, css_1.css)(elm, value);
             }
             else {
@@ -6596,7 +7952,7 @@ function attr(elm, keyOrAttributes, value) {
         });
         return null;
     }
-    var key = (0, string_1.CamelCaseToKebabCase)(keyOrAttributes);
+    var key = (0, kebab_case_1.CamelCaseToKebabCase)(keyOrAttributes);
     if (/^-/.test(key)) {
         var res = attr(elm, "data".concat(key));
         if (res) {
@@ -6631,32 +7987,6 @@ function callPromise(condition, callback) {
     return callback();
 }
 exports.callPromise = callPromise;
-var map = {};
-var reset = function (key) {
-    var _a, _b;
-    if (!(key in map)) {
-        var iframe = document.createElement('iframe');
-        try {
-            iframe.src = 'about:blank';
-            document.body.appendChild(iframe);
-            if (!iframe.contentWindow) {
-                return null;
-            }
-            var func = (0, get_1.get)(key, iframe.contentWindow), bind = (0, get_1.get)(key.split('.').slice(0, -1).join('.'), iframe.contentWindow);
-            if ((0, is_function_1.isFunction)(func)) {
-                map[key] = func.bind(bind);
-            }
-        }
-        catch (e) {
-            if (false) {}
-        }
-        finally {
-            (_a = iframe.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(iframe);
-        }
-    }
-    return (_b = map[key]) !== null && _b !== void 0 ? _b : null;
-};
-exports.reset = reset;
 var loadImage = function (src, jodit) {
     return jodit.async.promise(function (res, rej) {
         var image = new Image(), onError = function () {
@@ -6707,78 +8037,7 @@ exports.memorizeExec = memorizeExec;
 
 
 /***/ }),
-/* 151 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.get = void 0;
-var tslib_1 = __webpack_require__(1);
-var is_string_1 = __webpack_require__(13);
-var is_void_1 = __webpack_require__(152);
-function get(chain, obj) {
-    var e_1, _a;
-    if (!(0, is_string_1.isString)(chain) || !chain.length) {
-        return null;
-    }
-    var parts = chain.split('.');
-    var result = obj;
-    try {
-        try {
-            for (var parts_1 = tslib_1.__values(parts), parts_1_1 = parts_1.next(); !parts_1_1.done; parts_1_1 = parts_1.next()) {
-                var part = parts_1_1.value;
-                if ((0, is_void_1.isVoid)(result[part])) {
-                    return null;
-                }
-                result = result[part];
-            }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (parts_1_1 && !parts_1_1.done && (_a = parts_1.return)) _a.call(parts_1);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-    }
-    catch (_b) {
-        return null;
-    }
-    if ((0, is_void_1.isVoid)(result)) {
-        return null;
-    }
-    return result;
-}
-exports.get = get;
-
-
-/***/ }),
-/* 152 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isVoid = void 0;
-function isVoid(value) {
-    return value === undefined || value === null;
-}
-exports.isVoid = isVoid;
-
-
-/***/ }),
-/* 153 */
+/* 191 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -6790,8 +8049,7 @@ exports.isVoid = isVoid;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.dataBind = void 0;
-var component_1 = __webpack_require__(154);
-var checker_1 = __webpack_require__(173);
+var is_view_object_1 = __webpack_require__(183);
 var store = new WeakMap();
 var dataBind = function (elm, key, value) {
     var itemStore = store.get(elm);
@@ -6799,10 +8057,10 @@ var dataBind = function (elm, key, value) {
         itemStore = {};
         store.set(elm, itemStore);
         var e = null;
-        if (elm instanceof component_1.ViewComponent) {
+        if ((0, is_view_object_1.isViewObject)(elm.j)) {
             e = elm.j.e;
         }
-        if ((0, checker_1.isViewObject)(elm)) {
+        if ((0, is_view_object_1.isViewObject)(elm)) {
             e = elm.e;
         }
         e &&
@@ -6820,7 +8078,7 @@ exports.dataBind = dataBind;
 
 
 /***/ }),
-/* 154 */
+/* 192 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -6831,14 +8089,102 @@ exports.dataBind = dataBind;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(155), exports);
-tslib_1.__exportStar(__webpack_require__(156), exports);
-tslib_1.__exportStar(__webpack_require__(219), exports);
+exports.clearCenterAlign = exports.css = void 0;
+var is_plain_object_1 = __webpack_require__(10);
+var is_numeric_1 = __webpack_require__(193);
+var is_void_1 = __webpack_require__(174);
+var is_boolean_1 = __webpack_require__(194);
+var normalize_css_value_1 = __webpack_require__(195);
+var camel_case_1 = __webpack_require__(198);
+var kebab_case_1 = __webpack_require__(196);
+function css(element, key, value, onlyStyleMode) {
+    if (onlyStyleMode === void 0) { onlyStyleMode = false; }
+    var numberFieldsReg = /^(left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size)/i;
+    if ((0, is_boolean_1.isBoolean)(value)) {
+        onlyStyleMode = value;
+        value = undefined;
+    }
+    if ((0, is_plain_object_1.isPlainObject)(key) || value !== undefined) {
+        var setValue = function (elm, _key, _value) {
+            if (!(0, is_void_1.isVoid)(_value) &&
+                numberFieldsReg.test(_key) &&
+                (0, is_numeric_1.isNumeric)(_value.toString())) {
+                _value = parseInt(_value.toString(), 10) + 'px';
+            }
+            if (_value !== undefined &&
+                (_value == null ||
+                    css(elm, _key, true) !== (0, normalize_css_value_1.normalizeCssValue)(_key, _value))) {
+                elm.style[_key] = _value;
+            }
+        };
+        if ((0, is_plain_object_1.isPlainObject)(key)) {
+            var keys = Object.keys(key);
+            for (var j = 0; j < keys.length; j += 1) {
+                setValue(element, (0, camel_case_1.camelCase)(keys[j]), key[keys[j]]);
+            }
+        }
+        else {
+            setValue(element, (0, camel_case_1.camelCase)(key), value);
+        }
+        return '';
+    }
+    var key2 = (0, kebab_case_1.kebabCase)(key), doc = element.ownerDocument || document, win = doc ? doc.defaultView || doc.parentWindow : false;
+    var currentValue = element.style[key];
+    var result = '';
+    if (currentValue !== undefined && currentValue !== '') {
+        result = currentValue;
+    }
+    else if (win && !onlyStyleMode) {
+        result = win.getComputedStyle(element).getPropertyValue(key2);
+    }
+    if (numberFieldsReg.test(key) &&
+        /^[-+]?[0-9.]+px$/.test(result.toString())) {
+        result = parseInt(result.toString(), 10);
+    }
+    return (0, normalize_css_value_1.normalizeCssValue)(key, result);
+}
+exports.css = css;
+var clearCenterAlign = function (image) {
+    if (css(image, 'display') === 'block') {
+        css(image, 'display', '');
+    }
+    var style = image.style;
+    if (style.marginLeft === 'auto' && style.marginRight === 'auto') {
+        style.marginLeft = '';
+        style.marginRight = '';
+    }
+};
+exports.clearCenterAlign = clearCenterAlign;
 
 
 /***/ }),
-/* 155 */
+/* 193 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isNumeric = void 0;
+var is_string_1 = __webpack_require__(13);
+function isNumeric(value) {
+    if ((0, is_string_1.isString)(value)) {
+        if (!value.match(/^([+-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
+            return false;
+        }
+        value = parseFloat(value);
+    }
+    return typeof value === 'number' && !isNaN(value) && isFinite(value);
+}
+exports.isNumeric = isNumeric;
+
+
+/***/ }),
+/* 194 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -6849,17 +8195,15 @@ tslib_1.__exportStar(__webpack_require__(219), exports);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.STATUSES = void 0;
-exports.STATUSES = {
-    beforeInit: 'beforeInit',
-    ready: 'ready',
-    beforeDestruct: 'beforeDestruct',
-    destructed: 'destructed'
-};
+exports.isBoolean = void 0;
+function isBoolean(elm) {
+    return typeof elm === 'boolean';
+}
+exports.isBoolean = isBoolean;
 
 
 /***/ }),
-/* 156 */
+/* 195 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -6870,150 +8214,232 @@ exports.STATUSES = {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Component = void 0;
-var helpers_1 = __webpack_require__(146);
-var global_1 = __webpack_require__(157);
-var statuses_1 = __webpack_require__(155);
-var StatusListHandlers = new Map();
-var Component = (function () {
-    function Component() {
-        this.ownerWindow = window;
-        this.__componentStatus = statuses_1.STATUSES.beforeInit;
-        this.uid = 'jodit-uid-' + (0, global_1.uniqueUid)();
-    }
-    Object.defineProperty(Component.prototype, "componentName", {
-        get: function () {
-            if (!this.__componentName) {
-                this.__componentName =
-                    'jodit-' +
-                        (0, helpers_1.kebabCase)(((0, helpers_1.isFunction)(this.className) ? this.className() : '') ||
-                            (0, helpers_1.getClassName)(this));
+exports.normalizeCssValue = void 0;
+var is_numeric_1 = __webpack_require__(193);
+var kebab_case_1 = __webpack_require__(196);
+var color_to_hex_1 = __webpack_require__(197);
+function normalizeCssValue(key, value) {
+    switch ((0, kebab_case_1.kebabCase)(key)) {
+        case 'font-weight':
+            switch (value.toString().toLowerCase()) {
+                case '700':
+                case 'bold':
+                    return 700;
+                case '400':
+                case 'normal':
+                    return 400;
+                case '900':
+                case 'heavy':
+                    return 900;
             }
-            return this.__componentName;
-        },
-        enumerable: false,
-        configurable: true
+            return (0, is_numeric_1.isNumeric)(value) ? Number(value) : value;
+    }
+    if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
+        return (0, color_to_hex_1.colorToHex)(value.toString()) || value;
+    }
+    return value;
+}
+exports.normalizeCssValue = normalizeCssValue;
+
+
+/***/ }),
+/* 196 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.CamelCaseToKebabCase = exports.kebabCase = void 0;
+var kebabCase = function (key) {
+    return key
+        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .replace(/[\s_]+/g, '-')
+        .toLowerCase();
+};
+exports.kebabCase = kebabCase;
+var CamelCaseToKebabCase = function (key) {
+    return key
+        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .toLowerCase();
+};
+exports.CamelCaseToKebabCase = CamelCaseToKebabCase;
+
+
+/***/ }),
+/* 197 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.colorToHex = void 0;
+var colorToHex = function (color) {
+    if (color === 'rgba(0, 0, 0, 0)' || color === '') {
+        return false;
+    }
+    if (!color) {
+        return '#000000';
+    }
+    if (color.substr(0, 1) === '#') {
+        return color;
+    }
+    var digits = /([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) ||
+        /([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color);
+    if (!digits) {
+        return '#000000';
+    }
+    var red = parseInt(digits[2], 10), green = parseInt(digits[3], 10), blue = parseInt(digits[4], 10), rgb = blue | (green << 8) | (red << 16);
+    var hex = rgb.toString(16).toUpperCase();
+    while (hex.length < 6) {
+        hex = '0' + hex;
+    }
+    return digits[1] + '#' + hex;
+};
+exports.colorToHex = colorToHex;
+
+
+/***/ }),
+/* 198 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.camelCase = void 0;
+var camelCase = function (key) {
+    return key.replace(/([-_])(.)/g, function (m, code, letter) {
+        return letter.toUpperCase();
     });
-    Component.prototype.getFullElName = function (elementName, mod, modValue) {
-        var result = [this.componentName];
-        if (elementName) {
-            elementName = elementName.replace(/[^a-z0-9-]/gi, '-');
-            result.push("__".concat(elementName));
+};
+exports.camelCase = camelCase;
+
+
+/***/ }),
+/* 199 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.set = void 0;
+var is_string_1 = __webpack_require__(13);
+var is_numeric_1 = __webpack_require__(193);
+var is_array_1 = __webpack_require__(14);
+var is_plain_object_1 = __webpack_require__(10);
+function set(chain, value, obj) {
+    if (!(0, is_string_1.isString)(chain) || !chain.length) {
+        return;
+    }
+    var parts = chain.split('.');
+    var result = obj, key = parts[0];
+    for (var i = 0; i < parts.length - 1; i += 1) {
+        key = parts[i];
+        if (!(0, is_array_1.isArray)(result[key]) && !(0, is_plain_object_1.isPlainObject)(result[key])) {
+            result[key] = (0, is_numeric_1.isNumeric)(parts[i + 1]) ? [] : {};
         }
-        if (mod) {
-            result.push('_', mod);
-            result.push('_', (0, helpers_1.isVoid)(modValue) ? 'true' : modValue.toString());
+        result = result[key];
+    }
+    if (result) {
+        result[parts[parts.length - 1]] = value;
+    }
+}
+exports.set = set;
+
+
+/***/ }),
+/* 200 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getClassName = exports.keepNames = void 0;
+var is_function_1 = __webpack_require__(9);
+exports.keepNames = new Map();
+var getClassName = function (obj) {
+    var _a;
+    if ((0, is_function_1.isFunction)(obj.className)) {
+        return obj.className();
+    }
+    var constructor = ((_a = obj.constructor) === null || _a === void 0 ? void 0 : _a.originalConstructor) || obj.constructor;
+    if (exports.keepNames.has(constructor)) {
+        return exports.keepNames.get(constructor);
+    }
+    if (constructor.name) {
+        return constructor.name;
+    }
+    var regex = new RegExp(/^\s*function\s*(\S*)\s*\(/);
+    var res = constructor.toString().match(regex);
+    return res ? res[1] : '';
+};
+exports.getClassName = getClassName;
+
+
+/***/ }),
+/* 201 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LimitedStack = void 0;
+var LimitedStack = (function () {
+    function LimitedStack(limit) {
+        this.limit = limit;
+        this.stack = [];
+    }
+    LimitedStack.prototype.push = function (item) {
+        this.stack.push(item);
+        if (this.stack.length > this.limit) {
+            this.stack.shift();
         }
-        return result.join('');
-    };
-    Object.defineProperty(Component.prototype, "ownerDocument", {
-        get: function () {
-            return this.ow.document;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Component.prototype, "od", {
-        get: function () {
-            return this.ownerDocument;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Component.prototype, "ow", {
-        get: function () {
-            return this.ownerWindow;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Component.prototype.get = function (chain, obj) {
-        return (0, helpers_1.get)(chain, obj || this);
-    };
-    Object.defineProperty(Component.prototype, "isReady", {
-        get: function () {
-            return this.componentStatus === statuses_1.STATUSES.ready;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Component.prototype, "isDestructed", {
-        get: function () {
-            return this.componentStatus === statuses_1.STATUSES.destructed;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Component.prototype, "isInDestruct", {
-        get: function () {
-            return (statuses_1.STATUSES.beforeDestruct === this.componentStatus ||
-                statuses_1.STATUSES.destructed === this.componentStatus);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Component.prototype.bindDestruct = function (component) {
-        var _this = this;
-        component.hookStatus(statuses_1.STATUSES.beforeDestruct, function () { return !_this.isInDestruct && _this.destruct(); });
         return this;
     };
-    Component.prototype.destruct = function () {
-        this.setStatus(statuses_1.STATUSES.destructed);
-        if (StatusListHandlers.get(this)) {
-            StatusListHandlers.delete(this);
-        }
+    LimitedStack.prototype.pop = function () {
+        return this.stack.pop();
     };
-    Object.defineProperty(Component.prototype, "componentStatus", {
-        get: function () {
-            return this.__componentStatus;
-        },
-        set: function (componentStatus) {
-            this.setStatus(componentStatus);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Component.prototype.setStatus = function (componentStatus) {
-        return this.setStatusComponent(componentStatus, this);
+    LimitedStack.prototype.find = function (clb) {
+        return this.stack.find(clb);
     };
-    Component.prototype.setStatusComponent = function (componentStatus, component) {
-        if (componentStatus === this.__componentStatus) {
-            return;
-        }
-        if (component === this) {
-            this.__componentStatus = componentStatus;
-        }
-        var proto = Object.getPrototypeOf(this);
-        if (proto && (0, helpers_1.isFunction)(proto.setStatusComponent)) {
-            proto.setStatusComponent(componentStatus, component);
-        }
-        var statuses = StatusListHandlers.get(this), list = statuses === null || statuses === void 0 ? void 0 : statuses[componentStatus];
-        if (list && list.length) {
-            list.forEach(function (cb) { return cb(component); });
-        }
-    };
-    Component.prototype.hookStatus = function (status, callback) {
-        var list = StatusListHandlers.get(this);
-        if (!list) {
-            list = {};
-            StatusListHandlers.set(this, list);
-        }
-        if (!list[status]) {
-            list[status] = [];
-        }
-        list[status].push(callback);
-    };
-    Component.isInstanceOf = function (c, constructorFunc) {
-        return c instanceof constructorFunc;
-    };
-    Component.STATUSES = statuses_1.STATUSES;
-    return Component;
+    return LimitedStack;
 }());
-exports.Component = Component;
+exports.LimitedStack = LimitedStack;
 
 
 /***/ }),
-/* 157 */
+/* 202 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -7024,89 +8450,151 @@ exports.Component = Component;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.eventEmitter = exports.getContainer = exports.extendLang = exports.lang = exports.modules = exports.pluginSystem = exports.uniqueUid = exports.instances = void 0;
-var plugin_system_1 = __webpack_require__(158);
-var dom_1 = __webpack_require__(159);
-var event_emitter_1 = __webpack_require__(139);
-var checker_1 = __webpack_require__(173);
-var get_class_name_1 = __webpack_require__(211);
-var string_1 = __webpack_require__(212);
-exports.instances = {};
-var counter = 1;
-var uuids = new Set();
-function uniqueUid() {
-    function gen() {
-        counter += 10 * (Math.random() + 1);
-        return Math.round(counter).toString(16);
+exports.loadNextStyle = exports.loadNext = exports.appendStyleAsync = exports.appendScriptAsync = exports.appendScript = void 0;
+var tslib_1 = __webpack_require__(1);
+var complete_url_1 = __webpack_require__(203);
+var is_function_1 = __webpack_require__(9);
+var is_string_1 = __webpack_require__(13);
+var alreadyLoadedList = new Map();
+var cacheLoaders = function (loader) {
+    return function (jodit, url) { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
+        var promise;
+        return tslib_1.__generator(this, function (_a) {
+            if (alreadyLoadedList.has(url)) {
+                return [2, alreadyLoadedList.get(url)];
+            }
+            promise = loader(jodit, url);
+            alreadyLoadedList.set(url, promise);
+            return [2, promise];
+        });
+    }); };
+};
+var appendScript = function (jodit, url, callback) {
+    var script = jodit.c.element('script');
+    script.type = 'text/javascript';
+    script.async = true;
+    if ((0, is_function_1.isFunction)(callback) && !jodit.isInDestruct) {
+        jodit.e.on(script, 'load', callback);
     }
-    var uid = gen();
-    while (uuids.has(uid)) {
-        uid = gen();
+    if (!script.src) {
+        script.src = (0, complete_url_1.completeUrl)(url);
     }
-    uuids.add(uid);
-    return uid;
-}
-exports.uniqueUid = uniqueUid;
-exports.pluginSystem = new plugin_system_1.PluginSystem();
-exports.modules = {};
-exports.lang = {};
-var extendLang = function (langs) {
-    Object.keys(langs).forEach(function (key) {
-        if (exports.lang[key]) {
-            Object.assign(exports.lang[key], langs[key]);
+    jodit.od.body.appendChild(script);
+    return {
+        callback: callback,
+        element: script
+    };
+};
+exports.appendScript = appendScript;
+exports.appendScriptAsync = cacheLoaders(function (jodit, url) {
+    return new Promise(function (resolve, reject) {
+        var element = (0, exports.appendScript)(jodit, url, resolve).element;
+        !jodit.isInDestruct && jodit.e.on(element, 'error', reject);
+    });
+});
+exports.appendStyleAsync = cacheLoaders(function (jodit, url) {
+    return new Promise(function (resolve, reject) {
+        var link = jodit.c.element('link');
+        link.rel = 'stylesheet';
+        link.media = 'all';
+        link.crossOrigin = 'anonymous';
+        var callback = function () { return resolve(link); };
+        !jodit.isInDestruct &&
+            jodit.e.on(link, 'load', callback).on(link, 'error', reject);
+        link.href = (0, complete_url_1.completeUrl)(url);
+        if (jodit.o.shadowRoot) {
+            jodit.o.shadowRoot.appendChild(link);
         }
         else {
-            exports.lang[key] = langs[key];
+            jodit.od.body.appendChild(link);
         }
     });
-};
-exports.extendLang = extendLang;
-var boxes = new WeakMap();
-function getContainer(jodit, classFunc, tag, createInsideEditor) {
-    if (tag === void 0) { tag = 'div'; }
-    if (createInsideEditor === void 0) { createInsideEditor = false; }
-    var name = classFunc ? (0, get_class_name_1.getClassName)(classFunc.prototype) : 'jodit-utils';
-    var data = boxes.get(jodit) || {}, key = name + tag;
-    var view = (0, checker_1.isViewObject)(jodit) ? jodit : jodit.j;
-    if (!data[key]) {
-        var c = view.c, body = (0, checker_1.isJoditObject)(jodit) && jodit.o.shadowRoot
-            ? jodit.o.shadowRoot
-            : jodit.od.body;
-        if (createInsideEditor &&
-            (0, checker_1.isJoditObject)(jodit) &&
-            jodit.od !== jodit.ed) {
-            c = jodit.createInside;
-            var place = tag === 'style' ? jodit.ed.head : jodit.ed.body;
-            body =
-                (0, checker_1.isJoditObject)(jodit) && jodit.o.shadowRoot
-                    ? jodit.o.shadowRoot
-                    : place;
-        }
-        var box_1 = c.element(tag, {
-            className: "jodit jodit-".concat((0, string_1.kebabCase)(name), "-container jodit-box")
-        });
-        box_1.classList.add("jodit_theme_".concat(view.o.theme || 'default'));
-        body.appendChild(box_1);
-        data[key] = box_1;
-        jodit.hookStatus('beforeDestruct', function () {
-            dom_1.Dom.safeRemove(box_1);
-            delete data[key];
-            if (Object.keys(data).length) {
-                boxes.delete(jodit);
-            }
-        });
-        boxes.set(jodit, data);
+});
+var loadNext = function (jodit, urls, i) {
+    if (i === void 0) { i = 0; }
+    if (!(0, is_string_1.isString)(urls[i])) {
+        return Promise.resolve();
     }
-    data[key].classList.remove('jodit_theme_default', 'jodit_theme_dark');
-    data[key].classList.add("jodit_theme_".concat(view.o.theme || 'default'));
-    return data[key];
-}
-exports.getContainer = getContainer;
-exports.eventEmitter = new event_emitter_1.EventEmitter();
+    return (0, exports.appendScriptAsync)(jodit, urls[i]).then(function () {
+        return (0, exports.loadNext)(jodit, urls, i + 1);
+    });
+};
+exports.loadNext = loadNext;
+var loadNextStyle = function (jodit, urls, i) {
+    if (i === void 0) { i = 0; }
+    if (!(0, is_string_1.isString)(urls[i])) {
+        return Promise.resolve();
+    }
+    return (0, exports.appendStyleAsync)(jodit, urls[i]).then(function () {
+        return (0, exports.loadNextStyle)(jodit, urls, i + 1);
+    });
+};
+exports.loadNextStyle = loadNextStyle;
 
 
 /***/ }),
-/* 158 */
+/* 203 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.completeUrl = void 0;
+var completeUrl = function (url) {
+    if (window.location.protocol === 'file:' && /^\/\//.test(url)) {
+        url = 'https:' + url;
+    }
+    return url;
+};
+exports.completeUrl = completeUrl;
+
+
+/***/ }),
+/* 204 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.browser = void 0;
+var browser = function (browser) {
+    var ua = navigator.userAgent.toLowerCase(), match = /(firefox)[\s/]([\w.]+)/.exec(ua) ||
+        /(chrome)[\s/]([\w.]+)/.exec(ua) ||
+        /(webkit)[\s/]([\w.]+)/.exec(ua) ||
+        /(opera)(?:.*version)[\s/]([\w.]+)/.exec(ua) ||
+        /(msie)[\s]([\w.]+)/.exec(ua) ||
+        /(trident)\/([\w.]+)/.exec(ua) ||
+        ua.indexOf('compatible') < 0 ||
+        [];
+    if (browser === 'version') {
+        return match[2];
+    }
+    if (browser === 'webkit') {
+        return match[1] === 'chrome' || match[1] === 'webkit';
+    }
+    if (browser === 'ff') {
+        return match[1] === 'firefox';
+    }
+    if (browser === 'msie') {
+        return match[1] === 'trident' || match[1] === 'msie';
+    }
+    return match[1] === browser;
+};
+exports.browser = browser;
+
+
+/***/ }),
+/* 205 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -7117,196 +8605,274 @@ exports.eventEmitter = new event_emitter_1.EventEmitter();
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PluginSystem = void 0;
-var tslib_1 = __webpack_require__(1);
-var helpers_1 = __webpack_require__(146);
-var PluginSystem = (function () {
-    function PluginSystem() {
-        this._items = new Map();
+exports.buildQuery = void 0;
+var is_plain_object_1 = __webpack_require__(10);
+var buildQuery = function (data, prefix) {
+    var str = [];
+    var enc = encodeURIComponent;
+    for (var dataKey in data) {
+        if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
+            var k = prefix ? prefix + '[' + dataKey + ']' : dataKey;
+            var v = data[dataKey];
+            str.push((0, is_plain_object_1.isPlainObject)(v) ? (0, exports.buildQuery)(v, k) : enc(k) + '=' + enc(v));
+        }
     }
-    PluginSystem.prototype.normalizeName = function (name) {
-        return (0, helpers_1.kebabCase)(name).toLowerCase();
-    };
-    PluginSystem.prototype.items = function (filter) {
-        var results = [];
-        this._items.forEach(function (plugin, name) {
-            results.push([name, plugin]);
-        });
-        return results.filter(function (_a) {
-            var _b = tslib_1.__read(_a, 1), name = _b[0];
-            return !filter || filter.includes(name);
-        });
-    };
-    PluginSystem.prototype.add = function (name, plugin) {
-        this._items.set(this.normalizeName(name), plugin);
-    };
-    PluginSystem.prototype.get = function (name) {
-        return this._items.get(this.normalizeName(name));
-    };
-    PluginSystem.prototype.remove = function (name) {
-        this._items.delete(this.normalizeName(name));
-    };
-    PluginSystem.prototype.init = function (jodit) {
-        var _this = this;
-        var extrasList = jodit.o.extraPlugins.map(function (s) {
-            return (0, helpers_1.isString)(s) ? { name: s } : s;
-        }), disableList = (0, helpers_1.splitArray)(jodit.o.disablePlugins).map(function (s) {
-            var name = _this.normalizeName(s);
-            if (false) {}
-            return name;
-        }), doneList = [], promiseList = {}, plugins = [], pluginsMap = {}, makeAndInit = function (_a) {
-            var _b = tslib_1.__read(_a, 2), name = _b[0], plugin = _b[1];
-            if (disableList.includes(name) ||
-                doneList.includes(name) ||
-                promiseList[name]) {
-                return;
-            }
-            var requires = plugin === null || plugin === void 0 ? void 0 : plugin.requires;
-            if (requires &&
-                (0, helpers_1.isArray)(requires) &&
-                _this.hasDisabledRequires(disableList, requires)) {
-                return;
-            }
-            var instance = PluginSystem.makePluginInstance(jodit, plugin);
-            if (instance) {
-                _this.initOrWait(jodit, name, instance, doneList, promiseList);
-                plugins.push(instance);
-                pluginsMap[name] = instance;
-            }
-        };
-        var resultLoadExtras = this.loadExtras(jodit, extrasList);
-        return (0, helpers_1.callPromise)(resultLoadExtras, function () {
-            if (jodit.isInDestruct) {
-                return;
-            }
-            _this.items(jodit.o.safeMode
-                ? jodit.o.safePluginsList.concat(extrasList.map(function (s) { return s.name; }))
-                : null).forEach(makeAndInit);
-            _this.addListenerOnBeforeDestruct(jodit, plugins);
-            jodit.__plugins = pluginsMap;
-        });
-    };
-    PluginSystem.prototype.hasDisabledRequires = function (disableList, requires) {
-        return Boolean((requires === null || requires === void 0 ? void 0 : requires.length) &&
-            disableList.some(function (disabled) { return requires.includes(disabled); }));
-    };
-    PluginSystem.makePluginInstance = function (jodit, plugin) {
+    return str.join('&');
+};
+exports.buildQuery = buildQuery;
+
+
+/***/ }),
+/* 206 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ConfigFlatten = exports.ConfigProto = void 0;
+var tslib_1 = __webpack_require__(1);
+var extend_1 = __webpack_require__(207);
+var is_array_1 = __webpack_require__(14);
+var is_plain_object_1 = __webpack_require__(10);
+var is_string_1 = __webpack_require__(13);
+var is_void_1 = __webpack_require__(174);
+var config_1 = __webpack_require__(164);
+var utils_1 = __webpack_require__(190);
+function ConfigProto(options, proto, deep) {
+    if (deep === void 0) { deep = 0; }
+    if (Object.getPrototypeOf(options) !== Object.prototype) {
+        return options;
+    }
+    var def = config_1.Config.defaultOptions;
+    if ((0, is_string_1.isString)(options.preset)) {
+        if (def.presets[options.preset] !== undefined) {
+            var preset_1 = def.presets[options.preset];
+            Object.keys(preset_1).forEach(function (subKey) {
+                if ((0, is_void_1.isVoid)(options[subKey])) {
+                    options[subKey] = preset_1[subKey];
+                }
+            });
+        }
+        delete options.preset;
+    }
+    var newOpt = {};
+    Object.keys(options).forEach(function (key) {
+        var opt = options[key], protoKey = proto ? proto[key] : null;
+        if ((0, is_plain_object_1.isPlainObject)(opt) && (0, is_plain_object_1.isPlainObject)(protoKey) && !(0, extend_1.isAtom)(opt)) {
+            newOpt[key] = ConfigProto(opt, protoKey, deep + 1);
+            return;
+        }
+        if (deep !== 0 && (0, is_array_1.isArray)(opt) && !(0, extend_1.isAtom)(opt) && (0, is_array_1.isArray)(protoKey)) {
+            newOpt[key] = tslib_1.__spreadArray(tslib_1.__spreadArray([], tslib_1.__read(opt), false), tslib_1.__read(protoKey.slice(opt.length)), false);
+            return;
+        }
+        newOpt[key] = opt;
+    });
+    Object.setPrototypeOf(newOpt, proto);
+    return newOpt;
+}
+exports.ConfigProto = ConfigProto;
+function ConfigFlatten(obj) {
+    return (0, utils_1.keys)(obj, false).reduce(function (app, key) {
+        app[key] = obj[key];
+        return app;
+    }, {});
+}
+exports.ConfigFlatten = ConfigFlatten;
+
+
+/***/ }),
+/* 207 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.fastClone = exports.markAsAtomic = exports.isAtom = void 0;
+var stringify_1 = __webpack_require__(181);
+function isAtom(obj) {
+    return obj && obj.isAtom;
+}
+exports.isAtom = isAtom;
+function markAsAtomic(obj) {
+    Object.defineProperty(obj, 'isAtom', {
+        enumerable: false,
+        value: true,
+        configurable: false
+    });
+    return obj;
+}
+exports.markAsAtomic = markAsAtomic;
+function fastClone(object) {
+    return JSON.parse((0, stringify_1.stringify)(object));
+}
+exports.fastClone = fastClone;
+
+
+/***/ }),
+/* 208 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.convertMediaUrlToVideoEmbed = void 0;
+var is_url_1 = __webpack_require__(209);
+var parse_query_1 = __webpack_require__(210);
+var convertMediaUrlToVideoEmbed = function (url, width, height) {
+    if (width === void 0) { width = 400; }
+    if (height === void 0) { height = 345; }
+    if (!(0, is_url_1.isURL)(url)) {
+        return url;
+    }
+    var parser = document.createElement('a'), pattern1 = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
+    parser.href = url;
+    if (!width) {
+        width = 400;
+    }
+    if (!height) {
+        height = 345;
+    }
+    var protocol = parser.protocol || '';
+    switch (parser.hostname) {
+        case 'www.vimeo.com':
+        case 'vimeo.com':
+            return pattern1.test(url)
+                ? url.replace(pattern1, '<iframe width="' +
+                    width +
+                    '" height="' +
+                    height +
+                    '" src="' +
+                    protocol +
+                    '//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>')
+                : url;
+        case 'youtube.com':
+        case 'www.youtube.com':
+        case 'youtu.be':
+        case 'www.youtu.be': {
+            var query = parser.search
+                ? (0, parse_query_1.parseQuery)(parser.search)
+                : { v: parser.pathname.substr(1) };
+            return query.v
+                ? '<iframe width="' +
+                    width +
+                    '" height="' +
+                    height +
+                    '" src="' +
+                    protocol +
+                    '//www.youtube.com/embed/' +
+                    query.v +
+                    '" frameborder="0" allowfullscreen></iframe>'
+                : url;
+        }
+    }
+    return url;
+};
+exports.convertMediaUrlToVideoEmbed = convertMediaUrlToVideoEmbed;
+
+
+/***/ }),
+/* 209 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isURL = void 0;
+function isURL(str) {
+    if (str.includes(' ')) {
+        return false;
+    }
+    if (typeof URL !== 'undefined') {
         try {
-            return (0, helpers_1.isFunction)(plugin) ? new plugin(jodit) : plugin;
+            var url = new URL(str);
+            return ['https:', 'http:', 'ftp:', 'file:', 'rtmp:'].includes(url.protocol);
         }
         catch (e) {
-            console.error(e);
-            if (false) {}
+            return false;
         }
-        return null;
-    };
-    PluginSystem.prototype.initOrWait = function (jodit, pluginName, instance, doneList, promiseList) {
-        var initPlugin = function (name, plugin) {
-            if ((0, helpers_1.isInitable)(plugin)) {
-                var req = plugin.requires;
-                if (!(req === null || req === void 0 ? void 0 : req.length) ||
-                    req.every(function (name) { return doneList.includes(name); })) {
-                    try {
-                        plugin.init(jodit);
-                    }
-                    catch (e) {
-                        console.error(e);
-                        if (false) {}
-                    }
-                    doneList.push(name);
-                }
-                else {
-                    if (false) {}
-                    promiseList[name] = plugin;
-                    return false;
-                }
-            }
-            else {
-                doneList.push(name);
-            }
-            if (plugin.hasStyle) {
-                PluginSystem.loadStyle(jodit, name);
-            }
-            return true;
-        };
-        initPlugin(pluginName, instance);
-        Object.keys(promiseList).forEach(function (name) {
-            var plugin = promiseList[name];
-            if (!plugin) {
-                return;
-            }
-            if (initPlugin(name, plugin)) {
-                promiseList[name] = undefined;
-                delete promiseList[name];
-            }
-        });
-    };
-    PluginSystem.prototype.addListenerOnBeforeDestruct = function (jodit, plugins) {
-        jodit.e.on('beforeDestruct', function () {
-            plugins.forEach(function (instance) {
-                if ((0, helpers_1.isDestructable)(instance)) {
-                    instance.destruct(jodit);
-                }
-            });
-            plugins.length = 0;
-            delete jodit.__plugins;
-        });
-    };
-    PluginSystem.prototype.load = function (jodit, pluginList) {
-        var reflect = function (p) {
-            return p.then(function (v) { return ({ v: v, status: 'fulfilled' }); }, function (e) { return ({ e: e, status: 'rejected' }); });
-        };
-        return Promise.all(pluginList.map(function (extra) {
-            var url = extra.url ||
-                PluginSystem.getFullUrl(jodit, extra.name, true);
-            return reflect((0, helpers_1.appendScriptAsync)(jodit, url));
-        }));
-    };
-    PluginSystem.loadStyle = function (jodit, pluginName) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var url;
-            return tslib_1.__generator(this, function (_a) {
-                url = PluginSystem.getFullUrl(jodit, pluginName, false);
-                if (this.styles.has(url)) {
-                    return [2];
-                }
-                this.styles.add(url);
-                return [2, (0, helpers_1.appendStyleAsync)(jodit, url)];
-            });
-        });
-    };
-    PluginSystem.getFullUrl = function (jodit, name, js) {
-        name = (0, helpers_1.kebabCase)(name);
-        return (jodit.basePath +
-            'plugins/' +
-            name +
-            '/' +
-            name +
-            '.' +
-            (js ? 'js' : 'css'));
-    };
-    PluginSystem.prototype.loadExtras = function (jodit, extrasList) {
-        var _this = this;
-        if (extrasList && extrasList.length) {
-            try {
-                var needLoadExtras = extrasList.filter(function (extra) { return !_this._items.has(_this.normalizeName(extra.name)); });
-                if (needLoadExtras.length) {
-                    return this.load(jodit, needLoadExtras);
-                }
-            }
-            catch (e) {
-                if (false) {}
-            }
-        }
-    };
-    PluginSystem.styles = new Set();
-    return PluginSystem;
-}());
-exports.PluginSystem = PluginSystem;
+    }
+    var a = document.createElement('a');
+    a.href = str;
+    return Boolean(a.hostname);
+}
+exports.isURL = isURL;
 
 
 /***/ }),
-/* 159 */
+/* 210 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parseQuery = void 0;
+var parseQuery = function (queryString) {
+    var query = {}, a = queryString.substr(1).split('&');
+    for (var i = 0; i < a.length; i += 1) {
+        var keyValue = a[i].split('=');
+        query[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1] || '');
+    }
+    return query;
+};
+exports.parseQuery = parseQuery;
+
+
+/***/ }),
+/* 211 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ctrlKey = void 0;
+var ctrlKey = function (e) {
+    if (typeof navigator !== 'undefined' &&
+        navigator.userAgent.indexOf('Mac OS X') !== -1) {
+        if (e.metaKey && !e.altKey) {
+            return true;
+        }
+    }
+    else if (e.ctrlKey && !e.altKey) {
+        return true;
+    }
+    return false;
+};
+exports.ctrlKey = ctrlKey;
+
+
+/***/ }),
+/* 212 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -7317,13 +8883,96 @@ exports.PluginSystem = PluginSystem;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(160), exports);
-tslib_1.__exportStar(__webpack_require__(210), exports);
+exports.defaultLanguage = void 0;
+var is_string_1 = __webpack_require__(13);
+var defaultLanguage = function (language, defaultLanguage) {
+    if (defaultLanguage === void 0) { defaultLanguage = 'en'; }
+    if (language !== 'auto' && (0, is_string_1.isString)(language)) {
+        return language;
+    }
+    if (document.documentElement && document.documentElement.lang) {
+        return document.documentElement.lang;
+    }
+    if (navigator.language) {
+        return navigator.language.substr(0, 2);
+    }
+    return defaultLanguage;
+};
+exports.defaultLanguage = defaultLanguage;
 
 
 /***/ }),
-/* 160 */
+/* 213 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.humanSizeToBytes = void 0;
+var humanSizeToBytes = function (human) {
+    if (/^[0-9.]+$/.test(human.toString())) {
+        return parseFloat(human);
+    }
+    var format = human.substr(-2, 2).toUpperCase(), formats = ['KB', 'MB', 'GB', 'TB'], number = parseFloat(human.substr(0, human.length - 2));
+    return formats.indexOf(format) !== -1
+        ? number * Math.pow(1024, formats.indexOf(format) + 1)
+        : parseInt(human, 10);
+};
+exports.humanSizeToBytes = humanSizeToBytes;
+
+
+/***/ }),
+/* 214 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.scrollIntoViewIfNeeded = exports.inView = void 0;
+var dom_1 = __webpack_require__(215);
+var inView = function (elm, root, doc) {
+    var rect = elm.getBoundingClientRect(), el = elm;
+    var top = rect.top, height = rect.height;
+    do {
+        if (el && el.parentNode) {
+            el = el.parentNode;
+            rect = el.getBoundingClientRect();
+            if (!(top <= rect.bottom)) {
+                return false;
+            }
+            if (top + height <= rect.top) {
+                return false;
+            }
+        }
+    } while (el && el !== root && el.parentNode);
+    return (top <= ((doc.documentElement && doc.documentElement.clientHeight) || 0));
+};
+exports.inView = inView;
+function scrollIntoViewIfNeeded(elm, root, doc) {
+    if (dom_1.Dom.isHTMLElement(elm) && !(0, exports.inView)(elm, root, doc)) {
+        if (root.clientHeight !== root.scrollHeight) {
+            root.scrollTop = elm.offsetTop;
+        }
+        if (!(0, exports.inView)(elm, root, doc)) {
+            elm.scrollIntoView();
+        }
+    }
+}
+exports.scrollIntoViewIfNeeded = scrollIntoViewIfNeeded;
+
+
+/***/ }),
+/* 215 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -7336,10 +8985,10 @@ tslib_1.__exportStar(__webpack_require__(210), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Dom = void 0;
 var tslib_1 = __webpack_require__(1);
-var consts = __webpack_require__(137);
-var helpers_1 = __webpack_require__(146);
-var selection_1 = __webpack_require__(161);
-var constants_1 = __webpack_require__(137);
+var consts = __webpack_require__(165);
+var helpers_1 = __webpack_require__(187);
+var selection_1 = __webpack_require__(216);
+var constants_1 = __webpack_require__(165);
 var Dom = (function () {
     function Dom() {
     }
@@ -7517,6 +9166,14 @@ var Dom = (function () {
         var win = (_a = node.ownerDocument) === null || _a === void 0 ? void 0 : _a.defaultView;
         return Boolean(win && node.nodeType === Node.ELEMENT_NODE);
     };
+    Dom.isFragment = function (node) {
+        var _a;
+        if (!Dom.isNode(node)) {
+            return false;
+        }
+        var win = (_a = node.ownerDocument) === null || _a === void 0 ? void 0 : _a.defaultView;
+        return Boolean(win && node.nodeType === Node.DOCUMENT_FRAGMENT_NODE);
+    };
     Dom.isHTMLElement = function (node) {
         var _a;
         if (!Dom.isNode(node)) {
@@ -7616,7 +9273,7 @@ var Dom = (function () {
                     currentNode = currentNode.parentNode;
                     _a.label = 3;
                 case 3:
-                    if (currentNode !== root) return [3, 1];
+                    if (currentNode && currentNode !== root) return [3, 1];
                     _a.label = 4;
                 case 4: return [2, null];
             }
@@ -7805,20 +9462,6 @@ var Dom = (function () {
             to.insertBefore(fragment, to.firstChild);
         }
     };
-    Dom.all = function (node, condition, prev) {
-        if (prev === void 0) { prev = false; }
-        var nodes = node.childNodes ? (0, helpers_1.toArray)(node.childNodes) : [];
-        if (condition(node)) {
-            return node;
-        }
-        if (prev) {
-            nodes = nodes.reverse();
-        }
-        nodes.forEach(function (child) {
-            Dom.all(child, condition, prev);
-        });
-        return null;
-    };
     Dom.isOrContains = function (root, child, onlyContains) {
         if (onlyContains === void 0) { onlyContains = false; }
         if (root === child) {
@@ -7886,7 +9529,7 @@ exports.Dom = Dom;
 
 
 /***/ }),
-/* 161 */
+/* 216 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -7898,12 +9541,12 @@ exports.Dom = Dom;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(162), exports);
-tslib_1.__exportStar(__webpack_require__(168), exports);
+tslib_1.__exportStar(__webpack_require__(217), exports);
+tslib_1.__exportStar(__webpack_require__(249), exports);
 
 
 /***/ }),
-/* 162 */
+/* 217 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -7915,8 +9558,8 @@ tslib_1.__exportStar(__webpack_require__(168), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CommitStyle = exports.REPLACE = exports.INITIAL = exports.UNSET = exports.CHANGE = exports.UNWRAP = exports.WRAP = void 0;
-var constants_1 = __webpack_require__(137);
-var apply_style_1 = __webpack_require__(163);
+var constants_1 = __webpack_require__(165);
+var apply_style_1 = __webpack_require__(218);
 exports.WRAP = 'wrap';
 exports.UNWRAP = 'unwrap';
 exports.CHANGE = 'change';
@@ -7982,7 +9625,7 @@ exports.CommitStyle = CommitStyle;
 
 
 /***/ }),
-/* 163 */
+/* 218 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -7994,11 +9637,11 @@ exports.CommitStyle = CommitStyle;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ApplyStyle = void 0;
-var helpers_1 = __webpack_require__(146);
-var api_1 = __webpack_require__(164);
-var commit_style_1 = __webpack_require__(162);
-var dom_1 = __webpack_require__(159);
-var api_2 = __webpack_require__(164);
+var helpers_1 = __webpack_require__(187);
+var api_1 = __webpack_require__(219);
+var commit_style_1 = __webpack_require__(217);
+var dom_1 = __webpack_require__(231);
+var api_2 = __webpack_require__(219);
 function ApplyStyle(jodit, cs) {
     var sel = jodit.s, editor = jodit.editor;
     var fsm = new api_2.FiniteStateMachine('start', {
@@ -8133,7 +9776,7 @@ exports.ApplyStyle = ApplyStyle;
 
 
 /***/ }),
-/* 164 */
+/* 219 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -8145,25 +9788,25 @@ exports.ApplyStyle = ApplyStyle;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(165), exports);
-tslib_1.__exportStar(__webpack_require__(166), exports);
-tslib_1.__exportStar(__webpack_require__(198), exports);
-tslib_1.__exportStar(__webpack_require__(167), exports);
-tslib_1.__exportStar(__webpack_require__(199), exports);
-tslib_1.__exportStar(__webpack_require__(200), exports);
-tslib_1.__exportStar(__webpack_require__(203), exports);
-tslib_1.__exportStar(__webpack_require__(204), exports);
-tslib_1.__exportStar(__webpack_require__(201), exports);
-tslib_1.__exportStar(__webpack_require__(202), exports);
-tslib_1.__exportStar(__webpack_require__(205), exports);
-tslib_1.__exportStar(__webpack_require__(206), exports);
-tslib_1.__exportStar(__webpack_require__(207), exports);
-tslib_1.__exportStar(__webpack_require__(209), exports);
-tslib_1.__exportStar(__webpack_require__(208), exports);
+tslib_1.__exportStar(__webpack_require__(220), exports);
+tslib_1.__exportStar(__webpack_require__(247), exports);
+tslib_1.__exportStar(__webpack_require__(253), exports);
+tslib_1.__exportStar(__webpack_require__(248), exports);
+tslib_1.__exportStar(__webpack_require__(254), exports);
+tslib_1.__exportStar(__webpack_require__(255), exports);
+tslib_1.__exportStar(__webpack_require__(258), exports);
+tslib_1.__exportStar(__webpack_require__(259), exports);
+tslib_1.__exportStar(__webpack_require__(256), exports);
+tslib_1.__exportStar(__webpack_require__(257), exports);
+tslib_1.__exportStar(__webpack_require__(260), exports);
+tslib_1.__exportStar(__webpack_require__(261), exports);
+tslib_1.__exportStar(__webpack_require__(262), exports);
+tslib_1.__exportStar(__webpack_require__(264), exports);
+tslib_1.__exportStar(__webpack_require__(263), exports);
 
 
 /***/ }),
-/* 165 */
+/* 220 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -8175,28 +9818,33 @@ tslib_1.__exportStar(__webpack_require__(208), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.toggleCSS = void 0;
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
-var commit_style_1 = __webpack_require__(162);
-var global_1 = __webpack_require__(157);
+var utils_1 = __webpack_require__(188);
+var css_1 = __webpack_require__(192);
+var data_bind_1 = __webpack_require__(191);
+var kebab_case_1 = __webpack_require__(196);
+var normalize_css_value_1 = __webpack_require__(195);
+var object_size_1 = __webpack_require__(221);
+var dom_1 = __webpack_require__(231);
+var commit_style_1 = __webpack_require__(217);
+var global_1 = __webpack_require__(239);
 function toggleCSS(commitStyle, elm, jodit, mode, dry) {
     if (dry === void 0) { dry = false; }
     var _a = commitStyle.options, style = _a.style, className = _a.className;
-    if (style && (0, helpers_1.size)(style) > 0) {
+    if (style && (0, object_size_1.size)(style) > 0) {
         Object.keys(style).forEach(function (rule) {
-            var inlineValue = elm.style.getPropertyValue((0, helpers_1.kebabCase)(rule));
+            var inlineValue = elm.style.getPropertyValue((0, kebab_case_1.kebabCase)(rule));
             if (inlineValue === '' && style[rule] == null) {
                 return;
             }
             if (getNativeCSSValue(jodit, elm, rule) ===
-                (0, helpers_1.normalizeCssValue)(rule, style[rule])) {
-                !dry && (0, helpers_1.css)(elm, rule, null);
+                (0, normalize_css_value_1.normalizeCssValue)(rule, style[rule])) {
+                !dry && (0, css_1.css)(elm, rule, null);
                 mode = commit_style_1.UNSET;
                 mode = removeExtraStyleAttribute(commitStyle, elm, mode);
                 return;
             }
             mode = commit_style_1.CHANGE;
-            !dry && (0, helpers_1.css)(elm, rule, style[rule]);
+            !dry && (0, css_1.css)(elm, rule, style[rule]);
             if (!dry) {
                 mode = removeExtraStyleAttribute(commitStyle, elm, mode);
             }
@@ -8216,8 +9864,8 @@ function toggleCSS(commitStyle, elm, jodit, mode, dry) {
 }
 exports.toggleCSS = toggleCSS;
 function removeExtraStyleAttribute(commitStyle, elm, mode) {
-    if (!(0, helpers_1.attr)(elm, 'style')) {
-        (0, helpers_1.attr)(elm, 'style', null);
+    if (!(0, utils_1.attr)(elm, 'style')) {
+        (0, utils_1.attr)(elm, 'style', null);
         if (elm.tagName.toLowerCase() === commitStyle.defaultTag) {
             dom_1.Dom.unwrap(elm);
             mode = commit_style_1.UNWRAP;
@@ -8227,12 +9875,12 @@ function removeExtraStyleAttribute(commitStyle, elm, mode) {
 }
 function getShadowRoot(jodit) {
     var _a;
-    if ((0, helpers_1.dataBind)(jodit, 'shadowRoot') !== undefined) {
-        return (0, helpers_1.dataBind)(jodit, 'shadowRoot');
+    if ((0, data_bind_1.dataBind)(jodit, 'shadowRoot') !== undefined) {
+        return (0, data_bind_1.dataBind)(jodit, 'shadowRoot');
     }
     var container = (0, global_1.getContainer)(jodit);
     var iframe = document.createElement('iframe');
-    (0, helpers_1.css)(iframe, {
+    (0, css_1.css)(iframe, {
         width: 0,
         height: 0,
         position: 'absolute',
@@ -8242,7 +9890,7 @@ function getShadowRoot(jodit) {
     container.appendChild(iframe);
     var doc = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document;
     var shadowRoot = !doc ? jodit.od.body : doc.body;
-    (0, helpers_1.dataBind)(jodit, 'shadowRoot', shadowRoot);
+    (0, data_bind_1.dataBind)(jodit, 'shadowRoot', shadowRoot);
     return shadowRoot;
 }
 function getNativeCSSValue(jodit, elm, key) {
@@ -8250,14 +9898,1260 @@ function getNativeCSSValue(jodit, elm, key) {
     newElm.style.cssText = elm.style.cssText;
     var root = getShadowRoot(jodit);
     root.appendChild(newElm);
-    var result = (0, helpers_1.css)(newElm, key);
+    var result = (0, css_1.css)(newElm, key);
     dom_1.Dom.safeRemove(newElm);
     return result;
 }
 
 
 /***/ }),
-/* 166 */
+/* 221 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.size = void 0;
+var checker_1 = __webpack_require__(222);
+function size(subject) {
+    if ((0, checker_1.isString)(subject) || (0, checker_1.isArray)(subject)) {
+        return subject.length;
+    }
+    if ((0, checker_1.isPlainObject)(subject)) {
+        return Object.keys(subject).length;
+    }
+    return 0;
+}
+exports.size = size;
+
+
+/***/ }),
+/* 222 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(223), exports);
+tslib_1.__exportStar(__webpack_require__(14), exports);
+tslib_1.__exportStar(__webpack_require__(194), exports);
+tslib_1.__exportStar(__webpack_require__(180), exports);
+tslib_1.__exportStar(__webpack_require__(9), exports);
+tslib_1.__exportStar(__webpack_require__(224), exports);
+tslib_1.__exportStar(__webpack_require__(225), exports);
+tslib_1.__exportStar(__webpack_require__(226), exports);
+tslib_1.__exportStar(__webpack_require__(227), exports);
+tslib_1.__exportStar(__webpack_require__(228), exports);
+tslib_1.__exportStar(__webpack_require__(183), exports);
+tslib_1.__exportStar(__webpack_require__(229), exports);
+tslib_1.__exportStar(__webpack_require__(175), exports);
+tslib_1.__exportStar(__webpack_require__(15), exports);
+tslib_1.__exportStar(__webpack_require__(193), exports);
+tslib_1.__exportStar(__webpack_require__(10), exports);
+tslib_1.__exportStar(__webpack_require__(12), exports);
+tslib_1.__exportStar(__webpack_require__(13), exports);
+tslib_1.__exportStar(__webpack_require__(209), exports);
+tslib_1.__exportStar(__webpack_require__(230), exports);
+tslib_1.__exportStar(__webpack_require__(174), exports);
+tslib_1.__exportStar(__webpack_require__(11), exports);
+
+
+/***/ }),
+/* 223 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.hasBrowserColorPicker = void 0;
+function hasBrowserColorPicker() {
+    var supportsColor = true;
+    try {
+        var a = document.createElement('input');
+        a.type = 'color';
+        supportsColor =
+            a.type === 'color' && typeof a.selectionStart !== 'number';
+    }
+    catch (e) {
+        supportsColor = false;
+    }
+    return supportsColor;
+}
+exports.hasBrowserColorPicker = hasBrowserColorPicker;
+
+
+/***/ }),
+/* 224 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isHTML = void 0;
+var is_string_1 = __webpack_require__(13);
+var isHTML = function (str) {
+    return (0, is_string_1.isString)(str) &&
+        /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str.replace(/[\r\n]/g, ''));
+};
+exports.isHTML = isHTML;
+
+
+/***/ }),
+/* 225 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isHtmlFromWord = void 0;
+function isHtmlFromWord(data) {
+    return (data.search(/<meta.*?Microsoft Excel\s[\d].*?>/) !== -1 ||
+        data.search(/<meta.*?Microsoft Word\s[\d].*?>/) !== -1 ||
+        (data.search(/style="[^"]*mso-/) !== -1 && data.search(/<font/) !== -1));
+}
+exports.isHtmlFromWord = isHtmlFromWord;
+
+
+/***/ }),
+/* 226 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.hasContainer = exports.isDestructable = exports.isInitable = void 0;
+var is_function_1 = __webpack_require__(9);
+var dom_1 = __webpack_require__(215);
+var is_void_1 = __webpack_require__(174);
+function isInitable(value) {
+    return !(0, is_void_1.isVoid)(value) && (0, is_function_1.isFunction)(value.init);
+}
+exports.isInitable = isInitable;
+function isDestructable(value) {
+    return !(0, is_void_1.isVoid)(value) && (0, is_function_1.isFunction)(value.destruct);
+}
+exports.isDestructable = isDestructable;
+function hasContainer(value) {
+    return !(0, is_void_1.isVoid)(value) && dom_1.Dom.isElement(value.container);
+}
+exports.hasContainer = hasContainer;
+
+
+/***/ }),
+/* 227 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isInt = void 0;
+var is_numeric_1 = __webpack_require__(193);
+var is_string_1 = __webpack_require__(13);
+function isInt(value) {
+    if ((0, is_string_1.isString)(value) && (0, is_numeric_1.isNumeric)(value)) {
+        value = parseFloat(value);
+    }
+    return typeof value === 'number' && Number.isFinite(value) && !(value % 1);
+}
+exports.isInt = isInt;
+
+
+/***/ }),
+/* 228 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isJoditObject = void 0;
+var is_function_1 = __webpack_require__(9);
+function isJoditObject(jodit) {
+    return Boolean(jodit &&
+        jodit instanceof Object &&
+        (0, is_function_1.isFunction)(jodit.constructor) &&
+        ((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
+            jodit.isJodit));
+}
+exports.isJoditObject = isJoditObject;
+
+
+/***/ }),
+/* 229 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isLicense = void 0;
+var is_string_1 = __webpack_require__(13);
+var isLicense = function (license) {
+    return (0, is_string_1.isString)(license) &&
+        license.length === 23 &&
+        /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license);
+};
+exports.isLicense = isLicense;
+
+
+/***/ }),
+/* 230 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isValidName = void 0;
+function isValidName(name) {
+    if (!name.length) {
+        return false;
+    }
+    return !/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name);
+}
+exports.isValidName = isValidName;
+
+
+/***/ }),
+/* 231 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(215), exports);
+tslib_1.__exportStar(__webpack_require__(232), exports);
+
+
+/***/ }),
+/* 232 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LazyWalker = void 0;
+var tslib_1 = __webpack_require__(1);
+var eventify_1 = __webpack_require__(178);
+var decorators_1 = __webpack_require__(233);
+var dom_1 = __webpack_require__(215);
+var LazyWalker = (function (_super) {
+    tslib_1.__extends(LazyWalker, _super);
+    function LazyWalker(async, options) {
+        if (options === void 0) { options = {}; }
+        var _this = _super.call(this) || this;
+        _this.async = async;
+        _this.options = options;
+        _this.workNodes = null;
+        _this.hadAffect = false;
+        _this.isWorked = false;
+        _this.isFinished = false;
+        _this.idleId = 0;
+        return _this;
+    }
+    LazyWalker.prototype.setWork = function (root) {
+        if (this.isWorked) {
+            this.break();
+        }
+        this.workNodes = dom_1.Dom.eachGen(root, !this.options.reverse);
+        this.isFinished = false;
+        this.startIdleRequest();
+        return this;
+    };
+    LazyWalker.prototype.startIdleRequest = function () {
+        var _a;
+        this.idleId = this.async.requestIdleCallback(this.workPerform, {
+            timeout: (_a = this.options.timeout) !== null && _a !== void 0 ? _a : 10
+        });
+    };
+    LazyWalker.prototype.break = function (reason) {
+        if (this.isWorked) {
+            this.stop();
+            this.emit('break', reason);
+        }
+    };
+    LazyWalker.prototype.end = function () {
+        if (this.isWorked) {
+            this.stop();
+            this.emit('end', this.hadAffect);
+            this.hadAffect = false;
+        }
+    };
+    LazyWalker.prototype.stop = function () {
+        this.isWorked = false;
+        this.isFinished = true;
+        this.workNodes = null;
+        this.async.cancelIdleCallback(this.idleId);
+    };
+    LazyWalker.prototype.destruct = function () {
+        this.stop();
+    };
+    LazyWalker.prototype.workPerform = function (deadline) {
+        var _a;
+        if (this.workNodes) {
+            this.isWorked = true;
+            var count = 0;
+            var chunkSize = (_a = this.options.timeoutChunkSize) !== null && _a !== void 0 ? _a : 50;
+            while (!this.isFinished &&
+                (deadline.timeRemaining() > 0 ||
+                    (deadline.didTimeout && count <= chunkSize))) {
+                var item = this.workNodes.next();
+                count += 1;
+                if (this.visitNode(item.value)) {
+                    this.hadAffect = true;
+                }
+                if (item.done) {
+                    this.end();
+                    return;
+                }
+            }
+        }
+        else {
+            this.end();
+        }
+        if (!this.isFinished) {
+            this.startIdleRequest();
+        }
+    };
+    LazyWalker.prototype.visitNode = function (nodeElm) {
+        var _a;
+        if (!nodeElm ||
+            (this.options.whatToShow !== undefined &&
+                nodeElm.nodeType !== this.options.whatToShow)) {
+            return false;
+        }
+        return (_a = this.emit('visit', nodeElm)) !== null && _a !== void 0 ? _a : false;
+    };
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], LazyWalker.prototype, "workPerform", null);
+    return LazyWalker;
+}(eventify_1.Eventify));
+exports.LazyWalker = LazyWalker;
+
+
+/***/ }),
+/* 233 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.autobind = void 0;
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(234), exports);
+tslib_1.__exportStar(__webpack_require__(235), exports);
+tslib_1.__exportStar(__webpack_require__(236), exports);
+tslib_1.__exportStar(__webpack_require__(242), exports);
+tslib_1.__exportStar(__webpack_require__(243), exports);
+tslib_1.__exportStar(__webpack_require__(244), exports);
+tslib_1.__exportStar(__webpack_require__(245), exports);
+tslib_1.__exportStar(__webpack_require__(246), exports);
+tslib_1.__exportStar(__webpack_require__(182), exports);
+var autobind_decorator_1 = __webpack_require__(16);
+Object.defineProperty(exports, "autobind", ({ enumerable: true, get: function () { return autobind_decorator_1.default; } }));
+
+
+/***/ }),
+/* 234 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.cache = void 0;
+var helpers_1 = __webpack_require__(187);
+function cache(target, name, descriptor) {
+    var getter = descriptor.get;
+    if (!getter) {
+        throw (0, helpers_1.error)('Getter property descriptor expected');
+    }
+    descriptor.get = function () {
+        var value = getter.call(this);
+        if (value && value.noCache === true) {
+            return value;
+        }
+        Object.defineProperty(this, name, {
+            configurable: descriptor.configurable,
+            enumerable: descriptor.enumerable,
+            writable: false,
+            value: value
+        });
+        return value;
+    };
+}
+exports.cache = cache;
+
+
+/***/ }),
+/* 235 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.component = void 0;
+var tslib_1 = __webpack_require__(1);
+function component(constructorFunction) {
+    var newConstructorFunction = (function (_super) {
+        tslib_1.__extends(newConstructorFunction, _super);
+        function newConstructorFunction() {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            var _this = _super.apply(this, tslib_1.__spreadArray([], tslib_1.__read(args), false)) || this;
+            var isRootConstructor = _this.constructor === newConstructorFunction;
+            if (isRootConstructor) {
+                if (!(_this instanceof newConstructorFunction)) {
+                    Object.setPrototypeOf(_this, newConstructorFunction.prototype);
+                }
+                _this.setStatus('ready');
+            }
+            return _this;
+        }
+        return newConstructorFunction;
+    }(constructorFunction));
+    return newConstructorFunction;
+}
+exports.component = component;
+
+
+/***/ }),
+/* 236 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.throttle = exports.debounce = void 0;
+var checker_1 = __webpack_require__(222);
+var component_1 = __webpack_require__(237);
+var error_1 = __webpack_require__(176);
+var helpers_1 = __webpack_require__(187);
+function debounce(timeout, firstCallImmediately, method) {
+    if (firstCallImmediately === void 0) { firstCallImmediately = false; }
+    if (method === void 0) { method = 'debounce'; }
+    return function (target, propertyKey) {
+        var fn = target[propertyKey];
+        if (!(0, checker_1.isFunction)(fn)) {
+            throw (0, error_1.error)('Handler must be a Function');
+        }
+        target.hookStatus(component_1.STATUSES.ready, function (component) {
+            var async = component.async;
+            (0, helpers_1.assert)(async != null, "Component ".concat(component.componentName || component.constructor.name, " should have \"async:IAsync\" field"));
+            var realTimeout = (0, checker_1.isFunction)(timeout)
+                ? timeout(component)
+                : timeout;
+            Object.defineProperty(component, propertyKey, {
+                configurable: true,
+                value: async[method](component[propertyKey].bind(component), (0, checker_1.isNumber)(realTimeout) || (0, checker_1.isPlainObject)(realTimeout)
+                    ? realTimeout
+                    : component.defaultTimeout, firstCallImmediately)
+            });
+        });
+        return {
+            configurable: true,
+            get: function () {
+                return fn.bind(this);
+            }
+        };
+    };
+}
+exports.debounce = debounce;
+function throttle(timeout, firstCallImmediately) {
+    if (firstCallImmediately === void 0) { firstCallImmediately = false; }
+    return debounce(timeout, firstCallImmediately, 'throttle');
+}
+exports.throttle = throttle;
+
+
+/***/ }),
+/* 237 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(184), exports);
+tslib_1.__exportStar(__webpack_require__(238), exports);
+tslib_1.__exportStar(__webpack_require__(241), exports);
+
+
+/***/ }),
+/* 238 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Component = void 0;
+var helpers_1 = __webpack_require__(187);
+var global_1 = __webpack_require__(239);
+var statuses_1 = __webpack_require__(184);
+var async_1 = __webpack_require__(5);
+var StatusListHandlers = new Map();
+var Component = (function () {
+    function Component() {
+        this.async = new async_1.Async();
+        this.ownerWindow = window;
+        this.__componentStatus = statuses_1.STATUSES.beforeInit;
+        this.uid = 'jodit-uid-' + (0, global_1.uniqueUid)();
+    }
+    Object.defineProperty(Component.prototype, "componentName", {
+        get: function () {
+            if (!this.__componentName) {
+                this.__componentName =
+                    'jodit-' +
+                        (0, helpers_1.kebabCase)(((0, helpers_1.isFunction)(this.className) ? this.className() : '') ||
+                            (0, helpers_1.getClassName)(this));
+            }
+            return this.__componentName;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Component.prototype.getFullElName = function (elementName, mod, modValue) {
+        var result = [this.componentName];
+        if (elementName) {
+            elementName = elementName.replace(/[^a-z0-9-]/gi, '-');
+            result.push("__".concat(elementName));
+        }
+        if (mod) {
+            result.push('_', mod);
+            result.push('_', (0, helpers_1.isVoid)(modValue) ? 'true' : modValue.toString());
+        }
+        return result.join('');
+    };
+    Object.defineProperty(Component.prototype, "ownerDocument", {
+        get: function () {
+            return this.ow.document;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Component.prototype, "od", {
+        get: function () {
+            return this.ownerDocument;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Component.prototype, "ow", {
+        get: function () {
+            return this.ownerWindow;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Component.prototype.get = function (chain, obj) {
+        return (0, helpers_1.get)(chain, obj || this);
+    };
+    Object.defineProperty(Component.prototype, "isReady", {
+        get: function () {
+            return this.componentStatus === statuses_1.STATUSES.ready;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Component.prototype, "isDestructed", {
+        get: function () {
+            return this.componentStatus === statuses_1.STATUSES.destructed;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Component.prototype, "isInDestruct", {
+        get: function () {
+            return (statuses_1.STATUSES.beforeDestruct === this.componentStatus ||
+                statuses_1.STATUSES.destructed === this.componentStatus);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Component.prototype.bindDestruct = function (component) {
+        var _this = this;
+        component.hookStatus(statuses_1.STATUSES.beforeDestruct, function () { return !_this.isInDestruct && _this.destruct(); });
+        return this;
+    };
+    Component.prototype.destruct = function () {
+        this.setStatus(statuses_1.STATUSES.destructed);
+        this.async.destruct();
+        if (StatusListHandlers.get(this)) {
+            StatusListHandlers.delete(this);
+        }
+    };
+    Object.defineProperty(Component.prototype, "componentStatus", {
+        get: function () {
+            return this.__componentStatus;
+        },
+        set: function (componentStatus) {
+            this.setStatus(componentStatus);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Component.prototype.setStatus = function (componentStatus) {
+        return this.setStatusComponent(componentStatus, this);
+    };
+    Component.prototype.setStatusComponent = function (componentStatus, component) {
+        if (componentStatus === this.__componentStatus) {
+            return;
+        }
+        if (component === this) {
+            this.__componentStatus = componentStatus;
+        }
+        var proto = Object.getPrototypeOf(this);
+        if (proto && (0, helpers_1.isFunction)(proto.setStatusComponent)) {
+            proto.setStatusComponent(componentStatus, component);
+        }
+        var statuses = StatusListHandlers.get(this), list = statuses === null || statuses === void 0 ? void 0 : statuses[componentStatus];
+        if (list && list.length) {
+            list.forEach(function (cb) { return cb(component); });
+        }
+    };
+    Component.prototype.hookStatus = function (status, callback) {
+        var list = StatusListHandlers.get(this);
+        if (!list) {
+            list = {};
+            StatusListHandlers.set(this, list);
+        }
+        if (!list[status]) {
+            list[status] = [];
+        }
+        list[status].push(callback);
+    };
+    Component.isInstanceOf = function (c, constructorFunc) {
+        return c instanceof constructorFunc;
+    };
+    Component.STATUSES = statuses_1.STATUSES;
+    return Component;
+}());
+exports.Component = Component;
+
+
+/***/ }),
+/* 239 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.eventEmitter = exports.getContainer = exports.extendLang = exports.modules = exports.pluginSystem = exports.uniqueUid = exports.instances = void 0;
+var plugin_system_1 = __webpack_require__(240);
+var dom_1 = __webpack_require__(231);
+var event_emitter_1 = __webpack_require__(167);
+var is_jodit_object_1 = __webpack_require__(228);
+var is_view_object_1 = __webpack_require__(183);
+var get_class_name_1 = __webpack_require__(200);
+var kebab_case_1 = __webpack_require__(196);
+var constants_1 = __webpack_require__(165);
+exports.instances = {};
+var counter = 1;
+var uuids = new Set();
+function uniqueUid() {
+    function gen() {
+        counter += 10 * (Math.random() + 1);
+        return Math.round(counter).toString(16);
+    }
+    var uid = gen();
+    while (uuids.has(uid)) {
+        uid = gen();
+    }
+    uuids.add(uid);
+    return uid;
+}
+exports.uniqueUid = uniqueUid;
+exports.pluginSystem = new plugin_system_1.PluginSystem();
+exports.modules = {};
+var extendLang = function (langs) {
+    Object.keys(langs).forEach(function (key) {
+        if (constants_1.lang[key]) {
+            Object.assign(constants_1.lang[key], langs[key]);
+        }
+        else {
+            constants_1.lang[key] = langs[key];
+        }
+    });
+};
+exports.extendLang = extendLang;
+var boxes = new WeakMap();
+function getContainer(jodit, classFunc, tag, createInsideEditor) {
+    if (tag === void 0) { tag = 'div'; }
+    if (createInsideEditor === void 0) { createInsideEditor = false; }
+    var name = classFunc ? (0, get_class_name_1.getClassName)(classFunc.prototype) : 'jodit-utils';
+    var data = boxes.get(jodit) || {}, key = name + tag;
+    var view = (0, is_view_object_1.isViewObject)(jodit) ? jodit : jodit.j;
+    if (!data[key]) {
+        var c = view.c, body = (0, is_jodit_object_1.isJoditObject)(jodit) && jodit.o.shadowRoot
+            ? jodit.o.shadowRoot
+            : jodit.od.body;
+        if (createInsideEditor &&
+            (0, is_jodit_object_1.isJoditObject)(jodit) &&
+            jodit.od !== jodit.ed) {
+            c = jodit.createInside;
+            var place = tag === 'style' ? jodit.ed.head : jodit.ed.body;
+            body =
+                (0, is_jodit_object_1.isJoditObject)(jodit) && jodit.o.shadowRoot
+                    ? jodit.o.shadowRoot
+                    : place;
+        }
+        var box_1 = c.element(tag, {
+            className: "jodit jodit-".concat((0, kebab_case_1.kebabCase)(name), "-container jodit-box")
+        });
+        box_1.classList.add("jodit_theme_".concat(view.o.theme || 'default'));
+        body.appendChild(box_1);
+        data[key] = box_1;
+        jodit.hookStatus('beforeDestruct', function () {
+            dom_1.Dom.safeRemove(box_1);
+            delete data[key];
+            if (Object.keys(data).length) {
+                boxes.delete(jodit);
+            }
+        });
+        boxes.set(jodit, data);
+    }
+    data[key].classList.remove('jodit_theme_default', 'jodit_theme_dark');
+    data[key].classList.add("jodit_theme_".concat(view.o.theme || 'default'));
+    return data[key];
+}
+exports.getContainer = getContainer;
+exports.eventEmitter = new event_emitter_1.EventEmitter();
+
+
+/***/ }),
+/* 240 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PluginSystem = void 0;
+var tslib_1 = __webpack_require__(1);
+var helpers_1 = __webpack_require__(187);
+var PluginSystem = (function () {
+    function PluginSystem() {
+        this._items = new Map();
+    }
+    PluginSystem.prototype.normalizeName = function (name) {
+        return (0, helpers_1.kebabCase)(name).toLowerCase();
+    };
+    PluginSystem.prototype.items = function (filter) {
+        var results = [];
+        this._items.forEach(function (plugin, name) {
+            results.push([name, plugin]);
+        });
+        return results.filter(function (_a) {
+            var _b = tslib_1.__read(_a, 1), name = _b[0];
+            return !filter || filter.includes(name);
+        });
+    };
+    PluginSystem.prototype.add = function (name, plugin) {
+        this._items.set(this.normalizeName(name), plugin);
+    };
+    PluginSystem.prototype.get = function (name) {
+        return this._items.get(this.normalizeName(name));
+    };
+    PluginSystem.prototype.remove = function (name) {
+        this._items.delete(this.normalizeName(name));
+    };
+    PluginSystem.prototype.init = function (jodit) {
+        var _this = this;
+        var extrasList = jodit.o.extraPlugins.map(function (s) {
+            return (0, helpers_1.isString)(s) ? { name: s } : s;
+        }), disableList = (0, helpers_1.splitArray)(jodit.o.disablePlugins).map(function (s) {
+            var name = _this.normalizeName(s);
+            if (false) {}
+            return name;
+        }), doneList = [], promiseList = {}, plugins = [], pluginsMap = {}, makeAndInit = function (_a) {
+            var _b = tslib_1.__read(_a, 2), name = _b[0], plugin = _b[1];
+            if (disableList.includes(name) ||
+                doneList.includes(name) ||
+                promiseList[name]) {
+                return;
+            }
+            var requires = plugin === null || plugin === void 0 ? void 0 : plugin.requires;
+            if (requires &&
+                (0, helpers_1.isArray)(requires) &&
+                _this.hasDisabledRequires(disableList, requires)) {
+                return;
+            }
+            var instance = PluginSystem.makePluginInstance(jodit, plugin);
+            if (instance) {
+                _this.initOrWait(jodit, name, instance, doneList, promiseList);
+                plugins.push(instance);
+                pluginsMap[name] = instance;
+            }
+        };
+        var resultLoadExtras = this.loadExtras(jodit, extrasList);
+        return (0, helpers_1.callPromise)(resultLoadExtras, function () {
+            if (jodit.isInDestruct) {
+                return;
+            }
+            _this.items(jodit.o.safeMode
+                ? jodit.o.safePluginsList.concat(extrasList.map(function (s) { return s.name; }))
+                : null).forEach(makeAndInit);
+            _this.addListenerOnBeforeDestruct(jodit, plugins);
+            jodit.__plugins = pluginsMap;
+        });
+    };
+    PluginSystem.prototype.hasDisabledRequires = function (disableList, requires) {
+        return Boolean((requires === null || requires === void 0 ? void 0 : requires.length) &&
+            disableList.some(function (disabled) { return requires.includes(disabled); }));
+    };
+    PluginSystem.makePluginInstance = function (jodit, plugin) {
+        try {
+            return (0, helpers_1.isFunction)(plugin) ? new plugin(jodit) : plugin;
+        }
+        catch (e) {
+            console.error(e);
+            if (false) {}
+        }
+        return null;
+    };
+    PluginSystem.prototype.initOrWait = function (jodit, pluginName, instance, doneList, promiseList) {
+        var initPlugin = function (name, plugin) {
+            if ((0, helpers_1.isInitable)(plugin)) {
+                var req = plugin.requires;
+                if (!(req === null || req === void 0 ? void 0 : req.length) ||
+                    req.every(function (name) { return doneList.includes(name); })) {
+                    try {
+                        plugin.init(jodit);
+                    }
+                    catch (e) {
+                        console.error(e);
+                        if (false) {}
+                    }
+                    doneList.push(name);
+                }
+                else {
+                    if (false) {}
+                    promiseList[name] = plugin;
+                    return false;
+                }
+            }
+            else {
+                doneList.push(name);
+            }
+            if (plugin.hasStyle) {
+                PluginSystem.loadStyle(jodit, name);
+            }
+            return true;
+        };
+        initPlugin(pluginName, instance);
+        Object.keys(promiseList).forEach(function (name) {
+            var plugin = promiseList[name];
+            if (!plugin) {
+                return;
+            }
+            if (initPlugin(name, plugin)) {
+                promiseList[name] = undefined;
+                delete promiseList[name];
+            }
+        });
+    };
+    PluginSystem.prototype.addListenerOnBeforeDestruct = function (jodit, plugins) {
+        jodit.e.on('beforeDestruct', function () {
+            plugins.forEach(function (instance) {
+                if ((0, helpers_1.isDestructable)(instance)) {
+                    instance.destruct(jodit);
+                }
+            });
+            plugins.length = 0;
+            delete jodit.__plugins;
+        });
+    };
+    PluginSystem.prototype.load = function (jodit, pluginList) {
+        var reflect = function (p) {
+            return p.then(function (v) { return ({ v: v, status: 'fulfilled' }); }, function (e) { return ({ e: e, status: 'rejected' }); });
+        };
+        return Promise.all(pluginList.map(function (extra) {
+            var url = extra.url ||
+                PluginSystem.getFullUrl(jodit, extra.name, true);
+            return reflect((0, helpers_1.appendScriptAsync)(jodit, url));
+        }));
+    };
+    PluginSystem.loadStyle = function (jodit, pluginName) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var url;
+            return tslib_1.__generator(this, function (_a) {
+                url = PluginSystem.getFullUrl(jodit, pluginName, false);
+                if (this.styles.has(url)) {
+                    return [2];
+                }
+                this.styles.add(url);
+                return [2, (0, helpers_1.appendStyleAsync)(jodit, url)];
+            });
+        });
+    };
+    PluginSystem.getFullUrl = function (jodit, name, js) {
+        name = (0, helpers_1.kebabCase)(name);
+        return (jodit.basePath +
+            'plugins/' +
+            name +
+            '/' +
+            name +
+            '.' +
+            (js ? 'js' : 'css'));
+    };
+    PluginSystem.prototype.loadExtras = function (jodit, extrasList) {
+        var _this = this;
+        if (extrasList && extrasList.length) {
+            try {
+                var needLoadExtras = extrasList.filter(function (extra) { return !_this._items.has(_this.normalizeName(extra.name)); });
+                if (needLoadExtras.length) {
+                    return this.load(jodit, needLoadExtras);
+                }
+            }
+            catch (e) {
+                if (false) {}
+            }
+        }
+    };
+    PluginSystem.styles = new Set();
+    return PluginSystem;
+}());
+exports.PluginSystem = PluginSystem;
+
+
+/***/ }),
+/* 241 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ViewComponent = void 0;
+var tslib_1 = __webpack_require__(1);
+var component_1 = __webpack_require__(238);
+var ViewComponent = (function (_super) {
+    tslib_1.__extends(ViewComponent, _super);
+    function ViewComponent(jodit) {
+        var _this = _super.call(this) || this;
+        _this.setParentView(jodit);
+        return _this;
+    }
+    Object.defineProperty(ViewComponent.prototype, "j", {
+        get: function () {
+            return this.jodit;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(ViewComponent.prototype, "defaultTimeout", {
+        get: function () {
+            return this.j.defaultTimeout;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    ViewComponent.prototype.i18n = function (text) {
+        var _a;
+        var params = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            params[_i - 1] = arguments[_i];
+        }
+        return (_a = this.j).i18n.apply(_a, tslib_1.__spreadArray([text], tslib_1.__read(params), false));
+    };
+    ViewComponent.prototype.setParentView = function (jodit) {
+        this.jodit = jodit;
+        jodit.components.add(this);
+        return this;
+    };
+    ViewComponent.prototype.destruct = function () {
+        this.j.components.delete(this);
+        return _super.prototype.destruct.call(this);
+    };
+    return ViewComponent;
+}(component_1.Component));
+exports.ViewComponent = ViewComponent;
+
+
+/***/ }),
+/* 242 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.idle = void 0;
+var tslib_1 = __webpack_require__(1);
+var component_1 = __webpack_require__(237);
+var helpers_1 = __webpack_require__(187);
+function idle() {
+    return function (target, propertyKey) {
+        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
+            throw (0, helpers_1.error)('Handler must be a Function');
+        }
+        target.hookStatus(component_1.STATUSES.ready, function (component) {
+            var async = component.async;
+            var originalMethod = component[propertyKey];
+            component[propertyKey] = function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                return async.requestIdleCallback(originalMethod.bind.apply(originalMethod, tslib_1.__spreadArray([component], tslib_1.__read(args), false)));
+            };
+        });
+    };
+}
+exports.idle = idle;
+
+
+/***/ }),
+/* 243 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.hook = void 0;
+var checker_1 = __webpack_require__(222);
+var error_1 = __webpack_require__(176);
+function hook(status) {
+    return function (target, propertyKey) {
+        if (!(0, checker_1.isFunction)(target[propertyKey])) {
+            throw (0, error_1.error)('Handler must be a Function');
+        }
+        target.hookStatus(status, function (component) {
+            component[propertyKey].call(component);
+        });
+    };
+}
+exports.hook = hook;
+
+
+/***/ }),
+/* 244 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.nonenumerable = void 0;
+var nonenumerable = function (target, propertyKey) {
+    var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
+    if (descriptor.enumerable !== false) {
+        Object.defineProperty(target, propertyKey, {
+            enumerable: false,
+            set: function (value) {
+                Object.defineProperty(this, propertyKey, {
+                    enumerable: false,
+                    writable: true,
+                    value: value
+                });
+            }
+        });
+    }
+};
+exports.nonenumerable = nonenumerable;
+
+
+/***/ }),
+/* 245 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.persistent = void 0;
+var component_1 = __webpack_require__(237);
+var is_view_object_1 = __webpack_require__(183);
+function persistent(target, propertyKey) {
+    target.hookStatus(component_1.STATUSES.ready, function (component) {
+        var jodit = (0, is_view_object_1.isViewObject)(component)
+            ? component
+            : component.jodit, storageKey = "".concat(jodit.options.namespace).concat(component.componentName, "_prop_").concat(propertyKey), initialValue = component[propertyKey];
+        Object.defineProperty(component, propertyKey, {
+            get: function () {
+                var _a;
+                return (_a = jodit.storage.get(storageKey)) !== null && _a !== void 0 ? _a : initialValue;
+            },
+            set: function (value) {
+                jodit.storage.set(storageKey, value);
+            }
+        });
+    });
+}
+exports.persistent = persistent;
+
+
+/***/ }),
+/* 246 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.wait = void 0;
+var tslib_1 = __webpack_require__(1);
+var helpers_1 = __webpack_require__(187);
+var component_1 = __webpack_require__(237);
+function wait(condition) {
+    return function (target, propertyKey) {
+        var fn = target[propertyKey];
+        if (!(0, helpers_1.isFunction)(fn)) {
+            throw (0, helpers_1.error)('Handler must be a Function');
+        }
+        target.hookStatus(component_1.STATUSES.ready, function (component) {
+            var async = component.async;
+            var realMethod = component[propertyKey];
+            var timeout = 0;
+            Object.defineProperty(component, propertyKey, {
+                configurable: true,
+                value: function callProxy() {
+                    var args = [];
+                    for (var _i = 0; _i < arguments.length; _i++) {
+                        args[_i] = arguments[_i];
+                    }
+                    async.clearTimeout(timeout);
+                    if (condition(component)) {
+                        realMethod.apply(component, args);
+                    }
+                    else {
+                        timeout = async.setTimeout(function () { return callProxy.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(args), false)); }, 10);
+                    }
+                }
+            });
+        });
+    };
+}
+exports.wait = wait;
+
+
+/***/ }),
+/* 247 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -8269,10 +11163,10 @@ function getNativeCSSValue(jodit, elm, key) {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.toggleOrderedList = void 0;
-var dom_1 = __webpack_require__(159);
-var extract_1 = __webpack_require__(167);
-var commit_style_1 = __webpack_require__(162);
-var toggle_css_1 = __webpack_require__(165);
+var dom_1 = __webpack_require__(231);
+var extract_1 = __webpack_require__(248);
+var commit_style_1 = __webpack_require__(217);
+var toggle_css_1 = __webpack_require__(220);
 function toggleOrderedList(style, li, jodit, mode) {
     if (!li) {
         return mode;
@@ -8298,7 +11192,7 @@ exports.toggleOrderedList = toggleOrderedList;
 
 
 /***/ }),
-/* 167 */
+/* 248 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -8310,9 +11204,9 @@ exports.toggleOrderedList = toggleOrderedList;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.extractSelectedPart = void 0;
-var select_1 = __webpack_require__(168);
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
+var select_1 = __webpack_require__(249);
+var helpers_1 = __webpack_require__(187);
+var dom_1 = __webpack_require__(231);
 function extractSelectedPart(wrapper, font, jodit) {
     var range = jodit.s.createRange();
     var leftEdge = select_1.Select.isMarker(font.previousSibling)
@@ -8342,7 +11236,7 @@ function extractAndMove(wrapper, range, left) {
 
 
 /***/ }),
-/* 168 */
+/* 249 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -8355,13 +11249,13 @@ function extractAndMove(wrapper, range, left) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Select = void 0;
 var tslib_1 = __webpack_require__(1);
-var consts = __webpack_require__(137);
-var constants_1 = __webpack_require__(137);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var commit_style_1 = __webpack_require__(162);
-var decorators_1 = __webpack_require__(169);
-var helpers_2 = __webpack_require__(195);
+var consts = __webpack_require__(165);
+var constants_1 = __webpack_require__(165);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var commit_style_1 = __webpack_require__(217);
+var decorators_1 = __webpack_require__(233);
+var helpers_2 = __webpack_require__(250);
 var Select = (function () {
     function Select(jodit) {
         var _this = this;
@@ -8418,6 +11312,15 @@ var Select = (function () {
         get: function () {
             var sel = this.sel;
             return sel && sel.rangeCount ? sel.getRangeAt(0) : this.createRange();
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Select.prototype, "isInsideArea", {
+        get: function () {
+            var sel = this.sel;
+            var range = (sel === null || sel === void 0 ? void 0 : sel.rangeCount) ? sel.getRangeAt(0) : null;
+            return !(!range || !dom_1.Dom.isOrContains(this.area, range.startContainer));
         },
         enumerable: false,
         configurable: true
@@ -8875,7 +11778,7 @@ var Select = (function () {
                 }
             };
             checkElm_1(start);
-            if (start !== end_1) {
+            if (start !== end_1 && dom_1.Dom.isOrContains(root_1, start, true)) {
                 dom_1.Dom.find(start, function (node) {
                     checkElm_1(node);
                     return (node === end_1 ||
@@ -9348,163 +12251,7 @@ exports.Select = Select;
 
 
 /***/ }),
-/* 169 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.autobind = void 0;
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(170), exports);
-tslib_1.__exportStar(__webpack_require__(171), exports);
-tslib_1.__exportStar(__webpack_require__(172), exports);
-tslib_1.__exportStar(__webpack_require__(188), exports);
-tslib_1.__exportStar(__webpack_require__(189), exports);
-tslib_1.__exportStar(__webpack_require__(190), exports);
-tslib_1.__exportStar(__webpack_require__(191), exports);
-tslib_1.__exportStar(__webpack_require__(192), exports);
-tslib_1.__exportStar(__webpack_require__(193), exports);
-var autobind_decorator_1 = __webpack_require__(15);
-Object.defineProperty(exports, "autobind", ({ enumerable: true, get: function () { return autobind_decorator_1.default; } }));
-
-
-/***/ }),
-/* 170 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.cache = void 0;
-var helpers_1 = __webpack_require__(146);
-function cache(target, name, descriptor) {
-    var getter = descriptor.get;
-    if (!getter) {
-        throw (0, helpers_1.error)('Getter property descriptor expected');
-    }
-    descriptor.get = function () {
-        var value = getter.call(this);
-        if (value && value.noCache === true) {
-            return value;
-        }
-        Object.defineProperty(this, name, {
-            configurable: descriptor.configurable,
-            enumerable: descriptor.enumerable,
-            writable: false,
-            value: value
-        });
-        return value;
-    };
-}
-exports.cache = cache;
-
-
-/***/ }),
-/* 171 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.component = void 0;
-var tslib_1 = __webpack_require__(1);
-function component(constructorFunction) {
-    var newConstructorFunction = (function (_super) {
-        tslib_1.__extends(newConstructorFunction, _super);
-        function newConstructorFunction() {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            var _this = _super.apply(this, tslib_1.__spreadArray([], tslib_1.__read(args), false)) || this;
-            var isRootConstructor = _this.constructor === newConstructorFunction;
-            if (isRootConstructor) {
-                if (!(_this instanceof newConstructorFunction)) {
-                    Object.setPrototypeOf(_this, newConstructorFunction.prototype);
-                }
-                _this.setStatus('ready');
-            }
-            return _this;
-        }
-        return newConstructorFunction;
-    }(constructorFunction));
-    return newConstructorFunction;
-}
-exports.component = component;
-
-
-/***/ }),
-/* 172 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.throttle = exports.debounce = void 0;
-var checker_1 = __webpack_require__(173);
-var component_1 = __webpack_require__(154);
-var error_1 = __webpack_require__(143);
-function debounce(timeout, firstCallImmediately, method) {
-    if (firstCallImmediately === void 0) { firstCallImmediately = false; }
-    if (method === void 0) { method = 'debounce'; }
-    return function (target, propertyKey) {
-        var fn = target[propertyKey];
-        if (!(0, checker_1.isFunction)(fn)) {
-            throw (0, error_1.error)('Handler must be a Function');
-        }
-        target.hookStatus(component_1.STATUSES.ready, function (component) {
-            var view = (0, checker_1.isViewObject)(component)
-                ? component
-                : component.jodit;
-            var realTimeout = (0, checker_1.isFunction)(timeout)
-                ? timeout(component)
-                : timeout;
-            Object.defineProperty(component, propertyKey, {
-                configurable: true,
-                value: view.async[method](component[propertyKey].bind(component), (0, checker_1.isNumber)(realTimeout) || (0, checker_1.isPlainObject)(realTimeout)
-                    ? realTimeout
-                    : view.defaultTimeout, firstCallImmediately)
-            });
-        });
-        return {
-            configurable: true,
-            get: function () {
-                return fn.bind(this);
-            }
-        };
-    };
-}
-exports.debounce = debounce;
-function throttle(timeout, firstCallImmediately) {
-    if (firstCallImmediately === void 0) { firstCallImmediately = false; }
-    return debounce(timeout, firstCallImmediately, 'throttle');
-}
-exports.throttle = throttle;
-
-
-/***/ }),
-/* 173 */
+/* 250 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -9516,725 +12263,12 @@ exports.throttle = throttle;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(174), exports);
-tslib_1.__exportStar(__webpack_require__(142), exports);
-tslib_1.__exportStar(__webpack_require__(175), exports);
-tslib_1.__exportStar(__webpack_require__(176), exports);
-tslib_1.__exportStar(__webpack_require__(9), exports);
-tslib_1.__exportStar(__webpack_require__(178), exports);
-tslib_1.__exportStar(__webpack_require__(179), exports);
-tslib_1.__exportStar(__webpack_require__(180), exports);
-tslib_1.__exportStar(__webpack_require__(181), exports);
-tslib_1.__exportStar(__webpack_require__(183), exports);
-tslib_1.__exportStar(__webpack_require__(184), exports);
-tslib_1.__exportStar(__webpack_require__(185), exports);
-tslib_1.__exportStar(__webpack_require__(14), exports);
-tslib_1.__exportStar(__webpack_require__(182), exports);
-tslib_1.__exportStar(__webpack_require__(10), exports);
-tslib_1.__exportStar(__webpack_require__(12), exports);
-tslib_1.__exportStar(__webpack_require__(13), exports);
-tslib_1.__exportStar(__webpack_require__(186), exports);
-tslib_1.__exportStar(__webpack_require__(187), exports);
-tslib_1.__exportStar(__webpack_require__(152), exports);
-tslib_1.__exportStar(__webpack_require__(11), exports);
+tslib_1.__exportStar(__webpack_require__(251), exports);
+tslib_1.__exportStar(__webpack_require__(252), exports);
 
 
 /***/ }),
-/* 174 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.hasBrowserColorPicker = void 0;
-function hasBrowserColorPicker() {
-    var supportsColor = true;
-    try {
-        var a = document.createElement('input');
-        a.type = 'color';
-        supportsColor =
-            a.type === 'color' && typeof a.selectionStart !== 'number';
-    }
-    catch (e) {
-        supportsColor = false;
-    }
-    return supportsColor;
-}
-exports.hasBrowserColorPicker = hasBrowserColorPicker;
-
-
-/***/ }),
-/* 175 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isBoolean = void 0;
-function isBoolean(elm) {
-    return typeof elm === 'boolean';
-}
-exports.isBoolean = isBoolean;
-
-
-/***/ }),
-/* 176 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isFastEqual = exports.isEqual = void 0;
-var stringify_1 = __webpack_require__(177);
-function isEqual(a, b) {
-    return a === b || (0, stringify_1.stringify)(a) === (0, stringify_1.stringify)(b);
-}
-exports.isEqual = isEqual;
-function isFastEqual(a, b) {
-    return a === b;
-}
-exports.isFastEqual = isFastEqual;
-
-
-/***/ }),
-/* 177 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.stringify = void 0;
-function stringify(value, options) {
-    if (options === void 0) { options = {}; }
-    if (typeof value !== 'object') {
-        return String(value);
-    }
-    var excludeKeys = new Set(options.excludeKeys);
-    var map = new WeakMap();
-    var r = function (k, v) {
-        if (excludeKeys.has(k)) {
-            return;
-        }
-        if (typeof v === 'object' && v != null) {
-            if (map.get(v)) {
-                return '[refObject]';
-            }
-            map.set(v, true);
-        }
-        return v;
-    };
-    return JSON.stringify(value, r, options.prettify);
-}
-exports.stringify = stringify;
-
-
-/***/ }),
-/* 178 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isHTML = void 0;
-var is_string_1 = __webpack_require__(13);
-var isHTML = function (str) {
-    return (0, is_string_1.isString)(str) &&
-        /<([A-Za-z][A-Za-z0-9]*)\b[^>]*>(.*?)<\/\1>/m.test(str.replace(/[\r\n]/g, ''));
-};
-exports.isHTML = isHTML;
-
-
-/***/ }),
-/* 179 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isHtmlFromWord = void 0;
-function isHtmlFromWord(data) {
-    return (data.search(/<meta.*?Microsoft Excel\s[\d].*?>/) !== -1 ||
-        data.search(/<meta.*?Microsoft Word\s[\d].*?>/) !== -1 ||
-        (data.search(/style="[^"]*mso-/) !== -1 && data.search(/<font/) !== -1));
-}
-exports.isHtmlFromWord = isHtmlFromWord;
-
-
-/***/ }),
-/* 180 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.hasContainer = exports.isDestructable = exports.isInitable = void 0;
-var is_function_1 = __webpack_require__(9);
-var dom_1 = __webpack_require__(159);
-var is_void_1 = __webpack_require__(152);
-function isInitable(value) {
-    return !(0, is_void_1.isVoid)(value) && (0, is_function_1.isFunction)(value.init);
-}
-exports.isInitable = isInitable;
-function isDestructable(value) {
-    return !(0, is_void_1.isVoid)(value) && (0, is_function_1.isFunction)(value.destruct);
-}
-exports.isDestructable = isDestructable;
-function hasContainer(value) {
-    return !(0, is_void_1.isVoid)(value) && dom_1.Dom.isElement(value.container);
-}
-exports.hasContainer = hasContainer;
-
-
-/***/ }),
-/* 181 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isInt = void 0;
-var is_numeric_1 = __webpack_require__(182);
-var is_string_1 = __webpack_require__(13);
-function isInt(value) {
-    if ((0, is_string_1.isString)(value) && (0, is_numeric_1.isNumeric)(value)) {
-        value = parseFloat(value);
-    }
-    return typeof value === 'number' && Number.isFinite(value) && !(value % 1);
-}
-exports.isInt = isInt;
-
-
-/***/ }),
-/* 182 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isNumeric = void 0;
-var is_string_1 = __webpack_require__(13);
-function isNumeric(value) {
-    if ((0, is_string_1.isString)(value)) {
-        if (!value.match(/^([+-])?[0-9]+(\.?)([0-9]+)?(e[0-9]+)?$/)) {
-            return false;
-        }
-        value = parseFloat(value);
-    }
-    return typeof value === 'number' && !isNaN(value) && isFinite(value);
-}
-exports.isNumeric = isNumeric;
-
-
-/***/ }),
-/* 183 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isViewObject = exports.isJoditObject = void 0;
-var is_function_1 = __webpack_require__(9);
-var global_1 = __webpack_require__(157);
-function isJoditObject(jodit) {
-    return Boolean(jodit &&
-        jodit instanceof Object &&
-        (0, is_function_1.isFunction)(jodit.constructor) &&
-        ((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
-            jodit.isJodit));
-}
-exports.isJoditObject = isJoditObject;
-function isViewObject(jodit) {
-    return Boolean(jodit &&
-        jodit instanceof Object &&
-        (0, is_function_1.isFunction)(jodit.constructor) &&
-        (jodit instanceof global_1.modules.View || jodit.isView));
-}
-exports.isViewObject = isViewObject;
-
-
-/***/ }),
-/* 184 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isLicense = void 0;
-var is_string_1 = __webpack_require__(13);
-var isLicense = function (license) {
-    return (0, is_string_1.isString)(license) &&
-        license.length === 23 &&
-        /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license);
-};
-exports.isLicense = isLicense;
-
-
-/***/ }),
-/* 185 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isNativeFunction = void 0;
-function isNativeFunction(f) {
-    return (Boolean(f) &&
-        (typeof f).toLowerCase() === 'function' &&
-        (f === Function.prototype ||
-            /^\s*function\s*(\b[a-z$_][a-z0-9$_]*\b)*\s*\((|([a-z$_][a-z0-9$_]*)(\s*,[a-z$_][a-z0-9$_]*)*)\)\s*{\s*\[native code]\s*}\s*$/i.test(String(f))));
-}
-exports.isNativeFunction = isNativeFunction;
-
-
-/***/ }),
-/* 186 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isURL = void 0;
-function isURL(str) {
-    if (str.includes(' ')) {
-        return false;
-    }
-    if (typeof URL !== 'undefined') {
-        try {
-            var url = new URL(str);
-            return ['https:', 'http:', 'ftp:', 'file:', 'rtmp:'].includes(url.protocol);
-        }
-        catch (e) {
-            return false;
-        }
-    }
-    var a = document.createElement('a');
-    a.href = str;
-    return Boolean(a.hostname);
-}
-exports.isURL = isURL;
-
-
-/***/ }),
-/* 187 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isValidName = void 0;
-function isValidName(name) {
-    if (!name.length) {
-        return false;
-    }
-    return !/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name);
-}
-exports.isValidName = isValidName;
-
-
-/***/ }),
-/* 188 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.idle = void 0;
-var tslib_1 = __webpack_require__(1);
-var component_1 = __webpack_require__(154);
-var helpers_1 = __webpack_require__(146);
-function idle() {
-    return function (target, propertyKey) {
-        if (!(0, helpers_1.isFunction)(target[propertyKey])) {
-            throw (0, helpers_1.error)('Handler must be a Function');
-        }
-        target.hookStatus(component_1.STATUSES.ready, function (component) {
-            var view = (0, helpers_1.isViewObject)(component)
-                ? component
-                : component.jodit;
-            var originalMethod = component[propertyKey];
-            component[propertyKey] = function () {
-                var args = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    args[_i] = arguments[_i];
-                }
-                return view.async.requestIdleCallback(originalMethod.bind.apply(originalMethod, tslib_1.__spreadArray([component], tslib_1.__read(args), false)));
-            };
-        });
-    };
-}
-exports.idle = idle;
-
-
-/***/ }),
-/* 189 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.hook = void 0;
-var checker_1 = __webpack_require__(173);
-var error_1 = __webpack_require__(143);
-function hook(status) {
-    return function (target, propertyKey) {
-        if (!(0, checker_1.isFunction)(target[propertyKey])) {
-            throw (0, error_1.error)('Handler must be a Function');
-        }
-        target.hookStatus(status, function (component) {
-            component[propertyKey].call(component);
-        });
-    };
-}
-exports.hook = hook;
-
-
-/***/ }),
-/* 190 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.nonenumerable = void 0;
-var nonenumerable = function (target, propertyKey) {
-    var descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
-    if (descriptor.enumerable !== false) {
-        Object.defineProperty(target, propertyKey, {
-            enumerable: false,
-            set: function (value) {
-                Object.defineProperty(this, propertyKey, {
-                    enumerable: false,
-                    writable: true,
-                    value: value
-                });
-            }
-        });
-    }
-};
-exports.nonenumerable = nonenumerable;
-
-
-/***/ }),
-/* 191 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.persistent = void 0;
-var component_1 = __webpack_require__(154);
-var helpers_1 = __webpack_require__(146);
-function persistent(target, propertyKey) {
-    target.hookStatus(component_1.STATUSES.ready, function (component) {
-        var jodit = (0, helpers_1.isViewObject)(component)
-            ? component
-            : component.jodit, storageKey = "".concat(jodit.options.namespace).concat(component.componentName, "_prop_").concat(propertyKey), initialValue = component[propertyKey];
-        Object.defineProperty(component, propertyKey, {
-            get: function () {
-                var _a;
-                return (_a = jodit.storage.get(storageKey)) !== null && _a !== void 0 ? _a : initialValue;
-            },
-            set: function (value) {
-                jodit.storage.set(storageKey, value);
-            }
-        });
-    });
-}
-exports.persistent = persistent;
-
-
-/***/ }),
-/* 192 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.wait = void 0;
-var tslib_1 = __webpack_require__(1);
-var helpers_1 = __webpack_require__(146);
-var component_1 = __webpack_require__(154);
-function wait(condition) {
-    return function (target, propertyKey) {
-        var fn = target[propertyKey];
-        if (!(0, helpers_1.isFunction)(fn)) {
-            throw (0, helpers_1.error)('Handler must be a Function');
-        }
-        target.hookStatus(component_1.STATUSES.ready, function (component) {
-            var async = (0, helpers_1.isViewObject)(component)
-                ? component.async
-                : component.j.async;
-            var realMethod = component[propertyKey];
-            var timeout = 0;
-            Object.defineProperty(component, propertyKey, {
-                configurable: true,
-                value: function callProxy() {
-                    var args = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        args[_i] = arguments[_i];
-                    }
-                    async.clearTimeout(timeout);
-                    if (condition(component)) {
-                        realMethod.apply(component, args);
-                    }
-                    else {
-                        timeout = async.setTimeout(function () { return callProxy.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(args), false)); }, 10);
-                    }
-                }
-            });
-        });
-    };
-}
-exports.wait = wait;
-
-
-/***/ }),
-/* 193 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.watch = exports.getPropertyDescriptor = void 0;
-var tslib_1 = __webpack_require__(1);
-var checker_1 = __webpack_require__(173);
-var event_emitter_1 = __webpack_require__(139);
-var component_1 = __webpack_require__(154);
-var split_array_1 = __webpack_require__(194);
-var error_1 = __webpack_require__(143);
-function getPropertyDescriptor(obj, prop) {
-    var desc;
-    do {
-        desc = Object.getOwnPropertyDescriptor(obj, prop);
-        obj = Object.getPrototypeOf(obj);
-    } while (!desc && obj);
-    return desc;
-}
-exports.getPropertyDescriptor = getPropertyDescriptor;
-function watch(observeFields, context) {
-    return function (target, propertyKey) {
-        if (!(0, checker_1.isFunction)(target[propertyKey])) {
-            throw (0, error_1.error)('Handler must be a Function');
-        }
-        var process = function (component) {
-            var callback = function (key) {
-                var _a;
-                var args = [];
-                for (var _i = 1; _i < arguments.length; _i++) {
-                    args[_i - 1] = arguments[_i];
-                }
-                if (!component.isInDestruct) {
-                    return (_a = component)[propertyKey].apply(_a, tslib_1.__spreadArray([key], tslib_1.__read(args), false));
-                }
-            };
-            (0, split_array_1.splitArray)(observeFields).forEach(function (field) {
-                if (/:/.test(field)) {
-                    var _a = tslib_1.__read(field.split(':'), 2), objectPath = _a[0], eventName_1 = _a[1];
-                    var ctx_1 = context;
-                    var view_1 = (0, checker_1.isViewObject)(component)
-                        ? component
-                        : component.jodit;
-                    if (objectPath.length) {
-                        ctx_1 = component.get(objectPath);
-                    }
-                    if ((0, checker_1.isFunction)(ctx_1)) {
-                        ctx_1 = ctx_1(component);
-                    }
-                    view_1.events.on(ctx_1 || component, eventName_1, callback);
-                    if (!ctx_1) {
-                        view_1.events.on(eventName_1, callback);
-                    }
-                    view_1.hookStatus('beforeDestruct', function () {
-                        view_1.events
-                            .off(ctx_1 || component, eventName_1, callback)
-                            .off(eventName_1, callback);
-                    });
-                    return;
-                }
-                var parts = field.split('.'), _b = tslib_1.__read(parts, 1), key = _b[0], teil = parts.slice(1);
-                var value = component[key];
-                if ((0, checker_1.isPlainObject)(value)) {
-                    var observableValue = (0, event_emitter_1.observable)(value);
-                    observableValue.on("change.".concat(teil.join('.')), callback);
-                }
-                var descriptor = getPropertyDescriptor(target, key);
-                Object.defineProperty(component, key, {
-                    configurable: true,
-                    set: function (v) {
-                        var oldValue = value;
-                        if (oldValue === v) {
-                            return;
-                        }
-                        value = v;
-                        if (descriptor && descriptor.set) {
-                            descriptor.set.call(component, v);
-                        }
-                        if ((0, checker_1.isPlainObject)(value)) {
-                            value = (0, event_emitter_1.observable)(value);
-                            value.on("change.".concat(teil.join('.')), callback);
-                        }
-                        callback(key, oldValue, value);
-                    },
-                    get: function () {
-                        if (descriptor && descriptor.get) {
-                            return descriptor.get.call(component);
-                        }
-                        return value;
-                    }
-                });
-            });
-        };
-        if ((0, checker_1.isFunction)(target.hookStatus)) {
-            target.hookStatus(component_1.STATUSES.ready, process);
-        }
-        else {
-            process(target);
-        }
-    };
-}
-exports.watch = watch;
-exports["default"] = watch;
-
-
-/***/ }),
-/* 194 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.splitArray = void 0;
-var is_string_1 = __webpack_require__(13);
-function splitArray(a) {
-    return (0, is_string_1.isString)(a) ? a.split(/[,\s]+/) : a;
-}
-exports.splitArray = splitArray;
-
-
-/***/ }),
-/* 195 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(196), exports);
-tslib_1.__exportStar(__webpack_require__(197), exports);
-
-
-/***/ }),
-/* 196 */
+/* 251 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10246,8 +12280,8 @@ tslib_1.__exportStar(__webpack_require__(197), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.moveNodeInsideStart = void 0;
-var dom_1 = __webpack_require__(159);
-var constants_1 = __webpack_require__(137);
+var dom_1 = __webpack_require__(231);
+var constants_1 = __webpack_require__(165);
 function moveNodeInsideStart(j, node, start) {
     var sibling = dom_1.Dom.findSibling(node, start), anotherSibling = dom_1.Dom.findSibling(node, !start);
     while (dom_1.Dom.isElement(sibling) &&
@@ -10268,7 +12302,7 @@ exports.moveNodeInsideStart = moveNodeInsideStart;
 
 
 /***/ }),
-/* 197 */
+/* 252 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10280,7 +12314,7 @@ exports.moveNodeInsideStart = moveNodeInsideStart;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.moveTheNodeAlongTheEdgeOutward = void 0;
-var dom_1 = __webpack_require__(159);
+var dom_1 = __webpack_require__(231);
 function moveTheNodeAlongTheEdgeOutward(node, start, root) {
     var item = node;
     while (item && item !== root) {
@@ -10299,7 +12333,7 @@ exports.moveTheNodeAlongTheEdgeOutward = moveTheNodeAlongTheEdgeOutward;
 
 
 /***/ }),
-/* 198 */
+/* 253 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10311,17 +12345,19 @@ exports.moveTheNodeAlongTheEdgeOutward = moveTheNodeAlongTheEdgeOutward;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.elementHasSameStyleKeys = exports.elementHasSameStyle = void 0;
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
+var css_1 = __webpack_require__(192);
+var is_void_1 = __webpack_require__(174);
+var normalize_css_value_1 = __webpack_require__(195);
+var dom_1 = __webpack_require__(231);
 function elementHasSameStyle(elm, rules) {
     return Boolean(!dom_1.Dom.isTag(elm, 'font') &&
         dom_1.Dom.isHTMLElement(elm) &&
         Object.keys(rules).every(function (property) {
-            var value = (0, helpers_1.css)(elm, property, true);
-            return (!(0, helpers_1.isVoid)(value) &&
+            var value = (0, css_1.css)(elm, property, true);
+            return (!(0, is_void_1.isVoid)(value) &&
                 value !== '' &&
-                !(0, helpers_1.isVoid)(rules[property]) &&
-                (0, helpers_1.normalizeCssValue)(property, rules[property])
+                !(0, is_void_1.isVoid)(rules[property]) &&
+                (0, normalize_css_value_1.normalizeCssValue)(property, rules[property])
                     .toString()
                     .toLowerCase() === value.toString().toLowerCase());
         }));
@@ -10330,13 +12366,13 @@ exports.elementHasSameStyle = elementHasSameStyle;
 function elementHasSameStyleKeys(elm, rules) {
     return Boolean(!dom_1.Dom.isTag(elm, 'font') &&
         dom_1.Dom.isHTMLElement(elm) &&
-        Object.keys(rules).every(function (property) { return !(0, helpers_1.isVoid)((0, helpers_1.css)(elm, property, true)); }));
+        Object.keys(rules).every(function (property) { return !(0, is_void_1.isVoid)((0, css_1.css)(elm, property, true)); }));
 }
 exports.elementHasSameStyleKeys = elementHasSameStyleKeys;
 
 
 /***/ }),
-/* 199 */
+/* 254 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10398,7 +12434,7 @@ exports.FiniteStateMachine = FiniteStateMachine;
 
 
 /***/ }),
-/* 200 */
+/* 255 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10410,9 +12446,9 @@ exports.FiniteStateMachine = FiniteStateMachine;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getSuitChild = void 0;
-var dom_1 = __webpack_require__(159);
-var is_normal_node_1 = __webpack_require__(201);
-var is_suit_element_1 = __webpack_require__(202);
+var dom_1 = __webpack_require__(231);
+var is_normal_node_1 = __webpack_require__(256);
+var is_suit_element_1 = __webpack_require__(257);
 function getSuitChild(style, font) {
     var child = font.firstChild;
     while (child && !(0, is_normal_node_1.isNormalNode)(child)) {
@@ -10432,7 +12468,7 @@ exports.getSuitChild = getSuitChild;
 
 
 /***/ }),
-/* 201 */
+/* 256 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10444,7 +12480,7 @@ exports.getSuitChild = getSuitChild;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isNormalNode = void 0;
-var dom_1 = __webpack_require__(159);
+var dom_1 = __webpack_require__(231);
 function isNormalNode(elm) {
     return Boolean(elm && !dom_1.Dom.isEmptyTextNode(elm) && !dom_1.Dom.isTemporary(elm));
 }
@@ -10452,16 +12488,16 @@ exports.isNormalNode = isNormalNode;
 
 
 /***/ }),
-/* 202 */
+/* 257 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isSameStyleChild = exports.isSuitElement = void 0;
-var is_normal_node_1 = __webpack_require__(201);
-var element_has_same_style_1 = __webpack_require__(198);
-var dom_1 = __webpack_require__(159);
+var is_normal_node_1 = __webpack_require__(256);
+var element_has_same_style_1 = __webpack_require__(253);
+var dom_1 = __webpack_require__(231);
 function isSuitElement(commitStyle, elm, strict) {
     if (!elm) {
         return false;
@@ -10490,7 +12526,7 @@ exports.isSameStyleChild = isSameStyleChild;
 
 
 /***/ }),
-/* 203 */
+/* 258 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10502,9 +12538,9 @@ exports.isSameStyleChild = isSameStyleChild;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getSuitParent = void 0;
-var dom_1 = __webpack_require__(159);
-var is_normal_node_1 = __webpack_require__(201);
-var is_suit_element_1 = __webpack_require__(202);
+var dom_1 = __webpack_require__(231);
+var is_normal_node_1 = __webpack_require__(256);
+var is_suit_element_1 = __webpack_require__(257);
 function getSuitParent(style, node, root) {
     var parentNode = node.parentNode;
     if (parentNode === root ||
@@ -10528,7 +12564,7 @@ exports.getSuitParent = getSuitParent;
 
 
 /***/ }),
-/* 204 */
+/* 259 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10540,7 +12576,7 @@ exports.getSuitParent = getSuitParent;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isInsideInvisibleElement = void 0;
-var dom_1 = __webpack_require__(159);
+var dom_1 = __webpack_require__(231);
 function isInsideInvisibleElement(font, root) {
     return Boolean(dom_1.Dom.closest(font, ['style', 'script'], root));
 }
@@ -10548,7 +12584,7 @@ exports.isInsideInvisibleElement = isInsideInvisibleElement;
 
 
 /***/ }),
-/* 205 */
+/* 260 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10560,7 +12596,7 @@ exports.isInsideInvisibleElement = isInsideInvisibleElement;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.toggleCommitStyles = void 0;
-var dom_1 = __webpack_require__(159);
+var dom_1 = __webpack_require__(231);
 function toggleCommitStyles(commitStyle, elm) {
     if (commitStyle.elementIsBlock ||
         (dom_1.Dom.isTag(elm, commitStyle.element) && !commitStyle.elementIsDefault)) {
@@ -10573,7 +12609,7 @@ exports.toggleCommitStyles = toggleCommitStyles;
 
 
 /***/ }),
-/* 206 */
+/* 261 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10585,10 +12621,10 @@ exports.toggleCommitStyles = toggleCommitStyles;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.unwrapChildren = void 0;
-var dom_1 = __webpack_require__(159);
-var is_suit_element_1 = __webpack_require__(202);
-var helpers_1 = __webpack_require__(146);
-var element_has_same_style_1 = __webpack_require__(198);
+var dom_1 = __webpack_require__(231);
+var is_suit_element_1 = __webpack_require__(257);
+var helpers_1 = __webpack_require__(187);
+var element_has_same_style_1 = __webpack_require__(253);
 function unwrapChildren(style, font) {
     var needUnwrap = [];
     var needChangeStyle = [];
@@ -10643,7 +12679,7 @@ exports.unwrapChildren = unwrapChildren;
 
 
 /***/ }),
-/* 207 */
+/* 262 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10655,10 +12691,10 @@ exports.unwrapChildren = unwrapChildren;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.wrapAndCommitStyle = void 0;
-var dom_1 = __webpack_require__(159);
-var wrap_unwrapped_text_1 = __webpack_require__(208);
-var helpers_1 = __webpack_require__(146);
-var wrap_ordered_list_1 = __webpack_require__(209);
+var dom_1 = __webpack_require__(231);
+var wrap_unwrapped_text_1 = __webpack_require__(263);
+var helpers_1 = __webpack_require__(187);
+var wrap_ordered_list_1 = __webpack_require__(264);
 function wrapAndCommitStyle(commitStyle, font, jodit) {
     var wrapper = findOrCreateWrapper(commitStyle, font, jodit);
     return commitStyle.elementIsList
@@ -10694,7 +12730,7 @@ function findOrCreateWrapper(commitStyle, font, jodit) {
 
 
 /***/ }),
-/* 208 */
+/* 263 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10706,7 +12742,7 @@ function findOrCreateWrapper(commitStyle, font, jodit) {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.wrapUnwrappedText = void 0;
-var dom_1 = __webpack_require__(159);
+var dom_1 = __webpack_require__(231);
 function wrapUnwrappedText(style, elm, jodit, getRange) {
     var root = jodit.editor, ci = jodit.createInside, edge = function (n, key) {
         if (key === void 0) { key = 'previousSibling'; }
@@ -10753,7 +12789,7 @@ exports.wrapUnwrappedText = wrapUnwrappedText;
 
 
 /***/ }),
-/* 209 */
+/* 264 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -10765,7 +12801,7 @@ exports.wrapUnwrappedText = wrapUnwrappedText;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.wrapOrderedList = void 0;
-var dom_1 = __webpack_require__(159);
+var dom_1 = __webpack_require__(231);
 function wrapOrderedList(commitStyle, wrapper, jodit) {
     var newWrapper = dom_1.Dom.replace(wrapper, 'li', jodit.createInside);
     var list = newWrapper.previousElementSibling || newWrapper.nextElementSibling;
@@ -10785,1492 +12821,7 @@ exports.wrapOrderedList = wrapOrderedList;
 
 
 /***/ }),
-/* 210 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.LazyWalker = void 0;
-var tslib_1 = __webpack_require__(1);
-var eventify_1 = __webpack_require__(144);
-var decorators_1 = __webpack_require__(169);
-var dom_1 = __webpack_require__(160);
-var LazyWalker = (function (_super) {
-    tslib_1.__extends(LazyWalker, _super);
-    function LazyWalker(async, options) {
-        if (options === void 0) { options = {}; }
-        var _this = _super.call(this) || this;
-        _this.async = async;
-        _this.options = options;
-        _this.workNodes = null;
-        _this.hadAffect = false;
-        _this.isWorked = false;
-        _this.isFinished = false;
-        _this.idleId = 0;
-        return _this;
-    }
-    LazyWalker.prototype.setWork = function (root) {
-        if (this.isWorked) {
-            this.break();
-        }
-        this.workNodes = dom_1.Dom.eachGen(root, !this.options.reverse);
-        this.isFinished = false;
-        this.startIdleRequest();
-        return this;
-    };
-    LazyWalker.prototype.startIdleRequest = function () {
-        var _a;
-        this.idleId = this.async.requestIdleCallback(this.workPerform, {
-            timeout: (_a = this.options.timeout) !== null && _a !== void 0 ? _a : 10
-        });
-    };
-    LazyWalker.prototype.break = function (reason) {
-        if (this.isWorked) {
-            this.stop();
-            this.emit('break', reason);
-        }
-    };
-    LazyWalker.prototype.end = function () {
-        if (this.isWorked) {
-            this.stop();
-            this.emit('end', this.hadAffect);
-            this.hadAffect = false;
-        }
-    };
-    LazyWalker.prototype.stop = function () {
-        this.isWorked = false;
-        this.isFinished = true;
-        this.workNodes = null;
-        this.async.cancelIdleCallback(this.idleId);
-    };
-    LazyWalker.prototype.destruct = function () {
-        this.stop();
-    };
-    LazyWalker.prototype.workPerform = function (deadline) {
-        var _a;
-        if (this.workNodes) {
-            this.isWorked = true;
-            var count = 0;
-            var chunkSize = (_a = this.options.timeoutChunkSize) !== null && _a !== void 0 ? _a : 50;
-            while (!this.isFinished &&
-                (deadline.timeRemaining() > 0 ||
-                    (deadline.didTimeout && count <= chunkSize))) {
-                var item = this.workNodes.next();
-                count += 1;
-                if (this.visitNode(item.value)) {
-                    this.hadAffect = true;
-                }
-                if (item.done) {
-                    this.end();
-                    return;
-                }
-            }
-        }
-        else {
-            this.end();
-        }
-        if (!this.isFinished) {
-            this.startIdleRequest();
-        }
-    };
-    LazyWalker.prototype.visitNode = function (nodeElm) {
-        var _a;
-        if (!nodeElm ||
-            (this.options.whatToShow !== undefined &&
-                nodeElm.nodeType !== this.options.whatToShow)) {
-            return false;
-        }
-        return (_a = this.emit('visit', nodeElm)) !== null && _a !== void 0 ? _a : false;
-    };
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], LazyWalker.prototype, "workPerform", null);
-    return LazyWalker;
-}(eventify_1.Eventify));
-exports.LazyWalker = LazyWalker;
-
-
-/***/ }),
-/* 211 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getClassName = exports.keepNames = void 0;
-var is_function_1 = __webpack_require__(9);
-exports.keepNames = new Map();
-var getClassName = function (obj) {
-    var _a;
-    if ((0, is_function_1.isFunction)(obj.className)) {
-        return obj.className();
-    }
-    var constructor = ((_a = obj.constructor) === null || _a === void 0 ? void 0 : _a.originalConstructor) || obj.constructor;
-    if (exports.keepNames.has(constructor)) {
-        return exports.keepNames.get(constructor);
-    }
-    if (constructor.name) {
-        return constructor.name;
-    }
-    var regex = new RegExp(/^\s*function\s*(\S*)\s*\(/);
-    var res = constructor.toString().match(regex);
-    return res ? res[1] : '';
-};
-exports.getClassName = getClassName;
-
-
-/***/ }),
-/* 212 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(213), exports);
-tslib_1.__exportStar(__webpack_require__(214), exports);
-tslib_1.__exportStar(__webpack_require__(215), exports);
-tslib_1.__exportStar(__webpack_require__(216), exports);
-tslib_1.__exportStar(__webpack_require__(177), exports);
-tslib_1.__exportStar(__webpack_require__(217), exports);
-tslib_1.__exportStar(__webpack_require__(218), exports);
-
-
-/***/ }),
-/* 213 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.camelCase = void 0;
-var camelCase = function (key) {
-    return key.replace(/([-_])(.)/g, function (m, code, letter) {
-        return letter.toUpperCase();
-    });
-};
-exports.camelCase = camelCase;
-
-
-/***/ }),
-/* 214 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.fuzzySearchIndex = void 0;
-var constants_1 = __webpack_require__(137);
-function fuzzySearchIndex(needle, haystack, offset, maxDistance) {
-    if (offset === void 0) { offset = 0; }
-    if (maxDistance === void 0) { maxDistance = 1; }
-    var i = 0, j = 0, startIndex = -1, len = 0, errorDistance = 0;
-    for (j = offset; i < needle.length && j < haystack.length;) {
-        if (needle[i].toLowerCase() === haystack[j].toLowerCase()) {
-            i++;
-            len++;
-            errorDistance = 0;
-            if (startIndex === -1) {
-                startIndex = j;
-            }
-        }
-        else if (i > 0) {
-            if (errorDistance >= maxDistance &&
-                haystack[j] !== constants_1.INVISIBLE_SPACE) {
-                i = 0;
-                startIndex = -1;
-                len = 0;
-                errorDistance = 0;
-                j--;
-            }
-            else {
-                errorDistance++;
-                len++;
-            }
-        }
-        j++;
-    }
-    return i === needle.length ? [startIndex, len] : [-1, 0];
-}
-exports.fuzzySearchIndex = fuzzySearchIndex;
-
-
-/***/ }),
-/* 215 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.i18n = exports.sprintf = void 0;
-var config_1 = __webpack_require__(136);
-var utils_1 = __webpack_require__(147);
-var checker_1 = __webpack_require__(173);
-var string_1 = __webpack_require__(212);
-var global_1 = __webpack_require__(157);
-var sprintf = function (str, args) {
-    if (!args || !args.length) {
-        return str;
-    }
-    var reg = /%([sd])/g;
-    var fnd = reg.exec(str);
-    var res = str, i = 0;
-    while (fnd && args[i] !== undefined) {
-        res = res.replace(fnd[0], args[i].toString());
-        i += 1;
-        fnd = reg.exec(str);
-    }
-    return res;
-};
-exports.sprintf = sprintf;
-var i18n = function (key, params, options) {
-    if (!(0, checker_1.isString)(key)) {
-        throw (0, utils_1.error)('i18n: Need string in first argument');
-    }
-    if (!key.length) {
-        return key;
-    }
-    var debug = Boolean(options !== undefined && options.debugLanguage);
-    var store;
-    var parse = function (value) {
-        return params && params.length ? (0, exports.sprintf)(value, params) : value;
-    }, defaultLanguage = (0, utils_1.defaultLanguage)(config_1.Config.defaultOptions.language, config_1.Config.defaultOptions.language), language = (0, utils_1.defaultLanguage)(options === null || options === void 0 ? void 0 : options.language, defaultLanguage), tryGet = function (store) {
-        if (!store) {
-            return;
-        }
-        if ((0, checker_1.isString)(store[key])) {
-            return parse(store[key]);
-        }
-        var lcKey = key.toLowerCase();
-        if ((0, checker_1.isString)(store[lcKey])) {
-            return parse(store[lcKey]);
-        }
-        var ucfKey = (0, string_1.ucfirst)(key);
-        if ((0, checker_1.isString)(store[ucfKey])) {
-            return parse(store[ucfKey]);
-        }
-        return;
-    };
-    if (global_1.lang[language] !== undefined) {
-        store = global_1.lang[language];
-    }
-    else {
-        if (global_1.lang[defaultLanguage] !== undefined) {
-            store = global_1.lang[defaultLanguage];
-        }
-        else {
-            store = global_1.lang.en;
-        }
-    }
-    var i18nOvr = options === null || options === void 0 ? void 0 : options.i18n;
-    if (i18nOvr && i18nOvr[language]) {
-        var result_1 = tryGet(i18nOvr[language]);
-        if (result_1) {
-            return result_1;
-        }
-    }
-    var result = tryGet(store);
-    if (result) {
-        return result;
-    }
-    if (global_1.lang.en && (0, checker_1.isString)(global_1.lang.en[key]) && global_1.lang.en[key]) {
-        return parse(global_1.lang.en[key]);
-    }
-    if (debug) {
-        return '{' + key + '}';
-    }
-    if (false) {}
-    return parse(key);
-};
-exports.i18n = i18n;
-
-
-/***/ }),
-/* 216 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.CamelCaseToKebabCase = exports.kebabCase = void 0;
-var kebabCase = function (key) {
-    return key
-        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
-        .replace(/([a-z])([A-Z])/g, '$1-$2')
-        .replace(/[\s_]+/g, '-')
-        .toLowerCase();
-};
-exports.kebabCase = kebabCase;
-var CamelCaseToKebabCase = function (key) {
-    return key
-        .replace(/([A-Z])([A-Z])([a-z])/g, '$1-$2$3')
-        .replace(/([a-z])([A-Z])/g, '$1-$2')
-        .toLowerCase();
-};
-exports.CamelCaseToKebabCase = CamelCaseToKebabCase;
-
-
-/***/ }),
-/* 217 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.trimInv = exports.trim = void 0;
-var constants_1 = __webpack_require__(137);
-function trim(value) {
-    return value
-        .replace((0, constants_1.SPACE_REG_EXP_END)(), '')
-        .replace((0, constants_1.SPACE_REG_EXP_START)(), '');
-}
-exports.trim = trim;
-function trimInv(value) {
-    return value
-        .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP_END)(), '')
-        .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP_START)(), '');
-}
-exports.trimInv = trimInv;
-
-
-/***/ }),
-/* 218 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ucfirst = void 0;
-function ucfirst(value) {
-    if (!value.length) {
-        return '';
-    }
-    return value[0].toUpperCase() + value.substr(1);
-}
-exports.ucfirst = ucfirst;
-
-
-/***/ }),
-/* 219 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ViewComponent = void 0;
-var tslib_1 = __webpack_require__(1);
-var component_1 = __webpack_require__(156);
-var ViewComponent = (function (_super) {
-    tslib_1.__extends(ViewComponent, _super);
-    function ViewComponent(jodit) {
-        var _this = _super.call(this) || this;
-        _this.setParentView(jodit);
-        return _this;
-    }
-    Object.defineProperty(ViewComponent.prototype, "defaultTimeout", {
-        get: function () {
-            return this.j.defaultTimeout;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(ViewComponent.prototype, "j", {
-        get: function () {
-            return this.jodit;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    ViewComponent.prototype.i18n = function (text) {
-        var _a;
-        var params = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            params[_i - 1] = arguments[_i];
-        }
-        return (_a = this.j).i18n.apply(_a, tslib_1.__spreadArray([text], tslib_1.__read(params), false));
-    };
-    ViewComponent.prototype.setParentView = function (jodit) {
-        this.jodit = jodit;
-        jodit.components.add(this);
-        return this;
-    };
-    ViewComponent.prototype.destruct = function () {
-        this.j.components.delete(this);
-        return _super.prototype.destruct.call(this);
-    };
-    return ViewComponent;
-}(component_1.Component));
-exports.ViewComponent = ViewComponent;
-
-
-/***/ }),
-/* 220 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.clearCenterAlign = exports.css = void 0;
-var checker_1 = __webpack_require__(173);
-var normalize_1 = __webpack_require__(221);
-var string_1 = __webpack_require__(212);
-function css(element, key, value, onlyStyleMode) {
-    if (onlyStyleMode === void 0) { onlyStyleMode = false; }
-    var numberFieldsReg = /^(left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size)/i;
-    if ((0, checker_1.isBoolean)(value)) {
-        onlyStyleMode = value;
-        value = undefined;
-    }
-    if ((0, checker_1.isPlainObject)(key) || value !== undefined) {
-        var setValue = function (elm, _key, _value) {
-            if (!(0, checker_1.isVoid)(_value) &&
-                numberFieldsReg.test(_key) &&
-                (0, checker_1.isNumeric)(_value.toString())) {
-                _value = parseInt(_value.toString(), 10) + 'px';
-            }
-            if (_value !== undefined &&
-                (_value == null ||
-                    css(elm, _key, true) !== (0, normalize_1.normalizeCssValue)(_key, _value))) {
-                elm.style[_key] = _value;
-            }
-        };
-        if ((0, checker_1.isPlainObject)(key)) {
-            var keys = Object.keys(key);
-            for (var j = 0; j < keys.length; j += 1) {
-                setValue(element, (0, string_1.camelCase)(keys[j]), key[keys[j]]);
-            }
-        }
-        else {
-            setValue(element, (0, string_1.camelCase)(key), value);
-        }
-        return '';
-    }
-    var key2 = (0, string_1.kebabCase)(key), doc = element.ownerDocument || document, win = doc ? doc.defaultView || doc.parentWindow : false;
-    var currentValue = element.style[key];
-    var result = '';
-    if (currentValue !== undefined && currentValue !== '') {
-        result = currentValue;
-    }
-    else if (win && !onlyStyleMode) {
-        result = win.getComputedStyle(element).getPropertyValue(key2);
-    }
-    if (numberFieldsReg.test(key) &&
-        /^[-+]?[0-9.]+px$/.test(result.toString())) {
-        result = parseInt(result.toString(), 10);
-    }
-    return (0, normalize_1.normalizeCssValue)(key, result);
-}
-exports.css = css;
-var clearCenterAlign = function (image) {
-    if (css(image, 'display') === 'block') {
-        css(image, 'display', '');
-    }
-    var style = image.style;
-    if (style.marginLeft === 'auto' && style.marginRight === 'auto') {
-        style.marginLeft = '';
-        style.marginRight = '';
-    }
-};
-exports.clearCenterAlign = clearCenterAlign;
-
-
-/***/ }),
-/* 221 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(222), exports);
-tslib_1.__exportStar(__webpack_require__(223), exports);
-tslib_1.__exportStar(__webpack_require__(224), exports);
-tslib_1.__exportStar(__webpack_require__(225), exports);
-tslib_1.__exportStar(__webpack_require__(226), exports);
-tslib_1.__exportStar(__webpack_require__(227), exports);
-tslib_1.__exportStar(__webpack_require__(228), exports);
-tslib_1.__exportStar(__webpack_require__(229), exports);
-tslib_1.__exportStar(__webpack_require__(232), exports);
-
-
-/***/ }),
-/* 222 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.normalizeKeyAliases = void 0;
-var string_1 = __webpack_require__(212);
-var constants_1 = __webpack_require__(137);
-function normalizeKeyAliases(keys) {
-    var memory = {};
-    return keys
-        .replace(/\+\+/g, '+add')
-        .split(/[\s]*\+[\s]*/)
-        .map(function (key) { return (0, string_1.trim)(key.toLowerCase()); })
-        .map(function (key) { return constants_1.KEY_ALIASES[key] || key; })
-        .sort()
-        .filter(function (key) { return !memory[key] && key !== '' && (memory[key] = true); })
-        .join('+');
-}
-exports.normalizeKeyAliases = normalizeKeyAliases;
-
-
-/***/ }),
-/* 223 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.normalizeLicense = void 0;
-var normalizeLicense = function (license, count) {
-    if (count === void 0) { count = 8; }
-    var parts = [];
-    while (license.length) {
-        parts.push(license.substr(0, count));
-        license = license.substr(count);
-    }
-    parts[1] = parts[1].replace(/./g, '*');
-    parts[2] = parts[2].replace(/./g, '*');
-    return parts.join('-');
-};
-exports.normalizeLicense = normalizeLicense;
-
-
-/***/ }),
-/* 224 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.normalizeNode = void 0;
-var constants_1 = __webpack_require__(137);
-var dom_1 = __webpack_require__(159);
-var normalizeNode = function (node) {
-    if (!node) {
-        return;
-    }
-    if (dom_1.Dom.isText(node) && node.nodeValue != null && node.parentNode) {
-        while (dom_1.Dom.isText(node.nextSibling)) {
-            if (node.nextSibling.nodeValue != null) {
-                node.nodeValue += node.nextSibling.nodeValue;
-            }
-            node.nodeValue = node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '');
-            dom_1.Dom.safeRemove(node.nextSibling);
-        }
-    }
-    else {
-        (0, exports.normalizeNode)(node.firstChild);
-    }
-    (0, exports.normalizeNode)(node.nextSibling);
-};
-exports.normalizeNode = normalizeNode;
-
-
-/***/ }),
-/* 225 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.normalizePath = void 0;
-var string_1 = __webpack_require__(212);
-var normalizePath = function () {
-    var path = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        path[_i] = arguments[_i];
-    }
-    return path
-        .filter(function (part) { return (0, string_1.trim)(part).length; })
-        .map(function (part, index) {
-        part = part.replace(/([^:])[\\/]+/g, '$1/');
-        if (index) {
-            part = part.replace(/^\//, '');
-        }
-        if (index !== path.length - 1) {
-            part = part.replace(/\/$/, '');
-        }
-        return part;
-    })
-        .join('/');
-};
-exports.normalizePath = normalizePath;
-
-
-/***/ }),
-/* 226 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.normalizeRelativePath = void 0;
-var normalizeRelativePath = function (path) {
-    var sections = path.split('/'), builder = sections.reduce(function (builder, section) {
-        switch (section) {
-            case '': {
-                break;
-            }
-            case '.': {
-                break;
-            }
-            case '..': {
-                builder.pop();
-                break;
-            }
-            default: {
-                builder.push(section);
-                break;
-            }
-        }
-        return builder;
-    }, []);
-    return builder.join('/') + (path.endsWith('/') ? '/' : '');
-};
-exports.normalizeRelativePath = normalizeRelativePath;
-
-
-/***/ }),
-/* 227 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.normalizeSize = void 0;
-var normalizeSize = function (value) {
-    if (/^[0-9]+$/.test(value.toString())) {
-        return value + 'px';
-    }
-    return value.toString();
-};
-exports.normalizeSize = normalizeSize;
-
-
-/***/ }),
-/* 228 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.normalizeUrl = void 0;
-var normalizeUrl = function () {
-    var urls = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        urls[_i] = arguments[_i];
-    }
-    return urls
-        .filter(function (url) { return url.length; })
-        .map(function (url) { return url.replace(/\/$/, ''); })
-        .join('/')
-        .replace(/([^:])[\\/]+/g, '$1/');
-};
-exports.normalizeUrl = normalizeUrl;
-
-
-/***/ }),
-/* 229 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.normalizeCssValue = void 0;
-var checker_1 = __webpack_require__(173);
-var string_1 = __webpack_require__(212);
-var color_1 = __webpack_require__(230);
-function normalizeCssValue(key, value) {
-    switch ((0, string_1.kebabCase)(key)) {
-        case 'font-weight':
-            switch (value.toString().toLowerCase()) {
-                case '700':
-                case 'bold':
-                    return 700;
-                case '400':
-                case 'normal':
-                    return 400;
-                case '900':
-                case 'heavy':
-                    return 900;
-            }
-            return (0, checker_1.isNumeric)(value) ? Number(value) : value;
-    }
-    if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
-        return (0, color_1.colorToHex)(value.toString()) || value;
-    }
-    return value;
-}
-exports.normalizeCssValue = normalizeCssValue;
-
-
-/***/ }),
-/* 230 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(231), exports);
-
-
-/***/ }),
-/* 231 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.colorToHex = void 0;
-var colorToHex = function (color) {
-    if (color === 'rgba(0, 0, 0, 0)' || color === '') {
-        return false;
-    }
-    if (!color) {
-        return '#000000';
-    }
-    if (color.substr(0, 1) === '#') {
-        return color;
-    }
-    var digits = /([\s\n\t\r]*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color) ||
-        /([\s\n\t\r]*?)rgba\((\d+), (\d+), (\d+), ([\d.]+)\)/.exec(color);
-    if (!digits) {
-        return '#000000';
-    }
-    var red = parseInt(digits[2], 10), green = parseInt(digits[3], 10), blue = parseInt(digits[4], 10), rgb = blue | (green << 8) | (red << 16);
-    var hex = rgb.toString(16).toUpperCase();
-    while (hex.length < 6) {
-        hex = '0' + hex;
-    }
-    return digits[1] + '#' + hex;
-};
-exports.colorToHex = colorToHex;
-
-
-/***/ }),
-/* 232 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.normalizeColor = void 0;
-var color_1 = __webpack_require__(230);
-var string_1 = __webpack_require__(212);
-var normalizeColor = function (colorInput) {
-    var newcolor = ['#'];
-    var color = (0, color_1.colorToHex)(colorInput);
-    if (!color) {
-        return false;
-    }
-    color = (0, string_1.trim)(color.toUpperCase());
-    color = color.substr(1);
-    if (color.length === 3) {
-        for (var i = 0; i < 3; i += 1) {
-            newcolor.push(color[i]);
-            newcolor.push(color[i]);
-        }
-        return newcolor.join('');
-    }
-    if (color.length > 6) {
-        color = color.substr(0, 6);
-    }
-    return '#' + color;
-};
-exports.normalizeColor = normalizeColor;
-
-
-/***/ }),
-/* 233 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.set = void 0;
-var is_string_1 = __webpack_require__(13);
-var is_numeric_1 = __webpack_require__(182);
-var is_array_1 = __webpack_require__(142);
-var checker_1 = __webpack_require__(173);
-function set(chain, value, obj) {
-    if (!(0, is_string_1.isString)(chain) || !chain.length) {
-        return;
-    }
-    var parts = chain.split('.');
-    var result = obj, key = parts[0];
-    for (var i = 0; i < parts.length - 1; i += 1) {
-        key = parts[i];
-        if (!(0, is_array_1.isArray)(result[key]) && !(0, checker_1.isPlainObject)(result[key])) {
-            result[key] = (0, is_numeric_1.isNumeric)(parts[i + 1]) ? [] : {};
-        }
-        result = result[key];
-    }
-    if (result) {
-        result[parts[parts.length - 1]] = value;
-    }
-}
-exports.set = set;
-
-
-/***/ }),
-/* 234 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.LimitedStack = void 0;
-var LimitedStack = (function () {
-    function LimitedStack(limit) {
-        this.limit = limit;
-        this.stack = [];
-    }
-    LimitedStack.prototype.push = function (item) {
-        this.stack.push(item);
-        if (this.stack.length > this.limit) {
-            this.stack.shift();
-        }
-        return this;
-    };
-    LimitedStack.prototype.pop = function () {
-        return this.stack.pop();
-    };
-    LimitedStack.prototype.find = function (clb) {
-        return this.stack.find(clb);
-    };
-    return LimitedStack;
-}());
-exports.LimitedStack = LimitedStack;
-
-
-/***/ }),
-/* 235 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.loadNextStyle = exports.loadNext = exports.appendStyleAsync = exports.appendScriptAsync = exports.appendScript = void 0;
-var tslib_1 = __webpack_require__(1);
-var complete_url_1 = __webpack_require__(236);
-var checker_1 = __webpack_require__(173);
-var alreadyLoadedList = new Map();
-var cacheLoaders = function (loader) {
-    return function (jodit, url) { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
-        var promise;
-        return tslib_1.__generator(this, function (_a) {
-            if (alreadyLoadedList.has(url)) {
-                return [2, alreadyLoadedList.get(url)];
-            }
-            promise = loader(jodit, url);
-            alreadyLoadedList.set(url, promise);
-            return [2, promise];
-        });
-    }); };
-};
-var appendScript = function (jodit, url, callback) {
-    var script = jodit.c.element('script');
-    script.type = 'text/javascript';
-    script.async = true;
-    if ((0, checker_1.isFunction)(callback) && !jodit.isInDestruct) {
-        jodit.e.on(script, 'load', callback);
-    }
-    if (!script.src) {
-        script.src = (0, complete_url_1.completeUrl)(url);
-    }
-    jodit.od.body.appendChild(script);
-    return {
-        callback: callback,
-        element: script
-    };
-};
-exports.appendScript = appendScript;
-exports.appendScriptAsync = cacheLoaders(function (jodit, url) {
-    return new Promise(function (resolve, reject) {
-        var element = (0, exports.appendScript)(jodit, url, resolve).element;
-        !jodit.isInDestruct && jodit.e.on(element, 'error', reject);
-    });
-});
-exports.appendStyleAsync = cacheLoaders(function (jodit, url) {
-    return new Promise(function (resolve, reject) {
-        var link = jodit.c.element('link');
-        link.rel = 'stylesheet';
-        link.media = 'all';
-        link.crossOrigin = 'anonymous';
-        var callback = function () { return resolve(link); };
-        !jodit.isInDestruct &&
-            jodit.e.on(link, 'load', callback).on(link, 'error', reject);
-        link.href = (0, complete_url_1.completeUrl)(url);
-        if (jodit.o.shadowRoot) {
-            jodit.o.shadowRoot.appendChild(link);
-        }
-        else {
-            jodit.od.body.appendChild(link);
-        }
-    });
-});
-var loadNext = function (jodit, urls, i) {
-    if (i === void 0) { i = 0; }
-    if (!(0, checker_1.isString)(urls[i])) {
-        return Promise.resolve();
-    }
-    return (0, exports.appendScriptAsync)(jodit, urls[i]).then(function () {
-        return (0, exports.loadNext)(jodit, urls, i + 1);
-    });
-};
-exports.loadNext = loadNext;
-var loadNextStyle = function (jodit, urls, i) {
-    if (i === void 0) { i = 0; }
-    if (!(0, checker_1.isString)(urls[i])) {
-        return Promise.resolve();
-    }
-    return (0, exports.appendStyleAsync)(jodit, urls[i]).then(function () {
-        return (0, exports.loadNextStyle)(jodit, urls, i + 1);
-    });
-};
-exports.loadNextStyle = loadNextStyle;
-
-
-/***/ }),
-/* 236 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.completeUrl = void 0;
-var completeUrl = function (url) {
-    if (window.location.protocol === 'file:' && /^\/\//.test(url)) {
-        url = 'https:' + url;
-    }
-    return url;
-};
-exports.completeUrl = completeUrl;
-
-
-/***/ }),
-/* 237 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.browser = void 0;
-var browser = function (browser) {
-    var ua = navigator.userAgent.toLowerCase(), match = /(firefox)[\s/]([\w.]+)/.exec(ua) ||
-        /(chrome)[\s/]([\w.]+)/.exec(ua) ||
-        /(webkit)[\s/]([\w.]+)/.exec(ua) ||
-        /(opera)(?:.*version)[\s/]([\w.]+)/.exec(ua) ||
-        /(msie)[\s]([\w.]+)/.exec(ua) ||
-        /(trident)\/([\w.]+)/.exec(ua) ||
-        ua.indexOf('compatible') < 0 ||
-        [];
-    if (browser === 'version') {
-        return match[2];
-    }
-    if (browser === 'webkit') {
-        return match[1] === 'chrome' || match[1] === 'webkit';
-    }
-    if (browser === 'ff') {
-        return match[1] === 'firefox';
-    }
-    if (browser === 'msie') {
-        return match[1] === 'trident' || match[1] === 'msie';
-    }
-    return match[1] === browser;
-};
-exports.browser = browser;
-
-
-/***/ }),
-/* 238 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.buildQuery = void 0;
-var checker_1 = __webpack_require__(173);
-var buildQuery = function (data, prefix) {
-    var str = [];
-    var enc = encodeURIComponent;
-    for (var dataKey in data) {
-        if (Object.prototype.hasOwnProperty.call(data, dataKey)) {
-            var k = prefix ? prefix + '[' + dataKey + ']' : dataKey;
-            var v = data[dataKey];
-            str.push((0, checker_1.isPlainObject)(v) ? (0, exports.buildQuery)(v, k) : enc(k) + '=' + enc(v));
-        }
-    }
-    return str.join('&');
-};
-exports.buildQuery = buildQuery;
-
-
-/***/ }),
-/* 239 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ConfigFlatten = exports.ConfigProto = void 0;
-var tslib_1 = __webpack_require__(1);
-var extend_1 = __webpack_require__(240);
-var checker_1 = __webpack_require__(173);
-var config_1 = __webpack_require__(136);
-var utils_1 = __webpack_require__(150);
-function ConfigProto(options, proto, deep) {
-    if (deep === void 0) { deep = 0; }
-    if (Object.getPrototypeOf(options) !== Object.prototype) {
-        return options;
-    }
-    var def = config_1.Config.defaultOptions;
-    if ((0, checker_1.isString)(options.preset)) {
-        if (def.presets[options.preset] !== undefined) {
-            var preset_1 = def.presets[options.preset];
-            Object.keys(preset_1).forEach(function (subKey) {
-                if ((0, checker_1.isVoid)(options[subKey])) {
-                    options[subKey] = preset_1[subKey];
-                }
-            });
-        }
-        delete options.preset;
-    }
-    var newOpt = {};
-    Object.keys(options).forEach(function (key) {
-        var opt = options[key], protoKey = proto ? proto[key] : null;
-        if ((0, checker_1.isPlainObject)(opt) && (0, checker_1.isPlainObject)(protoKey) && !(0, extend_1.isAtom)(opt)) {
-            newOpt[key] = ConfigProto(opt, protoKey, deep + 1);
-            return;
-        }
-        if (deep !== 0 && (0, checker_1.isArray)(opt) && !(0, extend_1.isAtom)(opt) && (0, checker_1.isArray)(protoKey)) {
-            newOpt[key] = tslib_1.__spreadArray(tslib_1.__spreadArray([], tslib_1.__read(opt), false), tslib_1.__read(protoKey.slice(opt.length)), false);
-            return;
-        }
-        newOpt[key] = opt;
-    });
-    Object.setPrototypeOf(newOpt, proto);
-    return newOpt;
-}
-exports.ConfigProto = ConfigProto;
-function ConfigFlatten(obj) {
-    return (0, utils_1.keys)(obj, false).reduce(function (app, key) {
-        app[key] = obj[key];
-        return app;
-    }, {});
-}
-exports.ConfigFlatten = ConfigFlatten;
-
-
-/***/ }),
-/* 240 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.fastClone = exports.markAsAtomic = exports.isAtom = void 0;
-var stringify_1 = __webpack_require__(177);
-function isAtom(obj) {
-    return obj && obj.isAtom;
-}
-exports.isAtom = isAtom;
-function markAsAtomic(obj) {
-    Object.defineProperty(obj, 'isAtom', {
-        enumerable: false,
-        value: true,
-        configurable: false
-    });
-    return obj;
-}
-exports.markAsAtomic = markAsAtomic;
-function fastClone(object) {
-    return JSON.parse((0, stringify_1.stringify)(object));
-}
-exports.fastClone = fastClone;
-
-
-/***/ }),
-/* 241 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.convertMediaUrlToVideoEmbed = void 0;
-var checker_1 = __webpack_require__(173);
-var parse_query_1 = __webpack_require__(242);
-var convertMediaUrlToVideoEmbed = function (url, width, height) {
-    if (width === void 0) { width = 400; }
-    if (height === void 0) { height = 345; }
-    if (!(0, checker_1.isURL)(url)) {
-        return url;
-    }
-    var parser = document.createElement('a'), pattern1 = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
-    parser.href = url;
-    if (!width) {
-        width = 400;
-    }
-    if (!height) {
-        height = 345;
-    }
-    var protocol = parser.protocol || '';
-    switch (parser.hostname) {
-        case 'www.vimeo.com':
-        case 'vimeo.com':
-            return pattern1.test(url)
-                ? url.replace(pattern1, '<iframe width="' +
-                    width +
-                    '" height="' +
-                    height +
-                    '" src="' +
-                    protocol +
-                    '//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>')
-                : url;
-        case 'youtube.com':
-        case 'www.youtube.com':
-        case 'youtu.be':
-        case 'www.youtu.be': {
-            var query = parser.search
-                ? (0, parse_query_1.parseQuery)(parser.search)
-                : { v: parser.pathname.substr(1) };
-            return query.v
-                ? '<iframe width="' +
-                    width +
-                    '" height="' +
-                    height +
-                    '" src="' +
-                    protocol +
-                    '//www.youtube.com/embed/' +
-                    query.v +
-                    '" frameborder="0" allowfullscreen></iframe>'
-                : url;
-        }
-    }
-    return url;
-};
-exports.convertMediaUrlToVideoEmbed = convertMediaUrlToVideoEmbed;
-
-
-/***/ }),
-/* 242 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseQuery = void 0;
-var parseQuery = function (queryString) {
-    var query = {}, a = queryString.substr(1).split('&');
-    for (var i = 0; i < a.length; i += 1) {
-        var keyValue = a[i].split('=');
-        query[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1] || '');
-    }
-    return query;
-};
-exports.parseQuery = parseQuery;
-
-
-/***/ }),
-/* 243 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ctrlKey = void 0;
-var ctrlKey = function (e) {
-    if (typeof navigator !== 'undefined' &&
-        navigator.userAgent.indexOf('Mac OS X') !== -1) {
-        if (e.metaKey && !e.altKey) {
-            return true;
-        }
-    }
-    else if (e.ctrlKey && !e.altKey) {
-        return true;
-    }
-    return false;
-};
-exports.ctrlKey = ctrlKey;
-
-
-/***/ }),
-/* 244 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.defaultLanguage = void 0;
-var checker_1 = __webpack_require__(173);
-var defaultLanguage = function (language, defaultLanguage) {
-    if (defaultLanguage === void 0) { defaultLanguage = 'en'; }
-    if (language !== 'auto' && (0, checker_1.isString)(language)) {
-        return language;
-    }
-    if (document.documentElement && document.documentElement.lang) {
-        return document.documentElement.lang;
-    }
-    if (navigator.language) {
-        return navigator.language.substr(0, 2);
-    }
-    return defaultLanguage;
-};
-exports.defaultLanguage = defaultLanguage;
-
-
-/***/ }),
-/* 245 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.humanSizeToBytes = void 0;
-var humanSizeToBytes = function (human) {
-    if (/^[0-9.]+$/.test(human.toString())) {
-        return parseFloat(human);
-    }
-    var format = human.substr(-2, 2).toUpperCase(), formats = ['KB', 'MB', 'GB', 'TB'], number = parseFloat(human.substr(0, human.length - 2));
-    return formats.indexOf(format) !== -1
-        ? number * Math.pow(1024, formats.indexOf(format) + 1)
-        : parseInt(human, 10);
-};
-exports.humanSizeToBytes = humanSizeToBytes;
-
-
-/***/ }),
-/* 246 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.scrollIntoViewIfNeeded = exports.inView = void 0;
-var inView = function (elm, root, doc) {
-    var rect = elm.getBoundingClientRect(), el = elm;
-    var top = rect.top, height = rect.height;
-    do {
-        if (el && el.parentNode) {
-            el = el.parentNode;
-            rect = el.getBoundingClientRect();
-            if (!(top <= rect.bottom)) {
-                return false;
-            }
-            if (top + height <= rect.top) {
-                return false;
-            }
-        }
-    } while (el && el !== root && el.parentNode);
-    return (top <= ((doc.documentElement && doc.documentElement.clientHeight) || 0));
-};
-exports.inView = inView;
-var scrollIntoViewIfNeeded = function (elm, root, doc) {
-    if (!(0, exports.inView)(elm, root, doc)) {
-        if (root.clientHeight !== root.scrollHeight) {
-            root.scrollTop = elm.offsetTop;
-        }
-        if (!(0, exports.inView)(elm, root, doc)) {
-            elm.scrollIntoView();
-        }
-    }
-};
-exports.scrollIntoViewIfNeeded = scrollIntoViewIfNeeded;
-
-
-/***/ }),
-/* 247 */
+/* 265 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -12282,14 +12833,14 @@ exports.scrollIntoViewIfNeeded = scrollIntoViewIfNeeded;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resolveElement = exports.cssPath = exports.refs = exports.getXPathByElement = exports.$$ = void 0;
-var constants_1 = __webpack_require__(137);
-var checker_1 = __webpack_require__(173);
-var utils_1 = __webpack_require__(147);
-var dom_1 = __webpack_require__(159);
-var string_1 = __webpack_require__(212);
-var array_1 = __webpack_require__(248);
-var ui_1 = __webpack_require__(251);
-var component_1 = __webpack_require__(154);
+var constants_1 = __webpack_require__(165);
+var is_string_1 = __webpack_require__(13);
+var utils_1 = __webpack_require__(188);
+var dom_1 = __webpack_require__(215);
+var camel_case_1 = __webpack_require__(198);
+var to_array_1 = __webpack_require__(171);
+var element_1 = __webpack_require__(266);
+var component_1 = __webpack_require__(238);
 var temp = 1;
 var $$temp = function () {
     temp++;
@@ -12331,18 +12882,18 @@ var getXPathByElement = function (element, root) {
         '/' +
         element.nodeName.toLowerCase() +
         (sames.length > 1
-            ? '[' + ((0, array_1.toArray)(sames).indexOf(element) + 1) + ']'
+            ? '[' + ((0, to_array_1.toArray)(sames).indexOf(element) + 1) + ']'
             : ''));
 };
 exports.getXPathByElement = getXPathByElement;
 var refs = function (root) {
-    if (component_1.Component.isInstanceOf(root, ui_1.UIElement)) {
+    if (component_1.Component.isInstanceOf(root, element_1.UIElement)) {
         root = root.container;
     }
     return $$('[ref],[data-ref]', root).reduce(function (def, child) {
         var key = (0, utils_1.attr)(child, '-ref');
-        if (key && (0, checker_1.isString)(key)) {
-            def[(0, string_1.camelCase)(key)] = child;
+        if (key && (0, is_string_1.isString)(key)) {
+            def[(0, camel_case_1.camelCase)(key)] = child;
             def[key] = child;
         }
         return def;
@@ -12380,7 +12931,7 @@ var cssPath = function (el) {
 exports.cssPath = cssPath;
 function resolveElement(element, od) {
     var resolved = element;
-    if ((0, checker_1.isString)(element)) {
+    if ((0, is_string_1.isString)(element)) {
         try {
             resolved = od.querySelector(element);
         }
@@ -12400,96 +12951,7 @@ exports.resolveElement = resolveElement;
 
 
 /***/ }),
-/* 248 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.toArray = exports.splitArray = exports.asArray = void 0;
-var as_array_1 = __webpack_require__(249);
-Object.defineProperty(exports, "asArray", ({ enumerable: true, get: function () { return as_array_1.asArray; } }));
-var split_array_1 = __webpack_require__(194);
-Object.defineProperty(exports, "splitArray", ({ enumerable: true, get: function () { return split_array_1.splitArray; } }));
-var to_array_1 = __webpack_require__(250);
-Object.defineProperty(exports, "toArray", ({ enumerable: true, get: function () { return to_array_1.toArray; } }));
-
-
-/***/ }),
-/* 249 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.asArray = void 0;
-var is_array_1 = __webpack_require__(142);
-var asArray = function (a) { return ((0, is_array_1.isArray)(a) ? a : [a]); };
-exports.asArray = asArray;
-
-
-/***/ }),
-/* 250 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.toArray = void 0;
-var utils_1 = __webpack_require__(150);
-var is_native_function_1 = __webpack_require__(185);
-exports.toArray = function toArray() {
-    var _a;
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
-    }
-    var func = (0, is_native_function_1.isNativeFunction)(Array.from)
-        ? Array.from
-        : (_a = (0, utils_1.reset)('Array.from')) !== null && _a !== void 0 ? _a : Array.from;
-    return func.apply(Array, args);
-};
-
-
-/***/ }),
-/* 251 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(252), exports);
-tslib_1.__exportStar(__webpack_require__(257), exports);
-tslib_1.__exportStar(__webpack_require__(272), exports);
-tslib_1.__exportStar(__webpack_require__(262), exports);
-tslib_1.__exportStar(__webpack_require__(275), exports);
-tslib_1.__exportStar(__webpack_require__(256), exports);
-tslib_1.__exportStar(__webpack_require__(293), exports);
-
-
-/***/ }),
-/* 252 */
+/* 266 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -12502,11 +12964,11 @@ tslib_1.__exportStar(__webpack_require__(293), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UIElement = void 0;
 var tslib_1 = __webpack_require__(1);
-var component_1 = __webpack_require__(154);
-var dom_1 = __webpack_require__(159);
-var traits_1 = __webpack_require__(253);
-var helpers_1 = __webpack_require__(146);
-var icon_1 = __webpack_require__(256);
+var component_1 = __webpack_require__(237);
+var dom_1 = __webpack_require__(215);
+var traits_1 = __webpack_require__(267);
+var is_string_1 = __webpack_require__(13);
+var icon_1 = __webpack_require__(270);
 var UIElement = (function (_super) {
     tslib_1.__extends(UIElement, _super);
     function UIElement(jodit, options) {
@@ -12609,7 +13071,7 @@ var UIElement = (function (_super) {
     UIElement.prototype.createContainer = function (options) {
         var _this = this;
         var result = this.render(options);
-        if ((0, helpers_1.isString)(result)) {
+        if ((0, is_string_1.isString)(result)) {
             var elm = this.j.c.fromHTML(result
                 .replace(/\*([^*]+?)\*/g, function (_, name) { return icon_1.Icon.get(name) || ''; })
                 .replace(/&__/g, this.componentName + '__')
@@ -12630,7 +13092,7 @@ exports.UIElement = UIElement;
 
 
 /***/ }),
-/* 253 */
+/* 267 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -12642,12 +13104,12 @@ exports.UIElement = UIElement;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(254), exports);
-tslib_1.__exportStar(__webpack_require__(255), exports);
+tslib_1.__exportStar(__webpack_require__(268), exports);
+tslib_1.__exportStar(__webpack_require__(269), exports);
 
 
 /***/ }),
-/* 254 */
+/* 268 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -12659,7 +13121,7 @@ tslib_1.__exportStar(__webpack_require__(255), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Elms = void 0;
-var to_array_1 = __webpack_require__(250);
+var to_array_1 = __webpack_require__(171);
 var Elms = (function () {
     function Elms() {
     }
@@ -12675,7 +13137,7 @@ exports.Elms = Elms;
 
 
 /***/ }),
-/* 255 */
+/* 269 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -12687,8 +13149,8 @@ exports.Elms = Elms;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Mods = void 0;
-var to_array_1 = __webpack_require__(250);
-var is_void_1 = __webpack_require__(152);
+var to_array_1 = __webpack_require__(171);
+var is_void_1 = __webpack_require__(174);
 var Mods = (function () {
     function Mods() {
     }
@@ -12718,7 +13180,7 @@ exports.Mods = Mods;
 
 
 /***/ }),
-/* 256 */
+/* 270 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -12730,7 +13192,7 @@ exports.Mods = Mods;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Icon = void 0;
-var helpers_1 = __webpack_require__(146);
+var css_1 = __webpack_require__(192);
 var Icon = (function () {
     function Icon() {
     }
@@ -12761,7 +13223,7 @@ var Icon = (function () {
             var clearName = icon.name.replace(/[^a-zA-Z0-9]/g, '_');
             if (icon.iconURL) {
                 iconElement = jodit.c.span();
-                (0, helpers_1.css)(iconElement, 'backgroundImage', 'url(' +
+                (0, css_1.css)(iconElement, 'backgroundImage', 'url(' +
                     icon.iconURL.replace('{basePath}', (jodit === null || jodit === void 0 ? void 0 : jodit.basePath) || '') +
                     ')');
             }
@@ -12790,803 +13252,8 @@ exports.Icon = Icon;
 
 
 /***/ }),
-/* 257 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(258), exports);
-tslib_1.__exportStar(__webpack_require__(260), exports);
-
-
-/***/ }),
-/* 258 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Button = exports.UIButton = exports.UIButtonState = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(259);
-var ui_1 = __webpack_require__(251);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var ui_2 = __webpack_require__(251);
-var ui_3 = __webpack_require__(251);
-var decorators_1 = __webpack_require__(169);
-var component_1 = __webpack_require__(154);
-var UIButtonState = function () { return ({
-    size: 'middle',
-    type: 'button',
-    name: '',
-    value: '',
-    variant: 'initial',
-    disabled: false,
-    activated: false,
-    icon: {
-        name: 'empty',
-        fill: '',
-        iconURL: ''
-    },
-    tooltip: '',
-    text: '',
-    tabIndex: undefined
-}); };
-exports.UIButtonState = UIButtonState;
-var UIButton = (function (_super) {
-    tslib_1.__extends(UIButton, _super);
-    function UIButton(jodit, state) {
-        var _this = _super.call(this, jodit) || this;
-        _this.isButton = true;
-        _this.state = (0, exports.UIButtonState)();
-        _this.actionHandlers = [];
-        _this.updateSize();
-        _this.onChangeSize();
-        _this.onChangeStatus();
-        if (state) {
-            _this.hookStatus(component_1.STATUSES.ready, function () {
-                _this.setState(state);
-            });
-        }
-        return _this;
-    }
-    UIButton.prototype.className = function () {
-        return 'UIButton';
-    };
-    UIButton.prototype.setState = function (state) {
-        Object.assign(this.state, state);
-        return this;
-    };
-    UIButton.prototype.onChangeSize = function () {
-        this.setMod('size', this.state.size);
-    };
-    UIButton.prototype.onChangeType = function () {
-        (0, helpers_1.attr)(this.container, 'type', this.state.type);
-    };
-    UIButton.prototype.updateSize = function () {
-        var pe = this.closest(ui_3.UIList);
-        if (pe) {
-            this.state.size = pe.buttonSize;
-            return;
-        }
-    };
-    UIButton.prototype.onChangeStatus = function () {
-        this.setMod('variant', this.state.variant);
-    };
-    UIButton.prototype.onChangeText = function () {
-        this.text.textContent = this.jodit.i18n(this.state.text);
-    };
-    UIButton.prototype.onChangeTextSetMode = function () {
-        this.setMod('text-icons', Boolean(this.state.text.trim().length));
-    };
-    UIButton.prototype.onChangeDisabled = function () {
-        (0, helpers_1.attr)(this.container, 'disabled', this.state.disabled || null);
-    };
-    UIButton.prototype.onChangeActivated = function () {
-        (0, helpers_1.attr)(this.container, 'aria-pressed', this.state.activated);
-    };
-    UIButton.prototype.onChangeName = function () {
-        this.container.classList.add("".concat(this.componentName, "_").concat(this.clearName(this.state.name)));
-        this.name = this.state.name;
-        (0, helpers_1.attr)(this.container, 'data-ref', this.state.name);
-        (0, helpers_1.attr)(this.container, 'ref', this.state.name);
-    };
-    UIButton.prototype.onChangeTooltip = function () {
-        if (this.get('j.o.useNativeTooltip')) {
-            (0, helpers_1.attr)(this.container, 'title', this.state.tooltip);
-        }
-        (0, helpers_1.attr)(this.container, 'aria-label', this.state.tooltip);
-    };
-    UIButton.prototype.onChangeTabIndex = function () {
-        (0, helpers_1.attr)(this.container, 'tabindex', this.state.tabIndex);
-    };
-    UIButton.prototype.onChangeIcon = function () {
-        var textIcons = this.get('j.o.textIcons');
-        if (textIcons === true ||
-            ((0, helpers_1.isFunction)(textIcons) && textIcons(this.state.name))) {
-            return;
-        }
-        dom_1.Dom.detach(this.icon);
-        var iconElement = ui_2.Icon.makeIcon(this.j, this.state.icon);
-        iconElement && this.icon.appendChild(iconElement);
-    };
-    UIButton.prototype.focus = function () {
-        this.container.focus();
-    };
-    UIButton.prototype.isFocused = function () {
-        var activeElement = this.od.activeElement;
-        return Boolean(activeElement && dom_1.Dom.isOrContains(this.container, activeElement));
-    };
-    UIButton.prototype.createContainer = function () {
-        var cn = this.componentName;
-        var button = this.j.c.element('button', {
-            class: cn,
-            type: 'button',
-            role: 'button',
-            ariaPressed: false
-        });
-        this.icon = this.j.c.span(cn + '__icon');
-        this.text = this.j.c.span(cn + '__text');
-        button.appendChild(this.icon);
-        button.appendChild(this.text);
-        this.j.e.on(button, 'click', this.onActionFire);
-        return button;
-    };
-    UIButton.prototype.destruct = function () {
-        this.j.e.off(this.container);
-        return _super.prototype.destruct.call(this);
-    };
-    UIButton.prototype.onAction = function (callback) {
-        this.actionHandlers.push(callback);
-        return this;
-    };
-    UIButton.prototype.onActionFire = function (e) {
-        var _this = this;
-        e.buffer = {
-            actionTrigger: this
-        };
-        this.actionHandlers.forEach(function (callback) { return callback.call(_this, e); });
-    };
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.size')
-    ], UIButton.prototype, "onChangeSize", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.type')
-    ], UIButton.prototype, "onChangeType", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('parentElement')
-    ], UIButton.prototype, "updateSize", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.variant')
-    ], UIButton.prototype, "onChangeStatus", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.text')
-    ], UIButton.prototype, "onChangeText", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.text')
-    ], UIButton.prototype, "onChangeTextSetMode", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.disabled')
-    ], UIButton.prototype, "onChangeDisabled", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.activated')
-    ], UIButton.prototype, "onChangeActivated", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.name')
-    ], UIButton.prototype, "onChangeName", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.tooltip')
-    ], UIButton.prototype, "onChangeTooltip", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.tabIndex')
-    ], UIButton.prototype, "onChangeTabIndex", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.icon')
-    ], UIButton.prototype, "onChangeIcon", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], UIButton.prototype, "onActionFire", null);
-    UIButton = tslib_1.__decorate([
-        decorators_1.component
-    ], UIButton);
-    return UIButton;
-}(ui_1.UIElement));
-exports.UIButton = UIButton;
-function Button(jodit, stateOrText, text, variant) {
-    var button = new UIButton(jodit);
-    button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
-    if ((0, helpers_1.isString)(stateOrText)) {
-        button.state.icon.name = stateOrText;
-        button.state.name = stateOrText;
-        if (variant) {
-            button.state.variant = variant;
-        }
-        if (text) {
-            button.state.text = text;
-        }
-    }
-    else {
-        button.setState(stateOrText);
-    }
-    return button;
-}
-exports.Button = Button;
-
-
-/***/ }),
-/* 259 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 260 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UIButtonGroup = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(261);
-var group_1 = __webpack_require__(262);
-var decorators_1 = __webpack_require__(169);
-var button_1 = __webpack_require__(258);
-var helpers_1 = __webpack_require__(146);
-var UIButtonGroup = (function (_super) {
-    tslib_1.__extends(UIButtonGroup, _super);
-    function UIButtonGroup(jodit, options) {
-        if (options === void 0) { options = {
-            radio: true
-        }; }
-        var _this = this;
-        var _a, _b;
-        _this = _super.call(this, jodit, (_a = options.options) === null || _a === void 0 ? void 0 : _a.map(function (opt) {
-            var btn = new button_1.UIButton(jodit, {
-                text: opt.text,
-                value: opt.value,
-                variant: 'primary'
-            });
-            btn.onAction(function () {
-                _this.select(opt.value);
-            });
-            return btn;
-        }), options) || this;
-        _this.options = options;
-        _this.select((_b = options.value) !== null && _b !== void 0 ? _b : 0);
-        return _this;
-    }
-    UIButtonGroup.prototype.className = function () {
-        return 'UIButtonGroup';
-    };
-    UIButtonGroup.prototype.render = function (options) {
-        return "<div>\n\t\t\t<div class=\"&__label\">~".concat(options.label, "~</div>\n\t\t\t<div class=\"&__options\"></div>\n\t\t</div>");
-    };
-    UIButtonGroup.prototype.appendChildToContainer = function (childContainer) {
-        var options = this.getElm('options');
-        (0, helpers_1.assert)(options != null, 'Options does not exist');
-        options.appendChild(childContainer);
-    };
-    UIButtonGroup.prototype.select = function (indexOrValue) {
-        var _this = this;
-        var _a, _b;
-        this.elements.forEach(function (elm, index) {
-            if (index === indexOrValue || elm.state.value === indexOrValue) {
-                elm.state.activated = true;
-            }
-            else if (_this.options.radio) {
-                elm.state.activated = false;
-            }
-        });
-        var result = this.elements
-            .filter(function (elm) { return elm.state.activated; })
-            .map(function (elm) { return ({
-            text: elm.state.text,
-            value: elm.state.value
-        }); });
-        this.jodit.e.fire(this, 'select', result);
-        (_b = (_a = this.options).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, result);
-    };
-    UIButtonGroup = tslib_1.__decorate([
-        decorators_1.component
-    ], UIButtonGroup);
-    return UIButtonGroup;
-}(group_1.UIGroup));
-exports.UIButtonGroup = UIButtonGroup;
-
-
-/***/ }),
-/* 261 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 262 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(263), exports);
-tslib_1.__exportStar(__webpack_require__(265), exports);
-tslib_1.__exportStar(__webpack_require__(269), exports);
-tslib_1.__exportStar(__webpack_require__(270), exports);
-
-
-/***/ }),
-/* 263 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UIGroup = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(264);
-var element_1 = __webpack_require__(252);
-var decorators_1 = __webpack_require__(169);
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
-var component_1 = __webpack_require__(154);
-var UIGroup = (function (_super) {
-    tslib_1.__extends(UIGroup, _super);
-    function UIGroup(jodit, elements, options) {
-        var _this = _super.call(this, jodit, options) || this;
-        _this.options = options;
-        _this.syncMod = false;
-        _this.elements = [];
-        _this.buttonSize = 'middle';
-        elements === null || elements === void 0 ? void 0 : elements.forEach(function (elm) { return elm && _this.append(elm); });
-        if (options === null || options === void 0 ? void 0 : options.name) {
-            _this.name = options.name;
-        }
-        return _this;
-    }
-    UIGroup_1 = UIGroup;
-    UIGroup.prototype.className = function () {
-        return 'UIGroup';
-    };
-    Object.defineProperty(UIGroup.prototype, "allChildren", {
-        get: function () {
-            var result = [];
-            var stack = tslib_1.__spreadArray([], tslib_1.__read(this.elements), false);
-            while (stack.length) {
-                var elm = stack.shift();
-                if ((0, helpers_1.isArray)(elm)) {
-                    stack.push.apply(stack, tslib_1.__spreadArray([], tslib_1.__read(elm), false));
-                }
-                else if (component_1.Component.isInstanceOf(elm, UIGroup_1)) {
-                    stack.push.apply(stack, tslib_1.__spreadArray([], tslib_1.__read(elm.elements), false));
-                }
-                else {
-                    elm && result.push(elm);
-                }
-            }
-            return result;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    UIGroup.prototype.update = function () {
-        this.elements.forEach(function (elm) { return elm.update(); });
-        this.setMod('size', this.buttonSize);
-    };
-    UIGroup.prototype.append = function (elm, distElement) {
-        var _this = this;
-        if ((0, helpers_1.isArray)(elm)) {
-            elm.forEach(function (item) { return _this.append(item, distElement); });
-            return this;
-        }
-        this.elements.push(elm);
-        if (elm.name) {
-            elm.container.classList.add(this.getFullElName(elm.name));
-        }
-        if (distElement) {
-            var distElm = this.getElm(distElement);
-            (0, helpers_1.assert)(distElm != null, 'Element does not exist');
-            distElm.appendChild(elm.container);
-        }
-        else {
-            this.appendChildToContainer(elm.container);
-        }
-        elm.parentElement = this;
-        elm.update();
-        return this;
-    };
-    UIGroup.prototype.setMod = function (name, value) {
-        if (this.syncMod) {
-            this.elements.forEach(function (elm) { return elm.setMod(name, value); });
-        }
-        return _super.prototype.setMod.call(this, name, value);
-    };
-    UIGroup.prototype.appendChildToContainer = function (childContainer) {
-        this.container.appendChild(childContainer);
-    };
-    UIGroup.prototype.remove = function (elm) {
-        var index = this.elements.indexOf(elm);
-        if (index !== -1) {
-            this.elements.splice(index, 1);
-            dom_1.Dom.safeRemove(elm.container);
-            elm.parentElement = null;
-        }
-        return this;
-    };
-    UIGroup.prototype.clear = function () {
-        this.elements.forEach(function (elm) { return elm.destruct(); });
-        this.elements.length = 0;
-        return this;
-    };
-    UIGroup.prototype.destruct = function () {
-        this.clear();
-        return _super.prototype.destruct.call(this);
-    };
-    var UIGroup_1;
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('buttonSize')
-    ], UIGroup.prototype, "update", null);
-    UIGroup = UIGroup_1 = tslib_1.__decorate([
-        decorators_1.component
-    ], UIGroup);
-    return UIGroup;
-}(element_1.UIElement));
-exports.UIGroup = UIGroup;
-
-
-/***/ }),
-/* 264 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 265 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UIList = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(266);
-var get_strong_control_types_1 = __webpack_require__(267);
-var decorators_1 = __webpack_require__(169);
-var group_1 = __webpack_require__(263);
-var separator_1 = __webpack_require__(269);
-var spacer_1 = __webpack_require__(270);
-var button_1 = __webpack_require__(258);
-var buttons_1 = __webpack_require__(271);
-var get_control_type_1 = __webpack_require__(268);
-var array_1 = __webpack_require__(248);
-var component_1 = __webpack_require__(154);
-var UIList = (function (_super) {
-    tslib_1.__extends(UIList, _super);
-    function UIList(jodit) {
-        var _this = _super.call(this, jodit) || this;
-        _this.mode = 'horizontal';
-        _this.removeButtons = [];
-        _this.onChangeMode();
-        return _this;
-    }
-    UIList.prototype.className = function () {
-        return 'UIList';
-    };
-    UIList.prototype.onChangeMode = function () {
-        this.setMod('mode', this.mode);
-    };
-    UIList.prototype.makeGroup = function () {
-        return new group_1.UIGroup(this.jodit);
-    };
-    Object.defineProperty(UIList.prototype, "buttons", {
-        get: function () {
-            return this.allChildren.filter(function (elm) {
-                return component_1.Component.isInstanceOf(elm, button_1.UIButton);
-            });
-        },
-        enumerable: false,
-        configurable: true
-    });
-    UIList.prototype.getButtonsNames = function () {
-        return this.buttons
-            .map(function (a) { return (a instanceof button_1.UIButton && a.state.name) || ''; })
-            .filter(function (a) { return a !== ''; });
-    };
-    UIList.prototype.setRemoveButtons = function (removeButtons) {
-        this.removeButtons = removeButtons || [];
-        return this;
-    };
-    UIList.prototype.build = function (items, target) {
-        var _this = this;
-        if (target === void 0) { target = null; }
-        items = (0, array_1.splitArray)(items);
-        this.clear();
-        var lastBtnSeparator = false;
-        var line = this.makeGroup();
-        this.append(line);
-        line.setMod('line', true);
-        var group;
-        var addButton = function (control) {
-            var elm = null;
-            switch (control.name) {
-                case '\n':
-                    line = _this.makeGroup();
-                    line.setMod('line', true);
-                    group = _this.makeGroup();
-                    line.append(group);
-                    _this.append(line);
-                    break;
-                case '|':
-                    if (!lastBtnSeparator) {
-                        lastBtnSeparator = true;
-                        elm = new separator_1.UISeparator(_this.j);
-                    }
-                    break;
-                case '---': {
-                    group.setMod('before-spacer', true);
-                    var space = new spacer_1.UISpacer(_this.j);
-                    line.append(space);
-                    group = _this.makeGroup();
-                    line.append(group);
-                    lastBtnSeparator = false;
-                    break;
-                }
-                default:
-                    lastBtnSeparator = false;
-                    elm = _this.makeButton(control, target);
-            }
-            if (elm) {
-                if (!group) {
-                    group = _this.makeGroup();
-                    line.append(group);
-                }
-                group.append(elm);
-            }
-        };
-        var isNotRemoved = function (b) {
-            return !_this.removeButtons.includes(b.name);
-        };
-        items.forEach(function (item) {
-            if ((0, buttons_1.isButtonGroup)(item)) {
-                var buttons = item.buttons.filter(function (b) { return b; });
-                if (buttons.length) {
-                    group = _this.makeGroup();
-                    group.setMod('separated', true).setMod('group', item.group);
-                    line.append(group);
-                    (0, get_strong_control_types_1.getStrongControlTypes)(buttons, _this.j.o.controls)
-                        .filter(isNotRemoved)
-                        .forEach(addButton);
-                }
-            }
-            else {
-                if (!group) {
-                    group = _this.makeGroup();
-                    line.append(group);
-                }
-                var control = (0, get_control_type_1.getControlType)(item, _this.j.o.controls);
-                isNotRemoved(control) && addButton(control);
-            }
-        });
-        this.update();
-        return this;
-    };
-    UIList.prototype.makeButton = function (control, target) {
-        return new button_1.UIButton(this.j);
-    };
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('mode')
-    ], UIList.prototype, "onChangeMode", null);
-    UIList = tslib_1.__decorate([
-        decorators_1.component
-    ], UIList);
-    return UIList;
-}(group_1.UIGroup));
-exports.UIList = UIList;
-
-
-/***/ }),
-/* 266 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 267 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getStrongControlTypes = void 0;
-var get_control_type_1 = __webpack_require__(268);
-var config_1 = __webpack_require__(136);
-var checker_1 = __webpack_require__(173);
-var helpers_1 = __webpack_require__(146);
-function getStrongControlTypes(items, controls) {
-    var elements = (0, checker_1.isArray)(items)
-        ? items
-        : (0, helpers_1.keys)(items, false).map(function (key) {
-            var value = items[key] || {};
-            return (0, helpers_1.ConfigProto)({ name: key }, value);
-        });
-    return elements.map(function (item) {
-        return (0, get_control_type_1.getControlType)(item, controls || config_1.Config.defaultOptions.controls);
-    });
-}
-exports.getStrongControlTypes = getStrongControlTypes;
-
-
-/***/ }),
-/* 268 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.findControlType = exports.getControlType = void 0;
-var tslib_1 = __webpack_require__(1);
-var helpers_1 = __webpack_require__(146);
-var config_1 = __webpack_require__(136);
-function getControlType(button, controls) {
-    var buttonControl;
-    if (!controls) {
-        controls = config_1.Config.defaultOptions.controls;
-    }
-    if (!(0, helpers_1.isString)(button)) {
-        buttonControl = tslib_1.__assign({ name: 'empty' }, (0, helpers_1.ConfigFlatten)(button));
-        if (controls[buttonControl.name] !== undefined) {
-            buttonControl = tslib_1.__assign(tslib_1.__assign({}, (0, helpers_1.ConfigFlatten)(controls[buttonControl.name])), (0, helpers_1.ConfigFlatten)(buttonControl));
-        }
-    }
-    else {
-        buttonControl = findControlType(button, controls) || {
-            name: button,
-            command: button,
-            tooltip: button
-        };
-    }
-    return buttonControl;
-}
-exports.getControlType = getControlType;
-function findControlType(path, controls) {
-    var _a = tslib_1.__read(path.split(/\./), 2), namespaceOrKey = _a[0], key = _a[1];
-    var store = controls;
-    if (key != null) {
-        if (controls[namespaceOrKey] !== undefined) {
-            store = controls[namespaceOrKey];
-        }
-    }
-    else {
-        key = namespaceOrKey;
-    }
-    return store[key]
-        ? tslib_1.__assign({ name: key }, (0, helpers_1.ConfigFlatten)(store[key])) : undefined;
-}
-exports.findControlType = findControlType;
-
-
-/***/ }),
-/* 269 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UISeparator = void 0;
-var tslib_1 = __webpack_require__(1);
-var element_1 = __webpack_require__(252);
-var decorators_1 = __webpack_require__(169);
-var UISeparator = (function (_super) {
-    tslib_1.__extends(UISeparator, _super);
-    function UISeparator() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    UISeparator.prototype.className = function () {
-        return 'UISeparator';
-    };
-    UISeparator = tslib_1.__decorate([
-        decorators_1.component
-    ], UISeparator);
-    return UISeparator;
-}(element_1.UIElement));
-exports.UISeparator = UISeparator;
-
-
-/***/ }),
-/* 270 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UISpacer = void 0;
-var tslib_1 = __webpack_require__(1);
-var ui_1 = __webpack_require__(251);
-var decorators_1 = __webpack_require__(169);
-var UISpacer = (function (_super) {
-    tslib_1.__extends(UISpacer, _super);
-    function UISpacer() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    UISpacer.prototype.className = function () {
-        return 'UISpacer';
-    };
-    UISpacer = tslib_1.__decorate([
-        decorators_1.component
-    ], UISpacer);
-    return UISpacer;
-}(ui_1.UIElement));
-exports.UISpacer = UISpacer;
-
-
-/***/ }),
 /* 271 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
 
@@ -13596,27 +13263,18 @@ exports.UISpacer = UISpacer;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.flatButtonsSet = exports.isButtonGroup = void 0;
-var tslib_1 = __webpack_require__(1);
-var checker_1 = __webpack_require__(173);
-var isButtonGroup = function (item) {
-    return (0, checker_1.isArray)(item.buttons);
+exports.val = void 0;
+var val = function (elm, selector, value) {
+    var child = elm.querySelector(selector);
+    if (!child) {
+        return '';
+    }
+    if (value) {
+        child.value = value;
+    }
+    return child.value;
 };
-exports.isButtonGroup = isButtonGroup;
-function flatButtonsSet(buttons, jodit) {
-    var groups = jodit.getRegisteredButtonGroups();
-    return new Set(buttons.reduce(function (acc, item) {
-        var _a;
-        if ((0, exports.isButtonGroup)(item)) {
-            acc = acc.concat(tslib_1.__spreadArray(tslib_1.__spreadArray([], tslib_1.__read(item.buttons), false), tslib_1.__read(((_a = groups[item.group]) !== null && _a !== void 0 ? _a : [])), false));
-        }
-        else {
-            acc.push(item);
-        }
-        return acc;
-    }, []));
-}
-exports.flatButtonsSet = flatButtonsSet;
+exports.val = val;
 
 
 /***/ }),
@@ -13631,8 +13289,13 @@ exports.flatButtonsSet = flatButtonsSet;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(273), exports);
+exports.toArray = exports.splitArray = exports.asArray = void 0;
+var as_array_1 = __webpack_require__(273);
+Object.defineProperty(exports, "asArray", ({ enumerable: true, get: function () { return as_array_1.asArray; } }));
+var split_array_1 = __webpack_require__(177);
+Object.defineProperty(exports, "splitArray", ({ enumerable: true, get: function () { return split_array_1.splitArray; } }));
+var to_array_1 = __webpack_require__(171);
+Object.defineProperty(exports, "toArray", ({ enumerable: true, get: function () { return to_array_1.toArray; } }));
 
 
 /***/ }),
@@ -13647,15 +13310,1228 @@ tslib_1.__exportStar(__webpack_require__(273), exports);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.asArray = void 0;
+var is_array_1 = __webpack_require__(14);
+var asArray = function (a) { return ((0, is_array_1.isArray)(a) ? a : [a]); };
+exports.asArray = asArray;
+
+
+/***/ }),
+/* 274 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(197), exports);
+
+
+/***/ }),
+/* 275 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(276), exports);
+tslib_1.__exportStar(__webpack_require__(278), exports);
+tslib_1.__exportStar(__webpack_require__(279), exports);
+tslib_1.__exportStar(__webpack_require__(280), exports);
+tslib_1.__exportStar(__webpack_require__(281), exports);
+tslib_1.__exportStar(__webpack_require__(282), exports);
+
+
+/***/ }),
+/* 276 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.applyStyles = void 0;
+var dom_1 = __webpack_require__(215);
+var utils_1 = __webpack_require__(188);
+var trim_1 = __webpack_require__(277);
+function normalizeCSS(s) {
+    return s
+        .replace(/mso-[a-z-]+:[\s]*[^;]+;/gi, '')
+        .replace(/mso-[a-z-]+:[\s]*[^";']+$/gi, '')
+        .replace(/border[a-z-]*:[\s]*[^;]+;/gi, '')
+        .replace(/([0-9.]+)(pt|cm)/gi, function (match, units, metrics) {
+        switch (metrics.toLowerCase()) {
+            case 'pt':
+                return (parseFloat(units) * 1.328).toFixed(0) + 'px';
+            case 'cm':
+                return (parseFloat(units) * 0.02645833).toFixed(0) + 'px';
+        }
+        return match;
+    });
+}
+function applyStyles(html) {
+    if (html.indexOf('<html ') === -1) {
+        return html;
+    }
+    html = html.substring(html.indexOf('<html '), html.length);
+    html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
+    var iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    var convertedString = '', collection = [];
+    try {
+        var iframeDoc = iframe.contentDocument ||
+            (iframe.contentWindow ? iframe.contentWindow.document : null);
+        if (iframeDoc) {
+            iframeDoc.open();
+            iframeDoc.write(html);
+            iframeDoc.close();
+            try {
+                var _loop_1 = function (i) {
+                    var rules = iframeDoc.styleSheets[i].cssRules;
+                    var _loop_2 = function (idx) {
+                        if (rules[idx].selectorText === '') {
+                            return "continue";
+                        }
+                        collection = (0, utils_1.$$)(rules[idx].selectorText, iframeDoc.body);
+                        collection.forEach(function (elm) {
+                            elm.style.cssText = normalizeCSS(rules[idx].style.cssText +
+                                ';' +
+                                elm.style.cssText);
+                        });
+                    };
+                    for (var idx = 0; idx < rules.length; idx += 1) {
+                        _loop_2(idx);
+                    }
+                };
+                for (var i = 0; i < iframeDoc.styleSheets.length; i += 1) {
+                    _loop_1(i);
+                }
+            }
+            catch (e) {
+                if (false) {}
+            }
+            dom_1.Dom.each(iframeDoc.body, function (node) {
+                if (dom_1.Dom.isElement(node)) {
+                    var elm = node;
+                    var css = elm.getAttribute('style');
+                    if (css) {
+                        elm.style.cssText = normalizeCSS(css);
+                    }
+                    if (elm.hasAttribute('style') &&
+                        !elm.getAttribute('style')) {
+                        elm.removeAttribute('style');
+                    }
+                }
+            });
+            convertedString = iframeDoc.firstChild
+                ? (0, trim_1.trim)(iframeDoc.body.innerHTML)
+                : '';
+        }
+    }
+    catch (_a) {
+    }
+    finally {
+        dom_1.Dom.safeRemove(iframe);
+    }
+    if (convertedString) {
+        html = convertedString;
+    }
+    return (0, trim_1.trim)(html
+        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
+        .replace(/<!--[^>]*>/g, ''));
+}
+exports.applyStyles = applyStyles;
+
+
+/***/ }),
+/* 277 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.trimInv = exports.trim = void 0;
+var constants_1 = __webpack_require__(165);
+function trim(value) {
+    return value
+        .replace((0, constants_1.SPACE_REG_EXP_END)(), '')
+        .replace((0, constants_1.SPACE_REG_EXP_START)(), '');
+}
+exports.trim = trim;
+function trimInv(value) {
+    return value
+        .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP_END)(), '')
+        .replace((0, constants_1.INVISIBLE_SPACE_REG_EXP_START)(), '');
+}
+exports.trimInv = trimInv;
+
+
+/***/ }),
+/* 278 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.cleanFromWord = void 0;
+var dom_1 = __webpack_require__(215);
+var trim_1 = __webpack_require__(277);
+var to_array_1 = __webpack_require__(171);
+function cleanFromWord(html) {
+    if (html.indexOf('<html ') !== -1) {
+        html = html.substring(html.indexOf('<html '), html.length);
+        html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
+    }
+    var convertedString = '';
+    try {
+        var div = document.createElement('div');
+        div.innerHTML = html;
+        var marks_1 = [];
+        if (div.firstChild) {
+            dom_1.Dom.each(div, function (node) {
+                if (!node) {
+                    return;
+                }
+                switch (node.nodeType) {
+                    case Node.ELEMENT_NODE:
+                        switch (node.nodeName) {
+                            case 'STYLE':
+                            case 'LINK':
+                            case 'META':
+                                marks_1.push(node);
+                                break;
+                            case 'W:SDT':
+                            case 'W:SDTPR':
+                            case 'FONT':
+                                dom_1.Dom.unwrap(node);
+                                break;
+                            default:
+                                (0, to_array_1.toArray)(node.attributes).forEach(function (attr) {
+                                    if ([
+                                        'src',
+                                        'href',
+                                        'rel',
+                                        'content'
+                                    ].indexOf(attr.name.toLowerCase()) === -1) {
+                                        node.removeAttribute(attr.name);
+                                    }
+                                });
+                        }
+                        break;
+                    case Node.TEXT_NODE:
+                        break;
+                    default:
+                        marks_1.push(node);
+                }
+            });
+        }
+        dom_1.Dom.safeRemove.apply(null, marks_1);
+        convertedString = div.innerHTML;
+    }
+    catch (e) { }
+    if (convertedString) {
+        html = convertedString;
+    }
+    html = html.split(/(\n)/).filter(trim_1.trim).join('\n');
+    return html
+        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
+        .replace(/<!--[^>]*>/g, '');
+}
+exports.cleanFromWord = cleanFromWord;
+
+
+/***/ }),
+/* 279 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.htmlspecialchars = void 0;
+function htmlspecialchars(html) {
+    var tmp = document.createElement('div');
+    tmp.textContent = html;
+    return tmp.innerHTML;
+}
+exports.htmlspecialchars = htmlspecialchars;
+
+
+/***/ }),
+/* 280 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.stripTags = void 0;
+var is_string_1 = __webpack_require__(13);
+var utils_1 = __webpack_require__(188);
+var trim_1 = __webpack_require__(277);
+var dom_1 = __webpack_require__(215);
+function stripTags(html, doc) {
+    if (doc === void 0) { doc = document; }
+    var tmp = doc.createElement('div');
+    if ((0, is_string_1.isString)(html)) {
+        tmp.innerHTML = html;
+    }
+    else {
+        tmp.appendChild(html);
+    }
+    (0, utils_1.$$)('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR', tmp).forEach(function (p) {
+        var pr = p.parentNode;
+        if (!pr) {
+            return;
+        }
+        var nx = p.nextSibling;
+        if (dom_1.Dom.isText(nx) && /^\s/.test(nx.nodeValue || '')) {
+            return;
+        }
+        if (nx) {
+            pr.insertBefore(doc.createTextNode(' '), nx);
+        }
+    });
+    return (0, trim_1.trim)(tmp.innerText) || '';
+}
+exports.stripTags = stripTags;
+
+
+/***/ }),
+/* 281 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.sanitizeHTMLElement = exports.safeHTML = void 0;
+var utils_1 = __webpack_require__(188);
+var dom_1 = __webpack_require__(215);
+function safeHTML(box, options) {
+    if (!dom_1.Dom.isElement(box) && !dom_1.Dom.isFragment(box)) {
+        return;
+    }
+    if (options.removeOnError) {
+        sanitizeHTMLElement(box);
+        (0, utils_1.$$)('[onerror]', box).forEach(sanitizeHTMLElement);
+    }
+    if (options.safeJavaScriptLink) {
+        sanitizeHTMLElement(box);
+        (0, utils_1.$$)('a[href^="javascript"]', box).forEach(sanitizeHTMLElement);
+    }
+}
+exports.safeHTML = safeHTML;
+function sanitizeHTMLElement(elm) {
+    if (!dom_1.Dom.isElement(elm)) {
+        return false;
+    }
+    var effected = false;
+    if (elm.hasAttribute('onerror')) {
+        (0, utils_1.attr)(elm, 'onerror', null);
+        effected = true;
+    }
+    var href = elm.getAttribute('href');
+    if (href && href.trim().indexOf('javascript') === 0) {
+        (0, utils_1.attr)(elm, 'href', location.protocol + '//' + href);
+        effected = true;
+    }
+    return effected;
+}
+exports.sanitizeHTMLElement = sanitizeHTMLElement;
+
+
+/***/ }),
+/* 282 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.nl2br = void 0;
+function nl2br(html) {
+    return html.replace(/\r\n|\r|\n/g, '<br/>');
+}
+exports.nl2br = nl2br;
+
+
+/***/ }),
+/* 283 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(284), exports);
+tslib_1.__exportStar(__webpack_require__(285), exports);
+tslib_1.__exportStar(__webpack_require__(286), exports);
+tslib_1.__exportStar(__webpack_require__(287), exports);
+tslib_1.__exportStar(__webpack_require__(292), exports);
+tslib_1.__exportStar(__webpack_require__(293), exports);
+tslib_1.__exportStar(__webpack_require__(294), exports);
+tslib_1.__exportStar(__webpack_require__(195), exports);
+tslib_1.__exportStar(__webpack_require__(295), exports);
+
+
+/***/ }),
+/* 284 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.normalizeKeyAliases = void 0;
+var trim_1 = __webpack_require__(277);
+var constants_1 = __webpack_require__(165);
+function normalizeKeyAliases(keys) {
+    var memory = {};
+    return keys
+        .replace(/\+\+/g, '+add')
+        .split(/[\s]*\+[\s]*/)
+        .map(function (key) { return (0, trim_1.trim)(key.toLowerCase()); })
+        .map(function (key) { return constants_1.KEY_ALIASES[key] || key; })
+        .sort()
+        .filter(function (key) { return !memory[key] && key !== '' && (memory[key] = true); })
+        .join('+');
+}
+exports.normalizeKeyAliases = normalizeKeyAliases;
+
+
+/***/ }),
+/* 285 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.normalizeLicense = void 0;
+var normalizeLicense = function (license, count) {
+    if (count === void 0) { count = 8; }
+    var parts = [];
+    while (license.length) {
+        parts.push(license.substr(0, count));
+        license = license.substr(count);
+    }
+    parts[1] = parts[1].replace(/./g, '*');
+    parts[2] = parts[2].replace(/./g, '*');
+    return parts.join('-');
+};
+exports.normalizeLicense = normalizeLicense;
+
+
+/***/ }),
+/* 286 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.normalizeNode = void 0;
+var constants_1 = __webpack_require__(165);
+var dom_1 = __webpack_require__(215);
+var normalizeNode = function (node) {
+    if (!node) {
+        return;
+    }
+    if (dom_1.Dom.isText(node) && node.nodeValue != null && node.parentNode) {
+        while (dom_1.Dom.isText(node.nextSibling)) {
+            if (node.nextSibling.nodeValue != null) {
+                node.nodeValue += node.nextSibling.nodeValue;
+            }
+            node.nodeValue = node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '');
+            dom_1.Dom.safeRemove(node.nextSibling);
+        }
+    }
+    else {
+        (0, exports.normalizeNode)(node.firstChild);
+    }
+    (0, exports.normalizeNode)(node.nextSibling);
+};
+exports.normalizeNode = normalizeNode;
+
+
+/***/ }),
+/* 287 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.normalizePath = void 0;
+var string_1 = __webpack_require__(288);
+var normalizePath = function () {
+    var path = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        path[_i] = arguments[_i];
+    }
+    return path
+        .filter(function (part) { return (0, string_1.trim)(part).length; })
+        .map(function (part, index) {
+        part = part.replace(/([^:])[\\/]+/g, '$1/');
+        if (index) {
+            part = part.replace(/^\//, '');
+        }
+        if (index !== path.length - 1) {
+            part = part.replace(/\/$/, '');
+        }
+        return part;
+    })
+        .join('/');
+};
+exports.normalizePath = normalizePath;
+
+
+/***/ }),
+/* 288 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(198), exports);
+tslib_1.__exportStar(__webpack_require__(289), exports);
+tslib_1.__exportStar(__webpack_require__(290), exports);
+tslib_1.__exportStar(__webpack_require__(196), exports);
+tslib_1.__exportStar(__webpack_require__(181), exports);
+tslib_1.__exportStar(__webpack_require__(277), exports);
+tslib_1.__exportStar(__webpack_require__(291), exports);
+
+
+/***/ }),
+/* 289 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.fuzzySearchIndex = void 0;
+var constants_1 = __webpack_require__(165);
+function fuzzySearchIndex(needle, haystack, offset, maxDistance) {
+    if (offset === void 0) { offset = 0; }
+    if (maxDistance === void 0) { maxDistance = 1; }
+    var i = 0, j = 0, startIndex = -1, len = 0, errorDistance = 0;
+    for (j = offset; i < needle.length && j < haystack.length;) {
+        if (needle[i].toLowerCase() === haystack[j].toLowerCase()) {
+            i++;
+            len++;
+            errorDistance = 0;
+            if (startIndex === -1) {
+                startIndex = j;
+            }
+        }
+        else if (i > 0) {
+            if (errorDistance >= maxDistance &&
+                haystack[j] !== constants_1.INVISIBLE_SPACE) {
+                i = 0;
+                startIndex = -1;
+                len = 0;
+                errorDistance = 0;
+                j--;
+            }
+            else {
+                errorDistance++;
+                len++;
+            }
+        }
+        j++;
+    }
+    return i === needle.length ? [startIndex, len] : [-1, 0];
+}
+exports.fuzzySearchIndex = fuzzySearchIndex;
+
+
+/***/ }),
+/* 290 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.i18n = exports.sprintf = void 0;
+var config_1 = __webpack_require__(164);
+var utils_1 = __webpack_require__(188);
+var is_string_1 = __webpack_require__(13);
+var ucfirst_1 = __webpack_require__(291);
+var constants_1 = __webpack_require__(165);
+var sprintf = function (str, args) {
+    if (!args || !args.length) {
+        return str;
+    }
+    var reg = /%([sd])/g;
+    var fnd = reg.exec(str);
+    var res = str, i = 0;
+    while (fnd && args[i] !== undefined) {
+        res = res.replace(fnd[0], args[i].toString());
+        i += 1;
+        fnd = reg.exec(str);
+    }
+    return res;
+};
+exports.sprintf = sprintf;
+function i18n(key, params, options) {
+    if (!(0, is_string_1.isString)(key)) {
+        throw (0, utils_1.error)('i18n: Need string in first argument');
+    }
+    if (!key.length) {
+        return key;
+    }
+    var debug = Boolean(options !== undefined && options.debugLanguage);
+    var store;
+    var parse = function (value) {
+        return params && params.length ? (0, exports.sprintf)(value, params) : value;
+    }, defaultLanguage = (0, utils_1.defaultLanguage)(config_1.Config.defaultOptions.language, config_1.Config.defaultOptions.language), language = (0, utils_1.defaultLanguage)(options === null || options === void 0 ? void 0 : options.language, defaultLanguage), tryGet = function (store) {
+        if (!store) {
+            return;
+        }
+        if ((0, is_string_1.isString)(store[key])) {
+            return parse(store[key]);
+        }
+        var lcKey = key.toLowerCase();
+        if ((0, is_string_1.isString)(store[lcKey])) {
+            return parse(store[lcKey]);
+        }
+        var ucfKey = (0, ucfirst_1.ucfirst)(key);
+        if ((0, is_string_1.isString)(store[ucfKey])) {
+            return parse(store[ucfKey]);
+        }
+        return;
+    };
+    if (constants_1.lang[language] !== undefined) {
+        store = constants_1.lang[language];
+    }
+    else {
+        if (constants_1.lang[defaultLanguage] !== undefined) {
+            store = constants_1.lang[defaultLanguage];
+        }
+        else {
+            store = constants_1.lang.en;
+        }
+    }
+    var i18nOvr = options === null || options === void 0 ? void 0 : options.i18n;
+    if (i18nOvr && i18nOvr[language]) {
+        var result_1 = tryGet(i18nOvr[language]);
+        if (result_1) {
+            return result_1;
+        }
+    }
+    var result = tryGet(store);
+    if (result) {
+        return result;
+    }
+    if (constants_1.lang.en && (0, is_string_1.isString)(constants_1.lang.en[key]) && constants_1.lang.en[key]) {
+        return parse(constants_1.lang.en[key]);
+    }
+    if (debug) {
+        return '{' + key + '}';
+    }
+    if (false) {}
+    return parse(key);
+}
+exports.i18n = i18n;
+
+
+/***/ }),
+/* 291 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ucfirst = void 0;
+function ucfirst(value) {
+    if (!value.length) {
+        return '';
+    }
+    return value[0].toUpperCase() + value.substr(1);
+}
+exports.ucfirst = ucfirst;
+
+
+/***/ }),
+/* 292 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.normalizeRelativePath = void 0;
+var normalizeRelativePath = function (path) {
+    var sections = path.split('/'), builder = sections.reduce(function (builder, section) {
+        switch (section) {
+            case '': {
+                break;
+            }
+            case '.': {
+                break;
+            }
+            case '..': {
+                builder.pop();
+                break;
+            }
+            default: {
+                builder.push(section);
+                break;
+            }
+        }
+        return builder;
+    }, []);
+    return builder.join('/') + (path.endsWith('/') ? '/' : '');
+};
+exports.normalizeRelativePath = normalizeRelativePath;
+
+
+/***/ }),
+/* 293 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.normalizeSize = void 0;
+var normalizeSize = function (value) {
+    if (/^[0-9]+$/.test(value.toString())) {
+        return value + 'px';
+    }
+    return value.toString();
+};
+exports.normalizeSize = normalizeSize;
+
+
+/***/ }),
+/* 294 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.normalizeUrl = void 0;
+var normalizeUrl = function () {
+    var urls = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        urls[_i] = arguments[_i];
+    }
+    return urls
+        .filter(function (url) { return url.length; })
+        .map(function (url) { return url.replace(/\/$/, ''); })
+        .join('/')
+        .replace(/([^:])[\\/]+/g, '$1/');
+};
+exports.normalizeUrl = normalizeUrl;
+
+
+/***/ }),
+/* 295 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.normalizeColor = void 0;
+var color_1 = __webpack_require__(274);
+var string_1 = __webpack_require__(288);
+var normalizeColor = function (colorInput) {
+    var newcolor = ['#'];
+    var color = (0, color_1.colorToHex)(colorInput);
+    if (!color) {
+        return false;
+    }
+    color = (0, string_1.trim)(color.toUpperCase());
+    color = color.substr(1);
+    if (color.length === 3) {
+        for (var i = 0; i < 3; i += 1) {
+            newcolor.push(color[i]);
+            newcolor.push(color[i]);
+        }
+        return newcolor.join('');
+    }
+    if (color.length > 6) {
+        color = color.substr(0, 6);
+    }
+    return '#' + color;
+};
+exports.normalizeColor = normalizeColor;
+
+
+/***/ }),
+/* 296 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(297), exports);
+tslib_1.__exportStar(__webpack_require__(298), exports);
+tslib_1.__exportStar(__webpack_require__(299), exports);
+tslib_1.__exportStar(__webpack_require__(300), exports);
+tslib_1.__exportStar(__webpack_require__(301), exports);
+tslib_1.__exportStar(__webpack_require__(221), exports);
+
+
+/***/ }),
+/* 297 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getContentWidth = void 0;
+var getContentWidth = function (element, win) {
+    var pi = function (value) { return parseInt(value, 10); }, style = win.getComputedStyle(element), width = element.offsetWidth, paddingLeft = pi(style.getPropertyValue('padding-left') || '0'), paddingRight = pi(style.getPropertyValue('padding-right') || '0');
+    return width - paddingLeft - paddingRight;
+};
+exports.getContentWidth = getContentWidth;
+
+
+/***/ }),
+/* 298 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getScrollParent = void 0;
+var utils_1 = __webpack_require__(188);
+var dom_1 = __webpack_require__(215);
+function getScrollParent(node) {
+    if (!node) {
+        return null;
+    }
+    var isElement = dom_1.Dom.isHTMLElement(node);
+    var overflowY = isElement && (0, utils_1.css)(node, 'overflowY');
+    var isScrollable = isElement && overflowY !== 'visible' && overflowY !== 'hidden';
+    if (isScrollable && node.scrollHeight >= node.clientHeight) {
+        return node;
+    }
+    return (getScrollParent(node.parentNode) ||
+        document.scrollingElement ||
+        document.body);
+}
+exports.getScrollParent = getScrollParent;
+
+
+/***/ }),
+/* 299 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.innerWidth = void 0;
+var innerWidth = function (element, win) {
+    var computedStyle = win.getComputedStyle(element);
+    var elementWidth = element.clientWidth;
+    elementWidth -=
+        parseFloat(computedStyle.paddingLeft || '0') +
+            parseFloat(computedStyle.paddingRight || '0');
+    return elementWidth;
+};
+exports.innerWidth = innerWidth;
+
+
+/***/ }),
+/* 300 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.offset = void 0;
+var offset = function (elm, jodit, doc, recurse) {
+    if (recurse === void 0) { recurse = false; }
+    var rect;
+    try {
+        rect = elm.getBoundingClientRect();
+    }
+    catch (e) {
+        rect = {
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            width: 0,
+            height: 0
+        };
+    }
+    var body = doc.body, docElem = doc.documentElement || {
+        clientTop: 0,
+        clientLeft: 0,
+        scrollTop: 0,
+        scrollLeft: 0
+    }, win = doc.defaultView || doc.parentWindow, scrollTop = win.pageYOffset || docElem.scrollTop || body.scrollTop, scrollLeft = win.pageXOffset || docElem.scrollLeft || body.scrollLeft, clientTop = docElem.clientTop || body.clientTop || 0, clientLeft = docElem.clientLeft || body.clientLeft || 0;
+    var topValue, leftValue;
+    var iframe = jodit.iframe;
+    if (!recurse && jodit && jodit.options && jodit.o.iframe && iframe) {
+        var _a = (0, exports.offset)(iframe, jodit, jodit.od, true), top_1 = _a.top, left = _a.left;
+        topValue = rect.top + top_1;
+        leftValue = rect.left + left;
+    }
+    else {
+        topValue = rect.top + scrollTop - clientTop;
+        leftValue = rect.left + scrollLeft - clientLeft;
+    }
+    return {
+        top: Math.round(topValue),
+        left: Math.round(leftValue),
+        width: rect.width,
+        height: rect.height
+    };
+};
+exports.offset = offset;
+
+
+/***/ }),
+/* 301 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.position = void 0;
+var is_jodit_object_1 = __webpack_require__(228);
+function position(elm, jodit, recurse) {
+    if (recurse === void 0) { recurse = false; }
+    var rect = elm.getBoundingClientRect();
+    var xPos = rect.left, yPos = rect.top;
+    if ((0, is_jodit_object_1.isJoditObject)(jodit) && jodit.iframe && !recurse) {
+        var _a = position(jodit.iframe, jodit, true), left = _a.left, top_1 = _a.top;
+        xPos += left;
+        yPos += top_1;
+    }
+    return {
+        left: Math.round(xPos),
+        top: Math.round(yPos),
+        width: Math.round(elm.offsetWidth),
+        height: Math.round(elm.offsetHeight)
+    };
+}
+exports.position = position;
+
+
+/***/ }),
+/* 302 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Response = void 0;
+var tslib_1 = __webpack_require__(1);
+var Response = (function () {
+    function Response(request, status, statusText, body) {
+        this.request = request;
+        this.status = status;
+        this.statusText = statusText;
+        this.body = body;
+    }
+    Object.defineProperty(Response.prototype, "url", {
+        get: function () {
+            return this.request.url;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Response.prototype.json = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2, JSON.parse(this.body)];
+            });
+        });
+    };
+    Response.prototype.text = function () {
+        return Promise.resolve(this.body);
+    };
+    Response.prototype.blob = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2, this.body];
+            });
+        });
+    };
+    return Response;
+}());
+exports.Response = Response;
+
+
+/***/ }),
+/* 303 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(164);
+config_1.Config.prototype.defaultAjaxOptions = {
+    successStatuses: [200, 201, 202],
+    dataType: 'json',
+    method: 'GET',
+    url: '',
+    data: null,
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    headers: {
+        'X-REQUESTED-WITH': 'XMLHttpRequest'
+    },
+    withCredentials: false,
+    xhr: function () {
+        return new XMLHttpRequest();
+    }
+};
+
+
+/***/ }),
+/* 304 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ContextMenu = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(305);
+var popup_1 = __webpack_require__(306);
+var button_1 = __webpack_require__(309);
+var checker_1 = __webpack_require__(222);
+var component_1 = __webpack_require__(235);
+var ContextMenu = (function (_super) {
+    tslib_1.__extends(ContextMenu, _super);
+    function ContextMenu() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    ContextMenu.prototype.className = function () {
+        return 'ContextMenu';
+    };
+    ContextMenu.prototype.show = function (x, y, actions) {
+        var _this = this;
+        var self = this, content = this.j.c.div(this.getFullElName('actions'));
+        if (!(0, checker_1.isArray)(actions)) {
+            return;
+        }
+        actions.forEach(function (item) {
+            if (!item) {
+                return;
+            }
+            var action = (0, button_1.Button)(_this.jodit, item.icon || 'empty', item.title);
+            _this.jodit && action.setParentView(_this.jodit);
+            action.setMod('context', 'menu');
+            action.onAction(function (e) {
+                var _a;
+                (_a = item.exec) === null || _a === void 0 ? void 0 : _a.call(self, e);
+                self.close();
+                return false;
+            });
+            content.appendChild(action.container);
+        });
+        this.setContent(content).open(function () { return ({ left: x, top: y, width: 0, height: 0 }); }, true);
+    };
+    ContextMenu = tslib_1.__decorate([
+        component_1.component
+    ], ContextMenu);
+    return ContextMenu;
+}(popup_1.Popup));
+exports.ContextMenu = ContextMenu;
+
+
+/***/ }),
+/* 305 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 306 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(307), exports);
+
+
+/***/ }),
+/* 307 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Popup = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(274);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var global_1 = __webpack_require__(157);
-var ui_1 = __webpack_require__(251);
-var decorators_1 = __webpack_require__(169);
-var component_1 = __webpack_require__(154);
+__webpack_require__(308);
+var dom_1 = __webpack_require__(215);
+var helpers_1 = __webpack_require__(187);
+var element_1 = __webpack_require__(266);
+var decorators_1 = __webpack_require__(233);
+var component_1 = __webpack_require__(238);
+var global_1 = __webpack_require__(239);
 var Popup = (function (_super) {
     tslib_1.__extends(Popup, _super);
     function Popup(jodit, smart) {
@@ -13698,7 +14574,7 @@ var Popup = (function (_super) {
         dom_1.Dom.detach(this.container);
         var box = this.j.c.div("".concat(this.componentName, "__content"));
         var elm;
-        if (component_1.Component.isInstanceOf(content, ui_1.UIElement)) {
+        if (component_1.Component.isInstanceOf(content, element_1.UIElement)) {
             elm = content.container;
             content.parentElement = this;
         }
@@ -13748,12 +14624,13 @@ var Popup = (function (_super) {
             }
             return false;
         };
-        if (checkView(this.j)) {
+        var j = this.j;
+        if (checkView(j)) {
             return;
         }
         var pe = this.parentElement;
         while (pe) {
-            if (checkView(pe.j)) {
+            if (checkView(j)) {
                 return;
             }
             if (pe.container.style.zIndex) {
@@ -13761,7 +14638,7 @@ var Popup = (function (_super) {
                 return;
             }
             if (!pe.parentElement && pe.container.parentElement) {
-                var elm = ui_1.UIElement.closestElement(pe.container.parentElement, ui_1.UIElement);
+                var elm = element_1.UIElement.closestElement(pe.container.parentElement, element_1.UIElement);
                 if (elm) {
                     pe = elm;
                     continue;
@@ -13876,7 +14753,7 @@ var Popup = (function (_super) {
         if (!target) {
             return false;
         }
-        var box = ui_1.UIElement.closestElement(target, Popup);
+        var box = element_1.UIElement.closestElement(target, Popup);
         return Boolean(box && (this === box || box.closest(this)));
     };
     Popup.prototype.addGlobalListeners = function () {
@@ -13915,6 +14792,7 @@ var Popup = (function (_super) {
             .off(this.container, 'scroll mousewheel', up)
             .off(ow, 'scroll', up)
             .off(ow, 'resize', up);
+        (0, helpers_1.assert)(this.j.container.isConnected, 'The container must be built into the DOM');
         dom_1.Dom.up(this.j.container, function (box) {
             box && _this.j.e.off(box, 'scroll mousewheel', up);
         });
@@ -13940,1433 +14818,17 @@ var Popup = (function (_super) {
         decorators_1.autobind
     ], Popup.prototype, "closeOnOutsideClick", null);
     return Popup;
-}(ui_1.UIElement));
+}(element_1.UIElement));
 exports.Popup = Popup;
 
 
 /***/ }),
-/* 274 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 275 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(276), exports);
-tslib_1.__exportStar(__webpack_require__(284), exports);
-tslib_1.__exportStar(__webpack_require__(291), exports);
-
-
-/***/ }),
-/* 276 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UIForm = void 0;
-var tslib_1 = __webpack_require__(1);
-var group_1 = __webpack_require__(263);
-var input_1 = __webpack_require__(277);
-var select_1 = __webpack_require__(282);
-var utils_1 = __webpack_require__(147);
-var component_1 = __webpack_require__(171);
-var component_2 = __webpack_require__(154);
-var UIForm = (function (_super) {
-    tslib_1.__extends(UIForm, _super);
-    function UIForm() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var _this = this;
-        var _a, _b;
-        _this = _super.apply(this, tslib_1.__spreadArray([], tslib_1.__read(args), false)) || this;
-        if ((_a = _this.options) === null || _a === void 0 ? void 0 : _a.className) {
-            _this.container.classList.add((_b = _this.options) === null || _b === void 0 ? void 0 : _b.className);
-        }
-        return _this;
-    }
-    UIForm.prototype.className = function () {
-        return 'UIForm';
-    };
-    UIForm.prototype.submit = function () {
-        this.j.e.fire(this.container, 'submit');
-    };
-    UIForm.prototype.validate = function () {
-        var e_1, _a, e_2, _b;
-        var inputs = this.allChildren.filter(function (elm) {
-            return component_2.Component.isInstanceOf(elm, input_1.UIInput);
-        });
-        try {
-            for (var inputs_1 = tslib_1.__values(inputs), inputs_1_1 = inputs_1.next(); !inputs_1_1.done; inputs_1_1 = inputs_1.next()) {
-                var input = inputs_1_1.value;
-                if (!input.validate()) {
-                    return false;
-                }
-            }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (inputs_1_1 && !inputs_1_1.done && (_a = inputs_1.return)) _a.call(inputs_1);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-        var selects = this.allChildren.filter(function (elm) {
-            return component_2.Component.isInstanceOf(elm, select_1.UISelect);
-        });
-        try {
-            for (var selects_1 = tslib_1.__values(selects), selects_1_1 = selects_1.next(); !selects_1_1.done; selects_1_1 = selects_1.next()) {
-                var select = selects_1_1.value;
-                if (!select.validate()) {
-                    return false;
-                }
-            }
-        }
-        catch (e_2_1) { e_2 = { error: e_2_1 }; }
-        finally {
-            try {
-                if (selects_1_1 && !selects_1_1.done && (_b = selects_1.return)) _b.call(selects_1);
-            }
-            finally { if (e_2) throw e_2.error; }
-        }
-        return true;
-    };
-    UIForm.prototype.onSubmit = function (handler) {
-        var _this = this;
-        this.j.e.on(this.container, 'submit', function () {
-            var inputs = _this.allChildren.filter(function (elm) {
-                return component_2.Component.isInstanceOf(elm, input_1.UIInput);
-            });
-            if (!_this.validate()) {
-                return false;
-            }
-            handler(inputs.reduce(function (res, item) {
-                res[item.state.name] = item.value;
-                return res;
-            }, {}));
-            return false;
-        });
-    };
-    UIForm.prototype.createContainer = function () {
-        var form = this.j.c.element('form');
-        form.classList.add(this.componentName);
-        (0, utils_1.attr)(form, 'dir', this.j.o.direction || 'auto');
-        return form;
-    };
-    UIForm = tslib_1.__decorate([
-        component_1.component
-    ], UIForm);
-    return UIForm;
-}(group_1.UIGroup));
-exports.UIForm = UIForm;
-
-
-/***/ }),
-/* 277 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UIInput = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(278);
-var element_1 = __webpack_require__(252);
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
-var decorators_1 = __webpack_require__(169);
-var icon_1 = __webpack_require__(256);
-var validators_1 = __webpack_require__(279);
-var UIInput = (function (_super) {
-    tslib_1.__extends(UIInput, _super);
-    function UIInput(jodit, options) {
-        var _this = _super.call(this, jodit, options) || this;
-        _this.label = _this.j.c.span(_this.getFullElName('label'));
-        _this.icon = _this.j.c.span(_this.getFullElName('icon'));
-        _this.clearButton = _this.j.c.span(_this.getFullElName('clear'), icon_1.Icon.get('cancel'));
-        _this.state = tslib_1.__assign({}, UIInput_1.defaultState);
-        _this.__errorBox = _this.j.c.span(_this.getFullElName('error'));
-        _this.validators = new Set([]);
-        if ((options === null || options === void 0 ? void 0 : options.value) !== undefined) {
-            options.value = options.value.toString();
-        }
-        Object.assign(_this.state, options);
-        if (_this.state.clearButton !== undefined) {
-            _this.j.e
-                .on(_this.clearButton, 'click', function (e) {
-                e.preventDefault();
-                _this.nativeInput.value = '';
-                _this.j.e.fire(_this.nativeInput, 'input');
-                _this.focus();
-            })
-                .on(_this.nativeInput, 'input', function () {
-                _this.state.clearButton = Boolean(_this.value.length);
-            });
-            _this.state.clearButton = Boolean(_this.value.length);
-        }
-        _this.j.e
-            .on(_this.nativeInput, 'focus blur', function () {
-            _this.onChangeFocus();
-        })
-            .on(_this.nativeInput, 'input change', _this.onChangeValue);
-        _this.onChangeState();
-        _this.onChangeClassName();
-        _this.onChangeStateValue();
-        return _this;
-    }
-    UIInput_1 = UIInput;
-    UIInput.prototype.className = function () {
-        return 'UIInput';
-    };
-    UIInput.prototype.onChangeClear = function () {
-        if (this.state.clearButton) {
-            dom_1.Dom.after(this.nativeInput, this.clearButton);
-        }
-        else {
-            dom_1.Dom.safeRemove(this.clearButton);
-        }
-    };
-    UIInput.prototype.onChangeClassName = function (ignore, oldClassName) {
-        oldClassName && this.container.classList.remove(oldClassName);
-        this.state.className &&
-            this.container.classList.add(this.state.className);
-    };
-    UIInput.prototype.onChangeState = function () {
-        this.name = this.state.name;
-        var input = this.nativeInput, _a = this.state, name = _a.name, icon = _a.icon, type = _a.type, ref = _a.ref, required = _a.required, placeholder = _a.placeholder, autocomplete = _a.autocomplete, label = _a.label;
-        (0, helpers_1.attr)(input, 'name', name);
-        (0, helpers_1.attr)(input, 'type', type);
-        (0, helpers_1.attr)(input, 'data-ref', ref || name);
-        (0, helpers_1.attr)(input, 'ref', ref || name);
-        (0, helpers_1.attr)(input, 'required', required || null);
-        (0, helpers_1.attr)(input, 'autocomplete', !autocomplete ? 'off' : null);
-        (0, helpers_1.attr)(input, 'placeholder', placeholder ? this.j.i18n(placeholder) : '');
-        if (icon && icon_1.Icon.exists(icon)) {
-            dom_1.Dom.before(input, this.icon);
-            this.icon.innerHTML = icon_1.Icon.get(icon);
-        }
-        else {
-            dom_1.Dom.safeRemove(this.icon);
-        }
-        if (label) {
-            dom_1.Dom.before(this.wrapper, this.label);
-            this.label.innerText = this.j.i18n(label);
-        }
-        else {
-            dom_1.Dom.safeRemove(this.label);
-        }
-        this.updateValidators();
-    };
-    UIInput.prototype.updateValidators = function () {
-        var _this = this;
-        var _a;
-        this.validators.clear();
-        if (this.state.required) {
-            this.validators.add(validators_1.inputValidators.required);
-        }
-        (_a = this.state.validators) === null || _a === void 0 ? void 0 : _a.forEach(function (name) {
-            var validator = validators_1.inputValidators[name];
-            validator && _this.validators.add(validator);
-        });
-    };
-    Object.defineProperty(UIInput.prototype, "error", {
-        set: function (value) {
-            this.setMod('has-error', Boolean(value));
-            if (!value) {
-                dom_1.Dom.safeRemove(this.__errorBox);
-            }
-            else {
-                this.__errorBox.innerText = this.j.i18n(value, this.j.i18n(this.state.label || ''));
-                this.container.appendChild(this.__errorBox);
-            }
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(UIInput.prototype, "value", {
-        get: function () {
-            return this.nativeInput.value;
-        },
-        set: function (value) {
-            if (this.value !== value) {
-                this.nativeInput.value = value;
-                this.onChangeValue();
-            }
-        },
-        enumerable: false,
-        configurable: true
-    });
-    UIInput.prototype.onChangeStateValue = function () {
-        var value = this.state.value.toString();
-        if (value !== this.value) {
-            this.value = value;
-        }
-    };
-    UIInput.prototype.onChangeValue = function () {
-        var _a, _b;
-        var value = this.value;
-        if (this.state.value !== value) {
-            this.state.value = value;
-            this.j.e.fire(this, 'change', value);
-            (_b = (_a = this.state).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, value);
-        }
-    };
-    UIInput.prototype.validate = function () {
-        var _this = this;
-        this.error = '';
-        return (0, helpers_1.toArray)(this.validators).every(function (validator) { return validator(_this); });
-    };
-    UIInput.prototype.createContainer = function (options) {
-        var container = _super.prototype.createContainer.call(this);
-        this.wrapper = this.j.c.div(this.getFullElName('wrapper'));
-        if (!this.nativeInput) {
-            this.nativeInput = this.createNativeInput();
-        }
-        var nativeInput = this.nativeInput;
-        nativeInput.classList.add(this.getFullElName('input'));
-        this.wrapper.appendChild(nativeInput);
-        container.appendChild(this.wrapper);
-        (0, helpers_1.attr)(nativeInput, 'dir', this.j.o.direction || 'auto');
-        return container;
-    };
-    UIInput.prototype.createNativeInput = function (options) {
-        return this.j.create.element('input');
-    };
-    UIInput.prototype.focus = function () {
-        this.nativeInput.focus();
-    };
-    Object.defineProperty(UIInput.prototype, "isFocused", {
-        get: function () {
-            return this.nativeInput === this.j.od.activeElement;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    UIInput.prototype.onChangeFocus = function () {
-        this.setMod('focused', this.isFocused);
-    };
-    var UIInput_1;
-    UIInput.defaultState = {
-        className: '',
-        autocomplete: true,
-        name: '',
-        value: '',
-        icon: '',
-        label: '',
-        ref: '',
-        type: 'text',
-        placeholder: '',
-        required: false,
-        validators: []
-    };
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.clearButton')
-    ], UIInput.prototype, "onChangeClear", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.className')
-    ], UIInput.prototype, "onChangeClassName", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)([
-            'state.name',
-            'state.type',
-            'state.label',
-            'state.placeholder',
-            'state.autocomplete',
-            'state.icon'
-        ]),
-        (0, decorators_1.debounce)()
-    ], UIInput.prototype, "onChangeState", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.value')
-    ], UIInput.prototype, "onChangeStateValue", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], UIInput.prototype, "onChangeValue", null);
-    UIInput = UIInput_1 = tslib_1.__decorate([
-        decorators_1.component
-    ], UIInput);
-    return UIInput;
-}(element_1.UIElement));
-exports.UIInput = UIInput;
-
-
-/***/ }),
-/* 278 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 279 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.selectValidators = exports.inputValidators = void 0;
-exports.inputValidators = __webpack_require__(280);
-exports.selectValidators = __webpack_require__(281);
-
-
-/***/ }),
-/* 280 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.url = exports.required = void 0;
-var helpers_1 = __webpack_require__(146);
-exports.required = function (input) {
-    if (!(0, helpers_1.trim)(input.value).length) {
-        input.error = 'Please fill out this field';
-        return false;
-    }
-    return true;
-};
-exports.url = function (input) {
-    if (!(0, helpers_1.isURL)((0, helpers_1.trim)(input.value))) {
-        input.error = 'Please enter a web address';
-        return false;
-    }
-    return true;
-};
-
-
-/***/ }),
-/* 281 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.required = void 0;
-var helpers_1 = __webpack_require__(146);
-exports.required = function (select) {
-    if (!(0, helpers_1.trim)(select.value).length) {
-        select.error = 'Please fill out this field';
-        return false;
-    }
-    return true;
-};
-
-
-/***/ }),
-/* 282 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UISelect = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(283);
-var helpers_1 = __webpack_require__(146);
-var decorators_1 = __webpack_require__(169);
-var input_1 = __webpack_require__(277);
-var validators_1 = __webpack_require__(279);
-var UISelect = (function (_super) {
-    tslib_1.__extends(UISelect, _super);
-    function UISelect(jodit, state) {
-        var _this = _super.call(this, jodit, state) || this;
-        _this.state = tslib_1.__assign({}, UISelect_1.defaultState);
-        Object.assign(_this.state, state);
-        return _this;
-    }
-    UISelect_1 = UISelect;
-    UISelect.prototype.className = function () {
-        return 'UISelect';
-    };
-    UISelect.prototype.createContainer = function (state) {
-        var _a;
-        var container = _super.prototype.createContainer.call(this, state);
-        var j = this.j, nativeInput = this.nativeInput;
-        var opt = function () { return j.create.element('option'); };
-        if (state.placeholder !== undefined) {
-            var option = opt();
-            option.value = '';
-            option.text = j.i18n(state.placeholder);
-            nativeInput.add(option);
-        }
-        (_a = state.options) === null || _a === void 0 ? void 0 : _a.forEach(function (element) {
-            var option = opt();
-            option.value = element.value.toString();
-            option.text = j.i18n(element.text);
-            nativeInput.add(option);
-        });
-        if (state.size && state.size > 0) {
-            (0, helpers_1.attr)(nativeInput, 'size', state.size);
-        }
-        if (state.multiple) {
-            (0, helpers_1.attr)(nativeInput, 'multiple', '');
-        }
-        return container;
-    };
-    UISelect.prototype.createNativeInput = function () {
-        return this.j.create.element('select');
-    };
-    UISelect.prototype.updateValidators = function () {
-        _super.prototype.updateValidators.call(this);
-        if (this.state.required) {
-            this.validators.delete(validators_1.inputValidators.required);
-            this.validators.add(validators_1.selectValidators.required);
-        }
-    };
-    var UISelect_1;
-    UISelect.defaultState = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { options: [], size: 1, multiple: false });
-    UISelect = UISelect_1 = tslib_1.__decorate([
-        decorators_1.component
-    ], UISelect);
-    return UISelect;
-}(input_1.UIInput));
-exports.UISelect = UISelect;
-
-
-/***/ }),
-/* 283 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 284 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(277), exports);
-tslib_1.__exportStar(__webpack_require__(285), exports);
-tslib_1.__exportStar(__webpack_require__(287), exports);
-tslib_1.__exportStar(__webpack_require__(282), exports);
-tslib_1.__exportStar(__webpack_require__(289), exports);
-
-
-/***/ }),
-/* 285 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UITextArea = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(286);
-var input_1 = __webpack_require__(277);
-var decorators_1 = __webpack_require__(169);
-var UITextArea = (function (_super) {
-    tslib_1.__extends(UITextArea, _super);
-    function UITextArea(jodit, state) {
-        var _this = _super.call(this, jodit, state) || this;
-        _this.state = tslib_1.__assign({}, UITextArea_1.defaultState);
-        Object.assign(_this.state, state);
-        if (_this.state.resizable === false) {
-            _this.nativeInput.style.resize = 'none';
-        }
-        return _this;
-    }
-    UITextArea_1 = UITextArea;
-    UITextArea.prototype.className = function () {
-        return 'UITextArea';
-    };
-    UITextArea.prototype.createContainer = function (options) {
-        this.nativeInput = this.j.create.element('textarea');
-        return _super.prototype.createContainer.call(this, options);
-    };
-    var UITextArea_1;
-    UITextArea.defaultState = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { size: 5, resizable: true });
-    UITextArea = UITextArea_1 = tslib_1.__decorate([
-        decorators_1.component
-    ], UITextArea);
-    return UITextArea;
-}(input_1.UIInput));
-exports.UITextArea = UITextArea;
-
-
-/***/ }),
-/* 286 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 287 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UICheckbox = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(288);
-var input_1 = __webpack_require__(277);
-var decorators_1 = __webpack_require__(169);
-var dom_1 = __webpack_require__(159);
-var UICheckbox = (function (_super) {
-    tslib_1.__extends(UICheckbox, _super);
-    function UICheckbox(jodit, options) {
-        var _this = _super.call(this, jodit, tslib_1.__assign(tslib_1.__assign({}, options), { type: 'checkbox' })) || this;
-        _this.state = tslib_1.__assign({}, UICheckbox_1.defaultState);
-        Object.assign(_this.state, options);
-        return _this;
-    }
-    UICheckbox_1 = UICheckbox;
-    UICheckbox.prototype.className = function () {
-        return 'UICheckbox';
-    };
-    UICheckbox.prototype.render = function () {
-        return this.j.c.element('label', {
-            className: this.componentName
-        });
-    };
-    UICheckbox.prototype.onChangeChecked = function () {
-        this.value = this.state.checked.toString();
-        this.nativeInput.checked = this.state.checked;
-        this.setMod('checked', this.state.checked);
-    };
-    UICheckbox.prototype.onChangeNativeCheckBox = function () {
-        this.state.checked = this.nativeInput.checked;
-    };
-    UICheckbox.prototype.onChangeSwitch = function () {
-        this.setMod('switch', this.state.switch);
-        var slider = this.getElm('switch-slider');
-        if (this.state.switch) {
-            if (!slider) {
-                slider = this.j.c.div(this.getFullElName('switch-slider'));
-            }
-            dom_1.Dom.after(this.nativeInput, slider);
-        }
-        else {
-            dom_1.Dom.safeRemove(slider);
-        }
-    };
-    var UICheckbox_1;
-    UICheckbox.defaultState = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { checked: false, switch: false });
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.checked'),
-        (0, decorators_1.hook)('ready')
-    ], UICheckbox.prototype, "onChangeChecked", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('nativeInput:change')
-    ], UICheckbox.prototype, "onChangeNativeCheckBox", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)('state.switch'),
-        (0, decorators_1.hook)('ready')
-    ], UICheckbox.prototype, "onChangeSwitch", null);
-    UICheckbox = UICheckbox_1 = tslib_1.__decorate([
-        decorators_1.component
-    ], UICheckbox);
-    return UICheckbox;
-}(input_1.UIInput));
-exports.UICheckbox = UICheckbox;
-
-
-/***/ }),
-/* 288 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 289 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UIFileInput = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(290);
-var input_1 = __webpack_require__(277);
-var decorators_1 = __webpack_require__(169);
-var button_1 = __webpack_require__(257);
-var UIFileInput = (function (_super) {
-    tslib_1.__extends(UIFileInput, _super);
-    function UIFileInput(jodit, options) {
-        var _this = _super.call(this, jodit, tslib_1.__assign({ type: 'file' }, options)) || this;
-        _this.state = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { type: 'file', onlyImages: true });
-        return _this;
-    }
-    UIFileInput.prototype.className = function () {
-        return 'UIFileInput';
-    };
-    UIFileInput.prototype.createContainer = function (options) {
-        this.button = new button_1.UIButton(this.j, {
-            icon: {
-                name: 'plus'
-            }
-        });
-        var container = this.button.container;
-        if (!this.nativeInput) {
-            this.nativeInput = this.createNativeInput(options);
-        }
-        var nativeInput = this.nativeInput;
-        nativeInput.classList.add(this.getFullElName('input'));
-        container.classList.add(this.componentName);
-        container.appendChild(nativeInput);
-        return container;
-    };
-    UIFileInput.prototype.createNativeInput = function (options) {
-        return this.j.create.fromHTML("<input\n\t\t\ttype=\"file\"\n\t\t\taccept=\"".concat(options.onlyImages ? 'image/*' : '*', "\"\n\t\t\ttabindex=\"-1\"\n\t\t\tdir=\"auto\"\n\t\t\tmultiple=\"\"\n\t\t/>"));
-    };
-    UIFileInput = tslib_1.__decorate([
-        decorators_1.component
-    ], UIFileInput);
-    return UIFileInput;
-}(input_1.UIInput));
-exports.UIFileInput = UIFileInput;
-
-
-/***/ }),
-/* 290 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 291 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UIBlock = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(292);
-var group_1 = __webpack_require__(262);
-var utils_1 = __webpack_require__(147);
-var decorators_1 = __webpack_require__(169);
-var UIBlock = (function (_super) {
-    tslib_1.__extends(UIBlock, _super);
-    function UIBlock(jodit, elements, options) {
-        if (options === void 0) { options = {
-            align: 'left'
-        }; }
-        var _this = _super.call(this, jodit, elements) || this;
-        _this.options = options;
-        _this.setMod('align', _this.options.align || 'left');
-        _this.setMod('width', _this.options.width || '');
-        _this.options.mod && _this.setMod(_this.options.mod, true);
-        _this.options.className &&
-            _this.container.classList.add(_this.options.className);
-        (0, utils_1.attr)(_this.container, 'data-ref', options.ref);
-        (0, utils_1.attr)(_this.container, 'ref', options.ref);
-        return _this;
-    }
-    UIBlock.prototype.className = function () {
-        return 'UIBlock';
-    };
-    UIBlock = tslib_1.__decorate([
-        decorators_1.component
-    ], UIBlock);
-    return UIBlock;
-}(group_1.UIGroup));
-exports.UIBlock = UIBlock;
-
-
-/***/ }),
-/* 292 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 293 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ProgressBar = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(294);
-var dom_1 = __webpack_require__(159);
-var element_1 = __webpack_require__(252);
-var ProgressBar = (function (_super) {
-    tslib_1.__extends(ProgressBar, _super);
-    function ProgressBar() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ProgressBar.prototype.className = function () {
-        return 'ProgressBar';
-    };
-    ProgressBar.prototype.render = function () {
-        return '<div><div></div></div>';
-    };
-    ProgressBar.prototype.show = function () {
-        var container = this.j.workplace || this.j.container;
-        container.appendChild(this.container);
-        return this;
-    };
-    ProgressBar.prototype.hide = function () {
-        dom_1.Dom.safeRemove(this.container);
-        return this;
-    };
-    ProgressBar.prototype.progress = function (percentage) {
-        this.container.style.width = percentage.toFixed(2) + '%';
-        return this;
-    };
-    ProgressBar.prototype.destruct = function () {
-        this.hide();
-        return _super.prototype.destruct.call(this);
-    };
-    return ProgressBar;
-}(element_1.UIElement));
-exports.ProgressBar = ProgressBar;
-
-
-/***/ }),
-/* 294 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 295 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.val = void 0;
-var val = function (elm, selector, value) {
-    var child = elm.querySelector(selector);
-    if (!child) {
-        return '';
-    }
-    if (value) {
-        child.value = value;
-    }
-    return child.value;
-};
-exports.val = val;
-
-
-/***/ }),
-/* 296 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(297), exports);
-tslib_1.__exportStar(__webpack_require__(298), exports);
-tslib_1.__exportStar(__webpack_require__(299), exports);
-tslib_1.__exportStar(__webpack_require__(300), exports);
-tslib_1.__exportStar(__webpack_require__(301), exports);
-
-
-/***/ }),
-/* 297 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.applyStyles = void 0;
-var dom_1 = __webpack_require__(159);
-var utils_1 = __webpack_require__(147);
-var string_1 = __webpack_require__(212);
-function normalizeCSS(s) {
-    return s
-        .replace(/mso-[a-z-]+:[\s]*[^;]+;/gi, '')
-        .replace(/mso-[a-z-]+:[\s]*[^";']+$/gi, '')
-        .replace(/border[a-z-]*:[\s]*[^;]+;/gi, '')
-        .replace(/([0-9.]+)(pt|cm)/gi, function (match, units, metrics) {
-        switch (metrics.toLowerCase()) {
-            case 'pt':
-                return (parseFloat(units) * 1.328).toFixed(0) + 'px';
-            case 'cm':
-                return (parseFloat(units) * 0.02645833).toFixed(0) + 'px';
-        }
-        return match;
-    });
-}
-function applyStyles(html) {
-    if (html.indexOf('<html ') === -1) {
-        return html;
-    }
-    html = html.substring(html.indexOf('<html '), html.length);
-    html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
-    var iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-    var convertedString = '', collection = [];
-    try {
-        var iframeDoc = iframe.contentDocument ||
-            (iframe.contentWindow ? iframe.contentWindow.document : null);
-        if (iframeDoc) {
-            iframeDoc.open();
-            iframeDoc.write(html);
-            iframeDoc.close();
-            try {
-                var _loop_1 = function (i) {
-                    var rules = iframeDoc.styleSheets[i].cssRules;
-                    var _loop_2 = function (idx) {
-                        if (rules[idx].selectorText === '') {
-                            return "continue";
-                        }
-                        collection = (0, utils_1.$$)(rules[idx].selectorText, iframeDoc.body);
-                        collection.forEach(function (elm) {
-                            elm.style.cssText = normalizeCSS(rules[idx].style.cssText +
-                                ';' +
-                                elm.style.cssText);
-                        });
-                    };
-                    for (var idx = 0; idx < rules.length; idx += 1) {
-                        _loop_2(idx);
-                    }
-                };
-                for (var i = 0; i < iframeDoc.styleSheets.length; i += 1) {
-                    _loop_1(i);
-                }
-            }
-            catch (e) {
-                if (false) {}
-            }
-            dom_1.Dom.each(iframeDoc.body, function (node) {
-                if (dom_1.Dom.isElement(node)) {
-                    var elm = node;
-                    var css = elm.getAttribute('style');
-                    if (css) {
-                        elm.style.cssText = normalizeCSS(css);
-                    }
-                    if (elm.hasAttribute('style') &&
-                        !elm.getAttribute('style')) {
-                        elm.removeAttribute('style');
-                    }
-                }
-            });
-            convertedString = iframeDoc.firstChild
-                ? (0, string_1.trim)(iframeDoc.body.innerHTML)
-                : '';
-        }
-    }
-    catch (_a) {
-    }
-    finally {
-        dom_1.Dom.safeRemove(iframe);
-    }
-    if (convertedString) {
-        html = convertedString;
-    }
-    return (0, string_1.trim)(html
-        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
-        .replace(/<!--[^>]*>/g, ''));
-}
-exports.applyStyles = applyStyles;
-
-
-/***/ }),
-/* 298 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.cleanFromWord = void 0;
-var dom_1 = __webpack_require__(159);
-var trim_1 = __webpack_require__(217);
-var to_array_1 = __webpack_require__(250);
-function cleanFromWord(html) {
-    if (html.indexOf('<html ') !== -1) {
-        html = html.substring(html.indexOf('<html '), html.length);
-        html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
-    }
-    var convertedString = '';
-    try {
-        var div = document.createElement('div');
-        div.innerHTML = html;
-        var marks_1 = [];
-        if (div.firstChild) {
-            dom_1.Dom.all(div, function (node) {
-                if (!node) {
-                    return;
-                }
-                switch (node.nodeType) {
-                    case Node.ELEMENT_NODE:
-                        switch (node.nodeName) {
-                            case 'STYLE':
-                            case 'LINK':
-                            case 'META':
-                                marks_1.push(node);
-                                break;
-                            case 'W:SDT':
-                            case 'W:SDTPR':
-                            case 'FONT':
-                                dom_1.Dom.unwrap(node);
-                                break;
-                            default:
-                                (0, to_array_1.toArray)(node.attributes).forEach(function (attr) {
-                                    if ([
-                                        'src',
-                                        'href',
-                                        'rel',
-                                        'content'
-                                    ].indexOf(attr.name.toLowerCase()) === -1) {
-                                        node.removeAttribute(attr.name);
-                                    }
-                                });
-                        }
-                        break;
-                    case Node.TEXT_NODE:
-                        break;
-                    default:
-                        marks_1.push(node);
-                }
-            });
-        }
-        dom_1.Dom.safeRemove.apply(null, marks_1);
-        convertedString = div.innerHTML;
-    }
-    catch (e) { }
-    if (convertedString) {
-        html = convertedString;
-    }
-    html = html.split(/(\n)/).filter(trim_1.trim).join('\n');
-    return html
-        .replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
-        .replace(/<!--[^>]*>/g, '');
-}
-exports.cleanFromWord = cleanFromWord;
-
-
-/***/ }),
-/* 299 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.htmlspecialchars = void 0;
-function htmlspecialchars(html) {
-    var tmp = document.createElement('div');
-    tmp.textContent = html;
-    return tmp.innerHTML;
-}
-exports.htmlspecialchars = htmlspecialchars;
-
-
-/***/ }),
-/* 300 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.safeHTML = exports.stripTags = void 0;
-var is_string_1 = __webpack_require__(13);
-var utils_1 = __webpack_require__(147);
-var trim_1 = __webpack_require__(217);
-var dom_1 = __webpack_require__(159);
-var utils_2 = __webpack_require__(147);
-function stripTags(html, doc) {
-    if (doc === void 0) { doc = document; }
-    var tmp = doc.createElement('div');
-    if ((0, is_string_1.isString)(html)) {
-        tmp.innerHTML = html;
-    }
-    else {
-        tmp.appendChild(html);
-    }
-    (0, utils_1.$$)('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR', tmp).forEach(function (p) {
-        var pr = p.parentNode;
-        if (!pr) {
-            return;
-        }
-        var nx = p.nextSibling;
-        if (dom_1.Dom.isText(nx) && /^\s/.test(nx.nodeValue || '')) {
-            return;
-        }
-        if (nx) {
-            pr.insertBefore(doc.createTextNode(' '), nx);
-        }
-    });
-    return (0, trim_1.trim)(tmp.innerText) || '';
-}
-exports.stripTags = stripTags;
-function safeHTML(box, options) {
-    if (!dom_1.Dom.isElement(box)) {
-        return;
-    }
-    var removeOnError = function (elm) {
-        return (0, utils_2.attr)(elm, 'onerror', null);
-    }, safeLink = function (elm) {
-        var href = elm.getAttribute('href');
-        if (href && href.trim().indexOf('javascript') === 0) {
-            (0, utils_2.attr)(elm, 'href', location.protocol + '//' + href);
-        }
-    };
-    if (options.removeOnError) {
-        removeOnError(box);
-        (0, utils_1.$$)('[onerror]', box).forEach(removeOnError);
-    }
-    if (options.safeJavaScriptLink) {
-        safeLink(box);
-        (0, utils_1.$$)('a[href^="javascript"]', box).forEach(safeLink);
-    }
-}
-exports.safeHTML = safeHTML;
-
-
-/***/ }),
-/* 301 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.nl2br = void 0;
-function nl2br(html) {
-    return html.replace(/\r\n|\r|\n/g, '<br/>');
-}
-exports.nl2br = nl2br;
-
-
-/***/ }),
-/* 302 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(303), exports);
-tslib_1.__exportStar(__webpack_require__(304), exports);
-tslib_1.__exportStar(__webpack_require__(305), exports);
-tslib_1.__exportStar(__webpack_require__(306), exports);
-tslib_1.__exportStar(__webpack_require__(307), exports);
-tslib_1.__exportStar(__webpack_require__(308), exports);
-
-
-/***/ }),
-/* 303 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getContentWidth = void 0;
-var getContentWidth = function (element, win) {
-    var pi = function (value) { return parseInt(value, 10); }, style = win.getComputedStyle(element), width = element.offsetWidth, paddingLeft = pi(style.getPropertyValue('padding-left') || '0'), paddingRight = pi(style.getPropertyValue('padding-right') || '0');
-    return width - paddingLeft - paddingRight;
-};
-exports.getContentWidth = getContentWidth;
-
-
-/***/ }),
-/* 304 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getScrollParent = void 0;
-var utils_1 = __webpack_require__(147);
-var dom_1 = __webpack_require__(159);
-function getScrollParent(node) {
-    if (!node) {
-        return null;
-    }
-    var isElement = dom_1.Dom.isHTMLElement(node);
-    var overflowY = isElement && (0, utils_1.css)(node, 'overflowY');
-    var isScrollable = isElement && overflowY !== 'visible' && overflowY !== 'hidden';
-    if (isScrollable && node.scrollHeight >= node.clientHeight) {
-        return node;
-    }
-    return (getScrollParent(node.parentNode) ||
-        document.scrollingElement ||
-        document.body);
-}
-exports.getScrollParent = getScrollParent;
-
-
-/***/ }),
-/* 305 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.innerWidth = void 0;
-var innerWidth = function (element, win) {
-    var computedStyle = win.getComputedStyle(element);
-    var elementWidth = element.clientWidth;
-    elementWidth -=
-        parseFloat(computedStyle.paddingLeft || '0') +
-            parseFloat(computedStyle.paddingRight || '0');
-    return elementWidth;
-};
-exports.innerWidth = innerWidth;
-
-
-/***/ }),
-/* 306 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.offset = void 0;
-var offset = function (elm, jodit, doc, recurse) {
-    if (recurse === void 0) { recurse = false; }
-    var rect;
-    try {
-        rect = elm.getBoundingClientRect();
-    }
-    catch (e) {
-        rect = {
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            width: 0,
-            height: 0
-        };
-    }
-    var body = doc.body, docElem = doc.documentElement || {
-        clientTop: 0,
-        clientLeft: 0,
-        scrollTop: 0,
-        scrollLeft: 0
-    }, win = doc.defaultView || doc.parentWindow, scrollTop = win.pageYOffset || docElem.scrollTop || body.scrollTop, scrollLeft = win.pageXOffset || docElem.scrollLeft || body.scrollLeft, clientTop = docElem.clientTop || body.clientTop || 0, clientLeft = docElem.clientLeft || body.clientLeft || 0;
-    var topValue, leftValue;
-    var iframe = jodit.iframe;
-    if (!recurse && jodit && jodit.options && jodit.o.iframe && iframe) {
-        var _a = (0, exports.offset)(iframe, jodit, jodit.od, true), top_1 = _a.top, left = _a.left;
-        topValue = rect.top + top_1;
-        leftValue = rect.left + left;
-    }
-    else {
-        topValue = rect.top + scrollTop - clientTop;
-        leftValue = rect.left + scrollLeft - clientLeft;
-    }
-    return {
-        top: Math.round(topValue),
-        left: Math.round(leftValue),
-        width: rect.width,
-        height: rect.height
-    };
-};
-exports.offset = offset;
-
-
-/***/ }),
-/* 307 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.position = void 0;
-var checker_1 = __webpack_require__(173);
-function position(elm, jodit, recurse) {
-    if (recurse === void 0) { recurse = false; }
-    var rect = elm.getBoundingClientRect();
-    var xPos = rect.left, yPos = rect.top;
-    if ((0, checker_1.isJoditObject)(jodit) && jodit.iframe && !recurse) {
-        var _a = position(jodit.iframe, jodit, true), left = _a.left, top_1 = _a.top;
-        xPos += left;
-        yPos += top_1;
-    }
-    return {
-        left: Math.round(xPos),
-        top: Math.round(yPos),
-        width: Math.round(elm.offsetWidth),
-        height: Math.round(elm.offsetHeight)
-    };
-}
-exports.position = position;
-
-
-/***/ }),
 /* 308 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.size = void 0;
-var checker_1 = __webpack_require__(173);
-function size(subject) {
-    if ((0, checker_1.isString)(subject) || (0, checker_1.isArray)(subject)) {
-        return subject.length;
-    }
-    if ((0, checker_1.isPlainObject)(subject)) {
-        return Object.keys(subject).length;
-    }
-    return 0;
-}
-exports.size = size;
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
 
 
 /***/ }),
@@ -15383,7 +14845,7 @@ exports.size = size;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
 tslib_1.__exportStar(__webpack_require__(310), exports);
-tslib_1.__exportStar(__webpack_require__(311), exports);
+tslib_1.__exportStar(__webpack_require__(321), exports);
 
 
 /***/ }),
@@ -15398,201 +14860,223 @@ tslib_1.__exportStar(__webpack_require__(311), exports);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Ajax = void 0;
+exports.Button = exports.UIButton = exports.UIButtonState = void 0;
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var helpers_1 = __webpack_require__(146);
-var response_1 = __webpack_require__(311);
-__webpack_require__(312);
-var Ajax = (function () {
-    function Ajax(jodit, options) {
-        var _this = this;
-        this.jodit = jodit;
-        this.resolved = false;
-        this.activated = false;
-        this.options = (0, helpers_1.ConfigProto)(options || {}, config_1.Config.prototype.defaultAjaxOptions);
-        this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
-        jodit && jodit.e && jodit.e.on('beforeDestruct', function () { return _this.destruct(); });
+__webpack_require__(311);
+var element_1 = __webpack_require__(266);
+var dom_1 = __webpack_require__(215);
+var utils_1 = __webpack_require__(188);
+var is_string_1 = __webpack_require__(13);
+var is_function_1 = __webpack_require__(9);
+var icon_1 = __webpack_require__(270);
+var list_1 = __webpack_require__(312);
+var decorators_1 = __webpack_require__(233);
+var statuses_1 = __webpack_require__(184);
+var UIButtonState = function () { return ({
+    size: 'middle',
+    type: 'button',
+    name: '',
+    value: '',
+    variant: 'initial',
+    disabled: false,
+    activated: false,
+    icon: {
+        name: 'empty',
+        fill: '',
+        iconURL: ''
+    },
+    tooltip: '',
+    text: '',
+    tabIndex: undefined
+}); };
+exports.UIButtonState = UIButtonState;
+var UIButton = (function (_super) {
+    tslib_1.__extends(UIButton, _super);
+    function UIButton(jodit, state) {
+        var _this = _super.call(this, jodit) || this;
+        _this.isButton = true;
+        _this.state = (0, exports.UIButtonState)();
+        _this.actionHandlers = [];
+        _this.updateSize();
+        _this.onChangeSize();
+        _this.onChangeStatus();
+        if (state) {
+            _this.hookStatus(statuses_1.STATUSES.ready, function () {
+                _this.setState(state);
+            });
+        }
+        return _this;
     }
-    Ajax.prototype.__buildParams = function (obj, prefix) {
-        if ((0, helpers_1.isFunction)(this.o.queryBuild)) {
-            return this.o.queryBuild.call(this, obj, prefix);
-        }
-        if ((0, helpers_1.isString)(obj) ||
-            (this.j.ow.FormData &&
-                obj instanceof this.j.ow.FormData)) {
-            return obj;
-        }
-        return (0, helpers_1.buildQuery)(obj);
+    UIButton.prototype.className = function () {
+        return 'UIButton';
     };
-    Object.defineProperty(Ajax.prototype, "o", {
-        get: function () {
-            return this.options;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Ajax.prototype, "j", {
-        get: function () {
-            return this.jodit;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Ajax.prototype.abort = function () {
-        try {
-            this.xhr.abort();
-        }
-        catch (_a) { }
+    UIButton.prototype.setState = function (state) {
+        Object.assign(this.state, state);
         return this;
     };
-    Ajax.prototype.send = function () {
-        var _this = this;
-        this.activated = true;
-        var _a = this, xhr = _a.xhr, o = _a.o;
-        var request = this.prepareRequest();
-        return this.j.async.promise(function (resolve, reject) {
-            var _a;
-            var onReject = function () {
-                reject((0, helpers_1.error)('Connection error'));
-            };
-            var onResolve = function () {
-                _this.resolved = true;
-                resolve(new response_1.Response(request, xhr.status, xhr.statusText, !xhr.responseType ? xhr.responseText : xhr.response));
-            };
-            xhr.onload = onResolve;
-            xhr.onabort = onReject;
-            xhr.onerror = onReject;
-            xhr.ontimeout = onReject;
-            if (o.responseType) {
-                xhr.responseType = o.responseType;
-            }
-            xhr.onprogress = function (e) {
-                var _a, _b;
-                var percentComplete = 0;
-                if (e.lengthComputable) {
-                    percentComplete = (e.loaded / e.total) * 100;
-                }
-                (_b = (_a = _this.options).onProgress) === null || _b === void 0 ? void 0 : _b.call(_a, percentComplete);
-            };
-            xhr.onreadystatechange = function () {
-                var _a, _b;
-                (_b = (_a = _this.options).onProgress) === null || _b === void 0 ? void 0 : _b.call(_a, 10);
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (o.successStatuses.includes(xhr.status)) {
-                        onResolve();
-                    }
-                    else {
-                        reject((0, helpers_1.error)(xhr.statusText || 'Connection error'));
-                    }
-                }
-            };
-            xhr.withCredentials = (_a = o.withCredentials) !== null && _a !== void 0 ? _a : false;
-            var url = request.url, data = request.data, method = request.method;
-            xhr.open(method, url, true);
-            if (o.contentType && xhr.setRequestHeader) {
-                xhr.setRequestHeader('Content-type', o.contentType);
-            }
-            var headers = o.headers;
-            if (headers && xhr.setRequestHeader) {
-                Object.keys(headers).forEach(function (key) {
-                    xhr.setRequestHeader(key, headers[key]);
-                });
-            }
-            _this.j.async.setTimeout(function () {
-                xhr.send(data ? _this.__buildParams(data) : undefined);
-            }, 0);
+    UIButton.prototype.onChangeSize = function () {
+        this.setMod('size', this.state.size);
+    };
+    UIButton.prototype.onChangeType = function () {
+        (0, utils_1.attr)(this.container, 'type', this.state.type);
+    };
+    UIButton.prototype.updateSize = function () {
+        var pe = this.closest(list_1.UIList);
+        if (pe) {
+            this.state.size = pe.buttonSize;
+            return;
+        }
+    };
+    UIButton.prototype.onChangeStatus = function () {
+        this.setMod('variant', this.state.variant);
+    };
+    UIButton.prototype.onChangeText = function () {
+        this.text.textContent = this.jodit.i18n(this.state.text);
+    };
+    UIButton.prototype.onChangeTextSetMode = function () {
+        this.setMod('text-icons', Boolean(this.state.text.trim().length));
+    };
+    UIButton.prototype.onChangeDisabled = function () {
+        (0, utils_1.attr)(this.container, 'disabled', this.state.disabled || null);
+    };
+    UIButton.prototype.onChangeActivated = function () {
+        (0, utils_1.attr)(this.container, 'aria-pressed', this.state.activated);
+    };
+    UIButton.prototype.onChangeName = function () {
+        this.container.classList.add("".concat(this.componentName, "_").concat(this.clearName(this.state.name)));
+        this.name = this.state.name;
+        (0, utils_1.attr)(this.container, 'data-ref', this.state.name);
+        (0, utils_1.attr)(this.container, 'ref', this.state.name);
+    };
+    UIButton.prototype.onChangeTooltip = function () {
+        if (this.get('j.o.useNativeTooltip')) {
+            (0, utils_1.attr)(this.container, 'title', this.state.tooltip);
+        }
+        (0, utils_1.attr)(this.container, 'aria-label', this.state.tooltip);
+    };
+    UIButton.prototype.onChangeTabIndex = function () {
+        (0, utils_1.attr)(this.container, 'tabindex', this.state.tabIndex);
+    };
+    UIButton.prototype.onChangeIcon = function () {
+        var textIcons = this.get('j.o.textIcons');
+        if (textIcons === true ||
+            ((0, is_function_1.isFunction)(textIcons) && textIcons(this.state.name))) {
+            return;
+        }
+        dom_1.Dom.detach(this.icon);
+        var iconElement = icon_1.Icon.makeIcon(this.j, this.state.icon);
+        iconElement && this.icon.appendChild(iconElement);
+    };
+    UIButton.prototype.focus = function () {
+        this.container.focus();
+    };
+    UIButton.prototype.isFocused = function () {
+        var activeElement = this.od.activeElement;
+        return Boolean(activeElement && dom_1.Dom.isOrContains(this.container, activeElement));
+    };
+    UIButton.prototype.createContainer = function () {
+        var cn = this.componentName;
+        var button = this.j.c.element('button', {
+            class: cn,
+            type: 'button',
+            role: 'button',
+            ariaPressed: false
         });
+        this.icon = this.j.c.span(cn + '__icon');
+        this.text = this.j.c.span(cn + '__text');
+        button.appendChild(this.icon);
+        button.appendChild(this.text);
+        this.j.e.on(button, 'click', this.onActionFire);
+        return button;
     };
-    Ajax.prototype.prepareRequest = function () {
-        if (!this.o.url) {
-            throw (0, helpers_1.error)('Need URL for AJAX request');
-        }
-        var url = this.o.url;
-        var data = this.o.data;
-        var method = (this.o.method || 'get').toLowerCase();
-        if (method === 'get' && data && (0, helpers_1.isPlainObject)(data)) {
-            var qIndex = url.indexOf('?');
-            if (qIndex !== -1) {
-                var urlData = (0, helpers_1.parseQuery)(url);
-                url =
-                    url.substr(0, qIndex) +
-                        '?' +
-                        (0, helpers_1.buildQuery)(tslib_1.__assign(tslib_1.__assign({}, urlData), data));
-            }
-            else {
-                url += '?' + (0, helpers_1.buildQuery)(this.o.data);
-            }
-        }
-        var request = {
-            url: url,
-            method: method,
-            data: data
+    UIButton.prototype.destruct = function () {
+        this.j.e.off(this.container);
+        return _super.prototype.destruct.call(this);
+    };
+    UIButton.prototype.onAction = function (callback) {
+        this.actionHandlers.push(callback);
+        return this;
+    };
+    UIButton.prototype.onActionFire = function (e) {
+        var _this = this;
+        e.buffer = {
+            actionTrigger: this
         };
-        Ajax.log.splice(100);
-        Ajax.log.push(request);
-        return request;
+        this.actionHandlers.forEach(function (callback) { return callback.call(_this, e); });
     };
-    Ajax.prototype.destruct = function () {
-        if (this.activated && !this.resolved) {
-            this.abort();
-            this.resolved = true;
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.size')
+    ], UIButton.prototype, "onChangeSize", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.type')
+    ], UIButton.prototype, "onChangeType", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('parentElement')
+    ], UIButton.prototype, "updateSize", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.variant')
+    ], UIButton.prototype, "onChangeStatus", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.text')
+    ], UIButton.prototype, "onChangeText", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.text')
+    ], UIButton.prototype, "onChangeTextSetMode", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.disabled')
+    ], UIButton.prototype, "onChangeDisabled", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.activated')
+    ], UIButton.prototype, "onChangeActivated", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.name')
+    ], UIButton.prototype, "onChangeName", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.tooltip')
+    ], UIButton.prototype, "onChangeTooltip", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.tabIndex')
+    ], UIButton.prototype, "onChangeTabIndex", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.icon')
+    ], UIButton.prototype, "onChangeIcon", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], UIButton.prototype, "onActionFire", null);
+    UIButton = tslib_1.__decorate([
+        decorators_1.component
+    ], UIButton);
+    return UIButton;
+}(element_1.UIElement));
+exports.UIButton = UIButton;
+function Button(jodit, stateOrText, text, variant) {
+    var button = new UIButton(jodit);
+    button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
+    if ((0, is_string_1.isString)(stateOrText)) {
+        button.state.icon.name = stateOrText;
+        button.state.name = stateOrText;
+        if (variant) {
+            button.state.variant = variant;
         }
-    };
-    Ajax.log = [];
-    return Ajax;
-}());
-exports.Ajax = Ajax;
+        if (text) {
+            button.state.text = text;
+        }
+    }
+    else {
+        button.setState(stateOrText);
+    }
+    return button;
+}
+exports.Button = Button;
 
 
 /***/ }),
 /* 311 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Response = void 0;
-var tslib_1 = __webpack_require__(1);
-var Response = (function () {
-    function Response(request, status, statusText, body) {
-        this.request = request;
-        this.status = status;
-        this.statusText = statusText;
-        this.body = body;
-    }
-    Object.defineProperty(Response.prototype, "url", {
-        get: function () {
-            return this.request.url;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Response.prototype.json = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
-            return tslib_1.__generator(this, function (_a) {
-                return [2, JSON.parse(this.body)];
-            });
-        });
-    };
-    Response.prototype.text = function () {
-        return Promise.resolve(this.body);
-    };
-    Response.prototype.blob = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
-            return tslib_1.__generator(this, function (_a) {
-                return [2, this.body];
-            });
-        });
-    };
-    return Response;
-}());
-exports.Response = Response;
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
 
 
 /***/ }),
@@ -15607,26 +15091,154 @@ exports.Response = Response;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
-config_1.Config.prototype.defaultAjaxOptions = {
-    successStatuses: [200, 201, 202],
-    dataType: 'json',
-    method: 'GET',
-    url: '',
-    data: null,
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    headers: {
-        'X-REQUESTED-WITH': 'XMLHttpRequest'
-    },
-    withCredentials: false,
-    xhr: function () {
-        return new XMLHttpRequest();
+exports.UIList = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(313);
+var get_strong_control_types_1 = __webpack_require__(314);
+var decorators_1 = __webpack_require__(233);
+var group_1 = __webpack_require__(316);
+var separator_1 = __webpack_require__(318);
+var spacer_1 = __webpack_require__(319);
+var button_1 = __webpack_require__(310);
+var buttons_1 = __webpack_require__(320);
+var get_control_type_1 = __webpack_require__(315);
+var split_array_1 = __webpack_require__(177);
+var component_1 = __webpack_require__(238);
+var UIList = (function (_super) {
+    tslib_1.__extends(UIList, _super);
+    function UIList(jodit) {
+        var _this = _super.call(this, jodit) || this;
+        _this.mode = 'horizontal';
+        _this.removeButtons = [];
+        _this.onChangeMode();
+        return _this;
     }
-};
+    UIList.prototype.className = function () {
+        return 'UIList';
+    };
+    UIList.prototype.onChangeMode = function () {
+        this.setMod('mode', this.mode);
+    };
+    UIList.prototype.makeGroup = function () {
+        return new group_1.UIGroup(this.jodit);
+    };
+    Object.defineProperty(UIList.prototype, "buttons", {
+        get: function () {
+            return this.allChildren.filter(function (elm) {
+                return component_1.Component.isInstanceOf(elm, button_1.UIButton);
+            });
+        },
+        enumerable: false,
+        configurable: true
+    });
+    UIList.prototype.getButtonsNames = function () {
+        return this.buttons
+            .map(function (a) { return (a instanceof button_1.UIButton && a.state.name) || ''; })
+            .filter(function (a) { return a !== ''; });
+    };
+    UIList.prototype.setRemoveButtons = function (removeButtons) {
+        this.removeButtons = removeButtons || [];
+        return this;
+    };
+    UIList.prototype.build = function (items, target) {
+        var _this = this;
+        if (target === void 0) { target = null; }
+        items = (0, split_array_1.splitArray)(items);
+        this.clear();
+        var lastBtnSeparator = false;
+        var line = this.makeGroup();
+        this.append(line);
+        line.setMod('line', true);
+        var group;
+        var addButton = function (control) {
+            var elm = null;
+            switch (control.name) {
+                case '\n':
+                    line = _this.makeGroup();
+                    line.setMod('line', true);
+                    group = _this.makeGroup();
+                    line.append(group);
+                    _this.append(line);
+                    break;
+                case '|':
+                    if (!lastBtnSeparator) {
+                        lastBtnSeparator = true;
+                        elm = new separator_1.UISeparator(_this.j);
+                    }
+                    break;
+                case '---': {
+                    group.setMod('before-spacer', true);
+                    var space = new spacer_1.UISpacer(_this.j);
+                    line.append(space);
+                    group = _this.makeGroup();
+                    line.append(group);
+                    lastBtnSeparator = false;
+                    break;
+                }
+                default:
+                    lastBtnSeparator = false;
+                    elm = _this.makeButton(control, target);
+            }
+            if (elm) {
+                if (!group) {
+                    group = _this.makeGroup();
+                    line.append(group);
+                }
+                group.append(elm);
+            }
+        };
+        var isNotRemoved = function (b) {
+            return !_this.removeButtons.includes(b.name);
+        };
+        items.forEach(function (item) {
+            if ((0, buttons_1.isButtonGroup)(item)) {
+                var buttons = item.buttons.filter(function (b) { return b; });
+                if (buttons.length) {
+                    group = _this.makeGroup();
+                    group.setMod('separated', true).setMod('group', item.group);
+                    line.append(group);
+                    (0, get_strong_control_types_1.getStrongControlTypes)(buttons, _this.j.o.controls)
+                        .filter(isNotRemoved)
+                        .forEach(addButton);
+                }
+            }
+            else {
+                if (!group) {
+                    group = _this.makeGroup();
+                    line.append(group);
+                }
+                var control = (0, get_control_type_1.getControlType)(item, _this.j.o.controls);
+                isNotRemoved(control) && addButton(control);
+            }
+        });
+        this.update();
+        return this;
+    };
+    UIList.prototype.makeButton = function (control, target) {
+        return new button_1.UIButton(this.j);
+    };
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('mode')
+    ], UIList.prototype, "onChangeMode", null);
+    UIList = tslib_1.__decorate([
+        decorators_1.component
+    ], UIList);
+    return UIList;
+}(group_1.UIGroup));
+exports.UIList = UIList;
 
 
 /***/ }),
 /* 313 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 314 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -15637,56 +15249,23 @@ config_1.Config.prototype.defaultAjaxOptions = {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ContextMenu = void 0;
-var tslib_1 = __webpack_require__(1);
-__webpack_require__(314);
-var popup_1 = __webpack_require__(272);
-var button_1 = __webpack_require__(257);
-var checker_1 = __webpack_require__(173);
-var ContextMenu = (function (_super) {
-    tslib_1.__extends(ContextMenu, _super);
-    function ContextMenu() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ContextMenu.prototype.className = function () {
-        return 'ContextMenu';
-    };
-    ContextMenu.prototype.show = function (x, y, actions) {
-        var _this = this;
-        var self = this, content = this.j.c.div(this.getFullElName('actions'));
-        if (!(0, checker_1.isArray)(actions)) {
-            return;
-        }
-        actions.forEach(function (item) {
-            if (!item) {
-                return;
-            }
-            var action = (0, button_1.Button)(_this.jodit, item.icon || 'empty', item.title);
-            _this.jodit && action.setParentView(_this.jodit);
-            action.setMod('context', 'menu');
-            action.onAction(function (e) {
-                var _a;
-                (_a = item.exec) === null || _a === void 0 ? void 0 : _a.call(self, e);
-                self.close();
-                return false;
-            });
-            content.appendChild(action.container);
+exports.getStrongControlTypes = void 0;
+var get_control_type_1 = __webpack_require__(315);
+var config_1 = __webpack_require__(164);
+var is_array_1 = __webpack_require__(14);
+var utils_1 = __webpack_require__(188);
+function getStrongControlTypes(items, controls) {
+    var elements = (0, is_array_1.isArray)(items)
+        ? items
+        : (0, utils_1.keys)(items, false).map(function (key) {
+            var value = items[key] || {};
+            return (0, utils_1.ConfigProto)({ name: key }, value);
         });
-        _super.prototype.setContent.call(this, content)
-            .open(function () { return ({ left: x, top: y, width: 0, height: 0 }); }, true);
-    };
-    return ContextMenu;
-}(popup_1.Popup));
-exports.ContextMenu = ContextMenu;
-
-
-/***/ }),
-/* 314 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
+    return elements.map(function (item) {
+        return (0, get_control_type_1.getControlType)(item, controls || config_1.Config.defaultOptions.controls);
+    });
+}
+exports.getStrongControlTypes = getStrongControlTypes;
 
 
 /***/ }),
@@ -15701,15 +15280,46 @@ __webpack_require__.r(__webpack_exports__);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Confirm = exports.Prompt = exports.Alert = exports.Dialog = void 0;
-var dialog_1 = __webpack_require__(316);
-Object.defineProperty(exports, "Dialog", ({ enumerable: true, get: function () { return dialog_1.Dialog; } }));
-var alert_1 = __webpack_require__(333);
-Object.defineProperty(exports, "Alert", ({ enumerable: true, get: function () { return alert_1.Alert; } }));
-var prompt_1 = __webpack_require__(334);
-Object.defineProperty(exports, "Prompt", ({ enumerable: true, get: function () { return prompt_1.Prompt; } }));
-var confirm_1 = __webpack_require__(335);
-Object.defineProperty(exports, "Confirm", ({ enumerable: true, get: function () { return confirm_1.Confirm; } }));
+exports.findControlType = exports.getControlType = void 0;
+var tslib_1 = __webpack_require__(1);
+var helpers_1 = __webpack_require__(187);
+var config_1 = __webpack_require__(164);
+function getControlType(button, controls) {
+    var buttonControl;
+    if (!controls) {
+        controls = config_1.Config.defaultOptions.controls;
+    }
+    if (!(0, helpers_1.isString)(button)) {
+        buttonControl = tslib_1.__assign({ name: 'empty' }, (0, helpers_1.ConfigFlatten)(button));
+        if (controls[buttonControl.name] !== undefined) {
+            buttonControl = tslib_1.__assign(tslib_1.__assign({}, (0, helpers_1.ConfigFlatten)(controls[buttonControl.name])), (0, helpers_1.ConfigFlatten)(buttonControl));
+        }
+    }
+    else {
+        buttonControl = findControlType(button, controls) || {
+            name: button,
+            command: button,
+            tooltip: button
+        };
+    }
+    return buttonControl;
+}
+exports.getControlType = getControlType;
+function findControlType(path, controls) {
+    var _a = tslib_1.__read(path.split(/\./), 2), namespaceOrKey = _a[0], key = _a[1];
+    var store = controls;
+    if (key != null) {
+        if (controls[namespaceOrKey] !== undefined) {
+            store = controls[namespaceOrKey];
+        }
+    }
+    else {
+        key = namespaceOrKey;
+    }
+    return store[key]
+        ? tslib_1.__assign({ name: key }, (0, helpers_1.ConfigFlatten)(store[key])) : undefined;
+}
+exports.findControlType = findControlType;
 
 
 /***/ }),
@@ -15724,19 +15334,364 @@ Object.defineProperty(exports, "Confirm", ({ enumerable: true, get: function () 
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Dialog = void 0;
+exports.UIGroup = void 0;
 var tslib_1 = __webpack_require__(1);
 __webpack_require__(317);
-var config_1 = __webpack_require__(136);
-var constants_1 = __webpack_require__(137);
-var helpers_1 = __webpack_require__(146);
-var view_with_toolbar_1 = __webpack_require__(318);
-var dom_1 = __webpack_require__(159);
-var component_1 = __webpack_require__(154);
-var global_1 = __webpack_require__(157);
-var decorators_1 = __webpack_require__(169);
-var view_1 = __webpack_require__(320);
-var ui_1 = __webpack_require__(251);
+var element_1 = __webpack_require__(266);
+var decorators_1 = __webpack_require__(233);
+var helpers_1 = __webpack_require__(187);
+var dom_1 = __webpack_require__(215);
+var component_1 = __webpack_require__(238);
+var UIGroup = (function (_super) {
+    tslib_1.__extends(UIGroup, _super);
+    function UIGroup(jodit, elements, options) {
+        var _this = _super.call(this, jodit, options) || this;
+        _this.options = options;
+        _this.syncMod = false;
+        _this.elements = [];
+        _this.buttonSize = 'middle';
+        elements === null || elements === void 0 ? void 0 : elements.forEach(function (elm) { return elm && _this.append(elm); });
+        if (options === null || options === void 0 ? void 0 : options.name) {
+            _this.name = options.name;
+        }
+        return _this;
+    }
+    UIGroup_1 = UIGroup;
+    UIGroup.prototype.className = function () {
+        return 'UIGroup';
+    };
+    Object.defineProperty(UIGroup.prototype, "allChildren", {
+        get: function () {
+            var result = [];
+            var stack = tslib_1.__spreadArray([], tslib_1.__read(this.elements), false);
+            while (stack.length) {
+                var elm = stack.shift();
+                if ((0, helpers_1.isArray)(elm)) {
+                    stack.push.apply(stack, tslib_1.__spreadArray([], tslib_1.__read(elm), false));
+                }
+                else if (component_1.Component.isInstanceOf(elm, UIGroup_1)) {
+                    stack.push.apply(stack, tslib_1.__spreadArray([], tslib_1.__read(elm.elements), false));
+                }
+                else {
+                    elm && result.push(elm);
+                }
+            }
+            return result;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    UIGroup.prototype.update = function () {
+        this.elements.forEach(function (elm) { return elm.update(); });
+        this.setMod('size', this.buttonSize);
+    };
+    UIGroup.prototype.append = function (elm, distElement) {
+        var _this = this;
+        if ((0, helpers_1.isArray)(elm)) {
+            elm.forEach(function (item) { return _this.append(item, distElement); });
+            return this;
+        }
+        this.elements.push(elm);
+        if (elm.name) {
+            elm.container.classList.add(this.getFullElName(elm.name));
+        }
+        if (distElement) {
+            var distElm = this.getElm(distElement);
+            (0, helpers_1.assert)(distElm != null, 'Element does not exist');
+            distElm.appendChild(elm.container);
+        }
+        else {
+            this.appendChildToContainer(elm.container);
+        }
+        elm.parentElement = this;
+        elm.update();
+        return this;
+    };
+    UIGroup.prototype.setMod = function (name, value) {
+        if (this.syncMod) {
+            this.elements.forEach(function (elm) { return elm.setMod(name, value); });
+        }
+        return _super.prototype.setMod.call(this, name, value);
+    };
+    UIGroup.prototype.appendChildToContainer = function (childContainer) {
+        this.container.appendChild(childContainer);
+    };
+    UIGroup.prototype.remove = function (elm) {
+        var index = this.elements.indexOf(elm);
+        if (index !== -1) {
+            this.elements.splice(index, 1);
+            dom_1.Dom.safeRemove(elm.container);
+            elm.parentElement = null;
+        }
+        return this;
+    };
+    UIGroup.prototype.clear = function () {
+        this.elements.forEach(function (elm) { return elm.destruct(); });
+        this.elements.length = 0;
+        return this;
+    };
+    UIGroup.prototype.destruct = function () {
+        this.clear();
+        return _super.prototype.destruct.call(this);
+    };
+    var UIGroup_1;
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('buttonSize')
+    ], UIGroup.prototype, "update", null);
+    UIGroup = UIGroup_1 = tslib_1.__decorate([
+        decorators_1.component
+    ], UIGroup);
+    return UIGroup;
+}(element_1.UIElement));
+exports.UIGroup = UIGroup;
+
+
+/***/ }),
+/* 317 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 318 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UISeparator = void 0;
+var tslib_1 = __webpack_require__(1);
+var element_1 = __webpack_require__(266);
+var component_1 = __webpack_require__(235);
+var UISeparator = (function (_super) {
+    tslib_1.__extends(UISeparator, _super);
+    function UISeparator() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    UISeparator.prototype.className = function () {
+        return 'UISeparator';
+    };
+    UISeparator = tslib_1.__decorate([
+        component_1.component
+    ], UISeparator);
+    return UISeparator;
+}(element_1.UIElement));
+exports.UISeparator = UISeparator;
+
+
+/***/ }),
+/* 319 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UISpacer = void 0;
+var tslib_1 = __webpack_require__(1);
+var element_1 = __webpack_require__(266);
+var component_1 = __webpack_require__(235);
+var UISpacer = (function (_super) {
+    tslib_1.__extends(UISpacer, _super);
+    function UISpacer() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    UISpacer.prototype.className = function () {
+        return 'UISpacer';
+    };
+    UISpacer = tslib_1.__decorate([
+        component_1.component
+    ], UISpacer);
+    return UISpacer;
+}(element_1.UIElement));
+exports.UISpacer = UISpacer;
+
+
+/***/ }),
+/* 320 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.flatButtonsSet = exports.isButtonGroup = void 0;
+var tslib_1 = __webpack_require__(1);
+var is_array_1 = __webpack_require__(14);
+var isButtonGroup = function (item) {
+    return (0, is_array_1.isArray)(item.buttons);
+};
+exports.isButtonGroup = isButtonGroup;
+function flatButtonsSet(buttons, jodit) {
+    var groups = jodit.getRegisteredButtonGroups();
+    return new Set(buttons.reduce(function (acc, item) {
+        var _a;
+        if ((0, exports.isButtonGroup)(item)) {
+            acc = acc.concat(tslib_1.__spreadArray(tslib_1.__spreadArray([], tslib_1.__read(item.buttons), false), tslib_1.__read(((_a = groups[item.group]) !== null && _a !== void 0 ? _a : [])), false));
+        }
+        else {
+            acc.push(item);
+        }
+        return acc;
+    }, []));
+}
+exports.flatButtonsSet = flatButtonsSet;
+
+
+/***/ }),
+/* 321 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UIButtonGroup = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(322);
+var group_1 = __webpack_require__(316);
+var component_1 = __webpack_require__(235);
+var button_1 = __webpack_require__(310);
+var assert_1 = __webpack_require__(170);
+var UIButtonGroup = (function (_super) {
+    tslib_1.__extends(UIButtonGroup, _super);
+    function UIButtonGroup(jodit, options) {
+        if (options === void 0) { options = {
+            radio: true
+        }; }
+        var _this = this;
+        var _a, _b;
+        _this = _super.call(this, jodit, (_a = options.options) === null || _a === void 0 ? void 0 : _a.map(function (opt) {
+            var btn = new button_1.UIButton(jodit, {
+                text: opt.text,
+                value: opt.value,
+                variant: 'primary'
+            });
+            btn.onAction(function () {
+                _this.select(opt.value);
+            });
+            return btn;
+        }), options) || this;
+        _this.options = options;
+        _this.select((_b = options.value) !== null && _b !== void 0 ? _b : 0);
+        return _this;
+    }
+    UIButtonGroup.prototype.className = function () {
+        return 'UIButtonGroup';
+    };
+    UIButtonGroup.prototype.render = function (options) {
+        return "<div>\n\t\t\t<div class=\"&__label\">~".concat(options.label, "~</div>\n\t\t\t<div class=\"&__options\"></div>\n\t\t</div>");
+    };
+    UIButtonGroup.prototype.appendChildToContainer = function (childContainer) {
+        var options = this.getElm('options');
+        (0, assert_1.assert)(options != null, 'Options does not exist');
+        options.appendChild(childContainer);
+    };
+    UIButtonGroup.prototype.select = function (indexOrValue) {
+        var _this = this;
+        var _a, _b;
+        this.elements.forEach(function (elm, index) {
+            if (index === indexOrValue || elm.state.value === indexOrValue) {
+                elm.state.activated = true;
+            }
+            else if (_this.options.radio) {
+                elm.state.activated = false;
+            }
+        });
+        var result = this.elements
+            .filter(function (elm) { return elm.state.activated; })
+            .map(function (elm) { return ({
+            text: elm.state.text,
+            value: elm.state.value
+        }); });
+        this.jodit.e.fire(this, 'select', result);
+        (_b = (_a = this.options).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, result);
+    };
+    UIButtonGroup = tslib_1.__decorate([
+        component_1.component
+    ], UIButtonGroup);
+    return UIButtonGroup;
+}(group_1.UIGroup));
+exports.UIButtonGroup = UIButtonGroup;
+
+
+/***/ }),
+/* 322 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 323 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Confirm = exports.Prompt = exports.Alert = exports.Dialog = void 0;
+var dialog_1 = __webpack_require__(324);
+Object.defineProperty(exports, "Dialog", ({ enumerable: true, get: function () { return dialog_1.Dialog; } }));
+var alert_1 = __webpack_require__(363);
+Object.defineProperty(exports, "Alert", ({ enumerable: true, get: function () { return alert_1.Alert; } }));
+var prompt_1 = __webpack_require__(364);
+Object.defineProperty(exports, "Prompt", ({ enumerable: true, get: function () { return prompt_1.Prompt; } }));
+var confirm_1 = __webpack_require__(365);
+Object.defineProperty(exports, "Confirm", ({ enumerable: true, get: function () { return confirm_1.Confirm; } }));
+
+
+/***/ }),
+/* 324 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Dialog = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(325);
+var config_1 = __webpack_require__(164);
+var constants_1 = __webpack_require__(165);
+var helpers_1 = __webpack_require__(187);
+var view_with_toolbar_1 = __webpack_require__(326);
+var dom_1 = __webpack_require__(231);
+var component_1 = __webpack_require__(237);
+var global_1 = __webpack_require__(239);
+var decorators_1 = __webpack_require__(233);
+var view_1 = __webpack_require__(328);
+var ui_1 = __webpack_require__(336);
 config_1.Config.prototype.dialog = {
     namespace: '',
     extraButtons: [],
@@ -16163,7 +16118,7 @@ exports.Dialog = Dialog;
 
 
 /***/ }),
-/* 317 */
+/* 325 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16172,7 +16127,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 318 */
+/* 326 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -16185,14 +16140,14 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ViewWithToolbar = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(319);
-var view_1 = __webpack_require__(320);
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
-var factory_1 = __webpack_require__(325);
-var component_1 = __webpack_require__(154);
-var buttons_1 = __webpack_require__(271);
-var decorators_1 = __webpack_require__(169);
+__webpack_require__(327);
+var view_1 = __webpack_require__(328);
+var helpers_1 = __webpack_require__(187);
+var dom_1 = __webpack_require__(231);
+var factory_1 = __webpack_require__(333);
+var component_1 = __webpack_require__(237);
+var buttons_1 = __webpack_require__(320);
+var decorators_1 = __webpack_require__(233);
 var ViewWithToolbar = (function (_super) {
     tslib_1.__extends(ViewWithToolbar, _super);
     function ViewWithToolbar(options, isJodit) {
@@ -16303,7 +16258,7 @@ exports.ViewWithToolbar = ViewWithToolbar;
 
 
 /***/ }),
-/* 319 */
+/* 327 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16312,7 +16267,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 320 */
+/* 328 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -16325,15 +16280,14 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.View = void 0;
 var tslib_1 = __webpack_require__(1);
-var storage_1 = __webpack_require__(321);
-var helpers_1 = __webpack_require__(146);
-var constants_1 = __webpack_require__(137);
-var modules_1 = __webpack_require__(138);
-var async_1 = __webpack_require__(5);
-var global_1 = __webpack_require__(157);
-var decorators_1 = __webpack_require__(169);
-var traits_1 = __webpack_require__(253);
-var event_emitter_1 = __webpack_require__(139);
+var storage_1 = __webpack_require__(329);
+var helpers_1 = __webpack_require__(187);
+var constants_1 = __webpack_require__(165);
+var modules_1 = __webpack_require__(166);
+var global_1 = __webpack_require__(239);
+var decorators_1 = __webpack_require__(233);
+var traits_1 = __webpack_require__(267);
+var event_emitter_1 = __webpack_require__(167);
 var View = (function (_super) {
     tslib_1.__extends(View, _super);
     function View(options, isJodit) {
@@ -16343,8 +16297,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.17.1";
-        _this.async = new async_1.Async();
+        _this.version = "3.18.1";
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
         _this.OPTIONS = View.defaultOptions;
@@ -16490,10 +16443,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.17.1";
+        return "3.18.1";
     };
     View.getVersion = function () {
-        return "3.17.1";
+        return "3.18.1";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -16579,7 +16532,7 @@ View.defaultOptions = {
 
 
 /***/ }),
-/* 321 */
+/* 329 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -16591,13 +16544,13 @@ View.defaultOptions = {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(322), exports);
-tslib_1.__exportStar(__webpack_require__(323), exports);
-tslib_1.__exportStar(__webpack_require__(324), exports);
+tslib_1.__exportStar(__webpack_require__(330), exports);
+tslib_1.__exportStar(__webpack_require__(331), exports);
+tslib_1.__exportStar(__webpack_require__(332), exports);
 
 
 /***/ }),
-/* 322 */
+/* 330 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -16637,7 +16590,7 @@ exports.MemoryStorageProvider = MemoryStorageProvider;
 
 
 /***/ }),
-/* 323 */
+/* 331 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -16714,7 +16667,7 @@ exports.LocalStorageProvider = LocalStorageProvider;
 
 
 /***/ }),
-/* 324 */
+/* 332 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -16726,9 +16679,9 @@ exports.LocalStorageProvider = LocalStorageProvider;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Storage = exports.StorageKey = void 0;
-var helpers_1 = __webpack_require__(146);
-var local_storage_provider_1 = __webpack_require__(323);
-var memory_storage_provider_1 = __webpack_require__(322);
+var helpers_1 = __webpack_require__(187);
+var local_storage_provider_1 = __webpack_require__(331);
+var memory_storage_provider_1 = __webpack_require__(330);
 exports.StorageKey = 'Jodit_';
 var Storage = (function () {
     function Storage(provider, suffix) {
@@ -16773,7 +16726,7 @@ exports.Storage = Storage;
 
 
 /***/ }),
-/* 325 */
+/* 333 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -16785,11 +16738,11 @@ exports.Storage = Storage;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeButton = exports.makeCollection = void 0;
-var helpers_1 = __webpack_require__(146);
-var collection_1 = __webpack_require__(326);
-var editor_collection_1 = __webpack_require__(328);
-var button_1 = __webpack_require__(329);
-var content_1 = __webpack_require__(331);
+var helpers_1 = __webpack_require__(187);
+var collection_1 = __webpack_require__(334);
+var editor_collection_1 = __webpack_require__(358);
+var button_1 = __webpack_require__(359);
+var content_1 = __webpack_require__(361);
 function makeCollection(jodit, parentElement) {
     var collection = (0, helpers_1.isJoditObject)(jodit)
         ? new editor_collection_1.ToolbarEditorCollection(jodit)
@@ -16819,7 +16772,7 @@ exports.makeButton = makeButton;
 
 
 /***/ }),
-/* 326 */
+/* 334 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -16832,11 +16785,11 @@ exports.makeButton = makeButton;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ToolbarCollection = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(327);
-var helpers_1 = __webpack_require__(146);
-var ui_1 = __webpack_require__(251);
-var factory_1 = __webpack_require__(325);
-var decorators_1 = __webpack_require__(169);
+__webpack_require__(335);
+var helpers_1 = __webpack_require__(187);
+var ui_1 = __webpack_require__(336);
+var factory_1 = __webpack_require__(333);
+var decorators_1 = __webpack_require__(233);
 var ToolbarCollection = (function (_super) {
     tslib_1.__extends(ToolbarCollection, _super);
     function ToolbarCollection(jodit) {
@@ -16926,7 +16879,7 @@ exports.ToolbarCollection = ToolbarCollection;
 
 
 /***/ }),
-/* 327 */
+/* 335 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16935,7 +16888,916 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 328 */
+/* 336 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(266), exports);
+tslib_1.__exportStar(__webpack_require__(309), exports);
+tslib_1.__exportStar(__webpack_require__(306), exports);
+tslib_1.__exportStar(__webpack_require__(337), exports);
+tslib_1.__exportStar(__webpack_require__(338), exports);
+tslib_1.__exportStar(__webpack_require__(270), exports);
+tslib_1.__exportStar(__webpack_require__(356), exports);
+
+
+/***/ }),
+/* 337 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(316), exports);
+tslib_1.__exportStar(__webpack_require__(312), exports);
+tslib_1.__exportStar(__webpack_require__(318), exports);
+tslib_1.__exportStar(__webpack_require__(319), exports);
+
+
+/***/ }),
+/* 338 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(339), exports);
+tslib_1.__exportStar(__webpack_require__(347), exports);
+tslib_1.__exportStar(__webpack_require__(354), exports);
+
+
+/***/ }),
+/* 339 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UIForm = void 0;
+var tslib_1 = __webpack_require__(1);
+var group_1 = __webpack_require__(316);
+var input_1 = __webpack_require__(340);
+var select_1 = __webpack_require__(345);
+var utils_1 = __webpack_require__(188);
+var component_1 = __webpack_require__(235);
+var component_2 = __webpack_require__(238);
+var UIForm = (function (_super) {
+    tslib_1.__extends(UIForm, _super);
+    function UIForm() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var _this = this;
+        var _a, _b;
+        _this = _super.apply(this, tslib_1.__spreadArray([], tslib_1.__read(args), false)) || this;
+        if ((_a = _this.options) === null || _a === void 0 ? void 0 : _a.className) {
+            _this.container.classList.add((_b = _this.options) === null || _b === void 0 ? void 0 : _b.className);
+        }
+        return _this;
+    }
+    UIForm.prototype.className = function () {
+        return 'UIForm';
+    };
+    UIForm.prototype.submit = function () {
+        this.j.e.fire(this.container, 'submit');
+    };
+    UIForm.prototype.validate = function () {
+        var e_1, _a, e_2, _b;
+        var inputs = this.allChildren.filter(function (elm) {
+            return component_2.Component.isInstanceOf(elm, input_1.UIInput);
+        });
+        try {
+            for (var inputs_1 = tslib_1.__values(inputs), inputs_1_1 = inputs_1.next(); !inputs_1_1.done; inputs_1_1 = inputs_1.next()) {
+                var input = inputs_1_1.value;
+                if (!input.validate()) {
+                    return false;
+                }
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (inputs_1_1 && !inputs_1_1.done && (_a = inputs_1.return)) _a.call(inputs_1);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        var selects = this.allChildren.filter(function (elm) {
+            return component_2.Component.isInstanceOf(elm, select_1.UISelect);
+        });
+        try {
+            for (var selects_1 = tslib_1.__values(selects), selects_1_1 = selects_1.next(); !selects_1_1.done; selects_1_1 = selects_1.next()) {
+                var select = selects_1_1.value;
+                if (!select.validate()) {
+                    return false;
+                }
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (selects_1_1 && !selects_1_1.done && (_b = selects_1.return)) _b.call(selects_1);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
+        return true;
+    };
+    UIForm.prototype.onSubmit = function (handler) {
+        var _this = this;
+        this.j.e.on(this.container, 'submit', function () {
+            var inputs = _this.allChildren.filter(function (elm) {
+                return component_2.Component.isInstanceOf(elm, input_1.UIInput);
+            });
+            if (!_this.validate()) {
+                return false;
+            }
+            handler(inputs.reduce(function (res, item) {
+                res[item.state.name] = item.value;
+                return res;
+            }, {}));
+            return false;
+        });
+    };
+    UIForm.prototype.createContainer = function () {
+        var form = this.j.c.element('form');
+        form.classList.add(this.componentName);
+        (0, utils_1.attr)(form, 'dir', this.j.o.direction || 'auto');
+        return form;
+    };
+    UIForm = tslib_1.__decorate([
+        component_1.component
+    ], UIForm);
+    return UIForm;
+}(group_1.UIGroup));
+exports.UIForm = UIForm;
+
+
+/***/ }),
+/* 340 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UIInput = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(341);
+var element_1 = __webpack_require__(266);
+var utils_1 = __webpack_require__(188);
+var to_array_1 = __webpack_require__(171);
+var dom_1 = __webpack_require__(215);
+var decorators_1 = __webpack_require__(233);
+var icon_1 = __webpack_require__(270);
+var validators_1 = __webpack_require__(342);
+var UIInput = (function (_super) {
+    tslib_1.__extends(UIInput, _super);
+    function UIInput(jodit, options) {
+        var _this = _super.call(this, jodit, options) || this;
+        _this.label = _this.j.c.span(_this.getFullElName('label'));
+        _this.icon = _this.j.c.span(_this.getFullElName('icon'));
+        _this.clearButton = _this.j.c.span(_this.getFullElName('clear'), icon_1.Icon.get('cancel'));
+        _this.state = tslib_1.__assign({}, UIInput_1.defaultState);
+        _this.__errorBox = _this.j.c.span(_this.getFullElName('error'));
+        _this.validators = new Set([]);
+        if ((options === null || options === void 0 ? void 0 : options.value) !== undefined) {
+            options.value = options.value.toString();
+        }
+        Object.assign(_this.state, options);
+        if (_this.state.clearButton !== undefined) {
+            _this.j.e
+                .on(_this.clearButton, 'click', function (e) {
+                e.preventDefault();
+                _this.nativeInput.value = '';
+                _this.j.e.fire(_this.nativeInput, 'input');
+                _this.focus();
+            })
+                .on(_this.nativeInput, 'input', function () {
+                _this.state.clearButton = Boolean(_this.value.length);
+            });
+            _this.state.clearButton = Boolean(_this.value.length);
+        }
+        _this.j.e
+            .on(_this.nativeInput, 'focus blur', function () {
+            _this.onChangeFocus();
+        })
+            .on(_this.nativeInput, 'input change', _this.onChangeValue);
+        _this.onChangeState();
+        _this.onChangeClassName();
+        _this.onChangeStateValue();
+        return _this;
+    }
+    UIInput_1 = UIInput;
+    UIInput.prototype.className = function () {
+        return 'UIInput';
+    };
+    UIInput.prototype.onChangeClear = function () {
+        if (this.state.clearButton) {
+            dom_1.Dom.after(this.nativeInput, this.clearButton);
+        }
+        else {
+            dom_1.Dom.safeRemove(this.clearButton);
+        }
+    };
+    UIInput.prototype.onChangeClassName = function (ignore, oldClassName) {
+        oldClassName && this.container.classList.remove(oldClassName);
+        this.state.className &&
+            this.container.classList.add(this.state.className);
+    };
+    UIInput.prototype.onChangeState = function () {
+        this.name = this.state.name;
+        var input = this.nativeInput, _a = this.state, name = _a.name, icon = _a.icon, type = _a.type, ref = _a.ref, required = _a.required, placeholder = _a.placeholder, autocomplete = _a.autocomplete, label = _a.label;
+        (0, utils_1.attr)(input, 'name', name);
+        (0, utils_1.attr)(input, 'type', type);
+        (0, utils_1.attr)(input, 'data-ref', ref || name);
+        (0, utils_1.attr)(input, 'ref', ref || name);
+        (0, utils_1.attr)(input, 'required', required || null);
+        (0, utils_1.attr)(input, 'autocomplete', !autocomplete ? 'off' : null);
+        (0, utils_1.attr)(input, 'placeholder', placeholder ? this.j.i18n(placeholder) : '');
+        if (icon && icon_1.Icon.exists(icon)) {
+            dom_1.Dom.before(input, this.icon);
+            this.icon.innerHTML = icon_1.Icon.get(icon);
+        }
+        else {
+            dom_1.Dom.safeRemove(this.icon);
+        }
+        if (label) {
+            dom_1.Dom.before(this.wrapper, this.label);
+            this.label.innerText = this.j.i18n(label);
+        }
+        else {
+            dom_1.Dom.safeRemove(this.label);
+        }
+        this.updateValidators();
+    };
+    UIInput.prototype.updateValidators = function () {
+        var _this = this;
+        var _a;
+        this.validators.clear();
+        if (this.state.required) {
+            this.validators.add(validators_1.inputValidators.required);
+        }
+        (_a = this.state.validators) === null || _a === void 0 ? void 0 : _a.forEach(function (name) {
+            var validator = validators_1.inputValidators[name];
+            validator && _this.validators.add(validator);
+        });
+    };
+    Object.defineProperty(UIInput.prototype, "error", {
+        set: function (value) {
+            this.setMod('has-error', Boolean(value));
+            if (!value) {
+                dom_1.Dom.safeRemove(this.__errorBox);
+            }
+            else {
+                this.__errorBox.innerText = this.j.i18n(value, this.j.i18n(this.state.label || ''));
+                this.container.appendChild(this.__errorBox);
+            }
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(UIInput.prototype, "value", {
+        get: function () {
+            return this.nativeInput.value;
+        },
+        set: function (value) {
+            if (this.value !== value) {
+                this.nativeInput.value = value;
+                this.onChangeValue();
+            }
+        },
+        enumerable: false,
+        configurable: true
+    });
+    UIInput.prototype.onChangeStateValue = function () {
+        var value = this.state.value.toString();
+        if (value !== this.value) {
+            this.value = value;
+        }
+    };
+    UIInput.prototype.onChangeValue = function () {
+        var _a, _b;
+        var value = this.value;
+        if (this.state.value !== value) {
+            this.state.value = value;
+            this.j.e.fire(this, 'change', value);
+            (_b = (_a = this.state).onChange) === null || _b === void 0 ? void 0 : _b.call(_a, value);
+        }
+    };
+    UIInput.prototype.validate = function () {
+        var _this = this;
+        this.error = '';
+        return (0, to_array_1.toArray)(this.validators).every(function (validator) { return validator(_this); });
+    };
+    UIInput.prototype.createContainer = function (options) {
+        var container = _super.prototype.createContainer.call(this);
+        this.wrapper = this.j.c.div(this.getFullElName('wrapper'));
+        if (!this.nativeInput) {
+            this.nativeInput = this.createNativeInput();
+        }
+        var nativeInput = this.nativeInput;
+        nativeInput.classList.add(this.getFullElName('input'));
+        this.wrapper.appendChild(nativeInput);
+        container.appendChild(this.wrapper);
+        (0, utils_1.attr)(nativeInput, 'dir', this.j.o.direction || 'auto');
+        return container;
+    };
+    UIInput.prototype.createNativeInput = function (options) {
+        return this.j.create.element('input');
+    };
+    UIInput.prototype.focus = function () {
+        this.nativeInput.focus();
+    };
+    Object.defineProperty(UIInput.prototype, "isFocused", {
+        get: function () {
+            return this.nativeInput === this.j.od.activeElement;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    UIInput.prototype.onChangeFocus = function () {
+        this.setMod('focused', this.isFocused);
+    };
+    var UIInput_1;
+    UIInput.defaultState = {
+        className: '',
+        autocomplete: true,
+        name: '',
+        value: '',
+        icon: '',
+        label: '',
+        ref: '',
+        type: 'text',
+        placeholder: '',
+        required: false,
+        validators: []
+    };
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.clearButton')
+    ], UIInput.prototype, "onChangeClear", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.className')
+    ], UIInput.prototype, "onChangeClassName", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)([
+            'state.name',
+            'state.type',
+            'state.label',
+            'state.placeholder',
+            'state.autocomplete',
+            'state.icon'
+        ]),
+        (0, decorators_1.debounce)()
+    ], UIInput.prototype, "onChangeState", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.value')
+    ], UIInput.prototype, "onChangeStateValue", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], UIInput.prototype, "onChangeValue", null);
+    UIInput = UIInput_1 = tslib_1.__decorate([
+        decorators_1.component
+    ], UIInput);
+    return UIInput;
+}(element_1.UIElement));
+exports.UIInput = UIInput;
+
+
+/***/ }),
+/* 341 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 342 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.selectValidators = exports.inputValidators = void 0;
+exports.inputValidators = __webpack_require__(343);
+exports.selectValidators = __webpack_require__(344);
+
+
+/***/ }),
+/* 343 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.url = exports.required = void 0;
+var is_url_1 = __webpack_require__(209);
+var trim_1 = __webpack_require__(277);
+exports.required = function (input) {
+    if (!(0, trim_1.trim)(input.value).length) {
+        input.error = 'Please fill out this field';
+        return false;
+    }
+    return true;
+};
+exports.url = function (input) {
+    if (!(0, is_url_1.isURL)((0, trim_1.trim)(input.value))) {
+        input.error = 'Please enter a web address';
+        return false;
+    }
+    return true;
+};
+
+
+/***/ }),
+/* 344 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.required = void 0;
+var trim_1 = __webpack_require__(277);
+exports.required = function (select) {
+    if (!(0, trim_1.trim)(select.value).length) {
+        select.error = 'Please fill out this field';
+        return false;
+    }
+    return true;
+};
+
+
+/***/ }),
+/* 345 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UISelect = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(346);
+var utils_1 = __webpack_require__(190);
+var component_1 = __webpack_require__(235);
+var input_1 = __webpack_require__(340);
+var validators_1 = __webpack_require__(342);
+var UISelect = (function (_super) {
+    tslib_1.__extends(UISelect, _super);
+    function UISelect(jodit, state) {
+        var _this = _super.call(this, jodit, state) || this;
+        _this.state = tslib_1.__assign({}, UISelect_1.defaultState);
+        Object.assign(_this.state, state);
+        return _this;
+    }
+    UISelect_1 = UISelect;
+    UISelect.prototype.className = function () {
+        return 'UISelect';
+    };
+    UISelect.prototype.createContainer = function (state) {
+        var _a;
+        var container = _super.prototype.createContainer.call(this, state);
+        var j = this.j, nativeInput = this.nativeInput;
+        var opt = function () { return j.create.element('option'); };
+        if (state.placeholder !== undefined) {
+            var option = opt();
+            option.value = '';
+            option.text = j.i18n(state.placeholder);
+            nativeInput.add(option);
+        }
+        (_a = state.options) === null || _a === void 0 ? void 0 : _a.forEach(function (element) {
+            var option = opt();
+            option.value = element.value.toString();
+            option.text = j.i18n(element.text);
+            nativeInput.add(option);
+        });
+        if (state.size && state.size > 0) {
+            (0, utils_1.attr)(nativeInput, 'size', state.size);
+        }
+        if (state.multiple) {
+            (0, utils_1.attr)(nativeInput, 'multiple', '');
+        }
+        return container;
+    };
+    UISelect.prototype.createNativeInput = function () {
+        return this.j.create.element('select');
+    };
+    UISelect.prototype.updateValidators = function () {
+        _super.prototype.updateValidators.call(this);
+        if (this.state.required) {
+            this.validators.delete(validators_1.inputValidators.required);
+            this.validators.add(validators_1.selectValidators.required);
+        }
+    };
+    var UISelect_1;
+    UISelect.defaultState = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { options: [], size: 1, multiple: false });
+    UISelect = UISelect_1 = tslib_1.__decorate([
+        component_1.component
+    ], UISelect);
+    return UISelect;
+}(input_1.UIInput));
+exports.UISelect = UISelect;
+
+
+/***/ }),
+/* 346 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 347 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(340), exports);
+tslib_1.__exportStar(__webpack_require__(348), exports);
+tslib_1.__exportStar(__webpack_require__(350), exports);
+tslib_1.__exportStar(__webpack_require__(345), exports);
+tslib_1.__exportStar(__webpack_require__(352), exports);
+
+
+/***/ }),
+/* 348 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UITextArea = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(349);
+var input_1 = __webpack_require__(340);
+var component_1 = __webpack_require__(235);
+var UITextArea = (function (_super) {
+    tslib_1.__extends(UITextArea, _super);
+    function UITextArea(jodit, state) {
+        var _this = _super.call(this, jodit, state) || this;
+        _this.state = tslib_1.__assign({}, UITextArea_1.defaultState);
+        Object.assign(_this.state, state);
+        if (_this.state.resizable === false) {
+            _this.nativeInput.style.resize = 'none';
+        }
+        return _this;
+    }
+    UITextArea_1 = UITextArea;
+    UITextArea.prototype.className = function () {
+        return 'UITextArea';
+    };
+    UITextArea.prototype.createContainer = function (options) {
+        this.nativeInput = this.j.create.element('textarea');
+        return _super.prototype.createContainer.call(this, options);
+    };
+    var UITextArea_1;
+    UITextArea.defaultState = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { size: 5, resizable: true });
+    UITextArea = UITextArea_1 = tslib_1.__decorate([
+        component_1.component
+    ], UITextArea);
+    return UITextArea;
+}(input_1.UIInput));
+exports.UITextArea = UITextArea;
+
+
+/***/ }),
+/* 349 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 350 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UICheckbox = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(351);
+var input_1 = __webpack_require__(340);
+var decorators_1 = __webpack_require__(233);
+var dom_1 = __webpack_require__(215);
+var UICheckbox = (function (_super) {
+    tslib_1.__extends(UICheckbox, _super);
+    function UICheckbox(jodit, options) {
+        var _this = _super.call(this, jodit, tslib_1.__assign(tslib_1.__assign({}, options), { type: 'checkbox' })) || this;
+        _this.state = tslib_1.__assign({}, UICheckbox_1.defaultState);
+        Object.assign(_this.state, options);
+        return _this;
+    }
+    UICheckbox_1 = UICheckbox;
+    UICheckbox.prototype.className = function () {
+        return 'UICheckbox';
+    };
+    UICheckbox.prototype.render = function () {
+        return this.j.c.element('label', {
+            className: this.componentName
+        });
+    };
+    UICheckbox.prototype.onChangeChecked = function () {
+        this.value = this.state.checked.toString();
+        this.nativeInput.checked = this.state.checked;
+        this.setMod('checked', this.state.checked);
+    };
+    UICheckbox.prototype.onChangeNativeCheckBox = function () {
+        this.state.checked = this.nativeInput.checked;
+    };
+    UICheckbox.prototype.onChangeSwitch = function () {
+        this.setMod('switch', this.state.switch);
+        var slider = this.getElm('switch-slider');
+        if (this.state.switch) {
+            if (!slider) {
+                slider = this.j.c.div(this.getFullElName('switch-slider'));
+            }
+            dom_1.Dom.after(this.nativeInput, slider);
+        }
+        else {
+            dom_1.Dom.safeRemove(slider);
+        }
+    };
+    var UICheckbox_1;
+    UICheckbox.defaultState = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { checked: false, switch: false });
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.checked'),
+        (0, decorators_1.hook)('ready')
+    ], UICheckbox.prototype, "onChangeChecked", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('nativeInput:change')
+    ], UICheckbox.prototype, "onChangeNativeCheckBox", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)('state.switch'),
+        (0, decorators_1.hook)('ready')
+    ], UICheckbox.prototype, "onChangeSwitch", null);
+    UICheckbox = UICheckbox_1 = tslib_1.__decorate([
+        decorators_1.component
+    ], UICheckbox);
+    return UICheckbox;
+}(input_1.UIInput));
+exports.UICheckbox = UICheckbox;
+
+
+/***/ }),
+/* 351 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 352 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UIFileInput = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(353);
+var input_1 = __webpack_require__(340);
+var component_1 = __webpack_require__(235);
+var button_1 = __webpack_require__(310);
+var UIFileInput = (function (_super) {
+    tslib_1.__extends(UIFileInput, _super);
+    function UIFileInput(jodit, options) {
+        var _this = _super.call(this, jodit, tslib_1.__assign({ type: 'file' }, options)) || this;
+        _this.state = tslib_1.__assign(tslib_1.__assign({}, input_1.UIInput.defaultState), { type: 'file', onlyImages: true });
+        return _this;
+    }
+    UIFileInput.prototype.className = function () {
+        return 'UIFileInput';
+    };
+    UIFileInput.prototype.createContainer = function (options) {
+        this.button = new button_1.UIButton(this.j, {
+            icon: {
+                name: 'plus'
+            }
+        });
+        var container = this.button.container;
+        if (!this.nativeInput) {
+            this.nativeInput = this.createNativeInput(options);
+        }
+        var nativeInput = this.nativeInput;
+        nativeInput.classList.add(this.getFullElName('input'));
+        container.classList.add(this.componentName);
+        container.appendChild(nativeInput);
+        return container;
+    };
+    UIFileInput.prototype.createNativeInput = function (options) {
+        return this.j.create.fromHTML("<input\n\t\t\ttype=\"file\"\n\t\t\taccept=\"".concat(options.onlyImages ? 'image/*' : '*', "\"\n\t\t\ttabindex=\"-1\"\n\t\t\tdir=\"auto\"\n\t\t\tmultiple=\"\"\n\t\t/>"));
+    };
+    UIFileInput = tslib_1.__decorate([
+        component_1.component
+    ], UIFileInput);
+    return UIFileInput;
+}(input_1.UIInput));
+exports.UIFileInput = UIFileInput;
+
+
+/***/ }),
+/* 353 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 354 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UIBlock = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(355);
+var group_1 = __webpack_require__(316);
+var utils_1 = __webpack_require__(188);
+var component_1 = __webpack_require__(235);
+var UIBlock = (function (_super) {
+    tslib_1.__extends(UIBlock, _super);
+    function UIBlock(jodit, elements, options) {
+        if (options === void 0) { options = {
+            align: 'left'
+        }; }
+        var _this = _super.call(this, jodit, elements) || this;
+        _this.options = options;
+        _this.setMod('align', _this.options.align || 'left');
+        _this.setMod('width', _this.options.width || '');
+        _this.options.mod && _this.setMod(_this.options.mod, true);
+        _this.options.className &&
+            _this.container.classList.add(_this.options.className);
+        (0, utils_1.attr)(_this.container, 'data-ref', options.ref);
+        (0, utils_1.attr)(_this.container, 'ref', options.ref);
+        return _this;
+    }
+    UIBlock.prototype.className = function () {
+        return 'UIBlock';
+    };
+    UIBlock = tslib_1.__decorate([
+        component_1.component
+    ], UIBlock);
+    return UIBlock;
+}(group_1.UIGroup));
+exports.UIBlock = UIBlock;
+
+
+/***/ }),
+/* 355 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 356 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ProgressBar = void 0;
+var tslib_1 = __webpack_require__(1);
+__webpack_require__(357);
+var dom_1 = __webpack_require__(215);
+var element_1 = __webpack_require__(266);
+var ProgressBar = (function (_super) {
+    tslib_1.__extends(ProgressBar, _super);
+    function ProgressBar() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    ProgressBar.prototype.className = function () {
+        return 'ProgressBar';
+    };
+    ProgressBar.prototype.render = function () {
+        return '<div><div></div></div>';
+    };
+    ProgressBar.prototype.show = function () {
+        var container = this.j.workplace || this.j.container;
+        container.appendChild(this.container);
+        return this;
+    };
+    ProgressBar.prototype.hide = function () {
+        dom_1.Dom.safeRemove(this.container);
+        return this;
+    };
+    ProgressBar.prototype.progress = function (percentage) {
+        this.container.style.width = percentage.toFixed(2) + '%';
+        return this;
+    };
+    ProgressBar.prototype.destruct = function () {
+        this.hide();
+        return _super.prototype.destruct.call(this);
+    };
+    return ProgressBar;
+}(element_1.UIElement));
+exports.ProgressBar = ProgressBar;
+
+
+/***/ }),
+/* 357 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 358 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -16948,11 +17810,11 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ToolbarEditorCollection = void 0;
 var tslib_1 = __webpack_require__(1);
-var collection_1 = __webpack_require__(326);
-var consts = __webpack_require__(137);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var decorators_1 = __webpack_require__(169);
+var collection_1 = __webpack_require__(334);
+var consts = __webpack_require__(165);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var decorators_1 = __webpack_require__(233);
 var ToolbarEditorCollection = (function (_super) {
     tslib_1.__extends(ToolbarEditorCollection, _super);
     function ToolbarEditorCollection(jodit) {
@@ -17059,7 +17921,7 @@ exports.ToolbarEditorCollection = ToolbarEditorCollection;
 
 
 /***/ }),
-/* 329 */
+/* 359 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17072,17 +17934,17 @@ exports.ToolbarEditorCollection = ToolbarEditorCollection;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ToolbarButton = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(330);
-var button_1 = __webpack_require__(257);
-var decorators_1 = __webpack_require__(169);
-var dom_1 = __webpack_require__(159);
-var popup_1 = __webpack_require__(272);
-var factory_1 = __webpack_require__(325);
-var helpers_1 = __webpack_require__(146);
-var ui_1 = __webpack_require__(251);
-var collection_1 = __webpack_require__(326);
-var component_1 = __webpack_require__(154);
-var get_control_type_1 = __webpack_require__(268);
+__webpack_require__(360);
+var button_1 = __webpack_require__(309);
+var decorators_1 = __webpack_require__(233);
+var dom_1 = __webpack_require__(231);
+var popup_1 = __webpack_require__(307);
+var factory_1 = __webpack_require__(333);
+var helpers_1 = __webpack_require__(187);
+var icon_1 = __webpack_require__(270);
+var collection_1 = __webpack_require__(334);
+var statuses_1 = __webpack_require__(184);
+var get_control_type_1 = __webpack_require__(315);
 var ToolbarButton = (function (_super) {
     tslib_1.__extends(ToolbarButton, _super);
     function ToolbarButton(jodit, control, target) {
@@ -17096,7 +17958,7 @@ var ToolbarButton = (function (_super) {
             return e.preventDefault();
         });
         _this.onAction(_this.onClick);
-        _this.hookStatus(component_1.STATUSES.ready, function () {
+        _this.hookStatus(statuses_1.STATUSES.ready, function () {
             _this.initFromControl();
             _this.initTooltip();
             _this.update();
@@ -17124,8 +17986,8 @@ var ToolbarButton = (function (_super) {
         var _a = this, control = _a.control, state = _a.state, tc = this.closest(collection_1.ToolbarCollection);
         state.disabled = this.calculateDisabledStatus(tc);
         state.activated = this.calculateActivatedStatus(tc);
-        if ((0, helpers_1.isFunction)(control.update)) {
-            control.update(this);
+        if ((0, helpers_1.isFunction)(control.update) && tc) {
+            control.update(this, tc.jodit);
         }
         _super.prototype.update.call(this);
     };
@@ -17184,7 +18046,7 @@ var ToolbarButton = (function (_super) {
             value: this
         });
         container.appendChild(button);
-        this.trigger = this.j.c.fromHTML("<span role=\"trigger\" class=\"".concat(cn, "__trigger\">").concat(ui_1.Icon.get('chevron'), "</span>"));
+        this.trigger = this.j.c.fromHTML("<span role=\"trigger\" class=\"".concat(cn, "__trigger\">").concat(icon_1.Icon.get('chevron'), "</span>"));
         return container;
     };
     ToolbarButton.prototype.focus = function () {
@@ -17247,7 +18109,7 @@ var ToolbarButton = (function (_super) {
             else {
                 var name_1 = ctr.icon || ctr.name;
                 state.icon.name =
-                    ui_1.Icon.exists(name_1) || ((_a = this.j.o.extraIcons) === null || _a === void 0 ? void 0 : _a[name_1])
+                    icon_1.Icon.exists(name_1) || ((_a = this.j.o.extraIcons) === null || _a === void 0 ? void 0 : _a[name_1])
                         ? name_1
                         : '';
             }
@@ -17424,7 +18286,7 @@ exports.ToolbarButton = ToolbarButton;
 
 
 /***/ }),
-/* 330 */
+/* 360 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17433,7 +18295,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 331 */
+/* 361 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17446,11 +18308,11 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ToolbarContent = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(332);
-var button_1 = __webpack_require__(257);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var decorators_1 = __webpack_require__(169);
+__webpack_require__(362);
+var button_1 = __webpack_require__(309);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var decorators_1 = __webpack_require__(233);
 var ToolbarContent = (function (_super) {
     tslib_1.__extends(ToolbarContent, _super);
     function ToolbarContent(jodit, control, target) {
@@ -17485,7 +18347,7 @@ exports.ToolbarContent = ToolbarContent;
 
 
 /***/ }),
-/* 332 */
+/* 362 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17494,7 +18356,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 333 */
+/* 363 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17506,10 +18368,10 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Alert = void 0;
-var dialog_1 = __webpack_require__(316);
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
-var ui_1 = __webpack_require__(251);
+var dialog_1 = __webpack_require__(324);
+var helpers_1 = __webpack_require__(187);
+var dom_1 = __webpack_require__(231);
+var ui_1 = __webpack_require__(336);
 var Alert = function (msg, title, callback, className) {
     if (className === void 0) { className = 'jodit-dialog_alert'; }
     if ((0, helpers_1.isFunction)(title)) {
@@ -17534,7 +18396,7 @@ exports.Alert = Alert;
 
 
 /***/ }),
-/* 334 */
+/* 364 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17546,9 +18408,9 @@ exports.Alert = Alert;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Prompt = void 0;
-var dialog_1 = __webpack_require__(315);
-var ui_1 = __webpack_require__(251);
-var helpers_1 = __webpack_require__(146);
+var dialog_1 = __webpack_require__(323);
+var ui_1 = __webpack_require__(336);
+var helpers_1 = __webpack_require__(187);
 var Prompt = function (msg, title, callback, placeholder, defaultValue) {
     var dialog = new dialog_1.Dialog(), cancelButton = (0, ui_1.Button)(dialog, 'cancel', 'Cancel'), okButton = (0, ui_1.Button)(dialog, 'ok', 'Ok'), form = dialog.c.element('form', {
         class: 'jodit-dialog_prompt'
@@ -17592,7 +18454,7 @@ exports.Prompt = Prompt;
 
 
 /***/ }),
-/* 335 */
+/* 365 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17604,9 +18466,9 @@ exports.Prompt = Prompt;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Confirm = void 0;
-var dialog_1 = __webpack_require__(315);
-var helpers_1 = __webpack_require__(146);
-var ui_1 = __webpack_require__(251);
+var dialog_1 = __webpack_require__(323);
+var helpers_1 = __webpack_require__(187);
+var ui_1 = __webpack_require__(336);
 var Confirm = function (msg, title, callback) {
     var dialog = new dialog_1.Dialog(), $div = dialog.c.fromHTML('<form class="jodit-dialog_prompt"></form>'), $label = dialog.c.element('label');
     if ((0, helpers_1.isFunction)(title)) {
@@ -17637,7 +18499,7 @@ exports.Confirm = Confirm;
 
 
 /***/ }),
-/* 336 */
+/* 366 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17649,12 +18511,12 @@ exports.Confirm = Confirm;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(158), exports);
-tslib_1.__exportStar(__webpack_require__(337), exports);
+tslib_1.__exportStar(__webpack_require__(240), exports);
+tslib_1.__exportStar(__webpack_require__(367), exports);
 
 
 /***/ }),
-/* 337 */
+/* 367 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17667,9 +18529,9 @@ tslib_1.__exportStar(__webpack_require__(337), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Plugin = void 0;
 var tslib_1 = __webpack_require__(1);
-var component_1 = __webpack_require__(154);
-var decorators_1 = __webpack_require__(169);
-var helpers_1 = __webpack_require__(146);
+var component_1 = __webpack_require__(237);
+var decorators_1 = __webpack_require__(233);
+var helpers_1 = __webpack_require__(187);
 var Plugin = (function (_super) {
     tslib_1.__extends(Plugin, _super);
     function Plugin(jodit) {
@@ -17722,7 +18584,7 @@ exports.Plugin = Plugin;
 
 
 /***/ }),
-/* 338 */
+/* 368 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17734,11 +18596,11 @@ exports.Plugin = Plugin;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(339), exports);
+tslib_1.__exportStar(__webpack_require__(369), exports);
 
 
 /***/ }),
-/* 339 */
+/* 369 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17750,9 +18612,9 @@ tslib_1.__exportStar(__webpack_require__(339), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Create = void 0;
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
-var constants_1 = __webpack_require__(137);
+var helpers_1 = __webpack_require__(187);
+var dom_1 = __webpack_require__(231);
+var constants_1 = __webpack_require__(165);
 var Create = (function () {
     function Create(document, createAttributes) {
         this.document = document;
@@ -17852,7 +18714,7 @@ exports.Create = Create;
 
 
 /***/ }),
-/* 340 */
+/* 370 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17864,11 +18726,11 @@ exports.Create = Create;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(341), exports);
+tslib_1.__exportStar(__webpack_require__(371), exports);
 
 
 /***/ }),
-/* 341 */
+/* 371 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -17881,26 +18743,26 @@ tslib_1.__exportStar(__webpack_require__(341), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isFileBrowserFilesItem = exports.FileBrowser = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(342);
-var config_1 = __webpack_require__(136);
-var consts = __webpack_require__(137);
-var dialog_1 = __webpack_require__(315);
-var storage_1 = __webpack_require__(321);
-var helpers_1 = __webpack_require__(146);
-var view_with_toolbar_1 = __webpack_require__(318);
-__webpack_require__(343);
-var dom_1 = __webpack_require__(159);
-var factories_1 = __webpack_require__(344);
-var state_listeners_1 = __webpack_require__(347);
-var native_listeners_1 = __webpack_require__(351);
-var self_listeners_1 = __webpack_require__(358);
-var data_provider_1 = __webpack_require__(345);
-var decorators_1 = __webpack_require__(169);
-var ui_1 = __webpack_require__(359);
-var event_emitter_1 = __webpack_require__(139);
-var load_tree_1 = __webpack_require__(349);
-var load_items_1 = __webpack_require__(350);
-var component_1 = __webpack_require__(154);
+__webpack_require__(372);
+var config_1 = __webpack_require__(164);
+var consts = __webpack_require__(165);
+var dialog_1 = __webpack_require__(323);
+var storage_1 = __webpack_require__(329);
+var helpers_1 = __webpack_require__(187);
+var view_with_toolbar_1 = __webpack_require__(326);
+__webpack_require__(373);
+var dom_1 = __webpack_require__(231);
+var factories_1 = __webpack_require__(374);
+var state_listeners_1 = __webpack_require__(377);
+var native_listeners_1 = __webpack_require__(381);
+var self_listeners_1 = __webpack_require__(388);
+var data_provider_1 = __webpack_require__(375);
+var decorators_1 = __webpack_require__(233);
+var ui_1 = __webpack_require__(389);
+var event_emitter_1 = __webpack_require__(167);
+var load_tree_1 = __webpack_require__(379);
+var load_items_1 = __webpack_require__(380);
+var component_1 = __webpack_require__(237);
 var FileBrowser = (function (_super) {
     tslib_1.__extends(FileBrowser, _super);
     function FileBrowser(options) {
@@ -18139,10 +19001,10 @@ var FileBrowser = (function (_super) {
         if (this.isInDestruct) {
             return;
         }
+        _super.prototype.destruct.call(this);
         this.dialog.destruct();
         this.events && this.e.off('.filebrowser');
         this.uploader && this.uploader.destruct();
-        _super.prototype.destruct.call(this);
     };
     tslib_1.__decorate([
         decorators_1.autobind
@@ -18161,7 +19023,7 @@ exports.isFileBrowserFilesItem = isFileBrowserFilesItem;
 
 
 /***/ }),
-/* 342 */
+/* 372 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18170,7 +19032,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 343 */
+/* 373 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -18182,9 +19044,9 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var helpers_1 = __webpack_require__(146);
-var ui_1 = __webpack_require__(251);
+var config_1 = __webpack_require__(164);
+var helpers_1 = __webpack_require__(187);
+var ui_1 = __webpack_require__(336);
 config_1.Config.prototype.filebrowser = {
     namespace: '',
     extraButtons: [],
@@ -18461,7 +19323,7 @@ config_1.Config.prototype.controls.filebrowser = {
 
 
 /***/ }),
-/* 344 */
+/* 374 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -18473,8 +19335,8 @@ config_1.Config.prototype.controls.filebrowser = {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.makeContextMenu = exports.makeDataProvider = void 0;
-var data_provider_1 = __webpack_require__(345);
-var context_menu_1 = __webpack_require__(313);
+var data_provider_1 = __webpack_require__(375);
+var context_menu_1 = __webpack_require__(304);
 function makeDataProvider(parent, options) {
     return new data_provider_1.default(parent, options);
 }
@@ -18486,7 +19348,7 @@ exports.makeContextMenu = makeContextMenu;
 
 
 /***/ }),
-/* 345 */
+/* 375 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -18499,10 +19361,10 @@ exports.makeContextMenu = makeContextMenu;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DEFAULT_SOURCE_NAME = void 0;
 var tslib_1 = __webpack_require__(1);
-var helpers_1 = __webpack_require__(146);
-var request_1 = __webpack_require__(309);
-var decorators_1 = __webpack_require__(169);
-var item_1 = __webpack_require__(346);
+var helpers_1 = __webpack_require__(187);
+var request_1 = __webpack_require__(185);
+var decorators_1 = __webpack_require__(233);
+var item_1 = __webpack_require__(376);
 exports.DEFAULT_SOURCE_NAME = 'default';
 var possibleRules = (/* unused pure expression or super */ null && ([
     'allowFiles',
@@ -18825,7 +19687,7 @@ exports["default"] = DataProvider;
 
 
 /***/ }),
-/* 346 */
+/* 376 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -18837,7 +19699,7 @@ exports["default"] = DataProvider;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FileBrowserItem = void 0;
-var helpers_1 = __webpack_require__(146);
+var helpers_1 = __webpack_require__(187);
 var FileBrowserItem = (function () {
     function FileBrowserItem(data) {
         var _this = this;
@@ -18922,7 +19784,7 @@ exports.FileBrowserItem = FileBrowserItem;
 
 
 /***/ }),
-/* 347 */
+/* 377 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -18934,11 +19796,11 @@ exports.FileBrowserItem = FileBrowserItem;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.stateListeners = void 0;
-var dom_1 = __webpack_require__(159);
-var normalize_1 = __webpack_require__(221);
-var ui_1 = __webpack_require__(251);
-var elements_map_1 = __webpack_require__(348);
-var load_tree_1 = __webpack_require__(349);
+var dom_1 = __webpack_require__(231);
+var normalize_1 = __webpack_require__(283);
+var ui_1 = __webpack_require__(336);
+var elements_map_1 = __webpack_require__(378);
+var load_tree_1 = __webpack_require__(379);
 var DEFAULT_SOURCE_NAME = 'default';
 function stateListeners() {
     var _this = this;
@@ -19076,7 +19938,7 @@ exports.stateListeners = stateListeners;
 
 
 /***/ }),
-/* 348 */
+/* 378 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -19101,7 +19963,7 @@ exports.elementsMap = elementsMap;
 
 
 /***/ }),
-/* 349 */
+/* 379 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -19114,9 +19976,9 @@ exports.elementsMap = elementsMap;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.loadTree = void 0;
 var tslib_1 = __webpack_require__(1);
-var error_1 = __webpack_require__(143);
-var dom_1 = __webpack_require__(159);
-var load_items_1 = __webpack_require__(350);
+var error_1 = __webpack_require__(176);
+var dom_1 = __webpack_require__(231);
+var load_items_1 = __webpack_require__(380);
 function loadTree(fb) {
     return tslib_1.__awaiter(this, void 0, void 0, function () {
         var errorUni, items, tree;
@@ -19149,7 +20011,7 @@ exports.loadTree = loadTree;
 
 
 /***/ }),
-/* 350 */
+/* 380 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -19186,7 +20048,7 @@ exports.loadItems = loadItems;
 
 
 /***/ }),
-/* 351 */
+/* 381 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -19199,11 +20061,11 @@ exports.loadItems = loadItems;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.nativeListeners = exports.elementToItem = exports.getItem = void 0;
 var tslib_1 = __webpack_require__(1);
-var helpers_1 = __webpack_require__(146);
-var context_menu_1 = __webpack_require__(352);
-var dom_1 = __webpack_require__(159);
-var elements_map_1 = __webpack_require__(348);
-var load_tree_1 = __webpack_require__(349);
+var helpers_1 = __webpack_require__(187);
+var context_menu_1 = __webpack_require__(382);
+var dom_1 = __webpack_require__(231);
+var elements_map_1 = __webpack_require__(378);
+var load_tree_1 = __webpack_require__(379);
 var getItem = function (node, root, tag) {
     if (tag === void 0) { tag = 'a'; }
     return dom_1.Dom.closest(node, function (elm) { return dom_1.Dom.isTag(elm, tag); }, root);
@@ -19294,7 +20156,7 @@ exports.nativeListeners = nativeListeners;
 
 
 /***/ }),
-/* 352 */
+/* 382 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -19306,16 +20168,16 @@ exports.nativeListeners = nativeListeners;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-var dialog_1 = __webpack_require__(315);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var factories_1 = __webpack_require__(344);
-var ui_1 = __webpack_require__(251);
-var native_listeners_1 = __webpack_require__(351);
-var image_editor_1 = __webpack_require__(353);
-var elements_map_1 = __webpack_require__(348);
-var load_tree_1 = __webpack_require__(349);
-var delete_file_1 = __webpack_require__(357);
+var dialog_1 = __webpack_require__(323);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var factories_1 = __webpack_require__(374);
+var ui_1 = __webpack_require__(336);
+var native_listeners_1 = __webpack_require__(381);
+var image_editor_1 = __webpack_require__(383);
+var elements_map_1 = __webpack_require__(378);
+var load_tree_1 = __webpack_require__(379);
+var delete_file_1 = __webpack_require__(387);
 var CLASS_PREVIEW = 'jodit-filebrowser-preview', preview_tpl_next = function (next, right) {
     if (next === void 0) { next = 'next'; }
     if (right === void 0) { right = 'right'; }
@@ -19481,7 +20343,7 @@ exports["default"] = (function (self) {
 
 
 /***/ }),
-/* 353 */
+/* 383 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -19494,16 +20356,16 @@ exports["default"] = (function (self) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.openImageEditor = exports.ImageEditor = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(354);
-var config_1 = __webpack_require__(136);
-var component_1 = __webpack_require__(154);
-var dialog_1 = __webpack_require__(315);
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
-var button_1 = __webpack_require__(257);
-var form_1 = __webpack_require__(355);
-var decorators_1 = __webpack_require__(169);
-__webpack_require__(356);
+__webpack_require__(384);
+var config_1 = __webpack_require__(164);
+var component_1 = __webpack_require__(237);
+var dialog_1 = __webpack_require__(323);
+var helpers_1 = __webpack_require__(187);
+var dom_1 = __webpack_require__(231);
+var button_1 = __webpack_require__(309);
+var form_1 = __webpack_require__(385);
+var decorators_1 = __webpack_require__(233);
+__webpack_require__(386);
 var jie = 'jodit-image-editor';
 var TABS = {
     resize: 'resize',
@@ -20043,7 +20905,7 @@ exports.openImageEditor = openImageEditor;
 
 
 /***/ }),
-/* 354 */
+/* 384 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20052,7 +20914,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 355 */
+/* 385 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -20064,7 +20926,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.form = void 0;
-var ui_1 = __webpack_require__(251);
+var ui_1 = __webpack_require__(336);
 var jie = 'jodit-image-editor';
 var gi = ui_1.Icon.get.bind(ui_1.Icon);
 var act = function (el, className) {
@@ -20091,7 +20953,7 @@ exports.form = form;
 
 
 /***/ }),
-/* 356 */
+/* 386 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -20102,7 +20964,7 @@ exports.form = form;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.imageeditor = {
     min_width: 20,
     min_height: 20,
@@ -20121,7 +20983,7 @@ config_1.Config.prototype.imageeditor = {
 
 
 /***/ }),
-/* 357 */
+/* 387 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -20145,7 +21007,7 @@ exports.deleteFile = deleteFile;
 
 
 /***/ }),
-/* 358 */
+/* 388 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -20158,14 +21020,14 @@ exports.deleteFile = deleteFile;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.selfListeners = void 0;
 var tslib_1 = __webpack_require__(1);
-var dialog_1 = __webpack_require__(315);
-var checker_1 = __webpack_require__(173);
-var helpers_1 = __webpack_require__(146);
-var data_provider_1 = __webpack_require__(345);
-var image_editor_1 = __webpack_require__(353);
-var load_tree_1 = __webpack_require__(349);
-var load_items_1 = __webpack_require__(350);
-var delete_file_1 = __webpack_require__(357);
+var dialog_1 = __webpack_require__(323);
+var checker_1 = __webpack_require__(222);
+var helpers_1 = __webpack_require__(187);
+var data_provider_1 = __webpack_require__(375);
+var image_editor_1 = __webpack_require__(383);
+var load_tree_1 = __webpack_require__(379);
+var load_items_1 = __webpack_require__(380);
+var delete_file_1 = __webpack_require__(387);
 function selfListeners() {
     var _this = this;
     var state = this.state, dp = this.dataProvider, self = this;
@@ -20284,7 +21146,7 @@ exports.selfListeners = selfListeners;
 
 
 /***/ }),
-/* 359 */
+/* 389 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -20296,12 +21158,12 @@ exports.selfListeners = selfListeners;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(360), exports);
-tslib_1.__exportStar(__webpack_require__(362), exports);
+tslib_1.__exportStar(__webpack_require__(390), exports);
+tslib_1.__exportStar(__webpack_require__(392), exports);
 
 
 /***/ }),
-/* 360 */
+/* 390 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -20314,8 +21176,8 @@ tslib_1.__exportStar(__webpack_require__(362), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FileBrowserFiles = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(361);
-var ui_1 = __webpack_require__(251);
+__webpack_require__(391);
+var ui_1 = __webpack_require__(336);
 var FileBrowserFiles = (function (_super) {
     tslib_1.__extends(FileBrowserFiles, _super);
     function FileBrowserFiles() {
@@ -20330,7 +21192,7 @@ exports.FileBrowserFiles = FileBrowserFiles;
 
 
 /***/ }),
-/* 361 */
+/* 391 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20339,7 +21201,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 362 */
+/* 392 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -20352,8 +21214,8 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FileBrowserTree = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(363);
-var ui_1 = __webpack_require__(251);
+__webpack_require__(393);
+var ui_1 = __webpack_require__(336);
 var FileBrowserTree = (function (_super) {
     tslib_1.__extends(FileBrowserTree, _super);
     function FileBrowserTree() {
@@ -20368,7 +21230,7 @@ exports.FileBrowserTree = FileBrowserTree;
 
 
 /***/ }),
-/* 363 */
+/* 393 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20377,7 +21239,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 364 */
+/* 394 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -20390,12 +21252,12 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.History = void 0;
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var component_1 = __webpack_require__(154);
-var snapshot_1 = __webpack_require__(365);
-var stack_1 = __webpack_require__(366);
-var command_1 = __webpack_require__(367);
-var decorators_1 = __webpack_require__(169);
+var config_1 = __webpack_require__(164);
+var component_1 = __webpack_require__(237);
+var snapshot_1 = __webpack_require__(395);
+var stack_1 = __webpack_require__(396);
+var command_1 = __webpack_require__(397);
+var decorators_1 = __webpack_require__(233);
 config_1.Config.prototype.history = {
     enable: true,
     maxHistoryLength: Infinity,
@@ -20538,7 +21400,7 @@ exports.History = History;
 
 
 /***/ }),
-/* 365 */
+/* 395 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -20551,8 +21413,8 @@ exports.History = History;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Snapshot = void 0;
 var tslib_1 = __webpack_require__(1);
-var component_1 = __webpack_require__(154);
-var dom_1 = __webpack_require__(159);
+var component_1 = __webpack_require__(237);
+var dom_1 = __webpack_require__(231);
 var Snapshot = (function (_super) {
     tslib_1.__extends(Snapshot, _super);
     function Snapshot() {
@@ -20690,7 +21552,7 @@ exports.Snapshot = Snapshot;
 
 
 /***/ }),
-/* 366 */
+/* 396 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -20769,7 +21631,7 @@ exports.Stack = Stack;
 
 
 /***/ }),
-/* 367 */
+/* 397 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -20800,7 +21662,7 @@ exports.Command = Command;
 
 
 /***/ }),
-/* 368 */
+/* 398 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -20813,11 +21675,11 @@ exports.Command = Command;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.StatusBar = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(369);
-var component_1 = __webpack_require__(154);
-var dom_1 = __webpack_require__(159);
-var traits_1 = __webpack_require__(253);
-var decorators_1 = __webpack_require__(169);
+__webpack_require__(399);
+var component_1 = __webpack_require__(237);
+var dom_1 = __webpack_require__(231);
+var traits_1 = __webpack_require__(267);
+var decorators_1 = __webpack_require__(233);
 var StatusBar = (function (_super) {
     tslib_1.__extends(StatusBar, _super);
     function StatusBar(jodit, target) {
@@ -20898,7 +21760,7 @@ exports.StatusBar = StatusBar;
 
 
 /***/ }),
-/* 369 */
+/* 399 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20907,7 +21769,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 370 */
+/* 400 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -20920,12 +21782,12 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Table = void 0;
 var tslib_1 = __webpack_require__(1);
-var consts = __webpack_require__(137);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var component_1 = __webpack_require__(154);
-var global_1 = __webpack_require__(157);
-var decorators_1 = __webpack_require__(169);
+var consts = __webpack_require__(165);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var component_1 = __webpack_require__(237);
+var global_1 = __webpack_require__(239);
+var decorators_1 = __webpack_require__(233);
 var markedValue = new WeakMap();
 var Table = (function (_super) {
     tslib_1.__extends(Table, _super);
@@ -21501,7 +22363,7 @@ var instance = function (j) { return j.getInstance('Table', j.o); };
 
 
 /***/ }),
-/* 371 */
+/* 401 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -21513,12 +22375,12 @@ var instance = function (j) { return j.getInstance('Table', j.o); };
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(329), exports);
-tslib_1.__exportStar(__webpack_require__(331), exports);
+tslib_1.__exportStar(__webpack_require__(359), exports);
+tslib_1.__exportStar(__webpack_require__(361), exports);
 
 
 /***/ }),
-/* 372 */
+/* 402 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -21531,13 +22393,13 @@ tslib_1.__exportStar(__webpack_require__(331), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Uploader = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(373);
-var config_1 = __webpack_require__(136);
-var constants_1 = __webpack_require__(137);
-var helpers_1 = __webpack_require__(146);
-var component_1 = __webpack_require__(154);
-var helpers_2 = __webpack_require__(374);
-__webpack_require__(380);
+__webpack_require__(403);
+var config_1 = __webpack_require__(164);
+var constants_1 = __webpack_require__(165);
+var helpers_1 = __webpack_require__(187);
+var component_1 = __webpack_require__(237);
+var helpers_2 = __webpack_require__(404);
+__webpack_require__(410);
 var Uploader = (function (_super) {
     tslib_1.__extends(Uploader, _super);
     function Uploader(editor, options) {
@@ -21547,6 +22409,13 @@ var Uploader = (function (_super) {
         _this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(config_1.Config.defaultOptions.uploader, (0, helpers_1.isJoditObject)(editor) ? editor.o.uploader : {}));
         return _this;
     }
+    Object.defineProperty(Uploader.prototype, "j", {
+        get: function () {
+            return this.jodit;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Uploader.prototype.className = function () {
         return 'Uploader';
     };
@@ -21695,7 +22564,7 @@ exports.Uploader = Uploader;
 
 
 /***/ }),
-/* 373 */
+/* 403 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21704,7 +22573,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 374 */
+/* 404 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -21717,11 +22586,11 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.hasItems = exports.hasFiles = void 0;
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(375), exports);
-tslib_1.__exportStar(__webpack_require__(376), exports);
-tslib_1.__exportStar(__webpack_require__(377), exports);
-tslib_1.__exportStar(__webpack_require__(378), exports);
-tslib_1.__exportStar(__webpack_require__(379), exports);
+tslib_1.__exportStar(__webpack_require__(405), exports);
+tslib_1.__exportStar(__webpack_require__(406), exports);
+tslib_1.__exportStar(__webpack_require__(407), exports);
+tslib_1.__exportStar(__webpack_require__(408), exports);
+tslib_1.__exportStar(__webpack_require__(409), exports);
 function hasFiles(data) {
     return Boolean(data && data.files && data.files.length > 0);
 }
@@ -21733,7 +22602,7 @@ exports.hasItems = hasItems;
 
 
 /***/ }),
-/* 375 */
+/* 405 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -21745,11 +22614,11 @@ exports.hasItems = hasItems;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.processOldBrowserDrag = void 0;
-var constants_1 = __webpack_require__(137);
-var global_1 = __webpack_require__(157);
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
-var index_1 = __webpack_require__(374);
+var constants_1 = __webpack_require__(165);
+var global_1 = __webpack_require__(239);
+var helpers_1 = __webpack_require__(187);
+var dom_1 = __webpack_require__(231);
+var index_1 = __webpack_require__(404);
 function processOldBrowserDrag(self, cData, handlerSuccess, handlerError, onFinally) {
     if (cData && (!cData.types.length || cData.types[0] !== constants_1.TEXT_PLAIN)) {
         var div_1 = self.j.c.div('', {
@@ -21778,7 +22647,7 @@ exports.processOldBrowserDrag = processOldBrowserDrag;
 
 
 /***/ }),
-/* 376 */
+/* 406 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -21801,7 +22670,7 @@ exports.dataURItoBlob = dataURItoBlob;
 
 
 /***/ }),
-/* 377 */
+/* 407 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -21813,12 +22682,12 @@ exports.dataURItoBlob = dataURItoBlob;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.buildData = void 0;
-var helpers_1 = __webpack_require__(146);
+var helpers_1 = __webpack_require__(187);
 function buildData(uploader, data) {
     if ((0, helpers_1.isFunction)(uploader.o.buildData)) {
         return uploader.o.buildData.call(uploader, data);
     }
-    var FD = uploader.j.ow.FormData;
+    var FD = uploader.ow.FormData;
     if (FD !== undefined) {
         if (data instanceof FD) {
             return data;
@@ -21838,7 +22707,7 @@ exports.buildData = buildData;
 
 
 /***/ }),
-/* 378 */
+/* 408 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -21850,9 +22719,9 @@ exports.buildData = buildData;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.send = exports.ajaxInstances = void 0;
-var request_1 = __webpack_require__(309);
-var helpers_1 = __webpack_require__(146);
-var build_data_1 = __webpack_require__(377);
+var request_1 = __webpack_require__(185);
+var helpers_1 = __webpack_require__(187);
+var build_data_1 = __webpack_require__(407);
 exports.ajaxInstances = new WeakMap();
 function send(uploader, data) {
     var requestData = (0, build_data_1.buildData)(uploader, data);
@@ -21920,7 +22789,7 @@ exports.send = send;
 
 
 /***/ }),
-/* 379 */
+/* 409 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -21932,8 +22801,8 @@ exports.send = send;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sendFiles = void 0;
-var helpers_1 = __webpack_require__(146);
-var send_1 = __webpack_require__(378);
+var helpers_1 = __webpack_require__(187);
+var send_1 = __webpack_require__(408);
 function sendFiles(uploader, files, handlerSuccess, handlerError, process) {
     if (!files) {
         return Promise.reject((0, helpers_1.error)('Need files'));
@@ -22037,7 +22906,7 @@ exports.sendFiles = sendFiles;
 
 
 /***/ }),
-/* 380 */
+/* 410 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -22049,8 +22918,9 @@ exports.sendFiles = sendFiles;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var helpers_1 = __webpack_require__(146);
+var config_1 = __webpack_require__(164);
+var is_array_1 = __webpack_require__(14);
+var is_jodit_object_1 = __webpack_require__(228);
 config_1.Config.prototype.enableDragAndDropFileToEditor = true;
 config_1.Config.prototype.uploader = {
     url: '',
@@ -22072,7 +22942,7 @@ config_1.Config.prototype.uploader = {
         return resp.success;
     },
     getMessage: function (resp) {
-        return resp.data.messages !== undefined && (0, helpers_1.isArray)(resp.data.messages)
+        return resp.data.messages !== undefined && (0, is_array_1.isArray)(resp.data.messages)
             ? resp.data.messages.join(' ')
             : '';
     },
@@ -22084,7 +22954,7 @@ config_1.Config.prototype.uploader = {
     },
     defaultHandlerSuccess: function (resp) {
         var j = this.j || this;
-        if (!(0, helpers_1.isJoditObject)(j)) {
+        if (!(0, is_jodit_object_1.isJoditObject)(j)) {
             return;
         }
         if (resp.files && resp.files.length) {
@@ -22110,7 +22980,7 @@ config_1.Config.prototype.uploader = {
         this.j.e.fire('errorMessage', e.message);
     },
     contentType: function (requestData) {
-        return this.j.ow.FormData !== undefined &&
+        return this.ow.FormData !== undefined &&
             typeof requestData !== 'string'
             ? false
             : 'application/x-www-form-urlencoded; charset=UTF-8';
@@ -22119,7 +22989,7 @@ config_1.Config.prototype.uploader = {
 
 
 /***/ }),
-/* 381 */
+/* 411 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -22130,30 +23000,30 @@ config_1.Config.prototype.uploader = {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var checker_1 = __webpack_require__(173);
-var en = __webpack_require__(382);
+var checker_1 = __webpack_require__(222);
+var en = __webpack_require__(412);
 var exp = {
     en: en
 };
 if (true) {
-    var ar = __webpack_require__(383);
-    var cs_cz = __webpack_require__(384);
-    var de = __webpack_require__(385);
-    var es = __webpack_require__(386);
-    var fr = __webpack_require__(387);
-    var he = __webpack_require__(388);
-    var hu = __webpack_require__(389);
-    var id = __webpack_require__(390);
-    var it = __webpack_require__(391);
-    var ja = __webpack_require__(392);
-    var ko = __webpack_require__(393);
-    var nl = __webpack_require__(394);
-    var pl = __webpack_require__(395);
-    var pt_br = __webpack_require__(396);
-    var ru = __webpack_require__(397);
-    var tr = __webpack_require__(398);
-    var zh_cn = __webpack_require__(399);
-    var zh_tw = __webpack_require__(400);
+    var ar = __webpack_require__(413);
+    var cs_cz = __webpack_require__(414);
+    var de = __webpack_require__(415);
+    var es = __webpack_require__(416);
+    var fr = __webpack_require__(417);
+    var he = __webpack_require__(418);
+    var hu = __webpack_require__(419);
+    var id = __webpack_require__(420);
+    var it = __webpack_require__(421);
+    var ja = __webpack_require__(422);
+    var ko = __webpack_require__(423);
+    var nl = __webpack_require__(424);
+    var pl = __webpack_require__(425);
+    var pt_br = __webpack_require__(426);
+    var ru = __webpack_require__(427);
+    var tr = __webpack_require__(428);
+    var zh_cn = __webpack_require__(429);
+    var zh_tw = __webpack_require__(430);
     exp = {
         ar: ar,
         cs_cz: cs_cz,
@@ -22195,7 +23065,7 @@ exports["default"] = exp;
 
 
 /***/ }),
-/* 382 */
+/* 412 */
 /***/ (function(module) {
 
 /*!
@@ -22212,7 +23082,7 @@ module.exports = {
 
 
 /***/ }),
-/* 383 */
+/* 413 */
 /***/ (function(module) {
 
 /*!
@@ -22445,7 +23315,7 @@ module.exports = {
 
 
 /***/ }),
-/* 384 */
+/* 414 */
 /***/ (function(module) {
 
 /*!
@@ -22680,7 +23550,7 @@ module.exports = {
 
 
 /***/ }),
-/* 385 */
+/* 415 */
 /***/ (function(module) {
 
 /*!
@@ -22920,7 +23790,7 @@ module.exports = {
 
 
 /***/ }),
-/* 386 */
+/* 416 */
 /***/ (function(module) {
 
 /*!
@@ -23159,7 +24029,7 @@ module.exports = {
 
 
 /***/ }),
-/* 387 */
+/* 417 */
 /***/ (function(module) {
 
 /*!
@@ -23389,7 +24259,7 @@ module.exports = {
 
 
 /***/ }),
-/* 388 */
+/* 418 */
 /***/ (function(module) {
 
 /*!
@@ -23623,7 +24493,7 @@ module.exports = {
 
 
 /***/ }),
-/* 389 */
+/* 419 */
 /***/ (function(module) {
 
 /*!
@@ -23859,7 +24729,7 @@ module.exports = {
 
 
 /***/ }),
-/* 390 */
+/* 420 */
 /***/ (function(module) {
 
 /*!
@@ -24094,7 +24964,7 @@ module.exports = {
 
 
 /***/ }),
-/* 391 */
+/* 421 */
 /***/ (function(module) {
 
 /*!
@@ -24329,7 +25199,7 @@ module.exports = {
 
 
 /***/ }),
-/* 392 */
+/* 422 */
 /***/ (function(module) {
 
 /*!
@@ -24567,7 +25437,7 @@ module.exports = {
 
 
 /***/ }),
-/* 393 */
+/* 423 */
 /***/ (function(module) {
 
 /*!
@@ -24800,7 +25670,7 @@ module.exports = {
 
 
 /***/ }),
-/* 394 */
+/* 424 */
 /***/ (function(module) {
 
 /*!
@@ -25036,7 +25906,7 @@ module.exports = {
 
 
 /***/ }),
-/* 395 */
+/* 425 */
 /***/ (function(module) {
 
 /*!
@@ -25272,7 +26142,7 @@ module.exports = {
 
 
 /***/ }),
-/* 396 */
+/* 426 */
 /***/ (function(module) {
 
 /*!
@@ -25511,7 +26381,7 @@ module.exports = {
 
 
 /***/ }),
-/* 397 */
+/* 427 */
 /***/ (function(module) {
 
 /*!
@@ -25745,7 +26615,7 @@ module.exports = {
 
 
 /***/ }),
-/* 398 */
+/* 428 */
 /***/ (function(module) {
 
 /*!
@@ -25979,7 +26849,7 @@ module.exports = {
 
 
 /***/ }),
-/* 399 */
+/* 429 */
 /***/ (function(module) {
 
 /*!
@@ -26213,7 +27083,7 @@ module.exports = {
 
 
 /***/ }),
-/* 400 */
+/* 430 */
 /***/ (function(module) {
 
 /*!
@@ -26445,7 +27315,7 @@ module.exports = {
 
 
 /***/ }),
-/* 401 */
+/* 431 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -26456,108 +27326,106 @@ module.exports = {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.xpath = exports.tab = exports.tooltip = exports.symbols = exports.spellcheck = exports.sticky = exports.stat = exports.source = exports.resizeHandler = exports.size = exports.select = exports.search = exports.resizer = exports.redoUndo = exports.placeholder = exports.poweredByJodit = exports.orderedList = exports.mobile = exports.link = exports.lineHeight = exports.limit = exports.justify = exports.inlinePopup = exports.hr = exports.indent = exports.iframe = exports.hotkeys = exports.fullsize = exports.formatBlock = exports.font = exports.errorMessages = exports.KeyArrowOutside = exports.enter = exports.DragAndDropElement = exports.DragAndDrop = exports.color = exports.PasteFromWord = exports.pasteStorage = exports.paste = exports.clipboard = exports.copyFormat = exports.cleanHtml = exports.WrapNodes = exports.bold = exports.Backspace = exports.classSpan = exports.focus = exports.about = exports.addNewLine = void 0;
+exports.xpath = exports.tab = exports.tooltip = exports.symbols = exports.spellcheck = exports.sticky = exports.stat = exports.source = exports.resizeHandler = exports.size = exports.select = exports.search = exports.resizer = exports.redoUndo = exports.placeholder = exports.poweredByJodit = exports.orderedList = exports.mobile = exports.link = exports.lineHeight = exports.limit = exports.justify = exports.inlinePopup = exports.hr = exports.indent = exports.iframe = exports.hotkeys = exports.fullsize = exports.formatBlock = exports.font = exports.errorMessages = exports.KeyArrowOutside = exports.enter = exports.color = exports.PasteFromWord = exports.DragAndDropElement = exports.DragAndDrop = exports.pasteStorage = exports.paste = exports.clipboard = exports.copyFormat = exports.cleanHtml = exports.WrapNodes = exports.bold = exports.Backspace = exports.classSpan = exports.focus = exports.about = exports.addNewLine = void 0;
 var tslib_1 = __webpack_require__(1);
-var add_new_line_1 = __webpack_require__(402);
+var add_new_line_1 = __webpack_require__(432);
 Object.defineProperty(exports, "addNewLine", ({ enumerable: true, get: function () { return add_new_line_1.addNewLine; } }));
-var about_1 = __webpack_require__(404);
+var about_1 = __webpack_require__(435);
 Object.defineProperty(exports, "about", ({ enumerable: true, get: function () { return about_1.about; } }));
-var focus_1 = __webpack_require__(406);
+var focus_1 = __webpack_require__(437);
 Object.defineProperty(exports, "focus", ({ enumerable: true, get: function () { return focus_1.focus; } }));
-var class_span_1 = __webpack_require__(407);
+var class_span_1 = __webpack_require__(438);
 Object.defineProperty(exports, "classSpan", ({ enumerable: true, get: function () { return class_span_1.classSpan; } }));
-var backspace_1 = __webpack_require__(409);
+var backspace_1 = __webpack_require__(440);
 Object.defineProperty(exports, "Backspace", ({ enumerable: true, get: function () { return backspace_1.Backspace; } }));
-var bold_1 = __webpack_require__(423);
+var bold_1 = __webpack_require__(454);
 Object.defineProperty(exports, "bold", ({ enumerable: true, get: function () { return bold_1.bold; } }));
-var fix_1 = __webpack_require__(424);
+var fix_1 = __webpack_require__(455);
 Object.defineProperty(exports, "WrapNodes", ({ enumerable: true, get: function () { return fix_1.WrapNodes; } }));
 Object.defineProperty(exports, "cleanHtml", ({ enumerable: true, get: function () { return fix_1.cleanHtml; } }));
-var clipboard_1 = __webpack_require__(429);
+var clipboard_1 = __webpack_require__(472);
 Object.defineProperty(exports, "copyFormat", ({ enumerable: true, get: function () { return clipboard_1.copyFormat; } }));
 Object.defineProperty(exports, "clipboard", ({ enumerable: true, get: function () { return clipboard_1.clipboard; } }));
 Object.defineProperty(exports, "paste", ({ enumerable: true, get: function () { return clipboard_1.paste; } }));
 Object.defineProperty(exports, "pasteStorage", ({ enumerable: true, get: function () { return clipboard_1.pasteStorage; } }));
+Object.defineProperty(exports, "DragAndDrop", ({ enumerable: true, get: function () { return clipboard_1.DragAndDrop; } }));
+Object.defineProperty(exports, "DragAndDropElement", ({ enumerable: true, get: function () { return clipboard_1.DragAndDropElement; } }));
 Object.defineProperty(exports, "PasteFromWord", ({ enumerable: true, get: function () { return clipboard_1.PasteFromWord; } }));
-var color_1 = __webpack_require__(440);
+var color_1 = __webpack_require__(485);
 Object.defineProperty(exports, "color", ({ enumerable: true, get: function () { return color_1.color; } }));
-var drag_and_drop_1 = __webpack_require__(447);
-Object.defineProperty(exports, "DragAndDrop", ({ enumerable: true, get: function () { return drag_and_drop_1.DragAndDrop; } }));
-var drag_and_drop_element_1 = __webpack_require__(448);
-Object.defineProperty(exports, "DragAndDropElement", ({ enumerable: true, get: function () { return drag_and_drop_element_1.DragAndDropElement; } }));
-var enter_1 = __webpack_require__(449);
+var enter_1 = __webpack_require__(492);
 Object.defineProperty(exports, "enter", ({ enumerable: true, get: function () { return enter_1.enter; } }));
-var key_arrow_outside_1 = __webpack_require__(450);
+var key_arrow_outside_1 = __webpack_require__(502);
 Object.defineProperty(exports, "KeyArrowOutside", ({ enumerable: true, get: function () { return key_arrow_outside_1.KeyArrowOutside; } }));
-var error_messages_1 = __webpack_require__(451);
+var error_messages_1 = __webpack_require__(503);
 Object.defineProperty(exports, "errorMessages", ({ enumerable: true, get: function () { return error_messages_1.errorMessages; } }));
-var font_1 = __webpack_require__(453);
+var font_1 = __webpack_require__(505);
 Object.defineProperty(exports, "font", ({ enumerable: true, get: function () { return font_1.font; } }));
-var format_block_1 = __webpack_require__(454);
+var format_block_1 = __webpack_require__(506);
 Object.defineProperty(exports, "formatBlock", ({ enumerable: true, get: function () { return format_block_1.formatBlock; } }));
-var fullsize_1 = __webpack_require__(455);
+var fullsize_1 = __webpack_require__(507);
 Object.defineProperty(exports, "fullsize", ({ enumerable: true, get: function () { return fullsize_1.fullsize; } }));
-var hotkeys_1 = __webpack_require__(457);
+var hotkeys_1 = __webpack_require__(509);
 Object.defineProperty(exports, "hotkeys", ({ enumerable: true, get: function () { return hotkeys_1.hotkeys; } }));
-var iframe_1 = __webpack_require__(458);
+var iframe_1 = __webpack_require__(510);
 Object.defineProperty(exports, "iframe", ({ enumerable: true, get: function () { return iframe_1.iframe; } }));
-tslib_1.__exportStar(__webpack_require__(460), exports);
-var indent_1 = __webpack_require__(473);
+tslib_1.__exportStar(__webpack_require__(512), exports);
+var indent_1 = __webpack_require__(525);
 Object.defineProperty(exports, "indent", ({ enumerable: true, get: function () { return indent_1.indent; } }));
-var insert_1 = __webpack_require__(474);
+var insert_1 = __webpack_require__(526);
 Object.defineProperty(exports, "hr", ({ enumerable: true, get: function () { return insert_1.hr; } }));
-var inline_popup_1 = __webpack_require__(476);
+var inline_popup_1 = __webpack_require__(528);
 Object.defineProperty(exports, "inlinePopup", ({ enumerable: true, get: function () { return inline_popup_1.inlinePopup; } }));
-var justify_1 = __webpack_require__(484);
+var justify_1 = __webpack_require__(536);
 Object.defineProperty(exports, "justify", ({ enumerable: true, get: function () { return justify_1.justify; } }));
-var limit_1 = __webpack_require__(485);
+var limit_1 = __webpack_require__(537);
 Object.defineProperty(exports, "limit", ({ enumerable: true, get: function () { return limit_1.limit; } }));
-var line_height_1 = __webpack_require__(486);
+var line_height_1 = __webpack_require__(538);
 Object.defineProperty(exports, "lineHeight", ({ enumerable: true, get: function () { return line_height_1.lineHeight; } }));
-var link_1 = __webpack_require__(488);
+var link_1 = __webpack_require__(540);
 Object.defineProperty(exports, "link", ({ enumerable: true, get: function () { return link_1.link; } }));
-tslib_1.__exportStar(__webpack_require__(490), exports);
-var mobile_1 = __webpack_require__(495);
+tslib_1.__exportStar(__webpack_require__(543), exports);
+var mobile_1 = __webpack_require__(548);
 Object.defineProperty(exports, "mobile", ({ enumerable: true, get: function () { return mobile_1.mobile; } }));
-var ordered_list_1 = __webpack_require__(497);
+var ordered_list_1 = __webpack_require__(550);
 Object.defineProperty(exports, "orderedList", ({ enumerable: true, get: function () { return ordered_list_1.orderedList; } }));
-var powered_by_jodit_1 = __webpack_require__(499);
+var powered_by_jodit_1 = __webpack_require__(552);
 Object.defineProperty(exports, "poweredByJodit", ({ enumerable: true, get: function () { return powered_by_jodit_1.poweredByJodit; } }));
-var placeholder_1 = __webpack_require__(500);
+var placeholder_1 = __webpack_require__(553);
 Object.defineProperty(exports, "placeholder", ({ enumerable: true, get: function () { return placeholder_1.placeholder; } }));
-var redo_undo_1 = __webpack_require__(503);
+var redo_undo_1 = __webpack_require__(556);
 Object.defineProperty(exports, "redoUndo", ({ enumerable: true, get: function () { return redo_undo_1.redoUndo; } }));
-var resizer_1 = __webpack_require__(504);
+var resizer_1 = __webpack_require__(557);
 Object.defineProperty(exports, "resizer", ({ enumerable: true, get: function () { return resizer_1.resizer; } }));
-var search_1 = __webpack_require__(507);
+var search_1 = __webpack_require__(560);
 Object.defineProperty(exports, "search", ({ enumerable: true, get: function () { return search_1.search; } }));
-var select_1 = __webpack_require__(514);
+var select_1 = __webpack_require__(567);
 Object.defineProperty(exports, "select", ({ enumerable: true, get: function () { return select_1.select; } }));
-var size_1 = __webpack_require__(516);
+var size_1 = __webpack_require__(569);
 Object.defineProperty(exports, "size", ({ enumerable: true, get: function () { return size_1.size; } }));
 Object.defineProperty(exports, "resizeHandler", ({ enumerable: true, get: function () { return size_1.resizeHandler; } }));
-var source_1 = __webpack_require__(521);
+var source_1 = __webpack_require__(574);
 Object.defineProperty(exports, "source", ({ enumerable: true, get: function () { return source_1.source; } }));
-var stat_1 = __webpack_require__(530);
+var stat_1 = __webpack_require__(583);
 Object.defineProperty(exports, "stat", ({ enumerable: true, get: function () { return stat_1.stat; } }));
-var sticky_1 = __webpack_require__(531);
+var sticky_1 = __webpack_require__(584);
 Object.defineProperty(exports, "sticky", ({ enumerable: true, get: function () { return sticky_1.sticky; } }));
-var spellcheck_1 = __webpack_require__(533);
+var spellcheck_1 = __webpack_require__(586);
 Object.defineProperty(exports, "spellcheck", ({ enumerable: true, get: function () { return spellcheck_1.spellcheck; } }));
-var symbols_1 = __webpack_require__(536);
+var symbols_1 = __webpack_require__(589);
 Object.defineProperty(exports, "symbols", ({ enumerable: true, get: function () { return symbols_1.symbols; } }));
-tslib_1.__exportStar(__webpack_require__(539), exports);
-var tooltip_1 = __webpack_require__(546);
+tslib_1.__exportStar(__webpack_require__(592), exports);
+var tooltip_1 = __webpack_require__(599);
 Object.defineProperty(exports, "tooltip", ({ enumerable: true, get: function () { return tooltip_1.tooltip; } }));
-var tab_1 = __webpack_require__(548);
+var tab_1 = __webpack_require__(601);
 Object.defineProperty(exports, "tab", ({ enumerable: true, get: function () { return tab_1.tab; } }));
-tslib_1.__exportStar(__webpack_require__(552), exports);
-var xpath_1 = __webpack_require__(557);
+tslib_1.__exportStar(__webpack_require__(605), exports);
+var xpath_1 = __webpack_require__(610);
 Object.defineProperty(exports, "xpath", ({ enumerable: true, get: function () { return xpath_1.xpath; } }));
 
 
 /***/ }),
-/* 402 */
+/* 432 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -26570,21 +27438,11 @@ Object.defineProperty(exports, "xpath", ({ enumerable: true, get: function () { 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.addNewLine = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(403);
-var config_1 = __webpack_require__(136);
-var modules_1 = __webpack_require__(138);
-var helpers_1 = __webpack_require__(146);
-config_1.Config.prototype.addNewLine = true;
-config_1.Config.prototype.addNewLineOnDBLClick = true;
-config_1.Config.prototype.addNewLineTagsTriggers = [
-    'table',
-    'iframe',
-    'img',
-    'hr',
-    'pre',
-    'jodit'
-];
-config_1.Config.prototype.addNewLineDeltaShow = 20;
+__webpack_require__(433);
+var modules_1 = __webpack_require__(166);
+var helpers_1 = __webpack_require__(187);
+var decorators_1 = __webpack_require__(233);
+__webpack_require__(434);
 var ns = 'addnewline';
 var addNewLine = (function (_super) {
     tslib_1.__extends(addNewLine, _super);
@@ -26606,15 +27464,7 @@ var addNewLine = (function (_super) {
             _this.j.async.clearTimeout(_this.timeout);
             _this.lineInFocus = false;
             modules_1.Dom.safeRemove(_this.line);
-        };
-        _this.hide = function () {
-            if (!_this.isShown || _this.lineInFocus) {
-                return;
-            }
-            _this.timeout = _this.j.async.setTimeout(_this.hideForce, {
-                timeout: 500,
-                label: 'add-new-line-hide'
-            });
+            _this.line.style.setProperty('--jd-offset-handle', '0');
         };
         _this.canGetFocus = function (elm) {
             return (elm != null &&
@@ -26625,7 +27475,12 @@ var addNewLine = (function (_super) {
             var editor = _this.j;
             var p = editor.createInside.element(editor.o.enter);
             if (_this.preview && _this.current && _this.current.parentNode) {
-                _this.current.parentNode.insertBefore(p, _this.current);
+                if (_this.current === editor.editor) {
+                    modules_1.Dom.prepend(editor.editor, p);
+                }
+                else {
+                    _this.current.parentNode.insertBefore(p, _this.current);
+                }
             }
             else {
                 editor.editor.appendChild(p);
@@ -26635,79 +27490,6 @@ var addNewLine = (function (_super) {
             editor.e.fire('synchro');
             _this.hideForce();
             e.preventDefault();
-        };
-        _this.onDblClickEditor = function (e) {
-            var editor = _this.j;
-            if (!editor.o.readonly &&
-                editor.o.addNewLineOnDBLClick &&
-                e.target === editor.editor &&
-                editor.s.isCollapsed()) {
-                var editorBound = (0, helpers_1.offset)(editor.editor, editor, editor.ed);
-                var top_1 = e.pageY - editor.ew.pageYOffset;
-                var p = editor.createInside.element(editor.o.enter);
-                if (Math.abs(top_1 - editorBound.top) <
-                    Math.abs(top_1 - (editorBound.height + editorBound.top)) &&
-                    editor.editor.firstChild) {
-                    editor.editor.insertBefore(p, editor.editor.firstChild);
-                }
-                else {
-                    editor.editor.appendChild(p);
-                }
-                editor.s.setCursorIn(p);
-                editor.synchronizeValues();
-                _this.hideForce();
-                e.preventDefault();
-            }
-        };
-        _this.onMouseMove = function (e) {
-            var editor = _this.j;
-            var currentElement = editor.ed.elementFromPoint(e.clientX, e.clientY);
-            if (!modules_1.Dom.isHTMLElement(currentElement) ||
-                modules_1.Dom.isOrContains(_this.line, currentElement)) {
-                return;
-            }
-            if (!modules_1.Dom.isOrContains(editor.editor, currentElement)) {
-                return;
-            }
-            if (!_this.isMatchedTag(currentElement)) {
-                currentElement = modules_1.Dom.closest(currentElement, _this.isMatchedTag, editor.editor);
-            }
-            if (!currentElement) {
-                _this.hide();
-                return;
-            }
-            if (_this.isMatchedTag(currentElement)) {
-                var parentBox = modules_1.Dom.up(currentElement, modules_1.Dom.isBlock, editor.editor);
-                if (parentBox && parentBox !== editor.editor) {
-                    currentElement = parentBox;
-                }
-            }
-            var pos = (0, helpers_1.position)(currentElement, _this.j);
-            var top = false;
-            var clientY = e.clientY;
-            if (_this.j.iframe) {
-                var top_2 = (0, helpers_1.position)(_this.j.iframe, _this.j, true).top;
-                clientY += top_2;
-            }
-            var delta = _this.j.o.addNewLineDeltaShow;
-            if (Math.abs(clientY - pos.top) <= delta) {
-                top = pos.top;
-                _this.preview = true;
-            }
-            if (Math.abs(clientY - (pos.top + pos.height)) <= delta) {
-                top = pos.top + pos.height;
-                _this.preview = false;
-            }
-            if (top !== false &&
-                !(0, helpers_1.call)(_this.preview ? modules_1.Dom.prev : modules_1.Dom.next, currentElement, _this.canGetFocus, editor.editor)) {
-                _this.line.style.top = top + 'px';
-                _this.current = currentElement;
-                _this.show();
-            }
-            else {
-                _this.current = false;
-                _this.hide();
-            }
         };
         return _this;
     }
@@ -26720,6 +27502,20 @@ var addNewLine = (function (_super) {
         this.line.classList.toggle('jodit-add-new-line_after', !this.preview);
         this.j.container.appendChild(this.line);
         this.line.style.width = this.j.editor.clientWidth + 'px';
+    };
+    addNewLine.prototype.onLock = function (isLocked) {
+        if (isLocked && this.isShown) {
+            this.hideForce();
+        }
+    };
+    addNewLine.prototype.hide = function () {
+        if (!this.isShown || this.lineInFocus) {
+            return;
+        }
+        this.timeout = this.j.async.setTimeout(this.hideForce, {
+            timeout: 500,
+            label: 'add-new-line-hide'
+        });
     };
     addNewLine.prototype.afterInit = function (editor) {
         var _this = this;
@@ -26748,10 +27544,85 @@ var addNewLine = (function (_super) {
             .off(editor.editor, '.' + ns)
             .off(editor.container, '.' + ns)
             .on([editor.ow, editor.ew, editor.editor], 'scroll' + '.' + ns, this.hideForce)
-            .on(editor.editor, 'dblclick' + '.' + ns, this.onDblClickEditor)
             .on(editor.editor, 'click' + '.' + ns, this.hide)
             .on(editor.container, 'mouseleave' + '.' + ns, this.hide)
-            .on(editor.editor, 'mousemove' + '.' + ns, editor.async.debounce(this.onMouseMove, editor.defaultTimeout * 3));
+            .on(editor.editor, 'mousemove' + '.' + ns, this.onMouseMove);
+    };
+    addNewLine.prototype.onDblClickEditor = function (e) {
+        var editor = this.j;
+        if (!editor.o.readonly &&
+            editor.o.addNewLineOnDBLClick &&
+            e.target === editor.editor &&
+            editor.s.isCollapsed()) {
+            var editorBound = (0, helpers_1.offset)(editor.editor, editor, editor.ed);
+            var top_1 = e.pageY - editor.ew.pageYOffset;
+            var p = editor.createInside.element(editor.o.enter);
+            if (Math.abs(top_1 - editorBound.top) <
+                Math.abs(top_1 - (editorBound.height + editorBound.top)) &&
+                editor.editor.firstChild) {
+                editor.editor.insertBefore(p, editor.editor.firstChild);
+            }
+            else {
+                editor.editor.appendChild(p);
+            }
+            editor.s.setCursorIn(p);
+            editor.synchronizeValues();
+            this.hideForce();
+            e.preventDefault();
+        }
+    };
+    addNewLine.prototype.onMouseMove = function (e) {
+        var editor = this.j;
+        var currentElement = editor.ed.elementFromPoint(e.clientX, e.clientY);
+        if (!modules_1.Dom.isHTMLElement(currentElement) ||
+            modules_1.Dom.isOrContains(this.line, currentElement)) {
+            return;
+        }
+        if (!modules_1.Dom.isOrContains(editor.editor, currentElement)) {
+            return;
+        }
+        if (editor.editor !== currentElement &&
+            !this.isMatchedTag(currentElement)) {
+            currentElement = modules_1.Dom.closest(currentElement, this.isMatchedTag, editor.editor);
+        }
+        if (!currentElement) {
+            this.hide();
+            return;
+        }
+        if (this.isMatchedTag(currentElement)) {
+            var parentBox = modules_1.Dom.up(currentElement, modules_1.Dom.isBlock, editor.editor);
+            if (parentBox && parentBox !== editor.editor) {
+                currentElement = parentBox;
+            }
+        }
+        var pos = (0, helpers_1.position)(currentElement, this.j);
+        var top = false;
+        var clientY = e.clientY;
+        if (this.j.iframe) {
+            var top_2 = (0, helpers_1.position)(this.j.iframe, this.j, true).top;
+            clientY += top_2;
+        }
+        var delta = this.j.o.addNewLineDeltaShow;
+        if (Math.abs(clientY - pos.top) <= delta) {
+            top = pos.top;
+            this.preview = true;
+        }
+        if (Math.abs(clientY - (pos.top + pos.height)) <= delta) {
+            top = pos.top + pos.height;
+            this.preview = false;
+        }
+        if (top !== false &&
+            ((editor.editor === currentElement && !this.preview) ||
+                !(0, helpers_1.call)(this.preview ? modules_1.Dom.prev : modules_1.Dom.next, currentElement, this.canGetFocus, editor.editor))) {
+            this.line.style.top = top + 'px';
+            this.current = currentElement;
+            this.show();
+            this.line.style.setProperty('--jd-offset-handle', e.clientX - pos.left - 10 + 'px');
+        }
+        else {
+            this.current = false;
+            this.hide();
+        }
     };
     addNewLine.prototype.beforeDestruct = function () {
         this.j.async.clearTimeout(this.timeout);
@@ -26761,13 +27632,25 @@ var addNewLine = (function (_super) {
             .off([this.j.ow, this.j.ew, this.j.editor], '.' + ns)
             .off(this.j.container, '.' + ns);
     };
+    tslib_1.__decorate([
+        (0, decorators_1.watch)(':lock')
+    ], addNewLine.prototype, "onLock", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], addNewLine.prototype, "hide", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)(':dblclick')
+    ], addNewLine.prototype, "onDblClickEditor", null);
+    tslib_1.__decorate([
+        (0, decorators_1.debounce)(function (ctx) { return ctx.defaultTimeout * 5; })
+    ], addNewLine.prototype, "onMouseMove", null);
     return addNewLine;
 }(modules_1.Plugin));
 exports.addNewLine = addNewLine;
 
 
 /***/ }),
-/* 403 */
+/* 433 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26776,7 +27659,33 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 404 */
+/* 434 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(164);
+config_1.Config.prototype.addNewLine = true;
+config_1.Config.prototype.addNewLineOnDBLClick = true;
+config_1.Config.prototype.addNewLineTagsTriggers = [
+    'table',
+    'iframe',
+    'img',
+    'hr',
+    'pre',
+    'jodit'
+];
+config_1.Config.prototype.addNewLineDeltaShow = 20;
+
+
+/***/ }),
+/* 435 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -26788,11 +27697,11 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.about = void 0;
-__webpack_require__(405);
-var config_1 = __webpack_require__(136);
-var helpers_1 = __webpack_require__(146);
-var constants = __webpack_require__(137);
-var dialog_1 = __webpack_require__(315);
+__webpack_require__(436);
+var config_1 = __webpack_require__(164);
+var helpers_1 = __webpack_require__(187);
+var constants = __webpack_require__(165);
+var dialog_1 = __webpack_require__(323);
 config_1.Config.prototype.controls.about = {
     exec: function (editor) {
         var dialog = new dialog_1.Dialog({
@@ -26823,7 +27732,7 @@ exports.about = about;
 
 
 /***/ }),
-/* 405 */
+/* 436 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26832,7 +27741,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 406 */
+/* 437 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -26844,8 +27753,8 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.focus = void 0;
-var config_1 = __webpack_require__(136);
-var dom_1 = __webpack_require__(159);
+var config_1 = __webpack_require__(164);
+var dom_1 = __webpack_require__(231);
 config_1.Config.prototype.autofocus = false;
 config_1.Config.prototype.cursorAfterAutofocus = 'end';
 config_1.Config.prototype.saveSelectionOnBlur = true;
@@ -26904,7 +27813,7 @@ exports.focus = focus;
 
 
 /***/ }),
-/* 407 */
+/* 438 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -26917,13 +27826,13 @@ exports.focus = focus;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.classSpan = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var config_1 = __webpack_require__(136);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
+var plugin_1 = __webpack_require__(366);
+var config_1 = __webpack_require__(164);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
 config_1.Config.prototype.controls.classSpan = {
     command: 'applyClassName',
-    icon: __webpack_require__(408),
+    icon: __webpack_require__(439),
     exec: helpers_1.memorizeExec,
     list: [
         'enabled',
@@ -26994,13 +27903,13 @@ exports.classSpan = classSpan;
 
 
 /***/ }),
-/* 408 */
+/* 439 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M36 4h-24c-2.21 0-4 1.79-4 4v32c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4v-32c0-2.21-1.79-4-4-4zm-24 4h10v16l-5-3-5 3v-16z\"/> </svg>"
 
 /***/ }),
-/* 409 */
+/* 440 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27013,14 +27922,14 @@ module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Backspace = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var dom_1 = __webpack_require__(159);
-var constants_1 = __webpack_require__(137);
-var helpers_1 = __webpack_require__(146);
-var cases_1 = __webpack_require__(410);
-var check_not_collapsed_1 = __webpack_require__(421);
-__webpack_require__(422);
-var helpers_2 = __webpack_require__(195);
+var plugin_1 = __webpack_require__(366);
+var dom_1 = __webpack_require__(231);
+var constants_1 = __webpack_require__(165);
+var helpers_1 = __webpack_require__(187);
+var cases_1 = __webpack_require__(441);
+var check_not_collapsed_1 = __webpack_require__(452);
+__webpack_require__(453);
+var helpers_2 = __webpack_require__(250);
 var Backspace = (function (_super) {
     tslib_1.__extends(Backspace, _super);
     function Backspace() {
@@ -27147,7 +28056,7 @@ exports.Backspace = Backspace;
 
 
 /***/ }),
-/* 410 */
+/* 441 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27159,15 +28068,15 @@ exports.Backspace = Backspace;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.cases = void 0;
-var check_remove_unbreakable_element_1 = __webpack_require__(411);
-var check_remove_content_not_editable_1 = __webpack_require__(415);
-var check_remove_char_1 = __webpack_require__(416);
-var check_table_cell_1 = __webpack_require__(417);
-var check_remove_empty_parent_1 = __webpack_require__(412);
-var check_remove_empty_neighbor_1 = __webpack_require__(418);
-var check_join_two_lists_1 = __webpack_require__(414);
-var check_join_neighbors_1 = __webpack_require__(419);
-var check_unwrap_first_list_item_1 = __webpack_require__(420);
+var check_remove_unbreakable_element_1 = __webpack_require__(442);
+var check_remove_content_not_editable_1 = __webpack_require__(446);
+var check_remove_char_1 = __webpack_require__(447);
+var check_table_cell_1 = __webpack_require__(448);
+var check_remove_empty_parent_1 = __webpack_require__(443);
+var check_remove_empty_neighbor_1 = __webpack_require__(449);
+var check_join_two_lists_1 = __webpack_require__(445);
+var check_join_neighbors_1 = __webpack_require__(450);
+var check_unwrap_first_list_item_1 = __webpack_require__(451);
 exports.cases = [
     check_remove_unbreakable_element_1.checkRemoveUnbreakableElement,
     check_remove_content_not_editable_1.checkRemoveContentNotEditable,
@@ -27182,7 +28091,7 @@ exports.cases = [
 
 
 /***/ }),
-/* 411 */
+/* 442 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27194,9 +28103,9 @@ exports.cases = [
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkRemoveUnbreakableElement = void 0;
-var dom_1 = __webpack_require__(159);
-var constants_1 = __webpack_require__(137);
-var check_remove_empty_parent_1 = __webpack_require__(412);
+var dom_1 = __webpack_require__(231);
+var constants_1 = __webpack_require__(165);
+var check_remove_empty_parent_1 = __webpack_require__(443);
 function checkRemoveUnbreakableElement(jodit, fakeNode, backspace) {
     var neighbor = dom_1.Dom.findSibling(fakeNode, backspace);
     if (dom_1.Dom.isElement(neighbor) &&
@@ -27214,7 +28123,7 @@ exports.checkRemoveUnbreakableElement = checkRemoveUnbreakableElement;
 
 
 /***/ }),
-/* 412 */
+/* 443 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27226,10 +28135,10 @@ exports.checkRemoveUnbreakableElement = checkRemoveUnbreakableElement;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkRemoveEmptyParent = void 0;
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(413);
-var constants_1 = __webpack_require__(137);
-var check_join_two_lists_1 = __webpack_require__(414);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(444);
+var constants_1 = __webpack_require__(165);
+var check_join_two_lists_1 = __webpack_require__(445);
 function checkRemoveEmptyParent(jodit, fakeNode, backspace) {
     var found = false;
     var _a = jodit.s, setCursorBefore = _a.setCursorBefore, setCursorIn = _a.setCursorIn;
@@ -27267,7 +28176,7 @@ exports.checkRemoveEmptyParent = checkRemoveEmptyParent;
 
 
 /***/ }),
-/* 413 */
+/* 444 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27279,9 +28188,9 @@ exports.checkRemoveEmptyParent = checkRemoveEmptyParent;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.findMostNestedNeighbor = exports.findNotEmptySibling = exports.findNotEmptyNeighbor = void 0;
-var utils_1 = __webpack_require__(147);
-var dom_1 = __webpack_require__(159);
-var string_1 = __webpack_require__(212);
+var utils_1 = __webpack_require__(188);
+var dom_1 = __webpack_require__(231);
+var string_1 = __webpack_require__(288);
 function findNotEmptyNeighbor(node, left, root) {
     return (0, utils_1.call)(left ? dom_1.Dom.prev : dom_1.Dom.next, node, function (n) { return Boolean(n && (!dom_1.Dom.isText(n) || (0, string_1.trim)((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)); }, root);
 }
@@ -27319,7 +28228,7 @@ exports.findMostNestedNeighbor = findMostNestedNeighbor;
 
 
 /***/ }),
-/* 414 */
+/* 445 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27331,8 +28240,8 @@ exports.findMostNestedNeighbor = findMostNestedNeighbor;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkJoinTwoLists = void 0;
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
 function checkJoinTwoLists(jodit, fakeNode, backspace) {
     var next = dom_1.Dom.findSibling(fakeNode, backspace), prev = dom_1.Dom.findSibling(fakeNode, !backspace);
     if (!dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, jodit.editor) &&
@@ -27355,16 +28264,16 @@ exports.checkJoinTwoLists = checkJoinTwoLists;
 
 
 /***/ }),
-/* 415 */
+/* 446 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkRemoveContentNotEditable = void 0;
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var helpers_2 = __webpack_require__(195);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var helpers_2 = __webpack_require__(250);
 function checkRemoveContentNotEditable(jodit, fakeNode, backspace) {
     var neighbor = dom_1.Dom.findSibling(fakeNode, backspace);
     if (!neighbor &&
@@ -27386,7 +28295,7 @@ exports.checkRemoveContentNotEditable = checkRemoveContentNotEditable;
 
 
 /***/ }),
-/* 416 */
+/* 447 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27398,10 +28307,10 @@ exports.checkRemoveContentNotEditable = checkRemoveContentNotEditable;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkRemoveChar = void 0;
-var helpers_1 = __webpack_require__(413);
-var dom_1 = __webpack_require__(159);
-var helpers_2 = __webpack_require__(146);
-var constants_1 = __webpack_require__(137);
+var helpers_1 = __webpack_require__(444);
+var dom_1 = __webpack_require__(231);
+var helpers_2 = __webpack_require__(187);
+var constants_1 = __webpack_require__(165);
 function checkRemoveChar(jodit, fakeNode, backspace, mode) {
     var _a, _b, _c;
     var step = backspace ? -1 : 1;
@@ -27506,7 +28415,7 @@ function addBRInsideEmptyBlock(jodit, node) {
 
 
 /***/ }),
-/* 417 */
+/* 448 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27518,7 +28427,7 @@ function addBRInsideEmptyBlock(jodit, node) {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkTableCell = void 0;
-var dom_1 = __webpack_require__(159);
+var dom_1 = __webpack_require__(231);
 function checkTableCell(jodit, fakeNode) {
     var cell = fakeNode.parentElement;
     if (dom_1.Dom.isCell(cell)) {
@@ -27530,7 +28439,7 @@ exports.checkTableCell = checkTableCell;
 
 
 /***/ }),
-/* 418 */
+/* 449 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27542,8 +28451,8 @@ exports.checkTableCell = checkTableCell;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkRemoveEmptyNeighbor = void 0;
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(413);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(444);
 function checkRemoveEmptyNeighbor(jodit, fakeNode, backspace) {
     var parent = dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, jodit.editor);
     if (!parent) {
@@ -27561,7 +28470,7 @@ exports.checkRemoveEmptyNeighbor = checkRemoveEmptyNeighbor;
 
 
 /***/ }),
-/* 419 */
+/* 450 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27573,8 +28482,8 @@ exports.checkRemoveEmptyNeighbor = checkRemoveEmptyNeighbor;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkJoinNeighbors = void 0;
-var helpers_1 = __webpack_require__(413);
-var dom_1 = __webpack_require__(159);
+var helpers_1 = __webpack_require__(444);
+var dom_1 = __webpack_require__(231);
 function checkJoinNeighbors(jodit, fakeNode, backspace) {
     var nextBox = fakeNode, mainClosestBox = nextBox;
     while (nextBox &&
@@ -27628,7 +28537,7 @@ function moveContentAndRemoveEmpty(jodit, mainClosestBox, sibling, backspace) {
 
 
 /***/ }),
-/* 420 */
+/* 451 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27640,8 +28549,8 @@ function moveContentAndRemoveEmpty(jodit, mainClosestBox, sibling, backspace) {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkUnwrapFirstListItem = void 0;
-var dom_1 = __webpack_require__(159);
-var utils_1 = __webpack_require__(147);
+var dom_1 = __webpack_require__(231);
+var utils_1 = __webpack_require__(188);
 function checkUnwrapFirstListItem(jodit, fakeNode, backspace) {
     var _a;
     var li = dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, jodit.editor);
@@ -27666,7 +28575,7 @@ exports.checkUnwrapFirstListItem = checkUnwrapFirstListItem;
 
 
 /***/ }),
-/* 421 */
+/* 452 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -27684,7 +28593,7 @@ exports.checkNotCollapsed = checkNotCollapsed;
 
 
 /***/ }),
-/* 422 */
+/* 453 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27695,7 +28604,7 @@ exports.checkNotCollapsed = checkNotCollapsed;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.delete = {
     hotkeys: {
         delete: ['delete', 'cmd+backspace'],
@@ -27709,7 +28618,7 @@ config_1.Config.prototype.delete = {
 
 
 /***/ }),
-/* 423 */
+/* 454 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27722,8 +28631,8 @@ config_1.Config.prototype.delete = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.bold = void 0;
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var helpers_1 = __webpack_require__(146);
+var config_1 = __webpack_require__(164);
+var helpers_1 = __webpack_require__(187);
 config_1.Config.prototype.controls.subscript = {
     tags: ['sub'],
     tooltip: 'subscript'
@@ -27811,7 +28720,7 @@ exports.bold = bold;
 
 
 /***/ }),
-/* 424 */
+/* 455 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27823,12 +28732,12 @@ exports.bold = bold;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(425), exports);
-tslib_1.__exportStar(__webpack_require__(427), exports);
+tslib_1.__exportStar(__webpack_require__(456), exports);
+tslib_1.__exportStar(__webpack_require__(470), exports);
 
 
 /***/ }),
-/* 425 */
+/* 456 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27841,14 +28750,12 @@ tslib_1.__exportStar(__webpack_require__(427), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.cleanHtml = void 0;
 var tslib_1 = __webpack_require__(1);
-var constants_1 = __webpack_require__(137);
-var modules_1 = __webpack_require__(138);
-var helpers_1 = __webpack_require__(146);
-var plugin_1 = __webpack_require__(336);
-var decorators_1 = __webpack_require__(169);
-var helpers_2 = __webpack_require__(413);
-var lazy_walker_1 = __webpack_require__(210);
-__webpack_require__(426);
+var safe_html_1 = __webpack_require__(281);
+var plugin_1 = __webpack_require__(367);
+var decorators_1 = __webpack_require__(233);
+var lazy_walker_1 = __webpack_require__(232);
+var helpers_1 = __webpack_require__(457);
+__webpack_require__(469);
 var cleanHtml = (function (_super) {
     tslib_1.__extends(cleanHtml, _super);
     function cleanHtml() {
@@ -27863,288 +28770,51 @@ var cleanHtml = (function (_super) {
         _this.walker = new lazy_walker_1.LazyWalker(_this.j.async, {
             timeout: _this.j.o.cleanHTML.timeout
         });
-        _this.allowTagsHash = cleanHtml.getHash(_this.j.o.cleanHTML.allowTags);
-        _this.denyTagsHash = cleanHtml.getHash(_this.j.o.cleanHTML.denyTags);
-        _this.onKeyUpCleanUp = function () {
-            var editor = _this.j;
-            if (!_this.allowEdit()) {
-                return;
-            }
-            var currentNode = editor.s.current();
-            if (currentNode) {
-                var currentParagraph = modules_1.Dom.up(currentNode, modules_1.Dom.isBlock, editor.editor);
-                if (currentParagraph) {
-                    modules_1.Dom.all(currentParagraph, function (node) {
-                        if (node && modules_1.Dom.isText(node)) {
-                            if (node.nodeValue != null &&
-                                (0, constants_1.INVISIBLE_SPACE_REG_EXP)().test(node.nodeValue) &&
-                                node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '').length !== 0) {
-                                node.nodeValue = node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '');
-                                if (node === currentNode &&
-                                    editor.s.isCollapsed()) {
-                                    editor.s.setCursorAfter(node);
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-        };
-        _this.beforeCommand = function (command) {
-            if (command.toLowerCase() === 'removeformat') {
-                _this.onRemoveFormat();
-                return false;
-            }
-        };
         return _this;
     }
-    cleanHtml.prototype.afterInit = function (jodit) {
-        jodit.e
-            .off('.cleanHtml')
-            .on('change.cleanHtml afterSetMode.cleanHtml afterInit.cleanHtml mousedown.cleanHtml keydown.cleanHtml', this.onChangeCleanHTML)
-            .on('keyup.cleanHtml', this.onKeyUpCleanUp)
-            .on('beforeCommand.cleanHtml', this.beforeCommand);
-    };
-    cleanHtml.prototype.replaceIfMatched = function (oldParent) {
-        var replaceOldTags = this.j.o.cleanHTML.replaceOldTags;
-        if (!replaceOldTags || !modules_1.Dom.isHTMLElement(oldParent)) {
-            return oldParent;
-        }
-        var tagName = replaceOldTags[oldParent.nodeName.toLowerCase()] ||
-            replaceOldTags[oldParent.nodeName];
-        if (tagName) {
-            return modules_1.Dom.replace(oldParent, tagName, this.j.createInside, true, false);
-        }
-        return oldParent;
-    };
+    cleanHtml.prototype.afterInit = function (jodit) { };
+    Object.defineProperty(cleanHtml.prototype, "isEditMode", {
+        get: function () {
+            return !(this.j.isInDestruct ||
+                !this.j.isEditorMode() ||
+                this.j.getReadOnly());
+        },
+        enumerable: false,
+        configurable: true
+    });
     cleanHtml.prototype.onChangeCleanHTML = function () {
-        if (!this.allowEdit()) {
+        if (!this.isEditMode) {
             return;
         }
         var editor = this.j;
-        this.onSafeHTML(editor.editor);
-        var current = editor.s.current();
-        var replaceOldTags = editor.o.cleanHTML.replaceOldTags;
-        if (replaceOldTags && current) {
-            var tags = (0, helpers_1.keys)(replaceOldTags, false);
-            if (editor.s.isCollapsed()) {
-                var oldParent = modules_1.Dom.closest(current, tags, editor.editor);
-                if (oldParent) {
-                    editor.s.save();
-                    this.replaceIfMatched(oldParent);
-                    editor.s.restore();
-                }
-            }
-        }
         this.walker.setWork(editor.editor);
-        this.currentSelectionNode = current;
+        this.currentSelectionNode = editor.s.current();
     };
     cleanHtml.prototype.startWalker = function () {
         var _this = this;
+        var jodit = this.jodit;
+        var allow = (0, helpers_1.getHash)(this.j.o.cleanHTML.allowTags);
+        var deny = (0, helpers_1.getHash)(this.j.o.cleanHTML.denyTags);
         this.walker
-            .on('visit', this.visitNode)
+            .on('visit', function (node) {
+            return (0, helpers_1.visitNodeWalker)(jodit, node, allow, deny, _this.currentSelectionNode);
+        })
             .on('end', function (affected) {
             _this.j.e.fire(affected
                 ? 'internalChange finishedCleanHTMLWorker'
                 : 'finishedCleanHTMLWorker');
         });
     };
-    cleanHtml.prototype.visitNode = function (nodeElm) {
-        var hasChanges = false;
-        var newNodeElm = this.replaceIfMatched(nodeElm);
-        if (nodeElm !== newNodeElm) {
-            nodeElm = newNodeElm;
-            hasChanges = true;
-        }
-        if (this.isRemovableNode(nodeElm, this.currentSelectionNode)) {
-            modules_1.Dom.safeRemove(nodeElm);
-            return true;
-        }
-        if (this.j.o.cleanHTML.fillEmptyParagraph &&
-            modules_1.Dom.isBlock(nodeElm) &&
-            modules_1.Dom.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)) {
-            var br = this.j.createInside.element('br');
-            nodeElm.appendChild(br);
-            hasChanges = true;
-        }
-        var allow = this.allowTagsHash;
-        if (allow &&
-            modules_1.Dom.isElement(nodeElm) &&
-            allow[nodeElm.nodeName] !== true) {
-            var attrs = nodeElm.attributes;
-            if (attrs && attrs.length) {
-                var removeAttrs = [];
-                for (var i = 0; i < attrs.length; i += 1) {
-                    var attr_1 = allow[nodeElm.nodeName][attrs[i].name];
-                    if (!attr_1 || (attr_1 !== true && attr_1 !== attrs[i].value)) {
-                        removeAttrs.push(attrs[i].name);
-                    }
-                }
-                if (removeAttrs.length) {
-                    hasChanges = true;
-                }
-                removeAttrs.forEach(function (attr) {
-                    nodeElm.removeAttribute(attr);
-                });
-            }
-        }
-        return hasChanges;
-    };
-    cleanHtml.prototype.allowEdit = function () {
-        return !(this.j.isInDestruct ||
-            !this.j.isEditorMode() ||
-            this.j.getReadOnly());
-    };
-    cleanHtml.getHash = function (tags) {
-        var attributesReg = /([^[]*)\[([^\]]+)]/;
-        var separator = /[\s]*,[\s]*/, attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
-        var tagsHash = {};
-        if ((0, helpers_1.isString)(tags)) {
-            tags.split(separator).map(function (elm) {
-                elm = (0, helpers_1.trim)(elm);
-                var attr = attributesReg.exec(elm), allowAttributes = {}, attributeMap = function (attrName) {
-                    attrName = (0, helpers_1.trim)(attrName);
-                    var val = attrReg.exec(attrName);
-                    if (val) {
-                        allowAttributes[val[1]] = val[2];
-                    }
-                    else {
-                        allowAttributes[attrName] = true;
-                    }
-                };
-                if (attr) {
-                    var attr2 = attr[2].split(separator);
-                    if (attr[1]) {
-                        attr2.forEach(attributeMap);
-                        tagsHash[attr[1].toUpperCase()] = allowAttributes;
-                    }
-                }
-                else {
-                    tagsHash[elm.toUpperCase()] = true;
-                }
-            });
-            return tagsHash;
-        }
-        if (tags) {
-            Object.keys(tags).forEach(function (tagName) {
-                tagsHash[tagName.toUpperCase()] = tags[tagName];
-            });
-            return tagsHash;
-        }
-        return false;
-    };
-    cleanHtml.prototype.onRemoveFormat = function () {
-        if (this.j.s.isCollapsed()) {
-            this.removeFormatForCollapsedSelection();
-        }
-        else {
-            this.removeFormatForSelection();
-        }
-    };
-    cleanHtml.prototype.removeFormatForCollapsedSelection = function (fake) {
-        var s = this.j.s;
-        var fakeNode = fake;
-        if (!fakeNode) {
-            fakeNode = this.j.createInside.fake();
-            s.range.insertNode(fakeNode);
-            s.range.collapse();
-        }
-        var mainInline = modules_1.Dom.furthest(fakeNode, this.isInlineBlock, this.j.editor);
-        if (mainInline) {
-            if (s.cursorOnTheLeft(mainInline)) {
-                modules_1.Dom.before(mainInline, fakeNode);
-            }
-            else if (s.cursorOnTheRight(mainInline)) {
-                modules_1.Dom.after(mainInline, fakeNode);
+    cleanHtml.prototype.beforeCommand = function (command) {
+        if (command.toLowerCase() === 'removeformat') {
+            if (this.j.s.isCollapsed()) {
+                (0, helpers_1.removeFormatForCollapsedSelection)(this.j);
             }
             else {
-                var leftHand = s.splitSelection(mainInline);
-                leftHand && modules_1.Dom.after(leftHand, fakeNode);
+                (0, helpers_1.removeFormatForSelection)(this.j);
             }
+            return false;
         }
-        if (!fake) {
-            s.setCursorBefore(fakeNode);
-            modules_1.Dom.safeRemove(fakeNode);
-        }
-    };
-    cleanHtml.prototype.isInlineBlock = function (node) {
-        return modules_1.Dom.isInlineBlock(node) && !modules_1.Dom.isTag(node, constants_1.INSEPARABLE_TAGS);
-    };
-    cleanHtml.prototype.removeFormatForSelection = function () {
-        var _this = this;
-        var s = this.j.s, range = s.range, left = range.cloneRange(), right = range.cloneRange(), fakeLeft = this.j.createInside.fake(), fakeRight = this.j.createInside.fake();
-        left.collapse(true);
-        right.collapse(false);
-        left.insertNode(fakeLeft);
-        right.insertNode(fakeRight);
-        range.setStartBefore(fakeLeft);
-        range.collapse(true);
-        s.selectRange(range);
-        this.removeFormatForCollapsedSelection(fakeLeft);
-        range.setEndAfter(fakeRight);
-        range.collapse(false);
-        s.selectRange(range);
-        this.removeFormatForCollapsedSelection(fakeRight);
-        var shouldUnwrap = [];
-        modules_1.Dom.between(fakeLeft, fakeRight, function (node) {
-            if (_this.isInlineBlock(node)) {
-                shouldUnwrap.push(node);
-            }
-            if (modules_1.Dom.isElement(node) && (0, helpers_1.attr)(node, 'style')) {
-                (0, helpers_1.attr)(node, 'style', null);
-            }
-        });
-        shouldUnwrap.forEach(function (node) { return modules_1.Dom.unwrap(node); });
-        var clearParent = function (node, left) {
-            if (!(0, helpers_2.findNotEmptySibling)(node, left)) {
-                var pn = node.parentNode;
-                if (pn && pn !== s.area && (0, helpers_1.attr)(pn, 'style')) {
-                    (0, helpers_1.attr)(pn, 'style', null);
-                    clearParent(pn, left);
-                    return true;
-                }
-            }
-        };
-        clearParent(fakeLeft, true) && clearParent(fakeRight, false);
-        range.setStartAfter(fakeLeft);
-        range.setEndBefore(fakeRight);
-        s.selectRange(range);
-        modules_1.Dom.safeRemove(fakeLeft);
-        modules_1.Dom.safeRemove(fakeRight);
-    };
-    cleanHtml.prototype.isRemovableNode = function (node, current) {
-        var allow = this.allowTagsHash;
-        if (!modules_1.Dom.isText(node) &&
-            ((allow && !allow[node.nodeName]) ||
-                (this.denyTagsHash && this.denyTagsHash[node.nodeName]))) {
-            return true;
-        }
-        if (current &&
-            modules_1.Dom.isTag(node, 'br') &&
-            cleanHtml.hasNotEmptyTextSibling(node) &&
-            !cleanHtml.hasNotEmptyTextSibling(node, true) &&
-            modules_1.Dom.up(node, modules_1.Dom.isBlock, this.j.editor) !==
-                modules_1.Dom.up(current, modules_1.Dom.isBlock, this.j.editor)) {
-            return true;
-        }
-        return (this.j.o.cleanHTML.removeEmptyElements &&
-            current != null &&
-            modules_1.Dom.isElement(node) &&
-            node.nodeName.match(constants_1.IS_INLINE) != null &&
-            !modules_1.Dom.isTemporary(node) &&
-            (0, helpers_1.trim)(node.innerHTML).length === 0 &&
-            !modules_1.Dom.isOrContains(node, current));
-    };
-    cleanHtml.hasNotEmptyTextSibling = function (node, next) {
-        if (next === void 0) { next = false; }
-        var prev = next ? node.nextSibling : node.previousSibling;
-        while (prev) {
-            if (modules_1.Dom.isElement(prev) || !modules_1.Dom.isEmptyTextNode(prev)) {
-                return true;
-            }
-            prev = next ? prev.nextSibling : prev.previousSibling;
-        }
-        return false;
     };
     cleanHtml.prototype.onBeforeSetNativeEditorValue = function (data) {
         var sandBox = this.j.createInside.div();
@@ -28154,24 +28824,20 @@ var cleanHtml = (function (_super) {
         return false;
     };
     cleanHtml.prototype.onSafeHTML = function (sandBox) {
-        (0, helpers_1.safeHTML)(sandBox, this.j.o.cleanHTML);
+        (0, safe_html_1.safeHTML)(sandBox, this.j.o.cleanHTML);
     };
     cleanHtml.prototype.beforeDestruct = function () {
-        this.j.e.off('.cleanHtml');
         this.walker.destruct();
     };
     tslib_1.__decorate([
-        (0, decorators_1.debounce)(function (ctx) { return ctx.jodit.o.cleanHTML.timeout; })
+        (0, decorators_1.watch)([':change', ':afterSetMode', ':afterInit', ':mousedown', ':keydown'])
     ], cleanHtml.prototype, "onChangeCleanHTML", null);
     tslib_1.__decorate([
         (0, decorators_1.hook)('ready')
     ], cleanHtml.prototype, "startWalker", null);
     tslib_1.__decorate([
-        decorators_1.autobind
-    ], cleanHtml.prototype, "visitNode", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], cleanHtml.prototype, "isInlineBlock", null);
+        (0, decorators_1.watch)(':beforeCommand')
+    ], cleanHtml.prototype, "beforeCommand", null);
     tslib_1.__decorate([
         (0, decorators_1.watch)(':beforeSetNativeEditorValue')
     ], cleanHtml.prototype, "onBeforeSetNativeEditorValue", null);
@@ -28184,7 +28850,7 @@ exports.cleanHtml = cleanHtml;
 
 
 /***/ }),
-/* 426 */
+/* 457 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28195,7 +28861,476 @@ exports.cleanHtml = cleanHtml;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(458), exports);
+tslib_1.__exportStar(__webpack_require__(459), exports);
+tslib_1.__exportStar(__webpack_require__(460), exports);
+tslib_1.__exportStar(__webpack_require__(461), exports);
+
+
+/***/ }),
+/* 458 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getHash = void 0;
+var helpers_1 = __webpack_require__(187);
+function getHash(tags) {
+    var attributesReg = /([^[]*)\[([^\]]+)]/;
+    var separator = /[\s]*,[\s]*/, attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
+    var tagsHash = {};
+    if ((0, helpers_1.isString)(tags)) {
+        tags.split(separator).map(function (elm) {
+            elm = (0, helpers_1.trim)(elm);
+            var attr = attributesReg.exec(elm), allowAttributes = {}, attributeMap = function (attrName) {
+                attrName = (0, helpers_1.trim)(attrName);
+                var val = attrReg.exec(attrName);
+                if (val) {
+                    allowAttributes[val[1]] = val[2];
+                }
+                else {
+                    allowAttributes[attrName] = true;
+                }
+            };
+            if (attr) {
+                var attr2 = attr[2].split(separator);
+                if (attr[1]) {
+                    attr2.forEach(attributeMap);
+                    tagsHash[attr[1].toUpperCase()] = allowAttributes;
+                }
+            }
+            else {
+                tagsHash[elm.toUpperCase()] = true;
+            }
+        });
+        return tagsHash;
+    }
+    if (tags) {
+        Object.keys(tags).forEach(function (tagName) {
+            tagsHash[tagName.toUpperCase()] = tags[tagName];
+        });
+        return tagsHash;
+    }
+    return false;
+}
+exports.getHash = getHash;
+
+
+/***/ }),
+/* 459 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isInlineBlock = exports.removeFormatForCollapsedSelection = void 0;
+var dom_1 = __webpack_require__(215);
+var constants_1 = __webpack_require__(165);
+function removeFormatForCollapsedSelection(jodit, fake) {
+    var s = jodit.s;
+    var fakeNode = fake;
+    if (!fakeNode) {
+        fakeNode = jodit.createInside.fake();
+        s.range.insertNode(fakeNode);
+        s.range.collapse();
+    }
+    var mainInline = dom_1.Dom.furthest(fakeNode, isInlineBlock, jodit.editor);
+    if (mainInline) {
+        if (s.cursorOnTheLeft(mainInline)) {
+            dom_1.Dom.before(mainInline, fakeNode);
+        }
+        else if (s.cursorOnTheRight(mainInline)) {
+            dom_1.Dom.after(mainInline, fakeNode);
+        }
+        else {
+            var leftHand = s.splitSelection(mainInline);
+            leftHand && dom_1.Dom.after(leftHand, fakeNode);
+        }
+    }
+    if (!fake) {
+        s.setCursorBefore(fakeNode);
+        dom_1.Dom.safeRemove(fakeNode);
+    }
+}
+exports.removeFormatForCollapsedSelection = removeFormatForCollapsedSelection;
+function isInlineBlock(node) {
+    return dom_1.Dom.isInlineBlock(node) && !dom_1.Dom.isTag(node, constants_1.INSEPARABLE_TAGS);
+}
+exports.isInlineBlock = isInlineBlock;
+
+
+/***/ }),
+/* 460 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.removeFormatForSelection = void 0;
+var dom_1 = __webpack_require__(215);
+var utils_1 = __webpack_require__(188);
+var helpers_1 = __webpack_require__(444);
+var remove_format_for_collapsed_selection_1 = __webpack_require__(459);
+function removeFormatForSelection(jodit) {
+    var s = jodit.s, editor = jodit.editor, createInside = jodit.createInside, range = s.range, left = range.cloneRange(), right = range.cloneRange(), fakeLeft = createInside.fake(), fakeRight = createInside.fake();
+    left.collapse(true);
+    right.collapse(false);
+    left.insertNode(fakeLeft);
+    right.insertNode(fakeRight);
+    range.setStartBefore(fakeLeft);
+    range.collapse(true);
+    s.selectRange(range);
+    (0, remove_format_for_collapsed_selection_1.removeFormatForCollapsedSelection)(jodit, fakeLeft);
+    range.setEndAfter(fakeRight);
+    range.collapse(false);
+    s.selectRange(range);
+    (0, remove_format_for_collapsed_selection_1.removeFormatForCollapsedSelection)(jodit, fakeRight);
+    var shouldUnwrap = [];
+    dom_1.Dom.between(fakeLeft, fakeRight, function (node) {
+        if ((0, remove_format_for_collapsed_selection_1.isInlineBlock)(node)) {
+            shouldUnwrap.push(node);
+        }
+        if (dom_1.Dom.isElement(node) && (0, utils_1.attr)(node, 'style')) {
+            (0, utils_1.attr)(node, 'style', null);
+        }
+    });
+    shouldUnwrap.forEach(function (node) { return dom_1.Dom.unwrap(node); });
+    var clearParent = function (node, left) {
+        if (!(0, helpers_1.findNotEmptySibling)(node, left)) {
+            var pn = node.parentNode;
+            if (pn && pn !== editor && (0, utils_1.attr)(pn, 'style')) {
+                (0, utils_1.attr)(pn, 'style', null);
+                clearParent(pn, left);
+                return true;
+            }
+        }
+    };
+    clearParent(fakeLeft, true) && clearParent(fakeRight, false);
+    range.setStartAfter(fakeLeft);
+    range.setEndBefore(fakeRight);
+    s.selectRange(range);
+    dom_1.Dom.safeRemove(fakeLeft);
+    dom_1.Dom.safeRemove(fakeRight);
+}
+exports.removeFormatForSelection = removeFormatForSelection;
+
+
+/***/ }),
+/* 461 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.visitNodeWalker = void 0;
+var tslib_1 = __webpack_require__(1);
+var filters = __webpack_require__(462);
+var keys = Object.keys(filters);
+function visitNodeWalker(jodit, nodeElm, allowTags, denyTags, currentSelectionNode) {
+    var e_1, _a;
+    var hadEffect = false;
+    try {
+        for (var keys_1 = tslib_1.__values(keys), keys_1_1 = keys_1.next(); !keys_1_1.done; keys_1_1 = keys_1.next()) {
+            var key = keys_1_1.value;
+            var filter = filters[key];
+            var tmp = hadEffect;
+            hadEffect = filter(jodit, nodeElm, hadEffect, allowTags, denyTags, currentSelectionNode);
+            if (false) {}
+            if (!nodeElm.isConnected) {
+                return true;
+            }
+        }
+    }
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (keys_1_1 && !keys_1_1.done && (_a = keys_1.return)) _a.call(keys_1);
+        }
+        finally { if (e_1) throw e_1.error; }
+    }
+    return hadEffect;
+}
+exports.visitNodeWalker = visitNodeWalker;
+
+
+/***/ }),
+/* 462 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(463), exports);
+tslib_1.__exportStar(__webpack_require__(464), exports);
+tslib_1.__exportStar(__webpack_require__(465), exports);
+tslib_1.__exportStar(__webpack_require__(466), exports);
+tslib_1.__exportStar(__webpack_require__(467), exports);
+tslib_1.__exportStar(__webpack_require__(468), exports);
+
+
+/***/ }),
+/* 463 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.replaceOldTags = void 0;
+var dom_1 = __webpack_require__(215);
+function replaceOldTags(jodit, nodeElm, hadEffect) {
+    var newNodeElm = replaceIfMatched(jodit, nodeElm, jodit.o.cleanHTML.replaceOldTags);
+    if (nodeElm !== newNodeElm) {
+        nodeElm = newNodeElm;
+        return true;
+    }
+    return hadEffect;
+}
+exports.replaceOldTags = replaceOldTags;
+function replaceIfMatched(jodit, oldParent, list) {
+    if (!list || !dom_1.Dom.isHTMLElement(oldParent)) {
+        return oldParent;
+    }
+    var tagName = list[oldParent.nodeName.toLowerCase()] || list[oldParent.nodeName];
+    if (tagName) {
+        return dom_1.Dom.replace(oldParent, tagName, jodit.createInside, true, false);
+    }
+    return oldParent;
+}
+
+
+/***/ }),
+/* 464 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.allowAttributes = void 0;
+var dom_1 = __webpack_require__(215);
+function allowAttributes(jodit, nodeElm, hadEffect, allow) {
+    if (allow && dom_1.Dom.isElement(nodeElm) && allow[nodeElm.nodeName] !== true) {
+        var attrs = nodeElm.attributes;
+        if (attrs && attrs.length) {
+            var removeAttrs = [];
+            for (var i = 0; i < attrs.length; i += 1) {
+                var attr = allow[nodeElm.nodeName][attrs[i].name];
+                if (!attr || (attr !== true && attr !== attrs[i].value)) {
+                    removeAttrs.push(attrs[i].name);
+                }
+            }
+            if (removeAttrs.length) {
+                hadEffect = true;
+            }
+            removeAttrs.forEach(function (attr) {
+                nodeElm.removeAttribute(attr);
+            });
+        }
+    }
+    return hadEffect;
+}
+exports.allowAttributes = allowAttributes;
+
+
+/***/ }),
+/* 465 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.fillEmptyParagraph = void 0;
+var dom_1 = __webpack_require__(215);
+function fillEmptyParagraph(jodit, nodeElm, hadEffect) {
+    if (jodit.o.cleanHTML.fillEmptyParagraph &&
+        dom_1.Dom.isBlock(nodeElm) &&
+        dom_1.Dom.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)) {
+        var br = jodit.createInside.element('br');
+        nodeElm.appendChild(br);
+        return true;
+    }
+    return hadEffect;
+}
+exports.fillEmptyParagraph = fillEmptyParagraph;
+
+
+/***/ }),
+/* 466 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.tryRemoveNode = void 0;
+var dom_1 = __webpack_require__(215);
+var constants_1 = __webpack_require__(165);
+var trim_1 = __webpack_require__(277);
+function tryRemoveNode(jodit, nodeElm, hadEffect, allowTags, denyTags, currentSelectionNode) {
+    if (isRemovableNode(jodit, nodeElm, currentSelectionNode, allowTags, denyTags)) {
+        dom_1.Dom.safeRemove(nodeElm);
+        return true;
+    }
+    return hadEffect;
+}
+exports.tryRemoveNode = tryRemoveNode;
+function isRemovableNode(jodit, node, current, allow, deny) {
+    if (!dom_1.Dom.isText(node) &&
+        ((allow && !allow[node.nodeName]) || (deny && deny[node.nodeName]))) {
+        return true;
+    }
+    return (jodit.o.cleanHTML.removeEmptyElements &&
+        dom_1.Dom.isElement(node) &&
+        node.nodeName.match(constants_1.IS_INLINE) != null &&
+        !dom_1.Dom.isTemporary(node) &&
+        (0, trim_1.trim)(node.innerHTML).length === 0 &&
+        (current == null || !dom_1.Dom.isOrContains(node, current)));
+}
+function removeExtraBR(jodit, node, current) {
+    if (dom_1.Dom.isTag(node, 'br') &&
+        hasNotEmptyTextSibling(node) &&
+        !hasNotEmptyTextSibling(node, true) &&
+        (current == null ||
+            dom_1.Dom.up(node, dom_1.Dom.isBlock, jodit.editor) !==
+                dom_1.Dom.up(current, dom_1.Dom.isBlock, jodit.editor))) {
+        return true;
+    }
+    return false;
+}
+function hasNotEmptyTextSibling(node, next) {
+    if (next === void 0) { next = false; }
+    var prev = next ? node.nextSibling : node.previousSibling;
+    while (prev) {
+        if (dom_1.Dom.isElement(prev) || !dom_1.Dom.isEmptyTextNode(prev)) {
+            return true;
+        }
+        prev = next ? prev.nextSibling : prev.previousSibling;
+    }
+    return false;
+}
+
+
+/***/ }),
+/* 467 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.removeInvTextNodes = void 0;
+var constants_1 = __webpack_require__(165);
+var dom_1 = __webpack_require__(215);
+function removeInvTextNodes(jodit, node, hadEffect, arg, argi, currentNode) {
+    if (!currentNode) {
+        return hadEffect;
+    }
+    if (!dom_1.Dom.isText(node) || node.nodeValue == null) {
+        return hadEffect;
+    }
+    if ((0, constants_1.INVISIBLE_SPACE_REG_EXP)().test(node.nodeValue) &&
+        node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '').length !== 0) {
+        node.nodeValue = node.nodeValue.replace((0, constants_1.INVISIBLE_SPACE_REG_EXP)(), '');
+        if (node === currentNode && jodit.s.isCollapsed()) {
+            jodit.s.setCursorAfter(node);
+        }
+        if (!node.nodeValue) {
+            dom_1.Dom.safeRemove(node);
+        }
+        return true;
+    }
+    return hadEffect;
+}
+exports.removeInvTextNodes = removeInvTextNodes;
+
+
+/***/ }),
+/* 468 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.sanitizeAttributes = void 0;
+var dom_1 = __webpack_require__(215);
+var helpers_1 = __webpack_require__(187);
+function sanitizeAttributes(jodit, nodeElm, hadEffect) {
+    if (dom_1.Dom.isElement(nodeElm) && (0, helpers_1.sanitizeHTMLElement)(nodeElm)) {
+        return true;
+    }
+    return hadEffect;
+}
+exports.sanitizeAttributes = sanitizeAttributes;
+
+
+/***/ }),
+/* 469 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.cleanHTML = {
     timeout: 300,
     removeEmptyElements: true,
@@ -28217,7 +29352,7 @@ config_1.Config.prototype.controls.eraser = {
 
 
 /***/ }),
-/* 427 */
+/* 470 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28230,17 +29365,17 @@ config_1.Config.prototype.controls.eraser = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.WrapNodes = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var dom_1 = __webpack_require__(159);
-var checker_1 = __webpack_require__(173);
-var decorators_1 = __webpack_require__(169);
-__webpack_require__(428);
+var plugin_1 = __webpack_require__(366);
+var dom_1 = __webpack_require__(231);
+var is_string_1 = __webpack_require__(13);
+var decorators_1 = __webpack_require__(233);
+__webpack_require__(471);
 var WrapNodes = (function (_super) {
     tslib_1.__extends(WrapNodes, _super);
     function WrapNodes() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.isSuitableStart = function (n) {
-            return (dom_1.Dom.isText(n) && (0, checker_1.isString)(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
+            return (dom_1.Dom.isText(n) && (0, is_string_1.isString)(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
                 (_this.isNotClosed(n) && !dom_1.Dom.isTemporary(n));
         };
         _this.isSuitable = function (n) {
@@ -28308,7 +29443,7 @@ exports.WrapNodes = WrapNodes;
 
 
 /***/ }),
-/* 428 */
+/* 471 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28319,14 +29454,14 @@ exports.WrapNodes = WrapNodes;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.wrapNodes = {
-    exclude: ['hr', 'style']
+    exclude: ['hr', 'style', 'br']
 };
 
 
 /***/ }),
-/* 429 */
+/* 472 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28338,16 +29473,18 @@ config_1.Config.prototype.wrapNodes = {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(430);
-tslib_1.__exportStar(__webpack_require__(431), exports);
-tslib_1.__exportStar(__webpack_require__(433), exports);
-tslib_1.__exportStar(__webpack_require__(435), exports);
-tslib_1.__exportStar(__webpack_require__(437), exports);
-tslib_1.__exportStar(__webpack_require__(439), exports);
+__webpack_require__(473);
+tslib_1.__exportStar(__webpack_require__(474), exports);
+tslib_1.__exportStar(__webpack_require__(476), exports);
+tslib_1.__exportStar(__webpack_require__(478), exports);
+tslib_1.__exportStar(__webpack_require__(480), exports);
+tslib_1.__exportStar(__webpack_require__(482), exports);
+tslib_1.__exportStar(__webpack_require__(483), exports);
+tslib_1.__exportStar(__webpack_require__(484), exports);
 
 
 /***/ }),
-/* 430 */
+/* 473 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28358,7 +29495,7 @@ tslib_1.__exportStar(__webpack_require__(439), exports);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.controls.cut = {
     command: 'cut',
     isDisabled: function (editor) { return editor.s.isCollapsed(); },
@@ -28377,7 +29514,7 @@ config_1.Config.prototype.controls.selectall = {
 
 
 /***/ }),
-/* 431 */
+/* 474 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28389,9 +29526,9 @@ config_1.Config.prototype.controls.selectall = {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.clipboard = exports.pluginKey = void 0;
-var constants_1 = __webpack_require__(137);
-var helpers_1 = __webpack_require__(146);
-var helpers_2 = __webpack_require__(432);
+var constants_1 = __webpack_require__(165);
+var helpers_1 = __webpack_require__(187);
+var helpers_2 = __webpack_require__(475);
 exports.pluginKey = 'clipboard';
 var clipboard = (function () {
     function clipboard() {
@@ -28453,7 +29590,7 @@ exports.clipboard = clipboard;
 
 
 /***/ }),
-/* 432 */
+/* 475 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28466,12 +29603,12 @@ exports.clipboard = clipboard;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.askInsertTypeDialog = exports.getAllTypes = exports.pasteInsertHtml = exports.getDataTransfer = void 0;
 var tslib_1 = __webpack_require__(1);
-var checker_1 = __webpack_require__(173);
-var dom_1 = __webpack_require__(159);
-var constants_1 = __webpack_require__(137);
-var modules_1 = __webpack_require__(138);
-var ui_1 = __webpack_require__(251);
-var utils_1 = __webpack_require__(150);
+var checker_1 = __webpack_require__(222);
+var dom_1 = __webpack_require__(231);
+var constants_1 = __webpack_require__(165);
+var modules_1 = __webpack_require__(166);
+var ui_1 = __webpack_require__(336);
+var utils_1 = __webpack_require__(190);
 var getDataTransfer = function (event) {
     if (event.clipboardData) {
         return event.clipboardData;
@@ -28561,7 +29698,7 @@ exports.askInsertTypeDialog = askInsertTypeDialog;
 
 
 /***/ }),
-/* 433 */
+/* 476 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28574,14 +29711,14 @@ exports.askInsertTypeDialog = askInsertTypeDialog;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.paste = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var helpers_1 = __webpack_require__(432);
-__webpack_require__(434);
-var constants_1 = __webpack_require__(137);
-var helpers_2 = __webpack_require__(146);
-var clipboard_1 = __webpack_require__(431);
-var dom_1 = __webpack_require__(159);
-var decorators_1 = __webpack_require__(169);
+var plugin_1 = __webpack_require__(366);
+var helpers_1 = __webpack_require__(475);
+__webpack_require__(477);
+var constants_1 = __webpack_require__(165);
+var helpers_2 = __webpack_require__(187);
+var clipboard_1 = __webpack_require__(474);
+var dom_1 = __webpack_require__(231);
+var decorators_1 = __webpack_require__(233);
 var paste = (function (_super) {
     tslib_1.__extends(paste, _super);
     function paste() {
@@ -28703,7 +29840,7 @@ exports.paste = paste;
 
 
 /***/ }),
-/* 434 */
+/* 477 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28716,11 +29853,11 @@ exports.paste = paste;
 var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-var constants_1 = __webpack_require__(137);
-var config_1 = __webpack_require__(136);
-var clipboard_1 = __webpack_require__(431);
-var helpers_1 = __webpack_require__(432);
-var alert_1 = __webpack_require__(333);
+var constants_1 = __webpack_require__(165);
+var config_1 = __webpack_require__(164);
+var clipboard_1 = __webpack_require__(474);
+var helpers_1 = __webpack_require__(475);
+var alert_1 = __webpack_require__(363);
 config_1.Config.prototype.askBeforePasteHTML = true;
 config_1.Config.prototype.processPasteHTML = true;
 config_1.Config.prototype.pasteHTMLActionList = [
@@ -28821,7 +29958,7 @@ config_1.Config.prototype.controls.paste = {
 
 
 /***/ }),
-/* 435 */
+/* 478 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28834,12 +29971,12 @@ config_1.Config.prototype.controls.paste = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PasteFromWord = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var helpers_1 = __webpack_require__(146);
-var constants_1 = __webpack_require__(137);
-var helpers_2 = __webpack_require__(432);
-var decorators_1 = __webpack_require__(169);
-__webpack_require__(436);
+var plugin_1 = __webpack_require__(366);
+var helpers_1 = __webpack_require__(187);
+var constants_1 = __webpack_require__(165);
+var helpers_2 = __webpack_require__(475);
+var decorators_1 = __webpack_require__(233);
+__webpack_require__(479);
 var PasteFromWord = (function (_super) {
     tslib_1.__extends(PasteFromWord, _super);
     function PasteFromWord() {
@@ -28897,7 +30034,7 @@ exports.PasteFromWord = PasteFromWord;
 
 
 /***/ }),
-/* 436 */
+/* 479 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28908,8 +30045,8 @@ exports.PasteFromWord = PasteFromWord;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
-var constants_1 = __webpack_require__(137);
+var config_1 = __webpack_require__(164);
+var constants_1 = __webpack_require__(165);
 config_1.Config.prototype.askBeforePasteFromWord = true;
 config_1.Config.prototype.processPasteFromWord = true;
 config_1.Config.prototype.defaultActionOnPasteFromWord = null;
@@ -28921,7 +30058,7 @@ config_1.Config.prototype.pasteFromWordActionList = [
 
 
 /***/ }),
-/* 437 */
+/* 480 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28934,13 +30071,13 @@ config_1.Config.prototype.pasteFromWordActionList = [
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.pasteStorage = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(438);
-var constants_1 = __webpack_require__(137);
-var dialog_1 = __webpack_require__(315);
-var plugin_1 = __webpack_require__(336);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var ui_1 = __webpack_require__(251);
+__webpack_require__(481);
+var constants_1 = __webpack_require__(165);
+var dialog_1 = __webpack_require__(323);
+var plugin_1 = __webpack_require__(366);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var ui_1 = __webpack_require__(336);
 var pasteStorage = (function (_super) {
     tslib_1.__extends(pasteStorage, _super);
     function pasteStorage() {
@@ -29101,7 +30238,7 @@ exports.pasteStorage = pasteStorage;
 
 
 /***/ }),
-/* 438 */
+/* 481 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29110,7 +30247,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 439 */
+/* 482 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -29122,9 +30259,9 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.copyFormat = void 0;
-var config_1 = __webpack_require__(136);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
+var config_1 = __webpack_require__(164);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
 var pluginKey = 'copyformat';
 var copyStyles = [
     'fontWeight',
@@ -29219,490 +30356,7 @@ exports.copyFormat = copyFormat;
 
 
 /***/ }),
-/* 440 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.color = void 0;
-var config_1 = __webpack_require__(136);
-var modules_1 = __webpack_require__(138);
-var helpers_1 = __webpack_require__(146);
-var widget_1 = __webpack_require__(441);
-config_1.Config.prototype.controls.brush = {
-    update: function (button) {
-        var color = (0, helpers_1.dataBind)(button, 'color');
-        var editor = button.j;
-        var update = function (key, value) {
-            if (value && value !== (0, helpers_1.css)(editor.editor, key).toString()) {
-                button.state.icon.fill = value;
-                return;
-            }
-        };
-        if (color) {
-            var mode = (0, helpers_1.dataBind)(button, 'color');
-            update(mode === 'color' ? mode : 'background-color', color);
-            return;
-        }
-        var current = editor.s.current();
-        if (current && !button.state.disabled) {
-            var currentBpx = modules_1.Dom.closest(current, modules_1.Dom.isElement, editor.editor) || editor.editor;
-            update('color', (0, helpers_1.css)(currentBpx, 'color').toString());
-            update('background-color', (0, helpers_1.css)(currentBpx, 'background-color').toString());
-        }
-        button.state.icon.fill = '';
-        button.state.activated = false;
-    },
-    popup: function (editor, current, self, close, button) {
-        var colorHEX = '', bg_color = '', tabs = [], currentElement = null;
-        if (current && current !== editor.editor && modules_1.Dom.isNode(current)) {
-            if (modules_1.Dom.isElement(current) &&
-                editor.s.isCollapsed() &&
-                !modules_1.Dom.isTag(current, ['br', 'hr'])) {
-                currentElement = current;
-            }
-            modules_1.Dom.up(current, function (node) {
-                if (modules_1.Dom.isHTMLElement(node)) {
-                    var color_1 = (0, helpers_1.css)(node, 'color', true), background = (0, helpers_1.css)(node, 'background-color', true);
-                    if (color_1) {
-                        colorHEX = color_1.toString();
-                        return true;
-                    }
-                    if (background) {
-                        bg_color = background.toString();
-                        return true;
-                    }
-                }
-            }, editor.editor);
-        }
-        var backgroundTag = (0, widget_1.ColorPickerWidget)(editor, function (value) {
-            if (!currentElement) {
-                editor.execCommand('background', false, value);
-            }
-            else {
-                currentElement.style.backgroundColor = value;
-            }
-            (0, helpers_1.dataBind)(button, 'color', value);
-            (0, helpers_1.dataBind)(button, 'color-mode', 'background');
-            close();
-        }, bg_color);
-        var colorTab = (0, widget_1.ColorPickerWidget)(editor, function (value) {
-            if (!currentElement) {
-                editor.execCommand('forecolor', false, value);
-            }
-            else {
-                currentElement.style.color = value;
-            }
-            (0, helpers_1.dataBind)(button, 'color', value);
-            (0, helpers_1.dataBind)(button, 'color-mode', 'color');
-            close();
-        }, colorHEX);
-        tabs = [
-            {
-                name: 'Background',
-                content: backgroundTag
-            },
-            {
-                name: 'Text',
-                content: colorTab
-            }
-        ];
-        if (editor.o.colorPickerDefaultTab !== 'background') {
-            tabs = tabs.reverse();
-        }
-        return (0, widget_1.TabsWidget)(editor, tabs, currentElement);
-    },
-    exec: function (jodit, current, _a) {
-        var button = _a.button;
-        var mode = (0, helpers_1.dataBind)(button, 'color-mode'), color = (0, helpers_1.dataBind)(button, 'color');
-        if (!mode) {
-            return false;
-        }
-        if (current &&
-            current !== jodit.editor &&
-            modules_1.Dom.isNode(current) &&
-            modules_1.Dom.isElement(current)) {
-            switch (mode) {
-                case 'color':
-                    current.style.color = color;
-                    break;
-                case 'background':
-                    current.style.backgroundColor = color;
-                    break;
-            }
-        }
-        else {
-            jodit.execCommand(mode === 'background' ? mode : 'forecolor', false, color);
-        }
-    },
-    tooltip: 'Fill color or set the text color'
-};
-function color(editor) {
-    editor.registerButton({
-        name: 'brush',
-        group: 'color'
-    });
-    var callback = function (command, second, third) {
-        var colorHEX = (0, helpers_1.normalizeColor)(third);
-        switch (command) {
-            case 'background':
-                editor.s.applyStyle({
-                    backgroundColor: !colorHEX ? '' : colorHEX
-                });
-                break;
-            case 'forecolor':
-                editor.s.applyStyle({
-                    color: !colorHEX ? '' : colorHEX
-                });
-                break;
-        }
-        editor.synchronizeValues();
-        return false;
-    };
-    editor
-        .registerCommand('forecolor', callback)
-        .registerCommand('background', callback);
-}
-exports.color = color;
-
-
-/***/ }),
-/* 441 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(442), exports);
-tslib_1.__exportStar(__webpack_require__(444), exports);
-tslib_1.__exportStar(__webpack_require__(446), exports);
-
-
-/***/ }),
-/* 442 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ColorPickerWidget = void 0;
-__webpack_require__(443);
-var helpers_1 = __webpack_require__(146);
-var ui_1 = __webpack_require__(251);
-var dom_1 = __webpack_require__(159);
-var ColorPickerWidget = function (editor, callback, coldColor) {
-    var cn = 'jodit-color-picker', valueHex = (0, helpers_1.normalizeColor)(coldColor), form = editor.c.div(cn), iconPalette = editor.o.textIcons
-        ? "<span>".concat(editor.i18n('palette'), "</span>")
-        : ui_1.Icon.get('palette'), eachColor = function (colors) {
-        var stack = [];
-        if ((0, helpers_1.isPlainObject)(colors)) {
-            Object.keys(colors).forEach(function (key) {
-                stack.push("<div class=\"".concat(cn, "__group ").concat(cn, "__group-").concat(key, "\">"));
-                stack.push(eachColor(colors[key]));
-                stack.push('</div>');
-            });
-        }
-        else if ((0, helpers_1.isArray)(colors)) {
-            colors.forEach(function (color) {
-                stack.push("<span class='".concat(cn, "__color-item ").concat(valueHex === color
-                    ? cn + '__color-item_active_true'
-                    : '', "' title=\"").concat(color, "\" style=\"background-color:").concat(color, "\" data-color=\"").concat(color, "\"></span>"));
-            });
-        }
-        return stack.join('');
-    };
-    form.appendChild(editor.c.fromHTML("<div class=\"".concat(cn, "__groups\">").concat(eachColor(editor.o.colors), "</div>")));
-    form.appendChild(editor.c.fromHTML("<div data-ref=\"extra\" class=\"".concat(cn, "__extra\"></div>")));
-    var extra = (0, helpers_1.refs)(form).extra;
-    if (editor.o.showBrowserColorPicker && (0, helpers_1.hasBrowserColorPicker)()) {
-        extra.appendChild(editor.c.fromHTML("<div class=\"".concat(cn, "__native\">").concat(iconPalette, "<input type=\"color\" value=\"#ffffff\"/></div>")));
-        editor.e.on(form, 'change', function (e) {
-            e.stopPropagation();
-            var target = e.target;
-            if (!target || !target.tagName || !dom_1.Dom.isTag(target, 'input')) {
-                return;
-            }
-            var color = target.value || '';
-            if ((0, helpers_1.isFunction)(callback)) {
-                callback(color);
-            }
-            e.preventDefault();
-        });
-    }
-    editor.e.on(form, 'mousedown touchend', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        var target = e.target;
-        if ((!target ||
-            !target.tagName ||
-            dom_1.Dom.isTag(target, 'svg') ||
-            dom_1.Dom.isTag(target, 'path')) &&
-            target.parentNode) {
-            target = dom_1.Dom.closest(target.parentNode, 'span', editor.editor);
-        }
-        if (!dom_1.Dom.isTag(target, 'span') ||
-            !target.classList.contains(cn + '__color-item')) {
-            return;
-        }
-        var color = (0, helpers_1.attr)(target, '-color') || '';
-        if (callback && (0, helpers_1.isFunction)(callback)) {
-            callback(color);
-        }
-    });
-    editor.e.fire('afterGenerateColorPicker', form, extra, callback, valueHex);
-    return form;
-};
-exports.ColorPickerWidget = ColorPickerWidget;
-
-
-/***/ }),
-/* 443 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 444 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TabsWidget = void 0;
-__webpack_require__(445);
-var helpers_1 = __webpack_require__(146);
-var ui_1 = __webpack_require__(251);
-var component_1 = __webpack_require__(154);
-var TabsWidget = function (jodit, tabs, state) {
-    var box = jodit.c.div('jodit-tabs'), tabBox = jodit.c.div('jodit-tabs__wrapper'), buttons = jodit.c.div('jodit-tabs__buttons'), nameToTab = {}, buttonList = [];
-    var firstTab = '', tabCount = 0;
-    box.appendChild(buttons);
-    box.appendChild(tabBox);
-    var setActive = function (tab) {
-        if (!nameToTab[tab]) {
-            return;
-        }
-        buttonList.forEach(function (b) {
-            b.state.activated = false;
-        });
-        (0, helpers_1.$$)('.jodit-tab', tabBox).forEach(function (a) {
-            a.classList.remove('jodit-tab_active');
-        });
-        nameToTab[tab].button.state.activated = true;
-        nameToTab[tab].tab.classList.add('jodit-tab_active');
-    };
-    tabs.forEach(function (_a) {
-        var icon = _a.icon, name = _a.name, content = _a.content;
-        var tab = jodit.c.div('jodit-tab'), button = (0, ui_1.Button)(jodit, icon || name, name);
-        jodit.e.on(button.container, 'mousedown', function (e) {
-            return e.preventDefault();
-        });
-        if (!firstTab) {
-            firstTab = name;
-        }
-        buttons.appendChild(button.container);
-        buttonList.push(button);
-        button.container.classList.add('jodit-tabs__button', 'jodit-tabs__button_columns_' + tabs.length);
-        if (!(0, helpers_1.isFunction)(content)) {
-            tab.appendChild(component_1.Component.isInstanceOf(content, ui_1.UIElement)
-                ? content.container
-                : content);
-        }
-        else {
-            tab.appendChild(jodit.c.div('jodit-tab_empty'));
-        }
-        tabBox.appendChild(tab);
-        button.onAction(function () {
-            setActive(name);
-            if ((0, helpers_1.isFunction)(content)) {
-                content.call(jodit);
-            }
-            if (state) {
-                state.__activeTab = name;
-            }
-            return false;
-        });
-        nameToTab[name] = {
-            button: button,
-            tab: tab
-        };
-        tabCount += 1;
-    });
-    if (!tabCount) {
-        return box;
-    }
-    (0, helpers_1.$$)('a', buttons).forEach(function (a) {
-        a.style.width = (100 / tabCount).toFixed(10) + '%';
-    });
-    var tab = !state || !state.__activeTab || !nameToTab[state.__activeTab]
-        ? firstTab
-        : state.__activeTab;
-    setActive(tab);
-    if (state) {
-        var __activeTab_1 = state.__activeTab;
-        Object.defineProperty(state, '__activeTab', {
-            configurable: true,
-            enumerable: false,
-            get: function () {
-                return __activeTab_1;
-            },
-            set: function (value) {
-                __activeTab_1 = value;
-                setActive(value);
-            }
-        });
-    }
-    return box;
-};
-exports.TabsWidget = TabsWidget;
-
-
-/***/ }),
-/* 445 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-/* 446 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FileSelectorWidget = void 0;
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
-var tabs_1 = __webpack_require__(444);
-var ui_1 = __webpack_require__(251);
-var FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
-    if (isImage === void 0) { isImage = true; }
-    var currentImage;
-    var tabs = [];
-    if (callbacks.upload &&
-        editor.o.uploader &&
-        (editor.o.uploader.url || editor.o.uploader.insertImageAsBase64URI)) {
-        var dragBox = editor.c.fromHTML('<div class="jodit-drag-and-drop__file-box">' +
-            "<strong>".concat(editor.i18n(isImage ? 'Drop image' : 'Drop file'), "</strong>") +
-            "<span><br>".concat(editor.i18n('or click'), "</span>") +
-            "<input type=\"file\" accept=\"".concat(isImage ? 'image/*' : '*', "\" tabindex=\"-1\" dir=\"auto\" multiple=\"\"/>") +
-            '</div>');
-        editor.uploader.bind(dragBox, function (resp) {
-            var handler = (0, helpers_1.isFunction)(callbacks.upload)
-                ? callbacks.upload
-                : editor.o.uploader.defaultHandlerSuccess;
-            if ((0, helpers_1.isFunction)(handler)) {
-                handler.call(editor, resp);
-            }
-            editor.e.fire('closeAllPopups');
-        }, function (error) {
-            editor.e.fire('errorMessage', error.message);
-            editor.e.fire('closeAllPopups');
-        });
-        tabs.push({
-            icon: 'upload',
-            name: 'Upload',
-            content: dragBox
-        });
-    }
-    if (callbacks.filebrowser) {
-        if (editor.o.filebrowser.ajax.url || editor.o.filebrowser.items.url) {
-            tabs.push({
-                icon: 'folder',
-                name: 'Browse',
-                content: function () {
-                    close && close();
-                    if (callbacks.filebrowser) {
-                        editor.filebrowser.open(callbacks.filebrowser, isImage);
-                    }
-                }
-            });
-        }
-    }
-    if (callbacks.url) {
-        var button = new ui_1.UIButton(editor, {
-            type: 'submit',
-            variant: 'primary',
-            text: 'Insert'
-        }), form = new ui_1.UIForm(editor, [
-            new ui_1.UIInput(editor, {
-                required: true,
-                label: 'URL',
-                name: 'url',
-                type: 'text',
-                placeholder: 'https://'
-            }),
-            new ui_1.UIInput(editor, {
-                name: 'text',
-                label: 'Alternative text'
-            }),
-            new ui_1.UIBlock(editor, [button])
-        ]);
-        currentImage = null;
-        if (elm &&
-            !dom_1.Dom.isText(elm) &&
-            (dom_1.Dom.isTag(elm, 'img') || (0, helpers_1.$$)('img', elm).length)) {
-            currentImage = elm.tagName === 'IMG' ? elm : (0, helpers_1.$$)('img', elm)[0];
-            (0, helpers_1.val)(form.container, 'input[name=url]', (0, helpers_1.attr)(currentImage, 'src'));
-            (0, helpers_1.val)(form.container, 'input[name=text]', (0, helpers_1.attr)(currentImage, 'alt'));
-            button.state.text = 'Update';
-        }
-        if (elm && dom_1.Dom.isTag(elm, 'a')) {
-            (0, helpers_1.val)(form.container, 'input[name=url]', (0, helpers_1.attr)(elm, 'href'));
-            (0, helpers_1.val)(form.container, 'input[name=text]', (0, helpers_1.attr)(elm, 'title'));
-            button.state.text = 'Update';
-        }
-        form.onSubmit(function (data) {
-            if ((0, helpers_1.isFunction)(callbacks.url)) {
-                callbacks.url.call(editor, data.url, data.text);
-            }
-        });
-        tabs.push({
-            icon: 'link',
-            name: 'URL',
-            content: form.container
-        });
-    }
-    return (0, tabs_1.TabsWidget)(editor, tabs);
-};
-exports.FileSelectorWidget = FileSelectorWidget;
-
-
-/***/ }),
-/* 447 */
+/* 483 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -29715,13 +30369,13 @@ exports.FileSelectorWidget = FileSelectorWidget;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DragAndDrop = void 0;
 var tslib_1 = __webpack_require__(1);
-var constants_1 = __webpack_require__(137);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var plugin_1 = __webpack_require__(336);
-var helpers_2 = __webpack_require__(432);
-var decorators_1 = __webpack_require__(169);
-var file_browser_1 = __webpack_require__(340);
+var constants_1 = __webpack_require__(165);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var plugin_1 = __webpack_require__(366);
+var helpers_2 = __webpack_require__(475);
+var decorators_1 = __webpack_require__(233);
+var file_browser_1 = __webpack_require__(370);
 var DragAndDrop = (function (_super) {
     tslib_1.__extends(DragAndDrop, _super);
     function DragAndDrop() {
@@ -29864,7 +30518,7 @@ var DragAndDrop = (function (_super) {
         decorators_1.autobind
     ], DragAndDrop.prototype, "onDragStart", null);
     tslib_1.__decorate([
-        (0, decorators_1.throttle)(function (ctx) { return ctx.j.defaultTimeout / 10; })
+        (0, decorators_1.throttle)(function (ctx) { return ctx.defaultTimeout / 10; })
     ], DragAndDrop.prototype, "onDrag", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -29878,7 +30532,7 @@ exports.DragAndDrop = DragAndDrop;
 
 
 /***/ }),
-/* 448 */
+/* 484 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -29891,11 +30545,11 @@ exports.DragAndDrop = DragAndDrop;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.DragAndDropElement = void 0;
 var tslib_1 = __webpack_require__(1);
-var helpers_1 = __webpack_require__(146);
-var plugin_1 = __webpack_require__(336);
-var dom_1 = __webpack_require__(159);
-var global_1 = __webpack_require__(157);
-var decorators_1 = __webpack_require__(169);
+var helpers_1 = __webpack_require__(187);
+var plugin_1 = __webpack_require__(366);
+var dom_1 = __webpack_require__(231);
+var global_1 = __webpack_require__(239);
+var decorators_1 = __webpack_require__(233);
 var DragState;
 (function (DragState) {
     DragState[DragState["IDLE"] = 0] = "IDLE";
@@ -30051,7 +30705,7 @@ var DragAndDropElement = (function (_super) {
         decorators_1.autobind
     ], DragAndDropElement.prototype, "onDragStart", null);
     tslib_1.__decorate([
-        (0, decorators_1.throttle)(function (ctx) { return ctx.j.defaultTimeout / 10; })
+        (0, decorators_1.throttle)(function (ctx) { return ctx.defaultTimeout / 10; })
     ], DragAndDropElement.prototype, "onDrag", null);
     tslib_1.__decorate([
         decorators_1.autobind
@@ -30065,7 +30719,7 @@ exports.DragAndDropElement = DragAndDropElement;
 
 
 /***/ }),
-/* 449 */
+/* 485 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -30076,212 +30730,874 @@ exports.DragAndDropElement = DragAndDropElement;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.enter = exports.insertParagraph = void 0;
-var tslib_1 = __webpack_require__(1);
-var consts = __webpack_require__(137);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var plugin_1 = __webpack_require__(336);
-var constants_1 = __webpack_require__(137);
-var insertParagraph = function (editor, fake, wrapperTag, style) {
-    var _a;
-    var p = editor.createInside.element(wrapperTag), helper_node = editor.createInside.element('br');
-    p.appendChild(helper_node);
-    if (style && style.cssText) {
-        p.setAttribute('style', style.cssText);
-    }
-    editor.s.insertNode(p, false, false);
-    editor.s.setCursorBefore(helper_node);
-    var range = editor.s.createRange();
-    range.setStartBefore(wrapperTag.toLowerCase() !== 'br' ? helper_node : p);
-    range.collapse(true);
-    editor.s.selectRange(range);
-    dom_1.Dom.safeRemove(fake);
-    (0, helpers_1.scrollIntoViewIfNeeded)(p, editor.editor, editor.ed);
-    (_a = editor.events) === null || _a === void 0 ? void 0 : _a.fire('synchro');
-    return p;
+exports.color = void 0;
+var config_1 = __webpack_require__(164);
+var modules_1 = __webpack_require__(166);
+var helpers_1 = __webpack_require__(187);
+var widget_1 = __webpack_require__(486);
+config_1.Config.prototype.controls.brush = {
+    update: function (button, editor) {
+        var color = (0, helpers_1.dataBind)(button, 'color');
+        var update = function (key, value) {
+            if (value && value !== (0, helpers_1.css)(editor.editor, key).toString()) {
+                button.state.icon.fill = value;
+                return;
+            }
+        };
+        if (color) {
+            var mode = (0, helpers_1.dataBind)(button, 'color');
+            update(mode === 'color' ? mode : 'background-color', color);
+            return;
+        }
+        var current = editor.s.current();
+        if (current && !button.state.disabled) {
+            var currentBpx = modules_1.Dom.closest(current, modules_1.Dom.isElement, editor.editor) || editor.editor;
+            update('color', (0, helpers_1.css)(currentBpx, 'color').toString());
+            update('background-color', (0, helpers_1.css)(currentBpx, 'background-color').toString());
+        }
+        button.state.icon.fill = '';
+        button.state.activated = false;
+    },
+    popup: function (editor, current, self, close, button) {
+        var colorHEX = '', bg_color = '', tabs = [], currentElement = null;
+        if (current && current !== editor.editor && modules_1.Dom.isNode(current)) {
+            if (modules_1.Dom.isElement(current) &&
+                editor.s.isCollapsed() &&
+                !modules_1.Dom.isTag(current, ['br', 'hr'])) {
+                currentElement = current;
+            }
+            modules_1.Dom.up(current, function (node) {
+                if (modules_1.Dom.isHTMLElement(node)) {
+                    var color_1 = (0, helpers_1.css)(node, 'color', true), background = (0, helpers_1.css)(node, 'background-color', true);
+                    if (color_1) {
+                        colorHEX = color_1.toString();
+                        return true;
+                    }
+                    if (background) {
+                        bg_color = background.toString();
+                        return true;
+                    }
+                }
+            }, editor.editor);
+        }
+        var backgroundTag = (0, widget_1.ColorPickerWidget)(editor, function (value) {
+            if (!currentElement) {
+                editor.execCommand('background', false, value);
+            }
+            else {
+                currentElement.style.backgroundColor = value;
+            }
+            (0, helpers_1.dataBind)(button, 'color', value);
+            (0, helpers_1.dataBind)(button, 'color-mode', 'background');
+            close();
+        }, bg_color);
+        var colorTab = (0, widget_1.ColorPickerWidget)(editor, function (value) {
+            if (!currentElement) {
+                editor.execCommand('forecolor', false, value);
+            }
+            else {
+                currentElement.style.color = value;
+            }
+            (0, helpers_1.dataBind)(button, 'color', value);
+            (0, helpers_1.dataBind)(button, 'color-mode', 'color');
+            close();
+        }, colorHEX);
+        tabs = [
+            {
+                name: 'Background',
+                content: backgroundTag
+            },
+            {
+                name: 'Text',
+                content: colorTab
+            }
+        ];
+        if (editor.o.colorPickerDefaultTab !== 'background') {
+            tabs = tabs.reverse();
+        }
+        return (0, widget_1.TabsWidget)(editor, tabs, currentElement);
+    },
+    exec: function (jodit, current, _a) {
+        var button = _a.button;
+        var mode = (0, helpers_1.dataBind)(button, 'color-mode'), color = (0, helpers_1.dataBind)(button, 'color');
+        if (!mode) {
+            return false;
+        }
+        if (current &&
+            current !== jodit.editor &&
+            modules_1.Dom.isNode(current) &&
+            modules_1.Dom.isElement(current)) {
+            switch (mode) {
+                case 'color':
+                    current.style.color = color;
+                    break;
+                case 'background':
+                    current.style.backgroundColor = color;
+                    break;
+            }
+        }
+        else {
+            jodit.execCommand(mode === 'background' ? mode : 'forecolor', false, color);
+        }
+    },
+    tooltip: 'Fill color or set the text color'
 };
-exports.insertParagraph = insertParagraph;
+function color(editor) {
+    editor.registerButton({
+        name: 'brush',
+        group: 'color'
+    });
+    var callback = function (command, second, third) {
+        var colorHEX = (0, helpers_1.normalizeColor)(third);
+        switch (command) {
+            case 'background':
+                editor.s.applyStyle({
+                    backgroundColor: !colorHEX ? '' : colorHEX
+                });
+                break;
+            case 'forecolor':
+                editor.s.applyStyle({
+                    color: !colorHEX ? '' : colorHEX
+                });
+                break;
+        }
+        editor.synchronizeValues();
+        return false;
+    };
+    editor
+        .registerCommand('forecolor', callback)
+        .registerCommand('background', callback);
+}
+exports.color = color;
+
+
+/***/ }),
+/* 486 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(487), exports);
+tslib_1.__exportStar(__webpack_require__(489), exports);
+tslib_1.__exportStar(__webpack_require__(491), exports);
+
+
+/***/ }),
+/* 487 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ColorPickerWidget = void 0;
+__webpack_require__(488);
+var helpers_1 = __webpack_require__(187);
+var ui_1 = __webpack_require__(336);
+var dom_1 = __webpack_require__(231);
+var ColorPickerWidget = function (editor, callback, coldColor) {
+    var cn = 'jodit-color-picker', valueHex = (0, helpers_1.normalizeColor)(coldColor), form = editor.c.div(cn), iconPalette = editor.o.textIcons
+        ? "<span>".concat(editor.i18n('palette'), "</span>")
+        : ui_1.Icon.get('palette'), eachColor = function (colors) {
+        var stack = [];
+        if ((0, helpers_1.isPlainObject)(colors)) {
+            Object.keys(colors).forEach(function (key) {
+                stack.push("<div class=\"".concat(cn, "__group ").concat(cn, "__group-").concat(key, "\">"));
+                stack.push(eachColor(colors[key]));
+                stack.push('</div>');
+            });
+        }
+        else if ((0, helpers_1.isArray)(colors)) {
+            colors.forEach(function (color) {
+                stack.push("<span class='".concat(cn, "__color-item ").concat(valueHex === color
+                    ? cn + '__color-item_active_true'
+                    : '', "' title=\"").concat(color, "\" style=\"background-color:").concat(color, "\" data-color=\"").concat(color, "\"></span>"));
+            });
+        }
+        return stack.join('');
+    };
+    form.appendChild(editor.c.fromHTML("<div class=\"".concat(cn, "__groups\">").concat(eachColor(editor.o.colors), "</div>")));
+    form.appendChild(editor.c.fromHTML("<div data-ref=\"extra\" class=\"".concat(cn, "__extra\"></div>")));
+    var extra = (0, helpers_1.refs)(form).extra;
+    if (editor.o.showBrowserColorPicker && (0, helpers_1.hasBrowserColorPicker)()) {
+        extra.appendChild(editor.c.fromHTML("<div class=\"".concat(cn, "__native\">").concat(iconPalette, "<input type=\"color\" value=\"#ffffff\"/></div>")));
+        editor.e.on(form, 'change', function (e) {
+            e.stopPropagation();
+            var target = e.target;
+            if (!target || !target.tagName || !dom_1.Dom.isTag(target, 'input')) {
+                return;
+            }
+            var color = target.value || '';
+            if ((0, helpers_1.isFunction)(callback)) {
+                callback(color);
+            }
+            e.preventDefault();
+        });
+    }
+    editor.e.on(form, 'mousedown touchend', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var target = e.target;
+        if ((!target ||
+            !target.tagName ||
+            dom_1.Dom.isTag(target, 'svg') ||
+            dom_1.Dom.isTag(target, 'path')) &&
+            target.parentNode) {
+            target = dom_1.Dom.closest(target.parentNode, 'span', editor.editor);
+        }
+        if (!dom_1.Dom.isTag(target, 'span') ||
+            !target.classList.contains(cn + '__color-item')) {
+            return;
+        }
+        var color = (0, helpers_1.attr)(target, '-color') || '';
+        if (callback && (0, helpers_1.isFunction)(callback)) {
+            callback(color);
+        }
+    });
+    editor.e.fire('afterGenerateColorPicker', form, extra, callback, valueHex);
+    return form;
+};
+exports.ColorPickerWidget = ColorPickerWidget;
+
+
+/***/ }),
+/* 488 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 489 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.TabsWidget = void 0;
+__webpack_require__(490);
+var helpers_1 = __webpack_require__(187);
+var ui_1 = __webpack_require__(336);
+var component_1 = __webpack_require__(237);
+var TabsWidget = function (jodit, tabs, state) {
+    var box = jodit.c.div('jodit-tabs'), tabBox = jodit.c.div('jodit-tabs__wrapper'), buttons = jodit.c.div('jodit-tabs__buttons'), nameToTab = {}, buttonList = [];
+    var firstTab = '', tabCount = 0;
+    box.appendChild(buttons);
+    box.appendChild(tabBox);
+    var setActive = function (tab) {
+        if (!nameToTab[tab]) {
+            return;
+        }
+        buttonList.forEach(function (b) {
+            b.state.activated = false;
+        });
+        (0, helpers_1.$$)('.jodit-tab', tabBox).forEach(function (a) {
+            a.classList.remove('jodit-tab_active');
+        });
+        nameToTab[tab].button.state.activated = true;
+        nameToTab[tab].tab.classList.add('jodit-tab_active');
+    };
+    tabs.forEach(function (_a) {
+        var icon = _a.icon, name = _a.name, content = _a.content;
+        var tab = jodit.c.div('jodit-tab'), button = (0, ui_1.Button)(jodit, icon || name, name);
+        jodit.e.on(button.container, 'mousedown', function (e) {
+            return e.preventDefault();
+        });
+        if (!firstTab) {
+            firstTab = name;
+        }
+        buttons.appendChild(button.container);
+        buttonList.push(button);
+        button.container.classList.add('jodit-tabs__button', 'jodit-tabs__button_columns_' + tabs.length);
+        if (!(0, helpers_1.isFunction)(content)) {
+            tab.appendChild(component_1.Component.isInstanceOf(content, ui_1.UIElement)
+                ? content.container
+                : content);
+        }
+        else {
+            tab.appendChild(jodit.c.div('jodit-tab_empty'));
+        }
+        tabBox.appendChild(tab);
+        button.onAction(function () {
+            setActive(name);
+            if ((0, helpers_1.isFunction)(content)) {
+                content.call(jodit);
+            }
+            if (state) {
+                state.__activeTab = name;
+            }
+            return false;
+        });
+        nameToTab[name] = {
+            button: button,
+            tab: tab
+        };
+        tabCount += 1;
+    });
+    if (!tabCount) {
+        return box;
+    }
+    (0, helpers_1.$$)('a', buttons).forEach(function (a) {
+        a.style.width = (100 / tabCount).toFixed(10) + '%';
+    });
+    var tab = !state || !state.__activeTab || !nameToTab[state.__activeTab]
+        ? firstTab
+        : state.__activeTab;
+    setActive(tab);
+    if (state) {
+        var __activeTab_1 = state.__activeTab;
+        Object.defineProperty(state, '__activeTab', {
+            configurable: true,
+            enumerable: false,
+            get: function () {
+                return __activeTab_1;
+            },
+            set: function (value) {
+                __activeTab_1 = value;
+                setActive(value);
+            }
+        });
+    }
+    return box;
+};
+exports.TabsWidget = TabsWidget;
+
+
+/***/ }),
+/* 490 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+/* 491 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.FileSelectorWidget = void 0;
+var helpers_1 = __webpack_require__(187);
+var dom_1 = __webpack_require__(231);
+var tabs_1 = __webpack_require__(489);
+var ui_1 = __webpack_require__(336);
+var FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
+    if (isImage === void 0) { isImage = true; }
+    var currentImage;
+    var tabs = [];
+    if (callbacks.upload &&
+        editor.o.uploader &&
+        (editor.o.uploader.url || editor.o.uploader.insertImageAsBase64URI)) {
+        var dragBox = editor.c.fromHTML('<div class="jodit-drag-and-drop__file-box">' +
+            "<strong>".concat(editor.i18n(isImage ? 'Drop image' : 'Drop file'), "</strong>") +
+            "<span><br>".concat(editor.i18n('or click'), "</span>") +
+            "<input type=\"file\" accept=\"".concat(isImage ? 'image/*' : '*', "\" tabindex=\"-1\" dir=\"auto\" multiple=\"\"/>") +
+            '</div>');
+        editor.uploader.bind(dragBox, function (resp) {
+            var handler = (0, helpers_1.isFunction)(callbacks.upload)
+                ? callbacks.upload
+                : editor.o.uploader.defaultHandlerSuccess;
+            if ((0, helpers_1.isFunction)(handler)) {
+                handler.call(editor, resp);
+            }
+            editor.e.fire('closeAllPopups');
+        }, function (error) {
+            editor.e.fire('errorMessage', error.message);
+            editor.e.fire('closeAllPopups');
+        });
+        tabs.push({
+            icon: 'upload',
+            name: 'Upload',
+            content: dragBox
+        });
+    }
+    if (callbacks.filebrowser) {
+        if (editor.o.filebrowser.ajax.url || editor.o.filebrowser.items.url) {
+            tabs.push({
+                icon: 'folder',
+                name: 'Browse',
+                content: function () {
+                    close && close();
+                    if (callbacks.filebrowser) {
+                        editor.filebrowser.open(callbacks.filebrowser, isImage);
+                    }
+                }
+            });
+        }
+    }
+    if (callbacks.url) {
+        var button = new ui_1.UIButton(editor, {
+            type: 'submit',
+            variant: 'primary',
+            text: 'Insert'
+        }), form = new ui_1.UIForm(editor, [
+            new ui_1.UIInput(editor, {
+                required: true,
+                label: 'URL',
+                name: 'url',
+                type: 'text',
+                placeholder: 'https://'
+            }),
+            new ui_1.UIInput(editor, {
+                name: 'text',
+                label: 'Alternative text'
+            }),
+            new ui_1.UIBlock(editor, [button])
+        ]);
+        currentImage = null;
+        if (elm &&
+            !dom_1.Dom.isText(elm) &&
+            (dom_1.Dom.isTag(elm, 'img') || (0, helpers_1.$$)('img', elm).length)) {
+            currentImage = elm.tagName === 'IMG' ? elm : (0, helpers_1.$$)('img', elm)[0];
+            (0, helpers_1.val)(form.container, 'input[name=url]', (0, helpers_1.attr)(currentImage, 'src'));
+            (0, helpers_1.val)(form.container, 'input[name=text]', (0, helpers_1.attr)(currentImage, 'alt'));
+            button.state.text = 'Update';
+        }
+        if (elm && dom_1.Dom.isTag(elm, 'a')) {
+            (0, helpers_1.val)(form.container, 'input[name=url]', (0, helpers_1.attr)(elm, 'href'));
+            (0, helpers_1.val)(form.container, 'input[name=text]', (0, helpers_1.attr)(elm, 'title'));
+            button.state.text = 'Update';
+        }
+        form.onSubmit(function (data) {
+            if ((0, helpers_1.isFunction)(callbacks.url)) {
+                callbacks.url.call(editor, data.url, data.text);
+            }
+        });
+        tabs.push({
+            icon: 'link',
+            name: 'URL',
+            content: form.container
+        });
+    }
+    return (0, tabs_1.TabsWidget)(editor, tabs);
+};
+exports.FileSelectorWidget = FileSelectorWidget;
+
+
+/***/ }),
+/* 492 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.enter = void 0;
+var tslib_1 = __webpack_require__(1);
+var dom_1 = __webpack_require__(215);
+var plugin_1 = __webpack_require__(367);
+var constants_1 = __webpack_require__(165);
+var helpers_1 = __webpack_require__(493);
+var decorators_1 = __webpack_require__(233);
 var enter = (function (_super) {
     tslib_1.__extends(enter, _super);
     function enter() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.brMode = false;
-        _this.defaultTag = consts.PARAGRAPH;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     enter.prototype.afterInit = function (editor) {
-        var _this = this;
-        this.defaultTag = editor.o.enter.toLowerCase();
-        this.brMode = this.defaultTag === consts.BR.toLowerCase();
+        var defaultTag = editor.o.enter.toLowerCase();
+        var brMode = defaultTag === constants_1.BR.toLowerCase();
         if (!editor.o.enterBlock) {
-            editor.o.enterBlock = this.brMode
-                ? consts.PARAGRAPH
-                : this.defaultTag;
+            editor.o.enterBlock = brMode
+                ? constants_1.PARAGRAPH
+                : defaultTag;
         }
-        editor.e
-            .off('.enter')
-            .on('keydown.enter', function (event) {
-            if (event.key === consts.KEY_ENTER) {
-                var beforeEnter = editor.e.fire('beforeEnter', event);
-                if (beforeEnter !== undefined) {
-                    return beforeEnter;
-                }
-                if (!editor.s.isCollapsed()) {
-                    editor.execCommand('Delete');
-                }
-                editor.s.focus();
-                _this.onEnter(event);
-                return false;
+    };
+    enter.prototype.onEnterKeyDown = function (event) {
+        if (event.key === constants_1.KEY_ENTER) {
+            var editor = this.j;
+            var beforeEnter = editor.e.fire('beforeEnter', event);
+            if (beforeEnter !== undefined) {
+                return beforeEnter;
             }
-        });
+            if (!editor.s.isCollapsed()) {
+                editor.execCommand('Delete');
+            }
+            editor.s.focus();
+            this.onEnter(event);
+            editor.synchronizeValues();
+            return false;
+        }
     };
     enter.prototype.onEnter = function (event) {
-        var editor = this.j, sel = editor.selection, defaultTag = this.defaultTag;
-        var current = sel.current(false);
-        if (!current || current === editor.editor) {
-            current = editor.createInside.text(constants_1.INVISIBLE_SPACE);
-            sel.insertNode(current);
-            sel.select(current);
-        }
-        var currentBox = this.getBlockWrapper(current);
+        var editor = this.j;
+        var current = this.getCurrentOrFillEmpty(editor);
+        var currentBox = (0, helpers_1.getBlockWrapper)(editor, current);
         var isLi = dom_1.Dom.isTag(currentBox, 'li');
         if ((!isLi || event.shiftKey) &&
-            !this.checkBR(current, event.shiftKey)) {
+            !(0, helpers_1.checkBR)(editor, current, event.shiftKey)) {
             return false;
         }
-        if (!currentBox && !this.hasPreviousBlock(current)) {
-            currentBox = this.wrapText(current);
+        if (!currentBox && !(0, helpers_1.hasPreviousBlock)(editor, current)) {
+            currentBox = (0, helpers_1.wrapText)(editor, current);
         }
         if (!currentBox || currentBox === current) {
-            (0, exports.insertParagraph)(editor, null, isLi ? 'li' : defaultTag);
+            (0, helpers_1.insertParagraph)(editor, null, isLi ? 'li' : editor.o.enter);
             return false;
         }
-        if (!this.checkUnsplittableBox(currentBox)) {
+        if (!(0, helpers_1.checkUnsplittableBox)(editor, currentBox)) {
             return false;
         }
         if (isLi && dom_1.Dom.isEmpty(currentBox)) {
-            this.enterInsideEmptyLIelement(currentBox);
+            (0, helpers_1.processEmptyLILeaf)(editor, currentBox);
             return false;
         }
-        var canSplit = currentBox.tagName.toLowerCase() === this.defaultTag || isLi;
-        var cursorOnTheRight = sel.cursorOnTheRight(currentBox);
-        var cursorOnTheLeft = sel.cursorOnTheLeft(currentBox);
-        if (!canSplit && (cursorOnTheRight || cursorOnTheLeft)) {
-            var fake = null;
-            if (cursorOnTheRight) {
-                fake = sel.setCursorAfter(currentBox);
-            }
-            else {
-                fake = sel.setCursorBefore(currentBox);
-            }
-            (0, exports.insertParagraph)(editor, fake, this.defaultTag);
-            if (cursorOnTheLeft && !cursorOnTheRight) {
-                sel.setCursorIn(currentBox, true);
-            }
-            return;
-        }
-        sel.splitSelection(currentBox);
+        (0, helpers_1.splitFragment)(editor, currentBox);
     };
-    enter.prototype.getBlockWrapper = function (current, tagReg) {
-        if (tagReg === void 0) { tagReg = consts.IS_BLOCK; }
-        var node = current;
-        var root = this.j.editor;
-        do {
-            if (!node || node === root) {
-                break;
-            }
-            if (tagReg.test(node.nodeName)) {
-                if (dom_1.Dom.isTag(node, 'li')) {
-                    return node;
-                }
-                return (this.getBlockWrapper(node.parentNode, /^li$/i) ||
-                    node);
-            }
-            node = node.parentNode;
-        } while (node && node !== root);
-        return null;
-    };
-    enter.prototype.checkBR = function (current, shiftKeyPressed) {
-        var isMultiLineBlock = dom_1.Dom.closest(current, ['pre', 'blockquote'], this.j.editor);
-        if (this.brMode ||
-            (shiftKeyPressed && !isMultiLineBlock) ||
-            (!shiftKeyPressed && isMultiLineBlock)) {
-            var br = this.j.createInside.element('br');
-            this.j.s.insertNode(br, true);
-            (0, helpers_1.scrollIntoViewIfNeeded)(br, this.j.editor, this.j.ed);
-            return false;
+    enter.prototype.getCurrentOrFillEmpty = function (editor) {
+        var s = editor.s;
+        var current = s.current(false);
+        if (!current || current === editor.editor) {
+            current = editor.createInside.text(constants_1.INVISIBLE_SPACE);
+            s.insertNode(current, false, false);
+            s.select(current);
         }
-        return true;
-    };
-    enter.prototype.wrapText = function (current) {
-        var _this = this;
-        var needWrap = current;
-        dom_1.Dom.up(needWrap, function (node) {
-            if (node && node.hasChildNodes() && node !== _this.j.editor) {
-                needWrap = node;
-            }
-        }, this.j.editor);
-        var currentBox = dom_1.Dom.wrapInline(needWrap, this.j.o.enter, this.j);
-        if (dom_1.Dom.isEmpty(currentBox)) {
-            var helper_node = this.j.createInside.element('br');
-            currentBox.appendChild(helper_node);
-            this.j.s.setCursorBefore(helper_node);
-        }
-        return currentBox;
-    };
-    enter.prototype.hasPreviousBlock = function (current) {
-        var editor = this.j;
-        return Boolean(dom_1.Dom.prev(current, function (elm) { return dom_1.Dom.isBlock(elm) || dom_1.Dom.isImage(elm); }, editor.editor));
-    };
-    enter.prototype.checkUnsplittableBox = function (currentBox) {
-        var editor = this.j, sel = editor.selection;
-        if (!dom_1.Dom.canSplitBlock(currentBox)) {
-            var br = editor.createInside.element('br');
-            sel.insertNode(br, false);
-            sel.setCursorAfter(br);
-            return false;
-        }
-        return true;
-    };
-    enter.prototype.enterInsideEmptyLIelement = function (currentBox) {
-        var fakeTextNode = null;
-        var ul = dom_1.Dom.closest(currentBox, ['ol', 'ul'], this.j.editor);
-        if (!ul) {
-            return;
-        }
-        if (!dom_1.Dom.prev(currentBox, function (elm) { return dom_1.Dom.isTag(elm, 'li'); }, ul)) {
-            fakeTextNode = this.j.s.setCursorBefore(ul);
-        }
-        else if (!dom_1.Dom.next(currentBox, function (elm) { return dom_1.Dom.isTag(elm, 'li'); }, ul)) {
-            fakeTextNode = this.j.s.setCursorAfter(ul);
-        }
-        else {
-            var leftRange = this.j.s.createRange();
-            leftRange.setStartBefore(ul);
-            leftRange.setEndAfter(currentBox);
-            var fragment = leftRange.extractContents();
-            if (ul.parentNode) {
-                ul.parentNode.insertBefore(fragment, ul);
-            }
-            fakeTextNode = this.j.s.setCursorBefore(ul);
-        }
-        dom_1.Dom.safeRemove(currentBox);
-        (0, exports.insertParagraph)(this.j, fakeTextNode, this.defaultTag);
-        if (!(0, helpers_1.$$)('li', ul).length) {
-            dom_1.Dom.safeRemove(ul);
-        }
+        return current;
     };
     enter.prototype.beforeDestruct = function (editor) {
         editor.e.off('keydown.enter');
     };
+    tslib_1.__decorate([
+        (0, decorators_1.watch)(':keydown.enter')
+    ], enter.prototype, "onEnterKeyDown", null);
     return enter;
 }(plugin_1.Plugin));
 exports.enter = enter;
 
 
 /***/ }),
-/* 450 */
+/* 493 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(1);
+tslib_1.__exportStar(__webpack_require__(494), exports);
+tslib_1.__exportStar(__webpack_require__(495), exports);
+tslib_1.__exportStar(__webpack_require__(496), exports);
+tslib_1.__exportStar(__webpack_require__(498), exports);
+tslib_1.__exportStar(__webpack_require__(499), exports);
+tslib_1.__exportStar(__webpack_require__(497), exports);
+tslib_1.__exportStar(__webpack_require__(500), exports);
+tslib_1.__exportStar(__webpack_require__(501), exports);
+
+
+/***/ }),
+/* 494 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkBR = void 0;
+var dom_1 = __webpack_require__(215);
+var scroll_into_view_1 = __webpack_require__(214);
+var constants_1 = __webpack_require__(165);
+function checkBR(jodit, current, shiftKeyPressed) {
+    var isMultiLineBlock = dom_1.Dom.closest(current, ['pre', 'blockquote'], jodit.editor);
+    var isBRMode = jodit.o.enter.toLowerCase() === constants_1.BR.toLowerCase();
+    if (isBRMode ||
+        (shiftKeyPressed && !isMultiLineBlock) ||
+        (!shiftKeyPressed && isMultiLineBlock)) {
+        var br = jodit.createInside.element('br');
+        jodit.s.insertNode(br, true, false);
+        (0, scroll_into_view_1.scrollIntoViewIfNeeded)(br, jodit.editor, jodit.ed);
+        return false;
+    }
+    return true;
+}
+exports.checkBR = checkBR;
+
+
+/***/ }),
+/* 495 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkUnsplittableBox = void 0;
+var dom_1 = __webpack_require__(215);
+function checkUnsplittableBox(jodit, currentBox) {
+    var sel = jodit.s;
+    if (!dom_1.Dom.canSplitBlock(currentBox)) {
+        var br = jodit.createInside.element('br');
+        sel.insertNode(br, false, false);
+        sel.setCursorAfter(br);
+        return false;
+    }
+    return true;
+}
+exports.checkUnsplittableBox = checkUnsplittableBox;
+
+
+/***/ }),
+/* 496 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.processEmptyLILeaf = void 0;
+var dom_1 = __webpack_require__(215);
+var selector_1 = __webpack_require__(265);
+var insert_paragraph_1 = __webpack_require__(497);
+function processEmptyLILeaf(jodit, li) {
+    var list = dom_1.Dom.closest(li, ['ol', 'ul'], jodit.editor);
+    if (!list) {
+        return;
+    }
+    var parentLi = list.parentElement, listInsideLeaf = dom_1.Dom.isTag(parentLi, 'li');
+    var container = listInsideLeaf ? parentLi : list;
+    var leftRange = jodit.s.createRange();
+    leftRange.setStartAfter(li);
+    leftRange.setEndAfter(list);
+    var rightPart = leftRange.extractContents();
+    var fakeTextNode = jodit.createInside.fake();
+    dom_1.Dom.after(container, fakeTextNode);
+    dom_1.Dom.safeRemove(li);
+    if (!(0, selector_1.$$)('li', list).length) {
+        dom_1.Dom.safeRemove(list);
+    }
+    var newLi = (0, insert_paragraph_1.insertParagraph)(jodit, fakeTextNode, listInsideLeaf ? 'li' : jodit.o.enter);
+    if (!rightPart.querySelector('li')) {
+        return;
+    }
+    if (listInsideLeaf) {
+        newLi.appendChild(rightPart);
+    }
+    else {
+        dom_1.Dom.after(newLi, rightPart);
+    }
+}
+exports.processEmptyLILeaf = processEmptyLILeaf;
+
+
+/***/ }),
+/* 497 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.insertParagraph = void 0;
+var dom_1 = __webpack_require__(215);
+var scroll_into_view_1 = __webpack_require__(214);
+function insertParagraph(editor, fake, wrapperTag, style) {
+    var _a, _b;
+    var s = editor.s, createInside = editor.createInside, p = createInside.element(wrapperTag), helper_node = createInside.element('br');
+    p.appendChild(helper_node);
+    if (style && style.cssText) {
+        p.setAttribute('style', style.cssText);
+    }
+    if (fake && fake.isConnected) {
+        dom_1.Dom.before(fake, p);
+        dom_1.Dom.safeRemove(fake);
+    }
+    else {
+        s.insertNode(p, false, false);
+    }
+    var range = s.createRange();
+    range.setStartBefore(wrapperTag.toLowerCase() !== 'br' ? helper_node : p);
+    range.collapse(true);
+    (_a = s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
+    (_b = s.sel) === null || _b === void 0 ? void 0 : _b.addRange(range);
+    (0, scroll_into_view_1.scrollIntoViewIfNeeded)(p, editor.editor, editor.ed);
+    return p;
+}
+exports.insertParagraph = insertParagraph;
+
+
+/***/ }),
+/* 498 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getBlockWrapper = void 0;
+var consts = __webpack_require__(165);
+var dom_1 = __webpack_require__(215);
+function getBlockWrapper(jodit, current, tagReg) {
+    if (tagReg === void 0) { tagReg = consts.IS_BLOCK; }
+    var node = current;
+    var root = jodit.editor;
+    do {
+        if (!node || node === root) {
+            break;
+        }
+        if (tagReg.test(node.nodeName)) {
+            if (dom_1.Dom.isTag(node, 'li')) {
+                return node;
+            }
+            return (getBlockWrapper(jodit, node.parentNode, /^li$/i) ||
+                node);
+        }
+        node = node.parentNode;
+    } while (node && node !== root);
+    return null;
+}
+exports.getBlockWrapper = getBlockWrapper;
+
+
+/***/ }),
+/* 499 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.hasPreviousBlock = void 0;
+var dom_1 = __webpack_require__(215);
+function hasPreviousBlock(jodit, current) {
+    return Boolean(dom_1.Dom.prev(current, function (elm) { return dom_1.Dom.isBlock(elm) || dom_1.Dom.isImage(elm); }, jodit.editor));
+}
+exports.hasPreviousBlock = hasPreviousBlock;
+
+
+/***/ }),
+/* 500 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.splitFragment = void 0;
+var insert_paragraph_1 = __webpack_require__(497);
+var scroll_into_view_1 = __webpack_require__(214);
+var dom_1 = __webpack_require__(215);
+function splitFragment(jodit, currentBox) {
+    var sel = jodit.s, enter = jodit.o.enter;
+    var defaultTag = enter.toLowerCase();
+    var isLi = dom_1.Dom.isTag(currentBox, 'li');
+    var canSplit = currentBox.tagName.toLowerCase() === defaultTag || isLi;
+    var cursorOnTheRight = sel.cursorOnTheRight(currentBox);
+    var cursorOnTheLeft = sel.cursorOnTheLeft(currentBox);
+    if (!canSplit && (cursorOnTheRight || cursorOnTheLeft)) {
+        var fake = null;
+        if (cursorOnTheRight) {
+            fake = sel.setCursorAfter(currentBox);
+        }
+        else {
+            fake = sel.setCursorBefore(currentBox);
+        }
+        (0, insert_paragraph_1.insertParagraph)(jodit, fake, defaultTag);
+        if (cursorOnTheLeft && !cursorOnTheRight) {
+            sel.setCursorIn(currentBox, true);
+        }
+        return;
+    }
+    var newP = sel.splitSelection(currentBox);
+    (0, scroll_into_view_1.scrollIntoViewIfNeeded)(newP, jodit.editor, jodit.ed);
+}
+exports.splitFragment = splitFragment;
+
+
+/***/ }),
+/* 501 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.wrapText = void 0;
+var dom_1 = __webpack_require__(215);
+function wrapText(jodit, current) {
+    var needWrap = current;
+    dom_1.Dom.up(needWrap, function (node) {
+        if (node && node.hasChildNodes() && node !== jodit.editor) {
+            needWrap = node;
+        }
+    }, jodit.editor);
+    var currentBox = dom_1.Dom.wrapInline(needWrap, jodit.o.enter, jodit);
+    if (dom_1.Dom.isEmpty(currentBox)) {
+        var helper_node = jodit.createInside.element('br');
+        currentBox.appendChild(helper_node);
+        jodit.s.setCursorBefore(helper_node);
+    }
+    return currentBox;
+}
+exports.wrapText = wrapText;
+
+
+/***/ }),
+/* 502 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -30294,11 +31610,11 @@ exports.enter = enter;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.KeyArrowOutside = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var decorators_1 = __webpack_require__(169);
-var constants_1 = __webpack_require__(137);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(413);
+var plugin_1 = __webpack_require__(366);
+var decorators_1 = __webpack_require__(233);
+var constants_1 = __webpack_require__(165);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(444);
 var KeyArrowOutside = (function (_super) {
     tslib_1.__extends(KeyArrowOutside, _super);
     function KeyArrowOutside() {
@@ -30332,7 +31648,7 @@ exports.KeyArrowOutside = KeyArrowOutside;
 
 
 /***/ }),
-/* 451 */
+/* 503 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -30344,10 +31660,11 @@ exports.KeyArrowOutside = KeyArrowOutside;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.errorMessages = void 0;
-__webpack_require__(452);
-var config_1 = __webpack_require__(136);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
+__webpack_require__(504);
+var config_1 = __webpack_require__(164);
+var dom_1 = __webpack_require__(231);
+var css_1 = __webpack_require__(192);
+var to_array_1 = __webpack_require__(171);
 config_1.Config.prototype.showMessageErrors = true;
 config_1.Config.prototype.showMessageErrorTime = 3000;
 config_1.Config.prototype.showMessageErrorOffsetPx = 3;
@@ -30356,8 +31673,8 @@ function errorMessages(editor) {
     if (editor.o.showMessageErrors) {
         var activeClass_1 = editor.getFullElName(ELM_NAME, 'active', true), messagesBox_1 = editor.c.div(editor.getFullElName(ELM_NAME)), calcOffsets_1 = function () {
             var height = 5;
-            (0, helpers_1.toArray)(messagesBox_1.childNodes).forEach(function (elm) {
-                (0, helpers_1.css)(elm, 'bottom', height + 'px');
+            (0, to_array_1.toArray)(messagesBox_1.childNodes).forEach(function (elm) {
+                (0, css_1.css)(elm, 'bottom', height + 'px');
                 height +=
                     elm.offsetHeight + editor.o.showMessageErrorOffsetPx;
             });
@@ -30386,7 +31703,7 @@ exports.errorMessages = errorMessages;
 
 
 /***/ }),
-/* 452 */
+/* 504 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30395,7 +31712,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 453 */
+/* 505 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -30408,9 +31725,9 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.font = void 0;
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
+var config_1 = __webpack_require__(164);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
 config_1.Config.prototype.defaultFontSizePoints = 'px';
 config_1.Config.prototype.controls.fontsize = {
     command: 'fontSize',
@@ -30530,7 +31847,7 @@ exports.font = font;
 
 
 /***/ }),
-/* 454 */
+/* 506 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -30542,13 +31859,13 @@ exports.font = font;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.formatBlock = void 0;
-var config_1 = __webpack_require__(136);
-var modules_1 = __webpack_require__(138);
-var helpers_1 = __webpack_require__(146);
+var config_1 = __webpack_require__(164);
+var modules_1 = __webpack_require__(166);
+var helpers_1 = __webpack_require__(187);
 config_1.Config.prototype.controls.paragraph = {
     command: 'formatBlock',
-    update: function (button) {
-        var editor = button.j, control = button.control, current = editor.s.current();
+    update: function (button, editor) {
+        var control = button.control, current = editor.s.current();
         if (current && editor.o.textIcons) {
             var currentBox = modules_1.Dom.closest(current, modules_1.Dom.isBlock, editor.editor) ||
                 editor.editor, currentValue = currentBox.nodeName.toLowerCase(), list = control.list;
@@ -30626,7 +31943,7 @@ exports.formatBlock = formatBlock;
 
 
 /***/ }),
-/* 455 */
+/* 507 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -30638,18 +31955,19 @@ exports.formatBlock = formatBlock;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.fullsize = void 0;
-__webpack_require__(456);
-var config_1 = __webpack_require__(136);
-var consts = __webpack_require__(137);
-var helpers_1 = __webpack_require__(146);
+__webpack_require__(508);
+var config_1 = __webpack_require__(164);
+var consts = __webpack_require__(165);
+var css_1 = __webpack_require__(192);
+var is_jodit_object_1 = __webpack_require__(228);
 config_1.Config.prototype.fullsize = false;
 config_1.Config.prototype.globalFullSize = true;
 config_1.Config.prototype.controls.fullsize = {
     exec: function (editor) {
         editor.toggleFullSize();
     },
-    update: function (button) {
-        var editor = button.j, mode = editor.isFullSize ? 'shrink' : 'fullsize';
+    update: function (button, editor) {
+        var mode = editor.isFullSize ? 'shrink' : 'fullsize';
         button.state.activated = editor.isFullSize;
         if (editor.o.textIcons) {
             button.state.text = mode;
@@ -30670,16 +31988,16 @@ function fullsize(editor) {
         var container = editor.container, events = editor.events;
         if (events) {
             if (isEnabled) {
-                oldHeight = (0, helpers_1.css)(container, 'height', true);
-                oldWidth = (0, helpers_1.css)(container, 'width', true);
-                (0, helpers_1.css)(container, {
+                oldHeight = (0, css_1.css)(container, 'height', true);
+                oldWidth = (0, css_1.css)(container, 'width', true);
+                (0, css_1.css)(container, {
                     height: editor.ow.innerHeight,
                     width: editor.ow.innerWidth
                 });
                 wasToggled = true;
             }
             else if (wasToggled) {
-                (0, helpers_1.css)(container, {
+                (0, css_1.css)(container, {
                     height: oldHeight || 'auto',
                     width: oldWidth || 'auto'
                 });
@@ -30698,9 +32016,9 @@ function fullsize(editor) {
         isEnabled = enable;
         container.classList.toggle('jodit_fullsize', enable);
         if (editor.toolbar) {
-            (0, helpers_1.isJoditObject)(editor) &&
+            (0, is_jodit_object_1.isJoditObject)(editor) &&
                 editor.toolbarContainer.appendChild(editor.toolbar.container);
-            (0, helpers_1.css)(editor.toolbar.container, 'width', 'auto');
+            (0, css_1.css)(editor.toolbar.container, 'width', 'auto');
         }
         if (editor.o.globalFullSize) {
             var node = container.parentNode;
@@ -30732,7 +32050,7 @@ exports.fullsize = fullsize;
 
 
 /***/ }),
-/* 456 */
+/* 508 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30741,7 +32059,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 457 */
+/* 509 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -30754,10 +32072,10 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.hotkeys = void 0;
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var plugin_1 = __webpack_require__(336);
-var helpers_1 = __webpack_require__(146);
-var constants_1 = __webpack_require__(137);
+var config_1 = __webpack_require__(164);
+var plugin_1 = __webpack_require__(366);
+var helpers_1 = __webpack_require__(187);
+var constants_1 = __webpack_require__(165);
 config_1.Config.prototype.commandToHotkeys = {
     removeFormat: ['ctrl+shift+m', 'cmd+shift+m'],
     insertOrderedList: ['ctrl+shift+7', 'cmd+shift+7'],
@@ -30878,14 +32196,14 @@ var hotkeys = (function (_super) {
                     event.preventDefault();
                 }
             }
-        }, undefined, true)
+        }, { top: true })
             .on('keyup.hotkeys', function () {
             if (itIsHotkey) {
                 itIsHotkey = false;
                 editor.e.stopPropagation('keyup');
                 return false;
             }
-        }, undefined, true);
+        }, { top: true });
     };
     hotkeys.prototype.beforeDestruct = function (jodit) {
         if (jodit.events) {
@@ -30898,7 +32216,7 @@ exports.hotkeys = hotkeys;
 
 
 /***/ }),
-/* 458 */
+/* 510 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -30910,10 +32228,10 @@ exports.hotkeys = hotkeys;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.iframe = void 0;
-var helpers_1 = __webpack_require__(146);
-var helpers_2 = __webpack_require__(146);
-var constants_1 = __webpack_require__(137);
-__webpack_require__(459);
+var helpers_1 = __webpack_require__(187);
+var helpers_2 = __webpack_require__(187);
+var constants_1 = __webpack_require__(165);
+__webpack_require__(511);
 function iframe(editor) {
     var opt = editor.options;
     editor.e
@@ -31030,7 +32348,7 @@ function iframe(editor) {
                         doc.body.innerHTML = value;
                     }
                     return true;
-                }, undefined, true);
+                }, { top: true });
             }
             editor.editor = doc.body;
             editor.e.on('afterSetMode afterInit afterAddPlace', toggleEditable);
@@ -31082,7 +32400,7 @@ exports.iframe = iframe;
 
 
 /***/ }),
-/* 459 */
+/* 511 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31093,7 +32411,7 @@ exports.iframe = iframe;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.iframe = false;
 config_1.Config.prototype.iframeBaseUrl = '';
 config_1.Config.prototype.iframeTitle = 'Jodit Editor';
@@ -31170,7 +32488,7 @@ config_1.Config.prototype.editHTMLDocumentMode = false;
 
 
 /***/ }),
-/* 460 */
+/* 512 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31182,13 +32500,13 @@ config_1.Config.prototype.editHTMLDocumentMode = false;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(461), exports);
-tslib_1.__exportStar(__webpack_require__(469), exports);
-tslib_1.__exportStar(__webpack_require__(472), exports);
+tslib_1.__exportStar(__webpack_require__(513), exports);
+tslib_1.__exportStar(__webpack_require__(521), exports);
+tslib_1.__exportStar(__webpack_require__(524), exports);
 
 
 /***/ }),
-/* 461 */
+/* 513 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31201,16 +32519,16 @@ tslib_1.__exportStar(__webpack_require__(472), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.imageProperties = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(462);
-var modules_1 = __webpack_require__(138);
-var helpers_1 = __webpack_require__(146);
-var widget_1 = __webpack_require__(441);
-var button_1 = __webpack_require__(257);
-var templates_1 = __webpack_require__(463);
-var decorators_1 = __webpack_require__(169);
-var image_editor_1 = __webpack_require__(353);
-var helpers_2 = __webpack_require__(467);
-__webpack_require__(468);
+__webpack_require__(514);
+var modules_1 = __webpack_require__(166);
+var helpers_1 = __webpack_require__(187);
+var widget_1 = __webpack_require__(486);
+var button_1 = __webpack_require__(309);
+var templates_1 = __webpack_require__(515);
+var decorators_1 = __webpack_require__(233);
+var image_editor_1 = __webpack_require__(383);
+var helpers_2 = __webpack_require__(519);
+__webpack_require__(520);
 var normalSizeToString = function (value) {
     value = (0, helpers_1.trim)(value);
     return /^[0-9]+$/.test(value) ? value + 'px' : value;
@@ -31661,7 +32979,7 @@ exports.imageProperties = imageProperties;
 
 
 /***/ }),
-/* 462 */
+/* 514 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31670,7 +32988,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 463 */
+/* 515 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31682,13 +33000,13 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(464), exports);
-tslib_1.__exportStar(__webpack_require__(465), exports);
-tslib_1.__exportStar(__webpack_require__(466), exports);
+tslib_1.__exportStar(__webpack_require__(516), exports);
+tslib_1.__exportStar(__webpack_require__(517), exports);
+tslib_1.__exportStar(__webpack_require__(518), exports);
 
 
 /***/ }),
-/* 464 */
+/* 516 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31700,7 +33018,7 @@ tslib_1.__exportStar(__webpack_require__(466), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.form = void 0;
-var ui_1 = __webpack_require__(251);
+var ui_1 = __webpack_require__(336);
 function form(editor) {
     var _a = editor.o.image, showPreview = _a.showPreview, editSize = _a.editSize, gi = ui_1.Icon.get.bind(ui_1.Icon);
     return editor.c.fromHTML("<form class=\"jodit-properties\">\n\t\t<div class=\"jodit-grid jodit-grid_xs-column\">\n\t\t\t<div class=\"jodit_col-lg-2-5 jodit_col-xs-5-5\">\n\t\t\t\t<div class=\"jodit-properties_view_box\">\n\t\t\t\t\t<div style=\"".concat(!showPreview ? 'display:none' : '', "\" class=\"jodit-properties_image_view\">\n\t\t\t\t\t\t<img data-ref=\"imageViewSrc\" src=\"\" alt=\"\"/>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div style=\"").concat(!editSize ? 'display:none' : '', "\" class=\"jodit-form__group jodit-properties_image_sizes\">\n\t\t\t\t\t\t<input data-ref=\"imageWidth\" type=\"text\" class=\"jodit-input\"/>\n\t\t\t\t\t\t<a data-ref=\"lockSize\" class=\"jodit-properties__lock\">").concat(gi('lock'), "</a>\n\t\t\t\t\t\t<input data-ref=\"imageHeight\" type=\"text\" class=\"imageHeight jodit-input\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div data-ref=\"tabsBox\" class=\"jodit_col-lg-3-5 jodit_col-xs-5-5\"></div>\n\t\t</div>\n\t</form>"));
@@ -31709,7 +33027,7 @@ exports.form = form;
 
 
 /***/ }),
-/* 465 */
+/* 517 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31721,7 +33039,7 @@ exports.form = form;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.mainTab = void 0;
-var ui_1 = __webpack_require__(251);
+var ui_1 = __webpack_require__(336);
 function mainTab(editor) {
     var opt = editor.o, i18n = editor.i18n.bind(editor), gi = ui_1.Icon.get.bind(ui_1.Icon), hasFbUrl = opt.filebrowser.ajax.url || opt.uploader.url, hasEditor = opt.image.useImageEditor;
     return editor.c.fromHTML("<div style=\"".concat(!opt.image.editSrc ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Src'), "</label>\n\t\t\t<div class=\"jodit-input_group\">\n\t\t\t\t<input data-ref=\"imageSrc\" class=\"jodit-input\" type=\"text\"/>\n\t\t\t\t<div\n\t\t\t\t\tclass=\"jodit-input_group-buttons\"\n\t\t\t\t\tstyle=\"").concat(hasFbUrl ? '' : 'display: none', "\"\n\t\t\t\t>\n\t\t\t\t\t\t<a\n\t\t\t\t\t\t\tdata-ref=\"changeImage\"\n\t\t\t\t\t\t\tclass=\"jodit-button\"\n\t\t\t\t\t\t>").concat(gi('image'), "</a>\n\t\t\t\t\t\t<a\n\t\t\t\t\t\t\tdata-ref=\"editImage\"\n\t\t\t\t\t\t\tclass=\"jodit-button\"\n\t\t\t\t\t\t\tstyle=\"").concat(hasEditor ? '' : 'display: none', "\"\n\t\t\t\t\t\t>").concat(gi('crop'), "</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editTitle ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Title'), "</label>\n\t\t\t<input data-ref=\"imageTitle\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editAlt ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Alternative'), "</label>\n\t\t\t<input data-ref=\"imageAlt\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editLink ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Link'), "</label>\n\t\t\t<input data-ref=\"imageLink\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editLink ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label class=\"jodit_vertical_middle\">\n\t\t\t\t<input data-ref=\"imageLinkOpenInNewTab\" type=\"checkbox\" class=\"jodit-checkbox\"/>\n\t\t\t\t<span>").concat(i18n('Open link in new tab'), "</span>\n\t\t\t</label>\n\t\t</div>"));
@@ -31730,7 +33048,7 @@ exports.mainTab = mainTab;
 
 
 /***/ }),
-/* 466 */
+/* 518 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31742,7 +33060,7 @@ exports.mainTab = mainTab;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.positionTab = void 0;
-var ui_1 = __webpack_require__(251);
+var ui_1 = __webpack_require__(336);
 function positionTab(editor) {
     var opt = editor.o, i18n = editor.i18n.bind(editor), gi = ui_1.Icon.get.bind(ui_1.Icon);
     return editor.c.fromHTML("<div style=\"".concat(!opt.image.editMargins ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Margins'), "</label>\n\t\t\t<div class=\"jodit-grid jodit_vertical_middle\">\n\t\t\t\t<input class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginTop\" type=\"text\" placeholder=\"").concat(i18n('top'), "\"/>\n\t\t\t\t<a style=\"text-align: center;\" data-ref=\"lockMargin\" class=\"jodit-properties__lock jodit_col-lg-1-5\">").concat(gi('lock'), "</a>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginRight\" type=\"text\" placeholder=\"").concat(i18n('right'), "\"/>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginBottom\" type=\"text\" placeholder=\"").concat(i18n('bottom'), "\"/>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginLeft\" type=\"text\" placeholder=\"").concat(i18n('left'), "\"/>\n\t\t\t</div>\n\t\t</div>\n\t\t<div\n\t\t\tstyle=\"").concat(!opt.image.editAlign ? 'display:none' : '', "\"\n\t\t\tclass=\"jodit-form__group\"\n\t\t>\n\t\t\t<label>").concat(i18n('Align'), "</label>\n\t\t\t<select data-ref=\"align\" class=\"jodit-select\">\n\t\t\t\t<option value=\"\">").concat(i18n('--Not Set--'), "</option>\n\t\t\t\t<option value=\"left\">").concat(i18n('Left'), "</option>\n\t\t\t\t<option value=\"center\">").concat(i18n('Center'), "</option>\n\t\t\t\t<option value=\"right\">").concat(i18n('Right'), "</option>\n\t\t\t</select>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editStyle ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Styles'), "</label>\n\t\t\t<input data-ref=\"style\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editClass ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Classes'), "</label>\n\t\t\t<input data-ref=\"classes\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editId ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>Id</label>\n\t\t\t<input data-ref=\"id\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div\n\t\t\tstyle=\"").concat(!opt.image.editBorderRadius ? 'display:none' : '', "\"\n\t\t\tclass=\"jodit-form__group\"\n\t\t>\n\t\t\t<label>").concat(i18n('Border radius'), "</label>\n\t\t\t\t<input data-ref=\"borderRadius\" type=\"number\" class=\"jodit-input\"/>\n\t\t</div>"));
@@ -31751,7 +33069,7 @@ exports.positionTab = positionTab;
 
 
 /***/ }),
-/* 467 */
+/* 519 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31763,7 +33081,7 @@ exports.positionTab = positionTab;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.hAlignElement = void 0;
-var helpers_1 = __webpack_require__(146);
+var helpers_1 = __webpack_require__(187);
 var hAlignElement = function (image, align) {
     if (align && align !== 'normal') {
         if (align !== 'center') {
@@ -31791,7 +33109,7 @@ exports.hAlignElement = hAlignElement;
 
 
 /***/ }),
-/* 468 */
+/* 520 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31802,7 +33120,7 @@ exports.hAlignElement = hAlignElement;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.image = {
     dialogWidth: 600,
     openOnDblClick: true,
@@ -31824,7 +33142,7 @@ config_1.Config.prototype.image = {
 
 
 /***/ }),
-/* 469 */
+/* 521 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31837,11 +33155,11 @@ config_1.Config.prototype.image = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.imageProcessor = void 0;
 var tslib_1 = __webpack_require__(1);
-var helpers_1 = __webpack_require__(146);
-var plugin_1 = __webpack_require__(336);
-var decorators_1 = __webpack_require__(169);
-__webpack_require__(470);
-var const_1 = __webpack_require__(471);
+var helpers_1 = __webpack_require__(187);
+var plugin_1 = __webpack_require__(366);
+var decorators_1 = __webpack_require__(233);
+__webpack_require__(522);
+var const_1 = __webpack_require__(523);
 var JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 var JODIT_IMAGE_BLOB_ID = JODIT_IMAGE_PROCESSOR_BINDED + 'blob-id';
 var imageProcessor = (function (_super) {
@@ -31973,7 +33291,7 @@ function dataURItoBlob(dataURI) {
 
 
 /***/ }),
-/* 470 */
+/* 522 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31984,14 +33302,14 @@ function dataURItoBlob(dataURI) {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.imageProcessor = {
     replaceDataURIToBlobIdInView: true
 };
 
 
 /***/ }),
-/* 471 */
+/* 523 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -32007,7 +33325,7 @@ exports.SOURCE_CONSUMER = 'source-consumer';
 
 
 /***/ }),
-/* 472 */
+/* 524 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32020,10 +33338,10 @@ exports.SOURCE_CONSUMER = 'source-consumer';
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.image = void 0;
 var tslib_1 = __webpack_require__(1);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var widget_1 = __webpack_require__(441);
-var config_1 = __webpack_require__(136);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var widget_1 = __webpack_require__(486);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.controls.image = {
     popup: function (editor, current, self, close) {
         var sourceImage = null;
@@ -32084,7 +33402,7 @@ exports.image = image;
 
 
 /***/ }),
-/* 473 */
+/* 525 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32096,10 +33414,10 @@ exports.image = image;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.indent = void 0;
-var config_1 = __webpack_require__(136);
-var constants_1 = __webpack_require__(137);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
+var config_1 = __webpack_require__(164);
+var constants_1 = __webpack_require__(165);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
 config_1.Config.prototype.controls.indent = {
     tooltip: 'Increase Indent'
 };
@@ -32179,7 +33497,7 @@ exports.indent = indent;
 
 
 /***/ }),
-/* 474 */
+/* 526 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32191,11 +33509,11 @@ exports.indent = indent;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(475), exports);
+tslib_1.__exportStar(__webpack_require__(527), exports);
 
 
 /***/ }),
-/* 475 */
+/* 527 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32207,8 +33525,8 @@ tslib_1.__exportStar(__webpack_require__(475), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.hr = void 0;
-var config_1 = __webpack_require__(136);
-var dom_1 = __webpack_require__(159);
+var config_1 = __webpack_require__(164);
+var dom_1 = __webpack_require__(231);
 config_1.Config.prototype.controls.hr = {
     command: 'insertHorizontalRule',
     tags: ['hr'],
@@ -32240,7 +33558,7 @@ exports.hr = hr;
 
 
 /***/ }),
-/* 476 */
+/* 528 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32253,15 +33571,15 @@ exports.hr = hr;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.inlinePopup = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(477);
-__webpack_require__(478);
-var plugin_1 = __webpack_require__(336);
-var factory_1 = __webpack_require__(325);
-var popup_1 = __webpack_require__(272);
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
-var ui_1 = __webpack_require__(251);
-var decorators_1 = __webpack_require__(169);
+__webpack_require__(529);
+__webpack_require__(530);
+var plugin_1 = __webpack_require__(366);
+var factory_1 = __webpack_require__(333);
+var popup_1 = __webpack_require__(306);
+var helpers_1 = __webpack_require__(187);
+var dom_1 = __webpack_require__(231);
+var ui_1 = __webpack_require__(336);
+var decorators_1 = __webpack_require__(233);
 var inlinePopup = (function (_super) {
     tslib_1.__extends(inlinePopup, _super);
     function inlinePopup() {
@@ -32478,7 +33796,7 @@ exports.inlinePopup = inlinePopup;
 
 
 /***/ }),
-/* 477 */
+/* 529 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32487,7 +33805,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 478 */
+/* 530 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32498,19 +33816,19 @@ __webpack_require__.r(__webpack_exports__);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.toolbarInline = true;
 config_1.Config.prototype.toolbarInlineForSelection = false;
 config_1.Config.prototype.toolbarInlineDisableFor = [];
 config_1.Config.prototype.toolbarInlineDisabledButtons = ['source'];
 config_1.Config.prototype.popup = {
-    a: (__webpack_require__(479)/* ["default"] */ .Z),
-    img: (__webpack_require__(480)["default"]),
-    cells: (__webpack_require__(481)/* ["default"] */ .Z),
-    toolbar: (__webpack_require__(482)/* ["default"] */ .Z),
-    jodit: (__webpack_require__(483)/* ["default"] */ .Z),
-    iframe: (__webpack_require__(483)/* ["default"] */ .Z),
-    'jodit-media': (__webpack_require__(483)/* ["default"] */ .Z),
+    a: (__webpack_require__(531)/* ["default"] */ .Z),
+    img: (__webpack_require__(532)["default"]),
+    cells: (__webpack_require__(533)/* ["default"] */ .Z),
+    toolbar: (__webpack_require__(534)/* ["default"] */ .Z),
+    jodit: (__webpack_require__(535)/* ["default"] */ .Z),
+    iframe: (__webpack_require__(535)/* ["default"] */ .Z),
+    'jodit-media': (__webpack_require__(535)/* ["default"] */ .Z),
     selection: [
         'bold',
         'underline',
@@ -32533,7 +33851,7 @@ config_1.Config.prototype.popup = {
 
 
 /***/ }),
-/* 479 */
+/* 531 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32545,7 +33863,7 @@ var __webpack_unused_export__;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 __webpack_unused_export__ = ({ value: true });
-var utils_1 = __webpack_require__(147);
+var utils_1 = __webpack_require__(188);
 exports.Z = [
     {
         name: 'eye',
@@ -32569,7 +33887,7 @@ exports.Z = [
 
 
 /***/ }),
-/* 480 */
+/* 532 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32581,10 +33899,10 @@ exports.Z = [
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.align = void 0;
-var dom_1 = __webpack_require__(159);
+var dom_1 = __webpack_require__(231);
 var is_string_1 = __webpack_require__(13);
-var css_1 = __webpack_require__(220);
-var helpers_1 = __webpack_require__(467);
+var css_1 = __webpack_require__(192);
+var helpers_1 = __webpack_require__(519);
 exports.align = {
     name: 'left',
     childTemplate: function (_, __, value) { return value; },
@@ -32652,7 +33970,7 @@ exports["default"] = [
 
 
 /***/ }),
-/* 481 */
+/* 533 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32664,9 +33982,9 @@ var __webpack_unused_export__;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 __webpack_unused_export__ = ({ value: true });
-var checker_1 = __webpack_require__(173);
-var css_1 = __webpack_require__(220);
-var widget_1 = __webpack_require__(441);
+var checker_1 = __webpack_require__(222);
+var css_1 = __webpack_require__(192);
+var widget_1 = __webpack_require__(486);
 var cmd = function (control) {
     return control.args && (0, checker_1.isString)(control.args[0])
         ? control.args[0].toLowerCase()
@@ -32795,7 +34113,7 @@ exports.Z = [
 
 
 /***/ }),
-/* 482 */
+/* 534 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -32837,7 +34155,7 @@ exports.Z = [
 
 
 /***/ }),
-/* 483 */
+/* 535 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32849,7 +34167,7 @@ var __webpack_unused_export__;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 __webpack_unused_export__ = ({ value: true });
-var img_1 = __webpack_require__(480);
+var img_1 = __webpack_require__(532);
 exports.Z = [
     {
         name: 'bin',
@@ -32863,7 +34181,7 @@ exports.Z = [
 
 
 /***/ }),
-/* 484 */
+/* 536 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32875,14 +34193,14 @@ exports.Z = [
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.justify = exports.alignElement = exports.clearAlign = void 0;
-var config_1 = __webpack_require__(136);
-var modules_1 = __webpack_require__(138);
-var helpers_1 = __webpack_require__(146);
+var config_1 = __webpack_require__(164);
+var modules_1 = __webpack_require__(166);
+var helpers_1 = __webpack_require__(187);
 config_1.Config.prototype.controls.align = {
     name: 'left',
     tooltip: 'Align',
-    update: function (button) {
-        var editor = button.j, control = button.control, current = editor.s.current();
+    update: function (button, editor) {
+        var control = button.control, current = editor.s.current();
         if (current) {
             var currentBox = modules_1.Dom.closest(current, modules_1.Dom.isBlock, editor.editor) ||
                 editor.editor;
@@ -33008,7 +34326,7 @@ exports.justify = justify;
 
 
 /***/ }),
-/* 485 */
+/* 537 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33021,11 +34339,11 @@ exports.justify = justify;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.limit = void 0;
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var plugin_1 = __webpack_require__(336);
-var constants_1 = __webpack_require__(137);
-var helpers_1 = __webpack_require__(146);
-var decorators_1 = __webpack_require__(169);
+var config_1 = __webpack_require__(164);
+var plugin_1 = __webpack_require__(366);
+var constants_1 = __webpack_require__(165);
+var helpers_1 = __webpack_require__(187);
+var decorators_1 = __webpack_require__(233);
 config_1.Config.prototype.limitWords = false;
 config_1.Config.prototype.limitChars = false;
 config_1.Config.prototype.limitHTML = false;
@@ -33104,7 +34422,7 @@ exports.limit = limit;
 
 
 /***/ }),
-/* 486 */
+/* 538 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33117,11 +34435,11 @@ exports.limit = limit;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.lineHeight = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-__webpack_require__(487);
-var helpers_1 = __webpack_require__(146);
-var decorators_1 = __webpack_require__(169);
-var dom_1 = __webpack_require__(159);
+var plugin_1 = __webpack_require__(366);
+__webpack_require__(539);
+var helpers_1 = __webpack_require__(187);
+var decorators_1 = __webpack_require__(233);
+var dom_1 = __webpack_require__(231);
 var lineHeight = (function (_super) {
     tslib_1.__extends(lineHeight, _super);
     function lineHeight() {
@@ -33187,7 +34505,7 @@ exports.lineHeight = lineHeight;
 
 
 /***/ }),
-/* 487 */
+/* 539 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33198,8 +34516,8 @@ exports.lineHeight = lineHeight;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
-var helpers_1 = __webpack_require__(146);
+var config_1 = __webpack_require__(164);
+var helpers_1 = __webpack_require__(187);
 config_1.Config.prototype.defaultLineHeight = null;
 config_1.Config.prototype.controls.lineHeight = {
     icon: 'line-height',
@@ -33215,7 +34533,7 @@ config_1.Config.prototype.controls.lineHeight = {
 
 
 /***/ }),
-/* 488 */
+/* 540 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33228,48 +34546,12 @@ config_1.Config.prototype.controls.lineHeight = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.link = void 0;
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var template_1 = __webpack_require__(489);
-var plugin_1 = __webpack_require__(336);
-var decorators_1 = __webpack_require__(169);
-var modules_1 = __webpack_require__(138);
-config_1.Config.prototype.link = {
-    formTemplate: template_1.formTemplate,
-    followOnDblClick: false,
-    processVideoLink: true,
-    processPastedLink: true,
-    noFollowCheckbox: true,
-    openInNewTabCheckbox: true,
-    modeClassName: 'input',
-    selectMultipleClassName: true,
-    selectSizeClassName: 3,
-    selectOptionsClassName: [],
-    hotkeys: ['ctrl+k', 'cmd+k']
-};
-config_1.Config.prototype.controls.unlink = {
-    exec: function (editor, current) {
-        var anchor = dom_1.Dom.closest(current, 'a', editor.editor);
-        if (anchor) {
-            dom_1.Dom.unwrap(anchor);
-        }
-        editor.synchronizeValues();
-        editor.e.fire('hidePopup');
-    },
-    tooltip: 'Unlink'
-};
-config_1.Config.prototype.controls.link = {
-    isActive: function (editor) {
-        var current = editor.s.current();
-        return Boolean(current && dom_1.Dom.closest(current, 'a', editor.editor));
-    },
-    popup: function (editor, current, self, close) {
-        return editor.e.fire('generateLinkForm.link', current, close);
-    },
-    tags: ['a'],
-    tooltip: 'Insert link'
-};
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var plugin_1 = __webpack_require__(366);
+var decorators_1 = __webpack_require__(233);
+var modules_1 = __webpack_require__(166);
+__webpack_require__(541);
 var link = (function (_super) {
     tslib_1.__extends(link, _super);
     function link() {
@@ -33513,6 +34795,7 @@ var link = (function (_super) {
                 if (noFollowCheckbox && nofollow_checkbox) {
                     (0, helpers_1.attr)(a, 'rel', nofollow_checkbox.checked ? 'nofollow' : null);
                 }
+                jodit.e.fire('applyLink', jodit, a, form);
             });
             jodit.synchronizeValues();
             close();
@@ -33552,7 +34835,59 @@ exports.link = link;
 
 
 /***/ }),
-/* 489 */
+/* 541 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(164);
+var template_1 = __webpack_require__(542);
+var dom_1 = __webpack_require__(215);
+config_1.Config.prototype.link = {
+    formTemplate: template_1.formTemplate,
+    followOnDblClick: false,
+    processVideoLink: true,
+    processPastedLink: true,
+    noFollowCheckbox: true,
+    openInNewTabCheckbox: true,
+    modeClassName: 'input',
+    selectMultipleClassName: true,
+    selectSizeClassName: 3,
+    selectOptionsClassName: [],
+    hotkeys: ['ctrl+k', 'cmd+k']
+};
+config_1.Config.prototype.controls.unlink = {
+    exec: function (editor, current) {
+        var anchor = dom_1.Dom.closest(current, 'a', editor.editor);
+        if (anchor) {
+            dom_1.Dom.unwrap(anchor);
+        }
+        editor.synchronizeValues();
+        editor.e.fire('hidePopup');
+    },
+    tooltip: 'Unlink'
+};
+config_1.Config.prototype.controls.link = {
+    isActive: function (editor) {
+        var current = editor.s.current();
+        return Boolean(current && dom_1.Dom.closest(current, 'a', editor.editor));
+    },
+    popup: function (editor, current, self, close) {
+        return editor.e.fire('generateLinkForm.link', current, close);
+    },
+    tags: ['a'],
+    tooltip: 'Insert link'
+};
+
+
+/***/ }),
+/* 542 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33564,8 +34899,8 @@ exports.link = link;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.formTemplate = void 0;
-var form_1 = __webpack_require__(275);
-var button_1 = __webpack_require__(257);
+var form_1 = __webpack_require__(338);
+var button_1 = __webpack_require__(309);
 var formTemplate = function (editor) {
     var _a = editor.o.link, openInNewTabCheckbox = _a.openInNewTabCheckbox, noFollowCheckbox = _a.noFollowCheckbox, modeClassName = _a.modeClassName, selectSizeClassName = _a.selectSizeClassName, selectMultipleClassName = _a.selectMultipleClassName, selectOptionsClassName = _a.selectOptionsClassName;
     return new form_1.UIForm(editor, [
@@ -33647,7 +34982,7 @@ exports.formTemplate = formTemplate;
 
 
 /***/ }),
-/* 490 */
+/* 543 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33659,13 +34994,13 @@ exports.formTemplate = formTemplate;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(491), exports);
-tslib_1.__exportStar(__webpack_require__(492), exports);
-tslib_1.__exportStar(__webpack_require__(494), exports);
+tslib_1.__exportStar(__webpack_require__(544), exports);
+tslib_1.__exportStar(__webpack_require__(545), exports);
+tslib_1.__exportStar(__webpack_require__(547), exports);
 
 
 /***/ }),
-/* 491 */
+/* 544 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33677,9 +35012,9 @@ tslib_1.__exportStar(__webpack_require__(494), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.media = void 0;
-var config_1 = __webpack_require__(136);
-var consts = __webpack_require__(137);
-var helpers_1 = __webpack_require__(146);
+var config_1 = __webpack_require__(164);
+var consts = __webpack_require__(165);
+var helpers_1 = __webpack_require__(187);
 config_1.Config.prototype.mediaFakeTag = 'jodit-media';
 config_1.Config.prototype.mediaInFakeBlock = true;
 config_1.Config.prototype.mediaBlocks = ['video', 'audio'];
@@ -33687,12 +35022,19 @@ function media(editor) {
     var keyFake = 'jodit_fake_wrapper';
     var _a = editor.options, mediaFakeTag = _a.mediaFakeTag, mediaBlocks = _a.mediaBlocks, mediaInFakeBlock = _a.mediaInFakeBlock;
     var wrap = function (element) {
+        var _a;
         if (element.parentNode &&
             (0, helpers_1.attr)(element.parentNode, 'data-jodit_iframe_wrapper')) {
             element = element.parentNode;
         }
         else {
-            var wrapper = editor.createInside.fromHTML("<".concat(mediaFakeTag, " data-jodit-temp=\"1\" contenteditable=\"false\" draggable=\"true\" data-").concat(keyFake, "=\"1\"></").concat(mediaFakeTag, ">"));
+            var wrapper = editor.createInside.element(mediaFakeTag, (_a = {
+                    'data-jodit-temp': 1,
+                    contenteditable: false,
+                    draggable: true
+                },
+                _a["data-".concat(keyFake)] = 1,
+                _a));
             (0, helpers_1.attr)(wrapper, 'style', (0, helpers_1.attr)(element, 'style'));
             wrapper.style.display =
                 element.style.display === 'inline-block'
@@ -33737,7 +35079,7 @@ exports.media = media;
 
 
 /***/ }),
-/* 492 */
+/* 545 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33749,7 +35091,7 @@ exports.media = media;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.video = void 0;
-__webpack_require__(493);
+__webpack_require__(546);
 function video(editor) {
     editor.registerButton({
         name: 'video',
@@ -33760,7 +35102,7 @@ exports.video = video;
 
 
 /***/ }),
-/* 493 */
+/* 546 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33771,14 +35113,14 @@ exports.video = video;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
-var widget_1 = __webpack_require__(441);
-var helpers_1 = __webpack_require__(146);
-var form_1 = __webpack_require__(275);
-var button_1 = __webpack_require__(257);
+var config_1 = __webpack_require__(164);
+var widget_1 = __webpack_require__(486);
+var helpers_1 = __webpack_require__(187);
+var form_1 = __webpack_require__(338);
+var button_1 = __webpack_require__(309);
 config_1.Config.prototype.controls.video = {
     popup: function (editor, current, control, close) {
-        var bylink = new form_1.UIForm(editor, [
+        var formLink = new form_1.UIForm(editor, [
             new form_1.UIBlock(editor, [
                 new form_1.UIInput(editor, {
                     name: 'url',
@@ -33790,10 +35132,10 @@ config_1.Config.prototype.controls.video = {
             ]),
             new form_1.UIBlock(editor, [
                 (0, button_1.Button)(editor, '', 'Insert', 'primary').onAction(function () {
-                    return bylink.submit();
+                    return formLink.submit();
                 })
             ])
-        ]), bycode = new form_1.UIForm(editor, [
+        ]), formCode = new form_1.UIForm(editor, [
             new form_1.UIBlock(editor, [
                 new form_1.UITextArea(editor, {
                     name: 'code',
@@ -33803,7 +35145,7 @@ config_1.Config.prototype.controls.video = {
             ]),
             new form_1.UIBlock(editor, [
                 (0, button_1.Button)(editor, '', 'Insert', 'primary').onAction(function () {
-                    return bycode.submit();
+                    return formCode.submit();
                 })
             ])
         ]), tabs = [], insertCode = function (code) {
@@ -33815,16 +35157,16 @@ config_1.Config.prototype.controls.video = {
         tabs.push({
             icon: 'link',
             name: 'Link',
-            content: bylink.container
+            content: formLink.container
         }, {
             icon: 'source',
             name: 'Code',
-            content: bycode.container
+            content: formCode.container
         });
-        bylink.onSubmit(function (data) {
+        formLink.onSubmit(function (data) {
             insertCode((0, helpers_1.convertMediaUrlToVideoEmbed)(data.url));
         });
-        bycode.onSubmit(function (data) {
+        formCode.onSubmit(function (data) {
             insertCode(data.code);
         });
         return (0, widget_1.TabsWidget)(editor, tabs);
@@ -33835,7 +35177,7 @@ config_1.Config.prototype.controls.video = {
 
 
 /***/ }),
-/* 494 */
+/* 547 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33847,9 +35189,9 @@ config_1.Config.prototype.controls.video = {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.file = void 0;
-var config_1 = __webpack_require__(136);
-var dom_1 = __webpack_require__(159);
-var widget_1 = __webpack_require__(441);
+var config_1 = __webpack_require__(164);
+var dom_1 = __webpack_require__(231);
+var widget_1 = __webpack_require__(486);
 config_1.Config.prototype.controls.file = {
     popup: function (editor, current, self, close) {
         var insert = function (url, title) {
@@ -33896,7 +35238,7 @@ exports.file = file;
 
 
 /***/ }),
-/* 495 */
+/* 548 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33908,9 +35250,9 @@ exports.file = file;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.mobile = void 0;
-var helpers_1 = __webpack_require__(146);
-var buttons_1 = __webpack_require__(271);
-__webpack_require__(496);
+var helpers_1 = __webpack_require__(187);
+var buttons_1 = __webpack_require__(320);
+__webpack_require__(549);
 function mobile(editor) {
     var timeout = 0, store = (0, helpers_1.splitArray)(editor.o.buttons);
     if (editor.o.mobileTapTimeout) {
@@ -33974,7 +35316,7 @@ exports.mobile = mobile;
 
 
 /***/ }),
-/* 496 */
+/* 549 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -33985,11 +35327,11 @@ exports.mobile = mobile;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
-var consts = __webpack_require__(137);
-var factory_1 = __webpack_require__(325);
-var helpers_1 = __webpack_require__(146);
-var collection_1 = __webpack_require__(326);
+var config_1 = __webpack_require__(164);
+var consts = __webpack_require__(165);
+var factory_1 = __webpack_require__(333);
+var helpers_1 = __webpack_require__(187);
+var collection_1 = __webpack_require__(334);
 config_1.Config.prototype.mobileTapTimeout = 300;
 config_1.Config.prototype.toolbarAdaptive = true;
 config_1.Config.prototype.controls.dots = {
@@ -34022,7 +35364,7 @@ config_1.Config.prototype.controls.dots = {
 
 
 /***/ }),
-/* 497 */
+/* 550 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -34035,9 +35377,9 @@ config_1.Config.prototype.controls.dots = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.orderedList = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var decorators_1 = __webpack_require__(169);
-__webpack_require__(498);
+var plugin_1 = __webpack_require__(366);
+var decorators_1 = __webpack_require__(233);
+__webpack_require__(551);
 var orderedList = (function (_super) {
     tslib_1.__extends(orderedList, _super);
     function orderedList() {
@@ -34078,7 +35420,7 @@ exports.orderedList = orderedList;
 
 
 /***/ }),
-/* 498 */
+/* 551 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -34089,8 +35431,8 @@ exports.orderedList = orderedList;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
-var data_bind_1 = __webpack_require__(153);
+var config_1 = __webpack_require__(164);
+var data_bind_1 = __webpack_require__(191);
 var memoExec = function (jodit, _, _a) {
     var _b;
     var control = _a.control;
@@ -34128,7 +35470,7 @@ config_1.Config.prototype.controls.ol = {
 
 
 /***/ }),
-/* 499 */
+/* 552 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -34155,7 +35497,7 @@ exports.poweredByJodit = poweredByJodit;
 
 
 /***/ }),
-/* 500 */
+/* 553 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -34168,15 +35510,15 @@ exports.poweredByJodit = poweredByJodit;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.placeholder = exports.isEditorEmpty = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(501);
-var consts = __webpack_require__(137);
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
-var plugin_1 = __webpack_require__(336);
-var constants_1 = __webpack_require__(137);
-var decorators_1 = __webpack_require__(169);
-var selection_1 = __webpack_require__(161);
-__webpack_require__(502);
+__webpack_require__(554);
+var consts = __webpack_require__(165);
+var helpers_1 = __webpack_require__(187);
+var dom_1 = __webpack_require__(231);
+var plugin_1 = __webpack_require__(366);
+var constants_1 = __webpack_require__(165);
+var decorators_1 = __webpack_require__(233);
+var selection_1 = __webpack_require__(216);
+__webpack_require__(555);
 function isEditorEmpty(root) {
     if (!root.firstChild) {
         return true;
@@ -34312,7 +35654,7 @@ exports.placeholder = placeholder;
 
 
 /***/ }),
-/* 501 */
+/* 554 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34321,7 +35663,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 502 */
+/* 555 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -34332,14 +35674,14 @@ __webpack_require__.r(__webpack_exports__);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.showPlaceholder = true;
 config_1.Config.prototype.placeholder = 'Type something';
 config_1.Config.prototype.useInputsPlaceholder = true;
 
 
 /***/ }),
-/* 503 */
+/* 556 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -34352,9 +35694,9 @@ config_1.Config.prototype.useInputsPlaceholder = true;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.redoUndo = void 0;
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var consts = __webpack_require__(137);
-var plugin_1 = __webpack_require__(336);
+var config_1 = __webpack_require__(164);
+var consts = __webpack_require__(165);
+var plugin_1 = __webpack_require__(366);
 config_1.Config.prototype.controls.redo = {
     mode: consts.MODE_SPLIT,
     isDisabled: function (editor) { return !editor.history.canRedo(); },
@@ -34403,7 +35745,7 @@ exports.redoUndo = redoUndo;
 
 
 /***/ }),
-/* 504 */
+/* 557 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -34416,15 +35758,15 @@ exports.redoUndo = redoUndo;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resizer = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(505);
-var consts = __webpack_require__(137);
-var constants_1 = __webpack_require__(137);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var plugin_1 = __webpack_require__(336);
-var global_1 = __webpack_require__(157);
-var decorators_1 = __webpack_require__(169);
-__webpack_require__(506);
+__webpack_require__(558);
+var consts = __webpack_require__(165);
+var constants_1 = __webpack_require__(165);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var plugin_1 = __webpack_require__(366);
+var global_1 = __webpack_require__(239);
+var decorators_1 = __webpack_require__(233);
+__webpack_require__(559);
 var keyBInd = '__jodit-resizer_binded';
 var resizer = (function (_super) {
     tslib_1.__extends(resizer, _super);
@@ -34458,7 +35800,9 @@ var resizer = (function (_super) {
                 }
                 var className = _this.handle.className;
                 var new_w = 0, new_h = 0;
-                if (dom_1.Dom.isTag(_this.element, 'img')) {
+                var uar = _this.j.o.resizer.useAspectRatio;
+                if (uar === true ||
+                    (Array.isArray(uar) && dom_1.Dom.isTag(_this.element, uar))) {
                     if (diff_x) {
                         new_w =
                             _this.width +
@@ -34792,7 +36136,7 @@ exports.resizer = resizer;
 
 
 /***/ }),
-/* 505 */
+/* 558 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34801,7 +36145,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 506 */
+/* 559 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -34812,19 +36156,20 @@ __webpack_require__.r(__webpack_exports__);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
 config_1.Config.prototype.resizer = {
     showSize: true,
     hideSizeTimeout: 1000,
     forImageChangeAttributes: true,
     min_width: 10,
-    min_height: 10
+    min_height: 10,
+    useAspectRatio: ['img']
 };
 
 
 /***/ }),
-/* 507 */
+/* 560 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -34837,13 +36182,13 @@ config_1.Config.prototype.resizer = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.search = void 0;
 var tslib_1 = __webpack_require__(1);
-var dom_1 = __webpack_require__(159);
-var plugin_1 = __webpack_require__(336);
-var decorators_1 = __webpack_require__(169);
-var helpers_1 = __webpack_require__(508);
-var search_1 = __webpack_require__(511);
-__webpack_require__(513);
-var helpers_2 = __webpack_require__(146);
+var dom_1 = __webpack_require__(231);
+var plugin_1 = __webpack_require__(366);
+var decorators_1 = __webpack_require__(233);
+var helpers_1 = __webpack_require__(561);
+var search_1 = __webpack_require__(564);
+__webpack_require__(566);
+var helpers_2 = __webpack_require__(187);
 var search = (function (_super) {
     tslib_1.__extends(search, _super);
     function search() {
@@ -35229,7 +36574,7 @@ exports.search = search;
 
 
 /***/ }),
-/* 508 */
+/* 561 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -35241,12 +36586,12 @@ exports.search = search;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(509), exports);
-tslib_1.__exportStar(__webpack_require__(510), exports);
+tslib_1.__exportStar(__webpack_require__(562), exports);
+tslib_1.__exportStar(__webpack_require__(563), exports);
 
 
 /***/ }),
-/* 509 */
+/* 562 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -35259,7 +36604,7 @@ tslib_1.__exportStar(__webpack_require__(510), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SentenceFinder = void 0;
 var tslib_1 = __webpack_require__(1);
-var fuzzy_search_index_1 = __webpack_require__(214);
+var fuzzy_search_index_1 = __webpack_require__(289);
 var SentenceFinder = (function () {
     function SentenceFinder(searchIndex) {
         if (searchIndex === void 0) { searchIndex = fuzzy_search_index_1.fuzzySearchIndex; }
@@ -35322,7 +36667,7 @@ exports.SentenceFinder = SentenceFinder;
 
 
 /***/ }),
-/* 510 */
+/* 563 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -35335,8 +36680,8 @@ exports.SentenceFinder = SentenceFinder;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isSelectionWrapper = exports.clearSelectionWrappersFromHTML = exports.clearSelectionWrappers = exports.getSelectionWrappers = exports.wrapRangesTextsInTmpSpan = void 0;
 var tslib_1 = __webpack_require__(1);
-var dom_1 = __webpack_require__(159);
-var selector_1 = __webpack_require__(247);
+var dom_1 = __webpack_require__(231);
+var selector_1 = __webpack_require__(265);
 var TMP_ATTR = 'jd-tmp-selection';
 function wrapRangesTextsInTmpSpan(rng, restRanges, ci, root) {
     var _a, e_1, _b;
@@ -35430,7 +36775,7 @@ exports.isSelectionWrapper = isSelectionWrapper;
 
 
 /***/ }),
-/* 511 */
+/* 564 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -35443,13 +36788,13 @@ exports.isSelectionWrapper = isSelectionWrapper;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UISearch = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(512);
-var ui_1 = __webpack_require__(251);
-var helpers_1 = __webpack_require__(146);
-var constants_1 = __webpack_require__(137);
-var consts = __webpack_require__(137);
-var decorators_1 = __webpack_require__(169);
-var dom_1 = __webpack_require__(159);
+__webpack_require__(565);
+var ui_1 = __webpack_require__(336);
+var helpers_1 = __webpack_require__(187);
+var constants_1 = __webpack_require__(165);
+var consts = __webpack_require__(165);
+var decorators_1 = __webpack_require__(233);
+var dom_1 = __webpack_require__(231);
 var UISearch = (function (_super) {
     tslib_1.__extends(UISearch, _super);
     function UISearch(jodit) {
@@ -35637,7 +36982,7 @@ exports.UISearch = UISearch;
 
 
 /***/ }),
-/* 512 */
+/* 565 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -35646,7 +36991,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 513 */
+/* 566 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -35657,7 +37002,7 @@ __webpack_require__.r(__webpack_exports__);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.useSearch = true;
 config_1.Config.prototype.search = {
     lazyIdleTimeout: 0
@@ -35693,7 +37038,7 @@ config_1.Config.prototype.controls.find = {
 
 
 /***/ }),
-/* 514 */
+/* 567 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -35706,12 +37051,12 @@ config_1.Config.prototype.controls.find = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.select = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var decorators_1 = __webpack_require__(169);
-var camel_case_1 = __webpack_require__(213);
-var dom_1 = __webpack_require__(159);
-var ui_1 = __webpack_require__(251);
-__webpack_require__(515);
+var plugin_1 = __webpack_require__(366);
+var decorators_1 = __webpack_require__(233);
+var camel_case_1 = __webpack_require__(198);
+var dom_1 = __webpack_require__(231);
+var ui_1 = __webpack_require__(336);
+__webpack_require__(568);
 var select = (function (_super) {
     tslib_1.__extends(select, _super);
     function select() {
@@ -35799,7 +37144,7 @@ exports.select = select;
 
 
 /***/ }),
-/* 515 */
+/* 568 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -35810,14 +37155,14 @@ exports.select = select;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.select = {
     normalizeSelectionBeforeCutAndCopy: true
 };
 
 
 /***/ }),
-/* 516 */
+/* 569 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -35829,13 +37174,13 @@ config_1.Config.prototype.select = {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(517);
-tslib_1.__exportStar(__webpack_require__(518), exports);
-tslib_1.__exportStar(__webpack_require__(519), exports);
+__webpack_require__(570);
+tslib_1.__exportStar(__webpack_require__(571), exports);
+tslib_1.__exportStar(__webpack_require__(572), exports);
 
 
 /***/ }),
-/* 517 */
+/* 570 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -35846,7 +37191,7 @@ tslib_1.__exportStar(__webpack_require__(519), exports);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.width = 'auto';
 config_1.Config.prototype.minWidth = 200;
 config_1.Config.prototype.maxWidth = '100%';
@@ -35859,7 +37204,7 @@ config_1.Config.prototype.saveHeightInStorage = false;
 
 
 /***/ }),
-/* 518 */
+/* 571 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -35872,10 +37217,10 @@ config_1.Config.prototype.saveHeightInStorage = false;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resizeHandler = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var dom_1 = __webpack_require__(159);
-var decorators_1 = __webpack_require__(169);
-var ui_1 = __webpack_require__(251);
+var plugin_1 = __webpack_require__(366);
+var dom_1 = __webpack_require__(231);
+var decorators_1 = __webpack_require__(233);
+var ui_1 = __webpack_require__(336);
 var resizeHandler = (function (_super) {
     tslib_1.__extends(resizeHandler, _super);
     function resizeHandler() {
@@ -35954,7 +37299,7 @@ exports.resizeHandler = resizeHandler;
 
 
 /***/ }),
-/* 519 */
+/* 572 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -35967,10 +37312,10 @@ exports.resizeHandler = resizeHandler;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.size = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(520);
-var helpers_1 = __webpack_require__(146);
-var plugin_1 = __webpack_require__(336);
-var decorators_1 = __webpack_require__(169);
+__webpack_require__(573);
+var helpers_1 = __webpack_require__(187);
+var plugin_1 = __webpack_require__(366);
+var decorators_1 = __webpack_require__(233);
 var size = (function (_super) {
     tslib_1.__extends(size, _super);
     function size() {
@@ -35982,7 +37327,9 @@ var size = (function (_super) {
         editor.e
             .on('setHeight.size', this.setHeight)
             .on('setWidth.size', this.setWidth)
-            .on('afterInit.size changePlace.size', this.initialize, undefined, true)
+            .on('afterInit.size changePlace.size', this.initialize, {
+            top: true
+        })
             .on(editor.ow, 'load.size', this.resizeWorkspaces)
             .on('afterInit.size resize.size afterUpdateToolbar.size ' +
             'scroll.size afterResize.size', this.resizeWorkspaces)
@@ -36091,7 +37438,7 @@ exports.size = size;
 
 
 /***/ }),
-/* 520 */
+/* 573 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36100,7 +37447,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 521 */
+/* 574 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -36112,12 +37459,12 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(522);
-tslib_1.__exportStar(__webpack_require__(523), exports);
+__webpack_require__(575);
+tslib_1.__exportStar(__webpack_require__(576), exports);
 
 
 /***/ }),
-/* 522 */
+/* 575 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -36128,9 +37475,9 @@ tslib_1.__exportStar(__webpack_require__(523), exports);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
-var consts = __webpack_require__(137);
-var constants_1 = __webpack_require__(137);
+var config_1 = __webpack_require__(164);
+var consts = __webpack_require__(165);
+var constants_1 = __webpack_require__(165);
 config_1.Config.prototype.beautifyHTML = !constants_1.IS_IE;
 config_1.Config.prototype.sourceEditor = 'ace';
 config_1.Config.prototype.sourceEditorNativeOptions = {
@@ -36160,7 +37507,7 @@ config_1.Config.prototype.controls.source = {
 
 
 /***/ }),
-/* 523 */
+/* 576 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -36173,15 +37520,15 @@ config_1.Config.prototype.controls.source = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.source = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(524);
-var consts = __webpack_require__(137);
-var constants_1 = __webpack_require__(137);
-var plugin_1 = __webpack_require__(336);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var factory_1 = __webpack_require__(525);
-var decorators_1 = __webpack_require__(169);
-var const_1 = __webpack_require__(471);
+__webpack_require__(577);
+var consts = __webpack_require__(165);
+var constants_1 = __webpack_require__(165);
+var plugin_1 = __webpack_require__(366);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var factory_1 = __webpack_require__(578);
+var decorators_1 = __webpack_require__(233);
+var const_1 = __webpack_require__(523);
 var source = (function (_super) {
     tslib_1.__extends(source, _super);
     function source() {
@@ -36482,7 +37829,7 @@ exports.source = source;
 
 
 /***/ }),
-/* 524 */
+/* 577 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36491,7 +37838,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 525 */
+/* 578 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -36503,8 +37850,8 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createSourceEditor = void 0;
-var engines_1 = __webpack_require__(526);
-var helpers_1 = __webpack_require__(146);
+var engines_1 = __webpack_require__(579);
+var helpers_1 = __webpack_require__(187);
 function createSourceEditor(type, editor, container, toWYSIWYG, fromWYSIWYG) {
     var sourceEditor;
     if ((0, helpers_1.isFunction)(type)) {
@@ -36531,7 +37878,7 @@ exports.createSourceEditor = createSourceEditor;
 
 
 /***/ }),
-/* 526 */
+/* 579 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -36543,12 +37890,12 @@ exports.createSourceEditor = createSourceEditor;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(527), exports);
-tslib_1.__exportStar(__webpack_require__(529), exports);
+tslib_1.__exportStar(__webpack_require__(580), exports);
+tslib_1.__exportStar(__webpack_require__(582), exports);
 
 
 /***/ }),
-/* 527 */
+/* 580 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -36561,9 +37908,9 @@ tslib_1.__exportStar(__webpack_require__(529), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TextAreaEditor = void 0;
 var tslib_1 = __webpack_require__(1);
-var helpers_1 = __webpack_require__(146);
-var modules_1 = __webpack_require__(138);
-var sourceEditor_1 = __webpack_require__(528);
+var helpers_1 = __webpack_require__(187);
+var modules_1 = __webpack_require__(166);
+var sourceEditor_1 = __webpack_require__(581);
 var TextAreaEditor = (function (_super) {
     tslib_1.__extends(TextAreaEditor, _super);
     function TextAreaEditor() {
@@ -36666,7 +38013,7 @@ exports.TextAreaEditor = TextAreaEditor;
 
 
 /***/ }),
-/* 528 */
+/* 581 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -36714,7 +38061,7 @@ exports.SourceEditor = SourceEditor;
 
 
 /***/ }),
-/* 529 */
+/* 582 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -36727,9 +38074,9 @@ exports.SourceEditor = SourceEditor;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AceEditor = void 0;
 var tslib_1 = __webpack_require__(1);
-var constants = __webpack_require__(137);
-var helpers_1 = __webpack_require__(146);
-var sourceEditor_1 = __webpack_require__(528);
+var constants = __webpack_require__(165);
+var helpers_1 = __webpack_require__(187);
+var sourceEditor_1 = __webpack_require__(581);
 var AceEditor = (function (_super) {
     tslib_1.__extends(AceEditor, _super);
     function AceEditor() {
@@ -36929,7 +38276,7 @@ exports.AceEditor = AceEditor;
 
 
 /***/ }),
-/* 530 */
+/* 583 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -36942,10 +38289,10 @@ exports.AceEditor = AceEditor;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.stat = void 0;
 var tslib_1 = __webpack_require__(1);
-var config_1 = __webpack_require__(136);
-var constants_1 = __webpack_require__(137);
-var plugin_1 = __webpack_require__(336);
-var dom_1 = __webpack_require__(159);
+var config_1 = __webpack_require__(164);
+var constants_1 = __webpack_require__(165);
+var plugin_1 = __webpack_require__(366);
+var dom_1 = __webpack_require__(231);
 config_1.Config.prototype.showCharsCounter = true;
 config_1.Config.prototype.countHTMLChars = false;
 config_1.Config.prototype.showWordsCounter = true;
@@ -37001,7 +38348,7 @@ exports.stat = stat;
 
 
 /***/ }),
-/* 531 */
+/* 584 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -37014,12 +38361,12 @@ exports.stat = stat;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sticky = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(532);
-var config_1 = __webpack_require__(136);
-var constants_1 = __webpack_require__(137);
-var modules_1 = __webpack_require__(138);
-var helpers_1 = __webpack_require__(146);
-var decorators_1 = __webpack_require__(169);
+__webpack_require__(585);
+var config_1 = __webpack_require__(164);
+var constants_1 = __webpack_require__(165);
+var modules_1 = __webpack_require__(166);
+var helpers_1 = __webpack_require__(187);
+var decorators_1 = __webpack_require__(233);
 config_1.Config.prototype.toolbarSticky = true;
 config_1.Config.prototype.toolbarDisableStickyForMobile = true;
 config_1.Config.prototype.toolbarStickyOffset = 0;
@@ -37113,7 +38460,7 @@ exports.sticky = sticky;
 
 
 /***/ }),
-/* 532 */
+/* 585 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -37122,7 +38469,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 533 */
+/* 586 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -37135,10 +38482,10 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.spellcheck = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var utils_1 = __webpack_require__(150);
-var decorators_1 = __webpack_require__(169);
-__webpack_require__(534);
+var plugin_1 = __webpack_require__(366);
+var utils_1 = __webpack_require__(190);
+var decorators_1 = __webpack_require__(233);
+__webpack_require__(587);
 var spellcheck = (function (_super) {
     tslib_1.__extends(spellcheck, _super);
     function spellcheck() {
@@ -37174,7 +38521,7 @@ exports.spellcheck = spellcheck;
 
 
 /***/ }),
-/* 534 */
+/* 587 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -37185,13 +38532,13 @@ exports.spellcheck = spellcheck;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.spellcheck = false;
 config_1.Config.prototype.controls.spellcheck = {
     isActive: function (e) {
         return e.o.spellcheck;
     },
-    icon: __webpack_require__(535),
+    icon: __webpack_require__(588),
     name: 'spellcheck',
     command: 'toggleSpellcheck',
     tooltip: 'Spellchecking'
@@ -37199,13 +38546,13 @@ config_1.Config.prototype.controls.spellcheck = {
 
 
 /***/ }),
-/* 535 */
+/* 588 */
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89 32h4.18L18.86 6h-3.71L4.93 32h4.18l2.25-6h11.29l2.24 6zM12.86 22L17 10.95 21.14 22h-8.28zm30.31 1.17L27 39.34 19.66 32l-2.83 2.83L27 45l19-19-2.83-2.83z\"/> </svg>"
 
 /***/ }),
-/* 536 */
+/* 589 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -37218,11 +38565,11 @@ module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.symbols = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(537);
-__webpack_require__(538);
-var constants_1 = __webpack_require__(137);
-var modules_1 = __webpack_require__(138);
-var utils_1 = __webpack_require__(147);
+__webpack_require__(590);
+__webpack_require__(591);
+var constants_1 = __webpack_require__(165);
+var modules_1 = __webpack_require__(166);
+var utils_1 = __webpack_require__(188);
 var symbols = (function (_super) {
     tslib_1.__extends(symbols, _super);
     function symbols() {
@@ -37327,7 +38674,7 @@ exports.symbols = symbols;
 
 
 /***/ }),
-/* 537 */
+/* 590 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -37336,7 +38683,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 538 */
+/* 591 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -37347,8 +38694,8 @@ __webpack_require__.r(__webpack_exports__);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
-var dialog_1 = __webpack_require__(315);
+var config_1 = __webpack_require__(164);
+var dialog_1 = __webpack_require__(323);
 config_1.Config.prototype.usePopupForSpecialCharacters = false;
 config_1.Config.prototype.specialCharacters = [
     '!',
@@ -37587,7 +38934,7 @@ config_1.Config.prototype.controls.symbol = {
 
 
 /***/ }),
-/* 539 */
+/* 592 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -37599,15 +38946,15 @@ config_1.Config.prototype.controls.symbol = {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(540);
-tslib_1.__exportStar(__webpack_require__(541), exports);
-tslib_1.__exportStar(__webpack_require__(543), exports);
-tslib_1.__exportStar(__webpack_require__(544), exports);
-tslib_1.__exportStar(__webpack_require__(545), exports);
+__webpack_require__(593);
+tslib_1.__exportStar(__webpack_require__(594), exports);
+tslib_1.__exportStar(__webpack_require__(596), exports);
+tslib_1.__exportStar(__webpack_require__(597), exports);
+tslib_1.__exportStar(__webpack_require__(598), exports);
 
 
 /***/ }),
-/* 540 */
+/* 593 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -37618,10 +38965,10 @@ tslib_1.__exportStar(__webpack_require__(545), exports);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
-var dom_1 = __webpack_require__(159);
-var utils_1 = __webpack_require__(147);
-var helpers_1 = __webpack_require__(146);
+var config_1 = __webpack_require__(164);
+var dom_1 = __webpack_require__(231);
+var utils_1 = __webpack_require__(188);
+var helpers_1 = __webpack_require__(187);
 config_1.Config.prototype.table = {
     allowCellSelection: true,
     selectionCellStyle: 'border: 1px double #1e88e5 !important;',
@@ -37767,7 +39114,7 @@ config_1.Config.prototype.controls.table = {
 
 
 /***/ }),
-/* 541 */
+/* 594 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -37780,11 +39127,11 @@ config_1.Config.prototype.controls.table = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resizeCells = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(542);
-var consts = __webpack_require__(137);
-var modules_1 = __webpack_require__(138);
-var helpers_1 = __webpack_require__(146);
-var decorators_1 = __webpack_require__(169);
+__webpack_require__(595);
+var consts = __webpack_require__(165);
+var modules_1 = __webpack_require__(166);
+var helpers_1 = __webpack_require__(187);
+var decorators_1 = __webpack_require__(233);
 var key = 'table_processor_observer-resize';
 var resizeCells = (function (_super) {
     tslib_1.__extends(resizeCells, _super);
@@ -38052,7 +39399,7 @@ exports.resizeCells = resizeCells;
 
 
 /***/ }),
-/* 542 */
+/* 595 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38061,7 +39408,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 543 */
+/* 596 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -38074,12 +39421,12 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.selectCells = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var modules_1 = __webpack_require__(138);
-var helpers_1 = __webpack_require__(146);
-var justify_1 = __webpack_require__(484);
-var constants_1 = __webpack_require__(137);
-var decorators_1 = __webpack_require__(169);
+var plugin_1 = __webpack_require__(366);
+var modules_1 = __webpack_require__(166);
+var helpers_1 = __webpack_require__(187);
+var justify_1 = __webpack_require__(536);
+var constants_1 = __webpack_require__(165);
+var decorators_1 = __webpack_require__(233);
 var key = 'table_processor_observer';
 var MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
 var selectCells = (function (_super) {
@@ -38366,7 +39713,7 @@ exports.selectCells = selectCells;
 
 
 /***/ }),
-/* 544 */
+/* 597 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -38378,9 +39725,9 @@ exports.selectCells = selectCells;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.tableKeyboardNavigation = void 0;
-var consts = __webpack_require__(137);
-var dom_1 = __webpack_require__(159);
-var modules_1 = __webpack_require__(138);
+var consts = __webpack_require__(165);
+var dom_1 = __webpack_require__(231);
+var modules_1 = __webpack_require__(166);
 function tableKeyboardNavigation(editor) {
     editor.e
         .off('.tableKeyboardNavigation')
@@ -38497,7 +39844,7 @@ exports.tableKeyboardNavigation = tableKeyboardNavigation;
 
 
 /***/ }),
-/* 545 */
+/* 598 */
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -38519,7 +39866,7 @@ exports.table = table;
 
 
 /***/ }),
-/* 546 */
+/* 599 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -38532,12 +39879,12 @@ exports.table = table;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.tooltip = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(547);
-var helpers_1 = __webpack_require__(146);
-var plugin_1 = __webpack_require__(336);
-var dom_1 = __webpack_require__(159);
-var global_1 = __webpack_require__(157);
-var decorators_1 = __webpack_require__(169);
+__webpack_require__(600);
+var helpers_1 = __webpack_require__(187);
+var plugin_1 = __webpack_require__(366);
+var dom_1 = __webpack_require__(231);
+var global_1 = __webpack_require__(239);
+var decorators_1 = __webpack_require__(233);
 var tooltip = (function (_super) {
     tslib_1.__extends(tooltip, _super);
     function tooltip() {
@@ -38613,7 +39960,7 @@ exports.tooltip = tooltip;
 
 
 /***/ }),
-/* 547 */
+/* 600 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38622,7 +39969,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 548 */
+/* 601 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -38635,11 +39982,11 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.tab = void 0;
 var tslib_1 = __webpack_require__(1);
-var plugin_1 = __webpack_require__(336);
-var decorators_1 = __webpack_require__(169);
-var constants_1 = __webpack_require__(137);
-var cases_1 = __webpack_require__(549);
-__webpack_require__(551);
+var plugin_1 = __webpack_require__(366);
+var decorators_1 = __webpack_require__(233);
+var constants_1 = __webpack_require__(165);
+var cases_1 = __webpack_require__(602);
+__webpack_require__(604);
 var tab = (function (_super) {
     tslib_1.__extends(tab, _super);
     function tab() {
@@ -38661,7 +40008,7 @@ exports.tab = tab;
 
 
 /***/ }),
-/* 549 */
+/* 602 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -38673,11 +40020,11 @@ exports.tab = tab;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(550), exports);
+tslib_1.__exportStar(__webpack_require__(603), exports);
 
 
 /***/ }),
-/* 550 */
+/* 603 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -38689,7 +40036,7 @@ tslib_1.__exportStar(__webpack_require__(550), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.onTabInsideLi = void 0;
-var dom_1 = __webpack_require__(159);
+var dom_1 = __webpack_require__(231);
 function onTabInsideLi(jodit) {
     if (!jodit.o.tab.tabInsideLiInsertNewList || !jodit.s.isCollapsed()) {
         return false;
@@ -38718,7 +40065,7 @@ exports.onTabInsideLi = onTabInsideLi;
 
 
 /***/ }),
-/* 551 */
+/* 604 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -38729,14 +40076,14 @@ exports.onTabInsideLi = onTabInsideLi;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(136);
+var config_1 = __webpack_require__(164);
 config_1.Config.prototype.tab = {
     tabInsideLiInsertNewList: true
 };
 
 
 /***/ }),
-/* 552 */
+/* 605 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -38748,12 +40095,12 @@ config_1.Config.prototype.tab = {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(553), exports);
-tslib_1.__exportStar(__webpack_require__(556), exports);
+tslib_1.__exportStar(__webpack_require__(606), exports);
+tslib_1.__exportStar(__webpack_require__(609), exports);
 
 
 /***/ }),
-/* 553 */
+/* 606 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -38765,11 +40112,11 @@ tslib_1.__exportStar(__webpack_require__(556), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.preview = void 0;
-__webpack_require__(554);
-var config_1 = __webpack_require__(136);
-var constants_1 = __webpack_require__(137);
-var helpers_1 = __webpack_require__(555);
-var dialog_1 = __webpack_require__(316);
+__webpack_require__(607);
+var config_1 = __webpack_require__(164);
+var constants_1 = __webpack_require__(165);
+var helpers_1 = __webpack_require__(608);
+var dialog_1 = __webpack_require__(324);
 config_1.Config.prototype.controls.preview = {
     icon: 'eye',
     command: 'preview',
@@ -38796,7 +40143,7 @@ exports.preview = preview;
 
 
 /***/ }),
-/* 554 */
+/* 607 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38805,7 +40152,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 555 */
+/* 608 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -38817,8 +40164,8 @@ __webpack_require__.r(__webpack_exports__);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.previewBox = void 0;
-var helpers_1 = __webpack_require__(146);
-var dom_1 = __webpack_require__(159);
+var helpers_1 = __webpack_require__(187);
+var dom_1 = __webpack_require__(231);
 function fixedAssetsSizeAndAbsoluteLinks(editor, points) {
     var restoreAttributes = [];
     try {
@@ -38958,7 +40305,7 @@ exports.previewBox = previewBox;
 
 
 /***/ }),
-/* 556 */
+/* 609 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -38970,11 +40317,11 @@ exports.previewBox = previewBox;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.print = void 0;
-var config_1 = __webpack_require__(136);
-var global_1 = __webpack_require__(157);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var consts = __webpack_require__(137);
+var config_1 = __webpack_require__(164);
+var global_1 = __webpack_require__(239);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var consts = __webpack_require__(165);
 config_1.Config.prototype.controls.print = {
     exec: function (editor) {
         var iframe = editor.create.element('iframe');
@@ -39028,7 +40375,7 @@ exports.print = print;
 
 
 /***/ }),
-/* 557 */
+/* 610 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -39041,14 +40388,14 @@ exports.print = print;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.xpath = void 0;
 var tslib_1 = __webpack_require__(1);
-__webpack_require__(558);
-var config_1 = __webpack_require__(136);
-var constants_1 = __webpack_require__(137);
-var context_menu_1 = __webpack_require__(313);
-var dom_1 = __webpack_require__(159);
-var helpers_1 = __webpack_require__(146);
-var plugin_1 = __webpack_require__(336);
-var factory_1 = __webpack_require__(325);
+__webpack_require__(611);
+var config_1 = __webpack_require__(164);
+var constants_1 = __webpack_require__(165);
+var context_menu_1 = __webpack_require__(304);
+var dom_1 = __webpack_require__(231);
+var helpers_1 = __webpack_require__(187);
+var plugin_1 = __webpack_require__(366);
+var factory_1 = __webpack_require__(333);
 config_1.Config.prototype.showXPathInStatusbar = true;
 var xpath = (function (_super) {
     tslib_1.__extends(xpath, _super);
@@ -39189,7 +40536,7 @@ exports.xpath = xpath;
 
 
 /***/ }),
-/* 558 */
+/* 611 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -39198,7 +40545,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 559 */
+/* 612 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -39211,668 +40558,668 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.palette = exports.outdent = exports.omega = exports.ol = exports.ok = exports.merge = exports.menu = exports.lock = exports.link = exports.line_height = exports.left = exports.justify = exports.italic = exports.info_circle = exports.indent = exports.image = exports.hr = exports.fullsize = exports.fontsize = exports.font = exports.folder = exports.file = exports.eye = exports.eraser = exports.enter = exports.chevron = exports.dots = exports.dedent = exports.cut = exports.crop = exports.copy = exports.copyformat = exports.check_square = exports.check = exports.chain_broken = exports.center = exports.cancel = exports.brush = exports.bold = exports.bin = exports.attachment = exports.arrows_h = exports.arrows_alt = exports.angle_up = exports.angle_right = exports.angle_left = exports.angle_down = exports.addrow = exports.addcolumn = exports.about = void 0;
 exports.video = exports.valign = exports.upload = exports.update = exports.unlock = exports.unlink = exports.undo = exports.underline = exports.ul = exports.th_list = exports.th = exports.table = exports.superscript = exports.subscript = exports.strikethrough = exports.splitv = exports.splitg = exports.source = exports.shrink = exports.settings = exports.select_all = exports.search = exports.save = exports.right = exports.resizer = exports.resize_handler = exports.resize = exports.redo = exports.print = exports.plus = exports.pencil = exports.paste = exports.paragraph = void 0;
-var about = __webpack_require__(560);
+var about = __webpack_require__(613);
 exports.about = about;
-var addcolumn = __webpack_require__(561);
+var addcolumn = __webpack_require__(614);
 exports.addcolumn = addcolumn;
-var addrow = __webpack_require__(562);
+var addrow = __webpack_require__(615);
 exports.addrow = addrow;
-var angle_down = __webpack_require__(563);
+var angle_down = __webpack_require__(616);
 exports.angle_down = angle_down;
-var angle_left = __webpack_require__(564);
+var angle_left = __webpack_require__(617);
 exports.angle_left = angle_left;
-var angle_right = __webpack_require__(565);
+var angle_right = __webpack_require__(618);
 exports.angle_right = angle_right;
-var angle_up = __webpack_require__(566);
+var angle_up = __webpack_require__(619);
 exports.angle_up = angle_up;
-var arrows_alt = __webpack_require__(567);
+var arrows_alt = __webpack_require__(620);
 exports.arrows_alt = arrows_alt;
-var arrows_h = __webpack_require__(568);
+var arrows_h = __webpack_require__(621);
 exports.arrows_h = arrows_h;
-var attachment = __webpack_require__(569);
+var attachment = __webpack_require__(622);
 exports.attachment = attachment;
-var bin = __webpack_require__(570);
+var bin = __webpack_require__(623);
 exports.bin = bin;
-var bold = __webpack_require__(571);
+var bold = __webpack_require__(624);
 exports.bold = bold;
-var brush = __webpack_require__(572);
+var brush = __webpack_require__(625);
 exports.brush = brush;
-var cancel = __webpack_require__(573);
+var cancel = __webpack_require__(626);
 exports.cancel = cancel;
-var center = __webpack_require__(574);
+var center = __webpack_require__(627);
 exports.center = center;
-var chain_broken = __webpack_require__(575);
+var chain_broken = __webpack_require__(628);
 exports.chain_broken = chain_broken;
-var check = __webpack_require__(576);
+var check = __webpack_require__(629);
 exports.check = check;
-var check_square = __webpack_require__(577);
+var check_square = __webpack_require__(630);
 exports.check_square = check_square;
-var chevron = __webpack_require__(578);
+var chevron = __webpack_require__(631);
 exports.chevron = chevron;
-var copyformat = __webpack_require__(579);
+var copyformat = __webpack_require__(632);
 exports.copyformat = copyformat;
-var crop = __webpack_require__(580);
+var crop = __webpack_require__(633);
 exports.crop = crop;
-var copy = __webpack_require__(581);
+var copy = __webpack_require__(634);
 exports.copy = copy;
-var cut = __webpack_require__(582);
+var cut = __webpack_require__(635);
 exports.cut = cut;
-var dedent = __webpack_require__(583);
+var dedent = __webpack_require__(636);
 exports.dedent = dedent;
-var dots = __webpack_require__(584);
+var dots = __webpack_require__(637);
 exports.dots = dots;
-var enter = __webpack_require__(585);
+var enter = __webpack_require__(638);
 exports.enter = enter;
-var eraser = __webpack_require__(586);
+var eraser = __webpack_require__(639);
 exports.eraser = eraser;
-var eye = __webpack_require__(587);
+var eye = __webpack_require__(640);
 exports.eye = eye;
-var file = __webpack_require__(588);
+var file = __webpack_require__(641);
 exports.file = file;
-var folder = __webpack_require__(589);
+var folder = __webpack_require__(642);
 exports.folder = folder;
-var font = __webpack_require__(590);
+var font = __webpack_require__(643);
 exports.font = font;
-var fontsize = __webpack_require__(591);
+var fontsize = __webpack_require__(644);
 exports.fontsize = fontsize;
-var fullsize = __webpack_require__(592);
+var fullsize = __webpack_require__(645);
 exports.fullsize = fullsize;
-var hr = __webpack_require__(593);
+var hr = __webpack_require__(646);
 exports.hr = hr;
-var image = __webpack_require__(594);
+var image = __webpack_require__(647);
 exports.image = image;
-var indent = __webpack_require__(595);
+var indent = __webpack_require__(648);
 exports.indent = indent;
-var info_circle = __webpack_require__(596);
+var info_circle = __webpack_require__(649);
 exports.info_circle = info_circle;
-var italic = __webpack_require__(597);
+var italic = __webpack_require__(650);
 exports.italic = italic;
-var justify = __webpack_require__(598);
+var justify = __webpack_require__(651);
 exports.justify = justify;
-var left = __webpack_require__(599);
+var left = __webpack_require__(652);
 exports.left = left;
-var line_height = __webpack_require__(600);
+var line_height = __webpack_require__(653);
 exports.line_height = line_height;
-var link = __webpack_require__(601);
+var link = __webpack_require__(654);
 exports.link = link;
-var lock = __webpack_require__(602);
+var lock = __webpack_require__(655);
 exports.lock = lock;
-var menu = __webpack_require__(603);
+var menu = __webpack_require__(656);
 exports.menu = menu;
-var merge = __webpack_require__(604);
+var merge = __webpack_require__(657);
 exports.merge = merge;
-var ok = __webpack_require__(605);
+var ok = __webpack_require__(658);
 exports.ok = ok;
-var ol = __webpack_require__(606);
+var ol = __webpack_require__(659);
 exports.ol = ol;
-var omega = __webpack_require__(607);
+var omega = __webpack_require__(660);
 exports.omega = omega;
-var outdent = __webpack_require__(608);
+var outdent = __webpack_require__(661);
 exports.outdent = outdent;
-var palette = __webpack_require__(609);
+var palette = __webpack_require__(662);
 exports.palette = palette;
-var paragraph = __webpack_require__(610);
+var paragraph = __webpack_require__(663);
 exports.paragraph = paragraph;
-var paste = __webpack_require__(611);
+var paste = __webpack_require__(664);
 exports.paste = paste;
-var pencil = __webpack_require__(612);
+var pencil = __webpack_require__(665);
 exports.pencil = pencil;
-var plus = __webpack_require__(613);
+var plus = __webpack_require__(666);
 exports.plus = plus;
-var print = __webpack_require__(614);
+var print = __webpack_require__(667);
 exports.print = print;
-var redo = __webpack_require__(615);
+var redo = __webpack_require__(668);
 exports.redo = redo;
-var resize = __webpack_require__(616);
+var resize = __webpack_require__(669);
 exports.resize = resize;
-var resize_handler = __webpack_require__(617);
+var resize_handler = __webpack_require__(670);
 exports.resize_handler = resize_handler;
-var resizer = __webpack_require__(618);
+var resizer = __webpack_require__(671);
 exports.resizer = resizer;
-var right = __webpack_require__(619);
+var right = __webpack_require__(672);
 exports.right = right;
-var save = __webpack_require__(620);
+var save = __webpack_require__(673);
 exports.save = save;
-var search = __webpack_require__(621);
+var search = __webpack_require__(674);
 exports.search = search;
-var settings = __webpack_require__(622);
+var settings = __webpack_require__(675);
 exports.settings = settings;
-var select_all = __webpack_require__(623);
+var select_all = __webpack_require__(676);
 exports.select_all = select_all;
-var shrink = __webpack_require__(624);
+var shrink = __webpack_require__(677);
 exports.shrink = shrink;
-var source = __webpack_require__(625);
+var source = __webpack_require__(678);
 exports.source = source;
-var splitg = __webpack_require__(626);
+var splitg = __webpack_require__(679);
 exports.splitg = splitg;
-var splitv = __webpack_require__(627);
+var splitv = __webpack_require__(680);
 exports.splitv = splitv;
-var strikethrough = __webpack_require__(628);
+var strikethrough = __webpack_require__(681);
 exports.strikethrough = strikethrough;
-var subscript = __webpack_require__(629);
+var subscript = __webpack_require__(682);
 exports.subscript = subscript;
-var superscript = __webpack_require__(630);
+var superscript = __webpack_require__(683);
 exports.superscript = superscript;
-var table = __webpack_require__(631);
+var table = __webpack_require__(684);
 exports.table = table;
-var th = __webpack_require__(632);
+var th = __webpack_require__(685);
 exports.th = th;
-var th_list = __webpack_require__(633);
+var th_list = __webpack_require__(686);
 exports.th_list = th_list;
-var ul = __webpack_require__(634);
+var ul = __webpack_require__(687);
 exports.ul = ul;
-var underline = __webpack_require__(635);
+var underline = __webpack_require__(688);
 exports.underline = underline;
-var undo = __webpack_require__(636);
+var undo = __webpack_require__(689);
 exports.undo = undo;
-var unlink = __webpack_require__(637);
+var unlink = __webpack_require__(690);
 exports.unlink = unlink;
-var unlock = __webpack_require__(638);
+var unlock = __webpack_require__(691);
 exports.unlock = unlock;
-var update = __webpack_require__(639);
+var update = __webpack_require__(692);
 exports.update = update;
-var upload = __webpack_require__(640);
+var upload = __webpack_require__(693);
 exports.upload = upload;
-var valign = __webpack_require__(641);
+var valign = __webpack_require__(694);
 exports.valign = valign;
-var video = __webpack_require__(642);
+var video = __webpack_require__(695);
 exports.video = video;
 
-
-/***/ }),
-/* 560 */
-/***/ (function(module) {
-
-module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg>"
-
-/***/ }),
-/* 561 */
-/***/ (function(module) {
-
-module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </svg>"
-
-/***/ }),
-/* 562 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
-
-/***/ }),
-/* 563 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
-
-/***/ }),
-/* 564 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
-
-/***/ }),
-/* 565 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
-
-/***/ }),
-/* 566 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
-
-/***/ }),
-/* 567 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg>"
-
-/***/ }),
-/* 568 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/> </svg>"
-
-/***/ }),
-/* 569 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/> </svg>"
-
-/***/ }),
-/* 570 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg>"
-
-/***/ }),
-/* 571 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/> </svg>"
-
-/***/ }),
-/* 572 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/> </svg>"
-
-/***/ }),
-/* 573 */
-/***/ (function(module) {
-
-module.exports = "<svg viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"> <g stroke=\"none\" stroke-width=\"1\"> <path d=\"M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z\"/> </g> </svg>"
-
-/***/ }),
-/* 574 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/> </svg>"
-
-/***/ }),
-/* 575 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
-
-/***/ }),
-/* 576 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/> </svg>"
-
-/***/ }),
-/* 577 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
-
-/***/ }),
-/* 578 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg>"
-
-/***/ }),
-/* 579 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
-
-/***/ }),
-/* 580 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
-
-/***/ }),
-/* 581 */
-/***/ (function(module) {
-
-module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
-
-/***/ }),
-/* 582 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
-
-/***/ }),
-/* 583 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
-
-/***/ }),
-/* 584 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
-
-/***/ }),
-/* 585 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
-
-/***/ }),
-/* 586 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
-
-/***/ }),
-/* 587 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/> </svg>"
-
-/***/ }),
-/* 588 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
-
-/***/ }),
-/* 589 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg>"
-
-/***/ }),
-/* 590 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
-
-/***/ }),
-/* 591 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
-
-/***/ }),
-/* 592 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
-
-/***/ }),
-/* 593 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
-
-/***/ }),
-/* 594 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
-
-/***/ }),
-/* 595 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
-
-/***/ }),
-/* 596 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
-
-/***/ }),
-/* 597 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
-
-/***/ }),
-/* 598 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
-
-/***/ }),
-/* 599 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
-
-/***/ }),
-/* 600 */
-/***/ (function(module) {
-
-module.exports = "<svg fill=\"none\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.09668 6.99707H7.17358L4.17358 3.99707L1.17358 6.99707H3.09668V17.0031H1.15881L4.15881 20.0031L7.15881 17.0031H5.09668V6.99707Z\"/> <path d=\"M22.8412 7H8.84119V5H22.8412V7Z\"/> <path d=\"M22.8412 11H8.84119V9H22.8412V11Z\"/> <path d=\"M8.84119 15H22.8412V13H8.84119V15Z\"/> <path d=\"M22.8412 19H8.84119V17H22.8412V19Z\"/> </svg>"
-
-/***/ }),
-/* 601 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
-
-/***/ }),
-/* 602 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
-
-/***/ }),
-/* 603 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
-
-/***/ }),
-/* 604 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
-
-/***/ }),
-/* 605 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
-
-/***/ }),
-/* 606 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
-
-/***/ }),
-/* 607 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
-
-/***/ }),
-/* 608 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
-
-/***/ }),
-/* 609 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
-
-/***/ }),
-/* 610 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
-
-/***/ }),
-/* 611 */
-/***/ (function(module) {
-
-module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
-
-/***/ }),
-/* 612 */
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
 
 /***/ }),
 /* 613 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
+module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg>"
 
 /***/ }),
 /* 614 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </svg>"
 
 /***/ }),
 /* 615 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
 
 /***/ }),
 /* 616 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 736q0 13-10 23l-466 466q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l393 393 393-393q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 617 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.9814 11.8049C5.59087 11.4144 5.59087 10.7812 5.9814 10.3907L10.224 6.14806C10.6146 5.75754 11.2477 5.75754 11.6383 6.14806C12.0288 6.53859 12.0288 7.17175 11.6383 7.56228L7.39561 11.8049C7.00509 12.1954 6.37192 12.1954 5.9814 11.8049Z\"/> <path d=\"M0.707107 12.0208C0.316582 11.6303 0.316582 10.9971 0.707107 10.6066L10.6066 0.707121C10.9971 0.316597 11.6303 0.316596 12.0208 0.707121C12.4113 1.09764 12.4113 1.73081 12.0208 2.12133L2.12132 12.0208C1.7308 12.4114 1.09763 12.4114 0.707107 12.0208Z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 618 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 619 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1395 1184q0 13-10 23l-50 50q-10 10-23 10t-23-10l-393-393-393 393q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l466 466q10 10 10 23z\"/> </svg>"
 
 /***/ }),
 /* 620 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg>"
 
 /***/ }),
 /* 621 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/> </svg>"
 
 /***/ }),
 /* 622 */
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/> </svg>"
 
 /***/ }),
 /* 623 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
 /* 624 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/> </svg>"
 
 /***/ }),
 /* 625 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/> </svg>"
 
 /***/ }),
 /* 626 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 14 14\" xmlns=\"http://www.w3.org/2000/svg\"> <g stroke=\"none\" stroke-width=\"1\"> <path d=\"M14,1.4 L12.6,0 L7,5.6 L1.4,0 L0,1.4 L5.6,7 L0,12.6 L1.4,14 L7,8.4 L12.6,14 L14,12.6 L8.4,7 L14,1.4 Z\"/> </g> </svg>"
 
 /***/ }),
 /* 627 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-896q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h896q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-640q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h640q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 /* 628 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
 
 /***/ }),
 /* 629 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1472 930v318q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q63 0 117 25 15 7 18 23 3 17-9 29l-49 49q-10 10-23 10-3 0-9-2-23-6-45-6h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-254q0-13 9-22l64-64q10-10 23-10 6 0 12 3 20 8 20 29zm231-489l-814 814q-24 24-57 24t-57-24l-430-430q-24-24-24-57t24-57l110-110q24-24 57-24t57 24l263 263 647-647q24-24 57-24t57 24l110 110q24 24 24 57t-24 57z\"/> </svg>"
 
 /***/ }),
 /* 630 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
 
 /***/ }),
 /* 631 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\"> <path d=\"M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z\"/> </svg>"
 
 /***/ }),
 /* 632 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
 
 /***/ }),
 /* 633 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
 
 /***/ }),
 /* 634 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
 
 /***/ }),
 /* 635 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
 
 /***/ }),
 /* 636 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
 
 /***/ }),
 /* 637 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
 
 /***/ }),
 /* 638 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
 
 /***/ }),
 /* 639 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
 
 /***/ }),
 /* 640 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z\"/> </svg>"
 
 /***/ }),
 /* 641 */
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 512v-472q22 14 36 28l408 408q14 14 28 36h-472zm-128 32q0 40 28 68t68 28h544v1056q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1600q0-40 28-68t68-28h800v544z\"/> </svg>"
 
 /***/ }),
 /* 642 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 608v704q0 92-66 158t-158 66h-1216q-92 0-158-66t-66-158v-960q0-92 66-158t158-66h320q92 0 158 66t66 158v32h672q92 0 158 66t66 158z\"/> </svg>"
+
+/***/ }),
+/* 643 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
+
+/***/ }),
+/* 644 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
+
+/***/ }),
+/* 645 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
+
+/***/ }),
+/* 646 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
+
+/***/ }),
+/* 647 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
+
+/***/ }),
+/* 648 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+
+/***/ }),
+/* 649 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
+
+/***/ }),
+/* 650 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
+
+/***/ }),
+/* 651 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
+
+/***/ }),
+/* 652 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm256-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm-384-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+
+/***/ }),
+/* 653 */
+/***/ (function(module) {
+
+module.exports = "<svg fill=\"none\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.09668 6.99707H7.17358L4.17358 3.99707L1.17358 6.99707H3.09668V17.0031H1.15881L4.15881 20.0031L7.15881 17.0031H5.09668V6.99707Z\"/> <path d=\"M22.8412 7H8.84119V5H22.8412V7Z\"/> <path d=\"M22.8412 11H8.84119V9H22.8412V11Z\"/> <path d=\"M8.84119 15H22.8412V13H8.84119V15Z\"/> <path d=\"M22.8412 19H8.84119V17H22.8412V19Z\"/> </svg>"
+
+/***/ }),
+/* 654 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
+
+/***/ }),
+/* 655 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M640 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z\"/></svg>"
+
+/***/ }),
+/* 656 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
+
+/***/ }),
+/* 657 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
+
+/***/ }),
+/* 658 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
+
+/***/ }),
+/* 659 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+
+/***/ }),
+/* 660 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
+
+/***/ }),
+/* 661 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+
+/***/ }),
+/* 662 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
+
+/***/ }),
+/* 663 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
+
+/***/ }),
+/* 664 */
+/***/ (function(module) {
+
+module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
+
+/***/ }),
+/* 665 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z\"/></svg>"
+
+/***/ }),
+/* 666 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z\"/></svg>"
+
+/***/ }),
+/* 667 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
+
+/***/ }),
+/* 668 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
+
+/***/ }),
+/* 669 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
+
+/***/ }),
+/* 670 */
+/***/ (function(module) {
+
+module.exports = "<svg viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.9814 11.8049C5.59087 11.4144 5.59087 10.7812 5.9814 10.3907L10.224 6.14806C10.6146 5.75754 11.2477 5.75754 11.6383 6.14806C12.0288 6.53859 12.0288 7.17175 11.6383 7.56228L7.39561 11.8049C7.00509 12.1954 6.37192 12.1954 5.9814 11.8049Z\"/> <path d=\"M0.707107 12.0208C0.316582 11.6303 0.316582 10.9971 0.707107 10.6066L10.6066 0.707121C10.9971 0.316597 11.6303 0.316596 12.0208 0.707121C12.4113 1.09764 12.4113 1.73081 12.0208 2.12133L2.12132 12.0208C1.7308 12.4114 1.09763 12.4114 0.707107 12.0208Z\"/> </svg>"
+
+/***/ }),
+/* 671 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
+
+/***/ }),
+/* 672 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1280q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1280q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1536q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1536q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1152q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1152q26 0 45 19t19 45z\"/> </svg>"
+
+/***/ }),
+/* 673 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1536h768v-384h-768v384zm896 0h128v-896q0-14-10-38.5t-20-34.5l-281-281q-10-10-34-20t-39-10v416q0 40-28 68t-68 28h-576q-40 0-68-28t-28-68v-416h-128v1280h128v-416q0-40 28-68t68-28h832q40 0 68 28t28 68v416zm-384-928v-320q0-13-9.5-22.5t-22.5-9.5h-192q-13 0-22.5 9.5t-9.5 22.5v320q0 13 9.5 22.5t22.5 9.5h192q13 0 22.5-9.5t9.5-22.5zm640 32v928q0 40-28 68t-68 28h-1344q-40 0-68-28t-28-68v-1344q0-40 28-68t68-28h928q40 0 88 20t76 48l280 280q28 28 48 76t20 88z\"/> </svg>"
+
+/***/ }),
+/* 674 */
+/***/ (function(module) {
+
+module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
+
+/***/ }),
+/* 675 */
+/***/ (function(module) {
+
+module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
+
+/***/ }),
+/* 676 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
+
+/***/ }),
+/* 677 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
+
+/***/ }),
+/* 678 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
+
+/***/ }),
+/* 679 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+
+/***/ }),
+/* 680 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+
+/***/ }),
+/* 681 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
+
+/***/ }),
+/* 682 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
+
+/***/ }),
+/* 683 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
+
+/***/ }),
+/* 684 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
+
+/***/ }),
+/* 685 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
+
+/***/ }),
+/* 686 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
+
+/***/ }),
+/* 687 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+
+/***/ }),
+/* 688 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
+
+/***/ }),
+/* 689 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
+
+/***/ }),
+/* 690 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
+
+/***/ }),
+/* 691 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1728 576v256q0 26-19 45t-45 19h-64q-26 0-45-19t-19-45v-256q0-106-75-181t-181-75-181 75-75 181v192h96q40 0 68 28t28 68v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h672v-192q0-185 131.5-316.5t316.5-131.5 316.5 131.5 131.5 316.5z\"/> </svg>"
+
+/***/ }),
+/* 692 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1639 1056q0 5-1 7-64 268-268 434.5t-478 166.5q-146 0-282.5-55t-243.5-157l-129 129q-19 19-45 19t-45-19-19-45v-448q0-26 19-45t45-19h448q26 0 45 19t19 45-19 45l-137 137q71 66 161 102t187 36q134 0 250-65t186-179q11-17 53-117 8-23 30-23h192q13 0 22.5 9.5t9.5 22.5zm25-800v448q0 26-19 45t-45 19h-448q-26 0-45-19t-19-45 19-45l138-138q-148-137-349-137-134 0-250 65t-186 179q-11 17-53 117-8 23-30 23h-199q-13 0-22.5-9.5t-9.5-22.5v-7q65-268 270-434.5t480-166.5q146 0 284 55.5t245 156.5l130-129q19-19 45-19t45 19 19 45z\"/> </svg>"
+
+/***/ }),
+/* 693 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z\"/> </svg>"
+
+/***/ }),
+/* 694 */
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
+
+/***/ }),
+/* 695 */
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/> </svg>"
@@ -39942,18 +41289,18 @@ var exports = __webpack_exports__;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Jodit = void 0;
-__webpack_require__(19);
+__webpack_require__(20);
 if ( true && typeof window !== 'undefined') {
-    __webpack_require__(20);
+    __webpack_require__(21);
 }
-var jodit_1 = __webpack_require__(135);
+var jodit_1 = __webpack_require__(163);
 Object.defineProperty(exports, "Jodit", ({ enumerable: true, get: function () { return jodit_1.Jodit; } }));
-var langs_1 = __webpack_require__(381);
-var decorators = __webpack_require__(169);
-var constants = __webpack_require__(137);
-var Modules = __webpack_require__(138);
-var Plugins = __webpack_require__(401);
-var Icons = __webpack_require__(559);
+var langs_1 = __webpack_require__(411);
+var decorators = __webpack_require__(233);
+var constants = __webpack_require__(165);
+var Modules = __webpack_require__(166);
+var Plugins = __webpack_require__(431);
+var Icons = __webpack_require__(612);
 Object.keys(constants).forEach(function (key) {
     jodit_1.Jodit[key] = constants[key];
 });

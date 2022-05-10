@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.17.1
+ * Version: v3.18.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -32,7 +32,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(1);
 tslib_1.__exportStar(__webpack_require__(2), exports);
 tslib_1.__exportStar(__webpack_require__(3), exports);
-tslib_1.__exportStar(__webpack_require__(16), exports);
+tslib_1.__exportStar(__webpack_require__(17), exports);
 
 
 /***/ }),
@@ -40,22 +40,8 @@ tslib_1.__exportStar(__webpack_require__(16), exports);
 /***/ (function(__unused_webpack_module, exports) {
 
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.__classPrivateFieldSet = exports.__classPrivateFieldGet = exports.__importDefault = exports.__importStar = exports.__makeTemplateObject = exports.__asyncValues = exports.__asyncDelegator = exports.__asyncGenerator = exports.__await = exports.__spreadArray = exports.__spreadArrays = exports.__spread = exports.__read = exports.__values = exports.__exportStar = exports.__createBinding = exports.__generator = exports.__awaiter = exports.__metadata = exports.__param = exports.__decorate = exports.__rest = exports.__assign = exports.__extends = void 0;
+exports.__classPrivateFieldIn = exports.__classPrivateFieldSet = exports.__classPrivateFieldGet = exports.__importDefault = exports.__importStar = exports.__makeTemplateObject = exports.__asyncValues = exports.__asyncDelegator = exports.__asyncGenerator = exports.__await = exports.__spreadArray = exports.__spreadArrays = exports.__spread = exports.__read = exports.__values = exports.__exportStar = exports.__createBinding = exports.__generator = exports.__awaiter = exports.__metadata = exports.__param = exports.__decorate = exports.__rest = exports.__assign = exports.__extends = void 0;
 var extendStatics = function (d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -211,7 +197,11 @@ exports.__generator = __generator;
 exports.__createBinding = Object.create ? (function (o, m, k, k2) {
     if (k2 === undefined)
         k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function () { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function () { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function (o, m, k, k2) {
     if (k2 === undefined)
         k2 = k;
@@ -379,6 +369,12 @@ function __classPrivateFieldSet(receiver, state, value, kind, f) {
     return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
 }
 exports.__classPrivateFieldSet = __classPrivateFieldSet;
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function"))
+        throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+exports.__classPrivateFieldIn = __classPrivateFieldIn;
 
 
 /***/ }),
@@ -409,7 +405,7 @@ exports.VDomRender = void 0;
 var tslib_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(4);
 var async_1 = __webpack_require__(5);
-var autobind_decorator_1 = __webpack_require__(15);
+var autobind_decorator_1 = __webpack_require__(16);
 var isProperty = function (key) { return key !== 'children'; };
 var isNew = function (prev, next) {
     return function (key) {
@@ -677,7 +673,7 @@ var is_function_1 = __webpack_require__(9);
 var is_plain_object_1 = __webpack_require__(10);
 var is_promise_1 = __webpack_require__(12);
 var is_string_1 = __webpack_require__(13);
-var is_number_1 = __webpack_require__(14);
+var is_number_1 = __webpack_require__(15);
 var Async = (function () {
     function Async() {
         var _this = this;
@@ -1037,6 +1033,29 @@ exports.isPromise = isPromise;
 
 /***/ }),
 /* 13 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isStringArray = exports.isString = void 0;
+var is_array_1 = __webpack_require__(14);
+function isString(value) {
+    return typeof value === 'string';
+}
+exports.isString = isString;
+function isStringArray(value) {
+    return (0, is_array_1.isArray)(value) && isString(value[0]);
+}
+exports.isStringArray = isStringArray;
+
+
+/***/ }),
+/* 14 */
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -1046,15 +1065,15 @@ exports.isPromise = isPromise;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isString = void 0;
-function isString(value) {
-    return typeof value === 'string';
+exports.isArray = void 0;
+function isArray(elm) {
+    return Array.isArray(elm);
 }
-exports.isString = isString;
+exports.isArray = isArray;
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -1072,7 +1091,7 @@ exports.isNumber = isNumber;
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -1150,7 +1169,7 @@ exports["default"] = autobind;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -1161,7 +1180,7 @@ exports["default"] = autobind;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.VDomJodit = void 0;
-__webpack_require__(17);
+__webpack_require__(18);
 var render_1 = __webpack_require__(3);
 var VDomJodit = (function () {
     function VDomJodit(elm) {
@@ -1197,7 +1216,7 @@ exports.VDomJodit = VDomJodit;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
