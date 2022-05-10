@@ -1345,7 +1345,7 @@ describe('Test image', function () {
 		editor.value = '<img src="tests/artio.jpg"/>';
 
 		simulateEvent('dblclick', editor.editor.querySelector('img'));
-		debugger
+
 		const dialog = getOpenedDialog(editor);
 
 		expect(dialog).is.null;

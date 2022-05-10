@@ -17,7 +17,7 @@ import { TEXT_HTML, TEXT_PLAIN } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { attr, ctrlKey, dataBind } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
-import { getDataTransfer } from './paste/helpers';
+import { getDataTransfer } from 'jodit/plugins/clipboard/paste/helpers';
 import { autobind, throttle } from 'jodit/core/decorators';
 import { isFileBrowserFilesItem } from 'jodit/modules/file-browser';
 

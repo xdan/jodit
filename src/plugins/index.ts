@@ -22,11 +22,11 @@ export {
 	clipboard,
 	paste,
 	pasteStorage,
+	DragAndDrop,
+	DragAndDropElement,
 	PasteFromWord
 } from './clipboard';
 export { color } from './color/color';
-export { DragAndDrop } from './clipboard/drag-and-drop';
-export { DragAndDropElement } from './clipboard/drag-and-drop-element';
 export { enter } from './keyboard/enter/enter';
 export { KeyArrowOutside } from './keyboard/key-arrow-outside';
 export { errorMessages } from './error-messages/error-messages';

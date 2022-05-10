@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Drag and drop element inside Editor', function () {
 	const { position } = Jodit.modules.Helpers;
 
