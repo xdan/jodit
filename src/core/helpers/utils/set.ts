@@ -12,7 +12,7 @@ import type { IDictionary } from 'jodit/types';
 import { isString } from '../checker/is-string';
 import { isNumeric } from '../checker/is-numeric';
 import { isArray } from '../checker/is-array';
-import { isPlainObject } from '../checker';
+import { isPlainObject } from '../checker/is-plain-object';
 
 /**
  * Safe access in tree object

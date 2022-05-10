@@ -17,13 +17,15 @@ import type {
 	IViewBased,
 	ButtonVariant
 } from 'jodit/types';
-import { UIElement } from 'jodit/core/ui';
-import { Dom } from 'jodit/core/dom';
-import { attr, isString, isFunction } from 'jodit/core/helpers';
-import { Icon } from 'jodit/core/ui';
-import { UIList } from 'jodit/core/ui';
+import { UIElement } from 'jodit/core/ui/element';
+import { Dom } from 'jodit/core/dom/dom';
+import { attr } from 'jodit/core/helpers/utils';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { Icon } from 'jodit/core/ui/icon';
+import { UIList } from 'jodit/core/ui/group/list';
 import { autobind, component, watch } from 'jodit/core/decorators';
-import { STATUSES } from 'jodit/core/component';
+import { STATUSES } from 'jodit/core/component/statuses';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',

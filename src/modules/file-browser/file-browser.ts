@@ -415,11 +415,11 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 			return;
 		}
 
+		super.destruct();
+
 		this.dialog.destruct();
 		this.events && this.e.off('.filebrowser');
 		this.uploader && this.uploader.destruct();
-
-		super.destruct();
 	}
 }
 

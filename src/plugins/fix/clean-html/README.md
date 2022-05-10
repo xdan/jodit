@@ -1,6 +1,6 @@
 The plugin allows you to ensure that the document does not contain unwanted tags, xxs scripts and the like.
 
-For example, you can explicitly specify which tags or attributes are allowed and which are not.:
+For example, you can explicitly specify which tags or attributes are allowed and which are not:
 
 ```javascript
 Jodit.make('#editor', {

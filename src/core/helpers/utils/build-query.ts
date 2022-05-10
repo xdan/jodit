@@ -9,7 +9,7 @@
  */
 
 import type { IDictionary } from 'jodit/types';
-import { isPlainObject } from '../checker';
+import { isPlainObject } from '../checker/is-plain-object';
 
 /**
  * Build query string

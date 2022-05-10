@@ -17,8 +17,9 @@ import type {
 	IViewBased
 } from 'jodit/types';
 import { UIElement } from 'jodit/core/ui/element';
-import { attr, toArray } from 'jodit/core/helpers';
-import { Dom } from 'jodit/core/dom';
+import { attr } from 'jodit/core/helpers/utils';
+import { toArray } from 'jodit/core/helpers/array/to-array';
+import { Dom } from 'jodit/core/dom/dom';
 import { autobind, component, debounce, watch } from 'jodit/core/decorators';
 import { Icon } from 'jodit/core/ui/icon';
 import { inputValidators } from 'jodit/core/ui/form/validators';

@@ -218,8 +218,7 @@ export function iframe(editor: IJodit): void {
 
 								return true;
 							},
-							undefined,
-							true
+							{ top: true }
 						);
 				}
 

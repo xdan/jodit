@@ -8,7 +8,12 @@
 module.exports = {
 	root: true,
 	parser: '@typescript-eslint/parser',
-	plugins: ['@typescript-eslint', 'header', 'eslint-plugin-tsdoc'],
+	plugins: [
+		'@typescript-eslint',
+		'header',
+		'eslint-plugin-tsdoc',
+		'eslint-plugin-import'
+	],
 	extends: [
 		'eslint:recommended',
 		'plugin:prettier/recommended',
@@ -22,6 +27,7 @@ module.exports = {
 	rules: {
 		'tsdoc/syntax': 'warn',
 		strict: ['error', 'never'],
+		'import/no-cycle': ['error', { maxDepth: 3 }],
 		'no-with': 'error',
 		'no-caller': 'error',
 		'no-delete-var': 'error',

@@ -16,10 +16,10 @@ import type {
 	IUIOption,
 	IViewBased
 } from 'jodit/types';
-import { UIGroup } from '../../group';
-import { component } from 'jodit/core/decorators';
+import { UIGroup } from '../../group/group';
+import { component } from 'jodit/core/decorators/component/component';
 import { UIButton } from '../button/button';
-import { assert } from 'jodit/core/helpers';
+import { assert } from 'jodit/core/helpers/utils/assert';
 
 @component
 export class UIButtonGroup extends UIGroup {

@@ -222,3 +222,5 @@ export const BASE_PATH: string = ((): string => {
 })();
 
 export const TEMP_ATTR = 'data-jodit-temp';
+
+export const lang: IDictionary<IDictionary<string>> = {};

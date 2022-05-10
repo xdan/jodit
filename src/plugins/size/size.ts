@@ -24,12 +24,9 @@ export class size extends Plugin {
 		editor.e
 			.on('setHeight.size', this.setHeight)
 			.on('setWidth.size', this.setWidth)
-			.on(
-				'afterInit.size changePlace.size',
-				this.initialize,
-				undefined,
-				true
-			)
+			.on('afterInit.size changePlace.size', this.initialize, {
+				top: true
+			})
 			.on(editor.ow, 'load.size', this.resizeWorkspaces)
 			.on(
 				'afterInit.size resize.size afterUpdateToolbar.size ' +

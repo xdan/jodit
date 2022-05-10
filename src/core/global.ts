@@ -22,9 +22,11 @@ import { PluginSystem } from './plugin/plugin-system';
 import { Dom } from './dom';
 
 import { EventEmitter } from './event-emitter';
-import { isJoditObject, isViewObject } from './helpers/checker';
+import { isJoditObject } from './helpers/checker/is-jodit-object';
+import { isViewObject } from './helpers/checker/is-view-object';
 import { getClassName } from './helpers/utils/get-class-name';
-import { kebabCase } from './helpers/string';
+import { kebabCase } from './helpers/string/kebab-case';
+import { lang } from './constants';
 
 export const instances: IDictionary<IJodit> = {};
 
@@ -52,8 +54,6 @@ export function uniqueUid(): string {
 export const pluginSystem = new PluginSystem();
 
 export const modules: IDictionary<Function> = {};
-
-export const lang: IDictionary<IDictionary<string>> = {};
 
 export const extendLang = (langs: IDictionary): void => {
 	Object.keys(langs).forEach(key => {

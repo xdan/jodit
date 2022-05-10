@@ -9,7 +9,7 @@
  */
 
 import type { IEventEmitter, IViewComponent, Nullable } from 'jodit/types';
-import { isViewObject } from '../checker/is-jodit-object';
+import { isViewObject } from '../checker/is-view-object';
 
 const store = new WeakMap();
 

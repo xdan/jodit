@@ -18,6 +18,7 @@ export * from './is-html-from-word';
 export * from './is-imp-interface';
 export * from './is-int';
 export * from './is-jodit-object';
+export * from './is-view-object';
 export * from './is-license';
 export * from './is-native-function';
 export * from './is-number';

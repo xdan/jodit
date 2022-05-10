@@ -183,8 +183,7 @@ export class hotkeys extends Plugin {
 						}
 					}
 				},
-				undefined,
-				true
+				{ top: true }
 			)
 			.on(
 				'keyup.hotkeys',
@@ -195,8 +194,7 @@ export class hotkeys extends Plugin {
 						return false;
 					}
 				},
-				undefined,
-				true
+				{ top: true }
 			);
 	}
 

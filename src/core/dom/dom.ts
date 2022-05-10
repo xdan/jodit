@@ -373,6 +373,19 @@ export class Dom {
 	}
 
 	/**
+	 * Check if element is document fragment
+	 */
+	static isFragment(node: unknown): node is DocumentFragment {
+		if (!Dom.isNode(node)) {
+			return false;
+		}
+
+		const win = node.ownerDocument?.defaultView;
+
+		return Boolean(win && node.nodeType === Node.DOCUMENT_FRAGMENT_NODE);
+	}
+
+	/**
 	 * Check if element is HTMLElement node
 	 */
 	static isHTMLElement(node: unknown): node is HTMLElement {
@@ -540,7 +553,7 @@ export class Dom {
 	): Generator<Node> {
 		const stack: Node[] = [];
 
-		let currentNode = start;
+		let currentNode: Nullable<Node> = start;
 
 		do {
 			let next = leftToRight
@@ -554,8 +567,8 @@ export class Dom {
 
 			yield* this.runInStack(start, stack, leftToRight, withChild);
 
-			currentNode = <Node>currentNode.parentNode;
-		} while (currentNode !== root);
+			currentNode = currentNode.parentNode;
+		} while (currentNode && currentNode !== root);
 
 		return null;
 	}
@@ -567,10 +580,9 @@ export class Dom {
 	 * @param callback - It called for each item found
 	 * @example
 	 * ```javascript
-	 * Jodit.modules.Dom.each(parent.s.current(), function (node) {
+	 * Jodit.modules.Dom.each(editor.s.current(), function (node) {
 	 *  if (node.nodeType === Node.TEXT_NODE) {
-	 *      node.nodeValue = node.nodeValue.replace(Jodit.INVISIBLE_SPACE_REG_EX, '') // remove all of
-	 *      the text element codes invisible character
+	 *      node.nodeValue = node.nodeValue.replace(Jodit.INVISIBLE_SPACE_REG_EX, '') // remove all of the text element codes invisible character
 	 *  }
 	 * });
 	 * ```
@@ -890,31 +902,6 @@ export class Dom {
 	}
 
 	/**
-	 * Call callback condition function for all elements of node
-	 */
-	static all(
-		node: Node,
-		condition: NodeCondition,
-		prev: boolean = false
-	): Nullable<Node> {
-		let nodes: Node[] = node.childNodes ? toArray(node.childNodes) : [];
-
-		if (condition(node)) {
-			return node;
-		}
-
-		if (prev) {
-			nodes = nodes.reverse();
-		}
-
-		nodes.forEach(child => {
-			Dom.all(child, condition, prev);
-		});
-
-		return null;
-	}
-
-	/**
 	 * Check root contains child or equal child
 	 */
 	static isOrContains(
@@ -974,17 +961,17 @@ export class Dom {
 	 * Check if element is some tag
 	 */
 	static isTag<K extends keyof HTMLElementTagNameMap>(
-		node: Node | null | false | EventTarget,
+		node: Node | null | undefined | false | EventTarget,
 		tagName: K
 	): node is HTMLElementTagNameMap[K];
 
 	static isTag<K extends keyof HTMLElementTagNameMap>(
-		node: Node | null | false | EventTarget,
+		node: Node | null | undefined | false | EventTarget,
 		tagNames: K[]
 	): node is HTMLElementTagNameMap[K];
 
 	static isTag<K extends keyof HTMLElementTagNameMap>(
-		node: Node | null | false | EventTarget,
+		node: Node | null | undefined | false | EventTarget,
 		tagNames: K[] | K
 	): node is HTMLElementTagNameMap[K] {
 		const tags = asArray(tagNames).map(String);

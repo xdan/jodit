@@ -12,14 +12,18 @@
 
 import type {
 	CallbackFunction,
+	CanArray,
+	CanUndef,
 	EventHandlerBlock,
-	IEventEmitter
+	IEventEmitter,
+	IEventEmitterOnOptions
 } from 'jodit/types';
 import { defaultNameSpace, EventHandlersStore } from './store';
-import { isString } from 'jodit/core/helpers/checker/is-string';
+import { isString, isStringArray } from 'jodit/core/helpers/checker/is-string';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { error } from 'jodit/core/helpers/utils/error';
+import { splitArray } from 'jodit/core/helpers/array/split-array';
 
 /**
  * The module editor's event manager
@@ -50,16 +54,14 @@ export class EventEmitter implements IEventEmitter {
 	private doc: Document = document;
 
 	private eachEvent(
-		events: string,
+		events: CanArray<string>,
 		callback: (event: string, namespace: string) => void
 	): void {
-		const eventParts: string[] = events.split(/[\s,]+/);
+		const eventParts = splitArray(events).map(e => e.trim());
 
-		eventParts.forEach((eventNameSpace: string) => {
-			const eventAndNameSpace: string[] = eventNameSpace.split('.');
-
-			const namespace: string = eventAndNameSpace[1] || defaultNameSpace;
-
+		eventParts.forEach(eventNameSpace => {
+			const eventAndNameSpace = eventNameSpace.split('.');
+			const namespace = eventAndNameSpace[1] || defaultNameSpace;
 			callback.call(this, eventAndNameSpace[0], namespace);
 		});
 	}
@@ -140,9 +142,9 @@ export class EventEmitter implements IEventEmitter {
 		element: Document | Element | HTMLElement | Window,
 		event: string | Event | MouseEvent
 	): void {
-		const evt: Event = this.doc.createEvent('HTMLEvents');
+		const evt = this.doc.createEvent('HTMLEvents');
 
-		if (typeof event === 'string') {
+		if (isString(event)) {
 			evt.initEvent(event, true, true);
 		} else {
 			evt.initEvent(event.type, event.bubbles, event.cancelable);
@@ -195,71 +197,65 @@ export class EventEmitter implements IEventEmitter {
 	currents: string[] = [];
 
 	/**
-	 * Sets the handler for the specified event ( Event List ) for a given element .
-	 *
-	 * @param subjectOrEvents - The object for which to set an event handler
-	 * @param eventsOrCallback - List of events, separated by a space or comma
-	 * @param handlerOrSelector - The event handler
-	 * @param selector - Selector for capturing
-	 * @param onTop - Set handler in first
+	 * Sets the handler for the specified event ( Event List ) for a given element
 	 *
 	 * @example
 	 * ```javascript
 	 * // set global handler
-	 * parent.on('beforeCommand', function (command) {
+	 * editor.events.on('beforeCommand', function (command) {
 	 *     alert('command');
 	 * });
 	 * ```
 	 * * @example
 	 * ```javascript
 	 * // set global handler
-	 * parent.on(document.body, 'click', function (e) {
+	 * editor.events.on(document.body, 'click', function (e) {
 	 *     alert(this.href);
-	 * }, 'a');
+	 * });
 	 * ```
 	 */
 	on(
-		events: string,
+		events: CanArray<string>,
 		callback: CallbackFunction,
-		ignore?: void,
-		onTop?: boolean
+		options?: IEventEmitterOnOptions
 	): this;
 
 	on(
-		subjects: HTMLElement | HTMLElement[],
-		events: string,
-		handle: CallbackFunction,
-		onTop?: boolean
-	): this;
-
-	on<T extends object>(
-		subjects: T[] | T,
-		events: string,
-		handle: CallbackFunction,
-		onTop?: boolean
+		subjects: CanArray<HTMLElement | Window | object>,
+		events: CanArray<string>,
+		callback: CallbackFunction,
+		options?: IEventEmitterOnOptions
 	): this;
 
 	on(
-		subjectOrEvents: HTMLElement | HTMLElement[] | object | string,
-		eventsOrCallback: string | CallbackFunction,
-		handlerOrSelector?: CallbackFunction | void,
-		onTop: boolean = false
+		eventsOrSubjects:
+			| CanArray<string>
+			| CanArray<HTMLElement | Window | object>,
+		callbackOrEvents: CallbackFunction | CanArray<string>,
+		optionsOrCallback: IEventEmitterOnOptions | CallbackFunction | void,
+		opts?: IEventEmitterOnOptions
 	): this {
-		const subject = isString(subjectOrEvents) ? this : subjectOrEvents;
+		let subjects: CanArray<HTMLElement | Window | object>;
+		let events: CanArray<string>;
+		let callback: CallbackFunction;
+		let options: CanUndef<IEventEmitterOnOptions>;
 
-		const events: string = isString(eventsOrCallback)
-			? eventsOrCallback
-			: (subjectOrEvents as string);
-
-		let callback = handlerOrSelector as CallbackFunction;
-
-		if (callback === undefined && isFunction(eventsOrCallback)) {
-			callback = eventsOrCallback as CallbackFunction;
+		if (isString(eventsOrSubjects) || isStringArray(eventsOrSubjects)) {
+			subjects = this;
+			events = eventsOrSubjects;
+			callback = callbackOrEvents as CallbackFunction;
+			options = optionsOrCallback as IEventEmitterOnOptions;
+		} else {
+			subjects = eventsOrSubjects;
+			events = callbackOrEvents as CanArray<string>;
+			callback = optionsOrCallback as CallbackFunction;
+			options = opts;
 		}
 
-		const store = this.getStore(subject);
-
-		if (!isString(events) || events === '') {
+		if (
+			!(isString(events) || isStringArray(events)) ||
+			events.length === 0
+		) {
 			throw error('Need events names');
 		}
 
@@ -267,13 +263,17 @@ export class EventEmitter implements IEventEmitter {
 			throw error('Need event handler');
 		}
 
-		if (isArray(subject)) {
-			subject.forEach((subj: object) => {
-				this.on(subj, events, callback, onTop);
+		if (isArray(subjects)) {
+			subjects.forEach(subj => {
+				this.on(subj, events, callback, options);
 			});
 
 			return this;
 		}
+
+		const subject = subjects;
+
+		const store = this.getStore(subject);
 
 		const isDOMElement = isFunction(
 				(subject as HTMLElement).addEventListener
@@ -314,7 +314,7 @@ export class EventEmitter implements IEventEmitter {
 		}
 
 		this.eachEvent(events, (event: string, namespace: string): void => {
-			if (event === '') {
+			if (event.length === 0) {
 				throw error('Need event name');
 			}
 
@@ -325,7 +325,7 @@ export class EventEmitter implements IEventEmitter {
 					syntheticCallback
 				};
 
-				store.set(event, namespace, block, onTop);
+				store.set(event, namespace, block, options?.top);
 
 				if (isDOMElement) {
 					const options: AddEventListenerOptions | false = [
@@ -354,29 +354,36 @@ export class EventEmitter implements IEventEmitter {
 	}
 
 	one(
-		subjectOrEvents: HTMLElement | HTMLElement[] | object | string,
-		eventsOrCallback: string | CallbackFunction,
-		handlerOrSelector?: CallbackFunction | void,
-		onTop: boolean = false
+		eventsOrSubjects:
+			| CanArray<string>
+			| CanArray<HTMLElement | Window | object>,
+		callbackOrEvents: CallbackFunction | CanArray<string>,
+		optionsOrCallback: IEventEmitterOnOptions | CallbackFunction | void,
+		opts?: IEventEmitterOnOptions
 	): this {
-		const subject = isString(subjectOrEvents) ? this : subjectOrEvents;
+		let subjects: CanArray<HTMLElement | Window | object>;
+		let events: CanArray<string>;
+		let callback: CallbackFunction;
+		let options: CanUndef<IEventEmitterOnOptions>;
 
-		const events: string = isString(eventsOrCallback)
-			? eventsOrCallback
-			: (subjectOrEvents as string);
-
-		let callback = handlerOrSelector as CallbackFunction;
-
-		if (callback === undefined && isFunction(eventsOrCallback)) {
-			callback = eventsOrCallback as CallbackFunction;
+		if (isString(eventsOrSubjects) || isStringArray(eventsOrSubjects)) {
+			subjects = this;
+			events = eventsOrSubjects;
+			callback = callbackOrEvents as CallbackFunction;
+			options = optionsOrCallback as IEventEmitterOnOptions;
+		} else {
+			subjects = eventsOrSubjects;
+			events = callbackOrEvents as CanArray<string>;
+			callback = optionsOrCallback as CallbackFunction;
+			options = opts;
 		}
 
 		const newCallback = (...args: any): void => {
-			this.off(subject, events, newCallback);
+			this.off(subjects, events, newCallback);
 			return callback(...args);
 		};
 
-		this.on(subject, events, newCallback, onTop);
+		this.on(subjects, events, newCallback, options);
 
 		return this;
 	}
@@ -412,26 +419,51 @@ export class EventEmitter implements IEventEmitter {
 	 * parent.e.off('someGlobalEvents');
 	 * ```
 	 */
-	off(events: string, callback?: CallbackFunction): this;
-	off(subject: object, events?: string, handler?: CallbackFunction): this;
+	off(events: CanArray<string>, callback?: CallbackFunction): this;
+
 	off(
-		subjectOrEvents: object | string,
-		eventsOrCallback?: string | CallbackFunction,
+		subjects: CanArray<Window | HTMLElement | object>,
+		events?: CanArray<string>,
+		callback?: CallbackFunction
+	): this;
+
+	off(
+		eventsOrSubjects:
+			| CanArray<string>
+			| CanArray<Window | HTMLElement | object>,
+		callbackOrEvents?: CallbackFunction | CanArray<string>,
 		handler?: CallbackFunction
 	): this {
-		const subject: object = isString(subjectOrEvents)
-			? this
-			: subjectOrEvents;
+		let subjects: CanArray<HTMLElement | Window | object>;
+		let events: CanArray<string>;
+		let callback: CanUndef<CallbackFunction>;
 
-		const events: string = isString(eventsOrCallback)
-			? eventsOrCallback
-			: (subjectOrEvents as string);
+		if (isString(eventsOrSubjects) || isStringArray(eventsOrSubjects)) {
+			subjects = this;
+			events = eventsOrSubjects;
+			callback = callbackOrEvents as CallbackFunction;
+		} else {
+			subjects = eventsOrSubjects;
+			events = callbackOrEvents as CanArray<string>;
+			callback = handler;
+		}
+
+		if (isArray(subjects)) {
+			subjects.forEach(subj => {
+				this.off(subj, events, callback);
+			});
+
+			return this;
+		}
+
+		const subject = subjects;
 
 		const store = this.getStore(subject);
 
-		let callback: () => void = handler as () => void;
-
-		if (!isString(events) || !events) {
+		if (
+			!(isString(events) || isStringArray(events)) ||
+			events.length === 0
+		) {
 			store.namespaces().forEach((namespace: string) => {
 				this.off(subject, '.' + namespace);
 			});
@@ -439,11 +471,9 @@ export class EventEmitter implements IEventEmitter {
 			return this;
 		}
 
-		if (callback === undefined && isFunction(eventsOrCallback)) {
-			callback = eventsOrCallback as () => void;
-		}
-
-		const isDOMElement = isFunction((subject as any).removeEventListener),
+		const isDOMElement = isFunction(
+				(subject as HTMLElement).removeEventListener
+			),
 			removeEventListener = (block: EventHandlerBlock): void => {
 				if (isDOMElement) {
 					(subject as HTMLElement).removeEventListener(

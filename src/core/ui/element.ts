@@ -16,9 +16,9 @@ import type {
 	ModType
 } from 'jodit/types';
 import { Component, ViewComponent } from 'jodit/core/component';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { Elms, Mods } from 'jodit/core/traits';
-import { isString } from 'jodit/core/helpers';
+import { isString } from 'jodit/core/helpers/checker/is-string';
 import { Icon } from 'jodit/core/ui/icon';
 
 export abstract class UIElement<T extends IViewBased = IViewBased>

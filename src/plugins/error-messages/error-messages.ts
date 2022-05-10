@@ -13,7 +13,8 @@ import './errors-messages.less';
 import type { IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom';
-import { css, toArray } from 'jodit/core/helpers';
+import { css } from 'jodit/core/helpers/utils/css';
+import { toArray } from 'jodit/core/helpers/array/to-array';
 
 declare module 'jodit/config' {
 	interface Config {

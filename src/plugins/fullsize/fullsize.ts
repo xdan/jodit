@@ -13,7 +13,8 @@ import './fullsize.less';
 import type { IViewWithToolbar, IControlType, IViewBased } from 'jodit/types';
 import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
-import { css, isJoditObject } from 'jodit/core/helpers';
+import { css } from 'jodit/core/helpers/utils/css';
+import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 
 declare module 'jodit/config' {
 	interface Config {

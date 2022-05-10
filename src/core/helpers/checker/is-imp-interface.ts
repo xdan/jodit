@@ -10,7 +10,7 @@
 
 import type { IContainer, IDestructible, IInitable } from 'jodit/types';
 import { isFunction } from './is-function';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { isVoid } from './is-void';
 
 /**

@@ -15,7 +15,8 @@ import type {
 	IUploaderOptions
 } from 'jodit/types';
 import { Config } from 'jodit/config';
-import { isArray, isJoditObject } from 'jodit/core/helpers';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
+import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 
 declare module 'jodit/config' {
 	interface Config {
