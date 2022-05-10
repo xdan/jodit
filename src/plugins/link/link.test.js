@@ -427,6 +427,50 @@ describe('Link plugin', function () {
 						});
 					});
 				});
+
+				describe('Change behaviour with event', () => {
+					it('should apply new attributes after submitting', () => {
+						const editor = getJodit({
+							link: {
+								openInNewTabCheckbox: false
+							},
+							events: {
+								applyLink: (jodit, link) => {
+									link.setAttribute('nofollow', true);
+									link.setAttribute('target', '_blank');
+								}
+							}
+						});
+
+						editor.value =
+							'<p>test <a href="#somelink">|link <strong>strong</strong></a> open</p>';
+
+						setCursorToChar(editor);
+
+						simulateEvent(
+							'click',
+							editor.editor.querySelector('a')
+						);
+
+						const inlinePopup = getOpenedPopup(editor);
+						clickButton('link', inlinePopup);
+						const popup = getOpenedPopup(editor);
+
+						const target = popup.querySelector(
+							'[ref=target_checkbox]'
+						);
+						expect(target).is.null;
+
+						const url = popup.querySelector('[ref=url_input]');
+						url.value = 'https://xdsoft.next';
+
+						simulateEvent('submit', popup.querySelector('form'));
+
+						expect(editor.value).equals(
+							'<p>test <a href="https://xdsoft.next" nofollow="true" target="_blank">link <strong>strong</strong></a> open</p>'
+						);
+					});
+				});
 			});
 
 			describe('In dialog', function () {

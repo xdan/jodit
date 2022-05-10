@@ -42,7 +42,7 @@ editor.e.on(
 );
 ```
 
-Также методы теперь поддерживают массив событий:
+Also, the methods now support an array of events:
 
 ```js
 editor.e.on('click mousedown mouseup', () => {
@@ -57,6 +57,7 @@ editor.e.on(['click', 'mousedown', 'mouseup'], () => {
 
 -   All components have their own instance of the Async module. What used to be `this.j.async` is now `this.async`.
 -   New option `resizer.useAspectRatio` [How to resize image with the handle bars without fixed aspect ratio](https://github.com/xdan/jodit/issues/839)
+-   Added event `applyLink` for issue [change default target for all links #841](https://github.com/xdan/jodit/issues/841)
 
 #### :bug: Bug Fix
 
@@ -1431,11 +1432,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                             	{ value: "", text: "" },
--                                                                                                                                                                                                                                                             	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                             	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                             	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                             ]
+-                                                                                                                                                                                                                                                               	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                               	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                               	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                               	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                               ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
