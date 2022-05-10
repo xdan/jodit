@@ -55,9 +55,9 @@ ES2018 Version (if your users use only modern browsers)
 ```html
 <link
 	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.13.4/jodit.es2018.min.css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/jodit.es2018.min.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.13.4/jodit.es2018.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/jodit.es2018.min.js"></script>
 ```
 
 ### USAGE
