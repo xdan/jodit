@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/html
+ */
+
 import { $$, attr } from '../utils';
 import { Dom } from 'jodit/core/dom/dom';
 

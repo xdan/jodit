@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/utils
+ */
+
 import type { IDictionary, Nullable } from 'jodit/types';
 import { get } from './get';
 import { isFunction } from '../checker/is-function';
