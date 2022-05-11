@@ -10,6 +10,7 @@ const path = require('path');
 
 const { variables } = require('./variables');
 const { fileName } = require('./utils/filename');
+const { includePlugins } = require('./utils/include-plugins');
 
 /**
  * @param {boolean} onlyTS - build only TypeScript files
@@ -19,6 +20,8 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 
 	const { ES, mode, isTest, isProd, debug, ESNext, uglify, outputPath } =
 		vars;
+
+	const [pluginsEntries] = includePlugins(dir);
 
 	console.warn(`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify}`);
 
@@ -40,7 +43,8 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 				: {}),
 			jodit: debug
 				? ['webpack-hot-middleware/client.js', './src/index']
-				: ['./src/index']
+				: ['./src/index'],
+			...pluginsEntries
 		},
 
 		output: {

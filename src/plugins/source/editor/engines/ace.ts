@@ -227,6 +227,10 @@ export class AceEditor
 		this.instance.setReadOnly(isReadOnly);
 	}
 
+	get isFocused(): boolean {
+		return this.instance.isFocused();
+	}
+
 	focus(): void {
 		this.instance.focus();
 	}

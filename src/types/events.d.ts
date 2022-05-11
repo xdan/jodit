@@ -86,7 +86,18 @@ interface IEventEmitter extends IDestructible {
 		options?: IEventEmitterOnOptions
 	): this;
 
-	one(...args: Parameters<IEventEmitter['on']>): IEventEmitter;
+	one(
+		events: CanArray<string>,
+		callback: CallbackFunction,
+		options?: IEventEmitterOnOptions
+	): this;
+
+	one(
+		subject: CanArray<Window | HTMLElement | object>,
+		events: CanArray<string>,
+		callback: CallbackFunction,
+		options?: IEventEmitterOnOptions
+	): this;
 
 	/**
 	 * Disable all handlers specified event ( Event List ) for a given element. Either a specific event handler.

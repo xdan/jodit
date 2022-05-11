@@ -94,6 +94,10 @@ export class TextAreaEditor
 		this.instance.setSelectionRange(start, end);
 	}
 
+	get isFocused(): boolean {
+		return this.instance === this.j.od.activeElement;
+	}
+
 	focus(): void {
 		this.instance.focus();
 	}

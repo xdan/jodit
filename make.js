@@ -5,6 +5,6 @@
  */
 module.exports = {
 	paths: [
-		// require('path').resolve(__dirname, './plugins/example/'),
+		// './src/plugins/speech/speech-recognize/'
 	]
 };

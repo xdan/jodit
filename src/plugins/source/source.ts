@@ -12,7 +12,12 @@ import './source.less';
 
 import type { IJodit, ISourceEditor } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
-import { INVISIBLE_SPACE, MODE_SOURCE, MODE_SPLIT } from 'jodit/core/constants';
+import {
+	INVISIBLE_SPACE,
+	KEY_ESC,
+	MODE_SOURCE,
+	MODE_SPLIT
+} from 'jodit/core/constants';
 import { Plugin } from 'jodit/core/plugin';
 import { Dom } from 'jodit/core/dom';
 import { isString, loadNext } from 'jodit/core/helpers';
@@ -307,18 +312,11 @@ export class source extends Plugin {
 			this.fromWYSIWYG
 		);
 
-		editor.registerCommand(
-			'escapeSourceEditor',
-			{
-				exec: () => {
-					this.sourceEditor?.blur();
-				},
-				hotkeys: ['esc']
-			},
-			{
-				stopPropagation: false
+		editor.e.on(editor.ow, 'keydown', (e: KeyboardEvent) => {
+			if (e.key === KEY_ESC && this.sourceEditor?.isFocused) {
+				this.sourceEditor.blur();
 			}
-		);
+		});
 
 		this.onReadonlyReact();
 

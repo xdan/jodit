@@ -161,17 +161,26 @@ export function askInsertTypeDialog(
 			text,
 			name: text.toLowerCase(),
 			tabIndex: 0
-		}).onAction(() => callback(value as InsertMode))
+		}).onAction(() => {
+			dialog.close();
+			callback(value as InsertMode);
+		})
 	);
+
+	dialog.e.one(dialog, 'afterClose', () => {
+		if (!jodit.s.isFocused()) {
+			jodit.s.focus();
+		}
+	});
 
 	const cancel = Button(jodit, {
 		text: 'Cancel',
 		tabIndex: 0
+	}).onAction(() => {
+		dialog.close();
 	});
 
-	dialog.setFooter(
-		[...buttons, cancel].map(btn => btn.onAction(() => dialog.close()))
-	);
+	dialog.setFooter([...buttons, cancel]);
 
 	buttons[0].focus();
 	buttons[0].state.variant = 'primary';
