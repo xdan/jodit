@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.2
+ * Version: v3.18.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -16297,7 +16297,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.18.2";
+        _this.version = "3.18.3";
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
         _this.OPTIONS = View.defaultOptions;
@@ -16443,10 +16443,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.18.2";
+        return "3.18.3";
     };
     View.getVersion = function () {
-        return "3.18.2";
+        return "3.18.3";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -29682,13 +29682,23 @@ function askInsertTypeDialog(jodit, msg, title, callback, buttonList) {
             text: text,
             name: text.toLowerCase(),
             tabIndex: 0
-        }).onAction(function () { return callback(value); });
+        }).onAction(function () {
+            dialog.close();
+            callback(value);
+        });
+    });
+    dialog.e.one(dialog, 'afterClose', function () {
+        if (!jodit.s.isFocused()) {
+            jodit.s.focus();
+        }
     });
     var cancel = (0, ui_1.Button)(jodit, {
         text: 'Cancel',
         tabIndex: 0
+    }).onAction(function () {
+        dialog.close();
     });
-    dialog.setFooter(tslib_1.__spreadArray(tslib_1.__spreadArray([], tslib_1.__read(buttons), false), [cancel], false).map(function (btn) { return btn.onAction(function () { return dialog.close(); }); }));
+    dialog.setFooter(tslib_1.__spreadArray(tslib_1.__spreadArray([], tslib_1.__read(buttons), false), [cancel], false));
     buttons[0].focus();
     buttons[0].state.variant = 'primary';
     jodit.e.fire('afterOpenPasteDialog', dialog, msg, title, callback, buttonList);
@@ -37723,14 +37733,11 @@ var source = (function (_super) {
             editor.workplace.appendChild(_this.mirrorContainer);
         });
         this.sourceEditor = (0, factory_1.createSourceEditor)('area', editor, this.mirrorContainer, this.toWYSIWYG, this.fromWYSIWYG);
-        editor.registerCommand('escapeSourceEditor', {
-            exec: function () {
-                var _a;
-                (_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.blur();
-            },
-            hotkeys: ['esc']
-        }, {
-            stopPropagation: false
+        editor.e.on(editor.ow, 'keydown', function (e) {
+            var _a;
+            if (e.key === constants_1.KEY_ESC && ((_a = _this.sourceEditor) === null || _a === void 0 ? void 0 : _a.isFocused)) {
+                _this.sourceEditor.blur();
+            }
         });
         this.onReadonlyReact();
         editor.e
@@ -37971,6 +37978,13 @@ var TextAreaEditor = (function (_super) {
         if (end === void 0) { end = start; }
         this.instance.setSelectionRange(start, end);
     };
+    Object.defineProperty(TextAreaEditor.prototype, "isFocused", {
+        get: function () {
+            return this.instance === this.j.od.activeElement;
+        },
+        enumerable: false,
+        configurable: true
+    });
     TextAreaEditor.prototype.focus = function () {
         this.instance.focus();
     };
@@ -38224,6 +38238,13 @@ var AceEditor = (function (_super) {
     AceEditor.prototype.setReadOnly = function (isReadOnly) {
         this.instance.setReadOnly(isReadOnly);
     };
+    Object.defineProperty(AceEditor.prototype, "isFocused", {
+        get: function () {
+            return this.instance.isFocused();
+        },
+        enumerable: false,
+        configurable: true
+    });
     AceEditor.prototype.focus = function () {
         this.instance.focus();
     };
@@ -41251,44 +41272,7 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/chunk loaded */
-/******/ 	!function() {
-/******/ 		var deferred = [];
-/******/ 		__webpack_require__.O = function(result, chunkIds, fn, priority) {
-/******/ 			if(chunkIds) {
-/******/ 				priority = priority || 0;
-/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
-/******/ 				deferred[i] = [chunkIds, fn, priority];
-/******/ 				return;
-/******/ 			}
-/******/ 			var notFulfilled = Infinity;
-/******/ 			for (var i = 0; i < deferred.length; i++) {
-/******/ 				var chunkIds = deferred[i][0];
-/******/ 				var fn = deferred[i][1];
-/******/ 				var priority = deferred[i][2];
-/******/ 				var fulfilled = true;
-/******/ 				for (var j = 0; j < chunkIds.length; j++) {
-/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every(function(key) { return __webpack_require__.O[key](chunkIds[j]); })) {
-/******/ 						chunkIds.splice(j--, 1);
-/******/ 					} else {
-/******/ 						fulfilled = false;
-/******/ 						if(priority < notFulfilled) notFulfilled = priority;
-/******/ 					}
-/******/ 				}
-/******/ 				if(fulfilled) {
-/******/ 					deferred.splice(i--, 1)
-/******/ 					var r = fn();
-/******/ 					if (r !== undefined) result = r;
-/******/ 				}
-/******/ 			}
-/******/ 			return result;
-/******/ 		};
-/******/ 	}();
-/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	!function() {
 /******/ 		__webpack_require__.g = (function() {
@@ -41301,11 +41285,6 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /******/ 		})();
 /******/ 	}();
 /******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
-/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -41315,61 +41294,6 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/jsonp chunk loading */
-/******/ 	!function() {
-/******/ 		// no baseURI
-/******/ 		
-/******/ 		// object to store loaded and loading chunks
-/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-/******/ 		var installedChunks = {
-/******/ 			670: 0
-/******/ 		};
-/******/ 		
-/******/ 		// no chunk on demand loading
-/******/ 		
-/******/ 		// no prefetching
-/******/ 		
-/******/ 		// no preloaded
-/******/ 		
-/******/ 		// no HMR
-/******/ 		
-/******/ 		// no HMR manifest
-/******/ 		
-/******/ 		__webpack_require__.O.j = function(chunkId) { return installedChunks[chunkId] === 0; };
-/******/ 		
-/******/ 		// install a JSONP callback for chunk loading
-/******/ 		var webpackJsonpCallback = function(parentChunkLoadingFunction, data) {
-/******/ 			var chunkIds = data[0];
-/******/ 			var moreModules = data[1];
-/******/ 			var runtime = data[2];
-/******/ 			// add "moreModules" to the modules object,
-/******/ 			// then flag all "chunkIds" as loaded and fire callback
-/******/ 			var moduleId, chunkId, i = 0;
-/******/ 			if(chunkIds.some(function(id) { return installedChunks[id] !== 0; })) {
-/******/ 				for(moduleId in moreModules) {
-/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
-/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
-/******/ 					}
-/******/ 				}
-/******/ 				if(runtime) var result = runtime(__webpack_require__);
-/******/ 			}
-/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
-/******/ 			for(;i < chunkIds.length; i++) {
-/******/ 				chunkId = chunkIds[i];
-/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
-/******/ 					installedChunks[chunkId][0]();
-/******/ 				}
-/******/ 				installedChunks[chunkId] = 0;
-/******/ 			}
-/******/ 			return __webpack_require__.O(result);
-/******/ 		}
-/******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunkjodit"] = self["webpackChunkjodit"] || [];
-/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
-/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	}();
 /******/ 	
 /************************************************************************/
@@ -41432,7 +41356,6 @@ Object.keys(langs_1.default)
 });
 
 }();
-__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	return __webpack_exports__;
 /******/ })()
 ;
