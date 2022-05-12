@@ -46,6 +46,26 @@ export interface IUploaderOptions<T> {
 	method: string;
 
 	filesVariableName: (i: number) => string;
+
+	/**
+	 * The method can be used to change the name of the uploaded file
+	 * ```js
+	 * Jodit.make('#editor', {
+	 *  uploader: {
+	 *    url: 'some-connector.php',
+	 *    processFileName: (key, file, name) => {
+	 *      return [key, file, 'some-prefix_' + name];
+	 *    }
+	 *  }
+	 * });
+	 * ```
+	 */
+	processFileName(
+		this: T,
+		key: string,
+		file: File,
+		name: string
+	): [string, File, string];
 	pathVariableName: string;
 	withCredentials: boolean;
 

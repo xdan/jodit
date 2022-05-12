@@ -17,6 +17,21 @@ describe('Security test', () => {
 						'<p><math><iframe></iframe></math><img src=""></p>'
 					);
 				});
+
+				it('Should remove this unsafe attribute2', () => {
+					const editor = getJodit();
+					editor.value =
+						'<html>' +
+						'<body>' +
+						'<meta name=Generator content="Microsoft Word 15">' +
+						'<img src="" onerror="alert(123)" />' +
+						'</body>' +
+						'</html>';
+
+					expect(sortAttributes(editor.value)).eq(
+						'<p><meta content="Microsoft Word 15" name="Generator"><img src=""></p>'
+					);
+				});
 			});
 
 			describe('Create JS link', () => {

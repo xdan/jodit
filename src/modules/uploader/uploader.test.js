@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Test uploader module', function () {
 	describe('Drop file', function () {
 		describe('Drop Image like base64', function () {
@@ -71,6 +72,41 @@ describe('Test uploader module', function () {
 						value: {
 							files: [file]
 						}
+					});
+				});
+			});
+
+			describe('Change filename', () => {
+				it('Should upload file with different filename', function (done) {
+					const file = new FileImage(),
+						editor = getJodit({
+							uploader: {
+								url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
+								processFileName: (key, file, name) => {
+									return [key, file, 'test_' + name];
+								}
+							},
+							events: {
+								afterInsertImage: function (img) {
+									expect(img.src).equals(
+										'https://xdsoft.net/jodit/files/test_logo.gif'
+									);
+
+									expect(sortAttributes(editor.value)).equals(
+										'<p><img src="https://xdsoft.net/jodit/files/test_logo.gif" style="width:300px"></p>'
+									);
+
+									done();
+								}
+							}
+						});
+
+					simulateEvent('drop', editor.editor, function (data) {
+						Object.defineProperty(data, 'dataTransfer', {
+							value: {
+								files: [file]
+							}
+						});
 					});
 				});
 			});

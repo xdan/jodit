@@ -119,7 +119,14 @@ export function sendFiles(
 					}
 				}
 
-				form.append(o.filesVariableName(i), fileList[i], newName);
+				const [key, iFile, name] = o.processFileName.call(
+					uploader,
+					o.filesVariableName(i),
+					fileList[i],
+					newName
+				);
+
+				form.append(key, iFile, name);
 			}
 		}
 

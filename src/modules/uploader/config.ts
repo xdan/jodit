@@ -68,6 +68,15 @@ Config.prototype.uploader = {
 			: '';
 	},
 
+	processFileName(
+		this: IUploader,
+		key: string,
+		file: File,
+		name: string
+	): [string, File, string] {
+		return [key, file, name];
+	},
+
 	process(this: IUploader, resp: IUploaderAnswer): IUploaderData {
 		return resp.data;
 	},

@@ -105,6 +105,24 @@ Default success result processor. In first param it get `uploader.process` resul
 
 Default error result processor.
 
+## uploader.processFileName
+
+-   Type: `function`
+-   Default: `(key, file, name) => [key, file, name]`
+
+The method can be used to change the name of the uploaded file.
+
+```js
+Jodit.make('#editor', {
+	uploader: {
+		url: 'some-connector.php',
+		processFileName: (key, file, name) => {
+			return [key, file, 'some-prefix_' + name];
+		}
+	}
+});
+```
+
 ## Examples
 
 ### Example 1

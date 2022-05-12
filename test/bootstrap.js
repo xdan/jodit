@@ -156,15 +156,15 @@ function mockAjax() {
 						break;
 					}
 					case 'fileUpload': {
-						const file = ajax.options.data.get('files[0]');
+						const file = ajax.options.data.getName('files[0]');
 						resolve({
 							success: true,
 							time: '2018-03-31 23:38:54',
 							data: {
 								baseurl: 'https://xdsoft.net/jodit/files/',
 								messages: [],
-								files: [file.name],
-								isImages: [/\.(png|jpg|gif)$/.test(file.name)],
+								files: [file],
+								isImages: [/\.(png|jpg|gif)$/.test(file)],
 								code: 220
 							}
 						});
@@ -300,11 +300,16 @@ if (typeof window.chai !== 'undefined') {
 	mockAjax();
 	window.FormData = function () {
 		this.data = {};
-		this.append = function (key, value) {
+		this.names = {};
+		this.append = function (key, value, name) {
 			this.data[key] = value;
+			this.names[key] = name;
 		};
 		this.get = function (key) {
 			return this.data[key];
+		};
+		this.getName = function (key) {
+			return this.names[key];
 		};
 	};
 }
