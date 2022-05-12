@@ -26,6 +26,8 @@ Jodit.make('#editor', {
 });
 ```
 
+-   Fixed file naming error when uploading to server
+
 ## 3.18.3
 
 #### :bug: Bug Fix
@@ -657,34 +659,28 @@ console.log(Jodit.modules.UIButton.componentName); // jodit-ui-button
 -   [Remember last opened folder with FileBrowser #675](https://github.com/xdan/jodit/issues/675)
     Boolean option `filebrowser.saveStateInStorage` split to dictionary:
 
-```ts
-interface IFileBrowserOptions
-
-:
-{
-}
-saveStateInStorage: false | {
-	storeLastOpenedFolder? : boolean;
-	storeView? : boolean;
-	storeSortBy? : boolean;
-};
+```typescript
+interface IFileBrowserOptions {
+	saveStateInStorage:
+		| false
+		| {
+				storeLastOpenedFolder?: boolean;
+				storeView?: boolean;
+				storeSortBy?: boolean;
+		  };
 }
 ```
 
 By default:
 
 ```js
-{
+opt = {
 	saveStateInStorage: {
 		storeLastOpenedFolder: true,
-			storeView
-	:
-		true,
-			storeSortBy
-	:
-		true
+		storeView: true,
+		storeSortBy: true
 	}
-}
+};
 ```
 
 Disable it:
@@ -786,9 +782,8 @@ await new Ajax(editor, {
 await new Ajax(editor, {
 	url: 'index.php'
 })
-	.send()˚
-.
-then(resp => resp.json()); // {success: true, data: ...}
+	.send()
+	.then(resp => resp.json()); // {success: true, data: ...}
 ```
 
 -   In `.npmignore` added:
@@ -1455,11 +1450,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                     	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                     	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                     	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                     	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                     ]
+-                                                                                                                                                                                                                                                                               	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                               	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                               	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                               	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                               ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
@@ -2610,11 +2605,7 @@ var editor = new Jodit('#example2_0', {
 Dom Module is now compatible with jQuery objects
 
 ```javascript
-var a = jQuery("<a href="
-#link
-">Link</a>"
-)
-;
+var a = jQuery("<a href=\"#link\">Link</a>");
 jodit.modules.Dom('.selector').append(a);
 jodit.modules.Dom(jQuery("#someid")).val();
 jodit.modules.Dom("#someid").val();

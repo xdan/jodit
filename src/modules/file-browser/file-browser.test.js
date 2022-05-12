@@ -999,7 +999,7 @@ describe('Jodit FileBrowser Tests', function () {
 						done();
 					});
 
-					simulateEvent('drop', 0, editor.editor, function (data) {
+					simulateEvent('drop', editor.editor, function (data) {
 						Object.defineProperty(data, 'dataTransfer', {
 							value: {
 								files: [
