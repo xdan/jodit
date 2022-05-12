@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.3
+ * Version: v3.18.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -12177,7 +12177,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.18.3";
+        this.version = "3.18.4";
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
         this.OPTIONS = View.defaultOptions;
@@ -12274,10 +12274,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.18.3";
+        return "3.18.4";
     }
     static getVersion() {
-        return "3.18.3";
+        return "3.18.4";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -17349,11 +17349,12 @@ function send_files_sendFiles(uploader, files, handlerSuccess, handlerError, pro
         for (let i = 0; i < fileList.length; i += 1) {
             file = fileList[i];
             if (file) {
+                const hasRealExtension = /\.[\d\w]+$/.test(file.name);
                 const mime = file.type.match(/\/([a-z0-9]+)/i);
                 const extension = mime && mime[1] ? mime[1].toLowerCase() : '';
                 let newName = fileList[i].name ||
                     Math.random().toString().replace('.', '');
-                if (extension) {
+                if (!hasRealExtension && extension) {
                     let extForReg = extension;
                     if (['jpeg', 'jpg'].includes(extForReg)) {
                         extForReg = 'jpeg|jpg';
@@ -17363,7 +17364,8 @@ function send_files_sendFiles(uploader, files, handlerSuccess, handlerError, pro
                         newName += '.' + extension;
                     }
                 }
-                form.append(o.filesVariableName(i), fileList[i], newName);
+                const [key, iFile, name] = o.processFileName.call(uploader, o.filesVariableName(i), fileList[i], newName);
+                form.append(key, iFile, name);
             }
         }
         if (process) {
@@ -17452,6 +17454,9 @@ config/* Config.prototype.uploader */.D.prototype.uploader = {
         return resp.data.messages !== undefined && (0,is_array/* isArray */.k)(resp.data.messages)
             ? resp.data.messages.join(' ')
             : '';
+    },
+    processFileName(key, file, name) {
+        return [key, file, name];
     },
     process(resp) {
         return resp.data;

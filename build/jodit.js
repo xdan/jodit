@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.3
+ * Version: v3.18.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -16297,7 +16297,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.18.3";
+        _this.version = "3.18.4";
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
         _this.OPTIONS = View.defaultOptions;
@@ -16443,10 +16443,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.18.3";
+        return "3.18.4";
     };
     View.getVersion = function () {
-        return "3.18.3";
+        return "3.18.4";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -22801,6 +22801,7 @@ exports.send = send;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sendFiles = void 0;
+var tslib_1 = __webpack_require__(1);
 var helpers_1 = __webpack_require__(187);
 var send_1 = __webpack_require__(408);
 function sendFiles(uploader, files, handlerSuccess, handlerError, process) {
@@ -22855,11 +22856,12 @@ function sendFiles(uploader, files, handlerSuccess, handlerError, process) {
         for (var i = 0; i < fileList.length; i += 1) {
             file = fileList[i];
             if (file) {
+                var hasRealExtension = /\.[\d\w]+$/.test(file.name);
                 var mime_2 = file.type.match(/\/([a-z0-9]+)/i);
                 var extension = mime_2 && mime_2[1] ? mime_2[1].toLowerCase() : '';
                 var newName = fileList[i].name ||
                     Math.random().toString().replace('.', '');
-                if (extension) {
+                if (!hasRealExtension && extension) {
                     var extForReg = extension;
                     if (['jpeg', 'jpg'].includes(extForReg)) {
                         extForReg = 'jpeg|jpg';
@@ -22869,7 +22871,8 @@ function sendFiles(uploader, files, handlerSuccess, handlerError, process) {
                         newName += '.' + extension;
                     }
                 }
-                form_1.append(o.filesVariableName(i), fileList[i], newName);
+                var _a = tslib_1.__read(o.processFileName.call(uploader, o.filesVariableName(i), fileList[i], newName), 3), key = _a[0], iFile = _a[1], name_1 = _a[2];
+                form_1.append(key, iFile, name_1);
             }
         }
         if (process) {
@@ -22945,6 +22948,9 @@ config_1.Config.prototype.uploader = {
         return resp.data.messages !== undefined && (0, is_array_1.isArray)(resp.data.messages)
             ? resp.data.messages.join(' ')
             : '';
+    },
+    processFileName: function (key, file, name) {
+        return [key, file, name];
     },
     process: function (resp) {
         return resp.data;
