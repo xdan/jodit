@@ -106,10 +106,7 @@ module.exports = function (config) {
 		customLaunchers: {
 			FirefoxHeadless: {
 				base: 'Firefox',
-				flags: ['-width', 1440, '-height', 900, '-headless'],
-				prefs: {
-					'network.proxy.type': 0
-				}
+				flags: ['-width', 1440, '-height', 900, '-headless']
 			},
 
 			ChromeHeadless: {
