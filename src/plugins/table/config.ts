@@ -19,7 +19,6 @@ declare module 'jodit/config' {
 		table: {
 			allowCellSelection: boolean;
 			selectionCellStyle: string;
-
 			allowCellResize: boolean;
 			useExtraClassesOptions: boolean;
 		};
@@ -29,7 +28,6 @@ declare module 'jodit/config' {
 Config.prototype.table = {
 	allowCellSelection: true,
 	selectionCellStyle: 'border: 1px double #1e88e5 !important;',
-
 	allowCellResize: true,
 	useExtraClassesOptions: false
 };
@@ -156,8 +154,6 @@ Config.prototype.controls.table = {
 					table = crt.element('table');
 
 				table.appendChild(tbody);
-
-				table.style.width = '100%';
 
 				let first_td: HTMLTableCellElement | null = null,
 					tr: HTMLTableRowElement,

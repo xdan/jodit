@@ -137,6 +137,14 @@
 			border: 1px solid var(--color-border);
 			user-select: text;
 			vertical-align: middle;
+
+			/**
+			// In some circumstances, because of this rule,
+			// the borders of the table are not shown - you need to find out under what
+			&[style*='border'] {
+				border-style: double !important;
+			}
+			*/
 		}
 	}
 }

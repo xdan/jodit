@@ -584,7 +584,11 @@ export class Config implements IViewOptions {
 	 * <JoditEditor config={config}/>
 	 * ```
 	 */
-	createAttributes: IDictionary<Attributes | NodeFunction> = {};
+	createAttributes: IDictionary<Attributes | NodeFunction> = {
+		table: {
+			style: 'border-collapse:collapse;width: 100%;'
+		}
+	};
 
 	/**
 	 * The width of the editor, accepted as the biggest. Used to the responsive version of the editor

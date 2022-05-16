@@ -11,7 +11,7 @@
 import type { IDictionary } from './types';
 
 export type Attributes = IDictionary<
-	string | number | boolean | IDictionary<string | number | boolean>
+	string | number | boolean | undefined | IDictionary<string | number | boolean | undefined>
 >;
 export type Children = string | Array<string | Node> | Node;
 
