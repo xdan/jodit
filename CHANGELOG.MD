@@ -28,7 +28,8 @@ Jodit.defaultOptions.createAttributes = {
 -   Fixed a bug where the download cancellation business exceptions were shown as errors in the file browser. Also fixed uncatchable exceptions inside Async.promise
 -   [Fixed Eraser delete "<a>" tag! #705 #845](https://github.com/xdan/jodit/pull/845) Thanks @s-renier-taonix-fr
 -   [Update Docker Env #844](https://github.com/xdan/jodit/pull/844) Thanks @s-renier-taonix-fr
--   Fixed table default styles
+-   Fixed table default styles [Jodit doesn't keep table borders #295](https://github.com/xdan/jodit/issues/295)
+-   [All td elements got double border style. #842](https://github.com/xdan/jodit/issues/842)
 
 ## 3.18.4
 
