@@ -9,7 +9,6 @@
  */
 
 import type { IFileBrowser } from 'jodit/types';
-import { error } from 'jodit/core/helpers/utils/error';
 import { Dom } from 'jodit/core/dom';
 import { loadItems } from 'jodit/modules/file-browser/fetch/load-items';
 
@@ -17,10 +16,6 @@ import { loadItems } from 'jodit/modules/file-browser/fetch/load-items';
  * Loads a list of directories
  */
 export async function loadTree(fb: IFileBrowser): Promise<any> {
-	const errorUni = (e: string | Error): Error => {
-		throw e instanceof Error ? e : error(e);
-	};
-
 	fb.tree.setMod('active', true);
 
 	Dom.detach(fb.tree.container);
@@ -35,15 +30,13 @@ export async function loadTree(fb: IFileBrowser): Promise<any> {
 			.then(resp => {
 				fb.state.sources = resp;
 			})
-			.catch(e => {
-				errorUni(e);
-			})
+			.catch(fb.status)
 			.finally(() => fb.tree.setMod('loading', false));
 
-		return Promise.all([tree, items]).catch(error);
+		return Promise.all([tree, items]);
 	}
 
 	fb.tree.setMod('active', false);
 
-	return items.catch(error);
+	return items;
 }

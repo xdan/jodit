@@ -32,13 +32,13 @@ export function selfListeners(this: IFileBrowser): void {
 		.on('sort.filebrowser', (value: string) => {
 			if (value !== state.sortBy) {
 				state.sortBy = value;
-				loadItems(self).catch(self.status);
+				loadItems(self);
 			}
 		})
 		.on('filter.filebrowser', (value: string) => {
 			if (value !== state.filterWord) {
 				state.filterWord = value;
-				loadItems(self).catch(self.status);
+				loadItems(self);
 			}
 		})
 		.on('openFolder.filebrowser', (data: IDictionary): void => {
@@ -167,7 +167,7 @@ export function selfListeners(this: IFileBrowser): void {
 									self.state.activeElements = [];
 									self.status(message, true);
 
-									loadItems(self).catch(self.status);
+									loadItems(self);
 								})
 								.catch(self.status);
 
@@ -180,6 +180,6 @@ export function selfListeners(this: IFileBrowser): void {
 			}
 		)
 		.on('update.filebrowser', () => {
-			loadTree(this).then(this.status);
+			loadTree(this).then(this.status, this.status);
 		});
 }

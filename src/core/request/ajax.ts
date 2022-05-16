@@ -23,7 +23,6 @@ import type {
 import { Config } from 'jodit/config';
 
 import {
-	error,
 	isPlainObject,
 	parseQuery,
 	buildQuery,
@@ -31,6 +30,7 @@ import {
 	isFunction,
 	ConfigProto
 } from 'jodit/core/helpers';
+import * as error from 'jodit/core/helpers/utils/error';
 import { Response } from './response';
 
 import './config';
@@ -83,14 +83,19 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 	}
 
 	abort(): Ajax {
+		if (this.isFulfilled) {
+			return this;
+		}
+
 		try {
+			this.isFulfilled = true;
 			this.xhr.abort();
 		} catch {}
 
 		return this;
 	}
 
-	private resolved = false;
+	private isFulfilled = false;
 
 	private activated = false;
 
@@ -103,11 +108,12 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 
 		return this.j.async.promise((resolve, reject) => {
 			const onReject = (): void => {
-				reject(error('Connection error'));
+				this.isFulfilled = true;
+				reject(error.connection('Connection error'));
 			};
 
 			const onResolve = (): void => {
-				this.resolved = true;
+				this.isFulfilled = true;
 
 				resolve(
 					new Response<T>(
@@ -120,7 +126,11 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 			};
 
 			xhr.onload = onResolve;
-			xhr.onabort = onReject;
+			xhr.onabort = (): void => {
+				this.isFulfilled = true;
+				reject(error.abort('Abort connection'));
+			};
+
 			xhr.onerror = onReject;
 			xhr.ontimeout = onReject;
 
@@ -144,8 +154,9 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 				if (xhr.readyState === XMLHttpRequest.DONE) {
 					if (o.successStatuses.includes(xhr.status)) {
 						onResolve();
-					} else {
-						reject(error(xhr.statusText || 'Connection error'));
+					} else if (xhr.statusText) {
+						this.isFulfilled = true;
+						reject(error.connection(xhr.statusText));
 					}
 				}
 			};
@@ -177,7 +188,7 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 
 	prepareRequest(): IRequest {
 		if (!this.o.url) {
-			throw error('Need URL for AJAX request');
+			throw error.error('Need URL for AJAX request');
 		}
 
 		let url: string = this.o.url;
@@ -192,7 +203,7 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 				const urlData = parseQuery(url);
 
 				url =
-					url.substr(0, qIndex) +
+					url.substring(0, qIndex) +
 					'?' +
 					buildQuery({ ...urlData, ...(data as IDictionary) });
 			} else {
@@ -213,9 +224,9 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 	}
 
 	destruct(): void {
-		if (this.activated && !this.resolved) {
+		if (this.activated && !this.isFulfilled) {
 			this.abort();
-			this.resolved = true;
+			this.isFulfilled = true;
 		}
 	}
 }

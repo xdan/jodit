@@ -9,6 +9,14 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.18.5
+
+#### :bug: Bug Fix
+
+-   Fixed a bug where the download cancellation business exceptions were shown as errors in the file browser. Also fixed uncatchable exceptions inside Async.promise
+-   [Fixed Eraser delete "<a>" tag! #705 #845](https://github.com/xdan/jodit/pull/845) Thanks @s-renier-taonix-fr
+-   [Update Docker Env #844](https://github.com/xdan/jodit/pull/844) Thanks @s-renier-taonix-fr
+
 ## 3.18.4
 
 #### :rocket: New Feature
@@ -1450,11 +1458,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                               	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                               	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                               	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                               	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                               ]
+-                                                                                                                                                                                                                                                                                   	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                   	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                   	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                   	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                   ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
@@ -2605,10 +2613,10 @@ var editor = new Jodit('#example2_0', {
 Dom Module is now compatible with jQuery objects
 
 ```javascript
-var a = jQuery("<a href=\"#link\">Link</a>");
+var a = jQuery('<a href="#link">Link</a>');
 jodit.modules.Dom('.selector').append(a);
-jodit.modules.Dom(jQuery("#someid")).val();
-jodit.modules.Dom("#someid").val();
+jodit.modules.Dom(jQuery('#someid')).val();
+jodit.modules.Dom('#someid').val();
 ```
 
 But you must remember that Jodit.modules.Dom! = JQuery

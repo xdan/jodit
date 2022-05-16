@@ -228,9 +228,11 @@ export class Async implements IAsync {
 			};
 		}
 
-		promise.finally(() => {
-			this.promisesRejections.delete(rejectCallback);
-		});
+		promise
+			.finally(() => {
+				this.promisesRejections.delete(rejectCallback);
+			})
+			.catch(() => null);
 
 		(promise as RejectablePromise<T>).rejectCallback = rejectCallback;
 

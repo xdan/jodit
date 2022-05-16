@@ -38,7 +38,8 @@ import {
 	isFunction,
 	isString,
 	ConfigProto,
-	trim
+	trim,
+	isAbort
 } from 'jodit/core/helpers';
 import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
 
@@ -128,6 +129,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	}
 
 	private errorHandler = (resp: Error | IFileBrowserAnswer): void => {
+		if (isAbort(resp)) {
+			return;
+		}
+
 		if (resp instanceof Error) {
 			this.status(this.i18n(resp.message));
 		} else {
@@ -162,6 +167,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 */
 	@autobind
 	status(message: string | Error, success?: boolean): void {
+		if (!message || isAbort(message)) {
+			return;
+		}
+
 		if (!isString(message)) {
 			message = message.message;
 		}

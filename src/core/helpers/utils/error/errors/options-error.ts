@@ -8,9 +8,9 @@
  * @module helpers/utils
  */
 
-/**
- * Helper for create Error object
- */
-export function error(message: string): Error {
-	return new TypeError(message);
+export class OptionsError extends TypeError {
+	constructor(m: string) {
+		super(m);
+		Object.setPrototypeOf(this, OptionsError.prototype);
+	}
 }
