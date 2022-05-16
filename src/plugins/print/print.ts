@@ -14,6 +14,8 @@ import { getContainer } from 'jodit/core/global';
 import { Dom } from 'jodit/core/dom';
 import { defaultLanguage } from 'jodit/core/helpers';
 import * as consts from 'jodit/core/constants';
+import { previewBox } from 'jodit/plugins/print/helpers';
+import { generateCriticalCSS } from 'jodit/plugins/print/lib/generate-critical-css';
 
 Config.prototype.controls.print = {
 	exec: (editor: IJodit) => {
@@ -53,15 +55,16 @@ Config.prototype.controls.print = {
 				myWindow.document.write(
 					'<!doctype html><html lang="' +
 						defaultLanguage(editor.o.language) +
-						'"><head><title></title></head>' +
-						'<body>' +
-						editor.value +
-						'</body></html>'
+						'"><head><title></title></head><style>' +
+						generateCriticalCSS(editor) +
+						'</style><body></body></html>'
 				);
 				myWindow.document.close();
+				previewBox(editor, undefined, 'px', myWindow.document.body);
 			}
 
 			const style = myWindow.document.createElement('style');
+
 			style.innerHTML = `@media print {
 					body {
 							-webkit-print-color-adjust: exact;

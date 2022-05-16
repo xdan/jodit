@@ -78,7 +78,7 @@ export function previewBox(
 			return res;
 		}
 
-		let div: HTMLElement = editor.c.div('jodit__preview-box');
+		let div: HTMLElement = editor.c.div('jodit__preview-box jodit-context');
 		if (container) {
 			container.appendChild(div);
 		}
