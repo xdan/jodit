@@ -861,7 +861,7 @@ describe('Tables Jodit Editor Tests', function () {
 			editor.s.insertNode(editor.createInside.text('ok'));
 
 			expect(editor.value).equals(
-				'<table><tr><td></td><td>ok</td></tr></table>'
+				'<table style="border-collapse:collapse;width: 100%;"><tr><td></td><td>ok</td></tr></table>'
 			);
 		});
 

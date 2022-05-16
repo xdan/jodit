@@ -11,11 +11,24 @@
 
 ## 3.18.5
 
+#### :boom: Breaking Change
+
+-   Added default table style to `createAttributes` option:
+
+```js
+Jodit.defaultOptions.createAttributes = {
+	table: {
+		style: 'border-collapse:collapse;width: 100%;'
+	}
+};
+```
+
 #### :bug: Bug Fix
 
 -   Fixed a bug where the download cancellation business exceptions were shown as errors in the file browser. Also fixed uncatchable exceptions inside Async.promise
 -   [Fixed Eraser delete "<a>" tag! #705 #845](https://github.com/xdan/jodit/pull/845) Thanks @s-renier-taonix-fr
 -   [Update Docker Env #844](https://github.com/xdan/jodit/pull/844) Thanks @s-renier-taonix-fr
+-   Fixed table default styles
 
 ## 3.18.4
 
@@ -1458,11 +1471,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                   	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                   	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                   	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                   	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                   ]
+-                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                       ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
