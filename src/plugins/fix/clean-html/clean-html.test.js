@@ -15,8 +15,8 @@ describe('Clean html plugin', function () {
 				],
 
 				[
-					'|<a href="#test">start</a> <span style="background-color: red; color: blue;">test test test|</span>',
-					'start test test test'
+					'|<a href="#test" style="background-color: red; color: blue;">start</a> <span style="background-color: red; color: blue;">test test test|</span>',
+					'<a href="#test">start</a> test test test'
 				],
 
 				[
@@ -119,7 +119,7 @@ describe('Clean html plugin', function () {
 				],
 				[
 					'<p><strong><em><u>as<span style="color: rgb(26, 188, 156);">da</span>s<span style="font-family: Impact,Charcoal,sans-serif;">da</span></u></em></strong><a href="https://xdan.ru/copysite/?lang=en"><strong><em><u><span style="font-family: Impact,Charcoal,sans-serif;">sds</span>a</u></em></strong></a><strong><em><u><s>d</s></u></em></strong></p>\n',
-					'<p>asdasdasdsad</p>\n'
+					'<p>asdasda<a href="https://xdan.ru/copysite/?lang=en">sdsa</a>d</p>\n'
 				]
 			].forEach(function (test) {
 				describe(`For "${test[0]}"`, function () {

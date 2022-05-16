@@ -48,7 +48,7 @@ export function removeFormatForSelection(jodit: IJodit): void {
 	const shouldUnwrap: Node[] = [];
 
 	Dom.between(fakeLeft, fakeRight, node => {
-		if (isInlineBlock(node)) {
+		if (isInlineBlock(node) && !Dom.isTag(node, ['a'])) {
 			shouldUnwrap.push(node);
 		}
 
