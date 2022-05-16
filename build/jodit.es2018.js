@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.4
+ * Version: v3.18.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -189,7 +189,11 @@ class Config {
         this.extraPlugins = [];
         this.extraButtons = [];
         this.extraIcons = {};
-        this.createAttributes = {};
+        this.createAttributes = {
+            table: {
+                style: 'border-collapse:collapse;width: 100%;'
+            }
+        };
         this.sizeLG = 900;
         this.sizeMD = 700;
         this.sizeSM = 400;
@@ -624,10 +628,10 @@ var is_string = __webpack_require__(8);
 var is_function = __webpack_require__(11);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
 var is_array = __webpack_require__(9);
-// EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
-var error = __webpack_require__(14);
+// EXTERNAL MODULE: ./src/core/helpers/utils/error/index.ts + 5 modules
+var error = __webpack_require__(13);
 // EXTERNAL MODULE: ./src/core/helpers/array/split-array.ts
-var split_array = __webpack_require__(13);
+var split_array = __webpack_require__(14);
 ;// CONCATENATED MODULE: ./src/core/event-emitter/event-emitter.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -707,7 +711,7 @@ class EventEmitter {
     }
     getStore(subject) {
         if (!subject) {
-            throw (0,error/* error */.v)('Need subject');
+            throw (0,error/* error */.vU)('Need subject');
         }
         if (subject[this.__key] === undefined) {
             const store = new EventHandlersStore();
@@ -783,10 +787,10 @@ class EventEmitter {
         }
         if (!((0,is_string/* isString */.H)(events) || (0,is_string/* isStringArray */.G)(events)) ||
             events.length === 0) {
-            throw (0,error/* error */.v)('Need events names');
+            throw (0,error/* error */.vU)('Need events names');
         }
         if (!(0,is_function/* isFunction */.m)(callback)) {
-            throw (0,error/* error */.v)('Need event handler');
+            throw (0,error/* error */.vU)('Need event handler');
         }
         if ((0,is_array/* isArray */.k)(subjects)) {
             subjects.forEach(subj => {
@@ -819,7 +823,7 @@ class EventEmitter {
         }
         this.eachEvent(events, (event, namespace) => {
             if (event.length === 0) {
-                throw (0,error/* error */.v)('Need event name');
+                throw (0,error/* error */.vU)('Need event name');
             }
             if (store.indexOf(event, namespace, callback) === false) {
                 const block = {
@@ -957,7 +961,7 @@ class EventEmitter {
             ? subjectOrEvents
             : eventsList;
         if (typeof events !== 'string') {
-            throw (0,error/* error */.v)('Need event names');
+            throw (0,error/* error */.vU)('Need event names');
         }
         const store = this.getStore(subject);
         this.eachEvent(events, (event, namespace) => {
@@ -995,7 +999,7 @@ class EventEmitter {
             : args;
         const isDOMElement = (0,is_function/* isFunction */.m)(subject.dispatchEvent);
         if (!isDOMElement && !(0,is_string/* isString */.H)(events)) {
-            throw (0,error/* error */.v)('Need events names');
+            throw (0,error/* error */.vU)('Need events names');
         }
         const store = this.getStore(subject);
         if (!(0,is_string/* isString */.H)(events) && isDOMElement) {
@@ -1316,6 +1320,106 @@ function isNativeFunction(f) {
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "_L": function() { return /* reexport */ AbortError; },
+  "hY": function() { return /* reexport */ ConnectionError; },
+  "tW": function() { return /* reexport */ OptionsError; },
+  "JG": function() { return /* reexport */ abort; },
+  "ZI": function() { return /* reexport */ connection; },
+  "vU": function() { return /* reexport */ error; },
+  "PQ": function() { return /* reexport */ isAbort; },
+  "YM": function() { return /* reexport */ options; }
+});
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/error/errors/abort-error.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+class AbortError extends Error {
+    constructor(m) {
+        super(m);
+        Object.setPrototypeOf(this, AbortError.prototype);
+    }
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/error/errors/connection-error.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+class ConnectionError extends Error {
+    constructor(m) {
+        super(m);
+        Object.setPrototypeOf(this, ConnectionError.prototype);
+    }
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/error/errors/options-error.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+class OptionsError extends TypeError {
+    constructor(m) {
+        super(m);
+        Object.setPrototypeOf(this, OptionsError.prototype);
+    }
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/error/errors/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/error/error.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function error(message) {
+    return new TypeError(message);
+}
+function connection(message) {
+    return new ConnectionError(message);
+}
+function options(message) {
+    return new OptionsError(message);
+}
+function abort(message) {
+    return new AbortError(message);
+}
+function isAbort(error) {
+    return error instanceof AbortError;
+}
+
+;// CONCATENATED MODULE: ./src/core/helpers/utils/error/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+/***/ }),
+/* 14 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "C": function() { return /* binding */ splitArray; }
 /* harmony export */ });
@@ -1326,24 +1430,6 @@ function isNativeFunction(f) {
  */
 function splitArray(a) {
     return Array.isArray(a) ? a : a.split(/[,\s]+/);
-}
-
-
-/***/ }),
-/* 14 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "v": function() { return /* binding */ error; }
-/* harmony export */ });
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-function error(message) {
-    return new TypeError(message);
 }
 
 
@@ -1524,13 +1610,13 @@ function observable(obj) {
 /* harmony export */   "YP": function() { return /* binding */ watch; },
 /* harmony export */   "w7": function() { return /* binding */ getPropertyDescriptor; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11);
+/* harmony import */ var jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(11);
 /* harmony import */ var jodit_core_helpers_checker_is_plain_object__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(20);
 /* harmony import */ var jodit_core_helpers_checker_is_view_object__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(19);
 /* harmony import */ var jodit_core_event_emitter_observable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
 /* harmony import */ var jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18);
-/* harmony import */ var jodit_core_helpers_array_split_array__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(13);
-/* harmony import */ var jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(14);
+/* harmony import */ var jodit_core_helpers_array_split_array__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14);
+/* harmony import */ var jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -1553,8 +1639,8 @@ function getPropertyDescriptor(obj, prop) {
 }
 function watch(observeFields, context) {
     return (target, propertyKey) => {
-        if (!(0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .m)(target[propertyKey])) {
-            throw (0,jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_3__/* .error */ .v)('Handler must be a Function');
+        if (!(0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .m)(target[propertyKey])) {
+            throw (0,jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_2__/* .error */ .vU)('Handler must be a Function');
         }
         const process = (component) => {
             const callback = (key, ...args) => {
@@ -1572,7 +1658,7 @@ function watch(observeFields, context) {
                     if (objectPath.length) {
                         ctx = component.get(objectPath);
                     }
-                    if ((0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .m)(ctx)) {
+                    if ((0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .m)(ctx)) {
                         ctx = ctx(component);
                     }
                     view.events.on(ctx || component, eventName, callback);
@@ -1619,7 +1705,7 @@ function watch(observeFields, context) {
                 });
             });
         };
-        if ((0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_2__/* .isFunction */ .m)(target.hookStatus)) {
+        if ((0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__/* .isFunction */ .m)(target.hookStatus)) {
             target.hookStatus(jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_1__/* .STATUSES.ready */ .n.ready, process);
         }
         else {
@@ -1928,9 +2014,11 @@ class Async {
             return executor(resolve, reject);
         });
         if (!promise.finally && "es2018" !== 'es2018') {}
-        promise.finally(() => {
+        promise
+            .finally(() => {
             this.promisesRejections.delete(rejectCallback);
-        });
+        })
+            .catch(() => null);
         promise.rejectCallback = rejectCallback;
         return promise;
     }
@@ -2068,10 +2156,14 @@ __webpack_require__.r(__webpack_exports__);
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
   "$$": function() { return /* reexport */ utils.$$; },
+  "AbortError": function() { return /* reexport */ utils/* AbortError */._L; },
   "CamelCaseToKebabCase": function() { return /* reexport */ string/* CamelCaseToKebabCase */.gP; },
   "ConfigFlatten": function() { return /* reexport */ utils/* ConfigFlatten */.tp; },
   "ConfigProto": function() { return /* reexport */ utils/* ConfigProto */.II; },
+  "ConnectionError": function() { return /* reexport */ utils/* ConnectionError */.hY; },
   "LimitedStack": function() { return /* reexport */ utils/* LimitedStack */.lI; },
+  "OptionsError": function() { return /* reexport */ utils/* OptionsError */.tW; },
+  "abort": function() { return /* reexport */ utils/* abort */.JG; },
   "appendScript": function() { return /* reexport */ utils/* appendScript */.uR; },
   "appendScriptAsync": function() { return /* reexport */ utils/* appendScriptAsync */.JL; },
   "appendStyleAsync": function() { return /* reexport */ utils/* appendStyleAsync */.Nf; },
@@ -2090,6 +2182,7 @@ __webpack_require__.d(__webpack_exports__, {
   "cns": function() { return /* reexport */ utils/* cns */.H5; },
   "colorToHex": function() { return /* reexport */ color_to_hex/* colorToHex */.h; },
   "completeUrl": function() { return /* reexport */ utils/* completeUrl */.WO; },
+  "connection": function() { return /* reexport */ utils/* connection */.ZI; },
   "convertMediaUrlToVideoEmbed": function() { return /* reexport */ utils/* convertMediaUrlToVideoEmbed */.UU; },
   "css": function() { return /* reexport */ utils/* css */.iv; },
   "cssPath": function() { return /* reexport */ utils/* cssPath */.iN; },
@@ -2111,6 +2204,7 @@ __webpack_require__.d(__webpack_exports__, {
   "i18n": function() { return /* reexport */ string/* i18n */.ag; },
   "inView": function() { return /* reexport */ utils/* inView */.jF; },
   "innerWidth": function() { return /* reexport */ inner_width_innerWidth; },
+  "isAbort": function() { return /* reexport */ utils/* isAbort */.PQ; },
   "isArray": function() { return /* reexport */ checker/* isArray */.kJ; },
   "isAtom": function() { return /* reexport */ utils/* isAtom */.J8; },
   "isBoolean": function() { return /* reexport */ checker/* isBoolean */.jn; },
@@ -2157,6 +2251,7 @@ __webpack_require__.d(__webpack_exports__, {
   "normalizeSize": function() { return /* reexport */ normalize/* normalizeSize */.aC; },
   "normalizeUrl": function() { return /* reexport */ normalize/* normalizeUrl */.D5; },
   "offset": function() { return /* reexport */ offset; },
+  "options": function() { return /* reexport */ utils/* options */.YM; },
   "parseQuery": function() { return /* reexport */ utils/* parseQuery */.mB; },
   "position": function() { return /* reexport */ position; },
   "refs": function() { return /* reexport */ utils/* refs */.xL; },
@@ -2193,7 +2288,7 @@ var is_array = __webpack_require__(9);
 const asArray = (a) => ((0,is_array/* isArray */.k)(a) ? a : [a]);
 
 // EXTERNAL MODULE: ./src/core/helpers/array/split-array.ts
-var split_array = __webpack_require__(13);
+var split_array = __webpack_require__(14);
 // EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
 var to_array = __webpack_require__(5);
 ;// CONCATENATED MODULE: ./src/core/helpers/array/index.ts
@@ -2631,9 +2726,13 @@ var string = __webpack_require__(64);
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
   "$$": function() { return /* reexport */ selector.$$; },
+  "_L": function() { return /* reexport */ error/* AbortError */._L; },
   "tp": function() { return /* reexport */ ConfigFlatten; },
   "II": function() { return /* reexport */ ConfigProto; },
+  "hY": function() { return /* reexport */ error/* ConnectionError */.hY; },
   "lI": function() { return /* reexport */ LimitedStack; },
+  "tW": function() { return /* reexport */ error/* OptionsError */.tW; },
+  "JG": function() { return /* reexport */ error/* abort */.JG; },
   "uR": function() { return /* reexport */ appendScript; },
   "JL": function() { return /* reexport */ appendScriptAsync; },
   "Nf": function() { return /* reexport */ appendStyleAsync; },
@@ -2646,19 +2745,21 @@ __webpack_require__.d(__webpack_exports__, {
   "bI": function() { return /* reexport */ css/* clearCenterAlign */.b; },
   "H5": function() { return /* reexport */ cns; },
   "WO": function() { return /* reexport */ completeUrl; },
+  "ZI": function() { return /* reexport */ error/* connection */.ZI; },
   "UU": function() { return /* reexport */ convertMediaUrlToVideoEmbed; },
   "iv": function() { return /* reexport */ css/* css */.i; },
   "iN": function() { return /* reexport */ selector/* cssPath */.iN; },
   "kT": function() { return /* reexport */ ctrlKey; },
   "qI": function() { return /* reexport */ data_bind/* dataBind */.q; },
   "X9": function() { return /* reexport */ defaultLanguage; },
-  "vU": function() { return /* reexport */ error/* error */.v; },
+  "vU": function() { return /* reexport */ error/* error */.vU; },
   "V8": function() { return /* reexport */ fastClone; },
   "U2": function() { return /* reexport */ get/* get */.U; },
   "gj": function() { return /* reexport */ get_class_name/* getClassName */.g; },
   "BR": function() { return /* reexport */ selector/* getXPathByElement */.BR; },
   "wx": function() { return /* reexport */ humanSizeToBytes; },
   "jF": function() { return /* reexport */ scroll_into_view/* inView */.j; },
+  "PQ": function() { return /* reexport */ error/* isAbort */.PQ; },
   "J8": function() { return /* reexport */ isAtom; },
   "kc": function() { return /* reexport */ get_class_name/* keepNames */.k; },
   "am": function() { return /* reexport */ utils/* keys */.XP; },
@@ -2669,6 +2770,7 @@ __webpack_require__.d(__webpack_exports__, {
   "Q8": function() { return /* reexport */ markDeprecated; },
   "MN": function() { return /* reexport */ utils/* markOwner */.MN; },
   "u3": function() { return /* reexport */ utils/* memorizeExec */.u3; },
+  "YM": function() { return /* reexport */ error/* options */.YM; },
   "mB": function() { return /* reexport */ parseQuery; },
   "xL": function() { return /* reexport */ selector/* refs */.xL; },
   "mc": function() { return /* reexport */ utils_reset/* reset */.m; },
@@ -3117,8 +3219,8 @@ const humanSizeToBytes = (human) => {
 var scroll_into_view = __webpack_require__(41);
 // EXTERNAL MODULE: ./src/core/helpers/utils/selector.ts
 var selector = __webpack_require__(57);
-// EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
-var error = __webpack_require__(14);
+// EXTERNAL MODULE: ./src/core/helpers/utils/error/index.ts + 5 modules
+var error = __webpack_require__(13);
 ;// CONCATENATED MODULE: ./src/core/helpers/utils/val.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6317,8 +6419,8 @@ var component = __webpack_require__(50);
 var checker = __webpack_require__(45);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 1 modules
 var core_component = __webpack_require__(51);
-// EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
-var error = __webpack_require__(14);
+// EXTERNAL MODULE: ./src/core/helpers/utils/error/index.ts + 5 modules
+var error = __webpack_require__(13);
 ;// CONCATENATED MODULE: ./src/core/decorators/debounce/debounce.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -6333,7 +6435,7 @@ function debounce(timeout, firstCallImmediately = false, method = 'debounce') {
     return (target, propertyKey) => {
         const fn = target[propertyKey];
         if (!(0,checker/* isFunction */.mf)(fn)) {
-            throw (0,error/* error */.v)('Handler must be a Function');
+            throw (0,error/* error */.vU)('Handler must be a Function');
         }
         target.hookStatus(core_component/* STATUSES.ready */.n$.ready, (component) => {
             const { async } = component;
@@ -6392,7 +6494,7 @@ function idle() {
 function hook(status) {
     return (target, propertyKey) => {
         if (!(0,checker/* isFunction */.mf)(target[propertyKey])) {
-            throw (0,error/* error */.v)('Handler must be a Function');
+            throw (0,error/* error */.vU)('Handler must be a Function');
         }
         target.hookStatus(status, (component) => {
             component[propertyKey].call(component);
@@ -9070,7 +9172,7 @@ var button_button = __webpack_require__(69);
 // EXTERNAL MODULE: ./src/core/ui/helpers/buttons.ts
 var buttons = __webpack_require__(75);
 // EXTERNAL MODULE: ./src/core/helpers/array/split-array.ts
-var split_array = __webpack_require__(13);
+var split_array = __webpack_require__(14);
 // EXTERNAL MODULE: ./src/core/component/component.ts
 var component = __webpack_require__(52);
 ;// CONCATENATED MODULE: ./src/core/ui/group/list.ts
@@ -15976,6 +16078,8 @@ var event_emitter = __webpack_require__(3);
 var async_async = __webpack_require__(24);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts + 16 modules
 var helpers = __webpack_require__(28);
+// EXTERNAL MODULE: ./src/core/helpers/utils/error/index.ts + 5 modules
+var error = __webpack_require__(13);
 ;// CONCATENATED MODULE: ./src/core/request/response.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -16036,10 +16140,11 @@ config/* Config.prototype.defaultAjaxOptions */.D.prototype.defaultAjaxOptions =
 
 
 
+
 class Ajax {
     constructor(jodit, options) {
         this.jodit = jodit;
-        this.resolved = false;
+        this.isFulfilled = false;
         this.activated = false;
         this.options = (0,helpers.ConfigProto)(options || {}, config/* Config.prototype.defaultAjaxOptions */.D.prototype.defaultAjaxOptions);
         this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
@@ -16063,7 +16168,11 @@ class Ajax {
         return this.jodit;
     }
     abort() {
+        if (this.isFulfilled) {
+            return this;
+        }
         try {
+            this.isFulfilled = true;
             this.xhr.abort();
         }
         catch (_a) { }
@@ -16076,14 +16185,18 @@ class Ajax {
         return this.j.async.promise((resolve, reject) => {
             var _a;
             const onReject = () => {
-                reject((0,helpers.error)('Connection error'));
+                this.isFulfilled = true;
+                reject(error/* connection */.ZI('Connection error'));
             };
             const onResolve = () => {
-                this.resolved = true;
+                this.isFulfilled = true;
                 resolve(new response_Response(request, xhr.status, xhr.statusText, !xhr.responseType ? xhr.responseText : xhr.response));
             };
             xhr.onload = onResolve;
-            xhr.onabort = onReject;
+            xhr.onabort = () => {
+                this.isFulfilled = true;
+                reject(error/* abort */.JG('Abort connection'));
+            };
             xhr.onerror = onReject;
             xhr.ontimeout = onReject;
             if (o.responseType) {
@@ -16104,8 +16217,9 @@ class Ajax {
                     if (o.successStatuses.includes(xhr.status)) {
                         onResolve();
                     }
-                    else {
-                        reject((0,helpers.error)(xhr.statusText || 'Connection error'));
+                    else if (xhr.statusText) {
+                        this.isFulfilled = true;
+                        reject(error/* connection */.ZI(xhr.statusText));
                     }
                 }
             };
@@ -16128,7 +16242,7 @@ class Ajax {
     }
     prepareRequest() {
         if (!this.o.url) {
-            throw (0,helpers.error)('Need URL for AJAX request');
+            throw error/* error */.vU('Need URL for AJAX request');
         }
         let url = this.o.url;
         const data = this.o.data;
@@ -16138,7 +16252,7 @@ class Ajax {
             if (qIndex !== -1) {
                 const urlData = (0,helpers.parseQuery)(url);
                 url =
-                    url.substr(0, qIndex) +
+                    url.substring(0, qIndex) +
                         '?' +
                         (0,helpers.buildQuery)({ ...urlData, ...data });
             }
@@ -16156,9 +16270,9 @@ class Ajax {
         return request;
     }
     destruct() {
-        if (this.activated && !this.resolved) {
+        if (this.activated && !this.isFulfilled) {
             this.abort();
-            this.resolved = true;
+            this.isFulfilled = true;
         }
     }
 }
@@ -16410,7 +16524,7 @@ class View extends component/* Component */.wA {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.18.4";
+        this.version = "3.18.5";
         this.buffer = Storage.makeStorage();
         this.storage = Storage.makeStorage(true, this.componentName);
         this.OPTIONS = View.defaultOptions;
@@ -16507,10 +16621,10 @@ class View extends component/* Component */.wA {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.18.4";
+        return "3.18.5";
     }
     static getVersion() {
-        return "3.18.4";
+        return "3.18.5";
     }
     initOptions(options) {
         this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -18520,11 +18634,13 @@ let DataProvider = class DataProvider {
         const ajax = new Ajax(this.parent, opts);
         ai.set(name, ajax);
         const promise = ajax.send();
-        promise.finally(() => {
+        promise
+            .finally(() => {
             ajax.destruct();
             ai.delete(name);
             this.progressHandler(100);
-        });
+        })
+            .catch(() => null);
         return promise
             .then(resp => resp.json())
             .then(resp => {
@@ -18567,7 +18683,7 @@ let DataProvider = class DataProvider {
             this.__currentPermissions[rule] === undefined ||
             this.__currentPermissions[rule]);
     }
-    async items(path, source, mods = {}) {
+    items(path, source, mods = {}) {
         const opt = this.options;
         if (!opt.items) {
             return Promise.reject('Set Items api options');
@@ -18615,10 +18731,10 @@ let DataProvider = class DataProvider {
     }
     async tree(path, source) {
         path = (0,helpers.normalizeRelativePath)(path);
-        await this.permissions(path, source);
         if (!this.o.folder) {
             return Promise.reject('Set Folder Api options');
         }
+        await this.permissions(path, source);
         this.o.folder.data.path = path;
         this.o.folder.data.source = source;
         return this.get('folder').then(resp => {
@@ -18795,15 +18911,13 @@ const elementsMap = (view) => {
     return result;
 };
 
-// EXTERNAL MODULE: ./src/core/helpers/utils/error.ts
-var error = __webpack_require__(14);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/fetch/load-items.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-async function loadItems(fb) {
+function loadItems(fb) {
     fb.files.setMod('active', true);
     fb.files.setMod('loading', true);
     return fb.dataProvider
@@ -18813,8 +18927,10 @@ async function loadItems(fb) {
         filterWord: fb.state.filterWord
     })
         .then(resp => {
-        fb.state.elements = resp;
-        fb.state.activeElements = [];
+        if (resp) {
+            fb.state.elements = resp;
+            fb.state.activeElements = [];
+        }
     })
         .catch(fb.status)
         .finally(() => fb.files.setMod('loading', false));
@@ -18828,11 +18944,7 @@ async function loadItems(fb) {
  */
 
 
-
 async function loadTree(fb) {
-    const errorUni = (e) => {
-        throw e instanceof Error ? e : (0,error/* error */.v)(e);
-    };
     fb.tree.setMod('active', true);
     dom/* Dom.detach */.i.detach(fb.tree.container);
     const items = loadItems(fb);
@@ -18843,14 +18955,12 @@ async function loadTree(fb) {
             .then(resp => {
             fb.state.sources = resp;
         })
-            .catch(e => {
-            errorUni(e);
-        })
+            .catch(fb.status)
             .finally(() => fb.tree.setMod('loading', false));
-        return Promise.all([tree, items]).catch(error/* error */.v);
+        return Promise.all([tree, items]);
     }
     fb.tree.setMod('active', false);
-    return items.catch(error/* error */.v);
+    return items;
 }
 
 ;// CONCATENATED MODULE: ./src/modules/file-browser/listeners/state-listeners.ts
@@ -19938,13 +20048,13 @@ function selfListeners() {
         .on('sort.filebrowser', (value) => {
         if (value !== state.sortBy) {
             state.sortBy = value;
-            loadItems(self).catch(self.status);
+            loadItems(self);
         }
     })
         .on('filter.filebrowser', (value) => {
         if (value !== state.filterWord) {
             state.filterWord = value;
-            loadItems(self).catch(self.status);
+            loadItems(self);
         }
     })
         .on('openFolder.filebrowser', (data) => {
@@ -20029,7 +20139,7 @@ function selfListeners() {
                     .then(message => {
                     self.state.activeElements = [];
                     self.status(message, true);
-                    loadItems(self).catch(self.status);
+                    loadItems(self);
                 })
                     .catch(self.status);
                 return;
@@ -20037,7 +20147,7 @@ function selfListeners() {
         }
     })
         .on('update.filebrowser', () => {
-        loadTree(this).then(this.status);
+        loadTree(this).then(this.status, this.status);
     });
 }
 
@@ -20127,6 +20237,9 @@ class FileBrowser extends ViewWithToolbar {
             onlyImages: false
         });
         this.errorHandler = (resp) => {
+            if ((0,helpers.isAbort)(resp)) {
+                return;
+            }
             if (resp instanceof Error) {
                 this.status(this.i18n(resp.message));
             }
@@ -20249,6 +20362,9 @@ class FileBrowser extends ViewWithToolbar {
         return this.dialog.isOpened && this.browser.style.display !== 'none';
     }
     status(message, success) {
+        if (!message || (0,helpers.isAbort)(message)) {
+            return;
+        }
         if (!(0,helpers.isString)(message)) {
             message = message.message;
         }
@@ -24077,7 +24193,7 @@ function removeFormatForSelection(jodit) {
     removeFormatForCollapsedSelection(jodit, fakeRight);
     const shouldUnwrap = [];
     dom_dom/* Dom.between */.i.between(fakeLeft, fakeRight, node => {
-        if (isInlineBlock(node)) {
+        if (isInlineBlock(node) && !dom_dom/* Dom.isTag */.i.isTag(node, ['a'])) {
             shouldUnwrap.push(node);
         }
         if (dom_dom/* Dom.isElement */.i.isElement(node) && (0,utils/* attr */.Lj)(node, 'style')) {
@@ -32259,7 +32375,6 @@ config/* Config.prototype.controls.table */.D.prototype.controls.table = {
             const rows_count = Math.ceil((k + 1) / default_cols_count), cols_count = (k % default_cols_count) + 1;
             const crt = editor.createInside, tbody = crt.element('tbody'), table = crt.element('table');
             table.appendChild(tbody);
-            table.style.width = '100%';
             let first_td = null, tr, td;
             for (let i = 1; i <= rows_count; i += 1) {
                 tr = crt.element('tr');
@@ -33207,7 +33322,7 @@ function previewBox(editor, defaultValue, points = 'px', container = null) {
         if (res != null) {
             return res;
         }
-        let div = editor.c.div('jodit__preview-box');
+        let div = editor.c.div('jodit__preview-box jodit-context');
         if (container) {
             container.appendChild(div);
         }
@@ -33333,12 +33448,114 @@ function preview(editor) {
     });
 }
 
+;// CONCATENATED MODULE: ./src/plugins/print/lib/generate-critical-css.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function generateCriticalCSS(jodit) {
+    const getMatchedCSSRules = (el, css = el.ownerDocument.styleSheets) => {
+        const rules = (0,to_array/* toArray */.q)(css)
+            .map(s => {
+            try {
+                return (0,to_array/* toArray */.q)(s.cssRules);
+            }
+            catch (_a) { }
+            return [];
+        })
+            .flat();
+        return rules.filter((r) => {
+            try {
+                return Boolean(r && el.matches(r.selectorText));
+            }
+            catch (_a) { }
+            return false;
+        });
+    };
+    class CSSCriticalPath {
+        constructor(w, d, opts) {
+            this.css = {};
+            const opt = opts || {};
+            const pushCSS = (r) => {
+                const selectorText = r.selectorText
+                    .split(',')
+                    .map(a => a.trim())
+                    .sort()
+                    .join(',');
+                if (Boolean(this.css[selectorText]) === false) {
+                    this.css[selectorText] = {};
+                }
+                const styles = r.style.cssText.split(/;(?![A-Za-z0-9])/);
+                for (let i = 0; i < styles.length; i++) {
+                    if (!styles[i]) {
+                        continue;
+                    }
+                    const pair = styles[i].split(':');
+                    pair[0] = pair[0].trim();
+                    pair[1] = pair[1].trim();
+                    this.css[selectorText][pair[0]] = pair[1].replace(/var\(([^)]+)\)/g, (varValue, key) => {
+                        const [name, def] = key.split(',');
+                        return (jodit.ew
+                            .getComputedStyle(jodit.editor)
+                            .getPropertyValue(name.trim()) ||
+                            def ||
+                            varValue).trim();
+                    });
+                }
+            };
+            const parseTree = () => {
+                const height = w.innerHeight;
+                const walker = d.createTreeWalker(jodit.editor, NodeFilter.SHOW_ELEMENT, () => NodeFilter.FILTER_ACCEPT);
+                while (walker.nextNode()) {
+                    const node = walker.currentNode;
+                    const rect = node.getBoundingClientRect();
+                    if (rect.top < height || opt.scanFullPage) {
+                        const rules = getMatchedCSSRules(node);
+                        if (rules) {
+                            for (let r = 0; r < rules.length; r++) {
+                                pushCSS(rules[r]);
+                            }
+                        }
+                    }
+                }
+            };
+            parseTree();
+        }
+        generateCSS() {
+            let finalCSS = '';
+            for (const k in this.css) {
+                if (/:not\(/.test(k)) {
+                    continue;
+                }
+                finalCSS += k + ' { ';
+                for (const j in this.css[k]) {
+                    finalCSS += j + ': ' + this.css[k][j] + '; ';
+                }
+                finalCSS += '}\n';
+            }
+            return finalCSS;
+        }
+    }
+    try {
+        const cp = new CSSCriticalPath(jodit.ew, jodit.ed, {
+            scanFullPage: true
+        });
+        return cp.generateCSS();
+    }
+    catch (_a) { }
+    return '';
+}
+
 ;// CONCATENATED MODULE: ./src/plugins/print/print.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+
 
 
 
@@ -33372,11 +33589,11 @@ config/* Config.prototype.controls.print */.D.prototype.controls.print = {
             else {
                 myWindow.document.write('<!doctype html><html lang="' +
                     (0,helpers.defaultLanguage)(editor.o.language) +
-                    '"><head><title></title></head>' +
-                    '<body>' +
-                    editor.value +
-                    '</body></html>');
+                    '"><head><title></title></head><style>' +
+                    generateCriticalCSS(editor) +
+                    '</style><body></body></html>');
                 myWindow.document.close();
+                previewBox(editor, undefined, 'px', myWindow.document.body);
             }
             const style = myWindow.document.createElement('style');
             style.innerHTML = `@media print {

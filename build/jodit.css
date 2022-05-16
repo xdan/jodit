@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.4
+ * Version: v3.18.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.4
+ * Version: v3.18.5
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -5583,9 +5583,7 @@ html.jodit_fullsize-box_true {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-td[style*='border'] {
-  border-style: double !important;
-}
+.jodit-context table,
 .jodit-wysiwyg table {
   max-width: 100%;
   border: none;
@@ -5594,11 +5592,29 @@ td[style*='border'] {
   border-collapse: collapse;
   empty-cells: show;
 }
+.jodit-context table tr,
 .jodit-wysiwyg table tr {
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+.jodit-context table tr th {
+  min-width: 2em;
+  padding: 0.4em;
+  border: 1px solid #dadada;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
+  vertical-align: middle;
+  /**
+			// In some circumstances, because of this rule,
+			// the borders of the table are not shown - you need to find out under what
+			&[style*='border'] {
+				border-style: double !important;
+			}
+			*/
 }
 .jodit-wysiwyg table tr th {
   min-width: 2em;
@@ -5609,6 +5625,30 @@ td[style*='border'] {
       -ms-user-select: text;
           user-select: text;
   vertical-align: middle;
+  /**
+			// In some circumstances, because of this rule,
+			// the borders of the table are not shown - you need to find out under what
+			&[style*='border'] {
+				border-style: double !important;
+			}
+			*/
+}
+.jodit-context table tr td {
+  min-width: 2em;
+  padding: 0.4em;
+  border: 1px solid #dadada;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
+  vertical-align: middle;
+  /**
+			// In some circumstances, because of this rule,
+			// the borders of the table are not shown - you need to find out under what
+			&[style*='border'] {
+				border-style: double !important;
+			}
+			*/
 }
 .jodit-wysiwyg table tr td {
   min-width: 2em;
@@ -5619,6 +5659,13 @@ td[style*='border'] {
       -ms-user-select: text;
           user-select: text;
   vertical-align: middle;
+  /**
+			// In some circumstances, because of this rule,
+			// the borders of the table are not shown - you need to find out under what
+			&[style*='border'] {
+				border-style: double !important;
+			}
+			*/
 }
 .jodit-table-resizer {
   position: absolute;
@@ -5759,6 +5806,13 @@ td[style*='border'] {
       -ms-user-select: text;
           user-select: text;
   vertical-align: middle;
+  /**
+			// In some circumstances, because of this rule,
+			// the borders of the table are not shown - you need to find out under what
+			&[style*='border'] {
+				border-style: double !important;
+			}
+			*/
 }
 .jodit__preview-box table tr td {
   min-width: 2em;
@@ -5769,6 +5823,13 @@ td[style*='border'] {
       -ms-user-select: text;
           user-select: text;
   vertical-align: middle;
+  /**
+			// In some circumstances, because of this rule,
+			// the borders of the table are not shown - you need to find out under what
+			&[style*='border'] {
+				border-style: double !important;
+			}
+			*/
 }
 
 /*!
