@@ -5,6 +5,6 @@
  */
 
 module.exports = {
-	"newline": "řádek",
-	"delete": "odstranit"
+	newline: 'řádek',
+	delete: 'odstranit'
 };

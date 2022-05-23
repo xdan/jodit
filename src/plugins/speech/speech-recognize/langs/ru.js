@@ -5,6 +5,6 @@
  */
 
 module.exports = {
-	"newline": "новая строка",
-	"delete": "удалить"
+	newline: 'новая строка',
+	delete: 'удалить'
 };

@@ -5,6 +5,6 @@
  */
 
 module.exports = {
-	"newline": "newline",
-	"delete": "Hapus"
+	newline: 'newline',
+	delete: 'Hapus'
 };

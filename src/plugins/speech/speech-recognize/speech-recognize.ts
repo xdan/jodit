@@ -22,7 +22,6 @@ import { execSpellCommand } from './helpers/exec-spell-command';
 
 import './config';
 
-
 export class SpeechRecognizeNative extends Plugin implements IPlugin {
 	override buttons: Plugin['buttons'] = [
 		{

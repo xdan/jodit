@@ -5,6 +5,6 @@
  */
 
 module.exports = {
-	"newline": "nuova riga",
-	"delete": "eliminare"
+	newline: 'nuova riga',
+	delete: 'eliminare'
 };

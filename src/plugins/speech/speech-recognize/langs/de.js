@@ -5,6 +5,6 @@
  */
 
 module.exports = {
-	"newline": "Zeilenumbruch",
-	"delete": "löschen"
+	newline: 'Zeilenumbruch',
+	delete: 'löschen'
 };

@@ -5,6 +5,6 @@
  */
 
 module.exports = {
-	"newline": "újsor",
-	"delete": "törlés"
+	newline: 'újsor',
+	delete: 'törlés'
 };

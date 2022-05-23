@@ -41,7 +41,7 @@ Config.prototype.speechRecognize = {
 	makeAlarmSounds: true,
 	commands: {
 		'newline|enter': NEWLINE,
-		'delete': DELETE,
+		delete: DELETE
 	}
 };
 

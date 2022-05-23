@@ -5,6 +5,6 @@
  */
 
 module.exports = {
-	"newline": "줄 바꿈",
-	"delete": "삭제"
+	newline: '줄 바꿈',
+	delete: '삭제'
 };

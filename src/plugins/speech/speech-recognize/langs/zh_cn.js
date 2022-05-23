@@ -5,6 +5,6 @@
  */
 
 module.exports = {
-	"newline": "新行",
-	"delete": "删除"
+	newline: '新行',
+	delete: '删除'
 };

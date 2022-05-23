@@ -5,6 +5,6 @@
  */
 
 module.exports = {
-	"newline": "خط جدید",
-	"delete": "حذف"
+	newline: 'خط جدید',
+	delete: 'حذف'
 };

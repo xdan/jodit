@@ -5,6 +5,6 @@
  */
 
 module.exports = {
-	"newline": "linha",
-	"delete": "excluir"
+	newline: 'linha',
+	delete: 'excluir'
 };
