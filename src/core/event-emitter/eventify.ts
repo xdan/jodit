@@ -8,7 +8,7 @@
  * @module event-emitter
  */
 
-import type { CanUndef } from 'jodit/types';
+import type { CanUndef, IDestructible } from 'jodit/types';
 
 /**
  * Class for adding event handling capability
@@ -35,7 +35,8 @@ import type { CanUndef } from 'jodit/types';
 export abstract class Eventify<
 	MAP extends { [key: string]: (...args: any[]) => any },
 	EVENT extends keyof MAP = keyof MAP
-> {
+> implements IDestructible
+{
 	private map: Map<keyof MAP, Set<Function>> = new Map();
 
 	on(name: EVENT, func: MAP[EVENT]): this {
@@ -54,6 +55,10 @@ export abstract class Eventify<
 		}
 
 		return this;
+	}
+
+	destruct(): void {
+		this.map.clear();
 	}
 
 	protected emit(

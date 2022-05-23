@@ -82,7 +82,8 @@ export class LazyWalker
 		this.async.cancelIdleCallback(this.idleId);
 	}
 
-	destruct(): void {
+	override destruct(): void {
+		super.destruct();
 		this.stop();
 	}
 

@@ -3,8 +3,6 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-module.exports = {
-	paths: [
-		'./src/plugins/speech/speech-recognize/'
-	]
-};
+
+export const PII = 440;
+export const WARN = 940;

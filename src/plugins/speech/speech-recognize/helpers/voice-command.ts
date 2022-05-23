@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/speech/speech-recognize
+ */
+
 export function lastIndexOf(reg: RegExp, str: string): number {
 	for (let i = str.length - 1; i >= 0; i -= 1) {
 		const char = str[i];

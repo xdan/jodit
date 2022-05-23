@@ -9,7 +9,7 @@ wrong:
 ```typescript
 export default class Some {}
 //...
-import Some from './some'
+import Some from './some';
 ```
 
 Right:
@@ -17,7 +17,7 @@ Right:
 ```typescript
 export class Some {}
 //...
-import { Some } from './some'
+import { Some } from './some';
 ```
 
 ## Prefer full file paths over shortcuts. Also use jodit namespace instead of relative path
@@ -53,45 +53,67 @@ import { trim } from 'jodit/core/helpers/string/trim';
 import { isString, isUrl } from 'jodit/core/helpers/checkers';
 ```
 
-## Top types
+## Import order
 
-And don't forget the `type` keyword if you only need the type:
+Imports should be in the following order
+
+-   Styles
+-
+-   Global types
+-   Global modules
+-
+-   Local types
+-   Local modules
+
+> Don't forget the `type` keyword if you only need the type:
 
 Wrong:
 
 ```typescript
+import './config';
+import type { LocalType } from './interface';
 import { isString } from 'jodit/core/helpers/checkers/is-string';
 import { IJodit } from 'jodit/types';
+import './styles.less';
 ```
 
 Right:
 
 ```typescript
+import './styles.less';
+
 import type { IJodit } from 'jodit/types';
 import { isString } from 'jodit/core/helpers/checkers/is-string';
+
+import type { LocalType } from './interface';
+import './config';
 ```
 
 ## Several modules in a folder should be re-exported to that folder's index.ts
 
 folder/subfolder/some.ts
+
 ```
 export function some1(){}
 export function some2(){}
 ```
 
 folder/subfolder/another.ts
+
 ```
 export function another1(){}
 export function another2(){}
 ```
 
 folder/subfolder/index.ts
+
 ```
 export * from "./some"
 export * from "./another"
 ```
 
 folder/index.ts
+
 ```
 export * from "./subfolder"
 ```
