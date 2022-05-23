@@ -151,7 +151,7 @@ export type ExecCommandCallback<T> =
 			this: T,
 			command: string,
 			value?: string,
-			next?: boolean
+			next?: any
 	  ) => void | boolean | Promise<void | boolean>)
 	| ((
 			this: T,

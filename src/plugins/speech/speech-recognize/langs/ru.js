@@ -4,9 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-/**
- * @module plugins/speech/speech-recognize
- */
-
-export const NEWLINE = 'NEWLINE';
-export const DELETE = 'DELETE';
+module.exports = {
+	"newline": "новая строка",
+	"delete": "удалить"
+};

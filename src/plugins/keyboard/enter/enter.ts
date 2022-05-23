@@ -47,6 +47,12 @@ export class enter extends Plugin {
 				? PARAGRAPH
 				: (defaultTag as 'p' | 'div');
 		}
+
+		editor.registerCommand(
+			'enter',
+			(command: string, value?: string, event: any = {}): false | void =>
+				this.onEnter(event)
+		);
 	}
 
 	@watch(':keydown.enter')

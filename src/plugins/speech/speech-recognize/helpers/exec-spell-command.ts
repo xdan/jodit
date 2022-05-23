@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/speech/speech-recognize
+ */
+
 import type { IJodit } from 'jodit/types';
 import { NEWLINE, DELETE } from './commands';
 
@@ -15,10 +19,7 @@ export function execSpellCommand(jodit: IJodit, command: string): void {
 		}
 
 		case NEWLINE: {
-			jodit.e.fire('keydown', {
-				key: 'Enter',
-				preventDefault() {}
-			});
+			jodit.execCommand('enter', '', {});
 			break;
 		}
 	}
