@@ -16,7 +16,7 @@ import { Alert } from 'jodit/modules/dialog/alert';
 import { SpeechRecognition } from './helpers/api';
 import { Sound } from './helpers/sound';
 import { dataBind } from '../../../core/helpers';
-import { NEWLINE } from './helpers/commands';
+import { NEWLINE, DELETE } from './helpers/commands';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -40,7 +40,8 @@ Config.prototype.speechRecognize = {
 	lang: 'en-US',
 	makeAlarmSounds: true,
 	commands: {
-		'newline|enter': NEWLINE
+		'newline|enter': NEWLINE,
+		'delete': DELETE,
 	}
 };
 
@@ -94,5 +95,8 @@ Config.prototype.controls.speechRecognize = {
 	icon: require('./icon.svg'),
 	name: 'speechRecognize',
 	command: 'toggleSpeechRecognize',
-	tooltip: 'Speech Recognize'
+	tooltip: 'Speech Recognize',
+	mods: {
+		stroke: false
+	}
 } as IControlType;

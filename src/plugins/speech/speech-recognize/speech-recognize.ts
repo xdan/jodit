@@ -14,10 +14,14 @@ import './speech-recognize.less';
 
 import type { IDictionary, IJodit, IPlugin } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
-import { watch } from 'jodit/src/core/decorators/watch/watch';
-import { keys } from 'jodit/src/core/helpers/utils/utils';
+import { watch } from 'jodit/core/decorators/watch/watch';
+import { keys } from 'jodit/core/helpers/utils/utils';
+import { extendLang } from 'jodit/core/global';
+
+import { execSpellCommand } from './helpers/exec-spell-command';
 
 import './config';
+
 
 export class SpeechRecognizeNative extends Plugin implements IPlugin {
 	override buttons: Plugin['buttons'] = [
@@ -28,17 +32,20 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 	];
 
 	protected override afterInit(jodit: IJodit): void {
-		if (jodit.o.speechRecognize.commands) {
-			keys(jodit.o.speechRecognize.commands, false).forEach(words => {
+		const { commands } = jodit.o.speechRecognize;
+
+		if (commands) {
+			extendLang(require('./langs'));
+
+			keys(commands, false).forEach(words => {
 				const keys = words.split('|');
 				keys.forEach(key => {
 					key = key.toLowerCase();
-					this._commandToWord[key] =
-						jodit.o.speechRecognize.commands[words];
+					this._commandToWord[key] = commands[words];
 
 					const translatedKey = jodit.i18n(key).toLowerCase();
 					if (translatedKey !== key) {
-						jodit.o.speechRecognize.commands[words];
+						this._commandToWord[translatedKey] = commands[words];
 					}
 				});
 			});
@@ -58,7 +65,7 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 		command = command.toLowerCase();
 
 		if (this._commandToWord[command]) {
-			alert(this._commandToWord[command]);
+			execSpellCommand(this.j, this._commandToWord[command]);
 			return true;
 		}
 

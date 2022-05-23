@@ -104,7 +104,7 @@ const header = fs.readFileSync(
 
 const translateAll = text => {
 	const langs = files
-		.filter(file => file !== 'README.md')
+		.filter(file => file !== 'README.md' && !file.includes('test'))
 		.map(file => {
 			let lang = file.replace(/\.(js|ts)$/, '');
 			const realLang = lang;

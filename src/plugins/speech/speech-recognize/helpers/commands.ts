@@ -5,3 +5,4 @@
  */
 
 export const NEWLINE = 'NEWLINE';
+export const DELETE = 'DELETE';

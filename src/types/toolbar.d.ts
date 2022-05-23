@@ -16,13 +16,12 @@ import type {
 	Nullable,
 	IViewBased,
 	IJodit,
-	IPoint,
+	IMods,
 	IBound
 } from './';
 import type { IFileBrowser } from './file-browser';
 
 import type { IUIButton, IUIElement, IUIList } from './ui';
-import { IMods } from './';
 
 interface IControlType<
 	T = IJodit | IViewBased | IFileBrowser,
@@ -247,6 +246,8 @@ interface IControlType<
 	) => string | HTMLElement | IUIElement | false;
 
 	defaultValue?: string | string[];
+
+	mods?: IMods['mods'];
 }
 
 interface IControlTypeStrong extends IControlType {

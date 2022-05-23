@@ -273,6 +273,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 			this.update();
 		});
+
+		if (control.mods) {
+			Object.keys(control.mods).forEach(mod => {
+				control.mods && this.setMod(mod, control.mods[mod]);
+			});
+		}
 	}
 
 	/**
