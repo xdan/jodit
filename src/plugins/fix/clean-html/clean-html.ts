@@ -5,7 +5,7 @@
  */
 
 /**
- * [[include:src/plugins/fix/clean-html/README.md]]
+ * [[include:plugins/fix/clean-html/README.md]]
  * @packageDocumentation
  * @module plugins/fix/clean-html
  */

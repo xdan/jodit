@@ -15,7 +15,7 @@ import { spy } from 'jodit/core/decorators/spy/spy';
 import { autobind } from 'jodit/src/core/decorators';
 
 import { sound } from './sound';
-import { PII, WARN } from '../../constants';
+import { PII, WARN } from '../constants';
 
 @autobind
 @spy

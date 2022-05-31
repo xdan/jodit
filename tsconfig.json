@@ -48,5 +48,6 @@
 		"./src/typings.d.ts",
 		"./src/types/index.d.ts",
 		"./src/types/async.d.ts",
+		"./src/plugins/speech/speech-recognize/speech-recognize.ts",
 	]
 }

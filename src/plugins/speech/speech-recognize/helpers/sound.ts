@@ -8,7 +8,7 @@
  * @module plugins/speech/speech-recognize
  */
 
-import { PII } from '../../constants';
+import { PII } from '../constants';
 
 export function sound({
 	sec = 0.1,

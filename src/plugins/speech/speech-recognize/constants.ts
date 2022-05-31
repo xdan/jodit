@@ -4,5 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/speech/speech-recognize
+ */
+
 export const PII = 440;
 export const WARN = 940;
