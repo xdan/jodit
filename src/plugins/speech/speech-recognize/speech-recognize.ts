@@ -139,4 +139,6 @@ declare const Jodit: {
 	plugins: any;
 };
 
-Jodit.plugins.add('speech-recognize', SpeechRecognizeNative);
+if (typeof Jodit !== 'undefined') {
+	Jodit.plugins.add('speech-recognize', SpeechRecognizeNative);
+}

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.5
+ * Version: v3.18.6
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -2779,6 +2779,9 @@ svg.jodit-icon {
 }
 .jodit-toolbar-button_with-trigger_true:hover:not([disabled]) {
   border-color: var(--jd-color-border);
+}
+.jodit-toolbar-button_stroke_false svg {
+  stroke: none;
 }
 
 /*!
