@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/print
+ */
+
 import type { IJodit, IDictionary } from 'jodit/types';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 
