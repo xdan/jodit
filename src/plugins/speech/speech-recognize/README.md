@@ -108,4 +108,4 @@ Jodit.make('#editor', {
 });
 ```
 
-For other settings see [documentation]()
+For other settings see [documentation](https://xdsoft.net/jodit/docs/modules/plugins_speech_speech_recognize.html)
