@@ -9,11 +9,13 @@
  */
 
 export interface ISpeechRecognizeResult {
-	results: Array<
-		Array<{
-			transcript: string;
-		}>
-	>;
+	resultIndex: number;
+	results: {
+		item(index: number): {
+			isFinal?: boolean;
+			item(subIndex: number): { transcript: string };
+		};
+	};
 }
 
 export interface ISpeechRecognize {
@@ -23,7 +25,21 @@ export interface ISpeechRecognize {
 	): void;
 	addEventListener(event: string, e: Function): void;
 	removeEventListener(event: string, e: Function): void;
-	lang: string;
+
+	/**
+	 * https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/lang
+	 */
+	lang?: string;
+
+	/**
+	 * https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/interimResults
+	 */
+	interimResults: boolean;
+
+	/**
+	 * https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/continuous
+	 */
+	continuous: boolean;
 
 	start(): void;
 	abort(): void;

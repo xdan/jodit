@@ -10,44 +10,94 @@
 
 import type { IControlType, IJodit, IDictionary } from 'jodit/types';
 import type { ISpeechRecognizeConstructor } from './interface';
+
 import { Config } from 'jodit/config';
-import { RecognizeManager } from './helpers/recognize-manager';
+import { dataBind } from 'jodit/core/helpers/utils/data-bind';
+import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
 import { Alert } from 'jodit/modules/dialog/alert';
+
+import { RecognizeManager } from './helpers/recognize-manager';
 import { SpeechRecognition } from './helpers/api';
-import { Sound } from './helpers/sound';
-import { dataBind } from '../../../core/helpers';
-import { NEWLINE, DELETE } from './helpers/commands';
 
 declare module 'jodit/config' {
 	interface Config {
 		speechRecognize: {
-			api: ISpeechRecognizeConstructor;
+			readonly api: ISpeechRecognizeConstructor;
 
-			lang: string;
+			/**
+			 * Returns and sets the language of the current SpeechRecognition.
+			 * If not specified, this defaults to the HTML lang attribute value, or
+			 * the user agent's language setting if that isn't set either.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/lang
+			 */
+			readonly lang?: string;
+
+			/**
+			 * Controls whether continuous results are returned for each recognition,
+			 * or only a single result.
+			 * @see https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/continuous
+			 */
+			readonly continuous: boolean;
+
+			/**
+			 * Controls whether interim results should be returned (true) or not (false.)
+			 * Interim results are results that are not yet final (e.g. the isFinal property is false.)
+			 * @see https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/interimResults
+			 */
+			readonly interimResults: boolean;
 
 			/**
 			 * On recognition error - make an error sound
 			 */
-			makeAlarmSounds: boolean;
+			readonly sound: boolean;
 
-			commands: IDictionary<string>;
+			/**
+			 * You can specify any commands in your language by listing them with the `|` sign.
+			 * In the value, write down any commands for
+			 * [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand#parameters)
+			 * and value (separated by ::)
+			 * You can also use [custom Jodit commands](#need-article)
+			 * For example
+			 * ```js
+			 * Jodit.make('#editor', {
+			 *   speechRecognize: {
+			 *     commands: {
+			 *       'remove line|remove paragraph': 'backspaceSentenceButton',
+			 *       'start bold': 'bold',
+			 *       'insert table|create table': 'insertHTML::<table><tr><td>test</td></tr></table>',
+			 *     }
+			 *   }
+			 * });
+			 * ```
+			 */
+			readonly commands: IDictionary<string>;
 		};
 	}
 }
 
 Config.prototype.speechRecognize = {
 	api: SpeechRecognition,
-	lang: 'en-US',
-	makeAlarmSounds: true,
+	sound: true,
+	continuous: true,
+	interimResults: true,
 	commands: {
-		'newline|enter': NEWLINE,
-		delete: DELETE
+		'newline|enter': 'enter',
+		'delete|remove word|delete word': 'backspaceWordButton',
+		comma: 'inserthtml::,',
+		underline: 'inserthtml::_',
+		hyphen: 'inserthtml::-',
+		space: 'inserthtml:: ',
+		question: 'inserthtml::?',
+		dot: 'inserthtml::.',
+		'quote|quotes|open quote': "inserthtml::'",
+		'header|header h1': 'formatblock::h1',
+		'select all': 'selectall'
 	}
 };
 
 Config.prototype.controls.speechRecognize = {
-	isActive(jodit, _, btn): boolean {
-		const api = btn && dataBind<RecognizeManager>(btn, 'speech');
+	isActive(jodit, _): boolean {
+		const api = dataBind<RecognizeManager>(jodit, 'speech');
 		return Boolean(api?.isEnabled);
 	},
 
@@ -55,20 +105,32 @@ Config.prototype.controls.speechRecognize = {
 		return !jodit.o.speechRecognize.api;
 	},
 
-	exec(jodit: IJodit, current, { button }): void {
-		const { api: Api, lang } = jodit.o.speechRecognize;
+	exec(jodit: IJodit, current, { button, control }): void {
+		const {
+			api: Api,
+			lang,
+			continuous,
+			interimResults,
+			sound
+		} = jodit.o.speechRecognize;
 
 		if (!Api) {
 			Alert('Speech recognize API unsupported in your browser');
 			return;
 		}
 
-		let api = dataBind<RecognizeManager>(button, 'speech');
+		let api = dataBind<RecognizeManager>(jodit, 'speech');
 
 		if (!api) {
-			api = new RecognizeManager(jodit.async, new Api());
+			const nativeApi = new Api();
+			api = new RecognizeManager(jodit.async, nativeApi);
+
 			api.lang = lang;
-			dataBind<RecognizeManager>(button, 'speech', api);
+			api.continuous = continuous;
+			api.interimResults = interimResults;
+			api.sound = sound;
+
+			dataBind<RecognizeManager>(jodit, 'speech', api);
 
 			api.on('pulse', (enable: boolean) => {
 				button.setMod('pulse', enable);
@@ -78,15 +140,28 @@ Config.prototype.controls.speechRecognize = {
 				jodit.e.fire('speechRecognizeResult', text)
 			);
 
-			if (jodit.o.speechRecognize.makeAlarmSounds) {
-				api.on('sound', (sound: number) => {
-					Sound({ sound });
-				});
-			}
+			api.on('progress', (text: string): void =>
+				jodit.e.fire('speechRecognizeProgressResult', text)
+			);
 
 			button.hookStatus('beforeDestruct', () => {
 				api.destruct();
 			});
+		}
+
+		if (control.args) {
+			const key = control.args[0] as
+				| 'sound'
+				| 'continuous'
+				| 'interimResults';
+
+			if (isBoolean(api[key])) {
+				api[key] = !api[key];
+				if (api.isEnabled) {
+					api.restart();
+				}
+				return;
+			}
 		}
 
 		api.toggle();
@@ -96,6 +171,21 @@ Config.prototype.controls.speechRecognize = {
 	name: 'speechRecognize',
 	command: 'toggleSpeechRecognize',
 	tooltip: 'Speech Recognize',
+	list: {
+		sound: 'Sound',
+		interimResults: 'Interim Results'
+	},
+	childTemplate(
+		jodit: IJodit,
+		key: 'sound' | 'interimResults',
+		value: string
+	): string {
+		const api = dataBind<RecognizeManager>(jodit, 'speech');
+
+		return `<span class='jodit-speech-recognize__list-item'><input ${
+			api?.[key] ?? jodit.o.speechRecognize[key] ? 'checked' : ''
+		} class='jodit-checkbox' type='checkbox'>${value}</span>`;
+	},
 	mods: {
 		stroke: false
 	}

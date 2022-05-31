@@ -1,3 +1,6 @@
+@import (reference) '../../../styles/mixins';
+@import (reference) '../../../styles/variables';
+
 @keyframes jdSpeakAnimation {
 	0% {
 		fill: green;
@@ -15,5 +18,23 @@
 			animation-iteration-count: infinite;
 			animation-name: jdSpeakAnimation;
 		}
+	}
+}
+
+.jodit-speech-recognize {
+	&__list-item {
+		padding: var(--padding-default);
+	}
+
+	&__popup {
+		.font();
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		padding: 24px;
+		background-color: rgba(240, 240, 240, 0.4);
+		border-radius: 8px;
+		font-size: 32px;
+		transform: translate(-50%, -50px);
 	}
 }

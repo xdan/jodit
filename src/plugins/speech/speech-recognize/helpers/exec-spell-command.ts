@@ -9,18 +9,8 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { NEWLINE, DELETE } from './commands';
 
-export function execSpellCommand(jodit: IJodit, command: string): void {
-	switch (command) {
-		case DELETE: {
-			jodit.execCommand('backspaceWordButton');
-			break;
-		}
-
-		case NEWLINE: {
-			jodit.execCommand('enter', '', {});
-			break;
-		}
-	}
+export function execSpellCommand(jodit: IJodit, commandSentence: string): void {
+	const [command, value] = commandSentence.split('::');
+	jodit.execCommand(command, null, value);
 }

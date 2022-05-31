@@ -436,9 +436,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				};
 			}
 
+			const { childTemplate } = control;
 			const childControl: IControlTypeStrong = {
 				name: key.toString(),
-				template: control.childTemplate,
+				template:
+					childTemplate &&
+					((j, k, v): string => childTemplate(j, k, v, this)),
 				exec: control.exec,
 				data: control.data,
 				command: control.command,

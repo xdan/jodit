@@ -21,14 +21,19 @@ import { extendLang } from 'jodit/core/global';
 import { execSpellCommand } from './helpers/exec-spell-command';
 
 import './config';
+import { Dom } from 'jodit/src/core/dom/dom';
+import { debounce } from 'jodit/src/core/decorators/debounce/debounce';
 
 export class SpeechRecognizeNative extends Plugin implements IPlugin {
-	override buttons: Plugin['buttons'] = [
-		{
-			group: 'state',
-			name: 'speechRecognize'
+	constructor(j: IJodit) {
+		super(j);
+		if (j.o.speechRecognize.api) {
+			j.registerButton({
+				group: 'state',
+				name: 'speechRecognize'
+			});
 		}
-	];
+	}
 
 	protected override afterInit(jodit: IJodit): void {
 		const { commands } = jodit.o.speechRecognize;
@@ -38,13 +43,19 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 
 			keys(commands, false).forEach(words => {
 				const keys = words.split('|');
+
 				keys.forEach(key => {
-					key = key.toLowerCase();
+					key = key.trim().toLowerCase();
 					this._commandToWord[key] = commands[words];
 
-					const translatedKey = jodit.i18n(key).toLowerCase();
-					if (translatedKey !== key) {
-						this._commandToWord[translatedKey] = commands[words];
+					const translatedKeys = jodit.i18n(key);
+
+					if (translatedKeys !== key) {
+						translatedKeys.split('|').forEach(translatedKey => {
+							this._commandToWord[
+								translatedKey.trim().toLowerCase()
+							] = commands[words].trim();
+						});
 					}
 				});
 			});
@@ -53,15 +64,65 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 
 	protected override beforeDestruct(jodit: IJodit): void {}
 
+	private messagePopup!: HTMLElement;
+
+	@watch(':speechRecognizeProgressResult')
+	@debounce()
+	protected onSpeechRecognizeProgressResult(text: string): void {
+		if (!this.messagePopup) {
+			this.messagePopup = this.j.create.div(
+				'jodit-speech-recognize__popup'
+			);
+		}
+		this.j.container.appendChild(this.messagePopup);
+		this.j.async.setTimeout(
+			() => {
+				Dom.safeRemove(this.messagePopup);
+			},
+			{
+				label: 'onSpeechRecognizeProgressResult',
+				timeout: 1000
+			}
+		);
+
+		this.messagePopup.innerText = text + '|';
+	}
+
 	@watch(':speechRecognizeResult')
 	protected onSpeechRecognizeResult(text: string): void {
+		const { j } = this,
+			{ s } = j;
+
+		Dom.safeRemove(this.messagePopup);
+
 		if (!this._checkCommand(text)) {
-			this.j.s.insertHTML(text);
+			const { range } = s,
+				node = s.current();
+
+			if (
+				s.isCollapsed() &&
+				Dom.isText(node) &&
+				Dom.isOrContains(j.editor, node) &&
+				node.nodeValue
+			) {
+				const sentence = node.nodeValue;
+
+				node.nodeValue =
+					sentence +
+					(/[\u00A0 ]\uFEFF*$/.test(sentence) ? '' : ' ') +
+					text;
+
+				range.setStartAfter(node);
+				s.selectRange(range);
+				j.synchronizeValues();
+			} else {
+				s.insertHTML(text);
+			}
 		}
 	}
 
 	private _checkCommand(command: string): boolean {
-		command = command.toLowerCase();
+		command = command.toLowerCase().replace(/\./g, '');
 
 		if (this._commandToWord[command]) {
 			execSpellCommand(this.j, this._commandToWord[command]);

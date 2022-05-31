@@ -20,7 +20,7 @@ import { BR } from 'jodit/core/constants';
 export function checkBR(
 	jodit: IJodit,
 	current: Node,
-	shiftKeyPressed: boolean
+	shiftKeyPressed?: boolean
 ): boolean {
 	const isMultiLineBlock = Dom.closest(
 		current,

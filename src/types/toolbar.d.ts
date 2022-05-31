@@ -209,7 +209,7 @@ interface IControlType<
 	 * The method which will be called for each element of button.list
 	 */
 	template?: (jodit: T, key: string, value: string) => string;
-	childTemplate?: (jodit: T, key: string, value: string) => string;
+	childTemplate?: (jodit: T, key: string, value: string, button: IToolbarButton) => string;
 
 	/**
 	 * After click on the button it will show popup element which consist value that this function returned

@@ -9,6 +9,14 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.18.6
+
+#### :rocket: New Feature
+
+-   Separate plugin for voice recognition and input of recognized text into the editor.
+    [Feature Request: Add ability for user to dictate using local device microphone as input #828](https://github.com/xdan/jodit/issues/828)
+    > This plugin is not included in the main Jodit build. It must be connected separately [Подробнее](./src/plugins/speech/speech-recognize/README.md)
+
 ## 3.18.5
 
 #### :boom: Breaking Change
@@ -1472,11 +1480,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                       ]
+-                                                                                                                                                                                                                                                                                           	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                           	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                           	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                           	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                           ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

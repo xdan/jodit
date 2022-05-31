@@ -83,7 +83,7 @@ export class enter extends Plugin {
 		}
 	}
 
-	private onEnter(event: KeyboardEvent): false | void {
+	private onEnter(event?: KeyboardEvent): false | void {
 		const editor = this.j;
 
 		const current = this.getCurrentOrFillEmpty(editor);
@@ -94,8 +94,8 @@ export class enter extends Plugin {
 
 		// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
 		if (
-			(!isLi || event.shiftKey) &&
-			!checkBR(editor, current, event.shiftKey)
+			(!isLi || event?.shiftKey) &&
+			!checkBR(editor, current, event?.shiftKey)
 		) {
 			return false;
 		}
