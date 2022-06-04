@@ -48,6 +48,7 @@ export const KEY_BACKSPACE = 'Backspace';
 export const KEY_TAB = 'Tab';
 export const KEY_ENTER = 'Enter';
 export const KEY_ESC = 'Escape';
+export const KEY_ALT = 'Alt';
 
 export const KEY_LEFT = 'ArrowLeft';
 export const KEY_UP = 'ArrowUp';
