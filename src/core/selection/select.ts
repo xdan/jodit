@@ -623,7 +623,7 @@ export class Select implements ISelect {
 		}
 
 		if (fireChange && this.j.events) {
-			this.j.e.fire('synchro');
+			this.j.__imdSynchronizeValues();
 		}
 
 		if (this.j.events) {
@@ -692,7 +692,8 @@ export class Select implements ISelect {
 			}
 		}
 
-		this.j.synchronizeValues();
+		// There is no need to use synchronizeValues because you need to apply the changes immediately
+		this.j.__imdSynchronizeValues();
 	}
 
 	/**

@@ -45,7 +45,13 @@ interface IJodit extends IViewWithToolbar {
 	getNativeEditorValue(): string;
 	getEditorValue(removeSelectionMarkers?: boolean, consumer?: string): string;
 	setEditorValue(value?: string): void;
+
 	synchronizeValues(): void;
+	/**
+	 * This is an internal method, do not use it in your applications.
+	 * @private
+	 */
+	__imdSynchronizeValues(): void;
 
 	/**
 	 * Only getter

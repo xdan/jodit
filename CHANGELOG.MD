@@ -14,6 +14,7 @@
 #### :bug: Bug Fix
 
 -   [Multiple modals 'Paste as HTML' after longer pressing ctrl+v #849](https://github.com/xdan/jodit/issues/849)
+-   [All added videos are deleted when you click Delete or Backspace #847](https://github.com/xdan/jodit/issues/847)
 
 ## 3.18.6
 

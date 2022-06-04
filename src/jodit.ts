@@ -440,6 +440,14 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 	@throttle()
 	synchronizeValues(): void {
+		this.__imdSynchronizeValues();
+	}
+
+	/**
+	 * This is an internal method, do not use it in your applications.
+	 * @private
+	 */
+	__imdSynchronizeValues(): void {
 		this.setEditorValue();
 	}
 
@@ -549,7 +557,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 			throw error('value must be string');
 		}
 
-		if (value !== undefined && this.getNativeEditorValue() !== value) {
+		if (!isVoid(value) && this.getNativeEditorValue() !== value) {
 			this.setNativeEditorValue(value);
 		}
 
@@ -604,7 +612,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 	/**
 	 * @deprecated Use `Jodit.value` instead
 	 */
-	setElementValue(value?: string): CanPromise<void> {
+	protected setElementValue(value?: string): CanPromise<void> {
 		const oldValue = this.getElementValue();
 
 		if (value === undefined || (isString(value) && value !== oldValue)) {
