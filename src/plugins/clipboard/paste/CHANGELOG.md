@@ -9,6 +9,10 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## (2022-06-04) @xdan
+
+-   [Multiple modals 'Paste as HTML' after longer pressing ctrl+v #849](https://github.com/xdan/jodit/issues/849)
+
 ## (2022-01-06) @xdan
 
 #### :rocket: New Feature

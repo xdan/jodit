@@ -167,24 +167,28 @@ Config.prototype.controls.speechRecognize = {
 		api.toggle();
 		button.state.activated = api.isEnabled;
 	},
+
 	icon: require('./icon.svg'),
 	name: 'speechRecognize',
 	command: 'toggleSpeechRecognize',
 	tooltip: 'Speech Recognize',
+
 	list: {
 		sound: 'Sound',
 		interimResults: 'Interim Results'
 	},
+
 	childTemplate(
 		jodit: IJodit,
 		key: 'sound' | 'interimResults',
 		value: string
 	): string {
-		const api = dataBind<RecognizeManager>(jodit, 'speech');
+		const api = dataBind<RecognizeManager>(jodit, 'speech'),
+			checked = api?.[key] ?? jodit.o.speechRecognize[key];
 
 		return `<span class='jodit-speech-recognize__list-item'><input ${
-			api?.[key] ?? jodit.o.speechRecognize[key] ? 'checked' : ''
-		} class='jodit-checkbox' type='checkbox'>${value}</span>`;
+			checked ? 'checked' : ''
+		} class='jodit-checkbox' type='checkbox'>&nbsp;${value}</span>`;
 	},
 	mods: {
 		stroke: false

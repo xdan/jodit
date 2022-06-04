@@ -70,6 +70,14 @@ export class paste extends Plugin {
 		}
 	}
 
+	/** @override **/
+	protected beforeDestruct(jodit: IJodit): void {
+		jodit.e
+			.off('paste.paste', this.onPaste)
+			.off('processPaste.paste', this.onProcessPasteReplaceNl2Br)
+			.off('.paste');
+	}
+
 	/**
 	 * Paste event handler
 	 */
@@ -149,6 +157,11 @@ export class paste extends Plugin {
 	}
 
 	/**
+	 * The dialog box was already open
+	 */
+	private _isDialogOpened: boolean = false;
+
+	/**
 	 * Process usual HTML text fragment
 	 */
 	private processHTML(e: PasteEvent, html: string): boolean {
@@ -164,19 +177,32 @@ export class paste extends Plugin {
 						html,
 						cached.action || this.j.o.defaultActionOnPaste
 					);
+
 					return true;
 				}
 			}
 
-			askInsertTypeDialog(
+			if (this._isDialogOpened) {
+				return true;
+			}
+
+			const dialog = askInsertTypeDialog(
 				this.j,
 				'Your code is similar to HTML. Keep as HTML?',
 				'Paste as HTML',
 				insertType => {
+					this._isDialogOpened = false;
 					this.insertByType(e, html, insertType);
 				},
 				this.j.o.pasteHTMLActionList
 			);
+
+			if (dialog) {
+				this._isDialogOpened = true;
+				dialog.e.on('beforeClose', () => {
+					this._isDialogOpened = false;
+				});
+			}
 
 			return true;
 		}
@@ -225,10 +251,5 @@ export class paste extends Plugin {
 		if (type === TEXT_PLAIN + ';' && !isHTML(text)) {
 			return nl2br(text);
 		}
-	}
-
-	/** @override **/
-	protected beforeDestruct(jodit: IJodit): void {
-		jodit.e.off('paste.paste', this.onPaste);
 	}
 }
