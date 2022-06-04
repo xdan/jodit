@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.6
+ * Version: v3.18.7
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -21,6 +21,7 @@
   animation-name: jdSpeakAnimation;
 }
 .jodit-speech-recognize__list-item {
+  display: flex;
   padding: var(--jd-padding-default);
 }
 .jodit-speech-recognize__popup {

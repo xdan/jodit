@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.6
+ * Version: v3.18.7
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -381,6 +381,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "IS_INLINE": function() { return /* binding */ IS_INLINE; },
 /* harmony export */   "IS_MAC": function() { return /* binding */ IS_MAC; },
 /* harmony export */   "KEY_ALIASES": function() { return /* binding */ KEY_ALIASES; },
+/* harmony export */   "KEY_ALT": function() { return /* binding */ KEY_ALT; },
 /* harmony export */   "KEY_BACKSPACE": function() { return /* binding */ KEY_BACKSPACE; },
 /* harmony export */   "KEY_DELETE": function() { return /* binding */ KEY_DELETE; },
 /* harmony export */   "KEY_DOWN": function() { return /* binding */ KEY_DOWN; },
@@ -443,6 +444,7 @@ const KEY_BACKSPACE = 'Backspace';
 const KEY_TAB = 'Tab';
 const KEY_ENTER = 'Enter';
 const KEY_ESC = 'Escape';
+const KEY_ALT = 'Alt';
 const KEY_LEFT = 'ArrowLeft';
 const KEY_UP = 'ArrowUp';
 const KEY_RIGHT = 'ArrowRight';
@@ -6830,7 +6832,7 @@ class Select {
             }
         }
         if (fireChange && this.j.events) {
-            this.j.e.fire('synchro');
+            this.j.__imdSynchronizeValues();
         }
         if (this.j.events) {
             this.j.e.fire('afterInsertNode', node);
@@ -6873,7 +6875,7 @@ class Select {
                 this.setCursorIn(fragment);
             }
         }
-        this.j.synchronizeValues();
+        this.j.__imdSynchronizeValues();
     }
     insertImage(url, styles = null, defaultWidth = null) {
         const image = (0,helpers.isString)(url) ? this.j.createInside.element('img') : url;
@@ -12431,7 +12433,7 @@ class View extends _modules__WEBPACK_IMPORTED_MODULE_3__.Component {
         this.isView = true;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.18.6";
+        this.version = "3.18.7";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View.defaultOptions;
@@ -12528,10 +12530,10 @@ class View extends _modules__WEBPACK_IMPORTED_MODULE_3__.Component {
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.18.6";
+        return "3.18.7";
     }
     static getVersion() {
-        return "3.18.6";
+        return "3.18.7";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -16983,7 +16985,8 @@ module.exports = {
 	Clean: 'نظيفة',
 	'Insert className': 'أدخل اسم الفصل',
 	'Line height': 'ارتفاع الخط',
-	Spellchecking: 'التدقيق الإملائي'
+	Spellchecking: 'التدقيق الإملائي',
+	'Press Alt for custom resizing': 'اضغط البديل لتغيير حجم مخصص'
 };
 
 
@@ -17218,7 +17221,8 @@ module.exports = {
 	'Find Next': 'Najít Další',
 	'Insert className': 'Vložte název třídy',
 	'Line height': 'Výška čáry',
-	Spellchecking: 'Kontrola pravopisu'
+	Spellchecking: 'Kontrola pravopisu',
+	'Press Alt for custom resizing': 'Stiskněte Alt pro vlastní změnu velikosti'
 };
 
 
@@ -17458,7 +17462,9 @@ module.exports = {
 	'Find Next': 'Weitersuchen',
 	'Insert className': 'className (CSS) einfügen',
 	'Line height': 'Zeilenhöhe',
-	Spellchecking: 'Rechtschreibprüfung'
+	Spellchecking: 'Rechtschreibprüfung',
+	'Press Alt for custom resizing':
+		'Drücken Sie Alt für benutzerdefinierte Größenanpassung'
 };
 
 
@@ -17697,7 +17703,9 @@ module.exports = {
 	'Find Next': 'Buscar Siguiente',
 	'Insert className': 'Insertar nombre de clase',
 	'Line height': 'Altura de la línea',
-	Spellchecking: 'Corrección ortográfica'
+	Spellchecking: 'Corrección ortográfica',
+	'Press Alt for custom resizing':
+		'Presione Alt para cambiar el tamaño personalizado'
 };
 
 
@@ -17927,7 +17935,9 @@ module.exports = {
 	'Find Next': 'Suivant',
 	'Insert className': 'Insérer un nom de classe',
 	'Line height': 'Hauteur de ligne',
-	Spellchecking: 'Vérification Orthographique'
+	Spellchecking: 'Vérification Orthographique',
+	'Press Alt for custom resizing':
+		'Appuyez sur Alt pour un redimensionnement personnalisé'
 };
 
 
@@ -18161,7 +18171,8 @@ module.exports = {
 	'Find Next': 'חפש את הבא',
 	'Insert className': 'הכנס את שם הכיתה',
 	'Line height': 'גובה שורה',
-	Spellchecking: 'בדיקת איות'
+	Spellchecking: 'בדיקת איות',
+	'Press Alt for custom resizing': 'לחץ על אלט לשינוי גודל מותאם אישית'
 };
 
 
@@ -18397,7 +18408,8 @@ module.exports = {
 	'Find Next': 'Következő Keresése',
 	'Insert className': 'Helyezze be az osztály nevét',
 	'Line height': 'Vonal magassága',
-	Spellchecking: 'Helyesírás-ellenőrzés'
+	Spellchecking: 'Helyesírás-ellenőrzés',
+	'Press Alt for custom resizing': 'Nyomja meg az Alt egyéni átméretezés'
 };
 
 
@@ -18632,7 +18644,8 @@ module.exports = {
 	'Find Next': 'Menemukan Berikutnya',
 	'Insert className': 'Masukkan nama kelas',
 	'Line height': 'Tinggi baris',
-	Spellchecking: 'Spellchecking'
+	Spellchecking: 'Spellchecking',
+	'Press Alt for custom resizing': 'Tekan Alt untuk mengubah ukuran kustom'
 };
 
 
@@ -18867,7 +18880,9 @@ module.exports = {
 	'Find Next': 'Trova Successivo',
 	'Insert className': 'Inserisci il nome della classe',
 	'Line height': 'Altezza linea',
-	Spellchecking: 'Controllo ortografico'
+	Spellchecking: 'Controllo ortografico',
+	'Press Alt for custom resizing':
+		'Premere Alt per il ridimensionamento personalizzato'
 };
 
 
@@ -19105,7 +19120,9 @@ module.exports = {
 	'Upper Roman': 'ローマ数字大文字',
 	'Insert className': 'クラス名を挿入',
 	'Line height': 'ラインの高さ',
-	Spellchecking: 'スペルチェック'
+	Spellchecking: 'スペルチェック',
+	'Press Alt for custom resizing':
+		'カスタムサイズ変更のためのAltキーを押します'
 };
 
 
@@ -19338,7 +19355,9 @@ module.exports = {
 	'Find Next': '다음 찾기',
 	'Insert className': 'className 입력',
 	'Line height': '선 높이',
-	Spellchecking: '맞춤법 검사'
+	Spellchecking: '맞춤법 검사',
+	'Press Alt for custom resizing':
+		'사용자 지정 크기 조정에 대 한 고도 누르십시오'
 };
 
 
@@ -19574,7 +19593,8 @@ module.exports = {
 	'Find Next': 'Volgende Zoeken',
 	'Insert className': 'Voeg de klassenaam in',
 	'Line height': 'Lijnhoogte',
-	Spellchecking: 'Spellingcontrole'
+	Spellchecking: 'Spellingcontrole',
+	'Press Alt for custom resizing': 'Druk op Alt voor aangepaste grootte'
 };
 
 
@@ -19810,7 +19830,8 @@ module.exports = {
 	'Find Next': 'Znajdź Dalej',
 	'Insert className': 'Wstaw nazwę zajęć',
 	'Line height': 'Wysokość linii',
-	Spellchecking: 'Sprawdzanie pisowni'
+	Spellchecking: 'Sprawdzanie pisowni',
+	'Press Alt for custom resizing': 'Naciśnij Alt, aby zmienić rozmiar'
 };
 
 
@@ -20049,7 +20070,9 @@ module.exports = {
 	'Find Next': 'Localizar Próxima',
 	'Insert className': 'Insira o nome da classe',
 	'Line height': 'Altura da linha',
-	Spellchecking: 'Verificação ortográfica'
+	Spellchecking: 'Verificação ortográfica',
+	'Press Alt for custom resizing':
+		'Pressione Alt para redimensionamento personalizado'
 };
 
 
@@ -20283,7 +20306,9 @@ module.exports = {
 	'Find Next': 'Найти Далее',
 	'Insert className': 'Вставить название класса',
 	'Line height': 'Высота линии',
-	Spellchecking: 'Проверка орфографии'
+	Spellchecking: 'Проверка орфографии',
+	'Press Alt for custom resizing':
+		'Нажмите Alt для изменения пользовательского размера'
 };
 
 
@@ -20517,7 +20542,9 @@ module.exports = {
 	'Find Next': 'Sonrakini Bul',
 	'Insert className': 'Sınıf adı girin',
 	'Line height': 'Çizgi yüksekliği',
-	Spellchecking: 'Yazım denetimi'
+	Spellchecking: 'Yazım denetimi',
+	'Press Alt for custom resizing':
+		'Özel yeniden boyutlandırma için Alt tuşuna basın'
 };
 
 
@@ -20751,7 +20778,8 @@ module.exports = {
 	'Find Next': '查找下一个',
 	'Insert className': '插入班级名称',
 	'Line height': '线高',
-	Spellchecking: '拼写检查'
+	Spellchecking: '拼写检查',
+	'Press Alt for custom resizing': '按Alt自定义调整大小'
 };
 
 
@@ -20983,7 +21011,8 @@ module.exports = {
 	'Find Next': 'ค้นหาถัดไป',
 	'Insert className': 'ใส่ชื่อคลาส',
 	'Line height': 'ความสูงเส้น',
-	Spellchecking: 'สะกดคำ'
+	Spellchecking: 'สะกดคำ',
+	'Press Alt for custom resizing': 'กดอัลท์สำหรับการปรับขนาดที่กำหนดเอง'
 };
 
 
@@ -22742,6 +22771,9 @@ class Jodit extends view_with_toolbar/* ViewWithToolbar */.C {
         this.history.processChanges();
     }
     synchronizeValues() {
+        this.__imdSynchronizeValues();
+    }
+    __imdSynchronizeValues() {
         this.setEditorValue();
     }
     getEditorValue(removeSelectionMarkers = true, consumer) {
@@ -22778,7 +22810,7 @@ class Jodit extends view_with_toolbar/* ViewWithToolbar */.C {
         if (!(0,helpers.isString)(value) && !(0,helpers.isVoid)(value)) {
             throw (0,helpers.error)('value must be string');
         }
-        if (value !== undefined && this.getNativeEditorValue() !== value) {
+        if (!(0,helpers.isVoid)(value) && this.getNativeEditorValue() !== value) {
             this.setNativeEditorValue(value);
         }
         this.e.fire('postProcessSetEditorValue');
@@ -24288,6 +24320,11 @@ const cases = [
 ];
 
 ;// CONCATENATED MODULE: ./src/plugins/keyboard/backspace/cases/check-not-collapsed.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 function checkNotCollapsed(jodit) {
     if (!jodit.s.isCollapsed()) {
         jodit.execCommand('Delete');
@@ -24379,7 +24416,7 @@ class Backspace extends core_plugin/* Plugin */.S {
             jodit.s.removeNode(current.firstChild);
         }
         if (!(0,helpers.trim)(jodit.editor.textContent || '') &&
-            !jodit.editor.querySelector('img') &&
+            !jodit.editor.querySelector('img,table,jodit,iframe,hr') &&
             (!current || !dom/* Dom.closest */.i.closest(current, 'table', jodit.editor))) {
             jodit.editor.innerHTML = '';
             const node = jodit.s.setCursorIn(jodit.editor);
@@ -25412,6 +25449,7 @@ class paste extends core_plugin/* Plugin */.S {
     constructor() {
         super(...arguments);
         this.pasteStack = new helpers.LimitedStack(20);
+        this._isDialogOpened = false;
     }
     afterInit(jodit) {
         jodit.e
@@ -25420,6 +25458,12 @@ class paste extends core_plugin/* Plugin */.S {
         if (jodit.o.nl2brInPlainText) {
             this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
         }
+    }
+    beforeDestruct(jodit) {
+        jodit.e
+            .off('paste.paste', this.onPaste)
+            .off('processPaste.paste', this.onProcessPasteReplaceNl2Br)
+            .off('.paste');
     }
     onPaste(e) {
         try {
@@ -25477,9 +25521,19 @@ class paste extends core_plugin/* Plugin */.S {
                     return true;
                 }
             }
-            askInsertTypeDialog(this.j, 'Your code is similar to HTML. Keep as HTML?', 'Paste as HTML', insertType => {
+            if (this._isDialogOpened) {
+                return true;
+            }
+            const dialog = askInsertTypeDialog(this.j, 'Your code is similar to HTML. Keep as HTML?', 'Paste as HTML', insertType => {
+                this._isDialogOpened = false;
                 this.insertByType(e, html, insertType);
             }, this.j.o.pasteHTMLActionList);
+            if (dialog) {
+                this._isDialogOpened = true;
+                dialog.e.on('beforeClose', () => {
+                    this._isDialogOpened = false;
+                });
+            }
             return true;
         }
         return false;
@@ -25507,9 +25561,6 @@ class paste extends core_plugin/* Plugin */.S {
         if (type === constants.TEXT_PLAIN + ';' && !(0,helpers.isHTML)(text)) {
             return (0,helpers.nl2br)(text);
         }
-    }
-    beforeDestruct(jodit) {
-        jodit.e.off('paste.paste', this.onPaste);
     }
 }
 (0,tslib_es6/* __decorate */.gn)([
@@ -30065,14 +30116,14 @@ class resizer extends core_plugin/* Plugin */.S {
         super(...arguments);
         this.LOCK_KEY = 'resizer';
         this.element = null;
-        this.isResized = false;
+        this.isResizeMode = false;
         this.isShown = false;
-        this.start_x = 0;
-        this.start_y = 0;
+        this.startX = 0;
+        this.startY = 0;
         this.width = 0;
         this.height = 0;
         this.ratio = 0;
-        this.rect = this.j.c.fromHTML(`<div class="jodit-resizer">
+        this.rect = this.j.c.fromHTML(`<div title="${this.j.i18n('Press Alt for custom resizing')}" class="jodit-resizer">
 				<div class="jodit-resizer__top-left"></div>
 				<div class="jodit-resizer__top-right"></div>
 				<div class="jodit-resizer__bottom-right"></div>
@@ -30080,81 +30131,11 @@ class resizer extends core_plugin/* Plugin */.S {
 				<span>100x100</span>
 			</div>`);
         this.sizeViewer = this.rect.getElementsByTagName('span')[0];
-        this.onResize = (e) => {
-            if (this.isResized) {
-                if (!this.element) {
-                    return;
-                }
-                let diff_x, diff_y;
-                if (this.j.options.iframe) {
-                    const workplacePosition = this.getWorkplacePosition();
-                    diff_x = e.clientX + workplacePosition.left - this.start_x;
-                    diff_y = e.clientY + workplacePosition.top - this.start_y;
-                }
-                else {
-                    diff_x = e.clientX - this.start_x;
-                    diff_y = e.clientY - this.start_y;
-                }
-                const className = this.handle.className;
-                let new_w = 0, new_h = 0;
-                const uar = this.j.o.resizer.useAspectRatio;
-                if (uar === true ||
-                    (Array.isArray(uar) && dom/* Dom.isTag */.i.isTag(this.element, uar))) {
-                    if (diff_x) {
-                        new_w =
-                            this.width +
-                                (className.match(/left/) ? -1 : 1) * diff_x;
-                        new_h = Math.round(new_w / this.ratio);
-                    }
-                    else {
-                        new_h =
-                            this.height +
-                                (className.match(/top/) ? -1 : 1) * diff_y;
-                        new_w = Math.round(new_h * this.ratio);
-                    }
-                    if (new_w > (0,helpers.innerWidth)(this.j.editor, this.j.ow)) {
-                        new_w = (0,helpers.innerWidth)(this.j.editor, this.j.ow);
-                        new_h = Math.round(new_w / this.ratio);
-                    }
-                }
-                else {
-                    new_w =
-                        this.width + (className.match(/left/) ? -1 : 1) * diff_x;
-                    new_h =
-                        this.height + (className.match(/top/) ? -1 : 1) * diff_y;
-                }
-                if (new_w > this.j.o.resizer.min_width) {
-                    if (new_w < this.rect.parentNode.offsetWidth) {
-                        this.applySize(this.element, 'width', new_w);
-                    }
-                    else {
-                        this.applySize(this.element, 'width', '100%');
-                    }
-                }
-                if (new_h > this.j.o.resizer.min_height) {
-                    this.applySize(this.element, 'height', new_h);
-                }
-                this.updateSize();
-                this.showSizeViewer(this.element.offsetWidth, this.element.offsetHeight);
-                e.stopImmediatePropagation();
-            }
-        };
-        this.onClickOutside = (e) => {
-            if (this.isShown) {
-                if (this.isResized) {
-                    this.j.unlock();
-                    this.isResized = false;
-                    this.j.synchronizeValues();
-                    e.stopImmediatePropagation();
-                    this.j.e.off(this.j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
-                }
-                else {
-                    this.hide();
-                }
-            }
-        };
+        this.pointerX = 0;
+        this.pointerY = 0;
+        this.isAltMode = false;
         this.onClickElement = (element) => {
-            if (this.isResized) {
+            if (this.isResizeMode) {
                 return;
             }
             if (this.element !== element || !this.isShown) {
@@ -30198,7 +30179,7 @@ class resizer extends core_plugin/* Plugin */.S {
     }
     afterInit(editor) {
         (0,helpers.$$)('div', this.rect).forEach((resizeHandle) => {
-            editor.e.on(resizeHandle, 'mousedown.resizer touchstart.resizer', this.onClickHandle.bind(this, resizeHandle));
+            editor.e.on(resizeHandle, 'mousedown.resizer touchstart.resizer', this.onStartResizing.bind(this, resizeHandle));
         });
         global/* eventEmitter.on */.TB.on('hideHelpers', this.hide);
         editor.e
@@ -30246,14 +30227,16 @@ class resizer extends core_plugin/* Plugin */.S {
         })
             .on(editor.ow, 'resize.resizer', this.updateSize)
             .on('resize.resizer', this.updateSize)
-            .on(editor.ow, 'mouseup.resizer keydown.resizer touchend.resizer', this.onClickOutside)
             .on([editor.ow, editor.editor], 'scroll.resizer', () => {
-            if (this.isShown && !this.isResized) {
+            if (this.isShown && !this.isResizeMode) {
                 this.hide();
             }
-        });
+        })
+            .on(editor.ow, 'keydown.resizer', this.onKeyDown)
+            .on(editor.ow, 'keyup.resizer', this.onKeyUp)
+            .on(editor.ow, 'mouseup.resizer touchend.resizer', this.onClickOutside);
     }
-    onClickHandle(resizeHandle, e) {
+    onStartResizing(resizeHandle, e) {
         if (!this.element || !this.element.parentNode) {
             this.hide();
             return false;
@@ -30266,12 +30249,111 @@ class resizer extends core_plugin/* Plugin */.S {
         this.width = this.element.offsetWidth;
         this.height = this.element.offsetHeight;
         this.ratio = this.width / this.height;
-        this.isResized = true;
-        this.start_x = e.clientX;
-        this.start_y = e.clientY;
-        this.j.e.fire('hidePopup');
-        this.j.lock(this.LOCK_KEY);
-        this.j.e.on(this.j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
+        this.isResizeMode = true;
+        this.startX = e.clientX;
+        this.startY = e.clientY;
+        this.pointerX = e.clientX;
+        this.pointerY = e.clientY;
+        const { j } = this;
+        j.e.fire('hidePopup');
+        j.lock(this.LOCK_KEY);
+        j.e.on(j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
+    }
+    onEndResizing() {
+        const { j } = this;
+        j.unlock();
+        this.isResizeMode = false;
+        this.isAltMode = false;
+        j.synchronizeValues();
+        j.e.off(j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
+    }
+    onResize(e) {
+        if (this.isResizeMode) {
+            if (!this.element) {
+                return;
+            }
+            this.pointerX = e.clientX;
+            this.pointerY = e.clientY;
+            let diff_x, diff_y;
+            if (this.j.options.iframe) {
+                const workplacePosition = this.getWorkplacePosition();
+                diff_x = e.clientX + workplacePosition.left - this.startX;
+                diff_y = e.clientY + workplacePosition.top - this.startY;
+            }
+            else {
+                diff_x = this.pointerX - this.startX;
+                diff_y = this.pointerY - this.startY;
+            }
+            const className = this.handle.className;
+            let new_w = 0, new_h = 0;
+            const uar = this.j.o.resizer.useAspectRatio;
+            if (!this.isAltMode &&
+                (uar === true ||
+                    (Array.isArray(uar) && dom/* Dom.isTag */.i.isTag(this.element, uar)))) {
+                if (diff_x) {
+                    new_w =
+                        this.width +
+                            (className.match(/left/) ? -1 : 1) * diff_x;
+                    new_h = Math.round(new_w / this.ratio);
+                }
+                else {
+                    new_h =
+                        this.height +
+                            (className.match(/top/) ? -1 : 1) * diff_y;
+                    new_w = Math.round(new_h * this.ratio);
+                }
+                if (new_w > (0,helpers.innerWidth)(this.j.editor, this.j.ow)) {
+                    new_w = (0,helpers.innerWidth)(this.j.editor, this.j.ow);
+                    new_h = Math.round(new_w / this.ratio);
+                }
+            }
+            else {
+                new_w =
+                    this.width + (className.match(/left/) ? -1 : 1) * diff_x;
+                new_h =
+                    this.height + (className.match(/top/) ? -1 : 1) * diff_y;
+            }
+            if (new_w > this.j.o.resizer.min_width) {
+                if (new_w < this.rect.parentNode.offsetWidth) {
+                    this.applySize(this.element, 'width', new_w);
+                }
+                else {
+                    this.applySize(this.element, 'width', '100%');
+                }
+            }
+            if (new_h > this.j.o.resizer.min_height) {
+                this.applySize(this.element, 'height', new_h);
+            }
+            this.updateSize();
+            this.showSizeViewer(this.element.offsetWidth, this.element.offsetHeight);
+            e.stopImmediatePropagation();
+        }
+    }
+    onKeyDown(e) {
+        this.isAltMode = e.key === constants.KEY_ALT;
+        if (!this.isAltMode && this.isResizeMode) {
+            this.onEndResizing();
+        }
+    }
+    onKeyUp() {
+        if (this.isAltMode && this.isResizeMode && this.element) {
+            this.width = this.element.offsetWidth;
+            this.height = this.element.offsetHeight;
+            this.ratio = this.width / this.height;
+            this.startX = this.pointerX;
+            this.startY = this.pointerY;
+        }
+        this.isAltMode = false;
+    }
+    onClickOutside(e) {
+        if (!this.isShown) {
+            return;
+        }
+        if (!this.isResizeMode) {
+            return this.hide();
+        }
+        e.stopImmediatePropagation();
+        this.onEndResizing();
     }
     getWorkplacePosition() {
         return (0,helpers.offset)((this.rect.parentNode || this.j.od.documentElement), this.j, this.j.od, true);
@@ -30392,8 +30474,8 @@ class resizer extends core_plugin/* Plugin */.S {
         this.updateSize();
     }
     hide() {
-        if (!this.isResized) {
-            this.isResized = false;
+        if (!this.isResizeMode) {
+            this.isResizeMode = false;
             this.isShown = false;
             this.element = null;
             dom/* Dom.safeRemove */.i.safeRemove(this.rect);
@@ -30409,6 +30491,24 @@ class resizer extends core_plugin/* Plugin */.S {
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':click')
 ], resizer.prototype, "onEditorClick", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], resizer.prototype, "onStartResizing", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], resizer.prototype, "onEndResizing", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], resizer.prototype, "onResize", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], resizer.prototype, "onKeyDown", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], resizer.prototype, "onKeyUp", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], resizer.prototype, "onClickOutside", null);
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.debounce)()
 ], resizer.prototype, "onChangeEditor", null);

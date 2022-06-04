@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.6
+ * Version: v3.18.7
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -102,6 +102,10 @@ var watch = __webpack_require__(18);
 var utils = __webpack_require__(32);
 // EXTERNAL MODULE: ./src/core/global.ts
 var global = __webpack_require__(56);
+// EXTERNAL MODULE: ./src/core/dom/dom.ts
+var dom = __webpack_require__(44);
+// EXTERNAL MODULE: ./src/core/decorators/debounce/debounce.ts
+var debounce = __webpack_require__(53);
 ;// CONCATENATED MODULE: ./src/plugins/speech/speech-recognize/helpers/exec-spell-command.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -450,18 +454,14 @@ config/* Config.prototype.controls.speechRecognize */.D.prototype.controls.speec
     },
     childTemplate(jodit, key, value) {
         var _a;
-        const api = (0,data_bind/* dataBind */.q)(jodit, 'speech');
-        return `<span class='jodit-speech-recognize__list-item'><input ${((_a = api === null || api === void 0 ? void 0 : api[key]) !== null && _a !== void 0 ? _a : jodit.o.speechRecognize[key]) ? 'checked' : ''} class='jodit-checkbox' type='checkbox'>${value}</span>`;
+        const api = (0,data_bind/* dataBind */.q)(jodit, 'speech'), checked = (_a = api === null || api === void 0 ? void 0 : api[key]) !== null && _a !== void 0 ? _a : jodit.o.speechRecognize[key];
+        return `<span class='jodit-speech-recognize__list-item'><input ${checked ? 'checked' : ''} class='jodit-checkbox' type='checkbox'>&nbsp;${value}</span>`;
     },
     mods: {
         stroke: false
     }
 };
 
-// EXTERNAL MODULE: ./src/core/dom/dom.ts
-var dom = __webpack_require__(44);
-// EXTERNAL MODULE: ./src/core/decorators/debounce/debounce.ts
-var debounce = __webpack_require__(53);
 ;// CONCATENATED MODULE: ./src/plugins/speech/speech-recognize/speech-recognize.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)

@@ -23,7 +23,6 @@ import { debounce } from 'jodit/core/decorators/debounce/debounce';
 import { execSpellCommand } from './helpers/exec-spell-command';
 import './config';
 
-
 export class SpeechRecognizeNative extends Plugin implements IPlugin {
 	constructor(j: IJodit) {
 		super(j);

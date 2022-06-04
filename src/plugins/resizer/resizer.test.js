@@ -273,6 +273,32 @@ describe('Resize plugin', function () {
 								}
 							);
 						});
+
+						describe('With Alt button', () => {
+							it("should don't save it", done => {
+								const editor = getJodit();
+
+								editor.value =
+									'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width: 301px;"/></p>';
+
+								onLoadImage(
+									editor.editor.querySelector('img'),
+									() => {
+										simulateEvent(
+											'keydown',
+											'Alt',
+											editor.ew
+										);
+										resizeImage(editor);
+
+										expect(sortAttributes(editor.value)).eq(
+											'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:159px;width:311px"></p>'
+										);
+										done();
+									}
+								);
+							});
+						});
 					});
 
 					describe('Enable useAspectRatio only for table', () => {

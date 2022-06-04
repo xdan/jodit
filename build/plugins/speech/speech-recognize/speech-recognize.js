@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.6
+ * Version: v3.18.7
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -176,8 +176,8 @@ config_1.Config.prototype.controls.speechRecognize = {
     },
     childTemplate: function (jodit, key, value) {
         var _a;
-        var api = (0, data_bind_1.dataBind)(jodit, 'speech');
-        return "<span class='jodit-speech-recognize__list-item'><input ".concat(((_a = api === null || api === void 0 ? void 0 : api[key]) !== null && _a !== void 0 ? _a : jodit.o.speechRecognize[key]) ? 'checked' : '', " class='jodit-checkbox' type='checkbox'>").concat(value, "</span>");
+        var api = (0, data_bind_1.dataBind)(jodit, 'speech'), checked = (_a = api === null || api === void 0 ? void 0 : api[key]) !== null && _a !== void 0 ? _a : jodit.o.speechRecognize[key];
+        return "<span class='jodit-speech-recognize__list-item'><input ".concat(checked ? 'checked' : '', " class='jodit-checkbox' type='checkbox'>&nbsp;").concat(value, "</span>");
     },
     mods: {
         stroke: false
@@ -547,10 +547,10 @@ var plugin_1 = __webpack_require__(372);
 var watch_1 = __webpack_require__(188);
 var utils_1 = __webpack_require__(196);
 var global_1 = __webpack_require__(245);
-var exec_spell_command_1 = __webpack_require__(705);
-__webpack_require__(706);
 var dom_1 = __webpack_require__(221);
 var debounce_1 = __webpack_require__(242);
+var exec_spell_command_1 = __webpack_require__(705);
+__webpack_require__(706);
 var SpeechRecognizeNative = (function (_super) {
     tslib_1.__extends(SpeechRecognizeNative, _super);
     function SpeechRecognizeNative(j) {

@@ -39,7 +39,7 @@ describe('Test paste plugin', () => {
 					getData: () => {
 						return pastedText;
 					}
-				}
+				};
 			};
 
 			describe('Enable memorizeChoiceWhenPasteFragment', () => {

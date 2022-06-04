@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.6
+ * Version: v3.18.7
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -5250,6 +5250,9 @@ var Jodit = (function (_super) {
         configurable: true
     });
     Jodit.prototype.synchronizeValues = function () {
+        this.__imdSynchronizeValues();
+    };
+    Jodit.prototype.__imdSynchronizeValues = function () {
         this.setEditorValue();
     };
     Jodit.prototype.getEditorValue = function (removeSelectionMarkers, consumer) {
@@ -5287,7 +5290,7 @@ var Jodit = (function (_super) {
         if (!(0, helpers_1.isString)(value) && !(0, helpers_1.isVoid)(value)) {
             throw (0, helpers_1.error)('value must be string');
         }
-        if (value !== undefined && this.getNativeEditorValue() !== value) {
+        if (!(0, helpers_1.isVoid)(value) && this.getNativeEditorValue() !== value) {
             this.setNativeEditorValue(value);
         }
         this.e.fire('postProcessSetEditorValue');
@@ -6260,7 +6263,7 @@ Config.prototype.controls = {};
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.lang = exports.TEMP_ATTR = exports.BASE_PATH = exports.KEY_ALIASES = exports.IS_MAC = exports.SAFE_COUNT_CHANGE_CALL = exports.INSERT_ONLY_TEXT = exports.INSERT_AS_TEXT = exports.INSERT_CLEAR_HTML = exports.INSERT_AS_HTML = exports.EMULATE_DBLCLICK_TIMEOUT = exports.MARKER_CLASS = exports.TEXT_RTF = exports.TEXT_HTML = exports.TEXT_PLAIN = exports.IS_IE = exports.MODE_SPLIT = exports.MODE_SOURCE = exports.MODE_WYSIWYG = exports.PARAGRAPH = exports.BR = exports.COMMAND_KEYS = exports.ACCURACY = exports.NEARBY = exports.KEY_F3 = exports.KEY_DELETE = exports.KEY_SPACE = exports.KEY_DOWN = exports.KEY_RIGHT = exports.KEY_UP = exports.KEY_LEFT = exports.KEY_ESC = exports.KEY_ENTER = exports.KEY_TAB = exports.KEY_BACKSPACE = exports.MAY_BE_REMOVED_WITH_KEY = exports.INSEPARABLE_TAGS = exports.IS_INLINE = exports.IS_BLOCK = exports.SPACE_REG_EXP_END = exports.SPACE_REG_EXP_START = exports.SPACE_REG_EXP = exports.INVISIBLE_SPACE_REG_EXP_START = exports.INVISIBLE_SPACE_REG_EXP_END = exports.INVISIBLE_SPACE_REG_EXP = exports.NBSP_SPACE = exports.INVISIBLE_SPACE = void 0;
+exports.lang = exports.TEMP_ATTR = exports.BASE_PATH = exports.KEY_ALIASES = exports.IS_MAC = exports.SAFE_COUNT_CHANGE_CALL = exports.INSERT_ONLY_TEXT = exports.INSERT_AS_TEXT = exports.INSERT_CLEAR_HTML = exports.INSERT_AS_HTML = exports.EMULATE_DBLCLICK_TIMEOUT = exports.MARKER_CLASS = exports.TEXT_RTF = exports.TEXT_HTML = exports.TEXT_PLAIN = exports.IS_IE = exports.MODE_SPLIT = exports.MODE_SOURCE = exports.MODE_WYSIWYG = exports.PARAGRAPH = exports.BR = exports.COMMAND_KEYS = exports.ACCURACY = exports.NEARBY = exports.KEY_F3 = exports.KEY_DELETE = exports.KEY_SPACE = exports.KEY_DOWN = exports.KEY_RIGHT = exports.KEY_UP = exports.KEY_LEFT = exports.KEY_ALT = exports.KEY_ESC = exports.KEY_ENTER = exports.KEY_TAB = exports.KEY_BACKSPACE = exports.MAY_BE_REMOVED_WITH_KEY = exports.INSEPARABLE_TAGS = exports.IS_INLINE = exports.IS_BLOCK = exports.SPACE_REG_EXP_END = exports.SPACE_REG_EXP_START = exports.SPACE_REG_EXP = exports.INVISIBLE_SPACE_REG_EXP_START = exports.INVISIBLE_SPACE_REG_EXP_END = exports.INVISIBLE_SPACE_REG_EXP = exports.NBSP_SPACE = exports.INVISIBLE_SPACE = void 0;
 exports.INVISIBLE_SPACE = '\uFEFF';
 exports.NBSP_SPACE = '\u00A0';
 var INVISIBLE_SPACE_REG_EXP = function () { return /[\uFEFF]/g; };
@@ -6295,6 +6298,7 @@ exports.KEY_BACKSPACE = 'Backspace';
 exports.KEY_TAB = 'Tab';
 exports.KEY_ENTER = 'Enter';
 exports.KEY_ESC = 'Escape';
+exports.KEY_ALT = 'Alt';
 exports.KEY_LEFT = 'ArrowLeft';
 exports.KEY_UP = 'ArrowUp';
 exports.KEY_RIGHT = 'ArrowRight';
@@ -11831,7 +11835,7 @@ var Select = (function () {
             }
         }
         if (fireChange && this.j.events) {
-            this.j.e.fire('synchro');
+            this.j.__imdSynchronizeValues();
         }
         if (this.j.events) {
             this.j.e.fire('afterInsertNode', node);
@@ -11875,7 +11879,7 @@ var Select = (function () {
                 this.setCursorIn(fragment);
             }
         }
-        this.j.synchronizeValues();
+        this.j.__imdSynchronizeValues();
     };
     Select.prototype.insertImage = function (url, styles, defaultWidth) {
         if (styles === void 0) { styles = null; }
@@ -16468,7 +16472,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.18.6";
+        _this.version = "3.18.7";
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
         _this.OPTIONS = View.defaultOptions;
@@ -16614,10 +16618,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.18.6";
+        return "3.18.7";
     };
     View.getVersion = function () {
-        return "3.18.6";
+        return "3.18.7";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -23488,7 +23492,8 @@ module.exports = {
 	Clean: 'نظيفة',
 	'Insert className': 'أدخل اسم الفصل',
 	'Line height': 'ارتفاع الخط',
-	Spellchecking: 'التدقيق الإملائي'
+	Spellchecking: 'التدقيق الإملائي',
+	'Press Alt for custom resizing': 'اضغط البديل لتغيير حجم مخصص'
 };
 
 
@@ -23723,7 +23728,8 @@ module.exports = {
 	'Find Next': 'Najít Další',
 	'Insert className': 'Vložte název třídy',
 	'Line height': 'Výška čáry',
-	Spellchecking: 'Kontrola pravopisu'
+	Spellchecking: 'Kontrola pravopisu',
+	'Press Alt for custom resizing': 'Stiskněte Alt pro vlastní změnu velikosti'
 };
 
 
@@ -23963,7 +23969,9 @@ module.exports = {
 	'Find Next': 'Weitersuchen',
 	'Insert className': 'className (CSS) einfügen',
 	'Line height': 'Zeilenhöhe',
-	Spellchecking: 'Rechtschreibprüfung'
+	Spellchecking: 'Rechtschreibprüfung',
+	'Press Alt for custom resizing':
+		'Drücken Sie Alt für benutzerdefinierte Größenanpassung'
 };
 
 
@@ -24202,7 +24210,9 @@ module.exports = {
 	'Find Next': 'Buscar Siguiente',
 	'Insert className': 'Insertar nombre de clase',
 	'Line height': 'Altura de la línea',
-	Spellchecking: 'Corrección ortográfica'
+	Spellchecking: 'Corrección ortográfica',
+	'Press Alt for custom resizing':
+		'Presione Alt para cambiar el tamaño personalizado'
 };
 
 
@@ -24432,7 +24442,9 @@ module.exports = {
 	'Find Next': 'Suivant',
 	'Insert className': 'Insérer un nom de classe',
 	'Line height': 'Hauteur de ligne',
-	Spellchecking: 'Vérification Orthographique'
+	Spellchecking: 'Vérification Orthographique',
+	'Press Alt for custom resizing':
+		'Appuyez sur Alt pour un redimensionnement personnalisé'
 };
 
 
@@ -24666,7 +24678,8 @@ module.exports = {
 	'Find Next': 'חפש את הבא',
 	'Insert className': 'הכנס את שם הכיתה',
 	'Line height': 'גובה שורה',
-	Spellchecking: 'בדיקת איות'
+	Spellchecking: 'בדיקת איות',
+	'Press Alt for custom resizing': 'לחץ על אלט לשינוי גודל מותאם אישית'
 };
 
 
@@ -24902,7 +24915,8 @@ module.exports = {
 	'Find Next': 'Következő Keresése',
 	'Insert className': 'Helyezze be az osztály nevét',
 	'Line height': 'Vonal magassága',
-	Spellchecking: 'Helyesírás-ellenőrzés'
+	Spellchecking: 'Helyesírás-ellenőrzés',
+	'Press Alt for custom resizing': 'Nyomja meg az Alt egyéni átméretezés'
 };
 
 
@@ -25137,7 +25151,8 @@ module.exports = {
 	'Find Next': 'Menemukan Berikutnya',
 	'Insert className': 'Masukkan nama kelas',
 	'Line height': 'Tinggi baris',
-	Spellchecking: 'Spellchecking'
+	Spellchecking: 'Spellchecking',
+	'Press Alt for custom resizing': 'Tekan Alt untuk mengubah ukuran kustom'
 };
 
 
@@ -25372,7 +25387,9 @@ module.exports = {
 	'Find Next': 'Trova Successivo',
 	'Insert className': 'Inserisci il nome della classe',
 	'Line height': 'Altezza linea',
-	Spellchecking: 'Controllo ortografico'
+	Spellchecking: 'Controllo ortografico',
+	'Press Alt for custom resizing':
+		'Premere Alt per il ridimensionamento personalizzato'
 };
 
 
@@ -25610,7 +25627,9 @@ module.exports = {
 	'Upper Roman': 'ローマ数字大文字',
 	'Insert className': 'クラス名を挿入',
 	'Line height': 'ラインの高さ',
-	Spellchecking: 'スペルチェック'
+	Spellchecking: 'スペルチェック',
+	'Press Alt for custom resizing':
+		'カスタムサイズ変更のためのAltキーを押します'
 };
 
 
@@ -25843,7 +25862,9 @@ module.exports = {
 	'Find Next': '다음 찾기',
 	'Insert className': 'className 입력',
 	'Line height': '선 높이',
-	Spellchecking: '맞춤법 검사'
+	Spellchecking: '맞춤법 검사',
+	'Press Alt for custom resizing':
+		'사용자 지정 크기 조정에 대 한 고도 누르십시오'
 };
 
 
@@ -26079,7 +26100,8 @@ module.exports = {
 	'Find Next': 'Volgende Zoeken',
 	'Insert className': 'Voeg de klassenaam in',
 	'Line height': 'Lijnhoogte',
-	Spellchecking: 'Spellingcontrole'
+	Spellchecking: 'Spellingcontrole',
+	'Press Alt for custom resizing': 'Druk op Alt voor aangepaste grootte'
 };
 
 
@@ -26315,7 +26337,8 @@ module.exports = {
 	'Find Next': 'Znajdź Dalej',
 	'Insert className': 'Wstaw nazwę zajęć',
 	'Line height': 'Wysokość linii',
-	Spellchecking: 'Sprawdzanie pisowni'
+	Spellchecking: 'Sprawdzanie pisowni',
+	'Press Alt for custom resizing': 'Naciśnij Alt, aby zmienić rozmiar'
 };
 
 
@@ -26554,7 +26577,9 @@ module.exports = {
 	'Find Next': 'Localizar Próxima',
 	'Insert className': 'Insira o nome da classe',
 	'Line height': 'Altura da linha',
-	Spellchecking: 'Verificação ortográfica'
+	Spellchecking: 'Verificação ortográfica',
+	'Press Alt for custom resizing':
+		'Pressione Alt para redimensionamento personalizado'
 };
 
 
@@ -26788,7 +26813,9 @@ module.exports = {
 	'Find Next': 'Найти Далее',
 	'Insert className': 'Вставить название класса',
 	'Line height': 'Высота линии',
-	Spellchecking: 'Проверка орфографии'
+	Spellchecking: 'Проверка орфографии',
+	'Press Alt for custom resizing':
+		'Нажмите Alt для изменения пользовательского размера'
 };
 
 
@@ -27022,7 +27049,9 @@ module.exports = {
 	'Find Next': 'Sonrakini Bul',
 	'Insert className': 'Sınıf adı girin',
 	'Line height': 'Çizgi yüksekliği',
-	Spellchecking: 'Yazım denetimi'
+	Spellchecking: 'Yazım denetimi',
+	'Press Alt for custom resizing':
+		'Özel yeniden boyutlandırma için Alt tuşuna basın'
 };
 
 
@@ -27256,7 +27285,8 @@ module.exports = {
 	'Find Next': '查找下一个',
 	'Insert className': '插入班级名称',
 	'Line height': '线高',
-	Spellchecking: '拼写检查'
+	Spellchecking: '拼写检查',
+	'Press Alt for custom resizing': '按Alt自定义调整大小'
 };
 
 
@@ -27488,7 +27518,8 @@ module.exports = {
 	'Find Next': 'ค้นหาถัดไป',
 	'Insert className': 'ใส่ชื่อคลาส',
 	'Line height': 'ความสูงเส้น',
-	Spellchecking: 'สะกดคำ'
+	Spellchecking: 'สะกดคำ',
+	'Press Alt for custom resizing': 'กดอัลท์สำหรับการปรับขนาดที่กำหนดเอง'
 };
 
 
@@ -28162,7 +28193,7 @@ var Backspace = (function (_super) {
             jodit.s.removeNode(current.firstChild);
         }
         if (!(0, helpers_1.trim)(jodit.editor.textContent || '') &&
-            !jodit.editor.querySelector('img') &&
+            !jodit.editor.querySelector('img,table,jodit,iframe,hr') &&
             (!current || !dom_1.Dom.closest(current, 'table', jodit.editor))) {
             jodit.editor.innerHTML = '';
             var node = jodit.s.setCursorIn(jodit.editor);
@@ -28758,6 +28789,11 @@ exports.checkUnwrapFirstListItem = checkUnwrapFirstListItem;
 
 "use strict";
 
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkNotCollapsed = void 0;
 function checkNotCollapsed(jodit) {
@@ -29912,6 +29948,7 @@ var paste = (function (_super) {
     function paste() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.pasteStack = new helpers_2.LimitedStack(20);
+        _this._isDialogOpened = false;
         return _this;
     }
     paste.prototype.afterInit = function (jodit) {
@@ -29924,6 +29961,12 @@ var paste = (function (_super) {
         if (jodit.o.nl2brInPlainText) {
             this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
         }
+    };
+    paste.prototype.beforeDestruct = function (jodit) {
+        jodit.e
+            .off('paste.paste', this.onPaste)
+            .off('processPaste.paste', this.onProcessPasteReplaceNl2Br)
+            .off('.paste');
     };
     paste.prototype.onPaste = function (e) {
         try {
@@ -29982,9 +30025,19 @@ var paste = (function (_super) {
                     return true;
                 }
             }
-            (0, helpers_1.askInsertTypeDialog)(this.j, 'Your code is similar to HTML. Keep as HTML?', 'Paste as HTML', function (insertType) {
+            if (this._isDialogOpened) {
+                return true;
+            }
+            var dialog = (0, helpers_1.askInsertTypeDialog)(this.j, 'Your code is similar to HTML. Keep as HTML?', 'Paste as HTML', function (insertType) {
+                _this._isDialogOpened = false;
                 _this.insertByType(e, html, insertType);
             }, this.j.o.pasteHTMLActionList);
+            if (dialog) {
+                this._isDialogOpened = true;
+                dialog.e.on('beforeClose', function () {
+                    _this._isDialogOpened = false;
+                });
+            }
             return true;
         }
         return false;
@@ -30012,9 +30065,6 @@ var paste = (function (_super) {
         if (type === constants_1.TEXT_PLAIN + ';' && !(0, helpers_2.isHTML)(text)) {
             return (0, helpers_2.nl2br)(text);
         }
-    };
-    paste.prototype.beforeDestruct = function (jodit) {
-        jodit.e.off('paste.paste', this.onPaste);
     };
     tslib_1.__decorate([
         decorators_1.autobind
@@ -35967,90 +36017,20 @@ var resizer = (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.LOCK_KEY = 'resizer';
         _this.element = null;
-        _this.isResized = false;
+        _this.isResizeMode = false;
         _this.isShown = false;
-        _this.start_x = 0;
-        _this.start_y = 0;
+        _this.startX = 0;
+        _this.startY = 0;
         _this.width = 0;
         _this.height = 0;
         _this.ratio = 0;
-        _this.rect = _this.j.c.fromHTML("<div class=\"jodit-resizer\">\n\t\t\t\t<div class=\"jodit-resizer__top-left\"></div>\n\t\t\t\t<div class=\"jodit-resizer__top-right\"></div>\n\t\t\t\t<div class=\"jodit-resizer__bottom-right\"></div>\n\t\t\t\t<div class=\"jodit-resizer__bottom-left\"></div>\n\t\t\t\t<span>100x100</span>\n\t\t\t</div>");
+        _this.rect = _this.j.c.fromHTML("<div title=\"".concat(_this.j.i18n('Press Alt for custom resizing'), "\" class=\"jodit-resizer\">\n\t\t\t\t<div class=\"jodit-resizer__top-left\"></div>\n\t\t\t\t<div class=\"jodit-resizer__top-right\"></div>\n\t\t\t\t<div class=\"jodit-resizer__bottom-right\"></div>\n\t\t\t\t<div class=\"jodit-resizer__bottom-left\"></div>\n\t\t\t\t<span>100x100</span>\n\t\t\t</div>"));
         _this.sizeViewer = _this.rect.getElementsByTagName('span')[0];
-        _this.onResize = function (e) {
-            if (_this.isResized) {
-                if (!_this.element) {
-                    return;
-                }
-                var diff_x = void 0, diff_y = void 0;
-                if (_this.j.options.iframe) {
-                    var workplacePosition = _this.getWorkplacePosition();
-                    diff_x = e.clientX + workplacePosition.left - _this.start_x;
-                    diff_y = e.clientY + workplacePosition.top - _this.start_y;
-                }
-                else {
-                    diff_x = e.clientX - _this.start_x;
-                    diff_y = e.clientY - _this.start_y;
-                }
-                var className = _this.handle.className;
-                var new_w = 0, new_h = 0;
-                var uar = _this.j.o.resizer.useAspectRatio;
-                if (uar === true ||
-                    (Array.isArray(uar) && dom_1.Dom.isTag(_this.element, uar))) {
-                    if (diff_x) {
-                        new_w =
-                            _this.width +
-                                (className.match(/left/) ? -1 : 1) * diff_x;
-                        new_h = Math.round(new_w / _this.ratio);
-                    }
-                    else {
-                        new_h =
-                            _this.height +
-                                (className.match(/top/) ? -1 : 1) * diff_y;
-                        new_w = Math.round(new_h * _this.ratio);
-                    }
-                    if (new_w > (0, helpers_1.innerWidth)(_this.j.editor, _this.j.ow)) {
-                        new_w = (0, helpers_1.innerWidth)(_this.j.editor, _this.j.ow);
-                        new_h = Math.round(new_w / _this.ratio);
-                    }
-                }
-                else {
-                    new_w =
-                        _this.width + (className.match(/left/) ? -1 : 1) * diff_x;
-                    new_h =
-                        _this.height + (className.match(/top/) ? -1 : 1) * diff_y;
-                }
-                if (new_w > _this.j.o.resizer.min_width) {
-                    if (new_w < _this.rect.parentNode.offsetWidth) {
-                        _this.applySize(_this.element, 'width', new_w);
-                    }
-                    else {
-                        _this.applySize(_this.element, 'width', '100%');
-                    }
-                }
-                if (new_h > _this.j.o.resizer.min_height) {
-                    _this.applySize(_this.element, 'height', new_h);
-                }
-                _this.updateSize();
-                _this.showSizeViewer(_this.element.offsetWidth, _this.element.offsetHeight);
-                e.stopImmediatePropagation();
-            }
-        };
-        _this.onClickOutside = function (e) {
-            if (_this.isShown) {
-                if (_this.isResized) {
-                    _this.j.unlock();
-                    _this.isResized = false;
-                    _this.j.synchronizeValues();
-                    e.stopImmediatePropagation();
-                    _this.j.e.off(_this.j.ow, 'mousemove.resizer touchmove.resizer', _this.onResize);
-                }
-                else {
-                    _this.hide();
-                }
-            }
-        };
+        _this.pointerX = 0;
+        _this.pointerY = 0;
+        _this.isAltMode = false;
         _this.onClickElement = function (element) {
-            if (_this.isResized) {
+            if (_this.isResizeMode) {
                 return;
             }
             if (_this.element !== element || !_this.isShown) {
@@ -36096,7 +36076,7 @@ var resizer = (function (_super) {
     resizer.prototype.afterInit = function (editor) {
         var _this = this;
         (0, helpers_1.$$)('div', this.rect).forEach(function (resizeHandle) {
-            editor.e.on(resizeHandle, 'mousedown.resizer touchstart.resizer', _this.onClickHandle.bind(_this, resizeHandle));
+            editor.e.on(resizeHandle, 'mousedown.resizer touchstart.resizer', _this.onStartResizing.bind(_this, resizeHandle));
         });
         global_1.eventEmitter.on('hideHelpers', this.hide);
         editor.e
@@ -36145,14 +36125,16 @@ var resizer = (function (_super) {
         })
             .on(editor.ow, 'resize.resizer', this.updateSize)
             .on('resize.resizer', this.updateSize)
-            .on(editor.ow, 'mouseup.resizer keydown.resizer touchend.resizer', this.onClickOutside)
             .on([editor.ow, editor.editor], 'scroll.resizer', function () {
-            if (_this.isShown && !_this.isResized) {
+            if (_this.isShown && !_this.isResizeMode) {
                 _this.hide();
             }
-        });
+        })
+            .on(editor.ow, 'keydown.resizer', this.onKeyDown)
+            .on(editor.ow, 'keyup.resizer', this.onKeyUp)
+            .on(editor.ow, 'mouseup.resizer touchend.resizer', this.onClickOutside);
     };
-    resizer.prototype.onClickHandle = function (resizeHandle, e) {
+    resizer.prototype.onStartResizing = function (resizeHandle, e) {
         if (!this.element || !this.element.parentNode) {
             this.hide();
             return false;
@@ -36165,12 +36147,111 @@ var resizer = (function (_super) {
         this.width = this.element.offsetWidth;
         this.height = this.element.offsetHeight;
         this.ratio = this.width / this.height;
-        this.isResized = true;
-        this.start_x = e.clientX;
-        this.start_y = e.clientY;
-        this.j.e.fire('hidePopup');
-        this.j.lock(this.LOCK_KEY);
-        this.j.e.on(this.j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
+        this.isResizeMode = true;
+        this.startX = e.clientX;
+        this.startY = e.clientY;
+        this.pointerX = e.clientX;
+        this.pointerY = e.clientY;
+        var j = this.j;
+        j.e.fire('hidePopup');
+        j.lock(this.LOCK_KEY);
+        j.e.on(j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
+    };
+    resizer.prototype.onEndResizing = function () {
+        var j = this.j;
+        j.unlock();
+        this.isResizeMode = false;
+        this.isAltMode = false;
+        j.synchronizeValues();
+        j.e.off(j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
+    };
+    resizer.prototype.onResize = function (e) {
+        if (this.isResizeMode) {
+            if (!this.element) {
+                return;
+            }
+            this.pointerX = e.clientX;
+            this.pointerY = e.clientY;
+            var diff_x = void 0, diff_y = void 0;
+            if (this.j.options.iframe) {
+                var workplacePosition = this.getWorkplacePosition();
+                diff_x = e.clientX + workplacePosition.left - this.startX;
+                diff_y = e.clientY + workplacePosition.top - this.startY;
+            }
+            else {
+                diff_x = this.pointerX - this.startX;
+                diff_y = this.pointerY - this.startY;
+            }
+            var className = this.handle.className;
+            var new_w = 0, new_h = 0;
+            var uar = this.j.o.resizer.useAspectRatio;
+            if (!this.isAltMode &&
+                (uar === true ||
+                    (Array.isArray(uar) && dom_1.Dom.isTag(this.element, uar)))) {
+                if (diff_x) {
+                    new_w =
+                        this.width +
+                            (className.match(/left/) ? -1 : 1) * diff_x;
+                    new_h = Math.round(new_w / this.ratio);
+                }
+                else {
+                    new_h =
+                        this.height +
+                            (className.match(/top/) ? -1 : 1) * diff_y;
+                    new_w = Math.round(new_h * this.ratio);
+                }
+                if (new_w > (0, helpers_1.innerWidth)(this.j.editor, this.j.ow)) {
+                    new_w = (0, helpers_1.innerWidth)(this.j.editor, this.j.ow);
+                    new_h = Math.round(new_w / this.ratio);
+                }
+            }
+            else {
+                new_w =
+                    this.width + (className.match(/left/) ? -1 : 1) * diff_x;
+                new_h =
+                    this.height + (className.match(/top/) ? -1 : 1) * diff_y;
+            }
+            if (new_w > this.j.o.resizer.min_width) {
+                if (new_w < this.rect.parentNode.offsetWidth) {
+                    this.applySize(this.element, 'width', new_w);
+                }
+                else {
+                    this.applySize(this.element, 'width', '100%');
+                }
+            }
+            if (new_h > this.j.o.resizer.min_height) {
+                this.applySize(this.element, 'height', new_h);
+            }
+            this.updateSize();
+            this.showSizeViewer(this.element.offsetWidth, this.element.offsetHeight);
+            e.stopImmediatePropagation();
+        }
+    };
+    resizer.prototype.onKeyDown = function (e) {
+        this.isAltMode = e.key === constants_1.KEY_ALT;
+        if (!this.isAltMode && this.isResizeMode) {
+            this.onEndResizing();
+        }
+    };
+    resizer.prototype.onKeyUp = function () {
+        if (this.isAltMode && this.isResizeMode && this.element) {
+            this.width = this.element.offsetWidth;
+            this.height = this.element.offsetHeight;
+            this.ratio = this.width / this.height;
+            this.startX = this.pointerX;
+            this.startY = this.pointerY;
+        }
+        this.isAltMode = false;
+    };
+    resizer.prototype.onClickOutside = function (e) {
+        if (!this.isShown) {
+            return;
+        }
+        if (!this.isResizeMode) {
+            return this.hide();
+        }
+        e.stopImmediatePropagation();
+        this.onEndResizing();
     };
     resizer.prototype.getWorkplacePosition = function () {
         return (0, helpers_1.offset)((this.rect.parentNode || this.j.od.documentElement), this.j, this.j.od, true);
@@ -36298,8 +36379,8 @@ var resizer = (function (_super) {
         this.updateSize();
     };
     resizer.prototype.hide = function () {
-        if (!this.isResized) {
-            this.isResized = false;
+        if (!this.isResizeMode) {
+            this.isResizeMode = false;
             this.isShown = false;
             this.element = null;
             dom_1.Dom.safeRemove(this.rect);
@@ -36314,6 +36395,24 @@ var resizer = (function (_super) {
     tslib_1.__decorate([
         (0, decorators_1.watch)(':click')
     ], resizer.prototype, "onEditorClick", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onStartResizing", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onEndResizing", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onResize", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onKeyDown", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onKeyUp", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onClickOutside", null);
     tslib_1.__decorate([
         (0, decorators_1.debounce)()
     ], resizer.prototype, "onChangeEditor", null);

@@ -234,11 +234,13 @@ export class resizer extends Plugin {
 			let new_w = 0,
 				new_h = 0;
 
-			const uar = Boolean(
-				this.j.o.resizer.useAspectRatio && !this.isAltMode
-			);
+			const uar = this.j.o.resizer.useAspectRatio;
 
-			if (uar || (Array.isArray(uar) && Dom.isTag(this.element, uar))) {
+			if (
+				!this.isAltMode &&
+				(uar === true ||
+					(Array.isArray(uar) && Dom.isTag(this.element, uar)))
+			) {
 				if (diff_x) {
 					new_w =
 						this.width +
