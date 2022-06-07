@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: '新行',
-	delete: '删除'
+	delete: '删除',
+	space: '空间'
 };

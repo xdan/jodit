@@ -12,6 +12,7 @@ module.exports = ({ ESNext, isTest, banner }) =>
 		extractComments: false,
 
 		exclude: './src/langs',
+
 		terserOptions: {
 			ecma: ESNext ? 8 : 5,
 

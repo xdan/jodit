@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: 'yeni satır',
-	delete: 'silmek'
+	delete: 'silmek',
+	space: 'uzay'
 };

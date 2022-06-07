@@ -72,7 +72,8 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 
 		optimization: {
 			minimize: !debug && uglify,
-			moduleIds: debug ? 'named' : 'natural',
+			moduleIds: debug ? 'named' : false,
+			mangleExports: true,
 			minimizer: require('./minimizer').map(mnm =>
 				mnm({ isTest, ESNext })
 			)

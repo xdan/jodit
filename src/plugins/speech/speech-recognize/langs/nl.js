@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: 'regel',
-	delete: 'verwijderen'
+	delete: 'verwijderen',
+	space: 'ruimte'
 };

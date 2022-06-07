@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: 'Zeilenumbruch',
-	delete: 'löschen'
+	delete: 'löschen',
+	space: 'Raum'
 };

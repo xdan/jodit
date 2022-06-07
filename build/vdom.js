@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.7
+ * Version: v3.18.8
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -18,25 +18,97 @@
 })(self, function() {
 return /******/ (function() { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ([
-/* 0 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/******/ 	var __webpack_modules__ = ({
 
+/***/ 8058:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(2), exports);
-tslib_1.__exportStar(__webpack_require__(3), exports);
-tslib_1.__exportStar(__webpack_require__(17), exports);
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
 
 
 /***/ }),
-/* 1 */
+
+/***/ 70631:
+/***/ (function(__unused_webpack_module, exports) {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.boundClass = exports.boundMethod = void 0;
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function _typeof(obj) { return typeof obj; };
+}
+else {
+    _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+} return _typeof(obj); }
+function boundMethod(target, key, descriptor) {
+    var fn = descriptor.value;
+    if (typeof fn !== 'function') {
+        throw new TypeError("@boundMethod decorator can only be applied to methods not: ".concat(_typeof(fn)));
+    }
+    var definingProperty = false;
+    return {
+        configurable: true,
+        get: function get() {
+            if (definingProperty || this === target.prototype || this.hasOwnProperty(key) || typeof fn !== 'function') {
+                return fn;
+            }
+            var boundFn = fn.bind(this);
+            definingProperty = true;
+            Object.defineProperty(this, key, {
+                configurable: true,
+                get: function get() {
+                    return boundFn;
+                },
+                set: function set(value) {
+                    fn = value;
+                    delete this[key];
+                }
+            });
+            definingProperty = false;
+            return boundFn;
+        },
+        set: function set(value) {
+            fn = value;
+        }
+    };
+}
+exports.boundMethod = boundMethod;
+function boundClass(target) {
+    var keys;
+    if (typeof Reflect !== 'undefined' && typeof Reflect.ownKeys === 'function') {
+        keys = Reflect.ownKeys(target.prototype);
+    }
+    else {
+        keys = Object.getOwnPropertyNames(target.prototype);
+        if (typeof Object.getOwnPropertySymbols === 'function') {
+            keys = keys.concat(Object.getOwnPropertySymbols(target.prototype));
+        }
+    }
+    keys.forEach(function (key) {
+        if (key === 'constructor') {
+            return;
+        }
+        var descriptor = Object.getOwnPropertyDescriptor(target.prototype, key);
+        if (typeof descriptor.value === 'function') {
+            Object.defineProperty(target.prototype, key, boundMethod(target, key, descriptor));
+        }
+    });
+    return target;
+}
+exports.boundClass = boundClass;
+function autobind() {
+    if (arguments.length === 1) {
+        return boundClass.apply(void 0, arguments);
+    }
+    return boundMethod.apply(void 0, arguments);
+}
+exports["default"] = autobind;
+
+
+/***/ }),
+
+/***/ 20255:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -378,285 +450,8 @@ exports.__classPrivateFieldIn = __classPrivateFieldIn;
 
 
 /***/ }),
-/* 2 */
-/***/ (function(__unused_webpack_module, exports) {
 
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-
-/***/ }),
-/* 3 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.VDomRender = void 0;
-var tslib_1 = __webpack_require__(1);
-var helpers_1 = __webpack_require__(4);
-var async_1 = __webpack_require__(5);
-var autobind_decorator_1 = __webpack_require__(16);
-var isProperty = function (key) { return key !== 'children'; };
-var isNew = function (prev, next) {
-    return function (key) {
-        return prev[key] !== next[key];
-    };
-};
-var isGone = function (prev, next) {
-    return function (key) {
-        return !(key in next);
-    };
-};
-var updateDom = function (dom, prevProps, nextProps) {
-    Object.keys(prevProps)
-        .filter(isProperty)
-        .filter(isGone(prevProps, nextProps))
-        .forEach(function (name) {
-        dom[name] = '';
-    });
-    Object.keys(nextProps)
-        .filter(isProperty)
-        .filter(isNew(prevProps, nextProps))
-        .forEach(function (name) {
-        dom[name] = nextProps[name];
-    });
-};
-var createDom = function (fiber) {
-    var dom = fiber.type === 'TEXT_ELEMENT'
-        ? document.createTextNode('')
-        : document.createElement(fiber.type);
-    updateDom(dom, {}, fiber.props);
-    return dom;
-};
-var VDomRender = (function () {
-    function VDomRender() {
-        this.async = new async_1.Async();
-        this.nextUnitOfWork = undefined;
-        this.currentRoot = undefined;
-        this.wipRoot = undefined;
-        this.deletions = [];
-        this.async.requestIdleCallback(this.workLoop);
-    }
-    VDomRender.prototype.commitRoot = function () {
-        var _a;
-        this.deletions.forEach(this.commitWork);
-        this.deletions.length = 0;
-        this.commitWork((_a = this.wipRoot) === null || _a === void 0 ? void 0 : _a.child);
-        this.currentRoot = this.wipRoot;
-        this.wipRoot = undefined;
-    };
-    VDomRender.prototype.commitWork = function (fiber) {
-        var _a, _b;
-        if (!fiber) {
-            return;
-        }
-        var domParentFiber = fiber.parent;
-        while (!(domParentFiber === null || domParentFiber === void 0 ? void 0 : domParentFiber.dom)) {
-            domParentFiber = domParentFiber === null || domParentFiber === void 0 ? void 0 : domParentFiber.parent;
-        }
-        var domParent = domParentFiber.dom;
-        if (fiber.effectTag === 'PLACEMENT' && fiber.dom != null) {
-            domParent.appendChild(fiber.dom);
-        }
-        else if (fiber.effectTag === 'UPDATE' && fiber.dom != null) {
-            updateDom(fiber.dom, (_b = (_a = fiber.alternate) === null || _a === void 0 ? void 0 : _a.props) !== null && _b !== void 0 ? _b : {}, fiber.props);
-        }
-        else if (fiber.effectTag === 'DELETION') {
-            this.commitDeletion(fiber, domParent);
-        }
-        this.commitWork(fiber === null || fiber === void 0 ? void 0 : fiber.child);
-        this.commitWork(fiber === null || fiber === void 0 ? void 0 : fiber.sibling);
-    };
-    VDomRender.prototype.commitDeletion = function (fiber, domParent) {
-        if (fiber === null || fiber === void 0 ? void 0 : fiber.dom) {
-            domParent.removeChild(fiber.dom);
-        }
-        else {
-            this.commitDeletion(fiber === null || fiber === void 0 ? void 0 : fiber.child, domParent);
-        }
-    };
-    VDomRender.prototype.render = function (element, container) {
-        var _a;
-        this.wipRoot = {
-            type: 'div',
-            dom: container,
-            props: {
-                children: [element]
-            },
-            alternate: (_a = this.currentRoot) !== null && _a !== void 0 ? _a : undefined
-        };
-        this.deletions = [];
-        this.nextUnitOfWork = this.wipRoot;
-    };
-    VDomRender.prototype.workLoop = function (deadline) {
-        var shouldYield = false;
-        while (this.nextUnitOfWork && !shouldYield) {
-            this.nextUnitOfWork = this.performUnitOfWork(this.nextUnitOfWork);
-            shouldYield = deadline.timeRemaining() < 1;
-        }
-        if (!this.nextUnitOfWork && this.wipRoot) {
-            this.commitRoot();
-        }
-        this.async.requestIdleCallback(this.workLoop);
-    };
-    VDomRender.prototype.performUnitOfWork = function (fiber) {
-        this.__updateHostComponent(fiber);
-        if (fiber.child) {
-            return fiber.child;
-        }
-        var nextFiber = fiber;
-        while (nextFiber) {
-            if (nextFiber.sibling) {
-                return nextFiber.sibling;
-            }
-            nextFiber = nextFiber.parent;
-        }
-        return;
-    };
-    VDomRender.prototype.__updateHostComponent = function (fiber) {
-        if (!fiber.dom) {
-            fiber.dom = createDom(fiber);
-        }
-        this.__reconcileChildren(fiber, fiber.props.children);
-    };
-    VDomRender.prototype.__reconcileChildren = function (wipFiber, elements) {
-        var index = 0;
-        var oldFiber = wipFiber.alternate && wipFiber.alternate.child;
-        var prevSibling = undefined;
-        while (index < elements.length || oldFiber) {
-            var element = elements[index];
-            var newFiber = undefined;
-            var sameType = oldFiber && element && element.type === oldFiber.type;
-            if (sameType && oldFiber) {
-                newFiber = {
-                    type: oldFiber.type,
-                    props: element.props,
-                    dom: oldFiber.dom,
-                    parent: wipFiber,
-                    alternate: oldFiber,
-                    effectTag: 'UPDATE'
-                };
-            }
-            if (element && !sameType) {
-                newFiber = {
-                    type: element.type,
-                    props: element.props,
-                    dom: null,
-                    parent: wipFiber,
-                    alternate: undefined,
-                    effectTag: 'PLACEMENT'
-                };
-            }
-            if (oldFiber && !sameType) {
-                oldFiber.effectTag = 'DELETION';
-                this.deletions.push(oldFiber);
-            }
-            if (oldFiber) {
-                oldFiber = oldFiber.sibling;
-            }
-            if (index === 0 && wipFiber) {
-                wipFiber.child = newFiber;
-            }
-            else if (element && prevSibling) {
-                prevSibling.sibling = newFiber;
-            }
-            prevSibling = newFiber;
-            index++;
-        }
-    };
-    VDomRender.prototype.htmlToVDom = function (html) {
-        var box = document.createElement('div');
-        box.innerHTML = html;
-        return (0, helpers_1.domToVDom)(box.children.length > 1 || !box.firstChild ? box : box.firstChild);
-    };
-    VDomRender = tslib_1.__decorate([
-        autobind_decorator_1.default
-    ], VDomRender);
-    return VDomRender;
-}());
-exports.VDomRender = VDomRender;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.domToVDom = exports.attrsToDict = void 0;
-var tslib_1 = __webpack_require__(1);
-function attrsToDict(elm) {
-    var _a, _b;
-    var result = {};
-    if (elm.nodeName === 'SCRIPT') {
-        result.textContent = (_a = elm.textContent) !== null && _a !== void 0 ? _a : '';
-    }
-    if (elm.nodeType === Node.TEXT_NODE) {
-        result.nodeValue = (_b = elm.nodeValue) !== null && _b !== void 0 ? _b : '';
-    }
-    if (elm instanceof HTMLElement) {
-        for (var i = 0; i < elm.attributes.length; i += 1) {
-            var attr = elm.attributes.item(i);
-            if (attr) {
-                result[attr.name] = attr.value;
-            }
-        }
-    }
-    return result;
-}
-exports.attrsToDict = attrsToDict;
-function domToVDom(elm, noNode) {
-    var _a;
-    if (noNode === void 0) { noNode = true; }
-    if (elm.nodeType === Node.TEXT_NODE) {
-        return {
-            type: 'TEXT_ELEMENT',
-            props: {
-                children: [],
-                nodeValue: (_a = elm.nodeValue) !== null && _a !== void 0 ? _a : ''
-            }
-        };
-    }
-    return {
-        type: elm.nodeName.toLowerCase(),
-        props: tslib_1.__assign({ children: Array.from(elm.childNodes).map(function (n) { return domToVDom(n, noNode); }) }, attrsToDict(elm))
-    };
-}
-exports.domToVDom = domToVDom;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(6), exports);
-
-
-/***/ }),
-/* 6 */
+/***/ 14722:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -667,13 +462,13 @@ tslib_1.__exportStar(__webpack_require__(6), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Async = void 0;
-var tslib_1 = __webpack_require__(1);
-var async_1 = __webpack_require__(7);
-var is_function_1 = __webpack_require__(9);
-var is_plain_object_1 = __webpack_require__(10);
-var is_promise_1 = __webpack_require__(12);
-var is_string_1 = __webpack_require__(13);
-var is_number_1 = __webpack_require__(15);
+var tslib_1 = __webpack_require__(20255);
+var async_1 = __webpack_require__(97336);
+var is_function_1 = __webpack_require__(84121);
+var is_plain_object_1 = __webpack_require__(77184);
+var is_promise_1 = __webpack_require__(30317);
+var is_string_1 = __webpack_require__(40607);
+var is_number_1 = __webpack_require__(93860);
 var Async = (function () {
     function Async() {
         var _this = this;
@@ -909,7 +704,8 @@ exports.Async = Async;
 
 
 /***/ }),
-/* 7 */
+
+/***/ 60588:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -919,12 +715,29 @@ exports.Async = Async;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(1);
-tslib_1.__exportStar(__webpack_require__(8), exports);
+var tslib_1 = __webpack_require__(20255);
+tslib_1.__exportStar(__webpack_require__(14722), exports);
 
 
 /***/ }),
-/* 8 */
+
+/***/ 97336:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(20255);
+tslib_1.__exportStar(__webpack_require__(60232), exports);
+
+
+/***/ }),
+
+/***/ 60232:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -935,7 +748,7 @@ tslib_1.__exportStar(__webpack_require__(8), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.clearTimeout = exports.setTimeout = void 0;
-var tslib_1 = __webpack_require__(1);
+var tslib_1 = __webpack_require__(20255);
 function setTimeout(callback, timeout) {
     var args = [];
     for (var _i = 2; _i < arguments.length; _i++) {
@@ -957,107 +770,8 @@ exports.clearTimeout = clearTimeout;
 
 
 /***/ }),
-/* 9 */
-/***/ (function(__unused_webpack_module, exports) {
 
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isFunction = void 0;
-function isFunction(value) {
-    return typeof value === 'function';
-}
-exports.isFunction = isFunction;
-
-
-/***/ }),
-/* 10 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isPlainObject = void 0;
-var is_window_1 = __webpack_require__(11);
-function isPlainObject(obj) {
-    if (!obj || typeof obj !== 'object' || obj.nodeType || (0, is_window_1.isWindow)(obj)) {
-        return false;
-    }
-    return !(obj.constructor &&
-        !{}.hasOwnProperty.call(obj.constructor.prototype, 'isPrototypeOf'));
-}
-exports.isPlainObject = isPlainObject;
-
-
-/***/ }),
-/* 11 */
-/***/ (function(__unused_webpack_module, exports) {
-
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isWindow = void 0;
-function isWindow(obj) {
-    return obj != null && obj === obj.window;
-}
-exports.isWindow = isWindow;
-
-
-/***/ }),
-/* 12 */
-/***/ (function(__unused_webpack_module, exports) {
-
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isPromise = void 0;
-function isPromise(val) {
-    return val && typeof val.then === 'function';
-}
-exports.isPromise = isPromise;
-
-
-/***/ }),
-/* 13 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isStringArray = exports.isString = void 0;
-var is_array_1 = __webpack_require__(14);
-function isString(value) {
-    return typeof value === 'string';
-}
-exports.isString = isString;
-function isStringArray(value) {
-    return (0, is_array_1.isArray)(value) && isString(value[0]);
-}
-exports.isStringArray = isStringArray;
-
-
-/***/ }),
-/* 14 */
+/***/ 2555:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -1075,7 +789,27 @@ exports.isArray = isArray;
 
 
 /***/ }),
-/* 15 */
+
+/***/ 84121:
+/***/ (function(__unused_webpack_module, exports) {
+
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isFunction = void 0;
+function isFunction(value) {
+    return typeof value === 'function';
+}
+exports.isFunction = isFunction;
+
+
+/***/ }),
+
+/***/ 93860:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -1093,85 +827,378 @@ exports.isNumber = isNumber;
 
 
 /***/ }),
-/* 16 */
-/***/ (function(__unused_webpack_module, exports) {
+
+/***/ 77184:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.boundClass = exports.boundMethod = void 0;
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function _typeof(obj) { return typeof obj; };
-}
-else {
-    _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-} return _typeof(obj); }
-function boundMethod(target, key, descriptor) {
-    var fn = descriptor.value;
-    if (typeof fn !== 'function') {
-        throw new TypeError("@boundMethod decorator can only be applied to methods not: ".concat(_typeof(fn)));
+exports.isPlainObject = void 0;
+var is_window_1 = __webpack_require__(99562);
+function isPlainObject(obj) {
+    if (!obj || typeof obj !== 'object' || obj.nodeType || (0, is_window_1.isWindow)(obj)) {
+        return false;
     }
-    var definingProperty = false;
-    return {
-        configurable: true,
-        get: function get() {
-            if (definingProperty || this === target.prototype || this.hasOwnProperty(key) || typeof fn !== 'function') {
-                return fn;
-            }
-            var boundFn = fn.bind(this);
-            definingProperty = true;
-            Object.defineProperty(this, key, {
-                configurable: true,
-                get: function get() {
-                    return boundFn;
-                },
-                set: function set(value) {
-                    fn = value;
-                    delete this[key];
-                }
-            });
-            definingProperty = false;
-            return boundFn;
-        },
-        set: function set(value) {
-            fn = value;
-        }
-    };
+    return !(obj.constructor &&
+        !{}.hasOwnProperty.call(obj.constructor.prototype, 'isPrototypeOf'));
 }
-exports.boundMethod = boundMethod;
-function boundClass(target) {
-    var keys;
-    if (typeof Reflect !== 'undefined' && typeof Reflect.ownKeys === 'function') {
-        keys = Reflect.ownKeys(target.prototype);
-    }
-    else {
-        keys = Object.getOwnPropertyNames(target.prototype);
-        if (typeof Object.getOwnPropertySymbols === 'function') {
-            keys = keys.concat(Object.getOwnPropertySymbols(target.prototype));
-        }
-    }
-    keys.forEach(function (key) {
-        if (key === 'constructor') {
-            return;
-        }
-        var descriptor = Object.getOwnPropertyDescriptor(target.prototype, key);
-        if (typeof descriptor.value === 'function') {
-            Object.defineProperty(target.prototype, key, boundMethod(target, key, descriptor));
-        }
-    });
-    return target;
-}
-exports.boundClass = boundClass;
-function autobind() {
-    if (arguments.length === 1) {
-        return boundClass.apply(void 0, arguments);
-    }
-    return boundMethod.apply(void 0, arguments);
-}
-exports["default"] = autobind;
+exports.isPlainObject = isPlainObject;
 
 
 /***/ }),
-/* 17 */
+
+/***/ 30317:
+/***/ (function(__unused_webpack_module, exports) {
+
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isPromise = void 0;
+function isPromise(val) {
+    return val && typeof val.then === 'function';
+}
+exports.isPromise = isPromise;
+
+
+/***/ }),
+
+/***/ 40607:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isStringArray = exports.isString = void 0;
+var is_array_1 = __webpack_require__(2555);
+function isString(value) {
+    return typeof value === 'string';
+}
+exports.isString = isString;
+function isStringArray(value) {
+    return (0, is_array_1.isArray)(value) && isString(value[0]);
+}
+exports.isStringArray = isStringArray;
+
+
+/***/ }),
+
+/***/ 99562:
+/***/ (function(__unused_webpack_module, exports) {
+
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isWindow = void 0;
+function isWindow(obj) {
+    return obj != null && obj === obj.window;
+}
+exports.isWindow = isWindow;
+
+
+/***/ }),
+
+/***/ 36211:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.domToVDom = exports.attrsToDict = void 0;
+var tslib_1 = __webpack_require__(20255);
+function attrsToDict(elm) {
+    var _a, _b;
+    var result = {};
+    if (elm.nodeName === 'SCRIPT') {
+        result.textContent = (_a = elm.textContent) !== null && _a !== void 0 ? _a : '';
+    }
+    if (elm.nodeType === Node.TEXT_NODE) {
+        result.nodeValue = (_b = elm.nodeValue) !== null && _b !== void 0 ? _b : '';
+    }
+    if (elm instanceof HTMLElement) {
+        for (var i = 0; i < elm.attributes.length; i += 1) {
+            var attr = elm.attributes.item(i);
+            if (attr) {
+                result[attr.name] = attr.value;
+            }
+        }
+    }
+    return result;
+}
+exports.attrsToDict = attrsToDict;
+function domToVDom(elm, noNode) {
+    var _a;
+    if (noNode === void 0) { noNode = true; }
+    if (elm.nodeType === Node.TEXT_NODE) {
+        return {
+            type: 'TEXT_ELEMENT',
+            props: {
+                children: [],
+                nodeValue: (_a = elm.nodeValue) !== null && _a !== void 0 ? _a : ''
+            }
+        };
+    }
+    return {
+        type: elm.nodeName.toLowerCase(),
+        props: tslib_1.__assign({ children: Array.from(elm.childNodes).map(function (n) { return domToVDom(n, noNode); }) }, attrsToDict(elm))
+    };
+}
+exports.domToVDom = domToVDom;
+
+
+/***/ }),
+
+/***/ 23336:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(20255);
+tslib_1.__exportStar(__webpack_require__(66814), exports);
+tslib_1.__exportStar(__webpack_require__(52464), exports);
+tslib_1.__exportStar(__webpack_require__(53401), exports);
+
+
+/***/ }),
+
+/***/ 66814:
+/***/ (function(__unused_webpack_module, exports) {
+
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+
+/***/ }),
+
+/***/ 52464:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.VDomRender = void 0;
+var tslib_1 = __webpack_require__(20255);
+var helpers_1 = __webpack_require__(36211);
+var async_1 = __webpack_require__(60588);
+var autobind_decorator_1 = __webpack_require__(70631);
+var isProperty = function (key) { return key !== 'children'; };
+var isNew = function (prev, next) {
+    return function (key) {
+        return prev[key] !== next[key];
+    };
+};
+var isGone = function (prev, next) {
+    return function (key) {
+        return !(key in next);
+    };
+};
+var updateDom = function (dom, prevProps, nextProps) {
+    Object.keys(prevProps)
+        .filter(isProperty)
+        .filter(isGone(prevProps, nextProps))
+        .forEach(function (name) {
+        dom[name] = '';
+    });
+    Object.keys(nextProps)
+        .filter(isProperty)
+        .filter(isNew(prevProps, nextProps))
+        .forEach(function (name) {
+        dom[name] = nextProps[name];
+    });
+};
+var createDom = function (fiber) {
+    var dom = fiber.type === 'TEXT_ELEMENT'
+        ? document.createTextNode('')
+        : document.createElement(fiber.type);
+    updateDom(dom, {}, fiber.props);
+    return dom;
+};
+var VDomRender = (function () {
+    function VDomRender() {
+        this.async = new async_1.Async();
+        this.nextUnitOfWork = undefined;
+        this.currentRoot = undefined;
+        this.wipRoot = undefined;
+        this.deletions = [];
+        this.async.requestIdleCallback(this.workLoop);
+    }
+    VDomRender.prototype.commitRoot = function () {
+        var _a;
+        this.deletions.forEach(this.commitWork);
+        this.deletions.length = 0;
+        this.commitWork((_a = this.wipRoot) === null || _a === void 0 ? void 0 : _a.child);
+        this.currentRoot = this.wipRoot;
+        this.wipRoot = undefined;
+    };
+    VDomRender.prototype.commitWork = function (fiber) {
+        var _a, _b;
+        if (!fiber) {
+            return;
+        }
+        var domParentFiber = fiber.parent;
+        while (!(domParentFiber === null || domParentFiber === void 0 ? void 0 : domParentFiber.dom)) {
+            domParentFiber = domParentFiber === null || domParentFiber === void 0 ? void 0 : domParentFiber.parent;
+        }
+        var domParent = domParentFiber.dom;
+        if (fiber.effectTag === 'PLACEMENT' && fiber.dom != null) {
+            domParent.appendChild(fiber.dom);
+        }
+        else if (fiber.effectTag === 'UPDATE' && fiber.dom != null) {
+            updateDom(fiber.dom, (_b = (_a = fiber.alternate) === null || _a === void 0 ? void 0 : _a.props) !== null && _b !== void 0 ? _b : {}, fiber.props);
+        }
+        else if (fiber.effectTag === 'DELETION') {
+            this.commitDeletion(fiber, domParent);
+        }
+        this.commitWork(fiber === null || fiber === void 0 ? void 0 : fiber.child);
+        this.commitWork(fiber === null || fiber === void 0 ? void 0 : fiber.sibling);
+    };
+    VDomRender.prototype.commitDeletion = function (fiber, domParent) {
+        if (fiber === null || fiber === void 0 ? void 0 : fiber.dom) {
+            domParent.removeChild(fiber.dom);
+        }
+        else {
+            this.commitDeletion(fiber === null || fiber === void 0 ? void 0 : fiber.child, domParent);
+        }
+    };
+    VDomRender.prototype.render = function (element, container) {
+        var _a;
+        this.wipRoot = {
+            type: 'div',
+            dom: container,
+            props: {
+                children: [element]
+            },
+            alternate: (_a = this.currentRoot) !== null && _a !== void 0 ? _a : undefined
+        };
+        this.deletions = [];
+        this.nextUnitOfWork = this.wipRoot;
+    };
+    VDomRender.prototype.workLoop = function (deadline) {
+        var shouldYield = false;
+        while (this.nextUnitOfWork && !shouldYield) {
+            this.nextUnitOfWork = this.performUnitOfWork(this.nextUnitOfWork);
+            shouldYield = deadline.timeRemaining() < 1;
+        }
+        if (!this.nextUnitOfWork && this.wipRoot) {
+            this.commitRoot();
+        }
+        this.async.requestIdleCallback(this.workLoop);
+    };
+    VDomRender.prototype.performUnitOfWork = function (fiber) {
+        this.__updateHostComponent(fiber);
+        if (fiber.child) {
+            return fiber.child;
+        }
+        var nextFiber = fiber;
+        while (nextFiber) {
+            if (nextFiber.sibling) {
+                return nextFiber.sibling;
+            }
+            nextFiber = nextFiber.parent;
+        }
+        return;
+    };
+    VDomRender.prototype.__updateHostComponent = function (fiber) {
+        if (!fiber.dom) {
+            fiber.dom = createDom(fiber);
+        }
+        this.__reconcileChildren(fiber, fiber.props.children);
+    };
+    VDomRender.prototype.__reconcileChildren = function (wipFiber, elements) {
+        var index = 0;
+        var oldFiber = wipFiber.alternate && wipFiber.alternate.child;
+        var prevSibling = undefined;
+        while (index < elements.length || oldFiber) {
+            var element = elements[index];
+            var newFiber = undefined;
+            var sameType = oldFiber && element && element.type === oldFiber.type;
+            if (sameType && oldFiber) {
+                newFiber = {
+                    type: oldFiber.type,
+                    props: element.props,
+                    dom: oldFiber.dom,
+                    parent: wipFiber,
+                    alternate: oldFiber,
+                    effectTag: 'UPDATE'
+                };
+            }
+            if (element && !sameType) {
+                newFiber = {
+                    type: element.type,
+                    props: element.props,
+                    dom: null,
+                    parent: wipFiber,
+                    alternate: undefined,
+                    effectTag: 'PLACEMENT'
+                };
+            }
+            if (oldFiber && !sameType) {
+                oldFiber.effectTag = 'DELETION';
+                this.deletions.push(oldFiber);
+            }
+            if (oldFiber) {
+                oldFiber = oldFiber.sibling;
+            }
+            if (index === 0 && wipFiber) {
+                wipFiber.child = newFiber;
+            }
+            else if (element && prevSibling) {
+                prevSibling.sibling = newFiber;
+            }
+            prevSibling = newFiber;
+            index++;
+        }
+    };
+    VDomRender.prototype.htmlToVDom = function (html) {
+        var box = document.createElement('div');
+        box.innerHTML = html;
+        return (0, helpers_1.domToVDom)(box.children.length > 1 || !box.firstChild ? box : box.firstChild);
+    };
+    VDomRender = tslib_1.__decorate([
+        autobind_decorator_1.default
+    ], VDomRender);
+    return VDomRender;
+}());
+exports.VDomRender = VDomRender;
+
+
+/***/ }),
+
+/***/ 53401:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -1182,8 +1209,8 @@ exports["default"] = autobind;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.VDomJodit = void 0;
-__webpack_require__(18);
-var render_1 = __webpack_require__(3);
+__webpack_require__(8058);
+var render_1 = __webpack_require__(52464);
 var VDomJodit = (function () {
     function VDomJodit(elm) {
         var _a;
@@ -1217,16 +1244,9 @@ var VDomJodit = (function () {
 exports.VDomJodit = VDomJodit;
 
 
-/***/ }),
-/* 18 */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
 /***/ })
-/******/ 	]);
+
+/******/ 	});
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
@@ -1269,7 +1289,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(0);
+/******/ 	var __webpack_exports__ = __webpack_require__(23336);
 /******/ 	
 /******/ 	return __webpack_exports__;
 /******/ })()

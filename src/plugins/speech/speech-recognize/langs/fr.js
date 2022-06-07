@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: 'nouvelle ligne',
-	delete: 'supprimer'
+	delete: 'supprimer',
+	space: 'espace'
 };

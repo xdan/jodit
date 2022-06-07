@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.7
+ * Version: v3.18.8
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -27,13 +27,13 @@
 .jodit-speech-recognize__popup {
   font-family: var(--jd-font-default);
   font-size: var(--jd-font-size-default);
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   padding: 24px;
   background-color: rgba(240, 240, 240, 0.4);
   border-radius: 8px;
   font-size: 32px;
-  transform: translate(-50%, -50px);
+  transform: translate(-50%, -50%);
 }
 

@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: 'újsor',
-	delete: 'törlés'
+	delete: 'törlés',
+	space: 'tér'
 };

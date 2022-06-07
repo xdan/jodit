@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: 'řádek',
-	delete: 'odstranit'
+	delete: 'odstranit',
+	space: 'prostora'
 };

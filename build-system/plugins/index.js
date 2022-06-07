@@ -27,5 +27,13 @@ module.exports = vars => {
 		}
 	}
 
+	if (!debug) {
+		plugins.push(
+			new webpack.ids.DeterministicModuleIdsPlugin({
+				maxLength: 5
+			})
+		);
+	}
+
 	return plugins;
 };

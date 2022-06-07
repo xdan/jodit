@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: 'الخط الجديد',
-	delete: 'حذف'
+	delete: 'حذف',
+	space: 'الفضاء'
 };

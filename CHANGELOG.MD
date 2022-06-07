@@ -9,6 +9,27 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.18.8
+
+#### :house: Internal
+
+-   Used plugin `webpack.ids.DeterministicModuleIdsPlugin` for more reliable sharing of exported module names between builds.
+    Now you can include plugins from 'es5' in the assembly for 'es2018.en'.
+-   Deps
+    ```
+     @types/node                       ^17.0.36  →  ^17.0.41
+     @typescript-eslint/eslint-plugin   ^5.27.0  →   ^5.27.1
+     @typescript-eslint/parser          ^5.27.0  →   ^5.27.1
+     cssnano-preset-advanced             ^5.3.6  →    ^5.3.7
+     eslint                             ^8.16.0  →   ^8.17.0
+     lint-staged                        ^12.4.3  →   ^13.0.0
+     terser-webpack-plugin               ^5.3.1  →    ^5.3.3
+     typescript                          ^4.7.2  →    ^4.7.3
+     webpack                            ^5.72.1  →   ^5.73.0
+     webpack-dev-server                  ^4.9.0  →    ^4.9.2
+     core-js                            ^3.22.7  →   ^3.22.8
+    ```
+
 ## 3.18.7
 
 #### :rocket: New Feature
@@ -1491,11 +1512,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                               	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                               	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                               	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                               	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                               ]
+-                                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                       ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

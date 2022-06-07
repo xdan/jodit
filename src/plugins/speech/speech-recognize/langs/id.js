@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: 'newline',
-	delete: 'Hapus'
+	delete: 'Hapus',
+	space: 'ruang'
 };

@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: '改行',
-	delete: '削除'
+	delete: '削除',
+	space: 'スペース'
 };

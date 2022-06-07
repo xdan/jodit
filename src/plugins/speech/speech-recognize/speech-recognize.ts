@@ -26,6 +26,7 @@ import './config';
 export class SpeechRecognizeNative extends Plugin implements IPlugin {
 	constructor(j: IJodit) {
 		super(j);
+
 		if (j.o.speechRecognize.api) {
 			j.registerButton({
 				group: 'state',
@@ -73,7 +74,8 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 				'jodit-speech-recognize__popup'
 			);
 		}
-		this.j.container.appendChild(this.messagePopup);
+
+		this.j.workplace.appendChild(this.messagePopup);
 		this.j.async.setTimeout(
 			() => {
 				Dom.safeRemove(this.messagePopup);

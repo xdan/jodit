@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: 'חדשות',
-	delete: 'מחק'
+	delete: 'מחק',
+	space: 'שטח'
 };

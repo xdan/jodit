@@ -6,5 +6,6 @@
 
 module.exports = {
 	newline: 'nuova riga',
-	delete: 'eliminare'
+	delete: 'eliminare',
+	space: 'spazio'
 };
