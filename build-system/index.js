@@ -26,7 +26,11 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 	console.warn(`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify}`);
 
 	return {
-		cache: !isProd,
+		cache: !isProd || {
+			type: 'filesystem',
+			idleTimeoutForInitialStore: 0,
+			name: 'jodit'
+		},
 		mode,
 		target: ['web', 'es5'],
 		context: dir,

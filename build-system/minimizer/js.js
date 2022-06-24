@@ -5,10 +5,11 @@
  */
 
 const MinimizeJSPlugin = require('terser-webpack-plugin');
+const os = require('os');
 
 module.exports = ({ ESNext, isTest, banner }) =>
 	new MinimizeJSPlugin({
-		parallel: true,
+		parallel: os.cpus().length,
 		extractComments: false,
 
 		exclude: './src/langs',
@@ -33,7 +34,7 @@ module.exports = ({ ESNext, isTest, banner }) =>
 
 				pure_funcs: ['assert'],
 
-				passes: 7
+				passes: 1
 			},
 
 			output: {

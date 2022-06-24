@@ -9,7 +9,7 @@ const webpack = require('webpack');
 module.exports = vars => {
 	const plugins = [new webpack.ProgressPlugin(), require('./define')(vars)];
 
-	const { isProd, ESNext, onlyTS, debug } = vars;
+	const { isProd, ESNext, onlyTS, debug, exclude } = vars;
 
 	if (debug) {
 		plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -34,6 +34,23 @@ module.exports = vars => {
 			})
 		);
 	}
+
+	plugins.push(
+		new webpack.IgnorePlugin({
+			checkResource(resource) {
+				if (exclude.length) {
+					for (const p of exclude) {
+						if (p.length && resource.includes(p)) {
+							console.log('Exclude:', resource, ' rule: ', p);
+							return true;
+						}
+					}
+				}
+
+				return false;
+			}
+		})
+	);
 
 	return plugins;
 };
