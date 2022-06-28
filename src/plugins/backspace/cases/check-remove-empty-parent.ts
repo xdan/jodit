@@ -12,7 +12,6 @@ import type { IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { INSEPARABLE_TAGS } from 'jodit/core/constants';
 
-import { findNotEmptyNeighbor } from '../helpers';
 import { checkJoinTwoLists } from './check-join-two-lists';
 
 /**
@@ -47,7 +46,7 @@ export function checkRemoveEmptyParent(
 		return false;
 	}
 
-	const neighbor = findNotEmptyNeighbor(fakeNode, backspace, jodit.editor);
+	const neighbor = Dom.findNotEmptyNeighbor(fakeNode, backspace, jodit.editor);
 
 	do {
 		if (prn && Dom.isEmpty(prn) && !Dom.isCell(prn)) {

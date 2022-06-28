@@ -8,7 +8,7 @@
  * @module plugins/paste
  */
 
-import type { IJodit, IUIOption, Nullable } from 'jodit/types';
+import type { IJodit, InsertMode, IUIOption, Nullable } from 'jodit/types';
 import {
 	isArray,
 	isNumber,
@@ -23,7 +23,7 @@ import { Confirm, Dialog } from 'jodit/modules';
 import { Button } from 'jodit/core/ui/button/button/button';
 import { markOwner } from 'jodit/src/core/helpers/utils/utils';
 
-import type { PasteEvent, InsertMode } from './interface';
+import type { PasteEvent } from './interface';
 
 /**
  * Get DataTransfer from different event types

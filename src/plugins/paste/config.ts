@@ -8,7 +8,7 @@
  * @module plugins/paste
  */
 
-import type { IControlType, IJodit, IUIOption } from 'jodit/types';
+import type { IControlType, IJodit, InsertMode, IUIOption } from 'jodit/types';
 import {
 	INSERT_AS_HTML,
 	INSERT_AS_TEXT,
@@ -19,7 +19,6 @@ import { Config } from 'jodit/config';
 import { Alert } from 'jodit/modules/dialog/alert';
 
 import { pasteInsertHtml } from './helpers';
-import type { InsertMode } from './interface';
 
 declare module 'jodit/config' {
 	interface Config {
