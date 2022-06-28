@@ -10,7 +10,7 @@
 
 import type { IJodit, Nullable } from 'jodit/types';
 import { $$, attr, css, isString } from 'jodit/core/helpers';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 
 /**
  * Fixes image sizes and sets absolute paths to images

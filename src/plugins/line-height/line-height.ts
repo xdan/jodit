@@ -13,10 +13,11 @@
 import type { IJodit } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
 
-import './config';
-import { css } from '../../core/helpers';
+import { css } from 'jodit/core/helpers';
 import { autobind } from 'jodit/core/decorators';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
+
+import './config';
 
 export class lineHeight extends Plugin {
 	override buttons: Plugin['buttons'] = [

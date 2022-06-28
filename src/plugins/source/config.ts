@@ -10,8 +10,7 @@
 
 import type { IControlType, IJodit, ISourceEditor } from 'jodit/types';
 import { Config } from 'jodit/config';
-import * as consts from 'jodit/core/constants';
-import { IS_IE } from 'jodit/core/constants';
+import { IS_IE, MODE_SOURCE, MODE_SPLIT } from 'jodit/core/constants';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -86,23 +85,23 @@ Config.prototype.sourceEditorNativeOptions = {
 };
 
 Config.prototype.sourceEditorCDNUrlsJS = [
-	'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js'
+	'https://cdnjs.cloudflare.com/ajax/libs/ace/1.7.0/ace.js'
 ];
 
 Config.prototype.beautifyHTMLCDNUrlsJS = [
-	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.13.0/beautify.min.js',
-	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.13.0/beautify-html.min.js'
+	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.4/beautify.min.js',
+	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.4/beautify-html.min.js'
 ];
 
 Config.prototype.controls.source = {
-	mode: consts.MODE_SPLIT,
+	mode: MODE_SPLIT,
 
 	exec: (editor: IJodit) => {
 		editor.toggleMode();
 	},
 
 	isActive: (editor: IJodit) => {
-		return editor.getRealMode() === consts.MODE_SOURCE;
+		return editor.getRealMode() === MODE_SOURCE;
 	},
 
 	tooltip: 'Change mode'

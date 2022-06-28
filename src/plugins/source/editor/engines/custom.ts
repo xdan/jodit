@@ -9,6 +9,7 @@
  */
 
 import type { ISourceEditor } from 'jodit/types';
+
 import { SourceEditor } from '../sourceEditor';
 
 export class CustomEditor

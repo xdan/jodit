@@ -11,6 +11,9 @@
 import type { IJodit, IDictionary } from 'jodit/types';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 
+/**
+ * @private
+ */
 export function generateCriticalCSS(jodit: IJodit): string {
 	const getMatchedCSSRules = (
 		el: HTMLElement,

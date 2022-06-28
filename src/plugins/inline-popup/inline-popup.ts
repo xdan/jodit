@@ -9,7 +9,6 @@
  */
 
 import './inline-popup.less';
-import './config/config';
 
 import type {
 	Buttons,
@@ -38,6 +37,8 @@ import { Dom } from 'jodit/core/dom';
 import { UIElement } from 'jodit/core/ui';
 import type { Table } from 'jodit/modules/table/table';
 import { debounce, wait, autobind, watch } from 'jodit/core/decorators';
+
+import './config/config';
 
 /**
  * Plugin for show inline popup dialog

@@ -19,11 +19,13 @@ import {
 	MODE_SPLIT
 } from 'jodit/core/constants';
 import { Plugin } from 'jodit/core/plugin';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { isString, loadNext } from 'jodit/core/helpers';
 import { createSourceEditor } from './editor/factory';
 import { autobind, watch } from 'jodit/core/decorators';
+
 import { SOURCE_CONSUMER } from './const';
+import './config';
 
 /**
  * Plug-in change simple textarea on CodeMirror editor in Source code mode

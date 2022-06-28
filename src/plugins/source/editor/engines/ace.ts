@@ -11,6 +11,7 @@
 import type { IJodit, ISourceEditor } from 'jodit/types';
 import * as constants from 'jodit/core/constants';
 import { isString, loadNext } from 'jodit/core/helpers';
+
 import { SourceEditor } from '../sourceEditor';
 
 export class AceEditor

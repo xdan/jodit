@@ -24,6 +24,7 @@ import {
 	$$,
 	asArray,
 	attr,
+	call,
 	css,
 	dataBind,
 	error,
@@ -696,6 +697,39 @@ export class Dom {
 		}
 
 		return sibling && cond(sibling) ? sibling : null;
+	}
+
+	/**
+	 * Returns the nearest non-empty sibling
+	 */
+	static findNotEmptySibling(node: Node, backspace: boolean): Nullable<Node> {
+		return Dom.findSibling(node, backspace, n => {
+			return (
+				!Dom.isEmptyTextNode(n) &&
+				Boolean(
+					!Dom.isText(n) || (n.nodeValue?.length && trim(n.nodeValue))
+				)
+			);
+		});
+	}
+
+	/**
+	 * Returns the nearest non-empty neighbor
+	 */
+	static findNotEmptyNeighbor(
+		node: Node,
+		left: boolean,
+		root: HTMLElement
+	): Nullable<Node> {
+		return call(
+			left ? Dom.prev : Dom.next,
+			node,
+			n =>
+				Boolean(
+					n && (!Dom.isText(n) || trim(n?.nodeValue || '').length)
+				),
+			root
+		);
 	}
 
 	static sibling(node: Node, left?: boolean): Nullable<Node> {

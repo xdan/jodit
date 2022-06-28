@@ -13,7 +13,8 @@ import './sticky.less';
 import type { IBound, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { IS_IE, MODE_WYSIWYG } from 'jodit/core/constants';
-import { Plugin, Dom } from '../../modules';
+import { Plugin } from 'jodit/core/plugin/plugin';
+import { Dom } from 'jodit/core/dom/dom';
 import { css, offset } from 'jodit/core/helpers';
 import { throttle } from 'jodit/core/decorators';
 

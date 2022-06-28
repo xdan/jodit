@@ -10,8 +10,8 @@
 
 import type { IJodit, IControlType } from 'jodit/types';
 import { Config } from 'jodit/config';
-import { Dom } from 'jodit/modules/';
-import { css } from 'jodit/core/helpers/';
+import { Dom } from 'jodit/core/dom/dom';
+import { css } from 'jodit/core/helpers/utils/css';
 
 Config.prototype.controls.align = {
 	name: 'left',

@@ -8,7 +8,7 @@
  * @module plugins/select
  */
 
-import { Config } from '../../config';
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

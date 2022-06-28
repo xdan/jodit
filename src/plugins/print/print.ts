@@ -14,8 +14,9 @@ import { getContainer } from 'jodit/core/global';
 import { Dom } from 'jodit/core/dom';
 import { defaultLanguage } from 'jodit/core/helpers';
 import * as consts from 'jodit/core/constants';
-import { previewBox } from 'jodit/plugins/print/helpers';
-import { generateCriticalCSS } from 'jodit/plugins/print/lib/generate-critical-css';
+
+import { previewBox } from './helpers';
+import { generateCriticalCSS } from './lib/generate-critical-css';
 
 Config.prototype.controls.print = {
 	exec: (editor: IJodit) => {

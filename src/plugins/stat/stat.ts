@@ -11,8 +11,8 @@
 import type { Nullable } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from 'jodit/core/constants';
-import { Plugin } from 'jodit/core/plugin';
-import { Dom } from 'jodit/core/dom';
+import { Plugin } from 'jodit/core/plugin/plugin';
+import { Dom } from 'jodit/core/dom/dom';
 
 declare module 'jodit/config' {
 	interface Config {

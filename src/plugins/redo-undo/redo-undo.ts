@@ -11,7 +11,7 @@
 import type { IControlType, IJodit, IPlugin } from 'jodit/types';
 import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
-import { Plugin } from 'jodit/core/plugin';
+import { Plugin } from 'jodit/core/plugin/plugin';
 
 Config.prototype.controls.redo = {
 	mode: consts.MODE_SPLIT,

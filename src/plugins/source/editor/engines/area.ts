@@ -9,8 +9,9 @@
  */
 
 import type { IJodit, ISourceEditor } from 'jodit/types';
-import { css } from '../../../../core/helpers';
-import { Dom } from '../../../../modules';
+import { css } from 'jodit/core/helpers/utils/css';
+import { Dom } from 'jodit/core/dom/dom';
+
 import { SourceEditor } from '../sourceEditor';
 
 export class TextAreaEditor

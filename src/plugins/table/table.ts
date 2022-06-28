@@ -10,6 +10,8 @@
 
 import type { IJodit } from 'jodit/types';
 
+import './config';
+
 export function table(editor: IJodit): void {
 	editor.registerButton({
 		name: 'table',

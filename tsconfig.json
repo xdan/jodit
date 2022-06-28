@@ -33,21 +33,17 @@
 
 		"lib": ["es5", "esnext", "dom", "scripthost", "es2015.iterable"],
 
-    "baseUrl": ".",
-    "paths": {
-      "jodit/src/*": ["./src/*"],
-      "jodit/*": ["./src/*"]
-    }
-  },
-	"include": [
-    "./src/types/"
-  ],
+		"baseUrl": ".",
+		"paths": {
+			"jodit/src/*": ["./src/*"],
+			"jodit/*": ["./src/*"]
+		}
+	},
+	"include": ["./src/types/"],
 	"files": [
 		"./index.d.ts",
 		"./src/index.ts",
 		"./src/typings.d.ts",
-		"./src/types/index.d.ts",
-		"./src/types/async.d.ts",
-		"./src/plugins/speech/speech-recognize/speech-recognize.ts",
+		"./src/types/index.d.ts"
 	]
 }

@@ -39,6 +39,54 @@ export class Config implements IViewOptions {
 	safeMode: boolean = false;
 
 	/**
+	 * Editor's width
+	 *
+	 * @example
+	 * ```javascript
+	 * Jodit.make('.editor', {
+	 *    width: '100%',
+	 * })
+	 * ```
+	 * @example
+	 * ```javascript
+	 * Jodit.make('.editor', {
+	 *    width: 600, // equivalent for '600px'
+	 * })
+	 * ```
+	 * @example
+	 * ```javascript
+	 * Jodit.make('.editor', {
+	 *    width: 'auto', // autosize
+	 * })
+	 * ```
+	 */
+	width: number | string = 'auto';
+
+	/**
+	 * Editor's height
+	 *
+	 * @example
+	 * ```javascript
+	 * Jodit.make('.editor', {
+	 *    height: '100%',
+	 * })
+	 * ```
+	 * @example
+	 * ```javascript
+	 * Jodit.make('.editor', {
+	 *    height: 600, // equivalent for '600px'
+	 * })
+	 * ```
+	 * @example
+	 * ```javascript
+	 * Jodit.make('.editor', {
+	 *    height: 'auto', // default - autosize
+	 * })
+	 * ```
+	 */
+	height: number | string = 'auto';
+
+	/**
 	 * List of plugins that will be initialized in safe mode.
 	 *
 	 * ```js

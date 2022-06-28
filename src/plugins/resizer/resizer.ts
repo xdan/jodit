@@ -14,7 +14,7 @@ import type { HTMLTagNames, IBound, Nullable } from 'jodit/types';
 import type { IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { IS_IE, KEY_ALT } from 'jodit/core/constants';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import {
 	$$,
 	attr,
@@ -24,9 +24,10 @@ import {
 	markOwner,
 	dataBind
 } from 'jodit/core/helpers';
-import { Plugin } from 'jodit/core/plugin';
+import { Plugin } from 'jodit/core/plugin/plugin';
 import { eventEmitter } from 'jodit/core/global';
 import { autobind, debounce, watch } from 'jodit/core/decorators';
+
 import './config';
 
 const keyBInd = '__jodit-resizer_binded';

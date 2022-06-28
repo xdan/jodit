@@ -1,0 +1,41 @@
+@import (reference) '../../styles/mixins';
+@import (reference) '../../styles/variables';
+
+@keyframes jdSpeakAnimation {
+	0% {
+		fill: green;
+		opacity: 0.3;
+	}
+	100% {
+		fill: #4285f4;
+	}
+}
+
+.jodit-toolbar-button {
+	&_pulse_true {
+		svg {
+			animation-duration: 0.7s;
+			animation-iteration-count: infinite;
+			animation-name: jdSpeakAnimation;
+		}
+	}
+}
+
+.jodit-speech-recognize {
+	&__list-item {
+		display: flex;
+		padding: var(--padding-default);
+	}
+
+	&__popup {
+		.font();
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		padding: 24px;
+		background-color: rgba(240, 240, 240, 0.4);
+		border-radius: 8px;
+		font-size: 32px;
+		transform: translate(-50%, -50%);
+	}
+}

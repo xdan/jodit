@@ -15,6 +15,8 @@ import { css, isNumber } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { autobind } from 'jodit/core/decorators';
 
+import './config';
+
 /**
  * Calculate sizes for editor workspace and handle setHeight and setWidth events
  */

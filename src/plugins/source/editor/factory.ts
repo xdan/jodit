@@ -9,8 +9,9 @@
  */
 
 import type { CallbackFunction, IJodit, ISourceEditor } from 'jodit/types';
-import { AceEditor, TextAreaEditor } from './engines';
 import { isFunction } from 'jodit/core/helpers';
+
+import { AceEditor, TextAreaEditor } from './engines';
 
 export function createSourceEditor(
 	type: 'ace' | 'mirror' | 'area' | ((jodit: IJodit) => ISourceEditor),

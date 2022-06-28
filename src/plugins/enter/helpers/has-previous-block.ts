@@ -1,0 +1,25 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+/**
+ * @module plugins/enter
+ */
+
+import type { IJodit } from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
+
+/**
+ * @private
+ */
+export function hasPreviousBlock(jodit: IJodit, current: Node): boolean {
+	return Boolean(
+		Dom.prev(
+			current,
+			elm => Dom.isBlock(elm) || Dom.isImage(elm),
+			jodit.editor
+		)
+	);
+}
