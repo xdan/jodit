@@ -13,8 +13,8 @@
 import type { IFileBrowserCallBackData, IJodit } from 'jodit/types';
 import { isFunction, $$, attr, val } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
-import { TabOption, TabsWidget } from '../tabs/tabs';
 import { UIBlock, UIForm, UIInput, UIButton } from 'jodit/core/ui';
+import { TabOption, TabsWidget } from '../tabs/tabs';
 
 interface ImageSelectorCallbacks {
 	/**

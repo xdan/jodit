@@ -31,6 +31,7 @@ import {
 	splitFragment,
 	wrapText
 } from './helpers';
+import { pluginSystem } from 'jodit/core/global';
 
 /**
  * One of most important core plugins. It is responsible for all the browsers to have the same effect when the Enter
@@ -141,3 +142,5 @@ export class enter extends Plugin {
 		editor.e.off('keydown.enter');
 	}
 }
+
+pluginSystem.add('enter', enter);

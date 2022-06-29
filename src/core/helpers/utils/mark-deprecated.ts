@@ -9,7 +9,7 @@
  */
 
 /**
- * By default terser will remove all `console.*` but
+ * By default, terser will remove all `console.*` but
  * if you use this object it will not be
  */
 export const cns = console;

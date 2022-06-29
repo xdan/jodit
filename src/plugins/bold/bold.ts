@@ -11,6 +11,7 @@
 import type { IDictionary, IJodit, IControlType } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { isArray } from 'jodit/core/helpers';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.subscript = {
 	tags: ['sub'],
@@ -122,3 +123,5 @@ export function bold(editor: IJodit): void {
 			exec: callBack
 		});
 }
+
+pluginSystem.add('bold', bold);

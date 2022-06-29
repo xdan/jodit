@@ -25,14 +25,18 @@ import {
 	isInitable,
 	isDestructable,
 	isFunction,
-	appendScriptAsync,
-	splitArray,
-	appendStyleAsync,
 	isString,
-	kebabCase,
-	callPromise,
 	isArray
-} from 'jodit/core/helpers';
+} from 'jodit/core/helpers/checker';
+
+import {
+	appendScriptAsync,
+	appendStyleAsync
+} from 'jodit/core/helpers/utils/append-script';
+
+import { splitArray } from 'jodit/core/helpers/array';
+import { kebabCase } from 'jodit/core/helpers/string';
+import { callPromise } from 'jodit/core/helpers/utils/utils';
 
 /**
  * Jodit plugin system
@@ -183,7 +187,14 @@ export class PluginSystem implements IPluginSystem {
 		plugin: PluginType
 	): Nullable<PluginInstance> {
 		try {
-			return isFunction(plugin) ? new plugin(jodit) : plugin;
+			try {
+				// @ts-ignore
+				return isFunction(plugin) ? new plugin(jodit) : plugin;
+			} catch (e) {
+				if (isFunction(plugin) && !plugin.prototype) {
+					return (plugin as Function)(jodit);
+				}
+			}
 		} catch (e) {
 			console.error(e);
 			if (!isProd) {

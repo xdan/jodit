@@ -14,11 +14,12 @@ import type { IJodit } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
 import { watch } from 'jodit/core/decorators';
 import { KEY_TAB } from 'jodit/core/constants';
+import { pluginSystem } from 'jodit/core/global';
 
 import { onTabInsideLi } from './cases';
 import './config';
 
-export class tab extends Plugin {
+class tab extends Plugin {
 	protected afterInit(jodit: IJodit): void {}
 
 	@watch(':keydown.tab')
@@ -30,3 +31,5 @@ export class tab extends Plugin {
 
 	protected beforeDestruct(jodit: IJodit): void {}
 }
+
+pluginSystem.add('tab', tab);

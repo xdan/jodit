@@ -9,8 +9,12 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { $$, attr, css, isString } from 'jodit/core/helpers';
+import { isString } from 'jodit/core/helpers/checker/is-string';
 import { Dom } from 'jodit/core/dom/dom';
+
+import { css } from './css';
+import { attr } from './utils';
+import { $$ } from './selector';
 
 /**
  * Fixes image sizes and sets absolute paths to images

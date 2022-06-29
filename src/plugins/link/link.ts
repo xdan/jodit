@@ -22,6 +22,7 @@ import {
 import { Plugin } from 'jodit/core/plugin';
 import { autobind } from 'jodit/core/decorators';
 import { Dialog } from 'jodit/modules/dialog';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -409,3 +410,5 @@ export class link extends Plugin {
 			.off('processPaste.link', this.onProcessPasteLink);
 	}
 }
+
+pluginSystem.add('link', link);

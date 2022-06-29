@@ -5,7 +5,7 @@
  */
 
 /**
- * [[include:plugins/image/image-processor/README.md]]
+ * [[include:plugins/image-processor/README.md]]
  * @packageDocumentation
  * @module plugins/image-processor
  */
@@ -14,9 +14,10 @@ import type { IDictionary, IJodit } from 'jodit/types';
 import { $$, dataBind } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { debounce, watch } from 'jodit/core/decorators';
+import { SOURCE_CONSUMER } from 'jodit/src/core/constants';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
-import { SOURCE_CONSUMER } from 'jodit/plugins/source/const';
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 const JODIT_IMAGE_BLOB_ID = JODIT_IMAGE_PROCESSOR_BINDED + 'blob-id';
@@ -153,3 +154,5 @@ function dataURItoBlob(dataURI: string): Blob {
 	// write the ArrayBuffer to a blob, and you're done
 	return new Blob([ab], { type: mimeString });
 }
+
+pluginSystem.add('imageProcessor', imageProcessor);

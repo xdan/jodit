@@ -248,6 +248,7 @@ export type InsertMode =
 	| 'insert_only_text';
 
 export type ImageAction = 'resize' | 'crop';
+export type ImageHAlign = 'normal' | 'left' | 'right' | 'center' | '';
 
 export interface ImageBox {
 	w: number;

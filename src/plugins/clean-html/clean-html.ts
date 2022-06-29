@@ -15,6 +15,7 @@ import { safeHTML } from 'jodit/core/helpers/html/safe-html';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { watch, hook } from 'jodit/core/decorators';
 import { LazyWalker } from 'jodit/core/dom/lazy-walker';
+import { pluginSystem } from 'jodit/core/global';
 
 import {
 	getHash,
@@ -130,3 +131,5 @@ export class cleanHtml extends Plugin {
 		this.walker.destruct();
 	}
 }
+
+pluginSystem.add('cleanHtml', cleanHtml);

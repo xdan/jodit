@@ -13,8 +13,9 @@ import './preview.less';
 import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { MODE_SOURCE, MODE_WYSIWYG } from 'jodit/core/constants';
-import { previewBox } from 'jodit/plugins/print/helpers';
 import { Dialog } from 'jodit/modules/dialog/dialog';
+import { previewBox } from 'jodit/core/helpers/utils/print';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.preview = {
 	icon: 'eye',
@@ -45,3 +46,5 @@ export function preview(editor: IJodit): void {
 		}
 	);
 }
+
+pluginSystem.add('preview', preview);

@@ -5,7 +5,7 @@
  */
 
 /**
- * @module plugins/image/image-properties
+ * @module plugins/image-properties
  */
 
 import type { IJodit } from 'jodit/types';

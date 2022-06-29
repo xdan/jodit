@@ -10,10 +10,14 @@
 
 import type { IBound, IJodit, Nullable } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
-import { Dom, Table } from 'jodit/modules';
-import { $$, position } from 'jodit/core/helpers';
+import { Table } from 'jodit/modules';
+import { Dom } from 'jodit/core/dom/dom';
+import { $$, alignElement, position } from 'jodit/core/helpers';
 import { KEY_TAB } from 'jodit/core/constants';
 import { autobind, watch } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
+
+import './config';
 
 const key = 'table_processor_observer';
 const MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
@@ -29,7 +33,7 @@ export class selectCells extends Plugin {
 	}
 
 	protected afterInit(jodit: IJodit): void {
-		if (!jodit.o.table.allowCellSelection) {
+		if (!jodit.o.tableAllowCellSelection) {
 			return;
 		}
 
@@ -433,3 +437,5 @@ export class selectCells extends Plugin {
 		jodit.e.off('.select-cells');
 	}
 }
+
+pluginSystem.add('selectCells', selectCells);

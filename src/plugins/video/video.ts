@@ -9,12 +9,15 @@
  */
 
 import type { IJodit } from 'jodit/types';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
-export function video(editor: IJodit): void {
+function video(editor: IJodit): void {
 	editor.registerButton({
 		name: 'video',
 		group: 'media'
 	});
 }
+
+pluginSystem.add('video', video);

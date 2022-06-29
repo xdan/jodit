@@ -13,6 +13,9 @@ import { Dom } from 'jodit/core/dom/dom';
 import { IS_INLINE } from 'jodit/core/constants';
 import { trim } from 'jodit/core/helpers/string/trim';
 
+/**
+ * @private
+ */
 export function tryRemoveNode(
 	jodit: IJodit,
 	nodeElm: Node,
@@ -37,6 +40,9 @@ export function tryRemoveNode(
 	return hadEffect;
 }
 
+/**
+ * @private
+ */
 function isRemovableNode(
 	jodit: IJodit,
 	node: Node,
@@ -59,39 +65,4 @@ function isRemovableNode(
 		trim((node as Element).innerHTML).length === 0 &&
 		(current == null || !Dom.isOrContains(node, current))
 	);
-}
-
-// @ts-ignore
-function removeExtraBR(
-	jodit: IJodit,
-	node: Node,
-	current: Nullable<Node>
-): boolean {
-	// remove extra br
-	if (
-		Dom.isTag(node, 'br') &&
-		hasNotEmptyTextSibling(node) &&
-		!hasNotEmptyTextSibling(node, true) &&
-		(current == null ||
-			Dom.up(node, Dom.isBlock, jodit.editor) !==
-				Dom.up(current, Dom.isBlock, jodit.editor))
-	) {
-		return true;
-	}
-
-	return false;
-}
-
-function hasNotEmptyTextSibling(node: Node, next = false): boolean {
-	let prev = next ? node.nextSibling : node.previousSibling;
-
-	while (prev) {
-		if (Dom.isElement(prev) || !Dom.isEmptyTextNode(prev)) {
-			return true;
-		}
-
-		prev = next ? prev.nextSibling : prev.previousSibling;
-	}
-
-	return false;
 }

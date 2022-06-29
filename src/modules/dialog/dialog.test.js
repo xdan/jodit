@@ -73,6 +73,8 @@ describe('Dialog system tests', function () {
 			clickButton('pencil', popup);
 
 			const dialog = getOpenedDialog(editor);
+			expect(dialog).is.not.null;
+
 			const changeImage = dialog.querySelector(
 				'a[data-ref="changeImage"]'
 			);

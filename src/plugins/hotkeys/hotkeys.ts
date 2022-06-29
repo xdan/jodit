@@ -8,8 +8,7 @@
  * @module plugins/keyboard
  */
 
-import type { IDictionary, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
+import type { IJodit } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
 import {
 	isArray,
@@ -18,32 +17,9 @@ import {
 	normalizeKeyAliases
 } from 'jodit/core/helpers';
 import { KEY_ESC } from 'jodit/core/constants';
+import { pluginSystem } from 'jodit/core/global';
 
-declare module 'jodit/config' {
-	interface Config {
-		commandToHotkeys: IDictionary<string | string[]>;
-	}
-}
-
-/**
- * You can redefine hotkeys for some command
- *
- * @example
- * ```js
- * var jodit = Jodit.make('#editor', {
- *  commandToHotkeys: {
- *      bold: 'ctrl+shift+b',
- *      italic: ['ctrl+i', 'ctrl+b'],
- *  }
- * })
- * ```
- */
-Config.prototype.commandToHotkeys = {
-	removeFormat: ['ctrl+shift+m', 'cmd+shift+m'],
-	insertOrderedList: ['ctrl+shift+7', 'cmd+shift+7'],
-	insertUnorderedList: ['ctrl+shift+8, cmd+shift+8'],
-	selectall: ['ctrl+a', 'cmd+a']
-};
+import './config';
 
 /**
  * Allow set hotkey for command or button
@@ -205,3 +181,5 @@ export class hotkeys extends Plugin {
 		}
 	}
 }
+
+pluginSystem.add('hotkeys', hotkeys);

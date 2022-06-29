@@ -8,8 +8,9 @@
  * @module plugins/paste
  */
 
-import type { IControlType, IJodit, InsertMode, IUIOption } from 'jodit/types';
+import type { IControlType, IJodit, IUIOption } from 'jodit/types';
 import {
+	CLIPBOARD_ID,
 	INSERT_AS_HTML,
 	INSERT_AS_TEXT,
 	INSERT_ONLY_TEXT,
@@ -44,12 +45,6 @@ declare module 'jodit/config' {
 		nl2brInPlainText: boolean;
 
 		/**
-		 * Default insert method
-		 * @default insert_as_html
-		 */
-		defaultActionOnPaste: InsertMode;
-
-		/**
 		 * Draggable elements
 		 */
 		draggableTags: string | string[];
@@ -73,7 +68,6 @@ Config.prototype.pasteHTMLActionList = [
 Config.prototype.memorizeChoiceWhenPasteFragment = false;
 
 Config.prototype.nl2brInPlainText = true;
-Config.prototype.defaultActionOnPaste = INSERT_AS_HTML;
 
 Config.prototype.draggableTags = ['img', 'jodit-media', 'jodit'];
 
@@ -122,7 +116,7 @@ Config.prototype.controls.paste = {
 		}
 
 		if (error) {
-			text = editor.buffer.get<string>(clipboardPluginKey) || '';
+			text = editor.buffer.get<string>(CLIPBOARD_ID) || '';
 			error = text.length === 0;
 		}
 

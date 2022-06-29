@@ -12,8 +12,10 @@ import type { IViewComponent, Nullable } from 'jodit/types';
 import { css, ctrlKey, dataBind, splitArray } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { Dom } from 'jodit/core/dom';
-import { getContainer } from 'jodit/core/global';
+import { getContainer, pluginSystem } from 'jodit/core/global';
 import { autobind, throttle } from 'jodit/core/decorators';
+
+import './config';
 
 enum DragState {
 	IDLE = 0,
@@ -249,3 +251,5 @@ export class dragAndDropElement extends Plugin {
 		this.removeDragListeners();
 	}
 }
+
+pluginSystem.add('dragAndDropElement', dragAndDropElement);

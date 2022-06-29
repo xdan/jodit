@@ -9,7 +9,7 @@
  */
 
 import type { HTMLTagNames } from 'jodit/types';
-import { Config } from '../../config';
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

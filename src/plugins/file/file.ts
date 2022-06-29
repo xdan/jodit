@@ -5,7 +5,7 @@
  */
 
 /**
- * @module plugins/media
+ * @module plugins/file
  */
 
 import type {
@@ -14,8 +14,9 @@ import type {
 	IJodit
 } from 'jodit/types';
 import { Config } from 'jodit/config';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { FileSelectorWidget } from 'jodit/modules/widget';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.file = {
 	popup: (
@@ -83,3 +84,5 @@ export function file(editor: IJodit): void {
 		group: 'media'
 	});
 }
+
+pluginSystem.add('file', file);

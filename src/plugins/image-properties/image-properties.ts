@@ -5,12 +5,17 @@
  */
 
 /**
- * @module plugins/image/image-properties
+ * @module plugins/image-properties
  */
 
 import './image-properties.less';
 
-import type { IDialog, IFileBrowserCallBackData, IJodit } from 'jodit/types';
+import type {
+	IDialog,
+	IFileBrowserCallBackData,
+	IJodit,
+	ImageHAlign
+} from 'jodit/types';
 
 import {
 	Alert,
@@ -32,12 +37,14 @@ import {
 	isString,
 	refs,
 	kebabCase,
-	isNumeric
+	isNumeric,
+	hAlignElement
 } from 'jodit/core/helpers';
 import { FileSelectorWidget, TabsWidget } from 'jodit/modules/widget';
 import { Button } from 'jodit/core/ui/button';
 import { watch, autobind } from 'jodit/core/decorators';
 import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
+import { pluginSystem } from 'jodit/core/global';
 
 import { form } from './templates/form';
 import { mainTab } from './templates/main-tab';
@@ -74,7 +81,7 @@ const normalSizeFromString = (value: string | number): string | number => {
  * Show dialog with image's options
  */
 export class imageProperties extends Plugin {
-	state: {
+	protected state: {
 		image: HTMLImageElement;
 		ratio: number;
 		sizeIsLocked: boolean;
@@ -93,7 +100,7 @@ export class imageProperties extends Plugin {
 	};
 
 	@watch('state.marginIsLocked')
-	onChangeMarginIsLocked(): void {
+	protected onChangeMarginIsLocked(): void {
 		if (!this.form) {
 			return;
 		}
@@ -111,7 +118,7 @@ export class imageProperties extends Plugin {
 	}
 
 	@watch('state.sizeIsLocked')
-	onChangeSizeIsLocked(): void {
+	protected onChangeSizeIsLocked(): void {
 		if (!this.form) {
 			return;
 		}
@@ -185,8 +192,8 @@ export class imageProperties extends Plugin {
 		}
 
 		this.dialog = new Dialog({
-			fullsize: this.j.o.fullsize,
-			globalFullSize: this.j.o.globalFullSize,
+			fullsize: false,
+			globalFullSize: true,
 			theme: this.j.o.theme,
 			language: this.j.o.language,
 			minWidth: Math.min(400, screen.width),
@@ -597,10 +604,7 @@ export class imageProperties extends Plugin {
 		}
 
 		if (opt.image.editAlign) {
-			hAlignElement(
-				image,
-				align.value as Parameters<typeof hAlignElement>[1]
-			);
+			hAlignElement(image, align.value as ImageHAlign);
 		}
 
 		this.j.synchronizeValues();
@@ -804,3 +808,5 @@ export class imageProperties extends Plugin {
 		editor.e.off(editor.editor, '.imageproperties').off('.imageproperties');
 	}
 }
+
+pluginSystem.add('imageProperties', imageProperties);

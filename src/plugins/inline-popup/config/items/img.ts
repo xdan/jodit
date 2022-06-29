@@ -8,11 +8,11 @@
  * @module plugins/inline-popup
  */
 
-import type { IControlType, IJodit } from 'jodit/types';
+import type { IControlType, IJodit, ImageHAlign } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { css } from 'jodit/core/helpers/utils/css';
-import { hAlignElement } from 'jodit/plugins/image/helpers';
+import { hAlignElement } from 'jodit/src/core/helpers/utils/align';
 
 export const align: IControlType<IJodit> = {
 	name: 'left',
@@ -23,19 +23,22 @@ export const align: IControlType<IJodit> = {
 			return;
 		}
 
-		const command = (
+		const command =
 			control.args && isString(control.args[0])
 				? control.args[0].toLowerCase()
-				: ''
-		) as Parameters<typeof hAlignElement>[1];
+				: '';
 
 		if (!command) {
 			return false;
 		}
 
-		hAlignElement(elm, command);
+		hAlignElement(elm, command as ImageHAlign);
+
 		if (Dom.isTag(elm, ['jodit', 'jodit-media']) && elm.firstElementChild) {
-			hAlignElement(elm.firstElementChild as HTMLElement, command);
+			hAlignElement(
+				elm.firstElementChild as HTMLElement,
+				command as ImageHAlign
+			);
 		}
 
 		editor.synchronizeValues();

@@ -12,7 +12,8 @@ import type { IJodit } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
 import { watch } from 'jodit/core/decorators';
 import { KEY_RIGHT, NBSP_SPACE } from 'jodit/core/constants';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
+import { pluginSystem } from 'jodit/core/global';
 
 /**
  * Allowing to go outside of an inline element if there is no other element after that.
@@ -46,3 +47,5 @@ export class keyArrowOutside extends Plugin {
 		}
 	}
 }
+
+pluginSystem.add('keyArrowOutside', keyArrowOutside);

@@ -19,6 +19,7 @@ import type {
 import { Config } from 'jodit/config';
 import { Dom } from 'jodit/modules/';
 import { memorizeExec } from 'jodit/core/helpers';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.paragraph = {
 	command: 'formatBlock',
@@ -136,3 +137,5 @@ export function formatBlock(editor: IJodit): void {
 		}
 	);
 }
+
+pluginSystem.add('formatBlock', formatBlock);

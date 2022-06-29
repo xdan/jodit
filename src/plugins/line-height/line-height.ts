@@ -16,6 +16,7 @@ import { Plugin } from 'jodit/core/plugin';
 import { css } from 'jodit/core/helpers';
 import { autobind } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -82,3 +83,5 @@ export class lineHeight extends Plugin {
 		});
 	}
 }
+
+pluginSystem.add('lineHeight', lineHeight);

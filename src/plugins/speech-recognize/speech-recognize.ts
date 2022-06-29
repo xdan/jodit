@@ -5,9 +5,9 @@
  */
 
 /**
- * [[include:plugins/speech/speech-recognize/README.md]]
+ * [[include:plugins/speech-recognize/README.md]]
  * @packageDocumentation
- * @module plugins/speech/speech-recognize
+ * @module plugins/speech-recognize
  */
 
 import './speech-recognize.less';

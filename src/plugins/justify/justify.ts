@@ -12,6 +12,8 @@ import type { IJodit, IControlType } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom/dom';
 import { css } from 'jodit/core/helpers/utils/css';
+import { alignElement } from 'jodit/src/core/helpers/utils/align';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.align = {
 	name: 'left',
@@ -114,50 +116,6 @@ Config.prototype.controls.right = {
 };
 
 /**
- * Remove text-align style for all selected children
- */
-export const clearAlign = (node: Node): void => {
-	Dom.each(node, elm => {
-		if (Dom.isHTMLElement(elm)) {
-			if (elm.style.textAlign) {
-				elm.style.textAlign = '';
-
-				if (!elm.style.cssText.trim().length) {
-					elm.removeAttribute('style');
-				}
-			}
-		}
-	});
-};
-
-/**
- * Apply align for element
- */
-export const alignElement = (command: string, box: HTMLElement): void => {
-	if (Dom.isNode(box) && Dom.isElement(box)) {
-		clearAlign(box);
-
-		switch (command.toLowerCase()) {
-			case 'justifyfull':
-				box.style.textAlign = 'justify';
-				break;
-
-			case 'justifyright':
-				box.style.textAlign = 'right';
-				break;
-
-			case 'justifyleft':
-				box.style.textAlign = 'left';
-				break;
-
-			case 'justifycenter':
-				box.style.textAlign = 'center';
-				break;
-		}
-	}
-};
-
-/**
  * Process commands: `justifyfull`, `justifyleft`, `justifyright`, `justifycenter`
  */
 export function justify(editor: IJodit): void {
@@ -199,3 +157,5 @@ export function justify(editor: IJodit): void {
 	editor.registerCommand('justifyleft', callback);
 	editor.registerCommand('justifycenter', callback);
 }
+
+pluginSystem.add('justify', justify);

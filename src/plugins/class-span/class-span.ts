@@ -13,6 +13,7 @@ import { Plugin } from 'jodit/core/plugin';
 import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom';
 import { memorizeExec } from 'jodit/core/helpers';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.classSpan = {
 	command: 'applyClassName',
@@ -134,3 +135,5 @@ export class classSpan extends Plugin {
 	/** @override */
 	protected override beforeDestruct(): void {}
 }
+
+pluginSystem.add('classSpan', classSpan);

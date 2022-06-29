@@ -13,11 +13,7 @@
 import type { IDictionary } from 'jodit/types';
 import { isArray } from '../core/helpers/checker';
 
-const en = require('./en');
-
-let exp: IDictionary<IDictionary<string>> = {
-	en
-};
+let exp: IDictionary<IDictionary<string>> = {};
 
 if (!process.env.EXCLUDE_LANGS) {
 	const ar = require('./ar');
@@ -43,7 +39,6 @@ if (!process.env.EXCLUDE_LANGS) {
 		ar,
 		cs_cz,
 		de,
-		en,
 		es,
 		fr,
 		he,
@@ -61,6 +56,9 @@ if (!process.env.EXCLUDE_LANGS) {
 		zh_tw
 	};
 }
+
+const en = require('./en');
+exp.en = en;
 
 /* Unpack array to hash */
 const get = (value: IDictionary): IDictionary => value.default || value,

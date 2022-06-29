@@ -11,6 +11,7 @@
 import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.hr = {
 	command: 'insertHorizontalRule',
@@ -51,3 +52,5 @@ export function hr(editor: IJodit): void {
 		return false;
 	});
 }
+
+pluginSystem.add('hr', hr);

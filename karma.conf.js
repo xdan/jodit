@@ -87,9 +87,7 @@ module.exports = function (config) {
 			'test/bootstrap.js',
 			'config.js',
 			'src/**/*.test.js',
-			'test/tests/units/*.js',
-			'test/tests/acceptance/*.js',
-			'test/tests/acceptance/plugins/*.js'
+			'test/tests/acceptance/*.js'
 		],
 
 		proxies: {

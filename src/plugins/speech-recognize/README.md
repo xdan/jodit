@@ -9,8 +9,8 @@ The plugin uses [JS Speech Recognize API](https://developer.mozilla.org/en-US/do
 This plugin is not included in the main Jodit build. It must be connected separately.
 
 ```js
-import 'jodit/build/plugins/speech/speech-recognize/speech-recognize.js'
-import 'jodit/build/plugins/speech/speech-recognize/speech-recognize.css'
+import 'jodit/build/plugins/speech-recognize/speech-recognize.js'
+import 'jodit/build/plugins/speech-recognize/speech-recognize.css'
 ```
 
 Or via CDN:
@@ -23,9 +23,9 @@ Or via CDN:
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/jodit.es2018.min.js"></script>
 <link
   rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/plugins/speech/speech-recognize/speech-recognize.css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/plugins/speech-recognize/speech-recognize.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/plugins/speech/speech-recognize/speech-recognize.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/plugins/speech-recognize/speech-recognize.js"></script>
 ```
 
 ## Commands

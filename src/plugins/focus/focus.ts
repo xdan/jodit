@@ -13,6 +13,7 @@
 import type { IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom';
+import { pluginSystem } from 'jodit/core/global';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -93,3 +94,5 @@ export function focus(editor: IJodit): void {
 			});
 	});
 }
+
+pluginSystem.add('focus', focus);

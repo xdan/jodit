@@ -12,11 +12,12 @@ import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { getContainer } from 'jodit/core/global';
 import { Dom } from 'jodit/core/dom';
-import { defaultLanguage } from 'jodit/core/helpers';
+import { defaultLanguage } from 'jodit/core/helpers/utils/default-language';
 import * as consts from 'jodit/core/constants';
+import { pluginSystem } from 'jodit/core/global';
 
-import { previewBox } from './helpers';
 import { generateCriticalCSS } from './lib/generate-critical-css';
+import { previewBox } from 'jodit/core/helpers/utils/print';
 
 Config.prototype.controls.print = {
 	exec: (editor: IJodit) => {
@@ -87,3 +88,5 @@ export function print(editor: IJodit): void {
 		name: 'print'
 	});
 }
+
+pluginSystem.add('print', print);

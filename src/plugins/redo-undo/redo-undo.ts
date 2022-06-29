@@ -12,6 +12,7 @@ import type { IControlType, IJodit, IPlugin } from 'jodit/types';
 import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
 import { Plugin } from 'jodit/core/plugin/plugin';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.redo = {
 	mode: consts.MODE_SPLIT,
@@ -63,3 +64,5 @@ export class redoUndo extends Plugin {
 		});
 	}
 }
+
+pluginSystem.add('redoUndo', redoUndo);

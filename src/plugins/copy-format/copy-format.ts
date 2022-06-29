@@ -11,7 +11,8 @@
 import type { IDictionary, IJodit, IControlType } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom/dom';
-import { css } from 'jodit/core/helpers/';
+import { css } from 'jodit/core/helpers/utils/css';
+import { pluginSystem } from 'jodit/core/global';
 
 const pluginKey = 'copyformat';
 
@@ -149,3 +150,5 @@ export function copyFormat(editor: IJodit): void {
 		group: 'clipboard'
 	});
 }
+
+pluginSystem.add('copyformat', copyFormat);

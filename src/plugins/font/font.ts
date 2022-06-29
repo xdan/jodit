@@ -12,6 +12,7 @@ import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom';
 import { css, memorizeExec, normalizeSize } from 'jodit/core/helpers/';
+import { pluginSystem } from 'jodit/core/global';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -186,3 +187,5 @@ export function font(editor: IJodit): void {
 		.registerCommand('fontsize', callback)
 		.registerCommand('fontname', callback);
 }
+
+pluginSystem.add('font', font);

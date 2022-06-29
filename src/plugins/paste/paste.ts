@@ -5,15 +5,16 @@
  */
 
 /**
- * [[include:plugins/clipboard/paste/README.md]]
+ * [[include:plugins/paste/README.md]]
  * @packageDocumentation
- * @module plugins/clipboard/paste
+ * @module plugins/paste
  */
 
-import type { IJodit } from 'jodit/types';
+import type { IJodit, InsertMode } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin/plugin';
 
 import {
+	CLIPBOARD_ID,
 	INSERT_AS_TEXT,
 	INSERT_CLEAR_HTML,
 	INSERT_ONLY_TEXT,
@@ -32,22 +33,14 @@ import {
 	htmlspecialchars,
 	LimitedStack,
 	nl2br,
-	stripTags
+	stripTags,
+	getDataTransfer
 } from 'jodit/core/helpers';
+import { pluginSystem } from 'jodit/core/global';
 
-import {
-	askInsertTypeDialog,
-	getAllTypes,
-	getDataTransfer,
-	pasteInsertHtml
-} from './helpers';
+import { askInsertTypeDialog, getAllTypes, pasteInsertHtml } from './helpers';
 
-import type {
-	InsertMode,
-	PastedData,
-	PastedValue,
-	PasteEvent
-} from './interface';
+import type { PastedData, PastedValue, PasteEvent } from './interface';
 
 import './config';
 
@@ -219,7 +212,7 @@ export class paste extends Plugin {
 		this.pasteStack.push({ html, action });
 
 		if (isString(html)) {
-			this.j.buffer.set(clipboardPluginKey, html);
+			this.j.buffer.set(CLIPBOARD_ID, html);
 
 			switch (action) {
 				case INSERT_CLEAR_HTML:
@@ -255,3 +248,5 @@ export class paste extends Plugin {
 		}
 	}
 }
+
+pluginSystem.add('paste', paste);

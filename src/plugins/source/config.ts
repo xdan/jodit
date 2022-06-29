@@ -85,7 +85,7 @@ Config.prototype.sourceEditorNativeOptions = {
 };
 
 Config.prototype.sourceEditorCDNUrlsJS = [
-	'https://cdnjs.cloudflare.com/ajax/libs/ace/1.7.0/ace.js'
+	'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js'
 ];
 
 Config.prototype.beautifyHTMLCDNUrlsJS = [

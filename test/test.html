@@ -10,9 +10,9 @@
 	<script>
 		if (!/localhost/.test(location.host)) {
 			document.write(
-				'<' + 'link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/9.2.0/mocha.min.css" />' +
-				'<' + 'script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/9.2.0/mocha.min.js"><' + '/script>' +
-				'<' + 'script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.3.5/chai.min.js"><' + '/script>' +
+				'<' + 'link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.0.0/mocha.min.css" />' +
+				'<' + 'script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.0.0/mocha.min.js"><' + '/script>' +
+				'<' + 'script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.3.6/chai.min.js"><' + '/script>' +
 				'<' + 'script src="https://cdn.jsdelivr.net/npm/synchronous-promise@2.0.15/index.js"><' + '/script>'
 			);
 		} else {
@@ -34,7 +34,7 @@
 		ui: 'bdd',
 		bail: true,
 		fullTrace: true,
-		// inlineDiffs: true
+		inlineDiffs: true
 	});
 
 	mocha.reporter('html');

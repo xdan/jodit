@@ -12,6 +12,7 @@ import type { IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { Table } from 'jodit/modules/table/table';
+import { pluginSystem } from 'jodit/core/global';
 
 /**
  * Process navigate keypressing in table cell
@@ -178,3 +179,5 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 			}
 		);
 }
+
+pluginSystem.add('tableKeyboardNavigation', tableKeyboardNavigation);

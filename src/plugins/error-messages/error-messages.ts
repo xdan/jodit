@@ -15,6 +15,7 @@ import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom';
 import { css } from 'jodit/core/helpers/utils/css';
 import { toArray } from 'jodit/core/helpers/array/to-array';
+import { pluginSystem } from 'jodit/core/global';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -102,3 +103,5 @@ export function errorMessages(editor: IJodit): void {
 			);
 	}
 }
+
+pluginSystem.add('errorMessages', errorMessages);

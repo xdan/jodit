@@ -9,6 +9,7 @@
  */
 
 import type { IJodit } from 'jodit/types';
+import { pluginSystem } from 'jodit/core/global';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -20,12 +21,13 @@ declare module 'jodit/config' {
 }
 
 export function poweredByJodit(jodit: IJodit): void {
+	const { o } = jodit;
 	if (
-		!jodit.o.hidePoweredByJodit &&
-		!jodit.o.inline &&
-		(jodit.o.showCharsCounter ||
-			jodit.o.showWordsCounter ||
-			jodit.o.showXPathInStatusbar)
+		!o.hidePoweredByJodit &&
+		!o.inline &&
+		((o as any).showCharsCounter ||
+			(o as any).showWordsCounter ||
+			(o as any).showXPathInStatusbar)
 	) {
 		jodit.hookStatus('ready', () => {
 			jodit.statusbar.append(
@@ -44,3 +46,5 @@ export function poweredByJodit(jodit: IJodit): void {
 		});
 	}
 }
+
+pluginSystem.add('poweredByJodit', poweredByJodit);

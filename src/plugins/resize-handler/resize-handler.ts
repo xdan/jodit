@@ -13,6 +13,7 @@ import { Plugin } from 'jodit/core/plugin';
 import { Dom } from 'jodit/core/dom';
 import { autobind } from 'jodit/core/decorators';
 import { Icon } from 'jodit/core/ui';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -133,3 +134,5 @@ export class resizeHandler extends Plugin {
 		this.j.e.off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);
 	}
 }
+
+pluginSystem.add('resizeHandler', resizeHandler);

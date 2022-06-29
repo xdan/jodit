@@ -14,6 +14,7 @@ import type { IJodit } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
 import { attr } from 'jodit/core/helpers/utils/utils';
 import { autobind } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -46,3 +47,5 @@ export class spellcheck extends Plugin {
 
 	protected beforeDestruct(jodit: IJodit): void {}
 }
+
+pluginSystem.add('spellcheck', spellcheck);

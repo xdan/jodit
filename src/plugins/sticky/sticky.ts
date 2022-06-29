@@ -11,45 +11,14 @@
 import './sticky.less';
 
 import type { IBound, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { IS_IE, MODE_WYSIWYG } from 'jodit/core/constants';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { Dom } from 'jodit/core/dom/dom';
 import { css, offset } from 'jodit/core/helpers';
 import { throttle } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 
-declare module 'jodit/config' {
-	interface Config {
-		/**
-		 * @example
-		 * ```javascript
-		 * var editor = Jodit.make('#someid', {
-		 *  toolbarSticky: false
-		 * })
-		 * ```
-		 */
-		toolbarSticky: boolean;
-
-		toolbarDisableStickyForMobile: boolean;
-
-		/**
-		 * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to
-		 * move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
-		 *
-		 * @example
-		 * ```javascript
-		 * var editor = Jodit.make('#someid', {
-		 *  toolbarStickyOffset: 100
-		 * })
-		 * ```
-		 */
-		toolbarStickyOffset: number;
-	}
-}
-
-Config.prototype.toolbarSticky = true;
-Config.prototype.toolbarDisableStickyForMobile = true;
-Config.prototype.toolbarStickyOffset = 0;
+import './config';
 
 export class sticky extends Plugin {
 	private isToolbarSticked: boolean = false;
@@ -179,3 +148,5 @@ export class sticky extends Plugin {
 			.off('.sticky');
 	}
 }
+
+pluginSystem.add('sticky', sticky);

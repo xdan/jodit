@@ -15,6 +15,7 @@ import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
 import { css } from 'jodit/core/helpers/utils/css';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
+import { pluginSystem } from 'jodit/core/global';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -163,3 +164,5 @@ export function fullsize(editor: IViewWithToolbar): void {
 			editor.events && editor.e.off(editor.ow, 'resize', resize);
 		});
 }
+
+pluginSystem.add('fullsize', fullsize);

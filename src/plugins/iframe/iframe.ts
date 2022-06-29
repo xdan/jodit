@@ -12,6 +12,7 @@ import type { IJodit } from 'jodit/types';
 import { css, defaultLanguage, attr, callPromise } from 'jodit/core/helpers/';
 import { error } from 'jodit/core/helpers';
 import { MODE_SOURCE } from 'jodit/core/constants';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -306,3 +307,5 @@ export function iframe(editor: IJodit): void {
 			return callPromise(result, init);
 		});
 }
+
+pluginSystem.add('iframe', iframe);

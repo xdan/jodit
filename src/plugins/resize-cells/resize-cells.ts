@@ -8,11 +8,11 @@
  * @module plugins/resize-cells
  */
 
-import './table.less';
+import './resize-cells.less';
 
 import type { IBound, IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
-import { Plugin, Dom, Table } from 'jodit/modules';
+import { Plugin, Table } from 'jodit/modules';
 import {
 	$$,
 	call,
@@ -21,6 +21,10 @@ import {
 	offset
 } from 'jodit/core/helpers';
 import { autobind } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
+import { pluginSystem } from 'jodit/core/global';
+
+import './config';
 
 const key = 'table_processor_observer-resize';
 
@@ -388,7 +392,7 @@ export class resizeCells extends Plugin {
 
 	/** @override */
 	afterInit(editor: IJodit): void {
-		if (!editor.o.table.allowCellResize) {
+		if (!editor.o.tableAllowCellResize) {
 			return;
 		}
 
@@ -488,3 +492,5 @@ export class resizeCells extends Plugin {
 		}
 	}
 }
+
+pluginSystem.add('resizeCells', resizeCells);

@@ -9,32 +9,11 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
 import { $$, attr, dataBind } from 'jodit/core/helpers/utils';
+import { pluginSystem } from 'jodit/core/global';
 
-declare module 'jodit/config' {
-	interface Config {
-		/**
-		 * Decorate media elements
-		 */
-		mediaInFakeBlock: boolean;
-
-		/**
-		 * Decorate media element with tag
-		 */
-		mediaFakeTag: string;
-
-		/**
-		 * Media tags
-		 */
-		mediaBlocks: string[];
-	}
-}
-
-Config.prototype.mediaFakeTag = 'jodit-media';
-Config.prototype.mediaInFakeBlock = true;
-Config.prototype.mediaBlocks = ['video', 'audio'];
+import './config';
 
 /**
  * Process `video` and `audio`
@@ -115,3 +94,5 @@ export function media(editor: IJodit): void {
 			);
 	}
 }
+
+pluginSystem.add('media', media);

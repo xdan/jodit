@@ -189,11 +189,13 @@ export class AceEditor
 
 		// global add ace editor in browser
 		if (!this.aceExists()) {
-			loadNext(editor, editor.o.sourceEditorCDNUrlsJS).then(() => {
-				if (!editor.isInDestruct) {
-					tryInitAceEditor();
-				}
-			});
+			loadNext(editor, editor.o.sourceEditorCDNUrlsJS)
+				.then(() => {
+					if (!editor.isInDestruct) {
+						tryInitAceEditor();
+					}
+				})
+				.catch(() => null);
 		}
 	}
 

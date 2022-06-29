@@ -12,8 +12,9 @@ import './size.less';
 
 import type { IJodit } from 'jodit/types';
 import { css, isNumber } from 'jodit/core/helpers';
-import { Plugin } from 'jodit/core/plugin';
+import { Plugin } from 'jodit/core/plugin/plugin';
 import { autobind } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -195,3 +196,5 @@ export class size extends Plugin {
 		jodit.e.off(jodit.ow, 'load.size', this.resizeWorkspaces).off('.size');
 	}
 }
+
+pluginSystem.add('size', size);

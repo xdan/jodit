@@ -26,23 +26,6 @@ import { markOwner } from 'jodit/src/core/helpers/utils/utils';
 import type { PasteEvent } from './interface';
 
 /**
- * Get DataTransfer from different event types
- */
-export const getDataTransfer = (
-	event: ClipboardEvent | DragEvent
-): Nullable<DataTransfer> => {
-	if ((event as ClipboardEvent).clipboardData) {
-		return (event as ClipboardEvent).clipboardData;
-	}
-
-	try {
-		return (event as DragEvent).dataTransfer || new DataTransfer();
-	} catch {
-		return null;
-	}
-};
-
-/**
  * Remove special HTML comments
  */
 function removeExtraFragments(html: string): string {

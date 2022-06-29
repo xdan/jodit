@@ -21,6 +21,7 @@ import {
 	scrollIntoViewIfNeeded
 } from 'jodit/core/helpers';
 import { autobind, debounce, watch } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -308,3 +309,5 @@ export class addNewLine extends Plugin {
 			.off(this.j.container, '.' + ns);
 	}
 }
+
+pluginSystem.add('addNewLine', addNewLine);

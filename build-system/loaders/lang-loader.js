@@ -17,12 +17,14 @@ module.exports = function (source) {
 	try {
 		const transpile = ts.transpileModule(source, {
 			compilerOptions: {
-				module: ts.ModuleKind.es5
+				module: 'es5',
+				target: 'es5'
 			}
 		});
 
 		const es5export = 'result = ';
 		const content = transpile.outputText
+			.replace('module.exports =', es5export)
 			.replace('export default', es5export)
 			.replace('exports.default =', es5export);
 
@@ -30,7 +32,7 @@ module.exports = function (source) {
 
 		try {
 			vm.runInNewContext(content, box);
-		} catch (e) {
+		} catch {
 			vm.runInNewContext('var exports={};' + content, box);
 		}
 
@@ -44,11 +46,11 @@ module.exports = function (source) {
 			result[index] = lang[key];
 		});
 
-		if (this.resourcePath.indexOf('en.ts') !== -1) {
+		if (this.resourcePath.indexOf('en.js') !== -1) {
 			result = keys; // for English file return keys
 		}
 	} catch (e) {
-		throw new Error('Error in lang-loader: ' + e.message);
+		throw new Error('Error in lang-loader: ' + e.message + e.stack);
 	}
 
 	return 'module.exports.default = ' + JSON.stringify(result);

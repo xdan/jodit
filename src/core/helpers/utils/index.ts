@@ -8,14 +8,9 @@
  * @module helpers/utils
  */
 
-export * from './assert';
-export * from './mark-deprecated';
-export * from './utils';
-export * from './get';
-export * from './set';
-export * from './get-class-name';
-export * from './stack';
+export * from './align';
 export * from './append-script';
+export * from './assert';
 export * from './browser';
 export * from './build-query';
 export * from './complete-url';
@@ -25,11 +20,18 @@ export * from './css';
 export * from './ctrl-key';
 export * from './data-bind';
 export * from './default-language';
+export * from './error';
 export * from './extend';
+export * from './get';
+export * from './get-class-name';
 export * from './human-size-to-bytes';
+export * from './mark-deprecated';
 export * from './parse-query';
+export * from './print';
+export * from './reset';
 export * from './scroll-into-view';
 export * from './selector';
-export * from './error';
+export * from './set';
+export * from './stack';
+export * from './utils';
 export * from './val';
-export * from './reset';

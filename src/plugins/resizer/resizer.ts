@@ -27,6 +27,7 @@ import {
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { eventEmitter } from 'jodit/core/global';
 import { autobind, debounce, watch } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -591,3 +592,5 @@ export class resizer extends Plugin {
 		jodit.e.off(this.j.ow, '.resizer').off('.resizer');
 	}
 }
+
+pluginSystem.add('resizer', resizer);

@@ -14,11 +14,12 @@
 
 import type { IPoint, IViewComponent } from 'jodit/types';
 import { TEXT_HTML, TEXT_PLAIN } from 'jodit/core/constants';
-import { Dom } from 'jodit/core/dom';
-import { attr, ctrlKey, dataBind } from 'jodit/core/helpers';
+import { Dom } from 'jodit/core/dom/dom';
+import { attr, ctrlKey, dataBind, getDataTransfer } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { autobind, throttle } from 'jodit/core/decorators';
 import { isFileBrowserFilesItem } from 'jodit/modules/file-browser';
+import { pluginSystem } from 'jodit/core/global';
 
 /**
  * Process drag and drop image from FileBrowser and movev image inside the editor
@@ -225,3 +226,5 @@ export class dragAndDrop extends Plugin {
 			);
 	}
 }
+
+pluginSystem.add('dragAndDrop', dragAndDrop);

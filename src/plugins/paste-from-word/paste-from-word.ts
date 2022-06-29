@@ -31,6 +31,7 @@ import {
 	askInsertTypeDialog,
 	pasteInsertHtml
 } from 'jodit/plugins/paste/helpers';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -98,12 +99,10 @@ export class pasteFromWord extends Plugin {
 			case INSERT_AS_HTML: {
 				html = applyStyles(html);
 
-				if (this.j.o.beautifyHTML) {
-					const value = this.j.events?.fire('beautifyHTML', html);
+				const value = this.j.events?.fire('beautifyHTML', html);
 
-					if (isString(value)) {
-						html = value;
-					}
+				if (isString(value)) {
+					html = value;
 				}
 
 				break;
@@ -123,3 +122,5 @@ export class pasteFromWord extends Plugin {
 		pasteInsertHtml(e, this.j, html);
 	}
 }
+
+pluginSystem.add('pasteFromWord', pasteFromWord);

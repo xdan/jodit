@@ -15,13 +15,14 @@ import { Plugin } from 'jodit/core/plugin';
 import { Dom } from 'jodit/core/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { autobind } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
 /**
  * Wrap single text nodes in block wrapper
  */
-export class wrapNodes extends Plugin {
+class wrapNodes extends Plugin {
 	/** @override **/
 	protected afterInit(jodit: IJodit): void {
 		if (jodit.o.enter.toLowerCase() === 'br') {
@@ -120,3 +121,5 @@ export class wrapNodes extends Plugin {
 		Dom.isElement(n) &&
 		!(Dom.isBlock(n) || Dom.isTag(n, this.j.o.wrapNodes.exclude));
 }
+
+pluginSystem.add('wrapNodes', wrapNodes);

@@ -24,6 +24,7 @@ import { Plugin } from 'jodit/core/plugin';
 import { autobind, cache, watch } from 'jodit/core/decorators';
 import { UISearch } from 'jodit/plugins/search/ui/search';
 import { scrollIntoViewIfNeeded } from 'jodit/core/helpers';
+import { pluginSystem } from 'jodit/core/global';
 
 import {
 	clearSelectionWrappers,
@@ -428,3 +429,5 @@ export class search extends Plugin {
 		jodit.e.off('.search');
 	}
 }
+
+pluginSystem.add('search', search);

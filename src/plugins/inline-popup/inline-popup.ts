@@ -37,6 +37,7 @@ import { Dom } from 'jodit/core/dom';
 import { UIElement } from 'jodit/core/ui';
 import type { Table } from 'jodit/modules/table/table';
 import { debounce, wait, autobind, watch } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config/config';
 
@@ -354,3 +355,5 @@ export class inlinePopup extends Plugin {
 		}, 'toolbar');
 	}
 }
+
+pluginSystem.add('inlinePopup', inlinePopup);

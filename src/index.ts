@@ -25,8 +25,9 @@ import Languages from './langs/';
 import * as decorators from './core/decorators';
 import * as constants from './core/constants';
 import * as Modules from './modules/';
-import * as Plugins from './plugins/';
 import * as Icons from './styles/icons/';
+
+import 'jodit/plugins/';
 
 // copy constants in Jodit
 Object.keys(constants).forEach((key: string) => {
@@ -59,13 +60,6 @@ Object.keys(decorators)
 ['Confirm', 'Alert', 'Prompt'].forEach((key: string) => {
 	(DefaultJodit as any)[key] = (Modules as any)[key];
 });
-
-// Plugins
-Object.keys(Plugins)
-	.filter(esFilter)
-	.forEach((key: string) => {
-		DefaultJodit.plugins.add(key, (Plugins as any)[key]);
-	});
 
 // Languages
 Object.keys(Languages)

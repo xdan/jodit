@@ -21,6 +21,7 @@ import { Plugin } from 'jodit/core/plugin/plugin';
 import { Dom } from 'jodit/core/dom/dom';
 import { attr, toArray } from 'jodit/core/helpers';
 import { Button } from 'jodit/core/ui/button/button/button';
+import { pluginSystem } from 'jodit/core/global';
 
 /**
  * Show dialog choose content to paste
@@ -217,3 +218,5 @@ export class pasteStorage extends Plugin {
 		this.list = [];
 	}
 }
+
+pluginSystem.add('pasteStorage', pasteStorage);

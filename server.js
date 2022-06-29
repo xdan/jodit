@@ -111,6 +111,6 @@ app.listen(port, function (error) {
 		);
 
 		const open = require('open');
-		open(`http://localhost:${port}/`);
+		open(`http://localhost:${port}/`, {newInstance: false});
 	}
 });

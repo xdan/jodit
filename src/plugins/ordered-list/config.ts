@@ -8,8 +8,8 @@
  * @module plugins/ordered-list
  */
 
-import { Config } from 'jodit/config';
 import type { IControlType, IJodit } from 'jodit/types';
+import { Config } from 'jodit/config';
 import { dataBind } from 'jodit/core/helpers/utils/data-bind';
 
 const memoExec: IControlType<IJodit>['exec'] = (

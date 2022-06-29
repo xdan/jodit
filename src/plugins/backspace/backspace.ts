@@ -14,6 +14,7 @@ import { Dom } from 'jodit/core/dom';
 import { INVISIBLE_SPACE } from 'jodit/core/constants';
 import { isFunction, trim } from 'jodit/core/helpers';
 import { moveNodeInsideStart } from 'jodit/src/core/selection/helpers';
+import { pluginSystem } from 'jodit/core/global';
 
 import type { DeleteMode } from './interface';
 import { cases } from './cases';
@@ -183,3 +184,5 @@ export class backspace extends Plugin {
 		Dom.safeRemove(fakeNode);
 	}
 }
+
+pluginSystem.add('backspace', backspace);

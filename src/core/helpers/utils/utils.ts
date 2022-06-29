@@ -14,7 +14,8 @@ import type {
 	IDictionary,
 	IViewBased,
 	IJodit,
-	RejectablePromise
+	RejectablePromise,
+	Nullable
 } from 'jodit/types';
 import { isFunction } from '../checker/is-function';
 import { isPromise } from '../checker/is-promise';
@@ -216,4 +217,21 @@ export const memorizeExec = <T extends IJodit = IJodit>(
 	}
 
 	editor.execCommand(control.command as string, false, value ?? undefined);
+};
+
+/**
+ * Get DataTransfer from different event types
+ */
+export const getDataTransfer = (
+	event: ClipboardEvent | DragEvent
+): Nullable<DataTransfer> => {
+	if ((event as ClipboardEvent).clipboardData) {
+		return (event as ClipboardEvent).clipboardData;
+	}
+
+	try {
+		return (event as DragEvent).dataTransfer || new DataTransfer();
+	} catch {
+		return null;
+	}
 };

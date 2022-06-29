@@ -5,7 +5,15 @@
  */
 
 /**
- * @module plugins/source
+ * @module plugins/select-cells
  */
 
-export const SOURCE_CONSUMER = 'source-consumer';
+import { Config } from 'jodit/config';
+
+declare module 'jodit/config' {
+	interface Config {
+		tableAllowCellSelection: boolean;
+	}
+}
+
+Config.prototype.tableAllowCellSelection = true;

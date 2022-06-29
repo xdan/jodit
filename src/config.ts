@@ -18,9 +18,11 @@ import type {
 	Controls,
 	IControlType,
 	IUIButtonState,
+	InsertMode,
 	Nullable
 } from './types';
 import * as consts from './core/constants';
+import { INSERT_AS_HTML } from './core/constants';
 
 /**
  * Default Editor's Configuration
@@ -358,6 +360,12 @@ export class Config implements IViewOptions {
 	 */
 	useNativeTooltip: boolean = false;
 
+	/**
+	 * Default insert method
+	 * @default insert_as_html
+	 */
+	defaultActionOnPaste: InsertMode = INSERT_AS_HTML;
+
 	// TODO
 	// autosave: false, // false or url
 	// autosaveCallback: false, // function
@@ -368,6 +376,25 @@ export class Config implements IViewOptions {
 	 * Element that will be created when you press Enter
 	 */
 	enter: 'p' | 'div' | 'br' = consts.PARAGRAPH;
+
+	/**
+	 * When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
+	 *
+	 * @example
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 *    iframe: true,
+	 *    iframeStyle: 'html{margin: 0px;}body{padding:10px;background:transparent;color:#000;position:relative;z-index:2;\
+	 *    user-select:auto;margin:0px;overflow:hidden;}body:after{content:"";clear:both;display:block}';
+	 * });
+	 * ```
+	 */
+	iframe: boolean = false;
+
+	/**
+	 * Allow editing the entire HTML document(html, head)
+	 */
+	editHTMLDocumentMode: boolean = false;
 
 	/**
 	 * Use when you need insert new block element

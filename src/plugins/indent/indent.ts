@@ -13,6 +13,7 @@ import { Config } from 'jodit/config';
 import { BR, PARAGRAPH } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { attr } from 'jodit/core/helpers';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.indent = {
 	tooltip: 'Increase Indent'
@@ -139,3 +140,5 @@ export function indent(editor: IJodit): void {
 		hotkeys: ['ctrl+[', 'cmd+[']
 	});
 }
+
+pluginSystem.add('indent', indent);
