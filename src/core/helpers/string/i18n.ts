@@ -80,11 +80,9 @@ export function i18n(
 		return key;
 	}
 
-	const debug: boolean = Boolean(
-		options !== undefined && options.debugLanguage
-	);
+	const debug: boolean = Boolean(options?.debugLanguage);
 
-	let store: IDictionary;
+	let store: IDictionary = {};
 
 	const parse = (value: string): string =>
 			params && params.length ? sprintf(value, params) : value,
@@ -119,7 +117,7 @@ export function i18n(
 
 	if (lang[language] !== undefined) {
 		store = lang[language];
-	} else {
+	} else if (!debug) {
 		if (lang[defaultLanguage] !== undefined) {
 			store = lang[defaultLanguage];
 		} else {
@@ -143,7 +141,7 @@ export function i18n(
 		return result;
 	}
 
-	if (lang.en && isString(lang.en[key]) && lang.en[key]) {
+	if (!debug && lang.en && isString(lang.en[key]) && lang.en[key]) {
 		return parse(lang.en[key]);
 	}
 

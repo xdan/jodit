@@ -22,21 +22,15 @@ module.exports = function (source) {
 			}
 		});
 
-		const es5export = 'result = ';
-		const content = transpile.outputText
-			.replace('module.exports =', es5export)
-			.replace('export default', es5export)
-			.replace('exports.default =', es5export);
+		const content = transpile.outputText;
 
 		const box = {};
 
 		try {
-			vm.runInNewContext(content, box);
-		} catch {
-			vm.runInNewContext('var exports={};' + content, box);
-		}
+			vm.runInNewContext('var module={};' + content, box);
+		} catch {}
 
-		const lang = box.result;
+		const lang = box.module.exports;
 
 		if (!keys.length) {
 			keys = Object.keys(lang);

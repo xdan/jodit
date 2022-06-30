@@ -312,41 +312,47 @@ describe('Test helpers', function () {
 				});
 			});
 
-			describe('Debug mode', function () {
-				it('Should show debug brackets for undefined keys', function () {
-					const values = [
-						'Type something',
-						'Напишите что-либо',
-						'ru',
+			const values = [
+				'Type something',
+				'Напишите что-либо',
+				'ru',
 
-						'About Jodit',
-						'حول جوديت',
-						'ar',
+				'About Jodit',
+				'حول جوديت',
+				'ar',
 
-						'About Jodit',
-						'{About Jodit}',
-						'ar1',
+				'About Jodit',
+				'{About Jodit}',
+				'ar1',
 
-						'British people',
-						'{British people}',
-						'ar'
-					];
+				'British people',
+				'{British people}',
+				'ar'
+			];
 
-					for (let i = 0; i < values.length; i += 3) {
-						expect(values[i + 1]).equals(
+			for (let i = 0; i < values.length; i += 3) {
+				const [source, result, language] = [
+					values[i],
+					values[i + 1],
+					values[i + 2]
+				];
+
+				describe(`Debug mode for ${language}`, function () {
+					it(`Should show debug brackets for undefined keys for source ${source}`, function () {
+						expect(result).equals(
 							i18n(
-								values[i],
+								source,
 								[],
 								{
-									language: values[i + 2],
+									language,
 									debugLanguage: true
 								},
 								true
 							)
 						);
-					}
+					});
 				});
-			});
+			}
 
 			describe('Define i18n property inside input options', function () {
 				it('Should use it', function () {

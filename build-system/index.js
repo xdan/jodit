@@ -88,8 +88,6 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 
 		plugins: require('./plugins/index')(vars),
 
-		externals: {
-			// 'jodit/plugins/': '{}',
-		}
+		externals: require('./external/index')(vars)
 	};
 };
