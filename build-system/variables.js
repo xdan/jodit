@@ -38,7 +38,7 @@ module.exports.variables = (argv, dir) => {
 	const exclude = (argv.exclude || '').split(/[,\s;]/);
 
 	const excludePlugins = (argv.excludePlugins || '').split(/[,\s;]/);
-	const excludeLangsKeys = (argv.excludeLangsKeys || '').split(/[,\s;]/);
+	const excludeLanguages = (argv.excludeLanguages || '').split(/[,\s;]/);
 
 	const ES = argv && ['es5', 'es2018'].includes(argv.es) ? argv.es : 'es2018';
 
@@ -60,7 +60,7 @@ module.exports.variables = (argv, dir) => {
 		isProd,
 		uglify,
 		excludeLangs,
-		excludeLangsKeys,
+		excludeLanguages,
 		excludePlugins,
 		mode,
 		ES,

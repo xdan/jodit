@@ -11,6 +11,7 @@ let keys = [];
 
 module.exports = function (source) {
 	this.cacheable && this.cacheable(true);
+	const isEn = this.resourcePath.includes('en.js');
 
 	let result = [];
 
@@ -40,7 +41,7 @@ module.exports = function (source) {
 			result[index] = lang[key];
 		});
 
-		if (this.resourcePath.indexOf('en.js') !== -1) {
+		if (isEn) {
 			result = keys; // for English file return keys
 		}
 	} catch (e) {

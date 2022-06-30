@@ -4,6 +4,7 @@
 	"description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
 	"main": "build/jodit.min.js",
 	"types": "./types/index.d.ts",
+  "sideEffects": false,
 	"scripts": {
 		"coverage": "npx type-coverage ./src --detail --ignore-files 'build/**' --ignore-files 'test/**' --ignore-files 'examples/**'",
 		"newversion": "npm run lint && npm run clean && npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./ && rm -rf types/",
