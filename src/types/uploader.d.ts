@@ -8,8 +8,9 @@
  * @module types
  */
 
-import type { IDictionary, IViewComponent } from './types';
+import type { CanPromise, IDictionary, IViewComponent } from './types';
 import type { IViewBased } from 'jodit/types/view';
+import type { IAjax } from './ajax';
 
 interface IUploaderData {
 	messages?: string[];
@@ -40,7 +41,10 @@ export interface IUploaderOptions<T> {
 		| ((request: FormData | IDictionary<string> | string) => string);
 	insertImageAsBase64URI: boolean;
 	imagesExtensions: string[];
-	headers?: IDictionary<string> | null;
+	headers?:
+		| IDictionary<string>
+		| null
+		| ((this: IAjax<any>) => CanPromise<IDictionary<string> | null>);
 	data: null | object;
 	format: string;
 	method: string;
