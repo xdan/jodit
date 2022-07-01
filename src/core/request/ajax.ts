@@ -106,7 +106,7 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 
 		const request = this.prepareRequest();
 
-		return this.j.async.promise((resolve, reject) => {
+		return this.j.async.promise(async (resolve, reject) => {
 			const onReject = (): void => {
 				this.isFulfilled = true;
 				reject(error.connection('Connection error'));
@@ -171,11 +171,17 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 				xhr.setRequestHeader('Content-type', o.contentType);
 			}
 
-			const { headers } = o;
+			let { headers } = o;
+			if (isFunction(headers)) {
+				headers = await headers.call(this);
+			}
 
 			if (headers && xhr.setRequestHeader) {
 				Object.keys(headers).forEach(key => {
-					xhr.setRequestHeader(key, headers[key]);
+					xhr.setRequestHeader(
+						key,
+						(headers as IDictionary<string>)[key]
+					);
 				});
 			}
 
