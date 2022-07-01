@@ -8,8 +8,8 @@
  * @module types
  */
 
-import { IDestructible, IDictionary } from './types';
-import { IViewBased } from './view';
+import type { CanPromise, IDestructible, IDictionary } from './types';
+import type { IViewBased } from './view';
 
 export type DataVariant =
 	| IDictionary<string>
@@ -81,11 +81,14 @@ export interface AjaxOptions {
 	contentType?: string | false;
 
 	/**
-	 * An object of additional header key/value pairs to send along
+	 * An object (or a function which returns an object) of additional header key/value pairs to send along
 	 * with requests using the XMLHttpRequest transport. Uses in {@link FileBrowser|FileBrowser}
 	 * and {@link Uploader|Uploader}
 	 */
-	headers?: IDictionary<string> | null;
+	headers?:
+		| IDictionary<string>
+		| null
+		| ((this: IAjax<any>) => CanPromise<IDictionary<string> | null>);
 
 	responseType?: XMLHttpRequestResponseType;
 
