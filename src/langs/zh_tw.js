@@ -144,14 +144,12 @@ module.exports = {
 	font: '字體',
 	about: '關於',
 	print: '打印',
-	symbol: '符號',
 	underline: '下劃線',
 	strikethrough: '上出現',
 	indent: '增加縮進',
 	outdent: '減少縮進',
 	fullsize: '全屏',
 	shrink: '收縮',
-	copyformat: '複製格式',
 	hr: '分割線',
 	ul: '無序列表',
 	ol: '順序列表',
@@ -221,7 +219,5 @@ module.exports = {
 	'Find Previous': 'ค้นหาก่อนหน้านี้',
 	'Find Next': 'ค้นหาถัดไป',
 	'Insert className': 'ใส่ชื่อคลาส',
-	'Line height': 'ความสูงเส้น',
-	Spellchecking: 'สะกดคำ',
 	'Press Alt for custom resizing': 'กดอัลท์สำหรับการปรับขนาดที่กำหนดเอง'
 };

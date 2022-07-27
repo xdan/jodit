@@ -132,14 +132,12 @@ module.exports = {
 	font: 'الخط',
 	about: 'حول المحرر',
 	print: 'طباعة',
-	symbol: 'رمز',
 	underline: 'أكد',
 	strikethrough: 'شطب',
 	indent: 'المسافة البادئة',
 	outdent: 'نتوء',
 	fullsize: 'ملء الشاشة',
 	shrink: 'الحجم التقليدي',
-	copyformat: 'نسخ التنسيق',
 	hr: 'الخط',
 	ul: 'قائمة',
 	ol: 'قائمة مرقمة',
@@ -222,7 +220,5 @@ module.exports = {
 	'Word Paste Detected': 'كلمة لصق الكشف عن',
 	Clean: 'نظيفة',
 	'Insert className': 'أدخل اسم الفصل',
-	'Line height': 'ارتفاع الخط',
-	Spellchecking: 'التدقيق الإملائي',
 	'Press Alt for custom resizing': 'اضغط البديل لتغيير حجم مخصص'
 };

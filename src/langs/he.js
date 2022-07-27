@@ -163,14 +163,12 @@ module.exports = {
 	font: 'גופן',
 	about: 'עלינו',
 	print: 'הדפס',
-	symbol: 'תו מיוחד',
 	underline: 'קו תחתון',
 	strikethrough: 'קו חוצה',
 	indent: 'הגדל כניסה',
 	outdent: 'הקטן כניסה',
 	fullsize: 'גודל מלא',
 	shrink: 'כווץ',
-	copyformat: 'העתק עיצוב',
 	hr: 'קו אופקי',
 	ul: 'רשימת תבליטים',
 	ol: 'רשימה ממוספרת',
@@ -223,7 +221,5 @@ module.exports = {
 	'Find Previous': 'מצא את הקודם',
 	'Find Next': 'חפש את הבא',
 	'Insert className': 'הכנס את שם הכיתה',
-	'Line height': 'גובה שורה',
-	Spellchecking: 'בדיקת איות',
 	'Press Alt for custom resizing': 'לחץ על אלט לשינוי גודל מותאם אישית'
 };

@@ -7,5 +7,8 @@
 module.exports = {
 	newline: 'linha',
 	delete: 'excluir',
-	space: 'espaco'
+	space: 'espaco',
+	'Speech Recognize': 'Discurso Reconhecer',
+	Sound: 'Som',
+	'Interim Results': 'Resultados Provisórios'
 };

@@ -129,14 +129,12 @@ module.exports = {
 	font: 'písmo',
 	about: 'о editoru',
 	print: 'tisk',
-	symbol: 'symbol',
 	underline: 'podtrženo',
 	strikethrough: 'přeškrtnuto',
 	indent: 'zvětšit odsazení',
 	outdent: 'zmenšit odsazení',
 	fullsize: 'celoobrazovkový režim',
 	shrink: 'smrsknout',
-	copyformat: 'Kopírovat formát',
 	hr: 'Linka',
 	ul: 'Odrážka',
 	ol: 'Číslovaný seznam',
@@ -224,7 +222,5 @@ module.exports = {
 	'Find Previous': 'Najít Předchozí',
 	'Find Next': 'Najít Další',
 	'Insert className': 'Vložte název třídy',
-	'Line height': 'Výška čáry',
-	Spellchecking: 'Kontrola pravopisu',
 	'Press Alt for custom resizing': 'Stiskněte Alt pro vlastní změnu velikosti'
 };

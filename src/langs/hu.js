@@ -165,14 +165,12 @@ module.exports = {
 	font: 'Betű',
 	about: 'Rólunk',
 	print: 'Nyomtat',
-	symbol: 'Szimbólum',
 	underline: 'Aláhúzott',
 	strikethrough: 'Áthúzott',
 	indent: 'Behúzás',
 	outdent: 'Aussenseiter',
 	fullsize: 'Teljes méret',
 	shrink: 'Összenyom',
-	copyformat: 'Formátum másolás',
 	hr: 'Egyenes vonal',
 	ul: 'Lista',
 	ol: 'Számozott lista',
@@ -225,7 +223,5 @@ module.exports = {
 	'Find Previous': 'Megtalálja Előző',
 	'Find Next': 'Következő Keresése',
 	'Insert className': 'Helyezze be az osztály nevét',
-	'Line height': 'Vonal magassága',
-	Spellchecking: 'Helyesírás-ellenőrzés',
 	'Press Alt for custom resizing': 'Nyomja meg az Alt egyéni átméretezés'
 };

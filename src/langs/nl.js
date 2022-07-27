@@ -165,14 +165,12 @@ module.exports = {
 	font: 'lettertype',
 	about: 'over',
 	print: 'afdrukken',
-	symbol: 'symbool',
 	underline: 'onderstreept',
 	strikethrough: 'doorgestreept',
 	indent: 'inspringen',
 	outdent: 'minder inspringen',
 	fullsize: 'volledige grootte',
 	shrink: 'kleiner maken',
-	copyformat: 'opmaak kopiëren',
 	hr: 'horizontale lijn',
 	ul: 'lijst',
 	ol: 'genummerde lijst',
@@ -225,7 +223,5 @@ module.exports = {
 	'Find Previous': 'Vorige Zoeken',
 	'Find Next': 'Volgende Zoeken',
 	'Insert className': 'Voeg de klassenaam in',
-	'Line height': 'Lijnhoogte',
-	Spellchecking: 'Spellingcontrole',
 	'Press Alt for custom resizing': 'Druk op Alt voor aangepaste grootte'
 };

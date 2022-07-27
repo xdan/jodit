@@ -164,14 +164,12 @@ module.exports = {
 	font: 'Font',
 	about: 'Approposito di',
 	print: 'Stampa',
-	symbol: 'Simbolo',
 	underline: 'Sottolineato',
 	strikethrough: 'Barrato',
 	indent: 'trattino',
 	outdent: 'annulla rientro',
 	fullsize: 'A grandezza normale',
 	shrink: 'comprimere',
-	copyformat: 'Copia il formato',
 	hr: 'linea orizzontale',
 	ul: 'lista non ordinata',
 	ol: 'lista ordinata',
@@ -224,8 +222,6 @@ module.exports = {
 	'Find Previous': 'Trova Precedente',
 	'Find Next': 'Trova Successivo',
 	'Insert className': 'Inserisci il nome della classe',
-	'Line height': 'Altezza linea',
-	Spellchecking: 'Controllo ortografico',
 	'Press Alt for custom resizing':
 		'Premere Alt per il ridimensionamento personalizzato'
 };

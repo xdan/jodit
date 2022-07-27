@@ -163,14 +163,12 @@ module.exports = {
 	font: 'Font',
 	about: 'Hakkında',
 	print: 'Yazdır',
-	symbol: 'Sembol',
 	underline: 'Alt çizgi',
 	strikethrough: 'Üstü çizili',
 	indent: 'Girinti',
 	outdent: 'Çıkıntı',
 	fullsize: 'Tam ekran',
 	shrink: 'Küçült',
-	copyformat: 'Kopyalama Biçimi',
 	hr: 'Ayraç',
 	ul: 'Sırasız liste',
 	ol: 'Sıralı liste',
@@ -223,8 +221,6 @@ module.exports = {
 	'Find Previous': 'Öncekini Bul',
 	'Find Next': 'Sonrakini Bul',
 	'Insert className': 'Sınıf adı girin',
-	'Line height': 'Çizgi yüksekliği',
-	Spellchecking: 'Yazım denetimi',
 	'Press Alt for custom resizing':
 		'Özel yeniden boyutlandırma için Alt tuşuna basın'
 };

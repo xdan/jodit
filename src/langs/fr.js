@@ -147,14 +147,12 @@ module.exports = {
 	font: 'police',
 	about: "à propos de l'éditeur",
 	print: 'impression',
-	symbol: 'caractère',
 	underline: 'souligné',
 	strikethrough: 'barré',
 	indent: 'indentation',
 	outdent: 'indifférent',
 	fullsize: 'taille réelle',
 	shrink: 'taille conventionnelle',
-	copyformat: 'Format de copie',
 	hr: 'la ligne',
 	ul: 'Liste des',
 	ol: 'Liste numérotée',
@@ -219,8 +217,6 @@ module.exports = {
 	'Find Previous': 'Trouvez Précédente',
 	'Find Next': 'Suivant',
 	'Insert className': 'Insérer un nom de classe',
-	'Line height': 'Hauteur de ligne',
-	Spellchecking: 'Vérification Orthographique',
 	'Press Alt for custom resizing':
 		'Appuyez sur Alt pour un redimensionnement personnalisé'
 };

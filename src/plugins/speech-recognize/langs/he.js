@@ -7,5 +7,8 @@
 module.exports = {
 	newline: 'חדשות',
 	delete: 'מחק',
-	space: 'שטח'
+	space: 'שטח',
+	'Speech Recognize': 'דיבור מזהה',
+	Sound: 'קול',
+	'Interim Results': 'תוצאות ביניים'
 };

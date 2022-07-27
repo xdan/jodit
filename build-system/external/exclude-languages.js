@@ -13,6 +13,7 @@ module.exports = ({ excludeLanguages }) => {
 		console.warn('Exclude languages:', excludeLanguages);
 
 		return excludeLanguages.reduce((map, name) => {
+			map[`./${name}.js`] = '{}';
 			map[`jodit/langs/${name}`] = '{}';
 			return map;
 		}, {});

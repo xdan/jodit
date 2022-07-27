@@ -132,6 +132,18 @@ Build min files:
 npm run build
 ```
 
+Build without some plugins:
+
+```bash
+webpack --progress --mode production --env es=es2018 --env uglify=true --env excludePlugins="about,source,bold,image,xpath,stat,class-span,color,clean-html,file,focus,enter,backspace,media,preview,pint,redo-undo,resize-cells,search,spellcheck,table"
+```
+
+Build without some languages:
+
+```bash
+webpack --progress --mode production --env es=es2018 --env uglify=true --env excludeLanguages="ru,ar,cs_cz,de,es,fa,fr,he,hu,id,it,ja,ko,nl,pl,pt_br,ru,tr,zh_cn,zh_tw"
+```
+
 Run tests:
 
 ```bash

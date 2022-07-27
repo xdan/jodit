@@ -17,7 +17,15 @@ const { argv } = require('yargs')
 		type: 'string',
 		default: path.resolve(process.cwd(), 'src/langs'),
 		description: 'Directory'
-	});
+	})
+	.example([
+		[
+			'npm run translate -- --command move --key symbol --dir ./src/plugins/symbols/langs --key-to symbols'
+		],
+		[
+			'npm run translate -- --str="Press Alt for custom resizing" --ytak=<key> --folder=<folder> --dir=./src/plugins/symbols/langs'
+		]
+	]);
 
 console.warn('Work directory:', argv.dir);
 

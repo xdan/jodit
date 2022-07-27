@@ -146,14 +146,12 @@ module.exports = {
 	font: '字体',
 	about: '关于',
 	print: '打印',
-	symbol: '符号',
 	underline: '下划线',
 	strikethrough: '上出现',
 	indent: '增加缩进',
 	outdent: '减少缩进',
 	fullsize: '全屏',
 	shrink: '收缩',
-	copyformat: '复制格式',
 	hr: '分割线',
 	ul: '无序列表',
 	ol: '顺序列表',
@@ -223,7 +221,5 @@ module.exports = {
 	'Find Previous': '查找上一个',
 	'Find Next': '查找下一个',
 	'Insert className': '插入班级名称',
-	'Line height': '线高',
-	Spellchecking: '拼写检查',
 	'Press Alt for custom resizing': '按Alt自定义调整大小'
 };

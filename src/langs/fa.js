@@ -164,14 +164,12 @@ module.exports = {
 	font: 'فونت',
 	about: 'درباره',
 	print: 'چاپ',
-	symbol: 'سمبل',
 	underline: 'خط زیرین',
 	strikethrough: 'خط روی متن',
 	indent: 'فرورفتگی',
 	outdent: 'فرورفتگی از بیرون',
 	fullsize: 'کامل کردن',
 	shrink: 'کوچک کردن',
-	copyformat: 'کپی کردن قالب',
 	hr: 'خط',
 	ul: 'لیست',
 	ol: 'لیست عدید',
@@ -224,7 +222,5 @@ module.exports = {
 	'Find Previous': 'پیدا کردن قبلی',
 	'Find Next': 'پیدا کردن بعدی',
 	'Insert className': 'Insertar nombre de clase',
-	'Line height': 'ارتفاع خط',
-	Spellchecking: 'غلطیابی املایی',
 	'Press Alt for custom resizing': 'برای تغییر اندازه سفارشی فشار دهید'
 };

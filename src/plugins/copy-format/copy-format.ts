@@ -150,8 +150,9 @@ export function copyFormat(editor: IJodit): void {
 		name: 'copy-format',
 		group: 'clipboard'
 	});
+
+	extendLang(require('./langs'));
 }
 
-extendLang(require('./langs'));
 pluginSystem.add('copy-format', copyFormat);
 Icon.set('copy-format', require('./copy-format.svg'));

@@ -127,14 +127,12 @@ module.exports = {
 	font: '글꼴',
 	about: '편집기 정보',
 	print: '프린트',
-	symbol: '기호',
 	underline: '밑줄',
 	strikethrough: '취소선',
 	indent: '들여쓰기',
 	outdent: '내어쓰기',
 	fullsize: '전체 화면',
 	shrink: '일반 화면',
-	copyformat: '복사 형식',
 	hr: '구분선',
 	ul: '글머리 목록',
 	ol: '번호 목록',
@@ -222,8 +220,6 @@ module.exports = {
 	'Find Previous': '이전 찾기',
 	'Find Next': '다음 찾기',
 	'Insert className': 'className 입력',
-	'Line height': '선 높이',
-	Spellchecking: '맞춤법 검사',
 	'Press Alt for custom resizing':
 		'사용자 지정 크기 조정에 대 한 고도 누르십시오'
 };

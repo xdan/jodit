@@ -21,7 +21,7 @@ import {
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { Dom } from 'jodit/core/dom/dom';
 import { attr } from 'jodit/core/helpers/utils';
-import { pluginSystem } from 'jodit/core/global';
+import { extendLang, pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -38,6 +38,11 @@ export class symbols extends Plugin {
 	];
 
 	private countInRow: number = 17;
+
+	constructor(jodit: IJodit) {
+		super(jodit);
+		extendLang(require('./langs'));
+	}
 
 	/** @override */
 	override afterInit(jodit: IJodit): void {

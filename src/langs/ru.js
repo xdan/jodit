@@ -128,14 +128,12 @@ module.exports = {
 	font: 'шрифт',
 	about: 'о редакторе',
 	print: 'печать',
-	symbol: 'символ',
 	underline: 'подчеркнутый',
 	strikethrough: 'перечеркнутый',
 	indent: 'отступ',
 	outdent: 'выступ',
 	fullsize: 'во весь экран',
 	shrink: 'обычный размер',
-	copyformat: 'Копировать формат',
 	hr: 'линия',
 	ul: 'Список',
 	ol: 'Нумерованный список',
@@ -223,8 +221,6 @@ module.exports = {
 	'Find Previous': 'Найти Предыдущие',
 	'Find Next': 'Найти Далее',
 	'Insert className': 'Вставить название класса',
-	'Line height': 'Высота линии',
-	Spellchecking: 'Проверка орфографии',
 	'Press Alt for custom resizing':
 		'Нажмите Alt для изменения пользовательского размера'
 };

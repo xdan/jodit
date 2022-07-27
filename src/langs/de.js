@@ -164,14 +164,12 @@ module.exports = {
 	font: 'Schriftart',
 	about: 'Über',
 	print: 'Drucken',
-	symbol: 'Symbol',
 	underline: 'Unterstreichen',
 	strikethrough: 'Durchstreichen',
 	indent: 'Einzug',
 	outdent: 'Herausstellen',
 	fullsize: 'Vollgröße',
 	shrink: 'Schrumpfen',
-	copyformat: 'Format kopierenт',
 	hr: 'die Linie',
 	ul: 'Liste von',
 	ol: 'Nummerierte Liste',
@@ -229,8 +227,6 @@ module.exports = {
 	'Find Previous': 'Suche vorherige',
 	'Find Next': 'Weitersuchen',
 	'Insert className': 'className (CSS) einfügen',
-	'Line height': 'Zeilenhöhe',
-	Spellchecking: 'Rechtschreibprüfung',
 	'Press Alt for custom resizing':
 		'Drücken Sie Alt für benutzerdefinierte Größenanpassung'
 };

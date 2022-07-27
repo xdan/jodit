@@ -143,14 +143,12 @@ module.exports = {
 	font: 'font',
 	about: 'about',
 	print: 'print',
-	symbol: 'symbol',
 	underline: 'underline',
 	strikethrough: 'strikethrough',
 	indent: 'indent',
 	outdent: 'outdent',
 	fullsize: 'fullsize',
 	shrink: 'shrink',
-	copyformat: 'copyformat',
 	hr: '分割線',
 	ul: '箇条書き',
 	ol: '番号付きリスト',
@@ -227,8 +225,6 @@ module.exports = {
 	'Upper Alpha': '英大文字',
 	'Upper Roman': 'ローマ数字大文字',
 	'Insert className': 'クラス名を挿入',
-	'Line height': 'ラインの高さ',
-	Spellchecking: 'スペルチェック',
 	'Press Alt for custom resizing':
 		'カスタムサイズ変更のためのAltキーを押します'
 };

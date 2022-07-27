@@ -165,14 +165,12 @@ module.exports = {
 	font: 'czcionka',
 	about: 'O programie',
 	print: 'drukuj',
-	symbol: 'symbol',
 	underline: 'podkreślenie',
 	strikethrough: 'przekreślenie',
 	indent: 'wcięcie',
 	outdent: 'wycięcie',
 	fullsize: 'pełen rozmiar',
 	shrink: 'przytnij',
-	copyformat: 'format kopii',
 	hr: 'linia pozioma',
 	ul: 'lista',
 	ol: 'lista numerowana',
@@ -225,7 +223,5 @@ module.exports = {
 	'Find Previous': 'Znaleźć Poprzednie',
 	'Find Next': 'Znajdź Dalej',
 	'Insert className': 'Wstaw nazwę zajęć',
-	'Line height': 'Wysokość linii',
-	Spellchecking: 'Sprawdzanie pisowni',
 	'Press Alt for custom resizing': 'Naciśnij Alt, aby zmienić rozmiar'
 };
