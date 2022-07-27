@@ -26,12 +26,12 @@ declare module 'jodit/config' {
 Config.prototype.defaultFontSizePoints = 'px';
 
 Icon.set('font', require('./icons/font.svg')).set(
-	'fontSize',
+	'fontsize',
 	require('./icons/fontsize.svg')
 );
 
-Config.prototype.controls.fontSize = {
-	command: 'fontSize',
+Config.prototype.controls.fontsize = {
+	command: 'fontsize',
 
 	data: {
 		cssRule: 'font-size'

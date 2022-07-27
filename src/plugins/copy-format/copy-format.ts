@@ -84,7 +84,7 @@ const getStyles = (
 	return result;
 };
 
-Config.prototype.controls.copyFormat = {
+Config.prototype.controls.copyformat = {
 	exec: (editor: IJodit, current, { button }) => {
 		if (!current) {
 			return;
@@ -147,12 +147,12 @@ Config.prototype.controls.copyFormat = {
 
 export function copyFormat(editor: IJodit): void {
 	editor.registerButton({
-		name: 'copy-format',
+		name: 'copyformat',
 		group: 'clipboard'
 	});
 
 	extendLang(require('./langs'));
 }
 
-pluginSystem.add('copy-format', copyFormat);
-Icon.set('copy-format', require('./copy-format.svg'));
+pluginSystem.add('copyformat', copyFormat);
+Icon.set('copyformat', require('./copy-format.svg'));

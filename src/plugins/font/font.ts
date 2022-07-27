@@ -24,7 +24,7 @@ export function font(editor: IJodit): void {
 			group: 'font'
 		})
 		.registerButton({
-			name: 'fontSize',
+			name: 'fontsize',
 			group: 'font'
 		});
 

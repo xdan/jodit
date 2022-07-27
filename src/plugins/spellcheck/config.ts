@@ -33,5 +33,5 @@ Config.prototype.controls.spellcheck = {
 	icon: require('./spellcheck.svg'),
 	name: 'spellcheck',
 	command: 'toggleSpellcheck',
-	tooltip: 'Spellchecking'
+	tooltip: 'Spellcheck'
 } as IControlType;
