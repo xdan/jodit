@@ -11,6 +11,7 @@
 import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Alert } from 'jodit/modules/dialog';
+import { Icon } from 'jodit/core/ui/icon';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -234,8 +235,9 @@ Config.prototype.specialCharacters = [
 	'&asymp;'
 ];
 
-Config.prototype.controls.symbol = {
-	icon: 'omega',
+Icon.set('symbols', require('./symbols.svg'));
+
+Config.prototype.controls.symbols = {
 	hotkeys: ['ctrl+shift+i', 'cmd+shift+i'],
 	tooltip: 'Insert Special Character',
 	popup: (editor: IJodit, current, control, close): any => {

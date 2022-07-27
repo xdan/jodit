@@ -13,8 +13,9 @@ import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom/dom';
 import { css } from 'jodit/core/helpers/utils/css';
 import { pluginSystem } from 'jodit/core/global';
+import { Icon } from 'jodit/core/ui/icon';
 
-const pluginKey = 'copyformat';
+const pluginKey = 'copy-format';
 
 /**
  * Plug-in copy and paste formatting from one element to another
@@ -83,7 +84,7 @@ const getStyles = (
 	return result;
 };
 
-Config.prototype.controls.copyformat = {
+Config.prototype.controls.copyFormat = {
 	exec: (editor: IJodit, current, { button }) => {
 		if (!current) {
 			return;
@@ -146,9 +147,10 @@ Config.prototype.controls.copyformat = {
 
 export function copyFormat(editor: IJodit): void {
 	editor.registerButton({
-		name: 'copyformat',
+		name: 'copy-format',
 		group: 'clipboard'
 	});
 }
 
-pluginSystem.add('copyformat', copyFormat);
+pluginSystem.add('copy-format', copyFormat);
+Icon.set('copy-format', require('./copy-format.svg'));

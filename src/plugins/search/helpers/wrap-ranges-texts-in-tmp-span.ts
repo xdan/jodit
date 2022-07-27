@@ -10,7 +10,7 @@
 
 import type { CanUndef, ICreate, ISelectionRange, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
-import { $$ } from 'jodit/src/core/helpers/utils/selector';
+import { $$ } from 'jodit/core/helpers/utils/selector';
 
 const TMP_ATTR = 'jd-tmp-selection';
 

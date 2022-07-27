@@ -46,7 +46,11 @@ export function checkRemoveEmptyParent(
 		return false;
 	}
 
-	const neighbor = Dom.findNotEmptyNeighbor(fakeNode, backspace, jodit.editor);
+	const neighbor = Dom.findNotEmptyNeighbor(
+		fakeNode,
+		backspace,
+		jodit.editor
+	);
 
 	do {
 		if (prn && Dom.isEmpty(prn) && !Dom.isCell(prn)) {

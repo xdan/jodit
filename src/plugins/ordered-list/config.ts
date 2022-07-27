@@ -11,6 +11,7 @@
 import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { dataBind } from 'jodit/core/helpers/utils/data-bind';
+import { Icon } from 'jodit/core/ui/icon';
 
 const memoExec: IControlType<IJodit>['exec'] = (
 	jodit,
@@ -29,6 +30,8 @@ const memoExec: IControlType<IJodit>['exec'] = (
 		value === 'default' ? null : value
 	);
 };
+
+Icon.set('ol', require('./icons/ol.svg')).set('ul', require('./icons/ul.svg'));
 
 Config.prototype.controls.ul = {
 	command: 'insertUnorderedList',

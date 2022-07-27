@@ -14,11 +14,10 @@ import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom';
 import { memorizeExec } from 'jodit/core/helpers';
 import { pluginSystem } from 'jodit/core/global';
+import { Icon } from '../../core/ui';
 
 Config.prototype.controls.classSpan = {
 	command: 'applyClassName',
-
-	icon: require('./icon.svg'),
 
 	exec: memorizeExec,
 
@@ -137,3 +136,4 @@ export class classSpan extends Plugin {
 }
 
 pluginSystem.add('classSpan', classSpan);
+Icon.set('class-span', require('./class-span.svg'));

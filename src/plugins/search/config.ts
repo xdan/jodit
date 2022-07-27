@@ -10,6 +10,7 @@
 
 import type { FuzzySearch, IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
+import { Icon } from 'jodit/core/ui/icon';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -45,6 +46,8 @@ Config.prototype.useSearch = true;
 Config.prototype.search = {
 	lazyIdleTimeout: 0
 };
+
+Icon.set('search', require('./search.svg'));
 
 Config.prototype.controls.find = {
 	tooltip: 'Find',

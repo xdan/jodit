@@ -12,7 +12,7 @@ import type { IControlType, IJodit, ImageHAlign } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { css } from 'jodit/core/helpers/utils/css';
-import { hAlignElement } from 'jodit/src/core/helpers/utils/align';
+import { hAlignElement } from 'jodit/core/helpers/utils/align';
 
 export const align: IControlType<IJodit> = {
 	name: 'left',

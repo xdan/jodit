@@ -15,6 +15,7 @@ import type {
 	IViewBased
 } from 'jodit/types';
 import { css } from 'jodit/core/helpers/utils/css';
+import { camelCase, kebabCase } from 'jodit/core/helpers';
 
 export class Icon {
 	private static icons: IDictionary<string> = {};
@@ -24,12 +25,19 @@ export class Icon {
 			return name;
 		}
 
-		return (
+		const icon =
 			Icon.icons[name] ||
 			Icon.icons[name.replace(/-/g, '_')] ||
 			Icon.icons[name.replace(/_/g, '-')] ||
-			Icon.icons[name.toLowerCase()]
-		);
+			Icon.icons[camelCase(name)] ||
+			Icon.icons[kebabCase(name)] ||
+			Icon.icons[name.toLowerCase()];
+
+		if (!isProd && !icon) {
+			console.log(`Icon "${name}" not found`);
+		}
+
+		return icon;
 	}
 
 	/**

@@ -13,6 +13,12 @@ import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { pluginSystem } from 'jodit/core/global';
+import { Icon } from 'jodit/core/ui/icon';
+
+Icon.set('redo', require('./icons/redo.svg')).set(
+	'undo',
+	require('./icons/undo.svg')
+);
 
 Config.prototype.controls.redo = {
 	mode: consts.MODE_SPLIT,

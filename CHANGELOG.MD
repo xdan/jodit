@@ -13,6 +13,7 @@
 
 #### :house: Internal
 
+-   Plugin icons moved to their respective plugins
 -   Used plugin `webpack.ids.DeterministicModuleIdsPlugin` for more reliable sharing of exported module names between builds.
     Now you can include plugins from 'es5' in the assembly for 'es2018.en'.
 -   Deps
@@ -1512,11 +1513,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                       ]
+-                                                                                                                                                                                                                                                                                                         	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                         	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                         	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                         	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                         ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

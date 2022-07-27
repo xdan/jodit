@@ -6,6 +6,7 @@
 
 import type { ImageEditorOptions } from 'jodit/types';
 import { Config } from 'jodit/config';
+import { Icon } from 'jodit/core/ui/icon';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -28,3 +29,8 @@ Config.prototype.imageeditor = {
 	cropDefaultWidth: '70%',
 	cropDefaultHeight: '70%'
 };
+
+Icon.set('crop', require('./icons/crop.svg')).set(
+	'resize',
+	require('./icons/resize.svg')
+);

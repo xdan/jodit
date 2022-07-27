@@ -32,7 +32,7 @@ export class symbols extends Plugin {
 	/** @override */
 	override buttons: Plugin['buttons'] = [
 		{
-			name: 'symbol',
+			name: 'symbols',
 			group: 'insert'
 		}
 	];

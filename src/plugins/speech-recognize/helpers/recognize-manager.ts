@@ -8,9 +8,9 @@
  * @module plugins/speech-recognize
  */
 
-import { Eventify } from 'jodit/src/core/event-emitter/eventify';
-import type { CanUndef, IAsync, IDestructible } from 'jodit/src/types';
-import { autobind } from 'jodit/src/core/decorators';
+import { Eventify } from 'jodit/core/event-emitter/eventify';
+import type { CanUndef, IAsync, IDestructible } from 'jodit/types';
+import { autobind } from 'jodit/core/decorators';
 
 import { sound } from './sound';
 import { PII, WARN } from '../constants';

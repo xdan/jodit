@@ -14,7 +14,7 @@ import type { IDictionary, IJodit } from 'jodit/types';
 import { $$, dataBind } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { debounce, watch } from 'jodit/core/decorators';
-import { SOURCE_CONSUMER } from 'jodit/src/core/constants';
+import { SOURCE_CONSUMER } from 'jodit/core/constants';
 import { pluginSystem } from 'jodit/core/global';
 
 import './config';

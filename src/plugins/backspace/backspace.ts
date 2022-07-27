@@ -13,7 +13,7 @@ import { Plugin } from 'jodit/core/plugin';
 import { Dom } from 'jodit/core/dom';
 import { INVISIBLE_SPACE } from 'jodit/core/constants';
 import { isFunction, trim } from 'jodit/core/helpers';
-import { moveNodeInsideStart } from 'jodit/src/core/selection/helpers';
+import { moveNodeInsideStart } from 'jodit/core/selection/helpers';
 import { pluginSystem } from 'jodit/core/global';
 
 import type { DeleteMode } from './interface';

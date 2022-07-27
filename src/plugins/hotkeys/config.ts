@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/hotkeys
+ */
+
 import type { IDictionary } from 'jodit/types';
 import { Config } from 'jodit/config';
 
@@ -12,8 +16,6 @@ declare module 'jodit/config' {
 		commandToHotkeys: IDictionary<string | string[]>;
 	}
 }
-
-
 
 /**
  * You can redefine hotkeys for some command

@@ -14,7 +14,7 @@ import type {
 	ISelectionRange,
 	Nullable
 } from 'jodit/types';
-import { fuzzySearchIndex } from 'jodit/src/core/helpers/string/fuzzy-search-index';
+import { fuzzySearchIndex } from 'jodit/core/helpers/string/fuzzy-search-index';
 
 export interface State {
 	query: string;

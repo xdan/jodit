@@ -10,6 +10,7 @@
 
 import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
+import { Icon } from 'jodit/core/ui/icon';
 
 Config.prototype.controls.cut = {
 	command: 'cut',
@@ -28,3 +29,8 @@ Config.prototype.controls.selectall = {
 	command: 'selectall',
 	tooltip: 'Select all'
 } as IControlType;
+
+Icon.set('copy', require('./icons/copy.svg'))
+	.set('cut', require('./icons/cut.svg'))
+	.set('paste', require('./icons/paste.svg'))
+	.set('select-all', require('./icons/select-all.svg'));

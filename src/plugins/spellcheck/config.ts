@@ -10,6 +10,7 @@
 
 import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
+import { Icon } from 'jodit/core/ui/icon';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -22,6 +23,8 @@ declare module 'jodit/config' {
 }
 
 Config.prototype.spellcheck = false;
+
+Icon.set('spellcheck', require('./spellcheck.svg'));
 
 Config.prototype.controls.spellcheck = {
 	isActive(e: IJodit): boolean {

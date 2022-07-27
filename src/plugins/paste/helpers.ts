@@ -21,7 +21,7 @@ import { TEXT_PLAIN } from 'jodit/core/constants';
 import { Confirm, Dialog } from 'jodit/modules';
 
 import { Button } from 'jodit/core/ui/button/button/button';
-import { markOwner } from 'jodit/src/core/helpers/utils/utils';
+import { markOwner } from 'jodit/core/helpers/utils/utils';
 
 import type { PasteEvent } from './interface';
 

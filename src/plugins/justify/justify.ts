@@ -12,8 +12,11 @@ import type { IJodit, IControlType } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom/dom';
 import { css } from 'jodit/core/helpers/utils/css';
-import { alignElement } from 'jodit/src/core/helpers/utils/align';
+import { alignElement } from 'jodit/core/helpers/utils/align';
 import { pluginSystem } from 'jodit/core/global';
+import { Icon } from 'jodit/core/ui/icon';
+
+Icon.set('justify', require('./justify.svg'));
 
 Config.prototype.controls.align = {
 	name: 'left',

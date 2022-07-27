@@ -14,6 +14,9 @@ import { TabOption, TabsWidget } from 'jodit/modules/widget';
 import { convertMediaUrlToVideoEmbed } from 'jodit/core/helpers';
 import { UIForm, UIInput, UITextArea, UIBlock } from 'jodit/core/ui/form';
 import { Button } from 'jodit/core/ui/button';
+import { Icon } from 'jodit/core/ui/icon';
+
+Icon.set('video', require('./video.svg'));
 
 Config.prototype.controls.video = {
 	popup: (editor: IJodit, current, control, close) => {

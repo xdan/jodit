@@ -20,6 +20,9 @@ import { Config } from 'jodit/config';
 import { Dom } from 'jodit/modules/';
 import { memorizeExec } from 'jodit/core/helpers';
 import { pluginSystem } from 'jodit/core/global';
+import { Icon } from 'jodit/core/ui/icon';
+
+Icon.set('paragraph', require('./paragraph.svg'));
 
 Config.prototype.controls.paragraph = {
 	command: 'formatBlock',

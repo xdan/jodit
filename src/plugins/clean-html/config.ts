@@ -10,6 +10,7 @@
 
 import type { HTMLTagNames, IDictionary } from 'jodit/types';
 import { Config } from 'jodit/config';
+import { Icon } from 'jodit/core/ui/icon';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -104,3 +105,5 @@ Config.prototype.controls.eraser = {
 	command: 'removeFormat',
 	tooltip: 'Clear Formatting'
 };
+
+Icon.set('eraser', require('./eraser.svg'));

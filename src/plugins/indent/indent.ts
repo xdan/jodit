@@ -8,59 +8,14 @@
  * @module plugins/indent
  */
 
-import type { IControlType, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
+import type { IJodit } from 'jodit/types';
 import { BR, PARAGRAPH } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { attr } from 'jodit/core/helpers';
 import { pluginSystem } from 'jodit/core/global';
 
-Config.prototype.controls.indent = {
-	tooltip: 'Increase Indent'
-} as IControlType;
-
-/**
- * Get style rule key for current direction
- */
-const getKey = (
-	direction: string,
-	box: HTMLElement
-): 'marginLeft' | 'marginRight' | 'paddingLeft' | 'paddingRight' =>
-	`${Dom.isCell(box) ? 'padding' : 'margin'}${
-		direction === 'rtl' ? 'Right' : 'Left'
-	}`;
-
-Config.prototype.controls.outdent = {
-	isDisabled: (editor: IJodit): boolean => {
-		const current = editor.s.current();
-
-		if (current) {
-			const currentBox = Dom.closest(current, Dom.isBlock, editor.editor);
-
-			if (currentBox) {
-				const arrow = getKey(editor.o.direction, currentBox);
-				return (
-					!currentBox.style[arrow] ||
-					parseInt(currentBox.style[arrow], 10) <= 0
-				);
-			}
-		}
-
-		return true;
-	},
-	tooltip: 'Decrease Indent'
-} as IControlType;
-
-declare module 'jodit/config' {
-	interface Config {
-		/**
-		 * The number of pixels to use for indenting the current line.
-		 */
-		indentMargin: number;
-	}
-}
-
-Config.prototype.indentMargin = 10;
+import './config';
+import { getKey } from './helpers';
 
 /**
  * Indents the line containing the selection or insertion point.

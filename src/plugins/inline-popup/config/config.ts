@@ -10,6 +10,7 @@
 
 import type { IControlType, IDictionary, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
+import { Icon } from 'jodit/core/ui/icon';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -33,6 +34,14 @@ Config.prototype.toolbarInline = true;
 Config.prototype.toolbarInlineForSelection = false;
 Config.prototype.toolbarInlineDisableFor = [];
 Config.prototype.toolbarInlineDisabledButtons = ['source'];
+
+Icon.set('addcolumn', require('../icons/addcolumn.svg'))
+	.set('addrow', require('../icons/addrow.svg'))
+	.set('merge', require('../icons/merge.svg'))
+	.set('th', require('../icons/th.svg'))
+	.set('splitg', require('../icons/splitg.svg'))
+	.set('splitv', require('../icons/splitv.svg'))
+	.set('th-list', require('../icons/th-list.svg'));
 
 Config.prototype.popup = {
 	a: require('./items/a').default,

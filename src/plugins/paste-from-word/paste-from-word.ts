@@ -24,7 +24,7 @@ import {
 	INSERT_AS_TEXT,
 	INSERT_ONLY_TEXT
 } from 'jodit/core/constants';
-import { watch } from 'jodit/src/core/decorators';
+import { watch } from 'jodit/core/decorators';
 
 import type { PastedData, PasteEvent } from 'jodit/plugins/paste/interface';
 import {

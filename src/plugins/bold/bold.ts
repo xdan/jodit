@@ -12,6 +12,7 @@ import type { IDictionary, IJodit, IControlType } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { isArray } from 'jodit/core/helpers';
 import { pluginSystem } from 'jodit/core/global';
+import { Icon } from 'jodit/core/ui/icon';
 
 Config.prototype.controls.subscript = {
 	tags: ['sub'],
@@ -125,3 +126,10 @@ export function bold(editor: IJodit): void {
 }
 
 pluginSystem.add('bold', bold);
+
+Icon.set('bold', require('./icons/bold.svg'))
+	.set('italic', require('./icons/italic.svg'))
+	.set('strikethrough', require('./icons/strikethrough.svg'))
+	.set('subscript', require('./icons/subscript.svg'))
+	.set('superscript', require('./icons/superscript.svg'))
+	.set('underline', require('./icons/underline.svg'));

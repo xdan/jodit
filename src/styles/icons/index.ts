@@ -18,6 +18,8 @@ import * as bin from './bin.svg';
 import * as cancel from './cancel.svg';
 import * as center from './center.svg';
 import * as check from './check.svg';
+import * as chevron from './chevron.svg';
+import * as dots from './dots.svg';
 import * as eye from './eye.svg';
 import * as file from './file.svg';
 import * as folder from './folder.svg';
@@ -45,6 +47,8 @@ export {
 	cancel,
 	center,
 	check,
+	chevron,
+	dots,
 	eye,
 	file,
 	folder,
@@ -61,5 +65,5 @@ export {
 	unlock,
 	update,
 	upload,
-	valign,
+	valign
 };

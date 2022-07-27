@@ -14,6 +14,7 @@ import { Config } from 'jodit/config';
 import { dataBind } from 'jodit/core/helpers/utils/data-bind';
 import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
 import { Alert } from 'jodit/modules/dialog/alert';
+import { Icon } from 'jodit/core/ui/icon';
 
 import type { ISpeechRecognizeConstructor } from './interface';
 import { RecognizeManager } from './helpers/recognize-manager';
@@ -95,6 +96,8 @@ Config.prototype.speechRecognize = {
 	}
 };
 
+Icon.set('speech-recognize', require('./speech-recognize.svg'));
+
 Config.prototype.controls.speechRecognize = {
 	isActive(jodit, _): boolean {
 		const api = dataBind<RecognizeManager>(jodit, 'speech');
@@ -168,7 +171,6 @@ Config.prototype.controls.speechRecognize = {
 		button.state.activated = api.isEnabled;
 	},
 
-	icon: require('./icon.svg'),
 	name: 'speechRecognize',
 	command: 'toggleSpeechRecognize',
 	tooltip: 'Speech Recognize',

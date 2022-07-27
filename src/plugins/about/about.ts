@@ -16,6 +16,7 @@ import { css, isLicense, normalizeLicense } from 'jodit/core/helpers/';
 import * as constants from 'jodit/core/constants';
 import { Dialog } from 'jodit/modules/dialog';
 import { pluginSystem } from 'jodit/core/global';
+import { Icon } from 'jodit/core/ui/icon';
 
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {
@@ -70,3 +71,4 @@ function about(editor: IJodit): void {
 }
 
 pluginSystem.add('about', about);
+Icon.set('about', require('./about.svg'));

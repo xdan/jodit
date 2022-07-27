@@ -5,7 +5,7 @@
  */
 
 /**
- * @module plugins/keyboard
+ * @module plugins/hotkeys
  */
 
 import type { IJodit } from 'jodit/types';

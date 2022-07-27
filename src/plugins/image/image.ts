@@ -18,6 +18,9 @@ import { $$ } from 'jodit/core/helpers';
 import { FileSelectorWidget } from 'jodit/modules/widget';
 import { Config } from 'jodit/config';
 import { pluginSystem } from 'jodit/core/global';
+import { Icon } from 'jodit/core/ui/icon';
+
+Icon.set('image', require('./image.svg'));
 
 Config.prototype.controls.image = {
 	popup: (editor: IJodit, current, self, close) => {

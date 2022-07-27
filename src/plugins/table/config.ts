@@ -13,6 +13,7 @@ import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom';
 import { attr } from 'jodit/core/helpers/utils';
 import { $$, css, scrollIntoViewIfNeeded } from 'jodit/core/helpers';
+import { Icon } from 'jodit/core/ui/icon';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -27,6 +28,8 @@ Config.prototype.table = {
 	selectionCellStyle: 'border: 1px double #1e88e5 !important;',
 	useExtraClassesOptions: false
 };
+
+Icon.set('table', require('./table.svg'));
 
 Config.prototype.controls.table = {
 	data: {

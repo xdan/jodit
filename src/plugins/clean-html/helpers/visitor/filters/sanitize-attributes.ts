@@ -9,7 +9,7 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Dom } from 'jodit/src/core/dom/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { sanitizeHTMLElement } from 'jodit/core/helpers';
 
 /**

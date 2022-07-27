@@ -12,6 +12,7 @@ import type { IControlType, IJodit, IUIOption, IUIForm } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { formTemplate } from './template';
 import { Dom } from 'jodit/core/dom/dom';
+import { Icon } from 'jodit/core/ui/icon';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -85,6 +86,11 @@ Config.prototype.link = {
 	selectOptionsClassName: [],
 	hotkeys: ['ctrl+k', 'cmd+k']
 };
+
+Icon.set('link', require('./icons/link.svg')).set(
+	'unlink',
+	require('./icons/unlink.svg')
+);
 
 Config.prototype.controls.unlink = {
 	exec: (editor: IJodit, current: Node) => {
