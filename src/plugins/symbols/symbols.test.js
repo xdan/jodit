@@ -107,6 +107,7 @@ describe('Symbols plugin', function () {
 				);
 			});
 		});
+
 		describe('Press key top', function () {
 			it('Should select element above', function () {
 				const area = appendTestArea();

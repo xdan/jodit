@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Test editor size plugin', function () {
 	it('should show resize handler in right-bottom corner and allow resize editor by vertical', function () {
 		const editor = getJodit({
@@ -339,6 +340,32 @@ describe('Test editor size plugin', function () {
 					});
 				});
 			});
+		});
+	});
+
+	describe('In iframe mode after change mode', function () {
+		it('Should set min-height to iframe', function () {
+			const editor = getJodit({
+				iframe: true,
+				minHeight: 300
+			});
+
+			editor.value = '';
+
+			editor.toggleMode();
+			editor.toggleMode();
+
+			expect(editor.editor.offsetHeight).to.be.above(180);
+		});
+	});
+
+	describe('Set height', function () {
+		it('Should set container height', function () {
+			const editor = getJodit({
+				height: 222
+			});
+
+			expect(editor.container.offsetHeight).equals(222);
 		});
 	});
 });
