@@ -12,7 +12,7 @@ import type { IDictionary, IJodit, IControlType } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom/dom';
 import { css } from 'jodit/core/helpers/utils/css';
-import { pluginSystem } from 'jodit/core/global';
+import { extendLang, pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 
 const pluginKey = 'copy-format';
@@ -152,5 +152,6 @@ export function copyFormat(editor: IJodit): void {
 	});
 }
 
+extendLang(require('./langs'));
 pluginSystem.add('copy-format', copyFormat);
 Icon.set('copy-format', require('./copy-format.svg'));
