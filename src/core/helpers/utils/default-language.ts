@@ -26,7 +26,7 @@ export const defaultLanguage = (
 	}
 
 	if (navigator.language) {
-		return navigator.language.substr(0, 2);
+		return navigator.language.substring(0, 2);
 	}
 
 	return defaultLanguage;

@@ -25,4 +25,5 @@ test.html
 test.html
 tsdoc.json
 webpack.config.js
+**/*.md
 .*.test.js

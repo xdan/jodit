@@ -15,6 +15,7 @@ import { Config } from 'jodit/config';
 import { css, isLicense, normalizeLicense } from 'jodit/core/helpers/';
 import * as constants from 'jodit/core/constants';
 import { Dialog } from 'jodit/modules/dialog';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {
@@ -61,9 +62,11 @@ Config.prototype.controls.about = {
 	mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG
 } as IControlType;
 
-export function about(editor: IJodit): void {
+function about(editor: IJodit): void {
 	editor.registerButton({
 		name: 'about',
 		group: 'info'
 	});
 }
+
+pluginSystem.add('about', about);

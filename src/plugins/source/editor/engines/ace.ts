@@ -11,6 +11,7 @@
 import type { IJodit, ISourceEditor } from 'jodit/types';
 import * as constants from 'jodit/core/constants';
 import { isString, loadNext } from 'jodit/core/helpers';
+
 import { SourceEditor } from '../sourceEditor';
 
 export class AceEditor
@@ -188,11 +189,13 @@ export class AceEditor
 
 		// global add ace editor in browser
 		if (!this.aceExists()) {
-			loadNext(editor, editor.o.sourceEditorCDNUrlsJS).then(() => {
-				if (!editor.isInDestruct) {
-					tryInitAceEditor();
-				}
-			});
+			loadNext(editor, editor.o.sourceEditorCDNUrlsJS)
+				.then(() => {
+					if (!editor.isInDestruct) {
+						tryInitAceEditor();
+					}
+				})
+				.catch(() => null);
 		}
 	}
 

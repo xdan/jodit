@@ -9,7 +9,6 @@
  */
 
 import type { IJodit, SnapshotType } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { Plugin } from 'jodit/core/plugin';
 import {
 	COMMAND_KEYS,
@@ -18,29 +17,9 @@ import {
 } from 'jodit/core/constants';
 import { stripTags } from 'jodit/core/helpers';
 import { autobind } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 
-declare module 'jodit/config' {
-	interface Config {
-		/**
-		 * limit words count
-		 */
-		limitWords: false | number;
-
-		/**
-		 * limit chars count
-		 */
-		limitChars: false | number;
-
-		/**
-		 * limit html chars count
-		 */
-		limitHTML: false;
-	}
-}
-
-Config.prototype.limitWords = false;
-Config.prototype.limitChars = false;
-Config.prototype.limitHTML = false;
+import './config';
 
 /**
  * Plugin control for chars or words count
@@ -141,3 +120,5 @@ export class limit extends Plugin {
 		jodit.e.off('.limit');
 	}
 }
+
+pluginSystem.add('limit', limit);

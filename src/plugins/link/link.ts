@@ -9,6 +9,7 @@
  */
 
 import type { IDictionary, IJodit, IUIForm, Nullable } from 'jodit/types';
+import type { UIForm } from 'jodit/core/ui/form/form';
 import { Dom } from 'jodit/core/dom';
 import {
 	attr,
@@ -20,7 +21,8 @@ import {
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { autobind } from 'jodit/core/decorators';
-import { Dialog, UIForm } from '../../modules';
+import { Dialog } from 'jodit/modules/dialog';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -408,3 +410,5 @@ export class link extends Plugin {
 			.off('processPaste.link', this.onProcessPasteLink);
 	}
 }
+
+pluginSystem.add('link', link);

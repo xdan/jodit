@@ -13,6 +13,7 @@ import { Config } from 'jodit/config';
 import { Dom } from 'jodit/modules/';
 import { css, dataBind, normalizeColor } from 'jodit/core/helpers/';
 import { ColorPickerWidget, TabOption, TabsWidget } from 'jodit/modules/widget';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.brush = {
 	update(button, editor: IJodit): void {
@@ -216,3 +217,5 @@ export function color(editor: IJodit): void {
 		.registerCommand('forecolor', callback)
 		.registerCommand('background', callback);
 }
+
+pluginSystem.add('color', color);

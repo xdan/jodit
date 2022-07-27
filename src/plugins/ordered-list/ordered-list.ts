@@ -11,6 +11,7 @@
 import type { IJodit } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
 import { autobind } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -53,3 +54,5 @@ export class orderedList extends Plugin {
 
 	protected beforeDestruct(jodit: IJodit): void {}
 }
+
+pluginSystem.add('orderedList', orderedList);

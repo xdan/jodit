@@ -14,10 +14,11 @@ import type { IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { css, attr } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
-import { Plugin } from 'jodit/core/plugin';
+import { Plugin } from 'jodit/core/plugin/plugin';
 import { MAY_BE_REMOVED_WITH_KEY } from 'jodit/core/constants';
 import { debounce } from 'jodit/core/decorators';
 import { Select } from 'jodit/core/selection';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
@@ -216,3 +217,5 @@ export class placeholder extends Plugin {
 		jodit.e.off('.placeholder').off(window, 'load', this.toggle);
 	}
 }
+
+pluginSystem.add('placeholder', placeholder);

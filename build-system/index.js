@@ -11,7 +11,6 @@ const path = require('path');
 const { variables } = require('./variables');
 const { fileName } = require('./utils/filename');
 const { includePlugins } = require('./utils/include-plugins');
-
 /**
  * @param {boolean} onlyTS - build only TypeScript files
  */
@@ -87,6 +86,8 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 			rules: require('./rules/index')(vars)
 		},
 
-		plugins: require('./plugins/index')(vars)
+		plugins: require('./plugins/index')(vars),
+
+		externals: require('./external/index')(vars)
 	};
 };

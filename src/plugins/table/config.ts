@@ -17,18 +17,14 @@ import { $$, css, scrollIntoViewIfNeeded } from 'jodit/core/helpers';
 declare module 'jodit/config' {
 	interface Config {
 		table: {
-			allowCellSelection: boolean;
 			selectionCellStyle: string;
-			allowCellResize: boolean;
 			useExtraClassesOptions: boolean;
 		};
 	}
 }
 
 Config.prototype.table = {
-	allowCellSelection: true,
 	selectionCellStyle: 'border: 1px double #1e88e5 !important;',
-	allowCellResize: true,
 	useExtraClassesOptions: false
 };
 

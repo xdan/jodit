@@ -15,7 +15,7 @@ import type { IDictionary } from 'jodit/types';
  */
 export const parseQuery = (queryString: string): IDictionary<string> => {
 	const query: IDictionary<string> = {},
-		a = queryString.substr(1).split('&');
+		a = queryString.substring(1).split('&');
 
 	for (let i = 0; i < a.length; i += 1) {
 		const keyValue = a[i].split('=');

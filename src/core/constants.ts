@@ -225,3 +225,6 @@ export const BASE_PATH: string = ((): string => {
 export const TEMP_ATTR = 'data-jodit-temp';
 
 export const lang: IDictionary<IDictionary<string>> = {};
+
+export const CLIPBOARD_ID = 'clipboard';
+export const SOURCE_CONSUMER = 'source-consumer';

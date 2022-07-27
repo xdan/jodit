@@ -52,13 +52,28 @@ ES2018 Version (if your users use only modern browsers)
 
 ### Use a CDN
 
+#### cdnjs
+
 ```html
 <link
 	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/jodit.es2018.min.css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.9/jodit.es2018.min.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/jodit.es2018.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.9/jodit.es2018.min.js"></script>
 ```
+
+#### unpkg
+
+
+```html
+<link
+	rel="stylesheet"
+	href="https://unpkg.com/jodit@3.18.9/build/jodit.es2018.min.css"
+/>
+<script src="https://unpkg.com/jodit@3.18.9/build/jodit.es2018.min.js"></script>
+```
+
+
 
 ### USAGE
 

@@ -10,11 +10,16 @@
 
 import type { IJodit, IPlugin } from 'jodit/types';
 import type { Plugin } from 'jodit/core/plugin';
-import { TEXT_HTML, TEXT_PLAIN } from 'jodit/core/constants';
-import { stripTags } from 'jodit/core/helpers';
-import { getDataTransfer } from './paste/helpers';
+import {
+	CLIPBOARD_ID,
+	INSERT_AS_HTML,
+	TEXT_HTML,
+	TEXT_PLAIN
+} from 'jodit/core/constants';
+import { getDataTransfer, stripTags } from 'jodit/core/helpers';
+import { pluginSystem } from 'jodit/core/global';
 
-export const pluginKey = 'clipboard';
+import './config';
 
 /**
  * Clipboard plugin - cut and copy functionality
@@ -46,9 +51,9 @@ export class clipboard implements IPlugin {
 		this.buttons?.forEach(btn => editor.registerButton(btn));
 
 		editor.e
-			.off(`copy.${pluginKey} cut.${pluginKey}`)
+			.off(`copy.${CLIPBOARD_ID} cut.${CLIPBOARD_ID}`)
 			.on(
-				`copy.${pluginKey} cut.${pluginKey}`,
+				`copy.${CLIPBOARD_ID} cut.${CLIPBOARD_ID}`,
 				(event: ClipboardEvent): false | void => {
 					const selectedText = editor.s.html;
 
@@ -65,10 +70,12 @@ export class clipboard implements IPlugin {
 						clipboardData.setData(TEXT_HTML, selectedText);
 					}
 
-					editor.buffer.set(pluginKey, selectedText);
+					editor.buffer.set(CLIPBOARD_ID, selectedText);
 					editor.e.fire('pasteStack', {
 						html: selectedText,
-						action: editor.o.defaultActionOnPaste
+						action:
+							(editor.o as any).defaultActionOnPaste ||
+							INSERT_AS_HTML
 					});
 
 					if (event.type === 'cut') {
@@ -85,7 +92,9 @@ export class clipboard implements IPlugin {
 
 	/** @override */
 	destruct(editor: IJodit): void {
-		editor?.buffer?.set(pluginKey, '');
-		editor?.events?.off('.' + pluginKey);
+		editor?.buffer?.set(CLIPBOARD_ID, '');
+		editor?.events?.off('.' + CLIPBOARD_ID);
 	}
 }
+
+pluginSystem.add('clipboard', clipboard);

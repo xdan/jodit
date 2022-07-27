@@ -14,12 +14,11 @@ import type { IJodit, Nullable } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
 import { autobind, watch } from 'jodit/core/decorators';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { Popup, UIElement } from 'jodit/core/ui';
+import { pluginSystem } from 'jodit/core/global';
 
 import './config';
-
-/* eslint-disable tsdoc/syntax */
 
 /**
  * A utility plugin that allows you to subscribe to a click/mousedown/touchstart/mouseup on an element in DOM order
@@ -41,15 +40,13 @@ export class select extends Plugin {
 		'touchend'
 	];
 
-	/** @override */
-	protected afterInit(jodit: IJodit): void {
+	protected override afterInit(jodit: IJodit): void {
 		this.proxyEventsList.forEach(eventName => {
 			jodit.e.on(eventName + '.select', this.onStartSelection);
 		});
 	}
 
-	/** @override */
-	protected beforeDestruct(jodit: IJodit): void {
+	protected override beforeDestruct(jodit: IJodit): void {
 		this.proxyEventsList.forEach(eventName => {
 			jodit.e.on(eventName + '.select', this.onStartSelection);
 		});
@@ -127,3 +124,5 @@ export class select extends Plugin {
 		this.jodit.s.expandSelection();
 	}
 }
+
+pluginSystem.add('select', select);

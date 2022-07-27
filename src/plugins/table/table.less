@@ -8,32 +8,6 @@
 @import (reference) '../../styles/variables';
 @import './table.common';
 
-.jodit-table-resizer {
-	position: absolute;
-	z-index: 3;
-	padding-right: calc(var(--padding-default) / 2);
-	padding-left: calc(var(--padding-default) / 2);
-	margin-left: calc(var(--padding-default) / -2);
-	cursor: col-resize;
-
-	&::after {
-		display: block;
-		width: 0;
-		height: 100%;
-		border: 0;
-		content: '';
-	}
-
-	&_moved {
-		z-index: 2;
-		background-color: var(--color-background-selection);
-
-		&::after {
-			border-right: 1px solid var(--color-border)-moved;
-		}
-	}
-}
-
 .jodit-form__inserter {
 	.jodit-form__table-creator-box {
 		display: flex;

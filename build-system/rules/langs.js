@@ -8,10 +8,10 @@ const path = require('path');
 
 module.exports = ({ superDirname }) => {
 	return {
-		test: /\.(ts)$/,
+		test: /\.(js)$/,
 		use: [
 			{
-				loader: path.resolve(__dirname, '../loaders/lang-loader')
+				loader: path.resolve(__dirname, '../loaders/lang-loader.js')
 			}
 		],
 		include: path.resolve(superDirname, './src/langs'),

@@ -9,22 +9,12 @@
  */
 
 import type { Nullable } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from 'jodit/core/constants';
-import { Plugin } from 'jodit/core/plugin';
-import { Dom } from 'jodit/core/dom';
+import { Plugin } from 'jodit/core/plugin/plugin';
+import { Dom } from 'jodit/core/dom/dom';
+import { pluginSystem } from 'jodit/core/global';
 
-declare module 'jodit/config' {
-	interface Config {
-		showCharsCounter: boolean;
-		countHTMLChars: boolean;
-		showWordsCounter: boolean;
-	}
-}
-
-Config.prototype.showCharsCounter = true;
-Config.prototype.countHTMLChars = false;
-Config.prototype.showWordsCounter = true;
+import './config';
 
 /**
  * Show stat data - words and chars count
@@ -91,3 +81,5 @@ export class stat extends Plugin {
 		this.wordCounter = null;
 	}
 }
+
+pluginSystem.add('stat', stat);

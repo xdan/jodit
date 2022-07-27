@@ -9,7 +9,7 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
-## 3.18.8
+## 3.19.1
 
 #### :house: Internal
 
@@ -47,7 +47,7 @@
 
 -   Separate plugin for voice recognition and input of recognized text into the editor.
     [Feature Request: Add ability for user to dictate using local device microphone as input #828](https://github.com/xdan/jodit/issues/828)
-    > This plugin is not included in the main Jodit build. It must be connected separately [Подробнее](./src/plugins/speech/speech-recognize/README.md)
+    > This plugin is not included in the main Jodit build. It must be connected separately [Подробнее](./src/plugins/speech-recognize/README.md)
 
 ## 3.18.5
 

@@ -10,8 +10,6 @@
 
 import './symbols.less';
 
-import './config';
-
 import type { IJodit } from 'jodit/types';
 import {
 	KEY_DOWN,
@@ -20,8 +18,12 @@ import {
 	KEY_RIGHT,
 	KEY_UP
 } from 'jodit/core/constants';
-import { Dom, Plugin } from '../../modules';
+import { Plugin } from 'jodit/core/plugin/plugin';
+import { Dom } from 'jodit/core/dom/dom';
 import { attr } from 'jodit/core/helpers/utils';
+import { pluginSystem } from 'jodit/core/global';
+
+import './config';
 
 /**
  * The plugin inserts characters that are not part of the standard keyboard.
@@ -181,3 +183,5 @@ export class symbols extends Plugin {
 		jodit.e.off('generateSpecialCharactersTable.symbols');
 	}
 }
+
+pluginSystem.add('symbols', symbols);

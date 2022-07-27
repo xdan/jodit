@@ -16,14 +16,17 @@ import {
 	INVISIBLE_SPACE,
 	KEY_ESC,
 	MODE_SOURCE,
-	MODE_SPLIT
+	MODE_SPLIT,
+	SOURCE_CONSUMER
 } from 'jodit/core/constants';
 import { Plugin } from 'jodit/core/plugin';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { isString, loadNext } from 'jodit/core/helpers';
-import { createSourceEditor } from './editor/factory';
 import { autobind, watch } from 'jodit/core/decorators';
-import { SOURCE_CONSUMER } from './const';
+import { pluginSystem } from 'jodit/core/global';
+
+import { createSourceEditor } from './editor/factory';
+import './config';
 
 /**
  * Plug-in change simple textarea on CodeMirror editor in Source code mode
@@ -399,3 +402,5 @@ export class source extends Plugin {
 		Dom.safeRemove(this.mirrorContainer);
 	}
 }
+
+pluginSystem.add('source', source);

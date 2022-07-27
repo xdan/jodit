@@ -14,10 +14,10 @@ import type { IJodit, IPoint } from 'jodit/types';
 import { css } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { Dom } from 'jodit/core/dom';
-import { getContainer } from 'jodit/core/global';
+import { getContainer, pluginSystem } from 'jodit/core/global';
 import { autobind } from 'jodit/core/decorators';
 
-export class tooltip extends Plugin {
+class tooltip extends Plugin {
 	private isOpened = false;
 
 	container!: HTMLElement;
@@ -108,3 +108,5 @@ export class tooltip extends Plugin {
 		Dom.safeRemove(this.container);
 	}
 }
+
+pluginSystem.add('tooltip', tooltip);

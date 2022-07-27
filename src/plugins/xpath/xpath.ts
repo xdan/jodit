@@ -11,26 +11,20 @@
 import './xpath.less';
 
 import type { IControlTypeStrong, IToolbarButton } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { INVISIBLE_SPACE, MODE_WYSIWYG } from 'jodit/core/constants';
 import { ContextMenu } from 'jodit/modules/context-menu/context-menu';
 import { Dom } from 'jodit/core/dom';
 import { getXPathByElement, trim, attr } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { makeButton } from 'jodit/modules/toolbar/factory';
+import { pluginSystem } from 'jodit/core/global';
 
-declare module 'jodit/config' {
-	interface Config {
-		showXPathInStatusbar: boolean;
-	}
-}
-
-Config.prototype.showXPathInStatusbar = true;
+import './config';
 
 /**
  * Show path to current element in status bar
  */
-export class xpath extends Plugin {
+class xpath extends Plugin {
 	private onContext = (bindElement: Node, event: MouseEvent): boolean => {
 		if (!this.menu) {
 			this.menu = new ContextMenu(this.j);
@@ -183,10 +177,10 @@ export class xpath extends Plugin {
 		this.j.defaultTimeout * 2
 	);
 
-	container?: HTMLElement;
-	menu?: ContextMenu;
+	protected container?: HTMLElement;
+	protected menu?: ContextMenu;
 
-	afterInit(): void {
+	protected afterInit(): void {
 		if (this.j.o.showXPathInStatusbar) {
 			this.container = this.j.c.div('jodit-xpath');
 
@@ -220,7 +214,7 @@ export class xpath extends Plugin {
 		}
 	}
 
-	beforeDestruct(): void {
+	protected beforeDestruct(): void {
 		if (this.j && this.j.events) {
 			this.j.e.off('.xpath');
 		}
@@ -234,3 +228,5 @@ export class xpath extends Plugin {
 		delete this.container;
 	}
 }
+
+pluginSystem.add('xpath', xpath);

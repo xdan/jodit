@@ -41,7 +41,7 @@ module.exports = vars => {
 				if (exclude.length) {
 					for (const p of exclude) {
 						if (p.length && resource.includes(p)) {
-							console.log('Exclude:', resource, ' rule: ', p);
+							console.log('\nExclude:', resource, ' rule: ', p);
 							return true;
 						}
 					}

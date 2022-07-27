@@ -241,7 +241,14 @@ export interface ImageEditorOptions {
 	cropDefaultHeight: string | number;
 }
 
+export type InsertMode =
+	| 'insert_as_html'
+	| 'insert_as_text'
+	| 'insert_clear_html'
+	| 'insert_only_text';
+
 export type ImageAction = 'resize' | 'crop';
+export type ImageHAlign = 'normal' | 'left' | 'right' | 'center' | '';
 
 export interface ImageBox {
 	w: number;

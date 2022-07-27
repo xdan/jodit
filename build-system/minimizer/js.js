@@ -34,7 +34,7 @@ module.exports = ({ ESNext, isTest, banner }) =>
 
 				pure_funcs: ['assert'],
 
-				passes: 1
+				passes: 4
 			},
 
 			output: {

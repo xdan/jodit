@@ -12,13 +12,8 @@ import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {
-		allowResizeX: boolean;
-		allowResizeY: boolean;
-
 		saveHeightInStorage: boolean;
 
-		width: number | string;
-		height: number | string;
 		minWidth: number | string;
 		minHeight: number | string;
 		maxWidth: number | string;
@@ -26,59 +21,8 @@ declare module 'jodit/config' {
 	}
 }
 
-/**
- * Editor's width
- *
- * @example
- * ```javascript
- * Jodit.make('.editor', {
- *    width: '100%',
- * })
- * ```
- * @example
- * ```javascript
- * Jodit.make('.editor', {
- *    width: 600, // equivalent for '600px'
- * })
- * ```
- * @example
- * ```javascript
- * Jodit.make('.editor', {
- *    width: 'auto', // autosize
- * })
- * ```
- */
-
-Config.prototype.width = 'auto';
 Config.prototype.minWidth = 200;
 Config.prototype.maxWidth = '100%';
-
-Config.prototype.allowResizeX = false;
-Config.prototype.allowResizeY = true;
-
-/**
- * Editor's height
- *
- * @example
- * ```javascript
- * Jodit.make('.editor', {
- *    height: '100%',
- * })
- * ```
- * @example
- * ```javascript
- * Jodit.make('.editor', {
- *    height: 600, // equivalent for '600px'
- * })
- * ```
- * @example
- * ```javascript
- * Jodit.make('.editor', {
- *    height: 'auto', // default - autosize
- * })
- * ```
- */
-Config.prototype.height = 'auto';
 
 /**
  * Editor's min-height

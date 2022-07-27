@@ -13,37 +13,32 @@
 import type { IDictionary } from 'jodit/types';
 import { isArray } from '../core/helpers/checker';
 
-const en = require('./en');
-
-let exp: IDictionary<IDictionary<string>> = {
-	en
-};
+let exp: IDictionary<IDictionary<string>> = {};
 
 if (!process.env.EXCLUDE_LANGS) {
-	const ar = require('./ar');
-	const cs_cz = require('./cs_cz');
-	const de = require('./de');
-	const es = require('./es');
-	const fr = require('./fr');
-	const he = require('./he');
-	const hu = require('./hu');
-	const id = require('./id');
-	const it = require('./it');
-	const ja = require('./ja');
-	const ko = require('./ko');
-	const nl = require('./nl');
-	const pl = require('./pl');
-	const pt_br = require('./pt_br');
-	const ru = require('./ru');
-	const tr = require('./tr');
-	const zh_cn = require('./zh_cn');
-	const zh_tw = require('./zh_tw');
+	const ar = require('jodit/langs/ar');
+	const cs_cz = require('jodit/langs/cs_cz');
+	const de = require('jodit/langs/de');
+	const es = require('jodit/langs/es');
+	const fr = require('jodit/langs/fr');
+	const he = require('jodit/langs/he');
+	const hu = require('jodit/langs/hu');
+	const id = require('jodit/langs/id');
+	const it = require('jodit/langs/it');
+	const ja = require('jodit/langs/ja');
+	const ko = require('jodit/langs/ko');
+	const nl = require('jodit/langs/nl');
+	const pl = require('jodit/langs/pl');
+	const pt_br = require('jodit/langs/pt_br');
+	const ru = require('jodit/langs/ru');
+	const tr = require('jodit/langs/tr');
+	const zh_cn = require('jodit/langs/zh_cn');
+	const zh_tw = require('jodit/langs/zh_tw');
 
 	exp = {
 		ar,
 		cs_cz,
 		de,
-		en,
 		es,
 		fr,
 		he,
@@ -62,8 +57,12 @@ if (!process.env.EXCLUDE_LANGS) {
 	};
 }
 
+const en = require('jodit/langs/en');
+exp.en = en;
+
 /* Unpack array to hash */
-const get = (value: IDictionary): IDictionary => value.default || value,
+const get = (value: IDictionary): IDictionary =>
+		value ? value.default || value : {},
 	hashLang: IDictionary = {};
 
 if (isArray(get(en))) {

@@ -17,6 +17,7 @@ import { Dom } from 'jodit/core/dom';
 import { $$ } from 'jodit/core/helpers';
 import { FileSelectorWidget } from 'jodit/modules/widget';
 import { Config } from 'jodit/config';
+import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.image = {
 	popup: (editor: IJodit, current, self, close) => {
@@ -91,3 +92,5 @@ export function image(editor: IJodit): void {
 		group: 'media'
 	});
 }
+
+pluginSystem.add('image', image);
