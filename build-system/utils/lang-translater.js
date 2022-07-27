@@ -21,4 +21,4 @@ const { argv } = require('yargs')
 
 console.warn('Work directory:', argv.dir);
 
-require(path.resolve(__dirname, `./lang/${argv.command}.js`));
+require(path.resolve(__dirname, `./lang/${argv.command}.js`))();

@@ -41,15 +41,8 @@ module.exports.readLangs = function readLangs(dir) {
 		.filter(([lang]) => lang);
 };
 
-module.exports.saveJson = function saveJson(fileName, data) {
-	!fs.existsSync(path.dirname(fileName)) &&
-		fs.mkdirSync(path.dirname(fileName), { recursive: true });
+async function prettier(fileName) {
 	return new Promise((resolve, reject) => {
-		fs.writeFileSync(
-			fileName,
-			`${header}\nmodule.exports = ${JSON.stringify(data, null, '\t')};`
-		);
-
 		exec(`prettier --write ${fileName}`, error => {
 			if (error != null) {
 				reject(error);
@@ -59,6 +52,18 @@ module.exports.saveJson = function saveJson(fileName, data) {
 			resolve();
 		});
 	});
+};
+
+module.exports.saveJson = function saveJson(fileName, data) {
+	!fs.existsSync(path.dirname(fileName)) &&
+		fs.mkdirSync(path.dirname(fileName), { recursive: true });
+
+	fs.writeFileSync(
+		fileName,
+		`${header}\nmodule.exports = ${JSON.stringify(data, null, '\t')};`
+	);
+
+	return prettier(fileName);
 };
 
 module.exports.makeIndexFile = function makeIndexFile(dir, langs) {
@@ -78,9 +83,11 @@ module.exports.makeIndexFile = function makeIndexFile(dir, langs) {
 					([_, file, realLang]) =>
 						`const ${realLang} = require('./${file}');\n`
 				)
-				.join('')}\nexport default {${langs
+				.join('')}\nexport {${langs
 				.map(([, , lang]) => lang)
 				.join(',')}};`
 		);
+
+		return prettier(indexFile);
 	}
 };

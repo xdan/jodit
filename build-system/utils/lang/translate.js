@@ -79,7 +79,7 @@ async function translate(text, lang = 'ru') {
 }
 
 const fs = require('fs');
-const { saveJson, readLangs } = require('./helpers');
+const { saveJson, readLangs, makeIndexFile } = require('./helpers');
 
 const folder = path.resolve(path.resolve(__dirname, '../../../src/langs'));
 
@@ -101,27 +101,9 @@ const translateAll = text => {
 		}
 	});
 
-	const indexFile = path.join(path.resolve(argv.dir), 'index.ts');
-
-	if (!fs.existsSync(indexFile)) {
-		const folder = path.dirname(indexFile);
-
-		if (!fs.existsSync(folder)) {
-			fs.mkdirSync(folder, { recursive: true });
-		}
-
-		fs.writeFileSync(
-			indexFile,
-			`${header}\n${langs
-				.map(
-					([lang, file, realLang]) =>
-						`const ${realLang} = require('./${file}');\n`
-				)
-				.join('')}\nexport default {${langs
-				.map(([, , lang]) => lang)
-				.join(',')}};`
-		);
-	}
+	return makeIndexFile(path.resolve(argv.dir), langs);
 };
 
-translateAll(argv.str);
+module.exports = async () => {
+	await translateAll(argv.str);
+};

@@ -22,7 +22,7 @@ const { argv } = require('yargs')
 	});
 
 const fs = require('fs');
-const { saveJson, readLangs } = require('./helpers');
+const { saveJson, readLangs, makeIndexFile } = require('./helpers');
 
 const key = argv.key;
 const keyTo = argv.keyTo || key;
@@ -35,27 +35,33 @@ if (sourcePath === targetPath && key === keyTo) {
 	);
 }
 
-const files = readLangs(sourcePath);
+console.warn('Key:', key, 'To:', keyTo);
 
-await Promise.all(
-	files.map(async ([_, file]) => {
-		const sourceFilename = path.resolve(sourcePath, file);
-		const json = require(sourceFilename);
-		if (!json[key]) {
-			console.warn(`File ${file} does not have key ${key}`);
-			return;
-		}
+module.exports = async () => {
+	const files = readLangs(sourcePath);
 
-		const value = json[key];
-		delete json[key];
-		await saveJson(sourceFilename, json);
+	await Promise.all(
+		files.map(async ([_, file]) => {
+			const sourceFilename = path.resolve(sourcePath, file);
+			const json = require(sourceFilename);
+			if (!json[key]) {
+				console.warn(`File ${file} does not have key ${key}`);
+				return;
+			}
 
-		const targetFilename = path.resolve(targetPath, file);
-		const targetJSON = fs.existsSync(targetFilename)
-			? require(targetFilename)
-			: {};
+			const value = json[key];
+			delete json[key];
+			await saveJson(sourceFilename, json);
 
-		targetJSON[keyTo] = value;
-		await saveJson(targetFilename, targetJSON);
-	})
-);
+			const targetFilename = path.resolve(targetPath, file);
+			const targetJSON = fs.existsSync(targetFilename)
+				? require(targetFilename)
+				: {};
+
+			targetJSON[keyTo] = value;
+			await saveJson(targetFilename, targetJSON);
+		})
+	);
+
+	await makeIndexFile(targetPath, files);
+};
