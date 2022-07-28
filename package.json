@@ -1,10 +1,10 @@
 {
 	"name": "jodit",
-	"version": "3.19.0",
+	"version": "3.19.1",
 	"description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
 	"main": "build/jodit.min.js",
 	"types": "./types/index.d.ts",
-  "sideEffects": false,
+	"sideEffects": false,
 	"scripts": {
 		"coverage": "npx type-coverage ./src --detail --ignore-files 'build/**' --ignore-files 'test/**' --ignore-files 'examples/**'",
 		"newversion": "npm run lint && npm run clean && npm test && npm version patch --no-git-tag-version && npm run build && npm run newversiongit && npm publish ./ && rm -rf types/",
@@ -21,7 +21,7 @@
 		"build-no-uglify-es2018": "webpack --progress --mode production --env es=es2018 --env uglify=false",
 		"build-no-uglify-es2018-en": "webpack --progress --mode production --env es=es2018 --env excludeLangs=true --env uglify=false",
 		"find-test": "node ./build-system/utils/find-tests.js",
-		"test": "npm run find-test && npm run clean && webpack --progress --mode production --env es=es2018 --env uglify=false --env isTest=true && npm run test-only-run",
+		"test": "npm run find-test && npm run clean && npm run test-only-run",
 		"test-debug": "karma start --browsers Chrome karma.conf.js  --single-run false",
 		"test-chrome": "karma start --browsers Chrome karma.conf.js",
 		"test-only-run": "karma start --browsers FirefoxHeadless karma.conf.js",

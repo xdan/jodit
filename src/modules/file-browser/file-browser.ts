@@ -12,7 +12,7 @@ import './styles';
 
 import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
-import { Dialog } from 'jodit/modules/dialog/';
+import { Dialog } from 'jodit/modules/dialog/dialog';
 
 import type {
 	IFileBrowser,
@@ -42,9 +42,6 @@ import {
 	isAbort
 } from 'jodit/core/helpers';
 import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
-
-import './config';
-
 import { Dom } from 'jodit/core/dom';
 import { makeDataProvider } from './factories';
 import { stateListeners } from './listeners/state-listeners';
@@ -58,9 +55,7 @@ import { loadTree } from './fetch/load-tree';
 import { loadItems } from './fetch/load-items';
 import { STATUSES } from 'jodit/core/component';
 
-/**
- * @module modules/file-browser
- */
+import './config';
 
 export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	/** @override */

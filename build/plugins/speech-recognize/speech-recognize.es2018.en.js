@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.9
+ * Version: v3.19.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -16,16 +16,16 @@
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
 })(self, function() {
-return (self["webpackChunkjodit"] = self["webpackChunkjodit"] || []).push([[373],{
+return (self["webpackChunkjodit"] = self["webpackChunkjodit"] || []).push([[781],{
 
-/***/ 94888:
+/***/ 90327:
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 16 16\" xml:space=\"preserve\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M8,11c1.657,0,3-1.343,3-3V3c0-1.657-1.343-3-3-3S5,1.343,5,3v5C5,9.657,6.343,11,8,11z\"/> <path d=\"M13,8V6h-1l0,1.844c0,1.92-1.282,3.688-3.164,4.071C6.266,12.438,4,10.479,4,8V6H3v2c0,2.414,1.721,4.434,4,4.899V15H5v1h6 v-1H9v-2.101C11.279,12.434,13,10.414,13,8z\"/> </svg>"
 
 /***/ }),
 
-/***/ 44308:
+/***/ 57368:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -35,52 +35,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 35333:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.spy = void 0;
-var checker_1 = __webpack_require__(37379);
-var utils_1 = __webpack_require__(73344);
-function spy(target) {
-    var methods = Reflect.ownKeys(target.prototype);
-    methods.forEach(function (key) {
-        if (key === 'constructor') {
-            return;
-        }
-        var descriptor = Object.getOwnPropertyDescriptor(target.prototype, key);
-        if (descriptor && (0, checker_1.isFunction)(descriptor.value)) {
-            target.prototype[key] = function () {
-                var args = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    args[_i] = arguments[_i];
-                }
-                console.log("Class: ".concat((0, utils_1.getClassName)(target.prototype), " call: ").concat(String(key), "(").concat(args.map(function (a) {
-                    return (0, checker_1.isPlainObject)(a) ||
-                        (0, checker_1.isString)(a) ||
-                        (0, checker_1.isBoolean)(a) ||
-                        (0, checker_1.isNumber)(a)
-                        ? JSON.stringify(a)
-                        : {}.toString.call(a);
-                }), ")"));
-                return descriptor.value.apply(this, args);
-            };
-        }
-    });
-}
-exports.spy = spy;
-
-
-/***/ }),
-
-/***/ 30051:
+/***/ 38587:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -95,8 +50,9 @@ var config_1 = __webpack_require__(27537);
 var data_bind_1 = __webpack_require__(70774);
 var is_boolean_1 = __webpack_require__(65131);
 var alert_1 = __webpack_require__(66124);
-var recognize_manager_1 = __webpack_require__(34492);
-var api_1 = __webpack_require__(22659);
+var icon_1 = __webpack_require__(76381);
+var recognize_manager_1 = __webpack_require__(94539);
+var api_1 = __webpack_require__(43467);
 config_1.Config.prototype.speechRecognize = {
     api: api_1.SpeechRecognition,
     sound: true,
@@ -116,6 +72,7 @@ config_1.Config.prototype.speechRecognize = {
         'select all': 'selectall'
     }
 };
+icon_1.Icon.set('speech-recognize', __webpack_require__(90327));
 config_1.Config.prototype.controls.speechRecognize = {
     isActive: function (jodit, _) {
         var api = (0, data_bind_1.dataBind)(jodit, 'speech');
@@ -166,7 +123,6 @@ config_1.Config.prototype.controls.speechRecognize = {
         api.toggle();
         button.state.activated = api.isEnabled;
     },
-    icon: __webpack_require__(94888),
     name: 'speechRecognize',
     command: 'toggleSpeechRecognize',
     tooltip: 'Speech Recognize',
@@ -187,7 +143,7 @@ config_1.Config.prototype.controls.speechRecognize = {
 
 /***/ }),
 
-/***/ 85815:
+/***/ 28511:
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -205,7 +161,7 @@ exports.WARN = 940;
 
 /***/ }),
 
-/***/ 22659:
+/***/ 43467:
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -223,7 +179,7 @@ exports.SpeechRecognition = window.SpeechRecognition ||
 
 /***/ }),
 
-/***/ 28448:
+/***/ 99829:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -245,7 +201,7 @@ exports.execSpellCommand = execSpellCommand;
 
 /***/ }),
 
-/***/ 34492:
+/***/ 94539:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -259,10 +215,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RecognizeManager = void 0;
 var tslib_1 = __webpack_require__(20255);
 var eventify_1 = __webpack_require__(99437);
-var spy_1 = __webpack_require__(35333);
 var decorators_1 = __webpack_require__(9901);
-var sound_1 = __webpack_require__(17983);
-var constants_1 = __webpack_require__(85815);
+var sound_1 = __webpack_require__(87672);
+var constants_1 = __webpack_require__(28511);
 var RecognizeManager = (function (_super) {
     tslib_1.__extends(RecognizeManager, _super);
     function RecognizeManager(async, api) {
@@ -429,8 +384,7 @@ var RecognizeManager = (function (_super) {
     var RecognizeManager_1;
     RecognizeManager._instances = new Set();
     RecognizeManager = RecognizeManager_1 = tslib_1.__decorate([
-        decorators_1.autobind,
-        spy_1.spy
+        decorators_1.autobind
     ], RecognizeManager);
     return RecognizeManager;
 }(eventify_1.Eventify));
@@ -439,7 +393,7 @@ exports.RecognizeManager = RecognizeManager;
 
 /***/ }),
 
-/***/ 17983:
+/***/ 87672:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -451,7 +405,7 @@ exports.RecognizeManager = RecognizeManager;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sound = void 0;
-var constants_1 = __webpack_require__(85815);
+var constants_1 = __webpack_require__(28511);
 function sound(_a) {
     var _b = _a === void 0 ? {} : _a, _c = _b.sec, sec = _c === void 0 ? 0.1 : _c, _d = _b.frequency, frequency = _d === void 0 ? constants_1.PII : _d, _e = _b.gain, gain = _e === void 0 ? 0.1 : _e, _f = _b.type, type = _f === void 0 ? 'sine' : _f;
     if (typeof window.AudioContext === 'undefined' &&
@@ -475,7 +429,7 @@ exports.sound = sound;
 
 /***/ }),
 
-/***/ 60450:
+/***/ 86937:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -487,49 +441,49 @@ exports.sound = sound;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
-var ar = __webpack_require__(1181);
+var ar = __webpack_require__(5466);
 exports.ar = ar;
-var cs_cz = __webpack_require__(30371);
+var cs_cz = __webpack_require__(65226);
 exports.cs_cz = cs_cz;
-var de = __webpack_require__(70772);
+var de = __webpack_require__(87541);
 exports.de = de;
-var es = __webpack_require__(22280);
+var es = __webpack_require__(87104);
 exports.es = es;
-var fa = __webpack_require__(83170);
+var fa = __webpack_require__(53808);
 exports.fa = fa;
-var fr = __webpack_require__(12379);
+var fr = __webpack_require__(48954);
 exports.fr = fr;
-var he = __webpack_require__(68949);
+var he = __webpack_require__(14694);
 exports.he = he;
-var hu = __webpack_require__(28758);
+var hu = __webpack_require__(67381);
 exports.hu = hu;
-var id = __webpack_require__(39567);
+var id = __webpack_require__(99549);
 exports.id = id;
-var it = __webpack_require__(4437);
+var it = __webpack_require__(28428);
 exports.it = it;
-var ja = __webpack_require__(80078);
+var ja = __webpack_require__(25363);
 exports.ja = ja;
-var ko = __webpack_require__(88927);
+var ko = __webpack_require__(96929);
 exports.ko = ko;
-var nl = __webpack_require__(22094);
+var nl = __webpack_require__(58499);
 exports.nl = nl;
-var pl = __webpack_require__(19946);
+var pl = __webpack_require__(59430);
 exports.pl = pl;
-var pt_br = __webpack_require__(15070);
+var pt_br = __webpack_require__(70297);
 exports.pt_br = pt_br;
-var ru = __webpack_require__(56134);
+var ru = __webpack_require__(98949);
 exports.ru = ru;
-var tr = __webpack_require__(80386);
+var tr = __webpack_require__(61232);
 exports.tr = tr;
-var zh_cn = __webpack_require__(29369);
+var zh_cn = __webpack_require__(56775);
 exports.zh_cn = zh_cn;
-var zh_tw = __webpack_require__(4777);
+var zh_tw = __webpack_require__(97957);
 exports.zh_tw = zh_tw;
 
 
 /***/ }),
 
-/***/ 31897:
+/***/ 40256:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -542,15 +496,15 @@ exports.zh_tw = zh_tw;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SpeechRecognizeNative = void 0;
 var tslib_1 = __webpack_require__(20255);
-__webpack_require__(44308);
+__webpack_require__(57368);
 var plugin_1 = __webpack_require__(35570);
 var watch_1 = __webpack_require__(44101);
 var utils_1 = __webpack_require__(51976);
 var global_1 = __webpack_require__(58299);
 var dom_1 = __webpack_require__(43887);
 var debounce_1 = __webpack_require__(1509);
-var exec_spell_command_1 = __webpack_require__(28448);
-__webpack_require__(30051);
+var exec_spell_command_1 = __webpack_require__(99829);
+__webpack_require__(38587);
 var SpeechRecognizeNative = (function (_super) {
     tslib_1.__extends(SpeechRecognizeNative, _super);
     function SpeechRecognizeNative(j) {
@@ -568,7 +522,7 @@ var SpeechRecognizeNative = (function (_super) {
         var _this = this;
         var commands = jodit.o.speechRecognize.commands;
         if (commands) {
-            (0, global_1.extendLang)(__webpack_require__(60450));
+            (0, global_1.extendLang)(__webpack_require__(86937));
             (0, utils_1.keys)(commands, false).forEach(function (words) {
                 var keys = words.split('|');
                 keys.forEach(function (key) {
@@ -647,7 +601,7 @@ if (typeof Jodit !== 'undefined') {
 
 /***/ }),
 
-/***/ 1181:
+/***/ 5466:
 /***/ (function(module) {
 
 /*!
@@ -659,13 +613,16 @@ if (typeof Jodit !== 'undefined') {
 module.exports = {
 	newline: 'الخط الجديد',
 	delete: 'حذف',
-	space: 'الفضاء'
+	space: 'الفضاء',
+	'Speech Recognize': 'التعرف على الكلام',
+	Sound: 'الصوت',
+	'Interim Results': 'النتائج المؤقتة'
 };
 
 
 /***/ }),
 
-/***/ 30371:
+/***/ 65226:
 /***/ (function(module) {
 
 /*!
@@ -677,13 +634,16 @@ module.exports = {
 module.exports = {
 	newline: 'řádek',
 	delete: 'odstranit',
-	space: 'prostora'
+	space: 'prostora',
+	'Speech Recognize': 'Rozpoznání Řeči',
+	Sound: 'Zvuk',
+	'Interim Results': 'Průběžné Výsledky'
 };
 
 
 /***/ }),
 
-/***/ 70772:
+/***/ 87541:
 /***/ (function(module) {
 
 /*!
@@ -695,13 +655,16 @@ module.exports = {
 module.exports = {
 	newline: 'Zeilenumbruch',
 	delete: 'löschen',
-	space: 'Raum'
+	space: 'Raum',
+	'Speech Recognize': 'Sprache Erkennen',
+	Sound: 'Sound',
+	'Interim Results': 'Zwischenergebnis'
 };
 
 
 /***/ }),
 
-/***/ 22280:
+/***/ 87104:
 /***/ (function(module) {
 
 /*!
@@ -713,13 +676,16 @@ module.exports = {
 module.exports = {
 	newline: 'nueva línea',
 	delete: 'eliminar',
-	space: 'espacio'
+	space: 'espacio',
+	'Speech Recognize': 'Reconocimiento de Voz',
+	Sound: 'Sonido',
+	'Interim Results': 'Resultados Provisionales'
 };
 
 
 /***/ }),
 
-/***/ 83170:
+/***/ 53808:
 /***/ (function(module) {
 
 /*!
@@ -731,13 +697,16 @@ module.exports = {
 module.exports = {
 	newline: 'خط جدید',
 	delete: 'حذف',
-	space: 'فضا'
+	space: 'فضا',
+	'Speech Recognize': 'گفتار را تشخیص دهید',
+	Sound: 'صدا',
+	'Interim Results': 'نتایج موقت'
 };
 
 
 /***/ }),
 
-/***/ 12379:
+/***/ 48954:
 /***/ (function(module) {
 
 /*!
@@ -749,13 +718,16 @@ module.exports = {
 module.exports = {
 	newline: 'nouvelle ligne',
 	delete: 'supprimer',
-	space: 'espace'
+	space: 'espace',
+	'Speech Recognize': 'Reconnaissance Vocale',
+	Sound: 'Son',
+	'Interim Results': 'Résultats Intermédiaires'
 };
 
 
 /***/ }),
 
-/***/ 68949:
+/***/ 14694:
 /***/ (function(module) {
 
 /*!
@@ -767,13 +739,16 @@ module.exports = {
 module.exports = {
 	newline: 'חדשות',
 	delete: 'מחק',
-	space: 'שטח'
+	space: 'שטח',
+	'Speech Recognize': 'דיבור מזהה',
+	Sound: 'קול',
+	'Interim Results': 'תוצאות ביניים'
 };
 
 
 /***/ }),
 
-/***/ 28758:
+/***/ 67381:
 /***/ (function(module) {
 
 /*!
@@ -785,13 +760,16 @@ module.exports = {
 module.exports = {
 	newline: 'újsor',
 	delete: 'törlés',
-	space: 'tér'
+	space: 'tér',
+	'Speech Recognize': 'A Beszéd Felismeri',
+	Sound: 'Hang',
+	'Interim Results': 'Időközi Eredmények'
 };
 
 
 /***/ }),
 
-/***/ 39567:
+/***/ 99549:
 /***/ (function(module) {
 
 /*!
@@ -803,13 +781,16 @@ module.exports = {
 module.exports = {
 	newline: 'newline',
 	delete: 'Hapus',
-	space: 'ruang'
+	space: 'ruang',
+	'Speech Recognize': 'Pidato Mengenali',
+	Sound: 'Suara',
+	'Interim Results': 'Hasil Sementara'
 };
 
 
 /***/ }),
 
-/***/ 4437:
+/***/ 28428:
 /***/ (function(module) {
 
 /*!
@@ -821,13 +802,16 @@ module.exports = {
 module.exports = {
 	newline: 'nuova riga',
 	delete: 'eliminare',
-	space: 'spazio'
+	space: 'spazio',
+	'Speech Recognize': 'Discorso Riconoscere',
+	Sound: 'Suono',
+	'Interim Results': 'Risultati intermedi'
 };
 
 
 /***/ }),
 
-/***/ 80078:
+/***/ 25363:
 /***/ (function(module) {
 
 /*!
@@ -839,13 +823,16 @@ module.exports = {
 module.exports = {
 	newline: '改行',
 	delete: '削除',
-	space: 'スペース'
+	space: 'スペース',
+	'Speech Recognize': '音声認識',
+	Sound: '音',
+	'Interim Results': '中間結果'
 };
 
 
 /***/ }),
 
-/***/ 88927:
+/***/ 96929:
 /***/ (function(module) {
 
 /*!
@@ -857,13 +844,16 @@ module.exports = {
 module.exports = {
 	newline: '줄 바꿈',
 	delete: '삭제',
-	space: '공간'
+	space: '공간',
+	'Speech Recognize': '음성 인식',
+	Sound: '소리',
+	'Interim Results': '중간 결과'
 };
 
 
 /***/ }),
 
-/***/ 22094:
+/***/ 58499:
 /***/ (function(module) {
 
 /*!
@@ -875,13 +865,16 @@ module.exports = {
 module.exports = {
 	newline: 'regel',
 	delete: 'verwijderen',
-	space: 'ruimte'
+	space: 'ruimte',
+	'Speech Recognize': 'Spraak Herkennen',
+	Sound: 'Geluid',
+	'Interim Results': 'Tussentijdse Resultaten'
 };
 
 
 /***/ }),
 
-/***/ 19946:
+/***/ 59430:
 /***/ (function(module) {
 
 /*!
@@ -893,13 +886,16 @@ module.exports = {
 module.exports = {
 	newline: 'newline',
 	delete: 'usunąć',
-	space: 'przestrzeń'
+	space: 'przestrzeń',
+	'Speech Recognize': 'Rozpoznawanie Mowy',
+	Sound: 'Dźwięk',
+	'Interim Results': 'Wyniki Okresowe'
 };
 
 
 /***/ }),
 
-/***/ 15070:
+/***/ 70297:
 /***/ (function(module) {
 
 /*!
@@ -911,13 +907,16 @@ module.exports = {
 module.exports = {
 	newline: 'linha',
 	delete: 'excluir',
-	space: 'espaco'
+	space: 'espaco',
+	'Speech Recognize': 'Discurso Reconhecer',
+	Sound: 'Som',
+	'Interim Results': 'Resultados Provisórios'
 };
 
 
 /***/ }),
 
-/***/ 56134:
+/***/ 98949:
 /***/ (function(module) {
 
 /*!
@@ -929,13 +928,16 @@ module.exports = {
 module.exports = {
 	newline: 'новая строка|перенос|энтер',
 	delete: 'удалить',
-	space: 'пробел'
+	space: 'пробел',
+	'Speech Recognize': 'Распознавание речи',
+	Sound: 'Звук',
+	'Interim Results': 'Промежуточные результаты'
 };
 
 
 /***/ }),
 
-/***/ 80386:
+/***/ 61232:
 /***/ (function(module) {
 
 /*!
@@ -947,13 +949,16 @@ module.exports = {
 module.exports = {
 	newline: 'yeni satır',
 	delete: 'silmek',
-	space: 'uzay'
+	space: 'uzay',
+	'Speech Recognize': 'Konuşma Tanıma',
+	Sound: 'Ses',
+	'Interim Results': 'Ara Sonuçlar'
 };
 
 
 /***/ }),
 
-/***/ 29369:
+/***/ 56775:
 /***/ (function(module) {
 
 /*!
@@ -965,13 +970,16 @@ module.exports = {
 module.exports = {
 	newline: '新行',
 	delete: '删除',
-	space: '空间'
+	space: '空间',
+	'Speech Recognize': '言语识别',
+	Sound: '声音',
+	'Interim Results': '中期业绩'
 };
 
 
 /***/ }),
 
-/***/ 4777:
+/***/ 97957:
 /***/ (function(module) {
 
 /*!
@@ -983,7 +991,10 @@ module.exports = {
 module.exports = {
 	newline: 'นิวไลน์',
 	delete: 'ลบ',
-	space: 'พื้นที่'
+	space: 'พื้นที่',
+	'Speech Recognize': 'การรับรู้คำพูด',
+	Sound: 'เสียง',
+	'Interim Results': 'ผลระหว่างกาล'
 };
 
 
@@ -992,7 +1003,7 @@ module.exports = {
 },
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ var __webpack_exec__ = function(moduleId) { return __webpack_require__(__webpack_require__.s = moduleId); }
-/******/ var __webpack_exports__ = (__webpack_exec__(31897));
+/******/ var __webpack_exports__ = (__webpack_exec__(40256));
 /******/ return __webpack_exports__;
 /******/ }
 ]);

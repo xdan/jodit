@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.9
+ * Version: v3.19.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -19,10 +19,458 @@
 return /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 76391:
+/***/ 90643:
+/***/ (function(module) {
+
+module.exports["default"] = ["إبدأ في الكتابة...","حول جوديت","محرر جوديت",null,"دليل مستخدم جوديت","يحتوي على مساعدة مفصلة للاستخدام","للحصول على معلومات حول الترخيص، يرجى الذهاب لموقعنا:","شراء النسخة الكاملة","حقوق الطبع والنشر © XDSoft.net - Chupurnov Valeriy. كل الحقوق محفوظة.","مِرْساة","فتح في نافذة جديدة","فتح المحرر في الحجم الكامل","مسح التنسيق","ملء اللون أو تعيين لون النص","إعادة","تراجع","عريض","مائل","إدراج قائمة غير مرتبة","إدراج قائمة مرتبة","محاذاة للوسط","محاذاة مثبتة","محاذاة لليسار","محاذاة لليمين","إدراج خط أفقي","إدراج صورة","ادخال الملف","إدراج فيديو يوتيوب/فيميو ","إدراج رابط","حجم الخط","نوع الخط","إدراج كتلة تنسيق","عادي","عنوان 1","عنوان 2","عنوان 3","عنوان 4","إقتباس","كود","إدراج","إدراج جدول","تقليل المسافة البادئة","زيادة المسافة البادئة","تحديد أحرف خاصة","إدراج حرف خاص","تنسيق الرسم","تغيير الوضع","هوامش","أعلى","يمين","أسفل","يسار","الأنماط","الطبقات","محاذاة","اليمين","الوسط","اليسار","--غير مضبوط--","Src","العنوان","العنوان البديل","الرابط","افتح الرابط في نافذة جديدة","الصورة","ملف","متقدم","خصائص الصورة","إلغاء","حسنا","يشبه الكود الخاص بك HTML. تبقي كما HTML؟","الصق ك HTML","احتفظ","نظيفة","إدراج كنص","إدراج النص فقط","كلمة لصق الكشف عن","للصق المحتوى قادم من Microsoft Word/Excel الوثيقة. هل تريد أن تبقي شكل أو تنظيفه ؟ ","متصفح الملفات","حدث خطأ في تحميل القائمة ","حدث خطأ في تحميل المجلدات","هل أنت واثق؟","أدخل اسم المجلد","إنشاء مجلد","أكتب إسم","إسقاط صورة","إسقاط الملف","أو أنقر","النص البديل","تصفح","رفع","الخلفية","نص","أعلى","الوسط","الأسفل","إدراج عمود قبل","إدراج عمود بعد","إدراج صف أعلى","إدراج صف أسفل","حذف الجدول","حذف الصف","حذف العمود","خلية فارغة","مصدر","بالخط العريض","مائل","شغل","صلة","إلغاء","كرر","طاولة","صورة","نظيف","فقرة","حجم الخط","فيديو","الخط","حول المحرر","طباعة","أكد","شطب","المسافة البادئة","نتوء","ملء الشاشة","الحجم التقليدي","الخط","قائمة","قائمة مرقمة","قطع","اختر الكل","قانون","فتح الرابط","تعديل الرابط","سمة Nofollow","إزالة الرابط","مراجعة","لتحرير","تحديث","URL","تحرير","محاذاة أفقية","فلتر","عن طريق التغيير","بالاسم","حسب الحجم","إضافة مجلد","إعادة","احتفظ","حفظ باسم","تغيير الحجم","حجم القطع","عرض","ارتفاع","حافظ على النسب","أن","لا","حذف","تميز","%d حرف","%d كلام",null,"تميز %s","اختر الكل","محاذاة عمودية","انشق، مزق","انقسام عمودي","تقسيم أفقي","اذهب","أضف العمود","اضف سطر","حذف","الحدود","رخصة %s","اضرب من خلال","أكد","حرف فوقي","مخطوطة","قطع الاختيار","استراحة","البحث عن","استبدل ب","محل","معجون","اختر محتوى للصق","يمكنك فقط تحرير صورك الخاصة. تحميل هذه الصورة على المضيف؟","تم تحميل الصورة بنجاح على الخادم!","لوحة","لا توجد ملفات في هذا الدليل.","إعادة تسمية","أدخل اسم جديد","معاينة","تحميل","لصق من الحافظة","متصفحك لا يدعم إمكانية الوصول المباشر إلى الحافظة.","نسخ التحديد","نسخ","دائرة نصف قطرها الحدود","عرض كل","تطبيق","يرجى ملء هذا المجال","يرجى إدخال عنوان ويب","الافتراضي","دائرة","نقطة","المربعة","البحث","تجد السابقة","تجد التالي","أدخل اسم الفصل","اضغط البديل لتغيير حجم مخصص"]
+
+/***/ }),
+
+/***/ 52532:
+/***/ (function(module) {
+
+module.exports["default"] = ["Napiš něco","O Jodit","Editor Jodit","Verze pro nekomerční použití","Jodit Uživatelská příručka","obsahuje detailní nápovědu","Pro informace o licenci, prosím, přejděte na naši stránku:","Koupit plnou verzi","Copyright © XDSoft.net - Chupurnov Valeriy. Všechna práva vyhrazena.","Anchor","Otevřít v nové záložce","Otevřít v celoobrazovkovém režimu","Vyčistit formátování","Barva výplně a písma","Vpřed","Zpět","Tučné","Kurzíva","Odrážky","Číslovaný seznam","Zarovnat na střed","Zarovnat do bloku","Zarovnat vlevo","Zarovnat vpravo","Vložit horizontální linku","Vložit obrázek","Vložit soubor","Vložit video (YT/Vimeo)","Vložit odkaz","Velikost písma","Typ písma","Formátovat blok","Normální text","Nadpis 1","Nadpis 2","Nadpis 3","Nadpis 4","Citát","Kód","Vložit","Vložit tabulku","Zmenšit odsazení","Zvětšit odsazení","Vybrat speciální symbol","Vložit speciální symbol","Použít formát","Změnit mód","Okraje","horní","pravý","spodní","levý","Styly","Třídy","Zarovnání","Vpravo","Na střed","Vlevo","--nenastaveno--","src","Titulek","Alternativní text (alt)","Link","Otevřít link v nové záložce","Obrázek","soubor","Rozšířené","Vlastnosti obrázku","Zpět","Ok","Váš text se podobá HTML. Vložit ho jako HTML?","Vložit jako HTML","Ponechat originál","Vyčistit","Vložit jako TEXT","Vložit pouze TEXT","Detekován fragment z Wordu nebo Excelu","Obsah, který vkládáte, je pravděpodobně z Microsoft Word / Excel. Chcete ponechat formát nebo vložit pouze text?","Prohlížeč souborů","Chyba při načítání seznamu souborů","Chyba při načítání složek","Jste si jistý(á)?","Název složky","Vytvořit složku","název","Přetáhněte sem obrázek","Přetáhněte sem soubor","nebo klikněte","Alternativní text","Server","Nahrát","Pozadí","Text","Nahoru","Na střed","Dolu","Vložit sloupec před","Vložit sloupec za","Vložit řádek nad","Vložit řádek pod","Vymazat tabulku","Vymazat řádku","Vymazat sloupec","Vyčistit buňku","HTML","tučně","kurzíva","štětec","odkaz","zpět","vpřed","tabulka","obrázek","guma","odstavec","velikost písma","video","písmo","о editoru","tisk","podtrženo","přeškrtnuto","zvětšit odsazení","zmenšit odsazení","celoobrazovkový režim","smrsknout","Linka","Odrážka","Číslovaný seznam","Vyjmout","Označit vše","Kód","Otevřít odkaz","Upravit odkaz","Atribut no-follow","Odstranit odkaz","Zobrazit","Chcete-li upravit","Aktualizovat","URL","Editovat","Horizontální zarovnání","Filtr","Dle poslední změny","Dle názvu","Dle velikosti","Přidat složku","Reset","Uložit","Uložit jako...","Změnit rozměr","Ořezat","Šířka","Výška","Ponechat poměr","Ano","Ne","Vyjmout","Označit","Znaky: %d","Slova: %d","Vše","Označit %s","Označit vše","Vertikální zarovnání","Rozdělit","Rozdělit vertikálně","Rozdělit horizontálně","Spojit","Přidat sloupec","Přidat řádek","Vymazat","Okraj","Licence: %s","Přeškrtnuto","Podtrženo","Horní index","Dolní index","Vyjmout označené","Zalomení","Najdi","Nahradit za","Vyměňte","Vložit","Vyber obsah pro vložení","Můžete upravovat pouze své obrázky. Načíst obrázek?","Obrázek byl úspěšně nahrán!","paleta","V tomto adresáři nejsou žádné soubory.","přejmenovat","Zadejte nový název","náhled","Stažení","Vložit ze schránky","Váš prohlížeč nepodporuje přímý přístup do schránky.","Kopírovat výběr","kopírování","Border radius","Zobrazit všechny","Platí","Prosím, vyplňte toto pole","Prosím, zadejte webovou adresu","Výchozí","Kruh","Dot","Quadrate","Najít","Najít Předchozí","Najít Další","Vložte název třídy","Stiskněte Alt pro vlastní změnu velikosti"]
+
+/***/ }),
+
+/***/ 75178:
+/***/ (function(module) {
+
+module.exports["default"] = ["Bitte geben Sie einen Text ein","Über Jodit","Jodit Editor",null,"Das Jodit Benutzerhandbuch","beinhaltet ausführliche Informationen wie Sie den Editor verwenden können.","Für Informationen zur Lizenz, besuchen Sie bitte unsere Web-Präsenz:","Vollversion kaufen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Anker","In neuer Registerkarte öffnen","Editor in voller Größe öffnen","Formatierung löschen","Füllfarbe oder Textfarbe ändern","Wiederholen","Rückgängig machen","Fett","Kursiv","Unsortierte Liste einfügen","Nummerierte Liste einfügen","Mittig ausrichten","Blocksatz","Links ausrichten","Rechts ausrichten","Horizontale Linie einfügen","Bild einfügen","Datei einfügen","Youtube/vimeo Video einfügen","Link einfügen","Schriftgröße","Schriftfamilie","Formatblock einfügen","Normal","Überschrift 1","Überschrift 2","Überschrift 3","Überschrift 4","Zitat","Code","Einfügen","Tabelle einfügen","Einzug verkleinern","Einzug vergrößern","Sonderzeichen auswählen","Sonderzeichen einfügen","Format kopieren","Änderungsmodus","Ränder","Oben","Rechts","Unten","Links","CSS Stil","CSS Klassen","Ausrichtung","Rechts","Zentriert","Links","Keine","Pfad","Titel","Alternativer Text","Link","Link in neuem Tab öffnen","Bild","Datei","Fortgeschritten","Bildeigenschaften","Abbrechen","OK","Ihr Text ähnelt HTML-Code. Als HTML beibehalten?","Als HTML einfügen?","Original speichern","Säubern","Als Text einfügen","Nur Text einfügen","In Word formatierter Text erkannt","Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder bereinigen?","Dateibrowser","Fehler beim Laden der Liste","Fehler beim Laden der Ordner","Sind Sie sicher?","Geben Sie den Verzeichnisnamen ein","Verzeichnis erstellen","Typname","Bild hier hinziehen","Datei löschen","oder hier klicken","Alternativtext","Auswählen","Hochladen","Hintergrund","Text","Oben","Mittig","Unten","Spalte davor einfügen","Spalte danach einfügen","Zeile oberhalb einfügen","Zeile unterhalb einfügen","Tabelle löschen","Zeile löschen","Spalte löschen","Zelle leeren","HTML","Fett gedruckt","Kursiv","Bürste","Verknüpfung","Rückgängig machen","Wiederholen","Tabelle","Bild","Radiergummi","Absatz","Schriftgröße","Video","Schriftart","Über","Drucken","Unterstreichen","Durchstreichen","Einzug","Herausstellen","Vollgröße","Schrumpfen","die Linie","Liste von","Nummerierte Liste","Schneiden","Wählen Sie Alle aus","Code einbetten","Link öffnen","Link bearbeiten","Nofollow-Attribut","Link entfernen","Ansehen","Bearbeiten","Aktualisieren","URL","Bearbeiten","Horizontale Ausrichtung","Filter","Sortieren nach geändert","Nach Name sortieren","Nach Größe sortiert","Ordner hinzufügen","Wiederherstellen","Speichern","Speichern als","Größe ändern","Größe anpassen","Breite","Höhe","Seitenverhältnis beibehalten","Ja","Nein","Entfernen","Markieren","Zeichen: %d","Wörter: %d","Alles markieren","Markieren: %s","Alles markieren","Vertikale Ausrichtung","Unterteilen","Vertikal unterteilen","Horizontal unterteilen","Vereinen","Spalte hinzufügen","Zeile hinzufügen","Löschen","Rand",null,"Durchstreichen","Unterstreichen","Hochgestellen","Tiefstellen","Auswahl ausschneiden","Pause","Suche nach","Ersetzen durch","Ersetzen","Einfügen","Wählen Sie den Inhalt zum Einfügen aus","Sie können nur Ihre eigenen Bilder bearbeiten. Dieses Bild auf den Host herunterladen?","Das Bild wurde erfolgreich auf den Server hochgeladen!","Palette","In diesem Verzeichnis befinden sich keine Dateien.","Umbenennen","Geben Sie einen neuen Namen ein","Vorschau","Herunterladen","Aus Zwischenablage einfügen","Ihr Browser unterstützt keinen direkten Zugriff auf die Zwischenablage.","Auswahl kopieren","Kopieren","Radius für abgerundete Ecken","Alle anzeigen","Anwenden","Bitte füllen Sie dieses Feld aus","Bitte geben Sie eine Web-Adresse ein","Standard","Kreis","Punkte","Quadrate","Suchen","Suche vorherige","Weitersuchen","className (CSS) einfügen","Drücken Sie Alt für benutzerdefinierte Größenanpassung"]
+
+/***/ }),
+
+/***/ 51048:
+/***/ (function(module) {
+
+module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Free Non-commercial Version","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open editor in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Clean","Insert as Text","Insert only Text","Word Paste Detected","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Browse","Upload","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Eye","pencil","Update"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Chars: %d","Words: %d","All","Select %s","Select all","Vertical align","Split","Split vertical","Split horizontal","Merge","Add column","Add row","Delete","Border","License: %s","Strike through","Underline","superscript","subscript","Cut selection","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","Insert className","Press Alt for custom resizing"]
+
+/***/ }),
+
+/***/ 22999:
+/***/ (function(module) {
+
+module.exports["default"] = ["Escriba algo...","Acerca de Jodit","Jodit Editor",null,"Guía de usuario Jodit","contiene ayuda detallada para el uso.","Para información sobre la licencia, por favor visite nuestro sitio:","Compre la versión completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos los derechos reservados.","Anclar","Abrir en nueva pestaña","Abrir editor en pantalla completa","Limpiar formato","Color de relleno o de letra","Rehacer","Deshacer","Negrita","Cursiva","Insertar lista no ordenada","Insertar lista ordenada","Alinear Centrado","Alinear Justificado","Alinear Izquierda","Alinear Derecha","Insertar línea horizontal","Insertar imagen","Insertar archivo","Insertar video de Youtube/vimeo","Insertar vínculo","Tamaño de letra","Familia de letra","Insertar bloque","Normal","Encabezado 1","Encabezado 2","Encabezado 3","Encabezado 4","Cita","Código","Insertar","Insertar tabla","Disminuir sangría","Aumentar sangría","Seleccionar caracter especial","Insertar caracter especial","Copiar formato","Cambiar modo","Márgenes","arriba","derecha","abajo","izquierda","Estilos CSS","Clases CSS","Alinear","Derecha","Centrado","Izquierda","--No Establecido--","Fuente","Título","Texto Alternativo","Vínculo","Abrir vínculo en nueva pestaña","Imagen","Archivo","Avanzado","Propiedades de imagen","Cancelar","Aceptar","El código es similar a HTML. ¿Mantener como HTML?","Pegar como HTML?","Mantener","Limpiar","Insertar como texto","Insertar solo texto","Pegado desde Word detectado","El contenido pegado proviene de un documento de Microsoft Word/Excel. ¿Desea mantener el formato o limpiarlo?","Buscar archivo","Error al cargar la lista","Error al cargar las carpetas","¿Está seguro?","Entre nombre de carpeta","Crear carpeta","Entre el nombre","Soltar imagen","Soltar archivo","o click","Texto alternativo","Buscar","Subir","Fondo","Texto","Arriba","Centro","Abajo","Insertar columna antes","Interar columna después","Insertar fila arriba","Insertar fila debajo","Borrar tabla","Borrar fila","Borrar columna","Vaciar celda","HTML","negrita","cursiva","Brocha","Vínculo","deshacer","rehacer","Tabla","Imagen","Borrar","Párrafo","Tamaño de letra","Video","Letra","Acerca de","Imprimir","subrayar","tachar","sangría","quitar sangría","Tamaño completo","encoger","línea horizontal","lista sin ordenar","lista ordenada","Cortar","Seleccionar todo","Incluir código","Abrir vínculo","Editar vínculo","No seguir","Desvincular","Ver","Para editar","Actualizar","URL","Editar","Alineación horizontal","filtrar","Ordenar por fecha modificación","Ordenar por nombre","Ordenar por tamaño","Agregar carpeta","Resetear","Guardar","Guardar como...","Redimensionar","Recortar","Ancho","Alto","Mantener relación de aspecto","Si","No","Quitar","Seleccionar","Caracteres: %d","Palabras: %d","Todo","Seleccionar: %s","Seleccionar todo","Alineación vertical","Dividir","Dividir vertical","Dividir horizontal","Mezclar","Agregar columna","Agregar fila","Borrar","Borde",null,"Tachado","Subrayado","superíndice","subíndice","Cortar selección","Pausa","Buscar","Reemplazar con","Reemplazar","Pegar","Seleccionar contenido para pegar","Solo puedes editar tus propias imágenes. ¿Descargar esta imagen en el servidor?","¡La imagen se ha subido correctamente al servidor!","paleta","No hay archivos en este directorio.","renombrar","Ingresa un nuevo nombre","avance","Descargar","Pegar desde el portapapeles","Su navegador no soporta el acceso directo en el portapapeles.","Selección de copia","copia","Radio frontera","Mostrar todos los","Aplicar","Por favor, rellene este campo","Por favor, introduzca una dirección web","Predeterminado","Círculo","Punto","Cuadro","Encontrar","Buscar Anterior","Buscar Siguiente","Insertar nombre de clase","Presione Alt para cambiar el tamaño personalizado"]
+
+/***/ }),
+
+/***/ 34145:
+/***/ (function(module) {
+
+module.exports["default"] = ["Ecrivez ici","A propos de Jodit","Editeur Jodit",null,"Guide de l'utilisateur","Aide détaillée à l'utilisation","Consulter la licence sur notre site web:","Acheter la version complète","Copyright © XDSoft.net - Chupurnov Valeriy. Tous droits réservés.","Ancre","Ouvrir dans un nouvel onglet","Ouvrir l'éditeur en pleine page","Supprimer le formattage","Modifier la couleur du fond ou du texte","Refaire","Défaire","Gras","Italique","Liste non ordonnée","Liste ordonnée","Centrer","Justifier","Aligner à gauche ","Aligner à droite","Insérer une ligne horizontale","Insérer une image","Insérer un fichier","Insérer une vidéo","Insérer un lien","Taille des caractères","Famille des caractères","Bloc formatté","Normal","Titre 1","Titre 2","Titre 3","Titre 4","Citation","Code","Insérer","Insérer un tableau","Diminuer le retrait","Retrait plus","Sélectionnez un caractère spécial","Insérer un caractère spécial","Cloner le format","Mode wysiwyg <-> code html","Marges","haut","droite","Bas","gauche","Styles","Classes","Alignement","Droite","Centre","Gauche","--Non disponible--","Source","Titre","Alternative","Lien","Ouvrir le lien dans un nouvel onglet","Image","fichier","Avancé","Propriétés de l'image","Annuler","OK","Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?","Coller en HTML?","Sauvegarder l'original","Nettoyer","Coller en tant que texte","Coller le texte seulement","C'est peut-être un fragment de Word ou Excel","Le contenu que vous insérez provient d'un document Microsoft Word / Excel. Voulez-vous enregistrer le format ou l'effacer?","Explorateur de fichiers","Erreur de liste de chargement","Erreur de dossier de chargement","Etes-vous sûrs ?","Entrer le non de dossier","Créer un dossier","type de fichier","Coller une image","Déposer un fichier","ou cliquer","Texte de remplacemement","Chercher","Charger","Arrière-plan","Texte","Haut","Milieu","Bas","Insérer une colonne avant","Insérer une colonne après","Insérer une ligne en dessus","Insérer une ligne en dessous","Supprimer le tableau","Supprimer la ligne","Supprimer la colonne","Vider la cellule","la source","graisseux","italique","verser","lien","abolir","prêt","graphique","Image","la gommen","clause","taille de police","Video","police","à propos de l'éditeur","impression","souligné","barré","indentation","indifférent","taille réelle","taille conventionnelle","la ligne","Liste des","Liste numérotée","Couper","Sélectionner tout",null,"Ouvrir le lien","Modifier le lien","Attribut Nofollow","Supprimer le lien","Voir","Pour éditer","Mettre à jour","URL",null,"Alignement horizontal","Filtre","Trier par modifié","Trier par nom","Classer par taille","Ajouter le dossier","Restaurer","Sauvegarder","Enregistrer sous","Changer la taille","Taille de garniture","Largeur","Hauteur","Garder les proportions","Oui","Non","Supprimer","Mettre en évidence","Symboles: %d","Mots: %d",null,"Mettre en évidence: %s","Tout sélectionner","Alignement vertical","Split","Split vertical","Split horizontal","aller","Ajouter une colonne","Ajouter une rangée","Effacer",null,null,"Frapper à travers","Souligner","exposant","indice","Couper la sélection","Pause","Rechercher","Remplacer par","Remplacer","Coller","Choisissez le contenu à coller","Vous ne pouvez éditer que vos propres images. Téléchargez cette image sur l'hôte?","L'image a été téléchargée avec succès sur le serveur!null","Palette","Il n'y a aucun fichier dans ce répertoire.","renommer","Entrez un nouveau nom","Aperçu","Télécharger","Coller à partir du presse-papiers","Votre navigateur ne prend pas en charge l'accès direct à la presse-papiers.","Copier la sélection","copie","Rayon des frontières","Afficher tous les","Appliquer","Veuillez remplir ce champ","Veuillez entrer une adresse web","Par défaut","Cercle","Dot","Quadrate","Trouver","Trouvez Précédente","Suivant","Insérer un nom de classe","Appuyez sur Alt pour un redimensionnement personnalisé"]
+
+/***/ }),
+
+/***/ 40272:
+/***/ (function(module) {
+
+module.exports["default"] = ["הקלד משהו...","About Jodit","Jodit Editor",null,"Jodit User's Guide","contains detailed help for using.","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","מקום עיגון","פתח בכרטיסיה חדשה","פתח את העורך בחלון חדש","נקה עיצוב","שנה צבע טקסט או רקע","בצע שוב","בטל","מודגש","נטוי","הכנס רשימת תבליטים","הכנס רשימה ממוספרת","מרכז","ישר ","ישר לשמאל","ישר לימין","הכנס קו אופקי","הכנס תמונה","הכנס קובץ","הכנס סרטון וידאו מYouTube/Vimeo","הכנס קישור","גודל גופן","גופן","מעוצב מראש","רגיל","כותרת 1","כותרת 2","כותרת 3","כותרת 4","ציטוט","קוד","הכנס","הכנס טבלה","הקטן כניסה","הגדל כניסה","בחר תו מיוחד","הכנס תו מיוחד","העתק עיצוב","החלף מצב","ריווח","עליון","ימין","תחתון","שמאל","עיצוב CSS","מחלקת CSS","יישור","ימין","מרכז","שמאל","--לא נקבע--","מקור","כותרת","כיתוב חלופי","קישור","פתח בכרטיסיה חדשה","תמונה","קובץ","מתקדם","מאפייני תמונה","ביטול","אישור","הקוד דומה לHTML, האם להשאיר כHTML","הדבק כHTML","השאר","נקה","הכנס כטקסט","הכנס טקסט בלבד","זוהתה הדבקה מ\"וורד\"","התוכן המודבק מגיע ממסמך וורד/אקסל. האם ברצונך להשאיר את העיצוב או לנקותו","סייר הקבצים","שגיאה  בזמן טעינת רשימה","שגיאה בזמן טעינת תקיות","האם אתה בטוח?","הכנס שם תקיה","צור תקיה","סוג הקובץ","הסר תמונה","הסר קובץ","או לחץ","כיתוב חלופי","סייר","העלה","רקע","טקסט","עליון","מרכז","תחתון","הכנס עמודה לפני","הכנס עמודה אחרי","הכנס שורה מעל","הכנס שורה מתחת","מחק טבלה","מחק שורה","מחק עמודה","רוקן תא","HTML","מודגש","נטוי","מברשת","קישור","בטל","בצע שוב","טבלה","תמונה","מחק","פסקה","גודל גופן","וידאו","גופן","עלינו","הדפס","קו תחתון","קו חוצה","הגדל כניסה","הקטן כניסה","גודל מלא","כווץ","קו אופקי","רשימת תבליטים","רשימה ממוספרת","חתוך","בחר הכל","הוסף קוד","פתח קישור","ערוך קישור","ללא מעקב","בטל קישור","הצג","כדי לערוך","עדכן","כתובת","ערוך","יישור אופקי","סנן","מין לפי שינוי","מיין לפי שם","מיין לפי גודל","הוסף תקייה","אפס","שמור","שמור בשם...","שנה גודל","חתוך","רוחב","גובה","שמור יחס","כן","לא","הסר","בחר","תווים: %d","מילים: %d","הכל","נבחר: %s","בחר הכל","יישור אנכי","פיצול","פיצול אנכי","פיצול אופקי","מזג","הוסף עמודה","הוסף שורה","מחק","מסגרת",null,"קו חוצה","קו תחתון","superscript","subscript","גזור בחירה","שבירת שורה","חפש","החלף ב","להחליף","הדבק","בחר תוכן להדבקה","רק קבצים המשוייכים שלך ניתנים לעריכה. האם להוריד את הקובץ?","התמונה עלתה בהצלחה!","לוח","אין קבצים בספריה זו.","הונגרית","הזן שם חדש","תצוגה מקדימה","הורד","להדביק מהלוח","הדפדפן שלך לא תומך גישה ישירה ללוח.","העתק בחירה","העתק","רדיוס הגבול","הצג את כל","החל","נא למלא שדה זה","אנא הזן כתובת אינטרנט","ברירת המחדל","מעגל","נקודה","הריבוע הזה","למצוא","מצא את הקודם","חפש את הבא","הכנס את שם הכיתה","לחץ על אלט לשינוי גודל מותאם אישית"]
+
+/***/ }),
+
+/***/ 2978:
+/***/ (function(module) {
+
+module.exports["default"] = ["Írjon be valamit","Joditról","Jodit Editor","Ingyenes változat","Jodit útmutató","további segítséget tartalmaz","További licence információkért látogassa meg a weboldalunkat:","Teljes verzió megvásárlása","Copyright © XDSoft.net - Chupurnov Valeriy. Minden jog fenntartva.","Horgony","Megnyitás új lapon","Megnyitás teljes méretben","Formázás törlése","Háttér/szöveg szín","Újra","Visszavon","Félkövér","Dőlt","Pontozott lista","Számozott lista","Középre zárt","Sorkizárt","Balra zárt","Jobbra zárt","Vízszintes vonal beszúrása","Kép beszúrás","Fájl beszúrás","Youtube videó beszúrása","Link beszúrás","Betűméret","Betűtípus","Formázott blokk beszúrása","Normál","Fejléc 1","Fejléc 2","Fejléc 3","Fejléc 4","Idézet","Kód","Beszúr","Táblázat beszúrása","Behúzás csökkentése","Behúzás növelése","Speciális karakter kiválasztása","Speciális karakter beszúrása","Kép formázása","Nézet váltása","Szegélyek","felső","jobb","alsó","bal","CSS stílusok","CSS osztályok","Igazítás","Jobbra","Középre","Balra","Nincs","Forrás","Cím","Helyettesítő szöveg","Link","Link megnyitása új lapon","Kép","Fájl","Haladó","Kép tulajdonságai","Mégsem","OK","A beillesztett szöveg HTML-nek tűnik. Megtartsuk HTML-ként?","Beszúrás HTML-ként","Megtartás","Elvetés","Beszúrás szövegként","Csak szöveg beillesztése","Word-ből másolt szöveg","A beillesztett tartalom Microsoft Word/Excel dokumentumból származik. Meg szeretné tartani a formátumát?","Fájl tallózó","Hiba a lista betöltése közben","Hiba a mappák betöltése közben","Biztosan ezt szeretné?","Írjon be egy mappanevet","Mappa létrehozása","írjon be bevet","Húzza ide a képet","Húzza ide a fájlt","vagy kattintson","Helyettesítő szöveg","Tallóz","Feltölt","Háttér","Szöveg","Fent","Középen","Lent","Oszlop beszúrás elé","Oszlop beszúrás utána","Sor beszúrás fölé","Sor beszúrás alá","Táblázat törlése","Sor törlése","Oszlop törlése","Cella tartalmának törlése","HTML","Félkövér","Dőlt","Ecset","Link","Visszavon","Újra","Táblázat","Kép","Törlés","Paragráfus","Betűméret","Videó","Betű","Rólunk","Nyomtat","Aláhúzott","Áthúzott","Behúzás","Aussenseiter","Teljes méret","Összenyom","Egyenes vonal","Lista","Számozott lista","Kivág","Összes kijelölése","Beágyazott kód","Link megnyitása","Link szerkesztése","Nincs követés","Link leválasztása","felülvizsgálat","Szerkesztés","Frissít","URL","Szerkeszt","Vízszintes igazítás","Szűrő","Rendezés módosítás szerint","Rendezés név szerint","Rendezés méret szerint","Mappa hozzáadás","Visszaállít","Mentés","Mentés másként...","Átméretezés","Kivág","Szélesség","Magasság","Képarány megtartása","Igen","Nem","Eltávolít","Kijelöl","Karakterek száma: %d","Szavak száma: %d","Összes","Kijelöl: %s","Összes kijelölése","Függőleges igazítás","Felosztás","Függőleges felosztás","Vízszintes felosztás","Összevonás","Oszlop hozzáadás","Sor hozzáadás","Törlés","Szegély",null,"Áthúzott","Aláhúzott","Felső index","Alsó index","Kivágás","Szünet","Keresés","Csere erre","Cserélje ki","Beillesztés","Válasszon tartalmat a beillesztéshez","Csak a saját képeit tudja szerkeszteni. Letölti ezt a képet?","Kép sikeresen feltöltve!","Palette","Er zijn geen bestanden in deze map.","átnevezés","Adja meg az új nevet","előnézet","Letöltés","Illessze be a vágólap","A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.","Másolás kiválasztása","másolás","Határ sugár","Összes","Alkalmazni","Kérjük, töltse ki ezt a mezőt,","Kérjük, írja be a webcímet","Alapértelmezett","Kör","Pont","Quadrate","Találni","Megtalálja Előző","Következő Keresése","Helyezze be az osztály nevét","Nyomja meg az Alt egyéni átméretezés"]
+
+/***/ }),
+
+/***/ 99113:
+/***/ (function(module) {
+
+module.exports["default"] = ["Ketik sesuatu","Tentang Jodit","Editor Jodit","Versi Bebas Non-komersil","Panduan Pengguna Jodit","mencakup detail bantuan penggunaan","Untuk informasi tentang lisensi, silakan kunjungi website:","Beli versi lengkap","Hak Cipta © XDSoft.net - Chupurnov Valeriy. Hak cipta dilindungi undang-undang.","Tautan","Buka di tab baru","Buka editor dalam ukuran penuh","Hapus Pemformatan","Isi warna atau atur warna teks","Ulangi","Batalkan","Tebal","Miring","Sisipkan Daftar Tidak Berurut","Sisipkan Daftar Berurut","Tengah","Penuh","Kiri","Kanan","Sisipkan Garis Horizontal","Sisipkan Gambar","Sisipkan Berkas","Sisipkan video youtube/vimeo","Sisipkan tautan","Ukuran font","Keluarga font","Sisipkan blok format","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Kutip","Kode","Sisipkan","Sisipkan tabel","Kurangi Indentasi","Tambah Indentasi","Pilih Karakter Spesial","Sisipkan Karakter Spesial","Formar warna","Ubah mode","Batas","atas","kanan","bawah","kiri","Gaya","Class","Rata","Kanan","Tengah","Kiri","--Tidak diset--","Src","Judul","Teks alternatif","Tautan","Buka tautan di tab baru","Gambar","berkas","Lanjutan","Properti gambar","Batal","Ya","Kode Anda cenderung ke HTML. Biarkan sebagai HTML?","Paste sebagai HTML","Jaga","Bersih","Sisipkan sebagai teks","Sisipkan hanya teks","Terdeteksi paste dari Word","Konten dipaste dari dokumen Microsoft Word/Excel. Apakah Anda ingin tetap menjaga format atau membersihkannya?","Penjelajah Berkas","Error ketika memuat list","Error ketika memuat folder","Apakah Anda yakin?","Masukkan nama Direktori","Buat direktori","ketik nama","Letakkan gambar","Letakkan berkas","atau klik","Teks alternatif","Jelajahi","Unggah","Latar Belakang","Teks","Atas","Tengah","Bawah","Sisipkan kolom sebelumnya","Sisipkan kolom setelahnya","Sisipkan baris di atasnya","Sisipkan baris di bawahnya","Hapus tabel","Hapus baris","Hapus kolom","Kosongkan cell","sumber","tebal","miring","sikat","tautan","batalkan","ulangi","tabel","gambar","penghapus","paragraf","ukuran font","video","font","tentang","cetak","garis bawah","coret","menjorok ke dalam","menjorok ke luar","ukuran penuh","menyusut","hr","ul","ol","potong","Pilih semua","Kode embed","Buka tautan","Edit tautan","No follow","Hapus tautan","Mata","pensil","Perbarui","URL","Edit","Perataan horizontal","Filter","Urutkan berdasarkan perubahan","Urutkan berdasarkan nama","Urutkan berdasarkan ukuran","Tambah folder","Reset","Simpan","Simpan sebagai...","Ubah ukuran","Crop","Lebar","Tinggi","Jaga aspek rasio","Ya","Tidak","Copot","Pilih","Karakter: %d","Kata: %d","Semua","Pilih %s","Pilih semua","Rata vertikal","Bagi","Bagi secara vertikal","Bagi secara horizontal","Gabungkan","Tambah kolom","tambah baris","Hapus","Bingkai","Lisensi: %s","Coret","Garis Bawah","Superskrip","Subskrip","Potong pilihan","Berhenti","Mencari","Ganti dengan","Mengganti","Paste","Pilih konten untuk dipaste","Anda hanya dapat mengedit gambar Anda sendiri. Unduh gambar ini di host?","Gambar telah sukses diunggah ke host!","palet","Tidak ada berkas","ganti nama","Masukkan nama baru","pratinjau","Unduh","Paste dari clipboard","Browser anda tidak mendukung akses langsung ke clipboard.","Copy seleksi","copy","Border radius","Tampilkan semua","Menerapkan","Silahkan mengisi kolom ini","Silahkan masukkan alamat web","Default","Lingkaran","Dot","Kuadrat","Menemukan","Menemukan Sebelumnya","Menemukan Berikutnya","Masukkan nama kelas","Tekan Alt untuk mengubah ukuran kustom"]
+
+/***/ }),
+
+/***/ 51923:
+/***/ (function(module) {
+
+module.exports["default"] = ["Scrivi qualcosa...","A proposito di Jodit","Jodit Editor",null,"Guida utente di Jodit","contiene una guida dettagliata per l'uso.","Per informazioni sulla licenza, si prega di visitare il nostro sito:","Acquista la versione completa","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Ancora","Apri in una nuova scheda","Apri l'editor a schermo intero","Formato chiaro","Riempi colore o lettera","Ripristina","Annulla","Grassetto","Corsivo","Inserisci lista non ordinata","Inserisci l'elenco ordinato","Allinea Centra","Allineare Giustificato","Allinea a Sinistra","Allinea a Destra","Inserisci la linea orizzontale","Inserisci immagine","Inserisci un file","Inserisci video Youtube/Vimeo","Inserisci il link","Dimensione del carattere","Tipo di font","Inserisci blocco","Normale","Heading 1","Heading 2","Heading 3","Heading 4","Citazione","Codice","Inserisci","Inserisci tabella","Riduci il rientro","Aumenta il rientro","Seleziona una funzione speciale","Inserisci un carattere speciale","Copia formato","Cambia modo","Margini","su","destra","giù","sinistra","Stili CSS","Classi CSS","Allinea","Destra","Centro","Sinistra","--Non Impostato--","Fonte","Titolo","Testo Alternativo","Link","Apri il link in una nuova scheda","Immagine","Archivio","Avanzato","Proprietà dell'immagine","Annulla","Accetta","Il codice è simile all'HTML. Mantieni come HTML?","Incolla come HTML?","Mantieni","Pulisci","Inserisci come testo","Inserisci solo il testo","Incollato da Word rilevato","Il contenuto incollato proviene da un documento Microsoft Word / Excel. Vuoi mantenere il formato o pulirlo?","Cerca il file","Errore durante il caricamento dell'elenco","Errore durante il caricamento delle cartelle","Sei sicuro?","Inserisci il nome della cartella","Crea cartella","Entre el nombre","Rilascia l'immagine","Rilascia file","o click","Testo alternativo","Sfoglia","Carica","Sfondo","Testo","Su","Centro","Sotto","Inserisci prima la colonna","Inserisci colonna dopo","Inserisci la riga sopra","Inserisci la riga sotto","Elimina tabella","Elimina riga","Elimina colonna","Cella vuota","HTML","Grassetto","Corsivo","Pennello","Link","Annulla","Ripristina","Tabella","Immagine","Gomma","Paragrafo","Dimensione del carattere","Video","Font","Approposito di","Stampa","Sottolineato","Barrato","trattino","annulla rientro","A grandezza normale","comprimere","linea orizzontale","lista non ordinata","lista ordinata","Taglia","Seleziona tutto","Includi codice","Apri link","Modifica link","Non seguire","Togli link","Recensione","Per modificare","Aggiornare"," URL","Modifica","Allineamento orizzontale","Filtro","Ordina per data di modifica","Ordina per nome","Ordina per dimensione","Aggiungi cartella","Reset","Salva","Salva con nome...","Ridimensiona","Tagliare","Larghezza","Altezza","Mantenere le proporzioni","Si","No","Rimuovere","Seleziona","Caratteri: %d","Parole: %d","Tutto","Seleziona: %s","Seleziona tutto","Allineamento verticala","Dividere","Dividere verticalmente","Diviso orizzontale","Fondi","Aggiungi colonna","Aggiungi riga","Cancella","Bordo",null,"Barrato","Sottolineato","indice","deponente","Taglia la selezione","Pausa","Cerca","Sostituisci con","Sostituire","Incolla","Seleziona il contenuto da incollare","Puoi modificare solo le tue immagini. Scarica questa immagine sul server?","L'immagine è stata caricata con successo sul server!","tavolozza","Non ci sono file in questa directory.","ungherese","Inserisci un nuovo nome","anteprima","Scaricare","Incolla dagli appunti","Il tuo browser non supporta l'accesso diretto agli appunti.","Selezione di copia","copia","Border radius","Mostra tutti","Applicare","Si prega di compilare questo campo","Si prega di inserire un indirizzo web","Di Default","Cerchio","Dot","Quadrate","Trovare","Trova Precedente","Trova Successivo","Inserisci il nome della classe","Premere Alt per il ridimensionamento personalizzato"]
+
+/***/ }),
+
+/***/ 21268:
+/***/ (function(module) {
+
+module.exports["default"] = ["なにかタイプしてください","Joditについて","Jodit Editor",null,"Jodit ユーザーズ・ガイド","詳しい使い方","ライセンス詳細についてはJodit Webサイトを確認ください：","フルバージョンを購入","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","新しいタブで開く","エディターのサイズ（フル/ノーマル）","書式をクリア","テキストの色","やり直し","元に戻す","太字","斜体","箇条書き","番号付きリスト","中央揃え","両端揃え","左揃え","右揃え","区切り線を挿入","画像を挿入","ファイルを挿入","Youtube/Vimeo 動画","リンクを挿入","フォントサイズ","フォント","テキストのスタイル","指定なし","タイトル1","タイトル2","タイトル3","タイトル4","引用","コード","挿入","表を挿入","インデント減","インデント増","特殊文字を選択","特殊文字を挿入","書式を貼付け","編集モード切替え","マージン","上","右","下","左","スタイル","クラス","配置","右寄せ","中央寄せ","左寄せ","指定なし","ソース","タイトル","代替テキスト","リンク","新しいタブで開く","画像","ファイル","高度な設定","画像のプロパティー","キャンセル","確定","HTMLコードを保持しますか？","HTMLで貼付け","HTMLを保持","Clean","HTMLをテキストにする","テキストだけ","Word Paste Detected","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","ここに画像をドロップ","ここにファイルをドロップ","or クリック","代替テキスト","ブラウズ","アップロード","背景","文字","上","中央","下","左に列を挿入","右に列を挿入","上に行を挿入","下に行を挿入","表を削除","行を削除","列を削除","セルを空にする","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","分割線","箇条書き","番号付きリスト","切り取り","すべて選択","埋め込みコード","リンクを開く","リンクを編集","No follow","リンク解除","サイトを確認","鉛筆","更新","URL","編集","水平方向の配置","Filter","Sort by changed","Sort by name","Sort by size","Add folder","リセット","保存","Save as ...","リサイズ","Crop","幅","高さ","縦横比を保持","はい","いいえ","移除","選択","文字数: %d","単語数: %d","全部","選択: %s","すべて選択","垂直方向の配置","分割","セルの分割（垂直方向）","セルの分割（水平方向）","セルの結合","列を追加","行を追加","削除","境界線",null,"取り消し線","下線","上付き文字","下付き文字","切り取り","Pause","検索","置換","交換","貼付け","選択した内容を貼付け","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","パレット","There are no files","Rename","Enter new name","プレビュー","ダウンロード","貼り付け","お使いのブラウザはクリップボードを使用できません","コピー","copy","角の丸み","全て表示","適用","まだこの分野","を入力してくださいウェブアドレス","デフォルト","白丸","黒丸","四角","見","探前","由来","クラス名を挿入","カスタムサイズ変更のためのAltキーを押します"]
+
+/***/ }),
+
+/***/ 37289:
+/***/ (function(module) {
+
+module.exports["default"] = ["무엇이든 입력하세요","Jodit에 대하여","Jodit Editor",null,"Jodit 사용자 안내서","자세한 도움말이 들어있어요","라이센스에 관해서는 Jodit 웹 사이트를 방문해주세요：","풀 버전 구입하기","© XDSoft.net - Chupurnov Valeriy. 에게 저작권과 모든 권리가 있습니다.","Anchor","새 탭에서 열기","전체 크기로 보기","서식 지우기","글씨 색상","재실행","실행 취소","굵게","기울임","글머리 목록","번호 목록","가운데 정렬","양쪽 정렬","왼쪽 정렬","오른쪽 정렬","수평 구분선 넣기","이미지 넣기","파일 넣기","Youtube/Vimeo 동영상","링크 넣기","글꼴 크기","글꼴","블록 요소 넣기","일반 텍스트","제목 1","제목 2","제목 3","제목 4","인용","코드","붙여 넣기","테이블","들여쓰기 감소","들여쓰기 증가","특수문자 선택","특수문자 입력","페인트 형식","편집모드 변경","마진","위","오른쪽","아래","왼쪽","스타일","클래스","정렬","오른쪽으로","가운데로","왼쪽으로","--지정 안 함--","경로(src)","제목","대체 텍스트(alt)","링크","새 탭에서 열기",null,"파일","고급","이미지 속성","취소","확인","HTML 코드로 감지했어요. 코드인채로 붙여넣을까요?","HTML로 붙여넣기","원본 유지","지우기","텍스트로 넣기","텍스트만 넣기","Word 붙여넣기 감지","Microsoft Word/Excel 문서로 감지했어요. 서식을 유지한채로 붙여넣을까요?","파일 탐색기","목록 불러오기 에러","폴더 불러오기","정말 진행할까요?","디렉토리 이름 입력","디렉토리 생성","이름 입력","이미지 드래그","파일 드래그","혹은 클릭","대체 텍스트","탐색","업로드","배경","텍스트","위","중앙","아래","이전 열에 삽입","다음 열에 삽입","위 행에 삽입","아래 행에 삽입","테이블 삭제","행 삭제","열 삭제","빈 셀","HTML 소스","볼드","이탤릭","브러시","링크","실행 취소","재실행","테이블","이미지","지우개","문단","글꼴 크기","비디오","글꼴","편집기 정보","프린트","밑줄","취소선","들여쓰기","내어쓰기","전체 화면","일반 화면","구분선","글머리 목록","번호 목록","잘라내기","모두 선택","Embed 코드","링크 열기","링크 편집","No follow","링크 제거","사이트 확인","연필","갱신","URL","편집","수평 정렬","필터","변경일 정렬","이름 정렬","크기 정렬","새 폴더","초기화","저장","새로 저장하기 ...","리사이즈","크롭","가로 길이","세로 높이","비율 유지하기","네","아니오","제거","선택","문자수: %d","단어수: %d","모두","선택: %s","모두 선택","수직 정렬","분할","세로 셀 분할","가로 셀 분할","셀 병합","열 추가","행 추가","삭제","외곽선","라이센스: %s","취소선","밑줄","윗첨자","아래첨자","선택 잘라내기","구분자","검색","대체하기","대체","붙여넣기","붙여넣을 내용 선택","외부 이미지는 편집할 수 없어요. 외부 이미지를 다운로드 할까요?","이미지를 무사히 업로드 했어요!","팔레트","파일이 없어요","이름 변경","새 이름 입력","미리보기","다운로드","클립보드 붙여넣기","사용중인 브라우저가 클립보드 접근을 지원하지 않아요.","선택 복사","복사","둥근 테두리","모두 보기","적용","이 항목을 입력해주세요!","웹 URL을 입력해주세요.","기본","원","점","정사각형","찾기","이전 찾기","다음 찾기","className 입력","사용자 지정 크기 조정에 대 한 고도 누르십시오"]
+
+/***/ }),
+
+/***/ 17084:
+/***/ (function(module) {
+
+module.exports["default"] = ["Begin met typen..","Over Jodit","Jodit Editor","Gratis niet-commerciële versie","Jodit gebruikershandleiding","bevat gedetailleerde informatie voor gebruik.","Voor informatie over de licentie, ga naar onze website:","Volledige versie kopen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle rechten voorbehouden.","Anker","Open in nieuwe tab","Editor in volledig scherm openen","Opmaak verwijderen","Vulkleur of tekstkleur aanpassen","Opnieuw","Ongedaan maken","Vet","Cursief","Geordende list invoegen","Ongeordende lijst invoegen","Centreren","Uitlijnen op volledige breedte","Links uitlijnen","Rechts uitlijnen","Horizontale lijn invoegen","Afbeelding invoegen","Bestand invoegen","Youtube/Vimeo video invoegen","Link toevoegen","Tekstgrootte","Lettertype","Format blok invoegen","Normaal","Koptekst 1","Koptekst 2","Koptekst 3","Koptekst 4","Citaat","Code","Invoegen","Tabel invoegen","Inspringing verkleinen","Inspringing vergroten","Symbool selecteren","Symbool invoegen","Opmaak kopieren","Modus veranderen","Marges","Boven","Rechts","Onder","Links","CSS styles","CSS classes","Uitlijning","Rechts","Gecentreerd","Links","--Leeg--","Src","Titel","Alternatieve tekst","Link","Link in nieuwe tab openen","Afbeelding","Bestand","Geavanceerd","Afbeeldingseigenschappen","Annuleren","OK","Deze code lijkt op HTML. Als HTML behouden?","Invoegen als HTML","Origineel behouden","Opschonen","Als tekst invoegen","Als onopgemaakte tekst invoegen","Word-tekst gedetecteerd","De geplakte tekst is afkomstig van een Microsoft Word/Excel document. Wil je de opmaak behouden of opschonen?","Bestandsbrowser","Fout bij het laden van de lijst","Fout bij het laden van de mappenlijst","Weet je het zeker?","Geef de map een naam","Map aanmaken","Type naam","Sleep hier een afbeelding naartoe","Sleep hier een bestand naartoe","of klik","Alternatieve tekst","Bladeren","Uploaden","Achtergrond","Tekst","Boven","Midden","Onder","Kolom invoegen (voor)","Kolom invoegen (na)","Rij invoegen (boven)","Rij invoegen (onder)","Tabel verwijderen","Rij verwijderen","Kolom verwijderen","Cel leegmaken","Broncode","vet","cursief","kwast","link","ongedaan maken","opnieuw","tabel","afbeelding","gum","paragraaf","lettergrootte","video","lettertype","over","afdrukken","onderstreept","doorgestreept","inspringen","minder inspringen","volledige grootte","kleiner maken","horizontale lijn","lijst","genummerde lijst","knip","alles selecteren","Embed code","link openen","link aanpassen","niet volgen","link verwijderen","Recensie","Om te bewerken","Updaten"," URL","Bewerken","Horizontaal uitlijnen","Filteren","Sorteren op wijzigingsdatum","Sorteren op naam","Sorteren op grootte","Map toevoegen","Herstellen","Opslaan","Opslaan als ...","Grootte aanpassen","Bijknippen","Breedte","Hoogte","Verhouding behouden","Ja","Nee","Verwijderen","Selecteren","Tekens: %d","Woorden: %d","Alles","Selecteer: %s","Selecteer alles","Verticaal uitlijnen","Splitsen","Verticaal splitsen","Horizontaal splitsen","Samenvoegen","Kolom toevoegen","Rij toevoegen","Verwijderen","Rand",null,"Doorstrepen","Onderstrepen","Superscript","Subscript","Selectie knippen","Enter","Zoek naar","Vervangen door","Vervangen","Plakken","Kies content om te plakken","Je kunt alleen je eigen afbeeldingen aanpassen. Deze afbeelding downloaden?","De afbeelding is succesvol geüploadet!","Palette","Er zijn geen bestanden in deze map.","Hongaars","Voer een nieuwe naam in","voorvertoning","Download","Plakken van klembord","Uw browser ondersteunt geen directe toegang tot het klembord.","Selectie kopiëren","kopiëren","Border radius","Toon alle","Toepassing","Vul dit veld","Voer een webadres","Standaard","Cirkel","Dot","Quadrate","Zoeken","Vorige Zoeken","Volgende Zoeken","Voeg de klassenaam in","Druk op Alt voor aangepaste grootte"]
+
+/***/ }),
+
+/***/ 96891:
+/***/ (function(module) {
+
+module.exports["default"] = ["Napisz coś","O Jodit","Edytor Jodit",null,"Instrukcja Jodit","zawiera szczegółowe informacje dotyczące użytkowania.","Odwiedź naszą stronę, aby uzyskać więcej informacji na temat licencji:","Zakup pełnej wersji","Copyright © XDSoft.net - Chupurnov Valeriy. Wszystkie prawa zastrzeżone.","Kotwica","Otwórz w nowej zakładce","Otwórz edytor w pełnym rozmiarze","Wyczyść formatowanie","Kolor wypełnienia lub ustaw kolor tekstu","Ponów","Cofnij","Pogrubienie","Kursywa","Wstaw listę wypunktowaną","Wstaw listę numeryczną","Wyśrodkuj","Wyjustuj","Wyrównaj do lewej","Wyrównaj do prawej","Wstaw linię poziomą","Wstaw grafikę","Wstaw plik","Wstaw film Youtube/vimeo","Wstaw link","Rozmiar tekstu","Krój czcionki","Wstaw formatowanie","Normalne","Nagłówek 1","Nagłówek 2","Nagłówek 3","Nagłówek 4","Cytat","Kod","Wstaw","Wstaw tabelę","Zmniejsz wcięcie","Zwiększ wcięcie","Wybierz znak specjalny","Wstaw znak specjalny","Malarz formatów","Zmień tryb","Marginesy","Górny","Prawy","Dolny","Levy","Style CSS","Klasy CSS","Wyrównanie","Prawa","środek","Lewa","brak","Źródło","Tytuł","Tekst alternatywny","Link","Otwórz w nowej zakładce","Grafika","Plik","Zaawansowane","Właściwości grafiki","Anuluj","OK","Twój kod wygląda jak HTML. Zachować HTML?","Wkleić jako HTML?","Oryginalny tekst","Wyczyść","Wstaw jako tekst","Wstaw tylko treść","Wykryto tekst w formacie Word","Wklejany tekst pochodzi z dokumentu Microsoft Word/Excel. Chcesz zachować ten format czy wyczyścić go? ","Przeglądarka plików","Błąd ładowania listy plików","Błąd ładowania folderów","Czy jesteś pewien?","Wprowadź nazwę folderu","Utwórz folder","wprowadź nazwę","Upuść plik graficzny","Upuść plik","lub kliknij tu","Tekst alternatywny","Przeglądaj","Wczytaj","Tło","Treść","Góra","Środek","Dół","Wstaw kolumnę przed","Wstaw kolumnę po","Wstaw wiersz przed","Wstaw wiersz po","Usuń tabelę","Usuń wiersz","Usuń kolumnę","Wyczyść komórkę","HTML","pogrubienie","kursywa","pędzel","link","cofnij","ponów","tabela","grafika","wyczyść","akapit","rozmiar czcionki","wideo","czcionka","O programie","drukuj","podkreślenie","przekreślenie","wcięcie","wycięcie","pełen rozmiar","przytnij","linia pozioma","lista","lista numerowana","wytnij","zaznacz wszystko","Wstaw kod","otwórz link","edytuj link","Atrybut no-follow","Usuń link","szukaj","edytuj","Aktualizuj","URL","Edytuj","Wyrównywanie w poziomie","Filtruj","Sortuj wg zmiany","Sortuj wg nazwy","Sortuj wg rozmiaru","Dodaj folder","wyczyść","zapisz","zapisz jako","Zmień rozmiar","Przytnij","Szerokość","Wysokość","Zachowaj proporcje","Tak","Nie","Usuń","Wybierz","Znaki: %d","Słowa: %d","Wszystko","Wybierz: %s","Wybierz wszystko","Wyrównywanie w pionie","Podziel","Podziel w pionie","Podziel w poziomie","Scal","Dodaj kolumnę","Dodaj wiersz","Usuń","Obramowanie",null,"Przekreślenie","Podkreślenie","indeks górny","index dolny","Wytnij zaznaczenie","Przerwa","Szukaj","Zamień na","Wymienić","Wklej","Wybierz zawartość do wklejenia","Możesz edytować tylko swoje grafiki. Czy chcesz pobrać tą grafikę?","Grafika została pomyślnienie dodana na serwer","Paleta","Brak plików.","zmień nazwę","Wprowadź nową nazwę","podgląd","pobierz","Wklej ze schowka","Twoja przeglądarka nie obsługuje schowka","Kopiuj zaznaczenie","kopiuj","Zaokrąglenie krawędzi","Pokaż wszystkie","Zastosuj","Proszę wypełnić to pole","Proszę, wpisz adres sieci web","Domyślnie","Koło","Punkt","Kwadrat","Znaleźć","Znaleźć Poprzednie","Znajdź Dalej","Wstaw nazwę zajęć","Naciśnij Alt, aby zmienić rozmiar"]
+
+/***/ }),
+
+/***/ 31211:
+/***/ (function(module) {
+
+module.exports["default"] = ["Escreva algo...","Sobre o Jodit","Editor Jodit",null,"Guia de usuário Jodit","contém ajuda detalhada para o uso.","Para informação sobre a licença, por favor visite nosso site:","Compre a versão completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos os direitos reservados.","Link","Abrir em nova aba","Abrir editor em tela cheia","Limpar formatação","Cor de preenchimento ou cor do texto","Refazer","Desfazer","Negrito","Itálico","Inserir lista não ordenada","Inserir lista ordenada","Centralizar","Justificar","Alinhar à Esquerda","Alinhar à Direita","Inserir linha horizontal","Inserir imagem","Inserir arquivo","Inserir vídeo do Youtube/vimeo","Inserir link","Tamanho da letra","Fonte","Inserir bloco","Normal","Cabeçalho 1","Cabeçalho 2","Cabeçalho 3","Cabeçalho 4","Citação","Código","Inserir","Inserir tabela","Diminuir recuo","Aumentar recuo","Selecionar caractere especial","Inserir caractere especial","Copiar formato","Mudar modo","Margens","cima","direta","baixo","esquerda","Estilos CSS","Classes CSS","Alinhamento","Direita","Centro","Esquerda","--Não Estabelecido--","Fonte","Título","Texto Alternativo","Link","Abrir link em nova aba","Imagem","Arquivo","Avançado","Propriedades da imagem","Cancelar","Ok","Seu código é similar ao HTML. Manter como HTML?","Colar como HTML?","Manter","Limpar","Inserir como Texto","Inserir somente o Texto","Colado do Word Detectado","O conteúdo colado veio de um documento Microsoft Word/Excel. Você deseja manter o formato ou limpa-lo?","Procurar arquivo","Erro ao carregar a lista","Erro ao carregar as pastas","Você tem certeza?","Escreva o nome da pasta","Criar pasta","Escreva seu nome","Soltar imagem","Soltar arquivo","ou clique","Texto alternativo","Explorar","Upload","Fundo","Texto","Cima","Meio","Baixo","Inserir coluna antes","Inserir coluna depois","Inserir linha acima","Inserir linha abaixo","Excluir tabela","Excluir linha","Excluir coluna","Limpar célula","HTML","negrito","itálico","pincel","link","desfazer","refazer","tabela","imagem","apagar","parágrafo","tamanho da letra","vídeo","fonte","Sobre de","Imprimir","sublinhar","tachado","recuar","diminuir recuo","Tamanho completo","diminuir","linha horizontal","lista não ordenada","lista ordenada","Cortar","Selecionar tudo","Incluir código","Abrir link","Editar link","Não siga","Remover link","Visualizar","Editar","Atualizar","URL","Editar","Alinhamento horizontal","filtrar","Ordenar por modificação","Ordenar por nome","Ordenar por tamanho","Adicionar pasta","Resetar","Salvar","Salvar como...","Redimensionar","Recortar","Largura","Altura","Manter a proporção","Sim","Não","Remover","Selecionar","Caracteres: %d","Palavras: %d","Tudo","Selecionar: %s","Selecionar tudo","Alinhamento vertical","Dividir","Dividir vertical","Dividir horizontal","Mesclar","Adicionar coluna","Adicionar linha","Excluir","Borda",null,"Tachado","Sublinhar","sobrescrito","subscrito","Cortar seleção","Pausa","Procurar por","Substituir com","Substituir","Colar","Escolher conteúdo para colar","Você só pode editar suas próprias imagens. Baixar essa imagem pro servidor?","A imagem foi enviada com sucesso para o servidor!","Palette","Não há arquivos nesse diretório.","Húngara","Digite um novo nome","preview","Baixar","Colar da área de transferência","O seu navegador não oferece suporte a acesso direto para a área de transferência.","Selecção de cópia","cópia","Border radius","Mostrar todos os","Aplicar","Por favor, preencha este campo","Por favor introduza um endereço web","Padrão","Círculo","Ponto","Quadro","Encontrar","Encontrar Anteriores","Localizar Próxima","Insira o nome da classe","Pressione Alt para redimensionamento personalizado"]
+
+/***/ }),
+
+/***/ 31109:
+/***/ (function(module) {
+
+module.exports["default"] = ["Напишите что-либо","О Jodit","Редактор Jodit",null,"Jodit Руководство пользователя","содержит детальную информацию по использованию","Для получения сведений о лицензии , пожалуйста, перейдите на наш сайт:","Купить полную версию","Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.","Анкор","Открывать ссылку в новой вкладке","Открыть редактор в полном размере","Очистить форматирование","Цвет заливки или цвет текста","Повтор","Отмена","Жирный","Наклонный","Вставка маркированного списка","Вставить нумерованный список","Выровнять по центру","Выровнять по ширине","Выровнять по левому краю","Выровнять по правому краю","Вставить горизонтальную линию","Вставить изображение","Вставить файл","Вставьте видео","Вставить ссылку","Размер шрифта","Шрифт","Вставить блочный элемент","Нормальный текст","Заголовок 1","Заголовок 2","Заголовок 3","Заголовок 4","Цитата","Код","Вставить","Вставить таблицу","Уменьшить отступ","Увеличить отступ","Выберите специальный символ","Вставить специальный символ","Формат краски","Источник","Отступы","сверху","справа","снизу","слева","Стили","Классы","Выравнивание","По правому краю","По центру","По левому краю","--не устанавливать--","src","Заголовок","Альтернативный текст (alt)","Ссылка","Открывать ссылку в новом окне",null,"Файл","Расширенные","Свойства изображения","Отмена","Ок","Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?","Вставить как HTML?","Сохранить оригинал","Почистить","Вставить как текст","Вставить только текст","Возможно это фрагмент Word или Excel","Контент который вы вставляете поступает из документа Microsoft Word / Excel. Вы хотите сохранить формат или очистить его?","Браузер файлов","Ошибка при загрузке списка изображений","Ошибка при загрузке списка директорий","Вы уверены?","Введите название директории","Создать директорию","введите название","Перетащите сюда изображение","Перетащите сюда файл","или нажмите","Альтернативный текст","Сервер","Загрузка","Фон","Текст"," К верху","По середине","К низу","Вставить столбец до","Вставить столбец после","Вставить ряд выше","Вставить ряд ниже","Удалить таблицу","Удалять ряд","Удалить столбец","Очистить ячейку","HTML","жирный","курсив","заливка","ссылка","отменить","повторить","таблица","Изображение","очистить","параграф","размер шрифта","видео","шрифт","о редакторе","печать","подчеркнутый","перечеркнутый","отступ","выступ","во весь экран","обычный размер","линия","Список","Нумерованный список","Вырезать","Выделить все","Код","Открыть ссылку","Редактировать ссылку","Атрибут nofollow","Убрать ссылку","Просмотр","Редактировать","Обновить","URL","Редактировать","Горизонтальное выравнивание","Фильтр","По изменению","По имени","По размеру","Добавить папку","Восстановить","Сохранить","Сохранить как","Изменить размер","Обрезать размер","Ширина","Высота","Сохранять пропорции","Да","Нет","Удалить","Выделить","Символов: %d","Слов: %d","Выделить все","Выделить: %s","Выделить все","Вертикальное выравнивание","Разделить","Разделить по вертикали","Разделить по горизонтали","Объединить в одну","Добавить столбец","Добавить строку","Удалить","Рамка","Лицензия: %s","Перечеркнуть","Подчеркивание","верхний индекс","индекс","Вырезать","Разделитель","Найти","Заменить на","Заменить","Вставить","Выбрать контент для вставки","Вы можете редактировать только свои собственные изображения. Загрузить это изображение на ваш сервер?","Изображение успешно загружено на сервер!","палитра","В данном каталоге нет файлов","Переименовать","Введите новое имя","Предпросмотр","Скачать","Вставить из буфера обмена","Ваш браузер не поддерживает прямой доступ к буферу обмена.","Скопировать выделенное","копия","Радиус границы","Показать все","Применить","Пожалуйста, заполните это поле","Пожалуйста, введите веб-адрес","По умолчанию","Круг","Точка","Квадрат","Найти","Найти Предыдущие","Найти Далее","Вставить название класса","Нажмите Alt для изменения пользовательского размера"]
+
+/***/ }),
+
+/***/ 79375:
+/***/ (function(module) {
+
+module.exports["default"] = ["Bir şeyler yaz","Jodit Hakkında","Jodit Editor",null,"Jodit Kullanım Kılavuzu","kullanım için detaylı bilgiler içerir","Lisans hakkında bilgi için lütfen web sitemize gidin:","Tam versiyonunu satın al","Copyright © XDSoft.net - Chupurnov Valeriy. Tüm hakları saklıdır.","Bağlantı","Yeni sekmede aç","Editörü tam ekranda aç","Stili temizle","Renk doldur veya yazı rengi seç","Yinele","Geri Al","Kalın","İtalik","Sırasız Liste Ekle","Sıralı Liste Ekle","Ortala","Kenarlara Yasla","Sola Yasla","Sağa Yasla","Yatay Çizgi Ekle","Resim Ekle","Dosya Ekle","Youtube/Vimeo Videosu Ekle","Bağlantı Ekle","Font Boyutu","Font Ailesi","Blok Ekle","Normal","Başlık 1","Başlık 2","Başlık 3","Başlık 4","Alıntı","Kod","Ekle","Tablo Ekle","Girintiyi Azalt","Girintiyi Arttır","Özel Karakter Seç","Özel Karakter Ekle","Resim Biçimi","Mod Değiştir","Boşluklar","Üst","Sağ","Alt","Sol","CSS Stilleri","CSS Sınıfları","Hizalama","Sağ","Ortalı","Sol","Belirsiz","Kaynak","Başlık","Alternatif Yazı","Link","Bağlantıyı yeni sekmede aç","Resim","Dosya","Gelişmiş","Resim özellikleri","İptal","Tamam","Kodunuz HTML koduna benziyor. HTML olarak devam etmek ister misiniz?","HTML olarak yapıştır","Sakla","Temizle","Yazı olarak ekle","Sadece yazıyı ekle","Word biçiminde yapıştırma algılandı","Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder löschen?","Dosya Listeleyici","Liste yüklenirken hata oluştu","Klasörler yüklenirken hata oluştur","Emin misiniz?","Dizin yolu giriniz","Dizin oluştur","İsim yaz","Resim bırak","Dosya bırak","veya tıkla","Alternatif yazı","Gözat","Yükle","Arka plan","Yazı","Üst","Orta","Aşağı","Öncesine kolon ekle","Sonrasına kolon ekle","Üstüne satır ekle","Altına satır ekle","Tabloyu sil","Satırı sil","Kolonu sil","Hücreyi temizle","Kaynak","Kalın","italik","Fırça","Bağlantı","Geri al","Yinele","Tablo","Resim","Silgi","Paragraf","Font boyutu","Video","Font","Hakkında","Yazdır","Alt çizgi","Üstü çizili","Girinti","Çıkıntı","Tam ekran","Küçült","Ayraç","Sırasız liste","Sıralı liste","Kes","Tümünü seç","Kod ekle","Bağlantıyı aç","Bağlantıyı düzenle","Nofollow özelliği","Bağlantıyı kaldır","Yorumu","Düzenlemek için","Güncelle","URL","Düzenle","Yatay hizala","Filtre","Değişime göre sırala","İsme göre sırala","Boyuta göre sırala","Klasör ekle","Sıfırla","Kaydet","Farklı kaydet","Boyutlandır","Kırp","Genişlik","Yükseklik","En boy oranını koru","Evet","Hayır","Sil","Seç","Harfler: %d","Kelimeler: %d","Tümü","Seç: %s","Tümünü seç","Dikey hizala","Ayır","Dikey ayır","Yatay ayır","Birleştir","Kolon ekle","Satır ekle","Sil","Kenarlık",null,"Üstü çizili","Alt çizgi","Üst yazı","Alt yazı","Seçilimi kes","Satır sonu","Ara","Şununla değiştir","Değiştir","Yapıştır","Yapıştırılacak içerik seç","Sadece kendi resimlerinizi düzenleyebilirsiniz. Bu görseli kendi hostunuza indirmek ister misiniz?","Görsel başarıyla hostunuza yüklendi","Palet","Bu dizinde dosya yok","Yeniden isimlendir","Yeni isim girin","Ön izleme","İndir","Panodan yapıştır ","Tarayıcınız panoya doğrudan erişimi desteklemiyor.","Seçimi kopyala","Kopyala","Sınır yarıçapı","Tümünü Göster","Uygula","Lütfen bu alanı doldurun","Lütfen bir web adresi girin","Varsayılan","Daire","Nokta","Kare","Bul","Öncekini Bul","Sonrakini Bul","Sınıf adı girin","Özel yeniden boyutlandırma için Alt tuşuna basın"]
+
+/***/ }),
+
+/***/ 21042:
+/***/ (function(module) {
+
+module.exports["default"] = ["输入一些内容","关于Jodit","Jodit Editor","Free Non-commercial Version","开发者指南","使用帮助","有关许可证的信息，请访问我们的网站：","购买完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. 版权所有","Anchor","在新窗口打开","全屏编辑","清除样式","颜色","重做","撤销","粗体","斜体","符号列表","编号","居中","对齐文本","左对齐","右对齐","分割线","图片","文件","视频","链接","字号","字体","格式块","默认","标题1","标题2","标题3","标题4","引用","代码","插入","表格","减少缩进","增加缩进","选择特殊符号","特殊符号","格式复制","改变模式","外边距（Margins）","top","right","bottom","left","样式","Classes","对齐方式","居右","居中","居左","无","Src","Title","Alternative","Link","在新窗口打开链接","图片","file","高级","图片属性","取消","确定","你粘贴的文本是一段html代码，是否保留源格式","html粘贴","保留源格式","匹配目标格式","把html代码视为普通文本","只保留文本","文本粘贴","正在粘贴 Word/Excel 的文本，是否保留源格式？","文件管理","加载list错误","加载folders错误","你确定吗？","输入路径","创建路径","type name","拖动图片到此","拖动文件到此","或点击","Alternative text","浏览","上传","背景色","文字","顶部","中间","底部","在之前插入列","在之后插入列","在之前插入行","在之后插入行","删除表格","删除行","删除列","清除内容","源码","粗体","斜体","颜色","链接","撤销","重做","表格","图片","橡皮擦","段落","字号","视频","字体","关于","打印","下划线","上出现","增加缩进","减少缩进","全屏","收缩","分割线","无序列表","顺序列表","剪切","全选","嵌入代码","打开链接","编辑链接","No follow","取消链接","预览","铅笔","更新","URL","编辑","水平对齐","筛选","修改时间排序","名称排序","大小排序","新建文件夹","重置","保存","保存为","调整大小","剪切","宽","高","保持长宽比","是","不","移除","选择","字符数: %d","单词数: %d","全部","选择: %s","全选","垂直对齐","拆分","垂直拆分","水平拆分","合并","添加列","添加行","删除","边框",null,"删除线","下划线","上标","下标","剪切","Break","查找","替换为","替换","粘贴","选择内容并粘贴","你只能编辑你自己的图片。Download this image on the host?","图片上传成功","调色板","此目录中沒有文件。","重命名","输入新名称","预览","下载","粘贴从剪贴板","你浏览器不支持直接访问的剪贴板。","复制选中内容","复制","边界半径","显示所有","应用","请填写这个字段","请输入一个网址","默认","圆圈","点","方形","搜索","查找上一个","查找下一个","插入班级名称","按Alt自定义调整大小"]
+
+/***/ }),
+
+/***/ 73895:
+/***/ (function(module) {
+
+module.exports["default"] = ["輸入一些內容","關於Jodit","Jodit Editor",null,"開發者指南","使用幫助","有關許可證的信息，請訪問我們的網站：","購買完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打開","全屏編輯","清除樣式","顏色","重做","撤銷","粗體","斜體","符號列表","編號","居中","對齊文本","左對齊","右對齊","分割線","圖片","文件","youtube/vimeo 影片","鏈接","字號","字體","格式塊","文本","標題1","標題2","標題3","標題4","引用","代碼","插入","表格","減少縮進","增加縮進","選擇特殊符號","特殊符號","格式複製","改變模式","外邊距（Margins）","top","right","bottom","left","樣式","Classes","對齊方式","居右","居中","居左","無","Src","Title","替代","Link","在新窗口打開鏈接","圖片","file","高級","圖片屬性","取消","確定","你黏貼的文本是一段html代碼，是否保留源格式","html黏貼","保留源格式","匹配目標格式","把html代碼視為普通文本","只保留文本","文本黏貼","正在黏貼 Word/Excel 的文本，是否保留源格式？","文件管理","加載list錯誤","加載folders錯誤","你確定嗎？","輸入路徑","創建路徑","type name","拖動圖片到此","拖動文件到此","或點擊","替代文字","瀏覽","上傳","背景色","文字","頂部","中間","底部","在之前插入列","在之後插入列","在之前插入行","在之後插入行","刪除表格","刪除行","刪除列","清除內容","源碼","粗體","斜體","顏色","鏈接","撤銷","重做","表格","圖片","橡皮擦","段落","字號","影片","字體","關於","打印","下劃線","上出現","增加縮進","減少縮進","全屏","收縮","分割線","無序列表","順序列表","剪切","全選","嵌入代碼","打開鏈接","編輯鏈接","No follow","取消連結","回顧","鉛筆","更新","URL",null,"水平對齊","篩選","修改時間排序","名稱排序","大小排序","新建文件夾","重置","保存","保存為","調整大小","Crop","寬","高","保存長寬比","是","不","移除","選擇","字符數: %d","單詞數: %d","全部","選擇: %s","全選","垂直對齊","拆分","垂直拆分","水平拆分","合併","添加列","添加行","刪除","邊框",null,"刪除線","下劃線","上標","下標","剪切","Pause","查找","替換為","แทนที่","黏貼","選擇內容並黏貼","你只能編輯你自己的圖片。是否下載此圖片到本地?","圖片上傳成功","調色板","此目錄中沒有文件。","重命名","輸入新名稱","預覽","下載","從剪貼板貼上","瀏覽器無法存取剪贴板。","複製已選取項目","複製","邊框圓角","顯示所有","應用","ได้โปรดกรอกช่องข้อมูลนี้","โปรดเติมที่อยู่บนเว็บ","ค่าปริยาย","วงกลม","จุด","Quadrate","ค้นหา","ค้นหาก่อนหน้านี้","ค้นหาถัดไป","ใส่ชื่อคลาส","กดอัลท์สำหรับการปรับขนาดที่กำหนดเอง"]
+
+/***/ }),
+
+/***/ 3610:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
+
+/***/ }),
+
+/***/ 56170:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
+
+/***/ }),
+
+/***/ 95331:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
+
+/***/ }),
+
+/***/ 84279:
+/***/ (function(module) {
+
+module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg>"
+
+/***/ }),
+
+/***/ 11257:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
+
+/***/ }),
+
+/***/ 25141:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/> </svg>"
+
+/***/ }),
+
+/***/ 24557:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
+
+/***/ }),
+
+/***/ 10859:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
+
+/***/ }),
+
+/***/ 9813:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
+
+/***/ }),
+
+/***/ 93395:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
+
+/***/ }),
+
+/***/ 98213:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
+
+/***/ }),
+
+/***/ 20026:
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M36 4h-24c-2.21 0-4 1.79-4 4v32c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4v-32c0-2.21-1.79-4-4-4zm-24 4h10v16l-5-3-5 3v-16z\"/> </svg>"
+
+/***/ }),
+
+/***/ 66911:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
+
+/***/ }),
+
+/***/ 50018:
+/***/ (function(module) {
+
+module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
+
+/***/ }),
+
+/***/ 99738:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
+
+/***/ }),
+
+/***/ 9185:
+/***/ (function(module) {
+
+module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
+
+/***/ }),
+
+/***/ 8619:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
+
+/***/ }),
+
+/***/ 73894:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/> </svg>"
+
+/***/ }),
+
+/***/ 83301:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
+
+/***/ }),
+
+/***/ 84142:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
+
+/***/ }),
+
+/***/ 57292:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
+
+/***/ }),
+
+/***/ 18019:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
+
+/***/ }),
+
+/***/ 45146:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
+
+/***/ }),
+
+/***/ 53576:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
+
+/***/ }),
+
+/***/ 14655:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
+
+/***/ }),
+
+/***/ 53477:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
+
+/***/ }),
+
+/***/ 90053:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+
+/***/ }),
+
+/***/ 72230:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+
+/***/ }),
+
+/***/ 78321:
+/***/ (function(module) {
+
+module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </svg>"
+
+/***/ }),
+
+/***/ 77654:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
+
+/***/ }),
+
+/***/ 43371:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
+
+/***/ }),
+
+/***/ 44563:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+
+/***/ }),
+
+/***/ 53183:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
+
+/***/ }),
+
+/***/ 6102:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
+
+/***/ }),
+
+/***/ 52242:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
+
+/***/ }),
+
+/***/ 87498:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
+
+/***/ }),
+
+/***/ 7986:
+/***/ (function(module) {
+
+module.exports = "<svg fill=\"none\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.09668 6.99707H7.17358L4.17358 3.99707L1.17358 6.99707H3.09668V17.0031H1.15881L4.15881 20.0031L7.15881 17.0031H5.09668V6.99707Z\"/> <path d=\"M22.8412 7H8.84119V5H22.8412V7Z\"/> <path d=\"M22.8412 11H8.84119V9H22.8412V11Z\"/> <path d=\"M8.84119 15H22.8412V13H8.84119V15Z\"/> <path d=\"M22.8412 19H8.84119V17H22.8412V19Z\"/> </svg>"
+
+/***/ }),
+
+/***/ 23075:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
+
+/***/ }),
+
+/***/ 10655:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
+
+/***/ }),
+
+/***/ 15476:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+
+/***/ }),
+
+/***/ 59403:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
+
+/***/ }),
+
+/***/ 22860:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
+
+/***/ }),
+
+/***/ 95600:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
+
+/***/ }),
+
+/***/ 76214:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
+
+/***/ }),
+
+/***/ 41197:
+/***/ (function(module) {
+
+module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
+
+/***/ }),
+
+/***/ 9342:
+/***/ (function(module) {
+
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
 
 /***/ }),
 
@@ -33,24 +481,24 @@ module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\
 
 /***/ }),
 
-/***/ 96815:
+/***/ 43158:
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 1792 1792\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M1088 1256v240q0 16-12 28t-28 12h-240q-16 0-28-12t-12-28v-240q0-16 12-28t28-12h240q16 0 28 12t12 28zm316-600q0 54-15.5 101t-35 76.5-55 59.5-57.5 43.5-61 35.5q-41 23-68.5 65t-27.5 67q0 17-12 32.5t-28 15.5h-240q-15 0-25.5-18.5t-10.5-37.5v-45q0-83 65-156.5t143-108.5q59-27 84-56t25-76q0-42-46.5-74t-107.5-32q-65 0-108 29-35 25-107 115-13 16-31 16-12 0-25-8l-164-125q-13-10-15.5-25t5.5-28q160-266 464-266 80 0 161 31t146 83 106 127.5 41 158.5z\"/> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
 
 /***/ }),
 
-/***/ 5342:
+/***/ 51716:
 /***/ (function(module) {
 
-module.exports = "<svg viewBox=\"0 0 18.151 18.151\" xmlns=\"http://www.w3.org/2000/svg\"> <g> <path stroke-width=\"0\" d=\"M6.237,16.546H3.649V1.604h5.916v5.728c0.474-0.122,0.968-0.194,1.479-0.194 c0.042,0,0.083,0.006,0.125,0.006V0H2.044v18.15h5.934C7.295,17.736,6.704,17.19,6.237,16.546z\"/> <path stroke-width=\"0\" d=\"M11.169,8.275c-2.723,0-4.938,2.215-4.938,4.938s2.215,4.938,4.938,4.938s4.938-2.215,4.938-4.938 S13.892,8.275,11.169,8.275z M11.169,16.81c-1.983,0-3.598-1.612-3.598-3.598c0-1.983,1.614-3.597,3.598-3.597 s3.597,1.613,3.597,3.597C14.766,15.198,13.153,16.81,11.169,16.81z\"/> <polygon stroke-width=\"0\" points=\"11.792,11.073 10.502,11.073 10.502,12.578 9.03,12.578 9.03,13.868 10.502,13.868 10.502,15.352 11.792,15.352 11.792,13.868 13.309,13.868 13.309,12.578 11.792,12.578 \"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
 
 /***/ }),
 
-/***/ 23157:
+/***/ 49222:
 /***/ (function(module) {
 
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 432 432\"> <g> <polygon points=\"203.688,96 0,96 0,144 155.688,144 \"/> <polygon points=\"155.719,288 0,288 0,336 203.719,336 \"/> <path d=\"M97.844,230.125c-3.701-3.703-5.856-8.906-5.856-14.141s2.154-10.438,5.856-14.141l9.844-9.844H0v48h107.719 L97.844,230.125z\"/> <polygon points=\"232,176 232,96 112,216 232,336 232,256 432,256 432,176\"/> </g> </svg>"
+module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/> </svg>"
 
 /***/ }),
 
@@ -82,45 +530,10 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 
 /***/ }),
 
-/***/ 26752:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1411 541l-355 355 355 355 144-144q29-31 70-14 39 17 39 59v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l144-144-355-355-355 355 144 144q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l144 144 355-355-355-355-144 144q-19 19-45 19-12 0-24-5-40-17-40-59v-448q0-26 19-45t45-19h448q42 0 59 40 17 39-14 69l-144 144 355 355 355-355-144-144q-31-30-14-69 17-40 59-40h448q26 0 45 19t19 45v448q0 42-39 59-13 5-25 5-26 0-45-19z\"/> </svg>"
-
-/***/ }),
-
-/***/ 17114:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 896q0 26-19 45l-256 256q-19 19-45 19t-45-19-19-45v-128h-1024v128q0 26-19 45t-45 19-45-19l-256-256q-19-19-19-45t19-45l256-256q19-19 45-19t45 19 19 45v128h1024v-128q0-26 19-45t45-19 45 19l256 256q19 19 19 45z\"/> </svg>"
-
-/***/ }),
-
-/***/ 90995:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1596 1385q0 117-79 196t-196 79q-135 0-235-100l-777-776q-113-115-113-271 0-159 110-270t269-111q158 0 273 113l605 606q10 10 10 22 0 16-30.5 46.5t-46.5 30.5q-13 0-23-10l-606-607q-79-77-181-77-106 0-179 75t-73 181q0 105 76 181l776 777q63 63 145 63 64 0 106-42t42-106q0-82-63-145l-581-581q-26-24-60-24-29 0-48 19t-19 48q0 32 25 59l410 410q10 10 10 22 0 16-31 47t-47 31q-12 0-22-10l-410-410q-63-61-63-149 0-82 57-139t139-57q88 0 149 63l581 581q100 98 100 235z\"/> </svg>"
-
-/***/ }),
-
 /***/ 10856:
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z\"/> </svg>"
-
-/***/ }),
-
-/***/ 81073:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M747 1521q74 32 140 32 376 0 376-335 0-114-41-180-27-44-61.5-74t-67.5-46.5-80.5-25-84-10.5-94.5-2q-73 0-101 10 0 53-.5 159t-.5 158q0 8-1 67.5t-.5 96.5 4.5 83.5 12 66.5zm-14-746q42 7 109 7 82 0 143-13t110-44.5 74.5-89.5 25.5-142q0-70-29-122.5t-79-82-108-43.5-124-14q-50 0-130 13 0 50 4 151t4 152q0 27-.5 80t-.5 79q0 46 1 69zm-541 889l2-94q15-4 85-16t106-27q7-12 12.5-27t8.5-33.5 5.5-32.5 3-37.5.5-34v-65.5q0-982-22-1025-4-8-22-14.5t-44.5-11-49.5-7-48.5-4.5-30.5-3l-4-83q98-2 340-11.5t373-9.5q23 0 68.5.5t67.5.5q70 0 136.5 13t128.5 42 108 71 74 104.5 28 137.5q0 52-16.5 95.5t-39 72-64.5 57.5-73 45-84 40q154 35 256.5 134t102.5 248q0 100-35 179.5t-93.5 130.5-138 85.5-163.5 48.5-176 14q-44 0-132-3t-132-3q-106 0-307 11t-231 12z\"/> </svg>"
-
-/***/ }),
-
-/***/ 98918:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 1152q0-36-20-69-1-1-15.5-22.5t-25.5-38-25-44-21-50.5q-4-16-21-16t-21 16q-7 23-21 50.5t-25 44-25.5 38-15.5 22.5q-20 33-20 69 0 53 37.5 90.5t90.5 37.5 90.5-37.5 37.5-90.5zm512-128q0 212-150 362t-362 150-362-150-150-362q0-145 81-275 6-9 62.5-90.5t101-151 99.5-178 83-201.5q9-30 34-47t51-17 51.5 17 33.5 47q28 93 83 201.5t99.5 178 101 151 62.5 90.5q81 127 81 275z\"/> </svg>"
 
 /***/ }),
 
@@ -138,20 +551,6 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 
 /***/ }),
 
-/***/ 74561:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
-
-/***/ }),
-
-/***/ 19442:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M813 1299l614-614q19-19 19-45t-19-45l-102-102q-19-19-45-19t-45 19l-467 467-211-211q-19-19-45-19t-45 19l-102 102q-19 19-19 45t19 45l358 358q19 19 45 19t45-19zm851-883v960q0 119-84.5 203.5t-203.5 84.5h-960q-119 0-203.5-84.5t-84.5-203.5v-960q0-119 84.5-203.5t203.5-84.5h960q119 0 203.5 84.5t84.5 203.5z\"/></svg>"
-
-/***/ }),
-
 /***/ 9370:
 /***/ (function(module) {
 
@@ -166,59 +565,10 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 10 10\">
 
 /***/ }),
 
-/***/ 14731:
-/***/ (function(module) {
-
-module.exports = "<svg viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M24.89,6.61H22.31V4.47A2.47,2.47,0,0,0,19.84,2H6.78A2.47,2.47,0,0,0,4.31,4.47V22.92a2.47,2.47,0,0,0,2.47,2.47H9.69V27.2a2.8,2.8,0,0,0,2.8,2.8h12.4a2.8,2.8,0,0,0,2.8-2.8V9.41A2.8,2.8,0,0,0,24.89,6.61ZM6.78,23.52a.61.61,0,0,1-.61-.6V4.47a.61.61,0,0,1,.61-.6H19.84a.61.61,0,0,1,.61.6V6.61h-8a2.8,2.8,0,0,0-2.8,2.8V23.52Zm19,3.68a.94.94,0,0,1-.94.93H12.49a.94.94,0,0,1-.94-.93V9.41a.94.94,0,0,1,.94-.93h12.4a.94.94,0,0,1,.94.93Z\"/> <path d=\"M23.49,13.53h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,17.37h-9.6a.94.94,0,1,0,0,1.87h9.6a.94.94,0,1,0,0-1.87Z\"/> <path d=\"M23.49,21.22h-9.6a.93.93,0,1,0,0,1.86h9.6a.93.93,0,1,0,0-1.86Z\"/> </svg>"
-
-/***/ }),
-
-/***/ 76488:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 16 16\"> <path stroke-width=\"0\" d=\"M16 9v-6h-3v-1c0-0.55-0.45-1-1-1h-11c-0.55 0-1 0.45-1 1v3c0 0.55 0.45 1 1 1h11c0.55 0 1-0.45 1-1v-1h2v4h-9v2h-0.5c-0.276 0-0.5 0.224-0.5 0.5v5c0 0.276 0.224 0.5 0.5 0.5h2c0.276 0 0.5-0.224 0.5-0.5v-5c0-0.276-0.224-0.5-0.5-0.5h-0.5v-1h9zM12 3h-11v-1h11v1z\"/> </svg>"
-
-/***/ }),
-
-/***/ 61557:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M621 1280h595v-595zm-45-45l595-595h-595v595zm1152 77v192q0 14-9 23t-23 9h-224v224q0 14-9 23t-23 9h-192q-14 0-23-9t-9-23v-224h-864q-14 0-23-9t-9-23v-864h-224q-14 0-23-9t-9-23v-192q0-14 9-23t23-9h224v-224q0-14 9-23t23-9h192q14 0 23 9t9 23v224h851l246-247q10-9 23-9t23 9q9 10 9 23t-9 23l-247 246v851h224q14 0 23 9t9 23z\"/> </svg>"
-
-/***/ }),
-
-/***/ 33910:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M960 896q26 0 45 19t19 45-19 45-45 19-45-19-19-45 19-45 45-19zm300 64l507 398q28 20 25 56-5 35-35 51l-128 64q-13 7-29 7-17 0-31-8l-690-387-110 66q-8 4-12 5 14 49 10 97-7 77-56 147.5t-132 123.5q-132 84-277 84-136 0-222-78-90-84-79-207 7-76 56-147t131-124q132-84 278-84 83 0 151 31 9-13 22-22l122-73-122-73q-13-9-22-22-68 31-151 31-146 0-278-84-82-53-131-124t-56-147q-5-59 15.5-113t63.5-93q85-79 222-79 145 0 277 84 83 52 132 123t56 148q4 48-10 97 4 1 12 5l110 66 690-387q14-8 31-8 16 0 29 7l128 64q30 16 35 51 3 36-25 56zm-681-260q46-42 21-108t-106-117q-92-59-192-59-74 0-113 36-46 42-21 108t106 117q92 59 192 59 74 0 113-36zm-85 745q81-51 106-117t-21-108q-39-36-113-36-100 0-192 59-81 51-106 117t21 108q39 36 113 36 100 0 192-59zm178-613l96 58v-11q0-36 33-56l14-8-79-47-26 26q-3 3-10 11t-12 12q-2 2-4 3.5t-3 2.5zm224 224l96 32 736-576-128-64-768 431v113l-160 96 9 8q2 2 7 6 4 4 11 12t11 12l26 26zm704 416l128-64-520-408-177 138q-2 3-13 7z\"/> </svg>"
-
-/***/ }),
-
-/***/ 39845:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
-
-/***/ }),
-
 /***/ 608:
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\" > <circle cx=\"12\" cy=\"12\" r=\"2.2\"/> <circle cx=\"12\" cy=\"5\" r=\"2.2\"/> <circle cx=\"12\" cy=\"19\" r=\"2.2\"/> </svg>"
-
-/***/ }),
-
-/***/ 10558:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 128 128\" xml:space=\"preserve\"> <polygon points=\"112.4560547,23.3203125 112.4560547,75.8154297 31.4853516,75.8154297 31.4853516,61.953125 16.0131836,72.6357422 0.5410156,83.3164063 16.0131836,93.9990234 31.4853516,104.6796875 31.4853516,90.8183594 112.4560547,90.8183594 112.4560547,90.8339844 127.4589844,90.8339844 127.4589844,23.3203125\"/> </svg>"
-
-/***/ }),
-
-/***/ 99162:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z\"/> </svg>"
 
 /***/ }),
 
@@ -243,66 +593,10 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 
 /***/ }),
 
-/***/ 31310:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M789 559l-170 450q33 0 136.5 2t160.5 2q19 0 57-2-87-253-184-452zm-725 1105l2-79q23-7 56-12.5t57-10.5 49.5-14.5 44.5-29 31-50.5l237-616 280-724h128q8 14 11 21l205 480q33 78 106 257.5t114 274.5q15 34 58 144.5t72 168.5q20 45 35 57 19 15 88 29.5t84 20.5q6 38 6 57 0 4-.5 13t-.5 13q-63 0-190-8t-191-8q-76 0-215 7t-178 8q0-43 4-78l131-28q1 0 12.5-2.5t15.5-3.5 14.5-4.5 15-6.5 11-8 9-11 2.5-14q0-16-31-96.5t-72-177.5-42-100l-450-2q-26 58-76.5 195.5t-50.5 162.5q0 22 14 37.5t43.5 24.5 48.5 13.5 57 8.5 41 4q1 19 1 58 0 9-2 27-58 0-174.5-10t-174.5-10q-8 0-26.5 4t-21.5 4q-80 14-188 14z\"/> </svg>"
-
-/***/ }),
-
-/***/ 20516:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1744 1408q33 0 42 18.5t-11 44.5l-126 162q-20 26-49 26t-49-26l-126-162q-20-26-11-44.5t42-18.5h80v-1024h-80q-33 0-42-18.5t11-44.5l126-162q20-26 49-26t49 26l126 162q20 26 11 44.5t-42 18.5h-80v1024h80zm-1663-1279l54 27q12 5 211 5 44 0 132-2t132-2q36 0 107.5.5t107.5.5h293q6 0 21 .5t20.5 0 16-3 17.5-9 15-17.5l42-1q4 0 14 .5t14 .5q2 112 2 336 0 80-5 109-39 14-68 18-25-44-54-128-3-9-11-48t-14.5-73.5-7.5-35.5q-6-8-12-12.5t-15.5-6-13-2.5-18-.5-16.5.5q-17 0-66.5-.5t-74.5-.5-64 2-71 6q-9 81-8 136 0 94 2 388t2 455q0 16-2.5 71.5t0 91.5 12.5 69q40 21 124 42.5t120 37.5q5 40 5 50 0 14-3 29l-34 1q-76 2-218-8t-207-10q-50 0-151 9t-152 9q-3-51-3-52v-9q17-27 61.5-43t98.5-29 78-27q19-42 19-383 0-101-3-303t-3-303v-117q0-2 .5-15.5t.5-25-1-25.5-3-24-5-14q-11-12-162-12-33 0-93 12t-80 26q-19 13-34 72.5t-31.5 111-42.5 53.5q-42-26-56-44v-383z\"/> </svg>"
-
-/***/ }),
-
-/***/ 64738:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <path stroke-width=\"0\" d=\"M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z\"/> </svg>"
-
-/***/ }),
-
-/***/ 23794:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1600 736v192q0 40-28 68t-68 28h-1216q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h1216q40 0 68 28t28 68z\"/> </svg>"
-
-/***/ }),
-
-/***/ 93515:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 576q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1024 384v448h-1408v-192l320-320 160 160 512-512zm96-704h-1600q-13 0-22.5 9.5t-9.5 22.5v1216q0 13 9.5 22.5t22.5 9.5h1600q13 0 22.5-9.5t9.5-22.5v-1216q0-13-9.5-22.5t-22.5-9.5zm160 32v1216q0 66-47 113t-113 47h-1600q-66 0-113-47t-47-113v-1216q0-66 47-113t113-47h1600q66 0 113 47t47 113z\"/> </svg>"
-
-/***/ }),
-
-/***/ 95890:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M352 832q0 14-9 23l-288 288q-9 9-23 9-13 0-22.5-9.5t-9.5-22.5v-576q0-13 9.5-22.5t22.5-9.5q14 0 23 9l288 288q9 9 9 23zm1440 480v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
-
-/***/ }),
-
 /***/ 91677:
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1152 1376v-160q0-14-9-23t-23-9h-96v-512q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v160q0 14 9 23t23 9h96v320h-96q-14 0-23 9t-9 23v160q0 14 9 23t23 9h448q14 0 23-9t9-23zm-128-896v-160q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v160q0 14 9 23t23 9h192q14 0 23-9t9-23zm640 416q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z\"/> </svg>"
-
-/***/ }),
-
-/***/ 55835:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z\"/> </svg>"
-
-/***/ }),
-
-/***/ 59967:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 1344v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45zm0-384v128q0 26-19 45t-45 19h-1664q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1664q26 0 45 19t19 45z\"/> </svg>"
 
 /***/ }),
 
@@ -313,20 +607,6 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 
 /***/ }),
 
-/***/ 113:
-/***/ (function(module) {
-
-module.exports = "<svg fill=\"none\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.09668 6.99707H7.17358L4.17358 3.99707L1.17358 6.99707H3.09668V17.0031H1.15881L4.15881 20.0031L7.15881 17.0031H5.09668V6.99707Z\"/> <path d=\"M22.8412 7H8.84119V5H22.8412V7Z\"/> <path d=\"M22.8412 11H8.84119V9H22.8412V11Z\"/> <path d=\"M8.84119 15H22.8412V13H8.84119V15Z\"/> <path d=\"M22.8412 19H8.84119V17H22.8412V19Z\"/> </svg>"
-
-/***/ }),
-
-/***/ 12527:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z\"/> </svg>"
-
-/***/ }),
-
 /***/ 64467:
 /***/ (function(module) {
 
@@ -334,66 +614,10 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 
 /***/ }),
 
-/***/ 33007:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z\"/></svg>"
-
-/***/ }),
-
-/***/ 4124:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 312 312\"> <g transform=\"translate(0.000000,312.000000) scale(0.100000,-0.100000)\" stroke=\"none\"> <path d=\"M50 3109 c0 -7 -11 -22 -25 -35 l-25 -23 0 -961 0 -961 32 -29 32 -30 501 -2 500 -3 3 -502 2 -502 31 -30 31 -31 958 0 958 0 23 25 c13 13 30 25 37 25 9 0 12 199 12 960 0 686 -3 960 -11 960 -6 0 -24 12 -40 28 l-29 27 -503 5 -502 5 -5 502 -5 503 -28 29 c-15 16 -27 34 -27 40 0 8 -274 11 -960 11 -710 0 -960 -3 -960 -11z m1738 -698 l2 -453 -40 -40 c-22 -22 -40 -43 -40 -47 0 -4 36 -42 79 -85 88 -87 82 -87 141 -23 l26 27 455 -2 454 -3 0 -775 0 -775 -775 0 -775 0 -3 450 -2 449 47 48 47 48 -82 80 c-44 44 -84 80 -87 80 -3 0 -25 -18 -48 -40 l-41 -40 -456 2 -455 3 -3 765 c-1 421 0 771 3 778 3 10 164 12 777 10 l773 -3 3 -454z\"/> <path d=\"M607 2492 c-42 -42 -77 -82 -77 -87 0 -6 86 -96 190 -200 105 -104 190 -197 190 -205 0 -8 -41 -56 -92 -107 -65 -65 -87 -94 -77 -98 8 -3 138 -4 289 -3 l275 3 3 275 c1 151 0 281 -3 289 -4 10 -35 -14 -103 -82 -54 -53 -103 -97 -109 -97 -7 0 -99 88 -206 195 -107 107 -196 195 -198 195 -3 0 -39 -35 -82 -78z\"/> <path d=\"M1470 1639 c-47 -49 -87 -91 -89 -94 -5 -6 149 -165 160 -165 9 0 189 179 189 188 0 12 -154 162 -165 161 -6 0 -48 -41 -95 -90z\"/> <path d=\"M1797 1303 c-9 -8 -9 -568 0 -576 4 -4 50 36 103 88 54 52 101 95 106 95 5 0 95 -85 199 -190 104 -104 194 -190 200 -190 6 0 46 36 90 80 l79 79 -197 196 c-108 108 -197 199 -197 203 0 4 45 52 99 106 55 55 98 103 95 108 -6 10 -568 11 -577 1z\"/> </g> </svg>"
-
-/***/ }),
-
 /***/ 86934:
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 32 32\"> <path d=\"M27 4l-15 15-7-7-5 5 12 12 20-20z\"/> </svg>"
-
-/***/ }),
-
-/***/ 30361:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M381 1620q0 80-54.5 126t-135.5 46q-106 0-172-66l57-88q49 45 106 45 29 0 50.5-14.5t21.5-42.5q0-64-105-56l-26-56q8-10 32.5-43.5t42.5-54 37-38.5v-1q-16 0-48.5 1t-48.5 1v53h-106v-152h333v88l-95 115q51 12 81 49t30 88zm2-627v159h-362q-6-36-6-54 0-51 23.5-93t56.5-68 66-47.5 56.5-43.5 23.5-45q0-25-14.5-38.5t-39.5-13.5q-46 0-81 58l-85-59q24-51 71.5-79.5t105.5-28.5q73 0 123 41.5t50 112.5q0 50-34 91.5t-75 64.5-75.5 50.5-35.5 52.5h127v-60h105zm1409 319v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm-1408-899v99h-335v-99h107q0-41 .5-122t.5-121v-12h-2q-8 17-50 54l-71-76 136-127h106v404h108zm1408 387v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-14 9-23t23-9h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
-
-/***/ }),
-
-/***/ 62449:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 270 270\"> <path d=\"m240.443652,220.45085l-47.410809,0l0,-10.342138c13.89973,-8.43655 25.752896,-19.844464 34.686646,-33.469923c11.445525,-17.455846 17.496072,-37.709239 17.496072,-58.570077c0,-59.589197 -49.208516,-108.068714 -109.693558,-108.068714s-109.69263,48.479517 -109.69263,108.069628c0,20.860839 6.050547,41.113316 17.497001,58.570077c8.93375,13.625459 20.787845,25.032458 34.686646,33.469008l0,10.342138l-47.412666,0c-10.256959,0 -18.571354,8.191376 -18.571354,18.296574c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.98402,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574l0,-39.496814c0,-7.073455 -4.137698,-13.51202 -10.626529,-16.537358c-25.24497,-11.772016 -41.557118,-37.145704 -41.557118,-64.643625c0,-39.411735 32.545369,-71.476481 72.549922,-71.476481c40.004553,0 72.550851,32.064746 72.550851,71.476481c0,27.497006 -16.312149,52.87161 -41.557118,64.643625c-6.487902,3.026253 -10.6256,9.464818 -10.6256,16.537358l0,39.496814c0,10.105198 8.314395,18.296574 18.571354,18.296574l65.982163,0c10.256959,0 18.571354,-8.191376 18.571354,-18.296574c0,-10.105198 -8.314395,-18.296574 -18.571354,-18.296574z\"/> </svg>"
-
-/***/ }),
-
-/***/ 89098:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M384 544v576q0 13-9.5 22.5t-22.5 9.5q-14 0-23-9l-288-288q-9-9-9-23t9-23l288-288q9-9 23-9 13 0 22.5 9.5t9.5 22.5zm1408 768v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1088q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1088q13 0 22.5 9.5t9.5 22.5zm0-384v192q0 13-9.5 22.5t-22.5 9.5h-1728q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1728q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
-
-/***/ }),
-
-/***/ 94173:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' x=\"0px\" y=\"0px\" viewBox=\"0 0 459 459\"> <g> <path d=\"M229.5,0C102,0,0,102,0,229.5S102,459,229.5,459c20.4,0,38.25-17.85,38.25-38.25c0-10.2-2.55-17.85-10.2-25.5 c-5.1-7.65-10.2-15.3-10.2-25.5c0-20.4,17.851-38.25,38.25-38.25h45.9c71.4,0,127.5-56.1,127.5-127.5C459,91.8,357,0,229.5,0z M89.25,229.5c-20.4,0-38.25-17.85-38.25-38.25S68.85,153,89.25,153s38.25,17.85,38.25,38.25S109.65,229.5,89.25,229.5z M165.75,127.5c-20.4,0-38.25-17.85-38.25-38.25S145.35,51,165.75,51S204,68.85,204,89.25S186.15,127.5,165.75,127.5z M293.25,127.5c-20.4,0-38.25-17.85-38.25-38.25S272.85,51,293.25,51s38.25,17.85,38.25,38.25S313.65,127.5,293.25,127.5z M369.75,229.5c-20.4,0-38.25-17.85-38.25-38.25S349.35,153,369.75,153S408,170.85,408,191.25S390.15,229.5,369.75,229.5z\" /> </g> </svg>"
-
-/***/ }),
-
-/***/ 6943:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"><path d=\"M1534 189v73q0 29-18.5 61t-42.5 32q-50 0-54 1-26 6-32 31-3 11-3 64v1152q0 25-18 43t-43 18h-108q-25 0-43-18t-18-43v-1218h-143v1218q0 25-17.5 43t-43.5 18h-108q-26 0-43.5-18t-17.5-43v-496q-147-12-245-59-126-58-192-179-64-117-64-259 0-166 88-286 88-118 209-159 111-37 417-37h479q25 0 43 18t18 43z\"/></svg>"
-
-/***/ }),
-
-/***/ 92390:
-/***/ (function(module) {
-
-module.exports = "<svg viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke-width=\"0\" d=\"M10.5 20H2a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h1V3l2.03-.4a3 3 0 0 1 5.94 0L13 3v1h1a2 2 0 0 1 2 2v1h-2V6h-1v1H3V6H2v12h5v2h3.5zM8 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2zm0 2v8h8v-8h-8z\"/> </svg>"
 
 /***/ }),
 
@@ -411,38 +635,10 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 
 /***/ }),
 
-/***/ 72419:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M448 1536h896v-256h-896v256zm0-640h896v-384h-160q-40 0-68-28t-28-68v-160h-640v640zm1152 64q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128 0v416q0 13-9.5 22.5t-22.5 9.5h-224v160q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-160h-224q-13 0-22.5-9.5t-9.5-22.5v-416q0-79 56.5-135.5t135.5-56.5h64v-544q0-40 28-68t68-28h672q40 0 88 20t76 48l152 152q28 28 48 76t20 88v256h64q79 0 135.5 56.5t56.5 135.5z\"/> </svg>"
-
-/***/ }),
-
-/***/ 31502:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 256v448q0 26-19 45t-45 19h-448q-42 0-59-40-17-39 14-69l138-138q-148-137-349-137-104 0-198.5 40.5t-163.5 109.5-109.5 163.5-40.5 198.5 40.5 198.5 109.5 163.5 163.5 109.5 198.5 40.5q119 0 225-52t179-147q7-10 23-12 14 0 25 9l137 138q9 8 9.5 20.5t-7.5 22.5q-109 132-264 204.5t-327 72.5q-156 0-298-61t-245-164-164-245-61-298 61-298 164-245 245-164 298-61q147 0 284.5 55.5t244.5 156.5l130-129q29-31 70-14 39 17 39 59z\"/> </svg>"
-
-/***/ }),
-
 /***/ 90265:
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\"> <path d=\"M5.9814 11.8049C5.59087 11.4144 5.59087 10.7812 5.9814 10.3907L10.224 6.14806C10.6146 5.75754 11.2477 5.75754 11.6383 6.14806C12.0288 6.53859 12.0288 7.17175 11.6383 7.56228L7.39561 11.8049C7.00509 12.1954 6.37192 12.1954 5.9814 11.8049Z\"/> <path d=\"M0.707107 12.0208C0.316582 11.6303 0.316582 10.9971 0.707107 10.6066L10.6066 0.707121C10.9971 0.316597 11.6303 0.316596 12.0208 0.707121C12.4113 1.09764 12.4113 1.73081 12.0208 2.12133L2.12132 12.0208C1.7308 12.4114 1.09763 12.4114 0.707107 12.0208Z\"/> </svg>"
-
-/***/ }),
-
-/***/ 42343:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 24 24\"> <g transform=\"translate(-251.000000, -443.000000)\"> <g transform=\"translate(215.000000, 119.000000)\"/> <path d=\"M252,448 L256,448 L256,444 L252,444 L252,448 Z M257,448 L269,448 L269,446 L257,446 L257,448 Z M257,464 L269,464 L269,462 L257,462 L257,464 Z M270,444 L270,448 L274,448 L274,444 L270,444 Z M252,462 L252,466 L256,466 L256,462 L252,462 Z M270,462 L270,466 L274,466 L274,462 L270,462 Z M254,461 L256,461 L256,449 L254,449 L254,461 Z M270,461 L272,461 L272,449 L270,449 L270,461 Z\"/> </g> </svg>"
-
-/***/ }),
-
-/***/ 54084:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M844 472q0 60-19 113.5t-63 92.5-105 39q-76 0-138-57.5t-92-135.5-30-151q0-60 19-113.5t63-92.5 105-39q77 0 138.5 57.5t91.5 135 30 151.5zm-342 483q0 80-42 139t-119 59q-76 0-141.5-55.5t-100.5-133.5-35-152q0-80 42-139.5t119-59.5q76 0 141.5 55.5t100.5 134 35 152.5zm394-27q118 0 255 97.5t229 237 92 254.5q0 46-17 76.5t-48.5 45-64.5 20-76 5.5q-68 0-187.5-45t-182.5-45q-66 0-192.5 44.5t-200.5 44.5q-183 0-183-146 0-86 56-191.5t139.5-192.5 187.5-146 193-59zm239-211q-61 0-105-39t-63-92.5-19-113.5q0-74 30-151.5t91.5-135 138.5-57.5q61 0 105 39t63 92.5 19 113.5q0 73-30 151t-92 135.5-138 57.5zm432-104q77 0 119 59.5t42 139.5q0 74-35 152t-100.5 133.5-141.5 55.5q-77 0-119-59t-42-139q0-74 35-152.5t100.5-134 141.5-55.5z\"/> </svg>"
 
 /***/ }),
 
@@ -460,122 +656,10 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 
 /***/ }),
 
-/***/ 96878:
-/***/ (function(module) {
-
-module.exports = "<svg viewBox=\"0 0 500 500\" xmlns=\"http://www.w3.org/2000/svg\"> <path clip-rule=\"evenodd\" d=\"M306.39,154.09c19.628,4.543,35.244,21.259,39.787,39.523 c1.551,8.54,8.998,14.989,17.904,14.989c9.991,0,18.168-8.175,18.168-18.17c0-13.083-10.991-32.98-25.985-47.881 c-14.719-14.537-32.252-24.802-46.695-24.802c-9.991,0-18.172,8.45-18.172,18.446C291.396,145.094,297.847,152.546,306.39,154.09z M56.629,392.312c-14.09,14.08-14.09,36.979,0,51.059c14.08,14.092,36.981,14.092,50.965,0l104.392-104.303 c24.347,15.181,53.062,23.991,83.953,23.991c87.857,0,158.995-71.142,158.995-158.999c0-87.854-71.138-158.995-158.995-158.995 c-87.856,0-158.995,71.141-158.995,158.995c0,30.802,8.819,59.606,23.992,83.953L56.629,392.312z M182.371,204.06 c0-62.687,50.875-113.568,113.568-113.568s113.569,50.881,113.569,113.568c0,62.694-50.876,113.569-113.569,113.569 S182.371,266.754,182.371,204.06z\" fill-rule=\"evenodd\"/> </svg>"
-
-/***/ }),
-
-/***/ 1032:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 18 18\"> <g fill-rule=\"evenodd\" stroke=\"none\" stroke-width=\"1\"> <g transform=\"translate(-381.000000, -381.000000)\"> <g transform=\"translate(381.000000, 381.000000)\"> <path d=\"M0,2 L2,2 L2,0 C0.9,0 0,0.9 0,2 L0,2 Z M0,10 L2,10 L2,8 L0,8 L0,10 L0,10 Z M4,18 L6,18 L6,16 L4,16 L4,18 L4,18 Z M0,6 L2,6 L2,4 L0,4 L0,6 L0,6 Z M10,0 L8,0 L8,2 L10,2 L10,0 L10,0 Z M16,0 L16,2 L18,2 C18,0.9 17.1,0 16,0 L16,0 Z M2,18 L2,16 L0,16 C0,17.1 0.9,18 2,18 L2,18 Z M0,14 L2,14 L2,12 L0,12 L0,14 L0,14 Z M6,0 L4,0 L4,2 L6,2 L6,0 L6,0 Z M8,18 L10,18 L10,16 L8,16 L8,18 L8,18 Z M16,10 L18,10 L18,8 L16,8 L16,10 L16,10 Z M16,18 C17.1,18 18,17.1 18,16 L16,16 L16,18 L16,18 Z M16,6 L18,6 L18,4 L16,4 L16,6 L16,6 Z M16,14 L18,14 L18,12 L16,12 L16,14 L16,14 Z M12,18 L14,18 L14,16 L12,16 L12,18 L12,18 Z M12,2 L14,2 L14,0 L12,0 L12,2 L12,2 Z M4,14 L14,14 L14,4 L4,4 L4,14 L4,14 Z M6,6 L12,6 L12,12 L6,12 L6,6 L6,6 Z\"/> </g> </g> </g> </svg>"
-
-/***/ }),
-
 /***/ 70744:
 /***/ (function(module) {
 
 module.exports = "<svg viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"> <path stroke=\"null\" d=\"m42.276011,26.302547c0.098397,-0.76605 0.172194,-1.54407 0.172194,-2.33406s-0.073797,-1.56801 -0.172194,-2.33406l5.202718,-3.961917c0.467384,-0.359086 0.602679,-1.005441 0.29519,-1.532101l-4.919828,-8.29489c-0.307489,-0.51469 -0.947067,-0.730142 -1.500548,-0.51469l-6.125186,2.405877c-1.266856,-0.945594 -2.656707,-1.747553 -4.157255,-2.357999l-0.922468,-6.343855c-0.110696,-0.562568 -0.614979,-1.005441 -1.229957,-1.005441l-9.839656,0c-0.614979,0 -1.119261,0.442873 -1.217657,1.005441l-0.922468,6.343855c-1.500548,0.610446 -2.890399,1.400436 -4.157255,2.357999l-6.125186,-2.405877c-0.553481,-0.203482 -1.193058,0 -1.500548,0.51469l-4.919828,8.29489c-0.307489,0.51469 -0.172194,1.161045 0.29519,1.532101l5.190419,3.961917c-0.098397,0.76605 -0.172194,1.54407 -0.172194,2.33406s0.073797,1.56801 0.172194,2.33406l-5.190419,3.961917c-0.467384,0.359086 -0.602679,1.005441 -0.29519,1.532101l4.919828,8.29489c0.307489,0.51469 0.947067,0.730142 1.500548,0.51469l6.125186,-2.405877c1.266856,0.945594 2.656707,1.747553 4.157255,2.357999l0.922468,6.343855c0.098397,0.562568 0.602679,1.005441 1.217657,1.005441l9.839656,0c0.614979,0 1.119261,-0.442873 1.217657,-1.005441l0.922468,-6.343855c1.500548,-0.610446 2.890399,-1.400436 4.157255,-2.357999l6.125186,2.405877c0.553481,0.203482 1.193058,0 1.500548,-0.51469l4.919828,-8.29489c0.307489,-0.51469 0.172194,-1.161045 -0.29519,-1.532101l-5.190419,-3.961917zm-18.277162,6.044617c-4.759934,0 -8.609699,-3.746465 -8.609699,-8.378677s3.849766,-8.378677 8.609699,-8.378677s8.609699,3.746465 8.609699,8.378677s-3.849766,8.378677 -8.609699,8.378677z\"/> </svg>"
-
-/***/ }),
-
-/***/ 31764:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M896 960v448q0 26-19 45t-45 19-45-19l-144-144-332 332q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l332-332-144-144q-19-19-19-45t19-45 45-19h448q26 0 45 19t19 45zm755-672q0 13-10 23l-332 332 144 144q19 19 19 45t-19 45-45 19h-448q-26 0-45-19t-19-45v-448q0-26 19-45t45-19 45 19l144 144 332-332q10-10 23-10t23 10l114 114q10 10 10 23z\"/> </svg>"
-
-/***/ }),
-
-/***/ 87971:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M553 1399l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23t-10 23l-393 393 393 393q10 10 10 23t-10 23zm591-1067l-373 1291q-4 13-15.5 19.5t-23.5 2.5l-62-17q-13-4-19.5-15.5t-2.5-24.5l373-1291q4-13 15.5-19.5t23.5-2.5l62 17q13 4 19.5 15.5t2.5 24.5zm657 651l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23t-10 23z\"/> </svg>"
-
-/***/ }),
-
-/***/ 30443:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 42h4v-4h-4v4zm4-28h-4v4h4v-4zm-4 20h4v-4h-4v4zm8 8h4v-4h-4v4zm-4-36h-4v4h4v-4zm8 0h-4v4h4v-4zm16 0h-4v4h4v-4zm-8 8h-4v4h4v-4zm0-8h-4v4h4v-4zm12 28h4v-4h-4v4zm-16 8h4v-4h-4v4zm-16-16h36v-4h-36v4zm32-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-16 16h4v-4h-4v4zm8 8h4v-4h-4v4zm8 0h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
-
-/***/ }),
-
-/***/ 62873:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\"> <path d=\"M6 18h4v-4h-4v4zm0-8h4v-4h-4v4zm8 32h4v-4h-4v4zm0-16h4v-4h-4v4zm-8 0h4v-4h-4v4zm0 16h4v-4h-4v4zm0-8h4v-4h-4v4zm8-24h4v-4h-4v4zm24 24h4v-4h-4v4zm-16 8h4v-36h-4v36zm16 0h4v-4h-4v4zm0-16h4v-4h-4v4zm0-20v4h4v-4h-4zm0 12h4v-4h-4v4zm-8-8h4v-4h-4v4zm0 32h4v-4h-4v4zm0-16h4v-4h-4v4z\"/> <path d=\"M0 0h48v48h-48z\" fill=\"none\"/> </svg>"
-
-/***/ }),
-
-/***/ 66353:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1760 896q14 0 23 9t9 23v64q0 14-9 23t-23 9h-1728q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h1728zm-1277-64q-28-35-51-80-48-97-48-188 0-181 134-309 133-127 393-127 50 0 167 19 66 12 177 48 10 38 21 118 14 123 14 183 0 18-5 45l-12 3-84-6-14-2q-50-149-103-205-88-91-210-91-114 0-182 59-67 58-67 146 0 73 66 140t279 129q69 20 173 66 58 28 95 52h-743zm507 256h411q7 39 7 92 0 111-41 212-23 55-71 104-37 35-109 81-80 48-153 66-80 21-203 21-114 0-195-23l-140-40q-57-16-72-28-8-8-8-22v-13q0-108-2-156-1-30 0-68l2-37v-44l102-2q15 34 30 71t22.5 56 12.5 27q35 57 80 94 43 36 105 57 59 22 132 22 64 0 139-27 77-26 122-86 47-61 47-129 0-84-81-157-34-29-137-71z\"/> </svg>"
-
-/***/ }),
-
-/***/ 52109:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm639 217v206h-514l-4-27q-3-45-3-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 80-65 188-65 110 0 178 59.5t68 158.5q0 66-34.5 118.5t-84 86-99.5 62.5-87 63-41 73h232v-80h126z\"/> </svg>"
-
-/***/ }),
-
-/***/ 24197:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1025 1369v167h-248l-159-252-24-42q-8-9-11-21h-3l-9 21q-10 20-25 44l-155 250h-258v-167h128l197-291-185-272h-137v-168h276l139 228q2 4 23 42 8 9 11 21h3q3-9 11-21l25-42 140-228h257v168h-125l-184 267 204 296h109zm637-679v206h-514l-3-27q-4-28-4-46 0-64 26-117t65-86.5 84-65 84-54.5 65-54 26-64q0-38-29.5-62.5t-70.5-24.5q-51 0-97 39-14 11-36 38l-105-92q26-37 63-66 83-65 188-65 110 0 178 59.5t68 158.5q0 56-24.5 103t-62 76.5-81.5 58.5-82 50.5-65.5 51.5-30.5 63h232v-80h126z\"/> </svg>"
-
-/***/ }),
-
-/***/ 83909:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M576 1376v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm-512-768v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm512 384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm0-384v-192q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v192q0 14 9 23t23 9h320q14 0 23-9t9-23zm128-320v1088q0 66-47 113t-113 47h-1344q-66 0-113-47t-47-113v-1088q0-66 47-113t113-47h1344q66 0 113 47t47 113z\"/> </svg>"
-
-/***/ }),
-
-/***/ 8270:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
-
-/***/ }),
-
-/***/ 7651:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm-640-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm640 512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68z\"/> </svg>"
-
-/***/ }),
-
-/***/ 7339:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path stroke-width=\"0\" d=\"M384 1408q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm0-512q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm-1408-928q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm1408 416v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5zm0-512v192q0 13-9.5 22.5t-22.5 9.5h-1216q-13 0-22.5-9.5t-9.5-22.5v-192q0-13 9.5-22.5t22.5-9.5h1216q13 0 22.5 9.5t9.5 22.5z\"/> </svg>"
-
-/***/ }),
-
-/***/ 32356:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M176 223q-37-2-45-4l-3-88q13-1 40-1 60 0 112 4 132 7 166 7 86 0 168-3 116-4 146-5 56 0 86-2l-1 14 2 64v9q-60 9-124 9-60 0-79 25-13 14-13 132 0 13 .5 32.5t.5 25.5l1 229 14 280q6 124 51 202 35 59 96 92 88 47 177 47 104 0 191-28 56-18 99-51 48-36 65-64 36-56 53-114 21-73 21-229 0-79-3.5-128t-11-122.5-13.5-159.5l-4-59q-5-67-24-88-34-35-77-34l-100 2-14-3 2-86h84l205 10q76 3 196-10l18 2q6 38 6 51 0 7-4 31-45 12-84 13-73 11-79 17-15 15-15 41 0 7 1.5 27t1.5 31q8 19 22 396 6 195-15 304-15 76-41 122-38 65-112 123-75 57-182 89-109 33-255 33-167 0-284-46-119-47-179-122-61-76-83-195-16-80-16-237v-333q0-188-17-213-25-36-147-39zm1488 1409v-64q0-14-9-23t-23-9h-1472q-14 0-23 9t-9 23v64q0 14 9 23t23 9h1472q14 0 23-9t9-23z\"/> </svg>"
-
-/***/ }),
-
-/***/ 3066:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1664 896q0 156-61 298t-164 245-245 164-298 61q-172 0-327-72.5t-264-204.5q-7-10-6.5-22.5t8.5-20.5l137-138q10-9 25-9 16 2 23 12 73 95 179 147t225 52q104 0 198.5-40.5t163.5-109.5 109.5-163.5 40.5-198.5-40.5-198.5-109.5-163.5-163.5-109.5-198.5-40.5q-98 0-188 35.5t-160 101.5l137 138q31 30 14 69-17 40-59 40h-448q-26 0-45-19t-19-45v-448q0-42 40-59 39-17 69 14l130 129q107-101 244.5-156.5t284.5-55.5q156 0 298 61t245 164 164 245 61 298z\"/> </svg>"
-
-/***/ }),
-
-/***/ 70152:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M503 1271l-256 256q-10 9-23 9-12 0-23-9-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23zm169 41v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm-224-224q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm1264 128q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-334-335q-21-21-42-56l239-18 273 274q27 27 68 27.5t68-26.5l147-146q28-28 28-67 0-40-28-68l-274-275 18-239q35 21 56 42l336 336q84 86 84 204zm-617-724l-239 18-273-274q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l274 274-18 240q-35-21-56-42l-336-336q-84-86-84-204 0-120 85-203l147-146q83-83 203-83 121 0 204 85l334 335q21 21 42 56zm633 84q0 14-9 23t-23 9h-320q-14 0-23-9t-9-23 9-23 23-9h320q14 0 23 9t9 23zm-544-544v320q0 14-9 23t-23 9-23-9-9-23v-320q0-14 9-23t23-9 23 9 9 23zm407 151l-256 256q-11 9-23 9t-23-9q-9-10-9-23t9-23l256-256q10-9 23-9t23 9q9 10 9 23t-9 23z\"/> </svg>"
 
 /***/ }),
 
@@ -604,13 +688,6 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1216 320q0 26-19 45t-45 19h-128v1024h128q26 0 45 19t19 45-19 45l-256 256q-19 19-45 19t-45-19l-256-256q-19-19-19-45t19-45 45-19h128v-1024h-128q-26 0-45-19t-19-45 19-45l256-256q19-19 45-19t45 19l256 256q19 19 19 45z\"/> </svg>"
-
-/***/ }),
-
-/***/ 65738:
-/***/ (function(module) {
-
-module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M1792 352v1088q0 42-39 59-13 5-25 5-27 0-45-19l-403-403v166q0 119-84.5 203.5t-203.5 84.5h-704q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h704q119 0 203.5 84.5t84.5 203.5v165l403-402q18-19 45-19 12 0 25 5 39 17 39 59z\"/> </svg>"
 
 /***/ }),
 
@@ -894,16 +971,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 17660:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ 32417:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -924,7 +991,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 42669:
+/***/ 9947:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -944,6 +1011,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ 71708:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ 51629:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -954,7 +1031,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 43916:
+/***/ 54860:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ 47818:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -974,7 +1061,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 22860:
+/***/ 88582:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1917,7 +2004,7 @@ module.exports = function (object, key, value) {
 "use strict";
 
 var isCallable = __webpack_require__(794);
-var createNonEnumerableProperty = __webpack_require__(45840);
+var definePropertyModule = __webpack_require__(73252);
 var makeBuiltIn = __webpack_require__(40846);
 var defineGlobalProperty = __webpack_require__(25379);
 module.exports = function (O, key, value, options) {
@@ -1934,14 +2021,22 @@ module.exports = function (O, key, value, options) {
             defineGlobalProperty(key, value);
     }
     else {
-        if (!options.unsafe)
-            delete O[key];
-        else if (O[key])
-            simple = true;
+        try {
+            if (!options.unsafe)
+                delete O[key];
+            else if (O[key])
+                simple = true;
+        }
+        catch (error) { }
         if (simple)
             O[key] = value;
         else
-            createNonEnumerableProperty(O, key, value);
+            definePropertyModule.f(O, key, {
+                value: value,
+                enumerable: false,
+                configurable: !options.nonConfigurable,
+                writable: !options.nonWritable
+            });
     }
     return O;
 };
@@ -2935,7 +3030,10 @@ var makeBuiltIn = module.exports = function (value, name, options) {
     if (options && options.setter)
         name = 'set ' + name;
     if (!hasOwn(value, 'name') || (CONFIGURABLE_FUNCTION_NAME && value.name !== name)) {
-        defineProperty(value, 'name', { value: name, configurable: true });
+        if (DESCRIPTORS)
+            defineProperty(value, 'name', { value: name, configurable: true });
+        else
+            value.name = name;
     }
     if (CONFIGURABLE_LENGTH && options && hasOwn(options, 'arity') && value.length !== options.arity) {
         defineProperty(value, 'length', { value: options.arity });
@@ -3521,10 +3619,10 @@ var store = __webpack_require__(45752);
 (module.exports = function (key, value) {
     return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
-    version: '3.22.8',
+    version: '3.23.3',
     mode: IS_PURE ? 'pure' : 'global',
     copyright: '© 2014-2022 Denis Pushkarev (zloirock.ru)',
-    license: 'https://github.com/zloirock/core-js/blob/v3.22.8/LICENSE',
+    license: 'https://github.com/zloirock/core-js/blob/v3.23.3/LICENSE',
     source: 'https://github.com/zloirock/core-js'
 });
 
@@ -5570,11 +5668,14 @@ exports.__classPrivateFieldIn = __classPrivateFieldIn;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Config = void 0;
 var consts = __webpack_require__(10063);
+var constants_1 = __webpack_require__(10063);
 var Config = (function () {
     function Config() {
         this.defaultTimeout = 100;
         this.namespace = '';
         this.safeMode = false;
+        this.width = 'auto';
+        this.height = 'auto';
         this.safePluginsList = ['about', 'enter', 'backspace'];
         this.license = '';
         this.preset = 'custom';
@@ -5627,7 +5728,10 @@ var Config = (function () {
         this.showTooltip = true;
         this.showTooltipDelay = 1000;
         this.useNativeTooltip = false;
+        this.defaultActionOnPaste = constants_1.INSERT_AS_HTML;
         this.enter = consts.PARAGRAPH;
+        this.iframe = false;
+        this.editHTMLDocumentMode = false;
         this.enterBlock = this.enter !== 'br' ? this.enter : consts.PARAGRAPH;
         this.defaultMode = consts.MODE_WYSIWYG;
         this.useSplitMode = false;
@@ -6441,7 +6545,7 @@ exports.ViewComponent = ViewComponent;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.lang = exports.TEMP_ATTR = exports.BASE_PATH = exports.KEY_ALIASES = exports.IS_MAC = exports.SAFE_COUNT_CHANGE_CALL = exports.INSERT_ONLY_TEXT = exports.INSERT_AS_TEXT = exports.INSERT_CLEAR_HTML = exports.INSERT_AS_HTML = exports.EMULATE_DBLCLICK_TIMEOUT = exports.MARKER_CLASS = exports.TEXT_RTF = exports.TEXT_HTML = exports.TEXT_PLAIN = exports.IS_IE = exports.MODE_SPLIT = exports.MODE_SOURCE = exports.MODE_WYSIWYG = exports.PARAGRAPH = exports.BR = exports.COMMAND_KEYS = exports.ACCURACY = exports.NEARBY = exports.KEY_F3 = exports.KEY_DELETE = exports.KEY_SPACE = exports.KEY_DOWN = exports.KEY_RIGHT = exports.KEY_UP = exports.KEY_LEFT = exports.KEY_ALT = exports.KEY_ESC = exports.KEY_ENTER = exports.KEY_TAB = exports.KEY_BACKSPACE = exports.MAY_BE_REMOVED_WITH_KEY = exports.INSEPARABLE_TAGS = exports.IS_INLINE = exports.IS_BLOCK = exports.SPACE_REG_EXP_END = exports.SPACE_REG_EXP_START = exports.SPACE_REG_EXP = exports.INVISIBLE_SPACE_REG_EXP_START = exports.INVISIBLE_SPACE_REG_EXP_END = exports.INVISIBLE_SPACE_REG_EXP = exports.NBSP_SPACE = exports.INVISIBLE_SPACE = void 0;
+exports.SOURCE_CONSUMER = exports.CLIPBOARD_ID = exports.lang = exports.TEMP_ATTR = exports.BASE_PATH = exports.KEY_ALIASES = exports.IS_MAC = exports.SAFE_COUNT_CHANGE_CALL = exports.INSERT_ONLY_TEXT = exports.INSERT_AS_TEXT = exports.INSERT_CLEAR_HTML = exports.INSERT_AS_HTML = exports.EMULATE_DBLCLICK_TIMEOUT = exports.MARKER_CLASS = exports.TEXT_RTF = exports.TEXT_HTML = exports.TEXT_PLAIN = exports.IS_IE = exports.MODE_SPLIT = exports.MODE_SOURCE = exports.MODE_WYSIWYG = exports.PARAGRAPH = exports.BR = exports.COMMAND_KEYS = exports.ACCURACY = exports.NEARBY = exports.KEY_F3 = exports.KEY_DELETE = exports.KEY_SPACE = exports.KEY_DOWN = exports.KEY_RIGHT = exports.KEY_UP = exports.KEY_LEFT = exports.KEY_ALT = exports.KEY_ESC = exports.KEY_ENTER = exports.KEY_TAB = exports.KEY_BACKSPACE = exports.MAY_BE_REMOVED_WITH_KEY = exports.INSEPARABLE_TAGS = exports.IS_INLINE = exports.IS_BLOCK = exports.SPACE_REG_EXP_END = exports.SPACE_REG_EXP_START = exports.SPACE_REG_EXP = exports.INVISIBLE_SPACE_REG_EXP_START = exports.INVISIBLE_SPACE_REG_EXP_END = exports.INVISIBLE_SPACE_REG_EXP = exports.NBSP_SPACE = exports.INVISIBLE_SPACE = void 0;
 exports.INVISIBLE_SPACE = '\uFEFF';
 exports.NBSP_SPACE = '\u00A0';
 var INVISIBLE_SPACE_REG_EXP = function () { return /[\uFEFF]/g; };
@@ -6563,6 +6667,8 @@ exports.BASE_PATH = (function () {
 })();
 exports.TEMP_ATTR = 'data-jodit-temp';
 exports.lang = {};
+exports.CLIPBOARD_ID = 'clipboard';
+exports.SOURCE_CONSUMER = 'source-consumer';
 
 
 /***/ }),
@@ -7541,6 +7647,18 @@ var Dom = (function () {
             sibling = Dom.sibling(sibling, left);
         }
         return sibling && cond(sibling) ? sibling : null;
+    };
+    Dom.findNotEmptySibling = function (node, backspace) {
+        return Dom.findSibling(node, backspace, function (n) {
+            var _a;
+            return (!Dom.isEmptyTextNode(n) &&
+                Boolean(!Dom.isText(n) || (((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length) && (0, helpers_1.trim)(n.nodeValue))));
+        });
+    };
+    Dom.findNotEmptyNeighbor = function (node, left, root) {
+        return (0, helpers_1.call)(left ? Dom.prev : Dom.next, node, function (n) {
+            return Boolean(n && (!Dom.isText(n) || (0, helpers_1.trim)((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length));
+        }, root);
     };
     Dom.sibling = function (node, left) {
         return left ? node.previousSibling : node.nextSibling;
@@ -10319,8 +10437,8 @@ var offset = function (elm, jodit, doc, recurse) {
     var topValue, leftValue;
     var iframe = jodit.iframe;
     if (!recurse && jodit && jodit.options && jodit.o.iframe && iframe) {
-        var _a = (0, exports.offset)(iframe, jodit, jodit.od, true), top_1 = _a.top, left = _a.left;
-        topValue = rect.top + top_1;
+        var _a = (0, exports.offset)(iframe, jodit, jodit.od, true), top = _a.top, left = _a.left;
+        topValue = rect.top + top;
         leftValue = rect.left + left;
     }
     else {
@@ -10357,9 +10475,9 @@ function position(elm, jodit, recurse) {
     var rect = elm.getBoundingClientRect();
     var xPos = rect.left, yPos = rect.top;
     if ((0, is_jodit_object_1.isJoditObject)(jodit) && jodit.iframe && !recurse) {
-        var _a = position(jodit.iframe, jodit, true), left = _a.left, top_1 = _a.top;
+        var _a = position(jodit.iframe, jodit, true), left = _a.left, top = _a.top;
         xPos += left;
-        yPos += top_1;
+        yPos += top;
     }
     return {
         left: Math.round(xPos),
@@ -10483,8 +10601,8 @@ function i18n(key, params, options) {
     if (!key.length) {
         return key;
     }
-    var debug = Boolean(options !== undefined && options.debugLanguage);
-    var store;
+    var debug = Boolean(options === null || options === void 0 ? void 0 : options.debugLanguage);
+    var store = {};
     var parse = function (value) {
         return params && params.length ? (0, exports.sprintf)(value, params) : value;
     }, defaultLanguage = (0, utils_1.defaultLanguage)(config_1.Config.defaultOptions.language, config_1.Config.defaultOptions.language), language = (0, utils_1.defaultLanguage)(options === null || options === void 0 ? void 0 : options.language, defaultLanguage), tryGet = function (store) {
@@ -10507,7 +10625,7 @@ function i18n(key, params, options) {
     if (constants_1.lang[language] !== undefined) {
         store = constants_1.lang[language];
     }
-    else {
+    else if (!debug) {
         if (constants_1.lang[defaultLanguage] !== undefined) {
             store = constants_1.lang[defaultLanguage];
         }
@@ -10526,7 +10644,7 @@ function i18n(key, params, options) {
     if (result) {
         return result;
     }
-    if (constants_1.lang.en && (0, is_string_1.isString)(constants_1.lang.en[key]) && constants_1.lang.en[key]) {
+    if (!debug && constants_1.lang.en && (0, is_string_1.isString)(constants_1.lang.en[key]) && constants_1.lang.en[key]) {
         return parse(constants_1.lang.en[key]);
     }
     if (debug) {
@@ -10684,6 +10802,81 @@ exports.ucfirst = ucfirst;
 
 /***/ }),
 
+/***/ 49359:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.alignElement = exports.clearAlign = exports.hAlignElement = void 0;
+var dom_1 = __webpack_require__(94522);
+var css_1 = __webpack_require__(56672);
+function hAlignElement(image, align) {
+    if (align && align !== 'normal') {
+        if (align !== 'center') {
+            (0, css_1.css)(image, 'float', align);
+            (0, css_1.clearCenterAlign)(image);
+        }
+        else {
+            (0, css_1.css)(image, {
+                float: '',
+                display: 'block',
+                marginLeft: 'auto',
+                marginRight: 'auto'
+            });
+        }
+    }
+    else {
+        if ((0, css_1.css)(image, 'float') &&
+            ['right', 'left'].indexOf((0, css_1.css)(image, 'float').toString().toLowerCase()) !== -1) {
+            (0, css_1.css)(image, 'float', '');
+        }
+        (0, css_1.clearCenterAlign)(image);
+    }
+}
+exports.hAlignElement = hAlignElement;
+function clearAlign(node) {
+    dom_1.Dom.each(node, function (elm) {
+        if (dom_1.Dom.isHTMLElement(elm)) {
+            if (elm.style.textAlign) {
+                elm.style.textAlign = '';
+                if (!elm.style.cssText.trim().length) {
+                    elm.removeAttribute('style');
+                }
+            }
+        }
+    });
+}
+exports.clearAlign = clearAlign;
+function alignElement(command, box) {
+    if (dom_1.Dom.isNode(box) && dom_1.Dom.isElement(box)) {
+        clearAlign(box);
+        switch (command.toLowerCase()) {
+            case 'justifyfull':
+                box.style.textAlign = 'justify';
+                break;
+            case 'justifyright':
+                box.style.textAlign = 'right';
+                break;
+            case 'justifyleft':
+                box.style.textAlign = 'left';
+                break;
+            case 'justifycenter':
+                box.style.textAlign = 'center';
+                break;
+        }
+    }
+}
+exports.alignElement = alignElement;
+
+
+/***/ }),
+
 /***/ 63116:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -10702,7 +10895,7 @@ var is_function_1 = __webpack_require__(84121);
 var is_string_1 = __webpack_require__(40607);
 var alreadyLoadedList = new Map();
 var cacheLoaders = function (loader) {
-    return function (jodit, url) { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
+    return function (jodit, url) { return tslib_1.__awaiter(void 0, void 0, Promise, function () {
         var promise;
         return tslib_1.__generator(this, function (_a) {
             if (alreadyLoadedList.has(url)) {
@@ -11211,7 +11404,7 @@ var defaultLanguage = function (language, defaultLanguage) {
         return document.documentElement.lang;
     }
     if (navigator.language) {
-        return navigator.language.substr(0, 2);
+        return navigator.language.substring(0, 2);
     }
     return defaultLanguage;
 };
@@ -11535,14 +11728,9 @@ exports.humanSizeToBytes = humanSizeToBytes;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(39665), exports);
-tslib_1.__exportStar(__webpack_require__(11781), exports);
-tslib_1.__exportStar(__webpack_require__(51976), exports);
-tslib_1.__exportStar(__webpack_require__(85913), exports);
-tslib_1.__exportStar(__webpack_require__(42614), exports);
-tslib_1.__exportStar(__webpack_require__(28693), exports);
-tslib_1.__exportStar(__webpack_require__(27541), exports);
+tslib_1.__exportStar(__webpack_require__(49359), exports);
 tslib_1.__exportStar(__webpack_require__(63116), exports);
+tslib_1.__exportStar(__webpack_require__(39665), exports);
 tslib_1.__exportStar(__webpack_require__(67199), exports);
 tslib_1.__exportStar(__webpack_require__(99614), exports);
 tslib_1.__exportStar(__webpack_require__(48659), exports);
@@ -11552,14 +11740,21 @@ tslib_1.__exportStar(__webpack_require__(56672), exports);
 tslib_1.__exportStar(__webpack_require__(63383), exports);
 tslib_1.__exportStar(__webpack_require__(70774), exports);
 tslib_1.__exportStar(__webpack_require__(3588), exports);
+tslib_1.__exportStar(__webpack_require__(80163), exports);
 tslib_1.__exportStar(__webpack_require__(83688), exports);
+tslib_1.__exportStar(__webpack_require__(85913), exports);
+tslib_1.__exportStar(__webpack_require__(28693), exports);
 tslib_1.__exportStar(__webpack_require__(52169), exports);
+tslib_1.__exportStar(__webpack_require__(11781), exports);
 tslib_1.__exportStar(__webpack_require__(71725), exports);
+tslib_1.__exportStar(__webpack_require__(79775), exports);
+tslib_1.__exportStar(__webpack_require__(33872), exports);
 tslib_1.__exportStar(__webpack_require__(6110), exports);
 tslib_1.__exportStar(__webpack_require__(78191), exports);
-tslib_1.__exportStar(__webpack_require__(80163), exports);
+tslib_1.__exportStar(__webpack_require__(42614), exports);
+tslib_1.__exportStar(__webpack_require__(27541), exports);
+tslib_1.__exportStar(__webpack_require__(51976), exports);
 tslib_1.__exportStar(__webpack_require__(14997), exports);
-tslib_1.__exportStar(__webpack_require__(33872), exports);
 
 
 /***/ }),
@@ -11609,7 +11804,7 @@ exports.markDeprecated = markDeprecated;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseQuery = void 0;
 var parseQuery = function (queryString) {
-    var query = {}, a = queryString.substr(1).split('&');
+    var query = {}, a = queryString.substring(1).split('&');
     for (var i = 0; i < a.length; i += 1) {
         var keyValue = a[i].split('=');
         query[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1] || '');
@@ -11617,6 +11812,163 @@ var parseQuery = function (queryString) {
     return query;
 };
 exports.parseQuery = parseQuery;
+
+
+/***/ }),
+
+/***/ 79775:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.previewBox = void 0;
+var is_string_1 = __webpack_require__(40607);
+var dom_1 = __webpack_require__(43887);
+var css_1 = __webpack_require__(56672);
+var utils_1 = __webpack_require__(51976);
+var selector_1 = __webpack_require__(78191);
+function fixedAssetsSizeAndAbsoluteLinks(editor, points) {
+    var restoreAttributes = [];
+    try {
+        (0, selector_1.$$)('img', editor.editor).forEach(function (item) {
+            var previousAttrs = [
+                (0, utils_1.attr)(item, 'width'),
+                (0, utils_1.attr)(item, 'height'),
+                item.src
+            ];
+            (0, utils_1.attr)(item, {
+                width: item.offsetWidth + points,
+                height: item.offsetHeight + points
+            });
+            var a = editor.createInside.a();
+            editor.ed.body.appendChild(a);
+            a.href = item.src;
+            item.src = a.href;
+            dom_1.Dom.safeRemove(a);
+            restoreAttributes.push(function () {
+                var _a;
+                item.src = (_a = previousAttrs[2]) !== null && _a !== void 0 ? _a : '';
+                (0, utils_1.attr)(item, {
+                    width: previousAttrs[0] || null,
+                    height: previousAttrs[1] || null
+                });
+            });
+        });
+    }
+    catch (e) {
+        restoreAttributes.forEach(function (c) { return c(); });
+        restoreAttributes.length = 0;
+        throw e;
+    }
+    return restoreAttributes;
+}
+function previewBox(editor, defaultValue, points, container) {
+    if (points === void 0) { points = 'px'; }
+    if (container === void 0) { container = null; }
+    var restoreAttributes = fixedAssetsSizeAndAbsoluteLinks(editor, points);
+    try {
+        var res = editor.e.fire('beforePreviewBox', defaultValue, points);
+        if (res != null) {
+            return res;
+        }
+        var div = editor.c.div('jodit__preview-box jodit-context');
+        if (container) {
+            container.appendChild(div);
+        }
+        (0, css_1.css)(div, {
+            position: 'relative',
+            padding: 16
+        });
+        var value = editor.value ||
+            "<div style='position: absolute;left:50%;top:50%;transform: translateX(-50%) translateY(-50%);color:#ccc;'>".concat(editor.i18n('Empty'), "</div>");
+        if (editor.iframe) {
+            var iframe_1 = editor.create.element('iframe');
+            (0, css_1.css)(iframe_1, {
+                minWidth: 800,
+                minHeight: 600,
+                border: 0
+            });
+            div.appendChild(iframe_1);
+            var myWindow_1 = iframe_1.contentWindow;
+            if (myWindow_1) {
+                editor.e.fire('generateDocumentStructure.iframe', myWindow_1.document, editor);
+                div = myWindow_1.document.body;
+                if (typeof ResizeObserver === 'function') {
+                    var resizeObserver_1 = new ResizeObserver(function (entries) {
+                        iframe_1.style.height =
+                            myWindow_1.document.body.offsetHeight + 20 + 'px';
+                    });
+                    resizeObserver_1.observe(myWindow_1.document.body);
+                    editor.e.on('beforeDestruct', function () {
+                        resizeObserver_1.unobserve(myWindow_1.document.body);
+                    });
+                }
+            }
+        }
+        else {
+            (0, css_1.css)(div, {
+                minWidth: 1024,
+                minHeight: 600,
+                border: 0
+            });
+        }
+        var setHTML_1 = function (box, value) {
+            var dv = (0, is_string_1.isString)(value) ? editor.c.div() : value;
+            if ((0, is_string_1.isString)(value)) {
+                dv.innerHTML = value;
+            }
+            for (var i = 0; i < dv.childNodes.length; i += 1) {
+                var c = dv.childNodes[i];
+                if (dom_1.Dom.isElement(c)) {
+                    var newNode = box.ownerDocument.createElement(c.nodeName);
+                    for (var j = 0; j < c.attributes.length; j += 1) {
+                        (0, utils_1.attr)(newNode, c.attributes[j].nodeName, c.attributes[j].nodeValue);
+                    }
+                    if (c.childNodes.length === 0 || dom_1.Dom.isTag(c, ['table'])) {
+                        switch (c.nodeName) {
+                            case 'SCRIPT':
+                                if (c.textContent) {
+                                    newNode.textContent = c.textContent;
+                                }
+                                break;
+                            default:
+                                if (c.innerHTML) {
+                                    newNode.innerHTML = c.innerHTML;
+                                }
+                                break;
+                        }
+                    }
+                    else {
+                        setHTML_1(newNode, c);
+                    }
+                    try {
+                        box.appendChild(newNode);
+                    }
+                    catch (_a) { }
+                }
+                else {
+                    try {
+                        box.appendChild(c.cloneNode(true));
+                    }
+                    catch (_b) { }
+                }
+            }
+        };
+        setHTML_1(div, value);
+        editor.e.fire('afterPreviewBox', div);
+        return div;
+    }
+    finally {
+        restoreAttributes.forEach(function (clb) { return clb(); });
+    }
+}
+exports.previewBox = previewBox;
 
 
 /***/ }),
@@ -11928,7 +12280,7 @@ exports.LimitedStack = LimitedStack;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.memorizeExec = exports.keys = exports.loadImage = exports.callPromise = exports.markOwner = exports.attr = exports.call = void 0;
+exports.getDataTransfer = exports.memorizeExec = exports.keys = exports.loadImage = exports.callPromise = exports.markOwner = exports.attr = exports.call = void 0;
 var tslib_1 = __webpack_require__(20255);
 var is_function_1 = __webpack_require__(84121);
 var is_promise_1 = __webpack_require__(30317);
@@ -12047,6 +12399,18 @@ var memorizeExec = function (editor, _, _a, preProcessValue) {
     editor.execCommand(control.command, false, value !== null && value !== void 0 ? value : undefined);
 };
 exports.memorizeExec = memorizeExec;
+var getDataTransfer = function (event) {
+    if (event.clipboardData) {
+        return event.clipboardData;
+    }
+    try {
+        return event.dataTransfer || new DataTransfer();
+    }
+    catch (_a) {
+        return null;
+    }
+};
+exports.getDataTransfer = getDataTransfer;
 
 
 /***/ }),
@@ -12109,13 +12473,17 @@ tslib_1.__exportStar(__webpack_require__(73177), exports);
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PluginSystem = void 0;
 var tslib_1 = __webpack_require__(20255);
-var helpers_1 = __webpack_require__(92654);
+var checker_1 = __webpack_require__(37379);
+var append_script_1 = __webpack_require__(63116);
+var array_1 = __webpack_require__(3005);
+var string_1 = __webpack_require__(15664);
+var utils_1 = __webpack_require__(51976);
 var PluginSystem = (function () {
     function PluginSystem() {
         this._items = new Map();
     }
     PluginSystem.prototype.normalizeName = function (name) {
-        return (0, helpers_1.kebabCase)(name).toLowerCase();
+        return (0, string_1.kebabCase)(name).toLowerCase();
     };
     PluginSystem.prototype.items = function (filter) {
         var results = [];
@@ -12139,8 +12507,8 @@ var PluginSystem = (function () {
     PluginSystem.prototype.init = function (jodit) {
         var _this = this;
         var extrasList = jodit.o.extraPlugins.map(function (s) {
-            return (0, helpers_1.isString)(s) ? { name: s } : s;
-        }), disableList = (0, helpers_1.splitArray)(jodit.o.disablePlugins).map(function (s) {
+            return (0, checker_1.isString)(s) ? { name: s } : s;
+        }), disableList = (0, array_1.splitArray)(jodit.o.disablePlugins).map(function (s) {
             var name = _this.normalizeName(s);
             if (false) {}
             return name;
@@ -12153,7 +12521,7 @@ var PluginSystem = (function () {
             }
             var requires = plugin === null || plugin === void 0 ? void 0 : plugin.requires;
             if (requires &&
-                (0, helpers_1.isArray)(requires) &&
+                (0, checker_1.isArray)(requires) &&
                 _this.hasDisabledRequires(disableList, requires)) {
                 return;
             }
@@ -12165,7 +12533,7 @@ var PluginSystem = (function () {
             }
         };
         var resultLoadExtras = this.loadExtras(jodit, extrasList);
-        return (0, helpers_1.callPromise)(resultLoadExtras, function () {
+        return (0, utils_1.callPromise)(resultLoadExtras, function () {
             if (jodit.isInDestruct) {
                 return;
             }
@@ -12182,7 +12550,14 @@ var PluginSystem = (function () {
     };
     PluginSystem.makePluginInstance = function (jodit, plugin) {
         try {
-            return (0, helpers_1.isFunction)(plugin) ? new plugin(jodit) : plugin;
+            try {
+                return (0, checker_1.isFunction)(plugin) ? new plugin(jodit) : plugin;
+            }
+            catch (e) {
+                if ((0, checker_1.isFunction)(plugin) && !plugin.prototype) {
+                    return plugin(jodit);
+                }
+            }
         }
         catch (e) {
             console.error(e);
@@ -12192,7 +12567,7 @@ var PluginSystem = (function () {
     };
     PluginSystem.prototype.initOrWait = function (jodit, pluginName, instance, doneList, promiseList) {
         var initPlugin = function (name, plugin) {
-            if ((0, helpers_1.isInitable)(plugin)) {
+            if ((0, checker_1.isInitable)(plugin)) {
                 var req = plugin.requires;
                 if (!(req === null || req === void 0 ? void 0 : req.length) ||
                     req.every(function (name) { return doneList.includes(name); })) {
@@ -12234,7 +12609,7 @@ var PluginSystem = (function () {
     PluginSystem.prototype.addListenerOnBeforeDestruct = function (jodit, plugins) {
         jodit.e.on('beforeDestruct', function () {
             plugins.forEach(function (instance) {
-                if ((0, helpers_1.isDestructable)(instance)) {
+                if ((0, checker_1.isDestructable)(instance)) {
                     instance.destruct(jodit);
                 }
             });
@@ -12249,11 +12624,11 @@ var PluginSystem = (function () {
         return Promise.all(pluginList.map(function (extra) {
             var url = extra.url ||
                 PluginSystem.getFullUrl(jodit, extra.name, true);
-            return reflect((0, helpers_1.appendScriptAsync)(jodit, url));
+            return reflect((0, append_script_1.appendScriptAsync)(jodit, url));
         }));
     };
     PluginSystem.loadStyle = function (jodit, pluginName) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var url;
             return tslib_1.__generator(this, function (_a) {
                 url = PluginSystem.getFullUrl(jodit, pluginName, false);
@@ -12261,12 +12636,12 @@ var PluginSystem = (function () {
                     return [2];
                 }
                 this.styles.add(url);
-                return [2, (0, helpers_1.appendStyleAsync)(jodit, url)];
+                return [2, (0, append_script_1.appendStyleAsync)(jodit, url)];
             });
         });
     };
     PluginSystem.getFullUrl = function (jodit, name, js) {
-        name = (0, helpers_1.kebabCase)(name);
+        name = (0, string_1.kebabCase)(name);
         return (jodit.basePath +
             'plugins/' +
             name +
@@ -12435,63 +12810,77 @@ var Ajax = (function () {
         this.activated = true;
         var _a = this, xhr = _a.xhr, o = _a.o;
         var request = this.prepareRequest();
-        return this.j.async.promise(function (resolve, reject) {
+        return this.j.async.promise(function (resolve, reject) { return tslib_1.__awaiter(_this, void 0, void 0, function () {
+            var onReject, onResolve, url, data, method, headers;
+            var _this = this;
             var _a;
-            var onReject = function () {
-                _this.isFulfilled = true;
-                reject(error.connection('Connection error'));
-            };
-            var onResolve = function () {
-                _this.isFulfilled = true;
-                resolve(new response_1.Response(request, xhr.status, xhr.statusText, !xhr.responseType ? xhr.responseText : xhr.response));
-            };
-            xhr.onload = onResolve;
-            xhr.onabort = function () {
-                _this.isFulfilled = true;
-                reject(error.abort('Abort connection'));
-            };
-            xhr.onerror = onReject;
-            xhr.ontimeout = onReject;
-            if (o.responseType) {
-                xhr.responseType = o.responseType;
-            }
-            xhr.onprogress = function (e) {
-                var _a, _b;
-                var percentComplete = 0;
-                if (e.lengthComputable) {
-                    percentComplete = (e.loaded / e.total) * 100;
+            return tslib_1.__generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        onReject = function () {
+                            _this.isFulfilled = true;
+                            reject(error.connection('Connection error'));
+                        };
+                        onResolve = function () {
+                            _this.isFulfilled = true;
+                            resolve(new response_1.Response(request, xhr.status, xhr.statusText, !xhr.responseType ? xhr.responseText : xhr.response));
+                        };
+                        xhr.onload = onResolve;
+                        xhr.onabort = function () {
+                            _this.isFulfilled = true;
+                            reject(error.abort('Abort connection'));
+                        };
+                        xhr.onerror = onReject;
+                        xhr.ontimeout = onReject;
+                        if (o.responseType) {
+                            xhr.responseType = o.responseType;
+                        }
+                        xhr.onprogress = function (e) {
+                            var _a, _b;
+                            var percentComplete = 0;
+                            if (e.lengthComputable) {
+                                percentComplete = (e.loaded / e.total) * 100;
+                            }
+                            (_b = (_a = _this.options).onProgress) === null || _b === void 0 ? void 0 : _b.call(_a, percentComplete);
+                        };
+                        xhr.onreadystatechange = function () {
+                            var _a, _b;
+                            (_b = (_a = _this.options).onProgress) === null || _b === void 0 ? void 0 : _b.call(_a, 10);
+                            if (xhr.readyState === XMLHttpRequest.DONE) {
+                                if (o.successStatuses.includes(xhr.status)) {
+                                    onResolve();
+                                }
+                                else if (xhr.statusText) {
+                                    _this.isFulfilled = true;
+                                    reject(error.connection(xhr.statusText));
+                                }
+                            }
+                        };
+                        xhr.withCredentials = (_a = o.withCredentials) !== null && _a !== void 0 ? _a : false;
+                        url = request.url, data = request.data, method = request.method;
+                        xhr.open(method, url, true);
+                        if (o.contentType && xhr.setRequestHeader) {
+                            xhr.setRequestHeader('Content-type', o.contentType);
+                        }
+                        headers = o.headers;
+                        if (!(0, helpers_1.isFunction)(headers)) return [3, 2];
+                        return [4, headers.call(this)];
+                    case 1:
+                        headers = _b.sent();
+                        _b.label = 2;
+                    case 2:
+                        if (headers && xhr.setRequestHeader) {
+                            Object.keys(headers).forEach(function (key) {
+                                xhr.setRequestHeader(key, headers[key]);
+                            });
+                        }
+                        this.j.async.setTimeout(function () {
+                            xhr.send(data ? _this.__buildParams(data) : undefined);
+                        }, 0);
+                        return [2];
                 }
-                (_b = (_a = _this.options).onProgress) === null || _b === void 0 ? void 0 : _b.call(_a, percentComplete);
-            };
-            xhr.onreadystatechange = function () {
-                var _a, _b;
-                (_b = (_a = _this.options).onProgress) === null || _b === void 0 ? void 0 : _b.call(_a, 10);
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (o.successStatuses.includes(xhr.status)) {
-                        onResolve();
-                    }
-                    else if (xhr.statusText) {
-                        _this.isFulfilled = true;
-                        reject(error.connection(xhr.statusText));
-                    }
-                }
-            };
-            xhr.withCredentials = (_a = o.withCredentials) !== null && _a !== void 0 ? _a : false;
-            var url = request.url, data = request.data, method = request.method;
-            xhr.open(method, url, true);
-            if (o.contentType && xhr.setRequestHeader) {
-                xhr.setRequestHeader('Content-type', o.contentType);
-            }
-            var headers = o.headers;
-            if (headers && xhr.setRequestHeader) {
-                Object.keys(headers).forEach(function (key) {
-                    xhr.setRequestHeader(key, headers[key]);
-                });
-            }
-            _this.j.async.setTimeout(function () {
-                xhr.send(data ? _this.__buildParams(data) : undefined);
-            }, 0);
-        });
+            });
+        }); });
     };
     Ajax.prototype.prepareRequest = function () {
         if (!this.o.url) {
@@ -12613,7 +13002,7 @@ var Response = (function () {
         configurable: true
     });
     Response.prototype.json = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             return tslib_1.__generator(this, function (_a) {
                 return [2, JSON.parse(this.body)];
             });
@@ -12623,7 +13012,7 @@ var Response = (function () {
         return Promise.resolve(this.body);
     };
     Response.prototype.blob = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             return tslib_1.__generator(this, function (_a) {
                 return [2, this.body];
             });
@@ -13254,7 +13643,7 @@ var Select = (function () {
             if (!dom_1.Dom.isHTMLElement(root_1)) {
                 root_1 = root_1.parentElement;
             }
-            var nodes_1 = [], startOffset = range.startOffset, length_1 = root_1.childNodes.length, elementOffset = startOffset < length_1 ? startOffset : length_1 - 1;
+            var nodes_1 = [], startOffset = range.startOffset, length = root_1.childNodes.length, elementOffset = startOffset < length ? startOffset : length - 1;
             var start = range.startContainer === this.area
                 ? root_1.childNodes[elementOffset]
                 : range.startContainer, end_1 = range.endContainer === this.area
@@ -16723,6 +17112,7 @@ exports.getStrongControlTypes = getStrongControlTypes;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Icon = void 0;
 var css_1 = __webpack_require__(56672);
+var helpers_1 = __webpack_require__(92654);
 var Icon = (function () {
     function Icon() {
     }
@@ -16730,10 +17120,14 @@ var Icon = (function () {
         if (/<svg/i.test(name)) {
             return name;
         }
-        return (Icon.icons[name] ||
+        var icon = Icon.icons[name] ||
             Icon.icons[name.replace(/-/g, '_')] ||
             Icon.icons[name.replace(/_/g, '-')] ||
-            Icon.icons[name.toLowerCase()]);
+            Icon.icons[(0, helpers_1.camelCase)(name)] ||
+            Icon.icons[(0, helpers_1.kebabCase)(name)] ||
+            Icon.icons[name.toLowerCase()];
+        if (false) {}
+        return icon;
     };
     Icon.exists = function (name) {
         return this.getIcon(name) !== undefined;
@@ -17348,7 +17742,7 @@ var View = (function (_super) {
         _this.isView = true;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.18.9";
+        _this.version = "3.19.1";
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
         _this.OPTIONS = View.defaultOptions;
@@ -17494,10 +17888,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.18.9";
+        return "3.19.1";
     };
     View.getVersion = function () {
-        return "3.18.9";
+        return "3.19.1";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
@@ -18597,34 +18991,30 @@ exports.Jodit = Jodit;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var checker_1 = __webpack_require__(37379);
-var en = __webpack_require__(27390);
-var exp = {
-    en: en
-};
+var exp = {};
 if (true) {
-    var ar = __webpack_require__(96380);
-    var cs_cz = __webpack_require__(33146);
-    var de = __webpack_require__(69154);
-    var es = __webpack_require__(65857);
-    var fr = __webpack_require__(64491);
-    var he = __webpack_require__(15794);
-    var hu = __webpack_require__(48963);
-    var id = __webpack_require__(70164);
-    var it = __webpack_require__(64917);
-    var ja = __webpack_require__(91235);
-    var ko = __webpack_require__(76676);
-    var nl = __webpack_require__(78337);
-    var pl = __webpack_require__(66221);
-    var pt_br = __webpack_require__(75662);
-    var ru = __webpack_require__(90159);
-    var tr = __webpack_require__(88053);
-    var zh_cn = __webpack_require__(79865);
-    var zh_tw = __webpack_require__(50691);
+    var ar = __webpack_require__(90643);
+    var cs_cz = __webpack_require__(52532);
+    var de = __webpack_require__(75178);
+    var es = __webpack_require__(22999);
+    var fr = __webpack_require__(34145);
+    var he = __webpack_require__(40272);
+    var hu = __webpack_require__(2978);
+    var id = __webpack_require__(99113);
+    var it = __webpack_require__(51923);
+    var ja = __webpack_require__(21268);
+    var ko = __webpack_require__(37289);
+    var nl = __webpack_require__(17084);
+    var pl = __webpack_require__(96891);
+    var pt_br = __webpack_require__(31211);
+    var ru = __webpack_require__(31109);
+    var tr = __webpack_require__(79375);
+    var zh_cn = __webpack_require__(21042);
+    var zh_tw = __webpack_require__(73895);
     exp = {
         ar: ar,
         cs_cz: cs_cz,
         de: de,
-        en: en,
         es: es,
         fr: fr,
         he: he,
@@ -18642,7 +19032,11 @@ if (true) {
         zh_tw: zh_tw
     };
 }
-var get = function (value) { return value.default || value; }, hashLang = {};
+var en = __webpack_require__(51048);
+exp.en = en;
+var get = function (value) {
+    return value ? value.default || value : {};
+}, hashLang = {};
 if ((0, checker_1.isArray)(get(en))) {
     get(en).forEach(function (key, index) {
         hashLang[index] = key;
@@ -19416,7 +19810,7 @@ exports["default"] = (function (self) {
                     ? {
                         icon: 'bin',
                         title: 'Delete',
-                        exec: function () { return tslib_1.__awaiter(void 0, void 0, void 0, function () {
+                        exec: function () { return tslib_1.__awaiter(void 0, void 0, Promise, function () {
                             var e_1;
                             return tslib_1.__generator(this, function (_a) {
                                 switch (_a.label) {
@@ -19667,20 +20061,21 @@ exports.FileBrowserItem = FileBrowserItem;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
 var config_1 = __webpack_require__(27537);
-var helpers_1 = __webpack_require__(92654);
-var ui_1 = __webpack_require__(14153);
+var checker_1 = __webpack_require__(37379);
+var file_1 = __webpack_require__(65841);
+var human_size_to_bytes_1 = __webpack_require__(52169);
 config_1.Config.prototype.filebrowser = {
     namespace: '',
     extraButtons: [],
     filter: function (item, search) {
         search = search.toLowerCase();
-        if ((0, helpers_1.isString)(item)) {
+        if ((0, checker_1.isString)(item)) {
             return item.toLowerCase().indexOf(search) !== -1;
         }
-        if ((0, helpers_1.isString)(item.name)) {
+        if ((0, checker_1.isString)(item.name)) {
             return item.name.toLowerCase().indexOf(search) !== -1;
         }
-        if ((0, helpers_1.isString)(item.file)) {
+        if ((0, checker_1.isString)(item.file)) {
             return item.file.toLowerCase().indexOf(search) !== -1;
         }
         return true;
@@ -19697,14 +20092,14 @@ config_1.Config.prototype.filebrowser = {
             }
             return 0;
         };
-        if ((0, helpers_1.isString)(a)) {
+        if ((0, checker_1.isString)(a)) {
             return compareStr(a.toLowerCase(), b.toLowerCase());
         }
         if (a[sortAttr] === undefined || sortAttr === 'name') {
-            if ((0, helpers_1.isString)(a.name)) {
+            if ((0, checker_1.isString)(a.name)) {
                 return compareStr(a.name.toLowerCase(), b.name.toLowerCase());
             }
-            if ((0, helpers_1.isString)(a.file)) {
+            if ((0, checker_1.isString)(a.file)) {
                 return compareStr(a.file.toLowerCase(), b.file.toLowerCase());
             }
             return 0;
@@ -19715,7 +20110,7 @@ config_1.Config.prototype.filebrowser = {
                 return asc ? f - s : s - f;
             }
             case 'size': {
-                var f = (0, helpers_1.humanSizeToBytes)(a.size), s = (0, helpers_1.humanSizeToBytes)(b.size);
+                var f = (0, human_size_to_bytes_1.humanSizeToBytes)(a.size), s = (0, human_size_to_bytes_1.humanSizeToBytes)(b.size);
                 return asc ? f - s : s - f;
             }
         }
@@ -19758,7 +20153,7 @@ config_1.Config.prototype.filebrowser = {
         return resp.success;
     },
     getMessage: function (resp) {
-        return resp.data.messages !== undefined && (0, helpers_1.isArray)(resp.data.messages)
+        return resp.data.messages !== undefined && (0, checker_1.isArray)(resp.data.messages)
             ? resp.data.messages.join(' ')
             : '';
     },
@@ -19837,7 +20232,7 @@ config_1.Config.prototype.controls.filebrowser = {
             return !browser.dataProvider.canI('FileUpload');
         },
         getContent: function (filebrowser) {
-            var btn = new ui_1.UIFileInput(filebrowser, {
+            var btn = new file_1.UIFileInput(filebrowser, {
                 onlyImages: filebrowser.state.onlyImages
             });
             filebrowser.e.fire('bindUploader.filebrowser', btn.container);
@@ -20033,7 +20428,7 @@ var DataProvider = (function () {
         this.progressHandler = callback;
     };
     DataProvider.prototype.permissions = function (path, source) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var _this = this;
             return tslib_1.__generator(this, function (_a) {
                 if (!this.o.permissions) {
@@ -20116,7 +20511,7 @@ var DataProvider = (function () {
         return elements;
     };
     DataProvider.prototype.tree = function (path, source) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var _this = this;
             return tslib_1.__generator(this, function (_a) {
                 switch (_a.label) {
@@ -20385,7 +20780,7 @@ var tslib_1 = __webpack_require__(20255);
 var dom_1 = __webpack_require__(94522);
 var load_items_1 = __webpack_require__(92595);
 function loadTree(fb) {
-    return tslib_1.__awaiter(this, void 0, void 0, function () {
+    return tslib_1.__awaiter(this, void 0, Promise, function () {
         var items, tree;
         return tslib_1.__generator(this, function (_a) {
             fb.tree.setMod('active', true);
@@ -20428,11 +20823,10 @@ var tslib_1 = __webpack_require__(20255);
 __webpack_require__(40692);
 var config_1 = __webpack_require__(27537);
 var consts = __webpack_require__(10063);
-var dialog_1 = __webpack_require__(68713);
+var dialog_1 = __webpack_require__(5204);
 var storage_1 = __webpack_require__(42413);
 var helpers_1 = __webpack_require__(92654);
 var view_with_toolbar_1 = __webpack_require__(62322);
-__webpack_require__(88450);
 var dom_1 = __webpack_require__(94522);
 var factories_1 = __webpack_require__(43708);
 var state_listeners_1 = __webpack_require__(47588);
@@ -20445,6 +20839,7 @@ var event_emitter_1 = __webpack_require__(42293);
 var load_tree_1 = __webpack_require__(35978);
 var load_items_1 = __webpack_require__(92595);
 var component_1 = __webpack_require__(34543);
+__webpack_require__(88450);
 var FileBrowser = (function (_super) {
     tslib_1.__extends(FileBrowser, _super);
     function FileBrowser(options) {
@@ -21650,6 +22045,7 @@ exports.Stack = Stack;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.imageeditor = {
     min_width: 20,
     min_height: 20,
@@ -21665,6 +22061,7 @@ config_1.Config.prototype.imageeditor = {
     cropDefaultWidth: '70%',
     cropDefaultHeight: '70%'
 };
+icon_1.Icon.set('crop', __webpack_require__(3610)).set('resize', __webpack_require__(56170));
 
 
 /***/ }),
@@ -23235,10 +23632,10 @@ var ToolbarButton = (function (_super) {
                 state.icon.iconURL = ctr.iconURL;
             }
             else {
-                var name_1 = ctr.icon || ctr.name;
+                var name = ctr.icon || ctr.name;
                 state.icon.name =
-                    icon_1.Icon.exists(name_1) || ((_a = this.j.o.extraIcons) === null || _a === void 0 ? void 0 : _a[name_1])
-                        ? name_1
+                    icon_1.Icon.exists(name) || ((_a = this.j.o.extraIcons) === null || _a === void 0 ? void 0 : _a[name])
+                        ? name
                         : '';
             }
             if (!ctr.iconURL && !state.icon.name) {
@@ -24023,8 +24420,8 @@ function sendFiles(uploader, files, handlerSuccess, handlerError, process) {
         var _loop_1 = function () {
             file_1 = fileList[i];
             if (file_1 && file_1.type) {
-                var mime_1 = file_1.type.match(/\/([a-z0-9]+)/i);
-                var extension = mime_1[1] ? mime_1[1].toLowerCase() : '';
+                var mime = file_1.type.match(/\/([a-z0-9]+)/i);
+                var extension = mime[1] ? mime[1].toLowerCase() : '';
                 if (o.imagesExtensions.includes(extension)) {
                     var reader_1 = new FileReader();
                     promises.push(uploader.j.async.promise(function (resolve, reject) {
@@ -24061,8 +24458,8 @@ function sendFiles(uploader, files, handlerSuccess, handlerError, process) {
             file = fileList[i];
             if (file) {
                 var hasRealExtension = /\.[\d\w]+$/.test(file.name);
-                var mime_2 = file.type.match(/\/([a-z0-9]+)/i);
-                var extension = mime_2 && mime_2[1] ? mime_2[1].toLowerCase() : '';
+                var mime = file.type.match(/\/([a-z0-9]+)/i);
+                var extension = mime && mime[1] ? mime[1].toLowerCase() : '';
                 var newName = fileList[i].name ||
                     Math.random().toString().replace('.', '');
                 if (!hasRealExtension && extension) {
@@ -24075,8 +24472,8 @@ function sendFiles(uploader, files, handlerSuccess, handlerError, process) {
                         newName += '.' + extension;
                     }
                 }
-                var _a = tslib_1.__read(o.processFileName.call(uploader, o.filesVariableName(i), fileList[i], newName), 3), key = _a[0], iFile = _a[1], name_1 = _a[2];
-                form_1.append(key, iFile, name_1);
+                var _a = tslib_1.__read(o.processFileName.call(uploader, o.filesVariableName(i), fileList[i], newName), 3), key = _a[0], iFile = _a[1], name = _a[2];
+                form_1.append(key, iFile, name);
             }
         }
         if (process) {
@@ -24398,6 +24795,7 @@ __webpack_require__(60819);
 var helpers_1 = __webpack_require__(92654);
 var ui_1 = __webpack_require__(14153);
 var dom_1 = __webpack_require__(94522);
+ui_1.Icon.set('palette', __webpack_require__(95331));
 var ColorPickerWidget = function (editor, callback, coldColor) {
     var cn = 'jodit-color-picker', valueHex = (0, helpers_1.normalizeColor)(coldColor), form = editor.c.div(cn), iconPalette = editor.o.textIcons
         ? "<span>".concat(editor.i18n('palette'), "</span>")
@@ -24479,8 +24877,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FileSelectorWidget = void 0;
 var helpers_1 = __webpack_require__(92654);
 var dom_1 = __webpack_require__(94522);
-var tabs_1 = __webpack_require__(21386);
 var ui_1 = __webpack_require__(14153);
+var tabs_1 = __webpack_require__(21386);
 var FileSelectorWidget = function (editor, callbacks, elm, close, isImage) {
     if (isImage === void 0) { isImage = true; }
     var currentImage;
@@ -24708,12 +25106,13 @@ exports.TabsWidget = TabsWidget;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.about = void 0;
 __webpack_require__(33126);
 var config_1 = __webpack_require__(27537);
 var helpers_1 = __webpack_require__(92654);
 var constants = __webpack_require__(10063);
 var dialog_1 = __webpack_require__(68713);
+var global_1 = __webpack_require__(58299);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.controls.about = {
     exec: function (editor) {
         var dialog = new dialog_1.Dialog({
@@ -24740,7 +25139,8 @@ function about(editor) {
         group: 'info'
     });
 }
-exports.about = about;
+global_1.pluginSystem.add('about', about);
+icon_1.Icon.set('about', __webpack_require__(84279));
 
 
 /***/ }),
@@ -24762,6 +25162,7 @@ __webpack_require__(30724);
 var modules_1 = __webpack_require__(46701);
 var helpers_1 = __webpack_require__(92654);
 var decorators_1 = __webpack_require__(9901);
+var global_1 = __webpack_require__(58299);
 __webpack_require__(25532);
 var ns = 'addnewline';
 var addNewLine = (function (_super) {
@@ -24875,10 +25276,10 @@ var addNewLine = (function (_super) {
             e.target === editor.editor &&
             editor.s.isCollapsed()) {
             var editorBound = (0, helpers_1.offset)(editor.editor, editor, editor.ed);
-            var top_1 = e.pageY - editor.ew.pageYOffset;
+            var top = e.pageY - editor.ew.pageYOffset;
             var p = editor.createInside.element(editor.o.enter);
-            if (Math.abs(top_1 - editorBound.top) <
-                Math.abs(top_1 - (editorBound.height + editorBound.top)) &&
+            if (Math.abs(top - editorBound.top) <
+                Math.abs(top - (editorBound.height + editorBound.top)) &&
                 editor.editor.firstChild) {
                 editor.editor.insertBefore(p, editor.editor.firstChild);
             }
@@ -24919,8 +25320,8 @@ var addNewLine = (function (_super) {
         var top = false;
         var clientY = e.clientY;
         if (this.j.iframe) {
-            var top_2 = (0, helpers_1.position)(this.j.iframe, this.j, true).top;
-            clientY += top_2;
+            var top_1 = (0, helpers_1.position)(this.j.iframe, this.j, true).top;
+            clientY += top_1;
         }
         var delta = this.j.o.addNewLineDeltaShow;
         if (Math.abs(clientY - pos.top) <= delta) {
@@ -24967,6 +25368,7 @@ var addNewLine = (function (_super) {
     return addNewLine;
 }(modules_1.Plugin));
 exports.addNewLine = addNewLine;
+global_1.pluginSystem.add('addNewLine', addNewLine);
 
 
 /***/ }),
@@ -24983,6 +25385,7 @@ exports.addNewLine = addNewLine;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
+var ui_1 = __webpack_require__(14153);
 config_1.Config.prototype.addNewLine = true;
 config_1.Config.prototype.addNewLineOnDBLClick = true;
 config_1.Config.prototype.addNewLineTagsTriggers = [
@@ -24994,6 +25397,725 @@ config_1.Config.prototype.addNewLineTagsTriggers = [
     'jodit'
 ];
 config_1.Config.prototype.addNewLineDeltaShow = 20;
+ui_1.Icon.set('enter', __webpack_require__(11257));
+
+
+/***/ }),
+
+/***/ 51904:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.backspace = void 0;
+var tslib_1 = __webpack_require__(20255);
+var plugin_1 = __webpack_require__(35570);
+var dom_1 = __webpack_require__(94522);
+var constants_1 = __webpack_require__(10063);
+var helpers_1 = __webpack_require__(92654);
+var helpers_2 = __webpack_require__(36687);
+var global_1 = __webpack_require__(58299);
+var cases_1 = __webpack_require__(18214);
+var check_not_collapsed_1 = __webpack_require__(30894);
+__webpack_require__(63108);
+var backspace = (function (_super) {
+    tslib_1.__extends(backspace, _super);
+    function backspace() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.requires = ['hotkeys'];
+        return _this;
+    }
+    backspace.prototype.afterInit = function (jodit) {
+        var _this = this;
+        jodit.e.on('afterCommand.delete', function (command) {
+            if (command === 'delete') {
+                _this.afterDeleteCommand();
+            }
+        });
+        jodit
+            .registerCommand('deleteButton', {
+            exec: function () { return _this.onDelete(false); },
+            hotkeys: jodit.o.delete.hotkeys.delete
+        }, {
+            stopPropagation: false
+        })
+            .registerCommand('backspaceButton', {
+            exec: function () { return _this.onDelete(true); },
+            hotkeys: jodit.o.delete.hotkeys.backspace
+        }, {
+            stopPropagation: false
+        })
+            .registerCommand('deleteWordButton', {
+            exec: function () { return _this.onDelete(false, 'word'); },
+            hotkeys: jodit.o.delete.hotkeys.deleteWord
+        })
+            .registerCommand('backspaceWordButton', {
+            exec: function () { return _this.onDelete(true, 'word'); },
+            hotkeys: jodit.o.delete.hotkeys.backspaceWord
+        })
+            .registerCommand('deleteSentenceButton', {
+            exec: function () { return _this.onDelete(false, 'sentence'); },
+            hotkeys: jodit.o.delete.hotkeys.deleteSentence
+        })
+            .registerCommand('backspaceSentenceButton', {
+            exec: function () { return _this.onDelete(true, 'sentence'); },
+            hotkeys: jodit.o.delete.hotkeys.backspaceSentence
+        });
+    };
+    backspace.prototype.beforeDestruct = function (jodit) {
+        jodit.e.off('afterCommand.delete');
+    };
+    backspace.prototype.afterDeleteCommand = function () {
+        var jodit = this.j;
+        var current = jodit.s.current();
+        if (current && dom_1.Dom.isTag(current.firstChild, 'br')) {
+            jodit.s.removeNode(current.firstChild);
+        }
+        if (!(0, helpers_1.trim)(jodit.editor.textContent || '') &&
+            !jodit.editor.querySelector('img,table,jodit,iframe,hr') &&
+            (!current || !dom_1.Dom.closest(current, 'table', jodit.editor))) {
+            jodit.editor.innerHTML = '';
+            var node = jodit.s.setCursorIn(jodit.editor);
+            jodit.s.removeNode(node);
+        }
+    };
+    backspace.prototype.onDelete = function (backspace, mode) {
+        if (mode === void 0) { mode = 'char'; }
+        var jodit = this.j;
+        var sel = jodit.selection;
+        if (!sel.isFocused()) {
+            sel.focus();
+        }
+        if ((0, check_not_collapsed_1.checkNotCollapsed)(jodit)) {
+            return false;
+        }
+        var range = sel.range;
+        var fakeNode = jodit.createInside.text(constants_1.INVISIBLE_SPACE);
+        try {
+            range.insertNode(fakeNode);
+            if (!dom_1.Dom.isOrContains(jodit.editor, fakeNode)) {
+                return;
+            }
+            (0, helpers_2.moveNodeInsideStart)(jodit, fakeNode, backspace);
+            if (cases_1.cases.some(function (func) {
+                return (0, helpers_1.isFunction)(func) &&
+                    func(jodit, fakeNode, backspace, mode);
+            })) {
+                return false;
+            }
+        }
+        catch (e) {
+            if (false) {}
+            throw e;
+        }
+        finally {
+            this.safeRemoveEmptyNode(fakeNode);
+        }
+        return false;
+    };
+    backspace.prototype.safeRemoveEmptyNode = function (fakeNode) {
+        var _a, _b;
+        var range = this.j.s.range;
+        if (range.startContainer === fakeNode) {
+            if (fakeNode.previousSibling) {
+                if (dom_1.Dom.isText(fakeNode.previousSibling)) {
+                    range.setStart(fakeNode.previousSibling, (_b = (_a = fakeNode.previousSibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0);
+                }
+                else {
+                    range.setStartAfter(fakeNode.previousSibling);
+                }
+            }
+            else if (fakeNode.nextSibling) {
+                if (dom_1.Dom.isText(fakeNode.nextSibling)) {
+                    range.setStart(fakeNode.nextSibling, 0);
+                }
+                else {
+                    range.setStartBefore(fakeNode.nextSibling);
+                }
+            }
+            range.collapse(true);
+            this.j.s.selectRange(range);
+        }
+        dom_1.Dom.safeRemove(fakeNode);
+    };
+    return backspace;
+}(plugin_1.Plugin));
+exports.backspace = backspace;
+global_1.pluginSystem.add('backspace', backspace);
+
+
+/***/ }),
+
+/***/ 33272:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkJoinNeighbors = void 0;
+var dom_1 = __webpack_require__(43887);
+function checkJoinNeighbors(jodit, fakeNode, backspace) {
+    var nextBox = fakeNode, mainClosestBox = nextBox;
+    while (nextBox &&
+        !dom_1.Dom.findNotEmptySibling(nextBox, backspace) &&
+        nextBox.parentElement !== jodit.editor) {
+        nextBox = nextBox.parentElement;
+        mainClosestBox = nextBox;
+    }
+    if (dom_1.Dom.isElement(mainClosestBox) &&
+        dom_1.Dom.isContentEditable(mainClosestBox, jodit.editor)) {
+        var sibling = dom_1.Dom.findNotEmptySibling(mainClosestBox, backspace);
+        if (sibling &&
+            (checkMoveListContent(jodit, mainClosestBox, sibling, backspace) ||
+                moveContentAndRemoveEmpty(jodit, mainClosestBox, sibling, backspace))) {
+            jodit.s.setCursorBefore(fakeNode);
+            return true;
+        }
+    }
+    return false;
+}
+exports.checkJoinNeighbors = checkJoinNeighbors;
+function checkMoveListContent(jodit, mainClosestBox, sibling, backspace) {
+    var siblingIsList = dom_1.Dom.isTag(sibling, ['ol', 'ul']);
+    var boxIsList = dom_1.Dom.isTag(mainClosestBox, ['ol', 'ul']);
+    var elementChild = function (elm, side) {
+        return side ? elm.firstElementChild : elm.lastElementChild;
+    };
+    if (boxIsList) {
+        sibling = jodit.createInside.element(jodit.o.enterBlock);
+        dom_1.Dom.before(mainClosestBox, sibling);
+        return moveContentAndRemoveEmpty(jodit, elementChild(mainClosestBox, backspace), sibling, backspace);
+    }
+    if (sibling && siblingIsList && !boxIsList) {
+        return moveContentAndRemoveEmpty(jodit, mainClosestBox, elementChild(sibling, !backspace), backspace);
+    }
+    return false;
+}
+function moveContentAndRemoveEmpty(jodit, mainClosestBox, sibling, backspace) {
+    if (mainClosestBox && dom_1.Dom.isElement(sibling)) {
+        dom_1.Dom.moveContent(mainClosestBox, sibling, !backspace);
+        var remove = mainClosestBox;
+        while (remove && remove !== jodit.editor && dom_1.Dom.isEmpty(remove)) {
+            var parent = remove.parentElement;
+            dom_1.Dom.safeRemove(remove);
+            remove = parent;
+        }
+        return true;
+    }
+    return false;
+}
+
+
+/***/ }),
+
+/***/ 61660:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkJoinTwoLists = void 0;
+var dom_1 = __webpack_require__(43887);
+var utils_1 = __webpack_require__(51976);
+function checkJoinTwoLists(jodit, fakeNode, backspace) {
+    var next = dom_1.Dom.findSibling(fakeNode, backspace), prev = dom_1.Dom.findSibling(fakeNode, !backspace);
+    if (!dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, jodit.editor) &&
+        dom_1.Dom.isTag(next, ['ul', 'ol']) &&
+        dom_1.Dom.isTag(prev, ['ul', 'ol']) &&
+        dom_1.Dom.isTag(next.lastElementChild, 'li') &&
+        dom_1.Dom.isTag(prev.firstElementChild, 'li')) {
+        var _a = jodit.s, setCursorBefore = _a.setCursorBefore, setCursorAfter = _a.setCursorAfter;
+        var target = next.lastElementChild, second = prev.firstElementChild;
+        (0, utils_1.call)(!backspace ? dom_1.Dom.append : dom_1.Dom.prepend, second, fakeNode);
+        dom_1.Dom.moveContent(prev, next, !backspace);
+        dom_1.Dom.safeRemove(prev);
+        (0, utils_1.call)(backspace ? dom_1.Dom.append : dom_1.Dom.prepend, target, fakeNode);
+        (0, utils_1.call)(backspace ? setCursorBefore : setCursorAfter, fakeNode);
+        return true;
+    }
+    return false;
+}
+exports.checkJoinTwoLists = checkJoinTwoLists;
+
+
+/***/ }),
+
+/***/ 30894:
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkNotCollapsed = void 0;
+function checkNotCollapsed(jodit) {
+    if (!jodit.s.isCollapsed()) {
+        jodit.execCommand('Delete');
+        return true;
+    }
+    return false;
+}
+exports.checkNotCollapsed = checkNotCollapsed;
+
+
+/***/ }),
+
+/***/ 88728:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkRemoveChar = void 0;
+var dom_1 = __webpack_require__(94522);
+var helpers_1 = __webpack_require__(92654);
+var constants_1 = __webpack_require__(10063);
+var helpers_2 = __webpack_require__(62493);
+function checkRemoveChar(jodit, fakeNode, backspace, mode) {
+    var _a, _b, _c;
+    var step = backspace ? -1 : 1;
+    var anotherSibling = dom_1.Dom.sibling(fakeNode, !backspace);
+    var sibling = dom_1.Dom.sibling(fakeNode, backspace), removeNeighbor = null;
+    var charRemoved = false, removed;
+    while (sibling && (dom_1.Dom.isText(sibling) || dom_1.Dom.isInlineBlock(sibling))) {
+        while (dom_1.Dom.isInlineBlock(sibling)) {
+            sibling = (backspace ? sibling === null || sibling === void 0 ? void 0 : sibling.lastChild : sibling === null || sibling === void 0 ? void 0 : sibling.firstChild);
+        }
+        if (!sibling) {
+            break;
+        }
+        if ((_a = sibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) {
+            var value = (0, helpers_1.toArray)(sibling.nodeValue);
+            var length = value.length;
+            var index = backspace ? length - 1 : 0;
+            if (value[index] === constants_1.INVISIBLE_SPACE) {
+                while (value[index] === constants_1.INVISIBLE_SPACE) {
+                    index += step;
+                }
+            }
+            removed = value[index];
+            if (value[index + step] === constants_1.INVISIBLE_SPACE) {
+                index += step;
+                while (value[index] === constants_1.INVISIBLE_SPACE) {
+                    index += step;
+                }
+                index += backspace ? 1 : -1;
+            }
+            if (backspace && index < 0) {
+                value = [];
+            }
+            else {
+                value = value.slice(backspace ? 0 : index + 1, backspace ? index : length);
+            }
+            if (!anotherSibling ||
+                !dom_1.Dom.isText(anotherSibling) ||
+                (!backspace ? / $/ : /^ /).test((_b = anotherSibling.nodeValue) !== null && _b !== void 0 ? _b : '') ||
+                !(0, helpers_1.trimInv)(anotherSibling.nodeValue || '').length) {
+                for (var i = backspace ? value.length - 1 : 0; backspace ? i >= 0 : i < value.length; i += backspace ? -1 : 1) {
+                    if (value[i] === ' ') {
+                        value[i] = constants_1.NBSP_SPACE;
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+            sibling.nodeValue = value.join('');
+        }
+        if (!((_c = sibling.nodeValue) === null || _c === void 0 ? void 0 : _c.length)) {
+            removeNeighbor = sibling;
+        }
+        if (!(0, helpers_1.isVoid)(removed) && removed !== constants_1.INVISIBLE_SPACE) {
+            charRemoved = true;
+            (0, helpers_1.call)(backspace ? dom_1.Dom.after : dom_1.Dom.before, sibling, fakeNode);
+            if (mode === 'sentence' ||
+                (mode === 'word' && removed !== ' ' && removed !== constants_1.NBSP_SPACE)) {
+                checkRemoveChar(jodit, fakeNode, backspace, mode);
+            }
+            break;
+        }
+        var nextSibling = dom_1.Dom.sibling(sibling, backspace);
+        if (!nextSibling &&
+            sibling.parentNode &&
+            sibling.parentNode !== jodit.editor) {
+            nextSibling = (0, helpers_2.findMostNestedNeighbor)(sibling, !backspace, jodit.editor, true);
+        }
+        if (removeNeighbor) {
+            dom_1.Dom.safeRemove(removeNeighbor);
+            removeNeighbor = null;
+        }
+        sibling = nextSibling;
+    }
+    if (charRemoved) {
+        removeEmptyInlineParent(fakeNode);
+        addBRInsideEmptyBlock(jodit, fakeNode);
+        jodit.s.setCursorBefore(fakeNode);
+    }
+    return charRemoved;
+}
+exports.checkRemoveChar = checkRemoveChar;
+function removeEmptyInlineParent(node) {
+    var parent = node.parentElement;
+    while (parent && dom_1.Dom.isInlineBlock(parent)) {
+        var p = parent.parentElement;
+        if (dom_1.Dom.isEmpty(parent)) {
+            dom_1.Dom.after(parent, node);
+            dom_1.Dom.safeRemove(parent);
+        }
+        parent = p;
+    }
+}
+function addBRInsideEmptyBlock(jodit, node) {
+    if (node.parentElement !== jodit.editor &&
+        dom_1.Dom.isBlock(node.parentElement) &&
+        dom_1.Dom.each(node.parentElement, dom_1.Dom.isEmptyTextNode)) {
+        dom_1.Dom.after(node, jodit.createInside.element('br'));
+    }
+}
+
+
+/***/ }),
+
+/***/ 16826:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkRemoveContentNotEditable = void 0;
+var dom_1 = __webpack_require__(94522);
+var helpers_1 = __webpack_require__(92654);
+var helpers_2 = __webpack_require__(36687);
+function checkRemoveContentNotEditable(jodit, fakeNode, backspace) {
+    var neighbor = dom_1.Dom.findSibling(fakeNode, backspace);
+    if (!neighbor &&
+        fakeNode.parentElement &&
+        fakeNode.parentElement !== jodit.editor) {
+        neighbor = dom_1.Dom.findSibling(fakeNode.parentElement, backspace);
+    }
+    if (dom_1.Dom.isElement(neighbor) &&
+        !dom_1.Dom.isContentEditable(neighbor, jodit.editor)) {
+        (0, helpers_1.call)(backspace ? dom_1.Dom.before : dom_1.Dom.after, neighbor, fakeNode);
+        dom_1.Dom.safeRemove(neighbor);
+        (0, helpers_2.moveNodeInsideStart)(jodit, fakeNode, backspace);
+        (0, helpers_1.call)(backspace ? jodit.s.setCursorBefore : jodit.s.setCursorAfter, fakeNode);
+        return true;
+    }
+    return false;
+}
+exports.checkRemoveContentNotEditable = checkRemoveContentNotEditable;
+
+
+/***/ }),
+
+/***/ 27450:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkRemoveEmptyNeighbor = void 0;
+var dom_1 = __webpack_require__(43887);
+function checkRemoveEmptyNeighbor(jodit, fakeNode, backspace) {
+    var parent = dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, jodit.editor);
+    if (!parent) {
+        return false;
+    }
+    var neighbor = dom_1.Dom.findNotEmptySibling(parent, backspace);
+    if (neighbor && dom_1.Dom.isEmpty(neighbor)) {
+        dom_1.Dom.safeRemove(neighbor);
+        jodit.s.setCursorBefore(fakeNode);
+        return true;
+    }
+    return false;
+}
+exports.checkRemoveEmptyNeighbor = checkRemoveEmptyNeighbor;
+
+
+/***/ }),
+
+/***/ 2025:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkRemoveEmptyParent = void 0;
+var dom_1 = __webpack_require__(94522);
+var constants_1 = __webpack_require__(10063);
+var check_join_two_lists_1 = __webpack_require__(61660);
+function checkRemoveEmptyParent(jodit, fakeNode, backspace) {
+    var found = false;
+    var _a = jodit.s, setCursorBefore = _a.setCursorBefore, setCursorIn = _a.setCursorIn;
+    var prn = dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, jodit.editor);
+    if (!prn || !dom_1.Dom.isEmpty(prn)) {
+        return false;
+    }
+    var neighbor = dom_1.Dom.findNotEmptyNeighbor(fakeNode, backspace, jodit.editor);
+    do {
+        if (prn && dom_1.Dom.isEmpty(prn) && !dom_1.Dom.isCell(prn)) {
+            dom_1.Dom.after(prn, fakeNode);
+            var tmp = dom_1.Dom.closest(prn, function (n) { return dom_1.Dom.isElement(n) && n !== prn; }, jodit.editor);
+            dom_1.Dom.safeRemove(prn);
+            found = true;
+            prn = tmp;
+        }
+        else {
+            break;
+        }
+    } while (prn);
+    if (found && (0, check_join_two_lists_1.checkJoinTwoLists)(jodit, fakeNode, backspace)) {
+        return true;
+    }
+    if (neighbor &&
+        !dom_1.Dom.isText(neighbor) &&
+        !dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS)) {
+        setCursorIn(neighbor, !backspace);
+    }
+    else {
+        setCursorBefore(fakeNode);
+    }
+    return found;
+}
+exports.checkRemoveEmptyParent = checkRemoveEmptyParent;
+
+
+/***/ }),
+
+/***/ 92259:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkRemoveUnbreakableElement = void 0;
+var dom_1 = __webpack_require__(43887);
+var constants_1 = __webpack_require__(10063);
+var check_remove_empty_parent_1 = __webpack_require__(2025);
+function checkRemoveUnbreakableElement(jodit, fakeNode, backspace) {
+    var neighbor = dom_1.Dom.findSibling(fakeNode, backspace);
+    if (dom_1.Dom.isElement(neighbor) &&
+        (dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS) || dom_1.Dom.isEmpty(neighbor))) {
+        dom_1.Dom.safeRemove(neighbor);
+        jodit.s.setCursorBefore(fakeNode);
+        if (dom_1.Dom.isTag(neighbor, 'br')) {
+            (0, check_remove_empty_parent_1.checkRemoveEmptyParent)(jodit, fakeNode, backspace);
+        }
+        return true;
+    }
+    return false;
+}
+exports.checkRemoveUnbreakableElement = checkRemoveUnbreakableElement;
+
+
+/***/ }),
+
+/***/ 41096:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkTableCell = void 0;
+var dom_1 = __webpack_require__(43887);
+function checkTableCell(jodit, fakeNode) {
+    var cell = fakeNode.parentElement;
+    if (dom_1.Dom.isCell(cell)) {
+        return true;
+    }
+    return false;
+}
+exports.checkTableCell = checkTableCell;
+
+
+/***/ }),
+
+/***/ 36513:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkUnwrapFirstListItem = void 0;
+var dom_1 = __webpack_require__(43887);
+var utils_1 = __webpack_require__(73344);
+function checkUnwrapFirstListItem(jodit, fakeNode, backspace) {
+    var _a;
+    var li = dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, jodit.editor);
+    var s = jodit.s;
+    if (dom_1.Dom.isTag(li, 'li') &&
+        ((_a = li === null || li === void 0 ? void 0 : li.parentElement) === null || _a === void 0 ? void 0 : _a[backspace ? 'firstElementChild' : 'lastElementChild']) === li &&
+        s.cursorInTheEdge(backspace, li)) {
+        var ul = li.parentElement;
+        var p = jodit.createInside.element(jodit.o.enterBlock);
+        (0, utils_1.call)(backspace ? dom_1.Dom.before : dom_1.Dom.after, ul, p);
+        dom_1.Dom.moveContent(li, p);
+        dom_1.Dom.safeRemove(li);
+        if (dom_1.Dom.isEmpty(ul)) {
+            dom_1.Dom.safeRemove(ul);
+        }
+        (0, utils_1.call)(backspace ? s.setCursorBefore : s.setCursorAfter, fakeNode);
+        return true;
+    }
+    return false;
+}
+exports.checkUnwrapFirstListItem = checkUnwrapFirstListItem;
+
+
+/***/ }),
+
+/***/ 18214:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.cases = void 0;
+var check_remove_unbreakable_element_1 = __webpack_require__(92259);
+var check_remove_content_not_editable_1 = __webpack_require__(16826);
+var check_remove_char_1 = __webpack_require__(88728);
+var check_table_cell_1 = __webpack_require__(41096);
+var check_remove_empty_parent_1 = __webpack_require__(2025);
+var check_remove_empty_neighbor_1 = __webpack_require__(27450);
+var check_join_two_lists_1 = __webpack_require__(61660);
+var check_join_neighbors_1 = __webpack_require__(33272);
+var check_unwrap_first_list_item_1 = __webpack_require__(36513);
+exports.cases = [
+    check_remove_unbreakable_element_1.checkRemoveUnbreakableElement,
+    check_remove_content_not_editable_1.checkRemoveContentNotEditable,
+    check_remove_char_1.checkRemoveChar,
+    check_table_cell_1.checkTableCell,
+    check_remove_empty_parent_1.checkRemoveEmptyParent,
+    check_remove_empty_neighbor_1.checkRemoveEmptyNeighbor,
+    check_join_two_lists_1.checkJoinTwoLists,
+    check_join_neighbors_1.checkJoinNeighbors,
+    check_unwrap_first_list_item_1.checkUnwrapFirstListItem
+];
+
+
+/***/ }),
+
+/***/ 63108:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+config_1.Config.prototype.delete = {
+    hotkeys: {
+        delete: ['delete', 'cmd+backspace'],
+        deleteWord: ['ctrl+delete', 'cmd+alt+backspace', 'ctrl+alt+backspace'],
+        deleteSentence: ['ctrl+shift+delete', 'cmd+shift+delete'],
+        backspace: ['backspace'],
+        backspaceWord: ['ctrl+backspace'],
+        backspaceSentence: ['ctrl+shift+backspace', 'cmd+shift+backspace']
+    }
+};
+
+
+/***/ }),
+
+/***/ 62493:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.findMostNestedNeighbor = void 0;
+var dom_1 = __webpack_require__(94522);
+function findMostNestedNeighbor(node, right, root, onlyInlide) {
+    if (onlyInlide === void 0) { onlyInlide = false; }
+    var nextChild = function (node) {
+        return right ? node.firstChild : node.lastChild;
+    };
+    var next = dom_1.Dom.findNotEmptyNeighbor(node, !right, root);
+    if (onlyInlide && dom_1.Dom.isElement(next) && !dom_1.Dom.isInlineBlock(next)) {
+        return null;
+    }
+    if (next) {
+        do {
+            if (nextChild(next)) {
+                next = nextChild(next);
+            }
+            else {
+                return next;
+            }
+        } while (next);
+    }
+    return null;
+}
+exports.findMostNestedNeighbor = findMostNestedNeighbor;
 
 
 /***/ }),
@@ -25013,6 +26135,8 @@ exports.bold = void 0;
 var tslib_1 = __webpack_require__(20255);
 var config_1 = __webpack_require__(27537);
 var helpers_1 = __webpack_require__(92654);
+var global_1 = __webpack_require__(58299);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.controls.subscript = {
     tags: ['sub'],
     tooltip: 'subscript'
@@ -25097,6 +26221,13 @@ function bold(editor) {
     });
 }
 exports.bold = bold;
+global_1.pluginSystem.add('bold', bold);
+icon_1.Icon.set('bold', __webpack_require__(25141))
+    .set('italic', __webpack_require__(24557))
+    .set('strikethrough', __webpack_require__(10859))
+    .set('subscript', __webpack_require__(9813))
+    .set('superscript', __webpack_require__(93395))
+    .set('underline', __webpack_require__(98213));
 
 
 /***/ }),
@@ -25118,9 +26249,10 @@ var plugin_1 = __webpack_require__(35570);
 var config_1 = __webpack_require__(27537);
 var dom_1 = __webpack_require__(94522);
 var helpers_1 = __webpack_require__(92654);
+var global_1 = __webpack_require__(58299);
+var ui_1 = __webpack_require__(14153);
 config_1.Config.prototype.controls.classSpan = {
     command: 'applyClassName',
-    icon: __webpack_require__(76391),
     exec: helpers_1.memorizeExec,
     list: [
         'enabled',
@@ -25188,1506 +26320,13 @@ var classSpan = (function (_super) {
     return classSpan;
 }(plugin_1.Plugin));
 exports.classSpan = classSpan;
+global_1.pluginSystem.add('classSpan', classSpan);
+ui_1.Icon.set('class-span', __webpack_require__(20026));
 
 
 /***/ }),
 
-/***/ 65425:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.clipboard = exports.pluginKey = void 0;
-var constants_1 = __webpack_require__(10063);
-var helpers_1 = __webpack_require__(92654);
-var helpers_2 = __webpack_require__(81259);
-exports.pluginKey = 'clipboard';
-var clipboard = (function () {
-    function clipboard() {
-        this.buttons = [
-            {
-                name: 'cut',
-                group: 'clipboard'
-            },
-            {
-                name: 'copy',
-                group: 'clipboard'
-            },
-            {
-                name: 'paste',
-                group: 'clipboard'
-            },
-            {
-                name: 'selectall',
-                group: 'clipboard'
-            }
-        ];
-    }
-    clipboard.prototype.init = function (editor) {
-        var _a;
-        (_a = this.buttons) === null || _a === void 0 ? void 0 : _a.forEach(function (btn) { return editor.registerButton(btn); });
-        editor.e
-            .off("copy.".concat(exports.pluginKey, " cut.").concat(exports.pluginKey))
-            .on("copy.".concat(exports.pluginKey, " cut.").concat(exports.pluginKey), function (event) {
-            var _a;
-            var selectedText = editor.s.html;
-            var clipboardData = (0, helpers_2.getDataTransfer)(event) ||
-                (0, helpers_2.getDataTransfer)(editor.ew) ||
-                (0, helpers_2.getDataTransfer)(event.originalEvent);
-            if (clipboardData) {
-                clipboardData.setData(constants_1.TEXT_PLAIN, (0, helpers_1.stripTags)(selectedText));
-                clipboardData.setData(constants_1.TEXT_HTML, selectedText);
-            }
-            editor.buffer.set(exports.pluginKey, selectedText);
-            editor.e.fire('pasteStack', {
-                html: selectedText,
-                action: editor.o.defaultActionOnPaste
-            });
-            if (event.type === 'cut') {
-                editor.s.remove();
-                editor.s.focus();
-            }
-            event.preventDefault();
-            (_a = editor === null || editor === void 0 ? void 0 : editor.events) === null || _a === void 0 ? void 0 : _a.fire('afterCopy', selectedText);
-        });
-    };
-    clipboard.prototype.destruct = function (editor) {
-        var _a, _b;
-        (_a = editor === null || editor === void 0 ? void 0 : editor.buffer) === null || _a === void 0 ? void 0 : _a.set(exports.pluginKey, '');
-        (_b = editor === null || editor === void 0 ? void 0 : editor.events) === null || _b === void 0 ? void 0 : _b.off('.' + exports.pluginKey);
-    };
-    return clipboard;
-}());
-exports.clipboard = clipboard;
-
-
-/***/ }),
-
-/***/ 71123:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(27537);
-config_1.Config.prototype.controls.cut = {
-    command: 'cut',
-    isDisabled: function (editor) { return editor.s.isCollapsed(); },
-    tooltip: 'Cut selection'
-};
-config_1.Config.prototype.controls.copy = {
-    command: 'copy',
-    isDisabled: function (editor) { return editor.s.isCollapsed(); },
-    tooltip: 'Copy selection'
-};
-config_1.Config.prototype.controls.selectall = {
-    icon: 'select-all',
-    command: 'selectall',
-    tooltip: 'Select all'
-};
-
-
-/***/ }),
-
-/***/ 46218:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.copyFormat = void 0;
-var config_1 = __webpack_require__(27537);
-var dom_1 = __webpack_require__(94522);
-var helpers_1 = __webpack_require__(92654);
-var pluginKey = 'copyformat';
-var copyStyles = [
-    'fontWeight',
-    'fontStyle',
-    'fontSize',
-    'color',
-    'margin',
-    'padding',
-    'borderWidth',
-    'borderStyle',
-    'borderColor',
-    'borderRadius',
-    'backgroundColor',
-    'textDecorationLine',
-    'fontFamily'
-];
-var getStyle = function (editor, key, box, defaultStyles) {
-    var result = (0, helpers_1.css)(box, key);
-    if (result === defaultStyles[key]) {
-        if (box.parentNode &&
-            box !== editor.editor &&
-            box.parentNode !== editor.editor) {
-            result = getStyle(editor, key, box.parentNode, defaultStyles);
-        }
-        else {
-            result = undefined;
-        }
-    }
-    return result;
-};
-var getStyles = function (editor, box, defaultStyles) {
-    var result = {};
-    if (box) {
-        copyStyles.forEach(function (key) {
-            result[key] = getStyle(editor, key, box, defaultStyles);
-            if (key.match(/border(Style|Color)/) && !result.borderWidth) {
-                result[key] = undefined;
-            }
-        });
-    }
-    return result;
-};
-config_1.Config.prototype.controls.copyformat = {
-    exec: function (editor, current, _a) {
-        var button = _a.button;
-        if (!current) {
-            return;
-        }
-        if (editor.buffer.exists(pluginKey)) {
-            editor.buffer.delete(pluginKey);
-            editor.e.off(editor.editor, 'mouseup.' + pluginKey);
-        }
-        else {
-            var defaultStyles_1 = {}, box = dom_1.Dom.up(current, function (elm) { return elm && !dom_1.Dom.isText(elm); }, editor.editor) || editor.editor;
-            var ideal_1 = editor.createInside.span();
-            editor.editor.appendChild(ideal_1);
-            copyStyles.forEach(function (key) {
-                defaultStyles_1[key] = (0, helpers_1.css)(ideal_1, key);
-            });
-            if (ideal_1 !== editor.editor) {
-                dom_1.Dom.safeRemove(ideal_1);
-            }
-            var format_1 = getStyles(editor, box, defaultStyles_1);
-            var onMouseUp = function () {
-                editor.buffer.delete(pluginKey);
-                var currentNode = editor.s.current();
-                if (currentNode) {
-                    if (dom_1.Dom.isTag(currentNode, 'img')) {
-                        (0, helpers_1.css)(currentNode, format_1);
-                    }
-                    else {
-                        editor.s.applyStyle(format_1);
-                    }
-                }
-                editor.e.off(editor.editor, 'mouseup.' + pluginKey);
-            };
-            editor.e.on(editor.editor, 'mouseup.' + pluginKey, onMouseUp);
-            editor.buffer.set(pluginKey, true);
-        }
-        button.update();
-    },
-    isActive: function (editor) { return editor.buffer.exists(pluginKey); },
-    tooltip: 'Paint format'
-};
-function copyFormat(editor) {
-    editor.registerButton({
-        name: 'copyformat',
-        group: 'clipboard'
-    });
-}
-exports.copyFormat = copyFormat;
-
-
-/***/ }),
-
-/***/ 75040:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.DragAndDropElement = void 0;
-var tslib_1 = __webpack_require__(20255);
-var helpers_1 = __webpack_require__(92654);
-var plugin_1 = __webpack_require__(35570);
-var dom_1 = __webpack_require__(94522);
-var global_1 = __webpack_require__(58299);
-var decorators_1 = __webpack_require__(9901);
-var DragState;
-(function (DragState) {
-    DragState[DragState["IDLE"] = 0] = "IDLE";
-    DragState[DragState["WAIT_DRAGGING"] = 1] = "WAIT_DRAGGING";
-    DragState[DragState["DRAGGING"] = 2] = "DRAGGING";
-})(DragState || (DragState = {}));
-var DragAndDropElement = (function (_super) {
-    tslib_1.__extends(DragAndDropElement, _super);
-    function DragAndDropElement() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.dragList = [];
-        _this.draggable = null;
-        _this.isCopyMode = false;
-        _this.diffStep = 10;
-        _this.startX = 0;
-        _this.startY = 0;
-        _this.state = DragState.IDLE;
-        return _this;
-    }
-    DragAndDropElement.prototype.afterInit = function () {
-        this.dragList = this.j.o.draggableTags
-            ? (0, helpers_1.splitArray)(this.j.o.draggableTags)
-                .filter(Boolean)
-                .map(function (item) { return item.toLowerCase(); })
-            : [];
-        if (!this.dragList.length) {
-            return;
-        }
-        this.j.e.on('mousedown dragstart', this.onDragStart);
-    };
-    DragAndDropElement.prototype.onDragStart = function (event) {
-        var _this = this;
-        if (event.type === 'dragstart' && this.draggable) {
-            return false;
-        }
-        if (this.state > DragState.IDLE) {
-            return;
-        }
-        var target = event.target;
-        if (!this.dragList.length || !target) {
-            return;
-        }
-        var matched = function (node) {
-            return Boolean(node && _this.dragList.includes(node.nodeName.toLowerCase()));
-        };
-        var lastTarget = dom_1.Dom.furthest(target, matched, this.j.editor) ||
-            (matched(target) ? target : null);
-        if (!lastTarget) {
-            return;
-        }
-        if (dom_1.Dom.isTag(lastTarget.parentElement, 'a') &&
-            lastTarget.parentElement.firstChild === lastTarget &&
-            lastTarget.parentElement.lastChild === lastTarget) {
-            lastTarget = lastTarget.parentElement;
-        }
-        this.startX = event.clientX;
-        this.startY = event.clientY;
-        this.isCopyMode = (0, helpers_1.ctrlKey)(event);
-        this.draggable = lastTarget.cloneNode(true);
-        (0, helpers_1.dataBind)(this.draggable, 'target', lastTarget);
-        this.state = DragState.WAIT_DRAGGING;
-        this.addDragListeners();
-    };
-    DragAndDropElement.prototype.onDrag = function (event) {
-        var _a, _b;
-        if (!this.draggable || this.state === DragState.IDLE) {
-            return;
-        }
-        var x = event.clientX, y = event.clientY;
-        if (this.state === DragState.WAIT_DRAGGING &&
-            Math.sqrt(Math.pow(x - this.startX, 2) + Math.pow(y - this.startY, 2)) < this.diffStep) {
-            return;
-        }
-        if (this.state === DragState.WAIT_DRAGGING) {
-            this.j.lock('drag-and-drop-element');
-            this.state = DragState.DRAGGING;
-        }
-        this.j.e.fire('hidePopup hideResizer');
-        if (!this.draggable.parentNode) {
-            var target = (0, helpers_1.dataBind)(this.draggable, 'target');
-            (0, helpers_1.css)(this.draggable, {
-                zIndex: 10000000000000,
-                pointerEvents: 'none',
-                pointer: 'drag',
-                position: 'fixed',
-                opacity: 0.7,
-                display: 'inline-block',
-                left: event.clientX,
-                top: event.clientY,
-                width: (_a = target === null || target === void 0 ? void 0 : target.offsetWidth) !== null && _a !== void 0 ? _a : 100,
-                height: (_b = target === null || target === void 0 ? void 0 : target.offsetHeight) !== null && _b !== void 0 ? _b : 100
-            });
-            (0, global_1.getContainer)(this.j, DragAndDropElement).appendChild(this.draggable);
-        }
-        (0, helpers_1.css)(this.draggable, {
-            left: event.clientX,
-            top: event.clientY
-        });
-        this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
-    };
-    DragAndDropElement.prototype.onDragEnd = function () {
-        if (this.isInDestruct) {
-            return;
-        }
-        this.removeDragListeners();
-        this.j.unlock();
-        this.state = DragState.IDLE;
-        if (this.draggable) {
-            dom_1.Dom.safeRemove(this.draggable);
-            this.draggable = null;
-        }
-    };
-    DragAndDropElement.prototype.onDrop = function () {
-        if (!this.draggable || this.state < DragState.DRAGGING) {
-            this.onDragEnd();
-            return;
-        }
-        var fragment = (0, helpers_1.dataBind)(this.draggable, 'target');
-        this.onDragEnd();
-        if (this.isCopyMode) {
-            fragment = fragment.cloneNode(true);
-        }
-        var parentElement = fragment.parentElement;
-        this.j.s.insertNode(fragment, true, false);
-        if (parentElement &&
-            dom_1.Dom.isEmpty(parentElement) &&
-            !dom_1.Dom.isTag(parentElement, ['td', 'th'])) {
-            dom_1.Dom.safeRemove(parentElement);
-        }
-        if (dom_1.Dom.isTag(fragment, 'img') && this.j.e) {
-            this.j.e.fire('afterInsertImage', fragment);
-        }
-        this.j.e.fire('synchro');
-    };
-    DragAndDropElement.prototype.addDragListeners = function () {
-        this.j.e
-            .on(this.j.editor, 'mousemove', this.onDrag)
-            .on('mouseup', this.onDrop)
-            .on([this.j.ew, this.ow], 'mouseup', this.onDragEnd);
-    };
-    DragAndDropElement.prototype.removeDragListeners = function () {
-        this.j.e
-            .off(this.j.editor, 'mousemove', this.onDrag)
-            .off('mouseup', this.onDrop)
-            .off([this.j.ew, this.ow], 'mouseup', this.onDragEnd);
-    };
-    DragAndDropElement.prototype.beforeDestruct = function () {
-        this.onDragEnd();
-        this.j.e.off('mousedown dragstart', this.onDragStart);
-        this.removeDragListeners();
-    };
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], DragAndDropElement.prototype, "onDragStart", null);
-    tslib_1.__decorate([
-        (0, decorators_1.throttle)(function (ctx) { return ctx.defaultTimeout / 10; })
-    ], DragAndDropElement.prototype, "onDrag", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], DragAndDropElement.prototype, "onDragEnd", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], DragAndDropElement.prototype, "onDrop", null);
-    return DragAndDropElement;
-}(plugin_1.Plugin));
-exports.DragAndDropElement = DragAndDropElement;
-
-
-/***/ }),
-
-/***/ 25052:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.DragAndDrop = void 0;
-var tslib_1 = __webpack_require__(20255);
-var constants_1 = __webpack_require__(10063);
-var dom_1 = __webpack_require__(94522);
-var helpers_1 = __webpack_require__(92654);
-var plugin_1 = __webpack_require__(35570);
-var helpers_2 = __webpack_require__(81259);
-var decorators_1 = __webpack_require__(9901);
-var file_browser_1 = __webpack_require__(12494);
-var DragAndDrop = (function (_super) {
-    tslib_1.__extends(DragAndDrop, _super);
-    function DragAndDrop() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.isFragmentFromEditor = false;
-        _this.isCopyMode = false;
-        _this.startDragPoint = { x: 0, y: 0 };
-        _this.draggable = null;
-        _this.bufferRange = null;
-        _this.getText = function (event) {
-            var dt = (0, helpers_2.getDataTransfer)(event);
-            return dt ? dt.getData(constants_1.TEXT_HTML) || dt.getData(constants_1.TEXT_PLAIN) : null;
-        };
-        return _this;
-    }
-    DragAndDrop.prototype.afterInit = function () {
-        this.j.e.on([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
-    };
-    DragAndDrop.prototype.onDragStart = function (event) {
-        var target = event.target;
-        this.onDragEnd();
-        this.isFragmentFromEditor = dom_1.Dom.isOrContains(this.j.editor, target, true);
-        this.isCopyMode = this.isFragmentFromEditor ? (0, helpers_1.ctrlKey)(event) : true;
-        if (this.isFragmentFromEditor) {
-            var sel = this.j.s.sel;
-            var range = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
-            if (range) {
-                this.bufferRange = range.cloneRange();
-            }
-        }
-        else {
-            this.bufferRange = null;
-        }
-        this.startDragPoint.x = event.clientX;
-        this.startDragPoint.y = event.clientY;
-        if ((0, file_browser_1.isFileBrowserFilesItem)(target)) {
-            target = target.querySelector('img');
-        }
-        if (dom_1.Dom.isTag(target, 'img')) {
-            this.draggable = target.cloneNode(true);
-            (0, helpers_1.dataBind)(this.draggable, 'target', target);
-        }
-        this.addDragListeners();
-    };
-    DragAndDrop.prototype.addDragListeners = function () {
-        this.j.e
-            .on('dragover', this.onDrag)
-            .on('drop.DragAndDrop', this.onDrop)
-            .on(window, 'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop', this.onDragEnd);
-    };
-    DragAndDrop.prototype.removeDragListeners = function () {
-        this.j.e
-            .off('dragover', this.onDrag)
-            .off('drop.DragAndDrop', this.onDrop)
-            .off(window, 'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop', this.onDragEnd);
-    };
-    DragAndDrop.prototype.onDrag = function (event) {
-        if (this.draggable) {
-            this.j.e.fire('hidePopup');
-            this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    };
-    DragAndDrop.prototype.onDragEnd = function () {
-        if (this.draggable) {
-            dom_1.Dom.safeRemove(this.draggable);
-            this.draggable = null;
-        }
-        this.isCopyMode = false;
-        this.removeDragListeners();
-    };
-    DragAndDrop.prototype.onDrop = function (event) {
-        if (!event.dataTransfer ||
-            !event.dataTransfer.files ||
-            !event.dataTransfer.files.length) {
-            if (!this.isFragmentFromEditor && !this.draggable) {
-                this.j.e.fire('paste', event);
-                event.preventDefault();
-                event.stopPropagation();
-                return false;
-            }
-            var sel = this.j.s.sel;
-            var range = this.bufferRange ||
-                (sel && sel.rangeCount ? sel.getRangeAt(0) : null);
-            var fragment = null;
-            if (!this.draggable && range) {
-                fragment = this.isCopyMode
-                    ? range.cloneContents()
-                    : range.extractContents();
-            }
-            else if (this.draggable) {
-                if (this.isCopyMode) {
-                    var _a = tslib_1.__read((0, helpers_1.attr)(this.draggable, '-is-file') === '1'
-                        ? ['a', 'href']
-                        : ['img', 'src'], 2), tagName = _a[0], field = _a[1];
-                    fragment = this.j.createInside.element(tagName);
-                    fragment.setAttribute(field, (0, helpers_1.attr)(this.draggable, 'data-src') ||
-                        (0, helpers_1.attr)(this.draggable, 'src') ||
-                        '');
-                    if (tagName === 'a') {
-                        fragment.textContent = (0, helpers_1.attr)(fragment, field) || '';
-                    }
-                }
-                else {
-                    fragment = (0, helpers_1.dataBind)(this.draggable, 'target');
-                }
-            }
-            else if (this.getText(event)) {
-                fragment = this.j.createInside.fromHTML(this.getText(event));
-            }
-            sel && sel.removeAllRanges();
-            this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
-            if (fragment) {
-                this.j.s.insertNode(fragment, false, false);
-                if (range && fragment.firstChild && fragment.lastChild) {
-                    range.setStartBefore(fragment.firstChild);
-                    range.setEndAfter(fragment.lastChild);
-                    this.j.s.selectRange(range);
-                    this.j.e.fire('synchro');
-                }
-                if (dom_1.Dom.isTag(fragment, 'img') && this.j.events) {
-                    this.j.e.fire('afterInsertImage', fragment);
-                }
-            }
-            event.preventDefault();
-            event.stopPropagation();
-        }
-        this.isFragmentFromEditor = false;
-        this.removeDragListeners();
-    };
-    DragAndDrop.prototype.beforeDestruct = function () {
-        this.onDragEnd();
-        this.j.e
-            .off(window, '.DragAndDrop')
-            .off('.DragAndDrop')
-            .off([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
-    };
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], DragAndDrop.prototype, "onDragStart", null);
-    tslib_1.__decorate([
-        (0, decorators_1.throttle)(function (ctx) { return ctx.defaultTimeout / 10; })
-    ], DragAndDrop.prototype, "onDrag", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], DragAndDrop.prototype, "onDragEnd", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], DragAndDrop.prototype, "onDrop", null);
-    return DragAndDrop;
-}(plugin_1.Plugin));
-exports.DragAndDrop = DragAndDrop;
-
-
-/***/ }),
-
-/***/ 89674:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-__webpack_require__(71123);
-tslib_1.__exportStar(__webpack_require__(65425), exports);
-tslib_1.__exportStar(__webpack_require__(29878), exports);
-tslib_1.__exportStar(__webpack_require__(33461), exports);
-tslib_1.__exportStar(__webpack_require__(19403), exports);
-tslib_1.__exportStar(__webpack_require__(46218), exports);
-tslib_1.__exportStar(__webpack_require__(25052), exports);
-tslib_1.__exportStar(__webpack_require__(75040), exports);
-
-
-/***/ }),
-
-/***/ 59899:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(27537);
-var constants_1 = __webpack_require__(10063);
-config_1.Config.prototype.askBeforePasteFromWord = true;
-config_1.Config.prototype.processPasteFromWord = true;
-config_1.Config.prototype.defaultActionOnPasteFromWord = null;
-config_1.Config.prototype.pasteFromWordActionList = [
-    { value: constants_1.INSERT_AS_HTML, text: 'Keep' },
-    { value: constants_1.INSERT_AS_TEXT, text: 'Clean' },
-    { value: constants_1.INSERT_ONLY_TEXT, text: 'Insert only Text' }
-];
-
-
-/***/ }),
-
-/***/ 33461:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PasteFromWord = void 0;
-var tslib_1 = __webpack_require__(20255);
-var plugin_1 = __webpack_require__(35570);
-var helpers_1 = __webpack_require__(92654);
-var constants_1 = __webpack_require__(10063);
-var helpers_2 = __webpack_require__(81259);
-var decorators_1 = __webpack_require__(9901);
-__webpack_require__(59899);
-var PasteFromWord = (function (_super) {
-    tslib_1.__extends(PasteFromWord, _super);
-    function PasteFromWord() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    PasteFromWord.prototype.afterInit = function (jodit) { };
-    PasteFromWord.prototype.beforeDestruct = function (jodit) { };
-    PasteFromWord.prototype.processWordHTML = function (e, text, texts) {
-        var _this = this;
-        var j = this.j, _a = j.o, processPasteFromWord = _a.processPasteFromWord, askBeforePasteFromWord = _a.askBeforePasteFromWord, defaultActionOnPasteFromWord = _a.defaultActionOnPasteFromWord, defaultActionOnPaste = _a.defaultActionOnPaste, pasteFromWordActionList = _a.pasteFromWordActionList;
-        if (processPasteFromWord && (0, helpers_1.isHtmlFromWord)(text)) {
-            if (askBeforePasteFromWord) {
-                (0, helpers_2.askInsertTypeDialog)(j, 'The pasted content is coming from a Microsoft Word/Excel document. ' +
-                    'Do you want to keep the format or clean it up?', 'Word Paste Detected', function (insertType) {
-                    _this.insertFromWordByType(e, text, insertType, texts);
-                }, pasteFromWordActionList);
-            }
-            else {
-                this.insertFromWordByType(e, text, defaultActionOnPasteFromWord || defaultActionOnPaste, texts);
-            }
-            return true;
-        }
-        return false;
-    };
-    PasteFromWord.prototype.insertFromWordByType = function (e, html, insertType, texts) {
-        var _a;
-        switch (insertType) {
-            case constants_1.INSERT_AS_HTML: {
-                html = (0, helpers_1.applyStyles)(html);
-                if (this.j.o.beautifyHTML) {
-                    var value = (_a = this.j.events) === null || _a === void 0 ? void 0 : _a.fire('beautifyHTML', html);
-                    if ((0, helpers_1.isString)(value)) {
-                        html = value;
-                    }
-                }
-                break;
-            }
-            case constants_1.INSERT_AS_TEXT: {
-                html = (0, helpers_1.cleanFromWord)(html);
-                break;
-            }
-            case constants_1.INSERT_ONLY_TEXT: {
-                html = (0, helpers_1.stripTags)((0, helpers_1.cleanFromWord)(html));
-                break;
-            }
-        }
-        (0, helpers_2.pasteInsertHtml)(e, this.j, html);
-    };
-    tslib_1.__decorate([
-        (0, decorators_1.watch)(':processHTML')
-    ], PasteFromWord.prototype, "processWordHTML", null);
-    return PasteFromWord;
-}(plugin_1.Plugin));
-exports.PasteFromWord = PasteFromWord;
-
-
-/***/ }),
-
-/***/ 19403:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.pasteStorage = void 0;
-var tslib_1 = __webpack_require__(20255);
-__webpack_require__(17660);
-var constants_1 = __webpack_require__(10063);
-var dialog_1 = __webpack_require__(68713);
-var plugin_1 = __webpack_require__(35570);
-var dom_1 = __webpack_require__(94522);
-var helpers_1 = __webpack_require__(92654);
-var ui_1 = __webpack_require__(14153);
-var pasteStorage = (function (_super) {
-    tslib_1.__extends(pasteStorage, _super);
-    function pasteStorage() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.currentIndex = 0;
-        _this.list = [];
-        _this.container = null;
-        _this.listBox = null;
-        _this.previewBox = null;
-        _this.dialog = null;
-        _this.paste = function () {
-            _this.j.s.focus();
-            _this.j.s.insertHTML(_this.list[_this.currentIndex]);
-            if (_this.currentIndex !== 0) {
-                var buffer = _this.list[0];
-                _this.list[0] = _this.list[_this.currentIndex];
-                _this.list[_this.currentIndex] = buffer;
-            }
-            _this.dialog && _this.dialog.close();
-            _this.j.synchronizeValues();
-            _this.j.e.fire('afterPaste');
-        };
-        _this.onKeyDown = function (e) {
-            var index = _this.currentIndex;
-            if ([constants_1.KEY_UP, constants_1.KEY_DOWN, constants_1.KEY_ENTER].indexOf(e.key) === -1) {
-                return;
-            }
-            if (e.key === constants_1.KEY_UP) {
-                if (index === 0) {
-                    index = _this.list.length - 1;
-                }
-                else {
-                    index -= 1;
-                }
-            }
-            if (e.key === constants_1.KEY_DOWN) {
-                if (index === _this.list.length - 1) {
-                    index = 0;
-                }
-                else {
-                    index += 1;
-                }
-            }
-            if (e.key === constants_1.KEY_ENTER) {
-                _this.paste();
-                return;
-            }
-            if (index !== _this.currentIndex) {
-                _this.selectIndex(index);
-            }
-            e.stopImmediatePropagation();
-            e.preventDefault();
-        };
-        _this.selectIndex = function (index) {
-            if (_this.listBox) {
-                (0, helpers_1.toArray)(_this.listBox.childNodes).forEach(function (a, i) {
-                    a.classList.remove('jodit_active');
-                    if (index === i && _this.previewBox) {
-                        a.classList.add('jodit_active');
-                        _this.previewBox.innerHTML = _this.list[index];
-                        a.focus();
-                    }
-                });
-            }
-            _this.currentIndex = index;
-        };
-        _this.showDialog = function () {
-            if (_this.list.length < 2) {
-                return;
-            }
-            _this.dialog || _this.createDialog();
-            if (_this.listBox) {
-                _this.listBox.innerHTML = '';
-            }
-            if (_this.previewBox) {
-                _this.previewBox.innerHTML = '';
-            }
-            _this.list.forEach(function (html, index) {
-                var a = _this.j.c.element('a');
-                a.textContent =
-                    index + 1 + '. ' + html.replace((0, constants_1.SPACE_REG_EXP)(), '');
-                _this.j.e.on(a, 'keydown', _this.onKeyDown);
-                (0, helpers_1.attr)(a, 'href', '#');
-                (0, helpers_1.attr)(a, 'data-index', index.toString());
-                (0, helpers_1.attr)(a, 'tab-index', '-1');
-                _this.listBox && _this.listBox.appendChild(a);
-            });
-            _this.dialog && _this.dialog.open();
-            _this.j.async.setTimeout(function () {
-                _this.selectIndex(0);
-            }, 100);
-        };
-        return _this;
-    }
-    pasteStorage.prototype.createDialog = function () {
-        var _this = this;
-        this.dialog = new dialog_1.Dialog({
-            language: this.j.o.language
-        });
-        var pasteButton = (0, ui_1.Button)(this.j, 'paste', 'Paste', 'primary');
-        pasteButton.onAction(this.paste);
-        var cancelButton = (0, ui_1.Button)(this.j, '', 'Cancel');
-        cancelButton.onAction(this.dialog.close);
-        this.container = this.j.c.div();
-        this.container.classList.add('jodit-paste-storage');
-        this.listBox = this.j.c.div();
-        this.previewBox = this.j.c.div();
-        this.container.appendChild(this.listBox);
-        this.container.appendChild(this.previewBox);
-        this.dialog.setHeader(this.j.i18n('Choose Content to Paste'));
-        this.dialog.setContent(this.container);
-        this.dialog.setFooter([pasteButton, cancelButton]);
-        this.j.e.on(this.listBox, 'click dblclick', function (e) {
-            var a = e.target;
-            if (dom_1.Dom.isTag(a, 'a') && a.hasAttribute('data-index')) {
-                _this.selectIndex(parseInt((0, helpers_1.attr)(a, '-index') || '0', 10));
-            }
-            if (e.type === 'dblclick') {
-                _this.paste();
-            }
-            return false;
-        });
-    };
-    pasteStorage.prototype.afterInit = function () {
-        var _this = this;
-        this.j.e
-            .off('afterCopy.paste-storage')
-            .on('pasteStorageList.paste-storage', function () { return _this.list.length; })
-            .on('afterCopy.paste-storage', function (html) {
-            if (_this.list.indexOf(html) !== -1) {
-                _this.list.splice(_this.list.indexOf(html), 1);
-            }
-            _this.list.unshift(html);
-            if (_this.list.length > 5) {
-                _this.list.length = 5;
-            }
-        });
-        this.j.registerCommand('showPasteStorage', {
-            exec: this.showDialog,
-            hotkeys: ['ctrl+shift+v', 'cmd+shift+v']
-        });
-    };
-    pasteStorage.prototype.beforeDestruct = function () {
-        this.dialog && this.dialog.destruct();
-        this.j.e.off('.paste-storage');
-        dom_1.Dom.safeRemove(this.previewBox);
-        dom_1.Dom.safeRemove(this.listBox);
-        dom_1.Dom.safeRemove(this.container);
-        this.container = null;
-        this.listBox = null;
-        this.previewBox = null;
-        this.dialog = null;
-        this.list = [];
-    };
-    return pasteStorage;
-}(plugin_1.Plugin));
-exports.pasteStorage = pasteStorage;
-
-
-/***/ }),
-
-/***/ 49501:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-var _a;
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-var constants_1 = __webpack_require__(10063);
-var config_1 = __webpack_require__(27537);
-var clipboard_1 = __webpack_require__(65425);
-var helpers_1 = __webpack_require__(81259);
-var alert_1 = __webpack_require__(66124);
-config_1.Config.prototype.askBeforePasteHTML = true;
-config_1.Config.prototype.processPasteHTML = true;
-config_1.Config.prototype.pasteHTMLActionList = [
-    { value: constants_1.INSERT_AS_HTML, text: 'Keep' },
-    { value: constants_1.INSERT_AS_TEXT, text: 'Insert as Text' },
-    { value: constants_1.INSERT_ONLY_TEXT, text: 'Insert only Text' }
-];
-config_1.Config.prototype.memorizeChoiceWhenPasteFragment = false;
-config_1.Config.prototype.nl2brInPlainText = true;
-config_1.Config.prototype.defaultActionOnPaste = constants_1.INSERT_AS_HTML;
-config_1.Config.prototype.draggableTags = ['img', 'jodit-media', 'jodit'];
-var psKey = 'pasteStorage';
-config_1.Config.prototype.controls.paste = {
-    tooltip: 'Paste from clipboard',
-    exec: function (editor, _, _a) {
-        var control = _a.control;
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var text, error, items, textBlob, e_1, e_2, value;
-            return tslib_1.__generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        if (control.name === psKey) {
-                            editor.execCommand('showPasteStorage');
-                            return [2];
-                        }
-                        editor.s.focus();
-                        text = '', error = true;
-                        if (!navigator.clipboard) return [3, 11];
-                        _b.label = 1;
-                    case 1:
-                        _b.trys.push([1, 6, , 7]);
-                        return [4, navigator.clipboard.read()];
-                    case 2:
-                        items = _b.sent();
-                        if (!(items && items.length)) return [3, 5];
-                        return [4, items[0].getType(constants_1.TEXT_PLAIN)];
-                    case 3:
-                        textBlob = _b.sent();
-                        return [4, new Response(textBlob).text()];
-                    case 4:
-                        text = _b.sent();
-                        _b.label = 5;
-                    case 5:
-                        error = false;
-                        return [3, 7];
-                    case 6:
-                        e_1 = _b.sent();
-                        if (false) {}
-                        return [3, 7];
-                    case 7:
-                        if (!error) return [3, 11];
-                        _b.label = 8;
-                    case 8:
-                        _b.trys.push([8, 10, , 11]);
-                        return [4, navigator.clipboard.readText()];
-                    case 9:
-                        text = _b.sent();
-                        error = false;
-                        return [3, 11];
-                    case 10:
-                        e_2 = _b.sent();
-                        if (false) {}
-                        return [3, 11];
-                    case 11:
-                        if (error) {
-                            text = editor.buffer.get(clipboard_1.pluginKey) || '';
-                            error = text.length === 0;
-                        }
-                        value = editor.value;
-                        if (error) {
-                            editor.ed.execCommand('paste');
-                            error = value === editor.value;
-                            !error && editor.e.fire('afterPaste');
-                        }
-                        else if (text.length) {
-                            (0, helpers_1.pasteInsertHtml)(null, editor, text);
-                            editor.e.fire('afterPaste');
-                        }
-                        else {
-                            if (error) {
-                                (0, alert_1.Alert)(editor.i18n("Your browser doesn't support direct access to the clipboard."), function () {
-                                    editor.s.focus();
-                                }).bindDestruct(editor);
-                            }
-                        }
-                        return [2];
-                }
-            });
-        });
-    },
-    list: (_a = {},
-        _a[psKey] = 'Paste Storage',
-        _a),
-    isChildDisabled: function (j) {
-        return j.e.fire('pasteStorageList') < 2;
-    }
-};
-
-
-/***/ }),
-
-/***/ 81259:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.askInsertTypeDialog = exports.getAllTypes = exports.pasteInsertHtml = exports.getDataTransfer = void 0;
-var tslib_1 = __webpack_require__(20255);
-var checker_1 = __webpack_require__(37379);
-var dom_1 = __webpack_require__(94522);
-var constants_1 = __webpack_require__(10063);
-var modules_1 = __webpack_require__(46701);
-var ui_1 = __webpack_require__(14153);
-var utils_1 = __webpack_require__(51976);
-var getDataTransfer = function (event) {
-    if (event.clipboardData) {
-        return event.clipboardData;
-    }
-    try {
-        return event.dataTransfer || new DataTransfer();
-    }
-    catch (_a) {
-        return null;
-    }
-};
-exports.getDataTransfer = getDataTransfer;
-function removeExtraFragments(html) {
-    html = html.replace(/<meta[^>]+?>/g, '');
-    var start = html.search(/<!--StartFragment-->/i);
-    if (start !== -1) {
-        html = html.substring(start + 20);
-    }
-    var end = html.search(/<!--EndFragment-->/i);
-    if (end !== -1) {
-        html = html.substring(0, end);
-    }
-    return html;
-}
-function isDragEvent(e) {
-    return Boolean(e && e.type === 'drop');
-}
-function pasteInsertHtml(e, editor, html) {
-    if (editor.isInDestruct) {
-        return;
-    }
-    if (isDragEvent(e)) {
-        editor.s.insertCursorAtPoint(e.clientX, e.clientY);
-    }
-    var result = editor.e.fire('beforePasteInsert', html);
-    if (!(0, checker_1.isVoid)(result) &&
-        ((0, checker_1.isString)(result) || (0, checker_1.isNumber)(result) || dom_1.Dom.isNode(result))) {
-        html = result;
-    }
-    if ((0, checker_1.isString)(html)) {
-        html = removeExtraFragments(html);
-    }
-    editor.s.insertHTML(html);
-}
-exports.pasteInsertHtml = pasteInsertHtml;
-function getAllTypes(dt) {
-    var types = dt.types;
-    var types_str = '';
-    if ((0, checker_1.isArray)(types) ||
-        {}.toString.call(types) === '[object DOMStringList]') {
-        for (var i = 0; i < types.length; i += 1) {
-            types_str += types[i] + ';';
-        }
-    }
-    else {
-        types_str = (types || constants_1.TEXT_PLAIN).toString() + ';';
-    }
-    return types_str;
-}
-exports.getAllTypes = getAllTypes;
-function askInsertTypeDialog(jodit, msg, title, callback, buttonList) {
-    if (jodit.e.fire('beforeOpenPasteDialog', msg, title, callback, buttonList) === false) {
-        return;
-    }
-    var dialog = (0, modules_1.Confirm)("<div style=\"word-break: normal; white-space: normal\">".concat(jodit.i18n(msg), "</div>"), jodit.i18n(title));
-    dialog.bindDestruct(jodit);
-    (0, utils_1.markOwner)(jodit, dialog.container);
-    var buttons = buttonList.map(function (_a) {
-        var text = _a.text, value = _a.value;
-        return (0, ui_1.Button)(jodit, {
-            text: text,
-            name: text.toLowerCase(),
-            tabIndex: 0
-        }).onAction(function () {
-            dialog.close();
-            callback(value);
-        });
-    });
-    dialog.e.one(dialog, 'afterClose', function () {
-        if (!jodit.s.isFocused()) {
-            jodit.s.focus();
-        }
-    });
-    var cancel = (0, ui_1.Button)(jodit, {
-        text: 'Cancel',
-        tabIndex: 0
-    }).onAction(function () {
-        dialog.close();
-    });
-    dialog.setFooter(tslib_1.__spreadArray(tslib_1.__spreadArray([], tslib_1.__read(buttons), false), [cancel], false));
-    buttons[0].focus();
-    buttons[0].state.variant = 'primary';
-    jodit.e.fire('afterOpenPasteDialog', dialog, msg, title, callback, buttonList);
-    return dialog;
-}
-exports.askInsertTypeDialog = askInsertTypeDialog;
-
-
-/***/ }),
-
-/***/ 29878:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.paste = void 0;
-var tslib_1 = __webpack_require__(20255);
-var plugin_1 = __webpack_require__(35570);
-var helpers_1 = __webpack_require__(81259);
-__webpack_require__(49501);
-var constants_1 = __webpack_require__(10063);
-var helpers_2 = __webpack_require__(92654);
-var clipboard_1 = __webpack_require__(65425);
-var dom_1 = __webpack_require__(94522);
-var decorators_1 = __webpack_require__(9901);
-var paste = (function (_super) {
-    tslib_1.__extends(paste, _super);
-    function paste() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.pasteStack = new helpers_2.LimitedStack(20);
-        _this._isDialogOpened = false;
-        return _this;
-    }
-    paste.prototype.afterInit = function (jodit) {
-        var _this = this;
-        jodit.e
-            .on('paste.paste', this.onPaste)
-            .on('pasteStack.paste', function (item) {
-            return _this.pasteStack.push(item);
-        });
-        if (jodit.o.nl2brInPlainText) {
-            this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
-        }
-    };
-    paste.prototype.beforeDestruct = function (jodit) {
-        jodit.e
-            .off('paste.paste', this.onPaste)
-            .off('processPaste.paste', this.onProcessPasteReplaceNl2Br)
-            .off('.paste');
-    };
-    paste.prototype.onPaste = function (e) {
-        try {
-            if (this.customPasteProcess(e) === false ||
-                this.j.e.fire('beforePaste', e) === false) {
-                e.preventDefault();
-                return false;
-            }
-            this.defaultPasteProcess(e);
-        }
-        finally {
-            this.j.e.fire('afterPaste', e);
-        }
-    };
-    paste.prototype.customPasteProcess = function (e) {
-        if (!this.j.o.processPasteHTML) {
-            return;
-        }
-        var dt = (0, helpers_1.getDataTransfer)(e), texts = {
-            html: dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_HTML),
-            plain: dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_PLAIN),
-            rtf: dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_RTF)
-        };
-        var key;
-        for (key in texts) {
-            var value = texts[key];
-            if ((0, helpers_2.isHTML)(value) &&
-                (this.j.e.fire('processHTML', e, value, texts) ||
-                    this.processHTML(e, value))) {
-                return false;
-            }
-        }
-    };
-    paste.prototype.defaultPasteProcess = function (e) {
-        var dt = (0, helpers_1.getDataTransfer)(e);
-        var text = (dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_HTML)) || (dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_PLAIN));
-        if (dt && text && (0, helpers_2.trim)(text) !== '') {
-            var result = this.j.e.fire('processPaste', e, text, (0, helpers_1.getAllTypes)(dt));
-            if (result !== undefined) {
-                text = result;
-            }
-            if ((0, helpers_2.isString)(text) || dom_1.Dom.isNode(text)) {
-                this.insertByType(e, text, this.j.o.defaultActionOnPaste);
-            }
-            e.preventDefault();
-            e.stopPropagation();
-        }
-    };
-    paste.prototype.processHTML = function (e, html) {
-        var _this = this;
-        if (this.j.o.askBeforePasteHTML) {
-            if (this.j.o.memorizeChoiceWhenPasteFragment) {
-                var cached = this.pasteStack.find(function (cachedItem) { return cachedItem.html === html; });
-                if (cached) {
-                    this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
-                    return true;
-                }
-            }
-            if (this._isDialogOpened) {
-                return true;
-            }
-            var dialog = (0, helpers_1.askInsertTypeDialog)(this.j, 'Your code is similar to HTML. Keep as HTML?', 'Paste as HTML', function (insertType) {
-                _this._isDialogOpened = false;
-                _this.insertByType(e, html, insertType);
-            }, this.j.o.pasteHTMLActionList);
-            if (dialog) {
-                this._isDialogOpened = true;
-                dialog.e.on('beforeClose', function () {
-                    _this._isDialogOpened = false;
-                });
-            }
-            return true;
-        }
-        return false;
-    };
-    paste.prototype.insertByType = function (e, html, action) {
-        this.pasteStack.push({ html: html, action: action });
-        if ((0, helpers_2.isString)(html)) {
-            this.j.buffer.set(clipboard_1.pluginKey, html);
-            switch (action) {
-                case constants_1.INSERT_CLEAR_HTML:
-                    html = (0, helpers_2.cleanFromWord)(html);
-                    break;
-                case constants_1.INSERT_ONLY_TEXT:
-                    html = (0, helpers_2.stripTags)(html);
-                    break;
-                case constants_1.INSERT_AS_TEXT:
-                    html = (0, helpers_2.htmlspecialchars)(html);
-                    break;
-                default:
-            }
-        }
-        (0, helpers_1.pasteInsertHtml)(e, this.j, html);
-    };
-    paste.prototype.onProcessPasteReplaceNl2Br = function (ignore, text, type) {
-        if (type === constants_1.TEXT_PLAIN + ';' && !(0, helpers_2.isHTML)(text)) {
-            return (0, helpers_2.nl2br)(text);
-        }
-    };
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], paste.prototype, "onPaste", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], paste.prototype, "onProcessPasteReplaceNl2Br", null);
-    return paste;
-}(plugin_1.Plugin));
-exports.paste = paste;
-
-
-/***/ }),
-
-/***/ 40777:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.color = void 0;
-var config_1 = __webpack_require__(27537);
-var modules_1 = __webpack_require__(46701);
-var helpers_1 = __webpack_require__(92654);
-var widget_1 = __webpack_require__(4188);
-config_1.Config.prototype.controls.brush = {
-    update: function (button, editor) {
-        var color = (0, helpers_1.dataBind)(button, 'color');
-        var update = function (key, value) {
-            if (value && value !== (0, helpers_1.css)(editor.editor, key).toString()) {
-                button.state.icon.fill = value;
-                return;
-            }
-        };
-        if (color) {
-            var mode = (0, helpers_1.dataBind)(button, 'color');
-            update(mode === 'color' ? mode : 'background-color', color);
-            return;
-        }
-        var current = editor.s.current();
-        if (current && !button.state.disabled) {
-            var currentBpx = modules_1.Dom.closest(current, modules_1.Dom.isElement, editor.editor) || editor.editor;
-            update('color', (0, helpers_1.css)(currentBpx, 'color').toString());
-            update('background-color', (0, helpers_1.css)(currentBpx, 'background-color').toString());
-        }
-        button.state.icon.fill = '';
-        button.state.activated = false;
-    },
-    popup: function (editor, current, self, close, button) {
-        var colorHEX = '', bg_color = '', tabs = [], currentElement = null;
-        if (current && current !== editor.editor && modules_1.Dom.isNode(current)) {
-            if (modules_1.Dom.isElement(current) &&
-                editor.s.isCollapsed() &&
-                !modules_1.Dom.isTag(current, ['br', 'hr'])) {
-                currentElement = current;
-            }
-            modules_1.Dom.up(current, function (node) {
-                if (modules_1.Dom.isHTMLElement(node)) {
-                    var color_1 = (0, helpers_1.css)(node, 'color', true), background = (0, helpers_1.css)(node, 'background-color', true);
-                    if (color_1) {
-                        colorHEX = color_1.toString();
-                        return true;
-                    }
-                    if (background) {
-                        bg_color = background.toString();
-                        return true;
-                    }
-                }
-            }, editor.editor);
-        }
-        var backgroundTag = (0, widget_1.ColorPickerWidget)(editor, function (value) {
-            if (!currentElement) {
-                editor.execCommand('background', false, value);
-            }
-            else {
-                currentElement.style.backgroundColor = value;
-            }
-            (0, helpers_1.dataBind)(button, 'color', value);
-            (0, helpers_1.dataBind)(button, 'color-mode', 'background');
-            close();
-        }, bg_color);
-        var colorTab = (0, widget_1.ColorPickerWidget)(editor, function (value) {
-            if (!currentElement) {
-                editor.execCommand('forecolor', false, value);
-            }
-            else {
-                currentElement.style.color = value;
-            }
-            (0, helpers_1.dataBind)(button, 'color', value);
-            (0, helpers_1.dataBind)(button, 'color-mode', 'color');
-            close();
-        }, colorHEX);
-        tabs = [
-            {
-                name: 'Background',
-                content: backgroundTag
-            },
-            {
-                name: 'Text',
-                content: colorTab
-            }
-        ];
-        if (editor.o.colorPickerDefaultTab !== 'background') {
-            tabs = tabs.reverse();
-        }
-        return (0, widget_1.TabsWidget)(editor, tabs, currentElement);
-    },
-    exec: function (jodit, current, _a) {
-        var button = _a.button;
-        var mode = (0, helpers_1.dataBind)(button, 'color-mode'), color = (0, helpers_1.dataBind)(button, 'color');
-        if (!mode) {
-            return false;
-        }
-        if (current &&
-            current !== jodit.editor &&
-            modules_1.Dom.isNode(current) &&
-            modules_1.Dom.isElement(current)) {
-            switch (mode) {
-                case 'color':
-                    current.style.color = color;
-                    break;
-                case 'background':
-                    current.style.backgroundColor = color;
-                    break;
-            }
-        }
-        else {
-            jodit.execCommand(mode === 'background' ? mode : 'forecolor', false, color);
-        }
-    },
-    tooltip: 'Fill color or set the text color'
-};
-function color(editor) {
-    editor.registerButton({
-        name: 'brush',
-        group: 'color'
-    });
-    var callback = function (command, second, third) {
-        var colorHEX = (0, helpers_1.normalizeColor)(third);
-        switch (command) {
-            case 'background':
-                editor.s.applyStyle({
-                    backgroundColor: !colorHEX ? '' : colorHEX
-                });
-                break;
-            case 'forecolor':
-                editor.s.applyStyle({
-                    color: !colorHEX ? '' : colorHEX
-                });
-                break;
-        }
-        editor.synchronizeValues();
-        return false;
-    };
-    editor
-        .registerCommand('forecolor', callback)
-        .registerCommand('background', callback);
-}
-exports.color = color;
-
-
-/***/ }),
-
-/***/ 54959:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.errorMessages = void 0;
-__webpack_require__(32417);
-var config_1 = __webpack_require__(27537);
-var dom_1 = __webpack_require__(94522);
-var css_1 = __webpack_require__(56672);
-var to_array_1 = __webpack_require__(42464);
-config_1.Config.prototype.showMessageErrors = true;
-config_1.Config.prototype.showMessageErrorTime = 3000;
-config_1.Config.prototype.showMessageErrorOffsetPx = 3;
-var ELM_NAME = 'error-box-for-messages';
-function errorMessages(editor) {
-    if (editor.o.showMessageErrors) {
-        var activeClass_1 = editor.getFullElName(ELM_NAME, 'active', true), messagesBox_1 = editor.c.div(editor.getFullElName(ELM_NAME)), calcOffsets_1 = function () {
-            var height = 5;
-            (0, to_array_1.toArray)(messagesBox_1.childNodes).forEach(function (elm) {
-                (0, css_1.css)(elm, 'bottom', height + 'px');
-                height +=
-                    elm.offsetHeight + editor.o.showMessageErrorOffsetPx;
-            });
-        };
-        editor.e
-            .on('beforeDestruct', function () {
-            dom_1.Dom.safeRemove(messagesBox_1);
-        })
-            .on('errorMessage', function (message, type, timeout) {
-            editor.workplace.appendChild(messagesBox_1);
-            var msg = editor.c.div(activeClass_1, message);
-            msg.classList.add(editor.getFullElName(ELM_NAME, 'type', type));
-            messagesBox_1.appendChild(msg);
-            calcOffsets_1();
-            editor.async.setTimeout(function () {
-                msg.classList.remove(activeClass_1);
-                editor.async.setTimeout(function () {
-                    dom_1.Dom.safeRemove(msg);
-                    calcOffsets_1();
-                }, 300);
-            }, timeout || editor.o.showMessageErrorTime);
-        });
-    }
-}
-exports.errorMessages = errorMessages;
-
-
-/***/ }),
-
-/***/ 68988:
+/***/ 12949:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -26704,8 +26343,9 @@ var safe_html_1 = __webpack_require__(64829);
 var plugin_1 = __webpack_require__(73177);
 var decorators_1 = __webpack_require__(9901);
 var lazy_walker_1 = __webpack_require__(74601);
-var helpers_1 = __webpack_require__(1051);
-__webpack_require__(22387);
+var global_1 = __webpack_require__(58299);
+var helpers_1 = __webpack_require__(67786);
+__webpack_require__(17606);
 var cleanHtml = (function (_super) {
     tslib_1.__extends(cleanHtml, _super);
     function cleanHtml() {
@@ -26797,11 +26437,12 @@ var cleanHtml = (function (_super) {
     return cleanHtml;
 }(plugin_1.Plugin));
 exports.cleanHtml = cleanHtml;
+global_1.pluginSystem.add('cleanHtml', cleanHtml);
 
 
 /***/ }),
 
-/***/ 22387:
+/***/ 17606:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -26813,6 +26454,7 @@ exports.cleanHtml = cleanHtml;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.cleanHTML = {
     timeout: 300,
     removeEmptyElements: true,
@@ -26831,11 +26473,12 @@ config_1.Config.prototype.controls.eraser = {
     command: 'removeFormat',
     tooltip: 'Clear Formatting'
 };
+icon_1.Icon.set('eraser', __webpack_require__(66911));
 
 
 /***/ }),
 
-/***/ 52046:
+/***/ 30472:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -26847,16 +26490,17 @@ config_1.Config.prototype.controls.eraser = {
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getHash = void 0;
-var helpers_1 = __webpack_require__(92654);
+var trim_1 = __webpack_require__(50106);
+var is_string_1 = __webpack_require__(40607);
 function getHash(tags) {
     var attributesReg = /([^[]*)\[([^\]]+)]/;
     var separator = /[\s]*,[\s]*/, attrReg = /^(.*)[\s]*=[\s]*(.*)$/;
     var tagsHash = {};
-    if ((0, helpers_1.isString)(tags)) {
+    if ((0, is_string_1.isString)(tags)) {
         tags.split(separator).map(function (elm) {
-            elm = (0, helpers_1.trim)(elm);
+            elm = (0, trim_1.trim)(elm);
             var attr = attributesReg.exec(elm), allowAttributes = {}, attributeMap = function (attrName) {
-                attrName = (0, helpers_1.trim)(attrName);
+                attrName = (0, trim_1.trim)(attrName);
                 var val = attrReg.exec(attrName);
                 if (val) {
                     allowAttributes[val[1]] = val[2];
@@ -26891,7 +26535,7 @@ exports.getHash = getHash;
 
 /***/ }),
 
-/***/ 1051:
+/***/ 67786:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -26903,15 +26547,15 @@ exports.getHash = getHash;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(52046), exports);
-tslib_1.__exportStar(__webpack_require__(30699), exports);
-tslib_1.__exportStar(__webpack_require__(99671), exports);
-tslib_1.__exportStar(__webpack_require__(9806), exports);
+tslib_1.__exportStar(__webpack_require__(30472), exports);
+tslib_1.__exportStar(__webpack_require__(46058), exports);
+tslib_1.__exportStar(__webpack_require__(3719), exports);
+tslib_1.__exportStar(__webpack_require__(35000), exports);
 
 
 /***/ }),
 
-/***/ 30699:
+/***/ 46058:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -26960,7 +26604,7 @@ exports.isInlineBlock = isInlineBlock;
 
 /***/ }),
 
-/***/ 99671:
+/***/ 3719:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -26974,8 +26618,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.removeFormatForSelection = void 0;
 var dom_1 = __webpack_require__(43887);
 var utils_1 = __webpack_require__(73344);
-var helpers_1 = __webpack_require__(67009);
-var remove_format_for_collapsed_selection_1 = __webpack_require__(30699);
+var remove_format_for_collapsed_selection_1 = __webpack_require__(46058);
 function removeFormatForSelection(jodit) {
     var s = jodit.s, editor = jodit.editor, createInside = jodit.createInside, range = s.range, left = range.cloneRange(), right = range.cloneRange(), fakeLeft = createInside.fake(), fakeRight = createInside.fake();
     left.collapse(true);
@@ -27001,7 +26644,7 @@ function removeFormatForSelection(jodit) {
     });
     shouldUnwrap.forEach(function (node) { return dom_1.Dom.unwrap(node); });
     var clearParent = function (node, left) {
-        if (!(0, helpers_1.findNotEmptySibling)(node, left)) {
+        if (!dom_1.Dom.findNotEmptySibling(node, left)) {
             var pn = node.parentNode;
             if (pn && pn !== editor && (0, utils_1.attr)(pn, 'style')) {
                 (0, utils_1.attr)(pn, 'style', null);
@@ -27022,7 +26665,7 @@ exports.removeFormatForSelection = removeFormatForSelection;
 
 /***/ }),
 
-/***/ 34070:
+/***/ 47913:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27061,7 +26704,7 @@ exports.allowAttributes = allowAttributes;
 
 /***/ }),
 
-/***/ 6358:
+/***/ 42954:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27089,7 +26732,7 @@ exports.fillEmptyParagraph = fillEmptyParagraph;
 
 /***/ }),
 
-/***/ 29859:
+/***/ 58237:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27101,17 +26744,17 @@ exports.fillEmptyParagraph = fillEmptyParagraph;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(31333), exports);
-tslib_1.__exportStar(__webpack_require__(34070), exports);
-tslib_1.__exportStar(__webpack_require__(6358), exports);
-tslib_1.__exportStar(__webpack_require__(38482), exports);
-tslib_1.__exportStar(__webpack_require__(97588), exports);
-tslib_1.__exportStar(__webpack_require__(30162), exports);
+tslib_1.__exportStar(__webpack_require__(20544), exports);
+tslib_1.__exportStar(__webpack_require__(47913), exports);
+tslib_1.__exportStar(__webpack_require__(42954), exports);
+tslib_1.__exportStar(__webpack_require__(19070), exports);
+tslib_1.__exportStar(__webpack_require__(58909), exports);
+tslib_1.__exportStar(__webpack_require__(39196), exports);
 
 
 /***/ }),
 
-/***/ 97588:
+/***/ 58909:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27150,7 +26793,7 @@ exports.removeInvTextNodes = removeInvTextNodes;
 
 /***/ }),
 
-/***/ 31333:
+/***/ 20544:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27186,7 +26829,7 @@ function replaceIfMatched(jodit, oldParent, list) {
 
 /***/ }),
 
-/***/ 30162:
+/***/ 39196:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27211,7 +26854,7 @@ exports.sanitizeAttributes = sanitizeAttributes;
 
 /***/ }),
 
-/***/ 38482:
+/***/ 19070:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27246,33 +26889,11 @@ function isRemovableNode(jodit, node, current, allow, deny) {
         (0, trim_1.trim)(node.innerHTML).length === 0 &&
         (current == null || !dom_1.Dom.isOrContains(node, current)));
 }
-function removeExtraBR(jodit, node, current) {
-    if (dom_1.Dom.isTag(node, 'br') &&
-        hasNotEmptyTextSibling(node) &&
-        !hasNotEmptyTextSibling(node, true) &&
-        (current == null ||
-            dom_1.Dom.up(node, dom_1.Dom.isBlock, jodit.editor) !==
-                dom_1.Dom.up(current, dom_1.Dom.isBlock, jodit.editor))) {
-        return true;
-    }
-    return false;
-}
-function hasNotEmptyTextSibling(node, next) {
-    if (next === void 0) { next = false; }
-    var prev = next ? node.nextSibling : node.previousSibling;
-    while (prev) {
-        if (dom_1.Dom.isElement(prev) || !dom_1.Dom.isEmptyTextNode(prev)) {
-            return true;
-        }
-        prev = next ? prev.nextSibling : prev.previousSibling;
-    }
-    return false;
-}
 
 
 /***/ }),
 
-/***/ 9806:
+/***/ 35000:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27285,7 +26906,7 @@ function hasNotEmptyTextSibling(node, next) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.visitNodeWalker = void 0;
 var tslib_1 = __webpack_require__(20255);
-var filters = __webpack_require__(29859);
+var filters = __webpack_require__(58237);
 var keys = Object.keys(filters);
 function visitNodeWalker(jodit, nodeElm, allowTags, denyTags, currentSelectionNode) {
     var e_1, _a;
@@ -27316,7 +26937,7 @@ exports.visitNodeWalker = visitNodeWalker;
 
 /***/ }),
 
-/***/ 93445:
+/***/ 65425:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27327,14 +26948,75 @@ exports.visitNodeWalker = visitNodeWalker;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(68988), exports);
-tslib_1.__exportStar(__webpack_require__(6308), exports);
+exports.clipboard = void 0;
+var constants_1 = __webpack_require__(10063);
+var helpers_1 = __webpack_require__(92654);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(71123);
+var clipboard = (function () {
+    function clipboard() {
+        this.buttons = [
+            {
+                name: 'cut',
+                group: 'clipboard'
+            },
+            {
+                name: 'copy',
+                group: 'clipboard'
+            },
+            {
+                name: 'paste',
+                group: 'clipboard'
+            },
+            {
+                name: 'selectall',
+                group: 'clipboard'
+            }
+        ];
+    }
+    clipboard.prototype.init = function (editor) {
+        var _a;
+        (_a = this.buttons) === null || _a === void 0 ? void 0 : _a.forEach(function (btn) { return editor.registerButton(btn); });
+        editor.e
+            .off("copy.".concat(constants_1.CLIPBOARD_ID, " cut.").concat(constants_1.CLIPBOARD_ID))
+            .on("copy.".concat(constants_1.CLIPBOARD_ID, " cut.").concat(constants_1.CLIPBOARD_ID), function (event) {
+            var _a;
+            var selectedText = editor.s.html;
+            var clipboardData = (0, helpers_1.getDataTransfer)(event) ||
+                (0, helpers_1.getDataTransfer)(editor.ew) ||
+                (0, helpers_1.getDataTransfer)(event.originalEvent);
+            if (clipboardData) {
+                clipboardData.setData(constants_1.TEXT_PLAIN, (0, helpers_1.stripTags)(selectedText));
+                clipboardData.setData(constants_1.TEXT_HTML, selectedText);
+            }
+            editor.buffer.set(constants_1.CLIPBOARD_ID, selectedText);
+            editor.e.fire('pasteStack', {
+                html: selectedText,
+                action: editor.o.defaultActionOnPaste ||
+                    constants_1.INSERT_AS_HTML
+            });
+            if (event.type === 'cut') {
+                editor.s.remove();
+                editor.s.focus();
+            }
+            event.preventDefault();
+            (_a = editor === null || editor === void 0 ? void 0 : editor.events) === null || _a === void 0 ? void 0 : _a.fire('afterCopy', selectedText);
+        });
+    };
+    clipboard.prototype.destruct = function (editor) {
+        var _a, _b;
+        (_a = editor === null || editor === void 0 ? void 0 : editor.buffer) === null || _a === void 0 ? void 0 : _a.set(constants_1.CLIPBOARD_ID, '');
+        (_b = editor === null || editor === void 0 ? void 0 : editor.events) === null || _b === void 0 ? void 0 : _b.off('.' + constants_1.CLIPBOARD_ID);
+    };
+    return clipboard;
+}());
+exports.clipboard = clipboard;
+global_1.pluginSystem.add('clipboard', clipboard);
 
 
 /***/ }),
 
-/***/ 70988:
+/***/ 71123:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27346,14 +27028,31 @@ tslib_1.__exportStar(__webpack_require__(6308), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
-config_1.Config.prototype.wrapNodes = {
-    exclude: ['hr', 'style', 'br']
+var icon_1 = __webpack_require__(76381);
+config_1.Config.prototype.controls.cut = {
+    command: 'cut',
+    isDisabled: function (editor) { return editor.s.isCollapsed(); },
+    tooltip: 'Cut selection'
 };
+config_1.Config.prototype.controls.copy = {
+    command: 'copy',
+    isDisabled: function (editor) { return editor.s.isCollapsed(); },
+    tooltip: 'Copy selection'
+};
+config_1.Config.prototype.controls.selectall = {
+    icon: 'select-all',
+    command: 'selectall',
+    tooltip: 'Select all'
+};
+icon_1.Icon.set('copy', __webpack_require__(50018))
+    .set('cut', __webpack_require__(99738))
+    .set('paste', __webpack_require__(9185))
+    .set('select-all', __webpack_require__(8619));
 
 
 /***/ }),
 
-/***/ 6308:
+/***/ 40777:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27364,88 +27063,1260 @@ config_1.Config.prototype.wrapNodes = {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.WrapNodes = void 0;
-var tslib_1 = __webpack_require__(20255);
-var plugin_1 = __webpack_require__(35570);
-var dom_1 = __webpack_require__(94522);
-var is_string_1 = __webpack_require__(40607);
-var decorators_1 = __webpack_require__(9901);
-__webpack_require__(70988);
-var WrapNodes = (function (_super) {
-    tslib_1.__extends(WrapNodes, _super);
-    function WrapNodes() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.isSuitableStart = function (n) {
-            return (dom_1.Dom.isText(n) && (0, is_string_1.isString)(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
-                (_this.isNotClosed(n) && !dom_1.Dom.isTemporary(n));
-        };
-        _this.isSuitable = function (n) {
-            return dom_1.Dom.isText(n) || _this.isNotClosed(n);
-        };
-        _this.isNotClosed = function (n) {
-            return dom_1.Dom.isElement(n) &&
-                !(dom_1.Dom.isBlock(n) || dom_1.Dom.isTag(n, _this.j.o.wrapNodes.exclude));
-        };
-        return _this;
-    }
-    WrapNodes.prototype.afterInit = function (jodit) {
-        if (jodit.o.enter.toLowerCase() === 'br') {
-            return;
+exports.color = void 0;
+var helpers_1 = __webpack_require__(92654);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(89994);
+function color(editor) {
+    editor.registerButton({
+        name: 'brush',
+        group: 'color'
+    });
+    var callback = function (command, second, third) {
+        var colorHEX = (0, helpers_1.normalizeColor)(third);
+        switch (command) {
+            case 'background':
+                editor.s.applyStyle({
+                    backgroundColor: !colorHEX ? '' : colorHEX
+                });
+                break;
+            case 'forecolor':
+                editor.s.applyStyle({
+                    color: !colorHEX ? '' : colorHEX
+                });
+                break;
         }
-        jodit.e.on('afterInit.wtn postProcessSetEditorValue.wtn', this.postProcessSetEditorValue);
+        editor.synchronizeValues();
+        return false;
     };
-    WrapNodes.prototype.beforeDestruct = function (jodit) {
-        jodit.e.off('.wtn');
-    };
-    WrapNodes.prototype.postProcessSetEditorValue = function () {
-        var jodit = this.jodit;
-        if (!jodit.isEditorMode()) {
-            return;
-        }
-        var child = jodit.editor.firstChild, isChanged = false;
-        while (child) {
-            this.checkAloneListLeaf(child, jodit);
-            if (this.isSuitableStart(child)) {
-                if (!isChanged) {
-                    jodit.s.save();
-                }
-                isChanged = true;
-                var box = jodit.createInside.element(jodit.o.enter);
-                dom_1.Dom.before(child, box);
-                while (child && this.isSuitable(child)) {
-                    var next = child.nextSibling;
-                    box.appendChild(child);
-                    child = next;
-                }
-                box.normalize();
-            }
-            child = child && child.nextSibling;
-        }
-        if (isChanged) {
-            jodit.s.restore();
-            if (jodit.e.current === 'afterInit') {
-                jodit.e.fire('internalChange');
-            }
-        }
-    };
-    WrapNodes.prototype.checkAloneListLeaf = function (child, jodit) {
-        if (dom_1.Dom.isElement(child) &&
-            dom_1.Dom.isTag(child, 'li') &&
-            !dom_1.Dom.isTag(child.parentElement, ['ul', 'ol'])) {
-            dom_1.Dom.wrap(child, 'ul', jodit.createInside);
-        }
-    };
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], WrapNodes.prototype, "postProcessSetEditorValue", null);
-    return WrapNodes;
-}(plugin_1.Plugin));
-exports.WrapNodes = WrapNodes;
+    editor
+        .registerCommand('forecolor', callback)
+        .registerCommand('background', callback);
+}
+exports.color = color;
+global_1.pluginSystem.add('color', color);
 
 
 /***/ }),
 
-/***/ 25141:
+/***/ 89994:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+var helpers_1 = __webpack_require__(92654);
+var widget_1 = __webpack_require__(4188);
+var icon_1 = __webpack_require__(76381);
+var dom_1 = __webpack_require__(43887);
+icon_1.Icon.set('brush', __webpack_require__(73894));
+config_1.Config.prototype.controls.brush = {
+    update: function (button, editor) {
+        var color = (0, helpers_1.dataBind)(button, 'color');
+        var update = function (key, value) {
+            if (value && value !== (0, helpers_1.css)(editor.editor, key).toString()) {
+                button.state.icon.fill = value;
+                return;
+            }
+        };
+        if (color) {
+            var mode = (0, helpers_1.dataBind)(button, 'color');
+            update(mode === 'color' ? mode : 'background-color', color);
+            return;
+        }
+        var current = editor.s.current();
+        if (current && !button.state.disabled) {
+            var currentBpx = dom_1.Dom.closest(current, dom_1.Dom.isElement, editor.editor) || editor.editor;
+            update('color', (0, helpers_1.css)(currentBpx, 'color').toString());
+            update('background-color', (0, helpers_1.css)(currentBpx, 'background-color').toString());
+        }
+        button.state.icon.fill = '';
+        button.state.activated = false;
+    },
+    popup: function (editor, current, self, close, button) {
+        var colorHEX = '', bg_color = '', tabs = [], currentElement = null;
+        if (current && current !== editor.editor && dom_1.Dom.isNode(current)) {
+            if (dom_1.Dom.isElement(current) &&
+                editor.s.isCollapsed() &&
+                !dom_1.Dom.isTag(current, ['br', 'hr'])) {
+                currentElement = current;
+            }
+            dom_1.Dom.up(current, function (node) {
+                if (dom_1.Dom.isHTMLElement(node)) {
+                    var color = (0, helpers_1.css)(node, 'color', true), background = (0, helpers_1.css)(node, 'background-color', true);
+                    if (color) {
+                        colorHEX = color.toString();
+                        return true;
+                    }
+                    if (background) {
+                        bg_color = background.toString();
+                        return true;
+                    }
+                }
+            }, editor.editor);
+        }
+        var backgroundTag = (0, widget_1.ColorPickerWidget)(editor, function (value) {
+            if (!currentElement) {
+                editor.execCommand('background', false, value);
+            }
+            else {
+                currentElement.style.backgroundColor = value;
+            }
+            (0, helpers_1.dataBind)(button, 'color', value);
+            (0, helpers_1.dataBind)(button, 'color-mode', 'background');
+            close();
+        }, bg_color);
+        var colorTab = (0, widget_1.ColorPickerWidget)(editor, function (value) {
+            if (!currentElement) {
+                editor.execCommand('forecolor', false, value);
+            }
+            else {
+                currentElement.style.color = value;
+            }
+            (0, helpers_1.dataBind)(button, 'color', value);
+            (0, helpers_1.dataBind)(button, 'color-mode', 'color');
+            close();
+        }, colorHEX);
+        tabs = [
+            {
+                name: 'Background',
+                content: backgroundTag
+            },
+            {
+                name: 'Text',
+                content: colorTab
+            }
+        ];
+        if (editor.o.colorPickerDefaultTab !== 'background') {
+            tabs = tabs.reverse();
+        }
+        return (0, widget_1.TabsWidget)(editor, tabs, currentElement);
+    },
+    exec: function (jodit, current, _a) {
+        var button = _a.button;
+        var mode = (0, helpers_1.dataBind)(button, 'color-mode'), color = (0, helpers_1.dataBind)(button, 'color');
+        if (!mode) {
+            return false;
+        }
+        if (current &&
+            current !== jodit.editor &&
+            dom_1.Dom.isNode(current) &&
+            dom_1.Dom.isElement(current)) {
+            switch (mode) {
+                case 'color':
+                    current.style.color = color;
+                    break;
+                case 'background':
+                    current.style.backgroundColor = color;
+                    break;
+            }
+        }
+        else {
+            jodit.execCommand(mode === 'background' ? mode : 'forecolor', false, color);
+        }
+    },
+    tooltip: 'Fill color or set the text color'
+};
+
+
+/***/ }),
+
+/***/ 12452:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.copyFormat = void 0;
+var config_1 = __webpack_require__(27537);
+var dom_1 = __webpack_require__(43887);
+var css_1 = __webpack_require__(56672);
+var global_1 = __webpack_require__(58299);
+var icon_1 = __webpack_require__(76381);
+var pluginKey = 'copy-format';
+var copyStyles = [
+    'fontWeight',
+    'fontStyle',
+    'fontSize',
+    'color',
+    'margin',
+    'padding',
+    'borderWidth',
+    'borderStyle',
+    'borderColor',
+    'borderRadius',
+    'backgroundColor',
+    'textDecorationLine',
+    'fontFamily'
+];
+var getStyle = function (editor, key, box, defaultStyles) {
+    var result = (0, css_1.css)(box, key);
+    if (result === defaultStyles[key]) {
+        if (box.parentNode &&
+            box !== editor.editor &&
+            box.parentNode !== editor.editor) {
+            result = getStyle(editor, key, box.parentNode, defaultStyles);
+        }
+        else {
+            result = undefined;
+        }
+    }
+    return result;
+};
+var getStyles = function (editor, box, defaultStyles) {
+    var result = {};
+    if (box) {
+        copyStyles.forEach(function (key) {
+            result[key] = getStyle(editor, key, box, defaultStyles);
+            if (key.match(/border(Style|Color)/) && !result.borderWidth) {
+                result[key] = undefined;
+            }
+        });
+    }
+    return result;
+};
+config_1.Config.prototype.controls.copyformat = {
+    exec: function (editor, current, _a) {
+        var button = _a.button;
+        if (!current) {
+            return;
+        }
+        if (editor.buffer.exists(pluginKey)) {
+            editor.buffer.delete(pluginKey);
+            editor.e.off(editor.editor, 'mouseup.' + pluginKey);
+        }
+        else {
+            var defaultStyles_1 = {}, box = dom_1.Dom.up(current, function (elm) { return elm && !dom_1.Dom.isText(elm); }, editor.editor) || editor.editor;
+            var ideal_1 = editor.createInside.span();
+            editor.editor.appendChild(ideal_1);
+            copyStyles.forEach(function (key) {
+                defaultStyles_1[key] = (0, css_1.css)(ideal_1, key);
+            });
+            if (ideal_1 !== editor.editor) {
+                dom_1.Dom.safeRemove(ideal_1);
+            }
+            var format_1 = getStyles(editor, box, defaultStyles_1);
+            var onMouseUp = function () {
+                editor.buffer.delete(pluginKey);
+                var currentNode = editor.s.current();
+                if (currentNode) {
+                    if (dom_1.Dom.isTag(currentNode, 'img')) {
+                        (0, css_1.css)(currentNode, format_1);
+                    }
+                    else {
+                        editor.s.applyStyle(format_1);
+                    }
+                }
+                editor.e.off(editor.editor, 'mouseup.' + pluginKey);
+            };
+            editor.e.on(editor.editor, 'mouseup.' + pluginKey, onMouseUp);
+            editor.buffer.set(pluginKey, true);
+        }
+        button.update();
+    },
+    isActive: function (editor) { return editor.buffer.exists(pluginKey); },
+    tooltip: 'Paint format'
+};
+function copyFormat(editor) {
+    editor.registerButton({
+        name: 'copyformat',
+        group: 'clipboard'
+    });
+    (0, global_1.extendLang)(__webpack_require__(53914));
+}
+exports.copyFormat = copyFormat;
+global_1.pluginSystem.add('copyformat', copyFormat);
+icon_1.Icon.set('copyformat', __webpack_require__(83301));
+
+
+/***/ }),
+
+/***/ 53914:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
+var ar = __webpack_require__(80078);
+exports.ar = ar;
+var cs_cz = __webpack_require__(16986);
+exports.cs_cz = cs_cz;
+var de = __webpack_require__(59347);
+exports.de = de;
+var es = __webpack_require__(63640);
+exports.es = es;
+var fa = __webpack_require__(53434);
+exports.fa = fa;
+var fr = __webpack_require__(85638);
+exports.fr = fr;
+var he = __webpack_require__(31743);
+exports.he = he;
+var hu = __webpack_require__(66219);
+exports.hu = hu;
+var id = __webpack_require__(50331);
+exports.id = id;
+var it = __webpack_require__(25582);
+exports.it = it;
+var ja = __webpack_require__(82066);
+exports.ja = ja;
+var ko = __webpack_require__(71925);
+exports.ko = ko;
+var nl = __webpack_require__(65274);
+exports.nl = nl;
+var pl = __webpack_require__(58548);
+exports.pl = pl;
+var pt_br = __webpack_require__(82958);
+exports.pt_br = pt_br;
+var ru = __webpack_require__(52315);
+exports.ru = ru;
+var tr = __webpack_require__(87727);
+exports.tr = tr;
+var zh_cn = __webpack_require__(9396);
+exports.zh_cn = zh_cn;
+var zh_tw = __webpack_require__(28765);
+exports.zh_tw = zh_tw;
+
+
+/***/ }),
+
+/***/ 64424:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+config_1.Config.prototype.draggableTags = ['img', 'jodit-media', 'jodit'];
+
+
+/***/ }),
+
+/***/ 84026:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.dragAndDropElement = void 0;
+var tslib_1 = __webpack_require__(20255);
+var helpers_1 = __webpack_require__(92654);
+var plugin_1 = __webpack_require__(35570);
+var dom_1 = __webpack_require__(94522);
+var global_1 = __webpack_require__(58299);
+var decorators_1 = __webpack_require__(9901);
+__webpack_require__(64424);
+var DragState;
+(function (DragState) {
+    DragState[DragState["IDLE"] = 0] = "IDLE";
+    DragState[DragState["WAIT_DRAGGING"] = 1] = "WAIT_DRAGGING";
+    DragState[DragState["DRAGGING"] = 2] = "DRAGGING";
+})(DragState || (DragState = {}));
+var dragAndDropElement = (function (_super) {
+    tslib_1.__extends(dragAndDropElement, _super);
+    function dragAndDropElement() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.dragList = [];
+        _this.draggable = null;
+        _this.isCopyMode = false;
+        _this.diffStep = 10;
+        _this.startX = 0;
+        _this.startY = 0;
+        _this.state = DragState.IDLE;
+        return _this;
+    }
+    dragAndDropElement.prototype.afterInit = function () {
+        this.dragList = this.j.o.draggableTags
+            ? (0, helpers_1.splitArray)(this.j.o.draggableTags)
+                .filter(Boolean)
+                .map(function (item) { return item.toLowerCase(); })
+            : [];
+        if (!this.dragList.length) {
+            return;
+        }
+        this.j.e.on('mousedown dragstart', this.onDragStart);
+    };
+    dragAndDropElement.prototype.onDragStart = function (event) {
+        var _this = this;
+        if (event.type === 'dragstart' && this.draggable) {
+            return false;
+        }
+        if (this.state > DragState.IDLE) {
+            return;
+        }
+        var target = event.target;
+        if (!this.dragList.length || !target) {
+            return;
+        }
+        var matched = function (node) {
+            return Boolean(node && _this.dragList.includes(node.nodeName.toLowerCase()));
+        };
+        var lastTarget = dom_1.Dom.furthest(target, matched, this.j.editor) ||
+            (matched(target) ? target : null);
+        if (!lastTarget) {
+            return;
+        }
+        if (dom_1.Dom.isTag(lastTarget.parentElement, 'a') &&
+            lastTarget.parentElement.firstChild === lastTarget &&
+            lastTarget.parentElement.lastChild === lastTarget) {
+            lastTarget = lastTarget.parentElement;
+        }
+        this.startX = event.clientX;
+        this.startY = event.clientY;
+        this.isCopyMode = (0, helpers_1.ctrlKey)(event);
+        this.draggable = lastTarget.cloneNode(true);
+        (0, helpers_1.dataBind)(this.draggable, 'target', lastTarget);
+        this.state = DragState.WAIT_DRAGGING;
+        this.addDragListeners();
+    };
+    dragAndDropElement.prototype.onDrag = function (event) {
+        var _a, _b;
+        if (!this.draggable || this.state === DragState.IDLE) {
+            return;
+        }
+        var x = event.clientX, y = event.clientY;
+        if (this.state === DragState.WAIT_DRAGGING &&
+            Math.sqrt(Math.pow(x - this.startX, 2) + Math.pow(y - this.startY, 2)) < this.diffStep) {
+            return;
+        }
+        if (this.state === DragState.WAIT_DRAGGING) {
+            this.j.lock('drag-and-drop-element');
+            this.state = DragState.DRAGGING;
+        }
+        this.j.e.fire('hidePopup hideResizer');
+        if (!this.draggable.parentNode) {
+            var target = (0, helpers_1.dataBind)(this.draggable, 'target');
+            (0, helpers_1.css)(this.draggable, {
+                zIndex: 10000000000000,
+                pointerEvents: 'none',
+                pointer: 'drag',
+                position: 'fixed',
+                opacity: 0.7,
+                display: 'inline-block',
+                left: event.clientX,
+                top: event.clientY,
+                width: (_a = target === null || target === void 0 ? void 0 : target.offsetWidth) !== null && _a !== void 0 ? _a : 100,
+                height: (_b = target === null || target === void 0 ? void 0 : target.offsetHeight) !== null && _b !== void 0 ? _b : 100
+            });
+            (0, global_1.getContainer)(this.j, dragAndDropElement).appendChild(this.draggable);
+        }
+        (0, helpers_1.css)(this.draggable, {
+            left: event.clientX,
+            top: event.clientY
+        });
+        this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
+    };
+    dragAndDropElement.prototype.onDragEnd = function () {
+        if (this.isInDestruct) {
+            return;
+        }
+        this.removeDragListeners();
+        this.j.unlock();
+        this.state = DragState.IDLE;
+        if (this.draggable) {
+            dom_1.Dom.safeRemove(this.draggable);
+            this.draggable = null;
+        }
+    };
+    dragAndDropElement.prototype.onDrop = function () {
+        if (!this.draggable || this.state < DragState.DRAGGING) {
+            this.onDragEnd();
+            return;
+        }
+        var fragment = (0, helpers_1.dataBind)(this.draggable, 'target');
+        this.onDragEnd();
+        if (this.isCopyMode) {
+            fragment = fragment.cloneNode(true);
+        }
+        var parentElement = fragment.parentElement;
+        this.j.s.insertNode(fragment, true, false);
+        if (parentElement &&
+            dom_1.Dom.isEmpty(parentElement) &&
+            !dom_1.Dom.isTag(parentElement, ['td', 'th'])) {
+            dom_1.Dom.safeRemove(parentElement);
+        }
+        if (dom_1.Dom.isTag(fragment, 'img') && this.j.e) {
+            this.j.e.fire('afterInsertImage', fragment);
+        }
+        this.j.e.fire('synchro');
+    };
+    dragAndDropElement.prototype.addDragListeners = function () {
+        this.j.e
+            .on(this.j.editor, 'mousemove', this.onDrag)
+            .on('mouseup', this.onDrop)
+            .on([this.j.ew, this.ow], 'mouseup', this.onDragEnd);
+    };
+    dragAndDropElement.prototype.removeDragListeners = function () {
+        this.j.e
+            .off(this.j.editor, 'mousemove', this.onDrag)
+            .off('mouseup', this.onDrop)
+            .off([this.j.ew, this.ow], 'mouseup', this.onDragEnd);
+    };
+    dragAndDropElement.prototype.beforeDestruct = function () {
+        this.onDragEnd();
+        this.j.e.off('mousedown dragstart', this.onDragStart);
+        this.removeDragListeners();
+    };
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], dragAndDropElement.prototype, "onDragStart", null);
+    tslib_1.__decorate([
+        (0, decorators_1.throttle)(function (ctx) { return ctx.defaultTimeout / 10; })
+    ], dragAndDropElement.prototype, "onDrag", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], dragAndDropElement.prototype, "onDragEnd", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], dragAndDropElement.prototype, "onDrop", null);
+    return dragAndDropElement;
+}(plugin_1.Plugin));
+exports.dragAndDropElement = dragAndDropElement;
+global_1.pluginSystem.add('dragAndDropElement', dragAndDropElement);
+
+
+/***/ }),
+
+/***/ 20549:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.dragAndDrop = void 0;
+var tslib_1 = __webpack_require__(20255);
+var constants_1 = __webpack_require__(10063);
+var dom_1 = __webpack_require__(43887);
+var helpers_1 = __webpack_require__(92654);
+var plugin_1 = __webpack_require__(35570);
+var decorators_1 = __webpack_require__(9901);
+var file_browser_1 = __webpack_require__(12494);
+var global_1 = __webpack_require__(58299);
+var dragAndDrop = (function (_super) {
+    tslib_1.__extends(dragAndDrop, _super);
+    function dragAndDrop() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.isFragmentFromEditor = false;
+        _this.isCopyMode = false;
+        _this.startDragPoint = { x: 0, y: 0 };
+        _this.draggable = null;
+        _this.bufferRange = null;
+        _this.getText = function (event) {
+            var dt = (0, helpers_1.getDataTransfer)(event);
+            return dt ? dt.getData(constants_1.TEXT_HTML) || dt.getData(constants_1.TEXT_PLAIN) : null;
+        };
+        return _this;
+    }
+    dragAndDrop.prototype.afterInit = function () {
+        this.j.e.on([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
+    };
+    dragAndDrop.prototype.onDragStart = function (event) {
+        var target = event.target;
+        this.onDragEnd();
+        this.isFragmentFromEditor = dom_1.Dom.isOrContains(this.j.editor, target, true);
+        this.isCopyMode = this.isFragmentFromEditor ? (0, helpers_1.ctrlKey)(event) : true;
+        if (this.isFragmentFromEditor) {
+            var sel = this.j.s.sel;
+            var range = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
+            if (range) {
+                this.bufferRange = range.cloneRange();
+            }
+        }
+        else {
+            this.bufferRange = null;
+        }
+        this.startDragPoint.x = event.clientX;
+        this.startDragPoint.y = event.clientY;
+        if ((0, file_browser_1.isFileBrowserFilesItem)(target)) {
+            target = target.querySelector('img');
+        }
+        if (dom_1.Dom.isTag(target, 'img')) {
+            this.draggable = target.cloneNode(true);
+            (0, helpers_1.dataBind)(this.draggable, 'target', target);
+        }
+        this.addDragListeners();
+    };
+    dragAndDrop.prototype.addDragListeners = function () {
+        this.j.e
+            .on('dragover', this.onDrag)
+            .on('drop.DragAndDrop', this.onDrop)
+            .on(window, 'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop', this.onDragEnd);
+    };
+    dragAndDrop.prototype.removeDragListeners = function () {
+        this.j.e
+            .off('dragover', this.onDrag)
+            .off('drop.DragAndDrop', this.onDrop)
+            .off(window, 'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop', this.onDragEnd);
+    };
+    dragAndDrop.prototype.onDrag = function (event) {
+        if (this.draggable) {
+            this.j.e.fire('hidePopup');
+            this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    };
+    dragAndDrop.prototype.onDragEnd = function () {
+        if (this.draggable) {
+            dom_1.Dom.safeRemove(this.draggable);
+            this.draggable = null;
+        }
+        this.isCopyMode = false;
+        this.removeDragListeners();
+    };
+    dragAndDrop.prototype.onDrop = function (event) {
+        if (!event.dataTransfer ||
+            !event.dataTransfer.files ||
+            !event.dataTransfer.files.length) {
+            if (!this.isFragmentFromEditor && !this.draggable) {
+                this.j.e.fire('paste', event);
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            }
+            var sel = this.j.s.sel;
+            var range = this.bufferRange ||
+                (sel && sel.rangeCount ? sel.getRangeAt(0) : null);
+            var fragment = null;
+            if (!this.draggable && range) {
+                fragment = this.isCopyMode
+                    ? range.cloneContents()
+                    : range.extractContents();
+            }
+            else if (this.draggable) {
+                if (this.isCopyMode) {
+                    var _a = tslib_1.__read((0, helpers_1.attr)(this.draggable, '-is-file') === '1'
+                        ? ['a', 'href']
+                        : ['img', 'src'], 2), tagName = _a[0], field = _a[1];
+                    fragment = this.j.createInside.element(tagName);
+                    fragment.setAttribute(field, (0, helpers_1.attr)(this.draggable, 'data-src') ||
+                        (0, helpers_1.attr)(this.draggable, 'src') ||
+                        '');
+                    if (tagName === 'a') {
+                        fragment.textContent = (0, helpers_1.attr)(fragment, field) || '';
+                    }
+                }
+                else {
+                    fragment = (0, helpers_1.dataBind)(this.draggable, 'target');
+                }
+            }
+            else if (this.getText(event)) {
+                fragment = this.j.createInside.fromHTML(this.getText(event));
+            }
+            sel && sel.removeAllRanges();
+            this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
+            if (fragment) {
+                this.j.s.insertNode(fragment, false, false);
+                if (range && fragment.firstChild && fragment.lastChild) {
+                    range.setStartBefore(fragment.firstChild);
+                    range.setEndAfter(fragment.lastChild);
+                    this.j.s.selectRange(range);
+                    this.j.e.fire('synchro');
+                }
+                if (dom_1.Dom.isTag(fragment, 'img') && this.j.events) {
+                    this.j.e.fire('afterInsertImage', fragment);
+                }
+            }
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        this.isFragmentFromEditor = false;
+        this.removeDragListeners();
+    };
+    dragAndDrop.prototype.beforeDestruct = function () {
+        this.onDragEnd();
+        this.j.e
+            .off(window, '.DragAndDrop')
+            .off('.DragAndDrop')
+            .off([window, this.j.ed, this.j.editor], 'dragstart.DragAndDrop', this.onDragStart);
+    };
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], dragAndDrop.prototype, "onDragStart", null);
+    tslib_1.__decorate([
+        (0, decorators_1.throttle)(function (ctx) { return ctx.defaultTimeout / 10; })
+    ], dragAndDrop.prototype, "onDrag", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], dragAndDrop.prototype, "onDragEnd", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], dragAndDrop.prototype, "onDrop", null);
+    return dragAndDrop;
+}(plugin_1.Plugin));
+exports.dragAndDrop = dragAndDrop;
+global_1.pluginSystem.add('dragAndDrop', dragAndDrop);
+
+
+/***/ }),
+
+/***/ 665:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.enter = void 0;
+var tslib_1 = __webpack_require__(20255);
+var dom_1 = __webpack_require__(43887);
+var plugin_1 = __webpack_require__(73177);
+var constants_1 = __webpack_require__(10063);
+var decorators_1 = __webpack_require__(9901);
+var helpers_1 = __webpack_require__(62777);
+var global_1 = __webpack_require__(58299);
+var enter = (function (_super) {
+    tslib_1.__extends(enter, _super);
+    function enter() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    enter.prototype.afterInit = function (editor) {
+        var _this = this;
+        var defaultTag = editor.o.enter.toLowerCase();
+        var brMode = defaultTag === constants_1.BR.toLowerCase();
+        if (!editor.o.enterBlock) {
+            editor.o.enterBlock = brMode
+                ? constants_1.PARAGRAPH
+                : defaultTag;
+        }
+        editor.registerCommand('enter', function (command, value, event) {
+            if (event === void 0) { event = {}; }
+            return _this.onEnter(event);
+        });
+    };
+    enter.prototype.onEnterKeyDown = function (event) {
+        if (event.key === constants_1.KEY_ENTER) {
+            var editor = this.j;
+            var beforeEnter = editor.e.fire('beforeEnter', event);
+            if (beforeEnter !== undefined) {
+                return beforeEnter;
+            }
+            if (!editor.s.isCollapsed()) {
+                editor.execCommand('Delete');
+            }
+            editor.s.focus();
+            this.onEnter(event);
+            editor.synchronizeValues();
+            return false;
+        }
+    };
+    enter.prototype.onEnter = function (event) {
+        var editor = this.j;
+        var current = this.getCurrentOrFillEmpty(editor);
+        var currentBox = (0, helpers_1.getBlockWrapper)(editor, current);
+        var isLi = dom_1.Dom.isTag(currentBox, 'li');
+        if ((!isLi || (event === null || event === void 0 ? void 0 : event.shiftKey)) &&
+            !(0, helpers_1.checkBR)(editor, current, event === null || event === void 0 ? void 0 : event.shiftKey)) {
+            return false;
+        }
+        if (!currentBox && !(0, helpers_1.hasPreviousBlock)(editor, current)) {
+            currentBox = (0, helpers_1.wrapText)(editor, current);
+        }
+        if (!currentBox || currentBox === current) {
+            (0, helpers_1.insertParagraph)(editor, null, isLi ? 'li' : editor.o.enter);
+            return false;
+        }
+        if (!(0, helpers_1.checkUnsplittableBox)(editor, currentBox)) {
+            return false;
+        }
+        if (isLi && dom_1.Dom.isEmpty(currentBox)) {
+            (0, helpers_1.processEmptyLILeaf)(editor, currentBox);
+            return false;
+        }
+        (0, helpers_1.splitFragment)(editor, currentBox);
+    };
+    enter.prototype.getCurrentOrFillEmpty = function (editor) {
+        var s = editor.s;
+        var current = s.current(false);
+        if (!current || current === editor.editor) {
+            current = editor.createInside.text(constants_1.INVISIBLE_SPACE);
+            s.insertNode(current, false, false);
+            s.select(current);
+        }
+        return current;
+    };
+    enter.prototype.beforeDestruct = function (editor) {
+        editor.e.off('keydown.enter');
+    };
+    tslib_1.__decorate([
+        (0, decorators_1.watch)(':keydown.enter')
+    ], enter.prototype, "onEnterKeyDown", null);
+    return enter;
+}(plugin_1.Plugin));
+exports.enter = enter;
+global_1.pluginSystem.add('enter', enter);
+
+
+/***/ }),
+
+/***/ 69368:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkBR = void 0;
+var dom_1 = __webpack_require__(43887);
+var scroll_into_view_1 = __webpack_require__(6110);
+var constants_1 = __webpack_require__(10063);
+function checkBR(jodit, current, shiftKeyPressed) {
+    var isMultiLineBlock = dom_1.Dom.closest(current, ['pre', 'blockquote'], jodit.editor);
+    var isBRMode = jodit.o.enter.toLowerCase() === constants_1.BR.toLowerCase();
+    if (isBRMode ||
+        (shiftKeyPressed && !isMultiLineBlock) ||
+        (!shiftKeyPressed && isMultiLineBlock)) {
+        var br = jodit.createInside.element('br');
+        jodit.s.insertNode(br, true, false);
+        (0, scroll_into_view_1.scrollIntoViewIfNeeded)(br, jodit.editor, jodit.ed);
+        return false;
+    }
+    return true;
+}
+exports.checkBR = checkBR;
+
+
+/***/ }),
+
+/***/ 31926:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkUnsplittableBox = void 0;
+var dom_1 = __webpack_require__(43887);
+function checkUnsplittableBox(jodit, currentBox) {
+    var sel = jodit.s;
+    if (!dom_1.Dom.canSplitBlock(currentBox)) {
+        var br = jodit.createInside.element('br');
+        sel.insertNode(br, false, false);
+        sel.setCursorAfter(br);
+        return false;
+    }
+    return true;
+}
+exports.checkUnsplittableBox = checkUnsplittableBox;
+
+
+/***/ }),
+
+/***/ 82258:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getBlockWrapper = void 0;
+var consts = __webpack_require__(10063);
+var dom_1 = __webpack_require__(43887);
+function getBlockWrapper(jodit, current, tagReg) {
+    if (tagReg === void 0) { tagReg = consts.IS_BLOCK; }
+    var node = current;
+    var root = jodit.editor;
+    do {
+        if (!node || node === root) {
+            break;
+        }
+        if (tagReg.test(node.nodeName)) {
+            if (dom_1.Dom.isTag(node, 'li')) {
+                return node;
+            }
+            return (getBlockWrapper(jodit, node.parentNode, /^li$/i) ||
+                node);
+        }
+        node = node.parentNode;
+    } while (node && node !== root);
+    return null;
+}
+exports.getBlockWrapper = getBlockWrapper;
+
+
+/***/ }),
+
+/***/ 95645:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.hasPreviousBlock = void 0;
+var dom_1 = __webpack_require__(43887);
+function hasPreviousBlock(jodit, current) {
+    return Boolean(dom_1.Dom.prev(current, function (elm) { return dom_1.Dom.isBlock(elm) || dom_1.Dom.isImage(elm); }, jodit.editor));
+}
+exports.hasPreviousBlock = hasPreviousBlock;
+
+
+/***/ }),
+
+/***/ 62777:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(20255);
+tslib_1.__exportStar(__webpack_require__(69368), exports);
+tslib_1.__exportStar(__webpack_require__(31926), exports);
+tslib_1.__exportStar(__webpack_require__(65700), exports);
+tslib_1.__exportStar(__webpack_require__(82258), exports);
+tslib_1.__exportStar(__webpack_require__(95645), exports);
+tslib_1.__exportStar(__webpack_require__(20565), exports);
+tslib_1.__exportStar(__webpack_require__(66000), exports);
+tslib_1.__exportStar(__webpack_require__(20548), exports);
+
+
+/***/ }),
+
+/***/ 20565:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.insertParagraph = void 0;
+var dom_1 = __webpack_require__(43887);
+var scroll_into_view_1 = __webpack_require__(6110);
+function insertParagraph(editor, fake, wrapperTag, style) {
+    var _a, _b;
+    var s = editor.s, createInside = editor.createInside, p = createInside.element(wrapperTag), helper_node = createInside.element('br');
+    p.appendChild(helper_node);
+    if (style && style.cssText) {
+        p.setAttribute('style', style.cssText);
+    }
+    if (fake && fake.isConnected) {
+        dom_1.Dom.before(fake, p);
+        dom_1.Dom.safeRemove(fake);
+    }
+    else {
+        s.insertNode(p, false, false);
+    }
+    var range = s.createRange();
+    range.setStartBefore(wrapperTag.toLowerCase() !== 'br' ? helper_node : p);
+    range.collapse(true);
+    (_a = s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
+    (_b = s.sel) === null || _b === void 0 ? void 0 : _b.addRange(range);
+    (0, scroll_into_view_1.scrollIntoViewIfNeeded)(p, editor.editor, editor.ed);
+    return p;
+}
+exports.insertParagraph = insertParagraph;
+
+
+/***/ }),
+
+/***/ 65700:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.processEmptyLILeaf = void 0;
+var dom_1 = __webpack_require__(43887);
+var selector_1 = __webpack_require__(78191);
+var insert_paragraph_1 = __webpack_require__(20565);
+function processEmptyLILeaf(jodit, li) {
+    var list = dom_1.Dom.closest(li, ['ol', 'ul'], jodit.editor);
+    if (!list) {
+        return;
+    }
+    var parentLi = list.parentElement, listInsideLeaf = dom_1.Dom.isTag(parentLi, 'li');
+    var container = listInsideLeaf ? parentLi : list;
+    var leftRange = jodit.s.createRange();
+    leftRange.setStartAfter(li);
+    leftRange.setEndAfter(list);
+    var rightPart = leftRange.extractContents();
+    var fakeTextNode = jodit.createInside.fake();
+    dom_1.Dom.after(container, fakeTextNode);
+    dom_1.Dom.safeRemove(li);
+    if (!(0, selector_1.$$)('li', list).length) {
+        dom_1.Dom.safeRemove(list);
+    }
+    var newLi = (0, insert_paragraph_1.insertParagraph)(jodit, fakeTextNode, listInsideLeaf ? 'li' : jodit.o.enter);
+    if (!rightPart.querySelector('li')) {
+        return;
+    }
+    if (listInsideLeaf) {
+        newLi.appendChild(rightPart);
+    }
+    else {
+        dom_1.Dom.after(newLi, rightPart);
+    }
+}
+exports.processEmptyLILeaf = processEmptyLILeaf;
+
+
+/***/ }),
+
+/***/ 66000:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.splitFragment = void 0;
+var scroll_into_view_1 = __webpack_require__(6110);
+var dom_1 = __webpack_require__(43887);
+var insert_paragraph_1 = __webpack_require__(20565);
+function splitFragment(jodit, currentBox) {
+    var sel = jodit.s, enter = jodit.o.enter;
+    var defaultTag = enter.toLowerCase();
+    var isLi = dom_1.Dom.isTag(currentBox, 'li');
+    var canSplit = currentBox.tagName.toLowerCase() === defaultTag || isLi;
+    var cursorOnTheRight = sel.cursorOnTheRight(currentBox);
+    var cursorOnTheLeft = sel.cursorOnTheLeft(currentBox);
+    if (!canSplit && (cursorOnTheRight || cursorOnTheLeft)) {
+        var fake = null;
+        if (cursorOnTheRight) {
+            fake = sel.setCursorAfter(currentBox);
+        }
+        else {
+            fake = sel.setCursorBefore(currentBox);
+        }
+        (0, insert_paragraph_1.insertParagraph)(jodit, fake, defaultTag);
+        if (cursorOnTheLeft && !cursorOnTheRight) {
+            sel.setCursorIn(currentBox, true);
+        }
+        return;
+    }
+    var newP = sel.splitSelection(currentBox);
+    (0, scroll_into_view_1.scrollIntoViewIfNeeded)(newP, jodit.editor, jodit.ed);
+}
+exports.splitFragment = splitFragment;
+
+
+/***/ }),
+
+/***/ 20548:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.wrapText = void 0;
+var dom_1 = __webpack_require__(43887);
+function wrapText(jodit, current) {
+    var needWrap = current;
+    dom_1.Dom.up(needWrap, function (node) {
+        if (node && node.hasChildNodes() && node !== jodit.editor) {
+            needWrap = node;
+        }
+    }, jodit.editor);
+    var currentBox = dom_1.Dom.wrapInline(needWrap, jodit.o.enter, jodit);
+    if (dom_1.Dom.isEmpty(currentBox)) {
+        var helper_node = jodit.createInside.element('br');
+        currentBox.appendChild(helper_node);
+        jodit.s.setCursorBefore(helper_node);
+    }
+    return currentBox;
+}
+exports.wrapText = wrapText;
+
+
+/***/ }),
+
+/***/ 54959:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.errorMessages = void 0;
+__webpack_require__(32417);
+var config_1 = __webpack_require__(27537);
+var dom_1 = __webpack_require__(94522);
+var css_1 = __webpack_require__(56672);
+var to_array_1 = __webpack_require__(42464);
+var global_1 = __webpack_require__(58299);
+config_1.Config.prototype.showMessageErrors = true;
+config_1.Config.prototype.showMessageErrorTime = 3000;
+config_1.Config.prototype.showMessageErrorOffsetPx = 3;
+var ELM_NAME = 'error-box-for-messages';
+function errorMessages(editor) {
+    if (editor.o.showMessageErrors) {
+        var activeClass_1 = editor.getFullElName(ELM_NAME, 'active', true), messagesBox_1 = editor.c.div(editor.getFullElName(ELM_NAME)), calcOffsets_1 = function () {
+            var height = 5;
+            (0, to_array_1.toArray)(messagesBox_1.childNodes).forEach(function (elm) {
+                (0, css_1.css)(elm, 'bottom', height + 'px');
+                height +=
+                    elm.offsetHeight + editor.o.showMessageErrorOffsetPx;
+            });
+        };
+        editor.e
+            .on('beforeDestruct', function () {
+            dom_1.Dom.safeRemove(messagesBox_1);
+        })
+            .on('errorMessage', function (message, type, timeout) {
+            editor.workplace.appendChild(messagesBox_1);
+            var msg = editor.c.div(activeClass_1, message);
+            msg.classList.add(editor.getFullElName(ELM_NAME, 'type', type));
+            messagesBox_1.appendChild(msg);
+            calcOffsets_1();
+            editor.async.setTimeout(function () {
+                msg.classList.remove(activeClass_1);
+                editor.async.setTimeout(function () {
+                    dom_1.Dom.safeRemove(msg);
+                    calcOffsets_1();
+                }, 300);
+            }, timeout || editor.o.showMessageErrorTime);
+        });
+    }
+}
+exports.errorMessages = errorMessages;
+global_1.pluginSystem.add('errorMessages', errorMessages);
+
+
+/***/ }),
+
+/***/ 24660:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.file = void 0;
+var config_1 = __webpack_require__(27537);
+var dom_1 = __webpack_require__(43887);
+var widget_1 = __webpack_require__(4188);
+var global_1 = __webpack_require__(58299);
+config_1.Config.prototype.controls.file = {
+    popup: function (editor, current, self, close) {
+        var insert = function (url, title) {
+            if (title === void 0) { title = ''; }
+            editor.s.insertNode(editor.createInside.fromHTML("<a href=\"".concat(url, "\" title=\"").concat(title, "\">").concat(title || url, "</a>")));
+        };
+        var sourceAnchor = null;
+        if (current &&
+            (dom_1.Dom.isTag(current, 'a') ||
+                dom_1.Dom.closest(current, 'a', editor.editor))) {
+            sourceAnchor = dom_1.Dom.isTag(current, 'a')
+                ? current
+                : dom_1.Dom.closest(current, 'a', editor.editor);
+        }
+        return (0, widget_1.FileSelectorWidget)(editor, {
+            filebrowser: function (data) {
+                data.files &&
+                    data.files.forEach(function (file) { return insert(data.baseurl + file); });
+                close();
+            },
+            upload: true,
+            url: function (url, text) {
+                if (sourceAnchor) {
+                    sourceAnchor.setAttribute('href', url);
+                    sourceAnchor.setAttribute('title', text);
+                }
+                else {
+                    insert(url, text);
+                }
+                close();
+            }
+        }, sourceAnchor, close, false);
+    },
+    tags: ['a'],
+    tooltip: 'Insert file'
+};
+function file(editor) {
+    editor.registerButton({
+        name: 'file',
+        group: 'media'
+    });
+}
+exports.file = file;
+global_1.pluginSystem.add('file', file);
+
+
+/***/ }),
+
+/***/ 78881:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27459,6 +28330,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.focus = void 0;
 var config_1 = __webpack_require__(27537);
 var dom_1 = __webpack_require__(94522);
+var global_1 = __webpack_require__(58299);
 config_1.Config.prototype.autofocus = false;
 config_1.Config.prototype.cursorAfterAutofocus = 'end';
 config_1.Config.prototype.saveSelectionOnBlur = true;
@@ -27514,11 +28386,12 @@ function focus(editor) {
     });
 }
 exports.focus = focus;
+global_1.pluginSystem.add('focus', focus);
 
 
 /***/ }),
 
-/***/ 98650:
+/***/ 7080:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27529,14 +28402,15 @@ exports.focus = focus;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.font = void 0;
 var tslib_1 = __webpack_require__(20255);
 var config_1 = __webpack_require__(27537);
-var dom_1 = __webpack_require__(94522);
-var helpers_1 = __webpack_require__(92654);
+var dom_1 = __webpack_require__(43887);
+var utils_1 = __webpack_require__(73344);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.defaultFontSizePoints = 'px';
+icon_1.Icon.set('font', __webpack_require__(84142)).set('fontsize', __webpack_require__(57292));
 config_1.Config.prototype.controls.fontsize = {
-    command: 'fontSize',
+    command: 'fontsize',
     data: {
         cssRule: 'font-size'
     },
@@ -27559,7 +28433,7 @@ config_1.Config.prototype.controls.fontsize = {
     ],
     exec: function (editor, event, _a) {
         var control = _a.control;
-        return (0, helpers_1.memorizeExec)(editor, event, { control: control }, function (value) {
+        return (0, utils_1.memorizeExec)(editor, event, { control: control }, function (value) {
             var _a;
             if (((_a = control.command) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === 'fontsize') {
                 return "".concat(value).concat(editor.o.defaultFontSizePoints);
@@ -27583,7 +28457,7 @@ config_1.Config.prototype.controls.fontsize = {
             });
         if (current) {
             var currentBpx = dom_1.Dom.closest(current, dom_1.Dom.isElement, editor.editor) || editor.editor;
-            var value = (0, helpers_1.css)(currentBpx, cssKey);
+            var value = (0, utils_1.css)(currentBpx, cssKey);
             return Boolean(value &&
                 control.args &&
                 normalize(control.args[0].toString()) ===
@@ -27619,6 +28493,25 @@ config_1.Config.prototype.controls.font = tslib_1.__assign(tslib_1.__assign({}, 
                 .replace(/[^a-z0-9]+/g, ',');
         }
     }, tooltip: 'Font family' });
+
+
+/***/ }),
+
+/***/ 98650:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.font = void 0;
+var helpers_1 = __webpack_require__(92654);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(7080);
 function font(editor) {
     editor
         .registerButton({
@@ -27650,6 +28543,7 @@ function font(editor) {
         .registerCommand('fontname', callback);
 }
 exports.font = font;
+global_1.pluginSystem.add('font', font);
 
 
 /***/ }),
@@ -27669,6 +28563,9 @@ exports.formatBlock = void 0;
 var config_1 = __webpack_require__(27537);
 var modules_1 = __webpack_require__(46701);
 var helpers_1 = __webpack_require__(92654);
+var global_1 = __webpack_require__(58299);
+var icon_1 = __webpack_require__(76381);
+icon_1.Icon.set('paragraph', __webpack_require__(18019));
 config_1.Config.prototype.controls.paragraph = {
     command: 'formatBlock',
     update: function (button, editor) {
@@ -27747,11 +28644,12 @@ function formatBlock(editor) {
     });
 }
 exports.formatBlock = formatBlock;
+global_1.pluginSystem.add('formatBlock', formatBlock);
 
 
 /***/ }),
 
-/***/ 58935:
+/***/ 53022:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -27762,14 +28660,13 @@ exports.formatBlock = formatBlock;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.fullsize = void 0;
 __webpack_require__(14320);
 var config_1 = __webpack_require__(27537);
 var consts = __webpack_require__(10063);
-var css_1 = __webpack_require__(56672);
-var is_jodit_object_1 = __webpack_require__(47442);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.fullsize = false;
 config_1.Config.prototype.globalFullSize = true;
+icon_1.Icon.set('fullsize', __webpack_require__(45146)).set('shrink', __webpack_require__(53576));
 config_1.Config.prototype.controls.fullsize = {
     exec: function (editor) {
         editor.toggleFullSize();
@@ -27787,6 +28684,27 @@ config_1.Config.prototype.controls.fullsize = {
     tooltip: 'Open editor in fullsize',
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
 };
+
+
+/***/ }),
+
+/***/ 58935:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.fullsize = void 0;
+__webpack_require__(14320);
+var css_1 = __webpack_require__(56672);
+var is_jodit_object_1 = __webpack_require__(47442);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(53022);
 function fullsize(editor) {
     editor.registerButton({
         name: 'fullsize'
@@ -27855,6 +28773,233 @@ function fullsize(editor) {
     });
 }
 exports.fullsize = fullsize;
+global_1.pluginSystem.add('fullsize', fullsize);
+
+
+/***/ }),
+
+/***/ 35198:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+config_1.Config.prototype.commandToHotkeys = {
+    removeFormat: ['ctrl+shift+m', 'cmd+shift+m'],
+    insertOrderedList: ['ctrl+shift+7', 'cmd+shift+7'],
+    insertUnorderedList: ['ctrl+shift+8, cmd+shift+8'],
+    selectall: ['ctrl+a', 'cmd+a']
+};
+
+
+/***/ }),
+
+/***/ 45913:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.hotkeys = void 0;
+var tslib_1 = __webpack_require__(20255);
+var plugin_1 = __webpack_require__(35570);
+var helpers_1 = __webpack_require__(92654);
+var constants_1 = __webpack_require__(10063);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(35198);
+var hotkeys = (function (_super) {
+    tslib_1.__extends(hotkeys, _super);
+    function hotkeys() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.onKeyPress = function (event) {
+            var special = _this.specialKeys[event.which], character = (event.key || String.fromCharCode(event.which)).toLowerCase();
+            var modif = [special || character];
+            ['alt', 'ctrl', 'shift', 'meta'].forEach(function (specialKey) {
+                if (event[specialKey + 'Key'] && special !== specialKey) {
+                    modif.push(specialKey);
+                }
+            });
+            return (0, helpers_1.normalizeKeyAliases)(modif.join('+'));
+        };
+        _this.specialKeys = {
+            8: 'backspace',
+            9: 'tab',
+            10: 'return',
+            13: 'return',
+            16: 'shift',
+            17: 'ctrl',
+            18: 'alt',
+            19: 'pause',
+            20: 'capslock',
+            27: 'esc',
+            32: 'space',
+            33: 'pageup',
+            34: 'pagedown',
+            35: 'end',
+            36: 'home',
+            37: 'left',
+            38: 'up',
+            39: 'right',
+            40: 'down',
+            45: 'insert',
+            46: 'del',
+            59: ';',
+            61: '=',
+            91: 'meta',
+            96: '0',
+            97: '1',
+            98: '2',
+            99: '3',
+            100: '4',
+            101: '5',
+            102: '6',
+            103: '7',
+            104: '8',
+            105: '9',
+            106: '*',
+            107: '+',
+            109: '-',
+            110: '.',
+            111: '/',
+            112: 'f1',
+            113: 'f2',
+            114: 'f3',
+            115: 'f4',
+            116: 'f5',
+            117: 'f6',
+            118: 'f7',
+            119: 'f8',
+            120: 'f9',
+            121: 'f10',
+            122: 'f11',
+            123: 'f12',
+            144: 'numlock',
+            145: 'scroll',
+            173: '-',
+            186: ';',
+            187: '=',
+            188: ',',
+            189: '-',
+            190: '.',
+            191: '/',
+            192: '`',
+            219: '[',
+            220: '\\',
+            221: ']',
+            222: "'"
+        };
+        return _this;
+    }
+    hotkeys.prototype.afterInit = function (editor) {
+        var _this = this;
+        (0, helpers_1.keys)(editor.o.commandToHotkeys, false).forEach(function (commandName) {
+            var shortcuts = editor.o.commandToHotkeys[commandName];
+            if (shortcuts && ((0, helpers_1.isArray)(shortcuts) || (0, helpers_1.isString)(shortcuts))) {
+                editor.registerHotkeyToCommand(shortcuts, commandName);
+            }
+        });
+        var itIsHotkey = false;
+        editor.e
+            .off('.hotkeys')
+            .on([editor.ow, editor.ew], 'keydown.hotkeys', function (e) {
+            if (e.key === constants_1.KEY_ESC) {
+                return _this.j.e.fire('escape', e);
+            }
+        })
+            .on('keydown.hotkeys', function (event) {
+            var shortcut = _this.onKeyPress(event), stop = {
+                shouldStop: true
+            };
+            var resultOfFire = _this.j.e.fire(shortcut + '.hotkey', event.type, stop);
+            if (resultOfFire === false) {
+                if (stop.shouldStop) {
+                    itIsHotkey = true;
+                    editor.e.stopPropagation('keydown');
+                    return false;
+                }
+                else {
+                    event.preventDefault();
+                }
+            }
+        }, { top: true })
+            .on('keyup.hotkeys', function () {
+            if (itIsHotkey) {
+                itIsHotkey = false;
+                editor.e.stopPropagation('keyup');
+                return false;
+            }
+        }, { top: true });
+    };
+    hotkeys.prototype.beforeDestruct = function (jodit) {
+        if (jodit.events) {
+            jodit.e.off('.hotkeys');
+        }
+    };
+    return hotkeys;
+}(plugin_1.Plugin));
+exports.hotkeys = hotkeys;
+global_1.pluginSystem.add('hotkeys', hotkeys);
+
+
+/***/ }),
+
+/***/ 64378:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.hr = void 0;
+var config_1 = __webpack_require__(27537);
+var dom_1 = __webpack_require__(94522);
+var global_1 = __webpack_require__(58299);
+var icon_1 = __webpack_require__(76381);
+icon_1.Icon.set('hr', __webpack_require__(14655));
+config_1.Config.prototype.controls.hr = {
+    command: 'insertHorizontalRule',
+    tags: ['hr'],
+    tooltip: 'Insert Horizontal Line'
+};
+function hr(editor) {
+    editor.registerButton({
+        name: 'hr',
+        group: 'insert'
+    });
+    editor.registerCommand('insertHorizontalRule', function () {
+        var elm = editor.createInside.element('hr');
+        editor.s.insertNode(elm, false, false);
+        var block = dom_1.Dom.closest(elm.parentElement, dom_1.Dom.isBlock, editor.editor);
+        if (block && dom_1.Dom.isEmpty(block) && block !== editor.editor) {
+            dom_1.Dom.after(block, elm);
+            dom_1.Dom.safeRemove(block);
+        }
+        var p = dom_1.Dom.next(elm, dom_1.Dom.isBlock, editor.editor, false);
+        if (!p) {
+            p = editor.createInside.element(editor.o.enter);
+            dom_1.Dom.after(elm, p);
+        }
+        editor.s.setCursorIn(p);
+        return false;
+    });
+}
+exports.hr = hr;
+global_1.pluginSystem.add('hr', hr);
 
 
 /***/ }),
@@ -27871,7 +29016,6 @@ exports.fullsize = fullsize;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
-config_1.Config.prototype.iframe = false;
 config_1.Config.prototype.iframeBaseUrl = '';
 config_1.Config.prototype.iframeTitle = 'Jodit Editor';
 config_1.Config.prototype.iframeDoctype = '<!DOCTYPE html>';
@@ -27943,7 +29087,6 @@ config_1.Config.prototype.iframeStyle =
         '-ms-user-select: none' +
         '}';
 config_1.Config.prototype.iframeCSSLinks = [];
-config_1.Config.prototype.editHTMLDocumentMode = false;
 
 
 /***/ }),
@@ -27963,6 +29106,7 @@ exports.iframe = void 0;
 var helpers_1 = __webpack_require__(92654);
 var helpers_2 = __webpack_require__(92654);
 var constants_1 = __webpack_require__(10063);
+var global_1 = __webpack_require__(58299);
 __webpack_require__(18027);
 function iframe(editor) {
     var opt = editor.options;
@@ -28129,52 +29273,12 @@ function iframe(editor) {
     });
 }
 exports.iframe = iframe;
+global_1.pluginSystem.add('iframe', iframe);
 
 
 /***/ }),
 
-/***/ 76596:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.hAlignElement = void 0;
-var helpers_1 = __webpack_require__(92654);
-var hAlignElement = function (image, align) {
-    if (align && align !== 'normal') {
-        if (align !== 'center') {
-            (0, helpers_1.css)(image, 'float', align);
-            (0, helpers_1.clearCenterAlign)(image);
-        }
-        else {
-            (0, helpers_1.css)(image, {
-                float: '',
-                display: 'block',
-                marginLeft: 'auto',
-                marginRight: 'auto'
-            });
-        }
-    }
-    else {
-        if ((0, helpers_1.css)(image, 'float') &&
-            ['right', 'left'].indexOf((0, helpers_1.css)(image, 'float').toString().toLowerCase()) !== -1) {
-            (0, helpers_1.css)(image, 'float', '');
-        }
-        (0, helpers_1.clearCenterAlign)(image);
-    }
-};
-exports.hAlignElement = hAlignElement;
-
-
-/***/ }),
-
-/***/ 58463:
+/***/ 12716:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28193,7 +29297,7 @@ config_1.Config.prototype.imageProcessor = {
 
 /***/ }),
 
-/***/ 91238:
+/***/ 70846:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28209,8 +29313,9 @@ var tslib_1 = __webpack_require__(20255);
 var helpers_1 = __webpack_require__(92654);
 var plugin_1 = __webpack_require__(35570);
 var decorators_1 = __webpack_require__(9901);
-__webpack_require__(58463);
-var const_1 = __webpack_require__(848);
+var constants_1 = __webpack_require__(10063);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(12716);
 var JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 var JODIT_IMAGE_BLOB_ID = JODIT_IMAGE_PROCESSOR_BINDED + 'blob-id';
 var imageProcessor = (function (_super) {
@@ -28241,7 +29346,7 @@ var imageProcessor = (function (_super) {
         }
     };
     imageProcessor.prototype.onAfterGetValueFromEditor = function (data, consumer) {
-        if (consumer !== const_1.SOURCE_CONSUMER) {
+        if (consumer !== constants_1.SOURCE_CONSUMER) {
             return this.onBeforeSetElementValue(data);
         }
     };
@@ -28272,7 +29377,7 @@ var imageProcessor = (function (_super) {
         }
     };
     imageProcessor.prototype.afterChange = function (data) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var editor;
             return tslib_1.__generator(this, function (_a) {
                 editor = this.jodit;
@@ -28339,11 +29444,12 @@ function dataURItoBlob(dataURI) {
     }
     return new Blob([ab], { type: mimeString });
 }
+global_1.pluginSystem.add('imageProcessor', imageProcessor);
 
 
 /***/ }),
 
-/***/ 22978:
+/***/ 94615:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28377,7 +29483,7 @@ config_1.Config.prototype.image = {
 
 /***/ }),
 
-/***/ 13915:
+/***/ 19124:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28390,16 +29496,18 @@ config_1.Config.prototype.image = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.imageProperties = void 0;
 var tslib_1 = __webpack_require__(20255);
-__webpack_require__(42669);
+__webpack_require__(9947);
 var modules_1 = __webpack_require__(46701);
 var helpers_1 = __webpack_require__(92654);
 var widget_1 = __webpack_require__(4188);
 var button_1 = __webpack_require__(44632);
-var templates_1 = __webpack_require__(2352);
 var decorators_1 = __webpack_require__(9901);
 var image_editor_1 = __webpack_require__(87005);
-var helpers_2 = __webpack_require__(76596);
-__webpack_require__(22978);
+var global_1 = __webpack_require__(58299);
+var form_1 = __webpack_require__(22325);
+var main_tab_1 = __webpack_require__(25393);
+var position_tab_1 = __webpack_require__(96309);
+__webpack_require__(94615);
 var normalSizeToString = function (value) {
     value = (0, helpers_1.trim)(value);
     return /^[0-9]+$/.test(value) ? value + 'px' : value;
@@ -28469,8 +29577,8 @@ var imageProperties = (function (_super) {
             return;
         }
         this.dialog = new modules_1.Dialog({
-            fullsize: this.j.o.fullsize,
-            globalFullSize: this.j.o.globalFullSize,
+            fullsize: false,
+            globalFullSize: true,
             theme: this.j.o.theme,
             language: this.j.o.language,
             minWidth: Math.min(400, screen.width),
@@ -28493,14 +29601,14 @@ var imageProperties = (function (_super) {
         });
         var dialog = this.dialog;
         dialog.setHeader(i18n('Image properties'));
-        var mainForm = (0, templates_1.form)(editor);
+        var mainForm = (0, form_1.form)(editor);
         this.form = mainForm;
         dialog.setContent(mainForm);
         var tabsBox = (0, helpers_1.refs)(this.form).tabsBox;
         if (tabsBox) {
             tabsBox.appendChild((0, widget_1.TabsWidget)(editor, [
-                { name: 'Image', content: (0, templates_1.mainTab)(editor) },
-                { name: 'Advanced', content: (0, templates_1.positionTab)(editor) }
+                { name: 'Image', content: (0, main_tab_1.mainTab)(editor) },
+                { name: 'Advanced', content: (0, position_tab_1.positionTab)(editor) }
             ], this.activeTabState));
         }
         buttons.check.onAction(this.onApply);
@@ -28718,7 +29826,7 @@ var imageProperties = (function (_super) {
             (0, helpers_1.attr)(image, 'id', id.value || null);
         }
         if (opt.image.editAlign) {
-            (0, helpers_2.hAlignElement)(image, align.value);
+            (0, helpers_1.hAlignElement)(image, align.value);
         }
         this.j.synchronizeValues();
         this.dialog.close();
@@ -28847,11 +29955,12 @@ var imageProperties = (function (_super) {
     return imageProperties;
 }(modules_1.Plugin));
 exports.imageProperties = imageProperties;
+global_1.pluginSystem.add('imageProperties', imageProperties);
 
 
 /***/ }),
 
-/***/ 93387:
+/***/ 22325:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28863,9 +29972,9 @@ exports.imageProperties = imageProperties;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.form = void 0;
-var ui_1 = __webpack_require__(14153);
+var icon_1 = __webpack_require__(76381);
 function form(editor) {
-    var _a = editor.o.image, showPreview = _a.showPreview, editSize = _a.editSize, gi = ui_1.Icon.get.bind(ui_1.Icon);
+    var _a = editor.o.image, showPreview = _a.showPreview, editSize = _a.editSize, gi = icon_1.Icon.get.bind(icon_1.Icon);
     return editor.c.fromHTML("<form class=\"jodit-properties\">\n\t\t<div class=\"jodit-grid jodit-grid_xs-column\">\n\t\t\t<div class=\"jodit_col-lg-2-5 jodit_col-xs-5-5\">\n\t\t\t\t<div class=\"jodit-properties_view_box\">\n\t\t\t\t\t<div style=\"".concat(!showPreview ? 'display:none' : '', "\" class=\"jodit-properties_image_view\">\n\t\t\t\t\t\t<img data-ref=\"imageViewSrc\" src=\"\" alt=\"\"/>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div style=\"").concat(!editSize ? 'display:none' : '', "\" class=\"jodit-form__group jodit-properties_image_sizes\">\n\t\t\t\t\t\t<input data-ref=\"imageWidth\" type=\"text\" class=\"jodit-input\"/>\n\t\t\t\t\t\t<a data-ref=\"lockSize\" class=\"jodit-properties__lock\">").concat(gi('lock'), "</a>\n\t\t\t\t\t\t<input data-ref=\"imageHeight\" type=\"text\" class=\"imageHeight jodit-input\"/>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div data-ref=\"tabsBox\" class=\"jodit_col-lg-3-5 jodit_col-xs-5-5\"></div>\n\t\t</div>\n\t</form>"));
 }
 exports.form = form;
@@ -28873,26 +29982,7 @@ exports.form = form;
 
 /***/ }),
 
-/***/ 2352:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(93387), exports);
-tslib_1.__exportStar(__webpack_require__(36833), exports);
-tslib_1.__exportStar(__webpack_require__(69992), exports);
-
-
-/***/ }),
-
-/***/ 36833:
+/***/ 25393:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28904,9 +29994,9 @@ tslib_1.__exportStar(__webpack_require__(69992), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.mainTab = void 0;
-var ui_1 = __webpack_require__(14153);
+var icon_1 = __webpack_require__(76381);
 function mainTab(editor) {
-    var opt = editor.o, i18n = editor.i18n.bind(editor), gi = ui_1.Icon.get.bind(ui_1.Icon), hasFbUrl = opt.filebrowser.ajax.url || opt.uploader.url, hasEditor = opt.image.useImageEditor;
+    var opt = editor.o, i18n = editor.i18n.bind(editor), gi = icon_1.Icon.get.bind(icon_1.Icon), hasFbUrl = opt.filebrowser.ajax.url || opt.uploader.url, hasEditor = opt.image.useImageEditor;
     return editor.c.fromHTML("<div style=\"".concat(!opt.image.editSrc ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Src'), "</label>\n\t\t\t<div class=\"jodit-input_group\">\n\t\t\t\t<input data-ref=\"imageSrc\" class=\"jodit-input\" type=\"text\"/>\n\t\t\t\t<div\n\t\t\t\t\tclass=\"jodit-input_group-buttons\"\n\t\t\t\t\tstyle=\"").concat(hasFbUrl ? '' : 'display: none', "\"\n\t\t\t\t>\n\t\t\t\t\t\t<a\n\t\t\t\t\t\t\tdata-ref=\"changeImage\"\n\t\t\t\t\t\t\tclass=\"jodit-button\"\n\t\t\t\t\t\t>").concat(gi('image'), "</a>\n\t\t\t\t\t\t<a\n\t\t\t\t\t\t\tdata-ref=\"editImage\"\n\t\t\t\t\t\t\tclass=\"jodit-button\"\n\t\t\t\t\t\t\tstyle=\"").concat(hasEditor ? '' : 'display: none', "\"\n\t\t\t\t\t\t>").concat(gi('crop'), "</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editTitle ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Title'), "</label>\n\t\t\t<input data-ref=\"imageTitle\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editAlt ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Alternative'), "</label>\n\t\t\t<input data-ref=\"imageAlt\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editLink ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Link'), "</label>\n\t\t\t<input data-ref=\"imageLink\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editLink ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label class=\"jodit_vertical_middle\">\n\t\t\t\t<input data-ref=\"imageLinkOpenInNewTab\" type=\"checkbox\" class=\"jodit-checkbox\"/>\n\t\t\t\t<span>").concat(i18n('Open link in new tab'), "</span>\n\t\t\t</label>\n\t\t</div>"));
 }
 exports.mainTab = mainTab;
@@ -28914,7 +30004,7 @@ exports.mainTab = mainTab;
 
 /***/ }),
 
-/***/ 69992:
+/***/ 96309:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -28926,9 +30016,9 @@ exports.mainTab = mainTab;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.positionTab = void 0;
-var ui_1 = __webpack_require__(14153);
+var icon_1 = __webpack_require__(76381);
 function positionTab(editor) {
-    var opt = editor.o, i18n = editor.i18n.bind(editor), gi = ui_1.Icon.get.bind(ui_1.Icon);
+    var opt = editor.o, i18n = editor.i18n.bind(editor), gi = icon_1.Icon.get.bind(icon_1.Icon);
     return editor.c.fromHTML("<div style=\"".concat(!opt.image.editMargins ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Margins'), "</label>\n\t\t\t<div class=\"jodit-grid jodit_vertical_middle\">\n\t\t\t\t<input class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginTop\" type=\"text\" placeholder=\"").concat(i18n('top'), "\"/>\n\t\t\t\t<a style=\"text-align: center;\" data-ref=\"lockMargin\" class=\"jodit-properties__lock jodit_col-lg-1-5\">").concat(gi('lock'), "</a>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginRight\" type=\"text\" placeholder=\"").concat(i18n('right'), "\"/>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginBottom\" type=\"text\" placeholder=\"").concat(i18n('bottom'), "\"/>\n\t\t\t\t<input disabled=\"true\" class=\"jodit_col-lg-1-5 jodit-input\" data-ref=\"marginLeft\" type=\"text\" placeholder=\"").concat(i18n('left'), "\"/>\n\t\t\t</div>\n\t\t</div>\n\t\t<div\n\t\t\tstyle=\"").concat(!opt.image.editAlign ? 'display:none' : '', "\"\n\t\t\tclass=\"jodit-form__group\"\n\t\t>\n\t\t\t<label>").concat(i18n('Align'), "</label>\n\t\t\t<select data-ref=\"align\" class=\"jodit-select\">\n\t\t\t\t<option value=\"\">").concat(i18n('--Not Set--'), "</option>\n\t\t\t\t<option value=\"left\">").concat(i18n('Left'), "</option>\n\t\t\t\t<option value=\"center\">").concat(i18n('Center'), "</option>\n\t\t\t\t<option value=\"right\">").concat(i18n('Right'), "</option>\n\t\t\t</select>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editStyle ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Styles'), "</label>\n\t\t\t<input data-ref=\"style\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editClass ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>").concat(i18n('Classes'), "</label>\n\t\t\t<input data-ref=\"classes\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div style=\"").concat(!opt.image.editId ? 'display:none' : '', "\" class=\"jodit-form__group\">\n\t\t\t<label>Id</label>\n\t\t\t<input data-ref=\"id\" type=\"text\" class=\"jodit-input\"/>\n\t\t</div>\n\t\t<div\n\t\t\tstyle=\"").concat(!opt.image.editBorderRadius ? 'display:none' : '', "\"\n\t\t\tclass=\"jodit-form__group\"\n\t\t>\n\t\t\t<label>").concat(i18n('Border radius'), "</label>\n\t\t\t\t<input data-ref=\"borderRadius\" type=\"number\" class=\"jodit-input\"/>\n\t\t</div>"));
 }
 exports.positionTab = positionTab;
@@ -28953,6 +30043,9 @@ var dom_1 = __webpack_require__(94522);
 var helpers_1 = __webpack_require__(92654);
 var widget_1 = __webpack_require__(4188);
 var config_1 = __webpack_require__(27537);
+var global_1 = __webpack_require__(58299);
+var icon_1 = __webpack_require__(76381);
+icon_1.Icon.set('image', __webpack_require__(53477));
 config_1.Config.prototype.controls.image = {
     popup: function (editor, current, self, close) {
         var sourceImage = null;
@@ -29010,11 +30103,12 @@ function image(editor) {
     });
 }
 exports.image = image;
+global_1.pluginSystem.add('image', image);
 
 
 /***/ }),
 
-/***/ 67131:
+/***/ 99795:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -29025,10 +30119,51 @@ exports.image = image;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(13915), exports);
-tslib_1.__exportStar(__webpack_require__(91238), exports);
-tslib_1.__exportStar(__webpack_require__(72742), exports);
+var config_1 = __webpack_require__(27537);
+var dom_1 = __webpack_require__(94522);
+var icon_1 = __webpack_require__(76381);
+var helpers_1 = __webpack_require__(85622);
+icon_1.Icon.set('indent', __webpack_require__(90053)).set('outdent', __webpack_require__(72230));
+config_1.Config.prototype.controls.indent = {
+    tooltip: 'Increase Indent'
+};
+config_1.Config.prototype.controls.outdent = {
+    isDisabled: function (editor) {
+        var current = editor.s.current();
+        if (current) {
+            var currentBox = dom_1.Dom.closest(current, dom_1.Dom.isBlock, editor.editor);
+            if (currentBox) {
+                var arrow = (0, helpers_1.getKey)(editor.o.direction, currentBox);
+                return (!currentBox.style[arrow] ||
+                    parseInt(currentBox.style[arrow], 10) <= 0);
+            }
+        }
+        return true;
+    },
+    tooltip: 'Decrease Indent'
+};
+config_1.Config.prototype.indentMargin = 10;
+
+
+/***/ }),
+
+/***/ 85622:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getKey = void 0;
+var dom_1 = __webpack_require__(43887);
+var getKey = function (direction, box) {
+    return "".concat(dom_1.Dom.isCell(box) ? 'padding' : 'margin').concat(direction === 'rtl' ? 'Right' : 'Left');
+};
+exports.getKey = getKey;
 
 
 /***/ }),
@@ -29045,32 +30180,12 @@ tslib_1.__exportStar(__webpack_require__(72742), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.indent = void 0;
-var config_1 = __webpack_require__(27537);
 var constants_1 = __webpack_require__(10063);
 var dom_1 = __webpack_require__(94522);
 var helpers_1 = __webpack_require__(92654);
-config_1.Config.prototype.controls.indent = {
-    tooltip: 'Increase Indent'
-};
-var getKey = function (direction, box) {
-    return "".concat(dom_1.Dom.isCell(box) ? 'padding' : 'margin').concat(direction === 'rtl' ? 'Right' : 'Left');
-};
-config_1.Config.prototype.controls.outdent = {
-    isDisabled: function (editor) {
-        var current = editor.s.current();
-        if (current) {
-            var currentBox = dom_1.Dom.closest(current, dom_1.Dom.isBlock, editor.editor);
-            if (currentBox) {
-                var arrow = getKey(editor.o.direction, currentBox);
-                return (!currentBox.style[arrow] ||
-                    parseInt(currentBox.style[arrow], 10) <= 0);
-            }
-        }
-        return true;
-    },
-    tooltip: 'Decrease Indent'
-};
-config_1.Config.prototype.indentMargin = 10;
+var global_1 = __webpack_require__(58299);
+__webpack_require__(99795);
+var helpers_2 = __webpack_require__(85622);
 function indent(editor) {
     editor
         .registerButton({
@@ -29098,7 +30213,7 @@ function indent(editor) {
             }
             var alreadyIndented = processedElements.includes(currentBox);
             if (currentBox && !alreadyIndented) {
-                var key = getKey(editor.o.direction, currentBox);
+                var key = (0, helpers_2.getKey)(editor.o.direction, currentBox);
                 processedElements.push(currentBox);
                 var value = currentBox.style[key]
                     ? parseInt(currentBox.style[key], 10)
@@ -29125,12 +30240,13 @@ function indent(editor) {
     });
 }
 exports.indent = indent;
+global_1.pluginSystem.add('indent', indent);
 
 
 /***/ }),
 
 /***/ 20151:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
@@ -29139,103 +30255,67 @@ exports.indent = indent;
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.xpath = exports.tab = exports.tooltip = exports.symbols = exports.spellcheck = exports.sticky = exports.stat = exports.source = exports.resizeHandler = exports.size = exports.select = exports.search = exports.resizer = exports.redoUndo = exports.placeholder = exports.poweredByJodit = exports.orderedList = exports.mobile = exports.link = exports.lineHeight = exports.limit = exports.justify = exports.inlinePopup = exports.hr = exports.indent = exports.iframe = exports.hotkeys = exports.fullsize = exports.formatBlock = exports.font = exports.errorMessages = exports.KeyArrowOutside = exports.enter = exports.color = exports.PasteFromWord = exports.DragAndDropElement = exports.DragAndDrop = exports.pasteStorage = exports.paste = exports.clipboard = exports.copyFormat = exports.cleanHtml = exports.WrapNodes = exports.bold = exports.Backspace = exports.classSpan = exports.focus = exports.about = exports.addNewLine = void 0;
-var tslib_1 = __webpack_require__(20255);
-var add_new_line_1 = __webpack_require__(70428);
-Object.defineProperty(exports, "addNewLine", ({ enumerable: true, get: function () { return add_new_line_1.addNewLine; } }));
-var about_1 = __webpack_require__(3250);
-Object.defineProperty(exports, "about", ({ enumerable: true, get: function () { return about_1.about; } }));
-var focus_1 = __webpack_require__(25141);
-Object.defineProperty(exports, "focus", ({ enumerable: true, get: function () { return focus_1.focus; } }));
-var class_span_1 = __webpack_require__(57450);
-Object.defineProperty(exports, "classSpan", ({ enumerable: true, get: function () { return class_span_1.classSpan; } }));
-var backspace_1 = __webpack_require__(26685);
-Object.defineProperty(exports, "Backspace", ({ enumerable: true, get: function () { return backspace_1.Backspace; } }));
-var bold_1 = __webpack_require__(42544);
-Object.defineProperty(exports, "bold", ({ enumerable: true, get: function () { return bold_1.bold; } }));
-var fix_1 = __webpack_require__(93445);
-Object.defineProperty(exports, "WrapNodes", ({ enumerable: true, get: function () { return fix_1.WrapNodes; } }));
-Object.defineProperty(exports, "cleanHtml", ({ enumerable: true, get: function () { return fix_1.cleanHtml; } }));
-var clipboard_1 = __webpack_require__(89674);
-Object.defineProperty(exports, "copyFormat", ({ enumerable: true, get: function () { return clipboard_1.copyFormat; } }));
-Object.defineProperty(exports, "clipboard", ({ enumerable: true, get: function () { return clipboard_1.clipboard; } }));
-Object.defineProperty(exports, "paste", ({ enumerable: true, get: function () { return clipboard_1.paste; } }));
-Object.defineProperty(exports, "pasteStorage", ({ enumerable: true, get: function () { return clipboard_1.pasteStorage; } }));
-Object.defineProperty(exports, "DragAndDrop", ({ enumerable: true, get: function () { return clipboard_1.DragAndDrop; } }));
-Object.defineProperty(exports, "DragAndDropElement", ({ enumerable: true, get: function () { return clipboard_1.DragAndDropElement; } }));
-Object.defineProperty(exports, "PasteFromWord", ({ enumerable: true, get: function () { return clipboard_1.PasteFromWord; } }));
-var color_1 = __webpack_require__(40777);
-Object.defineProperty(exports, "color", ({ enumerable: true, get: function () { return color_1.color; } }));
-var enter_1 = __webpack_require__(4109);
-Object.defineProperty(exports, "enter", ({ enumerable: true, get: function () { return enter_1.enter; } }));
-var key_arrow_outside_1 = __webpack_require__(43343);
-Object.defineProperty(exports, "KeyArrowOutside", ({ enumerable: true, get: function () { return key_arrow_outside_1.KeyArrowOutside; } }));
-var error_messages_1 = __webpack_require__(54959);
-Object.defineProperty(exports, "errorMessages", ({ enumerable: true, get: function () { return error_messages_1.errorMessages; } }));
-var font_1 = __webpack_require__(98650);
-Object.defineProperty(exports, "font", ({ enumerable: true, get: function () { return font_1.font; } }));
-var format_block_1 = __webpack_require__(79167);
-Object.defineProperty(exports, "formatBlock", ({ enumerable: true, get: function () { return format_block_1.formatBlock; } }));
-var fullsize_1 = __webpack_require__(58935);
-Object.defineProperty(exports, "fullsize", ({ enumerable: true, get: function () { return fullsize_1.fullsize; } }));
-var hotkeys_1 = __webpack_require__(22997);
-Object.defineProperty(exports, "hotkeys", ({ enumerable: true, get: function () { return hotkeys_1.hotkeys; } }));
-var iframe_1 = __webpack_require__(94433);
-Object.defineProperty(exports, "iframe", ({ enumerable: true, get: function () { return iframe_1.iframe; } }));
-tslib_1.__exportStar(__webpack_require__(67131), exports);
-var indent_1 = __webpack_require__(87437);
-Object.defineProperty(exports, "indent", ({ enumerable: true, get: function () { return indent_1.indent; } }));
-var insert_1 = __webpack_require__(73631);
-Object.defineProperty(exports, "hr", ({ enumerable: true, get: function () { return insert_1.hr; } }));
-var inline_popup_1 = __webpack_require__(62425);
-Object.defineProperty(exports, "inlinePopup", ({ enumerable: true, get: function () { return inline_popup_1.inlinePopup; } }));
-var justify_1 = __webpack_require__(82428);
-Object.defineProperty(exports, "justify", ({ enumerable: true, get: function () { return justify_1.justify; } }));
-var limit_1 = __webpack_require__(31794);
-Object.defineProperty(exports, "limit", ({ enumerable: true, get: function () { return limit_1.limit; } }));
-var line_height_1 = __webpack_require__(98989);
-Object.defineProperty(exports, "lineHeight", ({ enumerable: true, get: function () { return line_height_1.lineHeight; } }));
-var link_1 = __webpack_require__(20448);
-Object.defineProperty(exports, "link", ({ enumerable: true, get: function () { return link_1.link; } }));
-tslib_1.__exportStar(__webpack_require__(32248), exports);
-var mobile_1 = __webpack_require__(27057);
-Object.defineProperty(exports, "mobile", ({ enumerable: true, get: function () { return mobile_1.mobile; } }));
-var ordered_list_1 = __webpack_require__(28922);
-Object.defineProperty(exports, "orderedList", ({ enumerable: true, get: function () { return ordered_list_1.orderedList; } }));
-var powered_by_jodit_1 = __webpack_require__(16459);
-Object.defineProperty(exports, "poweredByJodit", ({ enumerable: true, get: function () { return powered_by_jodit_1.poweredByJodit; } }));
-var placeholder_1 = __webpack_require__(82199);
-Object.defineProperty(exports, "placeholder", ({ enumerable: true, get: function () { return placeholder_1.placeholder; } }));
-var redo_undo_1 = __webpack_require__(68551);
-Object.defineProperty(exports, "redoUndo", ({ enumerable: true, get: function () { return redo_undo_1.redoUndo; } }));
-var resizer_1 = __webpack_require__(35196);
-Object.defineProperty(exports, "resizer", ({ enumerable: true, get: function () { return resizer_1.resizer; } }));
-var search_1 = __webpack_require__(93825);
-Object.defineProperty(exports, "search", ({ enumerable: true, get: function () { return search_1.search; } }));
-var select_1 = __webpack_require__(68396);
-Object.defineProperty(exports, "select", ({ enumerable: true, get: function () { return select_1.select; } }));
-var size_1 = __webpack_require__(43118);
-Object.defineProperty(exports, "size", ({ enumerable: true, get: function () { return size_1.size; } }));
-Object.defineProperty(exports, "resizeHandler", ({ enumerable: true, get: function () { return size_1.resizeHandler; } }));
-var source_1 = __webpack_require__(6309);
-Object.defineProperty(exports, "source", ({ enumerable: true, get: function () { return source_1.source; } }));
-var stat_1 = __webpack_require__(99525);
-Object.defineProperty(exports, "stat", ({ enumerable: true, get: function () { return stat_1.stat; } }));
-var sticky_1 = __webpack_require__(52186);
-Object.defineProperty(exports, "sticky", ({ enumerable: true, get: function () { return sticky_1.sticky; } }));
-var spellcheck_1 = __webpack_require__(56830);
-Object.defineProperty(exports, "spellcheck", ({ enumerable: true, get: function () { return spellcheck_1.spellcheck; } }));
-var symbols_1 = __webpack_require__(21112);
-Object.defineProperty(exports, "symbols", ({ enumerable: true, get: function () { return symbols_1.symbols; } }));
-tslib_1.__exportStar(__webpack_require__(74393), exports);
-var tooltip_1 = __webpack_require__(85098);
-Object.defineProperty(exports, "tooltip", ({ enumerable: true, get: function () { return tooltip_1.tooltip; } }));
-var tab_1 = __webpack_require__(8653);
-Object.defineProperty(exports, "tab", ({ enumerable: true, get: function () { return tab_1.tab; } }));
-tslib_1.__exportStar(__webpack_require__(92567), exports);
-var xpath_1 = __webpack_require__(84865);
-Object.defineProperty(exports, "xpath", ({ enumerable: true, get: function () { return xpath_1.xpath; } }));
+__webpack_require__(3250);
+__webpack_require__(70428);
+__webpack_require__(51904);
+__webpack_require__(42544);
+__webpack_require__(57450);
+__webpack_require__(12949);
+__webpack_require__(65425);
+__webpack_require__(40777);
+__webpack_require__(12452);
+__webpack_require__(20549);
+__webpack_require__(84026);
+__webpack_require__(665);
+__webpack_require__(54959);
+__webpack_require__(24660);
+__webpack_require__(78881);
+__webpack_require__(98650);
+__webpack_require__(79167);
+__webpack_require__(58935);
+__webpack_require__(45913);
+__webpack_require__(64378);
+__webpack_require__(94433);
+__webpack_require__(72742);
+__webpack_require__(70846);
+__webpack_require__(19124);
+__webpack_require__(87437);
+__webpack_require__(62425);
+__webpack_require__(82428);
+__webpack_require__(14557);
+__webpack_require__(31794);
+__webpack_require__(98989);
+__webpack_require__(20448);
+__webpack_require__(58252);
+__webpack_require__(27057);
+__webpack_require__(28922);
+__webpack_require__(78053);
+__webpack_require__(50532);
+__webpack_require__(33225);
+__webpack_require__(82199);
+__webpack_require__(16459);
+__webpack_require__(72802);
+__webpack_require__(16214);
+__webpack_require__(68551);
+__webpack_require__(1951);
+__webpack_require__(67757);
+__webpack_require__(35196);
+__webpack_require__(93825);
+__webpack_require__(68396);
+__webpack_require__(95571);
+__webpack_require__(41014);
+__webpack_require__(35448);
+__webpack_require__(56830);
+__webpack_require__(99525);
+__webpack_require__(52186);
+__webpack_require__(21112);
+__webpack_require__(74212);
+__webpack_require__(67122);
+__webpack_require__(96154);
+__webpack_require__(85098);
+__webpack_require__(82887);
+__webpack_require__(37455);
+__webpack_require__(84865);
 
 
 /***/ }),
@@ -29252,10 +30332,18 @@ Object.defineProperty(exports, "xpath", ({ enumerable: true, get: function () { 
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.toolbarInline = true;
 config_1.Config.prototype.toolbarInlineForSelection = false;
 config_1.Config.prototype.toolbarInlineDisableFor = [];
 config_1.Config.prototype.toolbarInlineDisabledButtons = ['source'];
+icon_1.Icon.set('addcolumn', __webpack_require__(78321))
+    .set('addrow', __webpack_require__(77654))
+    .set('merge', __webpack_require__(43371))
+    .set('th', __webpack_require__(52242))
+    .set('splitg', __webpack_require__(44563))
+    .set('splitv', __webpack_require__(53183))
+    .set('th-list', __webpack_require__(6102));
 config_1.Config.prototype.popup = {
     a: (__webpack_require__(58169)/* ["default"] */ .Z),
     img: (__webpack_require__(92534)["default"]),
@@ -29510,7 +30598,7 @@ exports.align = void 0;
 var dom_1 = __webpack_require__(94522);
 var is_string_1 = __webpack_require__(40607);
 var css_1 = __webpack_require__(56672);
-var helpers_1 = __webpack_require__(76596);
+var align_1 = __webpack_require__(49359);
 exports.align = {
     name: 'left',
     childTemplate: function (_, __, value) { return value; },
@@ -29520,15 +30608,15 @@ exports.align = {
         if (!dom_1.Dom.isTag(elm, ['img', 'jodit', 'jodit-media'])) {
             return;
         }
-        var command = (control.args && (0, is_string_1.isString)(control.args[0])
+        var command = control.args && (0, is_string_1.isString)(control.args[0])
             ? control.args[0].toLowerCase()
-            : '');
+            : '';
         if (!command) {
             return false;
         }
-        (0, helpers_1.hAlignElement)(elm, command);
+        (0, align_1.hAlignElement)(elm, command);
         if (dom_1.Dom.isTag(elm, ['jodit', 'jodit-media']) && elm.firstElementChild) {
-            (0, helpers_1.hAlignElement)(elm.firstElementChild, command);
+            (0, align_1.hAlignElement)(elm.firstElementChild, command);
         }
         editor.synchronizeValues();
         editor.e.fire('recalcPositionPopup');
@@ -29636,7 +30724,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.inlinePopup = void 0;
 var tslib_1 = __webpack_require__(20255);
 __webpack_require__(45109);
-__webpack_require__(6835);
 var plugin_1 = __webpack_require__(35570);
 var factory_1 = __webpack_require__(42701);
 var popup_1 = __webpack_require__(990);
@@ -29644,6 +30731,8 @@ var helpers_1 = __webpack_require__(92654);
 var dom_1 = __webpack_require__(94522);
 var ui_1 = __webpack_require__(14153);
 var decorators_1 = __webpack_require__(9901);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(6835);
 var inlinePopup = (function (_super) {
     tslib_1.__extends(inlinePopup, _super);
     function inlinePopup() {
@@ -29857,69 +30946,7 @@ var inlinePopup = (function (_super) {
     return inlinePopup;
 }(plugin_1.Plugin));
 exports.inlinePopup = inlinePopup;
-
-
-/***/ }),
-
-/***/ 36069:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.hr = void 0;
-var config_1 = __webpack_require__(27537);
-var dom_1 = __webpack_require__(94522);
-config_1.Config.prototype.controls.hr = {
-    command: 'insertHorizontalRule',
-    tags: ['hr'],
-    tooltip: 'Insert Horizontal Line'
-};
-function hr(editor) {
-    editor.registerButton({
-        name: 'hr',
-        group: 'insert'
-    });
-    editor.registerCommand('insertHorizontalRule', function () {
-        var elm = editor.createInside.element('hr');
-        editor.s.insertNode(elm, false, false);
-        var block = dom_1.Dom.closest(elm.parentElement, dom_1.Dom.isBlock, editor.editor);
-        if (block && dom_1.Dom.isEmpty(block) && block !== editor.editor) {
-            dom_1.Dom.after(block, elm);
-            dom_1.Dom.safeRemove(block);
-        }
-        var p = dom_1.Dom.next(elm, dom_1.Dom.isBlock, editor.editor, false);
-        if (!p) {
-            p = editor.createInside.element(editor.o.enter);
-            dom_1.Dom.after(elm, p);
-        }
-        editor.s.setCursorIn(p);
-        return false;
-    });
-}
-exports.hr = hr;
-
-
-/***/ }),
-
-/***/ 73631:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(36069), exports);
+global_1.pluginSystem.add('inlinePopup', inlinePopup);
 
 
 /***/ }),
@@ -29935,19 +30962,23 @@ tslib_1.__exportStar(__webpack_require__(36069), exports);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.justify = exports.alignElement = exports.clearAlign = void 0;
+exports.justify = void 0;
 var config_1 = __webpack_require__(27537);
-var modules_1 = __webpack_require__(46701);
-var helpers_1 = __webpack_require__(92654);
+var dom_1 = __webpack_require__(43887);
+var css_1 = __webpack_require__(56672);
+var align_1 = __webpack_require__(49359);
+var global_1 = __webpack_require__(58299);
+var icon_1 = __webpack_require__(76381);
+icon_1.Icon.set('justify', __webpack_require__(87498));
 config_1.Config.prototype.controls.align = {
     name: 'left',
     tooltip: 'Align',
     update: function (button, editor) {
         var control = button.control, current = editor.s.current();
         if (current) {
-            var currentBox = modules_1.Dom.closest(current, modules_1.Dom.isBlock, editor.editor) ||
+            var currentBox = dom_1.Dom.closest(current, dom_1.Dom.isBlock, editor.editor) ||
                 editor.editor;
-            var currentValue = (0, helpers_1.css)(currentBox, 'text-align').toString();
+            var currentValue = (0, css_1.css)(currentBox, 'text-align').toString();
             if (control.defaultValue &&
                 control.defaultValue.indexOf(currentValue) !== -1) {
                 currentValue = 'left';
@@ -29969,8 +31000,8 @@ config_1.Config.prototype.controls.align = {
     isActive: function (editor, btn) {
         var current = editor.s.current();
         if (current && btn.defaultValue) {
-            var currentBox = modules_1.Dom.closest(current, modules_1.Dom.isBlock, editor.editor) || editor.editor;
-            return (btn.defaultValue.indexOf((0, helpers_1.css)(currentBox, 'text-align').toString()) === -1);
+            var currentBox = dom_1.Dom.closest(current, dom_1.Dom.isBlock, editor.editor) || editor.editor;
+            return (btn.defaultValue.indexOf((0, css_1.css)(currentBox, 'text-align').toString()) === -1);
         }
         return false;
     },
@@ -30008,39 +31039,6 @@ config_1.Config.prototype.controls.right = {
     },
     tooltip: 'Align Right'
 };
-var clearAlign = function (node) {
-    modules_1.Dom.each(node, function (elm) {
-        if (modules_1.Dom.isHTMLElement(elm)) {
-            if (elm.style.textAlign) {
-                elm.style.textAlign = '';
-                if (!elm.style.cssText.trim().length) {
-                    elm.removeAttribute('style');
-                }
-            }
-        }
-    });
-};
-exports.clearAlign = clearAlign;
-var alignElement = function (command, box) {
-    if (modules_1.Dom.isNode(box) && modules_1.Dom.isElement(box)) {
-        (0, exports.clearAlign)(box);
-        switch (command.toLowerCase()) {
-            case 'justifyfull':
-                box.style.textAlign = 'justify';
-                break;
-            case 'justifyright':
-                box.style.textAlign = 'right';
-                break;
-            case 'justifyleft':
-                box.style.textAlign = 'left';
-                break;
-            case 'justifycenter':
-                box.style.textAlign = 'center';
-                break;
-        }
-    }
-};
-exports.alignElement = alignElement;
 function justify(editor) {
     editor.registerButton({
         name: 'align',
@@ -30052,11 +31050,11 @@ function justify(editor) {
             if (!current) {
                 return;
             }
-            var currentBox = modules_1.Dom.up(current, modules_1.Dom.isBlock, editor.editor);
+            var currentBox = dom_1.Dom.up(current, dom_1.Dom.isBlock, editor.editor);
             if (!currentBox) {
-                currentBox = modules_1.Dom.wrapInline(current, editor.o.enterBlock, editor);
+                currentBox = dom_1.Dom.wrapInline(current, editor.o.enterBlock, editor);
             }
-            (0, exports.alignElement)(command, currentBox);
+            (0, align_1.alignElement)(command, currentBox);
         });
         return false;
     };
@@ -30066,11 +31064,12 @@ function justify(editor) {
     editor.registerCommand('justifycenter', callback);
 }
 exports.justify = justify;
+global_1.pluginSystem.add('justify', justify);
 
 
 /***/ }),
 
-/***/ 26685:
+/***/ 14557:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -30081,1318 +31080,21 @@ exports.justify = justify;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Backspace = void 0;
-var tslib_1 = __webpack_require__(20255);
-var plugin_1 = __webpack_require__(35570);
-var dom_1 = __webpack_require__(94522);
-var constants_1 = __webpack_require__(10063);
-var helpers_1 = __webpack_require__(92654);
-var cases_1 = __webpack_require__(18701);
-var check_not_collapsed_1 = __webpack_require__(87431);
-__webpack_require__(24114);
-var helpers_2 = __webpack_require__(36687);
-var Backspace = (function (_super) {
-    tslib_1.__extends(Backspace, _super);
-    function Backspace() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.requires = ['hotkeys'];
-        return _this;
-    }
-    Backspace.prototype.afterInit = function (jodit) {
-        var _this = this;
-        jodit.e.on('afterCommand.delete', function (command) {
-            if (command === 'delete') {
-                _this.afterDeleteCommand();
-            }
-        });
-        jodit
-            .registerCommand('deleteButton', {
-            exec: function () { return _this.onDelete(false); },
-            hotkeys: jodit.o.delete.hotkeys.delete
-        }, {
-            stopPropagation: false
-        })
-            .registerCommand('backspaceButton', {
-            exec: function () { return _this.onDelete(true); },
-            hotkeys: jodit.o.delete.hotkeys.backspace
-        }, {
-            stopPropagation: false
-        })
-            .registerCommand('deleteWordButton', {
-            exec: function () { return _this.onDelete(false, 'word'); },
-            hotkeys: jodit.o.delete.hotkeys.deleteWord
-        })
-            .registerCommand('backspaceWordButton', {
-            exec: function () { return _this.onDelete(true, 'word'); },
-            hotkeys: jodit.o.delete.hotkeys.backspaceWord
-        })
-            .registerCommand('deleteSentenceButton', {
-            exec: function () { return _this.onDelete(false, 'sentence'); },
-            hotkeys: jodit.o.delete.hotkeys.deleteSentence
-        })
-            .registerCommand('backspaceSentenceButton', {
-            exec: function () { return _this.onDelete(true, 'sentence'); },
-            hotkeys: jodit.o.delete.hotkeys.backspaceSentence
-        });
-    };
-    Backspace.prototype.beforeDestruct = function (jodit) {
-        jodit.e.off('afterCommand.delete');
-    };
-    Backspace.prototype.afterDeleteCommand = function () {
-        var jodit = this.j;
-        var current = jodit.s.current();
-        if (current && dom_1.Dom.isTag(current.firstChild, 'br')) {
-            jodit.s.removeNode(current.firstChild);
-        }
-        if (!(0, helpers_1.trim)(jodit.editor.textContent || '') &&
-            !jodit.editor.querySelector('img,table,jodit,iframe,hr') &&
-            (!current || !dom_1.Dom.closest(current, 'table', jodit.editor))) {
-            jodit.editor.innerHTML = '';
-            var node = jodit.s.setCursorIn(jodit.editor);
-            jodit.s.removeNode(node);
-        }
-    };
-    Backspace.prototype.onDelete = function (backspace, mode) {
-        if (mode === void 0) { mode = 'char'; }
-        var jodit = this.j;
-        var sel = jodit.selection;
-        if (!sel.isFocused()) {
-            sel.focus();
-        }
-        if ((0, check_not_collapsed_1.checkNotCollapsed)(jodit)) {
-            return false;
-        }
-        var range = sel.range;
-        var fakeNode = jodit.createInside.text(constants_1.INVISIBLE_SPACE);
-        try {
-            range.insertNode(fakeNode);
-            if (!dom_1.Dom.isOrContains(jodit.editor, fakeNode)) {
-                return;
-            }
-            (0, helpers_2.moveNodeInsideStart)(jodit, fakeNode, backspace);
-            if (cases_1.cases.some(function (func) {
-                return (0, helpers_1.isFunction)(func) &&
-                    func(jodit, fakeNode, backspace, mode);
-            })) {
-                return false;
-            }
-        }
-        catch (e) {
-            if (false) {}
-            throw e;
-        }
-        finally {
-            this.safeRemoveEmptyNode(fakeNode);
-        }
-        return false;
-    };
-    Backspace.prototype.safeRemoveEmptyNode = function (fakeNode) {
-        var _a, _b;
-        var range = this.j.s.range;
-        if (range.startContainer === fakeNode) {
-            if (fakeNode.previousSibling) {
-                if (dom_1.Dom.isText(fakeNode.previousSibling)) {
-                    range.setStart(fakeNode.previousSibling, (_b = (_a = fakeNode.previousSibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0);
-                }
-                else {
-                    range.setStartAfter(fakeNode.previousSibling);
-                }
-            }
-            else if (fakeNode.nextSibling) {
-                if (dom_1.Dom.isText(fakeNode.nextSibling)) {
-                    range.setStart(fakeNode.nextSibling, 0);
-                }
-                else {
-                    range.setStartBefore(fakeNode.nextSibling);
-                }
-            }
-            range.collapse(true);
-            this.j.s.selectRange(range);
-        }
-        dom_1.Dom.safeRemove(fakeNode);
-    };
-    return Backspace;
-}(plugin_1.Plugin));
-exports.Backspace = Backspace;
-
-
-/***/ }),
-
-/***/ 85959:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkJoinNeighbors = void 0;
-var helpers_1 = __webpack_require__(67009);
-var dom_1 = __webpack_require__(94522);
-function checkJoinNeighbors(jodit, fakeNode, backspace) {
-    var nextBox = fakeNode, mainClosestBox = nextBox;
-    while (nextBox &&
-        !(0, helpers_1.findNotEmptySibling)(nextBox, backspace) &&
-        nextBox.parentElement !== jodit.editor) {
-        nextBox = nextBox.parentElement;
-        mainClosestBox = nextBox;
-    }
-    if (dom_1.Dom.isElement(mainClosestBox) &&
-        dom_1.Dom.isContentEditable(mainClosestBox, jodit.editor)) {
-        var sibling = (0, helpers_1.findNotEmptySibling)(mainClosestBox, backspace);
-        if (sibling &&
-            (checkMoveListContent(jodit, mainClosestBox, sibling, backspace) ||
-                moveContentAndRemoveEmpty(jodit, mainClosestBox, sibling, backspace))) {
-            jodit.s.setCursorBefore(fakeNode);
-            return true;
-        }
-    }
-    return false;
-}
-exports.checkJoinNeighbors = checkJoinNeighbors;
-function checkMoveListContent(jodit, mainClosestBox, sibling, backspace) {
-    var siblingIsList = dom_1.Dom.isTag(sibling, ['ol', 'ul']);
-    var boxIsList = dom_1.Dom.isTag(mainClosestBox, ['ol', 'ul']);
-    var elementChild = function (elm, side) {
-        return side ? elm.firstElementChild : elm.lastElementChild;
-    };
-    if (boxIsList) {
-        sibling = jodit.createInside.element(jodit.o.enterBlock);
-        dom_1.Dom.before(mainClosestBox, sibling);
-        return moveContentAndRemoveEmpty(jodit, elementChild(mainClosestBox, backspace), sibling, backspace);
-    }
-    if (sibling && siblingIsList && !boxIsList) {
-        return moveContentAndRemoveEmpty(jodit, mainClosestBox, elementChild(sibling, !backspace), backspace);
-    }
-    return false;
-}
-function moveContentAndRemoveEmpty(jodit, mainClosestBox, sibling, backspace) {
-    if (mainClosestBox && dom_1.Dom.isElement(sibling)) {
-        dom_1.Dom.moveContent(mainClosestBox, sibling, !backspace);
-        var remove = mainClosestBox;
-        while (remove && remove !== jodit.editor && dom_1.Dom.isEmpty(remove)) {
-            var parent_1 = remove.parentElement;
-            dom_1.Dom.safeRemove(remove);
-            remove = parent_1;
-        }
-        return true;
-    }
-    return false;
-}
-
-
-/***/ }),
-
-/***/ 52369:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkJoinTwoLists = void 0;
-var dom_1 = __webpack_require__(94522);
-var helpers_1 = __webpack_require__(92654);
-function checkJoinTwoLists(jodit, fakeNode, backspace) {
-    var next = dom_1.Dom.findSibling(fakeNode, backspace), prev = dom_1.Dom.findSibling(fakeNode, !backspace);
-    if (!dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, jodit.editor) &&
-        dom_1.Dom.isTag(next, ['ul', 'ol']) &&
-        dom_1.Dom.isTag(prev, ['ul', 'ol']) &&
-        dom_1.Dom.isTag(next.lastElementChild, 'li') &&
-        dom_1.Dom.isTag(prev.firstElementChild, 'li')) {
-        var _a = jodit.s, setCursorBefore = _a.setCursorBefore, setCursorAfter = _a.setCursorAfter;
-        var target = next.lastElementChild, second = prev.firstElementChild;
-        (0, helpers_1.call)(!backspace ? dom_1.Dom.append : dom_1.Dom.prepend, second, fakeNode);
-        dom_1.Dom.moveContent(prev, next, !backspace);
-        dom_1.Dom.safeRemove(prev);
-        (0, helpers_1.call)(backspace ? dom_1.Dom.append : dom_1.Dom.prepend, target, fakeNode);
-        (0, helpers_1.call)(backspace ? setCursorBefore : setCursorAfter, fakeNode);
-        return true;
-    }
-    return false;
-}
-exports.checkJoinTwoLists = checkJoinTwoLists;
-
-
-/***/ }),
-
-/***/ 87431:
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkNotCollapsed = void 0;
-function checkNotCollapsed(jodit) {
-    if (!jodit.s.isCollapsed()) {
-        jodit.execCommand('Delete');
-        return true;
-    }
-    return false;
-}
-exports.checkNotCollapsed = checkNotCollapsed;
-
-
-/***/ }),
-
-/***/ 18668:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkRemoveChar = void 0;
-var helpers_1 = __webpack_require__(67009);
-var dom_1 = __webpack_require__(94522);
-var helpers_2 = __webpack_require__(92654);
-var constants_1 = __webpack_require__(10063);
-function checkRemoveChar(jodit, fakeNode, backspace, mode) {
-    var _a, _b, _c;
-    var step = backspace ? -1 : 1;
-    var anotherSibling = dom_1.Dom.sibling(fakeNode, !backspace);
-    var sibling = dom_1.Dom.sibling(fakeNode, backspace), removeNeighbor = null;
-    var charRemoved = false, removed;
-    while (sibling && (dom_1.Dom.isText(sibling) || dom_1.Dom.isInlineBlock(sibling))) {
-        while (dom_1.Dom.isInlineBlock(sibling)) {
-            sibling = (backspace ? sibling === null || sibling === void 0 ? void 0 : sibling.lastChild : sibling === null || sibling === void 0 ? void 0 : sibling.firstChild);
-        }
-        if (!sibling) {
-            break;
-        }
-        if ((_a = sibling.nodeValue) === null || _a === void 0 ? void 0 : _a.length) {
-            var value = (0, helpers_2.toArray)(sibling.nodeValue);
-            var length_1 = value.length;
-            var index = backspace ? length_1 - 1 : 0;
-            if (value[index] === constants_1.INVISIBLE_SPACE) {
-                while (value[index] === constants_1.INVISIBLE_SPACE) {
-                    index += step;
-                }
-            }
-            removed = value[index];
-            if (value[index + step] === constants_1.INVISIBLE_SPACE) {
-                index += step;
-                while (value[index] === constants_1.INVISIBLE_SPACE) {
-                    index += step;
-                }
-                index += backspace ? 1 : -1;
-            }
-            if (backspace && index < 0) {
-                value = [];
-            }
-            else {
-                value = value.slice(backspace ? 0 : index + 1, backspace ? index : length_1);
-            }
-            if (!anotherSibling ||
-                !dom_1.Dom.isText(anotherSibling) ||
-                (!backspace ? / $/ : /^ /).test((_b = anotherSibling.nodeValue) !== null && _b !== void 0 ? _b : '') ||
-                !(0, helpers_2.trimInv)(anotherSibling.nodeValue || '').length) {
-                for (var i = backspace ? value.length - 1 : 0; backspace ? i >= 0 : i < value.length; i += backspace ? -1 : 1) {
-                    if (value[i] === ' ') {
-                        value[i] = constants_1.NBSP_SPACE;
-                    }
-                    else {
-                        break;
-                    }
-                }
-            }
-            sibling.nodeValue = value.join('');
-        }
-        if (!((_c = sibling.nodeValue) === null || _c === void 0 ? void 0 : _c.length)) {
-            removeNeighbor = sibling;
-        }
-        if (!(0, helpers_2.isVoid)(removed) && removed !== constants_1.INVISIBLE_SPACE) {
-            charRemoved = true;
-            (0, helpers_2.call)(backspace ? dom_1.Dom.after : dom_1.Dom.before, sibling, fakeNode);
-            if (mode === 'sentence' ||
-                (mode === 'word' && removed !== ' ' && removed !== constants_1.NBSP_SPACE)) {
-                checkRemoveChar(jodit, fakeNode, backspace, mode);
-            }
-            break;
-        }
-        var nextSibling = dom_1.Dom.sibling(sibling, backspace);
-        if (!nextSibling &&
-            sibling.parentNode &&
-            sibling.parentNode !== jodit.editor) {
-            nextSibling = (0, helpers_1.findMostNestedNeighbor)(sibling, !backspace, jodit.editor, true);
-        }
-        if (removeNeighbor) {
-            dom_1.Dom.safeRemove(removeNeighbor);
-            removeNeighbor = null;
-        }
-        sibling = nextSibling;
-    }
-    if (charRemoved) {
-        removeEmptyInlineParent(fakeNode);
-        addBRInsideEmptyBlock(jodit, fakeNode);
-        jodit.s.setCursorBefore(fakeNode);
-    }
-    return charRemoved;
-}
-exports.checkRemoveChar = checkRemoveChar;
-function removeEmptyInlineParent(node) {
-    var parent = node.parentElement;
-    while (parent && dom_1.Dom.isInlineBlock(parent)) {
-        var p = parent.parentElement;
-        if (dom_1.Dom.isEmpty(parent)) {
-            dom_1.Dom.after(parent, node);
-            dom_1.Dom.safeRemove(parent);
-        }
-        parent = p;
-    }
-}
-function addBRInsideEmptyBlock(jodit, node) {
-    if (node.parentElement !== jodit.editor &&
-        dom_1.Dom.isBlock(node.parentElement) &&
-        dom_1.Dom.each(node.parentElement, dom_1.Dom.isEmptyTextNode)) {
-        dom_1.Dom.after(node, jodit.createInside.element('br'));
-    }
-}
-
-
-/***/ }),
-
-/***/ 48832:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkRemoveContentNotEditable = void 0;
-var dom_1 = __webpack_require__(94522);
-var helpers_1 = __webpack_require__(92654);
-var helpers_2 = __webpack_require__(36687);
-function checkRemoveContentNotEditable(jodit, fakeNode, backspace) {
-    var neighbor = dom_1.Dom.findSibling(fakeNode, backspace);
-    if (!neighbor &&
-        fakeNode.parentElement &&
-        fakeNode.parentElement !== jodit.editor) {
-        neighbor = dom_1.Dom.findSibling(fakeNode.parentElement, backspace);
-    }
-    if (dom_1.Dom.isElement(neighbor) &&
-        !dom_1.Dom.isContentEditable(neighbor, jodit.editor)) {
-        (0, helpers_1.call)(backspace ? dom_1.Dom.before : dom_1.Dom.after, neighbor, fakeNode);
-        dom_1.Dom.safeRemove(neighbor);
-        (0, helpers_2.moveNodeInsideStart)(jodit, fakeNode, backspace);
-        (0, helpers_1.call)(backspace ? jodit.s.setCursorBefore : jodit.s.setCursorAfter, fakeNode);
-        return true;
-    }
-    return false;
-}
-exports.checkRemoveContentNotEditable = checkRemoveContentNotEditable;
-
-
-/***/ }),
-
-/***/ 81461:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkRemoveEmptyNeighbor = void 0;
-var dom_1 = __webpack_require__(94522);
-var helpers_1 = __webpack_require__(67009);
-function checkRemoveEmptyNeighbor(jodit, fakeNode, backspace) {
-    var parent = dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, jodit.editor);
-    if (!parent) {
-        return false;
-    }
-    var neighbor = (0, helpers_1.findNotEmptySibling)(parent, backspace);
-    if (neighbor && dom_1.Dom.isEmpty(neighbor)) {
-        dom_1.Dom.safeRemove(neighbor);
-        jodit.s.setCursorBefore(fakeNode);
-        return true;
-    }
-    return false;
-}
-exports.checkRemoveEmptyNeighbor = checkRemoveEmptyNeighbor;
-
-
-/***/ }),
-
-/***/ 78959:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkRemoveEmptyParent = void 0;
-var dom_1 = __webpack_require__(94522);
-var helpers_1 = __webpack_require__(67009);
-var constants_1 = __webpack_require__(10063);
-var check_join_two_lists_1 = __webpack_require__(52369);
-function checkRemoveEmptyParent(jodit, fakeNode, backspace) {
-    var found = false;
-    var _a = jodit.s, setCursorBefore = _a.setCursorBefore, setCursorIn = _a.setCursorIn;
-    var prn = dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, jodit.editor);
-    if (!prn || !dom_1.Dom.isEmpty(prn)) {
-        return false;
-    }
-    var neighbor = (0, helpers_1.findNotEmptyNeighbor)(fakeNode, backspace, jodit.editor);
-    do {
-        if (prn && dom_1.Dom.isEmpty(prn) && !dom_1.Dom.isCell(prn)) {
-            dom_1.Dom.after(prn, fakeNode);
-            var tmp = dom_1.Dom.closest(prn, function (n) { return dom_1.Dom.isElement(n) && n !== prn; }, jodit.editor);
-            dom_1.Dom.safeRemove(prn);
-            found = true;
-            prn = tmp;
-        }
-        else {
-            break;
-        }
-    } while (prn);
-    if (found && (0, check_join_two_lists_1.checkJoinTwoLists)(jodit, fakeNode, backspace)) {
-        return true;
-    }
-    if (neighbor &&
-        !dom_1.Dom.isText(neighbor) &&
-        !dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS)) {
-        setCursorIn(neighbor, !backspace);
-    }
-    else {
-        setCursorBefore(fakeNode);
-    }
-    return found;
-}
-exports.checkRemoveEmptyParent = checkRemoveEmptyParent;
-
-
-/***/ }),
-
-/***/ 58417:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkRemoveUnbreakableElement = void 0;
-var dom_1 = __webpack_require__(94522);
-var constants_1 = __webpack_require__(10063);
-var check_remove_empty_parent_1 = __webpack_require__(78959);
-function checkRemoveUnbreakableElement(jodit, fakeNode, backspace) {
-    var neighbor = dom_1.Dom.findSibling(fakeNode, backspace);
-    if (dom_1.Dom.isElement(neighbor) &&
-        (dom_1.Dom.isTag(neighbor, constants_1.INSEPARABLE_TAGS) || dom_1.Dom.isEmpty(neighbor))) {
-        dom_1.Dom.safeRemove(neighbor);
-        jodit.s.setCursorBefore(fakeNode);
-        if (dom_1.Dom.isTag(neighbor, 'br')) {
-            (0, check_remove_empty_parent_1.checkRemoveEmptyParent)(jodit, fakeNode, backspace);
-        }
-        return true;
-    }
-    return false;
-}
-exports.checkRemoveUnbreakableElement = checkRemoveUnbreakableElement;
-
-
-/***/ }),
-
-/***/ 12695:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkTableCell = void 0;
-var dom_1 = __webpack_require__(94522);
-function checkTableCell(jodit, fakeNode) {
-    var cell = fakeNode.parentElement;
-    if (dom_1.Dom.isCell(cell)) {
-        return true;
-    }
-    return false;
-}
-exports.checkTableCell = checkTableCell;
-
-
-/***/ }),
-
-/***/ 14049:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkUnwrapFirstListItem = void 0;
-var dom_1 = __webpack_require__(94522);
-var utils_1 = __webpack_require__(73344);
-function checkUnwrapFirstListItem(jodit, fakeNode, backspace) {
-    var _a;
-    var li = dom_1.Dom.closest(fakeNode, dom_1.Dom.isElement, jodit.editor);
-    var s = jodit.s;
-    if (dom_1.Dom.isTag(li, 'li') &&
-        ((_a = li === null || li === void 0 ? void 0 : li.parentElement) === null || _a === void 0 ? void 0 : _a[backspace ? 'firstElementChild' : 'lastElementChild']) === li &&
-        s.cursorInTheEdge(backspace, li)) {
-        var ul = li.parentElement;
-        var p = jodit.createInside.element(jodit.o.enterBlock);
-        (0, utils_1.call)(backspace ? dom_1.Dom.before : dom_1.Dom.after, ul, p);
-        dom_1.Dom.moveContent(li, p);
-        dom_1.Dom.safeRemove(li);
-        if (dom_1.Dom.isEmpty(ul)) {
-            dom_1.Dom.safeRemove(ul);
-        }
-        (0, utils_1.call)(backspace ? s.setCursorBefore : s.setCursorAfter, fakeNode);
-        return true;
-    }
-    return false;
-}
-exports.checkUnwrapFirstListItem = checkUnwrapFirstListItem;
-
-
-/***/ }),
-
-/***/ 18701:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.cases = void 0;
-var check_remove_unbreakable_element_1 = __webpack_require__(58417);
-var check_remove_content_not_editable_1 = __webpack_require__(48832);
-var check_remove_char_1 = __webpack_require__(18668);
-var check_table_cell_1 = __webpack_require__(12695);
-var check_remove_empty_parent_1 = __webpack_require__(78959);
-var check_remove_empty_neighbor_1 = __webpack_require__(81461);
-var check_join_two_lists_1 = __webpack_require__(52369);
-var check_join_neighbors_1 = __webpack_require__(85959);
-var check_unwrap_first_list_item_1 = __webpack_require__(14049);
-exports.cases = [
-    check_remove_unbreakable_element_1.checkRemoveUnbreakableElement,
-    check_remove_content_not_editable_1.checkRemoveContentNotEditable,
-    check_remove_char_1.checkRemoveChar,
-    check_table_cell_1.checkTableCell,
-    check_remove_empty_parent_1.checkRemoveEmptyParent,
-    check_remove_empty_neighbor_1.checkRemoveEmptyNeighbor,
-    check_join_two_lists_1.checkJoinTwoLists,
-    check_join_neighbors_1.checkJoinNeighbors,
-    check_unwrap_first_list_item_1.checkUnwrapFirstListItem
-];
-
-
-/***/ }),
-
-/***/ 24114:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(27537);
-config_1.Config.prototype.delete = {
-    hotkeys: {
-        delete: ['delete', 'cmd+backspace'],
-        deleteWord: ['ctrl+delete', 'cmd+alt+backspace', 'ctrl+alt+backspace'],
-        deleteSentence: ['ctrl+shift+delete', 'cmd+shift+delete'],
-        backspace: ['backspace'],
-        backspaceWord: ['ctrl+backspace'],
-        backspaceSentence: ['ctrl+shift+backspace', 'cmd+shift+backspace']
-    }
-};
-
-
-/***/ }),
-
-/***/ 4109:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.enter = void 0;
-var tslib_1 = __webpack_require__(20255);
-var dom_1 = __webpack_require__(43887);
-var plugin_1 = __webpack_require__(73177);
-var constants_1 = __webpack_require__(10063);
-var helpers_1 = __webpack_require__(17838);
-var decorators_1 = __webpack_require__(9901);
-var enter = (function (_super) {
-    tslib_1.__extends(enter, _super);
-    function enter() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    enter.prototype.afterInit = function (editor) {
-        var _this = this;
-        var defaultTag = editor.o.enter.toLowerCase();
-        var brMode = defaultTag === constants_1.BR.toLowerCase();
-        if (!editor.o.enterBlock) {
-            editor.o.enterBlock = brMode
-                ? constants_1.PARAGRAPH
-                : defaultTag;
-        }
-        editor.registerCommand('enter', function (command, value, event) {
-            if (event === void 0) { event = {}; }
-            return _this.onEnter(event);
-        });
-    };
-    enter.prototype.onEnterKeyDown = function (event) {
-        if (event.key === constants_1.KEY_ENTER) {
-            var editor = this.j;
-            var beforeEnter = editor.e.fire('beforeEnter', event);
-            if (beforeEnter !== undefined) {
-                return beforeEnter;
-            }
-            if (!editor.s.isCollapsed()) {
-                editor.execCommand('Delete');
-            }
-            editor.s.focus();
-            this.onEnter(event);
-            editor.synchronizeValues();
-            return false;
-        }
-    };
-    enter.prototype.onEnter = function (event) {
-        var editor = this.j;
-        var current = this.getCurrentOrFillEmpty(editor);
-        var currentBox = (0, helpers_1.getBlockWrapper)(editor, current);
-        var isLi = dom_1.Dom.isTag(currentBox, 'li');
-        if ((!isLi || (event === null || event === void 0 ? void 0 : event.shiftKey)) &&
-            !(0, helpers_1.checkBR)(editor, current, event === null || event === void 0 ? void 0 : event.shiftKey)) {
-            return false;
-        }
-        if (!currentBox && !(0, helpers_1.hasPreviousBlock)(editor, current)) {
-            currentBox = (0, helpers_1.wrapText)(editor, current);
-        }
-        if (!currentBox || currentBox === current) {
-            (0, helpers_1.insertParagraph)(editor, null, isLi ? 'li' : editor.o.enter);
-            return false;
-        }
-        if (!(0, helpers_1.checkUnsplittableBox)(editor, currentBox)) {
-            return false;
-        }
-        if (isLi && dom_1.Dom.isEmpty(currentBox)) {
-            (0, helpers_1.processEmptyLILeaf)(editor, currentBox);
-            return false;
-        }
-        (0, helpers_1.splitFragment)(editor, currentBox);
-    };
-    enter.prototype.getCurrentOrFillEmpty = function (editor) {
-        var s = editor.s;
-        var current = s.current(false);
-        if (!current || current === editor.editor) {
-            current = editor.createInside.text(constants_1.INVISIBLE_SPACE);
-            s.insertNode(current, false, false);
-            s.select(current);
-        }
-        return current;
-    };
-    enter.prototype.beforeDestruct = function (editor) {
-        editor.e.off('keydown.enter');
-    };
-    tslib_1.__decorate([
-        (0, decorators_1.watch)(':keydown.enter')
-    ], enter.prototype, "onEnterKeyDown", null);
-    return enter;
-}(plugin_1.Plugin));
-exports.enter = enter;
-
-
-/***/ }),
-
-/***/ 51322:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkBR = void 0;
-var dom_1 = __webpack_require__(43887);
-var scroll_into_view_1 = __webpack_require__(6110);
-var constants_1 = __webpack_require__(10063);
-function checkBR(jodit, current, shiftKeyPressed) {
-    var isMultiLineBlock = dom_1.Dom.closest(current, ['pre', 'blockquote'], jodit.editor);
-    var isBRMode = jodit.o.enter.toLowerCase() === constants_1.BR.toLowerCase();
-    if (isBRMode ||
-        (shiftKeyPressed && !isMultiLineBlock) ||
-        (!shiftKeyPressed && isMultiLineBlock)) {
-        var br = jodit.createInside.element('br');
-        jodit.s.insertNode(br, true, false);
-        (0, scroll_into_view_1.scrollIntoViewIfNeeded)(br, jodit.editor, jodit.ed);
-        return false;
-    }
-    return true;
-}
-exports.checkBR = checkBR;
-
-
-/***/ }),
-
-/***/ 60567:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkUnsplittableBox = void 0;
-var dom_1 = __webpack_require__(43887);
-function checkUnsplittableBox(jodit, currentBox) {
-    var sel = jodit.s;
-    if (!dom_1.Dom.canSplitBlock(currentBox)) {
-        var br = jodit.createInside.element('br');
-        sel.insertNode(br, false, false);
-        sel.setCursorAfter(br);
-        return false;
-    }
-    return true;
-}
-exports.checkUnsplittableBox = checkUnsplittableBox;
-
-
-/***/ }),
-
-/***/ 70963:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getBlockWrapper = void 0;
-var consts = __webpack_require__(10063);
-var dom_1 = __webpack_require__(43887);
-function getBlockWrapper(jodit, current, tagReg) {
-    if (tagReg === void 0) { tagReg = consts.IS_BLOCK; }
-    var node = current;
-    var root = jodit.editor;
-    do {
-        if (!node || node === root) {
-            break;
-        }
-        if (tagReg.test(node.nodeName)) {
-            if (dom_1.Dom.isTag(node, 'li')) {
-                return node;
-            }
-            return (getBlockWrapper(jodit, node.parentNode, /^li$/i) ||
-                node);
-        }
-        node = node.parentNode;
-    } while (node && node !== root);
-    return null;
-}
-exports.getBlockWrapper = getBlockWrapper;
-
-
-/***/ }),
-
-/***/ 75145:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.hasPreviousBlock = void 0;
-var dom_1 = __webpack_require__(43887);
-function hasPreviousBlock(jodit, current) {
-    return Boolean(dom_1.Dom.prev(current, function (elm) { return dom_1.Dom.isBlock(elm) || dom_1.Dom.isImage(elm); }, jodit.editor));
-}
-exports.hasPreviousBlock = hasPreviousBlock;
-
-
-/***/ }),
-
-/***/ 17838:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(51322), exports);
-tslib_1.__exportStar(__webpack_require__(60567), exports);
-tslib_1.__exportStar(__webpack_require__(80595), exports);
-tslib_1.__exportStar(__webpack_require__(70963), exports);
-tslib_1.__exportStar(__webpack_require__(75145), exports);
-tslib_1.__exportStar(__webpack_require__(33714), exports);
-tslib_1.__exportStar(__webpack_require__(1813), exports);
-tslib_1.__exportStar(__webpack_require__(97408), exports);
-
-
-/***/ }),
-
-/***/ 33714:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.insertParagraph = void 0;
-var dom_1 = __webpack_require__(43887);
-var scroll_into_view_1 = __webpack_require__(6110);
-function insertParagraph(editor, fake, wrapperTag, style) {
-    var _a, _b;
-    var s = editor.s, createInside = editor.createInside, p = createInside.element(wrapperTag), helper_node = createInside.element('br');
-    p.appendChild(helper_node);
-    if (style && style.cssText) {
-        p.setAttribute('style', style.cssText);
-    }
-    if (fake && fake.isConnected) {
-        dom_1.Dom.before(fake, p);
-        dom_1.Dom.safeRemove(fake);
-    }
-    else {
-        s.insertNode(p, false, false);
-    }
-    var range = s.createRange();
-    range.setStartBefore(wrapperTag.toLowerCase() !== 'br' ? helper_node : p);
-    range.collapse(true);
-    (_a = s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
-    (_b = s.sel) === null || _b === void 0 ? void 0 : _b.addRange(range);
-    (0, scroll_into_view_1.scrollIntoViewIfNeeded)(p, editor.editor, editor.ed);
-    return p;
-}
-exports.insertParagraph = insertParagraph;
-
-
-/***/ }),
-
-/***/ 80595:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.processEmptyLILeaf = void 0;
-var dom_1 = __webpack_require__(43887);
-var selector_1 = __webpack_require__(78191);
-var insert_paragraph_1 = __webpack_require__(33714);
-function processEmptyLILeaf(jodit, li) {
-    var list = dom_1.Dom.closest(li, ['ol', 'ul'], jodit.editor);
-    if (!list) {
-        return;
-    }
-    var parentLi = list.parentElement, listInsideLeaf = dom_1.Dom.isTag(parentLi, 'li');
-    var container = listInsideLeaf ? parentLi : list;
-    var leftRange = jodit.s.createRange();
-    leftRange.setStartAfter(li);
-    leftRange.setEndAfter(list);
-    var rightPart = leftRange.extractContents();
-    var fakeTextNode = jodit.createInside.fake();
-    dom_1.Dom.after(container, fakeTextNode);
-    dom_1.Dom.safeRemove(li);
-    if (!(0, selector_1.$$)('li', list).length) {
-        dom_1.Dom.safeRemove(list);
-    }
-    var newLi = (0, insert_paragraph_1.insertParagraph)(jodit, fakeTextNode, listInsideLeaf ? 'li' : jodit.o.enter);
-    if (!rightPart.querySelector('li')) {
-        return;
-    }
-    if (listInsideLeaf) {
-        newLi.appendChild(rightPart);
-    }
-    else {
-        dom_1.Dom.after(newLi, rightPart);
-    }
-}
-exports.processEmptyLILeaf = processEmptyLILeaf;
-
-
-/***/ }),
-
-/***/ 1813:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.splitFragment = void 0;
-var insert_paragraph_1 = __webpack_require__(33714);
-var scroll_into_view_1 = __webpack_require__(6110);
-var dom_1 = __webpack_require__(43887);
-function splitFragment(jodit, currentBox) {
-    var sel = jodit.s, enter = jodit.o.enter;
-    var defaultTag = enter.toLowerCase();
-    var isLi = dom_1.Dom.isTag(currentBox, 'li');
-    var canSplit = currentBox.tagName.toLowerCase() === defaultTag || isLi;
-    var cursorOnTheRight = sel.cursorOnTheRight(currentBox);
-    var cursorOnTheLeft = sel.cursorOnTheLeft(currentBox);
-    if (!canSplit && (cursorOnTheRight || cursorOnTheLeft)) {
-        var fake = null;
-        if (cursorOnTheRight) {
-            fake = sel.setCursorAfter(currentBox);
-        }
-        else {
-            fake = sel.setCursorBefore(currentBox);
-        }
-        (0, insert_paragraph_1.insertParagraph)(jodit, fake, defaultTag);
-        if (cursorOnTheLeft && !cursorOnTheRight) {
-            sel.setCursorIn(currentBox, true);
-        }
-        return;
-    }
-    var newP = sel.splitSelection(currentBox);
-    (0, scroll_into_view_1.scrollIntoViewIfNeeded)(newP, jodit.editor, jodit.ed);
-}
-exports.splitFragment = splitFragment;
-
-
-/***/ }),
-
-/***/ 97408:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.wrapText = void 0;
-var dom_1 = __webpack_require__(43887);
-function wrapText(jodit, current) {
-    var needWrap = current;
-    dom_1.Dom.up(needWrap, function (node) {
-        if (node && node.hasChildNodes() && node !== jodit.editor) {
-            needWrap = node;
-        }
-    }, jodit.editor);
-    var currentBox = dom_1.Dom.wrapInline(needWrap, jodit.o.enter, jodit);
-    if (dom_1.Dom.isEmpty(currentBox)) {
-        var helper_node = jodit.createInside.element('br');
-        currentBox.appendChild(helper_node);
-        jodit.s.setCursorBefore(helper_node);
-    }
-    return currentBox;
-}
-exports.wrapText = wrapText;
-
-
-/***/ }),
-
-/***/ 67009:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.findMostNestedNeighbor = exports.findNotEmptySibling = exports.findNotEmptyNeighbor = void 0;
-var utils_1 = __webpack_require__(73344);
-var dom_1 = __webpack_require__(94522);
-var string_1 = __webpack_require__(15664);
-function findNotEmptyNeighbor(node, left, root) {
-    return (0, utils_1.call)(left ? dom_1.Dom.prev : dom_1.Dom.next, node, function (n) { return Boolean(n && (!dom_1.Dom.isText(n) || (0, string_1.trim)((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)); }, root);
-}
-exports.findNotEmptyNeighbor = findNotEmptyNeighbor;
-function findNotEmptySibling(node, backspace) {
-    return dom_1.Dom.findSibling(node, backspace, function (n) {
-        var _a;
-        return (!dom_1.Dom.isEmptyTextNode(n) &&
-            Boolean(!dom_1.Dom.isText(n) || (((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length) && (0, string_1.trim)(n.nodeValue))));
-    });
-}
-exports.findNotEmptySibling = findNotEmptySibling;
-function findMostNestedNeighbor(node, right, root, onlyInlide) {
-    if (onlyInlide === void 0) { onlyInlide = false; }
-    var nextChild = function (node) {
-        return right ? node.firstChild : node.lastChild;
-    };
-    var next = findNotEmptyNeighbor(node, !right, root);
-    if (onlyInlide && dom_1.Dom.isElement(next) && !dom_1.Dom.isInlineBlock(next)) {
-        return null;
-    }
-    if (next) {
-        do {
-            if (nextChild(next)) {
-                next = nextChild(next);
-            }
-            else {
-                return next;
-            }
-        } while (next);
-    }
-    return null;
-}
-exports.findMostNestedNeighbor = findMostNestedNeighbor;
-
-
-/***/ }),
-
-/***/ 22997:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.hotkeys = void 0;
-var tslib_1 = __webpack_require__(20255);
-var config_1 = __webpack_require__(27537);
-var plugin_1 = __webpack_require__(35570);
-var helpers_1 = __webpack_require__(92654);
-var constants_1 = __webpack_require__(10063);
-config_1.Config.prototype.commandToHotkeys = {
-    removeFormat: ['ctrl+shift+m', 'cmd+shift+m'],
-    insertOrderedList: ['ctrl+shift+7', 'cmd+shift+7'],
-    insertUnorderedList: ['ctrl+shift+8, cmd+shift+8'],
-    selectall: ['ctrl+a', 'cmd+a']
-};
-var hotkeys = (function (_super) {
-    tslib_1.__extends(hotkeys, _super);
-    function hotkeys() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.onKeyPress = function (event) {
-            var special = _this.specialKeys[event.which], character = (event.key || String.fromCharCode(event.which)).toLowerCase();
-            var modif = [special || character];
-            ['alt', 'ctrl', 'shift', 'meta'].forEach(function (specialKey) {
-                if (event[specialKey + 'Key'] && special !== specialKey) {
-                    modif.push(specialKey);
-                }
-            });
-            return (0, helpers_1.normalizeKeyAliases)(modif.join('+'));
-        };
-        _this.specialKeys = {
-            8: 'backspace',
-            9: 'tab',
-            10: 'return',
-            13: 'return',
-            16: 'shift',
-            17: 'ctrl',
-            18: 'alt',
-            19: 'pause',
-            20: 'capslock',
-            27: 'esc',
-            32: 'space',
-            33: 'pageup',
-            34: 'pagedown',
-            35: 'end',
-            36: 'home',
-            37: 'left',
-            38: 'up',
-            39: 'right',
-            40: 'down',
-            45: 'insert',
-            46: 'del',
-            59: ';',
-            61: '=',
-            91: 'meta',
-            96: '0',
-            97: '1',
-            98: '2',
-            99: '3',
-            100: '4',
-            101: '5',
-            102: '6',
-            103: '7',
-            104: '8',
-            105: '9',
-            106: '*',
-            107: '+',
-            109: '-',
-            110: '.',
-            111: '/',
-            112: 'f1',
-            113: 'f2',
-            114: 'f3',
-            115: 'f4',
-            116: 'f5',
-            117: 'f6',
-            118: 'f7',
-            119: 'f8',
-            120: 'f9',
-            121: 'f10',
-            122: 'f11',
-            123: 'f12',
-            144: 'numlock',
-            145: 'scroll',
-            173: '-',
-            186: ';',
-            187: '=',
-            188: ',',
-            189: '-',
-            190: '.',
-            191: '/',
-            192: '`',
-            219: '[',
-            220: '\\',
-            221: ']',
-            222: "'"
-        };
-        return _this;
-    }
-    hotkeys.prototype.afterInit = function (editor) {
-        var _this = this;
-        (0, helpers_1.keys)(editor.o.commandToHotkeys, false).forEach(function (commandName) {
-            var shortcuts = editor.o.commandToHotkeys[commandName];
-            if (shortcuts && ((0, helpers_1.isArray)(shortcuts) || (0, helpers_1.isString)(shortcuts))) {
-                editor.registerHotkeyToCommand(shortcuts, commandName);
-            }
-        });
-        var itIsHotkey = false;
-        editor.e
-            .off('.hotkeys')
-            .on([editor.ow, editor.ew], 'keydown.hotkeys', function (e) {
-            if (e.key === constants_1.KEY_ESC) {
-                return _this.j.e.fire('escape', e);
-            }
-        })
-            .on('keydown.hotkeys', function (event) {
-            var shortcut = _this.onKeyPress(event), stop = {
-                shouldStop: true
-            };
-            var resultOfFire = _this.j.e.fire(shortcut + '.hotkey', event.type, stop);
-            if (resultOfFire === false) {
-                if (stop.shouldStop) {
-                    itIsHotkey = true;
-                    editor.e.stopPropagation('keydown');
-                    return false;
-                }
-                else {
-                    event.preventDefault();
-                }
-            }
-        }, { top: true })
-            .on('keyup.hotkeys', function () {
-            if (itIsHotkey) {
-                itIsHotkey = false;
-                editor.e.stopPropagation('keyup');
-                return false;
-            }
-        }, { top: true });
-    };
-    hotkeys.prototype.beforeDestruct = function (jodit) {
-        if (jodit.events) {
-            jodit.e.off('.hotkeys');
-        }
-    };
-    return hotkeys;
-}(plugin_1.Plugin));
-exports.hotkeys = hotkeys;
-
-
-/***/ }),
-
-/***/ 43343:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.KeyArrowOutside = void 0;
+exports.keyArrowOutside = void 0;
 var tslib_1 = __webpack_require__(20255);
 var plugin_1 = __webpack_require__(35570);
 var decorators_1 = __webpack_require__(9901);
 var constants_1 = __webpack_require__(10063);
-var dom_1 = __webpack_require__(94522);
-var helpers_1 = __webpack_require__(67009);
-var KeyArrowOutside = (function (_super) {
-    tslib_1.__extends(KeyArrowOutside, _super);
-    function KeyArrowOutside() {
+var dom_1 = __webpack_require__(43887);
+var global_1 = __webpack_require__(58299);
+var keyArrowOutside = (function (_super) {
+    tslib_1.__extends(keyArrowOutside, _super);
+    function keyArrowOutside() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    KeyArrowOutside.prototype.afterInit = function (jodit) { };
-    KeyArrowOutside.prototype.beforeDestruct = function (jodit) { };
-    KeyArrowOutside.prototype.onKeyDownArrow = function (e) {
+    keyArrowOutside.prototype.afterInit = function (jodit) { };
+    keyArrowOutside.prototype.beforeDestruct = function (jodit) { };
+    keyArrowOutside.prototype.onKeyDownArrow = function (e) {
         var _a;
         if (e.key !== constants_1.KEY_RIGHT || !this.j.selection.isCollapsed()) {
             return;
@@ -31404,81 +31106,23 @@ var KeyArrowOutside = (function (_super) {
         if (((_a = endContainer.nodeValue) === null || _a === void 0 ? void 0 : _a.length) === endOffset) {
             var parentNode = endContainer.parentNode;
             if (dom_1.Dom.isInlineBlock(parentNode) &&
-                !(0, helpers_1.findNotEmptyNeighbor)(parentNode, false, this.j.editor)) {
+                !dom_1.Dom.findNotEmptyNeighbor(parentNode, false, this.j.editor)) {
                 dom_1.Dom.after(parentNode, this.j.createInside.text(constants_1.NBSP_SPACE));
             }
         }
     };
     tslib_1.__decorate([
         (0, decorators_1.watch)(':keydown')
-    ], KeyArrowOutside.prototype, "onKeyDownArrow", null);
-    return KeyArrowOutside;
+    ], keyArrowOutside.prototype, "onKeyDownArrow", null);
+    return keyArrowOutside;
 }(plugin_1.Plugin));
-exports.KeyArrowOutside = KeyArrowOutside;
+exports.keyArrowOutside = keyArrowOutside;
+global_1.pluginSystem.add('keyArrowOutside', keyArrowOutside);
 
 
 /***/ }),
 
-/***/ 94736:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(78407), exports);
-
-
-/***/ }),
-
-/***/ 78407:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.onTabInsideLi = void 0;
-var dom_1 = __webpack_require__(94522);
-function onTabInsideLi(jodit) {
-    if (!jodit.o.tab.tabInsideLiInsertNewList || !jodit.s.isCollapsed()) {
-        return false;
-    }
-    var fake = jodit.createInside.fake();
-    jodit.s.insertNode(fake);
-    var li = dom_1.Dom.closest(fake, 'li', jodit.editor);
-    if (li &&
-        jodit.s.cursorOnTheLeft(li) &&
-        dom_1.Dom.isTag(li.previousElementSibling, 'li')) {
-        var list = dom_1.Dom.closest(li, ['ol', 'ul'], jodit.editor);
-        if (list) {
-            var newList = jodit.createInside.element(list.tagName);
-            var previousLi = li.previousElementSibling;
-            newList.appendChild(li);
-            previousLi.appendChild(newList);
-            jodit.s.setCursorAfter(fake);
-            dom_1.Dom.safeRemove(fake);
-            return true;
-        }
-    }
-    dom_1.Dom.safeRemove(fake);
-    return false;
-}
-exports.onTabInsideLi = onTabInsideLi;
-
-
-/***/ }),
-
-/***/ 72697:
+/***/ 34142:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -31490,49 +31134,9 @@ exports.onTabInsideLi = onTabInsideLi;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
-config_1.Config.prototype.tab = {
-    tabInsideLiInsertNewList: true
-};
-
-
-/***/ }),
-
-/***/ 8653:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.tab = void 0;
-var tslib_1 = __webpack_require__(20255);
-var plugin_1 = __webpack_require__(35570);
-var decorators_1 = __webpack_require__(9901);
-var constants_1 = __webpack_require__(10063);
-var cases_1 = __webpack_require__(94736);
-__webpack_require__(72697);
-var tab = (function (_super) {
-    tslib_1.__extends(tab, _super);
-    function tab() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    tab.prototype.afterInit = function (jodit) { };
-    tab.prototype.onTab = function (event) {
-        if (event.key === constants_1.KEY_TAB && (0, cases_1.onTabInsideLi)(this.j)) {
-            return false;
-        }
-    };
-    tab.prototype.beforeDestruct = function (jodit) { };
-    tslib_1.__decorate([
-        (0, decorators_1.watch)(':keydown.tab')
-    ], tab.prototype, "onTab", null);
-    return tab;
-}(plugin_1.Plugin));
-exports.tab = tab;
+config_1.Config.prototype.limitWords = false;
+config_1.Config.prototype.limitChars = false;
+config_1.Config.prototype.limitHTML = false;
 
 
 /***/ }),
@@ -31550,14 +31154,12 @@ exports.tab = tab;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.limit = void 0;
 var tslib_1 = __webpack_require__(20255);
-var config_1 = __webpack_require__(27537);
 var plugin_1 = __webpack_require__(35570);
 var constants_1 = __webpack_require__(10063);
 var helpers_1 = __webpack_require__(92654);
 var decorators_1 = __webpack_require__(9901);
-config_1.Config.prototype.limitWords = false;
-config_1.Config.prototype.limitChars = false;
-config_1.Config.prototype.limitHTML = false;
+var global_1 = __webpack_require__(58299);
+__webpack_require__(34142);
 var limit = (function (_super) {
     tslib_1.__extends(limit, _super);
     function limit() {
@@ -31630,6 +31232,7 @@ var limit = (function (_super) {
     return limit;
 }(plugin_1.Plugin));
 exports.limit = limit;
+global_1.pluginSystem.add('limit', limit);
 
 
 /***/ }),
@@ -31647,9 +31250,10 @@ exports.limit = limit;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
 var helpers_1 = __webpack_require__(92654);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.defaultLineHeight = null;
+icon_1.Icon.set('line-height', __webpack_require__(7986));
 config_1.Config.prototype.controls.lineHeight = {
-    icon: 'line-height',
     command: 'applyLineHeight',
     tags: ['ol'],
     tooltip: 'Line height',
@@ -31659,6 +31263,60 @@ config_1.Config.prototype.controls.lineHeight = {
         return (0, helpers_1.memorizeExec)(editor, event, { control: control }, function (value) { return value; });
     }
 };
+
+
+/***/ }),
+
+/***/ 52279:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
+var ar = __webpack_require__(47762);
+exports.ar = ar;
+var cs_cz = __webpack_require__(97495);
+exports.cs_cz = cs_cz;
+var de = __webpack_require__(80131);
+exports.de = de;
+var es = __webpack_require__(1201);
+exports.es = es;
+var fa = __webpack_require__(89912);
+exports.fa = fa;
+var fr = __webpack_require__(3405);
+exports.fr = fr;
+var he = __webpack_require__(14129);
+exports.he = he;
+var hu = __webpack_require__(93729);
+exports.hu = hu;
+var id = __webpack_require__(16106);
+exports.id = id;
+var it = __webpack_require__(89690);
+exports.it = it;
+var ja = __webpack_require__(33216);
+exports.ja = ja;
+var ko = __webpack_require__(17282);
+exports.ko = ko;
+var nl = __webpack_require__(91761);
+exports.nl = nl;
+var pl = __webpack_require__(61675);
+exports.pl = pl;
+var pt_br = __webpack_require__(69709);
+exports.pt_br = pt_br;
+var ru = __webpack_require__(82591);
+exports.ru = ru;
+var tr = __webpack_require__(87649);
+exports.tr = tr;
+var zh_cn = __webpack_require__(60268);
+exports.zh_cn = zh_cn;
+var zh_tw = __webpack_require__(58214);
+exports.zh_tw = zh_tw;
 
 
 /***/ }),
@@ -31677,20 +31335,22 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.lineHeight = void 0;
 var tslib_1 = __webpack_require__(20255);
 var plugin_1 = __webpack_require__(35570);
-__webpack_require__(69223);
 var helpers_1 = __webpack_require__(92654);
 var decorators_1 = __webpack_require__(9901);
-var dom_1 = __webpack_require__(94522);
+var dom_1 = __webpack_require__(43887);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(69223);
 var lineHeight = (function (_super) {
     tslib_1.__extends(lineHeight, _super);
-    function lineHeight() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    function lineHeight(jodit) {
+        var _this = _super.call(this, jodit) || this;
         _this.buttons = [
             {
                 name: 'lineHeight',
                 group: 'font'
             }
         ];
+        (0, global_1.extendLang)(__webpack_require__(52279));
         return _this;
     }
     lineHeight.prototype.afterInit = function (jodit) {
@@ -31743,6 +31403,7 @@ var lineHeight = (function (_super) {
     return lineHeight;
 }(plugin_1.Plugin));
 exports.lineHeight = lineHeight;
+global_1.pluginSystem.add('lineHeight', lineHeight);
 
 
 /***/ }),
@@ -31761,6 +31422,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
 var template_1 = __webpack_require__(64134);
 var dom_1 = __webpack_require__(43887);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.link = {
     formTemplate: template_1.formTemplate,
     followOnDblClick: false,
@@ -31774,6 +31436,7 @@ config_1.Config.prototype.link = {
     selectOptionsClassName: [],
     hotkeys: ['ctrl+k', 'cmd+k']
 };
+icon_1.Icon.set('link', __webpack_require__(23075)).set('unlink', __webpack_require__(10655));
 config_1.Config.prototype.controls.unlink = {
     exec: function (editor, current) {
         var anchor = dom_1.Dom.closest(current, 'a', editor.editor);
@@ -31817,7 +31480,8 @@ var dom_1 = __webpack_require__(94522);
 var helpers_1 = __webpack_require__(92654);
 var plugin_1 = __webpack_require__(35570);
 var decorators_1 = __webpack_require__(9901);
-var modules_1 = __webpack_require__(46701);
+var dialog_1 = __webpack_require__(68713);
+var global_1 = __webpack_require__(58299);
 __webpack_require__(91007);
 var link = (function (_super) {
     tslib_1.__extends(link, _super);
@@ -31842,7 +31506,7 @@ var link = (function (_super) {
         jodit.e.on('generateLinkForm.link', this.generateForm);
         jodit.registerCommand('openLinkDialog', {
             exec: function () {
-                var dialog = new modules_1.Dialog({
+                var dialog = new dialog_1.Dialog({
                     resizable: false
                 });
                 var htmlForm = _this.generateForm(jodit.s.current(), function () {
@@ -32099,6 +31763,7 @@ var link = (function (_super) {
     return link;
 }(plugin_1.Plugin));
 exports.link = link;
+global_1.pluginSystem.add('link', link);
 
 
 /***/ }),
@@ -32199,7 +31864,7 @@ exports.formTemplate = formTemplate;
 
 /***/ }),
 
-/***/ 22458:
+/***/ 55557:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32210,72 +31875,10 @@ exports.formTemplate = formTemplate;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.file = void 0;
 var config_1 = __webpack_require__(27537);
-var dom_1 = __webpack_require__(94522);
-var widget_1 = __webpack_require__(4188);
-config_1.Config.prototype.controls.file = {
-    popup: function (editor, current, self, close) {
-        var insert = function (url, title) {
-            if (title === void 0) { title = ''; }
-            editor.s.insertNode(editor.createInside.fromHTML("<a href=\"".concat(url, "\" title=\"").concat(title, "\">").concat(title || url, "</a>")));
-        };
-        var sourceAnchor = null;
-        if (current &&
-            (dom_1.Dom.isTag(current, 'a') ||
-                dom_1.Dom.closest(current, 'a', editor.editor))) {
-            sourceAnchor = dom_1.Dom.isTag(current, 'a')
-                ? current
-                : dom_1.Dom.closest(current, 'a', editor.editor);
-        }
-        return (0, widget_1.FileSelectorWidget)(editor, {
-            filebrowser: function (data) {
-                data.files &&
-                    data.files.forEach(function (file) { return insert(data.baseurl + file); });
-                close();
-            },
-            upload: true,
-            url: function (url, text) {
-                if (sourceAnchor) {
-                    sourceAnchor.setAttribute('href', url);
-                    sourceAnchor.setAttribute('title', text);
-                }
-                else {
-                    insert(url, text);
-                }
-                close();
-            }
-        }, sourceAnchor, close, false);
-    },
-    tags: ['a'],
-    tooltip: 'Insert file'
-};
-function file(editor) {
-    editor.registerButton({
-        name: 'file',
-        group: 'media'
-    });
-}
-exports.file = file;
-
-
-/***/ }),
-
-/***/ 32248:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(58252), exports);
-tslib_1.__exportStar(__webpack_require__(15101), exports);
-tslib_1.__exportStar(__webpack_require__(22458), exports);
+config_1.Config.prototype.mediaFakeTag = 'jodit-media';
+config_1.Config.prototype.mediaInFakeBlock = true;
+config_1.Config.prototype.mediaBlocks = ['video', 'audio'];
 
 
 /***/ }),
@@ -32292,19 +31895,17 @@ tslib_1.__exportStar(__webpack_require__(22458), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.media = void 0;
-var config_1 = __webpack_require__(27537);
 var consts = __webpack_require__(10063);
-var helpers_1 = __webpack_require__(92654);
-config_1.Config.prototype.mediaFakeTag = 'jodit-media';
-config_1.Config.prototype.mediaInFakeBlock = true;
-config_1.Config.prototype.mediaBlocks = ['video', 'audio'];
+var utils_1 = __webpack_require__(73344);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(55557);
 function media(editor) {
     var keyFake = 'jodit_fake_wrapper';
     var _a = editor.options, mediaFakeTag = _a.mediaFakeTag, mediaBlocks = _a.mediaBlocks, mediaInFakeBlock = _a.mediaInFakeBlock;
     var wrap = function (element) {
         var _a;
         if (element.parentNode &&
-            (0, helpers_1.attr)(element.parentNode, 'data-jodit_iframe_wrapper')) {
+            (0, utils_1.attr)(element.parentNode, 'data-jodit_iframe_wrapper')) {
             element = element.parentNode;
         }
         else {
@@ -32315,7 +31916,7 @@ function media(editor) {
                 },
                 _a["data-".concat(keyFake)] = 1,
                 _a));
-            (0, helpers_1.attr)(wrapper, 'style', (0, helpers_1.attr)(element, 'style'));
+            (0, utils_1.attr)(wrapper, 'style', (0, utils_1.attr)(element, 'style'));
             wrapper.style.display =
                 element.style.display === 'inline-block'
                     ? 'inline-block'
@@ -32345,9 +31946,9 @@ function media(editor) {
             .on('change afterInit afterSetMode changePlace', editor.async.debounce(function () {
             if (!editor.isDestructed &&
                 editor.getMode() !== consts.MODE_SOURCE) {
-                (0, helpers_1.$$)(mediaBlocks.join(','), editor.editor).forEach(function (elm) {
-                    if (!(0, helpers_1.dataBind)(elm, keyFake)) {
-                        (0, helpers_1.dataBind)(elm, keyFake, true);
+                (0, utils_1.$$)(mediaBlocks.join(','), editor.editor).forEach(function (elm) {
+                    if (!(0, utils_1.dataBind)(elm, keyFake)) {
+                        (0, utils_1.dataBind)(elm, keyFake, true);
                         wrap(elm);
                     }
                 });
@@ -32356,106 +31957,7 @@ function media(editor) {
     }
 }
 exports.media = media;
-
-
-/***/ }),
-
-/***/ 21290:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(27537);
-var widget_1 = __webpack_require__(4188);
-var helpers_1 = __webpack_require__(92654);
-var form_1 = __webpack_require__(18733);
-var button_1 = __webpack_require__(44632);
-config_1.Config.prototype.controls.video = {
-    popup: function (editor, current, control, close) {
-        var formLink = new form_1.UIForm(editor, [
-            new form_1.UIBlock(editor, [
-                new form_1.UIInput(editor, {
-                    name: 'url',
-                    required: true,
-                    label: 'URL',
-                    placeholder: 'https://',
-                    validators: ['url']
-                })
-            ]),
-            new form_1.UIBlock(editor, [
-                (0, button_1.Button)(editor, '', 'Insert', 'primary').onAction(function () {
-                    return formLink.submit();
-                })
-            ])
-        ]), formCode = new form_1.UIForm(editor, [
-            new form_1.UIBlock(editor, [
-                new form_1.UITextArea(editor, {
-                    name: 'code',
-                    required: true,
-                    label: 'Embed code'
-                })
-            ]),
-            new form_1.UIBlock(editor, [
-                (0, button_1.Button)(editor, '', 'Insert', 'primary').onAction(function () {
-                    return formCode.submit();
-                })
-            ])
-        ]), tabs = [], insertCode = function (code) {
-            editor.s.restore();
-            editor.s.insertHTML(code);
-            close();
-        };
-        editor.s.save();
-        tabs.push({
-            icon: 'link',
-            name: 'Link',
-            content: formLink.container
-        }, {
-            icon: 'source',
-            name: 'Code',
-            content: formCode.container
-        });
-        formLink.onSubmit(function (data) {
-            insertCode((0, helpers_1.convertMediaUrlToVideoEmbed)(data.url));
-        });
-        formCode.onSubmit(function (data) {
-            insertCode(data.code);
-        });
-        return (0, widget_1.TabsWidget)(editor, tabs);
-    },
-    tags: ['iframe'],
-    tooltip: 'Insert youtube/vimeo video'
-};
-
-
-/***/ }),
-
-/***/ 15101:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.video = void 0;
-__webpack_require__(21290);
-function video(editor) {
-    editor.registerButton({
-        name: 'video',
-        group: 'media'
-    });
-}
-exports.video = video;
+global_1.pluginSystem.add('media', media);
 
 
 /***/ }),
@@ -32523,6 +32025,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.mobile = void 0;
 var helpers_1 = __webpack_require__(92654);
 var buttons_1 = __webpack_require__(74091);
+var global_1 = __webpack_require__(58299);
 __webpack_require__(59008);
 function mobile(editor) {
     var timeout = 0, store = (0, helpers_1.splitArray)(editor.o.buttons);
@@ -32584,6 +32087,7 @@ function mobile(editor) {
     }
 }
 exports.mobile = mobile;
+global_1.pluginSystem.add('mobile', mobile);
 
 
 /***/ }),
@@ -32601,6 +32105,7 @@ exports.mobile = mobile;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
 var data_bind_1 = __webpack_require__(70774);
+var icon_1 = __webpack_require__(76381);
 var memoExec = function (jodit, _, _a) {
     var _b;
     var control = _a.control;
@@ -32609,6 +32114,7 @@ var memoExec = function (jodit, _, _a) {
     (0, data_bind_1.dataBind)(jodit, key, value);
     jodit.execCommand(control.command, false, value === 'default' ? null : value);
 };
+icon_1.Icon.set('ol', __webpack_require__(15476)).set('ul', __webpack_require__(59403));
 config_1.Config.prototype.controls.ul = {
     command: 'insertUnorderedList',
     tags: ['ul'],
@@ -32654,6 +32160,7 @@ exports.orderedList = void 0;
 var tslib_1 = __webpack_require__(20255);
 var plugin_1 = __webpack_require__(35570);
 var decorators_1 = __webpack_require__(9901);
+var global_1 = __webpack_require__(58299);
 __webpack_require__(45863);
 var orderedList = (function (_super) {
     tslib_1.__extends(orderedList, _super);
@@ -32692,6 +32199,676 @@ var orderedList = (function (_super) {
     return orderedList;
 }(plugin_1.Plugin));
 exports.orderedList = orderedList;
+global_1.pluginSystem.add('orderedList', orderedList);
+
+
+/***/ }),
+
+/***/ 75423:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+var constants_1 = __webpack_require__(10063);
+config_1.Config.prototype.askBeforePasteFromWord = true;
+config_1.Config.prototype.processPasteFromWord = true;
+config_1.Config.prototype.defaultActionOnPasteFromWord = null;
+config_1.Config.prototype.pasteFromWordActionList = [
+    { value: constants_1.INSERT_AS_HTML, text: 'Keep' },
+    { value: constants_1.INSERT_AS_TEXT, text: 'Clean' },
+    { value: constants_1.INSERT_ONLY_TEXT, text: 'Insert only Text' }
+];
+
+
+/***/ }),
+
+/***/ 50532:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.pasteFromWord = void 0;
+var tslib_1 = __webpack_require__(20255);
+var plugin_1 = __webpack_require__(35570);
+var helpers_1 = __webpack_require__(92654);
+var constants_1 = __webpack_require__(10063);
+var decorators_1 = __webpack_require__(9901);
+var helpers_2 = __webpack_require__(23063);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(75423);
+var pasteFromWord = (function (_super) {
+    tslib_1.__extends(pasteFromWord, _super);
+    function pasteFromWord() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.requires = ['paste'];
+        return _this;
+    }
+    pasteFromWord.prototype.afterInit = function (jodit) { };
+    pasteFromWord.prototype.beforeDestruct = function (jodit) { };
+    pasteFromWord.prototype.processWordHTML = function (e, text, texts) {
+        var _this = this;
+        var j = this.j, _a = j.o, processPasteFromWord = _a.processPasteFromWord, askBeforePasteFromWord = _a.askBeforePasteFromWord, defaultActionOnPasteFromWord = _a.defaultActionOnPasteFromWord, defaultActionOnPaste = _a.defaultActionOnPaste, pasteFromWordActionList = _a.pasteFromWordActionList;
+        if (processPasteFromWord && (0, helpers_1.isHtmlFromWord)(text)) {
+            if (askBeforePasteFromWord) {
+                (0, helpers_2.askInsertTypeDialog)(j, 'The pasted content is coming from a Microsoft Word/Excel document. ' +
+                    'Do you want to keep the format or clean it up?', 'Word Paste Detected', function (insertType) {
+                    _this.insertFromWordByType(e, text, insertType, texts);
+                }, pasteFromWordActionList);
+            }
+            else {
+                this.insertFromWordByType(e, text, defaultActionOnPasteFromWord || defaultActionOnPaste, texts);
+            }
+            return true;
+        }
+        return false;
+    };
+    pasteFromWord.prototype.insertFromWordByType = function (e, html, insertType, texts) {
+        var _a;
+        switch (insertType) {
+            case constants_1.INSERT_AS_HTML: {
+                html = (0, helpers_1.applyStyles)(html);
+                var value = (_a = this.j.events) === null || _a === void 0 ? void 0 : _a.fire('beautifyHTML', html);
+                if ((0, helpers_1.isString)(value)) {
+                    html = value;
+                }
+                break;
+            }
+            case constants_1.INSERT_AS_TEXT: {
+                html = (0, helpers_1.cleanFromWord)(html);
+                break;
+            }
+            case constants_1.INSERT_ONLY_TEXT: {
+                html = (0, helpers_1.stripTags)((0, helpers_1.cleanFromWord)(html));
+                break;
+            }
+        }
+        (0, helpers_2.pasteInsertHtml)(e, this.j, html);
+    };
+    tslib_1.__decorate([
+        (0, decorators_1.watch)(':processHTML')
+    ], pasteFromWord.prototype, "processWordHTML", null);
+    return pasteFromWord;
+}(plugin_1.Plugin));
+exports.pasteFromWord = pasteFromWord;
+global_1.pluginSystem.add('pasteFromWord', pasteFromWord);
+
+
+/***/ }),
+
+/***/ 33225:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.pasteStorage = void 0;
+var tslib_1 = __webpack_require__(20255);
+__webpack_require__(71708);
+var constants_1 = __webpack_require__(10063);
+var dialog_1 = __webpack_require__(5204);
+var plugin_1 = __webpack_require__(73177);
+var dom_1 = __webpack_require__(43887);
+var helpers_1 = __webpack_require__(92654);
+var button_1 = __webpack_require__(15327);
+var global_1 = __webpack_require__(58299);
+var pasteStorage = (function (_super) {
+    tslib_1.__extends(pasteStorage, _super);
+    function pasteStorage() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.currentIndex = 0;
+        _this.list = [];
+        _this.container = null;
+        _this.listBox = null;
+        _this.previewBox = null;
+        _this.dialog = null;
+        _this.paste = function () {
+            _this.j.s.focus();
+            _this.j.s.insertHTML(_this.list[_this.currentIndex]);
+            if (_this.currentIndex !== 0) {
+                var buffer = _this.list[0];
+                _this.list[0] = _this.list[_this.currentIndex];
+                _this.list[_this.currentIndex] = buffer;
+            }
+            _this.dialog && _this.dialog.close();
+            _this.j.synchronizeValues();
+            _this.j.e.fire('afterPaste');
+        };
+        _this.onKeyDown = function (e) {
+            var index = _this.currentIndex;
+            if ([constants_1.KEY_UP, constants_1.KEY_DOWN, constants_1.KEY_ENTER].indexOf(e.key) === -1) {
+                return;
+            }
+            if (e.key === constants_1.KEY_UP) {
+                if (index === 0) {
+                    index = _this.list.length - 1;
+                }
+                else {
+                    index -= 1;
+                }
+            }
+            if (e.key === constants_1.KEY_DOWN) {
+                if (index === _this.list.length - 1) {
+                    index = 0;
+                }
+                else {
+                    index += 1;
+                }
+            }
+            if (e.key === constants_1.KEY_ENTER) {
+                _this.paste();
+                return;
+            }
+            if (index !== _this.currentIndex) {
+                _this.selectIndex(index);
+            }
+            e.stopImmediatePropagation();
+            e.preventDefault();
+        };
+        _this.selectIndex = function (index) {
+            if (_this.listBox) {
+                (0, helpers_1.toArray)(_this.listBox.childNodes).forEach(function (a, i) {
+                    a.classList.remove('jodit_active');
+                    if (index === i && _this.previewBox) {
+                        a.classList.add('jodit_active');
+                        _this.previewBox.innerHTML = _this.list[index];
+                        a.focus();
+                    }
+                });
+            }
+            _this.currentIndex = index;
+        };
+        _this.showDialog = function () {
+            if (_this.list.length < 2) {
+                return;
+            }
+            _this.dialog || _this.createDialog();
+            if (_this.listBox) {
+                _this.listBox.innerHTML = '';
+            }
+            if (_this.previewBox) {
+                _this.previewBox.innerHTML = '';
+            }
+            _this.list.forEach(function (html, index) {
+                var a = _this.j.c.element('a');
+                a.textContent =
+                    index + 1 + '. ' + html.replace((0, constants_1.SPACE_REG_EXP)(), '');
+                _this.j.e.on(a, 'keydown', _this.onKeyDown);
+                (0, helpers_1.attr)(a, 'href', '#');
+                (0, helpers_1.attr)(a, 'data-index', index.toString());
+                (0, helpers_1.attr)(a, 'tab-index', '-1');
+                _this.listBox && _this.listBox.appendChild(a);
+            });
+            _this.dialog && _this.dialog.open();
+            _this.j.async.setTimeout(function () {
+                _this.selectIndex(0);
+            }, 100);
+        };
+        return _this;
+    }
+    pasteStorage.prototype.createDialog = function () {
+        var _this = this;
+        this.dialog = new dialog_1.Dialog({
+            language: this.j.o.language
+        });
+        var pasteButton = (0, button_1.Button)(this.j, 'paste', 'Paste', 'primary');
+        pasteButton.onAction(this.paste);
+        var cancelButton = (0, button_1.Button)(this.j, '', 'Cancel');
+        cancelButton.onAction(this.dialog.close);
+        this.container = this.j.c.div();
+        this.container.classList.add('jodit-paste-storage');
+        this.listBox = this.j.c.div();
+        this.previewBox = this.j.c.div();
+        this.container.appendChild(this.listBox);
+        this.container.appendChild(this.previewBox);
+        this.dialog.setHeader(this.j.i18n('Choose Content to Paste'));
+        this.dialog.setContent(this.container);
+        this.dialog.setFooter([pasteButton, cancelButton]);
+        this.j.e.on(this.listBox, 'click dblclick', function (e) {
+            var a = e.target;
+            if (dom_1.Dom.isTag(a, 'a') && a.hasAttribute('data-index')) {
+                _this.selectIndex(parseInt((0, helpers_1.attr)(a, '-index') || '0', 10));
+            }
+            if (e.type === 'dblclick') {
+                _this.paste();
+            }
+            return false;
+        });
+    };
+    pasteStorage.prototype.afterInit = function () {
+        var _this = this;
+        this.j.e
+            .off('afterCopy.paste-storage')
+            .on('pasteStorageList.paste-storage', function () { return _this.list.length; })
+            .on('afterCopy.paste-storage', function (html) {
+            if (_this.list.indexOf(html) !== -1) {
+                _this.list.splice(_this.list.indexOf(html), 1);
+            }
+            _this.list.unshift(html);
+            if (_this.list.length > 5) {
+                _this.list.length = 5;
+            }
+        });
+        this.j.registerCommand('showPasteStorage', {
+            exec: this.showDialog,
+            hotkeys: ['ctrl+shift+v', 'cmd+shift+v']
+        });
+    };
+    pasteStorage.prototype.beforeDestruct = function () {
+        this.dialog && this.dialog.destruct();
+        this.j.e.off('.paste-storage');
+        dom_1.Dom.safeRemove(this.previewBox);
+        dom_1.Dom.safeRemove(this.listBox);
+        dom_1.Dom.safeRemove(this.container);
+        this.container = null;
+        this.listBox = null;
+        this.previewBox = null;
+        this.dialog = null;
+        this.list = [];
+    };
+    return pasteStorage;
+}(plugin_1.Plugin));
+exports.pasteStorage = pasteStorage;
+global_1.pluginSystem.add('pasteStorage', pasteStorage);
+
+
+/***/ }),
+
+/***/ 12814:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+var _a;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(20255);
+var constants_1 = __webpack_require__(10063);
+var config_1 = __webpack_require__(27537);
+var alert_1 = __webpack_require__(66124);
+var helpers_1 = __webpack_require__(23063);
+config_1.Config.prototype.askBeforePasteHTML = true;
+config_1.Config.prototype.processPasteHTML = true;
+config_1.Config.prototype.pasteHTMLActionList = [
+    { value: constants_1.INSERT_AS_HTML, text: 'Keep' },
+    { value: constants_1.INSERT_AS_TEXT, text: 'Insert as Text' },
+    { value: constants_1.INSERT_ONLY_TEXT, text: 'Insert only Text' }
+];
+config_1.Config.prototype.memorizeChoiceWhenPasteFragment = false;
+config_1.Config.prototype.nl2brInPlainText = true;
+config_1.Config.prototype.draggableTags = ['img', 'jodit-media', 'jodit'];
+var psKey = 'pasteStorage';
+config_1.Config.prototype.controls.paste = {
+    tooltip: 'Paste from clipboard',
+    exec: function (editor, _, _a) {
+        var control = _a.control;
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var text, error, items, textBlob, e_1, e_2, value;
+            return tslib_1.__generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        if (control.name === psKey) {
+                            editor.execCommand('showPasteStorage');
+                            return [2];
+                        }
+                        editor.s.focus();
+                        text = '', error = true;
+                        if (!navigator.clipboard) return [3, 11];
+                        _b.label = 1;
+                    case 1:
+                        _b.trys.push([1, 6, , 7]);
+                        return [4, navigator.clipboard.read()];
+                    case 2:
+                        items = _b.sent();
+                        if (!(items && items.length)) return [3, 5];
+                        return [4, items[0].getType(constants_1.TEXT_PLAIN)];
+                    case 3:
+                        textBlob = _b.sent();
+                        return [4, new Response(textBlob).text()];
+                    case 4:
+                        text = _b.sent();
+                        _b.label = 5;
+                    case 5:
+                        error = false;
+                        return [3, 7];
+                    case 6:
+                        e_1 = _b.sent();
+                        if (false) {}
+                        return [3, 7];
+                    case 7:
+                        if (!error) return [3, 11];
+                        _b.label = 8;
+                    case 8:
+                        _b.trys.push([8, 10, , 11]);
+                        return [4, navigator.clipboard.readText()];
+                    case 9:
+                        text = _b.sent();
+                        error = false;
+                        return [3, 11];
+                    case 10:
+                        e_2 = _b.sent();
+                        if (false) {}
+                        return [3, 11];
+                    case 11:
+                        if (error) {
+                            text = editor.buffer.get(constants_1.CLIPBOARD_ID) || '';
+                            error = text.length === 0;
+                        }
+                        value = editor.value;
+                        if (error) {
+                            editor.ed.execCommand('paste');
+                            error = value === editor.value;
+                            !error && editor.e.fire('afterPaste');
+                        }
+                        else if (text.length) {
+                            (0, helpers_1.pasteInsertHtml)(null, editor, text);
+                            editor.e.fire('afterPaste');
+                        }
+                        else {
+                            if (error) {
+                                (0, alert_1.Alert)(editor.i18n("Your browser doesn't support direct access to the clipboard."), function () {
+                                    editor.s.focus();
+                                }).bindDestruct(editor);
+                            }
+                        }
+                        return [2];
+                }
+            });
+        });
+    },
+    list: (_a = {},
+        _a[psKey] = 'Paste Storage',
+        _a),
+    isChildDisabled: function (j) {
+        return j.e.fire('pasteStorageList') < 2;
+    }
+};
+
+
+/***/ }),
+
+/***/ 23063:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.askInsertTypeDialog = exports.getAllTypes = exports.pasteInsertHtml = void 0;
+var tslib_1 = __webpack_require__(20255);
+var checker_1 = __webpack_require__(37379);
+var dom_1 = __webpack_require__(43887);
+var constants_1 = __webpack_require__(10063);
+var modules_1 = __webpack_require__(46701);
+var button_1 = __webpack_require__(15327);
+var utils_1 = __webpack_require__(51976);
+function removeExtraFragments(html) {
+    html = html.replace(/<meta[^>]+?>/g, '');
+    var start = html.search(/<!--StartFragment-->/i);
+    if (start !== -1) {
+        html = html.substring(start + 20);
+    }
+    var end = html.search(/<!--EndFragment-->/i);
+    if (end !== -1) {
+        html = html.substring(0, end);
+    }
+    return html;
+}
+function isDragEvent(e) {
+    return Boolean(e && e.type === 'drop');
+}
+function pasteInsertHtml(e, editor, html) {
+    if (editor.isInDestruct) {
+        return;
+    }
+    if (isDragEvent(e)) {
+        editor.s.insertCursorAtPoint(e.clientX, e.clientY);
+    }
+    var result = editor.e.fire('beforePasteInsert', html);
+    if (!(0, checker_1.isVoid)(result) &&
+        ((0, checker_1.isString)(result) || (0, checker_1.isNumber)(result) || dom_1.Dom.isNode(result))) {
+        html = result;
+    }
+    if ((0, checker_1.isString)(html)) {
+        html = removeExtraFragments(html);
+    }
+    editor.s.insertHTML(html);
+}
+exports.pasteInsertHtml = pasteInsertHtml;
+function getAllTypes(dt) {
+    var types = dt.types;
+    var types_str = '';
+    if ((0, checker_1.isArray)(types) ||
+        {}.toString.call(types) === '[object DOMStringList]') {
+        for (var i = 0; i < types.length; i += 1) {
+            types_str += types[i] + ';';
+        }
+    }
+    else {
+        types_str = (types || constants_1.TEXT_PLAIN).toString() + ';';
+    }
+    return types_str;
+}
+exports.getAllTypes = getAllTypes;
+function askInsertTypeDialog(jodit, msg, title, callback, buttonList) {
+    if (jodit.e.fire('beforeOpenPasteDialog', msg, title, callback, buttonList) === false) {
+        return;
+    }
+    var dialog = (0, modules_1.Confirm)("<div style=\"word-break: normal; white-space: normal\">".concat(jodit.i18n(msg), "</div>"), jodit.i18n(title));
+    dialog.bindDestruct(jodit);
+    (0, utils_1.markOwner)(jodit, dialog.container);
+    var buttons = buttonList.map(function (_a) {
+        var text = _a.text, value = _a.value;
+        return (0, button_1.Button)(jodit, {
+            text: text,
+            name: text.toLowerCase(),
+            tabIndex: 0
+        }).onAction(function () {
+            dialog.close();
+            callback(value);
+        });
+    });
+    dialog.e.one(dialog, 'afterClose', function () {
+        if (!jodit.s.isFocused()) {
+            jodit.s.focus();
+        }
+    });
+    var cancel = (0, button_1.Button)(jodit, {
+        text: 'Cancel',
+        tabIndex: 0
+    }).onAction(function () {
+        dialog.close();
+    });
+    dialog.setFooter(tslib_1.__spreadArray(tslib_1.__spreadArray([], tslib_1.__read(buttons), false), [cancel], false));
+    buttons[0].focus();
+    buttons[0].state.variant = 'primary';
+    jodit.e.fire('afterOpenPasteDialog', dialog, msg, title, callback, buttonList);
+    return dialog;
+}
+exports.askInsertTypeDialog = askInsertTypeDialog;
+
+
+/***/ }),
+
+/***/ 78053:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.paste = void 0;
+var tslib_1 = __webpack_require__(20255);
+var plugin_1 = __webpack_require__(73177);
+var constants_1 = __webpack_require__(10063);
+var dom_1 = __webpack_require__(43887);
+var decorators_1 = __webpack_require__(9901);
+var helpers_1 = __webpack_require__(92654);
+var global_1 = __webpack_require__(58299);
+var helpers_2 = __webpack_require__(23063);
+__webpack_require__(12814);
+var paste = (function (_super) {
+    tslib_1.__extends(paste, _super);
+    function paste() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.pasteStack = new helpers_1.LimitedStack(20);
+        _this._isDialogOpened = false;
+        return _this;
+    }
+    paste.prototype.afterInit = function (jodit) {
+        var _this = this;
+        jodit.e
+            .on('paste.paste', this.onPaste)
+            .on('pasteStack.paste', function (item) {
+            return _this.pasteStack.push(item);
+        });
+        if (jodit.o.nl2brInPlainText) {
+            this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
+        }
+    };
+    paste.prototype.beforeDestruct = function (jodit) {
+        jodit.e
+            .off('paste.paste', this.onPaste)
+            .off('processPaste.paste', this.onProcessPasteReplaceNl2Br)
+            .off('.paste');
+    };
+    paste.prototype.onPaste = function (e) {
+        try {
+            if (this.customPasteProcess(e) === false ||
+                this.j.e.fire('beforePaste', e) === false) {
+                e.preventDefault();
+                return false;
+            }
+            this.defaultPasteProcess(e);
+        }
+        finally {
+            this.j.e.fire('afterPaste', e);
+        }
+    };
+    paste.prototype.customPasteProcess = function (e) {
+        if (!this.j.o.processPasteHTML) {
+            return;
+        }
+        var dt = (0, helpers_1.getDataTransfer)(e), texts = {
+            html: dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_HTML),
+            plain: dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_PLAIN),
+            rtf: dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_RTF)
+        };
+        var key;
+        for (key in texts) {
+            var value = texts[key];
+            if ((0, helpers_1.isHTML)(value) &&
+                (this.j.e.fire('processHTML', e, value, texts) ||
+                    this.processHTML(e, value))) {
+                return false;
+            }
+        }
+    };
+    paste.prototype.defaultPasteProcess = function (e) {
+        var dt = (0, helpers_1.getDataTransfer)(e);
+        var text = (dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_HTML)) || (dt === null || dt === void 0 ? void 0 : dt.getData(constants_1.TEXT_PLAIN));
+        if (dt && text && (0, helpers_1.trim)(text) !== '') {
+            var result = this.j.e.fire('processPaste', e, text, (0, helpers_2.getAllTypes)(dt));
+            if (result !== undefined) {
+                text = result;
+            }
+            if ((0, helpers_1.isString)(text) || dom_1.Dom.isNode(text)) {
+                this.insertByType(e, text, this.j.o.defaultActionOnPaste);
+            }
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    };
+    paste.prototype.processHTML = function (e, html) {
+        var _this = this;
+        if (this.j.o.askBeforePasteHTML) {
+            if (this.j.o.memorizeChoiceWhenPasteFragment) {
+                var cached = this.pasteStack.find(function (cachedItem) { return cachedItem.html === html; });
+                if (cached) {
+                    this.insertByType(e, html, cached.action || this.j.o.defaultActionOnPaste);
+                    return true;
+                }
+            }
+            if (this._isDialogOpened) {
+                return true;
+            }
+            var dialog = (0, helpers_2.askInsertTypeDialog)(this.j, 'Your code is similar to HTML. Keep as HTML?', 'Paste as HTML', function (insertType) {
+                _this._isDialogOpened = false;
+                _this.insertByType(e, html, insertType);
+            }, this.j.o.pasteHTMLActionList);
+            if (dialog) {
+                this._isDialogOpened = true;
+                dialog.e.on('beforeClose', function () {
+                    _this._isDialogOpened = false;
+                });
+            }
+            return true;
+        }
+        return false;
+    };
+    paste.prototype.insertByType = function (e, html, action) {
+        this.pasteStack.push({ html: html, action: action });
+        if ((0, helpers_1.isString)(html)) {
+            this.j.buffer.set(constants_1.CLIPBOARD_ID, html);
+            switch (action) {
+                case constants_1.INSERT_CLEAR_HTML:
+                    html = (0, helpers_1.cleanFromWord)(html);
+                    break;
+                case constants_1.INSERT_ONLY_TEXT:
+                    html = (0, helpers_1.stripTags)(html);
+                    break;
+                case constants_1.INSERT_AS_TEXT:
+                    html = (0, helpers_1.htmlspecialchars)(html);
+                    break;
+                default:
+            }
+        }
+        (0, helpers_2.pasteInsertHtml)(e, this.j, html);
+    };
+    paste.prototype.onProcessPasteReplaceNl2Br = function (ignore, text, type) {
+        if (type === constants_1.TEXT_PLAIN + ';' && !(0, helpers_1.isHTML)(text)) {
+            return (0, helpers_1.nl2br)(text);
+        }
+    };
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], paste.prototype, "onPaste", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], paste.prototype, "onProcessPasteReplaceNl2Br", null);
+    return paste;
+}(plugin_1.Plugin));
+exports.paste = paste;
+global_1.pluginSystem.add('paste', paste);
 
 
 /***/ }),
@@ -32732,10 +32909,11 @@ __webpack_require__(51629);
 var consts = __webpack_require__(10063);
 var helpers_1 = __webpack_require__(92654);
 var dom_1 = __webpack_require__(94522);
-var plugin_1 = __webpack_require__(35570);
+var plugin_1 = __webpack_require__(73177);
 var constants_1 = __webpack_require__(10063);
 var decorators_1 = __webpack_require__(9901);
 var selection_1 = __webpack_require__(36047);
+var global_1 = __webpack_require__(58299);
 __webpack_require__(90566);
 function isEditorEmpty(root) {
     if (!root.firstChild) {
@@ -32869,12 +33047,13 @@ var placeholder = (function (_super) {
     return placeholder;
 }(plugin_1.Plugin));
 exports.placeholder = placeholder;
+global_1.pluginSystem.add('placeholder', placeholder);
 
 
 /***/ }),
 
 /***/ 16459:
-/***/ (function(__unused_webpack_module, exports) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -32885,23 +33064,26 @@ exports.placeholder = placeholder;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.poweredByJodit = void 0;
+var global_1 = __webpack_require__(58299);
 function poweredByJodit(jodit) {
-    if (!jodit.o.hidePoweredByJodit &&
-        !jodit.o.inline &&
-        (jodit.o.showCharsCounter ||
-            jodit.o.showWordsCounter ||
-            jodit.o.showXPathInStatusbar)) {
+    var o = jodit.o;
+    if (!o.hidePoweredByJodit &&
+        !o.inline &&
+        (o.showCharsCounter ||
+            o.showWordsCounter ||
+            o.showXPathInStatusbar)) {
         jodit.hookStatus('ready', function () {
             jodit.statusbar.append(jodit.create.fromHTML("<a\n\t\t\t\t\t\ttabindex=\"-1\"\n\t\t\t\t\t\tstyle=\"text-transform: uppercase\"\n\t\t\t\t\t\tclass=\"jodit-status-bar-link\"\n\t\t\t\t\t\ttarget=\"_blank\"\n\t\t\t\t\t\thref=\"https://xdsoft.net/jodit/\">\n\t\t\t\t\t\t\tPowered by Jodit\n\t\t\t\t\t\t</a>"), true);
         });
     }
 }
 exports.poweredByJodit = poweredByJodit;
+global_1.pluginSystem.add('poweredByJodit', poweredByJodit);
 
 
 /***/ }),
 
-/***/ 5519:
+/***/ 72802:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32912,163 +33094,37 @@ exports.poweredByJodit = poweredByJodit;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.previewBox = void 0;
-var helpers_1 = __webpack_require__(92654);
-var dom_1 = __webpack_require__(94522);
-function fixedAssetsSizeAndAbsoluteLinks(editor, points) {
-    var restoreAttributes = [];
-    try {
-        (0, helpers_1.$$)('img', editor.editor).forEach(function (item) {
-            var previousAttrs = [
-                (0, helpers_1.attr)(item, 'width'),
-                (0, helpers_1.attr)(item, 'height'),
-                item.src
-            ];
-            (0, helpers_1.attr)(item, {
-                width: item.offsetWidth + points,
-                height: item.offsetHeight + points
-            });
-            var a = editor.createInside.a();
-            editor.ed.body.appendChild(a);
-            a.href = item.src;
-            item.src = a.href;
-            dom_1.Dom.safeRemove(a);
-            restoreAttributes.push(function () {
-                var _a;
-                item.src = (_a = previousAttrs[2]) !== null && _a !== void 0 ? _a : '';
-                (0, helpers_1.attr)(item, {
-                    width: previousAttrs[0] || null,
-                    height: previousAttrs[1] || null
-                });
-            });
+exports.preview = void 0;
+__webpack_require__(54860);
+var config_1 = __webpack_require__(27537);
+var constants_1 = __webpack_require__(10063);
+var dialog_1 = __webpack_require__(5204);
+var print_1 = __webpack_require__(79775);
+var global_1 = __webpack_require__(58299);
+config_1.Config.prototype.controls.preview = {
+    icon: 'eye',
+    command: 'preview',
+    mode: constants_1.MODE_SOURCE + constants_1.MODE_WYSIWYG,
+    tooltip: 'Preview'
+};
+function preview(editor) {
+    editor.registerButton({
+        name: 'preview'
+    });
+    editor.registerCommand('preview', function (_, _1, defaultValue) {
+        var dialog = new dialog_1.Dialog({
+            language: editor.o.language,
+            theme: editor.o.theme
         });
-    }
-    catch (e) {
-        restoreAttributes.forEach(function (c) { return c(); });
-        restoreAttributes.length = 0;
-        throw e;
-    }
-    return restoreAttributes;
+        dialog
+            .setSize(1024, 600)
+            .open('', editor.i18n('Preview'))
+            .setModal(true);
+        (0, print_1.previewBox)(editor, defaultValue, 'px', dialog.getElm('content'));
+    });
 }
-function previewBox(editor, defaultValue, points, container) {
-    if (points === void 0) { points = 'px'; }
-    if (container === void 0) { container = null; }
-    var restoreAttributes = fixedAssetsSizeAndAbsoluteLinks(editor, points);
-    try {
-        var res = editor.e.fire('beforePreviewBox', defaultValue, points);
-        if (res != null) {
-            return res;
-        }
-        var div = editor.c.div('jodit__preview-box jodit-context');
-        if (container) {
-            container.appendChild(div);
-        }
-        (0, helpers_1.css)(div, {
-            position: 'relative',
-            padding: 16
-        });
-        var value = editor.value ||
-            "<div style='position: absolute;left:50%;top:50%;transform: translateX(-50%) translateY(-50%);color:#ccc;'>".concat(editor.i18n('Empty'), "</div>");
-        if (editor.iframe) {
-            var iframe_1 = editor.create.element('iframe');
-            (0, helpers_1.css)(iframe_1, {
-                minWidth: 800,
-                minHeight: 600,
-                border: 0
-            });
-            div.appendChild(iframe_1);
-            var myWindow_1 = iframe_1.contentWindow;
-            if (myWindow_1) {
-                editor.e.fire('generateDocumentStructure.iframe', myWindow_1.document, editor);
-                div = myWindow_1.document.body;
-                if (typeof ResizeObserver === 'function') {
-                    var resizeObserver_1 = new ResizeObserver(function (entries) {
-                        iframe_1.style.height =
-                            myWindow_1.document.body.offsetHeight + 20 + 'px';
-                    });
-                    resizeObserver_1.observe(myWindow_1.document.body);
-                    editor.e.on('beforeDestruct', function () {
-                        resizeObserver_1.unobserve(myWindow_1.document.body);
-                    });
-                }
-            }
-        }
-        else {
-            (0, helpers_1.css)(div, {
-                minWidth: 1024,
-                minHeight: 600,
-                border: 0
-            });
-        }
-        var setHTML_1 = function (box, value) {
-            var dv = (0, helpers_1.isString)(value) ? editor.c.div() : value;
-            if ((0, helpers_1.isString)(value)) {
-                dv.innerHTML = value;
-            }
-            for (var i = 0; i < dv.childNodes.length; i += 1) {
-                var c = dv.childNodes[i];
-                if (dom_1.Dom.isElement(c)) {
-                    var newNode = box.ownerDocument.createElement(c.nodeName);
-                    for (var j = 0; j < c.attributes.length; j += 1) {
-                        (0, helpers_1.attr)(newNode, c.attributes[j].nodeName, c.attributes[j].nodeValue);
-                    }
-                    if (c.childNodes.length === 0 || dom_1.Dom.isTag(c, ['table'])) {
-                        switch (c.nodeName) {
-                            case 'SCRIPT':
-                                if (c.textContent) {
-                                    newNode.textContent = c.textContent;
-                                }
-                                break;
-                            default:
-                                if (c.innerHTML) {
-                                    newNode.innerHTML = c.innerHTML;
-                                }
-                                break;
-                        }
-                    }
-                    else {
-                        setHTML_1(newNode, c);
-                    }
-                    try {
-                        box.appendChild(newNode);
-                    }
-                    catch (_a) { }
-                }
-                else {
-                    try {
-                        box.appendChild(c.cloneNode(true));
-                    }
-                    catch (_b) { }
-                }
-            }
-        };
-        setHTML_1(div, value);
-        editor.e.fire('afterPreviewBox', div);
-        return div;
-    }
-    finally {
-        restoreAttributes.forEach(function (clb) { return clb(); });
-    }
-}
-exports.previewBox = previewBox;
-
-
-/***/ }),
-
-/***/ 92567:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(43181), exports);
-tslib_1.__exportStar(__webpack_require__(16214), exports);
+exports.preview = preview;
+global_1.pluginSystem.add('preview', preview);
 
 
 /***/ }),
@@ -33187,50 +33243,6 @@ exports.generateCriticalCSS = generateCriticalCSS;
 
 /***/ }),
 
-/***/ 43181:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.preview = void 0;
-__webpack_require__(43916);
-var config_1 = __webpack_require__(27537);
-var constants_1 = __webpack_require__(10063);
-var helpers_1 = __webpack_require__(5519);
-var dialog_1 = __webpack_require__(5204);
-config_1.Config.prototype.controls.preview = {
-    icon: 'eye',
-    command: 'preview',
-    mode: constants_1.MODE_SOURCE + constants_1.MODE_WYSIWYG,
-    tooltip: 'Preview'
-};
-function preview(editor) {
-    editor.registerButton({
-        name: 'preview'
-    });
-    editor.registerCommand('preview', function (_, _1, defaultValue) {
-        var dialog = new dialog_1.Dialog({
-            language: editor.o.language,
-            theme: editor.o.theme
-        });
-        dialog
-            .setSize(1024, 600)
-            .open('', editor.i18n('Preview'))
-            .setModal(true);
-        (0, helpers_1.previewBox)(editor, defaultValue, 'px', dialog.getElm('content'));
-    });
-}
-exports.preview = preview;
-
-
-/***/ }),
-
 /***/ 16214:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -33246,10 +33258,13 @@ exports.print = void 0;
 var config_1 = __webpack_require__(27537);
 var global_1 = __webpack_require__(58299);
 var dom_1 = __webpack_require__(94522);
-var helpers_1 = __webpack_require__(92654);
+var default_language_1 = __webpack_require__(3588);
 var consts = __webpack_require__(10063);
-var helpers_2 = __webpack_require__(5519);
+var global_2 = __webpack_require__(58299);
+var icon_1 = __webpack_require__(76381);
 var generate_critical_css_1 = __webpack_require__(28895);
+var print_1 = __webpack_require__(79775);
+icon_1.Icon.set('print', __webpack_require__(22860));
 config_1.Config.prototype.controls.print = {
     exec: function (editor) {
         var iframe = editor.create.element('iframe');
@@ -33277,12 +33292,12 @@ config_1.Config.prototype.controls.print = {
             }
             else {
                 myWindow.document.write('<!doctype html><html lang="' +
-                    (0, helpers_1.defaultLanguage)(editor.o.language) +
+                    (0, default_language_1.defaultLanguage)(editor.o.language) +
                     '"><head><title></title></head><style>' +
                     (0, generate_critical_css_1.generateCriticalCSS)(editor) +
                     '</style><body></body></html>');
                 myWindow.document.close();
-                (0, helpers_2.previewBox)(editor, undefined, 'px', myWindow.document.body);
+                (0, print_1.previewBox)(editor, undefined, 'px', myWindow.document.body);
             }
             var style = myWindow.document.createElement('style');
             style.innerHTML = "@media print {\n\t\t\t\t\tbody {\n\t\t\t\t\t\t\t-webkit-print-color-adjust: exact;\n\t\t\t\t\t}\n\t\t\t}";
@@ -33300,6 +33315,7 @@ function print(editor) {
     });
 }
 exports.print = print;
+global_2.pluginSystem.add('print', print);
 
 
 /***/ }),
@@ -33319,7 +33335,10 @@ exports.redoUndo = void 0;
 var tslib_1 = __webpack_require__(20255);
 var config_1 = __webpack_require__(27537);
 var consts = __webpack_require__(10063);
-var plugin_1 = __webpack_require__(35570);
+var plugin_1 = __webpack_require__(73177);
+var global_1 = __webpack_require__(58299);
+var icon_1 = __webpack_require__(76381);
+icon_1.Icon.set('redo', __webpack_require__(95600)).set('undo', __webpack_require__(76214));
 config_1.Config.prototype.controls.redo = {
     mode: consts.MODE_SPLIT,
     isDisabled: function (editor) { return !editor.history.canRedo(); },
@@ -33365,6 +33384,431 @@ var redoUndo = (function (_super) {
     return redoUndo;
 }(plugin_1.Plugin));
 exports.redoUndo = redoUndo;
+global_1.pluginSystem.add('redoUndo', redoUndo);
+
+
+/***/ }),
+
+/***/ 35477:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+config_1.Config.prototype.tableAllowCellResize = true;
+
+
+/***/ }),
+
+/***/ 1951:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.resizeCells = void 0;
+var tslib_1 = __webpack_require__(20255);
+__webpack_require__(47818);
+var consts = __webpack_require__(10063);
+var modules_1 = __webpack_require__(46701);
+var helpers_1 = __webpack_require__(92654);
+var decorators_1 = __webpack_require__(9901);
+var dom_1 = __webpack_require__(43887);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(35477);
+var key = 'table_processor_observer-resize';
+var resizeCells = (function (_super) {
+    tslib_1.__extends(resizeCells, _super);
+    function resizeCells() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.selectMode = false;
+        _this.resizeDelta = 0;
+        _this.createResizeHandle = function () {
+            if (!_this.resizeHandler) {
+                _this.resizeHandler = _this.j.c.div('jodit-table-resizer');
+                _this.j.e
+                    .on(_this.resizeHandler, 'mousedown.table touchstart.table', _this.onHandleMouseDown)
+                    .on(_this.resizeHandler, 'mouseenter.table', function () {
+                    _this.j.async.clearTimeout(_this.hideTimeout);
+                });
+            }
+        };
+        _this.hideTimeout = 0;
+        _this.drag = false;
+        _this.minX = 0;
+        _this.maxX = 0;
+        _this.startX = 0;
+        return _this;
+    }
+    Object.defineProperty(resizeCells.prototype, "module", {
+        get: function () {
+            return this.j.getInstance('Table', this.j.o);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(resizeCells.prototype, "isRTL", {
+        get: function () {
+            return this.j.o.direction === 'rtl';
+        },
+        enumerable: false,
+        configurable: true
+    });
+    resizeCells.prototype.showResizeHandle = function () {
+        this.j.async.clearTimeout(this.hideTimeout);
+        this.j.workplace.appendChild(this.resizeHandler);
+    };
+    resizeCells.prototype.hideResizeHandle = function () {
+        var _this = this;
+        this.hideTimeout = this.j.async.setTimeout(function () {
+            dom_1.Dom.safeRemove(_this.resizeHandler);
+        }, {
+            timeout: this.j.defaultTimeout,
+            label: 'hideResizer'
+        });
+    };
+    resizeCells.prototype.onHandleMouseDown = function (event) {
+        var _this = this;
+        if (this.j.isLocked) {
+            return;
+        }
+        this.drag = true;
+        this.j.e
+            .on(this.j.ow, 'mouseup.resize-cells touchend.resize-cells', this.onMouseUp)
+            .on(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
+        this.startX = event.clientX;
+        this.j.lock(key);
+        this.resizeHandler.classList.add('jodit-table-resizer_moved');
+        var box, tableBox = this.workTable.getBoundingClientRect();
+        this.minX = 0;
+        this.maxX = 1000000;
+        if (this.wholeTable != null) {
+            tableBox = this.workTable.parentNode.getBoundingClientRect();
+            this.minX = tableBox.left;
+            this.maxX = this.minX + tableBox.width;
+        }
+        else {
+            var coordinate_1 = modules_1.Table.formalCoordinate(this.workTable, this.workCell, true);
+            modules_1.Table.formalMatrix(this.workTable, function (td, i, j) {
+                if (coordinate_1[1] === j) {
+                    box = td.getBoundingClientRect();
+                    _this.minX = Math.max(box.left + consts.NEARBY / 2, _this.minX);
+                }
+                if (coordinate_1[1] + (_this.isRTL ? -1 : 1) === j) {
+                    box = td.getBoundingClientRect();
+                    _this.maxX = Math.min(box.left + box.width - consts.NEARBY / 2, _this.maxX);
+                }
+            });
+        }
+        return false;
+    };
+    resizeCells.prototype.onMouseMove = function (event) {
+        if (!this.drag) {
+            return;
+        }
+        this.j.e.fire('closeAllPopups');
+        var x = event.clientX;
+        var workplacePosition = (0, helpers_1.offset)((this.resizeHandler.parentNode ||
+            this.j.od.documentElement), this.j, this.j.od, true);
+        if (x < this.minX) {
+            x = this.minX;
+        }
+        if (x > this.maxX) {
+            x = this.maxX;
+        }
+        this.resizeDelta =
+            x - this.startX + (!this.j.o.iframe ? 0 : workplacePosition.left);
+        this.resizeHandler.style.left =
+            x - (this.j.o.iframe ? 0 : workplacePosition.left) + 'px';
+        var sel = this.j.s.sel;
+        sel && sel.removeAllRanges();
+    };
+    resizeCells.prototype.onMouseUp = function (e) {
+        if (this.selectMode || this.drag) {
+            this.selectMode = false;
+            this.j.unlock();
+        }
+        if (!this.resizeHandler || !this.drag) {
+            return;
+        }
+        this.drag = false;
+        this.j.e.off(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
+        this.resizeHandler.classList.remove('jodit-table-resizer_moved');
+        if (this.startX !== e.clientX) {
+            if (this.wholeTable == null) {
+                this.resizeColumns();
+            }
+            else {
+                this.resizeTable();
+            }
+        }
+        this.j.synchronizeValues();
+        this.j.s.focus();
+    };
+    resizeCells.prototype.resizeColumns = function () {
+        var delta = this.resizeDelta;
+        var marked = [];
+        modules_1.Table.setColumnWidthByDelta(this.workTable, modules_1.Table.formalCoordinate(this.workTable, this.workCell, true)[1], delta, true, marked);
+        var nextTD = (0, helpers_1.call)(this.isRTL ? dom_1.Dom.prev : dom_1.Dom.next, this.workCell, dom_1.Dom.isCell, this.workCell.parentNode);
+        modules_1.Table.setColumnWidthByDelta(this.workTable, modules_1.Table.formalCoordinate(this.workTable, nextTD)[1], -delta, false, marked);
+    };
+    resizeCells.prototype.resizeTable = function () {
+        var delta = this.resizeDelta * (this.isRTL ? -1 : 1);
+        var width = this.workTable.offsetWidth, parentWidth = (0, helpers_1.getContentWidth)(this.workTable.parentNode, this.j.ew);
+        var rightSide = !this.wholeTable;
+        var needChangeWidth = this.isRTL ? !rightSide : rightSide;
+        if (needChangeWidth) {
+            this.workTable.style.width =
+                ((width + delta) / parentWidth) * 100 + '%';
+        }
+        else {
+            var side = this.isRTL ? 'marginRight' : 'marginLeft';
+            var margin = parseInt(this.j.ew.getComputedStyle(this.workTable)[side] || '0', 10);
+            this.workTable.style.width =
+                ((width - delta) / parentWidth) * 100 + '%';
+            this.workTable.style[side] =
+                ((margin + delta) / parentWidth) * 100 + '%';
+        }
+    };
+    resizeCells.prototype.setWorkCell = function (cell, wholeTable) {
+        if (wholeTable === void 0) { wholeTable = null; }
+        this.wholeTable = wholeTable;
+        this.workCell = cell;
+        this.workTable = dom_1.Dom.up(cell, function (elm) { return dom_1.Dom.isTag(elm, 'table'); }, this.j.editor);
+    };
+    resizeCells.prototype.calcHandlePosition = function (table, cell, offsetX, delta) {
+        if (offsetX === void 0) { offsetX = 0; }
+        if (delta === void 0) { delta = 0; }
+        var box = (0, helpers_1.offset)(cell, this.j, this.j.ed);
+        if (offsetX > consts.NEARBY && offsetX < box.width - consts.NEARBY) {
+            this.hideResizeHandle();
+            return;
+        }
+        var workplacePosition = (0, helpers_1.offset)(this.j.workplace, this.j, this.j.od, true), parentBox = (0, helpers_1.offset)(table, this.j, this.j.ed);
+        this.resizeHandler.style.left =
+            (offsetX <= consts.NEARBY ? box.left : box.left + box.width) -
+                workplacePosition.left +
+                delta +
+                'px';
+        Object.assign(this.resizeHandler.style, {
+            height: parentBox.height + 'px',
+            top: parentBox.top - workplacePosition.top + 'px'
+        });
+        this.showResizeHandle();
+        if (offsetX <= consts.NEARBY) {
+            var prevTD = (0, helpers_1.call)(this.isRTL ? dom_1.Dom.next : dom_1.Dom.prev, cell, dom_1.Dom.isCell, cell.parentNode);
+            this.setWorkCell(prevTD || cell, prevTD ? null : true);
+        }
+        else {
+            var nextTD = (0, helpers_1.call)(!this.isRTL ? dom_1.Dom.next : dom_1.Dom.prev, cell, dom_1.Dom.isCell, cell.parentNode);
+            this.setWorkCell(cell, !nextTD ? false : null);
+        }
+    };
+    resizeCells.prototype.afterInit = function (editor) {
+        var _this = this;
+        if (!editor.o.tableAllowCellResize) {
+            return;
+        }
+        editor.e
+            .off(this.j.ow, '.resize-cells')
+            .off('.resize-cells')
+            .on('change.resize-cells afterCommand.resize-cells afterSetMode.resize-cells', function () {
+            (0, helpers_1.$$)('table', editor.editor).forEach(_this.observe);
+        })
+            .on(this.j.ow, 'scroll.resize-cells', function () {
+            if (!_this.drag) {
+                return;
+            }
+            var parent = dom_1.Dom.up(_this.workCell, function (elm) { return dom_1.Dom.isTag(elm, 'table'); }, editor.editor);
+            if (parent) {
+                var parentBox = parent.getBoundingClientRect();
+                _this.resizeHandler.style.top = parentBox.top + 'px';
+            }
+        })
+            .on('beforeSetMode.resize-cells', function () {
+            _this.module.getAllSelectedCells().forEach(function (td) {
+                _this.module.removeSelection(td);
+                modules_1.Table.normalizeTable(dom_1.Dom.closest(td, 'table', editor.editor));
+            });
+        });
+    };
+    resizeCells.prototype.observe = function (table) {
+        var _this = this;
+        if ((0, helpers_1.dataBind)(table, key)) {
+            return;
+        }
+        (0, helpers_1.dataBind)(table, key, true);
+        this.j.e
+            .on(table, 'mouseleave.resize-cells', function (e) {
+            if (_this.resizeHandler &&
+                _this.resizeHandler !== e.relatedTarget) {
+                _this.hideResizeHandle();
+            }
+        })
+            .on(table, 'mousemove.resize-cells touchmove.resize-cells', this.j.async.throttle(function (event) {
+            if (_this.j.isLocked) {
+                return;
+            }
+            var cell = dom_1.Dom.up(event.target, dom_1.Dom.isCell, table);
+            if (!cell) {
+                return;
+            }
+            _this.calcHandlePosition(table, cell, event.offsetX);
+        }, {
+            timeout: this.j.defaultTimeout
+        }));
+        this.createResizeHandle();
+    };
+    resizeCells.prototype.beforeDestruct = function (jodit) {
+        if (jodit.events) {
+            jodit.e.off(this.j.ow, '.resize-cells');
+            jodit.e.off('.resize-cells');
+        }
+    };
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizeCells.prototype, "onHandleMouseDown", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizeCells.prototype, "onMouseMove", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizeCells.prototype, "onMouseUp", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizeCells.prototype, "observe", null);
+    return resizeCells;
+}(modules_1.Plugin));
+exports.resizeCells = resizeCells;
+global_1.pluginSystem.add('resizeCells', resizeCells);
+
+
+/***/ }),
+
+/***/ 60991:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+config_1.Config.prototype.allowResizeX = false;
+config_1.Config.prototype.allowResizeY = true;
+
+
+/***/ }),
+
+/***/ 67757:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.resizeHandler = void 0;
+var tslib_1 = __webpack_require__(20255);
+var plugin_1 = __webpack_require__(35570);
+var dom_1 = __webpack_require__(94522);
+var decorators_1 = __webpack_require__(9901);
+var ui_1 = __webpack_require__(14153);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(60991);
+var resizeHandler = (function (_super) {
+    tslib_1.__extends(resizeHandler, _super);
+    function resizeHandler() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.isResized = false;
+        _this.start = {
+            x: 0,
+            y: 0,
+            w: 0,
+            h: 0
+        };
+        _this.handle = _this.j.c.div('jodit-editor__resize', ui_1.Icon.get('resize_handler'));
+        return _this;
+    }
+    resizeHandler.prototype.afterInit = function (editor) {
+        var _this = this;
+        var _a = editor.o, height = _a.height, width = _a.width, allowResizeX = _a.allowResizeX;
+        var allowResizeY = editor.o.allowResizeY;
+        if (height === 'auto' && width !== 'auto') {
+            allowResizeY = false;
+        }
+        if ((height !== 'auto' || width !== 'auto') &&
+            (allowResizeX || allowResizeY)) {
+            editor.statusbar.setMod('resize-handle', true);
+            editor.e
+                .on('toggleFullSize.resizeHandler', function () {
+                _this.handle.style.display = editor.isFullSize
+                    ? 'none'
+                    : 'block';
+            })
+                .on(this.handle, 'mousedown touchstart', this.onHandleResizeStart)
+                .on(editor.ow, 'mouseup touchend', this.onHandleResizeEnd);
+            editor.container.appendChild(this.handle);
+        }
+    };
+    resizeHandler.prototype.onHandleResizeStart = function (e) {
+        this.isResized = true;
+        this.start.x = e.clientX;
+        this.start.y = e.clientY;
+        this.start.w = this.j.container.offsetWidth;
+        this.start.h = this.j.container.offsetHeight;
+        this.j.lock();
+        this.j.e.on(this.j.ow, 'mousemove touchmove', this.onHandleResize);
+        e.preventDefault();
+    };
+    resizeHandler.prototype.onHandleResize = function (e) {
+        if (!this.isResized) {
+            return;
+        }
+        if (this.j.o.allowResizeY) {
+            this.j.e.fire('setHeight', this.start.h + e.clientY - this.start.y);
+        }
+        if (this.j.o.allowResizeX) {
+            this.j.e.fire('setWidth', this.start.w + e.clientX - this.start.x);
+        }
+        this.j.e.fire('resize');
+    };
+    resizeHandler.prototype.onHandleResizeEnd = function () {
+        if (this.isResized) {
+            this.isResized = false;
+            this.j.e.off(this.j.ow, 'mousemove touchmove', this.onHandleResize);
+            this.j.unlock();
+        }
+    };
+    resizeHandler.prototype.beforeDestruct = function () {
+        dom_1.Dom.safeRemove(this.handle);
+        this.j.e.off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);
+    };
+    resizeHandler.requires = ['size'];
+    resizeHandler = tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizeHandler);
+    return resizeHandler;
+}(plugin_1.Plugin));
+exports.resizeHandler = resizeHandler;
+global_1.pluginSystem.add('resizeHandler', resizeHandler);
 
 
 /***/ }),
@@ -33410,11 +33854,12 @@ var tslib_1 = __webpack_require__(20255);
 __webpack_require__(6316);
 var consts = __webpack_require__(10063);
 var constants_1 = __webpack_require__(10063);
-var dom_1 = __webpack_require__(94522);
+var dom_1 = __webpack_require__(43887);
 var helpers_1 = __webpack_require__(92654);
-var plugin_1 = __webpack_require__(35570);
+var plugin_1 = __webpack_require__(73177);
 var global_1 = __webpack_require__(58299);
 var decorators_1 = __webpack_require__(9901);
+var global_2 = __webpack_require__(58299);
 __webpack_require__(43087);
 var keyBInd = '__jodit-resizer_binded';
 var resizer = (function (_super) {
@@ -33831,6 +34276,7 @@ var resizer = (function (_super) {
     return resizer;
 }(plugin_1.Plugin));
 exports.resizer = resizer;
+global_2.pluginSystem.add('resizer', resizer);
 
 
 /***/ }),
@@ -33847,10 +34293,12 @@ exports.resizer = resizer;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.useSearch = true;
 config_1.Config.prototype.search = {
     lazyIdleTimeout: 0
 };
+icon_1.Icon.set('search', __webpack_require__(41197));
 config_1.Config.prototype.controls.find = {
     tooltip: 'Find',
     icon: 'search',
@@ -34103,10 +34551,11 @@ var tslib_1 = __webpack_require__(20255);
 var dom_1 = __webpack_require__(94522);
 var plugin_1 = __webpack_require__(35570);
 var decorators_1 = __webpack_require__(9901);
-var helpers_1 = __webpack_require__(81023);
 var search_1 = __webpack_require__(21292);
+var helpers_1 = __webpack_require__(92654);
+var global_1 = __webpack_require__(58299);
+var helpers_2 = __webpack_require__(81023);
 __webpack_require__(65623);
-var helpers_2 = __webpack_require__(92654);
 var search = (function (_super) {
     tslib_1.__extends(search, _super);
     function search() {
@@ -34133,7 +34582,7 @@ var search = (function (_super) {
         configurable: true
     });
     search.prototype.updateCounters = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var _a;
             return tslib_1.__generator(this, function (_b) {
                 switch (_b.label) {
@@ -34161,10 +34610,10 @@ var search = (function (_super) {
         }
         parentBox &&
             parentBox !== this.j.editor &&
-            (0, helpers_2.scrollIntoViewIfNeeded)(parentBox, this.j.editor, this.j.ed);
+            (0, helpers_1.scrollIntoViewIfNeeded)(parentBox, this.j.editor, this.j.ed);
     };
     search.prototype.calcCounts = function (query) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var result;
             return tslib_1.__generator(this, function (_a) {
                 switch (_a.label) {
@@ -34184,7 +34633,7 @@ var search = (function (_super) {
         });
     };
     search.prototype.findAndReplace = function (query) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var range, bounds, currentIndex, bound, rng, textNode;
             return tslib_1.__generator(this, function (_a) {
                 switch (_a.label) {
@@ -34228,7 +34677,7 @@ var search = (function (_super) {
     };
     search.prototype.findAndSelect = function (query, next) {
         var _a;
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var bounds, currentIndex, bound, rng;
             return tslib_1.__generator(this, function (_b) {
                 switch (_b.label) {
@@ -34246,10 +34695,10 @@ var search = (function (_super) {
                             return [2, false];
                         }
                         if (this.previousQuery !== query ||
-                            !(0, helpers_1.getSelectionWrappers)(this.j.editor).length) {
+                            !(0, helpers_2.getSelectionWrappers)(this.j.editor).length) {
                             (_a = this.drawPromise) === null || _a === void 0 ? void 0 : _a.rejectCallback();
                             this.j.async.cancelAnimationFrame(this.wrapFrameRequest);
-                            (0, helpers_1.clearSelectionWrappers)(this.j.editor);
+                            (0, helpers_2.clearSelectionWrappers)(this.j.editor);
                             this.drawPromise = this.drawSelectionRanges(bounds);
                         }
                         this.previousQuery = query;
@@ -34298,7 +34747,7 @@ var search = (function (_super) {
         });
     };
     search.prototype.isValidCache = function (promise) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var res;
             return tslib_1.__generator(this, function (_a) {
                 switch (_a.label) {
@@ -34317,7 +34766,7 @@ var search = (function (_super) {
         });
     };
     search.prototype.find = function (walker, query) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var cache, _a, sentence;
             var _this = this;
             return tslib_1.__generator(this, function (_b) {
@@ -34337,7 +34786,7 @@ var search = (function (_super) {
                         if (_a) {
                             return [2, cache];
                         }
-                        sentence = new helpers_1.SentenceFinder(this.j.o.search.fuzzySearch);
+                        sentence = new helpers_2.SentenceFinder(this.j.o.search.fuzzySearch);
                         this.cache[query] = this.j.async.promise(function (resolve) {
                             walker
                                 .on('break', function () {
@@ -34371,7 +34820,7 @@ var search = (function (_super) {
                 do {
                     sRange = parts.shift();
                     if (sRange) {
-                        (0, helpers_1.wrapRangesTextsInTmpSpan)(sRange, parts, ci, editor);
+                        (0, helpers_2.wrapRangesTextsInTmpSpan)(sRange, parts, ci, editor);
                     }
                     total += 1;
                 } while (sRange && total <= 5);
@@ -34387,7 +34836,7 @@ var search = (function (_super) {
         });
     };
     search.prototype.onAfterGetValueFromEditor = function (data) {
-        data.value = (0, helpers_1.clearSelectionWrappersFromHTML)(data.value);
+        data.value = (0, helpers_2.clearSelectionWrappersFromHTML)(data.value);
     };
     search.prototype.afterInit = function (editor) {
         var _this = this;
@@ -34398,14 +34847,14 @@ var search = (function (_super) {
                 _this.ui.close();
             })
                 .on(this.ui, 'afterClose', function () {
-                (0, helpers_1.clearSelectionWrappers)(editor.editor);
+                (0, helpers_2.clearSelectionWrappers)(editor.editor);
                 _this.ui.currentIndex = 0;
                 _this.ui.count = 0;
                 _this.cache = {};
             })
                 .on('click', function () {
                 _this.ui.currentIndex = 0;
-                (0, helpers_1.clearSelectionWrappers)(editor.editor);
+                (0, helpers_2.clearSelectionWrappers)(editor.editor);
             })
                 .on('change.search', function () {
                 _this.cache = {};
@@ -34489,6 +34938,7 @@ var search = (function (_super) {
     return search;
 }(plugin_1.Plugin));
 exports.search = search;
+global_1.pluginSystem.add('search', search);
 
 
 /***/ }),
@@ -34506,7 +34956,7 @@ exports.search = search;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UISearch = void 0;
 var tslib_1 = __webpack_require__(20255);
-__webpack_require__(22860);
+__webpack_require__(88582);
 var ui_1 = __webpack_require__(14153);
 var helpers_1 = __webpack_require__(92654);
 var constants_1 = __webpack_require__(10063);
@@ -34701,6 +35151,332 @@ exports.UISearch = UISearch;
 
 /***/ }),
 
+/***/ 62388:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+config_1.Config.prototype.tableAllowCellSelection = true;
+
+
+/***/ }),
+
+/***/ 95571:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.selectCells = void 0;
+var tslib_1 = __webpack_require__(20255);
+var plugin_1 = __webpack_require__(35570);
+var modules_1 = __webpack_require__(46701);
+var dom_1 = __webpack_require__(43887);
+var helpers_1 = __webpack_require__(92654);
+var constants_1 = __webpack_require__(10063);
+var decorators_1 = __webpack_require__(9901);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(62388);
+var key = 'table_processor_observer';
+var MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
+var selectCells = (function (_super) {
+    tslib_1.__extends(selectCells, _super);
+    function selectCells() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.requires = ['select'];
+        _this.selectedCell = null;
+        _this.isSelectionMode = false;
+        return _this;
+    }
+    Object.defineProperty(selectCells.prototype, "module", {
+        get: function () {
+            return this.j.getInstance('Table', this.j.o);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    selectCells.prototype.afterInit = function (jodit) {
+        var _this = this;
+        if (!jodit.o.tableAllowCellSelection) {
+            return;
+        }
+        jodit.e
+            .on('keydown.select-cells', function (event) {
+            if (event.key === constants_1.KEY_TAB) {
+                _this.unselectCells();
+            }
+        })
+            .on('beforeCommand.select-cells', this.onExecCommand)
+            .on('afterCommand.select-cells', this.onAfterCommand)
+            .on([
+            'clickEditor',
+            'mousedownTd',
+            'mousedownTh',
+            'touchstartTd',
+            'touchstartTh'
+        ]
+            .map(function (e) { return e + '.select-cells'; })
+            .join(' '), this.onStartSelection)
+            .on('clickTr clickTbody', function () {
+            var _a;
+            var cellsCount = _this.module.getAllSelectedCells().length;
+            if (cellsCount) {
+                if (cellsCount > 1) {
+                    (_a = _this.j.s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
+                }
+                return false;
+            }
+        });
+    };
+    selectCells.prototype.onStartSelection = function (cell) {
+        if (this.j.o.readonly) {
+            return;
+        }
+        this.unselectCells();
+        if (cell === this.j.editor) {
+            return;
+        }
+        var table = dom_1.Dom.closest(cell, 'table', this.j.editor);
+        if (!cell || !table) {
+            return;
+        }
+        if (!cell.firstChild) {
+            cell.appendChild(this.j.createInside.element('br'));
+        }
+        this.isSelectionMode = true;
+        this.selectedCell = cell;
+        this.module.addSelection(cell);
+        this.j.e
+            .on(table, 'mousemove.select-cells touchmove.select-cells', this.j.async.throttle(this.onMove.bind(this, table), {
+            label: MOUSE_MOVE_LABEL,
+            timeout: this.j.defaultTimeout / 2
+        }))
+            .on(table, 'mouseup.select-cells touchend.select-cells', this.onStopSelection.bind(this, table));
+        return false;
+    };
+    selectCells.prototype.onOutsideClick = function () {
+        this.selectedCell = null;
+        this.onRemoveSelection();
+    };
+    selectCells.prototype.onChange = function () {
+        if (!this.j.isLocked && !this.isSelectionMode) {
+            this.onRemoveSelection();
+        }
+    };
+    selectCells.prototype.onMove = function (table, e) {
+        var _this = this;
+        var _a;
+        if (this.j.o.readonly && !this.j.isLocked) {
+            return;
+        }
+        if (this.j.isLockedNotBy(key)) {
+            return;
+        }
+        var node = this.j.ed.elementFromPoint(e.clientX, e.clientY);
+        if (!node) {
+            return;
+        }
+        var cell = dom_1.Dom.closest(node, ['td', 'th'], table);
+        if (!cell || !this.selectedCell) {
+            return;
+        }
+        if (cell !== this.selectedCell) {
+            this.j.lock(key);
+        }
+        this.unselectCells();
+        var bound = modules_1.Table.getSelectedBound(table, [cell, this.selectedCell]), box = modules_1.Table.formalMatrix(table);
+        for (var i = bound[0][0]; i <= bound[1][0]; i += 1) {
+            for (var j = bound[0][1]; j <= bound[1][1]; j += 1) {
+                this.module.addSelection(box[i][j]);
+            }
+        }
+        var cellsCount = this.module.getAllSelectedCells().length;
+        if (cellsCount > 1) {
+            (_a = this.j.s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
+        }
+        this.j.e.fire('hidePopup');
+        e.stopPropagation();
+        (function () {
+            var n = _this.j.createInside.fromHTML('<div style="color:rgba(0,0,0,0.01);width:0;height:0">&nbsp;</div>');
+            cell.appendChild(n);
+            _this.j.async.setTimeout(function () {
+                var _a;
+                (_a = n.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(n);
+            }, _this.j.defaultTimeout / 5);
+        })();
+    };
+    selectCells.prototype.onRemoveSelection = function (e) {
+        var _a;
+        if (!((_a = e === null || e === void 0 ? void 0 : e.buffer) === null || _a === void 0 ? void 0 : _a.actionTrigger) &&
+            !this.selectedCell &&
+            this.module.getAllSelectedCells().length) {
+            this.j.unlock();
+            this.unselectCells();
+            this.j.e.fire('hidePopup', 'cells');
+            return;
+        }
+        this.isSelectionMode = false;
+        this.selectedCell = null;
+    };
+    selectCells.prototype.onStopSelection = function (table, e) {
+        var _this = this;
+        if (!this.selectedCell) {
+            return;
+        }
+        this.isSelectionMode = false;
+        this.j.unlock();
+        var node = this.j.ed.elementFromPoint(e.clientX, e.clientY);
+        if (!node) {
+            return;
+        }
+        var cell = dom_1.Dom.closest(node, ['td', 'th'], table);
+        if (!cell) {
+            return;
+        }
+        var ownTable = dom_1.Dom.closest(cell, 'table', table);
+        if (ownTable && ownTable !== table) {
+            return;
+        }
+        var bound = modules_1.Table.getSelectedBound(table, [cell, this.selectedCell]), box = modules_1.Table.formalMatrix(table);
+        var max = box[bound[1][0]][bound[1][1]], min = box[bound[0][0]][bound[0][1]];
+        this.j.e.fire('showPopup', table, function () {
+            var minOffset = (0, helpers_1.position)(min, _this.j), maxOffset = (0, helpers_1.position)(max, _this.j);
+            return {
+                left: minOffset.left,
+                top: minOffset.top,
+                width: maxOffset.left - minOffset.left + maxOffset.width,
+                height: maxOffset.top - minOffset.top + maxOffset.height
+            };
+        }, 'cells');
+        (0, helpers_1.$$)('table', this.j.editor).forEach(function (table) {
+            _this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells');
+        });
+        this.j.async.clearTimeout(MOUSE_MOVE_LABEL);
+    };
+    selectCells.prototype.unselectCells = function (currentCell) {
+        var module = this.module;
+        var cells = module.getAllSelectedCells();
+        if (cells.length) {
+            cells.forEach(function (cell) {
+                if (!currentCell || currentCell !== cell) {
+                    module.removeSelection(cell);
+                }
+            });
+        }
+    };
+    selectCells.prototype.onExecCommand = function (command) {
+        if (/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(command)) {
+            command = command.replace('table', '');
+            var cells = this.module.getAllSelectedCells();
+            if (cells.length) {
+                var _a = tslib_1.__read(cells, 1), cell = _a[0];
+                if (!cell) {
+                    return;
+                }
+                var table_1 = dom_1.Dom.closest(cell, 'table', this.j.editor);
+                if (!table_1) {
+                    return;
+                }
+                switch (command) {
+                    case 'splitv':
+                        modules_1.Table.splitVertical(table_1, this.j);
+                        break;
+                    case 'splitg':
+                        modules_1.Table.splitHorizontal(table_1, this.j);
+                        break;
+                    case 'merge':
+                        modules_1.Table.mergeSelected(table_1, this.j);
+                        break;
+                    case 'empty':
+                        cells.forEach(function (td) { return dom_1.Dom.detach(td); });
+                        break;
+                    case 'bin':
+                        dom_1.Dom.safeRemove(table_1);
+                        break;
+                    case 'binrow':
+                        new Set(cells.map(function (td) { return td.parentNode; })).forEach(function (row) {
+                            modules_1.Table.removeRow(table_1, row.rowIndex);
+                        });
+                        break;
+                    case 'bincolumn':
+                        {
+                            var columnsSet_1 = new Set(), columns = cells.reduce(function (acc, td) {
+                                if (!columnsSet_1.has(td.cellIndex)) {
+                                    acc.push(td);
+                                    columnsSet_1.add(td.cellIndex);
+                                }
+                                return acc;
+                            }, []);
+                            columns.forEach(function (td) {
+                                modules_1.Table.removeColumn(table_1, td.cellIndex);
+                            });
+                        }
+                        break;
+                    case 'addcolumnafter':
+                    case 'addcolumnbefore':
+                        modules_1.Table.appendColumn(table_1, cell.cellIndex, command === 'addcolumnafter', this.j.createInside);
+                        break;
+                    case 'addrowafter':
+                    case 'addrowbefore':
+                        modules_1.Table.appendRow(table_1, cell.parentNode, command === 'addrowafter', this.j.createInside);
+                        break;
+                }
+            }
+            return false;
+        }
+    };
+    selectCells.prototype.onAfterCommand = function (command) {
+        if (/^justify/.test(command)) {
+            this.module
+                .getAllSelectedCells()
+                .forEach(function (elm) { return (0, helpers_1.alignElement)(command, elm); });
+        }
+    };
+    selectCells.prototype.beforeDestruct = function (jodit) {
+        this.onRemoveSelection();
+        jodit.e.off('.select-cells');
+    };
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], selectCells.prototype, "onStartSelection", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)(':outsideClick')
+    ], selectCells.prototype, "onOutsideClick", null);
+    tslib_1.__decorate([
+        (0, decorators_1.watch)(':change')
+    ], selectCells.prototype, "onChange", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], selectCells.prototype, "onRemoveSelection", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], selectCells.prototype, "onStopSelection", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], selectCells.prototype, "onExecCommand", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], selectCells.prototype, "onAfterCommand", null);
+    return selectCells;
+}(plugin_1.Plugin));
+exports.selectCells = selectCells;
+global_1.pluginSystem.add('selectCells', selectCells);
+
+
+/***/ }),
+
 /***/ 83128:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -34736,8 +35512,9 @@ var tslib_1 = __webpack_require__(20255);
 var plugin_1 = __webpack_require__(35570);
 var decorators_1 = __webpack_require__(9901);
 var camel_case_1 = __webpack_require__(23912);
-var dom_1 = __webpack_require__(94522);
+var dom_1 = __webpack_require__(43887);
 var ui_1 = __webpack_require__(14153);
+var global_1 = __webpack_require__(58299);
 __webpack_require__(83128);
 var select = (function (_super) {
     tslib_1.__extends(select, _super);
@@ -34823,6 +35600,7 @@ var select = (function (_super) {
     return select;
 }(plugin_1.Plugin));
 exports.select = select;
+global_1.pluginSystem.add('select', select);
 
 
 /***/ }),
@@ -34839,130 +35617,11 @@ exports.select = select;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
-config_1.Config.prototype.width = 'auto';
 config_1.Config.prototype.minWidth = 200;
 config_1.Config.prototype.maxWidth = '100%';
-config_1.Config.prototype.allowResizeX = false;
-config_1.Config.prototype.allowResizeY = true;
-config_1.Config.prototype.height = 'auto';
 config_1.Config.prototype.minHeight = 200;
 config_1.Config.prototype.maxHeight = 'auto';
 config_1.Config.prototype.saveHeightInStorage = false;
-
-
-/***/ }),
-
-/***/ 43118:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-__webpack_require__(73893);
-tslib_1.__exportStar(__webpack_require__(40857), exports);
-tslib_1.__exportStar(__webpack_require__(41014), exports);
-
-
-/***/ }),
-
-/***/ 40857:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.resizeHandler = void 0;
-var tslib_1 = __webpack_require__(20255);
-var plugin_1 = __webpack_require__(35570);
-var dom_1 = __webpack_require__(94522);
-var decorators_1 = __webpack_require__(9901);
-var ui_1 = __webpack_require__(14153);
-var resizeHandler = (function (_super) {
-    tslib_1.__extends(resizeHandler, _super);
-    function resizeHandler() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.isResized = false;
-        _this.start = {
-            x: 0,
-            y: 0,
-            w: 0,
-            h: 0
-        };
-        _this.handle = _this.j.c.div('jodit-editor__resize', ui_1.Icon.get('resize_handler'));
-        return _this;
-    }
-    resizeHandler.prototype.afterInit = function (editor) {
-        var _this = this;
-        var _a = editor.o, height = _a.height, width = _a.width, allowResizeX = _a.allowResizeX;
-        var allowResizeY = editor.o.allowResizeY;
-        if (height === 'auto' && width !== 'auto') {
-            allowResizeY = false;
-        }
-        if ((height !== 'auto' || width !== 'auto') &&
-            (allowResizeX || allowResizeY)) {
-            editor.statusbar.setMod('resize-handle', true);
-            editor.e
-                .on('toggleFullSize.resizeHandler', function () {
-                _this.handle.style.display = editor.isFullSize
-                    ? 'none'
-                    : 'block';
-            })
-                .on(this.handle, 'mousedown touchstart', this.onHandleResizeStart)
-                .on(editor.ow, 'mouseup touchend', this.onHandleResizeEnd);
-            editor.container.appendChild(this.handle);
-        }
-    };
-    resizeHandler.prototype.onHandleResizeStart = function (e) {
-        this.isResized = true;
-        this.start.x = e.clientX;
-        this.start.y = e.clientY;
-        this.start.w = this.j.container.offsetWidth;
-        this.start.h = this.j.container.offsetHeight;
-        this.j.lock();
-        this.j.e.on(this.j.ow, 'mousemove touchmove', this.onHandleResize);
-        e.preventDefault();
-    };
-    resizeHandler.prototype.onHandleResize = function (e) {
-        if (!this.isResized) {
-            return;
-        }
-        if (this.j.o.allowResizeY) {
-            this.j.e.fire('setHeight', this.start.h + e.clientY - this.start.y);
-        }
-        if (this.j.o.allowResizeX) {
-            this.j.e.fire('setWidth', this.start.w + e.clientX - this.start.x);
-        }
-        this.j.e.fire('resize');
-    };
-    resizeHandler.prototype.onHandleResizeEnd = function () {
-        if (this.isResized) {
-            this.isResized = false;
-            this.j.e.off(this.j.ow, 'mousemove touchmove', this.onHandleResize);
-            this.j.unlock();
-        }
-    };
-    resizeHandler.prototype.beforeDestruct = function () {
-        dom_1.Dom.safeRemove(this.handle);
-        this.j.e.off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);
-    };
-    resizeHandler.requires = ['size'];
-    resizeHandler = tslib_1.__decorate([
-        decorators_1.autobind
-    ], resizeHandler);
-    return resizeHandler;
-}(plugin_1.Plugin));
-exports.resizeHandler = resizeHandler;
 
 
 /***/ }),
@@ -34982,8 +35641,10 @@ exports.size = void 0;
 var tslib_1 = __webpack_require__(20255);
 __webpack_require__(30962);
 var helpers_1 = __webpack_require__(92654);
-var plugin_1 = __webpack_require__(35570);
+var plugin_1 = __webpack_require__(73177);
 var decorators_1 = __webpack_require__(9901);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(73893);
 var size = (function (_super) {
     tslib_1.__extends(size, _super);
     function size() {
@@ -35103,6 +35764,7 @@ var size = (function (_super) {
     return size;
 }(plugin_1.Plugin));
 exports.size = size;
+global_1.pluginSystem.add('size', size);
 
 
 /***/ }),
@@ -35119,8 +35781,8 @@ exports.size = size;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
-var consts = __webpack_require__(10063);
 var constants_1 = __webpack_require__(10063);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.beautifyHTML = !constants_1.IS_IE;
 config_1.Config.prototype.sourceEditor = 'ace';
 config_1.Config.prototype.sourceEditorNativeOptions = {
@@ -35131,39 +35793,23 @@ config_1.Config.prototype.sourceEditorNativeOptions = {
     highlightActiveLine: true
 };
 config_1.Config.prototype.sourceEditorCDNUrlsJS = [
-    'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js'
+    'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js'
 ];
 config_1.Config.prototype.beautifyHTMLCDNUrlsJS = [
-    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.13.0/beautify.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.13.0/beautify-html.min.js'
+    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.4/beautify.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.4/beautify-html.min.js'
 ];
+icon_1.Icon.set('source', __webpack_require__(9342));
 config_1.Config.prototype.controls.source = {
-    mode: consts.MODE_SPLIT,
+    mode: constants_1.MODE_SPLIT,
     exec: function (editor) {
         editor.toggleMode();
     },
     isActive: function (editor) {
-        return editor.getRealMode() === consts.MODE_SOURCE;
+        return editor.getRealMode() === constants_1.MODE_SOURCE;
     },
     tooltip: 'Change mode'
 };
-
-
-/***/ }),
-
-/***/ 848:
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SOURCE_CONSUMER = void 0;
-exports.SOURCE_CONSUMER = 'source-consumer';
 
 
 /***/ }),
@@ -35300,11 +35946,13 @@ var AceEditor = (function (_super) {
         });
         tryInitAceEditor();
         if (!this.aceExists()) {
-            (0, helpers_1.loadNext)(editor, editor.o.sourceEditorCDNUrlsJS).then(function () {
+            (0, helpers_1.loadNext)(editor, editor.o.sourceEditorCDNUrlsJS)
+                .then(function () {
                 if (!editor.isInDestruct) {
                     tryInitAceEditor();
                 }
-            });
+            })
+                .catch(function () { return null; });
         }
     };
     AceEditor.prototype.destruct = function () {
@@ -35404,8 +36052,8 @@ exports.AceEditor = AceEditor;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TextAreaEditor = void 0;
 var tslib_1 = __webpack_require__(20255);
-var helpers_1 = __webpack_require__(92654);
-var modules_1 = __webpack_require__(46701);
+var css_1 = __webpack_require__(56672);
+var dom_1 = __webpack_require__(43887);
 var sourceEditor_1 = __webpack_require__(73350);
 var TextAreaEditor = (function (_super) {
     tslib_1.__extends(TextAreaEditor, _super);
@@ -35426,7 +36074,7 @@ var TextAreaEditor = (function (_super) {
         editor.e
             .on(this.instance, 'mousedown keydown touchstart input', editor.async.debounce(this.toWYSIWYG, editor.defaultTimeout))
             .on('setMinHeight.source', function (minHeightD) {
-            (0, helpers_1.css)(_this.instance, 'minHeight', minHeightD);
+            (0, css_1.css)(_this.instance, 'minHeight', minHeightD);
         })
             .on(this.instance, 'change keydown mousedown touchstart input', this.autosize)
             .on('afterSetMode.source', this.autosize)
@@ -35437,7 +36085,7 @@ var TextAreaEditor = (function (_super) {
         this.onReady();
     };
     TextAreaEditor.prototype.destruct = function () {
-        modules_1.Dom.safeRemove(this.instance);
+        dom_1.Dom.safeRemove(this.instance);
     };
     TextAreaEditor.prototype.getValue = function () {
         return this.instance.value;
@@ -35547,8 +36195,8 @@ tslib_1.__exportStar(__webpack_require__(97969), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createSourceEditor = void 0;
-var engines_1 = __webpack_require__(85910);
 var helpers_1 = __webpack_require__(92654);
+var engines_1 = __webpack_require__(85910);
 function createSourceEditor(type, editor, container, toWYSIWYG, fromWYSIWYG) {
     var sourceEditor;
     if ((0, helpers_1.isFunction)(type)) {
@@ -35625,24 +36273,6 @@ exports.SourceEditor = SourceEditor;
 
 /***/ }),
 
-/***/ 6309:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-__webpack_require__(24090);
-tslib_1.__exportStar(__webpack_require__(35448), exports);
-
-
-/***/ }),
-
 /***/ 35448:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -35660,11 +36290,12 @@ __webpack_require__(68197);
 var consts = __webpack_require__(10063);
 var constants_1 = __webpack_require__(10063);
 var plugin_1 = __webpack_require__(35570);
-var dom_1 = __webpack_require__(94522);
+var dom_1 = __webpack_require__(43887);
 var helpers_1 = __webpack_require__(92654);
-var factory_1 = __webpack_require__(65023);
 var decorators_1 = __webpack_require__(9901);
-var const_1 = __webpack_require__(848);
+var global_1 = __webpack_require__(58299);
+var factory_1 = __webpack_require__(65023);
+__webpack_require__(24090);
 var source = (function (_super) {
     tslib_1.__extends(source, _super);
     function source() {
@@ -35703,7 +36334,7 @@ var source = (function (_super) {
         if (force === void 0) { force = false; }
         if (!this.__lock || force === true) {
             this.__lock = true;
-            var new_value = this.j.getEditorValue(false, const_1.SOURCE_CONSUMER);
+            var new_value = this.j.getEditorValue(false, constants_1.SOURCE_CONSUMER);
             if (new_value !== this.getMirrorValue()) {
                 this.setMirrorValue(new_value);
             }
@@ -35874,7 +36505,7 @@ var source = (function (_super) {
             .on('change.source', this.syncValueFromWYSIWYG)
             .on('beautifyHTML', function (html) { return html; });
         if (editor.o.beautifyHTML) {
-            var addEventListener_1 = function () {
+            var addEventListener = function () {
                 var _a;
                 var html_beautify = editor.ow.html_beautify;
                 if (html_beautify && !editor.isInDestruct) {
@@ -35883,8 +36514,8 @@ var source = (function (_super) {
                 }
                 return false;
             };
-            if (!addEventListener_1()) {
-                (0, helpers_1.loadNext)(editor, editor.o.beautifyHTMLCDNUrlsJS).then(addEventListener_1);
+            if (!addEventListener()) {
+                (0, helpers_1.loadNext)(editor, editor.o.beautifyHTMLCDNUrlsJS).then(addEventListener);
             }
         }
         this.syncValueFromWYSIWYG(true);
@@ -35959,6 +36590,7 @@ var source = (function (_super) {
     return source;
 }(plugin_1.Plugin));
 exports.source = source;
+global_1.pluginSystem.add('source', source);
 
 
 /***/ }),
@@ -35975,7 +36607,9 @@ exports.source = source;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.spellcheck = false;
+icon_1.Icon.set('spellcheck', __webpack_require__(69546));
 config_1.Config.prototype.controls.spellcheck = {
     isActive: function (e) {
         return e.o.spellcheck;
@@ -35983,8 +36617,62 @@ config_1.Config.prototype.controls.spellcheck = {
     icon: __webpack_require__(69546),
     name: 'spellcheck',
     command: 'toggleSpellcheck',
-    tooltip: 'Spellchecking'
+    tooltip: 'Spellcheck'
 };
+
+
+/***/ }),
+
+/***/ 48390:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
+var ar = __webpack_require__(5586);
+exports.ar = ar;
+var cs_cz = __webpack_require__(66023);
+exports.cs_cz = cs_cz;
+var de = __webpack_require__(65860);
+exports.de = de;
+var es = __webpack_require__(86055);
+exports.es = es;
+var fa = __webpack_require__(50037);
+exports.fa = fa;
+var fr = __webpack_require__(7118);
+exports.fr = fr;
+var he = __webpack_require__(30298);
+exports.he = he;
+var hu = __webpack_require__(52107);
+exports.hu = hu;
+var id = __webpack_require__(31240);
+exports.id = id;
+var it = __webpack_require__(4101);
+exports.it = it;
+var ja = __webpack_require__(69286);
+exports.ja = ja;
+var ko = __webpack_require__(13402);
+exports.ko = ko;
+var nl = __webpack_require__(89574);
+exports.nl = nl;
+var pl = __webpack_require__(63630);
+exports.pl = pl;
+var pt_br = __webpack_require__(72212);
+exports.pt_br = pt_br;
+var ru = __webpack_require__(82570);
+exports.ru = ru;
+var tr = __webpack_require__(19323);
+exports.tr = tr;
+var zh_cn = __webpack_require__(50279);
+exports.zh_cn = zh_cn;
+var zh_tw = __webpack_require__(98364);
+exports.zh_tw = zh_tw;
 
 
 /***/ }),
@@ -36005,17 +36693,19 @@ var tslib_1 = __webpack_require__(20255);
 var plugin_1 = __webpack_require__(35570);
 var utils_1 = __webpack_require__(51976);
 var decorators_1 = __webpack_require__(9901);
+var global_1 = __webpack_require__(58299);
 __webpack_require__(24306);
 var spellcheck = (function (_super) {
     tslib_1.__extends(spellcheck, _super);
-    function spellcheck() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    function spellcheck(jodit) {
+        var _this = _super.call(this, jodit) || this;
         _this.buttons = [
             {
                 group: 'state',
                 name: 'spellcheck'
             }
         ];
+        (0, global_1.extendLang)(__webpack_require__(48390));
         return _this;
     }
     spellcheck.prototype.afterInit = function (jodit) {
@@ -36038,6 +36728,26 @@ var spellcheck = (function (_super) {
     return spellcheck;
 }(plugin_1.Plugin));
 exports.spellcheck = spellcheck;
+global_1.pluginSystem.add('spellcheck', spellcheck);
+
+
+/***/ }),
+
+/***/ 48692:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+config_1.Config.prototype.showCharsCounter = true;
+config_1.Config.prototype.countHTMLChars = false;
+config_1.Config.prototype.showWordsCounter = true;
 
 
 /***/ }),
@@ -36055,13 +36765,11 @@ exports.spellcheck = spellcheck;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.stat = void 0;
 var tslib_1 = __webpack_require__(20255);
-var config_1 = __webpack_require__(27537);
 var constants_1 = __webpack_require__(10063);
-var plugin_1 = __webpack_require__(35570);
-var dom_1 = __webpack_require__(94522);
-config_1.Config.prototype.showCharsCounter = true;
-config_1.Config.prototype.countHTMLChars = false;
-config_1.Config.prototype.showWordsCounter = true;
+var plugin_1 = __webpack_require__(73177);
+var dom_1 = __webpack_require__(43887);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(48692);
 var stat = (function (_super) {
     tslib_1.__extends(stat, _super);
     function stat() {
@@ -36111,6 +36819,26 @@ var stat = (function (_super) {
     return stat;
 }(plugin_1.Plugin));
 exports.stat = stat;
+global_1.pluginSystem.add('stat', stat);
+
+
+/***/ }),
+
+/***/ 12577:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+config_1.Config.prototype.toolbarSticky = true;
+config_1.Config.prototype.toolbarDisableStickyForMobile = true;
+config_1.Config.prototype.toolbarStickyOffset = 0;
 
 
 /***/ }),
@@ -36129,14 +36857,13 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sticky = void 0;
 var tslib_1 = __webpack_require__(20255);
 __webpack_require__(60057);
-var config_1 = __webpack_require__(27537);
 var constants_1 = __webpack_require__(10063);
-var modules_1 = __webpack_require__(46701);
+var plugin_1 = __webpack_require__(73177);
+var dom_1 = __webpack_require__(43887);
 var helpers_1 = __webpack_require__(92654);
 var decorators_1 = __webpack_require__(9901);
-config_1.Config.prototype.toolbarSticky = true;
-config_1.Config.prototype.toolbarDisableStickyForMobile = true;
-config_1.Config.prototype.toolbarStickyOffset = 0;
+var global_1 = __webpack_require__(58299);
+__webpack_require__(12577);
 var sticky = (function (_super) {
     tslib_1.__extends(sticky, _super);
     function sticky() {
@@ -36213,7 +36940,7 @@ var sticky = (function (_super) {
             this.j.o.sizeSM >= this.j.container.offsetWidth);
     };
     sticky.prototype.beforeDestruct = function (jodit) {
-        this.dummyBox && modules_1.Dom.safeRemove(this.dummyBox);
+        this.dummyBox && dom_1.Dom.safeRemove(this.dummyBox);
         jodit.e
             .off(jodit.ow, 'scroll.sticky wheel.sticky mousewheel.sticky resize.sticky', this.onScroll)
             .off('.sticky');
@@ -36222,8 +36949,9 @@ var sticky = (function (_super) {
         (0, decorators_1.throttle)()
     ], sticky.prototype, "onScroll", null);
     return sticky;
-}(modules_1.Plugin));
+}(plugin_1.Plugin));
 exports.sticky = sticky;
+global_1.pluginSystem.add('sticky', sticky);
 
 
 /***/ }),
@@ -36241,6 +36969,7 @@ exports.sticky = sticky;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
 var dialog_1 = __webpack_require__(68713);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.usePopupForSpecialCharacters = false;
 config_1.Config.prototype.specialCharacters = [
     '!',
@@ -36454,8 +37183,8 @@ config_1.Config.prototype.specialCharacters = [
     '&diams;',
     '&asymp;'
 ];
-config_1.Config.prototype.controls.symbol = {
-    icon: 'omega',
+icon_1.Icon.set('symbols', __webpack_require__(43158));
+config_1.Config.prototype.controls.symbols = {
     hotkeys: ['ctrl+shift+i', 'cmd+shift+i'],
     tooltip: 'Insert Special Character',
     popup: function (editor, current, control, close) {
@@ -36480,6 +37209,60 @@ config_1.Config.prototype.controls.symbol = {
 
 /***/ }),
 
+/***/ 74604:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
+var ar = __webpack_require__(54261);
+exports.ar = ar;
+var cs_cz = __webpack_require__(60425);
+exports.cs_cz = cs_cz;
+var de = __webpack_require__(7057);
+exports.de = de;
+var es = __webpack_require__(48356);
+exports.es = es;
+var fa = __webpack_require__(11428);
+exports.fa = fa;
+var fr = __webpack_require__(29084);
+exports.fr = fr;
+var he = __webpack_require__(22876);
+exports.he = he;
+var hu = __webpack_require__(20890);
+exports.hu = hu;
+var id = __webpack_require__(75987);
+exports.id = id;
+var it = __webpack_require__(60379);
+exports.it = it;
+var ja = __webpack_require__(99950);
+exports.ja = ja;
+var ko = __webpack_require__(60934);
+exports.ko = ko;
+var nl = __webpack_require__(21994);
+exports.nl = nl;
+var pl = __webpack_require__(38128);
+exports.pl = pl;
+var pt_br = __webpack_require__(71515);
+exports.pt_br = pt_br;
+var ru = __webpack_require__(58194);
+exports.ru = ru;
+var tr = __webpack_require__(65802);
+exports.tr = tr;
+var zh_cn = __webpack_require__(86628);
+exports.zh_cn = zh_cn;
+var zh_tw = __webpack_require__(32210);
+exports.zh_tw = zh_tw;
+
+
+/***/ }),
+
 /***/ 21112:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -36494,21 +37277,24 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.symbols = void 0;
 var tslib_1 = __webpack_require__(20255);
 __webpack_require__(33393);
-__webpack_require__(53012);
 var constants_1 = __webpack_require__(10063);
-var modules_1 = __webpack_require__(46701);
+var plugin_1 = __webpack_require__(73177);
+var dom_1 = __webpack_require__(43887);
 var utils_1 = __webpack_require__(73344);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(53012);
 var symbols = (function (_super) {
     tslib_1.__extends(symbols, _super);
-    function symbols() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    function symbols(jodit) {
+        var _this = _super.call(this, jodit) || this;
         _this.buttons = [
             {
-                name: 'symbol',
+                name: 'symbols',
                 group: 'insert'
             }
         ];
         _this.countInRow = 17;
+        (0, global_1.extendLang)(__webpack_require__(74604));
         return _this;
     }
     symbols.prototype.afterInit = function (jodit) {
@@ -36531,7 +37317,7 @@ var symbols = (function (_super) {
                 preview.innerHTML = this.innerHTML;
             })
                 .on(chars, 'mousedown', function (e) {
-                if (modules_1.Dom.isTag(this, 'a')) {
+                if (dom_1.Dom.isTag(this, 'a')) {
                     jodit.s.focus();
                     jodit.s.insertHTML(this.innerHTML);
                     jodit.e.fire(this, 'close_dialog');
@@ -36540,13 +37326,13 @@ var symbols = (function (_super) {
                 }
             })
                 .on(chars, 'mouseenter', function () {
-                if (modules_1.Dom.isTag(this, 'a')) {
+                if (dom_1.Dom.isTag(this, 'a')) {
                     this.focus();
                 }
             })
                 .on(chars, 'keydown', function (e) {
                 var target = e.target;
-                if (modules_1.Dom.isTag(target, 'a')) {
+                if (dom_1.Dom.isTag(target, 'a')) {
                     var index = parseInt((0, utils_1.attr)(target, '-index') || '0', 10), jIndex = parseInt((0, utils_1.attr)(target, 'data-index-j') || '0', 10);
                     var newIndex = void 0;
                     switch (e.key) {
@@ -36597,8 +37383,261 @@ var symbols = (function (_super) {
         jodit.e.off('generateSpecialCharactersTable.symbols');
     };
     return symbols;
-}(modules_1.Plugin));
+}(plugin_1.Plugin));
 exports.symbols = symbols;
+global_1.pluginSystem.add('symbols', symbols);
+
+
+/***/ }),
+
+/***/ 66110:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(20255);
+tslib_1.__exportStar(__webpack_require__(29228), exports);
+
+
+/***/ }),
+
+/***/ 29228:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.onTabInsideLi = void 0;
+var dom_1 = __webpack_require__(43887);
+function onTabInsideLi(jodit) {
+    if (!jodit.o.tab.tabInsideLiInsertNewList || !jodit.s.isCollapsed()) {
+        return false;
+    }
+    var fake = jodit.createInside.fake();
+    jodit.s.insertNode(fake);
+    var li = dom_1.Dom.closest(fake, 'li', jodit.editor);
+    if (li &&
+        jodit.s.cursorOnTheLeft(li) &&
+        dom_1.Dom.isTag(li.previousElementSibling, 'li')) {
+        var list = dom_1.Dom.closest(li, ['ol', 'ul'], jodit.editor);
+        if (list) {
+            var newList = jodit.createInside.element(list.tagName);
+            var previousLi = li.previousElementSibling;
+            newList.appendChild(li);
+            previousLi.appendChild(newList);
+            jodit.s.setCursorAfter(fake);
+            dom_1.Dom.safeRemove(fake);
+            return true;
+        }
+    }
+    dom_1.Dom.safeRemove(fake);
+    return false;
+}
+exports.onTabInsideLi = onTabInsideLi;
+
+
+/***/ }),
+
+/***/ 56163:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+config_1.Config.prototype.tab = {
+    tabInsideLiInsertNewList: true
+};
+
+
+/***/ }),
+
+/***/ 74212:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(20255);
+var plugin_1 = __webpack_require__(35570);
+var decorators_1 = __webpack_require__(9901);
+var constants_1 = __webpack_require__(10063);
+var global_1 = __webpack_require__(58299);
+var cases_1 = __webpack_require__(66110);
+__webpack_require__(56163);
+var tab = (function (_super) {
+    tslib_1.__extends(tab, _super);
+    function tab() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    tab.prototype.afterInit = function (jodit) { };
+    tab.prototype.onTab = function (event) {
+        if (event.key === constants_1.KEY_TAB && (0, cases_1.onTabInsideLi)(this.j)) {
+            return false;
+        }
+    };
+    tab.prototype.beforeDestruct = function (jodit) { };
+    tslib_1.__decorate([
+        (0, decorators_1.watch)(':keydown.tab')
+    ], tab.prototype, "onTab", null);
+    return tab;
+}(plugin_1.Plugin));
+global_1.pluginSystem.add('tab', tab);
+
+
+/***/ }),
+
+/***/ 96154:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.tableKeyboardNavigation = void 0;
+var consts = __webpack_require__(10063);
+var dom_1 = __webpack_require__(43887);
+var table_1 = __webpack_require__(28314);
+var global_1 = __webpack_require__(58299);
+function tableKeyboardNavigation(editor) {
+    editor.e
+        .off('.tableKeyboardNavigation')
+        .on('keydown.tableKeyboardNavigation', function (event) {
+        var current, block;
+        if (event.key === consts.KEY_TAB ||
+            event.key === consts.KEY_LEFT ||
+            event.key === consts.KEY_RIGHT ||
+            event.key === consts.KEY_UP ||
+            event.key === consts.KEY_DOWN) {
+            current = editor.s.current();
+            block = dom_1.Dom.up(current, function (elm) {
+                return elm &&
+                    elm.nodeName &&
+                    /^td|th$/i.test(elm.nodeName);
+            }, editor.editor);
+            if (!block) {
+                return;
+            }
+            var range = editor.s.range;
+            if (event.key !== consts.KEY_TAB && current !== block) {
+                if (((event.key === consts.KEY_LEFT ||
+                    event.key === consts.KEY_UP) &&
+                    (dom_1.Dom.prev(current, function (elm) {
+                        return event.key === consts.KEY_UP
+                            ? dom_1.Dom.isTag(elm, 'br')
+                            : Boolean(elm);
+                    }, block) ||
+                        (event.key !== consts.KEY_UP &&
+                            dom_1.Dom.isText(current) &&
+                            range.startOffset !== 0))) ||
+                    ((event.key === consts.KEY_RIGHT ||
+                        event.key === consts.KEY_DOWN) &&
+                        (dom_1.Dom.next(current, function (elm) {
+                            return event.key === consts.KEY_DOWN
+                                ? dom_1.Dom.isTag(elm, 'br')
+                                : Boolean(elm);
+                        }, block) ||
+                            (event.key !== consts.KEY_DOWN &&
+                                dom_1.Dom.isText(current) &&
+                                current.nodeValue &&
+                                range.startOffset !==
+                                    current.nodeValue.length)))) {
+                    return;
+                }
+            }
+        }
+        else {
+            return;
+        }
+        var table = dom_1.Dom.up(block, function (elm) { return elm && /^table$/i.test(elm.nodeName); }, editor.editor);
+        var next = null;
+        switch (event.key) {
+            case consts.KEY_TAB:
+            case consts.KEY_LEFT: {
+                var sibling = event.key === consts.KEY_LEFT || event.shiftKey
+                    ? 'prev'
+                    : 'next';
+                next = dom_1.Dom[sibling](block, function (elm) {
+                    return elm &&
+                        /^td|th$/i.test(elm.tagName);
+                }, table);
+                if (!next) {
+                    table_1.Table.appendRow(table, sibling === 'next'
+                        ? false
+                        : table.querySelector('tr'), sibling === 'next', editor.createInside);
+                    next = dom_1.Dom[sibling](block, dom_1.Dom.isCell, table);
+                }
+                break;
+            }
+            case consts.KEY_UP:
+            case consts.KEY_DOWN:
+                {
+                    var i_1 = 0, j_1 = 0;
+                    var matrix = table_1.Table.formalMatrix(table, function (elm, _i, _j) {
+                        if (elm === block) {
+                            i_1 = _i;
+                            j_1 = _j;
+                        }
+                    });
+                    if (event.key === consts.KEY_UP) {
+                        if (matrix[i_1 - 1] !== undefined) {
+                            next = matrix[i_1 - 1][j_1];
+                        }
+                    }
+                    else {
+                        if (matrix[i_1 + 1] !== undefined) {
+                            next = matrix[i_1 + 1][j_1];
+                        }
+                    }
+                }
+                break;
+        }
+        if (next) {
+            if (!next.firstChild) {
+                var first = editor.createInside.element('br');
+                next.appendChild(first);
+                editor.s.setCursorBefore(first);
+            }
+            else {
+                if (event.key === consts.KEY_TAB) {
+                    editor.s.select(next, true);
+                }
+                else {
+                    editor.s.setCursorIn(next, event.key === consts.KEY_RIGHT ||
+                        event.key === consts.KEY_DOWN);
+                }
+            }
+            return false;
+        }
+    });
+}
+exports.tableKeyboardNavigation = tableKeyboardNavigation;
+global_1.pluginSystem.add('tableKeyboardNavigation', tableKeyboardNavigation);
 
 
 /***/ }),
@@ -36618,12 +37657,12 @@ var config_1 = __webpack_require__(27537);
 var dom_1 = __webpack_require__(94522);
 var utils_1 = __webpack_require__(73344);
 var helpers_1 = __webpack_require__(92654);
+var icon_1 = __webpack_require__(76381);
 config_1.Config.prototype.table = {
-    allowCellSelection: true,
     selectionCellStyle: 'border: 1px double #1e88e5 !important;',
-    allowCellResize: true,
     useExtraClassesOptions: false
 };
+icon_1.Icon.set('table', __webpack_require__(51716));
 config_1.Config.prototype.controls.table = {
     data: {
         cols: 10,
@@ -36763,753 +37802,8 @@ config_1.Config.prototype.controls.table = {
 
 /***/ }),
 
-/***/ 74393:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-__webpack_require__(62653);
-tslib_1.__exportStar(__webpack_require__(41139), exports);
-tslib_1.__exportStar(__webpack_require__(15768), exports);
-tslib_1.__exportStar(__webpack_require__(29082), exports);
-tslib_1.__exportStar(__webpack_require__(67122), exports);
-
-
-/***/ }),
-
-/***/ 41139:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.resizeCells = void 0;
-var tslib_1 = __webpack_require__(20255);
-__webpack_require__(51057);
-var consts = __webpack_require__(10063);
-var modules_1 = __webpack_require__(46701);
-var helpers_1 = __webpack_require__(92654);
-var decorators_1 = __webpack_require__(9901);
-var key = 'table_processor_observer-resize';
-var resizeCells = (function (_super) {
-    tslib_1.__extends(resizeCells, _super);
-    function resizeCells() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.selectMode = false;
-        _this.resizeDelta = 0;
-        _this.createResizeHandle = function () {
-            if (!_this.resizeHandler) {
-                _this.resizeHandler = _this.j.c.div('jodit-table-resizer');
-                _this.j.e
-                    .on(_this.resizeHandler, 'mousedown.table touchstart.table', _this.onHandleMouseDown)
-                    .on(_this.resizeHandler, 'mouseenter.table', function () {
-                    _this.j.async.clearTimeout(_this.hideTimeout);
-                });
-            }
-        };
-        _this.hideTimeout = 0;
-        _this.drag = false;
-        _this.minX = 0;
-        _this.maxX = 0;
-        _this.startX = 0;
-        return _this;
-    }
-    Object.defineProperty(resizeCells.prototype, "module", {
-        get: function () {
-            return this.j.getInstance('Table', this.j.o);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(resizeCells.prototype, "isRTL", {
-        get: function () {
-            return this.j.o.direction === 'rtl';
-        },
-        enumerable: false,
-        configurable: true
-    });
-    resizeCells.prototype.showResizeHandle = function () {
-        this.j.async.clearTimeout(this.hideTimeout);
-        this.j.workplace.appendChild(this.resizeHandler);
-    };
-    resizeCells.prototype.hideResizeHandle = function () {
-        var _this = this;
-        this.hideTimeout = this.j.async.setTimeout(function () {
-            modules_1.Dom.safeRemove(_this.resizeHandler);
-        }, {
-            timeout: this.j.defaultTimeout,
-            label: 'hideResizer'
-        });
-    };
-    resizeCells.prototype.onHandleMouseDown = function (event) {
-        var _this = this;
-        if (this.j.isLocked) {
-            return;
-        }
-        this.drag = true;
-        this.j.e
-            .on(this.j.ow, 'mouseup.resize-cells touchend.resize-cells', this.onMouseUp)
-            .on(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
-        this.startX = event.clientX;
-        this.j.lock(key);
-        this.resizeHandler.classList.add('jodit-table-resizer_moved');
-        var box, tableBox = this.workTable.getBoundingClientRect();
-        this.minX = 0;
-        this.maxX = 1000000;
-        if (this.wholeTable != null) {
-            tableBox = this.workTable.parentNode.getBoundingClientRect();
-            this.minX = tableBox.left;
-            this.maxX = this.minX + tableBox.width;
-        }
-        else {
-            var coordinate_1 = modules_1.Table.formalCoordinate(this.workTable, this.workCell, true);
-            modules_1.Table.formalMatrix(this.workTable, function (td, i, j) {
-                if (coordinate_1[1] === j) {
-                    box = td.getBoundingClientRect();
-                    _this.minX = Math.max(box.left + consts.NEARBY / 2, _this.minX);
-                }
-                if (coordinate_1[1] + (_this.isRTL ? -1 : 1) === j) {
-                    box = td.getBoundingClientRect();
-                    _this.maxX = Math.min(box.left + box.width - consts.NEARBY / 2, _this.maxX);
-                }
-            });
-        }
-        return false;
-    };
-    resizeCells.prototype.onMouseMove = function (event) {
-        if (!this.drag) {
-            return;
-        }
-        this.j.e.fire('closeAllPopups');
-        var x = event.clientX;
-        var workplacePosition = (0, helpers_1.offset)((this.resizeHandler.parentNode ||
-            this.j.od.documentElement), this.j, this.j.od, true);
-        if (x < this.minX) {
-            x = this.minX;
-        }
-        if (x > this.maxX) {
-            x = this.maxX;
-        }
-        this.resizeDelta =
-            x - this.startX + (!this.j.o.iframe ? 0 : workplacePosition.left);
-        this.resizeHandler.style.left =
-            x - (this.j.o.iframe ? 0 : workplacePosition.left) + 'px';
-        var sel = this.j.s.sel;
-        sel && sel.removeAllRanges();
-    };
-    resizeCells.prototype.onMouseUp = function (e) {
-        if (this.selectMode || this.drag) {
-            this.selectMode = false;
-            this.j.unlock();
-        }
-        if (!this.resizeHandler || !this.drag) {
-            return;
-        }
-        this.drag = false;
-        this.j.e.off(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
-        this.resizeHandler.classList.remove('jodit-table-resizer_moved');
-        if (this.startX !== e.clientX) {
-            if (this.wholeTable == null) {
-                this.resizeColumns();
-            }
-            else {
-                this.resizeTable();
-            }
-        }
-        this.j.synchronizeValues();
-        this.j.s.focus();
-    };
-    resizeCells.prototype.resizeColumns = function () {
-        var delta = this.resizeDelta;
-        var marked = [];
-        modules_1.Table.setColumnWidthByDelta(this.workTable, modules_1.Table.formalCoordinate(this.workTable, this.workCell, true)[1], delta, true, marked);
-        var nextTD = (0, helpers_1.call)(this.isRTL ? modules_1.Dom.prev : modules_1.Dom.next, this.workCell, modules_1.Dom.isCell, this.workCell.parentNode);
-        modules_1.Table.setColumnWidthByDelta(this.workTable, modules_1.Table.formalCoordinate(this.workTable, nextTD)[1], -delta, false, marked);
-    };
-    resizeCells.prototype.resizeTable = function () {
-        var delta = this.resizeDelta * (this.isRTL ? -1 : 1);
-        var width = this.workTable.offsetWidth, parentWidth = (0, helpers_1.getContentWidth)(this.workTable.parentNode, this.j.ew);
-        var rightSide = !this.wholeTable;
-        var needChangeWidth = this.isRTL ? !rightSide : rightSide;
-        if (needChangeWidth) {
-            this.workTable.style.width =
-                ((width + delta) / parentWidth) * 100 + '%';
-        }
-        else {
-            var side = this.isRTL ? 'marginRight' : 'marginLeft';
-            var margin = parseInt(this.j.ew.getComputedStyle(this.workTable)[side] || '0', 10);
-            this.workTable.style.width =
-                ((width - delta) / parentWidth) * 100 + '%';
-            this.workTable.style[side] =
-                ((margin + delta) / parentWidth) * 100 + '%';
-        }
-    };
-    resizeCells.prototype.setWorkCell = function (cell, wholeTable) {
-        if (wholeTable === void 0) { wholeTable = null; }
-        this.wholeTable = wholeTable;
-        this.workCell = cell;
-        this.workTable = modules_1.Dom.up(cell, function (elm) { return modules_1.Dom.isTag(elm, 'table'); }, this.j.editor);
-    };
-    resizeCells.prototype.calcHandlePosition = function (table, cell, offsetX, delta) {
-        if (offsetX === void 0) { offsetX = 0; }
-        if (delta === void 0) { delta = 0; }
-        var box = (0, helpers_1.offset)(cell, this.j, this.j.ed);
-        if (offsetX > consts.NEARBY && offsetX < box.width - consts.NEARBY) {
-            this.hideResizeHandle();
-            return;
-        }
-        var workplacePosition = (0, helpers_1.offset)(this.j.workplace, this.j, this.j.od, true), parentBox = (0, helpers_1.offset)(table, this.j, this.j.ed);
-        this.resizeHandler.style.left =
-            (offsetX <= consts.NEARBY ? box.left : box.left + box.width) -
-                workplacePosition.left +
-                delta +
-                'px';
-        Object.assign(this.resizeHandler.style, {
-            height: parentBox.height + 'px',
-            top: parentBox.top - workplacePosition.top + 'px'
-        });
-        this.showResizeHandle();
-        if (offsetX <= consts.NEARBY) {
-            var prevTD = (0, helpers_1.call)(this.isRTL ? modules_1.Dom.next : modules_1.Dom.prev, cell, modules_1.Dom.isCell, cell.parentNode);
-            this.setWorkCell(prevTD || cell, prevTD ? null : true);
-        }
-        else {
-            var nextTD = (0, helpers_1.call)(!this.isRTL ? modules_1.Dom.next : modules_1.Dom.prev, cell, modules_1.Dom.isCell, cell.parentNode);
-            this.setWorkCell(cell, !nextTD ? false : null);
-        }
-    };
-    resizeCells.prototype.afterInit = function (editor) {
-        var _this = this;
-        if (!editor.o.table.allowCellResize) {
-            return;
-        }
-        editor.e
-            .off(this.j.ow, '.resize-cells')
-            .off('.resize-cells')
-            .on('change.resize-cells afterCommand.resize-cells afterSetMode.resize-cells', function () {
-            (0, helpers_1.$$)('table', editor.editor).forEach(_this.observe);
-        })
-            .on(this.j.ow, 'scroll.resize-cells', function () {
-            if (!_this.drag) {
-                return;
-            }
-            var parent = modules_1.Dom.up(_this.workCell, function (elm) { return modules_1.Dom.isTag(elm, 'table'); }, editor.editor);
-            if (parent) {
-                var parentBox = parent.getBoundingClientRect();
-                _this.resizeHandler.style.top = parentBox.top + 'px';
-            }
-        })
-            .on('beforeSetMode.resize-cells', function () {
-            _this.module.getAllSelectedCells().forEach(function (td) {
-                _this.module.removeSelection(td);
-                modules_1.Table.normalizeTable(modules_1.Dom.closest(td, 'table', editor.editor));
-            });
-        });
-    };
-    resizeCells.prototype.observe = function (table) {
-        var _this = this;
-        if ((0, helpers_1.dataBind)(table, key)) {
-            return;
-        }
-        (0, helpers_1.dataBind)(table, key, true);
-        this.j.e
-            .on(table, 'mouseleave.resize-cells', function (e) {
-            if (_this.resizeHandler &&
-                _this.resizeHandler !== e.relatedTarget) {
-                _this.hideResizeHandle();
-            }
-        })
-            .on(table, 'mousemove.resize-cells touchmove.resize-cells', this.j.async.throttle(function (event) {
-            if (_this.j.isLocked) {
-                return;
-            }
-            var cell = modules_1.Dom.up(event.target, modules_1.Dom.isCell, table);
-            if (!cell) {
-                return;
-            }
-            _this.calcHandlePosition(table, cell, event.offsetX);
-        }, {
-            timeout: this.j.defaultTimeout
-        }));
-        this.createResizeHandle();
-    };
-    resizeCells.prototype.beforeDestruct = function (jodit) {
-        if (jodit.events) {
-            jodit.e.off(this.j.ow, '.resize-cells');
-            jodit.e.off('.resize-cells');
-        }
-    };
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], resizeCells.prototype, "onHandleMouseDown", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], resizeCells.prototype, "onMouseMove", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], resizeCells.prototype, "onMouseUp", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], resizeCells.prototype, "observe", null);
-    return resizeCells;
-}(modules_1.Plugin));
-exports.resizeCells = resizeCells;
-
-
-/***/ }),
-
-/***/ 15768:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.selectCells = void 0;
-var tslib_1 = __webpack_require__(20255);
-var plugin_1 = __webpack_require__(35570);
-var modules_1 = __webpack_require__(46701);
-var helpers_1 = __webpack_require__(92654);
-var justify_1 = __webpack_require__(82428);
-var constants_1 = __webpack_require__(10063);
-var decorators_1 = __webpack_require__(9901);
-var key = 'table_processor_observer';
-var MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
-var selectCells = (function (_super) {
-    tslib_1.__extends(selectCells, _super);
-    function selectCells() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.requires = ['select'];
-        _this.selectedCell = null;
-        _this.isSelectionMode = false;
-        return _this;
-    }
-    Object.defineProperty(selectCells.prototype, "module", {
-        get: function () {
-            return this.j.getInstance('Table', this.j.o);
-        },
-        enumerable: false,
-        configurable: true
-    });
-    selectCells.prototype.afterInit = function (jodit) {
-        var _this = this;
-        if (!jodit.o.table.allowCellSelection) {
-            return;
-        }
-        jodit.e
-            .on('keydown.select-cells', function (event) {
-            if (event.key === constants_1.KEY_TAB) {
-                _this.unselectCells();
-            }
-        })
-            .on('beforeCommand.select-cells', this.onExecCommand)
-            .on('afterCommand.select-cells', this.onAfterCommand)
-            .on([
-            'clickEditor',
-            'mousedownTd',
-            'mousedownTh',
-            'touchstartTd',
-            'touchstartTh'
-        ]
-            .map(function (e) { return e + '.select-cells'; })
-            .join(' '), this.onStartSelection)
-            .on('clickTr clickTbody', function () {
-            var _a;
-            var cellsCount = _this.module.getAllSelectedCells().length;
-            if (cellsCount) {
-                if (cellsCount > 1) {
-                    (_a = _this.j.s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
-                }
-                return false;
-            }
-        });
-    };
-    selectCells.prototype.onStartSelection = function (cell) {
-        if (this.j.o.readonly) {
-            return;
-        }
-        this.unselectCells();
-        if (cell === this.j.editor) {
-            return;
-        }
-        var table = modules_1.Dom.closest(cell, 'table', this.j.editor);
-        if (!cell || !table) {
-            return;
-        }
-        if (!cell.firstChild) {
-            cell.appendChild(this.j.createInside.element('br'));
-        }
-        this.isSelectionMode = true;
-        this.selectedCell = cell;
-        this.module.addSelection(cell);
-        this.j.e
-            .on(table, 'mousemove.select-cells touchmove.select-cells', this.j.async.throttle(this.onMove.bind(this, table), {
-            label: MOUSE_MOVE_LABEL,
-            timeout: this.j.defaultTimeout / 2
-        }))
-            .on(table, 'mouseup.select-cells touchend.select-cells', this.onStopSelection.bind(this, table));
-        return false;
-    };
-    selectCells.prototype.onOutsideClick = function () {
-        this.selectedCell = null;
-        this.onRemoveSelection();
-    };
-    selectCells.prototype.onChange = function () {
-        if (!this.j.isLocked && !this.isSelectionMode) {
-            this.onRemoveSelection();
-        }
-    };
-    selectCells.prototype.onMove = function (table, e) {
-        var _this = this;
-        var _a;
-        if (this.j.o.readonly && !this.j.isLocked) {
-            return;
-        }
-        if (this.j.isLockedNotBy(key)) {
-            return;
-        }
-        var node = this.j.ed.elementFromPoint(e.clientX, e.clientY);
-        if (!node) {
-            return;
-        }
-        var cell = modules_1.Dom.closest(node, ['td', 'th'], table);
-        if (!cell || !this.selectedCell) {
-            return;
-        }
-        if (cell !== this.selectedCell) {
-            this.j.lock(key);
-        }
-        this.unselectCells();
-        var bound = modules_1.Table.getSelectedBound(table, [cell, this.selectedCell]), box = modules_1.Table.formalMatrix(table);
-        for (var i = bound[0][0]; i <= bound[1][0]; i += 1) {
-            for (var j = bound[0][1]; j <= bound[1][1]; j += 1) {
-                this.module.addSelection(box[i][j]);
-            }
-        }
-        var cellsCount = this.module.getAllSelectedCells().length;
-        if (cellsCount > 1) {
-            (_a = this.j.s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
-        }
-        this.j.e.fire('hidePopup');
-        e.stopPropagation();
-        (function () {
-            var n = _this.j.createInside.fromHTML('<div style="color:rgba(0,0,0,0.01);width:0;height:0">&nbsp;</div>');
-            cell.appendChild(n);
-            _this.j.async.setTimeout(function () {
-                var _a;
-                (_a = n.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(n);
-            }, _this.j.defaultTimeout / 5);
-        })();
-    };
-    selectCells.prototype.onRemoveSelection = function (e) {
-        var _a;
-        if (!((_a = e === null || e === void 0 ? void 0 : e.buffer) === null || _a === void 0 ? void 0 : _a.actionTrigger) &&
-            !this.selectedCell &&
-            this.module.getAllSelectedCells().length) {
-            this.j.unlock();
-            this.unselectCells();
-            this.j.e.fire('hidePopup', 'cells');
-            return;
-        }
-        this.isSelectionMode = false;
-        this.selectedCell = null;
-    };
-    selectCells.prototype.onStopSelection = function (table, e) {
-        var _this = this;
-        if (!this.selectedCell) {
-            return;
-        }
-        this.isSelectionMode = false;
-        this.j.unlock();
-        var node = this.j.ed.elementFromPoint(e.clientX, e.clientY);
-        if (!node) {
-            return;
-        }
-        var cell = modules_1.Dom.closest(node, ['td', 'th'], table);
-        if (!cell) {
-            return;
-        }
-        var ownTable = modules_1.Dom.closest(cell, 'table', table);
-        if (ownTable && ownTable !== table) {
-            return;
-        }
-        var bound = modules_1.Table.getSelectedBound(table, [cell, this.selectedCell]), box = modules_1.Table.formalMatrix(table);
-        var max = box[bound[1][0]][bound[1][1]], min = box[bound[0][0]][bound[0][1]];
-        this.j.e.fire('showPopup', table, function () {
-            var minOffset = (0, helpers_1.position)(min, _this.j), maxOffset = (0, helpers_1.position)(max, _this.j);
-            return {
-                left: minOffset.left,
-                top: minOffset.top,
-                width: maxOffset.left - minOffset.left + maxOffset.width,
-                height: maxOffset.top - minOffset.top + maxOffset.height
-            };
-        }, 'cells');
-        (0, helpers_1.$$)('table', this.j.editor).forEach(function (table) {
-            _this.j.e.off(table, 'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells');
-        });
-        this.j.async.clearTimeout(MOUSE_MOVE_LABEL);
-    };
-    selectCells.prototype.unselectCells = function (currentCell) {
-        var module = this.module;
-        var cells = module.getAllSelectedCells();
-        if (cells.length) {
-            cells.forEach(function (cell) {
-                if (!currentCell || currentCell !== cell) {
-                    module.removeSelection(cell);
-                }
-            });
-        }
-    };
-    selectCells.prototype.onExecCommand = function (command) {
-        if (/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(command)) {
-            command = command.replace('table', '');
-            var cells = this.module.getAllSelectedCells();
-            if (cells.length) {
-                var _a = tslib_1.__read(cells, 1), cell = _a[0];
-                if (!cell) {
-                    return;
-                }
-                var table_1 = modules_1.Dom.closest(cell, 'table', this.j.editor);
-                if (!table_1) {
-                    return;
-                }
-                switch (command) {
-                    case 'splitv':
-                        modules_1.Table.splitVertical(table_1, this.j);
-                        break;
-                    case 'splitg':
-                        modules_1.Table.splitHorizontal(table_1, this.j);
-                        break;
-                    case 'merge':
-                        modules_1.Table.mergeSelected(table_1, this.j);
-                        break;
-                    case 'empty':
-                        cells.forEach(function (td) { return modules_1.Dom.detach(td); });
-                        break;
-                    case 'bin':
-                        modules_1.Dom.safeRemove(table_1);
-                        break;
-                    case 'binrow':
-                        new Set(cells.map(function (td) { return td.parentNode; })).forEach(function (row) {
-                            modules_1.Table.removeRow(table_1, row.rowIndex);
-                        });
-                        break;
-                    case 'bincolumn':
-                        {
-                            var columnsSet_1 = new Set(), columns = cells.reduce(function (acc, td) {
-                                if (!columnsSet_1.has(td.cellIndex)) {
-                                    acc.push(td);
-                                    columnsSet_1.add(td.cellIndex);
-                                }
-                                return acc;
-                            }, []);
-                            columns.forEach(function (td) {
-                                modules_1.Table.removeColumn(table_1, td.cellIndex);
-                            });
-                        }
-                        break;
-                    case 'addcolumnafter':
-                    case 'addcolumnbefore':
-                        modules_1.Table.appendColumn(table_1, cell.cellIndex, command === 'addcolumnafter', this.j.createInside);
-                        break;
-                    case 'addrowafter':
-                    case 'addrowbefore':
-                        modules_1.Table.appendRow(table_1, cell.parentNode, command === 'addrowafter', this.j.createInside);
-                        break;
-                }
-            }
-            return false;
-        }
-    };
-    selectCells.prototype.onAfterCommand = function (command) {
-        if (/^justify/.test(command)) {
-            this.module
-                .getAllSelectedCells()
-                .forEach(function (elm) { return (0, justify_1.alignElement)(command, elm); });
-        }
-    };
-    selectCells.prototype.beforeDestruct = function (jodit) {
-        this.onRemoveSelection();
-        jodit.e.off('.select-cells');
-    };
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], selectCells.prototype, "onStartSelection", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)(':outsideClick')
-    ], selectCells.prototype, "onOutsideClick", null);
-    tslib_1.__decorate([
-        (0, decorators_1.watch)(':change')
-    ], selectCells.prototype, "onChange", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], selectCells.prototype, "onRemoveSelection", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], selectCells.prototype, "onStopSelection", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], selectCells.prototype, "onExecCommand", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], selectCells.prototype, "onAfterCommand", null);
-    return selectCells;
-}(plugin_1.Plugin));
-exports.selectCells = selectCells;
-
-
-/***/ }),
-
-/***/ 29082:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.tableKeyboardNavigation = void 0;
-var consts = __webpack_require__(10063);
-var dom_1 = __webpack_require__(94522);
-var modules_1 = __webpack_require__(46701);
-function tableKeyboardNavigation(editor) {
-    editor.e
-        .off('.tableKeyboardNavigation')
-        .on('keydown.tableKeyboardNavigation', function (event) {
-        var current, block;
-        if (event.key === consts.KEY_TAB ||
-            event.key === consts.KEY_LEFT ||
-            event.key === consts.KEY_RIGHT ||
-            event.key === consts.KEY_UP ||
-            event.key === consts.KEY_DOWN) {
-            current = editor.s.current();
-            block = dom_1.Dom.up(current, function (elm) {
-                return elm &&
-                    elm.nodeName &&
-                    /^td|th$/i.test(elm.nodeName);
-            }, editor.editor);
-            if (!block) {
-                return;
-            }
-            var range = editor.s.range;
-            if (event.key !== consts.KEY_TAB && current !== block) {
-                if (((event.key === consts.KEY_LEFT ||
-                    event.key === consts.KEY_UP) &&
-                    (dom_1.Dom.prev(current, function (elm) {
-                        return event.key === consts.KEY_UP
-                            ? dom_1.Dom.isTag(elm, 'br')
-                            : Boolean(elm);
-                    }, block) ||
-                        (event.key !== consts.KEY_UP &&
-                            dom_1.Dom.isText(current) &&
-                            range.startOffset !== 0))) ||
-                    ((event.key === consts.KEY_RIGHT ||
-                        event.key === consts.KEY_DOWN) &&
-                        (dom_1.Dom.next(current, function (elm) {
-                            return event.key === consts.KEY_DOWN
-                                ? dom_1.Dom.isTag(elm, 'br')
-                                : Boolean(elm);
-                        }, block) ||
-                            (event.key !== consts.KEY_DOWN &&
-                                dom_1.Dom.isText(current) &&
-                                current.nodeValue &&
-                                range.startOffset !==
-                                    current.nodeValue.length)))) {
-                    return;
-                }
-            }
-        }
-        else {
-            return;
-        }
-        var table = dom_1.Dom.up(block, function (elm) { return elm && /^table$/i.test(elm.nodeName); }, editor.editor);
-        var next = null;
-        switch (event.key) {
-            case consts.KEY_TAB:
-            case consts.KEY_LEFT: {
-                var sibling = event.key === consts.KEY_LEFT || event.shiftKey
-                    ? 'prev'
-                    : 'next';
-                next = dom_1.Dom[sibling](block, function (elm) {
-                    return elm &&
-                        /^td|th$/i.test(elm.tagName);
-                }, table);
-                if (!next) {
-                    modules_1.Table.appendRow(table, sibling === 'next'
-                        ? false
-                        : table.querySelector('tr'), sibling === 'next', editor.createInside);
-                    next = dom_1.Dom[sibling](block, dom_1.Dom.isCell, table);
-                }
-                break;
-            }
-            case consts.KEY_UP:
-            case consts.KEY_DOWN:
-                {
-                    var i_1 = 0, j_1 = 0;
-                    var matrix = modules_1.Table.formalMatrix(table, function (elm, _i, _j) {
-                        if (elm === block) {
-                            i_1 = _i;
-                            j_1 = _j;
-                        }
-                    });
-                    if (event.key === consts.KEY_UP) {
-                        if (matrix[i_1 - 1] !== undefined) {
-                            next = matrix[i_1 - 1][j_1];
-                        }
-                    }
-                    else {
-                        if (matrix[i_1 + 1] !== undefined) {
-                            next = matrix[i_1 + 1][j_1];
-                        }
-                    }
-                }
-                break;
-        }
-        if (next) {
-            if (!next.firstChild) {
-                var first = editor.createInside.element('br');
-                next.appendChild(first);
-                editor.s.setCursorBefore(first);
-            }
-            else {
-                if (event.key === consts.KEY_TAB) {
-                    editor.s.select(next, true);
-                }
-                else {
-                    editor.s.setCursorIn(next, event.key === consts.KEY_RIGHT ||
-                        event.key === consts.KEY_DOWN);
-                }
-            }
-            return false;
-        }
-    });
-}
-exports.tableKeyboardNavigation = tableKeyboardNavigation;
-
-
-/***/ }),
-
 /***/ 67122:
-/***/ (function(__unused_webpack_module, exports) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
@@ -37520,6 +37814,9 @@ exports.tableKeyboardNavigation = tableKeyboardNavigation;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.table = void 0;
+__webpack_require__(51057);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(62653);
 function table(editor) {
     editor.registerButton({
         name: 'table',
@@ -37527,6 +37824,7 @@ function table(editor) {
     });
 }
 exports.table = table;
+global_1.pluginSystem.add('table', table);
 
 
 /***/ }),
@@ -37542,7 +37840,6 @@ exports.table = table;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.tooltip = void 0;
 var tslib_1 = __webpack_require__(20255);
 __webpack_require__(14351);
 var helpers_1 = __webpack_require__(92654);
@@ -37621,7 +37918,237 @@ var tooltip = (function (_super) {
     ], tooltip.prototype, "close", null);
     return tooltip;
 }(plugin_1.Plugin));
-exports.tooltip = tooltip;
+global_1.pluginSystem.add('tooltip', tooltip);
+
+
+/***/ }),
+
+/***/ 58991:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+var widget_1 = __webpack_require__(4188);
+var helpers_1 = __webpack_require__(92654);
+var form_1 = __webpack_require__(18733);
+var button_1 = __webpack_require__(44632);
+var icon_1 = __webpack_require__(76381);
+icon_1.Icon.set('video', __webpack_require__(49222));
+config_1.Config.prototype.controls.video = {
+    popup: function (editor, current, control, close) {
+        var formLink = new form_1.UIForm(editor, [
+            new form_1.UIBlock(editor, [
+                new form_1.UIInput(editor, {
+                    name: 'url',
+                    required: true,
+                    label: 'URL',
+                    placeholder: 'https://',
+                    validators: ['url']
+                })
+            ]),
+            new form_1.UIBlock(editor, [
+                (0, button_1.Button)(editor, '', 'Insert', 'primary').onAction(function () {
+                    return formLink.submit();
+                })
+            ])
+        ]), formCode = new form_1.UIForm(editor, [
+            new form_1.UIBlock(editor, [
+                new form_1.UITextArea(editor, {
+                    name: 'code',
+                    required: true,
+                    label: 'Embed code'
+                })
+            ]),
+            new form_1.UIBlock(editor, [
+                (0, button_1.Button)(editor, '', 'Insert', 'primary').onAction(function () {
+                    return formCode.submit();
+                })
+            ])
+        ]), tabs = [], insertCode = function (code) {
+            editor.s.restore();
+            editor.s.insertHTML(code);
+            close();
+        };
+        editor.s.save();
+        tabs.push({
+            icon: 'link',
+            name: 'Link',
+            content: formLink.container
+        }, {
+            icon: 'source',
+            name: 'Code',
+            content: formCode.container
+        });
+        formLink.onSubmit(function (data) {
+            insertCode((0, helpers_1.convertMediaUrlToVideoEmbed)(data.url));
+        });
+        formCode.onSubmit(function (data) {
+            insertCode(data.code);
+        });
+        return (0, widget_1.TabsWidget)(editor, tabs);
+    },
+    tags: ['iframe'],
+    tooltip: 'Insert youtube/vimeo video'
+};
+
+
+/***/ }),
+
+/***/ 82887:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var global_1 = __webpack_require__(58299);
+__webpack_require__(58991);
+function video(editor) {
+    editor.registerButton({
+        name: 'video',
+        group: 'media'
+    });
+}
+global_1.pluginSystem.add('video', video);
+
+
+/***/ }),
+
+/***/ 21189:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+config_1.Config.prototype.wrapNodes = {
+    exclude: ['hr', 'style', 'br']
+};
+
+
+/***/ }),
+
+/***/ 37455:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(20255);
+var plugin_1 = __webpack_require__(35570);
+var dom_1 = __webpack_require__(94522);
+var is_string_1 = __webpack_require__(40607);
+var decorators_1 = __webpack_require__(9901);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(21189);
+var wrapNodes = (function (_super) {
+    tslib_1.__extends(wrapNodes, _super);
+    function wrapNodes() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.isSuitableStart = function (n) {
+            return (dom_1.Dom.isText(n) && (0, is_string_1.isString)(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
+                (_this.isNotClosed(n) && !dom_1.Dom.isTemporary(n));
+        };
+        _this.isSuitable = function (n) {
+            return dom_1.Dom.isText(n) || _this.isNotClosed(n);
+        };
+        _this.isNotClosed = function (n) {
+            return dom_1.Dom.isElement(n) &&
+                !(dom_1.Dom.isBlock(n) || dom_1.Dom.isTag(n, _this.j.o.wrapNodes.exclude));
+        };
+        return _this;
+    }
+    wrapNodes.prototype.afterInit = function (jodit) {
+        if (jodit.o.enter.toLowerCase() === 'br') {
+            return;
+        }
+        jodit.e.on('afterInit.wtn postProcessSetEditorValue.wtn', this.postProcessSetEditorValue);
+    };
+    wrapNodes.prototype.beforeDestruct = function (jodit) {
+        jodit.e.off('.wtn');
+    };
+    wrapNodes.prototype.postProcessSetEditorValue = function () {
+        var jodit = this.jodit;
+        if (!jodit.isEditorMode()) {
+            return;
+        }
+        var child = jodit.editor.firstChild, isChanged = false;
+        while (child) {
+            this.checkAloneListLeaf(child, jodit);
+            if (this.isSuitableStart(child)) {
+                if (!isChanged) {
+                    jodit.s.save();
+                }
+                isChanged = true;
+                var box = jodit.createInside.element(jodit.o.enter);
+                dom_1.Dom.before(child, box);
+                while (child && this.isSuitable(child)) {
+                    var next = child.nextSibling;
+                    box.appendChild(child);
+                    child = next;
+                }
+                box.normalize();
+            }
+            child = child && child.nextSibling;
+        }
+        if (isChanged) {
+            jodit.s.restore();
+            if (jodit.e.current === 'afterInit') {
+                jodit.e.fire('internalChange');
+            }
+        }
+    };
+    wrapNodes.prototype.checkAloneListLeaf = function (child, jodit) {
+        if (dom_1.Dom.isElement(child) &&
+            dom_1.Dom.isTag(child, 'li') &&
+            !dom_1.Dom.isTag(child.parentElement, ['ul', 'ol'])) {
+            dom_1.Dom.wrap(child, 'ul', jodit.createInside);
+        }
+    };
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], wrapNodes.prototype, "postProcessSetEditorValue", null);
+    return wrapNodes;
+}(plugin_1.Plugin));
+global_1.pluginSystem.add('wrapNodes', wrapNodes);
+
+
+/***/ }),
+
+/***/ 15855:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var config_1 = __webpack_require__(27537);
+config_1.Config.prototype.showXPathInStatusbar = true;
 
 
 /***/ }),
@@ -37637,17 +38164,16 @@ exports.tooltip = tooltip;
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.xpath = void 0;
 var tslib_1 = __webpack_require__(20255);
 __webpack_require__(89310);
-var config_1 = __webpack_require__(27537);
 var constants_1 = __webpack_require__(10063);
 var context_menu_1 = __webpack_require__(73511);
 var dom_1 = __webpack_require__(94522);
 var helpers_1 = __webpack_require__(92654);
 var plugin_1 = __webpack_require__(35570);
 var factory_1 = __webpack_require__(42701);
-config_1.Config.prototype.showXPathInStatusbar = true;
+var global_1 = __webpack_require__(58299);
+__webpack_require__(15855);
 var xpath = (function (_super) {
     tslib_1.__extends(xpath, _super);
     function xpath() {
@@ -37783,7 +38309,7 @@ var xpath = (function (_super) {
     };
     return xpath;
 }(plugin_1.Plugin));
-exports.xpath = xpath;
+global_1.pluginSystem.add('xpath', xpath);
 
 
 /***/ }),
@@ -37857,14 +38383,7 @@ if (!String.prototype.endsWith) {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.palette = exports.outdent = exports.omega = exports.ol = exports.ok = exports.merge = exports.menu = exports.lock = exports.link = exports.line_height = exports.left = exports.justify = exports.italic = exports.info_circle = exports.indent = exports.image = exports.hr = exports.fullsize = exports.fontsize = exports.font = exports.folder = exports.file = exports.eye = exports.eraser = exports.enter = exports.chevron = exports.dots = exports.dedent = exports.cut = exports.crop = exports.copy = exports.copyformat = exports.check_square = exports.check = exports.chain_broken = exports.center = exports.cancel = exports.brush = exports.bold = exports.bin = exports.attachment = exports.arrows_h = exports.arrows_alt = exports.angle_up = exports.angle_right = exports.angle_left = exports.angle_down = exports.addrow = exports.addcolumn = exports.about = void 0;
-exports.video = exports.valign = exports.upload = exports.update = exports.unlock = exports.unlink = exports.undo = exports.underline = exports.ul = exports.th_list = exports.th = exports.table = exports.superscript = exports.subscript = exports.strikethrough = exports.splitv = exports.splitg = exports.source = exports.shrink = exports.settings = exports.select_all = exports.search = exports.save = exports.right = exports.resizer = exports.resize_handler = exports.resize = exports.redo = exports.print = exports.plus = exports.pencil = exports.paste = exports.paragraph = void 0;
-var about = __webpack_require__(96815);
-exports.about = about;
-var addcolumn = __webpack_require__(5342);
-exports.addcolumn = addcolumn;
-var addrow = __webpack_require__(23157);
-exports.addrow = addrow;
+exports.valign = exports.upload = exports.update = exports.unlock = exports.settings = exports.save = exports.right = exports.resize_handler = exports.plus = exports.pencil = exports.ok = exports.lock = exports.left = exports.info_circle = exports.folder = exports.file = exports.eye = exports.dots = exports.chevron = exports.check = exports.center = exports.cancel = exports.bin = exports.angle_up = exports.angle_right = exports.angle_left = exports.angle_down = void 0;
 var angle_down = __webpack_require__(1755);
 exports.angle_down = angle_down;
 var angle_left = __webpack_require__(74911);
@@ -37873,148 +38392,44 @@ var angle_right = __webpack_require__(8805);
 exports.angle_right = angle_right;
 var angle_up = __webpack_require__(16547);
 exports.angle_up = angle_up;
-var arrows_alt = __webpack_require__(26752);
-exports.arrows_alt = arrows_alt;
-var arrows_h = __webpack_require__(17114);
-exports.arrows_h = arrows_h;
-var attachment = __webpack_require__(90995);
-exports.attachment = attachment;
 var bin = __webpack_require__(10856);
 exports.bin = bin;
-var bold = __webpack_require__(81073);
-exports.bold = bold;
-var brush = __webpack_require__(98918);
-exports.brush = brush;
 var cancel = __webpack_require__(98441);
 exports.cancel = cancel;
 var center = __webpack_require__(52488);
 exports.center = center;
-var chain_broken = __webpack_require__(74561);
-exports.chain_broken = chain_broken;
 var check = __webpack_require__(9370);
 exports.check = check;
-var check_square = __webpack_require__(19442);
-exports.check_square = check_square;
 var chevron = __webpack_require__(66543);
 exports.chevron = chevron;
-var copyformat = __webpack_require__(76488);
-exports.copyformat = copyformat;
-var crop = __webpack_require__(61557);
-exports.crop = crop;
-var copy = __webpack_require__(14731);
-exports.copy = copy;
-var cut = __webpack_require__(33910);
-exports.cut = cut;
-var dedent = __webpack_require__(39845);
-exports.dedent = dedent;
 var dots = __webpack_require__(608);
 exports.dots = dots;
-var enter = __webpack_require__(10558);
-exports.enter = enter;
-var eraser = __webpack_require__(99162);
-exports.eraser = eraser;
 var eye = __webpack_require__(42840);
 exports.eye = eye;
 var file = __webpack_require__(79096);
 exports.file = file;
 var folder = __webpack_require__(33014);
 exports.folder = folder;
-var font = __webpack_require__(31310);
-exports.font = font;
-var fontsize = __webpack_require__(20516);
-exports.fontsize = fontsize;
-var fullsize = __webpack_require__(64738);
-exports.fullsize = fullsize;
-var hr = __webpack_require__(23794);
-exports.hr = hr;
-var image = __webpack_require__(93515);
-exports.image = image;
-var indent = __webpack_require__(95890);
-exports.indent = indent;
 var info_circle = __webpack_require__(91677);
 exports.info_circle = info_circle;
-var italic = __webpack_require__(55835);
-exports.italic = italic;
-var justify = __webpack_require__(59967);
-exports.justify = justify;
 var left = __webpack_require__(8259);
 exports.left = left;
-var line_height = __webpack_require__(113);
-exports.line_height = line_height;
-var link = __webpack_require__(12527);
-exports.link = link;
 var lock = __webpack_require__(64467);
 exports.lock = lock;
-var menu = __webpack_require__(33007);
-exports.menu = menu;
-var merge = __webpack_require__(4124);
-exports.merge = merge;
 var ok = __webpack_require__(86934);
 exports.ok = ok;
-var ol = __webpack_require__(30361);
-exports.ol = ol;
-var omega = __webpack_require__(62449);
-exports.omega = omega;
-var outdent = __webpack_require__(89098);
-exports.outdent = outdent;
-var palette = __webpack_require__(94173);
-exports.palette = palette;
-var paragraph = __webpack_require__(6943);
-exports.paragraph = paragraph;
-var paste = __webpack_require__(92390);
-exports.paste = paste;
 var pencil = __webpack_require__(76133);
 exports.pencil = pencil;
 var plus = __webpack_require__(45519);
 exports.plus = plus;
-var print = __webpack_require__(72419);
-exports.print = print;
-var redo = __webpack_require__(31502);
-exports.redo = redo;
-var resize = __webpack_require__(42343);
-exports.resize = resize;
 var resize_handler = __webpack_require__(90265);
 exports.resize_handler = resize_handler;
-var resizer = __webpack_require__(54084);
-exports.resizer = resizer;
 var right = __webpack_require__(81279);
 exports.right = right;
 var save = __webpack_require__(68899);
 exports.save = save;
-var search = __webpack_require__(96878);
-exports.search = search;
 var settings = __webpack_require__(70744);
 exports.settings = settings;
-var select_all = __webpack_require__(1032);
-exports.select_all = select_all;
-var shrink = __webpack_require__(31764);
-exports.shrink = shrink;
-var source = __webpack_require__(87971);
-exports.source = source;
-var splitg = __webpack_require__(30443);
-exports.splitg = splitg;
-var splitv = __webpack_require__(62873);
-exports.splitv = splitv;
-var strikethrough = __webpack_require__(66353);
-exports.strikethrough = strikethrough;
-var subscript = __webpack_require__(52109);
-exports.subscript = subscript;
-var superscript = __webpack_require__(24197);
-exports.superscript = superscript;
-var table = __webpack_require__(83909);
-exports.table = table;
-var th = __webpack_require__(7651);
-exports.th = th;
-var th_list = __webpack_require__(8270);
-exports.th_list = th_list;
-var ul = __webpack_require__(7339);
-exports.ul = ul;
-var underline = __webpack_require__(32356);
-exports.underline = underline;
-var undo = __webpack_require__(3066);
-exports.undo = undo;
-var unlink = __webpack_require__(70152);
-exports.unlink = unlink;
 var unlock = __webpack_require__(19201);
 exports.unlock = unlock;
 var update = __webpack_require__(84930);
@@ -38023,13 +38438,11 @@ var upload = __webpack_require__(99704);
 exports.upload = upload;
 var valign = __webpack_require__(2304);
 exports.valign = valign;
-var video = __webpack_require__(65738);
-exports.video = video;
 
 
 /***/ }),
 
-/***/ 96380:
+/***/ 80078:
 /***/ (function(module) {
 
 /*!
@@ -38039,232 +38452,13 @@ exports.video = video;
  */
 
 module.exports = {
-	'Type something': 'إبدأ في الكتابة...',
-	'About Jodit': 'حول جوديت',
-	'Jodit Editor': 'محرر جوديت',
-	"Jodit User's Guide": 'دليل مستخدم جوديت',
-	'contains detailed help for using': 'يحتوي على مساعدة مفصلة للاستخدام',
-	'For information about the license, please go to our website:':
-		'للحصول على معلومات حول الترخيص، يرجى الذهاب لموقعنا:',
-	'Buy full version': 'شراء النسخة الكاملة',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'حقوق الطبع والنشر © XDSoft.net - Chupurnov Valeriy. كل الحقوق محفوظة.',
-	Anchor: 'مِرْساة',
-	'Open in new tab': 'فتح في نافذة جديدة',
-	'Open editor in fullsize': 'فتح المحرر في الحجم الكامل',
-	'Clear Formatting': 'مسح التنسيق',
-	'Fill color or set the text color': 'ملء اللون أو تعيين لون النص',
-	Redo: 'إعادة',
-	Undo: 'تراجع',
-	Bold: 'عريض',
-	Italic: 'مائل',
-	'Insert Unordered List': 'إدراج قائمة غير مرتبة',
-	'Insert Ordered List': 'إدراج قائمة مرتبة',
-	'Align Center': 'محاذاة للوسط',
-	'Align Justify': 'محاذاة مثبتة',
-	'Align Left': 'محاذاة لليسار',
-	'Align Right': 'محاذاة لليمين',
-	'Insert Horizontal Line': 'إدراج خط أفقي',
-	'Insert Image': 'إدراج صورة',
-	'Insert file': 'ادخال الملف',
-	'Insert youtube/vimeo video': 'إدراج فيديو يوتيوب/فيميو ',
-	'Insert link': 'إدراج رابط',
-	'Font size': 'حجم الخط',
-	'Font family': 'نوع الخط',
-	'Insert format block': 'إدراج كتلة تنسيق',
-	Normal: 'عادي',
-	'Heading 1': 'عنوان 1',
-	'Heading 2': 'عنوان 2',
-	'Heading 3': 'عنوان 3',
-	'Heading 4': 'عنوان 4',
-	Quote: 'إقتباس',
-	Code: 'كود',
-	Insert: 'إدراج',
-	'Insert table': 'إدراج جدول',
-	'Decrease Indent': 'تقليل المسافة البادئة',
-	'Increase Indent': 'زيادة المسافة البادئة',
-	'Select Special Character': 'تحديد أحرف خاصة',
-	'Insert Special Character': 'إدراج حرف خاص',
-	'Paint format': 'تنسيق الرسم',
-	'Change mode': 'تغيير الوضع',
-	Margins: 'هوامش',
-	top: 'أعلى',
-	right: 'يمين',
-	bottom: 'أسفل',
-	left: 'يسار',
-	Styles: 'الأنماط',
-	Classes: 'الطبقات',
-	Align: 'محاذاة',
-	Right: 'اليمين',
-	Center: 'الوسط',
-	Left: 'اليسار',
-	'--Not Set--': '--غير مضبوط--',
-	Src: 'Src',
-	Title: 'العنوان',
-	Alternative: 'العنوان البديل',
-	Link: 'الرابط',
-	'Open link in new tab': 'افتح الرابط في نافذة جديدة',
-	Image: 'الصورة',
-	file: 'ملف',
-	Advanced: 'متقدم',
-	'Image properties': 'خصائص الصورة',
-	Cancel: 'إلغاء',
-	Ok: 'حسنا',
-	'File Browser': 'متصفح الملفات',
-	'Error on load list': 'حدث خطأ في تحميل القائمة ',
-	'Error on load folders': 'حدث خطأ في تحميل المجلدات',
-	'Are you sure?': 'هل أنت واثق؟',
-	'Enter Directory name': 'أدخل اسم المجلد',
-	'Create directory': 'إنشاء مجلد',
-	'type name': 'أكتب إسم',
-	'Drop image': 'إسقاط صورة',
-	'Drop file': 'إسقاط الملف',
-	'or click': 'أو أنقر',
-	'Alternative text': 'النص البديل',
-	Upload: 'رفع',
-	Browse: 'تصفح',
-	Background: 'الخلفية',
-	Text: 'نص',
-	Top: 'أعلى',
-	Middle: 'الوسط',
-	Bottom: 'الأسفل',
-	'Insert column before': 'إدراج عمود قبل',
-	'Insert column after': 'إدراج عمود بعد',
-	'Insert row above': 'إدراج صف أعلى',
-	'Insert row below': 'إدراج صف أسفل',
-	'Delete table': 'حذف الجدول',
-	'Delete row': 'حذف الصف',
-	'Delete column': 'حذف العمود',
-	'Empty cell': 'خلية فارغة',
-	'Chars: %d': '%d حرف',
-	'Words: %d': '%d كلام',
-	'Strike through': 'اضرب من خلال',
-	Underline: 'أكد',
-	superscript: 'حرف فوقي',
-	subscript: 'مخطوطة',
-	'Cut selection': 'قطع الاختيار',
-	'Select all': 'اختر الكل',
-	Break: 'استراحة',
-	'Search for': 'البحث عن',
-	'Replace with': 'استبدل ب',
-	Replace: 'محل',
-	Paste: 'معجون',
-	'Choose Content to Paste': 'اختر محتوى للصق',
-	source: 'مصدر',
-	bold: 'بالخط العريض',
-	italic: 'مائل',
-	brush: 'شغل',
-	link: 'صلة',
-	undo: 'إلغاء',
-	redo: 'كرر',
-	table: 'طاولة',
-	image: 'صورة',
-	eraser: 'نظيف',
-	paragraph: 'فقرة',
-	fontsize: 'حجم الخط',
-	video: 'فيديو',
-	font: 'الخط',
-	about: 'حول المحرر',
-	print: 'طباعة',
-	symbol: 'رمز',
-	underline: 'أكد',
-	strikethrough: 'شطب',
-	indent: 'المسافة البادئة',
-	outdent: 'نتوء',
-	fullsize: 'ملء الشاشة',
-	shrink: 'الحجم التقليدي',
-	copyformat: 'نسخ التنسيق',
-	hr: 'الخط',
-	ul: 'قائمة',
-	ol: 'قائمة مرقمة',
-	cut: 'قطع',
-	selectall: 'اختر الكل',
-	'Embed code': 'قانون',
-	'Open link': 'فتح الرابط',
-	'Edit link': 'تعديل الرابط',
-	'No follow': 'سمة Nofollow',
-	Unlink: 'إزالة الرابط',
-	Update: 'تحديث',
-	pencil: 'لتحرير',
-	Eye: 'مراجعة',
-	' URL': 'URL',
-	Edit: 'تحرير',
-	'Horizontal align': 'محاذاة أفقية',
-	Filter: 'فلتر',
-	'Sort by changed': 'عن طريق التغيير',
-	'Sort by name': 'بالاسم',
-	'Sort by size': 'حسب الحجم',
-	'Add folder': 'إضافة مجلد',
-	Reset: 'إعادة',
-	Save: 'احتفظ',
-	'Save as ...': 'حفظ باسم',
-	Resize: 'تغيير الحجم',
-	Crop: 'حجم القطع',
-	Width: 'عرض',
-	Height: 'ارتفاع',
-	'Keep Aspect Ratio': 'حافظ على النسب',
-	Yes: 'أن',
-	No: 'لا',
-	Remove: 'حذف',
-	Select: 'تميز',
-	'Select %s': 'تميز %s',
-	'Vertical align': 'محاذاة عمودية',
-	Split: 'انشق، مزق',
-	Merge: 'اذهب',
-	'Add column': 'أضف العمود',
-	'Add row': 'اضف سطر',
-	'License: %s': 'رخصة %s',
-	Delete: 'حذف',
-	'Split vertical': 'انقسام عمودي',
-	'Split horizontal': 'تقسيم أفقي',
-	Border: 'الحدود',
-	'Your code is similar to HTML. Keep as HTML?':
-		'يشبه الكود الخاص بك HTML. تبقي كما HTML؟',
-	'Paste as HTML': 'الصق ك HTML',
-	Keep: 'احتفظ',
-	'Insert as Text': 'إدراج كنص',
-	'Insert only Text': 'إدراج النص فقط',
-	'You can only edit your own images. Download this image on the host?':
-		'يمكنك فقط تحرير صورك الخاصة. تحميل هذه الصورة على المضيف؟',
-	'The image has been successfully uploaded to the host!':
-		'تم تحميل الصورة بنجاح على الخادم!',
-	palette: 'لوحة',
-	'There are no files': 'لا توجد ملفات في هذا الدليل.',
-	Rename: 'إعادة تسمية',
-	'Enter new name': 'أدخل اسم جديد',
-	preview: 'معاينة',
-	download: 'تحميل',
-	'Paste from clipboard': 'لصق من الحافظة',
-	"Your browser doesn't support direct access to the clipboard.":
-		'متصفحك لا يدعم إمكانية الوصول المباشر إلى الحافظة.',
-	'Copy selection': 'نسخ التحديد',
-	copy: 'نسخ',
-	'Border radius': 'دائرة نصف قطرها الحدود',
-	'Show all': 'عرض كل',
-	Apply: 'تطبيق',
-	'Please fill out this field': 'يرجى ملء هذا المجال',
-	'Please enter a web address': 'يرجى إدخال عنوان ويب',
-	Default: 'الافتراضي',
-	Circle: 'دائرة',
-	Dot: 'نقطة',
-	Quadrate: 'المربعة',
-	Find: 'البحث',
-	'Find Previous': 'تجد السابقة',
-	'Find Next': 'تجد التالي',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'للصق المحتوى قادم من Microsoft Word/Excel الوثيقة. هل تريد أن تبقي شكل أو تنظيفه ؟ ',
-	'Word Paste Detected': 'كلمة لصق الكشف عن',
-	Clean: 'نظيفة',
-	'Insert className': 'أدخل اسم الفصل',
-	'Line height': 'ارتفاع الخط',
-	Spellchecking: 'التدقيق الإملائي',
-	'Press Alt for custom resizing': 'اضغط البديل لتغيير حجم مخصص'
+	'copy-format': 'نسخ التنسيق'
 };
 
 
 /***/ }),
 
-/***/ 33146:
+/***/ 16986:
 /***/ (function(module) {
 
 /*!
@@ -38274,234 +38468,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Napiš něco',
-	'About Jodit': 'O Jodit',
-	'Jodit Editor': 'Editor Jodit',
-	'Free Non-commercial Version': 'Verze pro nekomerční použití',
-	"Jodit User's Guide": 'Jodit Uživatelská příručka',
-	'contains detailed help for using': 'obsahuje detailní nápovědu',
-	'For information about the license, please go to our website:':
-		'Pro informace o licenci, prosím, přejděte na naši stránku:',
-	'Buy full version': 'Koupit plnou verzi',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. Všechna práva vyhrazena.',
-	Anchor: 'Anchor',
-	'Open in new tab': 'Otevřít v nové záložce',
-	'Open editor in fullsize': 'Otevřít v celoobrazovkovém režimu',
-	'Clear Formatting': 'Vyčistit formátování',
-	'Fill color or set the text color': 'Barva výplně a písma',
-	Redo: 'Vpřed',
-	Undo: 'Zpět',
-	Bold: 'Tučné',
-	Italic: 'Kurzíva',
-	'Insert Unordered List': 'Odrážky',
-	'Insert Ordered List': 'Číslovaný seznam',
-	'Align Center': 'Zarovnat na střed',
-	'Align Justify': 'Zarovnat do bloku',
-	'Align Left': 'Zarovnat vlevo',
-	'Align Right': 'Zarovnat vpravo',
-	'Insert Horizontal Line': 'Vložit horizontální linku',
-	'Insert Image': 'Vložit obrázek',
-	'Insert file': 'Vložit soubor',
-	'Insert youtube/vimeo video': 'Vložit video (YT/Vimeo)',
-	'Insert link': 'Vložit odkaz',
-	'Font size': 'Velikost písma',
-	'Font family': 'Typ písma',
-	'Insert format block': 'Formátovat blok',
-	Normal: 'Normální text',
-	'Heading 1': 'Nadpis 1',
-	'Heading 2': 'Nadpis 2',
-	'Heading 3': 'Nadpis 3',
-	'Heading 4': 'Nadpis 4',
-	Quote: 'Citát',
-	Code: 'Kód',
-	Insert: 'Vložit',
-	'Insert table': 'Vložit tabulku',
-	'Decrease Indent': 'Zmenšit odsazení',
-	'Increase Indent': 'Zvětšit odsazení',
-	'Select Special Character': 'Vybrat speciální symbol',
-	'Insert Special Character': 'Vložit speciální symbol',
-	'Paint format': 'Použít formát',
-	'Change mode': 'Změnit mód',
-	Margins: 'Okraje',
-	top: 'horní',
-	right: 'pravý',
-	bottom: 'spodní',
-	left: 'levý',
-	Styles: 'Styly',
-	Classes: 'Třídy',
-	Align: 'Zarovnání',
-	Right: 'Vpravo',
-	Center: 'Na střed',
-	Left: 'Vlevo',
-	'--Not Set--': '--nenastaveno--',
-	Src: 'src',
-	Title: 'Titulek',
-	Alternative: 'Alternativní text (alt)',
-	Link: 'Link',
-	'Open link in new tab': 'Otevřít link v nové záložce',
-	Image: 'Obrázek',
-	file: 'soubor',
-	Advanced: 'Rozšířené',
-	'Image properties': 'Vlastnosti obrázku',
-	Cancel: 'Zpět',
-	Ok: 'Ok',
-	'Your code is similar to HTML. Keep as HTML?':
-		'Váš text se podobá HTML. Vložit ho jako HTML?',
-	'Paste as HTML': 'Vložit jako HTML',
-	Keep: 'Ponechat originál',
-	Clean: 'Vyčistit',
-	'Insert as Text': 'Vložit jako TEXT',
-	'Insert only Text': 'Vložit pouze TEXT',
-	'Word Paste Detected': 'Detekován fragment z Wordu nebo Excelu',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'Obsah, který vkládáte, je pravděpodobně z Microsoft Word / Excel. Chcete ponechat formát nebo vložit pouze text?',
-	'File Browser': 'Prohlížeč souborů',
-	'Error on load list': 'Chyba při načítání seznamu souborů',
-	'Error on load folders': 'Chyba při načítání složek',
-	'Are you sure?': 'Jste si jistý(á)?',
-	'Enter Directory name': 'Název složky',
-	'Create directory': 'Vytvořit složku',
-	'type name': 'název',
-	'Drop image': 'Přetáhněte sem obrázek',
-	'Drop file': 'Přetáhněte sem soubor',
-	'or click': 'nebo klikněte',
-	'Alternative text': 'Alternativní text',
-	Browse: 'Server',
-	Upload: 'Nahrát',
-	Background: 'Pozadí',
-	Text: 'Text',
-	Top: 'Nahoru',
-	Middle: 'Na střed',
-	Bottom: 'Dolu',
-	'Insert column before': 'Vložit sloupec před',
-	'Insert column after': 'Vložit sloupec za',
-	'Insert row above': 'Vložit řádek nad',
-	'Insert row below': 'Vložit řádek pod',
-	'Delete table': 'Vymazat tabulku',
-	'Delete row': 'Vymazat řádku',
-	'Delete column': 'Vymazat sloupec',
-	'Empty cell': 'Vyčistit buňku',
-	source: 'HTML',
-	bold: 'tučně',
-	italic: 'kurzíva',
-	brush: 'štětec',
-	link: 'odkaz',
-	undo: 'zpět',
-	redo: 'vpřed',
-	table: 'tabulka',
-	image: 'obrázek',
-	eraser: 'guma',
-	paragraph: 'odstavec',
-	fontsize: 'velikost písma',
-	video: 'video',
-	font: 'písmo',
-	about: 'о editoru',
-	print: 'tisk',
-	symbol: 'symbol',
-	underline: 'podtrženo',
-	strikethrough: 'přeškrtnuto',
-	indent: 'zvětšit odsazení',
-	outdent: 'zmenšit odsazení',
-	fullsize: 'celoobrazovkový režim',
-	shrink: 'smrsknout',
-	copyformat: 'Kopírovat formát',
-	hr: 'Linka',
-	ul: 'Odrážka',
-	ol: 'Číslovaný seznam',
-	cut: 'Vyjmout',
-	selectall: 'Označit vše',
-	'Embed code': 'Kód',
-	'Open link': 'Otevřít odkaz',
-	'Edit link': 'Upravit odkaz',
-	'No follow': 'Atribut no-follow',
-	Unlink: 'Odstranit odkaz',
-	Eye: 'Zobrazit',
-	pencil: 'Chcete-li upravit',
-	Update: 'Aktualizovat',
-	' URL': 'URL',
-	Edit: 'Editovat',
-	'Horizontal align': 'Horizontální zarovnání',
-	Filter: 'Filtr',
-	'Sort by changed': 'Dle poslední změny',
-	'Sort by name': 'Dle názvu',
-	'Sort by size': 'Dle velikosti',
-	'Add folder': 'Přidat složku',
-	Reset: 'Reset',
-	Save: 'Uložit',
-	'Save as ...': 'Uložit jako...',
-	Resize: 'Změnit rozměr',
-	Crop: 'Ořezat',
-	Width: 'Šířka',
-	Height: 'Výška',
-	'Keep Aspect Ratio': 'Ponechat poměr',
-	Yes: 'Ano',
-	No: 'Ne',
-	Remove: 'Vyjmout',
-	Select: 'Označit',
-	'Chars: %d': 'Znaky: %d',
-	'Words: %d': 'Slova: %d',
-	All: 'Vše',
-	'Select %s': 'Označit %s',
-	'Select all': 'Označit vše',
-	'Vertical align': 'Vertikální zarovnání',
-	Split: 'Rozdělit',
-	'Split vertical': 'Rozdělit vertikálně',
-	'Split horizontal': 'Rozdělit horizontálně',
-	Merge: 'Spojit',
-	'Add column': 'Přidat sloupec',
-	'Add row': 'Přidat řádek',
-	Delete: 'Vymazat',
-	Border: 'Okraj',
-	'License: %s': 'Licence: %s',
-	'Strike through': 'Přeškrtnuto',
-	Underline: 'Podtrženo',
-	superscript: 'Horní index',
-	subscript: 'Dolní index',
-	'Cut selection': 'Vyjmout označené',
-	Break: 'Zalomení',
-	'Search for': 'Najdi',
-	'Replace with': 'Nahradit za',
-	Replace: 'Vyměňte',
-	Paste: 'Vložit',
-	'Choose Content to Paste': 'Vyber obsah pro vložení',
-	'You can only edit your own images. Download this image on the host?':
-		'Můžete upravovat pouze své obrázky. Načíst obrázek?',
-	'The image has been successfully uploaded to the host!':
-		'Obrázek byl úspěšně nahrán!',
-	palette: 'paleta',
-	'There are no files': 'V tomto adresáři nejsou žádné soubory.',
-	Rename: 'přejmenovat',
-	'Enter new name': 'Zadejte nový název',
-	preview: 'náhled',
-	download: 'Stažení',
-	'Paste from clipboard': 'Vložit ze schránky',
-	"Your browser doesn't support direct access to the clipboard.":
-		'Váš prohlížeč nepodporuje přímý přístup do schránky.',
-	'Copy selection': 'Kopírovat výběr',
-	copy: 'kopírování',
-	'Border radius': 'Border radius',
-	'Show all': 'Zobrazit všechny',
-	Apply: 'Platí',
-	'Please fill out this field': 'Prosím, vyplňte toto pole',
-	'Please enter a web address': 'Prosím, zadejte webovou adresu',
-	Default: 'Výchozí',
-	Circle: 'Kruh',
-	Dot: 'Dot',
-	Quadrate: 'Quadrate',
-	Find: 'Najít',
-	'Find Previous': 'Najít Předchozí',
-	'Find Next': 'Najít Další',
-	'Insert className': 'Vložte název třídy',
-	'Line height': 'Výška čáry',
-	Spellchecking: 'Kontrola pravopisu',
-	'Press Alt for custom resizing': 'Stiskněte Alt pro vlastní změnu velikosti'
+	'copy-format': 'Kopírovat formát'
 };
 
 
 /***/ }),
 
-/***/ 69154:
+/***/ 59347:
 /***/ (function(module) {
 
 /*!
@@ -38511,240 +38484,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Bitte geben Sie einen Text ein',
-	Advanced: 'Fortgeschritten',
-	'About Jodit': 'Über Jodit',
-	'Jodit Editor': 'Jodit Editor',
-	"Jodit User's Guide": 'Das Jodit Benutzerhandbuch',
-	'contains detailed help for using':
-		'beinhaltet ausführliche Informationen wie Sie den Editor verwenden können.',
-	'For information about the license, please go to our website:':
-		'Für Informationen zur Lizenz, besuchen Sie bitte unsere Web-Präsenz:',
-	'Buy full version': 'Vollversion kaufen',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.',
-	Anchor: 'Anker',
-	'Open in new tab': 'In neuer Registerkarte öffnen',
-	'Open editor in fullsize': 'Editor in voller Größe öffnen',
-	'Clear Formatting': 'Formatierung löschen',
-	'Fill color or set the text color': 'Füllfarbe oder Textfarbe ändern',
-	Redo: 'Wiederholen',
-	Undo: 'Rückgängig machen',
-	Bold: 'Fett',
-	Italic: 'Kursiv',
-	'Insert Unordered List': 'Unsortierte Liste einfügen',
-	'Insert Ordered List': 'Nummerierte Liste einfügen',
-	'Align Center': 'Mittig ausrichten',
-	'Align Justify': 'Blocksatz',
-	'Align Left': 'Links ausrichten',
-	'Align Right': 'Rechts ausrichten',
-	'Insert Horizontal Line': 'Horizontale Linie einfügen',
-	'Insert Image': 'Bild einfügen',
-	'Insert file': 'Datei einfügen',
-	'Insert youtube/vimeo video': 'Youtube/vimeo Video einfügen',
-	'Insert link': 'Link einfügen',
-	'Font size': 'Schriftgröße',
-	'Font family': 'Schriftfamilie',
-	'Insert format block': 'Formatblock einfügen',
-	Normal: 'Normal',
-	'Heading 1': 'Überschrift 1',
-	'Heading 2': 'Überschrift 2',
-	'Heading 3': 'Überschrift 3',
-	'Heading 4': 'Überschrift 4',
-	Quote: 'Zitat',
-	Code: 'Code',
-	Insert: 'Einfügen',
-	'Insert table': 'Tabelle einfügen',
-	'Decrease Indent': 'Einzug verkleinern',
-	'Increase Indent': 'Einzug vergrößern',
-	'Select Special Character': 'Sonderzeichen auswählen',
-	'Insert Special Character': 'Sonderzeichen einfügen',
-	'Paint format': 'Format kopieren',
-	'Change mode': 'Änderungsmodus',
-	Margins: 'Ränder',
-	top: 'Oben',
-	right: 'Rechts',
-	bottom: 'Unten',
-	left: 'Links',
-	Styles: 'CSS Stil',
-	Classes: 'CSS Klassen',
-	Align: 'Ausrichtung',
-	Right: 'Rechts',
-	Center: 'Zentriert',
-	Left: 'Links',
-	'--Not Set--': 'Keine',
-	Src: 'Pfad',
-	Title: 'Titel',
-	Alternative: 'Alternativer Text',
-	Link: 'Link',
-	'Open link in new tab': 'Link in neuem Tab öffnen',
-	Image: 'Bild',
-	file: 'Datei',
-	Advansed: 'Erweitert',
-	'Image properties': 'Bildeigenschaften',
-	Cancel: 'Abbrechen',
-	Ok: 'OK',
-	'Your code is similar to HTML. Keep as HTML?':
-		'Ihr Text ähnelt HTML-Code. Als HTML beibehalten?',
-	'Paste as HTML': 'Als HTML einfügen?',
-	Keep: 'Original speichern',
-	Clean: 'Säubern',
-	'Insert as Text': 'Als Text einfügen',
-	'Word Paste Detected': 'In Word formatierter Text erkannt',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder bereinigen?',
-	'Insert only Text': 'Nur Text einfügen',
-	'File Browser': 'Dateibrowser',
-	'Error on load list': 'Fehler beim Laden der Liste',
-	'Error on load folders': 'Fehler beim Laden der Ordner',
-	'Are you sure?': 'Sind Sie sicher?',
-	'Enter Directory name': 'Geben Sie den Verzeichnisnamen ein',
-	'Create directory': 'Verzeichnis erstellen',
-	'type name': 'Typname',
-	'Drop image': 'Bild hier hinziehen',
-	'Drop file': 'Datei löschen',
-	'or click': 'oder hier klicken',
-	'Alternative text': 'Alternativtext',
-	Browse: 'Auswählen',
-	Upload: 'Hochladen',
-	Background: 'Hintergrund',
-	Text: 'Text',
-	Top: 'Oben',
-	Middle: 'Mittig',
-	Bottom: 'Unten',
-	'Insert column before': 'Spalte davor einfügen',
-	'Insert column after': 'Spalte danach einfügen',
-	'Insert row above': 'Zeile oberhalb einfügen',
-	'Insert row below': 'Zeile unterhalb einfügen',
-	'Delete table': 'Tabelle löschen',
-	'Delete row': 'Zeile löschen',
-	'Delete column': 'Spalte löschen',
-	'Empty cell': 'Zelle leeren',
-	Delete: 'Löschen',
-	'Strike through': 'Durchstreichen',
-	Underline: 'Unterstreichen',
-	Break: 'Pause',
-	'Search for': 'Suche nach',
-	'Replace with': 'Ersetzen durch',
-	Replace: 'Ersetzen',
-	Edit: 'Bearbeiten',
-	'Vertical align': 'Vertikale Ausrichtung',
-	'Horizontal align': 'Horizontale Ausrichtung',
-	Filter: 'Filter',
-	'Sort by changed': 'Sortieren nach geändert',
-	'Sort by name': 'Nach Name sortieren',
-	'Sort by size': 'Nach Größe sortiert',
-	'Add folder': 'Ordner hinzufügen',
-	'Split vertical': 'Vertikal unterteilen',
-	'Split horizontal': 'Horizontal unterteilen',
-	Split: 'Unterteilen',
-	Merge: 'Vereinen',
-	'Add column': 'Spalte hinzufügen',
-	'Add row': 'Zeile hinzufügen',
-	Border: 'Rand',
-	'Embed code': 'Code einbetten',
-	Update: 'Aktualisieren',
-	superscript: 'Hochgestellen',
-	subscript: 'Tiefstellen',
-	'Cut selection': 'Auswahl ausschneiden',
-	Paste: 'Einfügen',
-	'Choose Content to Paste': 'Wählen Sie den Inhalt zum Einfügen aus',
-	'Chars: %d': 'Zeichen: %d',
-	'Words: %d': 'Wörter: %d',
-	All: 'Alles markieren',
-	'Select %s': 'Markieren: %s',
-	'Select all': 'Alles markieren',
-	source: 'HTML',
-	bold: 'Fett gedruckt',
-	italic: 'Kursiv',
-	brush: 'Bürste',
-	link: 'Verknüpfung',
-	undo: 'Rückgängig machen',
-	redo: 'Wiederholen',
-	table: 'Tabelle',
-	image: 'Bild',
-	eraser: 'Radiergummi',
-	paragraph: 'Absatz',
-	fontsize: 'Schriftgröße',
-	video: 'Video',
-	font: 'Schriftart',
-	about: 'Über',
-	print: 'Drucken',
-	symbol: 'Symbol',
-	underline: 'Unterstreichen',
-	strikethrough: 'Durchstreichen',
-	indent: 'Einzug',
-	outdent: 'Herausstellen',
-	fullsize: 'Vollgröße',
-	shrink: 'Schrumpfen',
-	copyformat: 'Format kopierenт',
-	hr: 'die Linie',
-	ul: 'Liste von',
-	ol: 'Nummerierte Liste',
-	'Lower Alpha': 'Standard, Alphabet (klein)',
-	'Upper Alpha': 'Standard, Alphabet (gross)',
-	'Lower Roman': 'Römisch (klein)',
-	'Upper Roman': 'Römisch (gross)',
-	'Lower Greek': 'Griechisch',
-	cut: 'Schneiden',
-	selectall: 'Wählen Sie Alle aus',
-	'Open link': 'Link öffnen',
-	'Edit link': 'Link bearbeiten',
-	'No follow': 'Nofollow-Attribut',
-	Unlink: 'Link entfernen',
-	Eye: 'Ansehen',
-	pencil: 'Bearbeiten',
-	' URL': 'URL',
-	Reset: 'Wiederherstellen',
-	Save: 'Speichern',
-	'Save as ...': 'Speichern als',
-	Resize: 'Größe ändern',
-	Crop: 'Größe anpassen',
-	Width: 'Breite',
-	Height: 'Höhe',
-	'Keep Aspect Ratio': 'Seitenverhältnis beibehalten',
-	Yes: 'Ja',
-	No: 'Nein',
-	Remove: 'Entfernen',
-	Select: 'Markieren',
-	'You can only edit your own images. Download this image on the host?':
-		'Sie können nur Ihre eigenen Bilder bearbeiten. Dieses Bild auf den Host herunterladen?',
-	'The image has been successfully uploaded to the host!':
-		'Das Bild wurde erfolgreich auf den Server hochgeladen!',
-	palette: 'Palette',
-	'There are no files': 'In diesem Verzeichnis befinden sich keine Dateien.',
-	Rename: 'Umbenennen',
-	'Enter new name': 'Geben Sie einen neuen Namen ein',
-	preview: 'Vorschau',
-	download: 'Herunterladen',
-	'Paste from clipboard': 'Aus Zwischenablage einfügen',
-	"Your browser doesn't support direct access to the clipboard.":
-		'Ihr Browser unterstützt keinen direkten Zugriff auf die Zwischenablage.',
-	'Copy selection': 'Auswahl kopieren',
-	copy: 'Kopieren',
-	'Border radius': 'Radius für abgerundete Ecken',
-	'Show all': 'Alle anzeigen',
-	Apply: 'Anwenden',
-	'Please fill out this field': 'Bitte füllen Sie dieses Feld aus',
-	'Please enter a web address': 'Bitte geben Sie eine Web-Adresse ein',
-	Default: 'Standard',
-	Circle: 'Kreis',
-	Dot: 'Punkte',
-	Quadrate: 'Quadrate',
-	Find: 'Suchen',
-	'Find Previous': 'Suche vorherige',
-	'Find Next': 'Weitersuchen',
-	'Insert className': 'className (CSS) einfügen',
-	'Line height': 'Zeilenhöhe',
-	Spellchecking: 'Rechtschreibprüfung',
-	'Press Alt for custom resizing':
-		'Drücken Sie Alt für benutzerdefinierte Größenanpassung'
+	'copy-format': 'Format kopierenт'
 };
 
 
 /***/ }),
 
-/***/ 27390:
+/***/ 63640:
 /***/ (function(module) {
 
 /*!
@@ -38754,15 +38500,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Start writing...',
-	pencil: 'Edit',
-	Quadrate: 'Square'
+	'copy-format': 'Copiar formato'
 };
 
 
 /***/ }),
 
-/***/ 65857:
+/***/ 53434:
 /***/ (function(module) {
 
 /*!
@@ -38772,239 +38516,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Escriba algo...',
-	Advanced: 'Avanzado',
-	'About Jodit': 'Acerca de Jodit',
-	'Jodit Editor': 'Jodit Editor',
-	"Jodit User's Guide": 'Guía de usuario Jodit',
-	'contains detailed help for using': 'contiene ayuda detallada para el uso.',
-	'For information about the license, please go to our website:':
-		'Para información sobre la licencia, por favor visite nuestro sitio:',
-	'Buy full version': 'Compre la versión completa',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. Todos los derechos reservados.',
-	Anchor: 'Anclar',
-	'Open in new tab': 'Abrir en nueva pestaña',
-	'Open editor in fullsize': 'Abrir editor en pantalla completa',
-	'Clear Formatting': 'Limpiar formato',
-	'Fill color or set the text color': 'Color de relleno o de letra',
-	Redo: 'Rehacer',
-	Undo: 'Deshacer',
-	Bold: 'Negrita',
-	Italic: 'Cursiva',
-	'Insert Unordered List': 'Insertar lista no ordenada',
-	'Insert Ordered List': 'Insertar lista ordenada',
-	'Align Center': 'Alinear Centrado',
-	'Align Justify': 'Alinear Justificado',
-	'Align Left': 'Alinear Izquierda',
-	'Align Right': 'Alinear Derecha',
-	'Insert Horizontal Line': 'Insertar línea horizontal',
-	'Insert Image': 'Insertar imagen',
-	'Insert file': 'Insertar archivo',
-	'Insert youtube/vimeo video': 'Insertar video de Youtube/vimeo',
-	'Insert link': 'Insertar vínculo',
-	'Font size': 'Tamaño de letra',
-	'Font family': 'Familia de letra',
-	'Insert format block': 'Insertar bloque',
-	Normal: 'Normal',
-	'Heading 1': 'Encabezado 1',
-	'Heading 2': 'Encabezado 2',
-	'Heading 3': 'Encabezado 3',
-	'Heading 4': 'Encabezado 4',
-	Quote: 'Cita',
-	Code: 'Código',
-	Insert: 'Insertar',
-	'Insert table': 'Insertar tabla',
-	'Decrease Indent': 'Disminuir sangría',
-	'Increase Indent': 'Aumentar sangría',
-	'Select Special Character': 'Seleccionar caracter especial',
-	'Insert Special Character': 'Insertar caracter especial',
-	'Paint format': 'Copiar formato',
-	'Change mode': 'Cambiar modo',
-	Margins: 'Márgenes',
-	top: 'arriba',
-	right: 'derecha',
-	bottom: 'abajo',
-	left: 'izquierda',
-	Styles: 'Estilos CSS',
-	Classes: 'Clases CSS',
-	Align: 'Alinear',
-	Right: 'Derecha',
-	Center: 'Centrado',
-	Left: 'Izquierda',
-	'--Not Set--': '--No Establecido--',
-	Src: 'Fuente',
-	Title: 'Título',
-	Alternative: 'Texto Alternativo',
-	Link: 'Vínculo',
-	'Open link in new tab': 'Abrir vínculo en nueva pestaña',
-	Image: 'Imagen',
-	file: 'Archivo',
-	Advansed: 'Avanzado',
-	'Image properties': 'Propiedades de imagen',
-	Cancel: 'Cancelar',
-	Ok: 'Aceptar',
-	'Your code is similar to HTML. Keep as HTML?':
-		'El código es similar a HTML. ¿Mantener como HTML?',
-	'Paste as HTML': 'Pegar como HTML?',
-	Keep: 'Mantener',
-	Clean: 'Limpiar',
-	'Insert as Text': 'Insertar como texto',
-	'Word Paste Detected': 'Pegado desde Word detectado',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'El contenido pegado proviene de un documento de Microsoft Word/Excel. ¿Desea mantener el formato o limpiarlo?',
-	'Insert only Text': 'Insertar solo texto',
-	'File Browser': 'Buscar archivo',
-	'Error on load list': 'Error al cargar la lista',
-	'Error on load folders': 'Error al cargar las carpetas',
-	'Are you sure?': '¿Está seguro?',
-	'Enter Directory name': 'Entre nombre de carpeta',
-	'Create directory': 'Crear carpeta',
-	'type name': 'Entre el nombre',
-	'Drop image': 'Soltar imagen',
-	'Drop file': 'Soltar archivo',
-	'or click': 'o click',
-	'Alternative text': 'Texto alternativo',
-	Browse: 'Buscar',
-	Upload: 'Subir',
-	Background: 'Fondo',
-	Text: 'Texto',
-	Top: 'Arriba',
-	Middle: 'Centro',
-	Bottom: 'Abajo',
-	'Insert column before': 'Insertar columna antes',
-	'Insert column after': 'Interar columna después',
-	'Insert row above': 'Insertar fila arriba',
-	'Insert row below': 'Insertar fila debajo',
-	'Delete table': 'Borrar tabla',
-	'Delete row': 'Borrar fila',
-	'Delete column': 'Borrar columna',
-	'Empty cell': 'Vaciar celda',
-	Delete: 'Borrar',
-	'Strike through': 'Tachado',
-	Underline: 'Subrayado',
-	Break: 'Pausa',
-	'Search for': 'Buscar',
-	'Replace with': 'Reemplazar con',
-	Replace: 'Reemplazar',
-	Edit: 'Editar',
-	'Vertical align': 'Alineación vertical',
-	'Horizontal align': 'Alineación horizontal',
-	Filter: 'filtrar',
-	'Sort by changed': 'Ordenar por fecha modificación',
-	'Sort by name': 'Ordenar por nombre',
-	'Sort by size': 'Ordenar por tamaño',
-	'Add folder': 'Agregar carpeta',
-	Split: 'Dividir',
-	'Split vertical': 'Dividir vertical',
-	'Split horizontal': 'Dividir horizontal',
-	Merge: 'Mezclar',
-	'Add column': 'Agregar columna',
-	'Add row': 'Agregar fila',
-	Border: 'Borde',
-	'Embed code': 'Incluir código',
-	Update: 'Actualizar',
-	superscript: 'superíndice',
-	subscript: 'subíndice',
-	'Cut selection': 'Cortar selección',
-	Paste: 'Pegar',
-	'Choose Content to Paste': 'Seleccionar contenido para pegar',
-	'Chars: %d': 'Caracteres: %d',
-	'Words: %d': 'Palabras: %d',
-	All: 'Todo',
-	'Select %s': 'Seleccionar: %s',
-	'Select all': 'Seleccionar todo',
-	source: 'HTML',
-	bold: 'negrita',
-	italic: 'cursiva',
-	brush: 'Brocha',
-	link: 'Vínculo',
-	undo: 'deshacer',
-	redo: 'rehacer',
-	table: 'Tabla',
-	image: 'Imagen',
-	eraser: 'Borrar',
-	paragraph: 'Párrafo',
-	fontsize: 'Tamaño de letra',
-	video: 'Video',
-	font: 'Letra',
-	about: 'Acerca de',
-	print: 'Imprimir',
-	symbol: 'Símbolo',
-	underline: 'subrayar',
-	strikethrough: 'tachar',
-	indent: 'sangría',
-	outdent: 'quitar sangría',
-	fullsize: 'Tamaño completo',
-	shrink: 'encoger',
-	copyformat: 'Copiar formato',
-	hr: 'línea horizontal',
-	ul: 'lista sin ordenar',
-	ol: 'lista ordenada',
-	cut: 'Cortar',
-	selectall: 'Seleccionar todo',
-	'Open link': 'Abrir vínculo',
-	'Edit link': 'Editar vínculo',
-	'No follow': 'No seguir',
-	Unlink: 'Desvincular',
-	Eye: 'Ver',
-	pencil: 'Para editar',
-	' URL': 'URL',
-	Reset: 'Resetear',
-	Save: 'Guardar',
-	'Save as ...': 'Guardar como...',
-	Resize: 'Redimensionar',
-	Crop: 'Recortar',
-	Width: 'Ancho',
-	Height: 'Alto',
-	'Keep Aspect Ratio': 'Mantener relación de aspecto',
-	Yes: 'Si',
-	No: 'No',
-	Remove: 'Quitar',
-	Select: 'Seleccionar',
-	'You can only edit your own images. Download this image on the host?':
-		'Solo puedes editar tus propias imágenes. ¿Descargar esta imagen en el servidor?',
-	'The image has been successfully uploaded to the host!':
-		'¡La imagen se ha subido correctamente al servidor!',
-	palette: 'paleta',
-	'There are no files': 'No hay archivos en este directorio.',
-	Rename: 'renombrar',
-	'Enter new name': 'Ingresa un nuevo nombre',
-	preview: 'avance',
-	download: 'Descargar',
-	'Paste from clipboard': 'Pegar desde el portapapeles',
-	"Your browser doesn't support direct access to the clipboard.":
-		'Su navegador no soporta el acceso directo en el portapapeles.',
-	'Copy selection': 'Selección de copia',
-	copy: 'copia',
-	'Border radius': 'Radio frontera',
-	'Show all': 'Mostrar todos los',
-	Apply: 'Aplicar',
-	'Please fill out this field': 'Por favor, rellene este campo',
-	'Please enter a web address': 'Por favor, introduzca una dirección web',
-	Default: 'Predeterminado',
-	Circle: 'Círculo',
-	Dot: 'Punto',
-	Quadrate: 'Cuadro',
-	'Lower Alpha': 'Letra Minúscula',
-	'Lower Greek': 'Griego Minúscula',
-	'Lower Roman': 'Romano Minúscula',
-	'Upper Alpha': 'Letra Mayúscula',
-	'Upper Roman': 'Romano Mayúscula',
-	Find: 'Encontrar',
-	'Find Previous': 'Buscar Anterior',
-	'Find Next': 'Buscar Siguiente',
-	'Insert className': 'Insertar nombre de clase',
-	'Line height': 'Altura de la línea',
-	Spellchecking: 'Corrección ortográfica',
-	'Press Alt for custom resizing':
-		'Presione Alt para cambiar el tamaño personalizado'
+	'copy-format': 'کپی کردن قالب'
 };
 
 
 /***/ }),
 
-/***/ 64491:
+/***/ 85638:
 /***/ (function(module) {
 
 /*!
@@ -39014,230 +38532,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Ecrivez ici',
-	'About Jodit': 'A propos de Jodit',
-	'Jodit Editor': 'Editeur Jodit',
-	"Jodit User's Guide": "Guide de l'utilisateur",
-	'contains detailed help for using': "Aide détaillée à l'utilisation",
-	'For information about the license, please go to our website:':
-		'Consulter la licence sur notre site web:',
-	'Buy full version': 'Acheter la version complète',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. Tous droits réservés.',
-	Anchor: 'Ancre',
-	'Open in new tab': 'Ouvrir dans un nouvel onglet',
-	'Open editor in fullsize': "Ouvrir l'éditeur en pleine page",
-	'Clear Formatting': 'Supprimer le formattage',
-	'Fill color or set the text color':
-		'Modifier la couleur du fond ou du texte',
-	Redo: 'Refaire',
-	Undo: 'Défaire',
-	Bold: 'Gras',
-	Italic: 'Italique',
-	'Insert Unordered List': 'Liste non ordonnée',
-	'Insert Ordered List': 'Liste ordonnée',
-	'Align Center': 'Centrer',
-	'Align Justify': 'Justifier',
-	'Align Left': 'Aligner à gauche ',
-	'Align Right': 'Aligner à droite',
-	'Insert Horizontal Line': 'Insérer une ligne horizontale',
-	'Insert Image': 'Insérer une image',
-	'Insert file': 'Insérer un fichier',
-	'Insert youtube/vimeo video': 'Insérer une vidéo',
-	'Insert link': 'Insérer un lien',
-	'Font size': 'Taille des caractères',
-	'Font family': 'Famille des caractères',
-	'Insert format block': 'Bloc formatté',
-	Normal: 'Normal',
-	'Heading 1': 'Titre 1',
-	'Heading 2': 'Titre 2',
-	'Heading 3': 'Titre 3',
-	'Heading 4': 'Titre 4',
-	Quote: 'Citation',
-	Code: 'Code',
-	Insert: 'Insérer',
-	'Insert table': 'Insérer un tableau',
-	'Decrease Indent': 'Diminuer le retrait',
-	'Increase Indent': 'Retrait plus',
-	'Select Special Character': 'Sélectionnez un caractère spécial',
-	'Insert Special Character': 'Insérer un caractère spécial',
-	'Paint format': 'Cloner le format',
-	'Change mode': 'Mode wysiwyg <-> code html',
-	Margins: 'Marges',
-	top: 'haut',
-	right: 'droite',
-	bottom: 'Bas',
-	left: 'gauche',
-	Styles: 'Styles',
-	Classes: 'Classes',
-	Align: 'Alignement',
-	Right: 'Droite',
-	Center: 'Centre',
-	Left: 'Gauche',
-	'--Not Set--': '--Non disponible--',
-	Src: 'Source',
-	Title: 'Titre',
-	Alternative: 'Alternative',
-	Filter: 'Filtre',
-	Link: 'Lien',
-	'Open link in new tab': 'Ouvrir le lien dans un nouvel onglet',
-	Image: 'Image',
-	file: 'fichier',
-	Advanced: 'Avancé',
-	'Image properties': "Propriétés de l'image",
-	Cancel: 'Annuler',
-	Ok: 'OK',
-	'Your code is similar to HTML. Keep as HTML?':
-		'Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?',
-	'Paste as HTML': 'Coller en HTML?',
-	Keep: "Sauvegarder l'original",
-	Clean: 'Nettoyer',
-	'Insert as Text': 'Coller en tant que texte',
-	'Word Paste Detected': "C'est peut-être un fragment de Word ou Excel",
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		"Le contenu que vous insérez provient d'un document Microsoft Word / Excel. Voulez-vous enregistrer le format ou l'effacer?",
-	'Insert only Text': 'Coller le texte seulement',
-	'File Browser': 'Explorateur de fichiers',
-	'Error on load list': 'Erreur de liste de chargement',
-	'Error on load folders': 'Erreur de dossier de chargement',
-	'Are you sure?': 'Etes-vous sûrs ?',
-	'Enter Directory name': 'Entrer le non de dossier',
-	'Create directory': 'Créer un dossier',
-	'type name': 'type de fichier',
-	'Drop image': 'Coller une image',
-	'Drop file': 'Déposer un fichier',
-	'or click': 'ou cliquer',
-	'Alternative text': 'Texte de remplacemement',
-	Browse: 'Chercher',
-	Upload: 'Charger',
-	Background: 'Arrière-plan',
-	Text: 'Texte',
-	Top: 'Haut',
-	Middle: 'Milieu',
-	Bottom: 'Bas',
-	'Insert column before': 'Insérer une colonne avant',
-	'Insert column after': 'Insérer une colonne après',
-	'Insert row above': 'Insérer une ligne en dessus',
-	'Insert row below': 'Insérer une ligne en dessous',
-	'Delete table': 'Supprimer le tableau',
-	'Delete row': 'Supprimer la ligne',
-	'Delete column': 'Supprimer la colonne',
-	'Empty cell': 'Vider la cellule',
-	'Chars: %d': 'Symboles: %d',
-	'Words: %d': 'Mots: %d',
-	Split: 'Split',
-	'Split vertical': 'Split vertical',
-	'Split horizontal': 'Split horizontal',
-	'Strike through': 'Frapper à travers',
-	Underline: 'Souligner',
-	superscript: 'exposant',
-	subscript: 'indice',
-	'Cut selection': 'Couper la sélection',
-	'Select all': 'Tout sélectionner',
-	Break: 'Pause',
-	'Search for': 'Rechercher',
-	'Replace with': 'Remplacer par',
-	Replace: 'Remplacer',
-	Paste: 'Coller',
-	'Choose Content to Paste': 'Choisissez le contenu à coller',
-	source: 'la source',
-	bold: 'graisseux',
-	italic: 'italique',
-	brush: 'verser',
-	link: 'lien',
-	undo: 'abolir',
-	redo: 'prêt',
-	table: 'graphique',
-	image: 'Image',
-	eraser: 'la gommen',
-	paragraph: 'clause',
-	fontsize: 'taille de police',
-	video: 'Video',
-	font: 'police',
-	about: "à propos de l'éditeur",
-	print: 'impression',
-	symbol: 'caractère',
-	underline: 'souligné',
-	strikethrough: 'barré',
-	indent: 'indentation',
-	outdent: 'indifférent',
-	fullsize: 'taille réelle',
-	shrink: 'taille conventionnelle',
-	copyformat: 'Format de copie',
-	hr: 'la ligne',
-	ul: 'Liste des',
-	ol: 'Liste numérotée',
-	cut: 'Couper',
-	selectall: 'Sélectionner tout',
-	'Open link': 'Ouvrir le lien',
-	'Edit link': 'Modifier le lien',
-	'No follow': 'Attribut Nofollow',
-	Unlink: 'Supprimer le lien',
-	Eye: 'Voir',
-	pencil: 'Pour éditer',
-	' URL': 'URL',
-	Reset: 'Restaurer',
-	Save: 'Sauvegarder',
-	'Save as ...': 'Enregistrer sous',
-	Resize: 'Changer la taille',
-	Crop: 'Taille de garniture',
-	Width: 'Largeur',
-	Height: 'Hauteur',
-	'Keep Aspect Ratio': 'Garder les proportions',
-	Yes: 'Oui',
-	No: 'Non',
-	Remove: 'Supprimer',
-	Select: 'Mettre en évidence',
-	'Select %s': 'Mettre en évidence: %s',
-	Update: 'Mettre à jour',
-	'Vertical align': 'Alignement vertical',
-	Merge: 'aller',
-	'Add column': 'Ajouter une colonne',
-	'Add row': 'Ajouter une rangée',
-	Delete: 'Effacer',
-	'Horizontal align': 'Alignement horizontal',
-	'Sort by changed': 'Trier par modifié',
-	'Sort by name': 'Trier par nom',
-	'Sort by size': 'Classer par taille',
-	'Add folder': 'Ajouter le dossier',
-	'You can only edit your own images. Download this image on the host?':
-		"Vous ne pouvez éditer que vos propres images. Téléchargez cette image sur l'hôte?",
-	'The image has been successfully uploaded to the host!':
-		"L'image a été téléchargée avec succès sur le serveur!null",
-	palette: 'Palette',
-	'There are no files': "Il n'y a aucun fichier dans ce répertoire.",
-	Rename: 'renommer',
-	'Enter new name': 'Entrez un nouveau nom',
-	preview: 'Aperçu',
-	download: 'Télécharger',
-	'Paste from clipboard': 'Coller à partir du presse-papiers',
-	"Your browser doesn't support direct access to the clipboard.":
-		"Votre navigateur ne prend pas en charge l'accès direct à la presse-papiers.",
-	'Copy selection': 'Copier la sélection',
-	copy: 'copie',
-	'Border radius': 'Rayon des frontières',
-	'Show all': 'Afficher tous les',
-	Apply: 'Appliquer',
-	'Please fill out this field': 'Veuillez remplir ce champ',
-	'Please enter a web address': 'Veuillez entrer une adresse web',
-	Default: 'Par défaut',
-	Circle: 'Cercle',
-	Dot: 'Dot',
-	Quadrate: 'Quadrate',
-	Find: 'Trouver',
-	'Find Previous': 'Trouvez Précédente',
-	'Find Next': 'Suivant',
-	'Insert className': 'Insérer un nom de classe',
-	'Line height': 'Hauteur de ligne',
-	Spellchecking: 'Vérification Orthographique',
-	'Press Alt for custom resizing':
-		'Appuyez sur Alt pour un redimensionnement personnalisé'
+	'copy-format': 'Format de copie'
 };
 
 
 /***/ }),
 
-/***/ 15794:
+/***/ 31743:
 /***/ (function(module) {
 
 /*!
@@ -39247,233 +38548,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'הקלד משהו...',
-	Advanced: 'מתקדם',
-	'About Jodit': 'About Jodit',
-	'Jodit Editor': 'Jodit Editor',
-	"Jodit User's Guide": "Jodit User's Guide",
-	'contains detailed help for using': 'contains detailed help for using.',
-	'For information about the license, please go to our website:':
-		'For information about the license, please go to our website:',
-	'Buy full version': 'Buy full version',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.',
-	Anchor: 'מקום עיגון',
-	'Open in new tab': 'פתח בכרטיסיה חדשה',
-	'Open editor in fullsize': 'פתח את העורך בחלון חדש',
-	'Clear Formatting': 'נקה עיצוב',
-	'Fill color or set the text color': 'שנה צבע טקסט או רקע',
-	Redo: 'בצע שוב',
-	Undo: 'בטל',
-	Bold: 'מודגש',
-	Italic: 'נטוי',
-	'Insert Unordered List': 'הכנס רשימת תבליטים',
-	'Insert Ordered List': 'הכנס רשימה ממוספרת',
-	'Align Center': 'מרכז',
-	'Align Justify': 'ישר ',
-	'Align Left': 'ישר לשמאל',
-	'Align Right': 'ישר לימין',
-	'Insert Horizontal Line': 'הכנס קו אופקי',
-	'Insert Image': 'הכנס תמונה',
-	'Insert file': 'הכנס קובץ',
-	'Insert youtube/vimeo video': 'הכנס סרטון וידאו מYouTube/Vimeo',
-	'Insert link': 'הכנס קישור',
-	'Font size': 'גודל גופן',
-	'Font family': 'גופן',
-	'Insert format block': 'מעוצב מראש',
-	Normal: 'רגיל',
-	'Heading 1': 'כותרת 1',
-	'Heading 2': 'כותרת 2',
-	'Heading 3': 'כותרת 3',
-	'Heading 4': 'כותרת 4',
-	Quote: 'ציטוט',
-	Code: 'קוד',
-	Insert: 'הכנס',
-	'Insert table': 'הכנס טבלה',
-	'Decrease Indent': 'הקטן כניסה',
-	'Increase Indent': 'הגדל כניסה',
-	'Select Special Character': 'בחר תו מיוחד',
-	'Insert Special Character': 'הכנס תו מיוחד',
-	'Paint format': 'העתק עיצוב',
-	'Change mode': 'החלף מצב',
-	Margins: 'ריווח',
-	top: 'עליון',
-	right: 'ימין',
-	bottom: 'תחתון',
-	left: 'שמאל',
-	Styles: 'עיצוב CSS',
-	Classes: 'מחלקת CSS',
-	Align: 'יישור',
-	Right: 'ימין',
-	Center: 'מרכז',
-	Left: 'שמאל',
-	'--Not Set--': '--לא נקבע--',
-	Src: 'מקור',
-	Title: 'כותרת',
-	Alternative: 'כיתוב חלופי',
-	Link: 'קישור',
-	'Open link in new tab': 'פתח בכרטיסיה חדשה',
-	Image: 'תמונה',
-	file: 'קובץ',
-	Advansed: 'מתקדם',
-	'Image properties': 'מאפייני תמונה',
-	Cancel: 'ביטול',
-	Ok: 'אישור',
-	'Your code is similar to HTML. Keep as HTML?':
-		'הקוד דומה לHTML, האם להשאיר כHTML',
-	'Paste as HTML': 'הדבק כHTML',
-	Keep: 'השאר',
-	Clean: 'נקה',
-	'Insert as Text': 'הכנס כטקסט',
-	'Word Paste Detected': 'זוהתה הדבקה מ"וורד"',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'התוכן המודבק מגיע ממסמך וורד/אקסל. האם ברצונך להשאיר את העיצוב או לנקותו',
-	'Insert only Text': 'הכנס טקסט בלבד',
-	'File Browser': 'סייר הקבצים',
-	'Error on load list': 'שגיאה  בזמן טעינת רשימה',
-	'Error on load folders': 'שגיאה בזמן טעינת תקיות',
-	'Are you sure?': 'האם אתה בטוח?',
-	'Enter Directory name': 'הכנס שם תקיה',
-	'Create directory': 'צור תקיה',
-	'type name': 'סוג הקובץ',
-	'Drop image': 'הסר תמונה',
-	'Drop file': 'הסר קובץ',
-	'or click': 'או לחץ',
-	'Alternative text': 'כיתוב חלופי',
-	Browse: 'סייר',
-	Upload: 'העלה',
-	Background: 'רקע',
-	Text: 'טקסט',
-	Top: 'עליון',
-	Middle: 'מרכז',
-	Bottom: 'תחתון',
-	'Insert column before': 'הכנס עמודה לפני',
-	'Insert column after': 'הכנס עמודה אחרי',
-	'Insert row above': 'הכנס שורה מעל',
-	'Insert row below': 'הכנס שורה מתחת',
-	'Delete table': 'מחק טבלה',
-	'Delete row': 'מחק שורה',
-	'Delete column': 'מחק עמודה',
-	'Empty cell': 'רוקן תא',
-	Delete: 'מחק',
-	'Strike through': 'קו חוצה',
-	Underline: 'קו תחתון',
-	Break: 'שבירת שורה',
-	'Search for': 'חפש',
-	'Replace with': 'החלף ב',
-	Replace: 'להחליף',
-	Edit: 'ערוך',
-	'Vertical align': 'יישור אנכי',
-	'Horizontal align': 'יישור אופקי',
-	Filter: 'סנן',
-	'Sort by changed': 'מין לפי שינוי',
-	'Sort by name': 'מיין לפי שם',
-	'Sort by size': 'מיין לפי גודל',
-	'Add folder': 'הוסף תקייה',
-	Split: 'פיצול',
-	'Split vertical': 'פיצול אנכי',
-	'Split horizontal': 'פיצול אופקי',
-	Merge: 'מזג',
-	'Add column': 'הוסף עמודה',
-	'Add row': 'הוסף שורה',
-	Border: 'מסגרת',
-	'Embed code': 'הוסף קוד',
-	Update: 'עדכן',
-	superscript: 'superscript',
-	subscript: 'subscript',
-	'Cut selection': 'גזור בחירה',
-	Paste: 'הדבק',
-	'Choose Content to Paste': 'בחר תוכן להדבקה',
-	'Chars: %d': 'תווים: %d',
-	'Words: %d': 'מילים: %d',
-	All: 'הכל',
-	'Select %s': 'נבחר: %s',
-	'Select all': 'בחר הכל',
-	source: 'HTML',
-	bold: 'מודגש',
-	italic: 'נטוי',
-	brush: 'מברשת',
-	link: 'קישור',
-	undo: 'בטל',
-	redo: 'בצע שוב',
-	table: 'טבלה',
-	image: 'תמונה',
-	eraser: 'מחק',
-	paragraph: 'פסקה',
-	fontsize: 'גודל גופן',
-	video: 'וידאו',
-	font: 'גופן',
-	about: 'עלינו',
-	print: 'הדפס',
-	symbol: 'תו מיוחד',
-	underline: 'קו תחתון',
-	strikethrough: 'קו חוצה',
-	indent: 'הגדל כניסה',
-	outdent: 'הקטן כניסה',
-	fullsize: 'גודל מלא',
-	shrink: 'כווץ',
-	copyformat: 'העתק עיצוב',
-	hr: 'קו אופקי',
-	ul: 'רשימת תבליטים',
-	ol: 'רשימה ממוספרת',
-	cut: 'חתוך',
-	selectall: 'בחר הכל',
-	'Open link': 'פתח קישור',
-	'Edit link': 'ערוך קישור',
-	'No follow': 'ללא מעקב',
-	Unlink: 'בטל קישור',
-	Eye: 'הצג',
-	pencil: 'כדי לערוך',
-	' URL': 'כתובת',
-	Reset: 'אפס',
-	Save: 'שמור',
-	'Save as ...': 'שמור בשם...',
-	Resize: 'שנה גודל',
-	Crop: 'חתוך',
-	Width: 'רוחב',
-	Height: 'גובה',
-	'Keep Aspect Ratio': 'שמור יחס',
-	Yes: 'כן',
-	No: 'לא',
-	Remove: 'הסר',
-	Select: 'בחר',
-	'You can only edit your own images. Download this image on the host?':
-		'רק קבצים המשוייכים שלך ניתנים לעריכה. האם להוריד את הקובץ?',
-	'The image has been successfully uploaded to the host!':
-		'התמונה עלתה בהצלחה!',
-	palette: 'לוח',
-	'There are no files': 'אין קבצים בספריה זו.',
-	Rename: 'הונגרית',
-	'Enter new name': 'הזן שם חדש',
-	preview: 'תצוגה מקדימה',
-	download: 'הורד',
-	'Paste from clipboard': 'להדביק מהלוח',
-	"Your browser doesn't support direct access to the clipboard.":
-		'הדפדפן שלך לא תומך גישה ישירה ללוח.',
-	'Copy selection': 'העתק בחירה',
-	copy: 'העתק',
-	'Border radius': 'רדיוס הגבול',
-	'Show all': 'הצג את כל',
-	Apply: 'החל',
-	'Please fill out this field': 'נא למלא שדה זה',
-	'Please enter a web address': 'אנא הזן כתובת אינטרנט',
-	Default: 'ברירת המחדל',
-	Circle: 'מעגל',
-	Dot: 'נקודה',
-	Quadrate: 'הריבוע הזה',
-	Find: 'למצוא',
-	'Find Previous': 'מצא את הקודם',
-	'Find Next': 'חפש את הבא',
-	'Insert className': 'הכנס את שם הכיתה',
-	'Line height': 'גובה שורה',
-	Spellchecking: 'בדיקת איות',
-	'Press Alt for custom resizing': 'לחץ על אלט לשינוי גודל מותאם אישית'
+	'copy-format': 'העתק עיצוב'
 };
 
 
 /***/ }),
 
-/***/ 48963:
+/***/ 66219:
 /***/ (function(module) {
 
 /*!
@@ -39483,235 +38564,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Írjon be valamit',
-	Advanced: 'Haladó',
-	'About Jodit': 'Joditról',
-	'Jodit Editor': 'Jodit Editor',
-	'Free Non-commercial Version': 'Ingyenes változat',
-	"Jodit User's Guide": 'Jodit útmutató',
-	'contains detailed help for using': 'további segítséget tartalmaz',
-	'For information about the license, please go to our website:':
-		'További licence információkért látogassa meg a weboldalunkat:',
-	'Buy full version': 'Teljes verzió megvásárlása',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. Minden jog fenntartva.',
-	Anchor: 'Horgony',
-	'Open in new tab': 'Megnyitás új lapon',
-	'Open editor in fullsize': 'Megnyitás teljes méretben',
-	'Clear Formatting': 'Formázás törlése',
-	'Fill color or set the text color': 'Háttér/szöveg szín',
-	Redo: 'Újra',
-	Undo: 'Visszavon',
-	Bold: 'Félkövér',
-	Italic: 'Dőlt',
-	'Insert Unordered List': 'Pontozott lista',
-	'Insert Ordered List': 'Számozott lista',
-	'Align Center': 'Középre zárt',
-	'Align Justify': 'Sorkizárt',
-	'Align Left': 'Balra zárt',
-	'Align Right': 'Jobbra zárt',
-	'Insert Horizontal Line': 'Vízszintes vonal beszúrása',
-	'Insert Image': 'Kép beszúrás',
-	'Insert file': 'Fájl beszúrás',
-	'Insert youtube/vimeo video': 'Youtube videó beszúrása',
-	'Insert link': 'Link beszúrás',
-	'Font size': 'Betűméret',
-	'Font family': 'Betűtípus',
-	'Insert format block': 'Formázott blokk beszúrása',
-	Normal: 'Normál',
-	'Heading 1': 'Fejléc 1',
-	'Heading 2': 'Fejléc 2',
-	'Heading 3': 'Fejléc 3',
-	'Heading 4': 'Fejléc 4',
-	Quote: 'Idézet',
-	Code: 'Kód',
-	Insert: 'Beszúr',
-	'Insert table': 'Táblázat beszúrása',
-	'Decrease Indent': 'Behúzás csökkentése',
-	'Increase Indent': 'Behúzás növelése',
-	'Select Special Character': 'Speciális karakter kiválasztása',
-	'Insert Special Character': 'Speciális karakter beszúrása',
-	'Paint format': 'Kép formázása',
-	'Change mode': 'Nézet váltása',
-	Print: 'Nyomtatás',
-	Margins: 'Szegélyek',
-	top: 'felső',
-	right: 'jobb',
-	bottom: 'alsó',
-	left: 'bal',
-	Styles: 'CSS stílusok',
-	Classes: 'CSS osztályok',
-	Align: 'Igazítás',
-	Right: 'Jobbra',
-	Center: 'Középre',
-	Left: 'Balra',
-	'--Not Set--': 'Nincs',
-	Src: 'Forrás',
-	Title: 'Cím',
-	Alternative: 'Helyettesítő szöveg',
-	Link: 'Link',
-	'Open link in new tab': 'Link megnyitása új lapon',
-	Image: 'Kép',
-	file: 'Fájl',
-	Advansed: 'További beállítás',
-	'Image properties': 'Kép tulajdonságai',
-	Cancel: 'Mégsem',
-	Ok: 'OK',
-	'Your code is similar to HTML. Keep as HTML?':
-		'A beillesztett szöveg HTML-nek tűnik. Megtartsuk HTML-ként?',
-	'Paste as HTML': 'Beszúrás HTML-ként',
-	Keep: 'Megtartás',
-	Clean: 'Elvetés',
-	'Insert as Text': 'Beszúrás szövegként',
-	'Word Paste Detected': 'Word-ből másolt szöveg',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'A beillesztett tartalom Microsoft Word/Excel dokumentumból származik. Meg szeretné tartani a formátumát?',
-	'Insert only Text': 'Csak szöveg beillesztése',
-	'File Browser': 'Fájl tallózó',
-	'Error on load list': 'Hiba a lista betöltése közben',
-	'Error on load folders': 'Hiba a mappák betöltése közben',
-	'Are you sure?': 'Biztosan ezt szeretné?',
-	'Enter Directory name': 'Írjon be egy mappanevet',
-	'Create directory': 'Mappa létrehozása',
-	'type name': 'írjon be bevet',
-	'Drop image': 'Húzza ide a képet',
-	'Drop file': 'Húzza ide a fájlt',
-	'or click': 'vagy kattintson',
-	'Alternative text': 'Helyettesítő szöveg',
-	Browse: 'Tallóz',
-	Upload: 'Feltölt',
-	Background: 'Háttér',
-	Text: 'Szöveg',
-	Top: 'Fent',
-	Middle: 'Középen',
-	Bottom: 'Lent',
-	'Insert column before': 'Oszlop beszúrás elé',
-	'Insert column after': 'Oszlop beszúrás utána',
-	'Insert row above': 'Sor beszúrás fölé',
-	'Insert row below': 'Sor beszúrás alá',
-	'Delete table': 'Táblázat törlése',
-	'Delete row': 'Sor törlése',
-	'Delete column': 'Oszlop törlése',
-	'Empty cell': 'Cella tartalmának törlése',
-	Delete: 'Törlés',
-	'Strike through': 'Áthúzott',
-	Underline: 'Aláhúzott',
-	Break: 'Szünet',
-	'Search for': 'Keresés',
-	'Replace with': 'Csere erre',
-	Replace: 'Cserélje ki',
-	Edit: 'Szerkeszt',
-	'Vertical align': 'Függőleges igazítás',
-	'Horizontal align': 'Vízszintes igazítás',
-	Filter: 'Szűrő',
-	'Sort by changed': 'Rendezés módosítás szerint',
-	'Sort by name': 'Rendezés név szerint',
-	'Sort by size': 'Rendezés méret szerint',
-	'Add folder': 'Mappa hozzáadás',
-	'Split vertical': 'Függőleges felosztás',
-	'Split horizontal': 'Vízszintes felosztás',
-	Merge: 'Összevonás',
-	'Add column': 'Oszlop hozzáadás',
-	'Add row': 'Sor hozzáadás',
-	Border: 'Szegély',
-	'Embed code': 'Beágyazott kód',
-	Update: 'Frissít',
-	superscript: 'Felső index',
-	subscript: 'Alsó index',
-	'Cut selection': 'Kivágás',
-	Paste: 'Beillesztés',
-	'Choose Content to Paste': 'Válasszon tartalmat a beillesztéshez',
-	Split: 'Felosztás',
-	'Chars: %d': 'Karakterek száma: %d',
-	'Words: %d': 'Szavak száma: %d',
-	All: 'Összes',
-	'Select %s': 'Kijelöl: %s',
-	'Select all': 'Összes kijelölése',
-	source: 'HTML',
-	bold: 'Félkövér',
-	italic: 'Dőlt',
-	brush: 'Ecset',
-	link: 'Link',
-	undo: 'Visszavon',
-	redo: 'Újra',
-	table: 'Táblázat',
-	image: 'Kép',
-	eraser: 'Törlés',
-	paragraph: 'Paragráfus',
-	fontsize: 'Betűméret',
-	video: 'Videó',
-	font: 'Betű',
-	about: 'Rólunk',
-	print: 'Nyomtat',
-	symbol: 'Szimbólum',
-	underline: 'Aláhúzott',
-	strikethrough: 'Áthúzott',
-	indent: 'Behúzás',
-	outdent: 'Aussenseiter',
-	fullsize: 'Teljes méret',
-	shrink: 'Összenyom',
-	copyformat: 'Formátum másolás',
-	hr: 'Egyenes vonal',
-	ul: 'Lista',
-	ol: 'Számozott lista',
-	cut: 'Kivág',
-	selectall: 'Összes kijelölése',
-	'Open link': 'Link megnyitása',
-	'Edit link': 'Link szerkesztése',
-	'No follow': 'Nincs követés',
-	Unlink: 'Link leválasztása',
-	Eye: 'felülvizsgálat',
-	pencil: 'Szerkesztés',
-	' URL': 'URL',
-	Reset: 'Visszaállít',
-	Save: 'Mentés',
-	'Save as ...': 'Mentés másként...',
-	Resize: 'Átméretezés',
-	Crop: 'Kivág',
-	Width: 'Szélesség',
-	Height: 'Magasság',
-	'Keep Aspect Ratio': 'Képarány megtartása',
-	Yes: 'Igen',
-	No: 'Nem',
-	Remove: 'Eltávolít',
-	Select: 'Kijelöl',
-	'You can only edit your own images. Download this image on the host?':
-		'Csak a saját képeit tudja szerkeszteni. Letölti ezt a képet?',
-	'The image has been successfully uploaded to the host!':
-		'Kép sikeresen feltöltve!',
-	palette: 'Palette',
-	'There are no files': 'Er zijn geen bestanden in deze map.',
-	Rename: 'átnevezés',
-	'Enter new name': 'Adja meg az új nevet',
-	preview: 'előnézet',
-	download: 'Letöltés',
-	'Paste from clipboard': 'Illessze be a vágólap',
-	"Your browser doesn't support direct access to the clipboard.":
-		'A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.',
-	'Copy selection': 'Másolás kiválasztása',
-	copy: 'másolás',
-	'Border radius': 'Határ sugár',
-	'Show all': 'Összes',
-	Apply: 'Alkalmazni',
-	'Please fill out this field': 'Kérjük, töltse ki ezt a mezőt,',
-	'Please enter a web address': 'Kérjük, írja be a webcímet',
-	Default: 'Alapértelmezett',
-	Circle: 'Kör',
-	Dot: 'Pont',
-	Quadrate: 'Quadrate',
-	Find: 'Találni',
-	'Find Previous': 'Megtalálja Előző',
-	'Find Next': 'Következő Keresése',
-	'Insert className': 'Helyezze be az osztály nevét',
-	'Line height': 'Vonal magassága',
-	Spellchecking: 'Helyesírás-ellenőrzés',
-	'Press Alt for custom resizing': 'Nyomja meg az Alt egyéni átméretezés'
+	'copy-format': 'Formátum másolás'
 };
 
 
 /***/ }),
 
-/***/ 70164:
+/***/ 50331:
 /***/ (function(module) {
 
 /*!
@@ -39721,234 +38580,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Ketik sesuatu',
-	'About Jodit': 'Tentang Jodit',
-	'Jodit Editor': 'Editor Jodit',
-	'Free Non-commercial Version': 'Versi Bebas Non-komersil',
-	"Jodit User's Guide": 'Panduan Pengguna Jodit',
-	'contains detailed help for using': 'mencakup detail bantuan penggunaan',
-	'For information about the license, please go to our website:':
-		'Untuk informasi tentang lisensi, silakan kunjungi website:',
-	'Buy full version': 'Beli versi lengkap',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Hak Cipta © XDSoft.net - Chupurnov Valeriy. Hak cipta dilindungi undang-undang.',
-	Anchor: 'Tautan',
-	'Open in new tab': 'Buka di tab baru',
-	'Open editor in fullsize': 'Buka editor dalam ukuran penuh',
-	'Clear Formatting': 'Hapus Pemformatan',
-	'Fill color or set the text color': 'Isi warna atau atur warna teks',
-	Redo: 'Ulangi',
-	Undo: 'Batalkan',
-	Bold: 'Tebal',
-	Italic: 'Miring',
-	'Insert Unordered List': 'Sisipkan Daftar Tidak Berurut',
-	'Insert Ordered List': 'Sisipkan Daftar Berurut',
-	'Align Center': 'Tengah',
-	'Align Justify': 'Penuh',
-	'Align Left': 'Kiri',
-	'Align Right': 'Kanan',
-	'Insert Horizontal Line': 'Sisipkan Garis Horizontal',
-	'Insert Image': 'Sisipkan Gambar',
-	'Insert file': 'Sisipkan Berkas',
-	'Insert youtube/vimeo video': 'Sisipkan video youtube/vimeo',
-	'Insert link': 'Sisipkan tautan',
-	'Font size': 'Ukuran font',
-	'Font family': 'Keluarga font',
-	'Insert format block': 'Sisipkan blok format',
-	Normal: 'Normal',
-	'Heading 1': 'Heading 1',
-	'Heading 2': 'Heading 2',
-	'Heading 3': 'Heading 3',
-	'Heading 4': 'Heading 4',
-	Quote: 'Kutip',
-	Code: 'Kode',
-	Insert: 'Sisipkan',
-	'Insert table': 'Sisipkan tabel',
-	'Decrease Indent': 'Kurangi Indentasi',
-	'Increase Indent': 'Tambah Indentasi',
-	'Select Special Character': 'Pilih Karakter Spesial',
-	'Insert Special Character': 'Sisipkan Karakter Spesial',
-	'Paint format': 'Formar warna',
-	'Change mode': 'Ubah mode',
-	Margins: 'Batas',
-	top: 'atas',
-	right: 'kanan',
-	bottom: 'bawah',
-	left: 'kiri',
-	Styles: 'Gaya',
-	Classes: 'Class',
-	Align: 'Rata',
-	Right: 'Kanan',
-	Center: 'Tengah',
-	Left: 'Kiri',
-	'--Not Set--': '--Tidak diset--',
-	Src: 'Src',
-	Title: 'Judul',
-	Alternative: 'Teks alternatif',
-	Link: 'Tautan',
-	'Open link in new tab': 'Buka tautan di tab baru',
-	Image: 'Gambar',
-	file: 'berkas',
-	Advanced: 'Lanjutan',
-	'Image properties': 'Properti gambar',
-	Cancel: 'Batal',
-	Ok: 'Ya',
-	'Your code is similar to HTML. Keep as HTML?':
-		'Kode Anda cenderung ke HTML. Biarkan sebagai HTML?',
-	'Paste as HTML': 'Paste sebagai HTML',
-	Keep: 'Jaga',
-	Clean: 'Bersih',
-	'Insert as Text': 'Sisipkan sebagai teks',
-	'Insert only Text': 'Sisipkan hanya teks',
-	'Word Paste Detected': 'Terdeteksi paste dari Word',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'Konten dipaste dari dokumen Microsoft Word/Excel. Apakah Anda ingin tetap menjaga format atau membersihkannya?',
-	'File Browser': 'Penjelajah Berkas',
-	'Error on load list': 'Error ketika memuat list',
-	'Error on load folders': 'Error ketika memuat folder',
-	'Are you sure?': 'Apakah Anda yakin?',
-	'Enter Directory name': 'Masukkan nama Direktori',
-	'Create directory': 'Buat direktori',
-	'type name': 'ketik nama',
-	'Drop image': 'Letakkan gambar',
-	'Drop file': 'Letakkan berkas',
-	'or click': 'atau klik',
-	'Alternative text': 'Teks alternatif',
-	Browse: 'Jelajahi',
-	Upload: 'Unggah',
-	Background: 'Latar Belakang',
-	Text: 'Teks',
-	Top: 'Atas',
-	Middle: 'Tengah',
-	Bottom: 'Bawah',
-	'Insert column before': 'Sisipkan kolom sebelumnya',
-	'Insert column after': 'Sisipkan kolom setelahnya',
-	'Insert row above': 'Sisipkan baris di atasnya',
-	'Insert row below': 'Sisipkan baris di bawahnya',
-	'Delete table': 'Hapus tabel',
-	'Delete row': 'Hapus baris',
-	'Delete column': 'Hapus kolom',
-	'Empty cell': 'Kosongkan cell',
-	source: 'sumber',
-	bold: 'tebal',
-	italic: 'miring',
-	brush: 'sikat',
-	link: 'tautan',
-	undo: 'batalkan',
-	redo: 'ulangi',
-	table: 'tabel',
-	image: 'gambar',
-	eraser: 'penghapus',
-	paragraph: 'paragraf',
-	fontsize: 'ukuran font',
-	video: 'video',
-	font: 'font',
-	about: 'tentang',
-	print: 'cetak',
-	symbol: 'simbol',
-	underline: 'garis bawah',
-	strikethrough: 'coret',
-	indent: 'menjorok ke dalam',
-	outdent: 'menjorok ke luar',
-	fullsize: 'ukuran penuh',
-	shrink: 'menyusut',
-	copyformat: 'salin format',
-	hr: 'hr',
-	ul: 'ul',
-	ol: 'ol',
-	cut: 'potong',
-	selectall: 'Pilih semua',
-	'Embed code': 'Kode embed',
-	'Open link': 'Buka tautan',
-	'Edit link': 'Edit tautan',
-	'No follow': 'No follow',
-	Unlink: 'Hapus tautan',
-	Eye: 'Mata',
-	pencil: 'pensil',
-	Update: 'Perbarui',
-	' URL': 'URL',
-	Edit: 'Edit',
-	'Horizontal align': 'Perataan horizontal',
-	Filter: 'Filter',
-	'Sort by changed': 'Urutkan berdasarkan perubahan',
-	'Sort by name': 'Urutkan berdasarkan nama',
-	'Sort by size': 'Urutkan berdasarkan ukuran',
-	'Add folder': 'Tambah folder',
-	Reset: 'Reset',
-	Save: 'Simpan',
-	'Save as ...': 'Simpan sebagai...',
-	Resize: 'Ubah ukuran',
-	Crop: 'Crop',
-	Width: 'Lebar',
-	Height: 'Tinggi',
-	'Keep Aspect Ratio': 'Jaga aspek rasio',
-	Yes: 'Ya',
-	No: 'Tidak',
-	Remove: 'Copot',
-	Select: 'Pilih',
-	'Chars: %d': 'Karakter: %d',
-	'Words: %d': 'Kata: %d',
-	All: 'Semua',
-	'Select %s': 'Pilih %s',
-	'Select all': 'Pilih semua',
-	'Vertical align': 'Rata vertikal',
-	Split: 'Bagi',
-	'Split vertical': 'Bagi secara vertikal',
-	'Split horizontal': 'Bagi secara horizontal',
-	Merge: 'Gabungkan',
-	'Add column': 'Tambah kolom',
-	'Add row': 'tambah baris',
-	Delete: 'Hapus',
-	Border: 'Bingkai',
-	'License: %s': 'Lisensi: %s',
-	'Strike through': 'Coret',
-	Underline: 'Garis Bawah',
-	superscript: 'Superskrip',
-	subscript: 'Subskrip',
-	'Cut selection': 'Potong pilihan',
-	Break: 'Berhenti',
-	'Search for': 'Mencari',
-	'Replace with': 'Ganti dengan',
-	Replace: 'Mengganti',
-	Paste: 'Paste',
-	'Choose Content to Paste': 'Pilih konten untuk dipaste',
-	'You can only edit your own images. Download this image on the host?':
-		'Anda hanya dapat mengedit gambar Anda sendiri. Unduh gambar ini di host?',
-	'The image has been successfully uploaded to the host!':
-		'Gambar telah sukses diunggah ke host!',
-	palette: 'palet',
-	'There are no files': 'Tidak ada berkas',
-	Rename: 'ganti nama',
-	'Enter new name': 'Masukkan nama baru',
-	preview: 'pratinjau',
-	download: 'Unduh',
-	'Paste from clipboard': 'Paste dari clipboard',
-	"Your browser doesn't support direct access to the clipboard.":
-		'Browser anda tidak mendukung akses langsung ke clipboard.',
-	'Copy selection': 'Copy seleksi',
-	copy: 'copy',
-	'Border radius': 'Border radius',
-	'Show all': 'Tampilkan semua',
-	Apply: 'Menerapkan',
-	'Please fill out this field': 'Silahkan mengisi kolom ini',
-	'Please enter a web address': 'Silahkan masukkan alamat web',
-	Default: 'Default',
-	Circle: 'Lingkaran',
-	Dot: 'Dot',
-	Quadrate: 'Kuadrat',
-	Find: 'Menemukan',
-	'Find Previous': 'Menemukan Sebelumnya',
-	'Find Next': 'Menemukan Berikutnya',
-	'Insert className': 'Masukkan nama kelas',
-	'Line height': 'Tinggi baris',
-	Spellchecking: 'Spellchecking',
-	'Press Alt for custom resizing': 'Tekan Alt untuk mengubah ukuran kustom'
+	'copy-format': 'salin format'
 };
 
 
 /***/ }),
 
-/***/ 64917:
+/***/ 25582:
 /***/ (function(module) {
 
 /*!
@@ -39958,235 +38596,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Scrivi qualcosa...',
-	Advanced: 'Avanzato',
-	'About Jodit': 'A proposito di Jodit',
-	'Jodit Editor': 'Jodit Editor',
-	"Jodit User's Guide": 'Guida utente di Jodit',
-	'contains detailed help for using':
-		"contiene una guida dettagliata per l'uso.",
-	'For information about the license, please go to our website:':
-		'Per informazioni sulla licenza, si prega di visitare il nostro sito:',
-	'Buy full version': 'Acquista la versione completa',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.',
-	Anchor: 'Ancora',
-	'Open in new tab': 'Apri in una nuova scheda',
-	'Open editor in fullsize': "Apri l'editor a schermo intero",
-	'Clear Formatting': 'Formato chiaro',
-	'Fill color or set the text color': 'Riempi colore o lettera',
-	Redo: 'Ripristina',
-	Undo: 'Annulla',
-	Bold: 'Grassetto',
-	Italic: 'Corsivo',
-	'Insert Unordered List': 'Inserisci lista non ordinata',
-	'Insert Ordered List': "Inserisci l'elenco ordinato",
-	'Align Center': 'Allinea Centra',
-	'Align Justify': 'Allineare Giustificato',
-	'Align Left': 'Allinea a Sinistra',
-	'Align Right': 'Allinea a Destra',
-	'Insert Horizontal Line': 'Inserisci la linea orizzontale',
-	'Insert Image': 'Inserisci immagine',
-	'Insert file': 'Inserisci un file',
-	'Insert youtube/vimeo video': 'Inserisci video Youtube/Vimeo',
-	'Insert link': 'Inserisci il link',
-	'Font size': 'Dimensione del carattere',
-	'Font family': 'Tipo di font',
-	'Insert format block': 'Inserisci blocco',
-	Normal: 'Normale',
-	'Heading 1': 'Heading 1',
-	'Heading 2': 'Heading 2',
-	'Heading 3': 'Heading 3',
-	'Heading 4': 'Heading 4',
-	Quote: 'Citazione',
-	Code: 'Codice',
-	Insert: 'Inserisci',
-	'Insert table': 'Inserisci tabella',
-	'Decrease Indent': 'Riduci il rientro',
-	'Increase Indent': 'Aumenta il rientro',
-	'Select Special Character': 'Seleziona una funzione speciale',
-	'Insert Special Character': 'Inserisci un carattere speciale',
-	'Paint format': 'Copia formato',
-	'Change mode': 'Cambia modo',
-	Margins: 'Margini',
-	top: 'su',
-	right: 'destra',
-	bottom: 'giù',
-	left: 'sinistra',
-	Styles: 'Stili CSS',
-	Classes: 'Classi CSS',
-	Align: 'Allinea',
-	Right: 'Destra',
-	Center: 'Centro',
-	Left: 'Sinistra',
-	'--Not Set--': '--Non Impostato--',
-	Src: 'Fonte',
-	Title: 'Titolo',
-	Alternative: 'Testo Alternativo',
-	Link: 'Link',
-	'Open link in new tab': 'Apri il link in una nuova scheda',
-	Image: 'Immagine',
-	file: 'Archivio',
-	Advansed: 'Avanzato',
-	'Image properties': "Proprietà dell'immagine",
-	Cancel: 'Annulla',
-	Ok: 'Accetta',
-	'Your code is similar to HTML. Keep as HTML?':
-		"Il codice è simile all'HTML. Mantieni come HTML?",
-	'Paste as HTML': 'Incolla come HTML?',
-	Keep: 'Mantieni',
-	Clean: 'Pulisci',
-	'Insert as Text': 'Inserisci come testo',
-	'Word Paste Detected': 'Incollato da Word rilevato',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'Il contenuto incollato proviene da un documento Microsoft Word / Excel. Vuoi mantenere il formato o pulirlo?',
-	'Insert only Text': 'Inserisci solo il testo',
-	'File Browser': 'Cerca il file',
-	'Error on load list': "Errore durante il caricamento dell'elenco",
-	'Error on load folders': 'Errore durante il caricamento delle cartelle',
-	'Are you sure?': 'Sei sicuro?',
-	'Enter Directory name': 'Inserisci il nome della cartella',
-	'Create directory': 'Crea cartella',
-	'type name': 'Entre el nombre',
-	'Drop image': "Rilascia l'immagine",
-	'Drop file': 'Rilascia file',
-	'or click': 'o click',
-	'Alternative text': 'Testo alternativo',
-	Browse: 'Sfoglia',
-	Upload: 'Carica',
-	Background: 'Sfondo',
-	Text: 'Testo',
-	Top: 'Su',
-	Middle: 'Centro',
-	Bottom: 'Sotto',
-	'Insert column before': 'Inserisci prima la colonna',
-	'Insert column after': 'Inserisci colonna dopo',
-	'Insert row above': 'Inserisci la riga sopra',
-	'Insert row below': 'Inserisci la riga sotto',
-	'Delete table': 'Elimina tabella',
-	'Delete row': 'Elimina riga',
-	'Delete column': 'Elimina colonna',
-	'Empty cell': 'Cella vuota',
-	Delete: 'Cancella',
-	'Strike through': 'Barrato',
-	Underline: 'Sottolineato',
-	Break: 'Pausa',
-	'Search for': 'Cerca',
-	'Replace with': 'Sostituisci con',
-	Replace: 'Sostituire',
-	Edit: 'Modifica',
-	'Vertical align': 'Allineamento verticala',
-	'Horizontal align': 'Allineamento orizzontale',
-	Filter: 'Filtro',
-	'Sort by changed': 'Ordina per data di modifica',
-	'Sort by name': 'Ordina per nome',
-	'Sort by size': 'Ordina per dimensione',
-	'Add folder': 'Aggiungi cartella',
-	Split: 'Dividere',
-	'Split vertical': 'Dividere verticalmente',
-	'Split horizontal': 'Diviso orizzontale',
-	Merge: 'Fondi',
-	'Add column': 'Aggiungi colonna',
-	'Add row': 'Aggiungi riga',
-	Border: 'Bordo',
-	'Embed code': 'Includi codice',
-	Update: 'Aggiornare',
-	superscript: 'indice',
-	subscript: 'deponente',
-	'Cut selection': 'Taglia la selezione',
-	Paste: 'Incolla',
-	'Choose Content to Paste': 'Seleziona il contenuto da incollare',
-	'Chars: %d': 'Caratteri: %d',
-	'Words: %d': 'Parole: %d',
-	All: 'Tutto',
-	'Select %s': 'Seleziona: %s',
-	'Select all': 'Seleziona tutto',
-	source: 'HTML',
-	bold: 'Grassetto',
-	italic: 'Corsivo',
-	brush: 'Pennello',
-	link: 'Link',
-	undo: 'Annulla',
-	redo: 'Ripristina',
-	table: 'Tabella',
-	image: 'Immagine',
-	eraser: 'Gomma',
-	paragraph: 'Paragrafo',
-	fontsize: 'Dimensione del carattere',
-	video: 'Video',
-	font: 'Font',
-	about: 'Approposito di',
-	print: 'Stampa',
-	symbol: 'Simbolo',
-	underline: 'Sottolineato',
-	strikethrough: 'Barrato',
-	indent: 'trattino',
-	outdent: 'annulla rientro',
-	fullsize: 'A grandezza normale',
-	shrink: 'comprimere',
-	copyformat: 'Copia il formato',
-	hr: 'linea orizzontale',
-	ul: 'lista non ordinata',
-	ol: 'lista ordinata',
-	cut: 'Taglia',
-	selectall: 'Seleziona tutto',
-	'Open link': 'Apri link',
-	'Edit link': 'Modifica link',
-	'No follow': 'Non seguire',
-	Unlink: 'Togli link',
-	Eye: 'Recensione',
-	pencil: 'Per modificare',
-	' URL': ' URL',
-	Reset: 'Reset',
-	Save: 'Salva',
-	'Save as ...': 'Salva con nome...',
-	Resize: 'Ridimensiona',
-	Crop: 'Tagliare',
-	Width: 'Larghezza',
-	Height: 'Altezza',
-	'Keep Aspect Ratio': 'Mantenere le proporzioni',
-	Yes: 'Si',
-	No: 'No',
-	Remove: 'Rimuovere',
-	Select: 'Seleziona',
-	'You can only edit your own images. Download this image on the host?':
-		'Puoi modificare solo le tue immagini. Scarica questa immagine sul server?',
-	'The image has been successfully uploaded to the host!':
-		"L'immagine è stata caricata con successo sul server!",
-	palette: 'tavolozza',
-	'There are no files': 'Non ci sono file in questa directory.',
-	Rename: 'ungherese',
-	'Enter new name': 'Inserisci un nuovo nome',
-	preview: 'anteprima',
-	download: 'Scaricare',
-	'Paste from clipboard': 'Incolla dagli appunti',
-	"Your browser doesn't support direct access to the clipboard.":
-		"Il tuo browser non supporta l'accesso diretto agli appunti.",
-	'Copy selection': 'Selezione di copia',
-	copy: 'copia',
-	'Border radius': 'Border radius',
-	'Show all': 'Mostra tutti',
-	Apply: 'Applicare',
-	'Please fill out this field': 'Si prega di compilare questo campo',
-	'Please enter a web address': 'Si prega di inserire un indirizzo web',
-	Default: 'Di Default',
-	Circle: 'Cerchio',
-	Dot: 'Dot',
-	Quadrate: 'Quadrate',
-	Find: 'Trovare',
-	'Find Previous': 'Trova Precedente',
-	'Find Next': 'Trova Successivo',
-	'Insert className': 'Inserisci il nome della classe',
-	'Line height': 'Altezza linea',
-	Spellchecking: 'Controllo ortografico',
-	'Press Alt for custom resizing':
-		'Premere Alt per il ridimensionamento personalizzato'
+	'copy-format': 'Copia il formato'
 };
 
 
 /***/ }),
 
-/***/ 91235:
+/***/ 82066:
 /***/ (function(module) {
 
 /*!
@@ -40196,238 +38612,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'なにかタイプしてください',
-	Advanced: '高度な設定',
-	'About Jodit': 'Joditについて',
-	'Jodit Editor': 'Jodit Editor',
-	"Jodit User's Guide": 'Jodit ユーザーズ・ガイド',
-	'contains detailed help for using': '詳しい使い方',
-	'For information about the license, please go to our website:':
-		'ライセンス詳細についてはJodit Webサイトを確認ください：',
-	'Buy full version': 'フルバージョンを購入',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.',
-	Anchor: 'Anchor',
-	'Open in new tab': '新しいタブで開く',
-	'Open editor in fullsize': 'エディターのサイズ（フル/ノーマル）',
-	'Clear Formatting': '書式をクリア',
-	'Fill color or set the text color': 'テキストの色',
-	Redo: 'やり直し',
-	Undo: '元に戻す',
-	Bold: '太字',
-	Italic: '斜体',
-	'Insert Unordered List': '箇条書き',
-	'Insert Ordered List': '番号付きリスト',
-	'Align Center': '中央揃え',
-	'Align Justify': '両端揃え',
-	'Align Left': '左揃え',
-	'Align Right': '右揃え',
-	'Insert Horizontal Line': '区切り線を挿入',
-	'Insert Image': '画像を挿入',
-	'Insert file': 'ファイルを挿入',
-	'Insert youtube/vimeo video': 'Youtube/Vimeo 動画',
-	'Insert link': 'リンクを挿入',
-	'Font size': 'フォントサイズ',
-	'Font family': 'フォント',
-	'Insert format block': 'テキストのスタイル',
-	Normal: '指定なし',
-	'Heading 1': 'タイトル1',
-	'Heading 2': 'タイトル2',
-	'Heading 3': 'タイトル3',
-	'Heading 4': 'タイトル4',
-	Quote: '引用',
-	Code: 'コード',
-	Insert: '挿入',
-	'Insert table': '表を挿入',
-	'Decrease Indent': 'インデント減',
-	'Increase Indent': 'インデント増',
-	'Select Special Character': '特殊文字を選択',
-	'Insert Special Character': '特殊文字を挿入',
-	'Paint format': '書式を貼付け',
-	'Change mode': '編集モード切替え',
-	Margins: 'マージン',
-	top: '上',
-	right: '右',
-	bottom: '下',
-	left: '左',
-	Styles: 'スタイル',
-	Classes: 'クラス',
-	Align: '配置',
-	Right: '右寄せ',
-	Center: '中央寄せ',
-	Left: '左寄せ',
-	'--Not Set--': '指定なし',
-	Src: 'ソース',
-	Title: 'タイトル',
-	Alternative: '代替テキスト',
-	Link: 'リンク',
-	'Open link in new tab': '新しいタブで開く',
-	Image: '画像',
-	file: 'ファイル',
-	Advansed: 'Advansed',
-	'Image properties': '画像のプロパティー',
-	Cancel: 'キャンセル',
-	Ok: '確定',
-	'Your code is similar to HTML. Keep as HTML?': 'HTMLコードを保持しますか？',
-	'Paste as HTML': 'HTMLで貼付け',
-	Keep: 'HTMLを保持',
-	Clean: 'Clean',
-	'Insert as Text': 'HTMLをテキストにする',
-	'Word Paste Detected': 'Word Paste Detected',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?',
-	'Insert only Text': 'テキストだけ',
-	'File Browser': 'File Browser',
-	'Error on load list': 'Error on load list',
-	'Error on load folders': 'Error on load folders',
-	'Are you sure?': 'Are you sure?',
-	'Enter Directory name': 'Enter Directory name',
-	'Create directory': 'Create directory',
-	'type name': 'type name',
-	'Drop image': 'ここに画像をドロップ',
-	'Drop file': 'ここにファイルをドロップ',
-	'or click': 'or クリック',
-	'Alternative text': '代替テキスト',
-	Browse: 'ブラウズ',
-	Upload: 'アップロード',
-	Background: '背景',
-	Text: '文字',
-	Top: '上',
-	Middle: '中央',
-	Bottom: '下',
-	'Insert column before': '左に列を挿入',
-	'Insert column after': '右に列を挿入',
-	'Insert row above': '上に行を挿入',
-	'Insert row below': '下に行を挿入',
-	'Delete table': '表を削除',
-	'Delete row': '行を削除',
-	'Delete column': '列を削除',
-	'Empty cell': 'セルを空にする',
-	'Chars: %d': '文字数: %d',
-	'Words: %d': '単語数: %d',
-	'Strike through': '取り消し線',
-	Underline: '下線',
-	superscript: '上付き文字',
-	subscript: '下付き文字',
-	'Cut selection': '切り取り',
-	'Select all': 'すべて選択',
-	Break: 'Pause',
-	'Search for': '検索',
-	'Replace with': '置換',
-	Replace: '交換',
-	Paste: '貼付け',
-	'Choose Content to Paste': '選択した内容を貼付け',
-	All: '全部',
-	source: 'source',
-	bold: 'bold',
-	italic: 'italic',
-	brush: 'brush',
-	link: 'link',
-	undo: 'undo',
-	redo: 'redo',
-	table: 'table',
-	image: 'image',
-	eraser: 'eraser',
-	paragraph: 'paragraph',
-	fontsize: 'fontsize',
-	video: 'video',
-	font: 'font',
-	about: 'about',
-	print: 'print',
-	symbol: 'symbol',
-	underline: 'underline',
-	strikethrough: 'strikethrough',
-	indent: 'indent',
-	outdent: 'outdent',
-	fullsize: 'fullsize',
-	shrink: 'shrink',
-	copyformat: 'copyformat',
-	hr: '分割線',
-	ul: '箇条書き',
-	ol: '番号付きリスト',
-	cut: '切り取り',
-	selectall: 'すべて選択',
-	'Open link': 'リンクを開く',
-	'Edit link': 'リンクを編集',
-	'No follow': 'No follow',
-	Unlink: 'リンク解除',
-	Eye: 'サイトを確認',
-	' URL': 'URL',
-	Reset: 'リセット',
-	Save: '保存',
-	'Save as ...': 'Save as ...',
-	Resize: 'リサイズ',
-	Crop: 'Crop',
-	Width: '幅',
-	Height: '高さ',
-	'Keep Aspect Ratio': '縦横比を保持',
-	Yes: 'はい',
-	No: 'いいえ',
-	Remove: '移除',
-	Select: '選択',
-	'Select %s': '選択: %s',
-	Update: '更新',
-	'Vertical align': '垂直方向の配置',
-	Merge: 'セルの結合',
-	'Add column': '列を追加',
-	'Add row': '行を追加',
-	Border: '境界線',
-	'Embed code': '埋め込みコード',
-	Delete: '削除',
-	Edit: '編集',
-	'Horizontal align': '水平方向の配置',
-	Filter: 'Filter',
-	'Sort by changed': 'Sort by changed',
-	'Sort by name': 'Sort by name',
-	'Sort by size': 'Sort by size',
-	'Add folder': 'Add folder',
-	Split: '分割',
-	'Split vertical': 'セルの分割（垂直方向）',
-	'Split horizontal': 'セルの分割（水平方向）',
-	'You can only edit your own images. Download this image on the host?':
-		'You can only edit your own images. Download this image on the host?',
-	'The image has been successfully uploaded to the host!':
-		'The image has been successfully uploaded to the host!',
-	palette: 'パレット',
-	pencil: '鉛筆',
-	'There are no files': 'There are no files',
-	Rename: 'Rename',
-	'Enter new name': 'Enter new name',
-	preview: 'プレビュー',
-	download: 'ダウンロード',
-	'Paste from clipboard': '貼り付け',
-	"Your browser doesn't support direct access to the clipboard.":
-		'お使いのブラウザはクリップボードを使用できません',
-	'Copy selection': 'コピー',
-	copy: 'copy',
-	'Border radius': '角の丸み',
-	'Show all': '全て表示',
-	Apply: '適用',
-	'Please fill out this field': 'まだこの分野',
-	'Please enter a web address': 'を入力してくださいウェブアドレス',
-	Default: 'デフォルト',
-	Circle: '白丸',
-	Dot: '黒丸',
-	Quadrate: '四角',
-	Find: '見',
-	'Find Previous': '探前',
-	'Find Next': '由来',
-	'Lower Alpha': '英小文字',
-	'Lower Greek': 'ギリシャ文字',
-	'Lower Roman': 'ローマ数字小文字',
-	'Upper Alpha': '英大文字',
-	'Upper Roman': 'ローマ数字大文字',
-	'Insert className': 'クラス名を挿入',
-	'Line height': 'ラインの高さ',
-	Spellchecking: 'スペルチェック',
-	'Press Alt for custom resizing':
-		'カスタムサイズ変更のためのAltキーを押します'
+	'copy-format': 'copyformat'
 };
 
 
 /***/ }),
 
-/***/ 76676:
+/***/ 71925:
 /***/ (function(module) {
 
 /*!
@@ -40437,233 +38628,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': '무엇이든 입력하세요',
-	'About Jodit': 'Jodit에 대하여',
-	'Jodit Editor': 'Jodit Editor',
-	"Jodit User's Guide": 'Jodit 사용자 안내서',
-	'contains detailed help for using': '자세한 도움말이 들어있어요',
-	'For information about the license, please go to our website:':
-		'라이센스에 관해서는 Jodit 웹 사이트를 방문해주세요：',
-	'Buy full version': '풀 버전 구입하기',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'© XDSoft.net - Chupurnov Valeriy. 에게 저작권과 모든 권리가 있습니다.',
-	Anchor: 'Anchor',
-	'Open in new tab': '새 탭에서 열기',
-	'Open editor in fullsize': '전체 크기로 보기',
-	'Clear Formatting': '서식 지우기',
-	'Fill color or set the text color': '글씨 색상',
-	Redo: '재실행',
-	Undo: '실행 취소',
-	Bold: '굵게',
-	Italic: '기울임',
-	'Insert Unordered List': '글머리 목록',
-	'Insert Ordered List': '번호 목록',
-	'Align Center': '가운데 정렬',
-	'Align Justify': '양쪽 정렬',
-	'Align Left': '왼쪽 정렬',
-	'Align Right': '오른쪽 정렬',
-	'Insert Horizontal Line': '수평 구분선 넣기',
-	'Insert Image': '이미지 넣기',
-	'Insert file': '파일 넣기',
-	'Insert youtube/vimeo video': 'Youtube/Vimeo 동영상',
-	'Insert link': '링크 넣기',
-	'Font size': '글꼴 크기',
-	'Font family': '글꼴',
-	'Insert format block': '블록 요소 넣기',
-	Normal: '일반 텍스트',
-	'Heading 1': '제목 1',
-	'Heading 2': '제목 2',
-	'Heading 3': '제목 3',
-	'Heading 4': '제목 4',
-	Quote: '인용',
-	Code: '코드',
-	Insert: '붙여 넣기',
-	'Insert table': '테이블',
-	'Decrease Indent': '들여쓰기 감소',
-	'Increase Indent': '들여쓰기 증가',
-	'Select Special Character': '특수문자 선택',
-	'Insert Special Character': '특수문자 입력',
-	'Paint format': '페인트 형식',
-	'Change mode': '편집모드 변경',
-	Margins: '마진',
-	top: '위',
-	right: '오른쪽',
-	bottom: '아래',
-	left: '왼쪽',
-	Styles: '스타일',
-	Classes: '클래스',
-	Align: '정렬',
-	Right: '오른쪽으로',
-	Center: '가운데로',
-	Left: '왼쪽으로',
-	'--Not Set--': '--지정 안 함--',
-	Src: '경로(src)',
-	Title: '제목',
-	Alternative: '대체 텍스트(alt)',
-	Link: '링크',
-	'Open link in new tab': '새 탭에서 열기',
-	file: '파일',
-	Advanced: '고급',
-	'Image properties': '이미지 속성',
-	Cancel: '취소',
-	Ok: '확인',
-	'Your code is similar to HTML. Keep as HTML?':
-		'HTML 코드로 감지했어요. 코드인채로 붙여넣을까요?',
-	'Paste as HTML': 'HTML로 붙여넣기',
-	Keep: '원본 유지',
-	Clean: '지우기',
-	'Insert as Text': '텍스트로 넣기',
-	'Insert only Text': '텍스트만 넣기',
-	'Word Paste Detected': 'Word 붙여넣기 감지',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'Microsoft Word/Excel 문서로 감지했어요. 서식을 유지한채로 붙여넣을까요?',
-	'File Browser': '파일 탐색기',
-	'Error on load list': '목록 불러오기 에러',
-	'Error on load folders': '폴더 불러오기',
-	'Are you sure?': '정말 진행할까요?',
-	'Enter Directory name': '디렉토리 이름 입력',
-	'Create directory': '디렉토리 생성',
-	'type name': '이름 입력',
-	'Drop image': '이미지 드래그',
-	'Drop file': '파일 드래그',
-	'or click': '혹은 클릭',
-	'Alternative text': '대체 텍스트',
-	Browse: '탐색',
-	Upload: '업로드',
-	Background: '배경',
-	Text: '텍스트',
-	Top: '위',
-	Middle: '중앙',
-	Bottom: '아래',
-	'Insert column before': '이전 열에 삽입',
-	'Insert column after': '다음 열에 삽입',
-	'Insert row above': '위 행에 삽입',
-	'Insert row below': '아래 행에 삽입',
-	'Delete table': '테이블 삭제',
-	'Delete row': '행 삭제',
-	'Delete column': '열 삭제',
-	'Empty cell': '빈 셀',
-	source: 'HTML 소스',
-	bold: '볼드',
-	italic: '이탤릭',
-	brush: '브러시',
-	link: '링크',
-	undo: '실행 취소',
-	redo: '재실행',
-	table: '테이블',
-	image: '이미지',
-	eraser: '지우개',
-	paragraph: '문단',
-	fontsize: '글꼴 크기',
-	video: '비디오',
-	font: '글꼴',
-	about: '편집기 정보',
-	print: '프린트',
-	symbol: '기호',
-	underline: '밑줄',
-	strikethrough: '취소선',
-	indent: '들여쓰기',
-	outdent: '내어쓰기',
-	fullsize: '전체 화면',
-	shrink: '일반 화면',
-	copyformat: '복사 형식',
-	hr: '구분선',
-	ul: '글머리 목록',
-	ol: '번호 목록',
-	cut: '잘라내기',
-	selectall: '모두 선택',
-	'Embed code': 'Embed 코드',
-	'Open link': '링크 열기',
-	'Edit link': '링크 편집',
-	'No follow': 'No follow',
-	Unlink: '링크 제거',
-	Eye: '사이트 확인',
-	pencil: '연필',
-	Update: '갱신',
-	' URL': 'URL',
-	Edit: '편집',
-	'Horizontal align': '수평 정렬',
-	Filter: '필터',
-	'Sort by changed': '변경일 정렬',
-	'Sort by name': '이름 정렬',
-	'Sort by size': '크기 정렬',
-	'Add folder': '새 폴더',
-	Reset: '초기화',
-	Save: '저장',
-	'Save as ...': '새로 저장하기 ...',
-	Resize: '리사이즈',
-	Crop: '크롭',
-	Width: '가로 길이',
-	Height: '세로 높이',
-	'Keep Aspect Ratio': '비율 유지하기',
-	Yes: '네',
-	No: '아니오',
-	Remove: '제거',
-	Select: '선택',
-	'Chars: %d': '문자수: %d',
-	'Words: %d': '단어수: %d',
-	All: '모두',
-	'Select all': '모두 선택',
-	'Select %s': '선택: %s',
-	'Vertical align': '수직 정렬',
-	Split: '분할',
-	'Split vertical': '세로 셀 분할',
-	'Split horizontal': '가로 셀 분할',
-	Merge: '셀 병합',
-	'Add column': '열 추가',
-	'Add row': '행 추가',
-	Delete: '삭제',
-	Border: '외곽선',
-	'License: %s': '라이센스: %s',
-	'Strike through': '취소선',
-	Underline: '밑줄',
-	superscript: '윗첨자',
-	subscript: '아래첨자',
-	'Cut selection': '선택 잘라내기',
-	Break: '구분자',
-	'Search for': '검색',
-	'Replace with': '대체하기',
-	Replace: '대체',
-	Paste: '붙여넣기',
-	'Choose Content to Paste': '붙여넣을 내용 선택',
-	'You can only edit your own images. Download this image on the host?':
-		'외부 이미지는 편집할 수 없어요. 외부 이미지를 다운로드 할까요?',
-	'The image has been successfully uploaded to the host!':
-		'이미지를 무사히 업로드 했어요!',
-	palette: '팔레트',
-	'There are no files': '파일이 없어요',
-	Rename: '이름 변경',
-	'Enter new name': '새 이름 입력',
-	preview: '미리보기',
-	download: '다운로드',
-	'Paste from clipboard': '클립보드 붙여넣기',
-	"Your browser doesn't support direct access to the clipboard.":
-		'사용중인 브라우저가 클립보드 접근을 지원하지 않아요.',
-	'Copy selection': '선택 복사',
-	copy: '복사',
-	'Border radius': '둥근 테두리',
-	'Show all': '모두 보기',
-	Apply: '적용',
-	'Please fill out this field': '이 항목을 입력해주세요!',
-	'Please enter a web address': '웹 URL을 입력해주세요.',
-	Default: '기본',
-	Circle: '원',
-	Dot: '점',
-	Quadrate: '정사각형',
-	Find: '찾기',
-	'Find Previous': '이전 찾기',
-	'Find Next': '다음 찾기',
-	'Insert className': 'className 입력',
-	'Line height': '선 높이',
-	Spellchecking: '맞춤법 검사',
-	'Press Alt for custom resizing':
-		'사용자 지정 크기 조정에 대 한 고도 누르십시오'
+	'copy-format': '복사 형식'
 };
 
 
 /***/ }),
 
-/***/ 78337:
+/***/ 65274:
 /***/ (function(module) {
 
 /*!
@@ -40673,235 +38644,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Begin met typen..',
-	Advanced: 'Geavanceerd',
-	'About Jodit': 'Over Jodit',
-	'Jodit Editor': 'Jodit Editor',
-	'Free Non-commercial Version': 'Gratis niet-commerciële versie',
-	"Jodit User's Guide": 'Jodit gebruikershandleiding',
-	'contains detailed help for using':
-		'bevat gedetailleerde informatie voor gebruik.',
-	'For information about the license, please go to our website:':
-		'Voor informatie over de licentie, ga naar onze website:',
-	'Buy full version': 'Volledige versie kopen',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. Alle rechten voorbehouden.',
-	Anchor: 'Anker',
-	'Open in new tab': 'Open in nieuwe tab',
-	'Open editor in fullsize': 'Editor in volledig scherm openen',
-	'Clear Formatting': 'Opmaak verwijderen',
-	'Fill color or set the text color': 'Vulkleur of tekstkleur aanpassen',
-	Redo: 'Opnieuw',
-	Undo: 'Ongedaan maken',
-	Bold: 'Vet',
-	Italic: 'Cursief',
-	'Insert Unordered List': 'Geordende list invoegen',
-	'Insert Ordered List': 'Ongeordende lijst invoegen',
-	'Align Center': 'Centreren',
-	'Align Justify': 'Uitlijnen op volledige breedte',
-	'Align Left': 'Links uitlijnen',
-	'Align Right': 'Rechts uitlijnen',
-	'Insert Horizontal Line': 'Horizontale lijn invoegen',
-	'Insert Image': 'Afbeelding invoegen',
-	'Insert file': 'Bestand invoegen',
-	'Insert youtube/vimeo video': 'Youtube/Vimeo video invoegen',
-	'Insert link': 'Link toevoegen',
-	'Font size': 'Tekstgrootte',
-	'Font family': 'Lettertype',
-	'Insert format block': 'Format blok invoegen',
-	Normal: 'Normaal',
-	'Heading 1': 'Koptekst 1',
-	'Heading 2': 'Koptekst 2',
-	'Heading 3': 'Koptekst 3',
-	'Heading 4': 'Koptekst 4',
-	Quote: 'Citaat',
-	Code: 'Code',
-	Insert: 'Invoegen',
-	'Insert table': 'Tabel invoegen',
-	'Decrease Indent': 'Inspringing verkleinen',
-	'Increase Indent': 'Inspringing vergroten',
-	'Select Special Character': 'Symbool selecteren',
-	'Insert Special Character': 'Symbool invoegen',
-	'Paint format': 'Opmaak kopieren',
-	'Change mode': 'Modus veranderen',
-	Margins: 'Marges',
-	top: 'Boven',
-	right: 'Rechts',
-	bottom: 'Onder',
-	left: 'Links',
-	Styles: 'CSS styles',
-	Classes: 'CSS classes',
-	Align: 'Uitlijning',
-	Right: 'Rechts',
-	Center: 'Gecentreerd',
-	Left: 'Links',
-	'--Not Set--': '--Leeg--',
-	Src: 'Src',
-	Title: 'Titel',
-	Alternative: 'Alternatieve tekst',
-	Link: 'Link',
-	'Open link in new tab': 'Link in nieuwe tab openen',
-	Image: 'Afbeelding',
-	file: 'Bestand',
-	Advansed: 'Geavanceerd',
-	'Image properties': 'Afbeeldingseigenschappen',
-	Cancel: 'Annuleren',
-	Ok: 'OK',
-	'Your code is similar to HTML. Keep as HTML?':
-		'Deze code lijkt op HTML. Als HTML behouden?',
-	'Paste as HTML': 'Invoegen als HTML',
-	Keep: 'Origineel behouden',
-	Clean: 'Opschonen',
-	'Insert as Text': 'Als tekst invoegen',
-	'Word Paste Detected': 'Word-tekst gedetecteerd',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'De geplakte tekst is afkomstig van een Microsoft Word/Excel document. Wil je de opmaak behouden of opschonen?',
-	'Insert only Text': 'Als onopgemaakte tekst invoegen',
-	'File Browser': 'Bestandsbrowser',
-	'Error on load list': 'Fout bij het laden van de lijst',
-	'Error on load folders': 'Fout bij het laden van de mappenlijst',
-	'Are you sure?': 'Weet je het zeker?',
-	'Enter Directory name': 'Geef de map een naam',
-	'Create directory': 'Map aanmaken',
-	'type name': 'Type naam',
-	'Drop image': 'Sleep hier een afbeelding naartoe',
-	'Drop file': 'Sleep hier een bestand naartoe',
-	'or click': 'of klik',
-	'Alternative text': 'Alternatieve tekst',
-	Browse: 'Bladeren',
-	Upload: 'Uploaden',
-	Background: 'Achtergrond',
-	Text: 'Tekst',
-	Top: 'Boven',
-	Middle: 'Midden',
-	Bottom: 'Onder',
-	'Insert column before': 'Kolom invoegen (voor)',
-	'Insert column after': 'Kolom invoegen (na)',
-	'Insert row above': 'Rij invoegen (boven)',
-	'Insert row below': 'Rij invoegen (onder)',
-	'Delete table': 'Tabel verwijderen',
-	'Delete row': 'Rij verwijderen',
-	'Delete column': 'Kolom verwijderen',
-	'Empty cell': 'Cel leegmaken',
-	Delete: 'Verwijderen',
-	'Strike through': 'Doorstrepen',
-	Underline: 'Onderstrepen',
-	Break: 'Enter',
-	'Search for': 'Zoek naar',
-	'Replace with': 'Vervangen door',
-	Replace: 'Vervangen',
-	Edit: 'Bewerken',
-	'Vertical align': 'Verticaal uitlijnen',
-	'Horizontal align': 'Horizontaal uitlijnen',
-	Filter: 'Filteren',
-	'Sort by changed': 'Sorteren op wijzigingsdatum',
-	'Sort by name': 'Sorteren op naam',
-	'Sort by size': 'Sorteren op grootte',
-	'Add folder': 'Map toevoegen',
-	Split: 'Splitsen',
-	'Split vertical': 'Verticaal splitsen',
-	'Split horizontal': 'Horizontaal splitsen',
-	Merge: 'Samenvoegen',
-	'Add column': 'Kolom toevoegen',
-	'Add row': 'Rij toevoegen',
-	Border: 'Rand',
-	'Embed code': 'Embed code',
-	Update: 'Updaten',
-	superscript: 'Superscript',
-	subscript: 'Subscript',
-	'Cut selection': 'Selectie knippen',
-	Paste: 'Plakken',
-	'Choose Content to Paste': 'Kies content om te plakken',
-	'Chars: %d': 'Tekens: %d',
-	'Words: %d': 'Woorden: %d',
-	All: 'Alles',
-	'Select %s': 'Selecteer: %s',
-	'Select all': 'Selecteer alles',
-	source: 'Broncode',
-	bold: 'vet',
-	italic: 'cursief',
-	brush: 'kwast',
-	link: 'link',
-	undo: 'ongedaan maken',
-	redo: 'opnieuw',
-	table: 'tabel',
-	image: 'afbeelding',
-	eraser: 'gum',
-	paragraph: 'paragraaf',
-	fontsize: 'lettergrootte',
-	video: 'video',
-	font: 'lettertype',
-	about: 'over',
-	print: 'afdrukken',
-	symbol: 'symbool',
-	underline: 'onderstreept',
-	strikethrough: 'doorgestreept',
-	indent: 'inspringen',
-	outdent: 'minder inspringen',
-	fullsize: 'volledige grootte',
-	shrink: 'kleiner maken',
-	copyformat: 'opmaak kopiëren',
-	hr: 'horizontale lijn',
-	ul: 'lijst',
-	ol: 'genummerde lijst',
-	cut: 'knip',
-	selectall: 'alles selecteren',
-	'Open link': 'link openen',
-	'Edit link': 'link aanpassen',
-	'No follow': 'niet volgen',
-	Unlink: 'link verwijderen',
-	Eye: 'Recensie',
-	pencil: 'Om te bewerken',
-	' URL': ' URL',
-	Reset: 'Herstellen',
-	Save: 'Opslaan',
-	'Save as ...': 'Opslaan als ...',
-	Resize: 'Grootte aanpassen',
-	Crop: 'Bijknippen',
-	Width: 'Breedte',
-	Height: 'Hoogte',
-	'Keep Aspect Ratio': 'Verhouding behouden',
-	Yes: 'Ja',
-	No: 'Nee',
-	Remove: 'Verwijderen',
-	Select: 'Selecteren',
-	'You can only edit your own images. Download this image on the host?':
-		'Je kunt alleen je eigen afbeeldingen aanpassen. Deze afbeelding downloaden?',
-	'The image has been successfully uploaded to the host!':
-		'De afbeelding is succesvol geüploadet!',
-	palette: 'Palette',
-	'There are no files': 'Er zijn geen bestanden in deze map.',
-	Rename: 'Hongaars',
-	'Enter new name': 'Voer een nieuwe naam in',
-	preview: 'voorvertoning',
-	download: 'Download',
-	'Paste from clipboard': 'Plakken van klembord',
-	"Your browser doesn't support direct access to the clipboard.":
-		'Uw browser ondersteunt geen directe toegang tot het klembord.',
-	'Copy selection': 'Selectie kopiëren',
-	copy: 'kopiëren',
-	'Border radius': 'Border radius',
-	'Show all': 'Toon alle',
-	Apply: 'Toepassing',
-	'Please fill out this field': 'Vul dit veld',
-	'Please enter a web address': 'Voer een webadres',
-	Default: 'Standaard',
-	Circle: 'Cirkel',
-	Dot: 'Dot',
-	Quadrate: 'Quadrate',
-	Find: 'Zoeken',
-	'Find Previous': 'Vorige Zoeken',
-	'Find Next': 'Volgende Zoeken',
-	'Insert className': 'Voeg de klassenaam in',
-	'Line height': 'Lijnhoogte',
-	Spellchecking: 'Spellingcontrole',
-	'Press Alt for custom resizing': 'Druk op Alt voor aangepaste grootte'
+	'copy-format': 'opmaak kopiëren'
 };
 
 
 /***/ }),
 
-/***/ 66221:
+/***/ 58548:
 /***/ (function(module) {
 
 /*!
@@ -40911,235 +38660,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Napisz coś',
-	Advanced: 'Zaawansowane',
-	'About Jodit': 'O Jodit',
-	'Jodit Editor': 'Edytor Jodit',
-	"Jodit User's Guide": 'Instrukcja Jodit',
-	'contains detailed help for using':
-		'zawiera szczegółowe informacje dotyczące użytkowania.',
-	'For information about the license, please go to our website:':
-		'Odwiedź naszą stronę, aby uzyskać więcej informacji na temat licencji:',
-	'Buy full version': 'Zakup pełnej wersji',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. Wszystkie prawa zastrzeżone.',
-	Anchor: 'Kotwica',
-	'Open in new tab': 'Otwórz w nowej zakładce',
-	'Open editor in fullsize': 'Otwórz edytor w pełnym rozmiarze',
-	'Clear Formatting': 'Wyczyść formatowanie',
-	'Fill color or set the text color':
-		'Kolor wypełnienia lub ustaw kolor tekstu',
-	Redo: 'Ponów',
-	Undo: 'Cofnij',
-	Bold: 'Pogrubienie',
-	Italic: 'Kursywa',
-	'Insert Unordered List': 'Wstaw listę wypunktowaną',
-	'Insert Ordered List': 'Wstaw listę numeryczną',
-	'Align Center': 'Wyśrodkuj',
-	'Align Justify': 'Wyjustuj',
-	'Align Left': 'Wyrównaj do lewej',
-	'Align Right': 'Wyrównaj do prawej',
-	'Insert Horizontal Line': 'Wstaw linię poziomą',
-	'Insert Image': 'Wstaw grafikę',
-	'Insert file': 'Wstaw plik',
-	'Insert youtube/vimeo video': 'Wstaw film Youtube/vimeo',
-	'Insert link': 'Wstaw link',
-	'Font size': 'Rozmiar tekstu',
-	'Font family': 'Krój czcionki',
-	'Insert format block': 'Wstaw formatowanie',
-	Normal: 'Normalne',
-	'Heading 1': 'Nagłówek 1',
-	'Heading 2': 'Nagłówek 2',
-	'Heading 3': 'Nagłówek 3',
-	'Heading 4': 'Nagłówek 4',
-	Quote: 'Cytat',
-	Code: 'Kod',
-	Insert: 'Wstaw',
-	'Insert table': 'Wstaw tabelę',
-	'Decrease Indent': 'Zmniejsz wcięcie',
-	'Increase Indent': 'Zwiększ wcięcie',
-	'Select Special Character': 'Wybierz znak specjalny',
-	'Insert Special Character': 'Wstaw znak specjalny',
-	'Paint format': 'Malarz formatów',
-	'Change mode': 'Zmień tryb',
-	Margins: 'Marginesy',
-	top: 'Górny',
-	right: 'Prawy',
-	bottom: 'Dolny',
-	left: 'Levy',
-	Styles: 'Style CSS',
-	Classes: 'Klasy CSS',
-	Align: 'Wyrównanie',
-	Right: 'Prawa',
-	Center: 'środek',
-	Left: 'Lewa',
-	'--Not Set--': 'brak',
-	Src: 'Źródło',
-	Title: 'Tytuł',
-	Alternative: 'Tekst alternatywny',
-	Link: 'Link',
-	'Open link in new tab': 'Otwórz w nowej zakładce',
-	Image: 'Grafika',
-	file: 'Plik',
-	Advansed: 'Zaawansowne',
-	'Image properties': 'Właściwości grafiki',
-	Cancel: 'Anuluj',
-	Ok: 'OK',
-	'Your code is similar to HTML. Keep as HTML?':
-		'Twój kod wygląda jak HTML. Zachować HTML?',
-	'Paste as HTML': 'Wkleić jako HTML?',
-	Keep: 'Oryginalny tekst',
-	Clean: 'Wyczyść',
-	'Insert as Text': 'Wstaw jako tekst',
-	'Word Paste Detected': 'Wykryto tekst w formacie Word',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'Wklejany tekst pochodzi z dokumentu Microsoft Word/Excel. Chcesz zachować ten format czy wyczyścić go? ',
-	'Insert only Text': 'Wstaw tylko treść',
-	'File Browser': 'Przeglądarka plików',
-	'Error on load list': 'Błąd ładowania listy plików',
-	'Error on load folders': 'Błąd ładowania folderów',
-	'Are you sure?': 'Czy jesteś pewien?',
-	'Enter Directory name': 'Wprowadź nazwę folderu',
-	'Create directory': 'Utwórz folder',
-	'type name': 'wprowadź nazwę',
-	'Drop image': 'Upuść plik graficzny',
-	'Drop file': 'Upuść plik',
-	'or click': 'lub kliknij tu',
-	'Alternative text': 'Tekst alternatywny',
-	Browse: 'Przeglądaj',
-	Upload: 'Wczytaj',
-	Background: 'Tło',
-	Text: 'Treść',
-	Top: 'Góra',
-	Middle: 'Środek',
-	Bottom: 'Dół',
-	'Insert column before': 'Wstaw kolumnę przed',
-	'Insert column after': 'Wstaw kolumnę po',
-	'Insert row above': 'Wstaw wiersz przed',
-	'Insert row below': 'Wstaw wiersz po',
-	'Delete table': 'Usuń tabelę',
-	'Delete row': 'Usuń wiersz',
-	'Delete column': 'Usuń kolumnę',
-	'Empty cell': 'Wyczyść komórkę',
-	Delete: 'Usuń',
-	'Strike through': 'Przekreślenie',
-	Underline: 'Podkreślenie',
-	Break: 'Przerwa',
-	'Search for': 'Szukaj',
-	'Replace with': 'Zamień na',
-	Replace: 'Wymienić',
-	Edit: 'Edytuj',
-	'Vertical align': 'Wyrównywanie w pionie',
-	'Horizontal align': 'Wyrównywanie w poziomie',
-	Filter: 'Filtruj',
-	'Sort by changed': 'Sortuj wg zmiany',
-	'Sort by name': 'Sortuj wg nazwy',
-	'Sort by size': 'Sortuj wg rozmiaru',
-	'Add folder': 'Dodaj folder',
-	'Split vertical': 'Podziel w pionie',
-	'Split horizontal': 'Podziel w poziomie',
-	Split: 'Podziel',
-	Merge: 'Scal',
-	'Add column': 'Dodaj kolumnę',
-	'Add row': 'Dodaj wiersz',
-	Border: 'Obramowanie',
-	'Embed code': 'Wstaw kod',
-	Update: 'Aktualizuj',
-	superscript: 'indeks górny',
-	subscript: 'index dolny',
-	'Cut selection': 'Wytnij zaznaczenie',
-	Paste: 'Wklej',
-	'Choose Content to Paste': 'Wybierz zawartość do wklejenia',
-	'Chars: %d': 'Znaki: %d',
-	'Words: %d': 'Słowa: %d',
-	All: 'Wszystko',
-	'Select %s': 'Wybierz: %s',
-	'Select all': 'Wybierz wszystko',
-	source: 'HTML',
-	bold: 'pogrubienie',
-	italic: 'kursywa',
-	brush: 'pędzel',
-	link: 'link',
-	undo: 'cofnij',
-	redo: 'ponów',
-	table: 'tabela',
-	image: 'grafika',
-	eraser: 'wyczyść',
-	paragraph: 'akapit',
-	fontsize: 'rozmiar czcionki',
-	video: 'wideo',
-	font: 'czcionka',
-	about: 'O programie',
-	print: 'drukuj',
-	symbol: 'symbol',
-	underline: 'podkreślenie',
-	strikethrough: 'przekreślenie',
-	indent: 'wcięcie',
-	outdent: 'wycięcie',
-	fullsize: 'pełen rozmiar',
-	shrink: 'przytnij',
-	copyformat: 'format kopii',
-	hr: 'linia pozioma',
-	ul: 'lista',
-	ol: 'lista numerowana',
-	cut: 'wytnij',
-	selectall: 'zaznacz wszystko',
-	'Open link': 'otwórz link',
-	'Edit link': 'edytuj link',
-	'No follow': 'Atrybut no-follow',
-	Unlink: 'Usuń link',
-	Eye: 'szukaj',
-	pencil: 'edytuj',
-	' URL': 'URL',
-	Reset: 'wyczyść',
-	Save: 'zapisz',
-	'Save as ...': 'zapisz jako',
-	Resize: 'Zmień rozmiar',
-	Crop: 'Przytnij',
-	Width: 'Szerokość',
-	Height: 'Wysokość',
-	'Keep Aspect Ratio': 'Zachowaj proporcje',
-	Yes: 'Tak',
-	No: 'Nie',
-	Remove: 'Usuń',
-	Select: 'Wybierz',
-	'You can only edit your own images. Download this image on the host?':
-		'Możesz edytować tylko swoje grafiki. Czy chcesz pobrać tą grafikę?',
-	'The image has been successfully uploaded to the host!':
-		'Grafika została pomyślnienie dodana na serwer',
-	palette: 'Paleta',
-	'There are no files': 'Brak plików.',
-	Rename: 'zmień nazwę',
-	'Enter new name': 'Wprowadź nową nazwę',
-	preview: 'podgląd',
-	download: 'pobierz',
-	'Paste from clipboard': 'Wklej ze schowka',
-	"Your browser doesn't support direct access to the clipboard.":
-		'Twoja przeglądarka nie obsługuje schowka',
-	'Copy selection': 'Kopiuj zaznaczenie',
-	copy: 'kopiuj',
-	'Border radius': 'Zaokrąglenie krawędzi',
-	'Show all': 'Pokaż wszystkie',
-	Apply: 'Zastosuj',
-	'Please fill out this field': 'Proszę wypełnić to pole',
-	'Please enter a web address': 'Proszę, wpisz adres sieci web',
-	Default: 'Domyślnie',
-	Circle: 'Koło',
-	Dot: 'Punkt',
-	Quadrate: 'Kwadrat',
-	Find: 'Znaleźć',
-	'Find Previous': 'Znaleźć Poprzednie',
-	'Find Next': 'Znajdź Dalej',
-	'Insert className': 'Wstaw nazwę zajęć',
-	'Line height': 'Wysokość linii',
-	Spellchecking: 'Sprawdzanie pisowni',
-	'Press Alt for custom resizing': 'Naciśnij Alt, aby zmienić rozmiar'
+	'copy-format': 'format kopii'
 };
 
 
 /***/ }),
 
-/***/ 75662:
+/***/ 82958:
 /***/ (function(module) {
 
 /*!
@@ -41149,239 +38676,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Escreva algo...',
-	Advanced: 'Avançado',
-	'About Jodit': 'Sobre o Jodit',
-	'Jodit Editor': 'Editor Jodit',
-	"Jodit User's Guide": 'Guia de usuário Jodit',
-	'contains detailed help for using': 'contém ajuda detalhada para o uso.',
-	'For information about the license, please go to our website:':
-		'Para informação sobre a licença, por favor visite nosso site:',
-	'Buy full version': 'Compre a versão completa',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. Todos os direitos reservados.',
-	Anchor: 'Link',
-	'Open in new tab': 'Abrir em nova aba',
-	'Open editor in fullsize': 'Abrir editor em tela cheia',
-	'Clear Formatting': 'Limpar formatação',
-	'Fill color or set the text color': 'Cor de preenchimento ou cor do texto',
-	Redo: 'Refazer',
-	Undo: 'Desfazer',
-	Bold: 'Negrito',
-	Italic: 'Itálico',
-	'Insert Unordered List': 'Inserir lista não ordenada',
-	'Insert Ordered List': 'Inserir lista ordenada',
-	'Align Center': 'Centralizar',
-	'Align Justify': 'Justificar',
-	'Align Left': 'Alinhar à Esquerda',
-	'Align Right': 'Alinhar à Direita',
-	'Insert Horizontal Line': 'Inserir linha horizontal',
-	'Insert Image': 'Inserir imagem',
-	'Insert file': 'Inserir arquivo',
-	'Insert youtube/vimeo video': 'Inserir vídeo do Youtube/vimeo',
-	'Insert link': 'Inserir link',
-	'Font size': 'Tamanho da letra',
-	'Font family': 'Fonte',
-	'Insert format block': 'Inserir bloco',
-	Normal: 'Normal',
-	'Heading 1': 'Cabeçalho 1',
-	'Heading 2': 'Cabeçalho 2',
-	'Heading 3': 'Cabeçalho 3',
-	'Heading 4': 'Cabeçalho 4',
-	Quote: 'Citação',
-	Code: 'Código',
-	Insert: 'Inserir',
-	'Insert table': 'Inserir tabela',
-	'Decrease Indent': 'Diminuir recuo',
-	'Increase Indent': 'Aumentar recuo',
-	'Select Special Character': 'Selecionar caractere especial',
-	'Insert Special Character': 'Inserir caractere especial',
-	'Paint format': 'Copiar formato',
-	'Change mode': 'Mudar modo',
-	Margins: 'Margens',
-	top: 'cima',
-	right: 'direta',
-	bottom: 'baixo',
-	left: 'esquerda',
-	Styles: 'Estilos CSS',
-	Classes: 'Classes CSS',
-	Align: 'Alinhamento',
-	Right: 'Direita',
-	Center: 'Centro',
-	Left: 'Esquerda',
-	'--Not Set--': '--Não Estabelecido--',
-	Src: 'Fonte',
-	Title: 'Título',
-	Alternative: 'Texto Alternativo',
-	Link: 'Link',
-	'Open link in new tab': 'Abrir link em nova aba',
-	Image: 'Imagem',
-	file: 'Arquivo',
-	Advansed: 'Avançado',
-	'Image properties': 'Propriedades da imagem',
-	Cancel: 'Cancelar',
-	Ok: 'Ok',
-	'Your code is similar to HTML. Keep as HTML?':
-		'Seu código é similar ao HTML. Manter como HTML?',
-	'Paste as HTML': 'Colar como HTML?',
-	Keep: 'Manter',
-	Clean: 'Limpar',
-	'Insert as Text': 'Inserir como Texto',
-	'Word Paste Detected': 'Colado do Word Detectado',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'O conteúdo colado veio de um documento Microsoft Word/Excel. Você deseja manter o formato ou limpa-lo?',
-	'Insert only Text': 'Inserir somente o Texto',
-	'File Browser': 'Procurar arquivo',
-	'Error on load list': 'Erro ao carregar a lista',
-	'Error on load folders': 'Erro ao carregar as pastas',
-	'Are you sure?': 'Você tem certeza?',
-	'Enter Directory name': 'Escreva o nome da pasta',
-	'Create directory': 'Criar pasta',
-	'type name': 'Escreva seu nome',
-	'Drop image': 'Soltar imagem',
-	'Drop file': 'Soltar arquivo',
-	'or click': 'ou clique',
-	'Alternative text': 'Texto alternativo',
-	Browse: 'Explorar',
-	Upload: 'Upload',
-	Background: 'Fundo',
-	Text: 'Texto',
-	Top: 'Cima',
-	Middle: 'Meio',
-	Bottom: 'Baixo',
-	'Insert column before': 'Inserir coluna antes',
-	'Insert column after': 'Inserir coluna depois',
-	'Insert row above': 'Inserir linha acima',
-	'Insert row below': 'Inserir linha abaixo',
-	'Delete table': 'Excluir tabela',
-	'Delete row': 'Excluir linha',
-	'Delete column': 'Excluir coluna',
-	'Empty cell': 'Limpar célula',
-	Delete: 'Excluir',
-	'Strike through': 'Tachado',
-	Underline: 'Sublinhar',
-	Break: 'Pausa',
-	'Search for': 'Procurar por',
-	'Replace with': 'Substituir com',
-	Replace: 'Substituir',
-	Edit: 'Editar',
-	'Vertical align': 'Alinhamento vertical',
-	'Horizontal align': 'Alinhamento horizontal',
-	Filter: 'filtrar',
-	'Sort by changed': 'Ordenar por modificação',
-	'Sort by name': 'Ordenar por nome',
-	'Sort by size': 'Ordenar por tamanho',
-	'Add folder': 'Adicionar pasta',
-	Split: 'Dividir',
-	'Split vertical': 'Dividir vertical',
-	'Split horizontal': 'Dividir horizontal',
-	Merge: 'Mesclar',
-	'Add column': 'Adicionar coluna',
-	'Add row': 'Adicionar linha',
-	Border: 'Borda',
-	'Embed code': 'Incluir código',
-	Update: 'Atualizar',
-	superscript: 'sobrescrito',
-	subscript: 'subscrito',
-	'Cut selection': 'Cortar seleção',
-	Paste: 'Colar',
-	'Choose Content to Paste': 'Escolher conteúdo para colar',
-	'Chars: %d': 'Caracteres: %d',
-	'Words: %d': 'Palavras: %d',
-	All: 'Tudo',
-	'Select %s': 'Selecionar: %s',
-	'Select all': 'Selecionar tudo',
-	source: 'HTML',
-	bold: 'negrito',
-	italic: 'itálico',
-	brush: 'pincel',
-	link: 'link',
-	undo: 'desfazer',
-	redo: 'refazer',
-	table: 'tabela',
-	image: 'imagem',
-	eraser: 'apagar',
-	paragraph: 'parágrafo',
-	fontsize: 'tamanho da letra',
-	video: 'vídeo',
-	font: 'fonte',
-	about: 'Sobre de',
-	print: 'Imprimir',
-	symbol: 'Símbolo',
-	underline: 'sublinhar',
-	strikethrough: 'tachado',
-	indent: 'recuar',
-	outdent: 'diminuir recuo',
-	fullsize: 'Tamanho completo',
-	shrink: 'diminuir',
-	copyformat: 'Copiar formato',
-	hr: 'linha horizontal',
-	ul: 'lista não ordenada',
-	ol: 'lista ordenada',
-	cut: 'Cortar',
-	selectall: 'Selecionar tudo',
-	'Open link': 'Abrir link',
-	'Edit link': 'Editar link',
-	'No follow': 'Não siga',
-	Unlink: 'Remover link',
-	Eye: 'Visualizar',
-	pencil: 'Editar',
-	' URL': 'URL',
-	Reset: 'Resetar',
-	Save: 'Salvar',
-	'Save as ...': 'Salvar como...',
-	Resize: 'Redimensionar',
-	Crop: 'Recortar',
-	Width: 'Largura',
-	Height: 'Altura',
-	'Keep Aspect Ratio': 'Manter a proporção',
-	Yes: 'Sim',
-	No: 'Não',
-	Remove: 'Remover',
-	Select: 'Selecionar',
-	'You can only edit your own images. Download this image on the host?':
-		'Você só pode editar suas próprias imagens. Baixar essa imagem pro servidor?',
-	'The image has been successfully uploaded to the host!':
-		'A imagem foi enviada com sucesso para o servidor!',
-	palette: 'Palette',
-	'There are no files': 'Não há arquivos nesse diretório.',
-	Rename: 'Húngara',
-	'Enter new name': 'Digite um novo nome',
-	preview: 'preview',
-	download: 'Baixar',
-	'Paste from clipboard': 'Colar da área de transferência',
-	"Your browser doesn't support direct access to the clipboard.":
-		'O seu navegador não oferece suporte a acesso direto para a área de transferência.',
-	'Copy selection': 'Selecção de cópia',
-	copy: 'cópia',
-	'Border radius': 'Border radius',
-	'Show all': 'Mostrar todos os',
-	Apply: 'Aplicar',
-	'Please fill out this field': 'Por favor, preencha este campo',
-	'Please enter a web address': 'Por favor introduza um endereço web',
-	Default: 'Padrão',
-	Circle: 'Círculo',
-	Dot: 'Ponto',
-	Quadrate: 'Quadro',
-	'Lower Alpha': 'Letra Minúscula',
-	'Lower Greek': 'Grego Minúscula',
-	'Lower Roman': 'Romano Minúscula',
-	'Upper Alpha': 'Letra Maiúscula',
-	'Upper Roman': 'Romano Maiúscula',
-	Find: 'Encontrar',
-	'Find Previous': 'Encontrar Anteriores',
-	'Find Next': 'Localizar Próxima',
-	'Insert className': 'Insira o nome da classe',
-	'Line height': 'Altura da linha',
-	Spellchecking: 'Verificação ortográfica',
-	'Press Alt for custom resizing':
-		'Pressione Alt para redimensionamento personalizado'
+	'copy-format': 'Copiar formato'
 };
 
 
 /***/ }),
 
-/***/ 90159:
+/***/ 52315:
 /***/ (function(module) {
 
 /*!
@@ -41391,234 +38692,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Напишите что-либо',
-	'About Jodit': 'О Jodit',
-	'Jodit Editor': 'Редактор Jodit',
-	"Jodit User's Guide": 'Jodit Руководство пользователя',
-	'contains detailed help for using':
-		'содержит детальную информацию по использованию',
-	'For information about the license, please go to our website:':
-		'Для получения сведений о лицензии , пожалуйста, перейдите на наш сайт:',
-	'Buy full version': 'Купить полную версию',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.',
-	Anchor: 'Анкор',
-	'Open in new tab': 'Открывать ссылку в новой вкладке',
-	'Open editor in fullsize': 'Открыть редактор в полном размере',
-	'Clear Formatting': 'Очистить форматирование',
-	'Fill color or set the text color': 'Цвет заливки или цвет текста',
-	Redo: 'Повтор',
-	Undo: 'Отмена',
-	Bold: 'Жирный',
-	Italic: 'Наклонный',
-	'Insert Unordered List': 'Вставка маркированного списка',
-	'Insert Ordered List': 'Вставить нумерованный список',
-	'Align Center': 'Выровнять по центру',
-	'Align Justify': 'Выровнять по ширине',
-	'Align Left': 'Выровнять по левому краю',
-	'Align Right': 'Выровнять по правому краю',
-	'Insert Horizontal Line': 'Вставить горизонтальную линию',
-	'Insert Image': 'Вставить изображение',
-	'Insert file': 'Вставить файл',
-	'Insert youtube/vimeo video': 'Вставьте видео',
-	'Insert link': 'Вставить ссылку',
-	'Font size': 'Размер шрифта',
-	'Font family': 'Шрифт',
-	'Insert format block': 'Вставить блочный элемент',
-	Normal: 'Нормальный текст',
-	'Heading 1': 'Заголовок 1',
-	'Heading 2': 'Заголовок 2',
-	'Heading 3': 'Заголовок 3',
-	'Heading 4': 'Заголовок 4',
-	Quote: 'Цитата',
-	Code: 'Код',
-	Insert: 'Вставить',
-	'Insert table': 'Вставить таблицу',
-	'Decrease Indent': 'Уменьшить отступ',
-	'Increase Indent': 'Увеличить отступ',
-	'Select Special Character': 'Выберите специальный символ',
-	'Insert Special Character': 'Вставить специальный символ',
-	'Paint format': 'Формат краски',
-	'Change mode': 'Источник',
-	Margins: 'Отступы',
-	top: 'сверху',
-	right: 'справа',
-	bottom: 'снизу',
-	left: 'слева',
-	Styles: 'Стили',
-	Classes: 'Классы',
-	Align: 'Выравнивание',
-	Right: 'По правому краю',
-	Center: 'По центру',
-	Left: 'По левому краю',
-	'--Not Set--': '--не устанавливать--',
-	Src: 'src',
-	Title: 'Заголовок',
-	Alternative: 'Альтернативный текст (alt)',
-	Link: 'Ссылка',
-	'Open link in new tab': 'Открывать ссылку в новом окне',
-	file: 'Файл',
-	Advanced: 'Расширенные',
-	'Image properties': 'Свойства изображения',
-	Cancel: 'Отмена',
-	Ok: 'Ок',
-	'Your code is similar to HTML. Keep as HTML?':
-		'Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?',
-	'Paste as HTML': 'Вставить как HTML?',
-	Keep: 'Сохранить оригинал',
-	Clean: 'Почистить',
-	'Insert as Text': 'Вставить как текст',
-	'Insert only Text': 'Вставить только текст',
-	'Word Paste Detected': 'Возможно это фрагмент Word или Excel',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'Контент который вы вставляете поступает из документа Microsoft Word / Excel. Вы хотите сохранить формат или очистить его?',
-	'File Browser': 'Браузер файлов',
-	'Error on load list': 'Ошибка при загрузке списка изображений',
-	'Error on load folders': 'Ошибка при загрузке списка директорий',
-	'Are you sure?': 'Вы уверены?',
-	'Enter Directory name': 'Введите название директории',
-	'Create directory': 'Создать директорию',
-	'type name': 'введите название',
-	'Drop image': 'Перетащите сюда изображение',
-	'Drop file': 'Перетащите сюда файл',
-	'or click': 'или нажмите',
-	'Alternative text': 'Альтернативный текст',
-	Browse: 'Сервер',
-	Upload: 'Загрузка',
-	Background: 'Фон',
-	Text: 'Текст',
-	Top: ' К верху',
-	Middle: 'По середине',
-	Bottom: 'К низу',
-	'Insert column before': 'Вставить столбец до',
-	'Insert column after': 'Вставить столбец после',
-	'Insert row above': 'Вставить ряд выше',
-	'Insert row below': 'Вставить ряд ниже',
-	'Delete table': 'Удалить таблицу',
-	'Delete row': 'Удалять ряд',
-	'Delete column': 'Удалить столбец',
-	'Empty cell': 'Очистить ячейку',
-	source: 'HTML',
-	bold: 'жирный',
-	italic: 'курсив',
-	brush: 'заливка',
-	link: 'ссылка',
-	undo: 'отменить',
-	redo: 'повторить',
-	table: 'таблица',
-	image: 'Изображение',
-	eraser: 'очистить',
-	paragraph: 'параграф',
-	fontsize: 'размер шрифта',
-	video: 'видео',
-	font: 'шрифт',
-	about: 'о редакторе',
-	print: 'печать',
-	symbol: 'символ',
-	underline: 'подчеркнутый',
-	strikethrough: 'перечеркнутый',
-	indent: 'отступ',
-	outdent: 'выступ',
-	fullsize: 'во весь экран',
-	shrink: 'обычный размер',
-	copyformat: 'Копировать формат',
-	hr: 'линия',
-	ul: 'Список',
-	ol: 'Нумерованный список',
-	cut: 'Вырезать',
-	selectall: 'Выделить все',
-	'Embed code': 'Код',
-	'Open link': 'Открыть ссылку',
-	'Edit link': 'Редактировать ссылку',
-	'No follow': 'Атрибут nofollow',
-	Unlink: 'Убрать ссылку',
-	Eye: 'Просмотр',
-	pencil: 'Редактировать',
-	Update: 'Обновить',
-	' URL': 'URL',
-	Edit: 'Редактировать',
-	'Horizontal align': 'Горизонтальное выравнивание',
-	Filter: 'Фильтр',
-	'Sort by changed': 'По изменению',
-	'Sort by name': 'По имени',
-	'Sort by size': 'По размеру',
-	'Add folder': 'Добавить папку',
-	Reset: 'Восстановить',
-	Save: 'Сохранить',
-	'Save as ...': 'Сохранить как',
-	Resize: 'Изменить размер',
-	Crop: 'Обрезать размер',
-	Width: 'Ширина',
-	Height: 'Высота',
-	'Keep Aspect Ratio': 'Сохранять пропорции',
-	Yes: 'Да',
-	No: 'Нет',
-	Remove: 'Удалить',
-	Select: 'Выделить',
-	'Chars: %d': 'Символов: %d',
-	'Words: %d': 'Слов: %d',
-	All: 'Выделить все',
-	'Select %s': 'Выделить: %s',
-	'Select all': 'Выделить все',
-	'Vertical align': 'Вертикальное выравнивание',
-	Split: 'Разделить',
-	'Split vertical': 'Разделить по вертикали',
-	'Split horizontal': 'Разделить по горизонтали',
-	Merge: 'Объединить в одну',
-	'Add column': 'Добавить столбец',
-	'Add row': 'Добавить строку',
-	Delete: 'Удалить',
-	Border: 'Рамка',
-	'License: %s': 'Лицензия: %s',
-	'Strike through': 'Перечеркнуть',
-	Underline: 'Подчеркивание',
-	superscript: 'верхний индекс',
-	subscript: 'индекс',
-	'Cut selection': 'Вырезать',
-	Break: 'Разделитель',
-	'Search for': 'Найти',
-	'Replace with': 'Заменить на',
-	Replace: 'Заменить',
-	Paste: 'Вставить',
-	'Choose Content to Paste': 'Выбрать контент для вставки',
-	'You can only edit your own images. Download this image on the host?':
-		'Вы можете редактировать только свои собственные изображения. Загрузить это изображение на ваш сервер?',
-	'The image has been successfully uploaded to the host!':
-		'Изображение успешно загружено на сервер!',
-	palette: 'палитра',
-	'There are no files': 'В данном каталоге нет файлов',
-	Rename: 'Переименовать',
-	'Enter new name': 'Введите новое имя',
-	preview: 'Предпросмотр',
-	download: 'Скачать',
-	'Paste from clipboard': 'Вставить из буфера обмена',
-	"Your browser doesn't support direct access to the clipboard.":
-		'Ваш браузер не поддерживает прямой доступ к буферу обмена.',
-	'Copy selection': 'Скопировать выделенное',
-	copy: 'копия',
-	'Border radius': 'Радиус границы',
-	'Show all': 'Показать все',
-	Apply: 'Применить',
-	'Please fill out this field': 'Пожалуйста, заполните это поле',
-	'Please enter a web address': 'Пожалуйста, введите веб-адрес',
-	Default: 'По умолчанию',
-	Circle: 'Круг',
-	Dot: 'Точка',
-	Quadrate: 'Квадрат',
-	Find: 'Найти',
-	'Find Previous': 'Найти Предыдущие',
-	'Find Next': 'Найти Далее',
-	'Insert className': 'Вставить название класса',
-	'Line height': 'Высота линии',
-	Spellchecking: 'Проверка орфографии',
-	'Press Alt for custom resizing':
-		'Нажмите Alt для изменения пользовательского размера'
+	'copy-format': 'Копировать формат'
 };
 
 
 /***/ }),
 
-/***/ 88053:
+/***/ 87727:
 /***/ (function(module) {
 
 /*!
@@ -41628,234 +38708,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': 'Bir şeyler yaz',
-	Advanced: 'Gelişmiş',
-	'About Jodit': 'Jodit Hakkında',
-	'Jodit Editor': 'Jodit Editor',
-	"Jodit User's Guide": 'Jodit Kullanım Kılavuzu',
-	'contains detailed help for using': 'kullanım için detaylı bilgiler içerir',
-	'For information about the license, please go to our website:':
-		'Lisans hakkında bilgi için lütfen web sitemize gidin:',
-	'Buy full version': 'Tam versiyonunu satın al',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. Tüm hakları saklıdır.',
-	Anchor: 'Bağlantı',
-	'Open in new tab': 'Yeni sekmede aç',
-	'Open editor in fullsize': 'Editörü tam ekranda aç',
-	'Clear Formatting': 'Stili temizle',
-	'Fill color or set the text color': 'Renk doldur veya yazı rengi seç',
-	Redo: 'Yinele',
-	Undo: 'Geri Al',
-	Bold: 'Kalın',
-	Italic: 'İtalik',
-	'Insert Unordered List': 'Sırasız Liste Ekle',
-	'Insert Ordered List': 'Sıralı Liste Ekle',
-	'Align Center': 'Ortala',
-	'Align Justify': 'Kenarlara Yasla',
-	'Align Left': 'Sola Yasla',
-	'Align Right': 'Sağa Yasla',
-	'Insert Horizontal Line': 'Yatay Çizgi Ekle',
-	'Insert Image': 'Resim Ekle',
-	'Insert file': 'Dosya Ekle',
-	'Insert youtube/vimeo video': 'Youtube/Vimeo Videosu Ekle',
-	'Insert link': 'Bağlantı Ekle',
-	'Font size': 'Font Boyutu',
-	'Font family': 'Font Ailesi',
-	'Insert format block': 'Blok Ekle',
-	Normal: 'Normal',
-	'Heading 1': 'Başlık 1',
-	'Heading 2': 'Başlık 2',
-	'Heading 3': 'Başlık 3',
-	'Heading 4': 'Başlık 4',
-	Quote: 'Alıntı',
-	Code: 'Kod',
-	Insert: 'Ekle',
-	'Insert table': 'Tablo Ekle',
-	'Decrease Indent': 'Girintiyi Azalt',
-	'Increase Indent': 'Girintiyi Arttır',
-	'Select Special Character': 'Özel Karakter Seç',
-	'Insert Special Character': 'Özel Karakter Ekle',
-	'Paint format': 'Resim Biçimi',
-	'Change mode': 'Mod Değiştir',
-	Margins: 'Boşluklar',
-	top: 'Üst',
-	right: 'Sağ',
-	bottom: 'Alt',
-	left: 'Sol',
-	Styles: 'CSS Stilleri',
-	Classes: 'CSS Sınıfları',
-	Align: 'Hizalama',
-	Right: 'Sağ',
-	Center: 'Ortalı',
-	Left: 'Sol',
-	'--Not Set--': 'Belirsiz',
-	Src: 'Kaynak',
-	Title: 'Başlık',
-	Alternative: 'Alternatif Yazı',
-	Link: 'Link',
-	'Open link in new tab': 'Bağlantıyı yeni sekmede aç',
-	Image: 'Resim',
-	file: 'Dosya',
-	Advansed: 'Gelişmiş',
-	'Image properties': 'Resim özellikleri',
-	Cancel: 'İptal',
-	Ok: 'Tamam',
-	'Your code is similar to HTML. Keep as HTML?':
-		'Kodunuz HTML koduna benziyor. HTML olarak devam etmek ister misiniz?',
-	'Paste as HTML': 'HTML olarak yapıştır',
-	Keep: 'Sakla',
-	Clean: 'Temizle',
-	'Insert as Text': 'Yazı olarak ekle',
-	'Word Paste Detected': 'Word biçiminde yapıştırma algılandı',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder löschen?',
-	'Insert only Text': 'Sadece yazıyı ekle',
-	'File Browser': 'Dosya Listeleyici',
-	'Error on load list': 'Liste yüklenirken hata oluştu',
-	'Error on load folders': 'Klasörler yüklenirken hata oluştur',
-	'Are you sure?': 'Emin misiniz?',
-	'Enter Directory name': 'Dizin yolu giriniz',
-	'Create directory': 'Dizin oluştur',
-	'type name': 'İsim yaz',
-	'Drop image': 'Resim bırak',
-	'Drop file': 'Dosya bırak',
-	'or click': 'veya tıkla',
-	'Alternative text': 'Alternatif yazı',
-	Browse: 'Gözat',
-	Upload: 'Yükle',
-	Background: 'Arka plan',
-	Text: 'Yazı',
-	Top: 'Üst',
-	Middle: 'Orta',
-	Bottom: 'Aşağı',
-	'Insert column before': 'Öncesine kolon ekle',
-	'Insert column after': 'Sonrasına kolon ekle',
-	'Insert row above': 'Üstüne satır ekle',
-	'Insert row below': 'Altına satır ekle',
-	'Delete table': 'Tabloyu sil',
-	'Delete row': 'Satırı sil',
-	'Delete column': 'Kolonu sil',
-	'Empty cell': 'Hücreyi temizle',
-	Delete: 'Sil',
-	'Strike through': 'Üstü çizili',
-	Underline: 'Alt çizgi',
-	Break: 'Satır sonu',
-	'Search for': 'Ara',
-	'Replace with': 'Şununla değiştir',
-	Replace: 'Değiştir',
-	Edit: 'Düzenle',
-	'Vertical align': 'Dikey hizala',
-	'Horizontal align': 'Yatay hizala',
-	Filter: 'Filtre',
-	'Sort by changed': 'Değişime göre sırala',
-	'Sort by name': 'İsme göre sırala',
-	'Sort by size': 'Boyuta göre sırala',
-	'Add folder': 'Klasör ekle',
-	Split: 'Ayır',
-	'Split vertical': 'Dikey ayır',
-	'Split horizontal': 'Yatay ayır',
-	Merge: 'Birleştir',
-	'Add column': 'Kolon ekle',
-	'Add row': 'Satır ekle',
-	Border: 'Kenarlık',
-	'Embed code': 'Kod ekle',
-	Update: 'Güncelle',
-	superscript: 'Üst yazı',
-	subscript: 'Alt yazı',
-	'Cut selection': 'Seçilimi kes',
-	Paste: 'Yapıştır',
-	'Choose Content to Paste': 'Yapıştırılacak içerik seç',
-	'Chars: %d': 'Harfler: %d',
-	'Words: %d': 'Kelimeler: %d',
-	All: 'Tümü',
-	'Select %s': 'Seç: %s',
-	'Select all': 'Tümünü seç',
-	source: 'Kaynak',
-	bold: 'Kalın',
-	italic: 'italik',
-	brush: 'Fırça',
-	link: 'Bağlantı',
-	undo: 'Geri al',
-	redo: 'Yinele',
-	table: 'Tablo',
-	image: 'Resim',
-	eraser: 'Silgi',
-	paragraph: 'Paragraf',
-	fontsize: 'Font boyutu',
-	video: 'Video',
-	font: 'Font',
-	about: 'Hakkında',
-	print: 'Yazdır',
-	symbol: 'Sembol',
-	underline: 'Alt çizgi',
-	strikethrough: 'Üstü çizili',
-	indent: 'Girinti',
-	outdent: 'Çıkıntı',
-	fullsize: 'Tam ekran',
-	shrink: 'Küçült',
-	copyformat: 'Kopyalama Biçimi',
-	hr: 'Ayraç',
-	ul: 'Sırasız liste',
-	ol: 'Sıralı liste',
-	cut: 'Kes',
-	selectall: 'Tümünü seç',
-	'Open link': 'Bağlantıyı aç',
-	'Edit link': 'Bağlantıyı düzenle',
-	'No follow': 'Nofollow özelliği',
-	Unlink: 'Bağlantıyı kaldır',
-	Eye: 'Yorumu',
-	pencil: 'Düzenlemek için',
-	' URL': 'URL',
-	Reset: 'Sıfırla',
-	Save: 'Kaydet',
-	'Save as ...': 'Farklı kaydet',
-	Resize: 'Boyutlandır',
-	Crop: 'Kırp',
-	Width: 'Genişlik',
-	Height: 'Yükseklik',
-	'Keep Aspect Ratio': 'En boy oranını koru',
-	Yes: 'Evet',
-	No: 'Hayır',
-	Remove: 'Sil',
-	Select: 'Seç',
-	'You can only edit your own images. Download this image on the host?':
-		'Sadece kendi resimlerinizi düzenleyebilirsiniz. Bu görseli kendi hostunuza indirmek ister misiniz?',
-	'The image has been successfully uploaded to the host!':
-		'Görsel başarıyla hostunuza yüklendi',
-	palette: 'Palet',
-	'There are no files': 'Bu dizinde dosya yok',
-	Rename: 'Yeniden isimlendir',
-	'Enter new name': 'Yeni isim girin',
-	preview: 'Ön izleme',
-	download: 'İndir',
-	'Paste from clipboard': 'Panodan yapıştır ',
-	"Your browser doesn't support direct access to the clipboard.":
-		'Tarayıcınız panoya doğrudan erişimi desteklemiyor.',
-	'Copy selection': 'Seçimi kopyala',
-	copy: 'Kopyala',
-	'Border radius': 'Sınır yarıçapı',
-	'Show all': 'Tümünü Göster',
-	Apply: 'Uygula',
-	'Please fill out this field': 'Lütfen bu alanı doldurun',
-	'Please enter a web address': 'Lütfen bir web adresi girin',
-	Default: 'Varsayılan',
-	Circle: 'Daire',
-	Dot: 'Nokta',
-	Quadrate: 'Kare',
-	Find: 'Bul',
-	'Find Previous': 'Öncekini Bul',
-	'Find Next': 'Sonrakini Bul',
-	'Insert className': 'Sınıf adı girin',
-	'Line height': 'Çizgi yüksekliği',
-	Spellchecking: 'Yazım denetimi',
-	'Press Alt for custom resizing':
-		'Özel yeniden boyutlandırma için Alt tuşuna basın'
+	'copy-format': 'Kopyalama Biçimi'
 };
 
 
 /***/ }),
 
-/***/ 79865:
+/***/ 9396:
 /***/ (function(module) {
 
 /*!
@@ -41865,233 +38724,13 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': '输入一些内容',
-	Advanced: '高级',
-	'About Jodit': '关于Jodit',
-	'Jodit Editor': 'Jodit Editor',
-	'Free Non-commercial Version': 'Free Non-commercial Version',
-	"Jodit User's Guide": '开发者指南',
-	'contains detailed help for using': '使用帮助',
-	'For information about the license, please go to our website:':
-		'有关许可证的信息，请访问我们的网站：',
-	'Buy full version': '购买完整版本',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. 版权所有',
-	Anchor: 'Anchor',
-	'Open in new tab': '在新窗口打开',
-	'Open editor in fullsize': '全屏编辑',
-	'Clear Formatting': '清除样式',
-	'Fill color or set the text color': '颜色',
-	Redo: '重做',
-	Undo: '撤销',
-	Bold: '粗体',
-	Italic: '斜体',
-	'Insert Unordered List': '符号列表',
-	'Insert Ordered List': '编号',
-	'Align Center': '居中',
-	'Align Justify': '对齐文本',
-	'Align Left': '左对齐',
-	'Align Right': '右对齐',
-	'Insert Horizontal Line': '分割线',
-	'Insert Image': '图片',
-	'Insert file': '文件',
-	'Insert youtube/vimeo video': '视频',
-	'Insert link': '链接',
-	'Font size': '字号',
-	'Font family': '字体',
-	'Insert format block': '格式块',
-	Normal: '默认',
-	'Heading 1': '标题1',
-	'Heading 2': '标题2',
-	'Heading 3': '标题3',
-	'Heading 4': '标题4',
-	Quote: '引用',
-	Code: '代码',
-	Insert: '插入',
-	'Insert table': '表格',
-	'Decrease Indent': '减少缩进',
-	'Increase Indent': '增加缩进',
-	'Select Special Character': '选择特殊符号',
-	'Insert Special Character': '特殊符号',
-	'Paint format': '格式复制',
-	'Change mode': '改变模式',
-	Margins: '外边距（Margins）',
-	top: 'top',
-	right: 'right',
-	bottom: 'bottom',
-	left: 'left',
-	Styles: '样式',
-	Classes: 'Classes',
-	Align: '对齐方式',
-	Right: '居右',
-	Center: '居中',
-	Left: '居左',
-	'--Not Set--': '无',
-	Src: 'Src',
-	Title: 'Title',
-	Alternative: 'Alternative',
-	Link: 'Link',
-	'Open link in new tab': '在新窗口打开链接',
-	Image: '图片',
-	file: 'file',
-	Advansed: '高级',
-	'Image properties': '图片属性',
-	Cancel: '取消',
-	Ok: '确定',
-	'Your code is similar to HTML. Keep as HTML?':
-		'你粘贴的文本是一段html代码，是否保留源格式',
-	'Paste as HTML': 'html粘贴',
-	Keep: '保留源格式',
-	Clean: '匹配目标格式',
-	'Insert as Text': '把html代码视为普通文本',
-	'Word Paste Detected': '文本粘贴',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'正在粘贴 Word/Excel 的文本，是否保留源格式？',
-	'Insert only Text': '只保留文本',
-	'File Browser': '文件管理',
-	'Error on load list': '加载list错误',
-	'Error on load folders': '加载folders错误',
-	'Are you sure?': '你确定吗？',
-	'Enter Directory name': '输入路径',
-	'Create directory': '创建路径',
-	'type name': 'type name',
-	'Drop image': '拖动图片到此',
-	'Drop file': '拖动文件到此',
-	'or click': '或点击',
-	'Alternative text': 'Alternative text',
-	Browse: '浏览',
-	Upload: '上传',
-	Background: '背景色',
-	Text: '文字',
-	Top: '顶部',
-	Middle: '中间',
-	Bottom: '底部',
-	'Insert column before': '在之前插入列',
-	'Insert column after': '在之后插入列',
-	'Insert row above': '在之前插入行',
-	'Insert row below': '在之后插入行',
-	'Delete table': '删除表格',
-	'Delete row': '删除行',
-	'Delete column': '删除列',
-	'Empty cell': '清除内容',
-	'Chars: %d': '字符数: %d',
-	'Words: %d': '单词数: %d',
-	'Strike through': '删除线',
-	Underline: '下划线',
-	superscript: '上标',
-	subscript: '下标',
-	'Cut selection': '剪切',
-	'Select all': '全选',
-	Break: 'Break',
-	'Search for': '查找',
-	'Replace with': '替换为',
-	Replace: '替换',
-	Edit: '编辑',
-	Paste: '粘贴',
-	'Choose Content to Paste': '选择内容并粘贴',
-	All: '全部',
-	source: '源码',
-	bold: '粗体',
-	italic: '斜体',
-	brush: '颜色',
-	link: '链接',
-	undo: '撤销',
-	redo: '重做',
-	table: '表格',
-	image: '图片',
-	eraser: '橡皮擦',
-	paragraph: '段落',
-	fontsize: '字号',
-	video: '视频',
-	font: '字体',
-	about: '关于',
-	print: '打印',
-	symbol: '符号',
-	underline: '下划线',
-	strikethrough: '上出现',
-	indent: '增加缩进',
-	outdent: '减少缩进',
-	fullsize: '全屏',
-	shrink: '收缩',
-	copyformat: '复制格式',
-	hr: '分割线',
-	ul: '无序列表',
-	ol: '顺序列表',
-	cut: '剪切',
-	selectall: '全选',
-	'Open link': '打开链接',
-	'Edit link': '编辑链接',
-	'No follow': 'No follow',
-	Unlink: '取消链接',
-	Eye: '预览',
-	' URL': 'URL',
-	Reset: '重置',
-	Save: '保存',
-	'Save as ...': '保存为',
-	Resize: '调整大小',
-	Crop: '剪切',
-	Width: '宽',
-	Height: '高',
-	'Keep Aspect Ratio': '保持长宽比',
-	Yes: '是',
-	No: '不',
-	Remove: '移除',
-	Select: '选择',
-	'Select %s': '选择: %s',
-	Update: '更新',
-	'Vertical align': '垂直对齐',
-	Merge: '合并',
-	'Add column': '添加列',
-	'Add row': '添加行',
-	Border: '边框',
-	'Embed code': '嵌入代码',
-	Delete: '删除',
-	'Horizontal align': '水平对齐',
-	Filter: '筛选',
-	'Sort by changed': '修改时间排序',
-	'Sort by name': '名称排序',
-	'Sort by size': '大小排序',
-	'Add folder': '新建文件夹',
-	Split: '拆分',
-	'Split vertical': '垂直拆分',
-	'Split horizontal': '水平拆分',
-	'You can only edit your own images. Download this image on the host?':
-		'你只能编辑你自己的图片。Download this image on the host?',
-	'The image has been successfully uploaded to the host!': '图片上传成功',
-	palette: '调色板',
-	pencil: '铅笔',
-	'There are no files': '此目录中沒有文件。',
-	Rename: '重命名',
-	'Enter new name': '输入新名称',
-	preview: '预览',
-	download: '下载',
-	'Paste from clipboard': '粘贴从剪贴板',
-	"Your browser doesn't support direct access to the clipboard.":
-		'你浏览器不支持直接访问的剪贴板。',
-	'Copy selection': '复制选中内容',
-	copy: '复制',
-	'Border radius': '边界半径',
-	'Show all': '显示所有',
-	Apply: '应用',
-	'Please fill out this field': '请填写这个字段',
-	'Please enter a web address': '请输入一个网址',
-	Default: '默认',
-	Circle: '圆圈',
-	Dot: '点',
-	Quadrate: '方形',
-	Find: '搜索',
-	'Find Previous': '查找上一个',
-	'Find Next': '查找下一个',
-	'Insert className': '插入班级名称',
-	'Line height': '线高',
-	Spellchecking: '拼写检查',
-	'Press Alt for custom resizing': '按Alt自定义调整大小'
+	'copy-format': '复制格式'
 };
 
 
 /***/ }),
 
-/***/ 50691:
+/***/ 28765:
 /***/ (function(module) {
 
 /*!
@@ -42101,225 +38740,919 @@ module.exports = {
  */
 
 module.exports = {
-	'Type something': '輸入一些內容',
-	Advanced: '高級',
-	'About Jodit': '關於Jodit',
-	'Jodit Editor': 'Jodit Editor',
-	"Jodit User's Guide": '開發者指南',
-	'contains detailed help for using': '使用幫助',
-	'For information about the license, please go to our website:':
-		'有關許可證的信息，請訪問我們的網站：',
-	'Buy full version': '購買完整版本',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.',
-	Anchor: 'Anchor',
-	'Open in new tab': '在新窗口打開',
-	'Open editor in fullsize': '全屏編輯',
-	'Clear Formatting': '清除樣式',
-	'Fill color or set the text color': '顏色',
-	Redo: '重做',
-	Undo: '撤銷',
-	Bold: '粗體',
-	Italic: '斜體',
-	'Insert Unordered List': '符號列表',
-	'Insert Ordered List': '編號',
-	'Align Center': '居中',
-	'Align Justify': '對齊文本',
-	'Align Left': '左對齊',
-	'Align Right': '右對齊',
-	'Insert Horizontal Line': '分割線',
-	'Insert Image': '圖片',
-	'Insert file': '文件',
-	'Insert youtube/vimeo video': 'youtube/vimeo 影片',
-	'Insert link': '鏈接',
-	'Font size': '字號',
-	'Font family': '字體',
-	'Insert format block': '格式塊',
-	Normal: '文本',
-	'Heading 1': '標題1',
-	'Heading 2': '標題2',
-	'Heading 3': '標題3',
-	'Heading 4': '標題4',
-	Quote: '引用',
-	Code: '代碼',
-	Insert: '插入',
-	'Insert table': '表格',
-	'Decrease Indent': '減少縮進',
-	'Increase Indent': '增加縮進',
-	'Select Special Character': '選擇特殊符號',
-	'Insert Special Character': '特殊符號',
-	'Paint format': '格式複製',
-	'Change mode': '改變模式',
-	Margins: '外邊距（Margins）',
-	top: 'top',
-	right: 'right',
-	bottom: 'bottom',
-	left: 'left',
-	Styles: '樣式',
-	Classes: 'Classes',
-	Align: '對齊方式',
-	Right: '居右',
-	Center: '居中',
-	Left: '居左',
-	'--Not Set--': '無',
-	Src: 'Src',
-	Title: 'Title',
-	Alternative: '替代',
-	Link: 'Link',
-	'Open link in new tab': '在新窗口打開鏈接',
-	Image: '圖片',
-	file: 'file',
-	Advansed: '高級',
-	'Image properties': '圖片屬性',
-	Cancel: '取消',
-	Ok: '確定',
-	'Your code is similar to HTML. Keep as HTML?':
-		'你黏貼的文本是一段html代碼，是否保留源格式',
-	'Paste as HTML': 'html黏貼',
-	Keep: '保留源格式',
-	Clean: '匹配目標格式',
-	'Insert as Text': '把html代碼視為普通文本',
-	'Word Paste Detected': '文本黏貼',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'正在黏貼 Word/Excel 的文本，是否保留源格式？',
-	'Insert only Text': '只保留文本',
-	'File Browser': '文件管理',
-	'Error on load list': '加載list錯誤',
-	'Error on load folders': '加載folders錯誤',
-	'Are you sure?': '你確定嗎？',
-	'Enter Directory name': '輸入路徑',
-	'Create directory': '創建路徑',
-	'type name': 'type name',
-	'Drop image': '拖動圖片到此',
-	'Drop file': '拖動文件到此',
-	'or click': '或點擊',
-	'Alternative text': '替代文字',
-	Browse: '瀏覽',
-	Upload: '上傳',
-	Background: '背景色',
-	Text: '文字',
-	Top: '頂部',
-	Middle: '中間',
-	Bottom: '底部',
-	'Insert column before': '在之前插入列',
-	'Insert column after': '在之後插入列',
-	'Insert row above': '在之前插入行',
-	'Insert row below': '在之後插入行',
-	'Delete table': '刪除表格',
-	'Delete row': '刪除行',
-	'Delete column': '刪除列',
-	'Empty cell': '清除內容',
-	'Chars: %d': '字符數: %d',
-	'Words: %d': '單詞數: %d',
-	'Strike through': '刪除線',
-	Underline: '下劃線',
-	superscript: '上標',
-	subscript: '下標',
-	'Cut selection': '剪切',
-	'Select all': '全選',
-	Break: 'Pause',
-	'Search for': '查找',
-	'Replace with': '替換為',
-	Replace: 'แทนที่',
-	Paste: '黏貼',
-	'Choose Content to Paste': '選擇內容並黏貼',
-	All: '全部',
-	source: '源碼',
-	bold: '粗體',
-	italic: '斜體',
-	brush: '顏色',
-	link: '鏈接',
-	undo: '撤銷',
-	redo: '重做',
-	table: '表格',
-	image: '圖片',
-	eraser: '橡皮擦',
-	paragraph: '段落',
-	fontsize: '字號',
-	video: '影片',
-	font: '字體',
-	about: '關於',
-	print: '打印',
-	symbol: '符號',
-	underline: '下劃線',
-	strikethrough: '上出現',
-	indent: '增加縮進',
-	outdent: '減少縮進',
-	fullsize: '全屏',
-	shrink: '收縮',
-	copyformat: '複製格式',
-	hr: '分割線',
-	ul: '無序列表',
-	ol: '順序列表',
-	cut: '剪切',
-	selectall: '全選',
-	'Open link': '打開鏈接',
-	'Edit link': '編輯鏈接',
-	'No follow': 'No follow',
-	Unlink: '取消連結',
-	Eye: '回顧',
-	' URL': 'URL',
-	Reset: '重置',
-	Save: '保存',
-	'Save as ...': '保存為',
-	Resize: '調整大小',
-	Crop: 'Crop',
-	Width: '寬',
-	Height: '高',
-	'Keep Aspect Ratio': '保存長寬比',
-	Yes: '是',
-	No: '不',
-	Remove: '移除',
-	Select: '選擇',
-	'Select %s': '選擇: %s',
-	Update: '更新',
-	'Vertical align': '垂直對齊',
-	Merge: '合併',
-	'Add column': '添加列',
-	'Add row': '添加行',
-	Border: '邊框',
-	'Embed code': '嵌入代碼',
-	Delete: '刪除',
-	'Horizontal align': '水平對齊',
-	Filter: '篩選',
-	'Sort by changed': '修改時間排序',
-	'Sort by name': '名稱排序',
-	'Sort by size': '大小排序',
-	'Add folder': '新建文件夾',
-	Split: '拆分',
-	'Split vertical': '垂直拆分',
-	'Split horizontal': '水平拆分',
-	'You can only edit your own images. Download this image on the host?':
-		'你只能編輯你自己的圖片。是否下載此圖片到本地?',
-	'The image has been successfully uploaded to the host!': '圖片上傳成功',
-	palette: '調色板',
-	pencil: '鉛筆',
-	'There are no files': '此目錄中沒有文件。',
-	Rename: '重命名',
-	'Enter new name': '輸入新名稱',
-	preview: '預覽',
-	download: '下載',
-	'Paste from clipboard': '從剪貼板貼上',
-	"Your browser doesn't support direct access to the clipboard.":
-		'瀏覽器無法存取剪贴板。',
-	'Copy selection': '複製已選取項目',
-	copy: '複製',
-	'Border radius': '邊框圓角',
-	'Show all': '顯示所有',
-	Apply: '應用',
-	'Please fill out this field': 'ได้โปรดกรอกช่องข้อมูลนี้',
-	'Please enter a web address': 'โปรดเติมที่อยู่บนเว็บ',
-	Default: 'ค่าปริยาย',
-	Circle: 'วงกลม',
-	Dot: 'จุด',
-	Quadrate: 'Quadrate',
-	Find: 'ค้นหา',
-	'Find Previous': 'ค้นหาก่อนหน้านี้',
-	'Find Next': 'ค้นหาถัดไป',
-	'Insert className': 'ใส่ชื่อคลาส',
-	'Line height': 'ความสูงเส้น',
-	Spellchecking: 'สะกดคำ',
-	'Press Alt for custom resizing': 'กดอัลท์สำหรับการปรับขนาดที่กำหนดเอง'
+	'copy-format': '複製格式'
+};
+
+
+/***/ }),
+
+/***/ 47762:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'ارتفاع الخط'
+};
+
+
+/***/ }),
+
+/***/ 97495:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Výška čáry'
+};
+
+
+/***/ }),
+
+/***/ 80131:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Zeilenhöhe'
+};
+
+
+/***/ }),
+
+/***/ 1201:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Altura de la línea'
+};
+
+
+/***/ }),
+
+/***/ 89912:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'ارتفاع خط'
+};
+
+
+/***/ }),
+
+/***/ 3405:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Hauteur de ligne'
+};
+
+
+/***/ }),
+
+/***/ 14129:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'גובה שורה'
+};
+
+
+/***/ }),
+
+/***/ 93729:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Vonal magassága'
+};
+
+
+/***/ }),
+
+/***/ 16106:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Tinggi baris'
+};
+
+
+/***/ }),
+
+/***/ 89690:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Altezza linea'
+};
+
+
+/***/ }),
+
+/***/ 33216:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'ラインの高さ'
+};
+
+
+/***/ }),
+
+/***/ 17282:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': '선 높이'
+};
+
+
+/***/ }),
+
+/***/ 91761:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Lijnhoogte'
+};
+
+
+/***/ }),
+
+/***/ 61675:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Wysokość linii'
+};
+
+
+/***/ }),
+
+/***/ 69709:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Altura da linha'
+};
+
+
+/***/ }),
+
+/***/ 82591:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Высота линии'
+};
+
+
+/***/ }),
+
+/***/ 87649:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Çizgi yüksekliği'
+};
+
+
+/***/ }),
+
+/***/ 60268:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': '线高'
+};
+
+
+/***/ }),
+
+/***/ 58214:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'ความสูงเส้น'
+};
+
+
+/***/ }),
+
+/***/ 5586:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'التدقيق الإملائي'
+};
+
+
+/***/ }),
+
+/***/ 66023:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Kontrola pravopisu'
+};
+
+
+/***/ }),
+
+/***/ 65860:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Rechtschreibprüfung'
+};
+
+
+/***/ }),
+
+/***/ 86055:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Corrección ortográfica'
+};
+
+
+/***/ }),
+
+/***/ 50037:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'غلطیابی املایی'
+};
+
+
+/***/ }),
+
+/***/ 7118:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Vérification Orthographique'
+};
+
+
+/***/ }),
+
+/***/ 30298:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'בדיקת איות'
+};
+
+
+/***/ }),
+
+/***/ 52107:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Helyesírás-ellenőrzés'
+};
+
+
+/***/ }),
+
+/***/ 31240:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Spellchecking'
+};
+
+
+/***/ }),
+
+/***/ 4101:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Controllo ortografico'
+};
+
+
+/***/ }),
+
+/***/ 69286:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'スペルチェック'
+};
+
+
+/***/ }),
+
+/***/ 13402:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: '맞춤법 검사'
+};
+
+
+/***/ }),
+
+/***/ 89574:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Spellingcontrole'
+};
+
+
+/***/ }),
+
+/***/ 63630:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Sprawdzanie pisowni'
+};
+
+
+/***/ }),
+
+/***/ 72212:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Verificação ortográfica'
+};
+
+
+/***/ }),
+
+/***/ 82570:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Проверка орфографии'
+};
+
+
+/***/ }),
+
+/***/ 19323:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Yazım denetimi'
+};
+
+
+/***/ }),
+
+/***/ 50279:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: '拼写检查'
+};
+
+
+/***/ }),
+
+/***/ 98364:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'สะกดคำ'
+};
+
+
+/***/ }),
+
+/***/ 54261:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'رمز'
+};
+
+
+/***/ }),
+
+/***/ 60425:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'symbol'
+};
+
+
+/***/ }),
+
+/***/ 7057:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'Symbol'
+};
+
+
+/***/ }),
+
+/***/ 48356:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'Símbolo'
+};
+
+
+/***/ }),
+
+/***/ 11428:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'سمبل'
+};
+
+
+/***/ }),
+
+/***/ 29084:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'caractère'
+};
+
+
+/***/ }),
+
+/***/ 22876:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'תו מיוחד'
+};
+
+
+/***/ }),
+
+/***/ 20890:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'Szimbólum'
+};
+
+
+/***/ }),
+
+/***/ 75987:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'simbol'
+};
+
+
+/***/ }),
+
+/***/ 60379:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'Simbolo'
+};
+
+
+/***/ }),
+
+/***/ 99950:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'symbol'
+};
+
+
+/***/ }),
+
+/***/ 60934:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: '기호'
+};
+
+
+/***/ }),
+
+/***/ 21994:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'symbool'
+};
+
+
+/***/ }),
+
+/***/ 38128:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'symbol'
+};
+
+
+/***/ }),
+
+/***/ 71515:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'Símbolo'
+};
+
+
+/***/ }),
+
+/***/ 58194:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'символ'
+};
+
+
+/***/ }),
+
+/***/ 65802:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'Sembol'
+};
+
+
+/***/ }),
+
+/***/ 86628:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: '符号'
+};
+
+
+/***/ }),
+
+/***/ 32210:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: '符號'
 };
 
 
@@ -42496,8 +39829,8 @@ var langs_1 = __webpack_require__(76102);
 var decorators = __webpack_require__(9901);
 var constants = __webpack_require__(10063);
 var Modules = __webpack_require__(46701);
-var Plugins = __webpack_require__(20151);
 var Icons = __webpack_require__(65178);
+__webpack_require__(20151);
 Object.keys(constants).forEach(function (key) {
     jodit_1.Jodit[key] = constants[key];
 });
@@ -42519,11 +39852,6 @@ Object.keys(decorators)
 });
 ['Confirm', 'Alert', 'Prompt'].forEach(function (key) {
     jodit_1.Jodit[key] = Modules[key];
-});
-Object.keys(Plugins)
-    .filter(esFilter)
-    .forEach(function (key) {
-    jodit_1.Jodit.plugins.add(key, Plugins[key]);
 });
 Object.keys(langs_1.default)
     .filter(esFilter)

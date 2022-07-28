@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.9
+ * Version: v3.19.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.18.9
+ * Version: v3.19.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -4708,6 +4708,28 @@ a + .jodit-filebrowser-tree__source-title {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+.jodit-about {
+  padding: 20px;
+}
+.jodit-about a {
+  color: #459ce7;
+  text-decoration: none;
+}
+.jodit-about a:focus,
+.jodit-about a:hover {
+  color: #23527c;
+  outline: 0;
+  text-decoration: underline;
+}
+.jodit-about div {
+  margin-bottom: calc(8px / 2);
+}
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 .jodit-add-new-line {
   position: fixed;
   z-index: 1;
@@ -4759,82 +4781,6 @@ a + .jodit-filebrowser-tree__source-title {
 }
 .jodit-source__mode .jodit-add-new-line {
   display: none !important;
-}
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-.jodit-about {
-  padding: 20px;
-}
-.jodit-about a {
-  color: #459ce7;
-  text-decoration: none;
-}
-.jodit-about a:focus,
-.jodit-about a:hover {
-  color: #23527c;
-  outline: 0;
-  text-decoration: underline;
-}
-.jodit-about div {
-  margin-bottom: calc(8px / 2);
-}
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-.jodit-paste-storage {
-  max-width: 600px;
-  padding: 8px;
-}
-@media (max-width: 768px) {
-  .jodit-paste-storage {
-    max-width: 100%;
-  }
-}
-.jodit-paste-storage > div {
-  max-width: 100%;
-  max-height: 300px;
-  border: 1px solid #dadada;
-}
-.jodit-paste-storage > div:first-child {
-  margin-bottom: 8px;
-}
-.jodit-paste-storage > div:first-child a {
-  display: block;
-  overflow: hidden;
-  max-width: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: calc(8px / 2);
-  border: 1px solid transparent;
-  margin: 0;
-  color: #4c4c4c;
-  outline: none;
-  text-decoration: none;
-  -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
-  white-space: pre;
-}
-.jodit-paste-storage > div:first-child a.jodit_active {
-  background-color: #575757;
-  color: #fff;
-}
-.jodit-paste-storage > div:first-child a:focus {
-  outline: none;
-}
-.jodit-paste-storage > div:last-child {
-  overflow: auto;
-  padding: 8px;
-}
-.jodit-paste-storage > div:last-child ul,
-.jodit-paste-storage > div:last-child li {
-  margin: 0;
 }
 
 /*!
@@ -5117,6 +5063,60 @@ html.jodit_fullsize-box_true {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+.jodit-paste-storage {
+  max-width: 600px;
+  padding: 8px;
+}
+@media (max-width: 768px) {
+  .jodit-paste-storage {
+    max-width: 100%;
+  }
+}
+.jodit-paste-storage > div {
+  max-width: 100%;
+  max-height: 300px;
+  border: 1px solid #dadada;
+}
+.jodit-paste-storage > div:first-child {
+  margin-bottom: 8px;
+}
+.jodit-paste-storage > div:first-child a {
+  display: block;
+  overflow: hidden;
+  max-width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: calc(8px / 2);
+  border: 1px solid transparent;
+  margin: 0;
+  color: #4c4c4c;
+  outline: none;
+  text-decoration: none;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  white-space: pre;
+}
+.jodit-paste-storage > div:first-child a.jodit_active {
+  background-color: #575757;
+  color: #fff;
+}
+.jodit-paste-storage > div:first-child a:focus {
+  outline: none;
+}
+.jodit-paste-storage > div:last-child {
+  overflow: auto;
+  padding: 8px;
+}
+.jodit-paste-storage > div:last-child ul,
+.jodit-paste-storage > div:last-child li {
+  margin: 0;
+}
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
 .jodit-placeholder {
   position: absolute;
   z-index: 1;
@@ -5131,6 +5131,78 @@ html.jodit_fullsize-box_true {
      -moz-user-select: none !important;
       -ms-user-select: none !important;
           user-select: none !important;
+}
+
+.jodit__preview-box table {
+  max-width: 100%;
+  border: none;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-collapse: collapse;
+  empty-cells: show;
+}
+.jodit__preview-box table tr {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.jodit__preview-box table tr th {
+  min-width: 2em;
+  padding: 0.4em;
+  border: 1px solid #dadada;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
+  vertical-align: middle;
+  /**
+			// In some circumstances, because of this rule,
+			// the borders of the table are not shown - you need to find out under what
+			&[style*='border'] {
+				border-style: double !important;
+			}
+			*/
+}
+.jodit__preview-box table tr td {
+  min-width: 2em;
+  padding: 0.4em;
+  border: 1px solid #dadada;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
+  vertical-align: middle;
+  /**
+			// In some circumstances, because of this rule,
+			// the borders of the table are not shown - you need to find out under what
+			&[style*='border'] {
+				border-style: double !important;
+			}
+			*/
+}
+
+.jodit-table-resizer {
+  position: absolute;
+  z-index: 3;
+  padding-right: calc(8px / 2);
+  padding-left: calc(8px / 2);
+  margin-left: calc(8px / -2);
+  cursor: col-resize;
+}
+.jodit-table-resizer::after {
+  display: block;
+  width: 0;
+  height: 100%;
+  border: 0;
+  content: '';
+}
+.jodit-table-resizer_moved {
+  z-index: 2;
+  background-color: #b5d6fd;
+}
+.jodit-table-resizer_moved::after {
+  border-right: 1px solid #dadada moved;
 }
 
 /*!
@@ -5670,28 +5742,6 @@ html.jodit_fullsize-box_true {
 			}
 			*/
 }
-.jodit-table-resizer {
-  position: absolute;
-  z-index: 3;
-  padding-right: calc(8px / 2);
-  padding-left: calc(8px / 2);
-  margin-left: calc(8px / -2);
-  cursor: col-resize;
-}
-.jodit-table-resizer::after {
-  display: block;
-  width: 0;
-  height: 100%;
-  border: 0;
-  content: '';
-}
-.jodit-table-resizer_moved {
-  z-index: 2;
-  background-color: #b5d6fd;
-}
-.jodit-table-resizer_moved::after {
-  border-right: 1px solid #dadada moved;
-}
 .jodit-form__inserter .jodit-form__table-creator-box {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5784,55 +5834,6 @@ html.jodit_fullsize-box_true {
 }
 .jodit-tooltip.jodit-tooltip_visible {
   opacity: 1;
-}
-
-.jodit__preview-box table {
-  max-width: 100%;
-  border: none;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  border-collapse: collapse;
-  empty-cells: show;
-}
-.jodit__preview-box table tr {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-.jodit__preview-box table tr th {
-  min-width: 2em;
-  padding: 0.4em;
-  border: 1px solid #dadada;
-  -webkit-user-select: text;
-     -moz-user-select: text;
-      -ms-user-select: text;
-          user-select: text;
-  vertical-align: middle;
-  /**
-			// In some circumstances, because of this rule,
-			// the borders of the table are not shown - you need to find out under what
-			&[style*='border'] {
-				border-style: double !important;
-			}
-			*/
-}
-.jodit__preview-box table tr td {
-  min-width: 2em;
-  padding: 0.4em;
-  border: 1px solid #dadada;
-  -webkit-user-select: text;
-     -moz-user-select: text;
-      -ms-user-select: text;
-          user-select: text;
-  vertical-align: middle;
-  /**
-			// In some circumstances, because of this rule,
-			// the borders of the table are not shown - you need to find out under what
-			&[style*='border'] {
-				border-style: double !important;
-			}
-			*/
 }
 
 /*!

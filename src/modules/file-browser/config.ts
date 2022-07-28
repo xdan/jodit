@@ -23,8 +23,9 @@ import type {
 	IViewBased
 } from 'jodit/types';
 
-import { humanSizeToBytes, isArray, isString } from 'jodit/core/helpers';
-import { UIFileInput } from 'jodit/core/ui';
+import { isArray, isString } from 'jodit/core/helpers/checker';
+import { UIFileInput } from 'jodit/core/ui/form/inputs/file/file';
+import { humanSizeToBytes } from 'jodit/core/helpers/utils/human-size-to-bytes';
 
 declare module 'jodit/config' {
 	interface Config {

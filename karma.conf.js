@@ -81,12 +81,11 @@ module.exports = function (config) {
 			},
 
 			'app.css',
-			'build/jodit.js',
-			'build/jodit.css',
 			'node_modules/synchronous-promise/dist/synchronous-promise.js',
+			'src/index.ts',
 			'test/bootstrap.js',
 			'config.js',
-			'src/**/*.test.js',
+			{ pattern: './src/**/*.test.js', watched: false },
 			'test/tests/acceptance/*.js'
 		],
 

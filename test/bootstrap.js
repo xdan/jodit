@@ -7,6 +7,14 @@
 /* eslint no-unused-vars: 0 */
 /* eslint-disable tsdoc/syntax */
 
+const box = document.createElement('div');
+document.body.appendChild(box);
+
+const expect = typeof chai !== 'undefined' ? chai.expect : function () {},
+	stuff = [];
+
+const stringify = Jodit.ns.Helpers.stringify;
+
 typeof window.chai !== 'undefined' &&
 	(function () {
 		chai.config.truncateThreshold = 0;
@@ -411,14 +419,6 @@ if (String.prototype.repeat === undefined) {
 		return result.join('');
 	};
 }
-
-const expect = typeof chai !== 'undefined' ? chai.expect : function () {},
-	stuff = [];
-
-const stringify = Jodit.ns.Helpers.stringify;
-
-const box = document.createElement('div');
-document.body.appendChild(box);
 
 function flatten(obj) {
 	var result = Object.create(obj);
