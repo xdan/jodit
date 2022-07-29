@@ -27,7 +27,7 @@ import * as constants from './core/constants';
 import * as Modules from './modules/';
 import * as Icons from './styles/icons/';
 
-import 'jodit/plugins/';
+import 'jodit/plugins/index';
 
 // copy constants in Jodit
 Object.keys(constants).forEach((key: string) => {

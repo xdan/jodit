@@ -23,7 +23,7 @@ const webpackConfig = (() => {
 	);
 
 	delete config.context;
-	// delete config.entry;
+	delete config.entry;
 
 	delete config.output.path;
 	delete config.output.filename;
@@ -84,7 +84,6 @@ module.exports = function (config) {
 			'node_modules/synchronous-promise/dist/synchronous-promise.js',
 			'src/index.ts',
 			'test/bootstrap.js',
-			'config.js',
 			{ pattern: './src/**/*.test.js', watched: false },
 			'test/tests/acceptance/*.js'
 		],

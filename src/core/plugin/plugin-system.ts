@@ -98,6 +98,7 @@ export class PluginSystem implements IPluginSystem {
 			disableList = splitArray(jodit.o.disablePlugins).map(s => {
 				const name = this.normalizeName(s);
 
+				// @ts-ignore
 				if (!isProd && !this._items.has(name)) {
 					console.error(TypeError(`Unknown plugin disabled:${name}`));
 				}
@@ -197,6 +198,7 @@ export class PluginSystem implements IPluginSystem {
 			}
 		} catch (e) {
 			console.error(e);
+			// @ts-ignore
 			if (!isProd) {
 				throw e;
 			}
@@ -228,6 +230,7 @@ export class PluginSystem implements IPluginSystem {
 					} catch (e) {
 						console.error(e);
 
+						// @ts-ignore
 						if (!isProd) {
 							throw e;
 						}
@@ -235,6 +238,7 @@ export class PluginSystem implements IPluginSystem {
 
 					doneList.push(name);
 				} else {
+					// @ts-ignore
 					if (!isProd && !promiseList[name]) {
 						console.log('Await plugin: ', name);
 					}
@@ -362,6 +366,7 @@ export class PluginSystem implements IPluginSystem {
 					return this.load(jodit, needLoadExtras);
 				}
 			} catch (e) {
+				// @ts-ignore
 				if (!isProd) {
 					throw e;
 				}
