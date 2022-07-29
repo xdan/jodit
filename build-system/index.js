@@ -51,7 +51,6 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 		},
 
 		output: {
-			clean: true,
 			path: outputPath,
 			filename: fileName(vars)('[name]') + '.js',
 			publicPath: '/build/',

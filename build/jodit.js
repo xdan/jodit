@@ -19,10 +19,136 @@
 return /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 90643:
+/***/ (function(module) {
+
+module.exports["default"] = ["إبدأ في الكتابة...","حول جوديت","محرر جوديت",null,"دليل مستخدم جوديت","يحتوي على مساعدة مفصلة للاستخدام","للحصول على معلومات حول الترخيص، يرجى الذهاب لموقعنا:","شراء النسخة الكاملة","حقوق الطبع والنشر © XDSoft.net - Chupurnov Valeriy. كل الحقوق محفوظة.","مِرْساة","فتح في نافذة جديدة","فتح المحرر في الحجم الكامل","مسح التنسيق","ملء اللون أو تعيين لون النص","إعادة","تراجع","عريض","مائل","إدراج قائمة غير مرتبة","إدراج قائمة مرتبة","محاذاة للوسط","محاذاة مثبتة","محاذاة لليسار","محاذاة لليمين","إدراج خط أفقي","إدراج صورة","ادخال الملف","إدراج فيديو يوتيوب/فيميو ","إدراج رابط","حجم الخط","نوع الخط","إدراج كتلة تنسيق","عادي","عنوان 1","عنوان 2","عنوان 3","عنوان 4","إقتباس","كود","إدراج","إدراج جدول","تقليل المسافة البادئة","زيادة المسافة البادئة","تحديد أحرف خاصة","إدراج حرف خاص","تنسيق الرسم","تغيير الوضع","هوامش","أعلى","يمين","أسفل","يسار","الأنماط","الطبقات","محاذاة","اليمين","الوسط","اليسار","--غير مضبوط--","Src","العنوان","العنوان البديل","الرابط","افتح الرابط في نافذة جديدة","الصورة","ملف","متقدم","خصائص الصورة","إلغاء","حسنا","يشبه الكود الخاص بك HTML. تبقي كما HTML؟","الصق ك HTML","احتفظ","نظيفة","إدراج كنص","إدراج النص فقط","كلمة لصق الكشف عن","للصق المحتوى قادم من Microsoft Word/Excel الوثيقة. هل تريد أن تبقي شكل أو تنظيفه ؟ ","متصفح الملفات","حدث خطأ في تحميل القائمة ","حدث خطأ في تحميل المجلدات","هل أنت واثق؟","أدخل اسم المجلد","إنشاء مجلد","أكتب إسم","إسقاط صورة","إسقاط الملف","أو أنقر","النص البديل","تصفح","رفع","الخلفية","نص","أعلى","الوسط","الأسفل","إدراج عمود قبل","إدراج عمود بعد","إدراج صف أعلى","إدراج صف أسفل","حذف الجدول","حذف الصف","حذف العمود","خلية فارغة","مصدر","بالخط العريض","مائل","شغل","صلة","إلغاء","كرر","طاولة","صورة","نظيف","فقرة","حجم الخط","فيديو","الخط","حول المحرر","طباعة","أكد","شطب","المسافة البادئة","نتوء","ملء الشاشة","الحجم التقليدي","الخط","قائمة","قائمة مرقمة","قطع","اختر الكل","قانون","فتح الرابط","تعديل الرابط","سمة Nofollow","إزالة الرابط","مراجعة","لتحرير","تحديث","URL","تحرير","محاذاة أفقية","فلتر","عن طريق التغيير","بالاسم","حسب الحجم","إضافة مجلد","إعادة","احتفظ","حفظ باسم","تغيير الحجم","حجم القطع","عرض","ارتفاع","حافظ على النسب","أن","لا","حذف","تميز","%d حرف","%d كلام",null,"تميز %s","اختر الكل","محاذاة عمودية","انشق، مزق","انقسام عمودي","تقسيم أفقي","اذهب","أضف العمود","اضف سطر","حذف","الحدود","رخصة %s","اضرب من خلال","أكد","حرف فوقي","مخطوطة","قطع الاختيار","استراحة","البحث عن","استبدل ب","محل","معجون","اختر محتوى للصق","يمكنك فقط تحرير صورك الخاصة. تحميل هذه الصورة على المضيف؟","تم تحميل الصورة بنجاح على الخادم!","لوحة","لا توجد ملفات في هذا الدليل.","إعادة تسمية","أدخل اسم جديد","معاينة","تحميل","لصق من الحافظة","متصفحك لا يدعم إمكانية الوصول المباشر إلى الحافظة.","نسخ التحديد","نسخ","دائرة نصف قطرها الحدود","عرض كل","تطبيق","يرجى ملء هذا المجال","يرجى إدخال عنوان ويب","الافتراضي","دائرة","نقطة","المربعة","البحث","تجد السابقة","تجد التالي","أدخل اسم الفصل","اضغط البديل لتغيير حجم مخصص"]
+
+/***/ }),
+
+/***/ 52532:
+/***/ (function(module) {
+
+module.exports["default"] = ["Napiš něco","O Jodit","Editor Jodit","Verze pro nekomerční použití","Jodit Uživatelská příručka","obsahuje detailní nápovědu","Pro informace o licenci, prosím, přejděte na naši stránku:","Koupit plnou verzi","Copyright © XDSoft.net - Chupurnov Valeriy. Všechna práva vyhrazena.","Anchor","Otevřít v nové záložce","Otevřít v celoobrazovkovém režimu","Vyčistit formátování","Barva výplně a písma","Vpřed","Zpět","Tučné","Kurzíva","Odrážky","Číslovaný seznam","Zarovnat na střed","Zarovnat do bloku","Zarovnat vlevo","Zarovnat vpravo","Vložit horizontální linku","Vložit obrázek","Vložit soubor","Vložit video (YT/Vimeo)","Vložit odkaz","Velikost písma","Typ písma","Formátovat blok","Normální text","Nadpis 1","Nadpis 2","Nadpis 3","Nadpis 4","Citát","Kód","Vložit","Vložit tabulku","Zmenšit odsazení","Zvětšit odsazení","Vybrat speciální symbol","Vložit speciální symbol","Použít formát","Změnit mód","Okraje","horní","pravý","spodní","levý","Styly","Třídy","Zarovnání","Vpravo","Na střed","Vlevo","--nenastaveno--","src","Titulek","Alternativní text (alt)","Link","Otevřít link v nové záložce","Obrázek","soubor","Rozšířené","Vlastnosti obrázku","Zpět","Ok","Váš text se podobá HTML. Vložit ho jako HTML?","Vložit jako HTML","Ponechat originál","Vyčistit","Vložit jako TEXT","Vložit pouze TEXT","Detekován fragment z Wordu nebo Excelu","Obsah, který vkládáte, je pravděpodobně z Microsoft Word / Excel. Chcete ponechat formát nebo vložit pouze text?","Prohlížeč souborů","Chyba při načítání seznamu souborů","Chyba při načítání složek","Jste si jistý(á)?","Název složky","Vytvořit složku","název","Přetáhněte sem obrázek","Přetáhněte sem soubor","nebo klikněte","Alternativní text","Server","Nahrát","Pozadí","Text","Nahoru","Na střed","Dolu","Vložit sloupec před","Vložit sloupec za","Vložit řádek nad","Vložit řádek pod","Vymazat tabulku","Vymazat řádku","Vymazat sloupec","Vyčistit buňku","HTML","tučně","kurzíva","štětec","odkaz","zpět","vpřed","tabulka","obrázek","guma","odstavec","velikost písma","video","písmo","о editoru","tisk","podtrženo","přeškrtnuto","zvětšit odsazení","zmenšit odsazení","celoobrazovkový režim","smrsknout","Linka","Odrážka","Číslovaný seznam","Vyjmout","Označit vše","Kód","Otevřít odkaz","Upravit odkaz","Atribut no-follow","Odstranit odkaz","Zobrazit","Chcete-li upravit","Aktualizovat","URL","Editovat","Horizontální zarovnání","Filtr","Dle poslední změny","Dle názvu","Dle velikosti","Přidat složku","Reset","Uložit","Uložit jako...","Změnit rozměr","Ořezat","Šířka","Výška","Ponechat poměr","Ano","Ne","Vyjmout","Označit","Znaky: %d","Slova: %d","Vše","Označit %s","Označit vše","Vertikální zarovnání","Rozdělit","Rozdělit vertikálně","Rozdělit horizontálně","Spojit","Přidat sloupec","Přidat řádek","Vymazat","Okraj","Licence: %s","Přeškrtnuto","Podtrženo","Horní index","Dolní index","Vyjmout označené","Zalomení","Najdi","Nahradit za","Vyměňte","Vložit","Vyber obsah pro vložení","Můžete upravovat pouze své obrázky. Načíst obrázek?","Obrázek byl úspěšně nahrán!","paleta","V tomto adresáři nejsou žádné soubory.","přejmenovat","Zadejte nový název","náhled","Stažení","Vložit ze schránky","Váš prohlížeč nepodporuje přímý přístup do schránky.","Kopírovat výběr","kopírování","Border radius","Zobrazit všechny","Platí","Prosím, vyplňte toto pole","Prosím, zadejte webovou adresu","Výchozí","Kruh","Dot","Quadrate","Najít","Najít Předchozí","Najít Další","Vložte název třídy","Stiskněte Alt pro vlastní změnu velikosti"]
+
+/***/ }),
+
+/***/ 75178:
+/***/ (function(module) {
+
+module.exports["default"] = ["Bitte geben Sie einen Text ein","Über Jodit","Jodit Editor",null,"Das Jodit Benutzerhandbuch","beinhaltet ausführliche Informationen wie Sie den Editor verwenden können.","Für Informationen zur Lizenz, besuchen Sie bitte unsere Web-Präsenz:","Vollversion kaufen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Anker","In neuer Registerkarte öffnen","Editor in voller Größe öffnen","Formatierung löschen","Füllfarbe oder Textfarbe ändern","Wiederholen","Rückgängig machen","Fett","Kursiv","Unsortierte Liste einfügen","Nummerierte Liste einfügen","Mittig ausrichten","Blocksatz","Links ausrichten","Rechts ausrichten","Horizontale Linie einfügen","Bild einfügen","Datei einfügen","Youtube/vimeo Video einfügen","Link einfügen","Schriftgröße","Schriftfamilie","Formatblock einfügen","Normal","Überschrift 1","Überschrift 2","Überschrift 3","Überschrift 4","Zitat","Code","Einfügen","Tabelle einfügen","Einzug verkleinern","Einzug vergrößern","Sonderzeichen auswählen","Sonderzeichen einfügen","Format kopieren","Änderungsmodus","Ränder","Oben","Rechts","Unten","Links","CSS Stil","CSS Klassen","Ausrichtung","Rechts","Zentriert","Links","Keine","Pfad","Titel","Alternativer Text","Link","Link in neuem Tab öffnen","Bild","Datei","Fortgeschritten","Bildeigenschaften","Abbrechen","OK","Ihr Text ähnelt HTML-Code. Als HTML beibehalten?","Als HTML einfügen?","Original speichern","Säubern","Als Text einfügen","Nur Text einfügen","In Word formatierter Text erkannt","Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder bereinigen?","Dateibrowser","Fehler beim Laden der Liste","Fehler beim Laden der Ordner","Sind Sie sicher?","Geben Sie den Verzeichnisnamen ein","Verzeichnis erstellen","Typname","Bild hier hinziehen","Datei löschen","oder hier klicken","Alternativtext","Auswählen","Hochladen","Hintergrund","Text","Oben","Mittig","Unten","Spalte davor einfügen","Spalte danach einfügen","Zeile oberhalb einfügen","Zeile unterhalb einfügen","Tabelle löschen","Zeile löschen","Spalte löschen","Zelle leeren","HTML","Fett gedruckt","Kursiv","Bürste","Verknüpfung","Rückgängig machen","Wiederholen","Tabelle","Bild","Radiergummi","Absatz","Schriftgröße","Video","Schriftart","Über","Drucken","Unterstreichen","Durchstreichen","Einzug","Herausstellen","Vollgröße","Schrumpfen","die Linie","Liste von","Nummerierte Liste","Schneiden","Wählen Sie Alle aus","Code einbetten","Link öffnen","Link bearbeiten","Nofollow-Attribut","Link entfernen","Ansehen","Bearbeiten","Aktualisieren","URL","Bearbeiten","Horizontale Ausrichtung","Filter","Sortieren nach geändert","Nach Name sortieren","Nach Größe sortiert","Ordner hinzufügen","Wiederherstellen","Speichern","Speichern als","Größe ändern","Größe anpassen","Breite","Höhe","Seitenverhältnis beibehalten","Ja","Nein","Entfernen","Markieren","Zeichen: %d","Wörter: %d","Alles markieren","Markieren: %s","Alles markieren","Vertikale Ausrichtung","Unterteilen","Vertikal unterteilen","Horizontal unterteilen","Vereinen","Spalte hinzufügen","Zeile hinzufügen","Löschen","Rand",null,"Durchstreichen","Unterstreichen","Hochgestellen","Tiefstellen","Auswahl ausschneiden","Pause","Suche nach","Ersetzen durch","Ersetzen","Einfügen","Wählen Sie den Inhalt zum Einfügen aus","Sie können nur Ihre eigenen Bilder bearbeiten. Dieses Bild auf den Host herunterladen?","Das Bild wurde erfolgreich auf den Server hochgeladen!","Palette","In diesem Verzeichnis befinden sich keine Dateien.","Umbenennen","Geben Sie einen neuen Namen ein","Vorschau","Herunterladen","Aus Zwischenablage einfügen","Ihr Browser unterstützt keinen direkten Zugriff auf die Zwischenablage.","Auswahl kopieren","Kopieren","Radius für abgerundete Ecken","Alle anzeigen","Anwenden","Bitte füllen Sie dieses Feld aus","Bitte geben Sie eine Web-Adresse ein","Standard","Kreis","Punkte","Quadrate","Suchen","Suche vorherige","Weitersuchen","className (CSS) einfügen","Drücken Sie Alt für benutzerdefinierte Größenanpassung"]
+
+/***/ }),
+
 /***/ 51048:
 /***/ (function(module) {
 
 module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Free Non-commercial Version","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open editor in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Clean","Insert as Text","Insert only Text","Word Paste Detected","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Browse","Upload","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Eye","pencil","Update"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Chars: %d","Words: %d","All","Select %s","Select all","Vertical align","Split","Split vertical","Split horizontal","Merge","Add column","Add row","Delete","Border","License: %s","Strike through","Underline","superscript","subscript","Cut selection","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","Insert className","Press Alt for custom resizing"]
+
+/***/ }),
+
+/***/ 22999:
+/***/ (function(module) {
+
+module.exports["default"] = ["Escriba algo...","Acerca de Jodit","Jodit Editor",null,"Guía de usuario Jodit","contiene ayuda detallada para el uso.","Para información sobre la licencia, por favor visite nuestro sitio:","Compre la versión completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos los derechos reservados.","Anclar","Abrir en nueva pestaña","Abrir editor en pantalla completa","Limpiar formato","Color de relleno o de letra","Rehacer","Deshacer","Negrita","Cursiva","Insertar lista no ordenada","Insertar lista ordenada","Alinear Centrado","Alinear Justificado","Alinear Izquierda","Alinear Derecha","Insertar línea horizontal","Insertar imagen","Insertar archivo","Insertar video de Youtube/vimeo","Insertar vínculo","Tamaño de letra","Familia de letra","Insertar bloque","Normal","Encabezado 1","Encabezado 2","Encabezado 3","Encabezado 4","Cita","Código","Insertar","Insertar tabla","Disminuir sangría","Aumentar sangría","Seleccionar caracter especial","Insertar caracter especial","Copiar formato","Cambiar modo","Márgenes","arriba","derecha","abajo","izquierda","Estilos CSS","Clases CSS","Alinear","Derecha","Centrado","Izquierda","--No Establecido--","Fuente","Título","Texto Alternativo","Vínculo","Abrir vínculo en nueva pestaña","Imagen","Archivo","Avanzado","Propiedades de imagen","Cancelar","Aceptar","El código es similar a HTML. ¿Mantener como HTML?","Pegar como HTML?","Mantener","Limpiar","Insertar como texto","Insertar solo texto","Pegado desde Word detectado","El contenido pegado proviene de un documento de Microsoft Word/Excel. ¿Desea mantener el formato o limpiarlo?","Buscar archivo","Error al cargar la lista","Error al cargar las carpetas","¿Está seguro?","Entre nombre de carpeta","Crear carpeta","Entre el nombre","Soltar imagen","Soltar archivo","o click","Texto alternativo","Buscar","Subir","Fondo","Texto","Arriba","Centro","Abajo","Insertar columna antes","Interar columna después","Insertar fila arriba","Insertar fila debajo","Borrar tabla","Borrar fila","Borrar columna","Vaciar celda","HTML","negrita","cursiva","Brocha","Vínculo","deshacer","rehacer","Tabla","Imagen","Borrar","Párrafo","Tamaño de letra","Video","Letra","Acerca de","Imprimir","subrayar","tachar","sangría","quitar sangría","Tamaño completo","encoger","línea horizontal","lista sin ordenar","lista ordenada","Cortar","Seleccionar todo","Incluir código","Abrir vínculo","Editar vínculo","No seguir","Desvincular","Ver","Para editar","Actualizar","URL","Editar","Alineación horizontal","filtrar","Ordenar por fecha modificación","Ordenar por nombre","Ordenar por tamaño","Agregar carpeta","Resetear","Guardar","Guardar como...","Redimensionar","Recortar","Ancho","Alto","Mantener relación de aspecto","Si","No","Quitar","Seleccionar","Caracteres: %d","Palabras: %d","Todo","Seleccionar: %s","Seleccionar todo","Alineación vertical","Dividir","Dividir vertical","Dividir horizontal","Mezclar","Agregar columna","Agregar fila","Borrar","Borde",null,"Tachado","Subrayado","superíndice","subíndice","Cortar selección","Pausa","Buscar","Reemplazar con","Reemplazar","Pegar","Seleccionar contenido para pegar","Solo puedes editar tus propias imágenes. ¿Descargar esta imagen en el servidor?","¡La imagen se ha subido correctamente al servidor!","paleta","No hay archivos en este directorio.","renombrar","Ingresa un nuevo nombre","avance","Descargar","Pegar desde el portapapeles","Su navegador no soporta el acceso directo en el portapapeles.","Selección de copia","copia","Radio frontera","Mostrar todos los","Aplicar","Por favor, rellene este campo","Por favor, introduzca una dirección web","Predeterminado","Círculo","Punto","Cuadro","Encontrar","Buscar Anterior","Buscar Siguiente","Insertar nombre de clase","Presione Alt para cambiar el tamaño personalizado"]
+
+/***/ }),
+
+/***/ 34145:
+/***/ (function(module) {
+
+module.exports["default"] = ["Ecrivez ici","A propos de Jodit","Editeur Jodit",null,"Guide de l'utilisateur","Aide détaillée à l'utilisation","Consulter la licence sur notre site web:","Acheter la version complète","Copyright © XDSoft.net - Chupurnov Valeriy. Tous droits réservés.","Ancre","Ouvrir dans un nouvel onglet","Ouvrir l'éditeur en pleine page","Supprimer le formattage","Modifier la couleur du fond ou du texte","Refaire","Défaire","Gras","Italique","Liste non ordonnée","Liste ordonnée","Centrer","Justifier","Aligner à gauche ","Aligner à droite","Insérer une ligne horizontale","Insérer une image","Insérer un fichier","Insérer une vidéo","Insérer un lien","Taille des caractères","Famille des caractères","Bloc formatté","Normal","Titre 1","Titre 2","Titre 3","Titre 4","Citation","Code","Insérer","Insérer un tableau","Diminuer le retrait","Retrait plus","Sélectionnez un caractère spécial","Insérer un caractère spécial","Cloner le format","Mode wysiwyg <-> code html","Marges","haut","droite","Bas","gauche","Styles","Classes","Alignement","Droite","Centre","Gauche","--Non disponible--","Source","Titre","Alternative","Lien","Ouvrir le lien dans un nouvel onglet","Image","fichier","Avancé","Propriétés de l'image","Annuler","OK","Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?","Coller en HTML?","Sauvegarder l'original","Nettoyer","Coller en tant que texte","Coller le texte seulement","C'est peut-être un fragment de Word ou Excel","Le contenu que vous insérez provient d'un document Microsoft Word / Excel. Voulez-vous enregistrer le format ou l'effacer?","Explorateur de fichiers","Erreur de liste de chargement","Erreur de dossier de chargement","Etes-vous sûrs ?","Entrer le non de dossier","Créer un dossier","type de fichier","Coller une image","Déposer un fichier","ou cliquer","Texte de remplacemement","Chercher","Charger","Arrière-plan","Texte","Haut","Milieu","Bas","Insérer une colonne avant","Insérer une colonne après","Insérer une ligne en dessus","Insérer une ligne en dessous","Supprimer le tableau","Supprimer la ligne","Supprimer la colonne","Vider la cellule","la source","graisseux","italique","verser","lien","abolir","prêt","graphique","Image","la gommen","clause","taille de police","Video","police","à propos de l'éditeur","impression","souligné","barré","indentation","indifférent","taille réelle","taille conventionnelle","la ligne","Liste des","Liste numérotée","Couper","Sélectionner tout",null,"Ouvrir le lien","Modifier le lien","Attribut Nofollow","Supprimer le lien","Voir","Pour éditer","Mettre à jour","URL",null,"Alignement horizontal","Filtre","Trier par modifié","Trier par nom","Classer par taille","Ajouter le dossier","Restaurer","Sauvegarder","Enregistrer sous","Changer la taille","Taille de garniture","Largeur","Hauteur","Garder les proportions","Oui","Non","Supprimer","Mettre en évidence","Symboles: %d","Mots: %d",null,"Mettre en évidence: %s","Tout sélectionner","Alignement vertical","Split","Split vertical","Split horizontal","aller","Ajouter une colonne","Ajouter une rangée","Effacer",null,null,"Frapper à travers","Souligner","exposant","indice","Couper la sélection","Pause","Rechercher","Remplacer par","Remplacer","Coller","Choisissez le contenu à coller","Vous ne pouvez éditer que vos propres images. Téléchargez cette image sur l'hôte?","L'image a été téléchargée avec succès sur le serveur!null","Palette","Il n'y a aucun fichier dans ce répertoire.","renommer","Entrez un nouveau nom","Aperçu","Télécharger","Coller à partir du presse-papiers","Votre navigateur ne prend pas en charge l'accès direct à la presse-papiers.","Copier la sélection","copie","Rayon des frontières","Afficher tous les","Appliquer","Veuillez remplir ce champ","Veuillez entrer une adresse web","Par défaut","Cercle","Dot","Quadrate","Trouver","Trouvez Précédente","Suivant","Insérer un nom de classe","Appuyez sur Alt pour un redimensionnement personnalisé"]
+
+/***/ }),
+
+/***/ 40272:
+/***/ (function(module) {
+
+module.exports["default"] = ["הקלד משהו...","About Jodit","Jodit Editor",null,"Jodit User's Guide","contains detailed help for using.","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","מקום עיגון","פתח בכרטיסיה חדשה","פתח את העורך בחלון חדש","נקה עיצוב","שנה צבע טקסט או רקע","בצע שוב","בטל","מודגש","נטוי","הכנס רשימת תבליטים","הכנס רשימה ממוספרת","מרכז","ישר ","ישר לשמאל","ישר לימין","הכנס קו אופקי","הכנס תמונה","הכנס קובץ","הכנס סרטון וידאו מYouTube/Vimeo","הכנס קישור","גודל גופן","גופן","מעוצב מראש","רגיל","כותרת 1","כותרת 2","כותרת 3","כותרת 4","ציטוט","קוד","הכנס","הכנס טבלה","הקטן כניסה","הגדל כניסה","בחר תו מיוחד","הכנס תו מיוחד","העתק עיצוב","החלף מצב","ריווח","עליון","ימין","תחתון","שמאל","עיצוב CSS","מחלקת CSS","יישור","ימין","מרכז","שמאל","--לא נקבע--","מקור","כותרת","כיתוב חלופי","קישור","פתח בכרטיסיה חדשה","תמונה","קובץ","מתקדם","מאפייני תמונה","ביטול","אישור","הקוד דומה לHTML, האם להשאיר כHTML","הדבק כHTML","השאר","נקה","הכנס כטקסט","הכנס טקסט בלבד","זוהתה הדבקה מ\"וורד\"","התוכן המודבק מגיע ממסמך וורד/אקסל. האם ברצונך להשאיר את העיצוב או לנקותו","סייר הקבצים","שגיאה  בזמן טעינת רשימה","שגיאה בזמן טעינת תקיות","האם אתה בטוח?","הכנס שם תקיה","צור תקיה","סוג הקובץ","הסר תמונה","הסר קובץ","או לחץ","כיתוב חלופי","סייר","העלה","רקע","טקסט","עליון","מרכז","תחתון","הכנס עמודה לפני","הכנס עמודה אחרי","הכנס שורה מעל","הכנס שורה מתחת","מחק טבלה","מחק שורה","מחק עמודה","רוקן תא","HTML","מודגש","נטוי","מברשת","קישור","בטל","בצע שוב","טבלה","תמונה","מחק","פסקה","גודל גופן","וידאו","גופן","עלינו","הדפס","קו תחתון","קו חוצה","הגדל כניסה","הקטן כניסה","גודל מלא","כווץ","קו אופקי","רשימת תבליטים","רשימה ממוספרת","חתוך","בחר הכל","הוסף קוד","פתח קישור","ערוך קישור","ללא מעקב","בטל קישור","הצג","כדי לערוך","עדכן","כתובת","ערוך","יישור אופקי","סנן","מין לפי שינוי","מיין לפי שם","מיין לפי גודל","הוסף תקייה","אפס","שמור","שמור בשם...","שנה גודל","חתוך","רוחב","גובה","שמור יחס","כן","לא","הסר","בחר","תווים: %d","מילים: %d","הכל","נבחר: %s","בחר הכל","יישור אנכי","פיצול","פיצול אנכי","פיצול אופקי","מזג","הוסף עמודה","הוסף שורה","מחק","מסגרת",null,"קו חוצה","קו תחתון","superscript","subscript","גזור בחירה","שבירת שורה","חפש","החלף ב","להחליף","הדבק","בחר תוכן להדבקה","רק קבצים המשוייכים שלך ניתנים לעריכה. האם להוריד את הקובץ?","התמונה עלתה בהצלחה!","לוח","אין קבצים בספריה זו.","הונגרית","הזן שם חדש","תצוגה מקדימה","הורד","להדביק מהלוח","הדפדפן שלך לא תומך גישה ישירה ללוח.","העתק בחירה","העתק","רדיוס הגבול","הצג את כל","החל","נא למלא שדה זה","אנא הזן כתובת אינטרנט","ברירת המחדל","מעגל","נקודה","הריבוע הזה","למצוא","מצא את הקודם","חפש את הבא","הכנס את שם הכיתה","לחץ על אלט לשינוי גודל מותאם אישית"]
+
+/***/ }),
+
+/***/ 2978:
+/***/ (function(module) {
+
+module.exports["default"] = ["Írjon be valamit","Joditról","Jodit Editor","Ingyenes változat","Jodit útmutató","további segítséget tartalmaz","További licence információkért látogassa meg a weboldalunkat:","Teljes verzió megvásárlása","Copyright © XDSoft.net - Chupurnov Valeriy. Minden jog fenntartva.","Horgony","Megnyitás új lapon","Megnyitás teljes méretben","Formázás törlése","Háttér/szöveg szín","Újra","Visszavon","Félkövér","Dőlt","Pontozott lista","Számozott lista","Középre zárt","Sorkizárt","Balra zárt","Jobbra zárt","Vízszintes vonal beszúrása","Kép beszúrás","Fájl beszúrás","Youtube videó beszúrása","Link beszúrás","Betűméret","Betűtípus","Formázott blokk beszúrása","Normál","Fejléc 1","Fejléc 2","Fejléc 3","Fejléc 4","Idézet","Kód","Beszúr","Táblázat beszúrása","Behúzás csökkentése","Behúzás növelése","Speciális karakter kiválasztása","Speciális karakter beszúrása","Kép formázása","Nézet váltása","Szegélyek","felső","jobb","alsó","bal","CSS stílusok","CSS osztályok","Igazítás","Jobbra","Középre","Balra","Nincs","Forrás","Cím","Helyettesítő szöveg","Link","Link megnyitása új lapon","Kép","Fájl","Haladó","Kép tulajdonságai","Mégsem","OK","A beillesztett szöveg HTML-nek tűnik. Megtartsuk HTML-ként?","Beszúrás HTML-ként","Megtartás","Elvetés","Beszúrás szövegként","Csak szöveg beillesztése","Word-ből másolt szöveg","A beillesztett tartalom Microsoft Word/Excel dokumentumból származik. Meg szeretné tartani a formátumát?","Fájl tallózó","Hiba a lista betöltése közben","Hiba a mappák betöltése közben","Biztosan ezt szeretné?","Írjon be egy mappanevet","Mappa létrehozása","írjon be bevet","Húzza ide a képet","Húzza ide a fájlt","vagy kattintson","Helyettesítő szöveg","Tallóz","Feltölt","Háttér","Szöveg","Fent","Középen","Lent","Oszlop beszúrás elé","Oszlop beszúrás utána","Sor beszúrás fölé","Sor beszúrás alá","Táblázat törlése","Sor törlése","Oszlop törlése","Cella tartalmának törlése","HTML","Félkövér","Dőlt","Ecset","Link","Visszavon","Újra","Táblázat","Kép","Törlés","Paragráfus","Betűméret","Videó","Betű","Rólunk","Nyomtat","Aláhúzott","Áthúzott","Behúzás","Aussenseiter","Teljes méret","Összenyom","Egyenes vonal","Lista","Számozott lista","Kivág","Összes kijelölése","Beágyazott kód","Link megnyitása","Link szerkesztése","Nincs követés","Link leválasztása","felülvizsgálat","Szerkesztés","Frissít","URL","Szerkeszt","Vízszintes igazítás","Szűrő","Rendezés módosítás szerint","Rendezés név szerint","Rendezés méret szerint","Mappa hozzáadás","Visszaállít","Mentés","Mentés másként...","Átméretezés","Kivág","Szélesség","Magasság","Képarány megtartása","Igen","Nem","Eltávolít","Kijelöl","Karakterek száma: %d","Szavak száma: %d","Összes","Kijelöl: %s","Összes kijelölése","Függőleges igazítás","Felosztás","Függőleges felosztás","Vízszintes felosztás","Összevonás","Oszlop hozzáadás","Sor hozzáadás","Törlés","Szegély",null,"Áthúzott","Aláhúzott","Felső index","Alsó index","Kivágás","Szünet","Keresés","Csere erre","Cserélje ki","Beillesztés","Válasszon tartalmat a beillesztéshez","Csak a saját képeit tudja szerkeszteni. Letölti ezt a képet?","Kép sikeresen feltöltve!","Palette","Er zijn geen bestanden in deze map.","átnevezés","Adja meg az új nevet","előnézet","Letöltés","Illessze be a vágólap","A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.","Másolás kiválasztása","másolás","Határ sugár","Összes","Alkalmazni","Kérjük, töltse ki ezt a mezőt,","Kérjük, írja be a webcímet","Alapértelmezett","Kör","Pont","Quadrate","Találni","Megtalálja Előző","Következő Keresése","Helyezze be az osztály nevét","Nyomja meg az Alt egyéni átméretezés"]
+
+/***/ }),
+
+/***/ 99113:
+/***/ (function(module) {
+
+module.exports["default"] = ["Ketik sesuatu","Tentang Jodit","Editor Jodit","Versi Bebas Non-komersil","Panduan Pengguna Jodit","mencakup detail bantuan penggunaan","Untuk informasi tentang lisensi, silakan kunjungi website:","Beli versi lengkap","Hak Cipta © XDSoft.net - Chupurnov Valeriy. Hak cipta dilindungi undang-undang.","Tautan","Buka di tab baru","Buka editor dalam ukuran penuh","Hapus Pemformatan","Isi warna atau atur warna teks","Ulangi","Batalkan","Tebal","Miring","Sisipkan Daftar Tidak Berurut","Sisipkan Daftar Berurut","Tengah","Penuh","Kiri","Kanan","Sisipkan Garis Horizontal","Sisipkan Gambar","Sisipkan Berkas","Sisipkan video youtube/vimeo","Sisipkan tautan","Ukuran font","Keluarga font","Sisipkan blok format","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Kutip","Kode","Sisipkan","Sisipkan tabel","Kurangi Indentasi","Tambah Indentasi","Pilih Karakter Spesial","Sisipkan Karakter Spesial","Formar warna","Ubah mode","Batas","atas","kanan","bawah","kiri","Gaya","Class","Rata","Kanan","Tengah","Kiri","--Tidak diset--","Src","Judul","Teks alternatif","Tautan","Buka tautan di tab baru","Gambar","berkas","Lanjutan","Properti gambar","Batal","Ya","Kode Anda cenderung ke HTML. Biarkan sebagai HTML?","Paste sebagai HTML","Jaga","Bersih","Sisipkan sebagai teks","Sisipkan hanya teks","Terdeteksi paste dari Word","Konten dipaste dari dokumen Microsoft Word/Excel. Apakah Anda ingin tetap menjaga format atau membersihkannya?","Penjelajah Berkas","Error ketika memuat list","Error ketika memuat folder","Apakah Anda yakin?","Masukkan nama Direktori","Buat direktori","ketik nama","Letakkan gambar","Letakkan berkas","atau klik","Teks alternatif","Jelajahi","Unggah","Latar Belakang","Teks","Atas","Tengah","Bawah","Sisipkan kolom sebelumnya","Sisipkan kolom setelahnya","Sisipkan baris di atasnya","Sisipkan baris di bawahnya","Hapus tabel","Hapus baris","Hapus kolom","Kosongkan cell","sumber","tebal","miring","sikat","tautan","batalkan","ulangi","tabel","gambar","penghapus","paragraf","ukuran font","video","font","tentang","cetak","garis bawah","coret","menjorok ke dalam","menjorok ke luar","ukuran penuh","menyusut","hr","ul","ol","potong","Pilih semua","Kode embed","Buka tautan","Edit tautan","No follow","Hapus tautan","Mata","pensil","Perbarui","URL","Edit","Perataan horizontal","Filter","Urutkan berdasarkan perubahan","Urutkan berdasarkan nama","Urutkan berdasarkan ukuran","Tambah folder","Reset","Simpan","Simpan sebagai...","Ubah ukuran","Crop","Lebar","Tinggi","Jaga aspek rasio","Ya","Tidak","Copot","Pilih","Karakter: %d","Kata: %d","Semua","Pilih %s","Pilih semua","Rata vertikal","Bagi","Bagi secara vertikal","Bagi secara horizontal","Gabungkan","Tambah kolom","tambah baris","Hapus","Bingkai","Lisensi: %s","Coret","Garis Bawah","Superskrip","Subskrip","Potong pilihan","Berhenti","Mencari","Ganti dengan","Mengganti","Paste","Pilih konten untuk dipaste","Anda hanya dapat mengedit gambar Anda sendiri. Unduh gambar ini di host?","Gambar telah sukses diunggah ke host!","palet","Tidak ada berkas","ganti nama","Masukkan nama baru","pratinjau","Unduh","Paste dari clipboard","Browser anda tidak mendukung akses langsung ke clipboard.","Copy seleksi","copy","Border radius","Tampilkan semua","Menerapkan","Silahkan mengisi kolom ini","Silahkan masukkan alamat web","Default","Lingkaran","Dot","Kuadrat","Menemukan","Menemukan Sebelumnya","Menemukan Berikutnya","Masukkan nama kelas","Tekan Alt untuk mengubah ukuran kustom"]
+
+/***/ }),
+
+/***/ 51923:
+/***/ (function(module) {
+
+module.exports["default"] = ["Scrivi qualcosa...","A proposito di Jodit","Jodit Editor",null,"Guida utente di Jodit","contiene una guida dettagliata per l'uso.","Per informazioni sulla licenza, si prega di visitare il nostro sito:","Acquista la versione completa","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Ancora","Apri in una nuova scheda","Apri l'editor a schermo intero","Formato chiaro","Riempi colore o lettera","Ripristina","Annulla","Grassetto","Corsivo","Inserisci lista non ordinata","Inserisci l'elenco ordinato","Allinea Centra","Allineare Giustificato","Allinea a Sinistra","Allinea a Destra","Inserisci la linea orizzontale","Inserisci immagine","Inserisci un file","Inserisci video Youtube/Vimeo","Inserisci il link","Dimensione del carattere","Tipo di font","Inserisci blocco","Normale","Heading 1","Heading 2","Heading 3","Heading 4","Citazione","Codice","Inserisci","Inserisci tabella","Riduci il rientro","Aumenta il rientro","Seleziona una funzione speciale","Inserisci un carattere speciale","Copia formato","Cambia modo","Margini","su","destra","giù","sinistra","Stili CSS","Classi CSS","Allinea","Destra","Centro","Sinistra","--Non Impostato--","Fonte","Titolo","Testo Alternativo","Link","Apri il link in una nuova scheda","Immagine","Archivio","Avanzato","Proprietà dell'immagine","Annulla","Accetta","Il codice è simile all'HTML. Mantieni come HTML?","Incolla come HTML?","Mantieni","Pulisci","Inserisci come testo","Inserisci solo il testo","Incollato da Word rilevato","Il contenuto incollato proviene da un documento Microsoft Word / Excel. Vuoi mantenere il formato o pulirlo?","Cerca il file","Errore durante il caricamento dell'elenco","Errore durante il caricamento delle cartelle","Sei sicuro?","Inserisci il nome della cartella","Crea cartella","Entre el nombre","Rilascia l'immagine","Rilascia file","o click","Testo alternativo","Sfoglia","Carica","Sfondo","Testo","Su","Centro","Sotto","Inserisci prima la colonna","Inserisci colonna dopo","Inserisci la riga sopra","Inserisci la riga sotto","Elimina tabella","Elimina riga","Elimina colonna","Cella vuota","HTML","Grassetto","Corsivo","Pennello","Link","Annulla","Ripristina","Tabella","Immagine","Gomma","Paragrafo","Dimensione del carattere","Video","Font","Approposito di","Stampa","Sottolineato","Barrato","trattino","annulla rientro","A grandezza normale","comprimere","linea orizzontale","lista non ordinata","lista ordinata","Taglia","Seleziona tutto","Includi codice","Apri link","Modifica link","Non seguire","Togli link","Recensione","Per modificare","Aggiornare"," URL","Modifica","Allineamento orizzontale","Filtro","Ordina per data di modifica","Ordina per nome","Ordina per dimensione","Aggiungi cartella","Reset","Salva","Salva con nome...","Ridimensiona","Tagliare","Larghezza","Altezza","Mantenere le proporzioni","Si","No","Rimuovere","Seleziona","Caratteri: %d","Parole: %d","Tutto","Seleziona: %s","Seleziona tutto","Allineamento verticala","Dividere","Dividere verticalmente","Diviso orizzontale","Fondi","Aggiungi colonna","Aggiungi riga","Cancella","Bordo",null,"Barrato","Sottolineato","indice","deponente","Taglia la selezione","Pausa","Cerca","Sostituisci con","Sostituire","Incolla","Seleziona il contenuto da incollare","Puoi modificare solo le tue immagini. Scarica questa immagine sul server?","L'immagine è stata caricata con successo sul server!","tavolozza","Non ci sono file in questa directory.","ungherese","Inserisci un nuovo nome","anteprima","Scaricare","Incolla dagli appunti","Il tuo browser non supporta l'accesso diretto agli appunti.","Selezione di copia","copia","Border radius","Mostra tutti","Applicare","Si prega di compilare questo campo","Si prega di inserire un indirizzo web","Di Default","Cerchio","Dot","Quadrate","Trovare","Trova Precedente","Trova Successivo","Inserisci il nome della classe","Premere Alt per il ridimensionamento personalizzato"]
+
+/***/ }),
+
+/***/ 21268:
+/***/ (function(module) {
+
+module.exports["default"] = ["なにかタイプしてください","Joditについて","Jodit Editor",null,"Jodit ユーザーズ・ガイド","詳しい使い方","ライセンス詳細についてはJodit Webサイトを確認ください：","フルバージョンを購入","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","新しいタブで開く","エディターのサイズ（フル/ノーマル）","書式をクリア","テキストの色","やり直し","元に戻す","太字","斜体","箇条書き","番号付きリスト","中央揃え","両端揃え","左揃え","右揃え","区切り線を挿入","画像を挿入","ファイルを挿入","Youtube/Vimeo 動画","リンクを挿入","フォントサイズ","フォント","テキストのスタイル","指定なし","タイトル1","タイトル2","タイトル3","タイトル4","引用","コード","挿入","表を挿入","インデント減","インデント増","特殊文字を選択","特殊文字を挿入","書式を貼付け","編集モード切替え","マージン","上","右","下","左","スタイル","クラス","配置","右寄せ","中央寄せ","左寄せ","指定なし","ソース","タイトル","代替テキスト","リンク","新しいタブで開く","画像","ファイル","高度な設定","画像のプロパティー","キャンセル","確定","HTMLコードを保持しますか？","HTMLで貼付け","HTMLを保持","Clean","HTMLをテキストにする","テキストだけ","Word Paste Detected","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","ここに画像をドロップ","ここにファイルをドロップ","or クリック","代替テキスト","ブラウズ","アップロード","背景","文字","上","中央","下","左に列を挿入","右に列を挿入","上に行を挿入","下に行を挿入","表を削除","行を削除","列を削除","セルを空にする","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","分割線","箇条書き","番号付きリスト","切り取り","すべて選択","埋め込みコード","リンクを開く","リンクを編集","No follow","リンク解除","サイトを確認","鉛筆","更新","URL","編集","水平方向の配置","Filter","Sort by changed","Sort by name","Sort by size","Add folder","リセット","保存","Save as ...","リサイズ","Crop","幅","高さ","縦横比を保持","はい","いいえ","移除","選択","文字数: %d","単語数: %d","全部","選択: %s","すべて選択","垂直方向の配置","分割","セルの分割（垂直方向）","セルの分割（水平方向）","セルの結合","列を追加","行を追加","削除","境界線",null,"取り消し線","下線","上付き文字","下付き文字","切り取り","Pause","検索","置換","交換","貼付け","選択した内容を貼付け","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","パレット","There are no files","Rename","Enter new name","プレビュー","ダウンロード","貼り付け","お使いのブラウザはクリップボードを使用できません","コピー","copy","角の丸み","全て表示","適用","まだこの分野","を入力してくださいウェブアドレス","デフォルト","白丸","黒丸","四角","見","探前","由来","クラス名を挿入","カスタムサイズ変更のためのAltキーを押します"]
+
+/***/ }),
+
+/***/ 37289:
+/***/ (function(module) {
+
+module.exports["default"] = ["무엇이든 입력하세요","Jodit에 대하여","Jodit Editor",null,"Jodit 사용자 안내서","자세한 도움말이 들어있어요","라이센스에 관해서는 Jodit 웹 사이트를 방문해주세요：","풀 버전 구입하기","© XDSoft.net - Chupurnov Valeriy. 에게 저작권과 모든 권리가 있습니다.","Anchor","새 탭에서 열기","전체 크기로 보기","서식 지우기","글씨 색상","재실행","실행 취소","굵게","기울임","글머리 목록","번호 목록","가운데 정렬","양쪽 정렬","왼쪽 정렬","오른쪽 정렬","수평 구분선 넣기","이미지 넣기","파일 넣기","Youtube/Vimeo 동영상","링크 넣기","글꼴 크기","글꼴","블록 요소 넣기","일반 텍스트","제목 1","제목 2","제목 3","제목 4","인용","코드","붙여 넣기","테이블","들여쓰기 감소","들여쓰기 증가","특수문자 선택","특수문자 입력","페인트 형식","편집모드 변경","마진","위","오른쪽","아래","왼쪽","스타일","클래스","정렬","오른쪽으로","가운데로","왼쪽으로","--지정 안 함--","경로(src)","제목","대체 텍스트(alt)","링크","새 탭에서 열기",null,"파일","고급","이미지 속성","취소","확인","HTML 코드로 감지했어요. 코드인채로 붙여넣을까요?","HTML로 붙여넣기","원본 유지","지우기","텍스트로 넣기","텍스트만 넣기","Word 붙여넣기 감지","Microsoft Word/Excel 문서로 감지했어요. 서식을 유지한채로 붙여넣을까요?","파일 탐색기","목록 불러오기 에러","폴더 불러오기","정말 진행할까요?","디렉토리 이름 입력","디렉토리 생성","이름 입력","이미지 드래그","파일 드래그","혹은 클릭","대체 텍스트","탐색","업로드","배경","텍스트","위","중앙","아래","이전 열에 삽입","다음 열에 삽입","위 행에 삽입","아래 행에 삽입","테이블 삭제","행 삭제","열 삭제","빈 셀","HTML 소스","볼드","이탤릭","브러시","링크","실행 취소","재실행","테이블","이미지","지우개","문단","글꼴 크기","비디오","글꼴","편집기 정보","프린트","밑줄","취소선","들여쓰기","내어쓰기","전체 화면","일반 화면","구분선","글머리 목록","번호 목록","잘라내기","모두 선택","Embed 코드","링크 열기","링크 편집","No follow","링크 제거","사이트 확인","연필","갱신","URL","편집","수평 정렬","필터","변경일 정렬","이름 정렬","크기 정렬","새 폴더","초기화","저장","새로 저장하기 ...","리사이즈","크롭","가로 길이","세로 높이","비율 유지하기","네","아니오","제거","선택","문자수: %d","단어수: %d","모두","선택: %s","모두 선택","수직 정렬","분할","세로 셀 분할","가로 셀 분할","셀 병합","열 추가","행 추가","삭제","외곽선","라이센스: %s","취소선","밑줄","윗첨자","아래첨자","선택 잘라내기","구분자","검색","대체하기","대체","붙여넣기","붙여넣을 내용 선택","외부 이미지는 편집할 수 없어요. 외부 이미지를 다운로드 할까요?","이미지를 무사히 업로드 했어요!","팔레트","파일이 없어요","이름 변경","새 이름 입력","미리보기","다운로드","클립보드 붙여넣기","사용중인 브라우저가 클립보드 접근을 지원하지 않아요.","선택 복사","복사","둥근 테두리","모두 보기","적용","이 항목을 입력해주세요!","웹 URL을 입력해주세요.","기본","원","점","정사각형","찾기","이전 찾기","다음 찾기","className 입력","사용자 지정 크기 조정에 대 한 고도 누르십시오"]
+
+/***/ }),
+
+/***/ 17084:
+/***/ (function(module) {
+
+module.exports["default"] = ["Begin met typen..","Over Jodit","Jodit Editor","Gratis niet-commerciële versie","Jodit gebruikershandleiding","bevat gedetailleerde informatie voor gebruik.","Voor informatie over de licentie, ga naar onze website:","Volledige versie kopen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle rechten voorbehouden.","Anker","Open in nieuwe tab","Editor in volledig scherm openen","Opmaak verwijderen","Vulkleur of tekstkleur aanpassen","Opnieuw","Ongedaan maken","Vet","Cursief","Geordende list invoegen","Ongeordende lijst invoegen","Centreren","Uitlijnen op volledige breedte","Links uitlijnen","Rechts uitlijnen","Horizontale lijn invoegen","Afbeelding invoegen","Bestand invoegen","Youtube/Vimeo video invoegen","Link toevoegen","Tekstgrootte","Lettertype","Format blok invoegen","Normaal","Koptekst 1","Koptekst 2","Koptekst 3","Koptekst 4","Citaat","Code","Invoegen","Tabel invoegen","Inspringing verkleinen","Inspringing vergroten","Symbool selecteren","Symbool invoegen","Opmaak kopieren","Modus veranderen","Marges","Boven","Rechts","Onder","Links","CSS styles","CSS classes","Uitlijning","Rechts","Gecentreerd","Links","--Leeg--","Src","Titel","Alternatieve tekst","Link","Link in nieuwe tab openen","Afbeelding","Bestand","Geavanceerd","Afbeeldingseigenschappen","Annuleren","OK","Deze code lijkt op HTML. Als HTML behouden?","Invoegen als HTML","Origineel behouden","Opschonen","Als tekst invoegen","Als onopgemaakte tekst invoegen","Word-tekst gedetecteerd","De geplakte tekst is afkomstig van een Microsoft Word/Excel document. Wil je de opmaak behouden of opschonen?","Bestandsbrowser","Fout bij het laden van de lijst","Fout bij het laden van de mappenlijst","Weet je het zeker?","Geef de map een naam","Map aanmaken","Type naam","Sleep hier een afbeelding naartoe","Sleep hier een bestand naartoe","of klik","Alternatieve tekst","Bladeren","Uploaden","Achtergrond","Tekst","Boven","Midden","Onder","Kolom invoegen (voor)","Kolom invoegen (na)","Rij invoegen (boven)","Rij invoegen (onder)","Tabel verwijderen","Rij verwijderen","Kolom verwijderen","Cel leegmaken","Broncode","vet","cursief","kwast","link","ongedaan maken","opnieuw","tabel","afbeelding","gum","paragraaf","lettergrootte","video","lettertype","over","afdrukken","onderstreept","doorgestreept","inspringen","minder inspringen","volledige grootte","kleiner maken","horizontale lijn","lijst","genummerde lijst","knip","alles selecteren","Embed code","link openen","link aanpassen","niet volgen","link verwijderen","Recensie","Om te bewerken","Updaten"," URL","Bewerken","Horizontaal uitlijnen","Filteren","Sorteren op wijzigingsdatum","Sorteren op naam","Sorteren op grootte","Map toevoegen","Herstellen","Opslaan","Opslaan als ...","Grootte aanpassen","Bijknippen","Breedte","Hoogte","Verhouding behouden","Ja","Nee","Verwijderen","Selecteren","Tekens: %d","Woorden: %d","Alles","Selecteer: %s","Selecteer alles","Verticaal uitlijnen","Splitsen","Verticaal splitsen","Horizontaal splitsen","Samenvoegen","Kolom toevoegen","Rij toevoegen","Verwijderen","Rand",null,"Doorstrepen","Onderstrepen","Superscript","Subscript","Selectie knippen","Enter","Zoek naar","Vervangen door","Vervangen","Plakken","Kies content om te plakken","Je kunt alleen je eigen afbeeldingen aanpassen. Deze afbeelding downloaden?","De afbeelding is succesvol geüploadet!","Palette","Er zijn geen bestanden in deze map.","Hongaars","Voer een nieuwe naam in","voorvertoning","Download","Plakken van klembord","Uw browser ondersteunt geen directe toegang tot het klembord.","Selectie kopiëren","kopiëren","Border radius","Toon alle","Toepassing","Vul dit veld","Voer een webadres","Standaard","Cirkel","Dot","Quadrate","Zoeken","Vorige Zoeken","Volgende Zoeken","Voeg de klassenaam in","Druk op Alt voor aangepaste grootte"]
+
+/***/ }),
+
+/***/ 96891:
+/***/ (function(module) {
+
+module.exports["default"] = ["Napisz coś","O Jodit","Edytor Jodit",null,"Instrukcja Jodit","zawiera szczegółowe informacje dotyczące użytkowania.","Odwiedź naszą stronę, aby uzyskać więcej informacji na temat licencji:","Zakup pełnej wersji","Copyright © XDSoft.net - Chupurnov Valeriy. Wszystkie prawa zastrzeżone.","Kotwica","Otwórz w nowej zakładce","Otwórz edytor w pełnym rozmiarze","Wyczyść formatowanie","Kolor wypełnienia lub ustaw kolor tekstu","Ponów","Cofnij","Pogrubienie","Kursywa","Wstaw listę wypunktowaną","Wstaw listę numeryczną","Wyśrodkuj","Wyjustuj","Wyrównaj do lewej","Wyrównaj do prawej","Wstaw linię poziomą","Wstaw grafikę","Wstaw plik","Wstaw film Youtube/vimeo","Wstaw link","Rozmiar tekstu","Krój czcionki","Wstaw formatowanie","Normalne","Nagłówek 1","Nagłówek 2","Nagłówek 3","Nagłówek 4","Cytat","Kod","Wstaw","Wstaw tabelę","Zmniejsz wcięcie","Zwiększ wcięcie","Wybierz znak specjalny","Wstaw znak specjalny","Malarz formatów","Zmień tryb","Marginesy","Górny","Prawy","Dolny","Levy","Style CSS","Klasy CSS","Wyrównanie","Prawa","środek","Lewa","brak","Źródło","Tytuł","Tekst alternatywny","Link","Otwórz w nowej zakładce","Grafika","Plik","Zaawansowane","Właściwości grafiki","Anuluj","OK","Twój kod wygląda jak HTML. Zachować HTML?","Wkleić jako HTML?","Oryginalny tekst","Wyczyść","Wstaw jako tekst","Wstaw tylko treść","Wykryto tekst w formacie Word","Wklejany tekst pochodzi z dokumentu Microsoft Word/Excel. Chcesz zachować ten format czy wyczyścić go? ","Przeglądarka plików","Błąd ładowania listy plików","Błąd ładowania folderów","Czy jesteś pewien?","Wprowadź nazwę folderu","Utwórz folder","wprowadź nazwę","Upuść plik graficzny","Upuść plik","lub kliknij tu","Tekst alternatywny","Przeglądaj","Wczytaj","Tło","Treść","Góra","Środek","Dół","Wstaw kolumnę przed","Wstaw kolumnę po","Wstaw wiersz przed","Wstaw wiersz po","Usuń tabelę","Usuń wiersz","Usuń kolumnę","Wyczyść komórkę","HTML","pogrubienie","kursywa","pędzel","link","cofnij","ponów","tabela","grafika","wyczyść","akapit","rozmiar czcionki","wideo","czcionka","O programie","drukuj","podkreślenie","przekreślenie","wcięcie","wycięcie","pełen rozmiar","przytnij","linia pozioma","lista","lista numerowana","wytnij","zaznacz wszystko","Wstaw kod","otwórz link","edytuj link","Atrybut no-follow","Usuń link","szukaj","edytuj","Aktualizuj","URL","Edytuj","Wyrównywanie w poziomie","Filtruj","Sortuj wg zmiany","Sortuj wg nazwy","Sortuj wg rozmiaru","Dodaj folder","wyczyść","zapisz","zapisz jako","Zmień rozmiar","Przytnij","Szerokość","Wysokość","Zachowaj proporcje","Tak","Nie","Usuń","Wybierz","Znaki: %d","Słowa: %d","Wszystko","Wybierz: %s","Wybierz wszystko","Wyrównywanie w pionie","Podziel","Podziel w pionie","Podziel w poziomie","Scal","Dodaj kolumnę","Dodaj wiersz","Usuń","Obramowanie",null,"Przekreślenie","Podkreślenie","indeks górny","index dolny","Wytnij zaznaczenie","Przerwa","Szukaj","Zamień na","Wymienić","Wklej","Wybierz zawartość do wklejenia","Możesz edytować tylko swoje grafiki. Czy chcesz pobrać tą grafikę?","Grafika została pomyślnienie dodana na serwer","Paleta","Brak plików.","zmień nazwę","Wprowadź nową nazwę","podgląd","pobierz","Wklej ze schowka","Twoja przeglądarka nie obsługuje schowka","Kopiuj zaznaczenie","kopiuj","Zaokrąglenie krawędzi","Pokaż wszystkie","Zastosuj","Proszę wypełnić to pole","Proszę, wpisz adres sieci web","Domyślnie","Koło","Punkt","Kwadrat","Znaleźć","Znaleźć Poprzednie","Znajdź Dalej","Wstaw nazwę zajęć","Naciśnij Alt, aby zmienić rozmiar"]
+
+/***/ }),
+
+/***/ 31211:
+/***/ (function(module) {
+
+module.exports["default"] = ["Escreva algo...","Sobre o Jodit","Editor Jodit",null,"Guia de usuário Jodit","contém ajuda detalhada para o uso.","Para informação sobre a licença, por favor visite nosso site:","Compre a versão completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos os direitos reservados.","Link","Abrir em nova aba","Abrir editor em tela cheia","Limpar formatação","Cor de preenchimento ou cor do texto","Refazer","Desfazer","Negrito","Itálico","Inserir lista não ordenada","Inserir lista ordenada","Centralizar","Justificar","Alinhar à Esquerda","Alinhar à Direita","Inserir linha horizontal","Inserir imagem","Inserir arquivo","Inserir vídeo do Youtube/vimeo","Inserir link","Tamanho da letra","Fonte","Inserir bloco","Normal","Cabeçalho 1","Cabeçalho 2","Cabeçalho 3","Cabeçalho 4","Citação","Código","Inserir","Inserir tabela","Diminuir recuo","Aumentar recuo","Selecionar caractere especial","Inserir caractere especial","Copiar formato","Mudar modo","Margens","cima","direta","baixo","esquerda","Estilos CSS","Classes CSS","Alinhamento","Direita","Centro","Esquerda","--Não Estabelecido--","Fonte","Título","Texto Alternativo","Link","Abrir link em nova aba","Imagem","Arquivo","Avançado","Propriedades da imagem","Cancelar","Ok","Seu código é similar ao HTML. Manter como HTML?","Colar como HTML?","Manter","Limpar","Inserir como Texto","Inserir somente o Texto","Colado do Word Detectado","O conteúdo colado veio de um documento Microsoft Word/Excel. Você deseja manter o formato ou limpa-lo?","Procurar arquivo","Erro ao carregar a lista","Erro ao carregar as pastas","Você tem certeza?","Escreva o nome da pasta","Criar pasta","Escreva seu nome","Soltar imagem","Soltar arquivo","ou clique","Texto alternativo","Explorar","Upload","Fundo","Texto","Cima","Meio","Baixo","Inserir coluna antes","Inserir coluna depois","Inserir linha acima","Inserir linha abaixo","Excluir tabela","Excluir linha","Excluir coluna","Limpar célula","HTML","negrito","itálico","pincel","link","desfazer","refazer","tabela","imagem","apagar","parágrafo","tamanho da letra","vídeo","fonte","Sobre de","Imprimir","sublinhar","tachado","recuar","diminuir recuo","Tamanho completo","diminuir","linha horizontal","lista não ordenada","lista ordenada","Cortar","Selecionar tudo","Incluir código","Abrir link","Editar link","Não siga","Remover link","Visualizar","Editar","Atualizar","URL","Editar","Alinhamento horizontal","filtrar","Ordenar por modificação","Ordenar por nome","Ordenar por tamanho","Adicionar pasta","Resetar","Salvar","Salvar como...","Redimensionar","Recortar","Largura","Altura","Manter a proporção","Sim","Não","Remover","Selecionar","Caracteres: %d","Palavras: %d","Tudo","Selecionar: %s","Selecionar tudo","Alinhamento vertical","Dividir","Dividir vertical","Dividir horizontal","Mesclar","Adicionar coluna","Adicionar linha","Excluir","Borda",null,"Tachado","Sublinhar","sobrescrito","subscrito","Cortar seleção","Pausa","Procurar por","Substituir com","Substituir","Colar","Escolher conteúdo para colar","Você só pode editar suas próprias imagens. Baixar essa imagem pro servidor?","A imagem foi enviada com sucesso para o servidor!","Palette","Não há arquivos nesse diretório.","Húngara","Digite um novo nome","preview","Baixar","Colar da área de transferência","O seu navegador não oferece suporte a acesso direto para a área de transferência.","Selecção de cópia","cópia","Border radius","Mostrar todos os","Aplicar","Por favor, preencha este campo","Por favor introduza um endereço web","Padrão","Círculo","Ponto","Quadro","Encontrar","Encontrar Anteriores","Localizar Próxima","Insira o nome da classe","Pressione Alt para redimensionamento personalizado"]
+
+/***/ }),
+
+/***/ 31109:
+/***/ (function(module) {
+
+module.exports["default"] = ["Напишите что-либо","О Jodit","Редактор Jodit",null,"Jodit Руководство пользователя","содержит детальную информацию по использованию","Для получения сведений о лицензии , пожалуйста, перейдите на наш сайт:","Купить полную версию","Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.","Анкор","Открывать ссылку в новой вкладке","Открыть редактор в полном размере","Очистить форматирование","Цвет заливки или цвет текста","Повтор","Отмена","Жирный","Наклонный","Вставка маркированного списка","Вставить нумерованный список","Выровнять по центру","Выровнять по ширине","Выровнять по левому краю","Выровнять по правому краю","Вставить горизонтальную линию","Вставить изображение","Вставить файл","Вставьте видео","Вставить ссылку","Размер шрифта","Шрифт","Вставить блочный элемент","Нормальный текст","Заголовок 1","Заголовок 2","Заголовок 3","Заголовок 4","Цитата","Код","Вставить","Вставить таблицу","Уменьшить отступ","Увеличить отступ","Выберите специальный символ","Вставить специальный символ","Формат краски","Источник","Отступы","сверху","справа","снизу","слева","Стили","Классы","Выравнивание","По правому краю","По центру","По левому краю","--не устанавливать--","src","Заголовок","Альтернативный текст (alt)","Ссылка","Открывать ссылку в новом окне",null,"Файл","Расширенные","Свойства изображения","Отмена","Ок","Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?","Вставить как HTML?","Сохранить оригинал","Почистить","Вставить как текст","Вставить только текст","Возможно это фрагмент Word или Excel","Контент который вы вставляете поступает из документа Microsoft Word / Excel. Вы хотите сохранить формат или очистить его?","Браузер файлов","Ошибка при загрузке списка изображений","Ошибка при загрузке списка директорий","Вы уверены?","Введите название директории","Создать директорию","введите название","Перетащите сюда изображение","Перетащите сюда файл","или нажмите","Альтернативный текст","Сервер","Загрузка","Фон","Текст"," К верху","По середине","К низу","Вставить столбец до","Вставить столбец после","Вставить ряд выше","Вставить ряд ниже","Удалить таблицу","Удалять ряд","Удалить столбец","Очистить ячейку","HTML","жирный","курсив","заливка","ссылка","отменить","повторить","таблица","Изображение","очистить","параграф","размер шрифта","видео","шрифт","о редакторе","печать","подчеркнутый","перечеркнутый","отступ","выступ","во весь экран","обычный размер","линия","Список","Нумерованный список","Вырезать","Выделить все","Код","Открыть ссылку","Редактировать ссылку","Атрибут nofollow","Убрать ссылку","Просмотр","Редактировать","Обновить","URL","Редактировать","Горизонтальное выравнивание","Фильтр","По изменению","По имени","По размеру","Добавить папку","Восстановить","Сохранить","Сохранить как","Изменить размер","Обрезать размер","Ширина","Высота","Сохранять пропорции","Да","Нет","Удалить","Выделить","Символов: %d","Слов: %d","Выделить все","Выделить: %s","Выделить все","Вертикальное выравнивание","Разделить","Разделить по вертикали","Разделить по горизонтали","Объединить в одну","Добавить столбец","Добавить строку","Удалить","Рамка","Лицензия: %s","Перечеркнуть","Подчеркивание","верхний индекс","индекс","Вырезать","Разделитель","Найти","Заменить на","Заменить","Вставить","Выбрать контент для вставки","Вы можете редактировать только свои собственные изображения. Загрузить это изображение на ваш сервер?","Изображение успешно загружено на сервер!","палитра","В данном каталоге нет файлов","Переименовать","Введите новое имя","Предпросмотр","Скачать","Вставить из буфера обмена","Ваш браузер не поддерживает прямой доступ к буферу обмена.","Скопировать выделенное","копия","Радиус границы","Показать все","Применить","Пожалуйста, заполните это поле","Пожалуйста, введите веб-адрес","По умолчанию","Круг","Точка","Квадрат","Найти","Найти Предыдущие","Найти Далее","Вставить название класса","Нажмите Alt для изменения пользовательского размера"]
+
+/***/ }),
+
+/***/ 79375:
+/***/ (function(module) {
+
+module.exports["default"] = ["Bir şeyler yaz","Jodit Hakkında","Jodit Editor",null,"Jodit Kullanım Kılavuzu","kullanım için detaylı bilgiler içerir","Lisans hakkında bilgi için lütfen web sitemize gidin:","Tam versiyonunu satın al","Copyright © XDSoft.net - Chupurnov Valeriy. Tüm hakları saklıdır.","Bağlantı","Yeni sekmede aç","Editörü tam ekranda aç","Stili temizle","Renk doldur veya yazı rengi seç","Yinele","Geri Al","Kalın","İtalik","Sırasız Liste Ekle","Sıralı Liste Ekle","Ortala","Kenarlara Yasla","Sola Yasla","Sağa Yasla","Yatay Çizgi Ekle","Resim Ekle","Dosya Ekle","Youtube/Vimeo Videosu Ekle","Bağlantı Ekle","Font Boyutu","Font Ailesi","Blok Ekle","Normal","Başlık 1","Başlık 2","Başlık 3","Başlık 4","Alıntı","Kod","Ekle","Tablo Ekle","Girintiyi Azalt","Girintiyi Arttır","Özel Karakter Seç","Özel Karakter Ekle","Resim Biçimi","Mod Değiştir","Boşluklar","Üst","Sağ","Alt","Sol","CSS Stilleri","CSS Sınıfları","Hizalama","Sağ","Ortalı","Sol","Belirsiz","Kaynak","Başlık","Alternatif Yazı","Link","Bağlantıyı yeni sekmede aç","Resim","Dosya","Gelişmiş","Resim özellikleri","İptal","Tamam","Kodunuz HTML koduna benziyor. HTML olarak devam etmek ister misiniz?","HTML olarak yapıştır","Sakla","Temizle","Yazı olarak ekle","Sadece yazıyı ekle","Word biçiminde yapıştırma algılandı","Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder löschen?","Dosya Listeleyici","Liste yüklenirken hata oluştu","Klasörler yüklenirken hata oluştur","Emin misiniz?","Dizin yolu giriniz","Dizin oluştur","İsim yaz","Resim bırak","Dosya bırak","veya tıkla","Alternatif yazı","Gözat","Yükle","Arka plan","Yazı","Üst","Orta","Aşağı","Öncesine kolon ekle","Sonrasına kolon ekle","Üstüne satır ekle","Altına satır ekle","Tabloyu sil","Satırı sil","Kolonu sil","Hücreyi temizle","Kaynak","Kalın","italik","Fırça","Bağlantı","Geri al","Yinele","Tablo","Resim","Silgi","Paragraf","Font boyutu","Video","Font","Hakkında","Yazdır","Alt çizgi","Üstü çizili","Girinti","Çıkıntı","Tam ekran","Küçült","Ayraç","Sırasız liste","Sıralı liste","Kes","Tümünü seç","Kod ekle","Bağlantıyı aç","Bağlantıyı düzenle","Nofollow özelliği","Bağlantıyı kaldır","Yorumu","Düzenlemek için","Güncelle","URL","Düzenle","Yatay hizala","Filtre","Değişime göre sırala","İsme göre sırala","Boyuta göre sırala","Klasör ekle","Sıfırla","Kaydet","Farklı kaydet","Boyutlandır","Kırp","Genişlik","Yükseklik","En boy oranını koru","Evet","Hayır","Sil","Seç","Harfler: %d","Kelimeler: %d","Tümü","Seç: %s","Tümünü seç","Dikey hizala","Ayır","Dikey ayır","Yatay ayır","Birleştir","Kolon ekle","Satır ekle","Sil","Kenarlık",null,"Üstü çizili","Alt çizgi","Üst yazı","Alt yazı","Seçilimi kes","Satır sonu","Ara","Şununla değiştir","Değiştir","Yapıştır","Yapıştırılacak içerik seç","Sadece kendi resimlerinizi düzenleyebilirsiniz. Bu görseli kendi hostunuza indirmek ister misiniz?","Görsel başarıyla hostunuza yüklendi","Palet","Bu dizinde dosya yok","Yeniden isimlendir","Yeni isim girin","Ön izleme","İndir","Panodan yapıştır ","Tarayıcınız panoya doğrudan erişimi desteklemiyor.","Seçimi kopyala","Kopyala","Sınır yarıçapı","Tümünü Göster","Uygula","Lütfen bu alanı doldurun","Lütfen bir web adresi girin","Varsayılan","Daire","Nokta","Kare","Bul","Öncekini Bul","Sonrakini Bul","Sınıf adı girin","Özel yeniden boyutlandırma için Alt tuşuna basın"]
+
+/***/ }),
+
+/***/ 21042:
+/***/ (function(module) {
+
+module.exports["default"] = ["输入一些内容","关于Jodit","Jodit Editor","Free Non-commercial Version","开发者指南","使用帮助","有关许可证的信息，请访问我们的网站：","购买完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. 版权所有","Anchor","在新窗口打开","全屏编辑","清除样式","颜色","重做","撤销","粗体","斜体","符号列表","编号","居中","对齐文本","左对齐","右对齐","分割线","图片","文件","视频","链接","字号","字体","格式块","默认","标题1","标题2","标题3","标题4","引用","代码","插入","表格","减少缩进","增加缩进","选择特殊符号","特殊符号","格式复制","改变模式","外边距（Margins）","top","right","bottom","left","样式","Classes","对齐方式","居右","居中","居左","无","Src","Title","Alternative","Link","在新窗口打开链接","图片","file","高级","图片属性","取消","确定","你粘贴的文本是一段html代码，是否保留源格式","html粘贴","保留源格式","匹配目标格式","把html代码视为普通文本","只保留文本","文本粘贴","正在粘贴 Word/Excel 的文本，是否保留源格式？","文件管理","加载list错误","加载folders错误","你确定吗？","输入路径","创建路径","type name","拖动图片到此","拖动文件到此","或点击","Alternative text","浏览","上传","背景色","文字","顶部","中间","底部","在之前插入列","在之后插入列","在之前插入行","在之后插入行","删除表格","删除行","删除列","清除内容","源码","粗体","斜体","颜色","链接","撤销","重做","表格","图片","橡皮擦","段落","字号","视频","字体","关于","打印","下划线","上出现","增加缩进","减少缩进","全屏","收缩","分割线","无序列表","顺序列表","剪切","全选","嵌入代码","打开链接","编辑链接","No follow","取消链接","预览","铅笔","更新","URL","编辑","水平对齐","筛选","修改时间排序","名称排序","大小排序","新建文件夹","重置","保存","保存为","调整大小","剪切","宽","高","保持长宽比","是","不","移除","选择","字符数: %d","单词数: %d","全部","选择: %s","全选","垂直对齐","拆分","垂直拆分","水平拆分","合并","添加列","添加行","删除","边框",null,"删除线","下划线","上标","下标","剪切","Break","查找","替换为","替换","粘贴","选择内容并粘贴","你只能编辑你自己的图片。Download this image on the host?","图片上传成功","调色板","此目录中沒有文件。","重命名","输入新名称","预览","下载","粘贴从剪贴板","你浏览器不支持直接访问的剪贴板。","复制选中内容","复制","边界半径","显示所有","应用","请填写这个字段","请输入一个网址","默认","圆圈","点","方形","搜索","查找上一个","查找下一个","插入班级名称","按Alt自定义调整大小"]
+
+/***/ }),
+
+/***/ 73895:
+/***/ (function(module) {
+
+module.exports["default"] = ["輸入一些內容","關於Jodit","Jodit Editor",null,"開發者指南","使用幫助","有關許可證的信息，請訪問我們的網站：","購買完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打開","全屏編輯","清除樣式","顏色","重做","撤銷","粗體","斜體","符號列表","編號","居中","對齊文本","左對齊","右對齊","分割線","圖片","文件","youtube/vimeo 影片","鏈接","字號","字體","格式塊","文本","標題1","標題2","標題3","標題4","引用","代碼","插入","表格","減少縮進","增加縮進","選擇特殊符號","特殊符號","格式複製","改變模式","外邊距（Margins）","top","right","bottom","left","樣式","Classes","對齊方式","居右","居中","居左","無","Src","Title","替代","Link","在新窗口打開鏈接","圖片","file","高級","圖片屬性","取消","確定","你黏貼的文本是一段html代碼，是否保留源格式","html黏貼","保留源格式","匹配目標格式","把html代碼視為普通文本","只保留文本","文本黏貼","正在黏貼 Word/Excel 的文本，是否保留源格式？","文件管理","加載list錯誤","加載folders錯誤","你確定嗎？","輸入路徑","創建路徑","type name","拖動圖片到此","拖動文件到此","或點擊","替代文字","瀏覽","上傳","背景色","文字","頂部","中間","底部","在之前插入列","在之後插入列","在之前插入行","在之後插入行","刪除表格","刪除行","刪除列","清除內容","源碼","粗體","斜體","顏色","鏈接","撤銷","重做","表格","圖片","橡皮擦","段落","字號","影片","字體","關於","打印","下劃線","上出現","增加縮進","減少縮進","全屏","收縮","分割線","無序列表","順序列表","剪切","全選","嵌入代碼","打開鏈接","編輯鏈接","No follow","取消連結","回顧","鉛筆","更新","URL",null,"水平對齊","篩選","修改時間排序","名稱排序","大小排序","新建文件夾","重置","保存","保存為","調整大小","Crop","寬","高","保存長寬比","是","不","移除","選擇","字符數: %d","單詞數: %d","全部","選擇: %s","全選","垂直對齊","拆分","垂直拆分","水平拆分","合併","添加列","添加行","刪除","邊框",null,"刪除線","下劃線","上標","下標","剪切","Pause","查找","替換為","แทนที่","黏貼","選擇內容並黏貼","你只能編輯你自己的圖片。是否下載此圖片到本地?","圖片上傳成功","調色板","此目錄中沒有文件。","重命名","輸入新名稱","預覽","下載","從剪貼板貼上","瀏覽器無法存取剪贴板。","複製已選取項目","複製","邊框圓角","顯示所有","應用","ได้โปรดกรอกช่องข้อมูลนี้","โปรดเติมที่อยู่บนเว็บ","ค่าปริยาย","วงกลม","จุด","Quadrate","ค้นหา","ค้นหาก่อนหน้านี้","ค้นหาถัดไป","ใส่ชื่อคลาส","กดอัลท์สำหรับการปรับขนาดที่กำหนดเอง"]
 
 /***/ }),
 
@@ -795,6 +921,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ 28654:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ 60819:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -915,6 +1051,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ 6316:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ 88582:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -936,6 +1082,16 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 68197:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ 60057:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -976,6 +1132,16 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 89310:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ 90176:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1061,6 +1227,4086 @@ function autobind() {
     return boundMethod.apply(void 0, arguments);
 }
 exports["default"] = autobind;
+
+
+/***/ }),
+
+/***/ 61227:
+/***/ (function() {
+
+"use strict";
+
+/*! @source http://purl.eligrey.com/github/classList.js/blob/master/classList.js */
+if ("document" in window.self) {
+    if (!("classList" in document.createElement("_"))
+        || document.createElementNS && !("classList" in document.createElementNS("http://www.w3.org/2000/svg", "g"))) {
+        (function (view) {
+            "use strict";
+            if (!('Element' in view))
+                return;
+            var classListProp = "classList", protoProp = "prototype", elemCtrProto = view.Element[protoProp], objCtr = Object, strTrim = String[protoProp].trim || function () {
+                return this.replace(/^\s+|\s+$/g, "");
+            }, arrIndexOf = Array[protoProp].indexOf || function (item) {
+                var i = 0, len = this.length;
+                for (; i < len; i++) {
+                    if (i in this && this[i] === item) {
+                        return i;
+                    }
+                }
+                return -1;
+            }, DOMEx = function (type, message) {
+                this.name = type;
+                this.code = DOMException[type];
+                this.message = message;
+            }, checkTokenAndGetIndex = function (classList, token) {
+                if (token === "") {
+                    throw new DOMEx("SYNTAX_ERR", "An invalid or illegal string was specified");
+                }
+                if (/\s/.test(token)) {
+                    throw new DOMEx("INVALID_CHARACTER_ERR", "String contains an invalid character");
+                }
+                return arrIndexOf.call(classList, token);
+            }, ClassList = function (elem) {
+                var trimmedClasses = strTrim.call(elem.getAttribute("class") || ""), classes = trimmedClasses ? trimmedClasses.split(/\s+/) : [], i = 0, len = classes.length;
+                for (; i < len; i++) {
+                    this.push(classes[i]);
+                }
+                this._updateClassName = function () {
+                    elem.setAttribute("class", this.toString());
+                };
+            }, classListProto = ClassList[protoProp] = [], classListGetter = function () {
+                return new ClassList(this);
+            };
+            DOMEx[protoProp] = Error[protoProp];
+            classListProto.item = function (i) {
+                return this[i] || null;
+            };
+            classListProto.contains = function (token) {
+                token += "";
+                return checkTokenAndGetIndex(this, token) !== -1;
+            };
+            classListProto.add = function () {
+                var tokens = arguments, i = 0, l = tokens.length, token, updated = false;
+                do {
+                    token = tokens[i] + "";
+                    if (checkTokenAndGetIndex(this, token) === -1) {
+                        this.push(token);
+                        updated = true;
+                    }
+                } while (++i < l);
+                if (updated) {
+                    this._updateClassName();
+                }
+            };
+            classListProto.remove = function () {
+                var tokens = arguments, i = 0, l = tokens.length, token, updated = false, index;
+                do {
+                    token = tokens[i] + "";
+                    index = checkTokenAndGetIndex(this, token);
+                    while (index !== -1) {
+                        this.splice(index, 1);
+                        updated = true;
+                        index = checkTokenAndGetIndex(this, token);
+                    }
+                } while (++i < l);
+                if (updated) {
+                    this._updateClassName();
+                }
+            };
+            classListProto.toggle = function (token, force) {
+                token += "";
+                var result = this.contains(token), method = result ?
+                    force !== true && "remove"
+                    :
+                        force !== false && "add";
+                if (method) {
+                    this[method](token);
+                }
+                if (force === true || force === false) {
+                    return force;
+                }
+                else {
+                    return !result;
+                }
+            };
+            classListProto.toString = function () {
+                return this.join(" ");
+            };
+            if (objCtr.defineProperty) {
+                var classListPropDesc = {
+                    get: classListGetter,
+                    enumerable: true,
+                    configurable: true
+                };
+                try {
+                    objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+                }
+                catch (ex) {
+                    if (ex.number === undefined || ex.number === -0x7FF5EC54) {
+                        classListPropDesc.enumerable = false;
+                        objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
+                    }
+                }
+            }
+            else if (objCtr[protoProp].__defineGetter__) {
+                elemCtrProto.__defineGetter__(classListProp, classListGetter);
+            }
+        }(window.self));
+    }
+    (function () {
+        "use strict";
+        var testElement = document.createElement("_");
+        testElement.classList.add("c1", "c2");
+        if (!testElement.classList.contains("c2")) {
+            var createMethod = function (method) {
+                var original = DOMTokenList.prototype[method];
+                DOMTokenList.prototype[method] = function (token) {
+                    var i, len = arguments.length;
+                    for (i = 0; i < len; i++) {
+                        token = arguments[i];
+                        original.call(this, token);
+                    }
+                };
+            };
+            createMethod('add');
+            createMethod('remove');
+        }
+        testElement.classList.toggle("c3", false);
+        if (testElement.classList.contains("c3")) {
+            var _toggle = DOMTokenList.prototype.toggle;
+            DOMTokenList.prototype.toggle = function (token, force) {
+                if (1 in arguments && !this.contains(token) === !force) {
+                    return force;
+                }
+                else {
+                    return _toggle.call(this, token);
+                }
+            };
+        }
+        testElement = null;
+    }());
+}
+
+
+/***/ }),
+
+/***/ 69220:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+__webpack_require__(22513);
+var entryUnbind = __webpack_require__(56599);
+module.exports = entryUnbind('Array', 'findIndex');
+
+
+/***/ }),
+
+/***/ 10444:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+__webpack_require__(52867);
+__webpack_require__(70057);
+var path = __webpack_require__(31116);
+module.exports = path.Array.from;
+
+
+/***/ }),
+
+/***/ 66622:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+__webpack_require__(54166);
+__webpack_require__(32044);
+__webpack_require__(95661);
+__webpack_require__(28424);
+__webpack_require__(64514);
+__webpack_require__(30733);
+__webpack_require__(40327);
+__webpack_require__(53639);
+__webpack_require__(6147);
+__webpack_require__(7290);
+__webpack_require__(95122);
+__webpack_require__(61322);
+__webpack_require__(39605);
+__webpack_require__(49341);
+__webpack_require__(28809);
+__webpack_require__(82658);
+__webpack_require__(43967);
+__webpack_require__(90217);
+__webpack_require__(73477);
+__webpack_require__(93697);
+var path = __webpack_require__(31116);
+module.exports = path.Symbol;
+
+
+/***/ }),
+
+/***/ 98061:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var isCallable = __webpack_require__(794);
+var tryToString = __webpack_require__(98418);
+var $TypeError = TypeError;
+module.exports = function (argument) {
+    if (isCallable(argument))
+        return argument;
+    throw $TypeError(tryToString(argument) + ' is not a function');
+};
+
+
+/***/ }),
+
+/***/ 75839:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var isCallable = __webpack_require__(794);
+var $String = String;
+var $TypeError = TypeError;
+module.exports = function (argument) {
+    if (typeof argument == 'object' || isCallable(argument))
+        return argument;
+    throw $TypeError("Can't set " + $String(argument) + ' as a prototype');
+};
+
+
+/***/ }),
+
+/***/ 15179:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var wellKnownSymbol = __webpack_require__(19517);
+var create = __webpack_require__(93503);
+var defineProperty = (__webpack_require__(73252).f);
+var UNSCOPABLES = wellKnownSymbol('unscopables');
+var ArrayPrototype = Array.prototype;
+if (ArrayPrototype[UNSCOPABLES] == undefined) {
+    defineProperty(ArrayPrototype, UNSCOPABLES, {
+        configurable: true,
+        value: create(null)
+    });
+}
+module.exports = function (key) {
+    ArrayPrototype[UNSCOPABLES][key] = true;
+};
+
+
+/***/ }),
+
+/***/ 52313:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var isObject = __webpack_require__(8148);
+var $String = String;
+var $TypeError = TypeError;
+module.exports = function (argument) {
+    if (isObject(argument))
+        return argument;
+    throw $TypeError($String(argument) + ' is not an object');
+};
+
+
+/***/ }),
+
+/***/ 92707:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var bind = __webpack_require__(40207);
+var call = __webpack_require__(9093);
+var toObject = __webpack_require__(68488);
+var callWithSafeIterationClosing = __webpack_require__(79665);
+var isArrayIteratorMethod = __webpack_require__(84997);
+var isConstructor = __webpack_require__(15333);
+var lengthOfArrayLike = __webpack_require__(15050);
+var createProperty = __webpack_require__(89476);
+var getIterator = __webpack_require__(27395);
+var getIteratorMethod = __webpack_require__(81058);
+var $Array = Array;
+module.exports = function from(arrayLike) {
+    var O = toObject(arrayLike);
+    var IS_CONSTRUCTOR = isConstructor(this);
+    var argumentsLength = arguments.length;
+    var mapfn = argumentsLength > 1 ? arguments[1] : undefined;
+    var mapping = mapfn !== undefined;
+    if (mapping)
+        mapfn = bind(mapfn, argumentsLength > 2 ? arguments[2] : undefined);
+    var iteratorMethod = getIteratorMethod(O);
+    var index = 0;
+    var length, result, step, iterator, next, value;
+    if (iteratorMethod && !(this === $Array && isArrayIteratorMethod(iteratorMethod))) {
+        iterator = getIterator(O, iteratorMethod);
+        next = iterator.next;
+        result = IS_CONSTRUCTOR ? new this() : [];
+        for (; !(step = call(next, iterator)).done; index++) {
+            value = mapping ? callWithSafeIterationClosing(iterator, mapfn, [step.value, index], true) : step.value;
+            createProperty(result, index, value);
+        }
+    }
+    else {
+        length = lengthOfArrayLike(O);
+        result = IS_CONSTRUCTOR ? new this(length) : $Array(length);
+        for (; length > index; index++) {
+            value = mapping ? mapfn(O[index], index) : O[index];
+            createProperty(result, index, value);
+        }
+    }
+    result.length = index;
+    return result;
+};
+
+
+/***/ }),
+
+/***/ 79327:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var toIndexedObject = __webpack_require__(98651);
+var toAbsoluteIndex = __webpack_require__(10586);
+var lengthOfArrayLike = __webpack_require__(15050);
+var createMethod = function (IS_INCLUDES) {
+    return function ($this, el, fromIndex) {
+        var O = toIndexedObject($this);
+        var length = lengthOfArrayLike(O);
+        var index = toAbsoluteIndex(fromIndex, length);
+        var value;
+        if (IS_INCLUDES && el != el)
+            while (length > index) {
+                value = O[index++];
+                if (value != value)
+                    return true;
+            }
+        else
+            for (; length > index; index++) {
+                if ((IS_INCLUDES || index in O) && O[index] === el)
+                    return IS_INCLUDES || index || 0;
+            }
+        return !IS_INCLUDES && -1;
+    };
+};
+module.exports = {
+    includes: createMethod(true),
+    indexOf: createMethod(false)
+};
+
+
+/***/ }),
+
+/***/ 56881:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var bind = __webpack_require__(40207);
+var uncurryThis = __webpack_require__(90838);
+var IndexedObject = __webpack_require__(25049);
+var toObject = __webpack_require__(68488);
+var lengthOfArrayLike = __webpack_require__(15050);
+var arraySpeciesCreate = __webpack_require__(6429);
+var push = uncurryThis([].push);
+var createMethod = function (TYPE) {
+    var IS_MAP = TYPE == 1;
+    var IS_FILTER = TYPE == 2;
+    var IS_SOME = TYPE == 3;
+    var IS_EVERY = TYPE == 4;
+    var IS_FIND_INDEX = TYPE == 6;
+    var IS_FILTER_REJECT = TYPE == 7;
+    var NO_HOLES = TYPE == 5 || IS_FIND_INDEX;
+    return function ($this, callbackfn, that, specificCreate) {
+        var O = toObject($this);
+        var self = IndexedObject(O);
+        var boundFunction = bind(callbackfn, that);
+        var length = lengthOfArrayLike(self);
+        var index = 0;
+        var create = specificCreate || arraySpeciesCreate;
+        var target = IS_MAP ? create($this, length) : IS_FILTER || IS_FILTER_REJECT ? create($this, 0) : undefined;
+        var value, result;
+        for (; length > index; index++)
+            if (NO_HOLES || index in self) {
+                value = self[index];
+                result = boundFunction(value, index, O);
+                if (TYPE) {
+                    if (IS_MAP)
+                        target[index] = result;
+                    else if (result)
+                        switch (TYPE) {
+                            case 3: return true;
+                            case 5: return value;
+                            case 6: return index;
+                            case 2: push(target, value);
+                        }
+                    else
+                        switch (TYPE) {
+                            case 4: return false;
+                            case 7: push(target, value);
+                        }
+                }
+            }
+        return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : target;
+    };
+};
+module.exports = {
+    forEach: createMethod(0),
+    map: createMethod(1),
+    filter: createMethod(2),
+    some: createMethod(3),
+    every: createMethod(4),
+    find: createMethod(5),
+    findIndex: createMethod(6),
+    filterReject: createMethod(7)
+};
+
+
+/***/ }),
+
+/***/ 63833:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fails = __webpack_require__(75834);
+var wellKnownSymbol = __webpack_require__(19517);
+var V8_VERSION = __webpack_require__(65190);
+var SPECIES = wellKnownSymbol('species');
+module.exports = function (METHOD_NAME) {
+    return V8_VERSION >= 51 || !fails(function () {
+        var array = [];
+        var constructor = array.constructor = {};
+        constructor[SPECIES] = function () {
+            return { foo: 1 };
+        };
+        return array[METHOD_NAME](Boolean).foo !== 1;
+    });
+};
+
+
+/***/ }),
+
+/***/ 57652:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var toAbsoluteIndex = __webpack_require__(10586);
+var lengthOfArrayLike = __webpack_require__(15050);
+var createProperty = __webpack_require__(89476);
+var $Array = Array;
+var max = Math.max;
+module.exports = function (O, start, end) {
+    var length = lengthOfArrayLike(O);
+    var k = toAbsoluteIndex(start, length);
+    var fin = toAbsoluteIndex(end === undefined ? length : end, length);
+    var result = $Array(max(fin - k, 0));
+    for (var n = 0; k < fin; k++, n++)
+        createProperty(result, n, O[k]);
+    result.length = n;
+    return result;
+};
+
+
+/***/ }),
+
+/***/ 54832:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+module.exports = uncurryThis([].slice);
+
+
+/***/ }),
+
+/***/ 22506:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var isArray = __webpack_require__(36222);
+var isConstructor = __webpack_require__(15333);
+var isObject = __webpack_require__(8148);
+var wellKnownSymbol = __webpack_require__(19517);
+var SPECIES = wellKnownSymbol('species');
+var $Array = Array;
+module.exports = function (originalArray) {
+    var C;
+    if (isArray(originalArray)) {
+        C = originalArray.constructor;
+        if (isConstructor(C) && (C === $Array || isArray(C.prototype)))
+            C = undefined;
+        else if (isObject(C)) {
+            C = C[SPECIES];
+            if (C === null)
+                C = undefined;
+        }
+    }
+    return C === undefined ? $Array : C;
+};
+
+
+/***/ }),
+
+/***/ 6429:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var arraySpeciesConstructor = __webpack_require__(22506);
+module.exports = function (originalArray, length) {
+    return new (arraySpeciesConstructor(originalArray))(length === 0 ? 0 : length);
+};
+
+
+/***/ }),
+
+/***/ 79665:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var anObject = __webpack_require__(52313);
+var iteratorClose = __webpack_require__(11274);
+module.exports = function (iterator, fn, value, ENTRIES) {
+    try {
+        return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
+    }
+    catch (error) {
+        iteratorClose(iterator, 'throw', error);
+    }
+};
+
+
+/***/ }),
+
+/***/ 7581:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var wellKnownSymbol = __webpack_require__(19517);
+var ITERATOR = wellKnownSymbol('iterator');
+var SAFE_CLOSING = false;
+try {
+    var called = 0;
+    var iteratorWithReturn = {
+        next: function () {
+            return { done: !!called++ };
+        },
+        'return': function () {
+            SAFE_CLOSING = true;
+        }
+    };
+    iteratorWithReturn[ITERATOR] = function () {
+        return this;
+    };
+    Array.from(iteratorWithReturn, function () { throw 2; });
+}
+catch (error) { }
+module.exports = function (exec, SKIP_CLOSING) {
+    if (!SKIP_CLOSING && !SAFE_CLOSING)
+        return false;
+    var ITERATION_SUPPORT = false;
+    try {
+        var object = {};
+        object[ITERATOR] = function () {
+            return {
+                next: function () {
+                    return { done: ITERATION_SUPPORT = true };
+                }
+            };
+        };
+        exec(object);
+    }
+    catch (error) { }
+    return ITERATION_SUPPORT;
+};
+
+
+/***/ }),
+
+/***/ 6285:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+var toString = uncurryThis({}.toString);
+var stringSlice = uncurryThis(''.slice);
+module.exports = function (it) {
+    return stringSlice(toString(it), 8, -1);
+};
+
+
+/***/ }),
+
+/***/ 8652:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__(6424);
+var isCallable = __webpack_require__(794);
+var classofRaw = __webpack_require__(6285);
+var wellKnownSymbol = __webpack_require__(19517);
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+var $Object = Object;
+var CORRECT_ARGUMENTS = classofRaw(function () { return arguments; }()) == 'Arguments';
+var tryGet = function (it, key) {
+    try {
+        return it[key];
+    }
+    catch (error) { }
+};
+module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
+    var O, tag, result;
+    return it === undefined ? 'Undefined' : it === null ? 'Null'
+        : typeof (tag = tryGet(O = $Object(it), TO_STRING_TAG)) == 'string' ? tag
+            : CORRECT_ARGUMENTS ? classofRaw(O)
+                : (result = classofRaw(O)) == 'Object' && isCallable(O.callee) ? 'Arguments' : result;
+};
+
+
+/***/ }),
+
+/***/ 58392:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var hasOwn = __webpack_require__(14434);
+var ownKeys = __webpack_require__(86671);
+var getOwnPropertyDescriptorModule = __webpack_require__(36999);
+var definePropertyModule = __webpack_require__(73252);
+module.exports = function (target, source, exceptions) {
+    var keys = ownKeys(source);
+    var defineProperty = definePropertyModule.f;
+    var getOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        if (!hasOwn(target, key) && !(exceptions && hasOwn(exceptions, key))) {
+            defineProperty(target, key, getOwnPropertyDescriptor(source, key));
+        }
+    }
+};
+
+
+/***/ }),
+
+/***/ 27259:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fails = __webpack_require__(75834);
+module.exports = !fails(function () {
+    function F() { }
+    F.prototype.constructor = null;
+    return Object.getPrototypeOf(new F()) !== F.prototype;
+});
+
+
+/***/ }),
+
+/***/ 14899:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var IteratorPrototype = (__webpack_require__(77831).IteratorPrototype);
+var create = __webpack_require__(93503);
+var createPropertyDescriptor = __webpack_require__(32500);
+var setToStringTag = __webpack_require__(44532);
+var Iterators = __webpack_require__(84922);
+var returnThis = function () { return this; };
+module.exports = function (IteratorConstructor, NAME, next, ENUMERABLE_NEXT) {
+    var TO_STRING_TAG = NAME + ' Iterator';
+    IteratorConstructor.prototype = create(IteratorPrototype, { next: createPropertyDescriptor(+!ENUMERABLE_NEXT, next) });
+    setToStringTag(IteratorConstructor, TO_STRING_TAG, false, true);
+    Iterators[TO_STRING_TAG] = returnThis;
+    return IteratorConstructor;
+};
+
+
+/***/ }),
+
+/***/ 45840:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(13873);
+var definePropertyModule = __webpack_require__(73252);
+var createPropertyDescriptor = __webpack_require__(32500);
+module.exports = DESCRIPTORS ? function (object, key, value) {
+    return definePropertyModule.f(object, key, createPropertyDescriptor(1, value));
+} : function (object, key, value) {
+    object[key] = value;
+    return object;
+};
+
+
+/***/ }),
+
+/***/ 32500:
+/***/ (function(module) {
+
+"use strict";
+
+module.exports = function (bitmap, value) {
+    return {
+        enumerable: !(bitmap & 1),
+        configurable: !(bitmap & 2),
+        writable: !(bitmap & 4),
+        value: value
+    };
+};
+
+
+/***/ }),
+
+/***/ 89476:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var toPropertyKey = __webpack_require__(43836);
+var definePropertyModule = __webpack_require__(73252);
+var createPropertyDescriptor = __webpack_require__(32500);
+module.exports = function (object, key, value) {
+    var propertyKey = toPropertyKey(key);
+    if (propertyKey in object)
+        definePropertyModule.f(object, propertyKey, createPropertyDescriptor(0, value));
+    else
+        object[propertyKey] = value;
+};
+
+
+/***/ }),
+
+/***/ 35065:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var isCallable = __webpack_require__(794);
+var definePropertyModule = __webpack_require__(73252);
+var makeBuiltIn = __webpack_require__(40846);
+var defineGlobalProperty = __webpack_require__(25379);
+module.exports = function (O, key, value, options) {
+    if (!options)
+        options = {};
+    var simple = options.enumerable;
+    var name = options.name !== undefined ? options.name : key;
+    if (isCallable(value))
+        makeBuiltIn(value, name, options);
+    if (options.global) {
+        if (simple)
+            O[key] = value;
+        else
+            defineGlobalProperty(key, value);
+    }
+    else {
+        try {
+            if (!options.unsafe)
+                delete O[key];
+            else if (O[key])
+                simple = true;
+        }
+        catch (error) { }
+        if (simple)
+            O[key] = value;
+        else
+            definePropertyModule.f(O, key, {
+                value: value,
+                enumerable: false,
+                configurable: !options.nonConfigurable,
+                writable: !options.nonWritable
+            });
+    }
+    return O;
+};
+
+
+/***/ }),
+
+/***/ 25379:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(37042);
+var defineProperty = Object.defineProperty;
+module.exports = function (key, value) {
+    try {
+        defineProperty(global, key, { value: value, configurable: true, writable: true });
+    }
+    catch (error) {
+        global[key] = value;
+    }
+    return value;
+};
+
+
+/***/ }),
+
+/***/ 73514:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(50791);
+var call = __webpack_require__(9093);
+var IS_PURE = __webpack_require__(70852);
+var FunctionName = __webpack_require__(84521);
+var isCallable = __webpack_require__(794);
+var createIteratorConstructor = __webpack_require__(14899);
+var getPrototypeOf = __webpack_require__(1074);
+var setPrototypeOf = __webpack_require__(482);
+var setToStringTag = __webpack_require__(44532);
+var createNonEnumerableProperty = __webpack_require__(45840);
+var defineBuiltIn = __webpack_require__(35065);
+var wellKnownSymbol = __webpack_require__(19517);
+var Iterators = __webpack_require__(84922);
+var IteratorsCore = __webpack_require__(77831);
+var PROPER_FUNCTION_NAME = FunctionName.PROPER;
+var CONFIGURABLE_FUNCTION_NAME = FunctionName.CONFIGURABLE;
+var IteratorPrototype = IteratorsCore.IteratorPrototype;
+var BUGGY_SAFARI_ITERATORS = IteratorsCore.BUGGY_SAFARI_ITERATORS;
+var ITERATOR = wellKnownSymbol('iterator');
+var KEYS = 'keys';
+var VALUES = 'values';
+var ENTRIES = 'entries';
+var returnThis = function () { return this; };
+module.exports = function (Iterable, NAME, IteratorConstructor, next, DEFAULT, IS_SET, FORCED) {
+    createIteratorConstructor(IteratorConstructor, NAME, next);
+    var getIterationMethod = function (KIND) {
+        if (KIND === DEFAULT && defaultIterator)
+            return defaultIterator;
+        if (!BUGGY_SAFARI_ITERATORS && KIND in IterablePrototype)
+            return IterablePrototype[KIND];
+        switch (KIND) {
+            case KEYS: return function keys() { return new IteratorConstructor(this, KIND); };
+            case VALUES: return function values() { return new IteratorConstructor(this, KIND); };
+            case ENTRIES: return function entries() { return new IteratorConstructor(this, KIND); };
+        }
+        return function () { return new IteratorConstructor(this); };
+    };
+    var TO_STRING_TAG = NAME + ' Iterator';
+    var INCORRECT_VALUES_NAME = false;
+    var IterablePrototype = Iterable.prototype;
+    var nativeIterator = IterablePrototype[ITERATOR]
+        || IterablePrototype['@@iterator']
+        || DEFAULT && IterablePrototype[DEFAULT];
+    var defaultIterator = !BUGGY_SAFARI_ITERATORS && nativeIterator || getIterationMethod(DEFAULT);
+    var anyNativeIterator = NAME == 'Array' ? IterablePrototype.entries || nativeIterator : nativeIterator;
+    var CurrentIteratorPrototype, methods, KEY;
+    if (anyNativeIterator) {
+        CurrentIteratorPrototype = getPrototypeOf(anyNativeIterator.call(new Iterable()));
+        if (CurrentIteratorPrototype !== Object.prototype && CurrentIteratorPrototype.next) {
+            if (!IS_PURE && getPrototypeOf(CurrentIteratorPrototype) !== IteratorPrototype) {
+                if (setPrototypeOf) {
+                    setPrototypeOf(CurrentIteratorPrototype, IteratorPrototype);
+                }
+                else if (!isCallable(CurrentIteratorPrototype[ITERATOR])) {
+                    defineBuiltIn(CurrentIteratorPrototype, ITERATOR, returnThis);
+                }
+            }
+            setToStringTag(CurrentIteratorPrototype, TO_STRING_TAG, true, true);
+            if (IS_PURE)
+                Iterators[TO_STRING_TAG] = returnThis;
+        }
+    }
+    if (PROPER_FUNCTION_NAME && DEFAULT == VALUES && nativeIterator && nativeIterator.name !== VALUES) {
+        if (!IS_PURE && CONFIGURABLE_FUNCTION_NAME) {
+            createNonEnumerableProperty(IterablePrototype, 'name', VALUES);
+        }
+        else {
+            INCORRECT_VALUES_NAME = true;
+            defaultIterator = function values() { return call(nativeIterator, this); };
+        }
+    }
+    if (DEFAULT) {
+        methods = {
+            values: getIterationMethod(VALUES),
+            keys: IS_SET ? defaultIterator : getIterationMethod(KEYS),
+            entries: getIterationMethod(ENTRIES)
+        };
+        if (FORCED)
+            for (KEY in methods) {
+                if (BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME || !(KEY in IterablePrototype)) {
+                    defineBuiltIn(IterablePrototype, KEY, methods[KEY]);
+                }
+            }
+        else
+            $({ target: NAME, proto: true, forced: BUGGY_SAFARI_ITERATORS || INCORRECT_VALUES_NAME }, methods);
+    }
+    if ((!IS_PURE || FORCED) && IterablePrototype[ITERATOR] !== defaultIterator) {
+        defineBuiltIn(IterablePrototype, ITERATOR, defaultIterator, { name: DEFAULT });
+    }
+    Iterators[NAME] = defaultIterator;
+    return methods;
+};
+
+
+/***/ }),
+
+/***/ 24637:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var path = __webpack_require__(31116);
+var hasOwn = __webpack_require__(14434);
+var wrappedWellKnownSymbolModule = __webpack_require__(96767);
+var defineProperty = (__webpack_require__(73252).f);
+module.exports = function (NAME) {
+    var Symbol = path.Symbol || (path.Symbol = {});
+    if (!hasOwn(Symbol, NAME))
+        defineProperty(Symbol, NAME, {
+            value: wrappedWellKnownSymbolModule.f(NAME)
+        });
+};
+
+
+/***/ }),
+
+/***/ 13873:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fails = __webpack_require__(75834);
+module.exports = !fails(function () {
+    return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
+});
+
+
+/***/ }),
+
+/***/ 15192:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(37042);
+var isObject = __webpack_require__(8148);
+var document = global.document;
+var EXISTS = isObject(document) && isObject(document.createElement);
+module.exports = function (it) {
+    return EXISTS ? document.createElement(it) : {};
+};
+
+
+/***/ }),
+
+/***/ 39505:
+/***/ (function(module) {
+
+"use strict";
+
+var $TypeError = TypeError;
+var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
+module.exports = function (it) {
+    if (it > MAX_SAFE_INTEGER)
+        throw $TypeError('Maximum allowed index exceeded');
+    return it;
+};
+
+
+/***/ }),
+
+/***/ 21473:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var getBuiltIn = __webpack_require__(98945);
+module.exports = getBuiltIn('navigator', 'userAgent') || '';
+
+
+/***/ }),
+
+/***/ 65190:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(37042);
+var userAgent = __webpack_require__(21473);
+var process = global.process;
+var Deno = global.Deno;
+var versions = process && process.versions || Deno && Deno.version;
+var v8 = versions && versions.v8;
+var match, version;
+if (v8) {
+    match = v8.split('.');
+    version = match[0] > 0 && match[0] < 4 ? 1 : +(match[0] + match[1]);
+}
+if (!version && userAgent) {
+    match = userAgent.match(/Edge\/(\d+)/);
+    if (!match || match[1] >= 74) {
+        match = userAgent.match(/Chrome\/(\d+)/);
+        if (match)
+            version = +match[1];
+    }
+}
+module.exports = version;
+
+
+/***/ }),
+
+/***/ 56599:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(37042);
+var uncurryThis = __webpack_require__(90838);
+module.exports = function (CONSTRUCTOR, METHOD) {
+    return uncurryThis(global[CONSTRUCTOR].prototype[METHOD]);
+};
+
+
+/***/ }),
+
+/***/ 64456:
+/***/ (function(module) {
+
+"use strict";
+
+module.exports = [
+    'constructor',
+    'hasOwnProperty',
+    'isPrototypeOf',
+    'propertyIsEnumerable',
+    'toLocaleString',
+    'toString',
+    'valueOf'
+];
+
+
+/***/ }),
+
+/***/ 50791:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(37042);
+var getOwnPropertyDescriptor = (__webpack_require__(36999).f);
+var createNonEnumerableProperty = __webpack_require__(45840);
+var defineBuiltIn = __webpack_require__(35065);
+var defineGlobalProperty = __webpack_require__(25379);
+var copyConstructorProperties = __webpack_require__(58392);
+var isForced = __webpack_require__(56930);
+module.exports = function (options, source) {
+    var TARGET = options.target;
+    var GLOBAL = options.global;
+    var STATIC = options.stat;
+    var FORCED, target, key, targetProperty, sourceProperty, descriptor;
+    if (GLOBAL) {
+        target = global;
+    }
+    else if (STATIC) {
+        target = global[TARGET] || defineGlobalProperty(TARGET, {});
+    }
+    else {
+        target = (global[TARGET] || {}).prototype;
+    }
+    if (target)
+        for (key in source) {
+            sourceProperty = source[key];
+            if (options.dontCallGetSet) {
+                descriptor = getOwnPropertyDescriptor(target, key);
+                targetProperty = descriptor && descriptor.value;
+            }
+            else
+                targetProperty = target[key];
+            FORCED = isForced(GLOBAL ? key : TARGET + (STATIC ? '.' : '#') + key, options.forced);
+            if (!FORCED && targetProperty !== undefined) {
+                if (typeof sourceProperty == typeof targetProperty)
+                    continue;
+                copyConstructorProperties(sourceProperty, targetProperty);
+            }
+            if (options.sham || (targetProperty && targetProperty.sham)) {
+                createNonEnumerableProperty(sourceProperty, 'sham', true);
+            }
+            defineBuiltIn(target, key, sourceProperty, options);
+        }
+};
+
+
+/***/ }),
+
+/***/ 75834:
+/***/ (function(module) {
+
+"use strict";
+
+module.exports = function (exec) {
+    try {
+        return !!exec();
+    }
+    catch (error) {
+        return true;
+    }
+};
+
+
+/***/ }),
+
+/***/ 55101:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var NATIVE_BIND = __webpack_require__(32610);
+var FunctionPrototype = Function.prototype;
+var apply = FunctionPrototype.apply;
+var call = FunctionPrototype.call;
+module.exports = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND ? call.bind(apply) : function () {
+    return call.apply(apply, arguments);
+});
+
+
+/***/ }),
+
+/***/ 40207:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+var aCallable = __webpack_require__(98061);
+var NATIVE_BIND = __webpack_require__(32610);
+var bind = uncurryThis(uncurryThis.bind);
+module.exports = function (fn, that) {
+    aCallable(fn);
+    return that === undefined ? fn : NATIVE_BIND ? bind(fn, that) : function () {
+        return fn.apply(that, arguments);
+    };
+};
+
+
+/***/ }),
+
+/***/ 32610:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fails = __webpack_require__(75834);
+module.exports = !fails(function () {
+    var test = (function () { }).bind();
+    return typeof test != 'function' || test.hasOwnProperty('prototype');
+});
+
+
+/***/ }),
+
+/***/ 9093:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var NATIVE_BIND = __webpack_require__(32610);
+var call = Function.prototype.call;
+module.exports = NATIVE_BIND ? call.bind(call) : function () {
+    return call.apply(call, arguments);
+};
+
+
+/***/ }),
+
+/***/ 84521:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(13873);
+var hasOwn = __webpack_require__(14434);
+var FunctionPrototype = Function.prototype;
+var getDescriptor = DESCRIPTORS && Object.getOwnPropertyDescriptor;
+var EXISTS = hasOwn(FunctionPrototype, 'name');
+var PROPER = EXISTS && (function something() { }).name === 'something';
+var CONFIGURABLE = EXISTS && (!DESCRIPTORS || (DESCRIPTORS && getDescriptor(FunctionPrototype, 'name').configurable));
+module.exports = {
+    EXISTS: EXISTS,
+    PROPER: PROPER,
+    CONFIGURABLE: CONFIGURABLE
+};
+
+
+/***/ }),
+
+/***/ 90838:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var NATIVE_BIND = __webpack_require__(32610);
+var FunctionPrototype = Function.prototype;
+var bind = FunctionPrototype.bind;
+var call = FunctionPrototype.call;
+var uncurryThis = NATIVE_BIND && bind.bind(call, call);
+module.exports = NATIVE_BIND ? function (fn) {
+    return fn && uncurryThis(fn);
+} : function (fn) {
+    return fn && function () {
+        return call.apply(fn, arguments);
+    };
+};
+
+
+/***/ }),
+
+/***/ 98945:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(37042);
+var isCallable = __webpack_require__(794);
+var aFunction = function (argument) {
+    return isCallable(argument) ? argument : undefined;
+};
+module.exports = function (namespace, method) {
+    return arguments.length < 2 ? aFunction(global[namespace]) : global[namespace] && global[namespace][method];
+};
+
+
+/***/ }),
+
+/***/ 81058:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var classof = __webpack_require__(8652);
+var getMethod = __webpack_require__(20156);
+var Iterators = __webpack_require__(84922);
+var wellKnownSymbol = __webpack_require__(19517);
+var ITERATOR = wellKnownSymbol('iterator');
+module.exports = function (it) {
+    if (it != undefined)
+        return getMethod(it, ITERATOR)
+            || getMethod(it, '@@iterator')
+            || Iterators[classof(it)];
+};
+
+
+/***/ }),
+
+/***/ 27395:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var call = __webpack_require__(9093);
+var aCallable = __webpack_require__(98061);
+var anObject = __webpack_require__(52313);
+var tryToString = __webpack_require__(98418);
+var getIteratorMethod = __webpack_require__(81058);
+var $TypeError = TypeError;
+module.exports = function (argument, usingIterator) {
+    var iteratorMethod = arguments.length < 2 ? getIteratorMethod(argument) : usingIterator;
+    if (aCallable(iteratorMethod))
+        return anObject(call(iteratorMethod, argument));
+    throw $TypeError(tryToString(argument) + ' is not iterable');
+};
+
+
+/***/ }),
+
+/***/ 20156:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var aCallable = __webpack_require__(98061);
+module.exports = function (V, P) {
+    var func = V[P];
+    return func == null ? undefined : aCallable(func);
+};
+
+
+/***/ }),
+
+/***/ 37042:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var check = function (it) {
+    return it && it.Math == Math && it;
+};
+module.exports =
+    check(typeof globalThis == 'object' && globalThis) ||
+        check(typeof window == 'object' && window) ||
+        check(typeof self == 'object' && self) ||
+        check(typeof __webpack_require__.g == 'object' && __webpack_require__.g) ||
+        (function () { return this; })() || Function('return this')();
+
+
+/***/ }),
+
+/***/ 14434:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+var toObject = __webpack_require__(68488);
+var hasOwnProperty = uncurryThis({}.hasOwnProperty);
+module.exports = Object.hasOwn || function hasOwn(it, key) {
+    return hasOwnProperty(toObject(it), key);
+};
+
+
+/***/ }),
+
+/***/ 48889:
+/***/ (function(module) {
+
+"use strict";
+
+module.exports = {};
+
+
+/***/ }),
+
+/***/ 36249:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var getBuiltIn = __webpack_require__(98945);
+module.exports = getBuiltIn('document', 'documentElement');
+
+
+/***/ }),
+
+/***/ 12816:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(13873);
+var fails = __webpack_require__(75834);
+var createElement = __webpack_require__(15192);
+module.exports = !DESCRIPTORS && !fails(function () {
+    return Object.defineProperty(createElement('div'), 'a', {
+        get: function () { return 7; }
+    }).a != 7;
+});
+
+
+/***/ }),
+
+/***/ 25049:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+var fails = __webpack_require__(75834);
+var classof = __webpack_require__(6285);
+var $Object = Object;
+var split = uncurryThis(''.split);
+module.exports = fails(function () {
+    return !$Object('z').propertyIsEnumerable(0);
+}) ? function (it) {
+    return classof(it) == 'String' ? split(it, '') : $Object(it);
+} : $Object;
+
+
+/***/ }),
+
+/***/ 92355:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+var isCallable = __webpack_require__(794);
+var store = __webpack_require__(45752);
+var functionToString = uncurryThis(Function.toString);
+if (!isCallable(store.inspectSource)) {
+    store.inspectSource = function (it) {
+        return functionToString(it);
+    };
+}
+module.exports = store.inspectSource;
+
+
+/***/ }),
+
+/***/ 56113:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var NATIVE_WEAK_MAP = __webpack_require__(94698);
+var global = __webpack_require__(37042);
+var uncurryThis = __webpack_require__(90838);
+var isObject = __webpack_require__(8148);
+var createNonEnumerableProperty = __webpack_require__(45840);
+var hasOwn = __webpack_require__(14434);
+var shared = __webpack_require__(45752);
+var sharedKey = __webpack_require__(85475);
+var hiddenKeys = __webpack_require__(48889);
+var OBJECT_ALREADY_INITIALIZED = 'Object already initialized';
+var TypeError = global.TypeError;
+var WeakMap = global.WeakMap;
+var set, get, has;
+var enforce = function (it) {
+    return has(it) ? get(it) : set(it, {});
+};
+var getterFor = function (TYPE) {
+    return function (it) {
+        var state;
+        if (!isObject(it) || (state = get(it)).type !== TYPE) {
+            throw TypeError('Incompatible receiver, ' + TYPE + ' required');
+        }
+        return state;
+    };
+};
+if (NATIVE_WEAK_MAP || shared.state) {
+    var store = shared.state || (shared.state = new WeakMap());
+    var wmget = uncurryThis(store.get);
+    var wmhas = uncurryThis(store.has);
+    var wmset = uncurryThis(store.set);
+    set = function (it, metadata) {
+        if (wmhas(store, it))
+            throw new TypeError(OBJECT_ALREADY_INITIALIZED);
+        metadata.facade = it;
+        wmset(store, it, metadata);
+        return metadata;
+    };
+    get = function (it) {
+        return wmget(store, it) || {};
+    };
+    has = function (it) {
+        return wmhas(store, it);
+    };
+}
+else {
+    var STATE = sharedKey('state');
+    hiddenKeys[STATE] = true;
+    set = function (it, metadata) {
+        if (hasOwn(it, STATE))
+            throw new TypeError(OBJECT_ALREADY_INITIALIZED);
+        metadata.facade = it;
+        createNonEnumerableProperty(it, STATE, metadata);
+        return metadata;
+    };
+    get = function (it) {
+        return hasOwn(it, STATE) ? it[STATE] : {};
+    };
+    has = function (it) {
+        return hasOwn(it, STATE);
+    };
+}
+module.exports = {
+    set: set,
+    get: get,
+    has: has,
+    enforce: enforce,
+    getterFor: getterFor
+};
+
+
+/***/ }),
+
+/***/ 84997:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var wellKnownSymbol = __webpack_require__(19517);
+var Iterators = __webpack_require__(84922);
+var ITERATOR = wellKnownSymbol('iterator');
+var ArrayPrototype = Array.prototype;
+module.exports = function (it) {
+    return it !== undefined && (Iterators.Array === it || ArrayPrototype[ITERATOR] === it);
+};
+
+
+/***/ }),
+
+/***/ 36222:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var classof = __webpack_require__(6285);
+module.exports = Array.isArray || function isArray(argument) {
+    return classof(argument) == 'Array';
+};
+
+
+/***/ }),
+
+/***/ 794:
+/***/ (function(module) {
+
+"use strict";
+
+module.exports = function (argument) {
+    return typeof argument == 'function';
+};
+
+
+/***/ }),
+
+/***/ 15333:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+var fails = __webpack_require__(75834);
+var isCallable = __webpack_require__(794);
+var classof = __webpack_require__(8652);
+var getBuiltIn = __webpack_require__(98945);
+var inspectSource = __webpack_require__(92355);
+var noop = function () { };
+var empty = [];
+var construct = getBuiltIn('Reflect', 'construct');
+var constructorRegExp = /^\s*(?:class|function)\b/;
+var exec = uncurryThis(constructorRegExp.exec);
+var INCORRECT_TO_STRING = !constructorRegExp.exec(noop);
+var isConstructorModern = function isConstructor(argument) {
+    if (!isCallable(argument))
+        return false;
+    try {
+        construct(noop, empty, argument);
+        return true;
+    }
+    catch (error) {
+        return false;
+    }
+};
+var isConstructorLegacy = function isConstructor(argument) {
+    if (!isCallable(argument))
+        return false;
+    switch (classof(argument)) {
+        case 'AsyncFunction':
+        case 'GeneratorFunction':
+        case 'AsyncGeneratorFunction': return false;
+    }
+    try {
+        return INCORRECT_TO_STRING || !!exec(constructorRegExp, inspectSource(argument));
+    }
+    catch (error) {
+        return true;
+    }
+};
+isConstructorLegacy.sham = true;
+module.exports = !construct || fails(function () {
+    var called;
+    return isConstructorModern(isConstructorModern.call)
+        || !isConstructorModern(Object)
+        || !isConstructorModern(function () { called = true; })
+        || called;
+}) ? isConstructorLegacy : isConstructorModern;
+
+
+/***/ }),
+
+/***/ 56930:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fails = __webpack_require__(75834);
+var isCallable = __webpack_require__(794);
+var replacement = /#|\.prototype\./;
+var isForced = function (feature, detection) {
+    var value = data[normalize(feature)];
+    return value == POLYFILL ? true
+        : value == NATIVE ? false
+            : isCallable(detection) ? fails(detection)
+                : !!detection;
+};
+var normalize = isForced.normalize = function (string) {
+    return String(string).replace(replacement, '.').toLowerCase();
+};
+var data = isForced.data = {};
+var NATIVE = isForced.NATIVE = 'N';
+var POLYFILL = isForced.POLYFILL = 'P';
+module.exports = isForced;
+
+
+/***/ }),
+
+/***/ 8148:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var isCallable = __webpack_require__(794);
+module.exports = function (it) {
+    return typeof it == 'object' ? it !== null : isCallable(it);
+};
+
+
+/***/ }),
+
+/***/ 70852:
+/***/ (function(module) {
+
+"use strict";
+
+module.exports = false;
+
+
+/***/ }),
+
+/***/ 88253:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var getBuiltIn = __webpack_require__(98945);
+var isCallable = __webpack_require__(794);
+var isPrototypeOf = __webpack_require__(54671);
+var USE_SYMBOL_AS_UID = __webpack_require__(57982);
+var $Object = Object;
+module.exports = USE_SYMBOL_AS_UID ? function (it) {
+    return typeof it == 'symbol';
+} : function (it) {
+    var $Symbol = getBuiltIn('Symbol');
+    return isCallable($Symbol) && isPrototypeOf($Symbol.prototype, $Object(it));
+};
+
+
+/***/ }),
+
+/***/ 11274:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var call = __webpack_require__(9093);
+var anObject = __webpack_require__(52313);
+var getMethod = __webpack_require__(20156);
+module.exports = function (iterator, kind, value) {
+    var innerResult, innerError;
+    anObject(iterator);
+    try {
+        innerResult = getMethod(iterator, 'return');
+        if (!innerResult) {
+            if (kind === 'throw')
+                throw value;
+            return value;
+        }
+        innerResult = call(innerResult, iterator);
+    }
+    catch (error) {
+        innerError = true;
+        innerResult = error;
+    }
+    if (kind === 'throw')
+        throw value;
+    if (innerError)
+        throw innerResult;
+    anObject(innerResult);
+    return value;
+};
+
+
+/***/ }),
+
+/***/ 77831:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fails = __webpack_require__(75834);
+var isCallable = __webpack_require__(794);
+var create = __webpack_require__(93503);
+var getPrototypeOf = __webpack_require__(1074);
+var defineBuiltIn = __webpack_require__(35065);
+var wellKnownSymbol = __webpack_require__(19517);
+var IS_PURE = __webpack_require__(70852);
+var ITERATOR = wellKnownSymbol('iterator');
+var BUGGY_SAFARI_ITERATORS = false;
+var IteratorPrototype, PrototypeOfArrayIteratorPrototype, arrayIterator;
+if ([].keys) {
+    arrayIterator = [].keys();
+    if (!('next' in arrayIterator))
+        BUGGY_SAFARI_ITERATORS = true;
+    else {
+        PrototypeOfArrayIteratorPrototype = getPrototypeOf(getPrototypeOf(arrayIterator));
+        if (PrototypeOfArrayIteratorPrototype !== Object.prototype)
+            IteratorPrototype = PrototypeOfArrayIteratorPrototype;
+    }
+}
+var NEW_ITERATOR_PROTOTYPE = IteratorPrototype == undefined || fails(function () {
+    var test = {};
+    return IteratorPrototype[ITERATOR].call(test) !== test;
+});
+if (NEW_ITERATOR_PROTOTYPE)
+    IteratorPrototype = {};
+else if (IS_PURE)
+    IteratorPrototype = create(IteratorPrototype);
+if (!isCallable(IteratorPrototype[ITERATOR])) {
+    defineBuiltIn(IteratorPrototype, ITERATOR, function () {
+        return this;
+    });
+}
+module.exports = {
+    IteratorPrototype: IteratorPrototype,
+    BUGGY_SAFARI_ITERATORS: BUGGY_SAFARI_ITERATORS
+};
+
+
+/***/ }),
+
+/***/ 84922:
+/***/ (function(module) {
+
+"use strict";
+
+module.exports = {};
+
+
+/***/ }),
+
+/***/ 15050:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var toLength = __webpack_require__(24431);
+module.exports = function (obj) {
+    return toLength(obj.length);
+};
+
+
+/***/ }),
+
+/***/ 40846:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var fails = __webpack_require__(75834);
+var isCallable = __webpack_require__(794);
+var hasOwn = __webpack_require__(14434);
+var DESCRIPTORS = __webpack_require__(13873);
+var CONFIGURABLE_FUNCTION_NAME = (__webpack_require__(84521).CONFIGURABLE);
+var inspectSource = __webpack_require__(92355);
+var InternalStateModule = __webpack_require__(56113);
+var enforceInternalState = InternalStateModule.enforce;
+var getInternalState = InternalStateModule.get;
+var defineProperty = Object.defineProperty;
+var CONFIGURABLE_LENGTH = DESCRIPTORS && !fails(function () {
+    return defineProperty(function () { }, 'length', { value: 8 }).length !== 8;
+});
+var TEMPLATE = String(String).split('String');
+var makeBuiltIn = module.exports = function (value, name, options) {
+    if (String(name).slice(0, 7) === 'Symbol(') {
+        name = '[' + String(name).replace(/^Symbol\(([^)]*)\)/, '$1') + ']';
+    }
+    if (options && options.getter)
+        name = 'get ' + name;
+    if (options && options.setter)
+        name = 'set ' + name;
+    if (!hasOwn(value, 'name') || (CONFIGURABLE_FUNCTION_NAME && value.name !== name)) {
+        if (DESCRIPTORS)
+            defineProperty(value, 'name', { value: name, configurable: true });
+        else
+            value.name = name;
+    }
+    if (CONFIGURABLE_LENGTH && options && hasOwn(options, 'arity') && value.length !== options.arity) {
+        defineProperty(value, 'length', { value: options.arity });
+    }
+    try {
+        if (options && hasOwn(options, 'constructor') && options.constructor) {
+            if (DESCRIPTORS)
+                defineProperty(value, 'prototype', { writable: false });
+        }
+        else if (value.prototype)
+            value.prototype = undefined;
+    }
+    catch (error) { }
+    var state = enforceInternalState(value);
+    if (!hasOwn(state, 'source')) {
+        state.source = TEMPLATE.join(typeof name == 'string' ? name : '');
+    }
+    return value;
+};
+Function.prototype.toString = makeBuiltIn(function toString() {
+    return isCallable(this) && getInternalState(this).source || inspectSource(this);
+}, 'toString');
+
+
+/***/ }),
+
+/***/ 43932:
+/***/ (function(module) {
+
+"use strict";
+
+var ceil = Math.ceil;
+var floor = Math.floor;
+module.exports = Math.trunc || function trunc(x) {
+    var n = +x;
+    return (n > 0 ? floor : ceil)(n);
+};
+
+
+/***/ }),
+
+/***/ 14413:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var NATIVE_SYMBOL = __webpack_require__(47942);
+module.exports = NATIVE_SYMBOL && !!Symbol['for'] && !!Symbol.keyFor;
+
+
+/***/ }),
+
+/***/ 47942:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var V8_VERSION = __webpack_require__(65190);
+var fails = __webpack_require__(75834);
+module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
+    var symbol = Symbol();
+    return !String(symbol) || !(Object(symbol) instanceof Symbol) ||
+        !Symbol.sham && V8_VERSION && V8_VERSION < 41;
+});
+
+
+/***/ }),
+
+/***/ 94698:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(37042);
+var isCallable = __webpack_require__(794);
+var inspectSource = __webpack_require__(92355);
+var WeakMap = global.WeakMap;
+module.exports = isCallable(WeakMap) && /native code/.test(inspectSource(WeakMap));
+
+
+/***/ }),
+
+/***/ 93503:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var anObject = __webpack_require__(52313);
+var definePropertiesModule = __webpack_require__(5770);
+var enumBugKeys = __webpack_require__(64456);
+var hiddenKeys = __webpack_require__(48889);
+var html = __webpack_require__(36249);
+var documentCreateElement = __webpack_require__(15192);
+var sharedKey = __webpack_require__(85475);
+var GT = '>';
+var LT = '<';
+var PROTOTYPE = 'prototype';
+var SCRIPT = 'script';
+var IE_PROTO = sharedKey('IE_PROTO');
+var EmptyConstructor = function () { };
+var scriptTag = function (content) {
+    return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
+};
+var NullProtoObjectViaActiveX = function (activeXDocument) {
+    activeXDocument.write(scriptTag(''));
+    activeXDocument.close();
+    var temp = activeXDocument.parentWindow.Object;
+    activeXDocument = null;
+    return temp;
+};
+var NullProtoObjectViaIFrame = function () {
+    var iframe = documentCreateElement('iframe');
+    var JS = 'java' + SCRIPT + ':';
+    var iframeDocument;
+    iframe.style.display = 'none';
+    html.appendChild(iframe);
+    iframe.src = String(JS);
+    iframeDocument = iframe.contentWindow.document;
+    iframeDocument.open();
+    iframeDocument.write(scriptTag('document.F=Object'));
+    iframeDocument.close();
+    return iframeDocument.F;
+};
+var activeXDocument;
+var NullProtoObject = function () {
+    try {
+        activeXDocument = new ActiveXObject('htmlfile');
+    }
+    catch (error) { }
+    NullProtoObject = typeof document != 'undefined'
+        ? document.domain && activeXDocument
+            ? NullProtoObjectViaActiveX(activeXDocument)
+            : NullProtoObjectViaIFrame()
+        : NullProtoObjectViaActiveX(activeXDocument);
+    var length = enumBugKeys.length;
+    while (length--)
+        delete NullProtoObject[PROTOTYPE][enumBugKeys[length]];
+    return NullProtoObject();
+};
+hiddenKeys[IE_PROTO] = true;
+module.exports = Object.create || function create(O, Properties) {
+    var result;
+    if (O !== null) {
+        EmptyConstructor[PROTOTYPE] = anObject(O);
+        result = new EmptyConstructor();
+        EmptyConstructor[PROTOTYPE] = null;
+        result[IE_PROTO] = O;
+    }
+    else
+        result = NullProtoObject();
+    return Properties === undefined ? result : definePropertiesModule.f(result, Properties);
+};
+
+
+/***/ }),
+
+/***/ 5770:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(13873);
+var V8_PROTOTYPE_DEFINE_BUG = __webpack_require__(63142);
+var definePropertyModule = __webpack_require__(73252);
+var anObject = __webpack_require__(52313);
+var toIndexedObject = __webpack_require__(98651);
+var objectKeys = __webpack_require__(3385);
+exports.f = DESCRIPTORS && !V8_PROTOTYPE_DEFINE_BUG ? Object.defineProperties : function defineProperties(O, Properties) {
+    anObject(O);
+    var props = toIndexedObject(Properties);
+    var keys = objectKeys(Properties);
+    var length = keys.length;
+    var index = 0;
+    var key;
+    while (length > index)
+        definePropertyModule.f(O, key = keys[index++], props[key]);
+    return O;
+};
+
+
+/***/ }),
+
+/***/ 73252:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(13873);
+var IE8_DOM_DEFINE = __webpack_require__(12816);
+var V8_PROTOTYPE_DEFINE_BUG = __webpack_require__(63142);
+var anObject = __webpack_require__(52313);
+var toPropertyKey = __webpack_require__(43836);
+var $TypeError = TypeError;
+var $defineProperty = Object.defineProperty;
+var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var ENUMERABLE = 'enumerable';
+var CONFIGURABLE = 'configurable';
+var WRITABLE = 'writable';
+exports.f = DESCRIPTORS ? V8_PROTOTYPE_DEFINE_BUG ? function defineProperty(O, P, Attributes) {
+    anObject(O);
+    P = toPropertyKey(P);
+    anObject(Attributes);
+    if (typeof O === 'function' && P === 'prototype' && 'value' in Attributes && WRITABLE in Attributes && !Attributes[WRITABLE]) {
+        var current = $getOwnPropertyDescriptor(O, P);
+        if (current && current[WRITABLE]) {
+            O[P] = Attributes.value;
+            Attributes = {
+                configurable: CONFIGURABLE in Attributes ? Attributes[CONFIGURABLE] : current[CONFIGURABLE],
+                enumerable: ENUMERABLE in Attributes ? Attributes[ENUMERABLE] : current[ENUMERABLE],
+                writable: false
+            };
+        }
+    }
+    return $defineProperty(O, P, Attributes);
+} : $defineProperty : function defineProperty(O, P, Attributes) {
+    anObject(O);
+    P = toPropertyKey(P);
+    anObject(Attributes);
+    if (IE8_DOM_DEFINE)
+        try {
+            return $defineProperty(O, P, Attributes);
+        }
+        catch (error) { }
+    if ('get' in Attributes || 'set' in Attributes)
+        throw $TypeError('Accessors not supported');
+    if ('value' in Attributes)
+        O[P] = Attributes.value;
+    return O;
+};
+
+
+/***/ }),
+
+/***/ 36999:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(13873);
+var call = __webpack_require__(9093);
+var propertyIsEnumerableModule = __webpack_require__(33244);
+var createPropertyDescriptor = __webpack_require__(32500);
+var toIndexedObject = __webpack_require__(98651);
+var toPropertyKey = __webpack_require__(43836);
+var hasOwn = __webpack_require__(14434);
+var IE8_DOM_DEFINE = __webpack_require__(12816);
+var $getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+exports.f = DESCRIPTORS ? $getOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
+    O = toIndexedObject(O);
+    P = toPropertyKey(P);
+    if (IE8_DOM_DEFINE)
+        try {
+            return $getOwnPropertyDescriptor(O, P);
+        }
+        catch (error) { }
+    if (hasOwn(O, P))
+        return createPropertyDescriptor(!call(propertyIsEnumerableModule.f, O, P), O[P]);
+};
+
+
+/***/ }),
+
+/***/ 53305:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var classof = __webpack_require__(6285);
+var toIndexedObject = __webpack_require__(98651);
+var $getOwnPropertyNames = (__webpack_require__(7792).f);
+var arraySlice = __webpack_require__(57652);
+var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
+    ? Object.getOwnPropertyNames(window) : [];
+var getWindowNames = function (it) {
+    try {
+        return $getOwnPropertyNames(it);
+    }
+    catch (error) {
+        return arraySlice(windowNames);
+    }
+};
+module.exports.f = function getOwnPropertyNames(it) {
+    return windowNames && classof(it) == 'Window'
+        ? getWindowNames(it)
+        : $getOwnPropertyNames(toIndexedObject(it));
+};
+
+
+/***/ }),
+
+/***/ 7792:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var internalObjectKeys = __webpack_require__(84729);
+var enumBugKeys = __webpack_require__(64456);
+var hiddenKeys = enumBugKeys.concat('length', 'prototype');
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+    return internalObjectKeys(O, hiddenKeys);
+};
+
+
+/***/ }),
+
+/***/ 23953:
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+exports.f = Object.getOwnPropertySymbols;
+
+
+/***/ }),
+
+/***/ 1074:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var hasOwn = __webpack_require__(14434);
+var isCallable = __webpack_require__(794);
+var toObject = __webpack_require__(68488);
+var sharedKey = __webpack_require__(85475);
+var CORRECT_PROTOTYPE_GETTER = __webpack_require__(27259);
+var IE_PROTO = sharedKey('IE_PROTO');
+var $Object = Object;
+var ObjectPrototype = $Object.prototype;
+module.exports = CORRECT_PROTOTYPE_GETTER ? $Object.getPrototypeOf : function (O) {
+    var object = toObject(O);
+    if (hasOwn(object, IE_PROTO))
+        return object[IE_PROTO];
+    var constructor = object.constructor;
+    if (isCallable(constructor) && object instanceof constructor) {
+        return constructor.prototype;
+    }
+    return object instanceof $Object ? ObjectPrototype : null;
+};
+
+
+/***/ }),
+
+/***/ 54671:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+module.exports = uncurryThis({}.isPrototypeOf);
+
+
+/***/ }),
+
+/***/ 84729:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+var hasOwn = __webpack_require__(14434);
+var toIndexedObject = __webpack_require__(98651);
+var indexOf = (__webpack_require__(79327).indexOf);
+var hiddenKeys = __webpack_require__(48889);
+var push = uncurryThis([].push);
+module.exports = function (object, names) {
+    var O = toIndexedObject(object);
+    var i = 0;
+    var result = [];
+    var key;
+    for (key in O)
+        !hasOwn(hiddenKeys, key) && hasOwn(O, key) && push(result, key);
+    while (names.length > i)
+        if (hasOwn(O, key = names[i++])) {
+            ~indexOf(result, key) || push(result, key);
+        }
+    return result;
+};
+
+
+/***/ }),
+
+/***/ 3385:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var internalObjectKeys = __webpack_require__(84729);
+var enumBugKeys = __webpack_require__(64456);
+module.exports = Object.keys || function keys(O) {
+    return internalObjectKeys(O, enumBugKeys);
+};
+
+
+/***/ }),
+
+/***/ 33244:
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+var $propertyIsEnumerable = {}.propertyIsEnumerable;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var NASHORN_BUG = getOwnPropertyDescriptor && !$propertyIsEnumerable.call({ 1: 2 }, 1);
+exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
+    var descriptor = getOwnPropertyDescriptor(this, V);
+    return !!descriptor && descriptor.enumerable;
+} : $propertyIsEnumerable;
+
+
+/***/ }),
+
+/***/ 482:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+var anObject = __webpack_require__(52313);
+var aPossiblePrototype = __webpack_require__(75839);
+module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
+    var CORRECT_SETTER = false;
+    var test = {};
+    var setter;
+    try {
+        setter = uncurryThis(Object.getOwnPropertyDescriptor(Object.prototype, '__proto__').set);
+        setter(test, []);
+        CORRECT_SETTER = test instanceof Array;
+    }
+    catch (error) { }
+    return function setPrototypeOf(O, proto) {
+        anObject(O);
+        aPossiblePrototype(proto);
+        if (CORRECT_SETTER)
+            setter(O, proto);
+        else
+            O.__proto__ = proto;
+        return O;
+    };
+}() : undefined);
+
+
+/***/ }),
+
+/***/ 57555:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__(6424);
+var classof = __webpack_require__(8652);
+module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
+    return '[object ' + classof(this) + ']';
+};
+
+
+/***/ }),
+
+/***/ 82472:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var call = __webpack_require__(9093);
+var isCallable = __webpack_require__(794);
+var isObject = __webpack_require__(8148);
+var $TypeError = TypeError;
+module.exports = function (input, pref) {
+    var fn, val;
+    if (pref === 'string' && isCallable(fn = input.toString) && !isObject(val = call(fn, input)))
+        return val;
+    if (isCallable(fn = input.valueOf) && !isObject(val = call(fn, input)))
+        return val;
+    if (pref !== 'string' && isCallable(fn = input.toString) && !isObject(val = call(fn, input)))
+        return val;
+    throw $TypeError("Can't convert object to primitive value");
+};
+
+
+/***/ }),
+
+/***/ 86671:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var getBuiltIn = __webpack_require__(98945);
+var uncurryThis = __webpack_require__(90838);
+var getOwnPropertyNamesModule = __webpack_require__(7792);
+var getOwnPropertySymbolsModule = __webpack_require__(23953);
+var anObject = __webpack_require__(52313);
+var concat = uncurryThis([].concat);
+module.exports = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
+    var keys = getOwnPropertyNamesModule.f(anObject(it));
+    var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+    return getOwnPropertySymbols ? concat(keys, getOwnPropertySymbols(it)) : keys;
+};
+
+
+/***/ }),
+
+/***/ 31116:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(37042);
+module.exports = global;
+
+
+/***/ }),
+
+/***/ 60265:
+/***/ (function(module) {
+
+"use strict";
+
+var $TypeError = TypeError;
+module.exports = function (it) {
+    if (it == undefined)
+        throw $TypeError("Can't call method on " + it);
+    return it;
+};
+
+
+/***/ }),
+
+/***/ 44532:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineProperty = (__webpack_require__(73252).f);
+var hasOwn = __webpack_require__(14434);
+var wellKnownSymbol = __webpack_require__(19517);
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+module.exports = function (target, TAG, STATIC) {
+    if (target && !STATIC)
+        target = target.prototype;
+    if (target && !hasOwn(target, TO_STRING_TAG)) {
+        defineProperty(target, TO_STRING_TAG, { configurable: true, value: TAG });
+    }
+};
+
+
+/***/ }),
+
+/***/ 85475:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var shared = __webpack_require__(95138);
+var uid = __webpack_require__(15257);
+var keys = shared('keys');
+module.exports = function (key) {
+    return keys[key] || (keys[key] = uid(key));
+};
+
+
+/***/ }),
+
+/***/ 45752:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(37042);
+var defineGlobalProperty = __webpack_require__(25379);
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || defineGlobalProperty(SHARED, {});
+module.exports = store;
+
+
+/***/ }),
+
+/***/ 95138:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var IS_PURE = __webpack_require__(70852);
+var store = __webpack_require__(45752);
+(module.exports = function (key, value) {
+    return store[key] || (store[key] = value !== undefined ? value : {});
+})('versions', []).push({
+    version: '3.24.0',
+    mode: IS_PURE ? 'pure' : 'global',
+    copyright: '© 2014-2022 Denis Pushkarev (zloirock.ru)',
+    license: 'https://github.com/zloirock/core-js/blob/v3.24.0/LICENSE',
+    source: 'https://github.com/zloirock/core-js'
+});
+
+
+/***/ }),
+
+/***/ 41397:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+var toIntegerOrInfinity = __webpack_require__(27876);
+var toString = __webpack_require__(63046);
+var requireObjectCoercible = __webpack_require__(60265);
+var charAt = uncurryThis(''.charAt);
+var charCodeAt = uncurryThis(''.charCodeAt);
+var stringSlice = uncurryThis(''.slice);
+var createMethod = function (CONVERT_TO_STRING) {
+    return function ($this, pos) {
+        var S = toString(requireObjectCoercible($this));
+        var position = toIntegerOrInfinity(pos);
+        var size = S.length;
+        var first, second;
+        if (position < 0 || position >= size)
+            return CONVERT_TO_STRING ? '' : undefined;
+        first = charCodeAt(S, position);
+        return first < 0xD800 || first > 0xDBFF || position + 1 === size
+            || (second = charCodeAt(S, position + 1)) < 0xDC00 || second > 0xDFFF
+            ? CONVERT_TO_STRING
+                ? charAt(S, position)
+                : first
+            : CONVERT_TO_STRING
+                ? stringSlice(S, position, position + 2)
+                : (first - 0xD800 << 10) + (second - 0xDC00) + 0x10000;
+    };
+};
+module.exports = {
+    codeAt: createMethod(false),
+    charAt: createMethod(true)
+};
+
+
+/***/ }),
+
+/***/ 13829:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var call = __webpack_require__(9093);
+var getBuiltIn = __webpack_require__(98945);
+var wellKnownSymbol = __webpack_require__(19517);
+var defineBuiltIn = __webpack_require__(35065);
+module.exports = function () {
+    var Symbol = getBuiltIn('Symbol');
+    var SymbolPrototype = Symbol && Symbol.prototype;
+    var valueOf = SymbolPrototype && SymbolPrototype.valueOf;
+    var TO_PRIMITIVE = wellKnownSymbol('toPrimitive');
+    if (SymbolPrototype && !SymbolPrototype[TO_PRIMITIVE]) {
+        defineBuiltIn(SymbolPrototype, TO_PRIMITIVE, function (hint) {
+            return call(valueOf, this);
+        }, { arity: 1 });
+    }
+};
+
+
+/***/ }),
+
+/***/ 10586:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var toIntegerOrInfinity = __webpack_require__(27876);
+var max = Math.max;
+var min = Math.min;
+module.exports = function (index, length) {
+    var integer = toIntegerOrInfinity(index);
+    return integer < 0 ? max(integer + length, 0) : min(integer, length);
+};
+
+
+/***/ }),
+
+/***/ 98651:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var IndexedObject = __webpack_require__(25049);
+var requireObjectCoercible = __webpack_require__(60265);
+module.exports = function (it) {
+    return IndexedObject(requireObjectCoercible(it));
+};
+
+
+/***/ }),
+
+/***/ 27876:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var trunc = __webpack_require__(43932);
+module.exports = function (argument) {
+    var number = +argument;
+    return number !== number || number === 0 ? 0 : trunc(number);
+};
+
+
+/***/ }),
+
+/***/ 24431:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var toIntegerOrInfinity = __webpack_require__(27876);
+var min = Math.min;
+module.exports = function (argument) {
+    return argument > 0 ? min(toIntegerOrInfinity(argument), 0x1FFFFFFFFFFFFF) : 0;
+};
+
+
+/***/ }),
+
+/***/ 68488:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var requireObjectCoercible = __webpack_require__(60265);
+var $Object = Object;
+module.exports = function (argument) {
+    return $Object(requireObjectCoercible(argument));
+};
+
+
+/***/ }),
+
+/***/ 11261:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var call = __webpack_require__(9093);
+var isObject = __webpack_require__(8148);
+var isSymbol = __webpack_require__(88253);
+var getMethod = __webpack_require__(20156);
+var ordinaryToPrimitive = __webpack_require__(82472);
+var wellKnownSymbol = __webpack_require__(19517);
+var $TypeError = TypeError;
+var TO_PRIMITIVE = wellKnownSymbol('toPrimitive');
+module.exports = function (input, pref) {
+    if (!isObject(input) || isSymbol(input))
+        return input;
+    var exoticToPrim = getMethod(input, TO_PRIMITIVE);
+    var result;
+    if (exoticToPrim) {
+        if (pref === undefined)
+            pref = 'default';
+        result = call(exoticToPrim, input, pref);
+        if (!isObject(result) || isSymbol(result))
+            return result;
+        throw $TypeError("Can't convert object to primitive value");
+    }
+    if (pref === undefined)
+        pref = 'number';
+    return ordinaryToPrimitive(input, pref);
+};
+
+
+/***/ }),
+
+/***/ 43836:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var toPrimitive = __webpack_require__(11261);
+var isSymbol = __webpack_require__(88253);
+module.exports = function (argument) {
+    var key = toPrimitive(argument, 'string');
+    return isSymbol(key) ? key : key + '';
+};
+
+
+/***/ }),
+
+/***/ 6424:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var wellKnownSymbol = __webpack_require__(19517);
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+var test = {};
+test[TO_STRING_TAG] = 'z';
+module.exports = String(test) === '[object z]';
+
+
+/***/ }),
+
+/***/ 63046:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var classof = __webpack_require__(8652);
+var $String = String;
+module.exports = function (argument) {
+    if (classof(argument) === 'Symbol')
+        throw TypeError('Cannot convert a Symbol value to a string');
+    return $String(argument);
+};
+
+
+/***/ }),
+
+/***/ 98418:
+/***/ (function(module) {
+
+"use strict";
+
+var $String = String;
+module.exports = function (argument) {
+    try {
+        return $String(argument);
+    }
+    catch (error) {
+        return 'Object';
+    }
+};
+
+
+/***/ }),
+
+/***/ 15257:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var uncurryThis = __webpack_require__(90838);
+var id = 0;
+var postfix = Math.random();
+var toString = uncurryThis(1.0.toString);
+module.exports = function (key) {
+    return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString(++id + postfix, 36);
+};
+
+
+/***/ }),
+
+/***/ 57982:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var NATIVE_SYMBOL = __webpack_require__(47942);
+module.exports = NATIVE_SYMBOL
+    && !Symbol.sham
+    && typeof Symbol.iterator == 'symbol';
+
+
+/***/ }),
+
+/***/ 63142:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__(13873);
+var fails = __webpack_require__(75834);
+module.exports = DESCRIPTORS && fails(function () {
+    return Object.defineProperty(function () { }, 'prototype', {
+        value: 42,
+        writable: false
+    }).prototype != 42;
+});
+
+
+/***/ }),
+
+/***/ 96767:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var wellKnownSymbol = __webpack_require__(19517);
+exports.f = wellKnownSymbol;
+
+
+/***/ }),
+
+/***/ 19517:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(37042);
+var shared = __webpack_require__(95138);
+var hasOwn = __webpack_require__(14434);
+var uid = __webpack_require__(15257);
+var NATIVE_SYMBOL = __webpack_require__(47942);
+var USE_SYMBOL_AS_UID = __webpack_require__(57982);
+var WellKnownSymbolsStore = shared('wks');
+var Symbol = global.Symbol;
+var symbolFor = Symbol && Symbol['for'];
+var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol : Symbol && Symbol.withoutSetter || uid;
+module.exports = function (name) {
+    if (!hasOwn(WellKnownSymbolsStore, name) || !(NATIVE_SYMBOL || typeof WellKnownSymbolsStore[name] == 'string')) {
+        var description = 'Symbol.' + name;
+        if (NATIVE_SYMBOL && hasOwn(Symbol, name)) {
+            WellKnownSymbolsStore[name] = Symbol[name];
+        }
+        else if (USE_SYMBOL_AS_UID && symbolFor) {
+            WellKnownSymbolsStore[name] = symbolFor(description);
+        }
+        else {
+            WellKnownSymbolsStore[name] = createWellKnownSymbol(description);
+        }
+    }
+    return WellKnownSymbolsStore[name];
+};
+
+
+/***/ }),
+
+/***/ 54166:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(50791);
+var fails = __webpack_require__(75834);
+var isArray = __webpack_require__(36222);
+var isObject = __webpack_require__(8148);
+var toObject = __webpack_require__(68488);
+var lengthOfArrayLike = __webpack_require__(15050);
+var doesNotExceedSafeInteger = __webpack_require__(39505);
+var createProperty = __webpack_require__(89476);
+var arraySpeciesCreate = __webpack_require__(6429);
+var arrayMethodHasSpeciesSupport = __webpack_require__(63833);
+var wellKnownSymbol = __webpack_require__(19517);
+var V8_VERSION = __webpack_require__(65190);
+var IS_CONCAT_SPREADABLE = wellKnownSymbol('isConcatSpreadable');
+var IS_CONCAT_SPREADABLE_SUPPORT = V8_VERSION >= 51 || !fails(function () {
+    var array = [];
+    array[IS_CONCAT_SPREADABLE] = false;
+    return array.concat()[0] !== array;
+});
+var SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('concat');
+var isConcatSpreadable = function (O) {
+    if (!isObject(O))
+        return false;
+    var spreadable = O[IS_CONCAT_SPREADABLE];
+    return spreadable !== undefined ? !!spreadable : isArray(O);
+};
+var FORCED = !IS_CONCAT_SPREADABLE_SUPPORT || !SPECIES_SUPPORT;
+$({ target: 'Array', proto: true, arity: 1, forced: FORCED }, {
+    concat: function concat(arg) {
+        var O = toObject(this);
+        var A = arraySpeciesCreate(O, 0);
+        var n = 0;
+        var i, k, length, len, E;
+        for (i = -1, length = arguments.length; i < length; i++) {
+            E = i === -1 ? O : arguments[i];
+            if (isConcatSpreadable(E)) {
+                len = lengthOfArrayLike(E);
+                doesNotExceedSafeInteger(n + len);
+                for (k = 0; k < len; k++, n++)
+                    if (k in E)
+                        createProperty(A, n, E[k]);
+            }
+            else {
+                doesNotExceedSafeInteger(n + 1);
+                createProperty(A, n++, E);
+            }
+        }
+        A.length = n;
+        return A;
+    }
+});
+
+
+/***/ }),
+
+/***/ 22513:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(50791);
+var $findIndex = (__webpack_require__(56881).findIndex);
+var addToUnscopables = __webpack_require__(15179);
+var FIND_INDEX = 'findIndex';
+var SKIPS_HOLES = true;
+if (FIND_INDEX in [])
+    Array(1)[FIND_INDEX](function () { SKIPS_HOLES = false; });
+$({ target: 'Array', proto: true, forced: SKIPS_HOLES }, {
+    findIndex: function findIndex(callbackfn) {
+        return $findIndex(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+    }
+});
+addToUnscopables(FIND_INDEX);
+
+
+/***/ }),
+
+/***/ 70057:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(50791);
+var from = __webpack_require__(92707);
+var checkCorrectnessOfIteration = __webpack_require__(7581);
+var INCORRECT_ITERATION = !checkCorrectnessOfIteration(function (iterable) {
+    Array.from(iterable);
+});
+$({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
+    from: from
+});
+
+
+/***/ }),
+
+/***/ 67507:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(50791);
+var getBuiltIn = __webpack_require__(98945);
+var apply = __webpack_require__(55101);
+var call = __webpack_require__(9093);
+var uncurryThis = __webpack_require__(90838);
+var fails = __webpack_require__(75834);
+var isArray = __webpack_require__(36222);
+var isCallable = __webpack_require__(794);
+var isObject = __webpack_require__(8148);
+var isSymbol = __webpack_require__(88253);
+var arraySlice = __webpack_require__(54832);
+var NATIVE_SYMBOL = __webpack_require__(47942);
+var $stringify = getBuiltIn('JSON', 'stringify');
+var exec = uncurryThis(/./.exec);
+var charAt = uncurryThis(''.charAt);
+var charCodeAt = uncurryThis(''.charCodeAt);
+var replace = uncurryThis(''.replace);
+var numberToString = uncurryThis(1.0.toString);
+var tester = /[\uD800-\uDFFF]/g;
+var low = /^[\uD800-\uDBFF]$/;
+var hi = /^[\uDC00-\uDFFF]$/;
+var WRONG_SYMBOLS_CONVERSION = !NATIVE_SYMBOL || fails(function () {
+    var symbol = getBuiltIn('Symbol')();
+    return $stringify([symbol]) != '[null]'
+        || $stringify({ a: symbol }) != '{}'
+        || $stringify(Object(symbol)) != '{}';
+});
+var ILL_FORMED_UNICODE = fails(function () {
+    return $stringify('\uDF06\uD834') !== '"\\udf06\\ud834"'
+        || $stringify('\uDEAD') !== '"\\udead"';
+});
+var stringifyWithSymbolsFix = function (it, replacer) {
+    var args = arraySlice(arguments);
+    var $replacer = replacer;
+    if (!isObject(replacer) && it === undefined || isSymbol(it))
+        return;
+    if (!isArray(replacer))
+        replacer = function (key, value) {
+            if (isCallable($replacer))
+                value = call($replacer, this, key, value);
+            if (!isSymbol(value))
+                return value;
+        };
+    args[1] = replacer;
+    return apply($stringify, null, args);
+};
+var fixIllFormed = function (match, offset, string) {
+    var prev = charAt(string, offset - 1);
+    var next = charAt(string, offset + 1);
+    if ((exec(low, match) && !exec(hi, next)) || (exec(hi, match) && !exec(low, prev))) {
+        return '\\u' + numberToString(charCodeAt(match, 0), 16);
+    }
+    return match;
+};
+if ($stringify) {
+    $({ target: 'JSON', stat: true, arity: 3, forced: WRONG_SYMBOLS_CONVERSION || ILL_FORMED_UNICODE }, {
+        stringify: function stringify(it, replacer, space) {
+            var args = arraySlice(arguments);
+            var result = apply(WRONG_SYMBOLS_CONVERSION ? stringifyWithSymbolsFix : $stringify, null, args);
+            return ILL_FORMED_UNICODE && typeof result == 'string' ? replace(result, tester, fixIllFormed) : result;
+        }
+    });
+}
+
+
+/***/ }),
+
+/***/ 90217:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(37042);
+var setToStringTag = __webpack_require__(44532);
+setToStringTag(global.JSON, 'JSON', true);
+
+
+/***/ }),
+
+/***/ 73477:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var setToStringTag = __webpack_require__(44532);
+setToStringTag(Math, 'Math', true);
+
+
+/***/ }),
+
+/***/ 30165:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(50791);
+var NATIVE_SYMBOL = __webpack_require__(47942);
+var fails = __webpack_require__(75834);
+var getOwnPropertySymbolsModule = __webpack_require__(23953);
+var toObject = __webpack_require__(68488);
+var FORCED = !NATIVE_SYMBOL || fails(function () { getOwnPropertySymbolsModule.f(1); });
+$({ target: 'Object', stat: true, forced: FORCED }, {
+    getOwnPropertySymbols: function getOwnPropertySymbols(it) {
+        var $getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
+        return $getOwnPropertySymbols ? $getOwnPropertySymbols(toObject(it)) : [];
+    }
+});
+
+
+/***/ }),
+
+/***/ 32044:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__(6424);
+var defineBuiltIn = __webpack_require__(35065);
+var toString = __webpack_require__(57555);
+if (!TO_STRING_TAG_SUPPORT) {
+    defineBuiltIn(Object.prototype, 'toString', toString, { unsafe: true });
+}
+
+
+/***/ }),
+
+/***/ 93697:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(50791);
+var global = __webpack_require__(37042);
+var setToStringTag = __webpack_require__(44532);
+$({ global: true }, { Reflect: {} });
+setToStringTag(global.Reflect, 'Reflect', true);
+
+
+/***/ }),
+
+/***/ 52867:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var charAt = (__webpack_require__(41397).charAt);
+var toString = __webpack_require__(63046);
+var InternalStateModule = __webpack_require__(56113);
+var defineIterator = __webpack_require__(73514);
+var STRING_ITERATOR = 'String Iterator';
+var setInternalState = InternalStateModule.set;
+var getInternalState = InternalStateModule.getterFor(STRING_ITERATOR);
+defineIterator(String, 'String', function (iterated) {
+    setInternalState(this, {
+        type: STRING_ITERATOR,
+        string: toString(iterated),
+        index: 0
+    });
+}, function next() {
+    var state = getInternalState(this);
+    var string = state.string;
+    var index = state.index;
+    var point;
+    if (index >= string.length)
+        return { value: undefined, done: true };
+    point = charAt(string, index);
+    state.index += point.length;
+    return { value: point, done: false };
+});
+
+
+/***/ }),
+
+/***/ 28424:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+defineWellKnownSymbol('asyncIterator');
+
+
+/***/ }),
+
+/***/ 9656:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(50791);
+var global = __webpack_require__(37042);
+var call = __webpack_require__(9093);
+var uncurryThis = __webpack_require__(90838);
+var IS_PURE = __webpack_require__(70852);
+var DESCRIPTORS = __webpack_require__(13873);
+var NATIVE_SYMBOL = __webpack_require__(47942);
+var fails = __webpack_require__(75834);
+var hasOwn = __webpack_require__(14434);
+var isPrototypeOf = __webpack_require__(54671);
+var anObject = __webpack_require__(52313);
+var toIndexedObject = __webpack_require__(98651);
+var toPropertyKey = __webpack_require__(43836);
+var $toString = __webpack_require__(63046);
+var createPropertyDescriptor = __webpack_require__(32500);
+var nativeObjectCreate = __webpack_require__(93503);
+var objectKeys = __webpack_require__(3385);
+var getOwnPropertyNamesModule = __webpack_require__(7792);
+var getOwnPropertyNamesExternal = __webpack_require__(53305);
+var getOwnPropertySymbolsModule = __webpack_require__(23953);
+var getOwnPropertyDescriptorModule = __webpack_require__(36999);
+var definePropertyModule = __webpack_require__(73252);
+var definePropertiesModule = __webpack_require__(5770);
+var propertyIsEnumerableModule = __webpack_require__(33244);
+var defineBuiltIn = __webpack_require__(35065);
+var shared = __webpack_require__(95138);
+var sharedKey = __webpack_require__(85475);
+var hiddenKeys = __webpack_require__(48889);
+var uid = __webpack_require__(15257);
+var wellKnownSymbol = __webpack_require__(19517);
+var wrappedWellKnownSymbolModule = __webpack_require__(96767);
+var defineWellKnownSymbol = __webpack_require__(24637);
+var defineSymbolToPrimitive = __webpack_require__(13829);
+var setToStringTag = __webpack_require__(44532);
+var InternalStateModule = __webpack_require__(56113);
+var $forEach = (__webpack_require__(56881).forEach);
+var HIDDEN = sharedKey('hidden');
+var SYMBOL = 'Symbol';
+var PROTOTYPE = 'prototype';
+var setInternalState = InternalStateModule.set;
+var getInternalState = InternalStateModule.getterFor(SYMBOL);
+var ObjectPrototype = Object[PROTOTYPE];
+var $Symbol = global.Symbol;
+var SymbolPrototype = $Symbol && $Symbol[PROTOTYPE];
+var TypeError = global.TypeError;
+var QObject = global.QObject;
+var nativeGetOwnPropertyDescriptor = getOwnPropertyDescriptorModule.f;
+var nativeDefineProperty = definePropertyModule.f;
+var nativeGetOwnPropertyNames = getOwnPropertyNamesExternal.f;
+var nativePropertyIsEnumerable = propertyIsEnumerableModule.f;
+var push = uncurryThis([].push);
+var AllSymbols = shared('symbols');
+var ObjectPrototypeSymbols = shared('op-symbols');
+var WellKnownSymbolsStore = shared('wks');
+var USE_SETTER = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
+var setSymbolDescriptor = DESCRIPTORS && fails(function () {
+    return nativeObjectCreate(nativeDefineProperty({}, 'a', {
+        get: function () { return nativeDefineProperty(this, 'a', { value: 7 }).a; }
+    })).a != 7;
+}) ? function (O, P, Attributes) {
+    var ObjectPrototypeDescriptor = nativeGetOwnPropertyDescriptor(ObjectPrototype, P);
+    if (ObjectPrototypeDescriptor)
+        delete ObjectPrototype[P];
+    nativeDefineProperty(O, P, Attributes);
+    if (ObjectPrototypeDescriptor && O !== ObjectPrototype) {
+        nativeDefineProperty(ObjectPrototype, P, ObjectPrototypeDescriptor);
+    }
+} : nativeDefineProperty;
+var wrap = function (tag, description) {
+    var symbol = AllSymbols[tag] = nativeObjectCreate(SymbolPrototype);
+    setInternalState(symbol, {
+        type: SYMBOL,
+        tag: tag,
+        description: description
+    });
+    if (!DESCRIPTORS)
+        symbol.description = description;
+    return symbol;
+};
+var $defineProperty = function defineProperty(O, P, Attributes) {
+    if (O === ObjectPrototype)
+        $defineProperty(ObjectPrototypeSymbols, P, Attributes);
+    anObject(O);
+    var key = toPropertyKey(P);
+    anObject(Attributes);
+    if (hasOwn(AllSymbols, key)) {
+        if (!Attributes.enumerable) {
+            if (!hasOwn(O, HIDDEN))
+                nativeDefineProperty(O, HIDDEN, createPropertyDescriptor(1, {}));
+            O[HIDDEN][key] = true;
+        }
+        else {
+            if (hasOwn(O, HIDDEN) && O[HIDDEN][key])
+                O[HIDDEN][key] = false;
+            Attributes = nativeObjectCreate(Attributes, { enumerable: createPropertyDescriptor(0, false) });
+        }
+        return setSymbolDescriptor(O, key, Attributes);
+    }
+    return nativeDefineProperty(O, key, Attributes);
+};
+var $defineProperties = function defineProperties(O, Properties) {
+    anObject(O);
+    var properties = toIndexedObject(Properties);
+    var keys = objectKeys(properties).concat($getOwnPropertySymbols(properties));
+    $forEach(keys, function (key) {
+        if (!DESCRIPTORS || call($propertyIsEnumerable, properties, key))
+            $defineProperty(O, key, properties[key]);
+    });
+    return O;
+};
+var $create = function create(O, Properties) {
+    return Properties === undefined ? nativeObjectCreate(O) : $defineProperties(nativeObjectCreate(O), Properties);
+};
+var $propertyIsEnumerable = function propertyIsEnumerable(V) {
+    var P = toPropertyKey(V);
+    var enumerable = call(nativePropertyIsEnumerable, this, P);
+    if (this === ObjectPrototype && hasOwn(AllSymbols, P) && !hasOwn(ObjectPrototypeSymbols, P))
+        return false;
+    return enumerable || !hasOwn(this, P) || !hasOwn(AllSymbols, P) || hasOwn(this, HIDDEN) && this[HIDDEN][P]
+        ? enumerable : true;
+};
+var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(O, P) {
+    var it = toIndexedObject(O);
+    var key = toPropertyKey(P);
+    if (it === ObjectPrototype && hasOwn(AllSymbols, key) && !hasOwn(ObjectPrototypeSymbols, key))
+        return;
+    var descriptor = nativeGetOwnPropertyDescriptor(it, key);
+    if (descriptor && hasOwn(AllSymbols, key) && !(hasOwn(it, HIDDEN) && it[HIDDEN][key])) {
+        descriptor.enumerable = true;
+    }
+    return descriptor;
+};
+var $getOwnPropertyNames = function getOwnPropertyNames(O) {
+    var names = nativeGetOwnPropertyNames(toIndexedObject(O));
+    var result = [];
+    $forEach(names, function (key) {
+        if (!hasOwn(AllSymbols, key) && !hasOwn(hiddenKeys, key))
+            push(result, key);
+    });
+    return result;
+};
+var $getOwnPropertySymbols = function (O) {
+    var IS_OBJECT_PROTOTYPE = O === ObjectPrototype;
+    var names = nativeGetOwnPropertyNames(IS_OBJECT_PROTOTYPE ? ObjectPrototypeSymbols : toIndexedObject(O));
+    var result = [];
+    $forEach(names, function (key) {
+        if (hasOwn(AllSymbols, key) && (!IS_OBJECT_PROTOTYPE || hasOwn(ObjectPrototype, key))) {
+            push(result, AllSymbols[key]);
+        }
+    });
+    return result;
+};
+if (!NATIVE_SYMBOL) {
+    $Symbol = function Symbol() {
+        if (isPrototypeOf(SymbolPrototype, this))
+            throw TypeError('Symbol is not a constructor');
+        var description = !arguments.length || arguments[0] === undefined ? undefined : $toString(arguments[0]);
+        var tag = uid(description);
+        var setter = function (value) {
+            if (this === ObjectPrototype)
+                call(setter, ObjectPrototypeSymbols, value);
+            if (hasOwn(this, HIDDEN) && hasOwn(this[HIDDEN], tag))
+                this[HIDDEN][tag] = false;
+            setSymbolDescriptor(this, tag, createPropertyDescriptor(1, value));
+        };
+        if (DESCRIPTORS && USE_SETTER)
+            setSymbolDescriptor(ObjectPrototype, tag, { configurable: true, set: setter });
+        return wrap(tag, description);
+    };
+    SymbolPrototype = $Symbol[PROTOTYPE];
+    defineBuiltIn(SymbolPrototype, 'toString', function toString() {
+        return getInternalState(this).tag;
+    });
+    defineBuiltIn($Symbol, 'withoutSetter', function (description) {
+        return wrap(uid(description), description);
+    });
+    propertyIsEnumerableModule.f = $propertyIsEnumerable;
+    definePropertyModule.f = $defineProperty;
+    definePropertiesModule.f = $defineProperties;
+    getOwnPropertyDescriptorModule.f = $getOwnPropertyDescriptor;
+    getOwnPropertyNamesModule.f = getOwnPropertyNamesExternal.f = $getOwnPropertyNames;
+    getOwnPropertySymbolsModule.f = $getOwnPropertySymbols;
+    wrappedWellKnownSymbolModule.f = function (name) {
+        return wrap(wellKnownSymbol(name), name);
+    };
+    if (DESCRIPTORS) {
+        nativeDefineProperty(SymbolPrototype, 'description', {
+            configurable: true,
+            get: function description() {
+                return getInternalState(this).description;
+            }
+        });
+        if (!IS_PURE) {
+            defineBuiltIn(ObjectPrototype, 'propertyIsEnumerable', $propertyIsEnumerable, { unsafe: true });
+        }
+    }
+}
+$({ global: true, constructor: true, wrap: true, forced: !NATIVE_SYMBOL, sham: !NATIVE_SYMBOL }, {
+    Symbol: $Symbol
+});
+$forEach(objectKeys(WellKnownSymbolsStore), function (name) {
+    defineWellKnownSymbol(name);
+});
+$({ target: SYMBOL, stat: true, forced: !NATIVE_SYMBOL }, {
+    useSetter: function () { USE_SETTER = true; },
+    useSimple: function () { USE_SETTER = false; }
+});
+$({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL, sham: !DESCRIPTORS }, {
+    create: $create,
+    defineProperty: $defineProperty,
+    defineProperties: $defineProperties,
+    getOwnPropertyDescriptor: $getOwnPropertyDescriptor
+});
+$({ target: 'Object', stat: true, forced: !NATIVE_SYMBOL }, {
+    getOwnPropertyNames: $getOwnPropertyNames
+});
+defineSymbolToPrimitive();
+setToStringTag($Symbol, SYMBOL);
+hiddenKeys[HIDDEN] = true;
+
+
+/***/ }),
+
+/***/ 64514:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(50791);
+var DESCRIPTORS = __webpack_require__(13873);
+var global = __webpack_require__(37042);
+var uncurryThis = __webpack_require__(90838);
+var hasOwn = __webpack_require__(14434);
+var isCallable = __webpack_require__(794);
+var isPrototypeOf = __webpack_require__(54671);
+var toString = __webpack_require__(63046);
+var defineProperty = (__webpack_require__(73252).f);
+var copyConstructorProperties = __webpack_require__(58392);
+var NativeSymbol = global.Symbol;
+var SymbolPrototype = NativeSymbol && NativeSymbol.prototype;
+if (DESCRIPTORS && isCallable(NativeSymbol) && (!('description' in SymbolPrototype) ||
+    NativeSymbol().description !== undefined)) {
+    var EmptyStringDescriptionStore = {};
+    var SymbolWrapper = function Symbol() {
+        var description = arguments.length < 1 || arguments[0] === undefined ? undefined : toString(arguments[0]);
+        var result = isPrototypeOf(SymbolPrototype, this)
+            ? new NativeSymbol(description)
+            : description === undefined ? NativeSymbol() : NativeSymbol(description);
+        if (description === '')
+            EmptyStringDescriptionStore[result] = true;
+        return result;
+    };
+    copyConstructorProperties(SymbolWrapper, NativeSymbol);
+    SymbolWrapper.prototype = SymbolPrototype;
+    SymbolPrototype.constructor = SymbolWrapper;
+    var NATIVE_SYMBOL = String(NativeSymbol('test')) == 'Symbol(test)';
+    var symbolToString = uncurryThis(SymbolPrototype.toString);
+    var symbolValueOf = uncurryThis(SymbolPrototype.valueOf);
+    var regexp = /^Symbol\((.*)\)[^)]+$/;
+    var replace = uncurryThis(''.replace);
+    var stringSlice = uncurryThis(''.slice);
+    defineProperty(SymbolPrototype, 'description', {
+        configurable: true,
+        get: function description() {
+            var symbol = symbolValueOf(this);
+            var string = symbolToString(symbol);
+            if (hasOwn(EmptyStringDescriptionStore, symbol))
+                return '';
+            var desc = NATIVE_SYMBOL ? stringSlice(string, 7, -1) : replace(string, regexp, '$1');
+            return desc === '' ? undefined : desc;
+        }
+    });
+    $({ global: true, constructor: true, forced: true }, {
+        Symbol: SymbolWrapper
+    });
+}
+
+
+/***/ }),
+
+/***/ 56202:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(50791);
+var getBuiltIn = __webpack_require__(98945);
+var hasOwn = __webpack_require__(14434);
+var toString = __webpack_require__(63046);
+var shared = __webpack_require__(95138);
+var NATIVE_SYMBOL_REGISTRY = __webpack_require__(14413);
+var StringToSymbolRegistry = shared('string-to-symbol-registry');
+var SymbolToStringRegistry = shared('symbol-to-string-registry');
+$({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY }, {
+    'for': function (key) {
+        var string = toString(key);
+        if (hasOwn(StringToSymbolRegistry, string))
+            return StringToSymbolRegistry[string];
+        var symbol = getBuiltIn('Symbol')(string);
+        StringToSymbolRegistry[string] = symbol;
+        SymbolToStringRegistry[symbol] = string;
+        return symbol;
+    }
+});
+
+
+/***/ }),
+
+/***/ 30733:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+defineWellKnownSymbol('hasInstance');
+
+
+/***/ }),
+
+/***/ 40327:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+defineWellKnownSymbol('isConcatSpreadable');
+
+
+/***/ }),
+
+/***/ 53639:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+defineWellKnownSymbol('iterator');
+
+
+/***/ }),
+
+/***/ 95661:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+__webpack_require__(9656);
+__webpack_require__(56202);
+__webpack_require__(71940);
+__webpack_require__(67507);
+__webpack_require__(30165);
+
+
+/***/ }),
+
+/***/ 71940:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(50791);
+var hasOwn = __webpack_require__(14434);
+var isSymbol = __webpack_require__(88253);
+var tryToString = __webpack_require__(98418);
+var shared = __webpack_require__(95138);
+var NATIVE_SYMBOL_REGISTRY = __webpack_require__(14413);
+var SymbolToStringRegistry = shared('symbol-to-string-registry');
+$({ target: 'Symbol', stat: true, forced: !NATIVE_SYMBOL_REGISTRY }, {
+    keyFor: function keyFor(sym) {
+        if (!isSymbol(sym))
+            throw TypeError(tryToString(sym) + ' is not a symbol');
+        if (hasOwn(SymbolToStringRegistry, sym))
+            return SymbolToStringRegistry[sym];
+    }
+});
+
+
+/***/ }),
+
+/***/ 7290:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+defineWellKnownSymbol('matchAll');
+
+
+/***/ }),
+
+/***/ 6147:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+defineWellKnownSymbol('match');
+
+
+/***/ }),
+
+/***/ 95122:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+defineWellKnownSymbol('replace');
+
+
+/***/ }),
+
+/***/ 61322:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+defineWellKnownSymbol('search');
+
+
+/***/ }),
+
+/***/ 39605:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+defineWellKnownSymbol('species');
+
+
+/***/ }),
+
+/***/ 49341:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+defineWellKnownSymbol('split');
+
+
+/***/ }),
+
+/***/ 28809:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+var defineSymbolToPrimitive = __webpack_require__(13829);
+defineWellKnownSymbol('toPrimitive');
+defineSymbolToPrimitive();
+
+
+/***/ }),
+
+/***/ 82658:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var getBuiltIn = __webpack_require__(98945);
+var defineWellKnownSymbol = __webpack_require__(24637);
+var setToStringTag = __webpack_require__(44532);
+defineWellKnownSymbol('toStringTag');
+setToStringTag(getBuiltIn('Symbol'), 'Symbol');
+
+
+/***/ }),
+
+/***/ 43967:
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var defineWellKnownSymbol = __webpack_require__(24637);
+defineWellKnownSymbol('unscopables');
+
+
+/***/ }),
+
+/***/ 690:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+module.exports = (__webpack_require__(26002).polyfill)();
+
+
+/***/ }),
+
+/***/ 26002:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * @overview es6-promise - a tiny implementation of Promises/A+.
+ * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
+ * @license   Licensed under MIT license
+ *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
+ * @version   v4.2.8+1e68dce6
+ */
+(function (global, factory) {
+     true ? module.exports = factory() :
+        0;
+}(this, (function () {
+    'use strict';
+    function objectOrFunction(x) {
+        var type = typeof x;
+        return x !== null && (type === 'object' || type === 'function');
+    }
+    function isFunction(x) {
+        return typeof x === 'function';
+    }
+    var _isArray = void 0;
+    if (Array.isArray) {
+        _isArray = Array.isArray;
+    }
+    else {
+        _isArray = function (x) {
+            return Object.prototype.toString.call(x) === '[object Array]';
+        };
+    }
+    var isArray = _isArray;
+    var len = 0;
+    var vertxNext = void 0;
+    var customSchedulerFn = void 0;
+    var asap = function asap(callback, arg) {
+        queue[len] = callback;
+        queue[len + 1] = arg;
+        len += 2;
+        if (len === 2) {
+            if (customSchedulerFn) {
+                customSchedulerFn(flush);
+            }
+            else {
+                scheduleFlush();
+            }
+        }
+    };
+    function setScheduler(scheduleFn) {
+        customSchedulerFn = scheduleFn;
+    }
+    function setAsap(asapFn) {
+        asap = asapFn;
+    }
+    var browserWindow = typeof window !== 'undefined' ? window : undefined;
+    var browserGlobal = browserWindow || {};
+    var BrowserMutationObserver = browserGlobal.MutationObserver || browserGlobal.WebKitMutationObserver;
+    var isNode = typeof self === 'undefined' && typeof process !== 'undefined' && {}.toString.call(process) === '[object process]';
+    var isWorker = typeof Uint8ClampedArray !== 'undefined' && typeof importScripts !== 'undefined' && typeof MessageChannel !== 'undefined';
+    function useNextTick() {
+        return function () {
+            return process.nextTick(flush);
+        };
+    }
+    function useVertxTimer() {
+        if (typeof vertxNext !== 'undefined') {
+            return function () {
+                vertxNext(flush);
+            };
+        }
+        return useSetTimeout();
+    }
+    function useMutationObserver() {
+        var iterations = 0;
+        var observer = new BrowserMutationObserver(flush);
+        var node = document.createTextNode('');
+        observer.observe(node, { characterData: true });
+        return function () {
+            node.data = iterations = ++iterations % 2;
+        };
+    }
+    function useMessageChannel() {
+        var channel = new MessageChannel();
+        channel.port1.onmessage = flush;
+        return function () {
+            return channel.port2.postMessage(0);
+        };
+    }
+    function useSetTimeout() {
+        var globalSetTimeout = setTimeout;
+        return function () {
+            return globalSetTimeout(flush, 1);
+        };
+    }
+    var queue = new Array(1000);
+    function flush() {
+        for (var i = 0; i < len; i += 2) {
+            var callback = queue[i];
+            var arg = queue[i + 1];
+            callback(arg);
+            queue[i] = undefined;
+            queue[i + 1] = undefined;
+        }
+        len = 0;
+    }
+    function attemptVertx() {
+        try {
+            var vertx = Function('return this')().require('vertx');
+            vertxNext = vertx.runOnLoop || vertx.runOnContext;
+            return useVertxTimer();
+        }
+        catch (e) {
+            return useSetTimeout();
+        }
+    }
+    var scheduleFlush = void 0;
+    if (isNode) {
+        scheduleFlush = useNextTick();
+    }
+    else if (BrowserMutationObserver) {
+        scheduleFlush = useMutationObserver();
+    }
+    else if (isWorker) {
+        scheduleFlush = useMessageChannel();
+    }
+    else if (browserWindow === undefined && "function" === 'function') {
+        scheduleFlush = attemptVertx();
+    }
+    else {
+        scheduleFlush = useSetTimeout();
+    }
+    function then(onFulfillment, onRejection) {
+        var parent = this;
+        var child = new this.constructor(noop);
+        if (child[PROMISE_ID] === undefined) {
+            makePromise(child);
+        }
+        var _state = parent._state;
+        if (_state) {
+            var callback = arguments[_state - 1];
+            asap(function () {
+                return invokeCallback(_state, child, callback, parent._result);
+            });
+        }
+        else {
+            subscribe(parent, child, onFulfillment, onRejection);
+        }
+        return child;
+    }
+    function resolve$1(object) {
+        var Constructor = this;
+        if (object && typeof object === 'object' && object.constructor === Constructor) {
+            return object;
+        }
+        var promise = new Constructor(noop);
+        resolve(promise, object);
+        return promise;
+    }
+    var PROMISE_ID = Math.random().toString(36).substring(2);
+    function noop() { }
+    var PENDING = void 0;
+    var FULFILLED = 1;
+    var REJECTED = 2;
+    function selfFulfillment() {
+        return new TypeError("You cannot resolve a promise with itself");
+    }
+    function cannotReturnOwn() {
+        return new TypeError('A promises callback cannot return that same promise.');
+    }
+    function tryThen(then$$1, value, fulfillmentHandler, rejectionHandler) {
+        try {
+            then$$1.call(value, fulfillmentHandler, rejectionHandler);
+        }
+        catch (e) {
+            return e;
+        }
+    }
+    function handleForeignThenable(promise, thenable, then$$1) {
+        asap(function (promise) {
+            var sealed = false;
+            var error = tryThen(then$$1, thenable, function (value) {
+                if (sealed) {
+                    return;
+                }
+                sealed = true;
+                if (thenable !== value) {
+                    resolve(promise, value);
+                }
+                else {
+                    fulfill(promise, value);
+                }
+            }, function (reason) {
+                if (sealed) {
+                    return;
+                }
+                sealed = true;
+                reject(promise, reason);
+            }, 'Settle: ' + (promise._label || ' unknown promise'));
+            if (!sealed && error) {
+                sealed = true;
+                reject(promise, error);
+            }
+        }, promise);
+    }
+    function handleOwnThenable(promise, thenable) {
+        if (thenable._state === FULFILLED) {
+            fulfill(promise, thenable._result);
+        }
+        else if (thenable._state === REJECTED) {
+            reject(promise, thenable._result);
+        }
+        else {
+            subscribe(thenable, undefined, function (value) {
+                return resolve(promise, value);
+            }, function (reason) {
+                return reject(promise, reason);
+            });
+        }
+    }
+    function handleMaybeThenable(promise, maybeThenable, then$$1) {
+        if (maybeThenable.constructor === promise.constructor && then$$1 === then && maybeThenable.constructor.resolve === resolve$1) {
+            handleOwnThenable(promise, maybeThenable);
+        }
+        else {
+            if (then$$1 === undefined) {
+                fulfill(promise, maybeThenable);
+            }
+            else if (isFunction(then$$1)) {
+                handleForeignThenable(promise, maybeThenable, then$$1);
+            }
+            else {
+                fulfill(promise, maybeThenable);
+            }
+        }
+    }
+    function resolve(promise, value) {
+        if (promise === value) {
+            reject(promise, selfFulfillment());
+        }
+        else if (objectOrFunction(value)) {
+            var then$$1 = void 0;
+            try {
+                then$$1 = value.then;
+            }
+            catch (error) {
+                reject(promise, error);
+                return;
+            }
+            handleMaybeThenable(promise, value, then$$1);
+        }
+        else {
+            fulfill(promise, value);
+        }
+    }
+    function publishRejection(promise) {
+        if (promise._onerror) {
+            promise._onerror(promise._result);
+        }
+        publish(promise);
+    }
+    function fulfill(promise, value) {
+        if (promise._state !== PENDING) {
+            return;
+        }
+        promise._result = value;
+        promise._state = FULFILLED;
+        if (promise._subscribers.length !== 0) {
+            asap(publish, promise);
+        }
+    }
+    function reject(promise, reason) {
+        if (promise._state !== PENDING) {
+            return;
+        }
+        promise._state = REJECTED;
+        promise._result = reason;
+        asap(publishRejection, promise);
+    }
+    function subscribe(parent, child, onFulfillment, onRejection) {
+        var _subscribers = parent._subscribers;
+        var length = _subscribers.length;
+        parent._onerror = null;
+        _subscribers[length] = child;
+        _subscribers[length + FULFILLED] = onFulfillment;
+        _subscribers[length + REJECTED] = onRejection;
+        if (length === 0 && parent._state) {
+            asap(publish, parent);
+        }
+    }
+    function publish(promise) {
+        var subscribers = promise._subscribers;
+        var settled = promise._state;
+        if (subscribers.length === 0) {
+            return;
+        }
+        var child = void 0, callback = void 0, detail = promise._result;
+        for (var i = 0; i < subscribers.length; i += 3) {
+            child = subscribers[i];
+            callback = subscribers[i + settled];
+            if (child) {
+                invokeCallback(settled, child, callback, detail);
+            }
+            else {
+                callback(detail);
+            }
+        }
+        promise._subscribers.length = 0;
+    }
+    function invokeCallback(settled, promise, callback, detail) {
+        var hasCallback = isFunction(callback), value = void 0, error = void 0, succeeded = true;
+        if (hasCallback) {
+            try {
+                value = callback(detail);
+            }
+            catch (e) {
+                succeeded = false;
+                error = e;
+            }
+            if (promise === value) {
+                reject(promise, cannotReturnOwn());
+                return;
+            }
+        }
+        else {
+            value = detail;
+        }
+        if (promise._state !== PENDING) {
+        }
+        else if (hasCallback && succeeded) {
+            resolve(promise, value);
+        }
+        else if (succeeded === false) {
+            reject(promise, error);
+        }
+        else if (settled === FULFILLED) {
+            fulfill(promise, value);
+        }
+        else if (settled === REJECTED) {
+            reject(promise, value);
+        }
+    }
+    function initializePromise(promise, resolver) {
+        try {
+            resolver(function resolvePromise(value) {
+                resolve(promise, value);
+            }, function rejectPromise(reason) {
+                reject(promise, reason);
+            });
+        }
+        catch (e) {
+            reject(promise, e);
+        }
+    }
+    var id = 0;
+    function nextId() {
+        return id++;
+    }
+    function makePromise(promise) {
+        promise[PROMISE_ID] = id++;
+        promise._state = undefined;
+        promise._result = undefined;
+        promise._subscribers = [];
+    }
+    function validationError() {
+        return new Error('Array Methods must be provided an Array');
+    }
+    var Enumerator = function () {
+        function Enumerator(Constructor, input) {
+            this._instanceConstructor = Constructor;
+            this.promise = new Constructor(noop);
+            if (!this.promise[PROMISE_ID]) {
+                makePromise(this.promise);
+            }
+            if (isArray(input)) {
+                this.length = input.length;
+                this._remaining = input.length;
+                this._result = new Array(this.length);
+                if (this.length === 0) {
+                    fulfill(this.promise, this._result);
+                }
+                else {
+                    this.length = this.length || 0;
+                    this._enumerate(input);
+                    if (this._remaining === 0) {
+                        fulfill(this.promise, this._result);
+                    }
+                }
+            }
+            else {
+                reject(this.promise, validationError());
+            }
+        }
+        Enumerator.prototype._enumerate = function _enumerate(input) {
+            for (var i = 0; this._state === PENDING && i < input.length; i++) {
+                this._eachEntry(input[i], i);
+            }
+        };
+        Enumerator.prototype._eachEntry = function _eachEntry(entry, i) {
+            var c = this._instanceConstructor;
+            var resolve$$1 = c.resolve;
+            if (resolve$$1 === resolve$1) {
+                var _then = void 0;
+                var error = void 0;
+                var didError = false;
+                try {
+                    _then = entry.then;
+                }
+                catch (e) {
+                    didError = true;
+                    error = e;
+                }
+                if (_then === then && entry._state !== PENDING) {
+                    this._settledAt(entry._state, i, entry._result);
+                }
+                else if (typeof _then !== 'function') {
+                    this._remaining--;
+                    this._result[i] = entry;
+                }
+                else if (c === Promise$1) {
+                    var promise = new c(noop);
+                    if (didError) {
+                        reject(promise, error);
+                    }
+                    else {
+                        handleMaybeThenable(promise, entry, _then);
+                    }
+                    this._willSettleAt(promise, i);
+                }
+                else {
+                    this._willSettleAt(new c(function (resolve$$1) {
+                        return resolve$$1(entry);
+                    }), i);
+                }
+            }
+            else {
+                this._willSettleAt(resolve$$1(entry), i);
+            }
+        };
+        Enumerator.prototype._settledAt = function _settledAt(state, i, value) {
+            var promise = this.promise;
+            if (promise._state === PENDING) {
+                this._remaining--;
+                if (state === REJECTED) {
+                    reject(promise, value);
+                }
+                else {
+                    this._result[i] = value;
+                }
+            }
+            if (this._remaining === 0) {
+                fulfill(promise, this._result);
+            }
+        };
+        Enumerator.prototype._willSettleAt = function _willSettleAt(promise, i) {
+            var enumerator = this;
+            subscribe(promise, undefined, function (value) {
+                return enumerator._settledAt(FULFILLED, i, value);
+            }, function (reason) {
+                return enumerator._settledAt(REJECTED, i, reason);
+            });
+        };
+        return Enumerator;
+    }();
+    function all(entries) {
+        return new Enumerator(this, entries).promise;
+    }
+    function race(entries) {
+        var Constructor = this;
+        if (!isArray(entries)) {
+            return new Constructor(function (_, reject) {
+                return reject(new TypeError('You must pass an array to race.'));
+            });
+        }
+        else {
+            return new Constructor(function (resolve, reject) {
+                var length = entries.length;
+                for (var i = 0; i < length; i++) {
+                    Constructor.resolve(entries[i]).then(resolve, reject);
+                }
+            });
+        }
+    }
+    function reject$1(reason) {
+        var Constructor = this;
+        var promise = new Constructor(noop);
+        reject(promise, reason);
+        return promise;
+    }
+    function needsResolver() {
+        throw new TypeError('You must pass a resolver function as the first argument to the promise constructor');
+    }
+    function needsNew() {
+        throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");
+    }
+    var Promise$1 = function () {
+        function Promise(resolver) {
+            this[PROMISE_ID] = nextId();
+            this._result = this._state = undefined;
+            this._subscribers = [];
+            if (noop !== resolver) {
+                typeof resolver !== 'function' && needsResolver();
+                this instanceof Promise ? initializePromise(this, resolver) : needsNew();
+            }
+        }
+        Promise.prototype.catch = function _catch(onRejection) {
+            return this.then(null, onRejection);
+        };
+        Promise.prototype.finally = function _finally(callback) {
+            var promise = this;
+            var constructor = promise.constructor;
+            if (isFunction(callback)) {
+                return promise.then(function (value) {
+                    return constructor.resolve(callback()).then(function () {
+                        return value;
+                    });
+                }, function (reason) {
+                    return constructor.resolve(callback()).then(function () {
+                        throw reason;
+                    });
+                });
+            }
+            return promise.then(callback, callback);
+        };
+        return Promise;
+    }();
+    Promise$1.prototype.then = then;
+    Promise$1.all = all;
+    Promise$1.race = race;
+    Promise$1.resolve = resolve$1;
+    Promise$1.reject = reject$1;
+    Promise$1._setScheduler = setScheduler;
+    Promise$1._setAsap = setAsap;
+    Promise$1._asap = asap;
+    function polyfill() {
+        var local = void 0;
+        if (typeof __webpack_require__.g !== 'undefined') {
+            local = __webpack_require__.g;
+        }
+        else if (typeof self !== 'undefined') {
+            local = self;
+        }
+        else {
+            try {
+                local = Function('return this')();
+            }
+            catch (e) {
+                throw new Error('polyfill failed because global object is unavailable in this environment');
+            }
+        }
+        var P = local.Promise;
+        if (P) {
+            var promiseToString = null;
+            try {
+                promiseToString = Object.prototype.toString.call(P.resolve());
+            }
+            catch (e) {
+            }
+            if (promiseToString === '[object Promise]' && !P.cast) {
+                return;
+            }
+        }
+        local.Promise = Promise$1;
+    }
+    Promise$1.polyfill = polyfill;
+    Promise$1.Promise = Promise$1;
+    return Promise$1;
+})));
 
 
 /***/ }),
@@ -1759,142 +6005,161 @@ Config.prototype.controls = {};
 /***/ }),
 
 /***/ 14722:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Async": function() { return /* binding */ Async; }
-/* harmony export */ });
-/* harmony import */ var jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(97336);
-/* harmony import */ var jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(84121);
-/* harmony import */ var jodit_core_helpers_checker_is_plain_object__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(77184);
-/* harmony import */ var jodit_core_helpers_checker_is_promise__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30317);
-/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(40607);
-/* harmony import */ var jodit_core_helpers_checker_is_number__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(93860);
+
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-
-
-
-
-
-class Async {
-    constructor() {
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Async = void 0;
+var tslib_1 = __webpack_require__(20255);
+var async_1 = __webpack_require__(97336);
+var is_function_1 = __webpack_require__(84121);
+var is_plain_object_1 = __webpack_require__(77184);
+var is_promise_1 = __webpack_require__(30317);
+var is_string_1 = __webpack_require__(40607);
+var is_number_1 = __webpack_require__(93860);
+var Async = (function () {
+    function Async() {
+        var _this = this;
         var _a, _b, _c, _d;
         this.timers = new Map();
         this.promisesRejections = new Set();
         this.requestsIdle = new Set();
         this.requestsRaf = new Set();
-        this.requestIdleCallbackNative = (_b = (_a = window['requestIdleCallback']) === null || _a === void 0 ? void 0 : _a.bind(window)) !== null && _b !== void 0 ? _b : ((callback, options) => {
+        this.requestIdleCallbackNative = (_b = (_a = window['requestIdleCallback']) === null || _a === void 0 ? void 0 : _a.bind(window)) !== null && _b !== void 0 ? _b : (function (callback, options) {
             var _a;
-            const start = Date.now();
-            return this.setTimeout(() => {
+            var start = Date.now();
+            return _this.setTimeout(function () {
                 callback({
                     didTimeout: false,
-                    timeRemaining: () => Math.max(0, 50 - (Date.now() - start))
+                    timeRemaining: function () { return Math.max(0, 50 - (Date.now() - start)); }
                 });
             }, (_a = options === null || options === void 0 ? void 0 : options.timeout) !== null && _a !== void 0 ? _a : 1);
         });
-        this.cancelIdleCallbackNative = (_d = (_c = window['cancelIdleCallback']) === null || _c === void 0 ? void 0 : _c.bind(window)) !== null && _d !== void 0 ? _d : ((request) => {
-            this.clearTimeout(request);
+        this.cancelIdleCallbackNative = (_d = (_c = window['cancelIdleCallback']) === null || _c === void 0 ? void 0 : _c.bind(window)) !== null && _d !== void 0 ? _d : (function (request) {
+            _this.clearTimeout(request);
         });
         this.isDestructed = false;
     }
-    delay(timeout) {
-        return this.promise(resolve => this.setTimeout(resolve, timeout));
-    }
-    setTimeout(callback, timeout, ...args) {
+    Async.prototype.delay = function (timeout) {
+        var _this = this;
+        return this.promise(function (resolve) { return _this.setTimeout(resolve, timeout); });
+    };
+    Async.prototype.setTimeout = function (callback, timeout) {
+        var args = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            args[_i - 2] = arguments[_i];
+        }
         if (this.isDestructed) {
             return 0;
         }
-        let options = {};
-        if (!(0,jodit_core_helpers_checker_is_number__WEBPACK_IMPORTED_MODULE_5__.isNumber)(timeout)) {
+        var options = {};
+        if (!(0, is_number_1.isNumber)(timeout)) {
             options = timeout;
             timeout = options.timeout || 0;
         }
         if (options.label) {
             this.clearLabel(options.label);
         }
-        const timer = (0,jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_0__.setTimeout)(callback, timeout, ...args), key = options.label || timer;
+        var timer = async_1.setTimeout.apply(void 0, tslib_1.__spreadArray([callback, timeout], tslib_1.__read(args), false)), key = options.label || timer;
         this.timers.set(key, timer);
         return timer;
-    }
-    clearLabel(label) {
+    };
+    Async.prototype.clearLabel = function (label) {
         if (label && this.timers.has(label)) {
-            (0,jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_0__.clearTimeout)(this.timers.get(label));
+            (0, async_1.clearTimeout)(this.timers.get(label));
             this.timers.delete(label);
         }
-    }
-    clearTimeout(timerOrLabel) {
-        if ((0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_4__.isString)(timerOrLabel)) {
+    };
+    Async.prototype.clearTimeout = function (timerOrLabel) {
+        if ((0, is_string_1.isString)(timerOrLabel)) {
             return this.clearLabel(timerOrLabel);
         }
-        (0,jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_0__.clearTimeout)(timerOrLabel);
+        (0, async_1.clearTimeout)(timerOrLabel);
         this.timers.delete(timerOrLabel);
-    }
-    debounce(fn, timeout, firstCallImmediately = false) {
-        let timer = 0, fired = false;
-        const promises = [];
-        const callFn = (...args) => {
+    };
+    Async.prototype.debounce = function (fn, timeout, firstCallImmediately) {
+        var _this = this;
+        if (firstCallImmediately === void 0) { firstCallImmediately = false; }
+        var timer = 0, fired = false;
+        var promises = [];
+        var callFn = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
             if (!fired) {
                 timer = 0;
-                const res = fn(...args);
+                var res = fn.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(args), false));
                 fired = true;
                 if (promises.length) {
-                    const runPromises = () => {
-                        promises.forEach(res => res());
+                    var runPromises = function () {
+                        promises.forEach(function (res) { return res(); });
                         promises.length = 0;
                     };
-                    (0,jodit_core_helpers_checker_is_promise__WEBPACK_IMPORTED_MODULE_3__.isPromise)(res) ? res.finally(runPromises) : runPromises();
+                    (0, is_promise_1.isPromise)(res) ? res.finally(runPromises) : runPromises();
                 }
             }
         };
-        const onFire = (...args) => {
+        var onFire = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
             fired = false;
             if (!timeout) {
-                callFn(...args);
+                callFn.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(args), false));
             }
             else {
                 if (!timer && firstCallImmediately) {
-                    callFn(...args);
+                    callFn.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(args), false));
                 }
-                (0,jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_0__.clearTimeout)(timer);
-                timer = this.setTimeout(() => callFn(...args), (0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_1__.isFunction)(timeout) ? timeout() : timeout);
-                this.timers.set(fn, timer);
+                (0, async_1.clearTimeout)(timer);
+                timer = _this.setTimeout(function () { return callFn.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(args), false)); }, (0, is_function_1.isFunction)(timeout) ? timeout() : timeout);
+                _this.timers.set(fn, timer);
             }
         };
-        return (0,jodit_core_helpers_checker_is_plain_object__WEBPACK_IMPORTED_MODULE_2__.isPlainObject)(timeout) && timeout.promisify
-            ? (...args) => {
-                const promise = this.promise(res => {
+        return (0, is_plain_object_1.isPlainObject)(timeout) && timeout.promisify
+            ? function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                var promise = _this.promise(function (res) {
                     promises.push(res);
                 });
-                onFire(...args);
+                onFire.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(args), false));
                 return promise;
             }
             : onFire;
-    }
-    throttle(fn, timeout, ignore = false) {
-        let timer = null, needInvoke, callee, lastArgs;
-        return (...args) => {
+    };
+    Async.prototype.throttle = function (fn, timeout, ignore) {
+        var _this = this;
+        if (ignore === void 0) { ignore = false; }
+        var timer = null, needInvoke, callee, lastArgs;
+        return function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
             needInvoke = true;
             lastArgs = args;
             if (!timeout) {
-                fn(...lastArgs);
+                fn.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(lastArgs), false));
                 return;
             }
             if (!timer) {
-                callee = () => {
+                callee = function () {
                     if (needInvoke) {
-                        fn(...lastArgs);
+                        fn.apply(void 0, tslib_1.__spreadArray([], tslib_1.__read(lastArgs), false));
                         needInvoke = false;
-                        timer = this.setTimeout(callee, (0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_1__.isFunction)(timeout) ? timeout() : timeout);
-                        this.timers.set(callee, timer);
+                        timer = _this.setTimeout(callee, (0, is_function_1.isFunction)(timeout) ? timeout() : timeout);
+                        _this.timers.set(callee, timer);
                     }
                     else {
                         timer = null;
@@ -1903,80 +6168,93 @@ class Async {
                 callee();
             }
         };
-    }
-    promise(executor) {
-        let rejectCallback = () => { };
-        const promise = new Promise((resolve, reject) => {
-            this.promisesRejections.add(reject);
+    };
+    Async.prototype.promise = function (executor) {
+        var _this = this;
+        var rejectCallback = function () { };
+        var promise = new Promise(function (resolve, reject) {
+            _this.promisesRejections.add(reject);
             rejectCallback = reject;
             return executor(resolve, reject);
         });
-        if (!promise.finally && "es2018" !== 'es2018') {}
+        if (!promise.finally && "es5" !== 'es2018') {
+            promise.finally = function (onfinally) {
+                promise.then(onfinally).catch(onfinally);
+                return promise;
+            };
+        }
         promise
-            .finally(() => {
-            this.promisesRejections.delete(rejectCallback);
+            .finally(function () {
+            _this.promisesRejections.delete(rejectCallback);
         })
-            .catch(() => null);
+            .catch(function () { return null; });
         promise.rejectCallback = rejectCallback;
         return promise;
-    }
-    promiseState(p) {
+    };
+    Async.prototype.promiseState = function (p) {
+        var _this = this;
         if (p.status) {
             return p.status;
         }
         if (!Promise.race) {
-            return new Promise(resolve => {
-                p.then(v => {
+            return new Promise(function (resolve) {
+                p.then(function (v) {
                     resolve('fulfilled');
                     return v;
-                }, e => {
+                }, function (e) {
                     resolve('rejected');
                     throw e;
                 });
-                this.setTimeout(() => {
+                _this.setTimeout(function () {
                     resolve('pending');
                 }, 100);
             });
         }
-        const t = {};
-        return Promise.race([p, t]).then(v => (v === t ? 'pending' : 'fulfilled'), () => 'rejected');
-    }
-    requestIdleCallback(callback, options) {
-        const request = this.requestIdleCallbackNative(callback, options);
+        var t = {};
+        return Promise.race([p, t]).then(function (v) { return (v === t ? 'pending' : 'fulfilled'); }, function () { return 'rejected'; });
+    };
+    Async.prototype.requestIdleCallback = function (callback, options) {
+        var request = this.requestIdleCallbackNative(callback, options);
         this.requestsIdle.add(request);
         return request;
-    }
-    requestIdlePromise(options) {
-        return this.promise(res => {
-            const request = this.requestIdleCallback(() => res(request), options);
+    };
+    Async.prototype.requestIdlePromise = function (options) {
+        var _this = this;
+        return this.promise(function (res) {
+            var request = _this.requestIdleCallback(function () { return res(request); }, options);
         });
-    }
-    cancelIdleCallback(request) {
+    };
+    Async.prototype.cancelIdleCallback = function (request) {
         this.requestsIdle.delete(request);
         return this.cancelIdleCallbackNative(request);
-    }
-    requestAnimationFrame(callback) {
-        const request = requestAnimationFrame(callback);
+    };
+    Async.prototype.requestAnimationFrame = function (callback) {
+        var request = requestAnimationFrame(callback);
         this.requestsRaf.add(request);
         return request;
-    }
-    cancelAnimationFrame(request) {
+    };
+    Async.prototype.cancelAnimationFrame = function (request) {
         this.requestsRaf.delete(request);
         cancelAnimationFrame(request);
-    }
-    clear() {
-        this.requestsIdle.forEach(key => this.cancelIdleCallback(key));
-        this.requestsRaf.forEach(key => this.cancelAnimationFrame(key));
-        this.timers.forEach(key => (0,jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_0__.clearTimeout)(this.timers.get(key)));
+    };
+    Async.prototype.clear = function () {
+        var _this = this;
+        this.requestsIdle.forEach(function (key) { return _this.cancelIdleCallback(key); });
+        this.requestsRaf.forEach(function (key) { return _this.cancelAnimationFrame(key); });
+        this.timers.forEach(function (key) {
+            return (0, async_1.clearTimeout)(_this.timers.get(key));
+        });
         this.timers.clear();
-        this.promisesRejections.forEach(reject => reject());
+        this.promisesRejections.forEach(function (reject) { return reject(); });
         this.promisesRejections.clear();
-    }
-    destruct() {
+    };
+    Async.prototype.destruct = function () {
         this.clear();
         this.isDestructed = true;
-    }
-}
+    };
+    return Async;
+}());
+exports.Async = Async;
 
 
 /***/ }),
@@ -7786,53 +12064,52 @@ exports.scrollIntoViewIfNeeded = scrollIntoViewIfNeeded;
 /***/ }),
 
 /***/ 78191:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "$$": function() { return /* binding */ $$; },
-/* harmony export */   "cssPath": function() { return /* binding */ cssPath; },
-/* harmony export */   "getXPathByElement": function() { return /* binding */ getXPathByElement; },
-/* harmony export */   "refs": function() { return /* binding */ refs; },
-/* harmony export */   "resolveElement": function() { return /* binding */ resolveElement; }
-/* harmony export */ });
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10063);
-/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40607);
-/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(73344);
-/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(43887);
-/* harmony import */ var jodit_core_helpers_string_camel_case__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(23912);
-/* harmony import */ var jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(42464);
-/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(71525);
-/* harmony import */ var jodit_core_component_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(12614);
+
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-
-
-
-
-
-
-
-let temp = 1;
-const $$temp = () => {
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.resolveElement = exports.cssPath = exports.refs = exports.getXPathByElement = exports.$$ = void 0;
+var constants_1 = __webpack_require__(10063);
+var is_string_1 = __webpack_require__(40607);
+var utils_1 = __webpack_require__(73344);
+var dom_1 = __webpack_require__(43887);
+var camel_case_1 = __webpack_require__(23912);
+var to_array_1 = __webpack_require__(42464);
+var element_1 = __webpack_require__(71525);
+var component_1 = __webpack_require__(12614);
+var temp = 1;
+var $$temp = function () {
     temp++;
     return temp;
 };
 function $$(selector, root) {
-    let result;
-    if (false) {}
+    var result;
+    if ( true &&
+        /:scope/.test(selector) &&
+        constants_1.IS_IE &&
+        !(root && root.nodeType === Node.DOCUMENT_NODE)) {
+        var id = root.id, temp_id = id ||
+            '_selector_id_' + String(Math.random()).slice(2) + $$temp();
+        selector = selector.replace(/:scope/g, '#' + temp_id);
+        !id && root.setAttribute('id', temp_id);
+        result = root.parentNode.querySelectorAll(selector);
+        if (!id) {
+            root.removeAttribute('id');
+        }
+    }
     else {
         result = root.querySelectorAll(selector);
     }
     return [].slice.call(result);
 }
-const getXPathByElement = (element, root) => {
+exports.$$ = $$;
+var getXPathByElement = function (element, root) {
     if (!element || element.nodeType !== Node.ELEMENT_NODE) {
         return '';
     }
@@ -7842,42 +12119,44 @@ const getXPathByElement = (element, root) => {
     if (element.id) {
         return "//*[@id='" + element.id + "']";
     }
-    const sames = [].filter.call(element.parentNode.childNodes, (x) => x.nodeName === element.nodeName);
-    return (getXPathByElement(element.parentNode, root) +
+    var sames = [].filter.call(element.parentNode.childNodes, function (x) { return x.nodeName === element.nodeName; });
+    return ((0, exports.getXPathByElement)(element.parentNode, root) +
         '/' +
         element.nodeName.toLowerCase() +
         (sames.length > 1
-            ? '[' + ((0,jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_5__.toArray)(sames).indexOf(element) + 1) + ']'
+            ? '[' + ((0, to_array_1.toArray)(sames).indexOf(element) + 1) + ']'
             : ''));
 };
-const refs = (root) => {
-    if (jodit_core_component_component__WEBPACK_IMPORTED_MODULE_7__.Component.isInstanceOf(root, jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_6__.UIElement)) {
+exports.getXPathByElement = getXPathByElement;
+var refs = function (root) {
+    if (component_1.Component.isInstanceOf(root, element_1.UIElement)) {
         root = root.container;
     }
-    return $$('[ref],[data-ref]', root).reduce((def, child) => {
-        const key = (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__.attr)(child, '-ref');
-        if (key && (0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_1__.isString)(key)) {
-            def[(0,jodit_core_helpers_string_camel_case__WEBPACK_IMPORTED_MODULE_4__.camelCase)(key)] = child;
+    return $$('[ref],[data-ref]', root).reduce(function (def, child) {
+        var key = (0, utils_1.attr)(child, '-ref');
+        if (key && (0, is_string_1.isString)(key)) {
+            def[(0, camel_case_1.camelCase)(key)] = child;
             def[key] = child;
         }
         return def;
     }, {});
 };
-const cssPath = (el) => {
-    if (!jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_3__.Dom.isElement(el)) {
+exports.refs = refs;
+var cssPath = function (el) {
+    if (!dom_1.Dom.isElement(el)) {
         return null;
     }
-    const path = [];
-    let start = el;
+    var path = [];
+    var start = el;
     while (start && start.nodeType === Node.ELEMENT_NODE) {
-        let selector = start.nodeName.toLowerCase();
+        var selector = start.nodeName.toLowerCase();
         if (start.id) {
             selector += '#' + start.id;
             path.unshift(selector);
             break;
         }
         else {
-            let sib = start, nth = 1;
+            var sib = start, nth = 1;
             do {
                 sib = sib.previousElementSibling;
                 if (sib && sib.nodeName.toLowerCase() === selector) {
@@ -7891,24 +12170,26 @@ const cssPath = (el) => {
     }
     return path.join(' > ');
 };
+exports.cssPath = cssPath;
 function resolveElement(element, od) {
-    let resolved = element;
-    if ((0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_1__.isString)(element)) {
+    var resolved = element;
+    if ((0, is_string_1.isString)(element)) {
         try {
             resolved = od.querySelector(element);
         }
         catch (_a) {
-            throw (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__.error)('String "' + element + '" should be valid HTML selector');
+            throw (0, utils_1.error)('String "' + element + '" should be valid HTML selector');
         }
     }
     if (!resolved ||
         typeof resolved !== 'object' ||
-        !jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_3__.Dom.isElement(resolved) ||
+        !dom_1.Dom.isElement(resolved) ||
         !resolved.cloneNode) {
-        throw (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__.error)('Element "' + element + '" should be string or HTMLElement instance');
+        throw (0, utils_1.error)('Element "' + element + '" should be string or HTMLElement instance');
     }
     return resolved;
 }
+exports.resolveElement = resolveElement;
 
 
 /***/ }),
@@ -13432,114 +17713,140 @@ exports.ViewWithToolbar = ViewWithToolbar;
 /***/ }),
 
 /***/ 23967:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "View": function() { return /* binding */ View; }
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(20255);
-/* harmony import */ var _storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42413);
-/* harmony import */ var _storage__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_storage__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(92654);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10063);
-/* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(46701);
-/* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_modules__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _global__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(58299);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9901);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _traits__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(27671);
-/* harmony import */ var _traits__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_traits__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _event_emitter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(42293);
-/* harmony import */ var _event_emitter__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_event_emitter__WEBPACK_IMPORTED_MODULE_7__);
+
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-
-
-
-
-
-
-
-
-class View extends _modules__WEBPACK_IMPORTED_MODULE_3__.Component {
-    constructor(options, isJodit = false) {
-        super();
-        this.isJodit = isJodit;
-        this.isView = true;
-        this.mods = {};
-        this.components = new Set();
-        this.version = "3.19.3";
-        this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__.Storage.makeStorage();
-        this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__.Storage.makeStorage(true, this.componentName);
-        this.OPTIONS = View.defaultOptions;
-        this.__isFullSize = false;
-        this.__whoLocked = '';
-        this.isLockedNotBy = (name) => this.isLocked && this.__whoLocked !== name;
-        this.__modulesInstances = new Map();
-        this.id = new Date().getTime().toString();
-        this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__.Storage.makeStorage();
-        this.initOptions(options);
-        this.initOwners();
-        this.events = new _event_emitter__WEBPACK_IMPORTED_MODULE_7__.EventEmitter(this.od);
-        this.create = new _modules__WEBPACK_IMPORTED_MODULE_3__.Create(this.od);
-        this.container = this.c.div();
-        this.container.classList.add('jodit');
-        this.progressbar = new _modules__WEBPACK_IMPORTED_MODULE_3__.ProgressBar(this);
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.View = void 0;
+var tslib_1 = __webpack_require__(20255);
+var storage_1 = __webpack_require__(42413);
+var helpers_1 = __webpack_require__(92654);
+var constants_1 = __webpack_require__(10063);
+var modules_1 = __webpack_require__(46701);
+var global_1 = __webpack_require__(58299);
+var decorators_1 = __webpack_require__(9901);
+var traits_1 = __webpack_require__(27671);
+var event_emitter_1 = __webpack_require__(42293);
+var View = (function (_super) {
+    tslib_1.__extends(View, _super);
+    function View(options, isJodit) {
+        if (isJodit === void 0) { isJodit = false; }
+        var _this = _super.call(this) || this;
+        _this.isJodit = isJodit;
+        _this.isView = true;
+        _this.mods = {};
+        _this.components = new Set();
+        _this.version = "3.19.3";
+        _this.buffer = storage_1.Storage.makeStorage();
+        _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
+        _this.OPTIONS = View.defaultOptions;
+        _this.__isFullSize = false;
+        _this.__whoLocked = '';
+        _this.isLockedNotBy = function (name) {
+            return _this.isLocked && _this.__whoLocked !== name;
+        };
+        _this.__modulesInstances = new Map();
+        _this.id = new Date().getTime().toString();
+        _this.buffer = storage_1.Storage.makeStorage();
+        _this.initOptions(options);
+        _this.initOwners();
+        _this.events = new event_emitter_1.EventEmitter(_this.od);
+        _this.create = new modules_1.Create(_this.od);
+        _this.container = _this.c.div();
+        _this.container.classList.add('jodit');
+        _this.progressbar = new modules_1.ProgressBar(_this);
+        return _this;
     }
-    setMod(...[name, value]) {
-        _traits__WEBPACK_IMPORTED_MODULE_6__.Mods.setMod.call(this, name, value);
-        return this;
-    }
-    getMod(name) {
-        return _traits__WEBPACK_IMPORTED_MODULE_6__.Mods.getMod.call(this, name);
-    }
-    getElm(elementName) {
-        return _traits__WEBPACK_IMPORTED_MODULE_6__.Elms.getElm.call(this, elementName);
-    }
-    getElms(elementName) {
-        return _traits__WEBPACK_IMPORTED_MODULE_6__.Elms.getElms.call(this, elementName);
-    }
-    get basePath() {
-        if (this.o.basePath) {
-            return this.o.basePath;
+    View.prototype.setMod = function () {
+        var _a = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            _a[_i] = arguments[_i];
         }
-        return jodit_core_constants__WEBPACK_IMPORTED_MODULE_2__.BASE_PATH;
-    }
-    get defaultTimeout() {
-        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isVoid)(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;
-    }
-    get c() {
-        return this.create;
-    }
-    get container() {
-        return this.__container;
-    }
-    set container(container) {
-        this.__container = container;
-    }
-    get e() {
-        return this.events;
-    }
-    get options() {
-        return this.__options;
-    }
-    set options(options) {
-        this.__options = options;
-    }
-    get o() {
-        return this.options;
-    }
-    i18n(text, ...params) {
-        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.i18n)(text, params, this.options);
-    }
-    toggleFullSize(isFullSize) {
+        var _b = tslib_1.__read(_a, 2), name = _b[0], value = _b[1];
+        traits_1.Mods.setMod.call(this, name, value);
+        return this;
+    };
+    View.prototype.getMod = function (name) {
+        return traits_1.Mods.getMod.call(this, name);
+    };
+    View.prototype.getElm = function (elementName) {
+        return traits_1.Elms.getElm.call(this, elementName);
+    };
+    View.prototype.getElms = function (elementName) {
+        return traits_1.Elms.getElms.call(this, elementName);
+    };
+    Object.defineProperty(View.prototype, "basePath", {
+        get: function () {
+            if (this.o.basePath) {
+                return this.o.basePath;
+            }
+            return constants_1.BASE_PATH;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "defaultTimeout", {
+        get: function () {
+            return (0, helpers_1.isVoid)(this.o.defaultTimeout) ? 100 : this.o.defaultTimeout;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "c", {
+        get: function () {
+            return this.create;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "container", {
+        get: function () {
+            return this.__container;
+        },
+        set: function (container) {
+            this.__container = container;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "e", {
+        get: function () {
+            return this.events;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "options", {
+        get: function () {
+            return this.__options;
+        },
+        set: function (options) {
+            this.__options = options;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "o", {
+        get: function () {
+            return this.options;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    View.prototype.i18n = function (text) {
+        var params = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            params[_i - 1] = arguments[_i];
+        }
+        return (0, helpers_1.i18n)(text, params, this.options);
+    };
+    View.prototype.toggleFullSize = function (isFullSize) {
         if (isFullSize === undefined) {
             isFullSize = !this.__isFullSize;
         }
@@ -13550,78 +17857,88 @@ class View extends _modules__WEBPACK_IMPORTED_MODULE_3__.Component {
         if (this.events) {
             this.e.fire('toggleFullSize', isFullSize);
         }
-    }
-    get isLocked() {
-        return this.__whoLocked !== '';
-    }
-    lock(name = 'any') {
+    };
+    Object.defineProperty(View.prototype, "isLocked", {
+        get: function () {
+            return this.__whoLocked !== '';
+        },
+        enumerable: false,
+        configurable: true
+    });
+    View.prototype.lock = function (name) {
+        if (name === void 0) { name = 'any'; }
         if (!this.isLocked) {
             this.__whoLocked = name;
             return true;
         }
         return false;
-    }
-    unlock() {
+    };
+    View.prototype.unlock = function () {
         if (this.isLocked) {
             this.__whoLocked = '';
             return true;
         }
         return false;
-    }
-    get isFullSize() {
-        return this.__isFullSize;
-    }
-    getVersion() {
+    };
+    Object.defineProperty(View.prototype, "isFullSize", {
+        get: function () {
+            return this.__isFullSize;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    View.prototype.getVersion = function () {
         return "3.19.3";
-    }
-    static getVersion() {
+    };
+    View.getVersion = function () {
         return "3.19.3";
-    }
-    initOptions(options) {
-        this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View.defaultOptions));
-    }
-    initOwners() {
+    };
+    View.prototype.initOptions = function (options) {
+        this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View.defaultOptions));
+    };
+    View.prototype.initOwners = function () {
         var _a;
         this.ownerWindow = (_a = this.o.ownerWindow) !== null && _a !== void 0 ? _a : window;
-    }
-    attachEvents(options) {
+    };
+    View.prototype.attachEvents = function (options) {
+        var _this = this;
         if (!options) {
             return;
         }
-        const e = options === null || options === void 0 ? void 0 : options.events;
-        e && Object.keys(e).forEach((key) => this.e.on(key, e[key]));
-    }
-    getInstance(moduleName, options) {
-        const instance = this.e.fire((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.camelCase)('getInstance_' + moduleName), options);
+        var e = options === null || options === void 0 ? void 0 : options.events;
+        e && Object.keys(e).forEach(function (key) { return _this.e.on(key, e[key]); });
+    };
+    View.prototype.getInstance = function (moduleName, options) {
+        var instance = this.e.fire((0, helpers_1.camelCase)('getInstance_' + moduleName), options);
         if (instance) {
             return instance;
         }
-        const module = _global__WEBPACK_IMPORTED_MODULE_4__.modules[moduleName], mi = this.__modulesInstances;
-        if (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isFunction)(module)) {
-            throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.error)('Need real module name');
+        var module = global_1.modules[moduleName], mi = this.__modulesInstances;
+        if (!(0, helpers_1.isFunction)(module)) {
+            throw (0, helpers_1.error)('Need real module name');
         }
         if (!mi.has(moduleName)) {
-            const instance = module.prototype instanceof _modules__WEBPACK_IMPORTED_MODULE_3__.ViewComponent
+            var instance_1 = module.prototype instanceof modules_1.ViewComponent
                 ? new module(this, options)
                 : new module(options);
-            this.components.add(instance);
-            mi.set(moduleName, instance);
+            this.components.add(instance_1);
+            mi.set(moduleName, instance_1);
         }
         return mi.get(moduleName);
-    }
-    addDisclaimer(elm) {
+    };
+    View.prototype.addDisclaimer = function (elm) {
         this.container.appendChild(elm);
-    }
-    beforeDestruct() {
-        this.e.fire(_modules__WEBPACK_IMPORTED_MODULE_3__.STATUSES.beforeDestruct, this);
-        this.components.forEach(component => {
-            if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isDestructable)(component) && !component.isInDestruct) {
+    };
+    View.prototype.beforeDestruct = function () {
+        this.e.fire(modules_1.STATUSES.beforeDestruct, this);
+        this.components.forEach(function (component) {
+            if ((0, helpers_1.isDestructable)(component) && !component.isInDestruct) {
                 component.destruct();
             }
         });
         this.components.clear();
-    }
-    destruct() {
+    };
+    View.prototype.destruct = function () {
         if (this.isDestructed) {
             return;
         }
@@ -13634,14 +17951,16 @@ class View extends _modules__WEBPACK_IMPORTED_MODULE_3__.Component {
         if (this.buffer) {
             this.buffer.clear();
         }
-        _modules__WEBPACK_IMPORTED_MODULE_3__.Dom.safeRemove(this.container);
-        super.destruct();
-    }
-}
-View.esNext = true;
-(0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
-    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.hook)(_modules__WEBPACK_IMPORTED_MODULE_3__.STATUSES.beforeDestruct)
-], View.prototype, "beforeDestruct", null);
+        modules_1.Dom.safeRemove(this.container);
+        _super.prototype.destruct.call(this);
+    };
+    View.esNext = false;
+    tslib_1.__decorate([
+        (0, decorators_1.hook)(modules_1.STATUSES.beforeDestruct)
+    ], View.prototype, "beforeDestruct", null);
+    return View;
+}(modules_1.Component));
+exports.View = View;
 View.defaultOptions = {
     extraButtons: [],
     textIcons: false,
@@ -13663,15 +17982,14 @@ View.defaultOptions = {
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-var __webpack_unused_export__;
 
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-__webpack_unused_export__ = ({ value: true });
-exports.h = void 0;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Jodit = void 0;
 var tslib_1 = __webpack_require__(20255);
 var config_1 = __webpack_require__(27537);
 var constants = __webpack_require__(10063);
@@ -14656,7 +18974,84 @@ var Jodit = (function (_super) {
     ], Jodit.prototype, "prepareWYSIWYGEditor", null);
     return Jodit;
 }(view_with_toolbar_1.ViewWithToolbar));
-exports.h = Jodit;
+exports.Jodit = Jodit;
+
+
+/***/ }),
+
+/***/ 76102:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var checker_1 = __webpack_require__(37379);
+var exp = {};
+if (true) {
+    var ar = __webpack_require__(90643);
+    var cs_cz = __webpack_require__(52532);
+    var de = __webpack_require__(75178);
+    var es = __webpack_require__(22999);
+    var fr = __webpack_require__(34145);
+    var he = __webpack_require__(40272);
+    var hu = __webpack_require__(2978);
+    var id = __webpack_require__(99113);
+    var it = __webpack_require__(51923);
+    var ja = __webpack_require__(21268);
+    var ko = __webpack_require__(37289);
+    var nl = __webpack_require__(17084);
+    var pl = __webpack_require__(96891);
+    var pt_br = __webpack_require__(31211);
+    var ru = __webpack_require__(31109);
+    var tr = __webpack_require__(79375);
+    var zh_cn = __webpack_require__(21042);
+    var zh_tw = __webpack_require__(73895);
+    exp = {
+        ar: ar,
+        cs_cz: cs_cz,
+        de: de,
+        es: es,
+        fr: fr,
+        he: he,
+        hu: hu,
+        id: id,
+        it: it,
+        ja: ja,
+        ko: ko,
+        nl: nl,
+        pl: pl,
+        pt_br: pt_br,
+        ru: ru,
+        tr: tr,
+        zh_cn: zh_cn,
+        zh_tw: zh_tw
+    };
+}
+var en = __webpack_require__(51048);
+exp.en = en;
+var get = function (value) {
+    return value ? value.default || value : {};
+}, hashLang = {};
+if ((0, checker_1.isArray)(get(en))) {
+    get(en).forEach(function (key, index) {
+        hashLang[index] = key;
+    });
+}
+Object.keys(exp).forEach(function (lang) {
+    var list = get(exp[lang]);
+    if ((0, checker_1.isArray)(list)) {
+        exp[lang] = {};
+        list.forEach(function (value, index) {
+            exp[lang][hashLang[index]] = value;
+        });
+    }
+});
+exports["default"] = exp;
 
 
 /***/ }),
@@ -19774,14 +24169,13 @@ exports.makeButton = makeButton;
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-var __webpack_unused_export__;
 
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-__webpack_unused_export__ = ({ value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
 var config_1 = __webpack_require__(27537);
 var is_array_1 = __webpack_require__(2555);
@@ -20201,88 +24595,91 @@ exports.send = send;
 /***/ }),
 
 /***/ 48458:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Uploader": function() { return /* binding */ Uploader; }
-/* harmony export */ });
-/* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27537);
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(10063);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(92654);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var jodit_core_component___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(34543);
-/* harmony import */ var jodit_core_component___WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jodit_core_component___WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24968);
-/* harmony import */ var jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(40585);
+
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-
-
-
-
-
-
-class Uploader extends jodit_core_component___WEBPACK_IMPORTED_MODULE_3__.ViewComponent {
-    constructor(editor, options) {
-        super(editor);
-        this.path = '';
-        this.source = 'default';
-        this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.ConfigProto)(jodit_config__WEBPACK_IMPORTED_MODULE_0__.Config.defaultOptions.uploader, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isJoditObject)(editor) ? editor.o.uploader : {}));
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Uploader = void 0;
+var tslib_1 = __webpack_require__(20255);
+__webpack_require__(28654);
+var config_1 = __webpack_require__(27537);
+var constants_1 = __webpack_require__(10063);
+var helpers_1 = __webpack_require__(92654);
+var component_1 = __webpack_require__(34543);
+var helpers_2 = __webpack_require__(24968);
+__webpack_require__(40585);
+var Uploader = (function (_super) {
+    tslib_1.__extends(Uploader, _super);
+    function Uploader(editor, options) {
+        var _this = _super.call(this, editor) || this;
+        _this.path = '';
+        _this.source = 'default';
+        _this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(config_1.Config.defaultOptions.uploader, (0, helpers_1.isJoditObject)(editor) ? editor.o.uploader : {}));
+        return _this;
     }
-    get j() {
-        return this.jodit;
-    }
-    className() {
+    Object.defineProperty(Uploader.prototype, "j", {
+        get: function () {
+            return this.jodit;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Uploader.prototype.className = function () {
         return 'Uploader';
-    }
-    get o() {
-        return this.options;
-    }
-    setPath(path) {
+    };
+    Object.defineProperty(Uploader.prototype, "o", {
+        get: function () {
+            return this.options;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Uploader.prototype.setPath = function (path) {
         this.path = path;
         return this;
-    }
-    setSource(source) {
+    };
+    Uploader.prototype.setSource = function (source) {
         this.source = source;
         return this;
-    }
-    bind(form, handlerSuccess, handlerError) {
-        const onFinally = () => {
+    };
+    Uploader.prototype.bind = function (form, handlerSuccess, handlerError) {
+        var onFinally = function () {
             form.classList.remove('jodit_drag_hover');
         };
-        const self = this, onPaste = (e) => {
-            let i, file, extension;
-            const cData = e.clipboardData;
-            const process = (formdata) => {
+        var self = this, onPaste = function (e) {
+            var i, file, extension;
+            var cData = e.clipboardData;
+            var process = function (formdata) {
                 if (file) {
                     formdata.append('extension', extension);
                     formdata.append('mimetype', file.type);
                 }
             };
-            if (!jodit_core_constants__WEBPACK_IMPORTED_MODULE_1__.IS_IE && (0,jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.hasFiles)(cData)) {
-                (0,jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.sendFiles)(self, cData.files, handlerSuccess, handlerError).finally(onFinally);
+            if (!constants_1.IS_IE && (0, helpers_2.hasFiles)(cData)) {
+                (0, helpers_2.sendFiles)(self, cData.files, handlerSuccess, handlerError).finally(onFinally);
                 return false;
             }
-            if (jodit_core_constants__WEBPACK_IMPORTED_MODULE_1__.IS_IE && !true) {}
-            if ((0,jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.hasItems)(cData)) {
-                const { items } = cData;
+            if (constants_1.IS_IE && !false) {
+                return (0, helpers_2.processOldBrowserDrag)(self, cData, handlerSuccess, handlerError, onFinally);
+            }
+            if ((0, helpers_2.hasItems)(cData)) {
+                var items = cData.items;
                 for (i = 0; i < items.length; i += 1) {
                     if (items[i].kind === 'file' &&
                         items[i].type === 'image/png') {
                         file = items[i].getAsFile();
                         if (file) {
-                            const mime = file.type.match(/\/([a-z0-9]+)/i);
-                            extension = mime[1]
-                                ? mime[1].toLowerCase()
+                            var mime_1 = file.type.match(/\/([a-z0-9]+)/i);
+                            extension = mime_1[1]
+                                ? mime_1[1].toLowerCase()
                                 : '';
-                            (0,jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.sendFiles)(self, [file], handlerSuccess, handlerError, process).finally(onFinally);
+                            (0, helpers_2.sendFiles)(self, [file], handlerSuccess, handlerError, process).finally(onFinally);
                         }
                         e.preventDefault();
                         break;
@@ -20297,39 +24694,39 @@ class Uploader extends jodit_core_component___WEBPACK_IMPORTED_MODULE_3__.ViewCo
             self.j.e.on('beforePaste', onPaste);
         }
         this.attachEvents(form, handlerSuccess, handlerError, onFinally);
-    }
-    attachEvents(form, handlerSuccess, handlerError, onFinally) {
-        const self = this;
+    };
+    Uploader.prototype.attachEvents = function (form, handlerSuccess, handlerError, onFinally) {
+        var self = this;
         self.j.e
-            .on(form, 'dragend dragover dragenter dragleave drop', (e) => {
+            .on(form, 'dragend dragover dragenter dragleave drop', function (e) {
             e.preventDefault();
         })
-            .on(form, 'dragover', (event) => {
-            if ((0,jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.hasFiles)(event.dataTransfer) ||
-                (0,jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.hasItems)(event.dataTransfer)) {
+            .on(form, 'dragover', function (event) {
+            if ((0, helpers_2.hasFiles)(event.dataTransfer) ||
+                (0, helpers_2.hasItems)(event.dataTransfer)) {
                 form.classList.add('jodit_drag_hover');
                 event.preventDefault();
             }
         })
-            .on(form, 'dragend dragleave', (event) => {
+            .on(form, 'dragend dragleave', function (event) {
             form.classList.remove('jodit_drag_hover');
-            if ((0,jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.hasFiles)(event.dataTransfer)) {
+            if ((0, helpers_2.hasFiles)(event.dataTransfer)) {
                 event.preventDefault();
             }
         })
-            .on(form, 'drop', (event) => {
+            .on(form, 'drop', function (event) {
             form.classList.remove('jodit_drag_hover');
-            if ((0,jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.hasFiles)(event.dataTransfer)) {
+            if ((0, helpers_2.hasFiles)(event.dataTransfer)) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
-                (0,jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.sendFiles)(self, event.dataTransfer.files, handlerSuccess, handlerError).finally(onFinally);
+                (0, helpers_2.sendFiles)(self, event.dataTransfer.files, handlerSuccess, handlerError).finally(onFinally);
             }
         });
-        const inputFile = form.querySelector('input[type=file]');
+        var inputFile = form.querySelector('input[type=file]');
         if (inputFile) {
-            self.j.e.on(inputFile, 'change', () => {
-                (0,jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.sendFiles)(self, inputFile.files, handlerSuccess, handlerError)
-                    .then(() => {
+            self.j.e.on(inputFile, 'change', function () {
+                (0, helpers_2.sendFiles)(self, inputFile.files, handlerSuccess, handlerError)
+                    .then(function () {
                     inputFile.value = '';
                     if (!/safari/i.test(navigator.userAgent)) {
                         inputFile.type = '';
@@ -20339,33 +24736,33 @@ class Uploader extends jodit_core_component___WEBPACK_IMPORTED_MODULE_3__.ViewCo
                     .finally(onFinally);
             });
         }
-    }
-    uploadRemoteImage(url, handlerSuccess, handlerError) {
-        const uploader = this, { o } = uploader;
-        const handlerE = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isFunction)(handlerError)
+    };
+    Uploader.prototype.uploadRemoteImage = function (url, handlerSuccess, handlerError) {
+        var uploader = this, o = uploader.o;
+        var handlerE = (0, helpers_1.isFunction)(handlerError)
             ? handlerError
             : o.defaultHandlerError;
-        (0,jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.send)(uploader, {
+        (0, helpers_2.send)(uploader, {
             action: 'fileUploadRemote',
-            url
+            url: url
         })
-            .then(resp => {
+            .then(function (resp) {
             if (o.isSuccess.call(uploader, resp)) {
-                const handler = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isFunction)(handlerSuccess)
+                var handler = (0, helpers_1.isFunction)(handlerSuccess)
                     ? handlerSuccess
                     : o.defaultHandlerSuccess;
                 handler.call(uploader, o.process.call(uploader, resp));
                 return;
             }
-            handlerE.call(uploader, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.error)(o.getMessage.call(uploader, resp)));
+            handlerE.call(uploader, (0, helpers_1.error)(o.getMessage.call(uploader, resp)));
         })
-            .catch(e => handlerE.call(uploader, e));
-    }
-    destruct() {
-        this.setStatus(jodit_core_component___WEBPACK_IMPORTED_MODULE_3__.STATUSES.beforeDestruct);
-        const instances = jodit_modules_uploader_helpers__WEBPACK_IMPORTED_MODULE_4__.ajaxInstances.get(this);
+            .catch(function (e) { return handlerE.call(uploader, e); });
+    };
+    Uploader.prototype.destruct = function () {
+        this.setStatus(component_1.STATUSES.beforeDestruct);
+        var instances = helpers_2.ajaxInstances.get(this);
         if (instances) {
-            instances.forEach(ajax => {
+            instances.forEach(function (ajax) {
                 try {
                     ajax.destruct();
                 }
@@ -20373,9 +24770,11 @@ class Uploader extends jodit_core_component___WEBPACK_IMPORTED_MODULE_3__.ViewCo
             });
             instances.clear();
         }
-        super.destruct();
-    }
-}
+        _super.prototype.destruct.call(this);
+    };
+    return Uploader;
+}(component_1.ViewComponent));
+exports.Uploader = Uploader;
 
 
 /***/ }),
@@ -25850,14 +30249,13 @@ global_1.pluginSystem.add('indent', indent);
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-var __webpack_unused_export__;
 
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-__webpack_unused_export__ = ({ value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 __webpack_require__(3250);
 __webpack_require__(70428);
 __webpack_require__(51904);
@@ -29420,14 +33818,13 @@ global_1.pluginSystem.add('resizeHandler', resizeHandler);
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-var __webpack_unused_export__;
 
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-__webpack_unused_export__ = ({ value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
 config_1.Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
 config_1.Config.prototype.resizer = {
@@ -29443,120 +33840,106 @@ config_1.Config.prototype.resizer = {
 /***/ }),
 
 /***/ 35196:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "resizer": function() { return /* binding */ resizer; }
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10063);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(43887);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(92654);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(73177);
-/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(58299);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9901);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(43087);
+
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-
-
-
-
-
-
-
-
-
-
-const keyBInd = '__jodit-resizer_binded';
-class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plugin {
-    constructor() {
-        super(...arguments);
-        this.LOCK_KEY = 'resizer';
-        this.element = null;
-        this.isResizeMode = false;
-        this.isShown = false;
-        this.startX = 0;
-        this.startY = 0;
-        this.width = 0;
-        this.height = 0;
-        this.ratio = 0;
-        this.rect = this.j.c.fromHTML(`<div title="${this.j.i18n('Press Alt for custom resizing')}" class="jodit-resizer">
-				<div class="jodit-resizer__top-left"></div>
-				<div class="jodit-resizer__top-right"></div>
-				<div class="jodit-resizer__bottom-right"></div>
-				<div class="jodit-resizer__bottom-left"></div>
-				<span>100x100</span>
-			</div>`);
-        this.sizeViewer = this.rect.getElementsByTagName('span')[0];
-        this.pointerX = 0;
-        this.pointerY = 0;
-        this.isAltMode = false;
-        this.onClickElement = (element) => {
-            if (this.isResizeMode) {
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.resizer = void 0;
+var tslib_1 = __webpack_require__(20255);
+__webpack_require__(6316);
+var consts = __webpack_require__(10063);
+var constants_1 = __webpack_require__(10063);
+var dom_1 = __webpack_require__(43887);
+var helpers_1 = __webpack_require__(92654);
+var plugin_1 = __webpack_require__(73177);
+var global_1 = __webpack_require__(58299);
+var decorators_1 = __webpack_require__(9901);
+var global_2 = __webpack_require__(58299);
+__webpack_require__(43087);
+var keyBInd = '__jodit-resizer_binded';
+var resizer = (function (_super) {
+    tslib_1.__extends(resizer, _super);
+    function resizer() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.LOCK_KEY = 'resizer';
+        _this.element = null;
+        _this.isResizeMode = false;
+        _this.isShown = false;
+        _this.startX = 0;
+        _this.startY = 0;
+        _this.width = 0;
+        _this.height = 0;
+        _this.ratio = 0;
+        _this.rect = _this.j.c.fromHTML("<div title=\"".concat(_this.j.i18n('Press Alt for custom resizing'), "\" class=\"jodit-resizer\">\n\t\t\t\t<div class=\"jodit-resizer__top-left\"></div>\n\t\t\t\t<div class=\"jodit-resizer__top-right\"></div>\n\t\t\t\t<div class=\"jodit-resizer__bottom-right\"></div>\n\t\t\t\t<div class=\"jodit-resizer__bottom-left\"></div>\n\t\t\t\t<span>100x100</span>\n\t\t\t</div>"));
+        _this.sizeViewer = _this.rect.getElementsByTagName('span')[0];
+        _this.pointerX = 0;
+        _this.pointerY = 0;
+        _this.isAltMode = false;
+        _this.onClickElement = function (element) {
+            if (_this.isResizeMode) {
                 return;
             }
-            if (this.element !== element || !this.isShown) {
-                this.element = element;
-                this.show();
-                if (jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__.Dom.isTag(this.element, 'img') && !this.element.complete) {
-                    this.j.e.one(this.element, 'load', this.updateSize);
+            if (_this.element !== element || !_this.isShown) {
+                _this.element = element;
+                _this.show();
+                if (dom_1.Dom.isTag(_this.element, 'img') && !_this.element.complete) {
+                    _this.j.e.one(_this.element, 'load', _this.updateSize);
                 }
             }
         };
-        this.updateSize = () => {
-            if (this.isInDestruct || !this.isShown) {
+        _this.updateSize = function () {
+            if (_this.isInDestruct || !_this.isShown) {
                 return;
             }
-            if (this.element && this.rect) {
-                const workplacePosition = this.getWorkplacePosition();
-                const pos = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.offset)(this.element, this.j, this.j.ed), left = parseInt(this.rect.style.left || '0', 10), top = parseInt(this.rect.style.top || '0', 10), w = this.rect.offsetWidth, h = this.rect.offsetHeight;
-                const newTop = pos.top - workplacePosition.top, newLeft = pos.left - workplacePosition.left;
-                if (top !== newTop ||
+            if (_this.element && _this.rect) {
+                var workplacePosition = _this.getWorkplacePosition();
+                var pos = (0, helpers_1.offset)(_this.element, _this.j, _this.j.ed), left = parseInt(_this.rect.style.left || '0', 10), top_1 = parseInt(_this.rect.style.top || '0', 10), w = _this.rect.offsetWidth, h = _this.rect.offsetHeight;
+                var newTop = pos.top - workplacePosition.top, newLeft = pos.left - workplacePosition.left;
+                if (top_1 !== newTop ||
                     left !== newLeft ||
-                    w !== this.element.offsetWidth ||
-                    h !== this.element.offsetHeight) {
-                    (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.css)(this.rect, {
+                    w !== _this.element.offsetWidth ||
+                    h !== _this.element.offsetHeight) {
+                    (0, helpers_1.css)(_this.rect, {
                         top: newTop,
                         left: newLeft,
-                        width: this.element.offsetWidth,
-                        height: this.element.offsetHeight
+                        width: _this.element.offsetWidth,
+                        height: _this.element.offsetHeight
                     });
-                    if (this.j.events) {
-                        this.j.e.fire(this.element, 'changesize');
+                    if (_this.j.events) {
+                        _this.j.e.fire(_this.element, 'changesize');
                         if (!isNaN(left)) {
-                            this.j.e.fire('resize');
+                            _this.j.e.fire('resize');
                         }
                     }
                 }
             }
         };
-        this.hideSizeViewer = () => {
-            this.sizeViewer.style.opacity = '0';
+        _this.hideSizeViewer = function () {
+            _this.sizeViewer.style.opacity = '0';
         };
+        return _this;
     }
-    afterInit(editor) {
-        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.$$)('div', this.rect).forEach((resizeHandle) => {
-            editor.e.on(resizeHandle, 'mousedown.resizer touchstart.resizer', this.onStartResizing.bind(this, resizeHandle));
+    resizer.prototype.afterInit = function (editor) {
+        var _this = this;
+        (0, helpers_1.$$)('div', this.rect).forEach(function (resizeHandle) {
+            editor.e.on(resizeHandle, 'mousedown.resizer touchstart.resizer', _this.onStartResizing.bind(_this, resizeHandle));
         });
-        jodit_core_global__WEBPACK_IMPORTED_MODULE_4__.eventEmitter.on('hideHelpers', this.hide);
+        global_1.eventEmitter.on('hideHelpers', this.hide);
         editor.e
-            .on('readonly', (isReadOnly) => {
+            .on('readonly', function (isReadOnly) {
             if (isReadOnly) {
-                this.hide();
+                _this.hide();
             }
         })
             .on('afterInit changePlace', this.addEventListeners.bind(this))
-            .on('afterGetValueFromEditor.resizer', (data) => {
-            const rgx = /<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]*>.*?<\/iframe>.*?)<\/jodit>/gi;
+            .on('afterGetValueFromEditor.resizer', function (data) {
+            var rgx = /<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]*>.*?<\/iframe>.*?)<\/jodit>/gi;
             if (rgx.test(data.value)) {
                 data.value = data.value.replace(rgx, '$1');
             }
@@ -29565,44 +33948,45 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
             .on('change afterInit afterSetMode', this.onChangeEditor);
         this.addEventListeners();
         this.onChangeEditor();
-    }
-    onEditorClick(e) {
-        let node = e.target;
-        const { editor, options: { allowResizeTags } } = this.j;
+    };
+    resizer.prototype.onEditorClick = function (e) {
+        var node = e.target;
+        var _a = this.j, editor = _a.editor, allowResizeTags = _a.options.allowResizeTags;
         while (node && node !== editor) {
-            if (jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__.Dom.isTag(node, allowResizeTags)) {
+            if (dom_1.Dom.isTag(node, allowResizeTags)) {
                 this.bind(node);
                 this.onClickElement(node);
                 return;
             }
             node = node.parentNode;
         }
-    }
-    addEventListeners() {
-        const editor = this.j;
+    };
+    resizer.prototype.addEventListeners = function () {
+        var _this = this;
+        var editor = this.j;
         editor.e
             .off(editor.editor, '.resizer')
             .off(editor.ow, '.resizer')
-            .on(editor.editor, 'keydown.resizer', (e) => {
-            if (this.isShown &&
-                e.key === jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.KEY_DELETE &&
-                this.element &&
-                !jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__.Dom.isTag(this.element, 'table')) {
-                this.onDelete(e);
+            .on(editor.editor, 'keydown.resizer', function (e) {
+            if (_this.isShown &&
+                e.key === consts.KEY_DELETE &&
+                _this.element &&
+                !dom_1.Dom.isTag(_this.element, 'table')) {
+                _this.onDelete(e);
             }
         })
             .on(editor.ow, 'resize.resizer', this.updateSize)
             .on('resize.resizer', this.updateSize)
-            .on([editor.ow, editor.editor], 'scroll.resizer', () => {
-            if (this.isShown && !this.isResizeMode) {
-                this.hide();
+            .on([editor.ow, editor.editor], 'scroll.resizer', function () {
+            if (_this.isShown && !_this.isResizeMode) {
+                _this.hide();
             }
         })
             .on(editor.ow, 'keydown.resizer', this.onKeyDown)
             .on(editor.ow, 'keyup.resizer', this.onKeyUp)
             .on(editor.ow, 'mouseup.resizer touchend.resizer', this.onClickOutside);
-    }
-    onStartResizing(resizeHandle, e) {
+    };
+    resizer.prototype.onStartResizing = function (resizeHandle, e) {
         if (!this.element || !this.element.parentNode) {
             this.hide();
             return false;
@@ -29620,29 +34004,29 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
         this.startY = e.clientY;
         this.pointerX = e.clientX;
         this.pointerY = e.clientY;
-        const { j } = this;
+        var j = this.j;
         j.e.fire('hidePopup');
         j.lock(this.LOCK_KEY);
         j.e.on(j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
-    }
-    onEndResizing() {
-        const { j } = this;
+    };
+    resizer.prototype.onEndResizing = function () {
+        var j = this.j;
         j.unlock();
         this.isResizeMode = false;
         this.isAltMode = false;
         j.synchronizeValues();
         j.e.off(j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
-    }
-    onResize(e) {
+    };
+    resizer.prototype.onResize = function (e) {
         if (this.isResizeMode) {
             if (!this.element) {
                 return;
             }
             this.pointerX = e.clientX;
             this.pointerY = e.clientY;
-            let diff_x, diff_y;
+            var diff_x = void 0, diff_y = void 0;
             if (this.j.options.iframe) {
-                const workplacePosition = this.getWorkplacePosition();
+                var workplacePosition = this.getWorkplacePosition();
                 diff_x = e.clientX + workplacePosition.left - this.startX;
                 diff_y = e.clientY + workplacePosition.top - this.startY;
             }
@@ -29650,12 +34034,12 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
                 diff_x = this.pointerX - this.startX;
                 diff_y = this.pointerY - this.startY;
             }
-            const className = this.handle.className;
-            let new_w = 0, new_h = 0;
-            const uar = this.j.o.resizer.useAspectRatio;
+            var className = this.handle.className;
+            var new_w = 0, new_h = 0;
+            var uar = this.j.o.resizer.useAspectRatio;
             if (!this.isAltMode &&
                 (uar === true ||
-                    (Array.isArray(uar) && jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__.Dom.isTag(this.element, uar)))) {
+                    (Array.isArray(uar) && dom_1.Dom.isTag(this.element, uar)))) {
                 if (diff_x) {
                     new_w =
                         this.width +
@@ -29668,8 +34052,8 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
                             (className.match(/top/) ? -1 : 1) * diff_y;
                     new_w = Math.round(new_h * this.ratio);
                 }
-                if (new_w > (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.innerWidth)(this.j.editor, this.j.ow)) {
-                    new_w = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.innerWidth)(this.j.editor, this.j.ow);
+                if (new_w > (0, helpers_1.innerWidth)(this.j.editor, this.j.ow)) {
+                    new_w = (0, helpers_1.innerWidth)(this.j.editor, this.j.ow);
                     new_h = Math.round(new_w / this.ratio);
                 }
             }
@@ -29694,14 +34078,14 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
             this.showSizeViewer(this.element.offsetWidth, this.element.offsetHeight);
             e.stopImmediatePropagation();
         }
-    }
-    onKeyDown(e) {
-        this.isAltMode = e.key === jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.KEY_ALT;
+    };
+    resizer.prototype.onKeyDown = function (e) {
+        this.isAltMode = e.key === constants_1.KEY_ALT;
         if (!this.isAltMode && this.isResizeMode) {
             this.onEndResizing();
         }
-    }
-    onKeyUp() {
+    };
+    resizer.prototype.onKeyUp = function () {
         if (this.isAltMode && this.isResizeMode && this.element) {
             this.width = this.element.offsetWidth;
             this.height = this.element.offsetHeight;
@@ -29710,8 +34094,8 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
             this.startY = this.pointerY;
         }
         this.isAltMode = false;
-    }
-    onClickOutside(e) {
+    };
+    resizer.prototype.onClickOutside = function (e) {
         if (!this.isShown) {
             return;
         }
@@ -29720,20 +34104,20 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
         }
         e.stopImmediatePropagation();
         this.onEndResizing();
-    }
-    getWorkplacePosition() {
-        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.offset)((this.rect.parentNode || this.j.od.documentElement), this.j, this.j.od, true);
-    }
-    applySize(element, key, value) {
-        const changeAttrs = jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__.Dom.isImage(element) && this.j.o.resizer.forImageChangeAttributes;
+    };
+    resizer.prototype.getWorkplacePosition = function () {
+        return (0, helpers_1.offset)((this.rect.parentNode || this.j.od.documentElement), this.j, this.j.od, true);
+    };
+    resizer.prototype.applySize = function (element, key, value) {
+        var changeAttrs = dom_1.Dom.isImage(element) && this.j.o.resizer.forImageChangeAttributes;
         if (changeAttrs) {
-            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(element, key, value);
+            (0, helpers_1.attr)(element, key, value);
         }
         if (!changeAttrs || element.style[key]) {
-            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.css)(element, key, value);
+            (0, helpers_1.css)(element, key, value);
         }
-    }
-    onDelete(e) {
+    };
+    resizer.prototype.onDelete = function (e) {
         if (!this.element) {
             return;
         }
@@ -29741,12 +34125,12 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
             this.j.s.select(this.element);
         }
         else {
-            jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__.Dom.safeRemove(this.element);
+            dom_1.Dom.safeRemove(this.element);
             this.hide();
             e.preventDefault();
         }
-    }
-    onChangeEditor() {
+    };
+    resizer.prototype.onChangeEditor = function () {
         if (this.isShown) {
             if (!this.element || !this.element.parentNode) {
                 this.hide();
@@ -29755,20 +34139,21 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
                 this.updateSize();
             }
         }
-        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.$$)('iframe', this.j.editor).forEach(this.bind);
-    }
-    bind(element) {
-        if (!jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__.Dom.isHTMLElement(element) ||
+        (0, helpers_1.$$)('iframe', this.j.editor).forEach(this.bind);
+    };
+    resizer.prototype.bind = function (element) {
+        var _this = this;
+        if (!dom_1.Dom.isHTMLElement(element) ||
             !this.j.o.allowResizeTags.includes(element.tagName.toLowerCase()) ||
-            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.dataBind)(element, keyBInd)) {
+            (0, helpers_1.dataBind)(element, keyBInd)) {
             return;
         }
-        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.dataBind)(element, keyBInd, true);
-        let wrapper;
-        if (jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__.Dom.isTag(element, 'iframe')) {
-            const iframe = element;
-            if (jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__.Dom.isHTMLElement(element.parentNode) &&
-                (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(element.parentNode, '-jodit_iframe_wrapper')) {
+        (0, helpers_1.dataBind)(element, keyBInd, true);
+        var wrapper;
+        if (dom_1.Dom.isTag(element, 'iframe')) {
+            var iframe_1 = element;
+            if (dom_1.Dom.isHTMLElement(element.parentNode) &&
+                (0, helpers_1.attr)(element.parentNode, '-jodit_iframe_wrapper')) {
                 element = element.parentNode;
             }
             else {
@@ -29778,8 +34163,8 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
                     draggable: true,
                     'data-jodit_iframe_wrapper': 1
                 });
-                (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(wrapper, 'style', (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(element, 'style'));
-                (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.css)(wrapper, {
+                (0, helpers_1.attr)(wrapper, 'style', (0, helpers_1.attr)(element, 'style'));
+                (0, helpers_1.css)(wrapper, {
                     display: element.style.display === 'inline-block'
                         ? 'inline-block'
                         : 'block',
@@ -29790,26 +34175,32 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
                     element.parentNode.insertBefore(wrapper, element);
                 }
                 wrapper.appendChild(element);
-                this.j.e.on(wrapper, 'click', () => {
-                    (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(wrapper, 'data-jodit-wrapper_active', true);
+                this.j.e.on(wrapper, 'click', function () {
+                    (0, helpers_1.attr)(wrapper, 'data-jodit-wrapper_active', true);
                 });
                 element = wrapper;
             }
             this.j.e
                 .off(element, 'mousedown.select touchstart.select')
-                .on(element, 'mousedown.select touchstart.select', () => {
-                this.j.s.select(element);
+                .on(element, 'mousedown.select touchstart.select', function () {
+                _this.j.s.select(element);
             })
                 .off(element, 'changesize')
-                .on(element, 'changesize', () => {
-                iframe.setAttribute('width', element.offsetWidth + 'px');
-                iframe.setAttribute('height', element.offsetHeight + 'px');
+                .on(element, 'changesize', function () {
+                iframe_1.setAttribute('width', element.offsetWidth + 'px');
+                iframe_1.setAttribute('height', element.offsetHeight + 'px');
             });
         }
         this.j.e.on(element, 'dragstart', this.hide);
-        if (false) {}
-    }
-    showSizeViewer(w, h) {
+        if ( true && constants_1.IS_IE) {
+            this.j.e.on(element, 'mousedown', function (event) {
+                if (dom_1.Dom.isTag(element, 'img')) {
+                    event.preventDefault();
+                }
+            });
+        }
+    };
+    resizer.prototype.showSizeViewer = function (w, h) {
         if (!this.j.o.resizer.showSize) {
             return;
         }
@@ -29819,72 +34210,74 @@ class resizer extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_3__.Plug
             return;
         }
         this.sizeViewer.style.opacity = '1';
-        this.sizeViewer.textContent = `${w} x ${h}`;
+        this.sizeViewer.textContent = "".concat(w, " x ").concat(h);
         this.j.async.setTimeout(this.hideSizeViewer, {
             timeout: this.j.o.resizer.hideSizeTimeout,
             label: 'hideSizeViewer'
         });
-    }
-    show() {
+    };
+    resizer.prototype.show = function () {
         if (this.j.o.readonly || this.isShown) {
             return;
         }
         this.isShown = true;
         if (!this.rect.parentNode) {
-            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.markOwner)(this.j, this.rect);
+            (0, helpers_1.markOwner)(this.j, this.rect);
             this.j.workplace.appendChild(this.rect);
         }
         if (this.j.isFullSize) {
-            this.rect.style.zIndex = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.css)(this.j.container, 'zIndex').toString();
+            this.rect.style.zIndex = (0, helpers_1.css)(this.j.container, 'zIndex').toString();
         }
         this.updateSize();
-    }
-    hide() {
+    };
+    resizer.prototype.hide = function () {
         if (!this.isResizeMode) {
             this.isResizeMode = false;
             this.isShown = false;
             this.element = null;
-            jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__.Dom.safeRemove(this.rect);
-            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.$$)("[data-jodit-wrapper_active='true']", this.j.editor).forEach(elm => (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(elm, 'data-jodit-wrapper_active', false));
+            dom_1.Dom.safeRemove(this.rect);
+            (0, helpers_1.$$)("[data-jodit-wrapper_active='true']", this.j.editor).forEach(function (elm) { return (0, helpers_1.attr)(elm, 'data-jodit-wrapper_active', false); });
         }
-    }
-    beforeDestruct(jodit) {
+    };
+    resizer.prototype.beforeDestruct = function (jodit) {
         this.hide();
-        jodit_core_global__WEBPACK_IMPORTED_MODULE_4__.eventEmitter.off('hideHelpers', this.hide);
+        global_1.eventEmitter.off('hideHelpers', this.hide);
         jodit.e.off(this.j.ow, '.resizer').off('.resizer');
-    }
-}
-(0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.watch)(':click')
-], resizer.prototype, "onEditorClick", null);
-(0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.autobind
-], resizer.prototype, "onStartResizing", null);
-(0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.autobind
-], resizer.prototype, "onEndResizing", null);
-(0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.autobind
-], resizer.prototype, "onResize", null);
-(0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.autobind
-], resizer.prototype, "onKeyDown", null);
-(0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.autobind
-], resizer.prototype, "onKeyUp", null);
-(0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.autobind
-], resizer.prototype, "onClickOutside", null);
-(0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.debounce)()
-], resizer.prototype, "onChangeEditor", null);
-(0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.autobind
-], resizer.prototype, "bind", null);
-(0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.autobind
-], resizer.prototype, "hide", null);
-jodit_core_global__WEBPACK_IMPORTED_MODULE_4__.pluginSystem.add('resizer', resizer);
+    };
+    tslib_1.__decorate([
+        (0, decorators_1.watch)(':click')
+    ], resizer.prototype, "onEditorClick", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onStartResizing", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onEndResizing", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onResize", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onKeyDown", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onKeyUp", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "onClickOutside", null);
+    tslib_1.__decorate([
+        (0, decorators_1.debounce)()
+    ], resizer.prototype, "onChangeEditor", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "bind", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], resizer.prototype, "hide", null);
+    return resizer;
+}(plugin_1.Plugin));
+exports.resizer = resizer;
+global_2.pluginSystem.add('resizer', resizer);
 
 
 /***/ }),
@@ -32436,14 +36829,13 @@ global_1.pluginSystem.add('stat', stat);
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-var __webpack_unused_export__;
 
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-__webpack_unused_export__ = ({ value: true });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
 config_1.Config.prototype.toolbarSticky = true;
 config_1.Config.prototype.toolbarDisableStickyForMobile = true;
@@ -32453,78 +36845,78 @@ config_1.Config.prototype.toolbarStickyOffset = 0;
 /***/ }),
 
 /***/ 52186:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "sticky": function() { return /* binding */ sticky; }
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10063);
-/* harmony import */ var jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(73177);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(43887);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(92654);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9901);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(58299);
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(12577);
+
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-
-
-
-
-
-
-
-
-class sticky extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_1__.Plugin {
-    constructor() {
-        super(...arguments);
-        this.isToolbarSticked = false;
-        this.createDummy = (toolbar) => {
-            if (false) {}
-        };
-        this.addSticky = (toolbar) => {
-            if (!this.isToolbarSticked) {
-                this.createDummy(toolbar);
-                this.j.container.classList.add('jodit_sticky');
-                this.isToolbarSticked = true;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.sticky = void 0;
+var tslib_1 = __webpack_require__(20255);
+__webpack_require__(60057);
+var constants_1 = __webpack_require__(10063);
+var plugin_1 = __webpack_require__(73177);
+var dom_1 = __webpack_require__(43887);
+var helpers_1 = __webpack_require__(92654);
+var decorators_1 = __webpack_require__(9901);
+var global_1 = __webpack_require__(58299);
+__webpack_require__(12577);
+var sticky = (function (_super) {
+    tslib_1.__extends(sticky, _super);
+    function sticky() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.isToolbarSticked = false;
+        _this.createDummy = function (toolbar) {
+            if ( true && constants_1.IS_IE && !_this.dummyBox) {
+                _this.dummyBox = _this.j.c.div();
+                _this.dummyBox.classList.add('jodit_sticky-dummy_toolbar');
+                _this.j.container.insertBefore(_this.dummyBox, toolbar);
             }
-            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.css)(toolbar, {
-                top: this.j.o.toolbarStickyOffset || null,
-                width: this.j.container.offsetWidth - 2
-            });
-            if (false) {}
         };
-        this.removeSticky = (toolbar) => {
-            if (this.isToolbarSticked) {
-                (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.css)(toolbar, {
+        _this.addSticky = function (toolbar) {
+            if (!_this.isToolbarSticked) {
+                _this.createDummy(toolbar);
+                _this.j.container.classList.add('jodit_sticky');
+                _this.isToolbarSticked = true;
+            }
+            (0, helpers_1.css)(toolbar, {
+                top: _this.j.o.toolbarStickyOffset || null,
+                width: _this.j.container.offsetWidth - 2
+            });
+            if ( true && constants_1.IS_IE && _this.dummyBox) {
+                (0, helpers_1.css)(_this.dummyBox, {
+                    height: toolbar.offsetHeight
+                });
+            }
+        };
+        _this.removeSticky = function (toolbar) {
+            if (_this.isToolbarSticked) {
+                (0, helpers_1.css)(toolbar, {
                     width: '',
                     top: ''
                 });
-                this.j.container.classList.remove('jodit_sticky');
-                this.isToolbarSticked = false;
+                _this.j.container.classList.remove('jodit_sticky');
+                _this.isToolbarSticked = false;
             }
         };
+        return _this;
     }
-    afterInit(jodit) {
+    sticky.prototype.afterInit = function (jodit) {
+        var _this = this;
         jodit.e
             .on(jodit.ow, 'scroll.sticky wheel.sticky mousewheel.sticky resize.sticky', this.onScroll)
-            .on('getStickyState.sticky', () => this.isToolbarSticked);
-    }
-    onScroll() {
-        const { jodit } = this;
-        const scrollWindowTop = jodit.ow.pageYOffset ||
+            .on('getStickyState.sticky', function () { return _this.isToolbarSticked; });
+    };
+    sticky.prototype.onScroll = function () {
+        var jodit = this.jodit;
+        var scrollWindowTop = jodit.ow.pageYOffset ||
             (jodit.od.documentElement &&
                 jodit.od.documentElement.scrollTop) ||
-            0, offsetEditor = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.offset)(jodit.container, jodit, jodit.od, true), doSticky = jodit.getMode() === jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.MODE_WYSIWYG &&
+            0, offsetEditor = (0, helpers_1.offset)(jodit.container, jodit, jodit.od, true), doSticky = jodit.getMode() === constants_1.MODE_WYSIWYG &&
             scrollWindowTop + jodit.o.toolbarStickyOffset >
                 offsetEditor.top &&
             scrollWindowTop + jodit.o.toolbarStickyOffset <
@@ -32533,7 +36925,7 @@ class sticky extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_1__.Plugi
         if (jodit.o.toolbarSticky &&
             jodit.o.toolbar === true &&
             this.isToolbarSticked !== doSticky) {
-            const container = jodit.toolbarContainer;
+            var container = jodit.toolbarContainer;
             if (container) {
                 doSticky
                     ? this.addSticky(container)
@@ -32541,24 +36933,26 @@ class sticky extends jodit_core_plugin_plugin__WEBPACK_IMPORTED_MODULE_1__.Plugi
             }
             jodit.e.fire('toggleSticky', doSticky);
         }
-    }
-    isMobile() {
+    };
+    sticky.prototype.isMobile = function () {
         return (this.j &&
             this.j.options &&
             this.j.container &&
             this.j.o.sizeSM >= this.j.container.offsetWidth);
-    }
-    beforeDestruct(jodit) {
-        this.dummyBox && jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_2__.Dom.safeRemove(this.dummyBox);
+    };
+    sticky.prototype.beforeDestruct = function (jodit) {
+        this.dummyBox && dom_1.Dom.safeRemove(this.dummyBox);
         jodit.e
             .off(jodit.ow, 'scroll.sticky wheel.sticky mousewheel.sticky resize.sticky', this.onScroll)
             .off('.sticky');
-    }
-}
-(0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
-    (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__.throttle)()
-], sticky.prototype, "onScroll", null);
-jodit_core_global__WEBPACK_IMPORTED_MODULE_5__.pluginSystem.add('sticky', sticky);
+    };
+    tslib_1.__decorate([
+        (0, decorators_1.throttle)()
+    ], sticky.prototype, "onScroll", null);
+    return sticky;
+}(plugin_1.Plugin));
+exports.sticky = sticky;
+global_1.pluginSystem.add('sticky', sticky);
 
 
 /***/ }),
@@ -33921,6 +38315,64 @@ global_1.pluginSystem.add('xpath', xpath);
 
 /***/ }),
 
+/***/ 9992:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+__webpack_require__(61227);
+__webpack_require__(690);
+__webpack_require__(66622);
+__webpack_require__(69220);
+__webpack_require__(10444);
+if (!Array.prototype.includes) {
+    Array.prototype.includes = function (value) {
+        return this.indexOf(value) > -1;
+    };
+}
+if (typeof Object.assign !== 'function') {
+    Object.defineProperty(Object, 'assign', {
+        value: function assign(target, varArgs) {
+            if (target == null) {
+                throw new TypeError('Cannot convert undefined or null to object');
+            }
+            var to = Object(target);
+            for (var index = 1; index < arguments.length; index++) {
+                var nextSource = arguments[index];
+                if (nextSource != null) {
+                    for (var nextKey in nextSource) {
+                        if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                            to[nextKey] = nextSource[nextKey];
+                        }
+                    }
+                }
+            }
+            return to;
+        },
+        writable: true,
+        configurable: true
+    });
+}
+if (!Array.prototype.find) {
+    Array.prototype.find = function (value) {
+        return this.indexOf(value) > -1 ? value : undefined;
+    };
+}
+if (!String.prototype.endsWith) {
+    String.prototype.endsWith = function (value) {
+        return this[this.length - 1] === value;
+    };
+}
+
+
+/***/ }),
+
 /***/ 65178:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -35227,7 +39679,7 @@ module.exports = {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -35271,28 +39723,16 @@ module.exports = {
 /******/ 		};
 /******/ 	}();
 /******/ 	
-/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	/* webpack/runtime/global */
 /******/ 	!function() {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
 /******/ 			}
-/******/ 		};
+/******/ 		})();
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
@@ -35371,99 +39811,54 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
 "use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
+var exports = __webpack_exports__;
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "Jodit": function() { return /* reexport */ jodit/* Jodit */.h; }
-});
-
-// EXTERNAL MODULE: ./src/jodit.ts
-var jodit = __webpack_require__(68939);
-// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts
-var checker = __webpack_require__(37379);
-;// CONCATENATED MODULE: ./src/langs/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-let exp = {};
-if (false) {}
-const en = __webpack_require__(51048);
-exp.en = en;
-const get = (value) => value ? value.default || value : {}, hashLang = {};
-if ((0,checker.isArray)(get(en))) {
-    get(en).forEach((key, index) => {
-        hashLang[index] = key;
-    });
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Jodit = void 0;
+__webpack_require__(90176);
+if ( true && typeof window !== 'undefined') {
+    __webpack_require__(9992);
 }
-Object.keys(exp).forEach((lang) => {
-    const list = get(exp[lang]);
-    if ((0,checker.isArray)(list)) {
-        exp[lang] = {};
-        list.forEach((value, index) => {
-            exp[lang][hashLang[index]] = value;
-        });
-    }
-});
-/* harmony default export */ var langs = (exp);
-
-// EXTERNAL MODULE: ./src/core/decorators/index.ts
+var jodit_1 = __webpack_require__(68939);
+Object.defineProperty(exports, "Jodit", ({ enumerable: true, get: function () { return jodit_1.Jodit; } }));
+var langs_1 = __webpack_require__(76102);
 var decorators = __webpack_require__(9901);
-// EXTERNAL MODULE: ./src/core/constants.ts
 var constants = __webpack_require__(10063);
-// EXTERNAL MODULE: ./src/modules/index.ts
-var modules = __webpack_require__(46701);
-// EXTERNAL MODULE: ./src/styles/icons/index.ts
-var icons = __webpack_require__(65178);
-// EXTERNAL MODULE: ./src/plugins/index.ts
-var plugins = __webpack_require__(20151);
-;// CONCATENATED MODULE: ./src/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-if (false) {}
-
-
-
-
-
-
-
-Object.keys(constants).forEach((key) => {
-    jodit/* Jodit */.h[key] = constants[key];
+var Modules = __webpack_require__(46701);
+var Icons = __webpack_require__(65178);
+__webpack_require__(20151);
+Object.keys(constants).forEach(function (key) {
+    jodit_1.Jodit[key] = constants[key];
 });
-const esFilter = (key) => key !== '__esModule';
-Object.keys(icons)
+var esFilter = function (key) { return key !== '__esModule'; };
+Object.keys(Icons)
     .filter(esFilter)
-    .forEach((key) => {
-    modules.Icon.set(key.replace('_', '-'), icons[key]);
+    .forEach(function (key) {
+    Modules.Icon.set(key.replace('_', '-'), Icons[key]);
 });
-Object.keys(modules)
+Object.keys(Modules)
     .filter(esFilter)
-    .forEach((key) => {
-    jodit/* Jodit.modules */.h.modules[key] = modules[key];
+    .forEach(function (key) {
+    jodit_1.Jodit.modules[key] = Modules[key];
 });
 Object.keys(decorators)
     .filter(esFilter)
-    .forEach((key) => {
-    jodit/* Jodit.decorators */.h.decorators[key] = decorators[key];
+    .forEach(function (key) {
+    jodit_1.Jodit.decorators[key] = decorators[key];
 });
-['Confirm', 'Alert', 'Prompt'].forEach((key) => {
-    jodit/* Jodit */.h[key] = modules[key];
+['Confirm', 'Alert', 'Prompt'].forEach(function (key) {
+    jodit_1.Jodit[key] = Modules[key];
 });
-Object.keys(langs)
+Object.keys(langs_1.default)
     .filter(esFilter)
-    .forEach((key) => {
-    jodit/* Jodit.lang */.h.lang[key] = langs[key];
+    .forEach(function (key) {
+    jodit_1.Jodit.lang[key] = langs_1.default[key];
 });
-
 
 }();
 __webpack_exports__ = __webpack_require__.O(__webpack_exports__);
