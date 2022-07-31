@@ -11,8 +11,11 @@ module.exports = vars => {
 
 	const plugins = [require('./define')(vars)];
 
-	progressFunction &&
-		plugins.push(new webpack.ProgressPlugin(progressFunction));
+	plugins.push(
+		new webpack.ProgressPlugin(
+			progressFunction ? progressFunction : undefined
+		)
+	);
 
 	if (debug) {
 		plugins.push(new webpack.HotModuleReplacementPlugin());
