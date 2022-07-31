@@ -7,9 +7,12 @@
 const webpack = require('webpack');
 
 module.exports = vars => {
-	const plugins = [new webpack.ProgressPlugin(), require('./define')(vars)];
+	const { isProd, ESNext, onlyTS, debug, exclude, progressFunction } = vars;
 
-	const { isProd, ESNext, onlyTS, debug, exclude } = vars;
+	const plugins = [require('./define')(vars)];
+
+	progressFunction &&
+		plugins.push(new webpack.ProgressPlugin(progressFunction));
 
 	if (debug) {
 		plugins.push(new webpack.HotModuleReplacementPlugin());

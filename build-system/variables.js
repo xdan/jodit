@@ -63,6 +63,10 @@ module.exports.variables = (argv, dir) => {
 		excludeLangs,
 		excludeLanguages,
 		excludePlugins,
+		progressFunction:
+			typeof argv.progressFunction === 'function'
+				? argv.progressFunction
+				: false,
 		mode,
 		ES,
 		ESNext
