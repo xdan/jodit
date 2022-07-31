@@ -22,7 +22,7 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 
 	const [pluginsEntries] = includePlugins(dir);
 
-	console.warn(`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify}`);
+	console.info(`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify}`);
 
 	return {
 		cache: !isProd || {

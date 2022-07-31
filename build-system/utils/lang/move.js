@@ -35,7 +35,7 @@ if (sourcePath === targetPath && key === keyTo) {
 	);
 }
 
-console.warn('Key:', key, 'To:', keyTo);
+console.info('Key:', key, 'To:', keyTo);
 
 module.exports = async () => {
 	const files = readLangs(sourcePath);
@@ -45,7 +45,7 @@ module.exports = async () => {
 			const sourceFilename = path.resolve(sourcePath, file);
 			const json = require(sourceFilename);
 			if (!json[key]) {
-				console.warn(`File ${file} does not have key ${key}`);
+				console.info(`File ${file} does not have key ${key}`);
 				return;
 			}
 

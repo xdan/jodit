@@ -10,7 +10,7 @@ module.exports = ({ excludePlugins }) => {
 		Array.isArray(excludePlugins) &&
 		excludePlugins.filter(Boolean).length
 	) {
-		console.warn('Exclude plugins:', excludePlugins);
+		console.info('Exclude plugins:', excludePlugins);
 
 		return excludePlugins.reduce((map, pluginName) => {
 			map[`jodit/plugins/${pluginName}/${pluginName}`] = '{}';

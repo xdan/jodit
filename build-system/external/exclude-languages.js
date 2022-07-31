@@ -10,7 +10,7 @@ module.exports = ({ excludeLanguages }) => {
 		Array.isArray(excludeLanguages) &&
 		excludeLanguages.filter(Boolean).length
 	) {
-		console.warn('Exclude languages:', excludeLanguages);
+		console.info('Exclude languages:', excludeLanguages);
 
 		return excludeLanguages.reduce((map, name) => {
 			map[`./${name}.js`] = '{}';
