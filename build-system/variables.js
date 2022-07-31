@@ -45,7 +45,8 @@ module.exports.variables = (argv, dir) => {
 	const ESNext = ES === 'es2018';
 	const dirname = dir;
 	const superDirname = path.resolve(__dirname, '..');
-	const outputPath = path.join(dir, 'build');
+	const outputFolder = argv.outputFolder || 'build';
+	const outputPath = path.join(dir, outputFolder);
 
 	return {
 		argv,

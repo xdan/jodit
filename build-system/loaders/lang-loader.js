@@ -33,7 +33,7 @@ module.exports = function (source) {
 
 		const lang = box.module.exports;
 
-		if (!keys.length) {
+		if (!keys.length && lang) {
 			keys = Object.keys(lang);
 		}
 
