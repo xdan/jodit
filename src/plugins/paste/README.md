@@ -1,3 +1,5 @@
+# Process paste
+
 The plugin handles pasting text fragments from the clipboard.
 
 To disable the plugin, just select:

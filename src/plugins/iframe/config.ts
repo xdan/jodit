@@ -17,7 +17,7 @@ declare module 'jodit/config' {
 		 *
 		 * @example
 		 * ```javascript
-		 * new Jodit('#editor', {
+		 * Jodit.make('#editor', {
 		 *    iframe: true,
 		 *    iframeDefaultSrc: 'http://xdsoft.net/jodit/docs/',
 		 * });

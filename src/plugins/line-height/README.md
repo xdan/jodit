@@ -1,3 +1,5 @@
+# Line height plugin
+
 List of available line spacing in the dropdown list
 
 ```js

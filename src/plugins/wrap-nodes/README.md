@@ -1,3 +1,5 @@
+# Wrap inline nodes in block element
+
 A plugin that ensures that there are no elements in the document that are not surrounded by a block element.
 
 For example, the plugin will result in HTML:

@@ -1,4 +1,4 @@
-Plugin for processing images in a document.
+# Plugin for processing images in a document.
 
 -   Attaches a click handler to each image and select image after click
 -   After `load` image fire - resize - for recalculating editor size

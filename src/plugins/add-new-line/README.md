@@ -1,4 +1,4 @@
-# Plugin add-new-line
+# Plugin allow to append new block before/after text
 
 Adds an interface element - a floating button that appears at the edges of images
 or tables and allows you to add a paragraph before or after them.

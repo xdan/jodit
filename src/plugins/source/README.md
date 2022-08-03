@@ -1,3 +1,5 @@
+# Source editor
+
 The plugin allows you to add the ability to directly edit HTML to the editor.
 The plugin connects the editor to the [Ace](https://ace.c9.io/) page (default behavior).
 This is implemented through the connection of the CDN JS file. They are set in the settings in [[Config.sourceEditorCDNUrlsJS]]

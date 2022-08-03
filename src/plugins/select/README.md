@@ -1,3 +1,5 @@
+# Selection normalization
+
 Plugin normalizes selection and also proxies click events.
 A utility plugin that allows you to subscribe to a click/mousedown/touchstart/mouseup on an element in DOM order
 

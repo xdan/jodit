@@ -1,3 +1,5 @@
+# Apply block element H1,P,PRE,blockquote etc.
+
 Plugin for inserting or changing the type of a block element: p => h1, h1 => h2 etc
 
 All settings are reduced to adding a new field to `Config.prototype.controls.paragraph.list`
