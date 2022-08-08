@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/backspace/README.md]]
+ * @packageDocumentation
  * @module plugins/backspace
  */
 

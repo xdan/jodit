@@ -5,7 +5,7 @@
  */
 
 /**
- * [[include:plugins/keyboard/enter/README.md]]
+ * [[include:plugins/enter/README.md]]
  * @packageDocumentation
  * @module plugins/enter
  */

@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/copy-format/README.md]]
+ * @packageDocumentation
  * @module plugins/clipboard
  */
 

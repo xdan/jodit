@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/redo-undo/README.md]]
+ * @packageDocumentation
  * @module plugins/redo-undo
  */
 

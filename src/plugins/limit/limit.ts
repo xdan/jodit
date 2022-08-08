@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/limit/README.md]]
+ * @packageDocumentation
  * @module plugins/limit
  */
 

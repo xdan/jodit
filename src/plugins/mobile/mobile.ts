@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/mobile/README.md]]
+ * @packageDocumentation
  * @module plugins/mobile
  */
 

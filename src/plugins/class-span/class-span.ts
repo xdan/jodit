@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/class-span/README.md]]
+ * @packageDocumentation
  * @module plugins/class-span
  */
 

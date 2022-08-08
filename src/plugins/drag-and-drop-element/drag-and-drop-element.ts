@@ -5,7 +5,9 @@
  */
 
 /**
- * @module plugins/clipboard
+ * [[include:plugins/drag-and-drop-element/README.md]]
+ * @packageDocumentation
+ * @module plugins/drag-and-drop-element
  */
 
 import type { IViewComponent, Nullable } from 'jodit/types';

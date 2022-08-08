@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/placeholder/README.md]]
+ * @packageDocumentation
  * @module plugins/placeholder
  */
 

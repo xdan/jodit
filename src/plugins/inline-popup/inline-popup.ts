@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/inline-popup/README.md]]
+ * @packageDocumentation
  * @module plugins/inline-popup
  */
 

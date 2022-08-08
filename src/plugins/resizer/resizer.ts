@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/resizer/README.md]]
+ * @packageDocumentation
  * @module plugins/resizer
  */
 

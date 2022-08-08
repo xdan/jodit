@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/sticky/README.md]]
+ * @packageDocumentation
  * @module plugins/sticky
  */
 

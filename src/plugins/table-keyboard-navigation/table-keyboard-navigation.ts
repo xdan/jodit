@@ -5,7 +5,9 @@
  */
 
 /**
- * @module plugins/table
+ * [[include:plugins/table-keyboard-navigation/README.md]]
+ * @packageDocumentation
+ * @module plugins/table-keyboard-navigation
  */
 
 import type { IJodit } from 'jodit/types';

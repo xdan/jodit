@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/image-properties/README.md]]
+ * @packageDocumentation
  * @module plugins/image-properties
  */
 

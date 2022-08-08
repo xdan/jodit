@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/paste-storage/README.md]]
+ * @packageDocumentation
  * @module plugins/paste-storage
  */
 

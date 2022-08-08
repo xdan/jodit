@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/stat/README.md]]
+ * @packageDocumentation
  * @module plugins/stat
  */
 

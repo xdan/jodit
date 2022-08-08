@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/ordered-list/README.md]]
+ * @packageDocumentation
  * @module plugins/ordered-list
  */
 

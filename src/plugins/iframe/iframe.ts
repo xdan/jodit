@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/iframe/README.md]]
+ * @packageDocumentation
  * @module plugins/iframe
  */
 

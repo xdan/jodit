@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/bold/README.md]]
+ * @packageDocumentation
  * @module plugins/bold
  */
 

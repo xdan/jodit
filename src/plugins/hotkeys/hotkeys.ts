@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/hotkeys/README.md]]
+ * @packageDocumentation
  * @module plugins/hotkeys
  */
 

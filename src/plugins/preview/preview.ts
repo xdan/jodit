@@ -5,7 +5,9 @@
  */
 
 /**
- * @module plugins/print/preview
+ * [[include:plugins/preview/README.md]]
+ * @packageDocumentation
+ * @module plugins/preview
  */
 
 import './preview.less';

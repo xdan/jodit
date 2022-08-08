@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/fullsize/README.md]]
+ * @packageDocumentation
  * @module plugins/fullsize
  */
 

@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/resize-cells/README.md]]
+ * @packageDocumentation
  * @module plugins/resize-cells
  */
 

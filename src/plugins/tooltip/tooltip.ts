@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/tooltip/README.md]]
+ * @packageDocumentation
  * @module plugins/tooltip
  */
 

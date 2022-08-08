@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/xpath/README.md]]
+ * @packageDocumentation
  * @module plugins/xpath
  */
 

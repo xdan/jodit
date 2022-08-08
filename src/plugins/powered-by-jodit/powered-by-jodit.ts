@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/powered-by-jodit/README.md]]
+ * @packageDocumentation
  * @module plugins/powered-by-jodit
  */
 

@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/color/README.md]]
+ * @packageDocumentation
  * @module plugins/color
  */
 

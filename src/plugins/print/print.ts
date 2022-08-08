@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/print/README.md]]
+ * @packageDocumentation
  * @module plugins/print
  */
 

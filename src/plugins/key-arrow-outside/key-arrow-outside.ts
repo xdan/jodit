@@ -5,7 +5,9 @@
  */
 
 /**
- * @module plugins/keyboard
+ * [[include:plugins/key-arrow-outside/README.md]]
+ * @packageDocumentation
+ * @module plugins/key-arrow-outside
  */
 
 import type { IJodit } from 'jodit/types';

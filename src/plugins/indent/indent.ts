@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/indent/README.md]]
+ * @packageDocumentation
  * @module plugins/indent
  */
 

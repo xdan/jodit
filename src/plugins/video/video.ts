@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/video/README.md]]
+ * @packageDocumentation
  * @module plugins/video
  */
 

@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/about/README.md]]
+ * @packageDocumentation
  * @module plugins/about
  */
 

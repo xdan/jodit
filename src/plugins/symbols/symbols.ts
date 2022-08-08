@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/symbols/README.md]]
+ * @packageDocumentation
  * @module plugins/symbols
  */
 

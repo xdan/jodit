@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/hr/README.md]]
+ * @packageDocumentation
  * @module plugins/hr
  */
 

@@ -5,7 +5,9 @@
  */
 
 /**
- * @module plugins/clipboard
+ * [[include:plugins/drag-and-drop/README.md]]
+ * @packageDocumentation
+ * @module plugins/drag-and-drop
  */
 
 /**

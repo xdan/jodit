@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/font/README.md]]
+ * @packageDocumentation
  * @module plugins/font
  */
 

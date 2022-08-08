@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/error-messages/README.md]]
+ * @packageDocumentation
  * @module plugins/error-messages
  */
 

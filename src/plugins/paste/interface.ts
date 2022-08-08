@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { InsertMode } from 'jodit/types';
-
 /**
  * @module plugins/paste
  */
+
+import type { InsertMode } from 'jodit/types';
 
 export type PasteEvent = ClipboardEvent | DragEvent;
 

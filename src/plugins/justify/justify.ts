@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/justify/README.md]]
+ * @packageDocumentation
  * @module plugins/justify
  */
 

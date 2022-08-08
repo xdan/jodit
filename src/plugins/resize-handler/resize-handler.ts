@@ -5,7 +5,9 @@
  */
 
 /**
- * @module plugins/size
+ * [[include:plugins/resize-handler/README.md]]
+ * @packageDocumentation
+ * @module plugins/resize-handler
  */
 
 import type { IJodit, IPointBound } from 'jodit/types';

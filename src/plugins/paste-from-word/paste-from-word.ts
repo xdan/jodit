@@ -5,7 +5,7 @@
  */
 
 /**
- * [[include:plugins/clipboard/paste-from-word/README.md]]
+ * [[include:plugins/paste-from-word/README.md]]
  * @packageDocumentation
  * @module plugins/paste-from-word
  */
