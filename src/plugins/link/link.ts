@@ -54,7 +54,7 @@ export class link extends Plugin {
 
 		jodit.registerCommand('openLinkDialog', {
 			exec: () => {
-				const dialog = new Dialog({
+				const dialog = jodit.dialog({
 					resizable: false
 				});
 
@@ -115,7 +115,7 @@ export class link extends Plugin {
 			a.textContent = html;
 
 			jodit.e.stopPropagation('processPaste');
-
+			jodit.e.fire('applyLink', jodit, a, null);
 			return a;
 		}
 	}
