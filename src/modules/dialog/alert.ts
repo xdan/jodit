@@ -8,6 +8,7 @@
  * @module modules/dialog
  */
 
+import type { IDialog } from 'jodit/types';
 import { Dialog } from './dialog';
 import { asArray, isFunction } from 'jodit/core/helpers/';
 import { Dom } from 'jodit/core/dom';
@@ -27,17 +28,18 @@ import { Button } from 'jodit/core/ui';
  * });
  * ```
  */
-export const Alert = (
+export function Alert(
+	this: IDialog | unknown,
 	msg: string | HTMLElement,
 	title?: string | (() => void | false),
-	callback?: string | ((dialog: Dialog) => void | false),
+	callback?: string | ((dialog: IDialog) => void | false),
 	className: string = 'jodit-dialog_alert'
-): Dialog => {
+): IDialog {
 	if (isFunction(title)) {
 		callback = title;
 		title = undefined;
 	}
-	const dialog = new Dialog(),
+	const dialog = this instanceof Dialog ? this : new Dialog(),
 		container = dialog.c.div(className),
 		okButton = Button(dialog, 'ok', 'Ok');
 
@@ -59,4 +61,4 @@ export const Alert = (
 	okButton.focus();
 
 	return dialog;
-};
+}

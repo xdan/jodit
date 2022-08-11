@@ -10,7 +10,6 @@
 
 import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
-import { Alert } from 'jodit/modules/dialog';
 import { Icon } from 'jodit/core/ui/icon';
 
 declare module 'jodit/config' {
@@ -254,12 +253,14 @@ Config.prototype.controls.symbols = {
 				editor.e.on(container, 'close_dialog', close);
 				return box;
 			} else {
-				Alert(
-					container,
-					editor.i18n('Select Special Character'),
-					undefined,
-					'jodit-symbols'
-				).bindDestruct(editor);
+				editor
+					.alert(
+						container,
+						'Select Special Character',
+						undefined,
+						'jodit-symbols'
+					)
+					.bindDestruct(editor);
 
 				const a = container.querySelector('a');
 

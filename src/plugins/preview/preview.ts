@@ -15,7 +15,6 @@ import './preview.less';
 import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { MODE_SOURCE, MODE_WYSIWYG } from 'jodit/core/constants';
-import { Dialog } from 'jodit/modules/dialog/dialog';
 import { previewBox } from 'jodit/core/helpers/utils/print';
 import { pluginSystem } from 'jodit/core/global';
 
@@ -34,10 +33,7 @@ export function preview(editor: IJodit): void {
 	editor.registerCommand(
 		'preview',
 		(_: any, _1: any, defaultValue: string) => {
-			const dialog = new Dialog({
-				language: editor.o.language,
-				theme: editor.o.theme
-			});
+			const dialog = editor.dialog();
 
 			dialog
 				.setSize(1024, 600)

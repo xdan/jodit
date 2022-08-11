@@ -17,14 +17,14 @@ import type {
 	IJodit,
 	ImageEditorOptions,
 	ImageAction,
-	IViewBased,
 	IUIButton,
 	IDictionary,
-	IFileBrowserDataProvider
+	IFileBrowserDataProvider,
+	IPanel,
+	IDialog
 } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { ViewComponent } from 'jodit/core/component';
-import { Alert, Dialog, Prompt } from 'jodit/modules/dialog';
 import { $$, attr, call, css, refs, toArray, trim } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
 import { Button } from 'jodit/core/ui/button';
@@ -68,7 +68,7 @@ const TABS = {
  *
  */
 @component
-export class ImageEditor extends ViewComponent {
+export class ImageEditor extends ViewComponent<IPanel> {
 	/** @override */
 	override className(): string {
 		return 'ImageEditor';
@@ -77,7 +77,7 @@ export class ImageEditor extends ViewComponent {
 	private resizeUseRatio: boolean = true;
 	private cropUseRatio: boolean = true;
 
-	private readonly dialog: Dialog;
+	private readonly _dialog: IDialog;
 	private image!: HTMLImageElement;
 	private cropImage!: HTMLImageElement;
 	private clicked = false;
@@ -353,16 +353,14 @@ export class ImageEditor extends ViewComponent {
 
 				switch (button) {
 					case self.buttons.saveas:
-						Prompt(
-							self.j.i18n('Enter new name'),
-							self.j.i18n('Save in new file'),
+						self.j.prompt(
+							'Enter new name',
+							'Save in new file',
 							(name: string): false | void => {
 								if (!trim(name)) {
-									Alert(
-										self.j.i18n(
-											'The name should not be empty'
-										)
-									).bindDestruct(this.j);
+									self.j.alert(
+										'The name should not be empty'
+									);
 
 									return false;
 								}
@@ -372,16 +370,16 @@ export class ImageEditor extends ViewComponent {
 									data,
 									self.hide,
 									(e: Error) => {
-										Alert(e.message).bindDestruct(self.j);
+										self.j.alert(e.message);
 									}
 								);
 							}
-						).bindDestruct(this.j);
+						);
 						break;
 
 					case self.buttons.save:
 						self.onSave(undefined, data, self.hide, (e: Error) => {
-							Alert(e.message).bindDestruct(self.j);
+							self.j.alert(e.message);
 						});
 						break;
 
@@ -608,7 +606,7 @@ export class ImageEditor extends ViewComponent {
 	 */
 	@autobind
 	hide(): void {
-		this.dialog.close();
+		this._dialog.close();
 	}
 
 	/**
@@ -636,8 +634,8 @@ export class ImageEditor extends ViewComponent {
 	 * ```
 	 */
 	@autobind
-	open(url: string, save: onSave): Promise<Dialog> {
-		return this.j.async.promise<Dialog>((resolve: Function): void => {
+	open(url: string, save: onSave): Promise<IDialog> {
+		return this.j.async.promise<IDialog>((resolve: Function): void => {
 			const timestamp = new Date().getTime();
 
 			this.image = this.j.c.element('img');
@@ -668,7 +666,7 @@ export class ImageEditor extends ViewComponent {
 
 			this.image.setAttribute('src', url);
 
-			this.dialog.open();
+			this._dialog.open();
 
 			const { widthInput, heightInput } = refs<HTMLInputElement>(
 				this.editor
@@ -706,11 +704,11 @@ export class ImageEditor extends ViewComponent {
 				this.j.e.fire(this.resizeHandler, 'updatesize');
 				this.j.e.fire(this.cropHandler, 'updatesize');
 
-				this.dialog.setPosition();
+				this._dialog.setPosition();
 
 				this.j.e.fire('afterImageEditor');
 
-				resolve(this.dialog);
+				resolve(this._dialog);
 			};
 
 			this.image.addEventListener('load', onload);
@@ -721,7 +719,7 @@ export class ImageEditor extends ViewComponent {
 		});
 	}
 
-	constructor(editor: IViewBased) {
+	constructor(editor: IPanel) {
 		super(editor);
 
 		this.options =
@@ -761,17 +759,14 @@ export class ImageEditor extends ViewComponent {
 			`.${jie}__croper`
 		) as HTMLElement;
 
-		this.dialog = new Dialog({
-			fullsize: this.j.o.fullsize,
-			globalFullSize: this.j.o.globalFullSize,
-			language: this.j.o.language,
+		this._dialog = this.j.dialog({
 			buttons: ['fullsize', 'dialog.close']
 		});
 
-		this.dialog.setContent(this.editor);
+		this._dialog.setContent(this.editor);
 
-		this.dialog.setSize(this.o.width, this.o.height);
-		this.dialog.setHeader([
+		this._dialog.setSize(this.o.width, this.o.height);
+		this._dialog.setHeader([
 			this.buttons.reset,
 			this.buttons.save,
 			this.buttons.saveas
@@ -786,8 +781,8 @@ export class ImageEditor extends ViewComponent {
 			return;
 		}
 
-		if (this.dialog && !this.dialog.isInDestruct) {
-			this.dialog.destruct();
+		if (this._dialog && !this._dialog.isInDestruct) {
+			this._dialog.destruct();
 		}
 
 		Dom.safeRemove(this.editor);
@@ -808,14 +803,14 @@ export class ImageEditor extends ViewComponent {
  * Open Image Editor
  */
 export function openImageEditor(
-	this: IViewBased & { dataProvider: IFileBrowserDataProvider },
+	this: IPanel & { dataProvider: IFileBrowserDataProvider },
 	href: string,
 	name: string,
 	path: string,
 	source: string,
 	onSuccess?: () => void,
 	onFailed?: (error: Error) => void
-): Promise<Dialog> {
+): Promise<IDialog> {
 	return this.getInstance<ImageEditor>('ImageEditor', this.o).open(
 		href,
 		(

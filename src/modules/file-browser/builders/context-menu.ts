@@ -9,7 +9,6 @@
  */
 
 import type { IDialog, IFileBrowser } from 'jodit/types';
-import { Dialog } from 'jodit/modules/dialog';
 
 import { Dom } from 'jodit/core/dom';
 import { attr, error } from 'jodit/core/helpers';
@@ -117,9 +116,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 							icon: 'eye',
 							title: 'Preview',
 							exec: (): void => {
-								const preview = new Dialog({
-										fullsize: self.o.fullsize,
-										language: self.o.language,
+								const preview = self.dialog({
 										buttons: ['fullsize', 'dialog.close']
 									}),
 									temp_content = self.c.div(

@@ -8,9 +8,10 @@
  * @module modules/dialog
  */
 
-import { Dialog } from 'jodit/modules/dialog';
-import { isFunction } from 'jodit/core/helpers';
-import { Button } from 'jodit/core/ui';
+import type { IDialog } from 'jodit/types';
+import { Dialog } from 'jodit/modules/dialog/dialog';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { Button } from 'jodit/core/ui/button/button/button';
 
 /**
  * Show `confirm` dialog. Work without Jodit object
@@ -26,12 +27,13 @@ import { Button } from 'jodit/core/ui';
  * });
  * ```
  */
-export const Confirm = (
+export function Confirm(
+	this: IDialog | unknown,
 	msg: string,
 	title: string | ((yes: boolean) => void) | undefined,
 	callback?: (yes: boolean) => void | false
-): Dialog => {
-	const dialog = new Dialog(),
+): IDialog {
+	const dialog = this instanceof Dialog ? this : new Dialog(),
 		$div: HTMLDivElement = dialog.c.fromHTML(
 			'<form class="jodit-dialog_prompt"></form>'
 		) as HTMLDivElement,
@@ -69,4 +71,4 @@ export const Confirm = (
 	$ok.focus();
 
 	return dialog;
-};
+}

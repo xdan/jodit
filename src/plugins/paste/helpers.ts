@@ -8,7 +8,13 @@
  * @module plugins/paste
  */
 
-import type { IJodit, InsertMode, IUIOption, Nullable } from 'jodit/types';
+import type {
+	IDialog,
+	IJodit,
+	InsertMode,
+	IUIOption,
+	Nullable
+} from 'jodit/types';
 import {
 	isArray,
 	isNumber,
@@ -18,10 +24,7 @@ import {
 import { Dom } from 'jodit/core/dom/dom';
 
 import { TEXT_PLAIN } from 'jodit/core/constants';
-import { Confirm, Dialog } from 'jodit/modules';
-
 import { Button } from 'jodit/core/ui/button/button/button';
-import { markOwner } from 'jodit/core/helpers/utils/utils';
 
 import type { PasteEvent } from './interface';
 
@@ -113,7 +116,7 @@ export function askInsertTypeDialog(
 	title: string,
 	callback: (yes: InsertMode) => void,
 	buttonList: IUIOption[]
-): Dialog | void {
+): IDialog | void {
 	if (
 		jodit.e.fire(
 			'beforeOpenPasteDialog',
@@ -126,16 +129,12 @@ export function askInsertTypeDialog(
 		return;
 	}
 
-	const dialog = Confirm(
+	const dialog = jodit.confirm(
 		`<div style="word-break: normal; white-space: normal">${jodit.i18n(
 			msg
 		)}</div>`,
 		jodit.i18n(title)
 	);
-
-	dialog.bindDestruct(jodit);
-
-	markOwner(jodit, dialog.container);
 
 	const buttons = buttonList.map(({ text, value }) =>
 		Button(jodit, {

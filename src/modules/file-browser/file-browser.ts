@@ -12,7 +12,6 @@ import './styles';
 
 import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
-import { Dialog } from 'jodit/modules/dialog/dialog';
 
 import type {
 	IFileBrowser,
@@ -41,7 +40,7 @@ import {
 	trim,
 	isAbort
 } from 'jodit/core/helpers';
-import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
+import { Panel } from 'jodit/core/view/panel';
 import { Dom } from 'jodit/core/dom';
 import { makeDataProvider } from './factories';
 import { stateListeners } from './listeners/state-listeners';
@@ -57,7 +56,7 @@ import { STATUSES } from 'jodit/core/component';
 
 import './config';
 
-export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
+export class FileBrowser extends Panel implements IFileBrowser {
 	/** @override */
 	className(): string {
 		return 'Filebrowser';
@@ -137,7 +136,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 	override OPTIONS!: IFileBrowserOptions;
 
-	private dialog!: IDialog;
+	private _dialog!: IDialog;
 
 	/**
 	 * Container for set/get value
@@ -147,7 +146,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	uploader!: IUploader;
 
 	get isOpened(): boolean {
-		return this.dialog.isOpened && this.browser.style.display !== 'none';
+		return this._dialog.isOpened && this.browser.style.display !== 'none';
 	}
 
 	/**
@@ -204,7 +203,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 	 * Close dialog
 	 */
 	close = (): void => {
-		this.dialog.close();
+		this._dialog.close();
 	};
 
 	/**
@@ -257,7 +256,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 			this.toolbar.build(this.o.buttons ?? []).appendTo(header);
 
-			this.dialog.open(this.browser, header);
+			this._dialog.open(this.browser, header);
 
 			this.e.fire('sort.filebrowser', this.state.sortBy);
 
@@ -311,12 +310,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		self.dataProvider = makeDataProvider(self, self.options);
 
-		self.dialog = new Dialog({
-			fullsize: self.o.fullsize,
-			ownerWindow: self.ownerWindow,
-			theme: self.o.theme,
-			globalFullSize: self.o.globalFullSize,
-			language: this.o.language,
+		self._dialog = this.dialog({
 			minWidth: Math.min(700, screen.width),
 			minHeight: 300,
 			buttons: this.o.headerButtons ?? ['fullsize', 'dialog.close']
@@ -338,7 +332,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 		nativeListeners.call(self);
 		stateListeners.call(self);
 
-		self.dialog.setSize(self.o.width, self.o.height);
+		self._dialog.setSize(self.o.width, self.o.height);
 
 		const keys: Array<keyof IFileBrowserOptions> = [
 			'getLocalFileByUrl',
@@ -408,7 +402,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 	private proxyDialogEvents(self: FileBrowser): void {
 		['afterClose', 'beforeOpen'].forEach(proxyEvent => {
-			self.dialog.events.on(self.dialog, proxyEvent, () => {
+			self._dialog.events.on(self.dialog, proxyEvent, () => {
 				this.e.fire(proxyEvent);
 			});
 		});
@@ -421,7 +415,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser {
 
 		super.destruct();
 
-		this.dialog.destruct();
+		this._dialog.destruct();
 		this.events && this.e.off('.filebrowser');
 		this.uploader && this.uploader.destruct();
 	}

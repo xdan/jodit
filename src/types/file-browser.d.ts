@@ -17,7 +17,7 @@ import type {
 	Nullable
 } from './types';
 import type { IUploader, IUploaderOptions } from './uploader';
-import type { IViewBased, IViewOptions } from './view';
+import type { IPanel, IViewOptions } from './view';
 import type { IUIGroup } from './ui';
 import type { IObservable } from './events';
 import type { IAjax } from './ajax';
@@ -252,7 +252,7 @@ export interface IFileBrowserDataProvider extends IDestructible {
 // TODO - Remove extending
 export interface IFileBrowser<
 	T extends IFileBrowserOptions = IFileBrowserOptions
-> extends IViewBased<T> {
+> extends IPanel<T> {
 	readonly dataProvider: IFileBrowserDataProvider;
 	readonly state: IFileBrowserState & IObservable;
 

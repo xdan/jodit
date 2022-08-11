@@ -8,7 +8,7 @@
  * @module types
  */
 
-import type { IFocusable } from 'jodit/types/form';
+import type { IFocusable } from './form';
 import type {
 	CanUndef,
 	IContainer,
@@ -16,10 +16,10 @@ import type {
 	IDictionary,
 	IViewComponent,
 	Nullable
-} from 'jodit/types/types';
-import type { IViewBased } from 'jodit/types/view';
-import type { ButtonsOption } from 'jodit/types/toolbar';
-import type { IElms, IMods } from 'jodit/types/traits';
+} from './types';
+import type { IViewBased } from './view';
+import type { ButtonsOption } from './toolbar';
+import type { IElms, IMods } from './traits';
 
 export interface IUIElement
 	extends IViewComponent,

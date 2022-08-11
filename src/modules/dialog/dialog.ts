@@ -96,7 +96,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	private offsetY?: number;
 
 	private get destination(): HTMLElement {
-		return this.od.body;
+		return (this.o.shadowRoot ?? this.od.body) as HTMLElement;
 	}
 
 	private destroyAfterClose: boolean = false;

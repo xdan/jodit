@@ -376,5 +376,6 @@ View.defaultOptions = {
 	showTooltip: true,
 	useNativeTooltip: false,
 	buttons: [],
-	globalFullSize: true
+	globalFullSize: true,
+	language: 'auto'
 };

@@ -8,12 +8,19 @@
  * @module types
  */
 
-import { IViewOptions, IViewWithToolbar } from './view';
+import { IViewOptions, IPanel } from './view';
 import type { Config } from 'jodit/config';
-import type { CustomCommand, ICreate, IDestructible, IHistory, IStatusBar, Modes } from './';
+import type {
+	CustomCommand,
+	ICreate,
+	IDestructible,
+	IHistory,
+	IStatusBar,
+	Modes
+} from './';
 import type { IUploader } from './uploader';
 import type { IFileBrowser } from './file-browser';
-import { ISelect } from './select';
+import type { ISelect } from './select';
 
 interface IWorkPlace {
 	editor: HTMLDivElement | HTMLBodyElement;
@@ -27,7 +34,7 @@ interface IWorkPlace {
 	options: IViewOptions;
 }
 
-interface IJodit extends IViewWithToolbar {
+interface IJodit extends IPanel {
 	isJodit: true;
 
 	options: Config;

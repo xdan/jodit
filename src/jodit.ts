@@ -65,7 +65,7 @@ import {
 
 import { Storage } from './core/storage/';
 
-import { ViewWithToolbar } from './core/view/view-with-toolbar';
+import { Panel } from './core/view/panel';
 
 import { lang } from 'jodit/core/constants';
 import { instances, pluginSystem, modules } from './core/global';
@@ -77,7 +77,7 @@ const __defaultClassesKey = 'data-jodit-default-classes';
 /**
  * Class Jodit. Main class
  */
-export class Jodit extends ViewWithToolbar implements IJodit {
+export class Jodit extends Panel implements IJodit {
 	/** @override */
 	override className(): string {
 		return 'Jodit';

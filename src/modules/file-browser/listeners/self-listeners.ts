@@ -9,7 +9,6 @@
  */
 
 import type { IDictionary, IFileBrowser } from 'jodit/types';
-import { Confirm, Prompt } from 'jodit/modules/dialog';
 import { isValidName } from 'jodit/core/helpers/checker';
 import { normalizePath } from 'jodit/core/helpers';
 import { DEFAULT_SOURCE_NAME } from '../data-provider';
@@ -59,25 +58,21 @@ export function selfListeners(this: IFileBrowser): void {
 				data.name === '.' ? DEFAULT_SOURCE_NAME : data.source;
 		})
 		.on('removeFolder.filebrowser', (data: IDictionary): void => {
-			Confirm(
-				self.i18n('Are you sure?'),
-				self.i18n('Delete'),
-				(yes: boolean) => {
-					if (yes) {
-						dp.folderRemove(data.path, data.name, data.source)
-							.then(message => {
-								self.status(message, true);
-								return loadTree(self);
-							})
-							.catch(self.status);
-					}
+			self.confirm('Are you sure?', 'Delete', (yes: boolean) => {
+				if (yes) {
+					dp.folderRemove(data.path, data.name, data.source)
+						.then(message => {
+							self.status(message, true);
+							return loadTree(self);
+						})
+						.catch(self.status);
 				}
-			).bindDestruct(self);
+			});
 		})
 		.on('renameFolder.filebrowser', (data: IDictionary): void => {
-			Prompt(
-				self.i18n('Enter new name'),
-				self.i18n('Rename'),
+			self.prompt(
+				'Enter new name',
+				'Rename',
 				(newName: string): false | void => {
 					if (!isValidName(newName)) {
 						self.status(self.i18n('Enter new name'));
@@ -94,25 +89,25 @@ export function selfListeners(this: IFileBrowser): void {
 
 					return;
 				},
-				self.i18n('type name'),
+				'type name',
 				data.name
-			).bindDestruct(self);
+			);
 		})
 		.on('addFolder.filebrowser', (data: IDictionary): void => {
-			Prompt(
-				self.i18n('Enter Directory name'),
-				self.i18n('Create directory'),
+			self.prompt(
+				'Enter Directory name',
+				'Create directory',
 				(name: string) => {
 					dp.createFolder(name, data.path, data.source)
 						.then(() => loadTree(self))
 						.catch(self.status);
 				},
-				self.i18n('type name')
-			).bindDestruct(self);
+				'type name'
+			);
 		})
 		.on('fileRemove.filebrowser', () => {
 			if (self.state.activeElements.length) {
-				Confirm(self.i18n('Are you sure?'), '', (yes: boolean) => {
+				self.confirm('Are you sure?', '', (yes: boolean) => {
 					if (yes) {
 						const promises: Array<Promise<any>> = [];
 
@@ -133,7 +128,7 @@ export function selfListeners(this: IFileBrowser): void {
 							self.status
 						);
 					}
-				}).bindDestruct(self);
+				});
 			}
 		})
 		.on('edit.filebrowser', () => {
@@ -153,9 +148,9 @@ export function selfListeners(this: IFileBrowser): void {
 			'fileRename.filebrowser',
 			(name: string, path: string, source: string) => {
 				if (self.state.activeElements.length === 1) {
-					Prompt(
-						self.i18n('Enter new name'),
-						self.i18n('Rename'),
+					self.prompt(
+						'Enter new name',
+						'Rename',
 						(newName: string): false | void => {
 							if (!isValidName(newName)) {
 								self.status(self.i18n('Enter new name'));
@@ -173,9 +168,9 @@ export function selfListeners(this: IFileBrowser): void {
 
 							return;
 						},
-						self.i18n('type name'),
+						'type name',
 						name
-					).bindDestruct(this);
+					);
 				}
 			}
 		)

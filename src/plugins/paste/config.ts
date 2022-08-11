@@ -17,7 +17,6 @@ import {
 	TEXT_PLAIN
 } from 'jodit/core/constants';
 import { Config } from 'jodit/config';
-import { Alert } from 'jodit/modules/dialog/alert';
 
 import { pasteInsertHtml } from './helpers';
 
@@ -131,14 +130,10 @@ Config.prototype.controls.paste = {
 			editor.e.fire('afterPaste');
 		} else {
 			if (error) {
-				Alert(
-					editor.i18n(
-						"Your browser doesn't support direct access to the clipboard."
-					),
-					() => {
-						editor.s.focus();
-					}
-				).bindDestruct(editor);
+				editor.alert(
+					"Your browser doesn't support direct access to the clipboard.",
+					() => void editor.s.focus()
+				);
 			}
 		}
 	},

@@ -13,7 +13,6 @@ import type { IControlType, IJodit, IDictionary } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { dataBind } from 'jodit/core/helpers/utils/data-bind';
 import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
-import { Alert } from 'jodit/modules/dialog/alert';
 import { Icon } from 'jodit/core/ui/icon';
 
 import type { ISpeechRecognizeConstructor } from './interface';
@@ -118,7 +117,7 @@ Config.prototype.controls.speechRecognize = {
 		} = jodit.o.speechRecognize;
 
 		if (!Api) {
-			Alert('Speech recognize API unsupported in your browser');
+			jodit.alert('Speech recognize API unsupported in your browser');
 			return;
 		}
 

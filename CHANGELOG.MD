@@ -9,6 +9,13 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.19.4
+
+#### :bug: Bug Fix
+
+- [applyLink event is only fired when link is inserted via menu button but not when it is pasted #874](https://github.com/xdan/jodit/issues/874)
+- [Dialogs don't work inside Shadow DOM #866](https://github.com/xdan/jodit/issues/866)
+
 ## 3.19.3
 
 #### :bug: Bug Fix

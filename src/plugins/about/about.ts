@@ -16,15 +16,12 @@ import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { css, isLicense, normalizeLicense } from 'jodit/core/helpers/';
 import * as constants from 'jodit/core/constants';
-import { Dialog } from 'jodit/modules/dialog';
 import { pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {
-		const dialog = new Dialog({
-				language: editor.o.language
-			}),
+		const dialog = editor.dialog(),
 			i = editor.i18n.bind(editor);
 
 		dialog
@@ -59,7 +56,7 @@ Config.prototype.controls.about = {
 			minWidth: 420
 		});
 
-		dialog.open(true).bindDestruct(editor);
+		dialog.open(true);
 	},
 	tooltip: 'About Jodit',
 	mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG

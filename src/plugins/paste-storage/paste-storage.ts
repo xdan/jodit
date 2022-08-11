@@ -12,13 +12,13 @@
 
 import './paste-storage.less';
 
+import type { IDialog } from 'jodit/types';
 import {
 	KEY_DOWN,
 	KEY_ENTER,
 	KEY_UP,
 	SPACE_REG_EXP
 } from 'jodit/core/constants';
-import { Dialog } from 'jodit/modules/dialog/dialog';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { Dom } from 'jodit/core/dom/dom';
 import { attr, toArray } from 'jodit/core/helpers';
@@ -37,7 +37,7 @@ export class pasteStorage extends Plugin {
 	private listBox: HTMLElement | null = null;
 	private previewBox: HTMLElement | null = null;
 
-	private dialog: Dialog | null = null;
+	private dialog: IDialog | null = null;
 
 	private paste = (): void => {
 		this.j.s.focus();
@@ -144,9 +144,7 @@ export class pasteStorage extends Plugin {
 	};
 
 	private createDialog(): void {
-		this.dialog = new Dialog({
-			language: this.j.o.language
-		});
+		this.dialog = this.j.dialog();
 
 		const pasteButton = Button(this.j, 'paste', 'Paste', 'primary');
 

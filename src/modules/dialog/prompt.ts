@@ -8,6 +8,7 @@
  * @module modules/dialog
  */
 
+import type { IDialog } from 'jodit/types';
 import { Dialog } from 'jodit/modules/dialog';
 import { Button } from 'jodit/core/ui';
 import { attr, isFunction } from 'jodit/core/helpers';
@@ -29,14 +30,15 @@ import { attr, isFunction } from 'jodit/core/helpers';
  * });
  * ```
  */
-export const Prompt = (
+export function Prompt(
+	this: IDialog | unknown,
 	msg: string,
 	title: string | (() => false | void) | undefined,
 	callback: (value: string) => false | void,
 	placeholder?: string,
 	defaultValue?: string
-): Dialog => {
-	const dialog = new Dialog(),
+): IDialog {
+	const dialog = this instanceof Dialog ? this : new Dialog(),
 		cancelButton = Button(dialog, 'cancel', 'Cancel'),
 		okButton = Button(dialog, 'ok', 'Ok'),
 		form = dialog.c.element('form', {
@@ -92,4 +94,4 @@ export const Prompt = (
 	}
 
 	return dialog;
-};
+}

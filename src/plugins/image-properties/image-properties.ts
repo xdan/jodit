@@ -19,15 +19,7 @@ import type {
 	ImageHAlign
 } from 'jodit/types';
 
-import {
-	Alert,
-	Confirm,
-	Dialog,
-	Dom,
-	Popup,
-	Icon,
-	Plugin
-} from 'jodit/modules';
+import { Dom, Popup, Icon, Plugin } from 'jodit/modules';
 
 import {
 	css,
@@ -193,11 +185,7 @@ export class imageProperties extends Plugin {
 			return;
 		}
 
-		this.dialog = new Dialog({
-			fullsize: false,
-			globalFullSize: true,
-			theme: this.j.o.theme,
-			language: this.j.o.language,
+		this.dialog = this.j.dialog({
 			minWidth: Math.min(400, screen.width),
 			minHeight: 590,
 			buttons: ['fullsize', 'dialog.close']
@@ -622,19 +610,15 @@ export class imageProperties extends Plugin {
 			a = this.j.c.element('a'),
 			loadExternal = (): void => {
 				if (a.host !== location.host) {
-					Confirm(
-						this.j.i18n(
-							'You can only edit your own images. Download this image on the host?'
-						),
+					this.j.confirm(
+						'You can only edit your own images. Download this image on the host?',
 						yes => {
 							if (yes && this.j.uploader) {
 								this.j.uploader.uploadRemoteImage(
 									a.href.toString(),
 									resp => {
-										Alert(
-											this.j.i18n(
-												'The image has been successfully uploaded to the host!'
-											),
+										this.j.alert(
+											'The image has been successfully uploaded to the host!',
 											() => {
 												if (
 													isString(resp.newfilename)
@@ -649,21 +633,18 @@ export class imageProperties extends Plugin {
 													this.updateValues();
 												}
 											}
-										).bindDestruct(this.j);
+										);
 									},
 									error => {
-										Alert(
-											this.j.i18n(
-												'There was an error loading %s',
-												error.message
-											)
-										).bindDestruct(this.j);
+										this.j.alert(
+											'There was an error loading %s',
+											error.message
+										);
 									}
 								);
 							}
 						}
-					).bindDestruct(this.j);
-
+					);
 					return;
 				}
 			};
@@ -694,12 +675,12 @@ export class imageProperties extends Plugin {
 						this.updateValues();
 					},
 					error => {
-						Alert(error.message).bindDestruct(this.j);
+						this.j.alert(error.message);
 					}
 				);
 			})
 			.catch(error => {
-				Alert(error.message, loadExternal).bindDestruct(this.j);
+				this.j.alert(error.message, loadExternal);
 			});
 	}
 
