@@ -36,23 +36,15 @@ describe('Drag and drop element inside Editor', function () {
 							editor
 						);
 
-						simulateEvent(
-							events[1],
-							editor.editor,
-							function (options) {
-								options.clientX = box.left + 15;
-								options.clientY = box.top + 5;
-							}
-						);
+						simulateEvent(events[1], editor.editor, options => {
+							options.clientX = box.left + 15;
+							options.clientY = box.top + 5;
+						});
 
-						simulateEvent(
-							events[2],
-							editor.editor,
-							function (options) {
-								options.clientX = box.left + 15;
-								options.clientY = box.top + 5;
-							}
-						);
+						simulateEvent(events[2], editor.editor, options => {
+							options.clientX = box.left + 15;
+							options.clientY = box.top + 5;
+						});
 
 						const result =
 							'<p>1111</p>' +
