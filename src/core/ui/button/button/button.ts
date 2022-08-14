@@ -58,7 +58,7 @@ export class UIButton extends UIElement implements IUIButton {
 	/**
 	 * Marker for buttons
 	 */
-	readonly isButton: true = true;
+	readonly isButton = true as const;
 
 	readonly state = UIButtonState();
 

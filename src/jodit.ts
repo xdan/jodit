@@ -107,7 +107,7 @@ export class Jodit extends Panel implements IJodit {
 	/**
 	 * Define if object is Jodit
 	 */
-	override readonly isJodit: true = true;
+	override readonly isJodit = true as const;
 
 	/**
 	 * Plain text editor's value

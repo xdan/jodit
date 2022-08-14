@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.19.3
+ * Version: v3.19.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -49,7 +49,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var config_1 = __webpack_require__(27537);
 var data_bind_1 = __webpack_require__(70774);
 var is_boolean_1 = __webpack_require__(65131);
-var alert_1 = __webpack_require__(66124);
 var icon_1 = __webpack_require__(76381);
 var recognize_manager_1 = __webpack_require__(94539);
 var api_1 = __webpack_require__(43467);
@@ -85,7 +84,7 @@ config_1.Config.prototype.controls.speechRecognize = {
         var button = _a.button, control = _a.control;
         var _b = jodit.o.speechRecognize, Api = _b.api, lang = _b.lang, continuous = _b.continuous, interimResults = _b.interimResults, sound = _b.sound;
         if (!Api) {
-            (0, alert_1.Alert)('Speech recognize API unsupported in your browser');
+            jodit.alert('Speech recognize API unsupported in your browser');
             return;
         }
         var api = (0, data_bind_1.dataBind)(jodit, 'speech');

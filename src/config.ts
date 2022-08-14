@@ -314,7 +314,7 @@ export class Config implements IViewOptions {
 	 *
 	 * @example
 	 * ```javascript
-	 * var editor = Jodit.make('#editor', {
+	 * const editor = Jodit.make('#editor', {
 	 *     language: 'ru',
 	 *     i18n: {
 	 *         ru: {
@@ -325,7 +325,7 @@ export class Config implements IViewOptions {
 	 * console.log(editor.i18n('Type something')) //Начните что-либо вводить
 	 * ```
 	 */
-	i18n: false = false;
+	i18n: IDictionary<IDictionary<string>> | false = false;
 
 	/**
 	 * The tabindex global attribute is an integer indicating if the element can take
