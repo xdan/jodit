@@ -115,10 +115,14 @@ export class cleanHtml extends Plugin {
 	 */
 	@watch(':beforeSetNativeEditorValue')
 	protected onBeforeSetNativeEditorValue(data: { value: string }): boolean {
-		const sandBox = this.j.createInside.sandbox();
+		const sandBox = this.j.o.cleanHTML.useIframeSandbox
+			? this.j.createInside.sandbox()
+			: this.j.createInside.div();
+
 		sandBox.innerHTML = data.value;
 		this.onSafeHTML(sandBox);
 		data.value = sandBox.innerHTML;
+		safeHTML(sandBox, { safeJavaScriptLink: true, removeOnError: true });
 		Dom.safeRemove(sandBox);
 		return false;
 	}

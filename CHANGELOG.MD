@@ -11,12 +11,17 @@
 
 ## 3.19.4
 
+#### :rocket: New Feature
+
+-   Added `useIframeSandbox`:`boolean` option(default: false). Use iframe[sandbox] to paste HTML code into the editor to check it for safety.
+    Allows you not to run scripts and handlers, but it works much slower
+
 #### :bug: Bug Fix
 
-- [applyLink event is only fired when link is inserted via menu button but not when it is pasted #874](https://github.com/xdan/jodit/issues/874)
-- [Dialogs don't work inside Shadow DOM #866](https://github.com/xdan/jodit/issues/866)
-- [Popups don't work inside Shadow DOM #865](https://github.com/xdan/jodit/issues/865)
-- [Pb with cleanHTML.safeJavaScriptLink option #862](https://github.com/xdan/jodit/issues/862)
+-   [applyLink event is only fired when link is inserted via menu button but not when it is pasted #874](https://github.com/xdan/jodit/issues/874)
+-   [Dialogs don't work inside Shadow DOM #866](https://github.com/xdan/jodit/issues/866)
+-   [Popups don't work inside Shadow DOM #865](https://github.com/xdan/jodit/issues/865)
+-   [Pb with cleanHTML.safeJavaScriptLink option #862](https://github.com/xdan/jodit/issues/862)
 
 ## 3.19.3
 
@@ -1534,11 +1539,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                               	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                               	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                               	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                               	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                               ]
+-                                                                                                                                                                                                                                                                                                                 	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                 	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                 	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                 	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                 ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

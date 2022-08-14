@@ -26,6 +26,20 @@ declare module 'jodit/config' {
 			replaceOldTags: IDictionary<HTMLTagNames> | false;
 
 			/**
+			 * Use iframe[sandbox] to paste HTML code into the editor to check it for safety
+			 * Allows you not to run scripts and handlers, but it works much slower
+			 * @example
+			 * ```javascript
+			 * Jodit.make('#editor', {
+			 * 	 cleanHTML: {
+			 * 	 	 useIframeSandbox: true
+			 * 	 }
+			 * 	});
+			 * ```
+			 */
+			useIframeSandbox: boolean;
+
+			/**
 			 * Remove onError attributes
 			 */
 			removeOnError: boolean;
@@ -97,6 +111,7 @@ Config.prototype.cleanHTML = {
 	allowTags: false,
 	denyTags: false,
 
+	useIframeSandbox: false,
 	removeOnError: true,
 	safeJavaScriptLink: true
 };
