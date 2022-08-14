@@ -191,6 +191,37 @@ describe('Test uploader module', function () {
 				});
 			});
 
+			describe('Change filename', () => {
+				it('Should upload file and insert A element changed displayed name', done => {
+					const file = new FileXLS(),
+						editor = getJodit({
+							history: {
+								timeout: 0
+							},
+							uploader: {
+								url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
+								getDisplayName: (_, name) => 'File:' + name
+							},
+							events: {
+								afterInsertNode: node => {
+									expect(editor.value).equals(
+										'<p><a href="https://xdsoft.net/jodit/files/file.xls">File:file.xls</a></p>'
+									);
+									done();
+								}
+							}
+						});
+
+					simulateEvent('drop', 0, editor.editor, function (data) {
+						Object.defineProperty(data, 'dataTransfer', {
+							value: {
+								files: [file]
+							}
+						});
+					});
+				});
+			});
+
 			describe('Drop with insertImageAsBase64URI=true', function () {
 				it('Should upload file and insert A element with HREF to file on server', function (done) {
 					const file = new FileXLS(),

@@ -68,6 +68,9 @@ Config.prototype.uploader = {
 			: '';
 	},
 
+	/**
+	 * @see {{IUploader.processFileName}}
+	 */
 	processFileName(
 		this: IUploader,
 		key: string,
@@ -83,6 +86,10 @@ Config.prototype.uploader = {
 
 	error(this: IUploader, e: Error) {
 		this.j.e.fire('errorMessage', e.message, 'error', 4000);
+	},
+
+	getDisplayName(this: IUploader, baseurl: string, filename: string): string {
+		return baseurl + filename;
 	},
 
 	defaultHandlerSuccess(this: IUploader, resp: IUploaderData) {
@@ -104,7 +111,11 @@ Config.prototype.uploader = {
 				elm.setAttribute(attr, resp.baseurl + filename);
 
 				if (tagName === 'a') {
-					elm.textContent = resp.baseurl + filename;
+					elm.textContent = j.o.uploader.getDisplayName.call(
+						this,
+						resp.baseurl,
+						filename
+					);
 				}
 
 				if (tagName === 'img') {

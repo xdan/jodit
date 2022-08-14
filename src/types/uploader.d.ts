@@ -53,6 +53,7 @@ export interface IUploaderOptions<T> {
 
 	/**
 	 * The method can be used to change the name of the uploaded file
+	 * This is the name the file will have when it is sent to the server
 	 * ```js
 	 * Jodit.make('#editor', {
 	 *  uploader: {
@@ -70,6 +71,25 @@ export interface IUploaderOptions<T> {
 		file: File,
 		name: string
 	): [string, File, string];
+
+	/**
+	 * The method can be used to change the displayed name of the uploaded file
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 	uploader: {
+	 * 		url: 'https://sitename.net/jodit/connector/index.php?action=fileUpload',
+	 * 		getDisplayName: (_, name) => 'File:' + name
+	 * 	}
+	 * });
+	 * ```
+	 */
+	getDisplayName(
+		this: T,
+		baseurl: string,
+		filename: string
+	): string;
+
+
 	pathVariableName: string;
 	withCredentials: boolean;
 

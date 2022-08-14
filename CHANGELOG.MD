@@ -13,7 +13,19 @@
 
 #### :rocket: New Feature
 
--   Added `useIframeSandbox`:`boolean` option(default: false). Use iframe[sandbox] to paste HTML code into the editor to check it for safety.
+-   Added [[IUploader.getDisplayName]] option. Allow change file name before display it inside editor.
+		[Can we customize uploaded file's name? #869](https://github.com/xdan/jodit/issues/869)
+
+```javascript
+Jodit.make('#editor', {
+	uploader: {
+		url: 'https://sitename.net/jodit/connector/index.php?action=fileUpload',
+		getDisplayName: (_, name) => 'File:' + name
+	}
+});
+```
+
+-   Added `cleanHTML.useIframeSandbox`:`boolean` option(default: false). Use iframe[sandbox] to paste HTML code into the editor to check it for safety.
     Allows you not to run scripts and handlers, but it works much slower
 
 #### :bug: Bug Fix
@@ -1539,11 +1551,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                 	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                 	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                 	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                 	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                 ]
+-                                                                                                                                                                                                                                                                                                                   	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                   	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                   	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                   	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                   ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
