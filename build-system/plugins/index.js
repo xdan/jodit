@@ -7,7 +7,7 @@
 const webpack = require('webpack');
 
 module.exports = vars => {
-	const { isProd, ESNext, onlyTS, debug, exclude, progressFunction } = vars;
+	const { isProd, isTest, ESNext, onlyTS, debug, exclude, progressFunction } = vars;
 
 	const plugins = [require('./define')(vars)];
 
@@ -28,7 +28,7 @@ module.exports = vars => {
 
 		plugins.push(require('./banner')(vars));
 
-		if (!ESNext && !onlyTS) {
+		if (!isTest && !ESNext && !onlyTS) {
 			plugins.push(require('./post-build')(vars));
 		}
 	}

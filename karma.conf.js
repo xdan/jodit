@@ -5,6 +5,15 @@
  */
 
 const path = require('path');
+const { argv } = require('yargs').option('grep', {
+	type: 'string',
+	description: 'Grep test gllob pattern'
+});
+
+if (argv.grep) {
+	console.info('Grep glob pattern: ', argv.grep);
+}
+
 const webpackConfFunc = require(path.resolve(
 	process.cwd(),
 	'./webpack.config'
@@ -84,8 +93,11 @@ module.exports = function (config) {
 			'node_modules/synchronous-promise/dist/synchronous-promise.js',
 			'src/index.ts',
 			'test/bootstrap.js',
-			{ pattern: './src/**/*.test.js', watched: false },
-			'test/tests/acceptance/*.js'
+			{ pattern: argv.grep ?? 'src/**/*.test.js', watched: false },
+			{
+				pattern: argv.grep ?? 'test/tests/**/*.test.js',
+				watched: false
+			}
 		],
 
 		proxies: {
