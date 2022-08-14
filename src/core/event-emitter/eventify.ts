@@ -37,28 +37,28 @@ export abstract class Eventify<
 	EVENT extends keyof MAP = keyof MAP
 > implements IDestructible
 {
-	private map: Map<keyof MAP, Set<Function>> = new Map();
+	private __map: Map<keyof MAP, Set<Function>> = new Map();
 
 	on(name: EVENT, func: MAP[EVENT]): this {
-		if (!this.map.has(name)) {
-			this.map.set(name, new Set());
+		if (!this.__map.has(name)) {
+			this.__map.set(name, new Set());
 		}
 
-		this.map.get(name)?.add(func);
+		this.__map.get(name)?.add(func);
 
 		return this;
 	}
 
 	off(name: keyof MAP, func: MAP[EVENT]): this {
-		if (this.map.has(name)) {
-			this.map.get(name)?.delete(func);
+		if (this.__map.has(name)) {
+			this.__map.get(name)?.delete(func);
 		}
 
 		return this;
 	}
 
 	destruct(): void {
-		this.map.clear();
+		this.__map.clear();
 	}
 
 	protected emit(
@@ -67,8 +67,8 @@ export abstract class Eventify<
 	): CanUndef<ReturnType<MAP[EVENT]>> {
 		let result: CanUndef<ReturnType<MAP[EVENT]>>;
 
-		if (this.map.has(name)) {
-			this.map.get(name)?.forEach(cb => {
+		if (this.__map.has(name)) {
+			this.__map.get(name)?.forEach(cb => {
 				result = cb(...args);
 			});
 		}

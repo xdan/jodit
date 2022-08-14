@@ -29,31 +29,31 @@ import { splitArray } from 'jodit/core/helpers/array/split-array';
  * The module editor's event manager
  */
 export class EventEmitter implements IEventEmitter {
-	private mutedEvents: Set<string> = new Set();
+	private __mutedEvents: Set<string> = new Set();
 
 	mute(event?: string): this {
-		this.mutedEvents.add(event ?? '*');
+		this.__mutedEvents.add(event ?? '*');
 		return this;
 	}
 
 	isMuted(event?: string): boolean {
-		if (event && this.mutedEvents.has(event)) {
+		if (event && this.__mutedEvents.has(event)) {
 			return true;
 		}
 
-		return this.mutedEvents.has('*');
+		return this.__mutedEvents.has('*');
 	}
 
 	unmute(event?: string): this {
-		this.mutedEvents.delete(event ?? '*');
+		this.__mutedEvents.delete(event ?? '*');
 		return this;
 	}
 
 	readonly __key: string = '__JoditEventEmitterNamespaces';
 
-	private doc: Document = document;
+	private __doc: Document = document;
 
-	private eachEvent(
+	private __eachEvent(
 		events: CanArray<string>,
 		callback: (event: string, namespace: string) => void
 	): void {
@@ -66,7 +66,7 @@ export class EventEmitter implements IEventEmitter {
 		});
 	}
 
-	private getStore(subject: any): EventHandlersStore {
+	private __getStore(subject: any): EventHandlersStore {
 		if (!subject) {
 			throw error('Need subject');
 		}
@@ -85,7 +85,7 @@ export class EventEmitter implements IEventEmitter {
 		return subject[this.__key];
 	}
 
-	private removeStoreFromSubject(subject: any): void {
+	private __removeStoreFromSubject(subject: any): void {
 		if (subject[this.__key] !== undefined) {
 			Object.defineProperty(subject, this.__key, {
 				enumerable: false,
@@ -96,10 +96,10 @@ export class EventEmitter implements IEventEmitter {
 		}
 	}
 
-	private prepareEvent = (
-		event: TouchEvent | MouseEvent | ClipboardEvent
+	private __prepareEvent = (
+		e: TouchEvent | MouseEvent | ClipboardEvent
 	): void => {
-		if (event.cancelBubble) {
+		if (e.cancelBubble) {
 			return;
 		}
 
@@ -113,33 +113,31 @@ export class EventEmitter implements IEventEmitter {
 		}
 
 		if (
-			event.type.match(/^touch/) &&
-			(event as TouchEvent).changedTouches &&
-			(event as TouchEvent).changedTouches.length
+			e.type.match(/^touch/) &&
+			(e as TouchEvent).changedTouches &&
+			(e as TouchEvent).changedTouches.length
 		) {
 			['clientX', 'clientY', 'pageX', 'pageY'].forEach((key: string) => {
-				Object.defineProperty(event, key, {
-					value: ((event as TouchEvent).changedTouches[0] as any)[
-						key
-					],
+				Object.defineProperty(e, key, {
+					value: ((e as TouchEvent).changedTouches[0] as any)[key],
 					configurable: true,
 					enumerable: true
 				});
 			});
 		}
 
-		if (!(event as any).originalEvent) {
-			(event as any).originalEvent = event;
+		if (!(e as any).originalEvent) {
+			(e as any).originalEvent = e;
 		}
 
 		if (
-			event.type === 'paste' &&
-			(event as ClipboardEvent).clipboardData === undefined &&
-			(this.doc.defaultView as any).clipboardData
+			e.type === 'paste' &&
+			(e as ClipboardEvent).clipboardData === undefined &&
+			(this.__doc.defaultView as any).clipboardData
 		) {
-			Object.defineProperty(event, 'clipboardData', {
+			Object.defineProperty(e, 'clipboardData', {
 				get: () => {
-					return (this.doc.defaultView as any).clipboardData;
+					return (this.__doc.defaultView as any).clipboardData;
 				},
 				configurable: true,
 				enumerable: true
@@ -147,11 +145,11 @@ export class EventEmitter implements IEventEmitter {
 		}
 	};
 
-	private triggerNativeEvent(
+	private __triggerNativeEvent(
 		element: Document | Element | HTMLElement | Window,
 		event: string | Event | MouseEvent
 	): void {
-		const evt = this.doc.createEvent('HTMLEvents');
+		const evt = this.__doc.createEvent('HTMLEvents');
 
 		if (isString(event)) {
 			evt.initEvent(event, true, true);
@@ -282,7 +280,7 @@ export class EventEmitter implements IEventEmitter {
 
 		const subject = subjects;
 
-		const store = this.getStore(subject);
+		const store = this.__getStore(subject);
 
 		const isDOMElement = isFunction(
 				(subject as HTMLElement).addEventListener
@@ -310,7 +308,7 @@ export class EventEmitter implements IEventEmitter {
 					return;
 				}
 
-				self.prepareEvent(event as TouchEvent);
+				self.__prepareEvent(event as TouchEvent);
 
 				if (callback && callback.call(this, event) === false) {
 					event.preventDefault();
@@ -322,7 +320,7 @@ export class EventEmitter implements IEventEmitter {
 			};
 		}
 
-		this.eachEvent(events, (event: string, namespace: string): void => {
+		this.__eachEvent(events, (event: string, namespace: string): void => {
 			if (event.length === 0) {
 				throw error('Need event name');
 			}
@@ -467,7 +465,7 @@ export class EventEmitter implements IEventEmitter {
 
 		const subject = subjects;
 
-		const store = this.getStore(subject);
+		const store = this.__getStore(subject);
 
 		if (
 			!(isString(events) || isStringArray(events)) ||
@@ -476,7 +474,7 @@ export class EventEmitter implements IEventEmitter {
 			store.namespaces().forEach((namespace: string) => {
 				this.off(subject, '.' + namespace);
 			});
-			this.removeStoreFromSubject(subject);
+			this.__removeStoreFromSubject(subject);
 			return this;
 		}
 
@@ -529,7 +527,7 @@ export class EventEmitter implements IEventEmitter {
 				}
 			};
 
-		this.eachEvent(events, (event, namespace): void => {
+		this.__eachEvent(events, (event, namespace): void => {
 			if (namespace === defaultNameSpace) {
 				store.namespaces().forEach(namespace => {
 					removeCallbackFromNameSpace(event, namespace);
@@ -540,7 +538,7 @@ export class EventEmitter implements IEventEmitter {
 		});
 
 		if (store.isEmpty()) {
-			this.removeStoreFromSubject(subject);
+			this.__removeStoreFromSubject(subject);
 		}
 
 		return this;
@@ -567,9 +565,9 @@ export class EventEmitter implements IEventEmitter {
 			throw error('Need event names');
 		}
 
-		const store = this.getStore(subject);
+		const store = this.__getStore(subject);
 
-		this.eachEvent(events, (event: string, namespace: string): void => {
+		this.__eachEvent(events, (event: string, namespace: string): void => {
 			const blocks: EventHandlerBlock[] | void = store.get(
 				event,
 				namespace
@@ -591,14 +589,14 @@ export class EventEmitter implements IEventEmitter {
 
 	private __stopped: EventHandlerBlock[][] = [];
 
-	private removeStop(currentBlocks: EventHandlerBlock[]): void {
+	private __removeStop(currentBlocks: EventHandlerBlock[]): void {
 		if (currentBlocks) {
 			const index: number = this.__stopped.indexOf(currentBlocks);
 			index !== -1 && this.__stopped.splice(0, index + 1);
 		}
 	}
 
-	private isStopped(currentBlocks: EventHandlerBlock[]): boolean {
+	private __isStopped(currentBlocks: EventHandlerBlock[]): boolean {
 		return (
 			currentBlocks !== undefined &&
 			this.__stopped.indexOf(currentBlocks) !== -1
@@ -663,92 +661,99 @@ export class EventEmitter implements IEventEmitter {
 			throw error('Need events names');
 		}
 
-		const store = this.getStore(subject);
+		const store = this.__getStore(subject);
 
 		if (!isString(events) && isDOMElement) {
-			this.triggerNativeEvent(subject as HTMLElement, eventsList);
+			this.__triggerNativeEvent(subject as HTMLElement, eventsList);
 		} else {
-			this.eachEvent(events, (event: string, namespace: string): void => {
-				if (isDOMElement) {
-					this.triggerNativeEvent(subject as HTMLElement, event);
-				} else {
-					const blocks = store.get(event, namespace);
+			this.__eachEvent(
+				events,
+				(event: string, namespace: string): void => {
+					if (isDOMElement) {
+						this.__triggerNativeEvent(
+							subject as HTMLElement,
+							event
+						);
+					} else {
+						const blocks = store.get(event, namespace);
 
-					if (blocks) {
-						try {
-							[...blocks].every(
-								(block: EventHandlerBlock): boolean => {
-									if (this.isStopped(blocks)) {
-										return false;
+						if (blocks) {
+							try {
+								[...blocks].every(
+									(block: EventHandlerBlock): boolean => {
+										if (this.__isStopped(blocks)) {
+											return false;
+										}
+
+										this.currents.push(event);
+
+										result_value =
+											block.syntheticCallback.call(
+												subject,
+												event,
+												...argumentsList
+											);
+
+										this.currents.pop();
+
+										if (result_value !== undefined) {
+											result = result_value;
+										}
+
+										return true;
 									}
+								);
+							} finally {
+								this.__removeStop(blocks);
+							}
+						}
 
-									this.currents.push(event);
-
-									result_value = block.syntheticCallback.call(
-										subject,
-										event,
-										...argumentsList
+						if (namespace === defaultNameSpace && !isDOMElement) {
+							store
+								.namespaces()
+								.filter(ns => ns !== namespace)
+								.forEach((ns: string) => {
+									const result_second: any = this.fire.apply(
+										this,
+										[
+											subject,
+											event + '.' + ns,
+											...argumentsList
+										]
 									);
-
-									this.currents.pop();
-
-									if (result_value !== undefined) {
-										result = result_value;
+									if (result_second !== undefined) {
+										result = result_second;
 									}
-
-									return true;
-								}
-							);
-						} finally {
-							this.removeStop(blocks);
+								});
 						}
 					}
-
-					if (namespace === defaultNameSpace && !isDOMElement) {
-						store
-							.namespaces()
-							.filter(ns => ns !== namespace)
-							.forEach((ns: string) => {
-								const result_second: any = this.fire.apply(
-									this,
-									[
-										subject,
-										event + '.' + ns,
-										...argumentsList
-									]
-								);
-								if (result_second !== undefined) {
-									result = result_second;
-								}
-							});
-					}
 				}
-			});
+			);
 		}
 
 		return result;
 	}
 
-	private isDestructed: boolean = false;
+	private __isDestructed: boolean = false;
 
 	constructor(doc?: Document) {
 		if (doc) {
-			this.doc = doc;
+			this.__doc = doc;
 		}
 
 		this.__key += new Date().getTime();
 	}
 
 	destruct(): void {
-		if (!this.isDestructed) {
+		if (!this.__isDestructed) {
 			return;
 		}
 
-		this.isDestructed = true;
+		this.__isDestructed = true;
 
 		this.off(this);
 
-		this.getStore(this).clear();
-		this.removeStoreFromSubject(this);
+		this.__getStore(this).clear();
+		this.__removeStoreFromSubject(this);
 	}
 }
