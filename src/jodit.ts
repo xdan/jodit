@@ -348,6 +348,7 @@ export class Jodit extends Panel implements IJodit {
 				language: jodit.o.language,
 				license: jodit.o.license,
 				theme: jodit.o.theme,
+				shadowRoot: jodit.o.shadowRoot,
 				defaultCallback(data: IFileBrowserCallBackData): void {
 					if (data.files && data.files.length) {
 						data.files.forEach((file, i) => {

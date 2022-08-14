@@ -23,7 +23,6 @@ import {
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { autobind } from 'jodit/core/decorators';
-import { Dialog } from 'jodit/modules/dialog';
 import { pluginSystem } from 'jodit/core/global';
 
 import './config';

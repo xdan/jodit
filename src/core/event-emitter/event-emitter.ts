@@ -103,6 +103,15 @@ export class EventEmitter implements IEventEmitter {
 			return;
 		}
 
+		// for Shadow Dom
+		if (e.composed && isFunction(e.composedPath) && e.composedPath()[0]) {
+			Object.defineProperty(e, 'target', {
+				value: e.composedPath()[0],
+				configurable: true,
+				enumerable: true
+			});
+		}
+
 		if (
 			event.type.match(/^touch/) &&
 			(event as TouchEvent).changedTouches &&

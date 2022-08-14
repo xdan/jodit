@@ -28,7 +28,6 @@ import {
 	assert,
 	attr,
 	css,
-	isFunction,
 	isString,
 	kebabCase,
 	markOwner,
@@ -383,14 +382,11 @@ export class Popup extends UIElement implements IPopup {
 	}
 
 	isOwnClick(e: MouseEvent): boolean {
-		const target =
-			(isFunction(e.composedPath) && e.composedPath()[0]) || e.target;
-
-		if (!target) {
+		if (!e.target) {
 			return false;
 		}
 
-		const box = UIElement.closestElement(target as Node, Popup);
+		const box = UIElement.closestElement(e.target as Node, Popup);
 
 		return Boolean(box && (this === box || box.closest(this)));
 	}
