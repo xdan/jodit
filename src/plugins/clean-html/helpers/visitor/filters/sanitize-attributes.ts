@@ -20,7 +20,13 @@ export function sanitizeAttributes(
 	nodeElm: Node,
 	hadEffect: boolean
 ): boolean {
-	if (Dom.isElement(nodeElm) && sanitizeHTMLElement(nodeElm)) {
+	if (
+		Dom.isElement(nodeElm) &&
+		sanitizeHTMLElement(nodeElm, {
+			safeJavaScriptLink: jodit.options.cleanHTML.safeJavaScriptLink,
+			removeOnError: jodit.options.cleanHTML.removeOnError
+		})
+	) {
 		return true;
 	}
 

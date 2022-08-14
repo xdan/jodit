@@ -120,6 +120,26 @@ describe('Clean html plugin', function () {
 				[
 					'<p><strong><em><u>as<span style="color: rgb(26, 188, 156);">da</span>s<span style="font-family: Impact,Charcoal,sans-serif;">da</span></u></em></strong><a href="https://xdan.ru/copysite/?lang=en"><strong><em><u><span style="font-family: Impact,Charcoal,sans-serif;">sds</span>a</u></em></strong></a><strong><em><u><s>d</s></u></em></strong></p>\n',
 					'<p>asdasda<a href="https://xdan.ru/copysite/?lang=en">sdsa</a>d</p>\n'
+				],
+				[
+					'<p>test <img src="" onerror="alert(111)" alt=""></p>',
+					'<p>test <img src="" alt=""></p>'
+				],
+				[
+					'<p>test <a src="" href="javascript:alert(111)">click</a></p>',
+					'<p>test <a src="" href="http://javascript:alert(111)">click</a></p>'
+				],
+				[
+					'<p>test <img src="" onerror="alert(111)" alt="§"></p>',
+					'<p>test <img src="" _onerror="alert(111)" alt="§"></p>',
+					false,
+					{ cleanHTML: { removeOnError: false } }
+				],
+				[
+					'<p>test <a src="" href="javascript:alert(111)">click</a></p>',
+					'<p>test <a src="" href="javascript:alert(111)">click</a></p>',
+					false,
+					{ cleanHTML: { safeJavaScriptLink: false } }
 				]
 			].forEach(function (test) {
 				describe(`For "${test[0]}"`, function () {
@@ -127,7 +147,16 @@ describe('Clean html plugin', function () {
 						test[1]
 					)}"`, function () {
 						const editor = getJodit({
-							disablePlugins: ['WrapNodes']
+							disablePlugins: ['WrapNodes'],
+							...test[3]
+						});
+
+						editor.e.on('beforeSetNativeEditorValue', data => {
+							data.value = data.value.replace(
+								'onerror',
+								'_onerror'
+							);
+							return false;
 						});
 
 						editor.value = test[0];

@@ -44,10 +44,19 @@ export abstract class Panel extends ViewWithToolbar {
 		if (isString(title)) {
 			title = this.i18n(title);
 		}
+
 		if (isString(placeholder)) {
 			placeholder = this.i18n(placeholder);
 		}
-		return Prompt.call(this.dialog(), this.i18n(msg), title, callback);
+
+		return Prompt.call(
+			this.dialog(),
+			this.i18n(msg),
+			title,
+			callback,
+			placeholder,
+			defaultValue
+		);
 	}
 
 	alert(

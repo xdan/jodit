@@ -239,7 +239,7 @@ export class PluginSystem implements IPluginSystem {
 					doneList.push(name);
 				} else {
 					// @ts-ignore
-					if (!isProd && !promiseList[name]) {
+					if (!isProd && !isTest && !promiseList[name]) {
 						console.log('Await plugin: ', name);
 					}
 

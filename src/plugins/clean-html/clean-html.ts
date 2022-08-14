@@ -16,6 +16,7 @@ import { Plugin } from 'jodit/core/plugin/plugin';
 import { watch, hook } from 'jodit/core/decorators';
 import { LazyWalker } from 'jodit/core/dom/lazy-walker';
 import { pluginSystem } from 'jodit/core/global';
+import { Dom } from 'jodit/src/core/dom/dom';
 
 import {
 	getHash,
@@ -114,10 +115,11 @@ export class cleanHtml extends Plugin {
 	 */
 	@watch(':beforeSetNativeEditorValue')
 	protected onBeforeSetNativeEditorValue(data: { value: string }): boolean {
-		const sandBox = this.j.createInside.div();
+		const sandBox = this.j.createInside.sandbox();
 		sandBox.innerHTML = data.value;
 		this.onSafeHTML(sandBox);
 		data.value = sandBox.innerHTML;
+		Dom.safeRemove(sandBox);
 		return false;
 	}
 

@@ -16,6 +16,7 @@
 - [applyLink event is only fired when link is inserted via menu button but not when it is pasted #874](https://github.com/xdan/jodit/issues/874)
 - [Dialogs don't work inside Shadow DOM #866](https://github.com/xdan/jodit/issues/866)
 - [Popups don't work inside Shadow DOM #865](https://github.com/xdan/jodit/issues/865)
+- [Pb with cleanHTML.safeJavaScriptLink option #862](https://github.com/xdan/jodit/issues/862)
 
 ## 3.19.3
 

@@ -43,6 +43,8 @@ interface ICreate {
 		children?: Children
 	): HTMLDivElement;
 
+	sandbox(): HTMLElement;
+
 	span(className?: string, children?: Children): HTMLSpanElement;
 	span(
 		className?: string,

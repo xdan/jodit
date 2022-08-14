@@ -206,7 +206,7 @@ describe('Jodit FileBrowser Tests', function () {
 					.open(function () {})
 					.then(function () {
 						expect(
-							filebrowser.dialog.dialogbox_header.querySelectorAll(
+							filebrowser._dialog.dialogbox_header.querySelectorAll(
 								'.jodit-toolbar-button,.jodit-toolbar-content'
 							).length
 						).equals(9);
@@ -236,7 +236,7 @@ describe('Jodit FileBrowser Tests', function () {
 						.then(function () {
 							const edit = getButton(
 								'edit',
-								filebrowser.dialog.dialogbox_header
+								filebrowser._dialog.dialogbox_header
 							);
 							expect(edit).is.not.null;
 							expect(edit.hasAttribute('disabled')).is.true;
@@ -276,7 +276,7 @@ describe('Jodit FileBrowser Tests', function () {
 						.then(function () {
 							const edit = getButton(
 								'edit',
-								filebrowser.dialog.dialogbox_header
+								filebrowser._dialog.dialogbox_header
 							);
 
 							expect(edit.hasAttribute('disabled')).is.true;
@@ -325,7 +325,7 @@ describe('Jodit FileBrowser Tests', function () {
 								.then(function () {
 									const remove = getButton(
 										'remove',
-										filebrowser.dialog
+										filebrowser._dialog
 									);
 									expect(remove).is.not.null;
 									expect(
@@ -368,7 +368,7 @@ describe('Jodit FileBrowser Tests', function () {
 								.then(function () {
 									const remove = getButton(
 										'remove',
-										filebrowser.dialog
+										filebrowser._dialog
 									);
 									expect(remove).is.not.null;
 
@@ -411,8 +411,8 @@ describe('Jodit FileBrowser Tests', function () {
 				filebrowser
 					.open(function () {})
 					.then(function () {
-						const tiles = getButton('tiles', filebrowser.dialog);
-						const list = getButton('list', filebrowser.dialog);
+						const tiles = getButton('tiles', filebrowser._dialog);
+						const list = getButton('list', filebrowser._dialog);
 
 						const files = filebrowser.files.container;
 
@@ -454,9 +454,9 @@ describe('Jodit FileBrowser Tests', function () {
 						.then(function () {
 							const tiles = getButton(
 								'tiles',
-								filebrowser.dialog
+								filebrowser._dialog
 							);
-							const list = getButton('list', filebrowser.dialog);
+							const list = getButton('list', filebrowser._dialog);
 
 							const files = filebrowser.files.container;
 							expect(files).is.not.null;
@@ -520,7 +520,7 @@ describe('Jodit FileBrowser Tests', function () {
 					.open(function () {})
 					.then(async function () {
 						const filter =
-							filebrowser.dialog.dialogbox_header.querySelector(
+							filebrowser._dialog.dialogbox_header.querySelector(
 								'.jodit-toolbar-content_filter'
 							);
 						const input = filter.querySelector('input');
@@ -579,7 +579,7 @@ describe('Jodit FileBrowser Tests', function () {
 					.open(function () {})
 					.then(async function () {
 						const sort =
-							filebrowser.dialog.dialogbox_header.querySelector(
+							filebrowser._dialog.dialogbox_header.querySelector(
 								'.jodit-toolbar-content_sort'
 							);
 						const select = sort.querySelector('select');
@@ -686,7 +686,7 @@ describe('Jodit FileBrowser Tests', function () {
 						);
 					})
 					.then(function () {
-						const select = getButton('select', filebrowser.dialog);
+						const select = getButton('select', filebrowser._dialog);
 						const files = filebrowser.files.container;
 
 						expect(files).is.not.null;
@@ -1050,7 +1050,7 @@ describe('Jodit FileBrowser Tests', function () {
 
 						const dialog = getOpenedDialog(editor);
 						expect(dialog).is.not.null;
-						expect(dialog).does.not.equal(filebrowser.dialog);
+						expect(dialog).does.not.equal(filebrowser._dialog);
 
 						expect(dialog.querySelector('input').value).equals(
 							'ceicom'
@@ -1111,7 +1111,7 @@ describe('Jodit FileBrowser Tests', function () {
 
 						const dialog = getOpenedDialog(editor);
 						expect(dialog).is.not.null;
-						expect(dialog).does.not.equal(filebrowser.dialog);
+						expect(dialog).does.not.equal(filebrowser._dialog);
 
 						clickButton('ok', dialog);
 

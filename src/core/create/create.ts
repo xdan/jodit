@@ -25,7 +25,8 @@ import {
 	isFunction,
 	refs,
 	isString,
-	attr
+	attr,
+	assert
 } from 'jodit/core/helpers/';
 
 import { Dom } from 'jodit/core/dom';
@@ -96,6 +97,17 @@ export class Create implements ICreate {
 		}
 
 		return div;
+	}
+
+	sandbox(): HTMLElement {
+		const iframe = this.element('iframe', { sandbox: 'allow-same-origin' });
+		this.doc.body.appendChild(iframe);
+		const doc = iframe.contentWindow?.document;
+		assert(doc, 'iframe.contentWindow.document');
+		doc.open();
+		doc.write('<!DOCTYPE html><html><head></head><body></body></html>');
+		doc.close();
+		return doc.body;
 	}
 
 	span(className?: string, childrenOrAttributes?: Children): HTMLSpanElement;
