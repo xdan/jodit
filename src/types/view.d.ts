@@ -99,7 +99,7 @@ interface IViewBased<T = IViewOptions>
 	 */
 	readonly id: string;
 
-	basePath: string;
+	readonly basePath: string;
 
 	readonly isLocked: boolean;
 	isLockedNotBy(name: string): boolean;
@@ -112,7 +112,7 @@ interface IViewBased<T = IViewOptions>
 	readonly buffer: IStorage;
 	readonly storage: IStorage;
 
-	progressbar: IProgressBar;
+	readonly progressbar: IProgressBar;
 
 	readonly events: IEventEmitter;
 	readonly e: this['events'];
@@ -125,11 +125,11 @@ interface IViewBased<T = IViewOptions>
 	// alias
 	readonly o: this['options'];
 
-	i18n: (text: string, ...params: Array<string | number>) => string;
+	i18n(text: string, ...params: Array<string | number>): string;
 
-	defaultTimeout: number;
+	readonly defaultTimeout: number;
 
-	getVersion: () => string;
+	getVersion(): string;
 
 	readonly components: Set<IComponent>;
 	getInstance<T extends IComponent>(moduleName: string, options?: object): T;

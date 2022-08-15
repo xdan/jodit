@@ -29,7 +29,7 @@ import { autobind } from 'jodit/core/decorators';
 
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	TOOLBAR!: IToolbarCollection;
-	toolbar: this['TOOLBAR'] = makeCollection(this);
+	readonly toolbar: this['TOOLBAR'] = makeCollection(this);
 
 	private defaultToolbarContainer: HTMLElement =
 		this.c.div('jodit-toolbar__box');
@@ -154,7 +154,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		}
 	}
 
-	override isJodit: boolean = false;
+	override readonly isJodit: boolean = false;
 
 	/** @override **/
 	protected constructor(

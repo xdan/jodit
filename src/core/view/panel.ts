@@ -17,6 +17,7 @@ export abstract class Panel extends ViewWithToolbar {
 			ownerWindow: this.o.ownerWindow,
 			defaultTimeout: this.o.defaultTimeout,
 			theme: this.o.theme,
+			globalFullSize: this.o.globalFullSize,
 			...options
 		});
 		markOwner(this, dialog.container);

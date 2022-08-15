@@ -19,6 +19,8 @@ import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
+const fullsizeStack = new Set();
+
 /**
  * Process `toggleFullSize` event, and behavior - set/unset fullsize mode
  */
@@ -84,7 +86,16 @@ export function fullsize(editor: IViewWithToolbar): void {
 				css(editor.toolbar.container, 'width', 'auto');
 			}
 
-			if (editor.o.globalFullSize) {
+			enable
+				? fullsizeStack.add(container)
+				: fullsizeStack.delete(container);
+
+			const shouldToggleGlobalFullsize =
+				editor.o.globalFullSize &&
+				((fullsizeStack.size === 1 && enable) ||
+					(fullsizeStack.size === 0 && !enable));
+
+			if (shouldToggleGlobalFullsize) {
 				let node = container.parentNode as HTMLElement;
 
 				while (

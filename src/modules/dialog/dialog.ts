@@ -73,11 +73,10 @@ Config.prototype.controls.dialog = {
 	close: {
 		icon: 'cancel',
 		exec: dialog => {
-			(dialog as Dialog).close();
-			(dialog as Dialog).toggleFullSizeBox(false);
+			dialog.close();
 		}
 	}
-} as IDictionary<IControlType>;
+} as IDictionary<IControlType<IDialog>>;
 
 /**
  * Module to generate dialog windows
@@ -89,7 +88,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		return 'Dialog';
 	}
 
-	private resizer!: HTMLElement;
+	private readonly resizer!: HTMLElement;
 	override toolbar!: IToolbarCollection;
 
 	private offsetX?: number;
@@ -102,8 +101,6 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	private destroyAfterClose: boolean = false;
 
 	private moved: boolean = false;
-
-	private iSetMaximization: boolean = false;
 
 	private resizable: boolean = false;
 	private draggable: boolean = false;
@@ -328,14 +325,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 	override OPTIONS!: IDialogOptions;
 
-	dialog!: HTMLElement;
+	readonly dialog!: HTMLElement;
 
 	workplace!: HTMLDivElement;
 
-	private dialogbox_header!: HTMLElement;
-	private dialogbox_content!: HTMLElement;
-	private dialogbox_footer!: HTMLElement;
-	private dialogbox_toolbar!: HTMLElement;
+	private readonly dialogbox_header!: HTMLElement;
+	private readonly dialogbox_content!: HTMLElement;
+	private readonly dialogbox_footer!: HTMLElement;
+	private readonly dialogbox_toolbar!: HTMLElement;
 
 	/**
 	 * Specifies the size of the window
@@ -512,28 +509,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	/**
 	 * Expands the dialog on full browser window
 	 */
-	maximization(condition?: boolean): boolean {
-		if (isVoid(condition)) {
-			condition = !this.getMod('fullsize');
+	override toggleFullSize(isFullSize?: boolean): void {
+		if (isVoid(isFullSize)) {
+			isFullSize = !this.getMod('fullsize');
 		}
 
-		this.setMod('fullsize', condition);
+		this.setMod('fullsize', isFullSize);
 
-		this.toggleFullSizeBox(condition);
-		this.iSetMaximization = condition;
-
-		return condition;
-	}
-
-	toggleFullSizeBox(condition: boolean): void {
-		[this.destination, this.destination.parentNode].forEach(box => {
-			box &&
-				(box as HTMLElement).classList &&
-				(box as HTMLElement).classList.toggle(
-					'jodit_fullsize-box_true',
-					condition
-				);
-		});
+		super.toggleFullSize(isFullSize);
 	}
 
 	open(destroyAfterClose: boolean): this;
@@ -604,7 +587,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		this.setMaxZIndex();
 
 		if (this.o.fullsize) {
-			this.maximization(true);
+			this.toggleFullSize(true);
 		}
 
 		/**
@@ -653,7 +636,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * ```
 	 */
 	@autobind
-	close(e?: MouseEvent): this {
+	close(): this {
 		if (
 			this.isDestructed ||
 			!this.isOpened ||
@@ -662,15 +645,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			return this;
 		}
 
-		if (e) {
-			e.stopImmediatePropagation();
-			e.preventDefault();
-		}
-
 		/**
 		 * Called up to close the window
 		 */
-		if (this.e && this.e.fire('beforeClose', this) === false) {
+		if (this.e.fire('beforeClose', this) === false) {
 			return this;
 		}
 
@@ -678,9 +656,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.isOpened = false;
 
-		this.e.fire('toggleFullSize', false);
-		if (this.iSetMaximization) {
-			this.maximization(false);
+		if (this.isFullSize) {
+			this.toggleFullSize(false);
 		}
 
 		Dom.safeRemove(this.container);
@@ -694,8 +671,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		/**
 		 * It called after the window is closed
 		 */
-		this.e?.fire(this, 'afterClose');
-		this.e?.fire(this.ow, 'joditCloseDialog');
+		this.e.fire(this, 'afterClose');
+		this.e.fire(this.ow, 'joditCloseDialog');
 
 		return this;
 	}
@@ -769,12 +746,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			'header-toolbar element does not exist'
 		);
 
-		self.dialog = dialog;
-		self.resizer = resizer;
-		self.dialogbox_header = dialogbox_header;
-		self.dialogbox_content = dialogbox_content;
-		self.dialogbox_footer = dialogbox_footer;
-		self.dialogbox_toolbar = dialogbox_toolbar;
+		this.dialog = dialog;
+		this.resizer = resizer;
+		this.dialogbox_header = dialogbox_header;
+		this.dialogbox_content = dialogbox_content;
+		this.dialogbox_footer = dialogbox_footer;
+		this.dialogbox_toolbar = dialogbox_toolbar;
 
 		css(self.dialog, {
 			maxWidth: self.options.maxWidth,

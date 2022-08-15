@@ -174,10 +174,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		}
 
 		this.__isFullSize = isFullSize;
-
-		if (this.events) {
-			this.e.fire('toggleFullSize', isFullSize);
-		}
+		this.e.fire('toggleFullSize', isFullSize);
 	}
 
 	private __whoLocked: string | false = '';

@@ -6,29 +6,94 @@
 
 describe('Fullsize plugin', function () {
 	describe('Toggle fullsize', function () {
-		it('Should resize all boxes to first state', function () {
+		it('Should resize all boxes to first state', () => {
 			const editor = getJodit({
 				history: {
 					timeout: 0
 				}
 			});
-			const chacksizes = ['container', 'workplace', 'editor'];
-			const sizes = chacksizes.map(function (key) {
-					return editor[key].offsetHeight;
-				}),
-				equal = function (a, b) {
-					return Math.abs(a - b) <= 2;
-				};
+
+			const checkSizes = ['container', 'workplace', 'editor'];
+
+			const initialSizes = checkSizes.map(
+					key => editor[key].offsetHeight
+				),
+				equal = (a, b) => Math.abs(a - b) <= 2;
 
 			editor.toggleFullSize(true);
-			chacksizes.map(function (key, index) {
-				expect(equal(editor[key].offsetHeight, sizes[index])).is.false;
+			checkSizes.map((key, index) => {
+				expect(equal(editor[key].offsetHeight, initialSizes[index])).is
+					.false;
 			});
 
 			editor.toggleFullSize(false);
 
-			chacksizes.map(function (key, index) {
-				expect(equal(editor[key].offsetHeight, sizes[index])).is.true;
+			checkSizes.map(function (key, index) {
+				expect(
+					equal(editor[key].offsetHeight, initialSizes[index])
+				).is.true;
+			});
+		});
+
+		function checkAllParents(editor, enabled) {
+			let parent = editor.container.parentNode;
+
+			while (parent && parent.nodeType === Node.ELEMENT_NODE) {
+				expect(
+					parent.classList.contains('jodit_fullsize-box_true')
+				).equals(enabled);
+				parent = parent.parentNode;
+			}
+		}
+
+		describe('globalFullSize', () => {
+			describe('set fullsize', () => {
+				it('Should set special class for all parents', () => {
+					const editor = getJodit();
+					editor.toggleFullSize(true);
+					checkAllParents(editor, true);
+				});
+			});
+
+			describe('remove fullsize', () => {
+				it('Should remove special class for all parents', () => {
+					const editor = getJodit();
+					editor.toggleFullSize(true);
+					editor.toggleFullSize(false);
+					checkAllParents(editor, false);
+				});
+
+				describe('Several fullsize blocks', () => {
+					it('Should remove special class for all parents only for latest block', () => {
+						const editor = getJodit();
+						editor.toggleFullSize(true);
+						const dialog = editor.dialog();
+						dialog.open('test');
+						dialog.toggleFullSize(true);
+
+						checkAllParents(editor, true);
+
+						dialog.toggleFullSize(false);
+						checkAllParents(editor, true);
+
+						editor.toggleFullSize(false);
+						checkAllParents(editor, false);
+					});
+				});
+
+				describe('Close dialog', () => {
+					it('Should work same way', () => {
+						const editor = getJodit();
+						const dialog = editor.dialog();
+						dialog.open('test');
+						dialog.toggleFullSize(true);
+
+						checkAllParents(dialog, true);
+
+						dialog.close();
+						checkAllParents(dialog, false);
+					});
+				});
 			});
 		});
 	});
