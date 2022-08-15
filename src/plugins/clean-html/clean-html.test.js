@@ -6,176 +6,179 @@
 
 describe('Clean html plugin', function () {
 	describe('Click remove format button', function () {
-		describe('For range selection', function () {
-			[
+		[true, false].forEach(useIframeSandbox => {
+			describe(`State useIframeSandbox: ${useIframeSandbox}`, () => {
 				[
-					'start <span style="background-color: red; color: blue;">test test test|</span>',
-					'start <span style="background-color: red; color: blue;">test test test</span> pop ',
-					' pop '
-				],
+					[
+						'start <span style="background-color: red; color: blue;">test test test|</span>',
+						'start <span style="background-color: red; color: blue;">test test test</span> pop ',
+						' pop '
+					],
 
-				[
-					'|<a href="#test" style="background-color: red; color: blue;">start</a> <span style="background-color: red; color: blue;">test test test|</span>',
-					'<a href="#test">start</a> test test test'
-				],
+					[
+						'|<a href="#test" style="background-color: red; color: blue;">start</a> <span style="background-color: red; color: blue;">test test test|</span>',
+						'<a href="#test">start</a> test test test'
+					],
 
-				[
-					'<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;">|line 1</p>\n' +
-						'<p><br></p>\n' +
-						'<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;">line 2</p>\n' +
-						'<p><br></p>\n' +
-						'<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;">line 4|</p>\n',
-					'<p dir="ltr">line 1</p>\n' +
-						'<p><br></p>\n' +
-						'<p dir="ltr">line 2</p>\n' +
-						'<p><br></p>\n' +
-						'<p dir="ltr">line 4</p>\n'
-				],
+					[
+						'<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;">|line 1</p>\n' +
+							'<p><br></p>\n' +
+							'<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;">line 2</p>\n' +
+							'<p><br></p>\n' +
+							'<p dir="ltr" style="line-height:1.38;margin-top:0pt;margin-bottom:0pt;">line 4|</p>\n',
+						'<p dir="ltr">line 1</p>\n' +
+							'<p><br></p>\n' +
+							'<p dir="ltr">line 2</p>\n' +
+							'<p><br></p>\n' +
+							'<p dir="ltr">line 4</p>\n'
+					],
 
-				[
-					'start <strong>test test test|</strong>',
-					'start <strong>test test test</strong> pop ',
-					' pop '
-				],
+					[
+						'start <strong>test test test|</strong>',
+						'start <strong>test test test</strong> pop ',
+						' pop '
+					],
 
-				[
-					'start <strong><em>test test test|</em></strong>',
-					'start <strong><em>test test test</em></strong> pop ',
-					' pop '
-				],
+					[
+						'start <strong><em>test test test|</em></strong>',
+						'start <strong><em>test test test</em></strong> pop ',
+						' pop '
+					],
 
-				[
-					'start <strong><em>test test| test</em></strong>',
-					'start <strong><em>test test</em></strong> pop <strong><em> test</em></strong>',
-					' pop '
-				],
-				[
-					'<p>as<strong>da</strong>sd</p>' +
-						'<p>asd<strong>as</strong>d</p>' +
-						'<p>a<strong>sdsad</strong>a</p>',
+					[
+						'start <strong><em>test test| test</em></strong>',
+						'start <strong><em>test test</em></strong> pop <strong><em> test</em></strong>',
+						' pop '
+					],
+					[
+						'<p>as<strong>da</strong>sd</p>' +
+							'<p>asd<strong>as</strong>d</p>' +
+							'<p>a<strong>sdsad</strong>a</p>',
 
-					'<p>asdasd</p><p>asdasd</p><p>asdsada</p>'
-				],
-				[
-					'<p>fo|ur <strong style="background-color: red; color: blue;">about <span style="align-content: baseline;">rust blog| go</span>st</strong> elm</p>',
+						'<p>asdasd</p><p>asdasd</p><p>asdsada</p>'
+					],
+					[
+						'<p>fo|ur <strong style="background-color: red; color: blue;">about <span style="align-content: baseline;">rust blog| go</span>st</strong> elm</p>',
 
-					'<p>four about rust blog<strong style="background-color: red; color: blue;"><span style="align-content: baseline;"> go</span>st</strong> elm</p>'
-				],
-				[
-					'<p>four <strong style="background-color: red; color: blue;">ab|out <span style="align-content: baseline;">rust blog| go</span>st</strong> elm</p>',
+						'<p>four about rust blog<strong style="background-color: red; color: blue;"><span style="align-content: baseline;"> go</span>st</strong> elm</p>'
+					],
+					[
+						'<p>four <strong style="background-color: red; color: blue;">ab|out <span style="align-content: baseline;">rust blog| go</span>st</strong> elm</p>',
 
-					'<p>four <strong style="background-color: red; color: blue;">ab</strong>' +
-						'out rust blog' +
-						'<strong style="background-color:red;color:blue"><span style="align-content:baseline"> go</span>st</strong> elm</p>'
-				],
-				[
-					'<p>four <strong style="background-color: red; color: blue;"><span style="align-content: baseline;">rust |blog| go</span>st</strong> elm</p>',
+						'<p>four <strong style="background-color: red; color: blue;">ab</strong>' +
+							'out rust blog' +
+							'<strong style="background-color:red;color:blue"><span style="align-content:baseline"> go</span>st</strong> elm</p>'
+					],
+					[
+						'<p>four <strong style="background-color: red; color: blue;"><span style="align-content: baseline;">rust |blog| go</span>st</strong> elm</p>',
 
-					'<p>four <strong style="background-color: red; color: blue;"><span style="align-content: baseline;">rust </span></strong>' +
-						'blog' +
-						'<strong style="background-color:red;color:blue"><span style="align-content:baseline"> go</span>st</strong> elm</p>'
-				],
-				[
-					'<p>f|ive <strong style="background-color: red; color: blue;">one two three</strong> elm</p>' +
-						'<p>five <strong style="background-color: red; color: blue;">one| d</strong>two</p>',
+						'<p>four <strong style="background-color: red; color: blue;"><span style="align-content: baseline;">rust </span></strong>' +
+							'blog' +
+							'<strong style="background-color:red;color:blue"><span style="align-content:baseline"> go</span>st</strong> elm</p>'
+					],
+					[
+						'<p>f|ive <strong style="background-color: red; color: blue;">one two three</strong> elm</p>' +
+							'<p>five <strong style="background-color: red; color: blue;">one| d</strong>two</p>',
 
-					'<p>five one two three elm</p><p>five one<strong style="background-color: red; color: blue;"> d</strong>two</p>'
-				],
-				[
-					'<p>f|ive <strong style="background-color: red; color: blue;">one two three</strong> elm</p>' +
-						'<p>five <strong style="background-color: red; color: blue;">one|</strong>two</p>',
+						'<p>five one two three elm</p><p>five one<strong style="background-color: red; color: blue;"> d</strong>two</p>'
+					],
+					[
+						'<p>f|ive <strong style="background-color: red; color: blue;">one two three</strong> elm</p>' +
+							'<p>five <strong style="background-color: red; color: blue;">one|</strong>two</p>',
 
-					'<p>five one two three elm</p>' + '<p>five onetwo</p>'
-				],
-				[
-					'<p>five <strong style="background-color: red; color: blue;">one |two three</strong> elm</p>' +
-						'<p>five <strong style="background-color: red; color: blue;">one|</strong>two</p>',
+						'<p>five one two three elm</p>' + '<p>five onetwo</p>'
+					],
+					[
+						'<p>five <strong style="background-color: red; color: blue;">one |two three</strong> elm</p>' +
+							'<p>five <strong style="background-color: red; color: blue;">one|</strong>two</p>',
 
-					'<p>five <strong style="background-color: red; color: blue;">one </strong>two three elm</p>' +
-						'<p>five onetwo</p>'
-				],
-				[
-					'<p>five <strong style="background-color: red; color: blue;">one |two| three</strong> elm</p>',
+						'<p>five <strong style="background-color: red; color: blue;">one </strong>two three elm</p>' +
+							'<p>five onetwo</p>'
+					],
+					[
+						'<p>five <strong style="background-color: red; color: blue;">one |two| three</strong> elm</p>',
 
-					'<p>five <strong style="background-color: red; color: blue;">one </strong>' +
-						'two' +
-						'<strong style="background-color: red; color: blue;"> three</strong> elm</p>'
-				],
-				[
-					'one <span style="background-color: red; color: blue;">|test test test|</span> elm',
-					'one test test test elm'
-				],
-				[
-					'<p style="color: red">|one <span style="background-color: red; color: blue;">test test test</span> elm|</p>',
-					'<p>one test test test elm</p>'
-				],
-				[
-					'<p style="color: red">one |<span style="background-color: red; color: blue;">test test test</span> elm|</p>',
-					'<p style="color:red">one test test test elm</p>'
-				],
-				[
-					'two |<strong style="background-color: red; color: blue;">test test test</strong>| elm',
-					'two test test test elm'
-				],
-				[
-					'<p><strong><em><u>as<span style="color: rgb(26, 188, 156);">da</span>s<span style="font-family: Impact,Charcoal,sans-serif;">da</span></u></em></strong><a href="https://xdan.ru/copysite/?lang=en"><strong><em><u><span style="font-family: Impact,Charcoal,sans-serif;">sds</span>a</u></em></strong></a><strong><em><u><s>d</s></u></em></strong></p>\n',
-					'<p>asdasda<a href="https://xdan.ru/copysite/?lang=en">sdsa</a>d</p>\n'
-				],
-				[
-					'<p>test <img src="" onerror="alert(111)" alt=""></p>',
-					'<p>test <img src="" alt=""></p>'
-				],
-				[
-					'<p>test <a src="" href="javascript:alert(111)">click</a></p>',
-					'<p>test <a src="" href="http://javascript:alert(111)">click</a></p>'
-				],
-				[
-					'<p>test <img src="" onerror="alert(111)" alt="§"></p>',
-					'<p>test <img src="" _onerror="alert(111)" alt="§"></p>',
-					false,
-					{ cleanHTML: { removeOnError: false } }
-				],
-				[
-					'<p>test <a src="" href="javascript:alert(111)">click</a></p>',
-					'<p>test <a src="" href="javascript:alert(111)">click</a></p>',
-					false,
-					{ cleanHTML: { safeJavaScriptLink: false } }
-				]
-			].forEach(function (test) {
-				describe(`For "${test[0]}"`, function () {
-					it(`Should clean to "${sortAttributes(
-						test[1]
-					)}"`, function () {
-						const editor = getJodit({
-							disablePlugins: ['WrapNodes'],
-							...test[3]
-						});
+						'<p>five <strong style="background-color: red; color: blue;">one </strong>' +
+							'two' +
+							'<strong style="background-color: red; color: blue;"> three</strong> elm</p>'
+					],
+					[
+						'one <span style="background-color: red; color: blue;">|test test test|</span> elm',
+						'one test test test elm'
+					],
+					[
+						'<p style="color: red">|one <span style="background-color: red; color: blue;">test test test</span> elm|</p>',
+						'<p>one test test test elm</p>'
+					],
+					[
+						'<p style="color: red">one |<span style="background-color: red; color: blue;">test test test</span> elm|</p>',
+						'<p style="color:red">one test test test elm</p>'
+					],
+					[
+						'two |<strong style="background-color: red; color: blue;">test test test</strong>| elm',
+						'two test test test elm'
+					],
+					[
+						'<p><strong><em><u>as<span style="color: rgb(26, 188, 156);">da</span>s<span style="font-family: Impact,Charcoal,sans-serif;">da</span></u></em></strong><a href="https://xdan.ru/copysite/?lang=en"><strong><em><u><span style="font-family: Impact,Charcoal,sans-serif;">sds</span>a</u></em></strong></a><strong><em><u><s>d</s></u></em></strong></p>\n',
+						'<p>asdasda<a href="https://xdan.ru/copysite/?lang=en">sdsa</a>d</p>\n'
+					],
+					[
+						'<p>test <img src="" onerror="alert(111)" alt=""></p>',
+						'<p>test <img src="" alt=""></p>'
+					],
+					[
+						'<p>test <a src="" href="javascript:alert(111)">click</a></p>',
+						'<p>test <a src="" href="http://javascript:alert(111)">click</a></p>'
+					],
+					[
+						'<p>test <img src="" onerror="alert(111)" alt="§"></p>',
+						'<p>test <img src="" _onerror="alert(111)" alt="§"></p>',
+						false,
+						{ cleanHTML: { removeOnError: false } }
+					],
+					[
+						'<p>test <a src="" href="javascript:alert(111)">click</a></p>',
+						'<p>test <a src="" href="javascript:alert(111)">click</a></p>',
+						false,
+						{ cleanHTML: { safeJavaScriptLink: false } }
+					]
+				].forEach(function (test) {
+					describe(`For "${test[0]}"`, function () {
+						it(`Should clean to "${sortAttributes(
+							test[1]
+						)}"`, function () {
+							const editor = getJodit({
+								disablePlugins: ['WrapNodes'],
+								cleanHTML: { useIframeSandbox },
+								...test[3]
+							});
 
-						editor.e.on('beforeSetNativeEditorValue', data => {
-							data.value = data.value.replace(
-								'onerror',
-								'_onerror'
+							editor.e.on('beforeSetNativeEditorValue', data => {
+								data.value = data.value.replace(
+									'onerror',
+									'_onerror'
+								);
+								return false;
+							});
+
+							editor.value = test[0];
+
+							if (!setCursorToChar(editor)) {
+								const range = editor.s.createRange();
+								range.selectNodeContents(editor.editor);
+								editor.s.selectRange(range);
+							}
+
+							clickButton('eraser', editor);
+
+							if (test[2]) {
+								editor.s.insertHTML(test[2]);
+							}
+
+							expect(sortAttributes(editor.value)).equals(
+								sortAttributes(test[1])
 							);
-							return false;
 						});
-
-						editor.value = test[0];
-
-						if (!setCursorToChar(editor)) {
-							const range = editor.s.createRange();
-							range.selectNodeContents(editor.editor);
-							editor.s.selectRange(range);
-						}
-
-						clickButton('eraser', editor);
-
-						if (test[2]) {
-							editor.s.insertHTML(test[2]);
-						}
-
-						expect(sortAttributes(editor.value)).equals(
-							sortAttributes(test[1])
-						);
 					});
 				});
 			});
