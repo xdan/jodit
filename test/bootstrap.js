@@ -361,6 +361,7 @@ const excludeI18nKeys = [
 	'Times New Roman',
 	'Verdana,Geneva,sans-serif',
 	'Verdana',
+	'copyformat',
 	'Lower Alpha',
 	'Lower Greek',
 	'Lower Roman',
@@ -1224,4 +1225,27 @@ function decorate(decorators, target, key) {
 	}
 
 	r && Object.defineProperty(target, key, r);
+}
+
+function drawElement(element) {
+	unmockPromise();
+
+	return new Promise(resolve => {
+		const draw = () => {
+			html2canvas(element).then(canvas => {
+				mockPromise();
+				document.body.appendChild(canvas);
+				resolve();
+			});
+		};
+
+		if (typeof html2canvas === 'undefined') {
+			const script = document.createElement('script');
+			script.onload = draw;
+			script.src = 'https://html2canvas.hertzen.com/dist/html2canvas.js';
+			document.body.appendChild(script);
+		} else {
+			draw();
+		}
+	});
 }

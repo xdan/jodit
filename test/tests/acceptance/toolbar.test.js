@@ -770,7 +770,6 @@ describe('Toolbar', function () {
 						}
 					]
 				});
-				console.log(editor.toolbar.getButtonsNames());
 
 				expect(editor.toolbar.getButtonsNames()).deep.eq([
 					'source',

@@ -7,13 +7,13 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Jodit Test Document</title>
 	<link rel="stylesheet" href="./build/jodit.min.css">
-	<script src="./build/jodit.min.js"></script>
+	<script src="./build/jodit.js"></script>
 </head>
 <body>
 	<div id="box"></div>
 <script>
-	const result = [];
-	for (const key in Jodit.modules.ToolbarIcon.icons) {
+	const result = ['<div class="items">'];
+	for (const key in Jodit.modules.Icon.icons) {
 		result.push(`<div class="item">
 			<div class="item-title">${key}</div>
 			<div class="item-icon">
@@ -21,10 +21,13 @@
 			</div>
 		</div>`);
 	}
+
+	result.push(`</div>`)
+	result.push(`<div>Icons: ${Object.keys(Jodit.modules.Icon.icons).length}</div>`)
 	box.innerHTML = result.join('');
 </script>
 <style>
-	#box {
+	.items {
 		display: flex;
 		flex-wrap: wrap;
 	}
