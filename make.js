@@ -4,5 +4,5 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 module.exports = {
-	paths: ['./src/plugins/speech-recognize/']
+	paths: ['./src/plugins/speech-recognize/', './src/plugins/debug/']
 };
