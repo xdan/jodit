@@ -40,6 +40,14 @@ export function checkRemoveUnbreakableElement(
 		(Dom.isTag(neighbor, INSEPARABLE_TAGS) || Dom.isEmpty(neighbor))
 	) {
 		Dom.safeRemove(neighbor);
+
+		if (
+			Dom.isTag(neighbor, 'br') &&
+			!Dom.findNotEmptySibling(fakeNode, false)
+		) {
+			Dom.after(fakeNode, jodit.createInside.element('br'));
+		}
+
 		jodit.s.setCursorBefore(fakeNode);
 
 		if (Dom.isTag(neighbor, 'br')) {

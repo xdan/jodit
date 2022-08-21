@@ -207,13 +207,13 @@ export class Dom {
 	 * // Replace the first <span> element to the < p >
 	 * ```
 	 */
-	static replace(
-		elm: HTMLElement,
-		newTagName: HTMLTagNames | HTMLElement | string,
+	static replace<T extends Node>(
+		elm: Node,
+		newTagName: HTMLTagNames | Node | string,
 		create: ICreate,
 		withAttributes = false,
 		notMoveContent = false
-	): HTMLElement {
+	): T {
 		if (isHTML(newTagName)) {
 			newTagName = create.fromHTML(newTagName);
 		}
@@ -228,7 +228,7 @@ export class Dom {
 			}
 		}
 
-		if (withAttributes) {
+		if (withAttributes && Dom.isElement(elm) && Dom.isElement(tag)) {
 			toArray(elm.attributes).forEach(attr => {
 				tag.setAttribute(attr.name, attr.value);
 			});
@@ -238,7 +238,7 @@ export class Dom {
 			elm.parentNode.replaceChild(tag, elm);
 		}
 
-		return tag;
+		return tag as T;
 	}
 
 	/**
@@ -702,8 +702,8 @@ export class Dom {
 	/**
 	 * Returns the nearest non-empty sibling
 	 */
-	static findNotEmptySibling(node: Node, backspace: boolean): Nullable<Node> {
-		return Dom.findSibling(node, backspace, n => {
+	static findNotEmptySibling(node: Node, left: boolean): Nullable<Node> {
+		return Dom.findSibling(node, left, n => {
 			return (
 				!Dom.isEmptyTextNode(n) &&
 				Boolean(
@@ -961,6 +961,18 @@ export class Dom {
 				Dom.isNode(node) &&
 				node.parentNode &&
 				node.parentNode.removeChild(node)
+		);
+	}
+
+	static safeInsertNode(range: Range, node: Node): void {
+		range.collapsed || range.deleteContents();
+		range.insertNode(node);
+
+		// https://developer.mozilla.org/en-US/docs/Web/API/Range/insertNode
+		// if the new node is to be added to a text Node, that Node is split at the
+		// insertion point, and the insertion occurs between the two text nodes.
+		[node.nextSibling, node.previousSibling].forEach(
+			n => Dom.isText(n) && !n.nodeValue && Dom.safeRemove(n)
 		);
 	}
 

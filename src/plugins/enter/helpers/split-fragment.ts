@@ -49,5 +49,6 @@ export function splitFragment(jodit: IJodit, currentBox: HTMLElement): void {
 	}
 
 	const newP = sel.splitSelection(currentBox);
+
 	scrollIntoViewIfNeeded(newP, jodit.editor, jodit.ed);
 }

@@ -469,7 +469,6 @@ describe('Test Dom module', function () {
 						names.push(node.nodeName.toLowerCase());
 					})
 					.on('end', () => {
-						console.log(names);
 						for (let i = 0; i < 8000; i += 1) {
 							if (names[i] !== ls[i % 16]) {
 								console.log(i, ls[i % 16], names[i]);

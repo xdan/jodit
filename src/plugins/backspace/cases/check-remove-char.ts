@@ -44,6 +44,29 @@ export function checkRemoveChar(
 	let charRemoved: boolean = false,
 		removed: CanUndef<string>;
 
+	const getNextInlineSibling = (sibling: Node): Nullable<Node> => {
+		let nextSibling = Dom.sibling(sibling, backspace);
+
+		if (
+			!nextSibling &&
+			sibling.parentNode &&
+			sibling.parentNode !== jodit.editor
+		) {
+			nextSibling = findMostNestedNeighbor(
+				sibling,
+				!backspace,
+				jodit.editor,
+				true
+			);
+		}
+
+		return nextSibling;
+	};
+
+	if (!sibling) {
+		sibling = getNextInlineSibling(fakeNode);
+	}
+
 	while (sibling && (Dom.isText(sibling) || Dom.isInlineBlock(sibling))) {
 		while (Dom.isInlineBlock(sibling)) {
 			sibling = (
@@ -133,20 +156,7 @@ export function checkRemoveChar(
 			break;
 		}
 
-		let nextSibling = Dom.sibling(sibling, backspace);
-
-		if (
-			!nextSibling &&
-			sibling.parentNode &&
-			sibling.parentNode !== jodit.editor
-		) {
-			nextSibling = findMostNestedNeighbor(
-				sibling,
-				!backspace,
-				jodit.editor,
-				true
-			);
-		}
+		const nextSibling = getNextInlineSibling(sibling);
 
 		if (removeNeighbor) {
 			Dom.safeRemove(removeNeighbor);
@@ -156,10 +166,22 @@ export function checkRemoveChar(
 		sibling = nextSibling;
 	}
 
+	if (removeNeighbor) {
+		Dom.safeRemove(removeNeighbor);
+		removeNeighbor = null;
+	}
+
 	if (charRemoved) {
 		removeEmptyInlineParent(fakeNode);
 		addBRInsideEmptyBlock(jodit, fakeNode);
 		jodit.s.setCursorBefore(fakeNode);
+
+		if (
+			Dom.isTag(fakeNode.previousSibling, 'br') &&
+			!Dom.findNotEmptySibling(fakeNode, false)
+		) {
+			Dom.after(fakeNode, jodit.createInside.element('br'));
+		}
 	}
 
 	return charRemoved;

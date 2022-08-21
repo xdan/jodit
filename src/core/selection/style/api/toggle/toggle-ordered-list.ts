@@ -33,7 +33,11 @@ export function toggleOrderedList(
 
 	// ul => ol, ol => ul
 	if (list.tagName.toLowerCase() !== style.element) {
-		const newList = Dom.replace(list, style.element, jodit.createInside);
+		const newList = Dom.replace<HTMLElement>(
+			list,
+			style.element,
+			jodit.createInside
+		);
 		toggleCSS(style, newList, jodit, mode);
 		return REPLACE;
 	}

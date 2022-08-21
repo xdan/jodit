@@ -32,8 +32,8 @@ export function removeFormatForSelection(jodit: IJodit): void {
 	left.collapse(true);
 	right.collapse(false);
 
-	left.insertNode(fakeLeft);
-	right.insertNode(fakeRight);
+	Dom.safeInsertNode(left, fakeLeft);
+	Dom.safeInsertNode(right, fakeRight);
 
 	range.setStartBefore(fakeLeft);
 	range.collapse(true);

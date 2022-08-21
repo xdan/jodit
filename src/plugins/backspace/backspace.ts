@@ -125,7 +125,7 @@ export class backspace extends Plugin {
 		const fakeNode = jodit.createInside.text(INVISIBLE_SPACE);
 
 		try {
-			range.insertNode(fakeNode);
+			Dom.safeInsertNode(range, fakeNode);
 
 			if (!Dom.isOrContains(jodit.editor, fakeNode)) {
 				return;
@@ -134,11 +134,17 @@ export class backspace extends Plugin {
 			moveNodeInsideStart(jodit, fakeNode, backspace);
 
 			if (
-				cases.some(
-					(func): void | boolean =>
+				cases.some((func): void | true => {
+					if (
 						isFunction(func) &&
 						func(jodit, fakeNode, backspace, mode)
-				)
+					) {
+						if (!isProd) {
+							console.info('Remove case:', func.name);
+						}
+						return true;
+					}
+				})
 			) {
 				return false;
 			}

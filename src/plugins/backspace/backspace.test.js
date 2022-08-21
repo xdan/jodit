@@ -116,30 +116,18 @@ describe('Backspace/Delete key', function () {
 
 			describe('With spaces', function () {
 				it('Should remove previous char before cursor', function () {
-					editor.value = '<p>a b c d e</p>';
-					range.setStart(editor.editor.firstChild.firstChild, 6);
-					range.collapse(true);
-					editor.s.selectRange(range);
+					editor.value = '<p>a b c |d e</p>';
+					setCursorToChar(editor);
 
 					for (let i = 1; i <= 4; i += 1) {
 						simulateEvent(
-							'keydown',
-							Jodit.KEY_BACKSPACE,
-							editor.editor
-						);
-						simulateEvent(
-							'keyup',
-							Jodit.KEY_BACKSPACE,
-							editor.editor
-						);
-						simulateEvent(
-							'keypress',
+							['keydown', 'keyup', 'keypress'],
 							Jodit.KEY_BACKSPACE,
 							editor.editor
 						);
 					}
 
-					expect(editor.value).equals('<p>a&nbsp;d e</p>');
+					expect(editor.value).equals('<p>a d e</p>');
 				});
 			});
 
@@ -900,12 +888,19 @@ describe('Backspace/Delete key', function () {
 			'<ol><li>ab</li></ol><p>|cd</p> => <ol><li>ab|cd</li></ol>',
 			'<p>ab</p><ol><li>|cd</li></ol> => <p>ab</p><p>|cd</p>',
 			'<ol><li>ab</li><li>|cd</li></ol> => <ol><li>ab|cd</li></ol>',
+			'test<br>|plot => test|plot =>  => {"enter": "br"}',
+			'test<br>|plot => testtext|plot =>  => {"enter": "br"}  => text',
+			'test<br>p|lot => test<br>|lot =>  => {"enter": "br"}',
+			'test<br>p| => test<br>|<br> =>  => {"enter": "br"}',
 			'<ol><li>ab</li></ol><ul><li>|cd</li><li>e</li></ul> => <ol><li>ab</li></ol><p>|cd</p><ul><li>e</li></ul>'
 		].forEach(function (pars) {
-			const [key, value, button] = pars.split(' => ');
+			const [key, value, button, options, insert] = pars.split(' => ');
 
 			describe(`For key "${key}"`, function () {
-				it(`Should be ${value}`, function () {
+				it(`Should be ${value}`, async () => {
+					const editor = getJodit(
+						(options && JSON.parse(options)) || {}
+					);
 					editor.value = key;
 					setCursorToChar(editor);
 					simulateEvent(
@@ -913,6 +908,12 @@ describe('Backspace/Delete key', function () {
 						button || Jodit.KEY_BACKSPACE,
 						editor.editor
 					);
+
+					if (insert) {
+						await editor.async.requestIdlePromise();
+						editor.s.insertNode(editor.createInside.text(insert));
+					}
+
 					replaceCursorToChar(editor);
 					expect(sortAttributes(editor.value)).equals(value);
 				});

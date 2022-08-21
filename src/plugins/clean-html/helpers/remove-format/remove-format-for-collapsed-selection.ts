@@ -26,8 +26,9 @@ export function removeFormatForCollapsedSelection(
 
 	if (!fakeNode) {
 		fakeNode = jodit.createInside.fake();
-		s.range.insertNode(fakeNode);
-		s.range.collapse();
+		const { range } = s;
+		Dom.safeInsertNode(range, fakeNode);
+		range.collapse();
 	}
 
 	const mainInline = Dom.furthest(fakeNode, isInlineBlock, jodit.editor);

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Enter behavior Jodit Editor Tests', function () {
+describe('Enter behavior Tests', function () {
 	describe('Enter key', function () {
 		describe('Enter BR', function () {
 			it('Should simple insert BR element', function () {
@@ -15,9 +15,9 @@ describe('Enter behavior Jodit Editor Tests', function () {
 				editor.value = 'test';
 				editor.s.setCursorAfter(editor.editor.firstChild);
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-				expect(editor.value).equals('test<br>');
+				expect(editor.value).equals('test<br><br>');
 				editor.s.insertHTML('stop');
-				expect(editor.value).equals('test<br>stop');
+				expect(editor.value).equals('test<br>stop<br>');
 			});
 		});
 
@@ -568,7 +568,7 @@ describe('Enter behavior Jodit Editor Tests', function () {
 				editor.s.insertNode(editor.createInside.text('split'));
 
 				expect(sortAttributes(editor.value)).equals(
-					'<pre>test<br>split</pre>'
+					'<pre>test<br>split<br></pre>'
 				);
 			});
 
@@ -1036,7 +1036,7 @@ describe('Enter behavior Jodit Editor Tests', function () {
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 
-					expect(editor.value).equals('Some text<br><br><br> a ');
+					expect(editor.value).equals('Some text<br><br><br> a <br>');
 				});
 			});
 		});
@@ -1087,6 +1087,7 @@ describe('Enter behavior Jodit Editor Tests', function () {
 
 		describe('Cases', () => {
 			[
+				['test|', 'test<br>|<br>', { enter: 'br' }],
 				['<p>test|</p>', '<p>test</p><p>|<br></p>'],
 				[
 					'<ul><li>test|</li></ul>',
@@ -1124,10 +1125,10 @@ describe('Enter behavior Jodit Editor Tests', function () {
 					'<ul><li>1</li><li><ul><li>2</li></ul></li><li>|<br></li></ul>',
 					'<ul><li>1</li><li><ul><li>2</li></ul></li></ul><p>|<br></p>'
 				]
-			].forEach(([source, result]) => {
+			].forEach(([source, result, options]) => {
 				describe('For source: ' + source, () => {
 					it('Should be result: ' + result, () => {
-						const editor = getJodit();
+						const editor = getJodit(options);
 						editor.value = source;
 						setCursorToChar(editor);
 						simulateEvent(

@@ -283,6 +283,9 @@ export class Select implements ISelect {
 					atStart ? newRange.startContainer : newRange.endContainer
 				)
 			) {
+				// Here need do unsafe inserting
+				// Deny Dom.safeInsertNode(newRange, marker);
+				// Apply style -> Test Style module -> Base apply -> For selection <p><strong>|test|</strong></p> apply style {"element":"em","style":{"fontStyle":"italic"}}
 				newRange.insertNode(marker);
 			}
 		}
@@ -604,8 +607,7 @@ export class Select implements ISelect {
 						range.startContainer
 					);
 				} else {
-					range.deleteContents();
-					range.insertNode(node);
+					Dom.safeInsertNode(range, node);
 				}
 			} else {
 				this.area.appendChild(node);
@@ -1009,7 +1011,7 @@ export class Select implements ISelect {
 
 			range.collapse(inStart);
 
-			range.insertNode(fakeNode);
+			Dom.safeInsertNode(range, fakeNode);
 			range.selectNode(fakeNode);
 		} else {
 			if (inStart) {
@@ -1327,7 +1329,7 @@ export class Select implements ISelect {
 
 		try {
 			if (cursorOnTheRight || cursorOnTheLeft) {
-				range.insertNode(br);
+				Dom.safeInsertNode(range, br);
 
 				const clearBR = (
 					start: Node,
@@ -1370,8 +1372,16 @@ export class Select implements ISelect {
 
 			const fragment = leftRange.extractContents();
 
+			const clearEmpties = (node: Node) =>
+				Dom.each(
+					node,
+					node => Dom.isEmptyTextNode(node) && Dom.safeRemove(node)
+				);
+
 			if (currentBox.parentNode) {
 				try {
+					clearEmpties(fragment);
+					clearEmpties(currentBox);
 					currentBox.parentNode.insertBefore(fragment, currentBox);
 
 					if (cursorOnTheRight && br?.parentNode) {
@@ -1428,7 +1438,7 @@ export class Select implements ISelect {
 			const r = range.cloneRange();
 
 			r.collapse(start);
-			r.insertNode(fake);
+			Dom.safeInsertNode(r, fake);
 
 			moveTheNodeAlongTheEdgeOutward(fake, start, this.j.editor);
 

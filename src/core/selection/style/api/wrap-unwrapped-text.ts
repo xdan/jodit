@@ -60,7 +60,7 @@ export function wrapUnwrappedText(
 
 	const wrapper = ci.element(style.element);
 	wrapper.appendChild(fragment);
-	range.insertNode(wrapper);
+	Dom.safeInsertNode(range, wrapper);
 
 	if (style.elementIsBlock) {
 		if (

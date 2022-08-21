@@ -37,7 +37,17 @@ export function checkBR(
 		(!shiftKeyPressed && isMultiLineBlock)
 	) {
 		const br = jodit.createInside.element('br');
-		jodit.s.insertNode(br, true, false);
+
+		jodit.s.insertNode(br, false, false);
+
+		if (!Dom.findNotEmptySibling(br, false)) {
+			Dom.after(br, br.cloneNode());
+		}
+
+		const range = jodit.s.range;
+		range.setStartAfter(br);
+		range.collapse(true);
+		jodit.s.selectRange(range);
 		scrollIntoViewIfNeeded(br, jodit.editor, jodit.ed);
 
 		return false;

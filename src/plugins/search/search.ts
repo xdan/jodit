@@ -144,7 +144,7 @@ export class search extends Plugin {
 
 				const textNode = this.j.createInside.text(this.ui.replace);
 
-				rng.insertNode(textNode);
+				Dom.safeInsertNode(rng, textNode);
 				this.j.s.select(textNode);
 				this.tryScrollToElement(textNode);
 				this.cache = {};
