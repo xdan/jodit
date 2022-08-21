@@ -174,6 +174,8 @@ export class Config implements IViewOptions {
 		'selectall'
 	];
 
+	allowCommandsInReadOnly: string[] = ['selectall', 'preview', 'print'];
+
 	/**
 	 * Size of icons in the toolbar (can be "small", "middle", "large")
 	 *

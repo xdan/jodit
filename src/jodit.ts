@@ -763,7 +763,10 @@ export class Jodit extends Panel implements IJodit {
 			this.s.focus();
 		}
 
-		if (this.o.readonly && command !== 'selectall') {
+		if (
+			this.o.readonly &&
+			!this.o.allowCommandsInReadOnly.includes(command)
+		) {
 			return;
 		}
 

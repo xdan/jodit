@@ -50,18 +50,43 @@ describe('Test states', function () {
 				);
 			});
 
-			it('Should deny exec any commands', function () {
-				const editor = getJodit({
-					readonly: true
+			describe('Exec commands', function () {
+				it('Should deny exec any commands', function () {
+					const editor = getJodit({
+						readonly: true
+					});
+
+					editor.value = 'test';
+
+					editor.s.select(editor.editor.firstChild);
+
+					editor.execCommand('bold');
+
+					expect(editor.value).equals('<p>test</p>');
 				});
 
-				editor.value = 'test';
+				describe('Allow commands', function () {
+					it('Should allow excluded list allowCommandsInReadOnly', function () {
+						const editor = getJodit({
+							readonly: true,
+							allowCommandsInReadOnly: ['removeSpan']
+						});
 
-				editor.s.select(editor.editor.firstChild);
+						editor.registerCommand('removeSpan', () => {
+							editor.editor
+								.querySelectorAll('span')
+								.forEach(a => Jodit.modules.Dom.unwrap(a));
+						});
 
-				editor.execCommand('bold');
+						editor.value = '<p>t<span>e</span>st</p>';
 
-				expect(editor.value).equals('<p>test</p>');
+						editor.s.select(editor.editor.firstChild);
+
+						editor.execCommand('removeSpan');
+
+						expect(editor.value).equals('<p>test</p>');
+					});
+				});
 			});
 
 			it('Should disable all toolbar buttons besides source, print, about, fullsize', function () {
