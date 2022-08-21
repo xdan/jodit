@@ -460,14 +460,8 @@ describe('Clean html plugin', function () {
 				setCursorToChar(editor);
 				expect(cnt(editor.editor)).eq(2);
 
-				for (let i = 0; i < 3; i += 1) {
-					editor.s.insertNode(
-						editor.createInside.text(''),
-						false,
-						false
-					);
-				}
-				expect(cnt(editor.editor)).eq(5);
+				editor.s.insertNode(editor.createInside.text(''), false, false);
+				expect(cnt(editor.editor)).eq(3);
 
 				editor.e.on('finishedCleanHTMLWorker', () => {
 					expect(cnt(editor.editor)).eq(2);
@@ -492,20 +486,11 @@ describe('Clean html plugin', function () {
 						false,
 						false
 					);
-					editor.s.insertNode(
-						editor.createInside.text(''),
-						false,
-						false
-					);
-					editor.s.insertNode(
-						editor.createInside.text(''),
-						false,
-						false
-					);
-					expect(cnt(editor.editor)).eq(5);
+
+					expect(cnt(editor.editor)).eq(3);
 
 					editor.e.on('finishedCleanHTMLWorker', () => {
-						expect(cnt(editor.editor)).eq(5);
+						expect(cnt(editor.editor)).eq(3);
 						done();
 					});
 				});
@@ -520,19 +505,12 @@ describe('Clean html plugin', function () {
 				setCursorToChar(editor);
 				expect(cnt(editor.editor)).eq(2);
 
-				for (let i = 0; i < 3; i += 1) {
-					editor.s.insertNode(
-						editor.createInside.text(
-							Jodit.constants.INVISIBLE_SPACE
-						),
-						false,
-						false
-					);
-					const r = editor.s.range;
-					r.collapse(false);
-					editor.s.selectRange(r);
-				}
-				expect(cnt(editor.editor)).eq(5);
+				editor.s.insertNode(
+					editor.createInside.text(Jodit.constants.INVISIBLE_SPACE),
+					false,
+					false
+				);
+				expect(cnt(editor.editor)).eq(3);
 
 				editor.e.on('finishedCleanHTMLWorker', () => {
 					expect(cnt(editor.editor)).eq(2);
