@@ -1372,7 +1372,7 @@ export class Select implements ISelect {
 
 			const fragment = leftRange.extractContents();
 
-			const clearEmpties = (node: Node) =>
+			const clearEmpties = (node: Node): boolean =>
 				Dom.each(
 					node,
 					node => Dom.isEmptyTextNode(node) && Dom.safeRemove(node)

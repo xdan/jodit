@@ -23,17 +23,13 @@ export function removeInvTextNodes(
 	argi: unknown,
 	currentNode: Nullable<Node>
 ): boolean {
-	if (!currentNode) {
-		return hadEffect;
-	}
-
 	if (!Dom.isText(node) || node.nodeValue == null) {
 		return hadEffect;
 	}
 
 	if (
-		INV_REG().test(node.nodeValue) &&
-		node.nodeValue.replace(INV_REG(), '').length !== 0
+		INV_REG().test(node.nodeValue)
+		// node.nodeValue.replace(INV_REG(), '').length !== 0
 	) {
 		node.nodeValue = node.nodeValue.replace(INV_REG(), '');
 

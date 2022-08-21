@@ -27,5 +27,5 @@ declare module 'jodit/config' {
 }
 
 Config.prototype.select = {
-	normalizeSelectionBeforeCutAndCopy: true
+	normalizeSelectionBeforeCutAndCopy: false
 };

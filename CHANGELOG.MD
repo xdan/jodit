@@ -33,6 +33,10 @@
 
 -   [Pasting html breaks full screen mode #864](https://github.com/xdan/jodit/issues/864)
 -   [Using BR tag as enter element results reset of cursor while typing in newlines. #860](https://github.com/xdan/jodit/issues/860)
+    Fixed bugs with invisible aand empty nodes.
+-   [Adding paragraph when copying and pasting with little text #851](https://github.com/xdan/jodit/issues/851)
+    Options `select.normalizeSelectionBeforeCutAndCopy` now default is false
+-   [Jodit-selection-marker span appears after clicking Undo button. #880](https://github.com/xdan/jodit/issues/880)
 
 ## 3.19.4
 
@@ -1576,11 +1580,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                       ]
+-                                                                                                                                                                                                                                                                                                                                               	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                               	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                               	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                               	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                               ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

@@ -132,7 +132,9 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 			}
 		};
 
-		snapshot.html = this.j.getNativeEditorValue();
+		snapshot.html = this.removeJoditSelection(
+			this.j.getNativeEditorValue()
+		);
 
 		const sel = this.j.s.sel;
 
@@ -243,5 +245,12 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	override destruct(): void {
 		this.isBlocked = false;
 		super.destruct();
+	}
+
+	private removeJoditSelection(nativeEditorValue: string): string {
+		return nativeEditorValue.replace(
+			/<span[^>]*jodit-selection_marker[^>]*><\/span>/g,
+			''
+		);
 	}
 }

@@ -55,7 +55,7 @@ class wrapNodes extends Plugin {
 			isChanged: boolean = false;
 
 		while (child) {
-			this.checkAloneListLeaf(child, jodit);
+			child = this.checkAloneListLeaf(child, jodit);
 
 			if (this.isSuitableStart(child)) {
 				if (!isChanged) {
@@ -74,6 +74,7 @@ class wrapNodes extends Plugin {
 				}
 
 				box.normalize();
+				child = box;
 			}
 
 			child = child && child.nextSibling;
@@ -88,17 +89,33 @@ class wrapNodes extends Plugin {
 		}
 	}
 
-	private checkAloneListLeaf(
-		child: Node | Element | HTMLLIElement,
-		jodit: IJodit
-	): void {
-		if (
-			Dom.isElement(child) &&
-			Dom.isTag(child, 'li') &&
-			!Dom.isTag(child.parentElement, ['ul', 'ol'])
-		) {
-			Dom.wrap(child, 'ul', jodit.createInside);
-		}
+	private checkAloneListLeaf(child: Node, jodit: IJodit): Node {
+		// debugger
+		let result = child;
+		let next: Nullable<Node> = child;
+
+		do {
+			if (
+				Dom.isElement(next) &&
+				Dom.isTag(next, 'li') &&
+				!Dom.isTag(next.parentElement, ['ul', 'ol'])
+			) {
+				const nextChild: Nullable<Node> = Dom.findNotEmptySibling(
+					next,
+					false
+				);
+				if (Dom.isTag(result, 'ul')) {
+					result.appendChild(next);
+				} else {
+					result = Dom.wrap(next, 'ul', jodit.createInside);
+				}
+				next = nextChild;
+			} else {
+				break;
+			}
+		} while (next);
+
+		return result;
 	}
 
 	/**

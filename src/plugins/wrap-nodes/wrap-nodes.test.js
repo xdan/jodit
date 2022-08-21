@@ -12,10 +12,21 @@ describe('WrapNodes plugin test', function () {
 			expect(editor.value).equals('<p>test</p>');
 		});
 
-		it('Should wrap alone LI element', function () {
-			const editor = getJodit();
-			editor.value = '<li>test</li>';
-			expect(editor.value).equals('<ul><li>test</li></ul>');
+		describe('Wrap leafs', function () {
+			it('Should wrap alone LI element', function () {
+				const editor = getJodit();
+				editor.value = '<li>test</li>';
+				expect(editor.value).equals('<ul><li>test</li></ul>');
+			});
+
+			it('Should wrap several LI elements', function () {
+				const editor = getJodit();
+				editor.value =
+					'<li>test</li><li>test</li><p>test</p>test<li>test</li> <li>test</li>s<li>test</li>';
+				expect(editor.value).equals(
+					'<ul><li>test</li><li>test</li></ul><p>test</p><p>test</p><ul><li>test</li><li>test</li></ul> <p>s</p><ul><li>test</li></ul>'
+				);
+			});
 		});
 
 		describe('For STYLE/SCRIPT elements', function () {

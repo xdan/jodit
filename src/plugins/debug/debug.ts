@@ -31,7 +31,7 @@ export class Debug extends Plugin {
 			backgroundColor: '#fcfcfc'
 		});
 		Object.assign(sel.style, {
-			paddingTop: '16px',
+			paddingTop: '16px'
 		});
 
 		jodit.e
@@ -40,6 +40,7 @@ export class Debug extends Plugin {
 			})
 			.on(jodit.od, 'selectionchange', () => {
 				const range = jodit.selection.range;
+				tree.innerHTML = render(jodit.editor);
 				sel.innerHTML = `start ${range.startContainer.nodeName} ${range.startOffset}<br>end ${range.endContainer.nodeName} ${range.endOffset}`;
 			});
 	}
