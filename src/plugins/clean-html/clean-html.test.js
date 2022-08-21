@@ -446,4 +446,27 @@ describe('Clean html plugin', function () {
 			});
 		});
 	});
+
+	describe('Remove empty text nodes', () => {
+		it('should remove all empty text nodes', function (done) {
+			const editor = getJodit(),
+				cnt = elm =>
+					elm.childNodes.length +
+					Array.from(elm.childNodes).reduce((c, n) => c + cnt(n), 0);
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+			expect(cnt(editor.editor)).eq(2);
+
+			editor.s.insertNode(editor.createInside.text(''), false, false);
+			editor.s.insertNode(editor.createInside.text(''), false, false);
+			editor.s.insertNode(editor.createInside.text(''), false, false);
+			expect(cnt(editor.editor)).eq(5);
+
+			editor.e.on('finishedCleanHTMLWorker', () => {
+				expect(cnt(editor.editor)).eq(2);
+				done();
+			});
+		});
+	});
 });
