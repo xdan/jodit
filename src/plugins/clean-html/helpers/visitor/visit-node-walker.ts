@@ -26,7 +26,12 @@ export function visitNodeWalker(
 	currentSelectionNode: Nullable<Node>
 ): boolean {
 	let hadEffect = false;
+	const dcf = jodit.o.cleanHTML.disableCleanFilter;
 	for (const key of keys) {
+		if (dcf && dcf.has(key)) {
+			continue;
+		}
+
 		const filter = filters[key];
 
 		const tmp = hadEffect;

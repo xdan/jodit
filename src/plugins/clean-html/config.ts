@@ -8,7 +8,7 @@
  * @module plugins/clean-html
  */
 
-import type { HTMLTagNames, IDictionary } from 'jodit/types';
+import type { HTMLTagNames, IDictionary, Nullable } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
 
@@ -95,6 +95,13 @@ declare module 'jodit/config' {
 			 */
 			allowTags: false | string | IDictionary<string>;
 			denyTags: false | string | IDictionary<string>;
+
+			/**
+			 * Node filtering rules that do not need to be applied to content
+			 * The full list of rules is generated dynamically from the folder
+			 * https://github.com/xdan/jodit/tree/master/src/plugins/clean-html/helpers/visitor/filters
+			 */
+			disableCleanFilter: Nullable<Set<string>>;
 		};
 	}
 }
@@ -113,7 +120,8 @@ Config.prototype.cleanHTML = {
 
 	useIframeSandbox: false,
 	removeOnError: true,
-	safeJavaScriptLink: true
+	safeJavaScriptLink: true,
+	disableCleanFilter: null
 };
 
 Config.prototype.controls.eraser = {

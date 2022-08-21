@@ -13,6 +13,9 @@
 
 #### :rocket: New Feature
 
+-   Added `cleanHTML.disableCleanFilter:Set<string>` options. Node filtering rules that do not need to be applied to content
+    The full list of rules is generated dynamically from the folder
+    https://github.com/xdan/jodit/tree/master/src/plugins/clean-html/helpers/visitor/filters
 -   Added `allowCommandsInReadOnly:string[]` options. Allow execute commands in readonly mode.
     [activeButtonsInReadOnly: ['source', 'preview'] is not working. #878](https://github.com/xdan/jodit/issues/878)
     ```js
@@ -1573,11 +1576,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                     	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                     	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                     	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                     	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                     ]
+-                                                                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                       ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

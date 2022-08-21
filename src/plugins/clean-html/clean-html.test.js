@@ -448,11 +448,11 @@ describe('Clean html plugin', function () {
 	});
 
 	describe('Remove empty text nodes', () => {
+		const cnt = elm =>
+			elm.childNodes.length +
+			Array.from(elm.childNodes).reduce((c, n) => c + cnt(n), 0);
 		it('should remove all empty text nodes', function (done) {
-			const editor = getJodit(),
-				cnt = elm =>
-					elm.childNodes.length +
-					Array.from(elm.childNodes).reduce((c, n) => c + cnt(n), 0);
+			const editor = getJodit();
 
 			editor.value = '<p>test|</p>';
 			setCursorToChar(editor);
@@ -466,6 +466,30 @@ describe('Clean html plugin', function () {
 			editor.e.on('finishedCleanHTMLWorker', () => {
 				expect(cnt(editor.editor)).eq(2);
 				done();
+			});
+		});
+
+		describe('Disable rule `removeEmptyTextNode`', () => {
+			it('should remove all empty text nodes', function (done) {
+				const editor = getJodit({
+					cleanHTML: {
+						disableCleanFilter: new Set(['removeEmptyTextNode'])
+					}
+				});
+
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
+				expect(cnt(editor.editor)).eq(2);
+
+				editor.s.insertNode(editor.createInside.text(''), false, false);
+				editor.s.insertNode(editor.createInside.text(''), false, false);
+				editor.s.insertNode(editor.createInside.text(''), false, false);
+				expect(cnt(editor.editor)).eq(5);
+
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					expect(cnt(editor.editor)).eq(5);
+					done();
+				});
 			});
 		});
 	});
