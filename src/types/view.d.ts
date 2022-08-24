@@ -93,6 +93,7 @@ interface IViewBased<T = IViewOptions>
 		Mods,
 		Elms {
 	readonly isView: true;
+	readonly parent: Nullable<IViewBased>;
 
 	/**
 	 * ID attribute for source element, id add \{id\}_editor it's editor's id

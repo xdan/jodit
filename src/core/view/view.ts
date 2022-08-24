@@ -47,6 +47,7 @@ import { EventEmitter } from '../event-emitter';
 
 export abstract class View extends Component implements IViewBased, Mods, Elms {
 	readonly isView = true as const;
+	parent: Nullable<IViewBased> = null;
 
 	readonly mods: IDictionary<string | boolean | null> = {};
 

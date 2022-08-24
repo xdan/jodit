@@ -21,6 +21,7 @@ export abstract class Panel extends ViewWithToolbar {
 			...options
 		});
 		markOwner(this, dialog.container);
+		dialog.parent = this;
 		return dialog.bindDestruct(this);
 	}
 
