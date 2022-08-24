@@ -28,7 +28,7 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 		cache: !isProd || {
 			type: 'filesystem',
 			idleTimeoutForInitialStore: 0,
-			name: 'jodit'
+			name: `jodit${ES}${mode}${uglify}`
 		},
 		mode,
 		target: ['web', 'es5'],
