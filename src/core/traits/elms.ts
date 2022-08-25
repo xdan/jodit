@@ -12,15 +12,11 @@ import type { IComponent, IContainer, IElms, Nullable } from 'jodit/types';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 
 export abstract class Elms implements IElms {
-	abstract getElm(elementName: string): Nullable<HTMLElement>;
-
-	abstract getElms(elementName: string): HTMLElement[];
-
 	/**
 	 * Return element with BEM class name
 	 */
-	static getElm(
-		this: IComponent & IContainer,
+	getElm<T extends IComponent & IContainer & IElms>(
+		this: T,
 		elementName: string
 	): Nullable<HTMLElement> {
 		return this.container.querySelector(
@@ -31,8 +27,8 @@ export abstract class Elms implements IElms {
 	/**
 	 * Return elements with BEM class name
 	 */
-	static getElms(
-		this: IComponent & IContainer,
+	getElms<T extends IComponent & IContainer & IElms>(
+		this: T,
 		elementName: string
 	): HTMLElement[] {
 		return toArray(

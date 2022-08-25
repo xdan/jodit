@@ -39,38 +39,20 @@ import {
 	Create,
 	Dom,
 	ViewComponent
-} from '../../modules';
-import { modules } from '../global';
-import { hook } from 'jodit/core/decorators';
-import { Elms, Mods } from '../traits';
-import { EventEmitter } from '../event-emitter';
+} from 'jodit/modules';
+import { modules } from 'jodit/core/global';
+import { hook, derive } from 'jodit/core/decorators';
+import { Elms, Mods } from 'jodit/core/traits';
+import { EventEmitter } from 'jodit/core/event-emitter';
 
+export interface View extends Mods, Elms {}
+
+@derive(Mods, Elms)
 export abstract class View extends Component implements IViewBased, Mods, Elms {
 	readonly isView = true as const;
 	parent: Nullable<IViewBased> = null;
 
 	readonly mods: IDictionary<string | boolean | null> = {};
-
-	/** @see [[Mods.setMod]] */
-	setMod(...[name, value]: Parameters<typeof Mods.setMod>): this {
-		Mods.setMod.call(this, name, value);
-		return this;
-	}
-
-	/** @see [[Mods.getMod]] */
-	getMod(name: string): string | boolean | null {
-		return Mods.getMod.call(this, name);
-	}
-
-	/** @see [[Elms.getElm]]*/
-	getElm(elementName: string): Nullable<HTMLElement> {
-		return Elms.getElm.call(this, elementName);
-	}
-
-	/** @see [[Elms.getElms]]*/
-	getElms(elementName: string): HTMLElement[] {
-		return Elms.getElms.call(this, elementName);
-	}
 
 	/**
 	 * ID attribute for source element, id add `{id}_editor` it's editor's id
@@ -274,9 +256,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		this.events = new EventEmitter(this.od);
 		this.create = new Create(this.od);
 
-		this.container = this.c.div();
-		this.container.classList.add('jodit');
-
+		this.container = this.c.div(`jodit ${this.componentName}`);
 		this.progressbar = new ProgressBar(this);
 	}
 

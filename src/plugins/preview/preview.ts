@@ -33,7 +33,7 @@ export function preview(editor: IJodit): void {
 	editor.registerCommand(
 		'preview',
 		(_: any, _1: any, defaultValue: string) => {
-			const dialog = editor.dialog();
+			const dialog = editor.dlg();
 
 			dialog
 				.setSize(1024, 600)

@@ -12,15 +12,18 @@ import type {
 	IDictionary,
 	IUIElement,
 	IViewBased,
-	Nullable,
-	ModType
+	Nullable
 } from 'jodit/types';
 import { Component, ViewComponent } from 'jodit/core/component';
 import { Dom } from 'jodit/core/dom/dom';
 import { Elms, Mods } from 'jodit/core/traits';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { Icon } from 'jodit/core/ui/icon';
+import { derive } from 'jodit/core/decorators';
 
+export interface UIElement extends Mods, Elms {}
+
+@derive(Mods, Elms)
 export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
 	implements IUIElement, Mods, Elms
@@ -111,31 +114,6 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	}
 
 	readonly mods: IDictionary<string | boolean | null> = {};
-
-	/** @see [[Mods.setMod]] */
-	setMod(
-		name: string,
-		value: ModType,
-		container: HTMLElement = this.container
-	): this {
-		Mods.setMod.call(this, name, value, container);
-		return this;
-	}
-
-	/** @see [[Mods.getMod]] */
-	getMod(name: string): ModType {
-		return Mods.getMod.call(this, name);
-	}
-
-	/** @see [[Elms.getElm]]*/
-	getElm(elementName: string): Nullable<HTMLElement> {
-		return Elms.getElm.call(this, elementName);
-	}
-
-	/** @see [[Elms.getElms]]*/
-	getElms(elementName: string): HTMLElement[] {
-		return Elms.getElms.call(this, elementName);
-	}
 
 	/**
 	 * Update UI from state

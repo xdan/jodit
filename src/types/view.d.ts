@@ -23,8 +23,7 @@ import type { IStorage } from './storage';
 import type { IUIButtonState } from './ui';
 import type { IEventEmitter } from './events';
 import type { IPluginButton } from './plugin';
-import type { Mods, Elms } from '../core/traits'; //TODO remove export
-import type { IDialog, IDialogOptions } from './dialog';
+import type { IElms, IMods } from './traits';
 
 interface ILanguageOptions {
 	language?: string;
@@ -90,8 +89,8 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 interface IViewBased<T = IViewOptions>
 	extends IContainer,
 		IComponent,
-		Mods,
-		Elms {
+		IMods,
+		IElms {
 	readonly isView: true;
 	readonly parent: Nullable<IViewBased>;
 
@@ -146,29 +145,4 @@ interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {
 	getRegisteredButtonGroups(): IDictionary<string[]>;
 
 	setPanel(element: HTMLElement | string): void;
-}
-
-interface IPanel<T = IViewOptions> extends IViewWithToolbar<T> {
-	dialog(options?: IDialogOptions): IDialog;
-
-	confirm(
-		msg: string,
-		title: string | ((yes: boolean) => void) | undefined,
-		callback?: (yes: boolean) => void | false
-	): IDialog;
-
-	prompt(
-		msg: string,
-		title: string | (() => false | void) | undefined,
-		callback: (value: string) => false | void,
-		placeholder?: string,
-		defaultValue?: string
-	): IDialog;
-
-	alert(
-		msg: string | HTMLElement,
-		title?: string | (() => void | false),
-		callback?: string | ((dialog: IDialog) => void | false),
-		className?: string
-	): IDialog;
 }

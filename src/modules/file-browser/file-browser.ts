@@ -40,23 +40,27 @@ import {
 	trim,
 	isAbort
 } from 'jodit/core/helpers';
-import { Panel } from 'jodit/core/view/panel';
 import { Dom } from 'jodit/core/dom';
 import { makeDataProvider } from './factories';
 import { stateListeners } from './listeners/state-listeners';
 import { nativeListeners } from './listeners/native-listeners';
 import { selfListeners } from './listeners/self-listeners';
 import { DEFAULT_SOURCE_NAME } from './data-provider';
-import { autobind } from 'jodit/core/decorators';
+import { autobind, derive } from 'jodit/core/decorators';
 import { FileBrowserFiles, FileBrowserTree } from './ui';
 import { observable } from 'jodit/core/event-emitter';
 import { loadTree } from './fetch/load-tree';
 import { loadItems } from './fetch/load-items';
 import { STATUSES } from 'jodit/core/component';
+import { Dlgs } from 'jodit/core/traits';
+import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
 
 import './config';
 
-export class FileBrowser extends Panel implements IFileBrowser {
+export interface FileBrowser extends Dlgs {}
+
+@derive(Dlgs)
+export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	/** @override */
 	className(): string {
 		return 'Filebrowser';
@@ -310,7 +314,7 @@ export class FileBrowser extends Panel implements IFileBrowser {
 
 		self.dataProvider = makeDataProvider(self, self.options);
 
-		self._dialog = this.dialog({
+		self._dialog = this.dlg({
 			minWidth: Math.min(700, screen.width),
 			minHeight: 300,
 			buttons: this.o.headerButtons ?? ['fullsize', 'dialog.close']
@@ -402,7 +406,7 @@ export class FileBrowser extends Panel implements IFileBrowser {
 
 	private proxyDialogEvents(self: FileBrowser): void {
 		['afterClose', 'beforeOpen'].forEach(proxyEvent => {
-			self._dialog.events.on(self.dialog, proxyEvent, () => {
+			self._dialog.events.on(self.dlg, proxyEvent, () => {
 				this.e.fire(proxyEvent);
 			});
 		});

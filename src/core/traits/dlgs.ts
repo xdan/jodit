@@ -4,13 +4,16 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IDialog, IDialogOptions } from 'jodit/types';
-import { ViewWithToolbar } from './view-with-toolbar';
-import { Dialog, Alert, Confirm, Prompt } from 'jodit/modules/dialog';
-import { isString, markOwner } from 'jodit/core/helpers';
+/**
+ * @module traits
+ */
 
-export abstract class Panel extends ViewWithToolbar {
-	dialog(options?: IDialogOptions): IDialog {
+import type { IDialog, IDialogOptions, IViewBased, IDlgs } from 'jodit/types';
+import { Alert, Confirm, Dialog, Prompt } from '../../modules';
+import { isString, markOwner } from '../helpers';
+
+export abstract class Dlgs implements IDlgs {
+	dlg(this: IViewBased & IDlgs, options?: IDialogOptions): IDialog {
 		const dialog = new Dialog({
 			language: this.o.language,
 			shadowRoot: this.o.shadowRoot,
@@ -26,6 +29,7 @@ export abstract class Panel extends ViewWithToolbar {
 	}
 
 	confirm(
+		this: IViewBased & IDlgs,
 		msg: string,
 		title: string | ((yes: boolean) => void) | undefined,
 		callback?: (yes: boolean) => void | false
@@ -33,10 +37,11 @@ export abstract class Panel extends ViewWithToolbar {
 		if (isString(title)) {
 			title = this.i18n(title);
 		}
-		return Confirm.call(this.dialog(), this.i18n(msg), title, callback);
+		return Confirm.call(this.dlg(), this.i18n(msg), title, callback);
 	}
 
 	prompt(
+		this: IViewBased & IDlgs,
 		msg: string,
 		title: string | (() => false | void) | undefined,
 		callback: (value: string) => false | void,
@@ -52,7 +57,7 @@ export abstract class Panel extends ViewWithToolbar {
 		}
 
 		return Prompt.call(
-			this.dialog(),
+			this.dlg(),
 			this.i18n(msg),
 			title,
 			callback,
@@ -62,6 +67,7 @@ export abstract class Panel extends ViewWithToolbar {
 	}
 
 	alert(
+		this: IViewBased & IDlgs,
 		msg: string | HTMLElement,
 		title?: string | (() => void | false),
 		callback?: string | ((dialog: IDialog) => void | false),
@@ -73,6 +79,6 @@ export abstract class Panel extends ViewWithToolbar {
 		if (isString(title)) {
 			title = this.i18n(title);
 		}
-		return Alert.call(this.dialog(), msg, title, callback, className);
+		return Alert.call(this.dlg(), msg, title, callback, className);
 	}
 }

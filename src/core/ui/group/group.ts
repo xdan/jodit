@@ -16,7 +16,8 @@ import type {
 	IUIButtonState,
 	IUIElement,
 	IUIGroup,
-	IViewBased
+	IViewBased,
+	ModType
 } from 'jodit/types';
 import type { IDictionary } from 'jodit/types';
 import { UIElement } from '../element';
@@ -58,6 +59,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 			if (isArray(elm)) {
 				stack.push(...elm);
 			} else if (Component.isInstanceOf<UIGroup>(elm, UIGroup)) {
+				// @ts-ignore
 				stack.push(...elm.elements);
 			} else {
 				elm && result.push(elm);
@@ -108,13 +110,11 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	}
 
 	/** @override */
-	override setMod(name: string, value: string | boolean | null): this {
+	afterSetMod = (name: string, value: ModType): void => {
 		if (this.syncMod) {
 			this.elements.forEach(elm => elm.setMod(name, value));
 		}
-
-		return super.setMod(name, value);
-	}
+	};
 
 	/**
 	 * Allow set another container for the box of all children

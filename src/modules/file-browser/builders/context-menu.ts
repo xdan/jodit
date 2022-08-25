@@ -116,7 +116,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 							icon: 'eye',
 							title: 'Preview',
 							exec: (): void => {
-								const preview = self.dialog({
+								const preview = self.dlg({
 										buttons: ['fullsize', 'dialog.close']
 									}),
 									temp_content = self.c.div(

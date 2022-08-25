@@ -22,9 +22,12 @@ import type {
 import { ViewComponent, STATUSES } from 'jodit/core/component';
 import { Dom } from 'jodit/core/dom';
 import { Elms, Mods } from 'jodit/core/traits';
-import { component } from 'jodit/core/decorators';
+import { derive, component } from 'jodit/core/decorators';
+
+export interface StatusBar extends Mods, Elms {}
 
 @component
+@derive(Mods, Elms)
 export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 	className(): string {
 		return 'StatusBar';
@@ -55,17 +58,6 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 
 	readonly mods: IDictionary<ModType> = {};
 
-	/** @see [[Mods.setMod]] */
-	setMod(name: string, value: ModType): this {
-		Mods.setMod.call(this, name, value);
-		return this;
-	}
-
-	/** @see [[Mods.getMod]] */
-	getMod(name: string): ModType {
-		return Mods.getMod.call(this, name);
-	}
-
 	/**
 	 * Height of statusbar
 	 */
@@ -74,10 +66,7 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 	}
 
 	private findEmpty(inTheRight: boolean = false): CanUndef<HTMLElement> {
-		const items = Elms.getElms.call(
-			this,
-			inTheRight ? 'item-right' : 'item'
-		);
+		const items = this.getElms(inTheRight ? 'item-right' : 'item');
 
 		for (let i = 0; i < items.length; i += 1) {
 			if (!items[i].innerHTML.trim().length) {

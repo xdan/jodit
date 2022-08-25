@@ -21,7 +21,7 @@ import { Icon } from 'jodit/core/ui/icon';
 
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {
-		const dialog = editor.dialog(),
+		const dialog = editor.dlg(),
 			i = editor.i18n.bind(editor);
 
 		dialog

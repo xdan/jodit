@@ -144,7 +144,7 @@ export class pasteStorage extends Plugin {
 	};
 
 	private createDialog(): void {
-		this.dialog = this.j.dialog();
+		this.dialog = this.j.dlg();
 
 		const pasteButton = Button(this.j, 'paste', 'Paste', 'primary');
 

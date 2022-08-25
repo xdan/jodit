@@ -20,8 +20,9 @@ import type {
 	IUIButton,
 	IDictionary,
 	IFileBrowserDataProvider,
-	IPanel,
-	IDialog
+	IDialog,
+	IViewWithToolbar,
+	IDlgs
 } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { ViewComponent } from 'jodit/core/component';
@@ -68,7 +69,7 @@ const TABS = {
  *
  */
 @component
-export class ImageEditor extends ViewComponent<IPanel> {
+export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 	/** @override */
 	override className(): string {
 		return 'ImageEditor';
@@ -719,7 +720,7 @@ export class ImageEditor extends ViewComponent<IPanel> {
 		});
 	}
 
-	constructor(editor: IPanel) {
+	constructor(editor: IViewWithToolbar & IDlgs) {
 		super(editor);
 
 		this.options =
@@ -759,7 +760,7 @@ export class ImageEditor extends ViewComponent<IPanel> {
 			`.${jie}__croper`
 		) as HTMLElement;
 
-		this._dialog = this.j.dialog({
+		this._dialog = this.j.dlg({
 			buttons: ['fullsize', 'dialog.close']
 		});
 
@@ -803,7 +804,7 @@ export class ImageEditor extends ViewComponent<IPanel> {
  * Open Image Editor
  */
 export function openImageEditor(
-	this: IPanel & { dataProvider: IFileBrowserDataProvider },
+	this: IViewWithToolbar & { dataProvider: IFileBrowserDataProvider },
 	href: string,
 	name: string,
 	path: string,

@@ -185,7 +185,7 @@ export class imageProperties extends Plugin {
 			return;
 		}
 
-		this.dialog = this.j.dialog({
+		this.dialog = this.j.dlg({
 			minWidth: Math.min(400, screen.width),
 			minHeight: 590,
 			buttons: ['fullsize', 'dialog.close']

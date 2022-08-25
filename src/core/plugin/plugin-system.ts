@@ -37,6 +37,7 @@ import {
 import { splitArray } from 'jodit/core/helpers/array';
 import { kebabCase } from 'jodit/core/helpers/string';
 import { callPromise } from 'jodit/core/helpers/utils/utils';
+import { eventEmitter } from 'jodit/core/global';
 
 /**
  * Jodit plugin system
@@ -72,6 +73,7 @@ export class PluginSystem implements IPluginSystem {
 	 */
 	add(name: string, plugin: PluginType): void {
 		this._items.set(this.normalizeName(name), plugin);
+		eventEmitter.fire(`plugin:${name}:ready`);
 	}
 
 	/**
@@ -164,6 +166,24 @@ export class PluginSystem implements IPluginSystem {
 			this.addListenerOnBeforeDestruct(jodit, plugins);
 
 			(jodit as any).__plugins = pluginsMap;
+		});
+	}
+
+	/**
+	 * Returns the promise to wait for the plugin to load.
+	 */
+	wait(name: string): Promise<void> {
+		return new Promise<void>(resolve => {
+			if (this.get(name)) {
+				return resolve();
+			}
+
+			const onReady = (): void => {
+				resolve();
+				eventEmitter.off(`plugin:${name}:ready`, onReady);
+			};
+
+			eventEmitter.on(`plugin:${name}:ready`, onReady);
 		});
 	}
 

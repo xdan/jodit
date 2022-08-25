@@ -67,7 +67,7 @@ describe('Fullsize plugin', function () {
 					it('Should remove special class for all parents only for latest block', () => {
 						const editor = getJodit();
 						editor.toggleFullSize(true);
-						const dialog = editor.dialog();
+						const dialog = editor.dlg();
 						dialog.open('test');
 						dialog.toggleFullSize(true);
 
@@ -84,7 +84,7 @@ describe('Fullsize plugin', function () {
 				describe('Close dialog', () => {
 					it('Should work same way', () => {
 						const editor = getJodit();
-						const dialog = editor.dialog();
+						const dialog = editor.dlg();
 						dialog.open('test');
 						dialog.toggleFullSize(true);
 

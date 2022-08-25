@@ -40,7 +40,8 @@ import {
 	Plugin,
 	Select,
 	StatusBar,
-	STATUSES
+	STATUSES,
+	ViewWithToolbar
 } from './modules/';
 
 import {
@@ -65,11 +66,10 @@ import {
 
 import { Storage } from './core/storage/';
 
-import { Panel } from './core/view/panel';
-
 import { lang } from 'jodit/core/constants';
-import { instances, pluginSystem, modules } from './core/global';
-import { autobind, cache, throttle, watch } from './core/decorators';
+import { instances, pluginSystem, modules, eventEmitter } from './core/global';
+import { autobind, cache, throttle, watch, derive } from './core/decorators';
+import { Dlgs } from 'jodit/core/traits';
 
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 const __defaultClassesKey = 'data-jodit-default-classes';
@@ -77,7 +77,10 @@ const __defaultClassesKey = 'data-jodit-default-classes';
 /**
  * Class Jodit. Main class
  */
-export class Jodit extends Panel implements IJodit {
+export interface Jodit extends Dlgs {}
+
+@derive(Dlgs)
+export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	/** @override */
 	override className(): string {
 		return 'Jodit';
@@ -101,6 +104,12 @@ export class Jodit extends Panel implements IJodit {
 
 		return this.async.promise(resolve => {
 			this.hookStatus('ready', () => resolve(this));
+		});
+	}
+
+	static get ready(): Promise<IJodit> {
+		return new Promise(resolve => {
+			eventEmitter.on('oditready', resolve);
 		});
 	}
 

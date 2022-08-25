@@ -54,6 +54,7 @@ export interface IExtraPlugin {
 
 export interface IPluginSystem {
 	add(name: string, plugin: any): void;
+	wait(name: string): Promise<void>;
 	get(name: string): PluginType | void;
 	remove(name: string): void;
 	init(jodit: IJodit): CanPromise<void>;

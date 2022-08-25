@@ -17,10 +17,11 @@ import type {
 	Nullable
 } from './types';
 import type { IUploader, IUploaderOptions } from './uploader';
-import type { IPanel, IViewOptions } from './view';
+import type { IViewOptions, IViewWithToolbar } from './view';
 import type { IUIGroup } from './ui';
 import type { IObservable } from './events';
 import type { IAjax } from './ajax';
+import type { IDlgs } from './traits';
 
 /**
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
@@ -252,7 +253,8 @@ export interface IFileBrowserDataProvider extends IDestructible {
 // TODO - Remove extending
 export interface IFileBrowser<
 	T extends IFileBrowserOptions = IFileBrowserOptions
-> extends IPanel<T> {
+> extends IViewWithToolbar<T>,
+		IDlgs {
 	readonly dataProvider: IFileBrowserDataProvider;
 	readonly state: IFileBrowserState & IObservable;
 

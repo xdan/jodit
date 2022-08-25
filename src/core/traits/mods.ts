@@ -8,33 +8,34 @@
  * @module traits
  */
 
-import type { IComponent, IContainer, IMods, ModType } from 'jodit/types';
+import type {
+	IContainer,
+	IDictionary,
+	IMods,
+	IComponent,
+	ModType
+} from 'jodit/types';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';
 
 export abstract class Mods implements IMods {
-	abstract mods: IMods['mods'];
-	abstract readonly componentName: string;
-	abstract container: HTMLElement;
-
-	abstract setMod(name: string, value: ModType): this;
-	abstract getMod(name: string): ModType;
+	abstract mods: IDictionary;
 
 	/**
 	 * Set/remove BEM class modification
 	 *
 	 * @param value - if null, mod will be removed
 	 */
-	static setMod<T extends IComponent & IContainer & Mods>(
+	setMod<T extends IComponent & IContainer & IMods>(
 		this: T,
 		name: string,
 		value: ModType,
 		container?: HTMLElement
-	): void {
+	): T {
 		name = name.toLowerCase();
 
 		if (this.mods[name] === value) {
-			return;
+			return this;
 		}
 
 		const mod = `${this.componentName}_${name}`,
@@ -51,12 +52,16 @@ export abstract class Mods implements IMods {
 			cl.add(`${mod}_${value.toString().toLowerCase()}`);
 
 		this.mods[name] = value;
+
+		this.afterSetMod?.(name, value);
+
+		return this;
 	}
 
 	/**
 	 * Get BEM class modification value
 	 */
-	static getMod(this: IComponent & IContainer & Mods, name: string): ModType {
+	getMod(this: IMods, name: string): ModType {
 		return this.mods[name] ?? null;
 	}
 }

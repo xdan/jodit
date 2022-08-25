@@ -61,6 +61,7 @@ module.exports = {
 		'header/header': [2, 'src/header.js'],
 		'no-mixed-spaces-and-tabs': 'off',
 		'no-empty': 'off',
+		'@typescript-eslint/no-empty-interface': 'off',
 		'@typescript-eslint/ban-types': 'off',
 		'@typescript-eslint/ban-ts-comment': 'off',
 		'@typescript-eslint/no-empty-function': 'off',

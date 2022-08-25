@@ -53,7 +53,7 @@ export class link extends Plugin {
 
 		jodit.registerCommand('openLinkDialog', {
 			exec: () => {
-				const dialog = jodit.dialog({
+				const dialog = jodit.dlg({
 					resizable: false
 				});
 

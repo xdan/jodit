@@ -8,12 +8,13 @@
  * @module types
  */
 
-import { IViewOptions, IPanel } from './view';
+import { IViewOptions, IViewWithToolbar } from './view';
 import type { Config } from 'jodit/config';
 import type {
 	CustomCommand,
 	ICreate,
 	IDestructible,
+	IDlgs,
 	IHistory,
 	IStatusBar,
 	Modes
@@ -34,7 +35,7 @@ interface IWorkPlace {
 	options: IViewOptions;
 }
 
-interface IJodit extends IPanel {
+interface IJodit extends IViewWithToolbar, IDlgs {
 	isJodit: true;
 
 	options: Config;
