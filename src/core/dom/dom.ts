@@ -1006,17 +1006,17 @@ export class Dom {
 	/**
 	 * Check if element is some tag
 	 */
-	static isTag<K extends keyof HTMLElementTagNameMap>(
+	static isTag<K extends HTMLTagNames>(
 		node: Node | null | undefined | false | EventTarget,
 		tagName: K
 	): node is HTMLElementTagNameMap[K];
 
-	static isTag<K extends keyof HTMLElementTagNameMap>(
+	static isTag<K extends HTMLTagNames>(
 		node: Node | null | undefined | false | EventTarget,
 		tagNames: K[]
 	): node is HTMLElementTagNameMap[K];
 
-	static isTag<K extends keyof HTMLElementTagNameMap>(
+	static isTag<K extends HTMLTagNames>(
 		node: Node | null | undefined | false | EventTarget,
 		tagNames: K[] | K
 	): node is HTMLElementTagNameMap[K] {

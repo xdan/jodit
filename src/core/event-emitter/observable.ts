@@ -75,7 +75,7 @@ export function observable<T extends IDictionary, O extends T & IObservable>(
 	const on = (event: string | string[], callback: CallbackFunction): O => {
 		if (isArray(event)) {
 			event.map(e => on(e, callback));
-			return obj as O;
+			return obj as unknown as O;
 		}
 
 		if (!__onEvents[event]) {
@@ -84,7 +84,7 @@ export function observable<T extends IDictionary, O extends T & IObservable>(
 
 		__onEvents[event].push(callback);
 
-		return obj as O;
+		return obj as unknown as O;
 	};
 
 	const fire = (event: string | string[], ...attr: any[]): void => {
@@ -190,5 +190,5 @@ export function observable<T extends IDictionary, O extends T & IObservable>(
 
 	initAccessors(obj);
 
-	return obj as O;
+	return obj as unknown as O;
 }
