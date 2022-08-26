@@ -21,6 +21,8 @@ import { isVoid } from 'jodit/core/helpers/checker/is-void';
 export abstract class Mods implements IMods {
 	abstract mods: IDictionary;
 
+	afterSetMod(name: string, value: ModType): void {}
+
 	/**
 	 * Set/remove BEM class modification
 	 *
@@ -53,7 +55,7 @@ export abstract class Mods implements IMods {
 
 		this.mods[name] = value;
 
-		this.afterSetMod?.(name, value);
+		this.afterSetMod(name, value);
 
 		return this;
 	}

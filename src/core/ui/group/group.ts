@@ -110,11 +110,11 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	}
 
 	/** @override */
-	afterSetMod = (name: string, value: ModType): void => {
+	override afterSetMod(name: string, value: ModType): void {
 		if (this.syncMod) {
 			this.elements.forEach(elm => elm.setMod(name, value));
 		}
-	};
+	}
 
 	/**
 	 * Allow set another container for the box of all children

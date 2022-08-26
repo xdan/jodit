@@ -9,11 +9,7 @@
  */
 
 import type { IDictionary, Nullable } from 'jodit/types';
-import { IComponent, IContainer, IDialog, IDialogOptions } from 'jodit/types';
-
-export type Trait<C extends Function, I extends C['prototype'] = C['prototype']> = {
-	[K in Extract<keyof C, keyof I>]: I[K];
-};
+import type { IComponent, IContainer, IDialog, IDialogOptions } from 'jodit/types';
 
 export type ModType = string | boolean | null;
 
@@ -22,7 +18,7 @@ export interface IMods {
 	 * Set/remove modification (null - remove)
 	 */
 	setMod<T extends IComponent & IContainer & IMods>(this: T, name: string, value: ModType): T;
-	afterSetMod?: (name: string, value: ModType) => void;
+	afterSetMod(name: string, value: ModType): void;
 
 	getMod(name: string): ModType;
 	mods: IDictionary<ModType>;

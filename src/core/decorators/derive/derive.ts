@@ -20,7 +20,10 @@ export function derive(...traits: Function[]) {
 						key
 					);
 
-				const canDerive = method != null && isFunction(method.value);
+				const canDerive =
+					method != null &&
+					isFunction(method.value) &&
+					!isFunction(origin[key]);
 
 				if (canDerive) {
 					Object.defineProperty(origin, key, {
