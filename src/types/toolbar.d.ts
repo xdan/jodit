@@ -114,7 +114,7 @@ interface IControlType<
 
 	/**
 	 * Drop-down list. A hash or array. You must specify the command which will be submitted for the hash key
-	 * (or array value) (see .[[Jodit.execCommand]] or define 'exec' function. See example
+	 * (or array value) (see .[[IJodit.execCommand]] or define 'exec' function. See example
 	 * @example
 	 * ```javascript
 	 * Jodit.make('#editor2', {
@@ -148,7 +148,7 @@ interface IControlType<
 	/**
 	 * The command executes when the button is pressed. Allowed all
 	 * @see https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands
-	 * and several specific [[Jodit.execCommand]]
+	 * and several specific [[IJodit.execCommand]]
 	 */
 	command?: string;
 	tagRegExp?: RegExp;

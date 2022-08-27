@@ -3124,8 +3124,7 @@ option to false
 
 ### 2.3.28
 
-Added `headers` option in {@link module:FileBrowser|FileBrowser} and {@link module:Uploader|Uploader}. But primarily in
-{@link module:Dom|Dom}
+Added `headers` option in [[FileBrowser]] and [[Uploader]]. But primarily in [[Dom]]
 
 ```javascript
 var token = document
@@ -3325,7 +3324,7 @@ Fixed dialog bug
 
 ### 2.0.4
 
-Added CodeMirror plugin. Enable by default {@link defaultOptions~codeMirror.|options.codeMirror}
+Added CodeMirror plugin. Enable by default [[Config.codeMirror]]
 
 ### 2.0.0
 
