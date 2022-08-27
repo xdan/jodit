@@ -16,7 +16,7 @@ declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Options specifies whether the editor is to have its spelling and grammar checked or not
-		 * @see {@link http://www.w3schools.com/tags/att_global_spellcheck.asp}
+		 * @see http://www.w3schools.com/tags/att_global_spellcheck.asp
 		 */
 		spellcheck: boolean;
 	}

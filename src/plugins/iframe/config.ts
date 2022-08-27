@@ -26,7 +26,7 @@ declare module 'jodit/config' {
 		iframeDefaultSrc: string;
 
 		/**
-		 * Base URL where the root directory for {@link Jodit.defaultOptions.iframe|iframe} mode
+		 * Base URL where the root directory for [[Config.iframe]] mode
 		 *
 		 * @example
 		 * ```javascript

@@ -217,8 +217,8 @@ export class Config implements IViewOptions {
 	/**
 	 * Class name that can be appended to the editor
 	 *
-	 * @see {@link Jodit.defaultOptions.iframeCSSLinks|iframeCSSLinks}
-	 * @see {@link Jodit.defaultOptions.iframeStyle|iframeStyle}
+	 * @see [[Config.iframeCSSLinks]]
+	 * @see [[Config.iframeStyle]]
 	 *
 	 * @example
 	 * ```javascript

@@ -177,7 +177,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/**
 	 * Restores the state of the editor of the snapshot. Rebounding is not only html but selected text
 	 *
-	 * @param snapshot - snapshot of editor resulting from the `{@link Snapshot~make|make}`
+	 * @param snapshot - snapshot of editor resulting from the `[[Snapshot.make]]` method
 	 * @see make
 	 */
 	restore(snapshot: SnapshotType): void {
@@ -211,7 +211,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/**
 	 * Restore selection from snapshot
 	 *
-	 * @param snapshot - snapshot of editor resulting from the `{@link Snapshot~make|make}`
+	 * @param snapshot - snapshot of editor resulting from the [[Snapshot.make]] method
 	 * @see make
 	 */
 	restoreOnlySelection(snapshot: SnapshotType): void {

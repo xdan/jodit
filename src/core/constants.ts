@@ -91,7 +91,7 @@ export const MODE_SOURCE = 2;
 
 /**
  * Source code editor and HTML editor both like
- * {@link http://getuikit.com/docs/htmleditor.html|this}
+ * @see http://getuikit.com/docs/htmleditor.html|this
  */
 export const MODE_SPLIT = 3;
 

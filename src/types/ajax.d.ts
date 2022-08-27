@@ -82,8 +82,8 @@ export interface AjaxOptions {
 
 	/**
 	 * An object (or a function which returns an object) of additional header key/value pairs to send along
-	 * with requests using the XMLHttpRequest transport. Uses in {@link FileBrowser|FileBrowser}
-	 * and {@link Uploader|Uploader}
+	 * with requests using the XMLHttpRequest transport. Uses in [[FileBrowser]]
+	 * and [[Uploader]]
 	 */
 	headers?:
 		| IDictionary<string>

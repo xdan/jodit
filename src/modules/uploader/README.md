@@ -33,7 +33,7 @@ The format of the received data
 -   Default: null
 
 An object of additional header key/value pairs to send along with
-requests using the XMLHttpRequest transport. See {@link Ajax.defaultAjaxOptions|Ajax.defaultAjaxOptions}
+requests using the XMLHttpRequest transport. See [[Ajax.defaultAjaxOptions]]
 Type: {function} uploader.prepareData Before send file will called this function. First argument it gets
 [new FormData ()](https://developer.mozilla.org/en/docs/Web/API/FormData), you can use this if you want add some POST
 parameter.

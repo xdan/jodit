@@ -124,7 +124,7 @@ Jodit.make('#editor', {
 -   filebrowser.showFileName=true Show filename in thumbs
 -   filebrowser.showFileSize=true Show filesize in thumbs
 -   filebrowser.showFileChangeTime=true Show the last modification time in thumbs
--   filebrowser.editImage=true use {@link ImageEditor|Image editor module} - crop and resize image
+-   filebrowser.editImage=true use [[ImageEditor]] - crop and resize image
 -   filebrowser.preview=true Show preview button in context menu
 -   filebrowser.showPreviewNavigation=true Show navigation buttons in preview
 -   filebrowser.showSelectButtonInPreview=true Show select button in preview
@@ -208,30 +208,30 @@ const response = {
     send along with requests using the `XMLHttpRequest` transport. The header `X-Requested-With: XMLHttpRequest`
     is always added, but its default `XMLHttpRequest` value can be changed here.
     @property {object} `filebrowser.resize` Settings for AJAX connections to the server to resize
-    image. By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} with argument
+    image. By default, the uses [[Config.filebrowser.ajax]] with argument
     action=create
 -   filebrowser.crop Settings for AJAX connections to the server to crop image.
-    By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} with argument
+    By default, the uses [[Config.filebrowser.ajax]] with argument
     action=create
 -   filebrowser.c Settings for AJAX connections to the server to create
-    the category . By default, the uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax}
+    the category . By default, the uses [[Config.filebrowser.ajax]]
     with argument `action=create`
 -   filebrowser.move Settings for AJAX connections to the server for the moving
-    image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax}
+    image or category . By default uses [[Config.filebrowser.ajax]]
     with argument `action=move`
 -   filebrowser.remove Settings for AJAX connections to the server toWYSIWYG
-    delete the image or category . By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax}
+    delete the image or category . By default uses [[Config.filebrowser.ajax]]
     with argument `action=remove`
     @property {object} filebrowser.folder Settings for AJAX connections to the server toWYSIWYG
     download the list of categories .
-    By default uses {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax}
+    By default uses [[Config.filebrowser.ajax]]
     with argument `action=folder`
 -   filebrowser.items Settings for AJAX connections to the server to download
     the image list in the specified category . By default uses
-    {@link Jodit.defaultOptions.filebrowser.ajax|filebrowser.ajax} with argument action=items
--   filebrowser.uploader=null Settings Module {@link Uploader|Uploader}
+    [[Config.filebrowser.ajax]] with argument action=items
+-   filebrowser.uploader=null Settings Module [[Uploader]]
     for fast uploading images in category via Drag&Drop file in the file browser. The default settings of
-    the module {@link Uploader|Uploader}
+    the module [[Uploader]]
 
 Example:
 

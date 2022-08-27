@@ -753,7 +753,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	 * Execute command editor
 	 *
 	 * @param command - command. It supports all the
-	 * {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands} and a number of its own
+	 * @see https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands and a number of its own
 	 * for example applyStyleProperty. Comand fontSize receives the second parameter px,
 	 * formatBlock and can take several options
 	 * @example

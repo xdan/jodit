@@ -762,8 +762,8 @@ export class Select implements ISelect {
 		this.insertNode(image);
 
 		/**
-		 * Triggered after image was inserted {@link Select|insertImage}. This method can executed from
-		 * {@link FileBrowser|FileBrowser} or {@link Uploader|Uploader}
+		 * Triggered after image was inserted [[Select.insertImage]]. This method can executed from
+		 * [[FileBrowser]] or [[Uploader]]
 		 * @example
 		 * ```javascript
 		 * var editor = Jodit.make("#redactor");

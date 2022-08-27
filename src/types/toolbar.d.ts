@@ -147,7 +147,7 @@ interface IControlType<
 
 	/**
 	 * The command executes when the button is pressed. Allowed all
-	 * {@link https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands}
+	 * @see https://developer.mozilla.org/ru/docs/Web/API/Document/execCommand#commands
 	 * and several specific [[Jodit.execCommand]]
 	 */
 	command?: string;
