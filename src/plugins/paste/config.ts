@@ -44,11 +44,6 @@ declare module 'jodit/config' {
 		nl2brInPlainText: boolean;
 
 		/**
-		 * Draggable elements
-		 */
-		draggableTags: string | string[];
-
-		/**
 		 * Options when inserting HTML string
 		 */
 		pasteHTMLActionList: IUIOption[];
@@ -67,8 +62,6 @@ Config.prototype.pasteHTMLActionList = [
 Config.prototype.memorizeChoiceWhenPasteFragment = false;
 
 Config.prototype.nl2brInPlainText = true;
-
-Config.prototype.draggableTags = ['img', 'jodit-media', 'jodit'];
 
 const psKey = 'pasteStorage';
 
