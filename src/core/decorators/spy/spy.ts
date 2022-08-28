@@ -4,6 +4,11 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @internal
+ * @module decorators/spy
+ */
+
 import {
 	isBoolean,
 	isFunction,

@@ -129,11 +129,11 @@ export const INSERT_AS_HTML = 'insert_as_html';
 
 /**
  * Same as [[INSERT_AS_HTML]], but content will be stripped of extra styles and empty tags
- * ```
+ * ```html
  * <h1 style="color:red">test</h1>
  * ```
  * Will be inserted into the document as
- * ```
+ * ```html
  * <h1>test</h1>
  * ```
  */
@@ -141,11 +141,11 @@ export const INSERT_CLEAR_HTML = 'insert_clear_html';
 
 /**
  * The contents of the clipboard will be pasted into the document as plain text, i.e. all tags will be displayed as text.
- * ```
+ * ```html
  * <h1>test</h1>
  * ```
  * Will be inserted into the document as
- * ```
+ * ```html
  * &gt;&lt;h1&gt;test&lt;/h1&gt;
  * ```
  */
@@ -153,11 +153,11 @@ export const INSERT_AS_TEXT = 'insert_as_text';
 
 /**
  * All tags will be stripped:
- * ```
+ * ```html
  * <h1>test</h1>
  * ```
  * Will be inserted into the document as
- * ```
+ * ```html
  * test
  * ```
  */

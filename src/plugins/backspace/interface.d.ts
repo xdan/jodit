@@ -5,7 +5,7 @@
  */
 
 /**
- * @module plugins/keyboard/backspace
+ * @module plugins/backspace
  */
 
 export type DeleteMode = 'char' | 'word' | 'sentence';

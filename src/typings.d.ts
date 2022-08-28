@@ -6,6 +6,7 @@
 
 /**
  * @module types
+ * @internal
  */
 
 declare module '*.svg' {

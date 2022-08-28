@@ -5,7 +5,7 @@
  */
 
 /**
- * @module plugins/keyboard/backspace
+ * @module plugins/backspace
  */
 
 import { Config } from 'jodit/config';
