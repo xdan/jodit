@@ -1090,6 +1090,19 @@ describe('Enter behavior Tests', function () {
 				['test|', 'test<br>|<br>', { enter: 'br' }],
 				['<p>test|</p>', '<p>test</p><p>|<br></p>'],
 				[
+					'<p><a href="#index">test|</a></p>',
+					'<p><a href="#index">test</a></p><p>|<br></p>'
+				],
+				[
+					'test<a href="#index">test|</a>',
+					'test<a href="#index">test</a><br>|<br>',
+					{ enter: 'br' }
+				],
+				[
+					'<p><strong>test|</strong></p>',
+					'<p><strong>test</strong></p><p><strong>|<br></strong></p>'
+				],
+				[
 					'<ul><li>test|</li></ul>',
 					'<ul><li>test</li><li>|<br></li></ul>'
 				],

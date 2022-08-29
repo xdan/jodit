@@ -29,7 +29,8 @@ import {
 	hasPreviousBlock,
 	insertParagraph,
 	splitFragment,
-	wrapText
+	wrapText,
+	moveCursorOutFromSpecialTags
 } from './helpers';
 import { pluginSystem } from 'jodit/core/global';
 
@@ -86,42 +87,44 @@ export class enter extends Plugin {
 	}
 
 	private onEnter(event?: KeyboardEvent): false | void {
-		const editor = this.j;
+		const jodit = this.j;
 
-		const current = this.getCurrentOrFillEmpty(editor);
+		const current = this.getCurrentOrFillEmpty(jodit);
 
-		let currentBox = getBlockWrapper(editor, current);
+		moveCursorOutFromSpecialTags(jodit, current, ['a']);
+
+		let currentBox = getBlockWrapper(jodit, current);
 
 		const isLi = Dom.isTag(currentBox, 'li');
 
 		// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
 		if (
 			(!isLi || event?.shiftKey) &&
-			!checkBR(editor, current, event?.shiftKey)
+			!checkBR(jodit, current, event?.shiftKey)
 		) {
 			return false;
 		}
 
 		// wrap no wrapped element
-		if (!currentBox && !hasPreviousBlock(editor, current)) {
-			currentBox = wrapText(editor, current);
+		if (!currentBox && !hasPreviousBlock(jodit, current)) {
+			currentBox = wrapText(jodit, current);
 		}
 
 		if (!currentBox || currentBox === current) {
-			insertParagraph(editor, null, isLi ? 'li' : editor.o.enter);
+			insertParagraph(jodit, null, isLi ? 'li' : jodit.o.enter);
 			return false;
 		}
 
-		if (!checkUnsplittableBox(editor, currentBox)) {
+		if (!checkUnsplittableBox(jodit, currentBox)) {
 			return false;
 		}
 
 		if (isLi && Dom.isEmpty(currentBox)) {
-			processEmptyLILeaf(editor, currentBox);
+			processEmptyLILeaf(jodit, currentBox);
 			return false;
 		}
 
-		splitFragment(editor, currentBox);
+		splitFragment(jodit, currentBox);
 	}
 
 	private getCurrentOrFillEmpty(editor: IJodit): Node {
