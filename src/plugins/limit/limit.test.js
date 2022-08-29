@@ -23,6 +23,33 @@ describe('Limit plugin', function () {
 				}, 200);
 			});
 
+			describe('For special keys (ctrl + c etc.)', function () {
+				it('should allow press them', done => {
+					const editor = getJodit({
+						limitChars: 5
+					});
+
+					editor.value = '<p>11111</p>';
+					setCursorToChar(editor);
+
+					editor.e.on('keyup.limit', e => {
+						setTimeout(() => {
+							try {
+								expect(e.ctrlKey).is.true;
+								expect(e.defaultPrevented).is.false;
+								done();
+							} catch (e) {
+								done(e);
+							}
+						});
+					});
+
+					simulateEvent('keyup', 'c', editor, opts => {
+						opts.ctrlKey = true;
+					});
+				});
+			});
+
 			describe('Stat plugin', function () {
 				it('should show chars count', function (done) {
 					const editor = getJodit({

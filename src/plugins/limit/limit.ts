@@ -33,7 +33,6 @@ export class limit extends Plugin {
 
 		if (jodit && (limitWords || limitChars)) {
 			let snapshot: SnapshotType | null = null;
-
 			jodit.e
 				.off('.limit')
 				.on('beforePaste.limit', () => {
@@ -60,7 +59,10 @@ export class limit extends Plugin {
 		event: KeyboardEvent | null = null,
 		inputText: string = ''
 	): boolean {
-		if (event && COMMAND_KEYS.includes(event.key)) {
+		if (
+			event &&
+			(COMMAND_KEYS.includes(event.key) || event.ctrlKey || event.metaKey)
+		) {
 			return false;
 		}
 
