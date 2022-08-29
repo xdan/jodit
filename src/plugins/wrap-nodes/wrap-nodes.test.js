@@ -12,6 +12,24 @@ describe('WrapNodes plugin test', function () {
 			expect(editor.value).equals('<p>test</p>');
 		});
 
+		describe('Use Japanese keyboard', function () {
+			it('Should right wrap text', async function () {
+				const editor = getJodit({
+					language: 'ja'
+				});
+				editor.value = '';
+
+				editor.s.insertNode(editor.createInside.text('た'));
+				await editor.async.requestIdlePromise();
+				editor.s.insertNode(editor.createInside.text('て'));
+				await editor.async.requestIdlePromise();
+				editor.s.insertNode(editor.createInside.text('い'));
+				await editor.async.requestIdlePromise();
+
+				expect(editor.value).equals('<p>たてい</p>');
+			});
+		});
+
 		describe('Wrap leafs', function () {
 			it('Should wrap alone LI element', function () {
 				const editor = getJodit();

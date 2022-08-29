@@ -22,6 +22,8 @@
 
 -   [After adding hyperlink and hit enter the hyperlink added to first letter of the next word.](https://xdsoft.net/jodit/pro/cab/issues/a6ccc696-313f-4195-bed6-59ef28af2643)
 -   [After reaching the maximum character limit unable to copy the content from the editor.(eg:- if limit is 50000 then we are able to copy only 49999)](https://xdsoft.net/jodit/pro/cab/issues/e72690fa-6dea-4586-82fb-30b0e8d53d4a)
+-   [When typing Japanese characters in Jodit editor, extra characters are being added to the beginning of the first word.](https://xdsoft.net/jodit/pro/cab/issues/4c468c09-837d-40c6-b487-3746aecc470a)
+    Same [Composing japanese text is decided unintentionally. #870](https://github.com/xdan/jodit/issues/870)
 
 ## 3.19.5
 
@@ -1594,11 +1596,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                     	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                     	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                     	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                     	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                     ]
+-                                                                                                                                                                                                                                                                                                                                                         	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                         	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                         	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                         	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                         ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

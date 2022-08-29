@@ -29,10 +29,12 @@ class wrapNodes extends Plugin {
 			return;
 		}
 
-		jodit.e.on(
-			'afterInit.wtn postProcessSetEditorValue.wtn',
-			this.postProcessSetEditorValue
-		);
+		jodit.e
+			.on('focus.wtn keydown.wtn mousedown.wtn', this.preprocessInput)
+			.on(
+				'afterInit.wtn postProcessSetEditorValue.wtn',
+				this.postProcessSetEditorValue
+			);
 	}
 
 	/** @override **/
@@ -137,6 +139,24 @@ class wrapNodes extends Plugin {
 	private isNotClosed = (n: Nullable<Node>): n is Element =>
 		Dom.isElement(n) &&
 		!(Dom.isBlock(n) || Dom.isTag(n, this.j.o.wrapNodes.exclude));
+
+	/**
+	 * Process input without parent box
+	 */
+	@autobind
+	private preprocessInput(): void {
+		const { jodit } = this;
+
+		if (!jodit.isEditorMode() || jodit.editor.firstChild) {
+			return;
+		}
+
+		const box = jodit.createInside.element(jodit.o.enter);
+		const br = jodit.createInside.element('br');
+		Dom.append(box, br);
+		Dom.append(jodit.editor, box);
+		jodit.s.setCursorBefore(br);
+	}
 }
 
 pluginSystem.add('wrapNodes', wrapNodes);
