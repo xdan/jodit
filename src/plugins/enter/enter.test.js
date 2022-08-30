@@ -948,7 +948,8 @@ describe('Enter behavior Tests', function () {
 				it('Should add 2 P', function () {
 					const editor = getJodit();
 
-					editor.value = '<p><span style="color:red">test|</span></p>';
+					editor.value =
+						'<p><span style="color:red">test|</span></p>';
 
 					setCursorToChar(editor);
 

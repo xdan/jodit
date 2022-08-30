@@ -1,14 +1,14 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.19.5
+ * Version: v3.20.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
 	/*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.19.5
+ * Version: v3.20.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -2093,6 +2093,9 @@ svg.jodit-icon {
   top: auto !important;
   left: auto !important;
   width: 100% !important;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: 1px solid #dadada;
 }
 .jodit-dialog_theme_dark {
   background-color: #353535;

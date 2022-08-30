@@ -69,7 +69,7 @@ Config.prototype.uploader = {
 	},
 
 	/**
-	 * @see {{IUploader.processFileName}}
+	 * @see [[IUploader.processFileName]]
 	 */
 	processFileName(
 		this: IUploader,
