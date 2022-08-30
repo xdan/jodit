@@ -1050,7 +1050,7 @@ describe('Test paste plugin', () => {
 				};
 			};
 
-			simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
+			simulateEvent('paste', editor.editor, emulatePasteEvent);
 
 			expect(editor.value).equals('<p>test</p>');
 
@@ -1077,7 +1077,7 @@ describe('Test paste plugin', () => {
 					});
 
 					expect(editor.value).equals(
-						'<p>test</p><br><p>test</p><br><p>test</p>'
+						'<p>test<br>test<br>test<br></p>'
 					);
 				});
 			});
@@ -1255,7 +1255,7 @@ describe('Test paste plugin', () => {
 				simulateEvent('paste', editor.editor, emulatePasteEvent);
 
 				expect(editor.value).equals(
-					'<p>test</p><br><p>test</p><br><p>test</p><br><p>test</p><br><p>test</p><br>'
+					'<p>test<br>test<br>test<br>test<br>test<br><br></p>'
 				);
 			});
 		});

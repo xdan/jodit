@@ -30,7 +30,13 @@ class wrapNodes extends Plugin {
 		}
 
 		jodit.e
-			.on('focus.wtn keydown.wtn mousedown.wtn', this.preprocessInput)
+			.on(
+				'drop.wtn focus.wtn keydown.wtn mousedown.wtn',
+				this.preprocessInput,
+				{
+					top: true
+				}
+			)
 			.on(
 				'afterInit.wtn postProcessSetEditorValue.wtn',
 				this.postProcessSetEditorValue

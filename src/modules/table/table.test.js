@@ -844,7 +844,8 @@ describe('Tables Jodit Editor Tests', function () {
 		it('Create table and insert into cell some text', function () {
 			const editor = getJodit();
 			editor.ownerWindow.focus();
-			editor.value = '';
+			editor.value = '<p>|</p>';
+			setCursorToChar(editor);
 
 			const table = editor.createInside.element('table'),
 				tr = editor.createInside.element('tr'),

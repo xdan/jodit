@@ -540,7 +540,8 @@ describe('Link plugin', function () {
 						}
 					});
 
-					editor.value = '';
+					editor.value = '<p>|<br></p>';
+					setCursorToChar(editor);
 
 					clickButton('link', editor);
 
@@ -570,13 +571,13 @@ describe('Link plugin', function () {
 
 					url.focus();
 					url.value = 'tests/artio.jpg';
-					simulateEvent('submit', 0, list.querySelector('form'));
+					simulateEvent('submit', list.querySelector('form'));
 
 					expect(sortAttributes(editor.value)).equals(
 						'<p><a href="tests/artio.jpg">123</a></p>'
 					);
 
-					simulateEvent('mousedown', 0, editor.editor);
+					simulateEvent('mousedown', editor.editor);
 
 					expect(list.parentNode).is.null;
 				});
@@ -584,22 +585,20 @@ describe('Link plugin', function () {
 				it('Should fire change event', function () {
 					let change = 0;
 
-					const editor = getJodit({
-						events: {
-							change: function () {
-								change += 1;
-							}
-						}
-					});
+					const editor = getJodit();
 
-					editor.value = '';
+					editor.value = '<p>|<br></p>';
+					setCursorToChar(editor);
+					editor.events.on('change', function () {
+						change += 1;
+					});
 
 					clickButton('link', editor);
 
 					const list = getOpenedPopup(editor);
 					const url = list.querySelector('input[ref=url_input]');
 					url.value = 'tests/artio.jpg';
-					simulateEvent('submit', 0, list.querySelector('form'));
+					simulateEvent('submit', list.querySelector('form'));
 
 					expect(sortAttributes(editor.value)).equals(
 						'<p><a href="tests/artio.jpg">tests/artio.jpg</a></p>'

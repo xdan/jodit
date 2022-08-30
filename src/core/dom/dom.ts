@@ -830,8 +830,11 @@ export class Dom {
 		let matchedParent: Nullable<T> = null,
 			current: Nullable<T> = node?.parentElement as Nullable<T>;
 
-		while (current && current !== root && condition(current)) {
-			matchedParent = current;
+		while (current && current !== root) {
+			if (condition(current)) {
+				matchedParent = current;
+			}
+
 			current = current?.parentElement as Nullable<T>;
 		}
 

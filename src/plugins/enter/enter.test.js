@@ -24,21 +24,14 @@ describe('Enter behavior Tests', function () {
 		describe('If Enter was pressed in not wrapped text in the end, it text ', function () {
 			it('should be wrap in paragraph and cursor should be in next new paragraph', function () {
 				const editor = getJodit();
-				editor.value = 'Some text';
-
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
-
-				range.setStart(editor.editor.firstChild.firstChild, 9);
-				range.collapse(true);
-				sel.removeAllRanges();
-				sel.addRange(range);
+				editor.value = '<p>Some text|</p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 				editor.s.insertNode(editor.createInside.text(' a '));
 
-				expect(editor.value).equals('<p>Some text</p><p> a <br></p>');
+				expect(editor.value).equals('<p>Some text</p><p> a </p>');
 			});
 
 			describe('Inside BODY for iframe and editHTMLDocumentMode', function () {
@@ -50,15 +43,8 @@ describe('Enter behavior Tests', function () {
 						iframeCSSLinks: Jodit.atom([])
 					});
 
-					editor.value = 'Some text';
-
-					const sel = editor.s.sel,
-						range = editor.s.createRange();
-
-					range.setStart(editor.editor.firstChild.firstChild, 9);
-					range.collapse(true);
-					sel.removeAllRanges();
-					sel.addRange(range);
+					editor.value = '<p>Some text|</p>';
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
@@ -67,7 +53,7 @@ describe('Enter behavior Tests', function () {
 					expect(sortAttributes(editor.value)).equals(
 						'<!DOCTYPE html><html lang="en" style="overflow-y:hidden">' +
 							'<head><title>Jodit Editor</title></head>' +
-							'<body spellcheck="false"><p>Some text</p><p> a <br></p></body>' +
+							'<body spellcheck="false"><p>Some text</p><p> a </p></body>' +
 							'</html>'
 					);
 				});
@@ -78,22 +64,15 @@ describe('Enter behavior Tests', function () {
 			it('should simple create P>SPAN and move cursor inside this', function () {
 				const editor = getJodit();
 				editor.value =
-					'<p>Some <span style="color: red">text</span></p>';
-
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
-
-				range.selectNodeContents(editor.editor.firstChild.lastChild);
-				range.collapse(false);
-				sel.removeAllRanges();
-				sel.addRange(range);
+					'<p>Some <span style="color: red">text|</span></p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 				editor.s.insertNode(editor.createInside.text(' a '));
 
 				expect(editor.value).equals(
-					'<p>Some <span style="color: red">text</span></p><p><span style="color: red"> a <br></span></p>'
+					'<p>Some <span style="color: red">text</span></p><p><span style="color: red"> a </span></p>'
 				);
 			});
 		});
@@ -101,22 +80,15 @@ describe('Enter behavior Tests', function () {
 		describe('If Enter was pressed in the end of STRONG inside P', function () {
 			it('should simple create P>STRONG and move cursor inside this', function () {
 				const editor = getJodit();
-				editor.value = '<p>Some <strong>text</strong></p>';
-
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
-
-				range.selectNodeContents(editor.editor.firstChild.lastChild);
-				range.collapse(false);
-				sel.removeAllRanges();
-				sel.addRange(range);
+				editor.value = '<p>Some <strong>text|</strong></p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 				editor.s.insertNode(editor.createInside.text(' a '));
 
 				expect(editor.value).equals(
-					'<p>Some <strong>text</strong></p><p><strong> a <br></strong></p>'
+					'<p>Some <strong>text</strong></p><p><strong> a </strong></p>'
 				);
 			});
 		});
@@ -171,21 +143,14 @@ describe('Enter behavior Tests', function () {
 		describe('If Enter was pressed inside H1-6 cursor ', function () {
 			it('should be move in new paragraph below', function () {
 				const editor = getJodit();
-				editor.value = '<h1>Some text</h1>';
-
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
-
-				range.setStart(editor.editor.firstChild.firstChild, 9);
-				range.collapse(true);
-				sel.removeAllRanges();
-				sel.addRange(range);
+				editor.value = '<h1>Some text|</h1>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 				editor.s.insertNode(editor.createInside.text(' a '));
 
-				expect(editor.value).equals('<h1>Some text</h1><p> a <br></p>');
+				expect(editor.value).equals('<h1>Some text</h1><p> a </p>');
 			});
 		});
 
@@ -237,14 +202,14 @@ describe('Enter behavior Tests', function () {
 			it('should be added 2 paragraph and cursor must be in second', function () {
 				const editor = getJodit();
 
-				editor.value = ''; // empty
+				editor.value = '<p><br></p>'; // empty
 				editor.s.focus();
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 				editor.s.insertNode(editor.createInside.text(' a '));
 
-				expect(editor.value).equals('<p><br></p><p> a <br></p>');
+				expect(editor.value).equals('<p><br></p><p> a </p>');
 			});
 		});
 
@@ -283,7 +248,8 @@ describe('Enter behavior Tests', function () {
 			describe('after this', function () {
 				it('Should contain the specified tag settings and after this cursor must be inside that tag', function () {
 					const editor = getJodit();
-					editor.value = '';
+					editor.value = '<p>|<br></p>';
+					setCursorToChar(editor);
 					editor.s.focus();
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
@@ -296,7 +262,7 @@ describe('Enter behavior Tests', function () {
 					editor.s.insertNode(editor.createInside.text('test3'));
 
 					expect(editor.value).equals(
-						'<p><br></p><p>test</p><p>test2</p><p>test3<br></p>'
+						'<p><br></p><p>test</p><p>test2</p><p>test3</p>'
 					);
 				});
 			});
@@ -355,21 +321,13 @@ describe('Enter behavior Tests', function () {
 					);
 				});
 			});
+
 			describe('Enter pressed inside P element in the edge', function () {
 				describe('If cursor in the right edge of paragraph after enter', function () {
 					it('should move  cursor in another new paragraph', function () {
 						const editor = getJodit();
-
-						const p = editor.ed.createElement('p'),
-							p2 = editor.ed.createElement('p');
-
-						p.innerHTML = 'Split paragraph';
-						p2.innerHTML = 'Test';
-						editor.s.insertNode(p);
-						editor.s.insertNode(p2);
-
-						// set cursor in end of element
-						editor.s.setCursorIn(p, false);
+						editor.value = '<p>Split paragraph|</p><p>Test</p>';
+						setCursorToChar(editor);
 
 						simulateEvent(
 							'keydown',
@@ -380,29 +338,16 @@ describe('Enter behavior Tests', function () {
 						editor.s.insertNode(editor.createInside.text('a '));
 
 						expect(editor.value).equals(
-							'<p>Split paragraph</p><p>a <br></p><p>Test</p>'
+							'<p>Split paragraph</p><p>a </p><p>Test</p>'
 						);
 					});
 				});
+
 				describe('If cursor in the left edge of paragraph after enter', function () {
 					it('should move cursor in another new paragraph before old place', function () {
 						const editor = getJodit();
-
-						const p = editor.ed.createElement('p'),
-							p2 = editor.ed.createElement('p');
-
-						p.innerHTML = 'Split paragraph';
-						p2.innerHTML = 'Test';
-						editor.s.insertNode(p);
-						editor.s.insertNode(p2);
-
-						const range = editor.s.createRange();
-
-						// set cursor in start of element
-						range.setStart(p.firstChild, 0);
-						range.collapse(true);
-						editor.s.sel.removeAllRanges();
-						editor.s.sel.addRange(range);
+						editor.value = '<p>|Split paragraph</p><p>Test</p>';
+						setCursorToChar(editor);
 
 						simulateEvent(
 							'keydown',
@@ -420,20 +365,9 @@ describe('Enter behavior Tests', function () {
 				describe('Copys styles', function () {
 					it('should move  cursor in new paragraph an copy all styles from old', function () {
 						const editor = getJodit();
-
-						const p = editor.ed.createElement('p'),
-							p2 = editor.ed.createElement('p');
-
-						p.style.color = '#ff0000';
-						p.style.textAlign = 'right';
-
-						p.innerHTML = 'Split paragraph';
-						p2.innerHTML = 'Test';
-						editor.s.insertNode(p);
-						editor.s.insertNode(p2);
-
-						// set cursor in end of element
-						editor.s.setCursorIn(p, false);
+						editor.value =
+							'<p style="color:#FF0000;text-align:right">Split paragraph|</p><p>Test</p>';
+						setCursorToChar(editor);
 
 						simulateEvent(
 							'keydown',
@@ -444,7 +378,7 @@ describe('Enter behavior Tests', function () {
 						editor.s.insertNode(editor.createInside.text('a '));
 
 						expect(sortAttributes(editor.value)).to.be.equal(
-							'<p style="color:#FF0000;text-align:right">Split paragraph</p><p style="color:#FF0000;text-align:right">a <br></p><p>Test</p>'
+							'<p style="color:#FF0000;text-align:right">Split paragraph</p><p style="color:#FF0000;text-align:right">a </p><p>Test</p>'
 						);
 					});
 				});
@@ -455,20 +389,16 @@ describe('Enter behavior Tests', function () {
 			it('If cursor in TD tag', function () {
 				const editor = getJodit();
 
-				editor.value = '<table><tr><td>text</td></tr></table>';
-
-				const range = editor.s.createRange();
-
-				// set cursor in start of element
-				range.selectNodeContents(editor.editor.querySelector('td'));
-				range.collapse(true);
-				editor.s.selectRange(range);
+				editor.value = '<table><tr><td>|text</td></tr></table>';
+				setCursorToChar(editor);
 
 				editor.s.insertNode(editor.createInside.text('split '));
 
+				replaceCursorToChar(editor);
 				expect(editor.value).equals(
-					'<table><tbody><tr><td>split text</td></tr></tbody></table>'
+					'<table><tbody><tr><td>split |text</td></tr></tbody></table>'
 				);
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
@@ -498,21 +428,16 @@ describe('Enter behavior Tests', function () {
 			it('If cursor in right side of table', function () {
 				const editor = getJodit();
 
-				editor.value = '<table><tr><td>test</td></tr></table>';
-
-				const range = editor.s.createRange();
-
-				// set cursor in start of element
-				range.setEndAfter(editor.editor.querySelector('table'));
-				range.collapse(false);
-				editor.s.selectRange(range);
+				editor.value =
+					'<table><tr><td>test</td></tr></table><p>|<br></p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 				editor.s.insertNode(editor.createInside.text('text'), false);
 
 				expect(editor.value).equals(
-					'<table><tbody><tr><td>test</td></tr></tbody></table><p>text<br></p>'
+					'<table><tbody><tr><td>test</td></tr></tbody></table><p><br></p><p>text</p>'
 				);
 			});
 		});
@@ -521,15 +446,8 @@ describe('Enter behavior Tests', function () {
 			it('should insert <br> tag and move cursor after it.', function () {
 				const editor = getJodit();
 
-				editor.value = 'test';
-
-				const range = editor.s.createRange();
-
-				// set cursor in start of element
-				range.setStart(editor.editor.firstChild.firstChild, 2);
-				range.collapse(true);
-				editor.s.sel.removeAllRanges();
-				editor.s.sel.addRange(range);
+				editor.value = '<p>te|st</p>';
+				setCursorToChar(editor);
 
 				simulateEvent(
 					'keydown',
@@ -577,11 +495,8 @@ describe('Enter behavior Tests', function () {
 					it('should add new P element after PRE', function () {
 						const editor = getJodit();
 
-						editor.value = '<pre>test</pre>';
-
-						editor.s
-							.createRange(true)
-							.setStart(editor.editor.firstChild.firstChild, 4);
+						editor.value = '<pre>test|</pre>';
+						setCursorToChar(editor);
 
 						simulateEvent(
 							'keydown',
@@ -595,7 +510,7 @@ describe('Enter behavior Tests', function () {
 						editor.s.insertNode(editor.createInside.text('split '));
 
 						expect(editor.value).equals(
-							'<pre>test</pre><p>split <br></p>'
+							'<pre>test</pre><p>split </p>'
 						);
 					});
 				});
@@ -664,11 +579,9 @@ describe('Enter behavior Tests', function () {
 							enter: 'BR'
 						});
 
-						editor.value = '<ul><li>test</li></ul>';
+						editor.value = '<ul><li>test|</li></ul>';
+						setCursorToChar(editor);
 
-						editor.s.setCursorAfter(
-							editor.editor.querySelector('ul>li').firstChild
-						);
 						simulateEvent(
 							'keydown',
 							Jodit.KEY_ENTER,
@@ -679,7 +592,7 @@ describe('Enter behavior Tests', function () {
 						expect(
 							'<ul>' +
 								'<li>test</li>' +
-								'<li>split<br></li>' +
+								'<li>split</li>' +
 								'</ul>'
 						).equals(sortAttributes(editor.value));
 					});
@@ -801,29 +714,22 @@ describe('Enter behavior Tests', function () {
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 
-					expect(editor.value).equals('<p> a <br></p>');
+					expect(editor.value).equals('<p> a </p>');
 				});
 			});
 
 			describe('If Enter was pressed inside empty LI', function () {
 				it('should be removed and cursor must be after UL|OL', function () {
 					const editor = getJodit();
-					editor.value = '<ul><li>Some text</li><li> </li></ul>';
-
-					const range = editor.s.createRange(true);
-
-					range.setStart(
-						editor.editor.firstChild.lastChild.firstChild,
-						1
-					);
-					range.collapse(true);
+					editor.value = '<ul><li>Some text</li><li>| </li></ul>';
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
-						'<ul><li>Some text</li></ul><p> a <br></p>'
+						'<ul><li>Some text</li></ul><p> a </p>'
 					);
 				});
 			});
@@ -832,22 +738,15 @@ describe('Enter behavior Tests', function () {
 				it('should split parent UL, remove LI, insert new P in the middle of two new Ul and insert cursor inside this', function () {
 					const editor = getJodit();
 					editor.value =
-						'<ul><li>Test</li><li> </li><li>Some text</li></ul>';
-
-					const sel = editor.s.sel,
-						range = editor.s.createRange();
-
-					range.setStart(editor.editor.firstChild.childNodes[1], 0);
-					range.collapse(true);
-					sel.removeAllRanges();
-					sel.addRange(range);
+						'<ul><li>Test</li><li>| </li><li>Some text</li></ul>';
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
-						'<ul><li>Test</li></ul><p> a <br></p><ul><li>Some text</li></ul>'
+						'<ul><li>Test</li></ul><p> a </p><ul><li>Some text</li></ul>'
 					);
 				});
 			});
@@ -962,22 +861,16 @@ describe('Enter behavior Tests', function () {
 			describe('If Enter was pressed inside start of first empty LI', function () {
 				it('should remove this LI, and insert new P element before parent UL, cursor should move to inside it', function () {
 					const editor = getJodit();
-					editor.value = '<ul><li> </li><li>Some text</li></ul>';
+					editor.value = '<ul><li>| </li><li>Some text</li></ul>';
 
-					const sel = editor.s.sel,
-						range = editor.s.createRange();
-
-					range.setStart(editor.editor.firstChild.firstChild, 0);
-					range.collapse(true);
-					sel.removeAllRanges();
-					sel.addRange(range);
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
-						'<p> a <br></p><ul><li>Some text</li></ul>'
+						'<p> a </p><ul><li>Some text</li></ul>'
 					);
 				});
 			});
@@ -987,17 +880,11 @@ describe('Enter behavior Tests', function () {
 					const editor = getJodit();
 					editor.value =
 						'<ul>' +
-						'<li><p>Line_1</p></li>' +
+						'<li><p>Line_1|</p></li>' +
 						'<li><p>Line_2</p></li>' +
 						'</ul>';
 
-					const range = editor.s.createRange();
-
-					range.setEndAfter(
-						editor.editor.querySelector('p').firstChild
-					);
-					range.collapse(false);
-					editor.s.selectRange(range);
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
@@ -1006,7 +893,7 @@ describe('Enter behavior Tests', function () {
 					expect(editor.value).equals(
 						'<ul>' +
 							'<li><p>Line_1</p></li>' +
-							'<li><p> a <br></p></li>' +
+							'<li><p> a </p></li>' +
 							'<li><p>Line_2</p></li>' +
 							'</ul>'
 					);
@@ -1045,18 +932,15 @@ describe('Enter behavior Tests', function () {
 			it('Should add new P(with SPAN with same style) element after this span and this SPAN should wrap in P', function () {
 				const editor = getJodit();
 
-				editor.value = '<span style="color:red">test</span>';
+				editor.value = '<p><span style="color:red">test|</span></p>';
+				setCursorToChar(editor);
 
-				editor.s.setCursorIn(
-					editor.editor.querySelector('span'),
-					false
-				);
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 				editor.s.insertNode(editor.createInside.text('test'));
 
 				expect(sortAttributes(editor.value)).equals(
-					'<p><span style="color:red">test</span></p><p><span style="color:red">test<br></span></p>'
+					'<p><span style="color:red">test</span></p><p><span style="color:red">test</span></p>'
 				);
 			});
 
@@ -1064,12 +948,9 @@ describe('Enter behavior Tests', function () {
 				it('Should add 2 P', function () {
 					const editor = getJodit();
 
-					editor.value = '<p><span style="color:red">test</span></p>';
+					editor.value = '<p><span style="color:red">test|</span></p>';
 
-					editor.s.setCursorIn(
-						editor.editor.querySelector('span'),
-						false
-					);
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
@@ -1079,7 +960,7 @@ describe('Enter behavior Tests', function () {
 					expect(sortAttributes(editor.value)).equals(
 						'<p><span style="color:red">test</span></p>' +
 							'<p><span style="color:red"><br></span></p>' +
-							'<p><span style="color:red">test<br></span></p>'
+							'<p><span style="color:red">test</span></p>'
 					);
 				});
 			});

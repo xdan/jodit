@@ -180,22 +180,6 @@ Config.prototype.controls.table = {
 					tbody.appendChild(tr);
 				}
 
-				const crnt = editor.s.current();
-
-				if (crnt && editor.s.isCollapsed()) {
-					const block = Dom.closest(crnt, Dom.isBlock, editor.editor);
-
-					if (
-						block &&
-						block !== editor.editor &&
-						!block.nodeName.match(
-							/^TD|TH|TBODY|TABLE|THEADER|TFOOTER$/
-						)
-					) {
-						editor.s.setCursorAfter(block);
-					}
-				}
-
 				$$('input[type=checkbox]:checked', options).forEach(
 					(input: HTMLElement) => {
 						(input as HTMLInputElement).value
@@ -206,7 +190,10 @@ Config.prototype.controls.table = {
 					}
 				);
 
-				editor.s.insertNode(crt.text('\n'));
+				if (editor.editor.firstChild) {
+					editor.s.insertNode(crt.text('\n'), false, false);
+				}
+
 				editor.s.insertNode(table, false);
 
 				if (first_td) {

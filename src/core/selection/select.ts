@@ -581,7 +581,7 @@ export class Select implements ISelect {
 	): void {
 		this.errorNode(node);
 
-		this.j.e.fire('safeHTML', <HTMLElement>node);
+		this.j.e.fire('safeHTML', node);
 
 		if (!this.isFocused() && this.j.isEditorMode()) {
 			this.focus();
@@ -593,6 +593,8 @@ export class Select implements ISelect {
 		if (!this.isCollapsed()) {
 			this.j.execCommand('Delete');
 		}
+
+		this.j.e.fire('beforeInsertNode', node);
 
 		if (sel && sel.rangeCount) {
 			const range = sel.getRangeAt(0);
@@ -684,7 +686,13 @@ export class Select implements ISelect {
 			fragment.appendChild(node.firstChild);
 		}
 
-		this.insertNode(fragment, false, false);
+		this.insertNode(
+			fragment.firstChild && fragment.firstChild === fragment.lastChild
+				? fragment.lastChild
+				: fragment,
+			false,
+			false
+		);
 
 		if (insertCursorAfter) {
 			if (lastChild) {

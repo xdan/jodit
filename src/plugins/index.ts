@@ -70,4 +70,5 @@ import 'jodit/plugins/table-keyboard-navigation/table-keyboard-navigation';
 import 'jodit/plugins/tooltip/tooltip';
 import 'jodit/plugins/video/video';
 import 'jodit/plugins/wrap-nodes/wrap-nodes';
+import 'jodit/plugins/dtd/dtd';
 import 'jodit/plugins/xpath/xpath';

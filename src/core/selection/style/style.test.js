@@ -752,7 +752,7 @@ describe('Apply style', () => {
 							editor.s.insertHTML('test');
 
 							expect(sortAttributes(editor.value)).equals(
-								'<h1>test<br></h1>'
+								'<h1>test</h1>'
 							);
 						});
 					});

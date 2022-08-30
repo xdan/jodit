@@ -11,16 +11,17 @@
 
 ## 3.19.6
 
-#### :house: Internal
-
--   Added documentation for [Image properties - Input fields are not clickable ( react + material ui ) #879](https://github.com/xdan/jodit/issues/879)
-
 #### :rocket: New Feature
 
 -   Removed Panel and IPanel
 -   Made IDlgs and Dlgs traits
 -   Added @derive decorator
 -   Mods/Elms/Dlgs traits now uses with @derive
+-   Added `dtd` plugin. [Read more](https://xdsoft.net/jodit/docs/modules/plugins_dtd.html)
+
+#### :house: Internal
+
+-   Added documentation for [Image properties - Input fields are not clickable ( react + material ui ) #879](https://github.com/xdan/jodit/issues/879)
 
 #### :bug: Bug Fix
 

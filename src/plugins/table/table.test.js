@@ -15,7 +15,7 @@ describe('Test table plugin', () => {
 				popup.querySelector('span[data-index="6"]')
 			);
 			expect(sortAttributes(editor.value)).eq(
-				'\n<table style="border-collapse:collapse;width:100%"><tbody>\n<tr>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td></tr></tbody></table>'
+				'<table style="border-collapse:collapse;width:100%"><tbody>\n<tr>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td>\n\t<td style="width:14.28%"><br></td></tr></tbody></table>'
 			);
 		});
 	});
@@ -36,7 +36,7 @@ describe('Test table plugin', () => {
 				popup.querySelector('span[data-index="2"]')
 			);
 			expect(sortAttributes(editor.value)).eq(
-				'\n<table style="border-collapse:collapse;width:100%"><tbody>\n<tr>\n\t<td style="color:red;width:33.33%"><br></td>\n\t<td style="color:red;width:33.33%"><br></td>\n\t<td style="color:red;width:33.33%"><br></td></tr></tbody></table>'
+				'<table style="border-collapse:collapse;width:100%"><tbody>\n<tr>\n\t<td style="color:red;width:33.33%"><br></td>\n\t<td style="color:red;width:33.33%"><br></td>\n\t<td style="color:red;width:33.33%"><br></td></tr></tbody></table>'
 			);
 		});
 	});

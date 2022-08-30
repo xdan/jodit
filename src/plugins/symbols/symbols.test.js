@@ -214,7 +214,8 @@ describe('Symbols plugin', function () {
 					buttons: 'symbols'
 				});
 
-				editor.value = '';
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
 
 				const btn = getButton('symbols', editor);
 
@@ -227,7 +228,7 @@ describe('Symbols plugin', function () {
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, currentActive);
 
-				expect(editor.value).equals('<p>&amp;</p>');
+				expect(editor.value).equals('<p>test&amp;</p>');
 
 				simulateEvent('click', btn); //  close previous
 				simulateEvent('click', btn);
@@ -237,9 +238,9 @@ describe('Symbols plugin', function () {
 
 				const currentActive2 = dialog.getElementsByTagName('a')[125];
 
-				simulateEvent('mousedown', 0, currentActive2);
+				simulateEvent('mousedown', currentActive2);
 
-				expect(editor.value).equals('<p>&amp;½</p>');
+				expect(editor.value).equals('<p>test&amp;½</p>');
 			});
 		});
 	});

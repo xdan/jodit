@@ -23,7 +23,7 @@ describe('Test uploader module', function () {
 							afterInsertImage: function (img) {
 								expect(img.src).equals(file.dataURI);
 								expect(sortAttributes(editor.value)).equals(
-									'<p><img src="' +
+									'<p>test<img src="' +
 										file.dataURI +
 										'" width="300px"></p>'
 								);
@@ -32,7 +32,11 @@ describe('Test uploader module', function () {
 						}
 					});
 
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
+
 				simulateEvent('drop', editor.editor, function (data) {
+					fillXY(data, editor);
 					Object.defineProperty(data, 'dataTransfer', {
 						value: {
 							files: [file]
@@ -54,20 +58,27 @@ describe('Test uploader module', function () {
 						},
 						events: {
 							afterInsertImage: function (img) {
-								expect(img.src).equals(
-									'https://xdsoft.net/jodit/files/logo.gif'
-								);
+								try {
+									expect(img.src).equals(
+										'https://xdsoft.net/jodit/files/logo.gif'
+									);
 
-								expect(sortAttributes(editor.value)).equals(
-									'<p><img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px"></p>'
-								);
+									expect(sortAttributes(editor.value)).equals(
+										'<p>test<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px"></p>'
+									);
 
-								done();
+									done();
+								} catch (e) {
+									done(e);
+								}
 							}
 						}
 					});
 
-				simulateEvent('drop', 0, editor.editor, function (data) {
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
+
+				simulateEvent('drop', editor.editor, function (data) {
 					Object.defineProperty(data, 'dataTransfer', {
 						value: {
 							files: [file]
@@ -88,18 +99,27 @@ describe('Test uploader module', function () {
 							},
 							events: {
 								afterInsertImage: function (img) {
-									expect(img.src).equals(
-										'https://xdsoft.net/jodit/files/test_logo.gif'
-									);
+									try {
+										expect(img.src).equals(
+											'https://xdsoft.net/jodit/files/test_logo.gif'
+										);
 
-									expect(sortAttributes(editor.value)).equals(
-										'<p><img src="https://xdsoft.net/jodit/files/test_logo.gif" style="width:300px"></p>'
-									);
+										expect(
+											sortAttributes(editor.value)
+										).equals(
+											'<p>test<img src="https://xdsoft.net/jodit/files/test_logo.gif" style="width:300px"></p>'
+										);
 
-									done();
+										done();
+									} catch (e) {
+										done(e);
+									}
 								}
 							}
 						});
+
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
 
 					simulateEvent('drop', editor.editor, function (data) {
 						Object.defineProperty(data, 'dataTransfer', {
@@ -114,7 +134,7 @@ describe('Test uploader module', function () {
 			describe('For iframe mode', function () {
 				it('Should upload file and insert image with SRC from server', function (done) {
 					const timer = setTimeout(function () {
-						expect(true).is.false;
+						done('Timeout error');
 					}, 4000);
 
 					const file = new FileImage(),
@@ -128,23 +148,32 @@ describe('Test uploader module', function () {
 							},
 							events: {
 								afterInsertImage: function (img) {
-									clearTimeout(timer);
+									try {
+										clearTimeout(timer);
 
-									expect(img.src).equals(
-										'https://xdsoft.net/jodit/files/logo.gif'
-									);
-									expect(sortAttributes(editor.value)).equals(
-										'<p><img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px"></p>'
-									);
-									done();
+										expect(img.src).equals(
+											'https://xdsoft.net/jodit/files/logo.gif'
+										);
+										expect(
+											sortAttributes(editor.value)
+										).equals(
+											'<p>test<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px"></p>'
+										);
+										done();
+									} catch (e) {
+										done(e);
+									}
 								}
 							}
 						});
 
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
+
 					setTimeout(function () {
 						simulateEvent(
 							'drop',
-							0,
+
 							editor.editor,
 							function (data) {
 								Object.defineProperty(data, 'dataTransfer', {
@@ -171,18 +200,25 @@ describe('Test uploader module', function () {
 						},
 						events: {
 							afterInsertNode: function (node) {
-								expect(node.href).equals(
-									'https://xdsoft.net/jodit/files/file.xls'
-								);
-								expect(editor.value).equals(
-									'<p><a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
-								);
-								done();
+								try {
+									expect(node.href).equals(
+										'https://xdsoft.net/jodit/files/file.xls'
+									);
+									expect(editor.value).equals(
+										'<p>test<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
+									);
+									done();
+								} catch (e) {
+									done(e);
+								}
 							}
 						}
 					});
 
-				simulateEvent('drop', 0, editor.editor, function (data) {
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
+
+				simulateEvent('drop', editor.editor, function (data) {
 					Object.defineProperty(data, 'dataTransfer', {
 						value: {
 							files: [file]
@@ -204,15 +240,22 @@ describe('Test uploader module', function () {
 							},
 							events: {
 								afterInsertNode: node => {
-									expect(editor.value).equals(
-										'<p><a href="https://xdsoft.net/jodit/files/file.xls">File:file.xls</a></p>'
-									);
-									done();
+									try {
+										expect(editor.value).equals(
+											'<p>test<a href="https://xdsoft.net/jodit/files/file.xls">File:file.xls</a></p>'
+										);
+										done();
+									} catch (e) {
+										done(e);
+									}
 								}
 							}
 						});
 
-					simulateEvent('drop', 0, editor.editor, function (data) {
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
+
+					simulateEvent('drop', editor.editor, function (data) {
 						Object.defineProperty(data, 'dataTransfer', {
 							value: {
 								files: [file]
@@ -235,16 +278,23 @@ describe('Test uploader module', function () {
 							},
 							events: {
 								afterInsertNode: function (node) {
-									expect(node.href).equals(
-										'https://xdsoft.net/jodit/files/file.xls'
-									);
-									expect(editor.value).equals(
-										'<p><a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
-									);
-									done();
+									try {
+										expect(node.href).equals(
+											'https://xdsoft.net/jodit/files/file.xls'
+										);
+										expect(editor.value).equals(
+											'<p>test<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
+										);
+										done();
+									} catch (e) {
+										done(e);
+									}
 								}
 							}
 						});
+
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
 
 					simulateEvent('drop', 0, editor.editor, function (data) {
 						Object.defineProperty(data, 'dataTransfer', {

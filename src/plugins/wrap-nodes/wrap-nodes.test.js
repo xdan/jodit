@@ -143,7 +143,7 @@ describe('WrapNodes plugin test', function () {
 			expect(editor.value).equals('<p>test</p>');
 			expect(editor.history.length).equals(1);
 			editor.history.undo();
-			expect(editor.value).equals('');
+			expect(editor.value).equals('<p><br></p>');
 		});
 	});
 

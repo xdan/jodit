@@ -727,6 +727,9 @@ describe('Jodit FileBrowser Tests', function () {
 					}
 				});
 
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
+
 				const filebrowser = editor.filebrowser;
 
 				filebrowser
@@ -746,11 +749,11 @@ describe('Jodit FileBrowser Tests', function () {
 						);
 
 						simulateEvent('dragover', window, function (data) {
-							data.clientX = 50;
-							data.clientY = 20 + offset(editor.editor).top;
+							fillXY(data, editor);
 						});
 
 						simulateEvent('drop', editor.editor, function (data) {
+							fillXY(data, editor);
 							Object.defineProperty(data, 'dataTransfer', {
 								value: {
 									files: []
@@ -761,7 +764,7 @@ describe('Jodit FileBrowser Tests', function () {
 						simulateEvent('change', window);
 						editor.async.requestIdleCallback(() => {
 							expect(editor.value).equals(
-								'<p><img src="https://xdsoft.net/jodit/files/images.jpg"></p>'
+								'<p>test<img src="https://xdsoft.net/jodit/files/images.jpg"></p>'
 							);
 
 							simulateEvent('drop', window);
@@ -786,6 +789,8 @@ describe('Jodit FileBrowser Tests', function () {
 						}
 					}
 				});
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
 
 				const filebrowser = editor.filebrowser;
 
@@ -806,11 +811,11 @@ describe('Jodit FileBrowser Tests', function () {
 						);
 
 						simulateEvent('dragover', window, function (data) {
-							data.clientX = 50;
-							data.clientY = 20 + offset(editor.editor).top;
+							fillXY(data, editor);
 						});
 
 						simulateEvent('drop', editor.editor, function (data) {
+							fillXY(data, editor);
 							Object.defineProperty(data, 'dataTransfer', {
 								value: {
 									files: []
@@ -819,7 +824,7 @@ describe('Jodit FileBrowser Tests', function () {
 						});
 
 						expect(editor.value).equals(
-							'<p><a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a></p>'
+							'<p>test<a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a></p>'
 						);
 						simulateEvent('drop', window);
 
@@ -958,16 +963,22 @@ describe('Jodit FileBrowser Tests', function () {
 						}
 					});
 
-					editor.value = '';
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
 
 					editor.events.on('filesWereUploaded', function () {
-						expect(sortAttributes(editor.value)).equals(
-							'<p><img src="https://xdsoft.net/jodit/files/test.png" style="width:300px"></p>'
-						);
-						done();
+						try {
+							expect(sortAttributes(editor.value)).equals(
+								'<p>test<img src="https://xdsoft.net/jodit/files/test.png" style="width:300px"></p>'
+							);
+							done();
+						} catch (e) {
+							done(e);
+						}
 					});
 
 					simulateEvent('drop', editor.editor, function (data) {
+						fillXY(data, editor);
 						Object.defineProperty(data, 'dataTransfer', {
 							value: {
 								files: [{ name: 'test.png', type: 'image/png' }]
@@ -990,16 +1001,18 @@ describe('Jodit FileBrowser Tests', function () {
 						}
 					});
 
-					editor.value = '';
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
 
 					editor.events.on('filesWereUploaded', function () {
 						expect(editor.value).equals(
-							'<p><a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a></p>'
+							'<p>test<a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a></p>'
 						);
 						done();
 					});
 
 					simulateEvent('drop', editor.editor, function (data) {
+						fillXY(data, editor);
 						Object.defineProperty(data, 'dataTransfer', {
 							value: {
 								files: [

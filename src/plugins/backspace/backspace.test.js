@@ -39,7 +39,7 @@ describe('Backspace/Delete key', function () {
 						editor.editor
 					);
 
-					expect('').equals(editor.value);
+					expect('<p><br></p>').equals(editor.value);
 				});
 			});
 
@@ -468,10 +468,8 @@ describe('Backspace/Delete key', function () {
 	describe('inside empty P', function () {
 		describe('Backspace', function () {
 			it('Should remove empty tag', function () {
-				editor.value = '<p><br></p>';
-
-				range.setStartBefore(editor.editor.firstChild.firstChild);
-				editor.s.selectRange(range);
+				editor.value = '<p>|<br></p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
@@ -531,9 +529,9 @@ describe('Backspace/Delete key', function () {
 
 				describe('Inside this element and this element empty', function () {
 					it('Should remove empty this empty element', function () {
-						editor.value = '';
-
-						editor.s.focus();
+						editor.value = '<p>|<br></p>';
+						setCursorToChar(editor);
+						// editor.s.focus();
 
 						simulateEvent(
 							'keydown',
@@ -542,7 +540,7 @@ describe('Backspace/Delete key', function () {
 						);
 
 						editor.s.insertHTML('b');
-						expect(editor.value).equals('<p><br></p><p>b<br></p>');
+						expect(editor.value).equals('<p><br></p><p>b</p>');
 
 						simulateEvent(
 							'keydown',
@@ -565,7 +563,7 @@ describe('Backspace/Delete key', function () {
 							editor.editor
 						);
 
-						expect(editor.value).equals('');
+						expect(editor.value).equals('<p><br></p>');
 
 						simulateEvent(
 							'keydown',
@@ -573,7 +571,7 @@ describe('Backspace/Delete key', function () {
 							editor.editor
 						);
 
-						expect(editor.value).equals('');
+						expect(editor.value).equals('<p><br></p>');
 					});
 				});
 			});
@@ -581,10 +579,8 @@ describe('Backspace/Delete key', function () {
 
 		describe('Delete', function () {
 			it('Should remove empty tag', function () {
-				editor.value = '<p><br></p>';
-
-				range.setStartAfter(editor.editor.firstChild.firstChild);
-				editor.s.selectRange(range);
+				editor.value = '<p>|<br></p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
 
@@ -925,15 +921,12 @@ describe('Backspace/Delete key', function () {
 		it('Should remove this element', () => {
 			const editor = getJodit();
 			editor.value =
-				'<div data-jodit-page-break="true" contenteditable="false">Page break</div>';
-
-			const range = editor.s.createRange(true);
-			range.setStartAfter(editor.editor.firstChild);
-			editor.s.selectRange(range);
+				'<div data-jodit-page-break="true" contenteditable="false">Page break</div><p>|<br></p>';
+			setCursorToChar(editor);
 
 			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
-			expect('').equals(editor.value);
+			expect('<p><br></p>').equals(editor.value);
 		});
 	});
 

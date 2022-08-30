@@ -779,12 +779,14 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 		}
 	}
 
-	if (applyOpt) {
-		applyOpt(evt);
-	} else if (element.getBoundingClientRect) {
+	if (element.getBoundingClientRect && evt.clientX === undefined) {
 		const pos = Jodit.modules.Helpers.position(element);
 		evt.clientX = pos.left + 5;
 		evt.clientY = pos.top + 5;
+	}
+
+	if (applyOpt) {
+		applyOpt(evt);
 	}
 
 	if (type.match(/^mouse/)) {
@@ -1038,6 +1040,13 @@ function offset(el) {
 		width: rect.width,
 		height: rect.height
 	};
+}
+
+function fillXY(data, editor) {
+	data.clientX = 50;
+	data.clientY =
+		20 +
+		Jodit.modules.Helpers.position(editor.editor, editor, editor.od).top;
 }
 
 /**

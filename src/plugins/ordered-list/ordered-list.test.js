@@ -22,26 +22,15 @@ describe('Test orderedList plugin', function () {
 
 				it('If press Enter inside <li> in the end it should create new <li> and cursor must be in it', function () {
 					const editor = getJodit();
-					editor.value = '<ul><li>test</li></ul>';
-
-					const sel = editor.s.sel,
-						range = editor.s.createRange();
-
-					range.setStart(
-						editor.editor.firstChild.firstChild.firstChild,
-						4
-					);
-					range.collapse(true);
-
-					sel.removeAllRanges();
-					sel.addRange(range);
+					editor.value = '<ul><li>test|</li></ul>';
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(editor.value).equals(
-						'<ul><li>test</li><li> a <br></li></ul>'
+						'<ul><li>test</li><li> a </li></ul>'
 					);
 				});
 

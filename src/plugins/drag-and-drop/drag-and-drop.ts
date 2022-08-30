@@ -183,7 +183,6 @@ export class dragAndDrop extends Plugin {
 			}
 
 			sel && sel.removeAllRanges();
-
 			this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
 
 			if (fragment) {

@@ -130,7 +130,7 @@ describe('Commands Jodit Editor Tests', function () {
 				editor.execCommand('formatBlock', false, 'h1');
 				editor.s.insertHTML('test');
 
-				expect(editor.value).equals('<h1>test<br></h1>');
+				expect(editor.value).equals('<h1>test</h1>');
 			});
 		});
 
