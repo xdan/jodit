@@ -14,7 +14,7 @@ const path = require('path');
 
 const cwd = process.cwd();
 
-const reg = /--([a-zA-Z]+)\s*=\s*(.*)/;
+const reg = /--([a-zA-Z-]+)\s*=\s*(.*)/;
 const args = {};
 
 process.argv
@@ -43,6 +43,7 @@ const config = require(path.resolve(cwd, './webpack.config'))(
 );
 
 const compression = require('compression');
+const open = require('open');
 const app = new (require('express'))();
 
 app.use(compression());
@@ -54,6 +55,16 @@ const compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler));
 
 app.use(webpackHotMiddleware(compiler));
+
+const compile = new Promise((resolve, reject) => {
+	compiler.hooks.failed.tap('CompilePlugin', () => {
+		reject();
+	});
+
+	compiler.hooks.done.tap('CompilePlugin', () => {
+		resolve();
+	});
+});
 
 app.get('/', (req, res) => {
 	if (fs.existsSync(cwd + '/test.html')) {
@@ -100,9 +111,17 @@ app.use(
 	require('express').static(cwd + '/examples/download.jpg')
 );
 
-app.listen(port, function (error) {
+const host = `http://localhost:${port}/`;
+
+let resolveServer;
+const run = new Promise(resolve => {
+	resolveServer = resolve;
+});
+
+const listen = app.listen(port, error => {
 	if (error) {
 		console.error(error);
+		reject(error);
 	} else {
 		console.info(
 			'==> Listening on port %s. Open up http://localhost:%s/ in your browser.',
@@ -110,7 +129,26 @@ app.listen(port, function (error) {
 			port
 		);
 
-		const open = require('open');
-		open(`http://localhost:${port}/`, {newInstance: false});
+		compile
+			.then(() => resolveServer())
+			.then(() => {
+				if (!args['no-open']) {
+					const open = require('open');
+					open(host, {
+						newInstance: false
+					});
+				}
+			})
+			.then(() => console.log('Build done'));
 	}
 });
+
+module.exports = {
+	host,
+	port,
+	run,
+	close: () => {
+		listen.close();
+		compiler.close(() => {});
+	}
+};

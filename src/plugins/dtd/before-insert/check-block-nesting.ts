@@ -9,7 +9,7 @@
  * @internal
  */
 
-import type { IJodit } from 'jodit/types';
+import type { IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 
 /**
@@ -17,7 +17,11 @@ import { Dom } from 'jodit/core/dom/dom';
  * if it is not allowed, it deletes an empty block element or moves the cursor after it
  * @internal
  */
-export function checkBlockNesting(jodit: IJodit, node: Node): void {
+export function checkBlockNesting(jodit: IJodit, node: Nullable<Node>): void {
+	if (Dom.isFragment(node)) {
+		node = node.firstChild;
+	}
+
 	if (jodit.o.dtd.checkBlockNesting && Dom.isBlock(node)) {
 		const parent = Dom.furthest(
 			jodit.s.current(),
