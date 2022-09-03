@@ -44,7 +44,7 @@ const config = require(path.resolve(cwd, './webpack.config'))(
 
 const compression = require('compression');
 const open = require('open');
-const app = new (require('express'))();
+const app = new express();
 
 app.use(compression());
 

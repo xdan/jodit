@@ -1,4 +1,4 @@
-name: Run tests
+name: Run screenshot tests
 
 on:
   push:
@@ -16,7 +16,8 @@ jobs:
     - uses: actions/setup-node@v1 #Setup Node
       with:
         node-version: '16.15.0'
-    - name: Run Karma Tests
+    - name: Run screenshot Tests
       run: |
         npm install
-        npm run test
+        npm run test:screenshots -- --build=es2018.en
+        npm run test:screenshots -- --build=es2018

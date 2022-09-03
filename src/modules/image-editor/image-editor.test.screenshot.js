@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-require('../../../test/bootstrap.screenshot.js');
+require('../../../test/screenshots/bootstrap.screenshot.js');
 const expect = require('expect');
 
 describe('Image editor screenshot testing', () => {

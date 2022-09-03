@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			tcontent="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		/>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+		<script src="./build/jodit.js"></script>
+		<link rel="stylesheet" href="./normalize.css" />
+		<link rel="stylesheet" href="./build/jodit.css" />
+	</head>
+	<body>
+		<textarea id="editor" cols="30" rows="10"></textarea>
+		<script>
+			const editor = Jodit.make('#editor', {
+				uploader: {
+					url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
+				},
+				filebrowser: {
+					ajax: {
+						url: 'https://xdsoft.net/jodit/finder/'
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
