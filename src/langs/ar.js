@@ -17,7 +17,7 @@ module.exports = {
 		'حقوق الطبع والنشر © XDSoft.net - Chupurnov Valeriy. كل الحقوق محفوظة.',
 	Anchor: 'مِرْساة',
 	'Open in new tab': 'فتح في نافذة جديدة',
-	'Open editor in fullsize': 'فتح المحرر في الحجم الكامل',
+	'Open in fullsize': 'فتح المحرر في الحجم الكامل',
 	'Clear Formatting': 'مسح التنسيق',
 	'Fill color or set the text color': 'ملء اللون أو تعيين لون النص',
 	Redo: 'إعادة',

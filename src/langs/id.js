@@ -18,7 +18,7 @@ module.exports = {
 		'Hak Cipta © XDSoft.net - Chupurnov Valeriy. Hak cipta dilindungi undang-undang.',
 	Anchor: 'Tautan',
 	'Open in new tab': 'Buka di tab baru',
-	'Open editor in fullsize': 'Buka editor dalam ukuran penuh',
+	'Open in fullsize': 'Buka editor dalam ukuran penuh',
 	'Clear Formatting': 'Hapus Pemformatan',
 	'Fill color or set the text color': 'Isi warna atau atur warna teks',
 	Redo: 'Ulangi',

@@ -18,7 +18,7 @@ module.exports = {
 		'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.',
 	Anchor: 'Anchor',
 	'Open in new tab': '在新窗口打開',
-	'Open editor in fullsize': '全屏編輯',
+	'Open in fullsize': '全屏編輯',
 	'Clear Formatting': '清除樣式',
 	'Fill color or set the text color': '顏色',
 	Redo: '重做',

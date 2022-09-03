@@ -18,7 +18,7 @@ module.exports = {
 		'Copyright © XDSoft.net - Chupurnov Valeriy. Všechna práva vyhrazena.',
 	Anchor: 'Anchor',
 	'Open in new tab': 'Otevřít v nové záložce',
-	'Open editor in fullsize': 'Otevřít v celoobrazovkovém režimu',
+	'Open in fullsize': 'Otevřít v celoobrazovkovém režimu',
 	'Clear Formatting': 'Vyčistit formátování',
 	'Fill color or set the text color': 'Barva výplně a písma',
 	Redo: 'Vpřed',

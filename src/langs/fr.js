@@ -17,7 +17,7 @@ module.exports = {
 		'Copyright © XDSoft.net - Chupurnov Valeriy. Tous droits réservés.',
 	Anchor: 'Ancre',
 	'Open in new tab': 'Ouvrir dans un nouvel onglet',
-	'Open editor in fullsize': "Ouvrir l'éditeur en pleine page",
+	'Open in fullsize': "Ouvrir l'éditeur en pleine page",
 	'Clear Formatting': 'Supprimer le formattage',
 	'Fill color or set the text color':
 		'Modifier la couleur du fond ou du texte',

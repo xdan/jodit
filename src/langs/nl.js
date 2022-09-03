@@ -20,7 +20,7 @@ module.exports = {
 		'Copyright © XDSoft.net - Chupurnov Valeriy. Alle rechten voorbehouden.',
 	Anchor: 'Anker',
 	'Open in new tab': 'Open in nieuwe tab',
-	'Open editor in fullsize': 'Editor in volledig scherm openen',
+	'Open in fullsize': 'Editor in volledig scherm openen',
 	'Clear Formatting': 'Opmaak verwijderen',
 	'Fill color or set the text color': 'Vulkleur of tekstkleur aanpassen',
 	Redo: 'Opnieuw',

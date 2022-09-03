@@ -18,7 +18,7 @@ module.exports = {
 		'Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.',
 	Anchor: 'Анкор',
 	'Open in new tab': 'Открывать ссылку в новой вкладке',
-	'Open editor in fullsize': 'Открыть редактор в полном размере',
+	'Open in fullsize': 'Открыть редактор в полном размере',
 	'Clear Formatting': 'Очистить форматирование',
 	'Fill color or set the text color': 'Цвет заливки или цвет текста',
 	Redo: 'Повтор',

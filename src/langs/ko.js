@@ -17,7 +17,7 @@ module.exports = {
 		'© XDSoft.net - Chupurnov Valeriy. 에게 저작권과 모든 권리가 있습니다.',
 	Anchor: 'Anchor',
 	'Open in new tab': '새 탭에서 열기',
-	'Open editor in fullsize': '전체 크기로 보기',
+	'Open in fullsize': '전체 크기로 보기',
 	'Clear Formatting': '서식 지우기',
 	'Fill color or set the text color': '글씨 색상',
 	Redo: '재실행',

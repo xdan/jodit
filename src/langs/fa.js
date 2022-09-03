@@ -18,7 +18,7 @@ module.exports = {
 		'Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.',
 	Anchor: 'لینک',
 	'Open in new tab': 'بازکردن در تب جدید',
-	'Open editor in fullsize': 'تمام صفحه کردن ویرایشگر',
+	'Open in fullsize': 'تمام صفحه کردن ویرایشگر',
 	'Clear Formatting': 'پاک کردن قالب ها',
 	'Fill color or set the text color':
 		'رنگ را پر کنید یا رنگ متن را تنظیم کنید',

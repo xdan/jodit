@@ -19,7 +19,7 @@ module.exports = {
 		'Copyright © XDSoft.net - Chupurnov Valeriy. Wszystkie prawa zastrzeżone.',
 	Anchor: 'Kotwica',
 	'Open in new tab': 'Otwórz w nowej zakładce',
-	'Open editor in fullsize': 'Otwórz edytor w pełnym rozmiarze',
+	'Open in fullsize': 'Otwórz edytor w pełnym rozmiarze',
 	'Clear Formatting': 'Wyczyść formatowanie',
 	'Fill color or set the text color':
 		'Kolor wypełnienia lub ustaw kolor tekstu',

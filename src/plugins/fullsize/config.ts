@@ -67,7 +67,7 @@ Config.prototype.controls.fullsize = {
 		}
 	},
 
-	tooltip: 'Open editor in fullsize',
+	tooltip: 'Open in fullsize',
 
 	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
 } as IControlType;

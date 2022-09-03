@@ -19,7 +19,7 @@ module.exports = {
 		'Copyright © XDSoft.net - Chupurnov Valeriy. Minden jog fenntartva.',
 	Anchor: 'Horgony',
 	'Open in new tab': 'Megnyitás új lapon',
-	'Open editor in fullsize': 'Megnyitás teljes méretben',
+	'Open in fullsize': 'Megnyitás teljes méretben',
 	'Clear Formatting': 'Formázás törlése',
 	'Fill color or set the text color': 'Háttér/szöveg szín',
 	Redo: 'Újra',
