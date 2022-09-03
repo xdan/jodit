@@ -61,7 +61,7 @@ export class addNewLine extends Plugin {
 		this.j.async.clearTimeout(this.timeout);
 		this.line.classList.toggle('jodit-add-new-line_after', !this.preview);
 		this.j.container.appendChild(this.line);
-		this.line.style.width = this.j.editor.clientWidth + 'px';
+		this.line.style.width = this.j.container.clientWidth + 'px';
 	}
 
 	private hideForce = (): void => {
@@ -255,11 +255,12 @@ export class addNewLine extends Plugin {
 
 		let top: false | number = false;
 
-		let { clientY } = e;
+		let { clientY, clientX } = e;
 
 		if (this.j.iframe) {
-			const { top } = position(this.j.iframe, this.j, true);
+			const { top, left } = position(this.j.iframe, this.j, true);
 			clientY += top;
+			clientX += left;
 		}
 
 		const delta = this.j.o.addNewLineDeltaShow;
@@ -289,7 +290,7 @@ export class addNewLine extends Plugin {
 			this.show();
 			this.line.style.setProperty(
 				'--jd-offset-handle',
-				e.clientX - pos.left - 10 + 'px'
+				clientX - pos.left - 10 + 'px'
 			);
 		} else {
 			this.current = false;
