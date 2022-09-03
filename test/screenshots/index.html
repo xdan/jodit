@@ -11,14 +11,12 @@
 		<script src="./build/jodit.js"></script>
 		<link rel="stylesheet" href="./normalize.css" />
 		<link rel="stylesheet" href="./build/jodit.css" />
+		<link rel="stylesheet" href="./custom.css" />
 	</head>
 	<body>
 		<textarea id="editor" cols="30" rows="10"></textarea>
 		<script>
 			const editor = Jodit.make('#editor', {
-				uploader: {
-					url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
-				},
 				filebrowser: {
 					ajax: {
 						url: 'https://xdsoft.net/jodit/finder/'

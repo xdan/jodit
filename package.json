@@ -22,6 +22,7 @@
 		"find-test": "node ./build-system/utils/find-tests.js",
 		"test": "npm run find-test && npm run clean && npm run test-only-run",
 		"test:screenshots": "mocha ./src/**/**.screenshot.js",
+		"test:screenshots:update": "SNAPSHOT_UPDATE=true mocha ./src/**/**.screenshot.js",
 		"test-debug": "karma start --browsers Chrome karma.conf.js  --single-run false",
 		"test-chrome": "karma start --browsers Chrome karma.conf.js",
 		"test-only-run": "karma start --browsers FirefoxHeadless karma.conf.js",
