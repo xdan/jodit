@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.20.1
+ * Version: v3.20.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -43,7 +43,7 @@ module.exports["default"] = ["Bitte geben Sie einen Text ein","Über Jodit","Jod
 /***/ 51048:
 /***/ (function(module) {
 
-module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Free Non-commercial Version","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open editor in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Clean","Insert as Text","Insert only Text","Word Paste Detected","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Browse","Upload","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Eye","pencil","Update"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Chars: %d","Words: %d","All","Select %s","Select all","Vertical align","Split","Split vertical","Split horizontal","Merge","Add column","Add row","Delete","Border","License: %s","Strike through","Underline","superscript","subscript","Cut selection","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","Insert className","Press Alt for custom resizing"]
+module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Free Non-commercial Version","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Clean","Insert as Text","Insert only Text","Word Paste Detected","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Browse","Upload","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Eye","pencil","Update"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Chars: %d","Words: %d","All","Select %s","Select all","Vertical align","Split","Split vertical","Split horizontal","Merge","Add column","Add row","Delete","Border","License: %s","Strike through","Underline","superscript","subscript","Cut selection","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","Insert className","Press Alt for custom resizing"]
 
 /***/ }),
 
@@ -711,6 +711,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ 99895:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ 87682:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -1112,16 +1122,6 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 51057:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ 14351:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15872,6 +15872,115 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
 tslib_1.__exportStar(__webpack_require__(15327), exports);
 tslib_1.__exportStar(__webpack_require__(81433), exports);
+tslib_1.__exportStar(__webpack_require__(85598), exports);
+
+
+/***/ }),
+
+/***/ 85598:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.UITooltip = void 0;
+var tslib_1 = __webpack_require__(20255);
+__webpack_require__(99895);
+var helpers_1 = __webpack_require__(92654);
+var global_1 = __webpack_require__(58299);
+var decorators_1 = __webpack_require__(9901);
+var element_1 = __webpack_require__(71525);
+var UITooltip = (function (_super) {
+    tslib_1.__extends(UITooltip, _super);
+    function UITooltip(view) {
+        var _this = _super.call(this, view) || this;
+        _this.__isOpened = false;
+        _this.__useCount = 1;
+        _this.__delayShowTimeout = 0;
+        (0, global_1.getContainer)(view, UITooltip).appendChild(_this.container);
+        var timeout = 0;
+        view.e
+            .off('.tooltip')
+            .on('showTooltip.tooltip', function (getPoint, content) {
+            view.async.clearTimeout(timeout);
+            _this.__open(getPoint, content);
+        })
+            .on('delayShowTooltip.tooltip', _this.__delayOpen)
+            .on('escape.tooltip', _this.__close)
+            .on('hideTooltip.tooltip change.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip', function () {
+            _this.j.async.clearTimeout(_this.__delayShowTimeout);
+            timeout = view.async.setTimeout(_this.__close, _this.j.defaultTimeout);
+        });
+        return _this;
+    }
+    UITooltip.prototype.className = function () {
+        return 'UITooltip';
+    };
+    UITooltip.make = function (view) {
+        var instance = (0, helpers_1.dataBind)(view, 'ui-tooltip');
+        if (instance) {
+            instance.__useCount += 1;
+            return instance;
+        }
+        instance = new UITooltip(view);
+        (0, helpers_1.dataBind)(view, 'ui-tooltip', instance);
+        return instance;
+    };
+    UITooltip.prototype.__delayOpen = function (getPoint, content) {
+        var _this = this;
+        var to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
+        this.j.async.clearTimeout(this.__delayShowTimeout);
+        this.__delayShowTimeout = this.j.async.setTimeout(function () { return _this.__open(getPoint, content); }, {
+            timeout: to,
+            label: 'tooltip'
+        });
+    };
+    UITooltip.prototype.__open = function (getPoint, content) {
+        this.setMod('visible', true);
+        this.container.innerHTML = content;
+        this.__isOpened = true;
+        this.__setPosition(getPoint);
+    };
+    UITooltip.prototype.__setPosition = function (getPoint) {
+        var point = getPoint();
+        (0, helpers_1.css)(this.container, {
+            left: point.x,
+            top: point.y
+        });
+    };
+    UITooltip.prototype.__close = function () {
+        this.j.async.clearTimeout(this.__delayShowTimeout);
+        if (this.__isOpened) {
+            this.__isOpened = false;
+            this.setMod('visible', false);
+            (0, helpers_1.css)(this.container, {
+                left: -5000
+            });
+        }
+    };
+    UITooltip.prototype.destruct = function () {
+        var _a;
+        this.__useCount--;
+        if (!this.__useCount) {
+            (_a = this.j) === null || _a === void 0 ? void 0 : _a.e.off('.tooltip');
+            this.__close();
+            _super.prototype.destruct.call(this);
+        }
+    };
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], UITooltip.prototype, "__delayOpen", null);
+    tslib_1.__decorate([
+        decorators_1.autobind
+    ], UITooltip.prototype, "__close", null);
+    return UITooltip;
+}(element_1.UIElement));
+exports.UITooltip = UITooltip;
 
 
 /***/ }),
@@ -17903,7 +18012,7 @@ var View = (function (_super) {
         _this.parent = null;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.20.1";
+        _this.version = "3.20.2";
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
         _this.OPTIONS = View_1.defaultOptions;
@@ -18029,10 +18138,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.20.1";
+        return "3.20.2";
     };
     View.getVersion = function () {
-        return "3.20.1";
+        return "3.20.2";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -24043,7 +24152,9 @@ var ToolbarCollection = (function (_super) {
         _this.listenEvents = 'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
             'selectionchange changeSelection focus afterSetMode touchstart focus blur';
         _this.update = _this.j.async.debounce(_this.immediateUpdate, function () { return _this.j.defaultTimeout; });
+        _this.__tooltip = null;
         _this.initEvents();
+        _this.__tooltip = ui_1.UITooltip.make(jodit);
         return _this;
     }
     ToolbarCollection.prototype.className = function () {
@@ -24105,9 +24216,11 @@ var ToolbarCollection = (function (_super) {
         return this;
     };
     ToolbarCollection.prototype.destruct = function () {
+        var _a;
         if (this.isDestructed) {
             return;
         }
+        (_a = this.__tooltip) === null || _a === void 0 ? void 0 : _a.destruct();
         this.j.e
             .off(this.listenEvents, this.update)
             .off('afterSetMode focus', this.immediateUpdate);
@@ -25356,7 +25469,7 @@ var addNewLine = (function (_super) {
         this.j.async.clearTimeout(this.timeout);
         this.line.classList.toggle('jodit-add-new-line_after', !this.preview);
         this.j.container.appendChild(this.line);
-        this.line.style.width = this.j.editor.clientWidth + 'px';
+        this.line.style.width = this.j.container.clientWidth + 'px';
     };
     addNewLine.prototype.onLock = function (isLocked) {
         if (isLocked && this.isShown) {
@@ -25452,10 +25565,11 @@ var addNewLine = (function (_super) {
         }
         var pos = (0, helpers_1.position)(currentElement, this.j);
         var top = false;
-        var clientY = e.clientY;
+        var clientY = e.clientY, clientX = e.clientX;
         if (this.j.iframe) {
-            var top_2 = (0, helpers_1.position)(this.j.iframe, this.j, true).top;
+            var _a = (0, helpers_1.position)(this.j.iframe, this.j, true), top_2 = _a.top, left = _a.left;
             clientY += top_2;
+            clientX += left;
         }
         var delta = this.j.o.addNewLineDeltaShow;
         if (Math.abs(clientY - pos.top) <= delta) {
@@ -25472,7 +25586,7 @@ var addNewLine = (function (_super) {
             this.line.style.top = top + 'px';
             this.current = currentElement;
             this.show();
-            this.line.style.setProperty('--jd-offset-handle', e.clientX - pos.left - 10 + 'px');
+            this.line.style.setProperty('--jd-offset-handle', clientX - pos.left - 10 + 'px');
         }
         else {
             this.current = false;
@@ -28043,6 +28157,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkBlockNesting = void 0;
 var dom_1 = __webpack_require__(43887);
 function checkBlockNesting(jodit, node) {
+    if (dom_1.Dom.isFragment(node)) {
+        node = node.firstChild;
+    }
     if (jodit.o.dtd.checkBlockNesting && dom_1.Dom.isBlock(node)) {
         var parent_1 = dom_1.Dom.furthest(jodit.s.current(), dom_1.Dom.isBlock, jodit.editor);
         if (parent_1 && !jodit.o.dtd.blockLimits[parent_1.tagName.toLowerCase()]) {
@@ -29115,7 +29232,7 @@ config_1.Config.prototype.controls.fullsize = {
             button.state.icon.name = mode;
         }
     },
-    tooltip: 'Open editor in fullsize',
+    tooltip: 'Open in fullsize',
     mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG
 };
 
@@ -30752,7 +30869,6 @@ __webpack_require__(21112);
 __webpack_require__(74212);
 __webpack_require__(67122);
 __webpack_require__(96154);
-__webpack_require__(85098);
 __webpack_require__(82887);
 __webpack_require__(37455);
 __webpack_require__(10583);
@@ -38246,100 +38362,6 @@ function table(editor) {
 }
 exports.table = table;
 global_1.pluginSystem.add('table', table);
-
-
-/***/ }),
-
-/***/ 85098:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(20255);
-__webpack_require__(14351);
-var helpers_1 = __webpack_require__(92654);
-var plugin_1 = __webpack_require__(35570);
-var dom_1 = __webpack_require__(94522);
-var global_1 = __webpack_require__(58299);
-var decorators_1 = __webpack_require__(9901);
-var tooltip = (function (_super) {
-    tslib_1.__extends(tooltip, _super);
-    function tooltip() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.isOpened = false;
-        _this.delayShowTimeout = 0;
-        return _this;
-    }
-    tooltip.prototype.afterInit = function (jodit) {
-        var _this = this;
-        this.container = jodit.c.div('jodit-tooltip');
-        (0, global_1.getContainer)(this.j, tooltip).appendChild(this.container);
-        var timeout = 0;
-        jodit.e
-            .off('.tooltip')
-            .on('showTooltip.tooltip', function (getPoint, content) {
-            jodit.async.clearTimeout(timeout);
-            _this.open(getPoint, content);
-        })
-            .on('delayShowTooltip.tooltip', this.delayOpen)
-            .on('escape.tooltip', this.close)
-            .on('hideTooltip.tooltip change.tooltip scroll.tooltip changePlace.tooltip hidePopup.tooltip closeAllPopups.tooltip', function () {
-            _this.j.async.clearTimeout(_this.delayShowTimeout);
-            timeout = jodit.async.setTimeout(_this.close, _this.j.defaultTimeout);
-        });
-    };
-    tooltip.prototype.delayOpen = function (getPoint, content) {
-        var _this = this;
-        var to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
-        this.j.async.clearTimeout(this.delayShowTimeout);
-        this.delayShowTimeout = this.j.async.setTimeout(function () { return _this.open(getPoint, content); }, {
-            timeout: to,
-            label: 'tooltip'
-        });
-    };
-    tooltip.prototype.open = function (getPoint, content) {
-        this.container.classList.add('jodit-tooltip_visible');
-        this.container.innerHTML = content;
-        this.isOpened = true;
-        this.setPosition(getPoint);
-    };
-    tooltip.prototype.setPosition = function (getPoint) {
-        var point = getPoint();
-        (0, helpers_1.css)(this.container, {
-            left: point.x,
-            top: point.y
-        });
-    };
-    tooltip.prototype.close = function () {
-        this.j.async.clearTimeout(this.delayShowTimeout);
-        if (this.isOpened) {
-            this.isOpened = false;
-            this.container.classList.remove('jodit-tooltip_visible');
-            (0, helpers_1.css)(this.container, {
-                left: -5000
-            });
-        }
-    };
-    tooltip.prototype.beforeDestruct = function (jodit) {
-        jodit === null || jodit === void 0 ? void 0 : jodit.e.off('.tooltip');
-        this.close();
-        dom_1.Dom.safeRemove(this.container);
-    };
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], tooltip.prototype, "delayOpen", null);
-    tslib_1.__decorate([
-        decorators_1.autobind
-    ], tooltip.prototype, "close", null);
-    return tooltip;
-}(plugin_1.Plugin));
-global_1.pluginSystem.add('tooltip', tooltip);
 
 
 /***/ }),

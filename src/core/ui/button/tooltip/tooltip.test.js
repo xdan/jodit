@@ -65,7 +65,8 @@ describe('Tooltip plugin tests', function () {
 
 			simulateEvent('mouseenter', 0, button);
 
-			let tooltip = editor.ownerDocument.querySelector('.jodit-tooltip');
+			let tooltip =
+				editor.ownerDocument.querySelector('.jodit-ui-tooltip');
 			expect(tooltip).is.not.null;
 			const title = tooltip.textContent;
 			editor.destruct();
@@ -83,7 +84,7 @@ describe('Tooltip plugin tests', function () {
 
 			simulateEvent('mousemove', button);
 
-			tooltip = editor.ownerDocument.querySelector('.jodit-tooltip');
+			tooltip = editor.ownerDocument.querySelector('.jodit-ui-tooltip');
 
 			expect(tooltip).is.not.null;
 			simulateEvent('mouseleave', button);

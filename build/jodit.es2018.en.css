@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.20.1
+ * Version: v3.20.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -61,10 +61,10 @@
   --jd-border-radius-default: 3px;
   --jd-z-index-full-size: 100000;
   --jd-z-index-popup: 10000001;
-  --jd-z-index-tooltip: 10000002;
   --jd-z-index-dialog-overlay: 20000003;
   --jd-z-index-dialog: 20000004;
   --jd-z-index-context-menu: 30000005;
+  --jd-z-index-tooltip: 30000006;
   --jd-icon-loader-size: 48px;
   --jd-width_element_default: 18px;
   --jd-height_element_default: 18px;
@@ -1650,6 +1650,40 @@ svg.jodit-icon {
 }
 .jodit-ui-button-group .jodit-ui-button[aria-pressed='true']:not([disabled]) + .jodit-ui-button {
   border: 0;
+}
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+.jodit-ui-tooltip {
+  position: fixed;
+  z-index: var(--jd-z-index-tooltip);
+  width: auto;
+  max-width: 120px;
+  padding: calc(var(--jd-padding-default) / 4) calc(var(--jd-padding-default) / 2);
+  background: #727171;
+  background-clip: padding-box;
+  border-radius: 2px;
+  color: #fff;
+  font-family: var(--jd-font-default);
+  font-size: var(--jd-font-size-default);
+  font-size: 11px;
+  line-height: 1.4;
+  opacity: 0;
+  text-rendering: optimizeLegibility;
+  transition: opacity 0.2s ease 0s;
+  user-select: none;
+  white-space: normal;
+}
+@media (max-width: 768px) {
+  .jodit-ui-tooltip {
+    display: none;
+  }
+}
+.jodit-ui-tooltip.jodit-ui-tooltip_visible_true {
+  opacity: 1;
 }
 
 /*!
@@ -4764,40 +4798,6 @@ html.jodit_fullsize-box_true {
   margin: 0;
   font-size: 14px;
   text-align: center;
-}
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-.jodit-tooltip {
-  position: fixed;
-  z-index: var(--jd-z-index-tooltip);
-  width: auto;
-  max-width: 120px;
-  padding: calc(var(--jd-padding-default) / 4) calc(var(--jd-padding-default) / 2);
-  background: #727171;
-  background-clip: padding-box;
-  border-radius: 2px;
-  color: #fff;
-  font-family: var(--jd-font-default);
-  font-size: var(--jd-font-size-default);
-  font-size: 11px;
-  line-height: 1.4;
-  opacity: 0;
-  text-rendering: optimizeLegibility;
-  transition: opacity 0.2s ease 0s;
-  user-select: none;
-  white-space: normal;
-}
-@media (max-width: 768px) {
-  .jodit-tooltip {
-    display: none;
-  }
-}
-.jodit-tooltip.jodit-tooltip_visible {
-  opacity: 1;
 }
 
 /*!

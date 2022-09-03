@@ -4,6 +4,176 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 describe('Test i18n functionality', function () {
+	describe('Helper 18n', function () {
+		const i18n = Jodit.modules.Helpers.i18n;
+
+		describe('Put defined sentence', function () {
+			it('Should replace it on defined language', function () {
+				const values = [
+					'Type something',
+					'Напишите что-либо',
+					'ru',
+
+					'rename',
+					'Переименовать',
+					'ru',
+
+					'Rename',
+					'Переименовать',
+					'ru',
+
+					'About Jodit',
+					'حول جوديت',
+					'ar',
+
+					'about Jodit',
+					'حول جوديت',
+					'ar',
+
+					'British people',
+					'British people',
+					'ar'
+				];
+
+				for (let i = 0; i < values.length; i += 3) {
+					expect(values[i + 1]).equals(
+						i18n(
+							values[i],
+							[],
+							{
+								language: values[i + 2]
+							},
+							true
+						)
+					);
+				}
+			});
+
+			describe('Put some information inside sentence', function () {
+				it('Should put this information inside new sentence', function () {
+					const values = [
+						'Chars: %d',
+						'Символов: 1',
+						'ru',
+						[1],
+						'Select %s',
+						'Выделить: Test',
+						'ru',
+						['Test'],
+						'select %s',
+						'Выделить: Test',
+						'ru',
+						['Test'],
+						'Bla %d Bla %s',
+						'Bla 1 Bla boo',
+						'ru',
+						[1, 'boo'],
+						'Bla %d Bla %s',
+						'Bla 1 Bla boo',
+						'ru1',
+						[1, 'boo']
+					];
+
+					for (let i = 0; i < values.length; i += 4) {
+						expect(values[i + 1]).equals(
+							i18n(
+								values[i],
+								values[i + 3],
+								{
+									language: values[i + 2]
+								},
+								true
+							)
+						);
+					}
+				});
+			});
+		});
+
+		const values = [
+			'Type something',
+			'Напишите что-либо',
+			'ru',
+
+			'About Jodit',
+			'حول جوديت',
+			'ar',
+
+			'About Jodit',
+			'{About Jodit}',
+			'ar1',
+
+			'British people',
+			'{British people}',
+			'ar'
+		];
+
+		for (let i = 0; i < values.length; i += 3) {
+			const [source, result, language] = [
+				values[i],
+				values[i + 1],
+				values[i + 2]
+			];
+
+			describe(`Debug mode for ${language}`, function () {
+				it(`Should show debug brackets for undefined keys for source ${source}`, function () {
+					expect(result).equals(
+						i18n(
+							source,
+							[],
+							{
+								language,
+								debugLanguage: true
+							},
+							true
+						)
+					);
+				});
+			});
+		}
+
+		describe('Define i18n property inside input options', function () {
+			it('Should use it', function () {
+				const values = [
+					'Type something',
+					'Привет',
+					'ru',
+					'About Jodit',
+					'جوديت',
+					'ar',
+					'British people',
+					'Bond',
+					'ar'
+				];
+
+				const opt = {
+					ru: {
+						'Type something': 'Привет'
+					},
+					ar: {
+						'About Jodit': 'جوديت',
+						'British people': 'Bond'
+					}
+				};
+
+				for (let i = 0; i < values.length; i += 3) {
+					expect(values[i + 1]).equals(
+						i18n(
+							values[i],
+							[],
+							{
+								language: values[i + 2],
+								i18n: opt,
+								debugLanguage: true
+							},
+							true
+						)
+					);
+				}
+			});
+		});
+	});
+
 	describe('Test has keys in all functionality', function () {
 		const filter = [
 			'customxxx',
