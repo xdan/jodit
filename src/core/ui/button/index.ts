@@ -12,3 +12,4 @@
 
 export * from './button/button';
 export * from './group/group';
+export * from './tooltip/tooltip';
