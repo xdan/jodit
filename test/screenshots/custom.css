@@ -1,8 +1,9 @@
 body {
-	font-family: Arial, serif;
+	font-family: Arial, serif !important;
 	font-size: 16px;
 }
 
 * {
 	box-shadow: none !important;
+	font-family: Arial, serif !important;
 }
