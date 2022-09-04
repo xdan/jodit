@@ -27,3 +27,5 @@ tsdoc.json
 webpack.config.js
 **/*.md
 .*.test.js
+.*.test.screenshot.js
+__image_snapshots__
