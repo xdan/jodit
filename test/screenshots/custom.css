@@ -6,4 +6,6 @@ body {
 * {
 	box-shadow: none !important;
 	font-family: Arial, serif !important;
+	font-weight: normal !important;
+	text-shadow: none !important;
 }
