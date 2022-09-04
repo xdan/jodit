@@ -4,14 +4,20 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-let build = '';
+const args = {
+	build: '',
+	debug: false
+};
 process.argv.forEach(arg => {
-	if (/--build=/.test(arg)) {
-		build = arg.replace('--build=', '');
+	const res = /--(build|debug)=/.exec(arg);
+	if (res) {
+		const value = arg.split('=')[1];
+		args[res[1]] = /(true|false)/.test(value) ? value === 'true' : value;
 	}
 });
 
-console.info('Build:', build || 'usual');
+console.info('Build:', args.build || 'es5');
+console.info('Debug:', args.debug);
 
 const fs = require('fs');
 const expect = require('expect');
@@ -30,11 +36,18 @@ app.get('/', (req, res) => {
 	res.send(
 		fs
 			.readFileSync(path.resolve(__dirname, './index.html'), 'utf-8')
-			.replace(/\/jodit\./g, `/jodit.${build ? build + '.' : ''}`)
+			.replace(
+				/\/jodit\./g,
+				`/jodit.${args.build ? args.build + '.' : ''}`
+			)
 	);
 });
 
 app.use('/', express.static(__dirname));
+app.use(
+	'/bootstrap.js',
+	express.static(path.resolve(__dirname, '../bootstrap.js'))
+);
 app.use('/build', express.static(path.resolve(__dirname, '../../build')));
 
 const listen = app.listen(port, error => {
@@ -49,7 +62,7 @@ if (typeof before !== 'undefined') {
 	before(async function () {
 		this.timeout(10000);
 		browser = await puppeteer.launch({
-			// headless: false,
+			headless: !args.debug,
 			args: ['--disable-web-security', '--no-sandbox']
 		});
 
@@ -62,11 +75,13 @@ if (typeof before !== 'undefined') {
 		await global.page.reload({ waitUntil: 'networkidle2' });
 	});
 
-	after(function () {
-		console.log('Closing browser');
-		browser.close();
-		listen.close();
-	});
+	if (!args.debug) {
+		after(function () {
+			console.log('Closing browser');
+			browser.close();
+			listen.close();
+		});
+	}
 
 	require('./mock.request');
 }
