@@ -23,6 +23,7 @@
 		"test": "npm run find-test && npm run clean && npm run test-only-run",
 		"docker:screenshots:build": "docker build -t jodit-screenshots -f test/screenshots/Dockerfile .",
 		"docker:screenshots:run": "docker run -v $(pwd)/build:/app/build/ -v $(pwd)/test:/app/test/ -v $(pwd)/src:/app/src/ jodit-screenshots ./node_modules/.bin/mocha ./src/**/**.screenshot.js",
+		"docker:screenshots:run:es2018": "docker run -v $(pwd)/build:/app/build/ -v $(pwd)/test:/app/test/ -v $(pwd)/src:/app/src/ jodit-screenshots ./node_modules/.bin/mocha ./src/**/**.screenshot.js --build=es2018",
 		"docker:screenshots:update": "docker run -v $(pwd)/build:/app/build/ -v $(pwd)/test:/app/test/ -e SNAPSHOT_UPDATE=true -v $(pwd)/src:/app/src/ jodit-screenshots  ./node_modules/.bin/mocha ./src/**/**.screenshot.js",
 		"test-debug": "karma start --browsers Chrome karma.conf.js  --single-run false",
 		"test-chrome": "karma start --browsers Chrome karma.conf.js",

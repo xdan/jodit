@@ -11,6 +11,8 @@ process.argv.forEach(arg => {
 	}
 });
 
+console.info('Build:', build || 'usual');
+
 const fs = require('fs');
 const expect = require('expect');
 const path = require('path');

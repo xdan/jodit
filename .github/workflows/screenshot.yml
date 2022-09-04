@@ -18,6 +18,7 @@ jobs:
       run: |
         npm run docker:screenshots:build
         npm run docker:screenshots:run
+        npm run docker:screenshots:run:es2018
 
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3
