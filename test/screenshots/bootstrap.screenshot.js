@@ -48,7 +48,7 @@ if (typeof before !== 'undefined') {
 		this.timeout(10000);
 		browser = await puppeteer.launch({
 			// headless: false,
-			args: ['--disable-web-security']
+			args: ['--disable-web-security', '--no-sandbox']
 		});
 
 		global.page = await browser.newPage();

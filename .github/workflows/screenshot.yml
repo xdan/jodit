@@ -9,18 +9,14 @@ on:
 jobs:
   test:
 
-    runs-on: macos-12
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1 #Setup Node
-      with:
-        node-version: '16.15.0'
     - name: Run screenshot Tests
       run: |
-        npm ci
-        npm run test:screenshots -- --build=es2018.en
-        npm run test:screenshots -- --build=es2018
+        npm run docker:screenshots:run
 
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3

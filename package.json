@@ -21,6 +21,9 @@
 		"build-no-uglify-es2018-en": "webpack --progress --mode production --env es=es2018 --env excludeLangs=true --env uglify=false",
 		"find-test": "node ./build-system/utils/find-tests.js",
 		"test": "npm run find-test && npm run clean && npm run test-only-run",
+		"docker:screenshots:build": "docker build -t jodit-screenshots -f test/screenshots/Dockerfile .",
+		"docker:screenshots:run": "docker run -v $(pwd)/build:/app/build/ -v $(pwd)/test:/app/test/ -v $(pwd)/src:/app/src/ jodit-screenshots",
+
 		"test:screenshots": "mocha ./src/**/**.screenshot.js",
 		"test:screenshots:update": "SNAPSHOT_UPDATE=true mocha ./src/**/**.screenshot.js",
 		"test-debug": "karma start --browsers Chrome karma.conf.js  --single-run false",
