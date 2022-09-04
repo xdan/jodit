@@ -16,6 +16,7 @@ jobs:
     - uses: actions/setup-node@v1 #Setup Node
     - name: Run screenshot Tests
       run: |
+        npm run docker:screenshots:build
         npm run docker:screenshots:run
 
     - name: Archive production artifacts
