@@ -21,3 +21,10 @@ jobs:
         npm install
         npm run test:screenshots -- --build=es2018.en
         npm run test:screenshots -- --build=es2018
+
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v3
+      with:
+          name: screenshots
+          path: |
+            src/**/__image_snapshots__/**/*.png
