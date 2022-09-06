@@ -152,7 +152,22 @@ export interface IFileBrowserOptions extends IViewOptions {
 	fileMove: IFileBrowserAjaxOptions | null;
 	folderMove: IFileBrowserAjaxOptions | null;
 
+	/**
+	 * AJAX options for delete file
+	 * @example
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 	filebrowser: {
+	 * 		fileRemove: {
+	 * 			url: 'http://xdsoft.net/jodit/connector/index.php?action=fileDelete',
+	 * 			method: 'POST',
+	 * 		}
+	 * 	}
+	 * });
+	 * ```
+	 */
 	fileRemove: IFileBrowserAjaxOptions | null;
+
 	folderRemove: IFileBrowserAjaxOptions | null;
 
 	fileRename: IFileBrowserAjaxOptions | null;
