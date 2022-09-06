@@ -276,10 +276,16 @@ const options = {
 	create: {
 		data: { action: 'folderCreate' }
 	},
-	move: {
+	fileMove: {
 		data: { action: 'fileMove' }
 	},
-	remove: {
+	fileFolder: {
+		data: { action: 'fileFolder' }
+	},
+	folderRename: {
+		data: { action: 'folderRename' }
+	},
+	fileRemove: {
 		data: { action: 'fileRemove' }
 	},
 	items: {
@@ -339,10 +345,10 @@ var editor = Jodit.make('#jodit', {
 		create: {
 			url: 'connector/create.php'
 		},
-		move: {
+    fileMove: {
 			url: 'connector/move.php'
 		},
-		remove: {
+    fileRemove: {
 			url: 'connector/remove.php'
 		},
 		items: {

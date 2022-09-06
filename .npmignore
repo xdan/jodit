@@ -21,8 +21,6 @@ karma.conf.js
 make.js
 server.js
 test
-test.html
-test.html
 tsdoc.json
 webpack.config.js
 **/*.md
