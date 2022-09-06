@@ -1,3 +1,5 @@
+# Watch for something decorator
+
 The decorator allows you to hang handlers on changes to the internal fields of the component,
 as well as on any events [[EventEmitter]]
 

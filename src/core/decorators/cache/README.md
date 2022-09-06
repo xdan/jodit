@@ -1,3 +1,5 @@
+# Cache methods decorator
+
 The decorator allows you to cache the result of executing any method of the UI component.
 
 ```typescript

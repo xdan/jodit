@@ -1,3 +1,5 @@
+# Debounce and throttle decorators
+
 Wraps a component method in [[Async.debounce]]. This makes it possible to reduce the load on 'heavy' functions.
 For example:
 

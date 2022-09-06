@@ -1,3 +1,5 @@
+# Hook deorators
+
 Sets a handler for changing the component's status.
 
 ```ts

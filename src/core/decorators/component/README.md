@@ -1,3 +1,5 @@
+# UI Component decorator
+
 Any UI component inherited from [[UIElement]] must have a component decorator
 This decorator calls `setStatus('ready')` after the `new UI()` operation
 All other decorators start their work only when the component is ready to work.

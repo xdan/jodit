@@ -1,3 +1,5 @@
+# Jodit dialog system
+
 The Jodit dialog system allows you to create modals with title, footer, and content.
 Each dialog is created as a separate inheritor component [[View]].
 

@@ -1,3 +1,5 @@
+# File uploader module
+
 The module for uploading files to the server is configured via the `uploader` namespace and has [[IUploaderOptions]] options.
 
 > These same options are used by default in [[IFileBrowserOptions.uploader]] but can be overridden.

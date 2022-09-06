@@ -1,3 +1,5 @@
+# Jodit plugin system
+
 Jodit plugins are designed to extend the basic functionality of the editor.
 There are built-in plugins, without which the editor will not work correctly. There are plugins that add completely new functionality.
 You can write your own plugin that will either change the current behavior of the editor or add a new function.

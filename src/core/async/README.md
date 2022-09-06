@@ -1,3 +1,5 @@
+# Async module
+
 The module is designed to work with asynchronous operations inside the editor.
 
 ## Why

@@ -1,4 +1,4 @@
-Image editor module
+# Image editor module
 
 Photo editing is configured through the interface [[ImageEditorOptions]]
 

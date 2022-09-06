@@ -1,3 +1,5 @@
+# Jodit helpers functions
+
 Assistant functions are intended for small basic operations and are divided into subgroups.
 
 For example, the [[helpers/string]] subgroup is designed to work with strings:

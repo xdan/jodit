@@ -1,3 +1,5 @@
+# Wait something decorator
+
 Wrap function in wait wrapper, it will be called after `condition` returns `true`
 
 ```typescript

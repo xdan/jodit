@@ -1,3 +1,5 @@
+# Jodit constructor
+
 The Jodit editor consists of modules and plugins. Modules make up the permanent basis of the editor's work,
 and plugins can add their own functionality [[plugin]].
 

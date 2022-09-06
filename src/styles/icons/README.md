@@ -1,3 +1,5 @@
+# Icon system
+
 The Jodit icon system allows you to connect and use a ready-made set of icons in several places.
 Icons are actually SVG strings. You can insert any of these into your layout:
 
