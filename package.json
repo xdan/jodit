@@ -32,8 +32,8 @@
 		"types": "rm -rf types && mkdir -p ./types && cp -r ./src/types ./types && tsc --project . --declaration --declarationDir types --outDir types --emitDeclarationOnly --removeComments false",
 		"pretty": "npx prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less} ./src/**/**/**/*.{ts,less} ./src/**/**/**/**/*.{ts,less}",
 		"fix": "npx eslint ./src/ ./test/ --fix && npm run pretty",
-		"type-check": "tsc --noemit --noErrorTruncation",
-		"lint": "npm run type-check && eslint ./src/ ./test/ && stylelint ./src/**/**.less"
+		"dts": "tsc --noemit --noErrorTruncation",
+		"lint": "npm run dts && eslint ./src/ ./test/ && stylelint ./src/**/**.less"
 	},
 	"repository": {
 		"type": "git",

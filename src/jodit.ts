@@ -30,6 +30,8 @@ import type {
 	IHistory
 } from './types';
 
+import type * as Modules from './modules/';
+
 import { Config } from './config';
 import * as constants from './core/constants';
 
@@ -180,8 +182,9 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 	static readonly plugins: IPluginSystem = pluginSystem;
 
-	static readonly modules: IDictionary<Function> = modules;
-	static readonly ns: IDictionary<Function> = modules;
+	static modules: typeof Modules =
+		modules as unknown as typeof Modules;
+	static ns: typeof Modules = modules as unknown as typeof Modules;
 
 	static readonly decorators: IDictionary<Function> = {};
 	static readonly constants: typeof constants = constants;

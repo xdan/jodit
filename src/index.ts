@@ -47,18 +47,21 @@ Object.keys(Icons)
 Object.keys(Modules)
 	.filter(esFilter)
 	.forEach((key: string) => {
-		DefaultJodit.modules[key] = (Modules as any)[key];
+		// @ts-ignore
+		DefaultJodit.modules[key] = Modules[key];
 	});
 
 // Decorators
 Object.keys(decorators)
 	.filter(esFilter)
 	.forEach((key: string) => {
-		DefaultJodit.decorators[key] = (decorators as any)[key];
+		// @ts-ignore
+		DefaultJodit.decorators[key] = decorators[key];
 	});
 
 ['Confirm', 'Alert', 'Prompt'].forEach((key: string) => {
-	(DefaultJodit as any)[key] = (Modules as any)[key];
+	// @ts-ignore
+	DefaultJodit[key] = Modules[key];
 });
 
 // Languages
