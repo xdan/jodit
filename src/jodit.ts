@@ -182,8 +182,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 	static readonly plugins: IPluginSystem = pluginSystem;
 
-	static modules: typeof Modules =
-		modules as unknown as typeof Modules;
+	static modules: typeof Modules = modules as unknown as typeof Modules;
 	static ns: typeof Modules = modules as unknown as typeof Modules;
 
 	static readonly decorators: IDictionary<Function> = {};

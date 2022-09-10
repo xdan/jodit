@@ -3,7 +3,6 @@
 		"declaration": true,
 		"declarationDir": "types",
 		"outDir": "types",
-		"emitDeclarationOnly": true,
 		"target": "es5",
 		"moduleResolution": "node",
 
