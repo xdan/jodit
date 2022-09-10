@@ -12,6 +12,7 @@ let keys = [];
 module.exports = function (source) {
 	this.cacheable && this.cacheable(true);
 	const isEn = this.resourcePath.includes('en.js');
+	const isKeys = this.resourcePath.includes('keys.js');
 
 	let result = [];
 
@@ -41,8 +42,12 @@ module.exports = function (source) {
 			result[index] = lang[key];
 		});
 
+		if (isKeys) {
+			result = keys; // for Special keys file return keys
+		}
+
 		if (isEn) {
-			result = keys; // for English file return keys
+			result = lang; // for Special keys file return keys
 		}
 	} catch (e) {
 		throw new Error('Error in lang-loader: ' + e.message + e.stack);

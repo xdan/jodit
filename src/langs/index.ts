@@ -19,6 +19,7 @@ if (!process.env.EXCLUDE_LANGS) {
 	const ar = require('jodit/langs/ar');
 	const cs_cz = require('jodit/langs/cs_cz');
 	const de = require('jodit/langs/de');
+	const en = require('jodit/langs/en');
 	const es = require('jodit/langs/es');
 	const fr = require('jodit/langs/fr');
 	const he = require('jodit/langs/he');
@@ -39,6 +40,7 @@ if (!process.env.EXCLUDE_LANGS) {
 		ar,
 		cs_cz,
 		de,
+		en,
 		es,
 		fr,
 		he,
@@ -57,16 +59,15 @@ if (!process.env.EXCLUDE_LANGS) {
 	};
 }
 
-const en = require('jodit/langs/en');
-exp.en = en;
+const keys = require('jodit/langs/keys');
 
 /* Unpack array to hash */
 const get = (value: IDictionary): IDictionary =>
 		value ? value.default || value : {},
 	hashLang: IDictionary = {};
 
-if (isArray(get(en))) {
-	get(en).forEach((key: string, index: number) => {
+if (isArray(get(keys))) {
+	get(keys).forEach((key: string, index: number) => {
 		hashLang[index] = key;
 	});
 }
@@ -80,6 +81,8 @@ Object.keys(exp).forEach((lang: string) => {
 		list.forEach((value: string, index: number) => {
 			exp[lang][hashLang[index]] = value;
 		});
+	} else {
+		exp[lang] = list as IDictionary;
 	}
 });
 
