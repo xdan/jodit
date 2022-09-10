@@ -19,4 +19,4 @@ jobs:
     - name: Run Karma Tests
       run: |
         npm install
-        npm run test
+        npm test

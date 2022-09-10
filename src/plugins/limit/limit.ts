@@ -77,7 +77,7 @@ export class limit extends Plugin {
 			return true;
 		}
 
-		return Boolean(limitChars) && words.join('').length >= limitChars;
+		return Boolean(limitChars) && words.join('').length > limitChars;
 	}
 
 	/**

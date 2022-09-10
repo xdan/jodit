@@ -786,7 +786,10 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
 	}
 
 	if (applyOpt) {
-		applyOpt(evt);
+		const result = applyOpt(evt);
+		if (result) {
+			Object.assign(evt, result);
+		}
 	}
 
 	if (type.match(/^mouse/)) {

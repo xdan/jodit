@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Limit plugin', function () {
 	describe('Keydown', function () {
 		describe('On keydown when editor already full', function () {
@@ -132,6 +133,32 @@ describe('Limit plugin', function () {
 						}
 					};
 				});
+
+				setTimeout(() => {
+					expect(editor.value).equals('<p>11111</p>');
+					done();
+				}, 200);
+			});
+		});
+
+		describe('Copy and paste maximum data in the empty editor', function () {
+			it.only('should allow insert content', done => {
+				const editor = getJodit({
+					askBeforePasteHTML: false,
+					limitChars: 5,
+					history: {
+						timeout: 5
+					}
+				});
+
+				editor.value = '';
+
+				simulateEvent('paste', editor.editor, () => ({
+					clipboardData: {
+						types: ['text/html'],
+						getData: () => '<p>11111</p>'
+					}
+				}));
 
 				setTimeout(() => {
 					expect(editor.value).equals('<p>11111</p>');

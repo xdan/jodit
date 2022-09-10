@@ -18,6 +18,10 @@ Fix types generation:
 -   Remove styles
 -   Replace aliases
 
+#### :bug: Bug Fix
+
+-   [After reaching the maximum character limit unable to copy the content from the editor](https://xdsoft.net/jodit/pro/cab/issues/e72690fa-6dea-4586-82fb-30b0e8d53d4a)
+
 ## 3.20.2
 
 #### :house: Internal
@@ -1620,11 +1624,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                   	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                   ]
+-                                                                                                                                                                                                                                                                                                                                                                     	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                     ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
