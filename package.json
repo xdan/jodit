@@ -29,7 +29,9 @@
 		"test-chrome": "karma start --browsers Chrome karma.conf.js",
 		"test-only-run": "karma start --browsers FirefoxHeadless karma.conf.js",
 		"jodit": "cd ../jodit-react/ && npm update && npm run newversion && cd ../jodit-pro && npm run newversion && cd ../jodit-joomla && npm run newversion",
-		"types": "rm -rf types && mkdir -p ./types && cp -r ./src/types ./types && tsc --project . --declaration --declarationDir types --outDir types --emitDeclarationOnly --removeComments false",
+		"types": "rm -rf types && mkdir -p ./types && cp -r ./src/types ./types && tsc --project . --declaration --declarationDir types --outDir types --emitDeclarationOnly --removeComments false && npm run remove-styles-from-types && npm run resolve-types",
+		"resolve-types": "tsc-alias -p tsconfig.json ./types",
+		"remove-styles-from-types": "replace \"import .+.(less|svg)';\" '' ./types -r --include='*.d.ts'",
 		"pretty": "npx prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less} ./src/**/**/**/*.{ts,less} ./src/**/**/**/**/*.{ts,less}",
 		"fix": "npx eslint ./src/ ./test/ --fix && npm run pretty",
 		"dts": "tsc --noemit --noErrorTruncation",
@@ -63,8 +65,7 @@
 	"homepage": "https://xdsoft.net/jodit/",
 	"dependencies": {
 		"autobind-decorator": "^2.4.0",
-		"core-js": "^3.24.1",
-		"nock-puppeteer": "^14.4.1"
+		"core-js": "^3.24.1"
 	},
 	"devDependencies": {
 		"@types/ace": "^0.0.48",
@@ -114,6 +115,7 @@
 		"prettier": "^2.7.1",
 		"puppeteer": "^17.0.0",
 		"raw-loader": "^4.0.2",
+		"replace": "^1.2.1",
 		"style-loader": "^3.3.1",
 		"stylelint": "^14.10.0",
 		"stylelint-config-idiomatic-order": "v8.1.0",
@@ -124,6 +126,7 @@
 		"terser-webpack-plugin": "^5.3.4",
 		"ts-loader": "^9.3.1",
 		"ts-private-uglifier": "^1.0.2",
+		"tsc-alias": "^1.7.0",
 		"tslib": "^2.4.0",
 		"typescript": "^4.8.2",
 		"url-loader": "^4.1.1",

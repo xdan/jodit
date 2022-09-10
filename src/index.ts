@@ -10,7 +10,7 @@
  * @module jodit
  */
 
-import './styles';
+import './styles/index.less';
 
 declare function require(moduleName: string): any;
 
