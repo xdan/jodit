@@ -1,6 +1,6 @@
 # Link plugin
 
-Adds a link editor to the toolbar. Также может обрабатывать разные типы ссылок: видео, файлы.
+Adds a link editor to the toolbar. It can also process different types of links: videos, files.
 
 ```js
 Jodit.make('#editor', {
