@@ -395,6 +395,18 @@ export class Config implements IViewOptions {
 
 	/**
 	 * Allow editing the entire HTML document(html, head)
+	 * > Works together with the iframe option.
+	 * @example
+	 * ```js
+	 * const editor = Jodit.make('#editor', {
+	 *   iframe: true,
+	 *   editHTMLDocumentMode: true
+	 * });
+	 * editor.value = '<!DOCTYPE html><html lang="en" style="overflow-y:hidden">' +
+	 * 	'<head><title>Jodit Editor</title></head>' +
+	 * 	'<body spellcheck="false"><p>Some text</p><p> a </p></body>' +
+	 * 	'</html>';
+	 * ```
 	 */
 	editHTMLDocumentMode: boolean = false;
 
