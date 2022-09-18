@@ -17,7 +17,6 @@ import {
 	INVISIBLE_SPACE_REG_EXP,
 	SPACE_REG_EXP
 } from 'jodit/core/constants';
-import { stripTags } from 'jodit/core/helpers';
 import { autobind } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
 
@@ -33,6 +32,7 @@ export class limit extends Plugin {
 
 		if (jodit && (limitWords || limitChars)) {
 			let snapshot: SnapshotType | null = null;
+
 			jodit.e
 				.off('.limit')
 				.on('beforePaste.limit', () => {
@@ -46,6 +46,7 @@ export class limit extends Plugin {
 				.on('afterPaste.limit', (): false | void => {
 					if (this.shouldPreventInsertHTML() && snapshot) {
 						jodit.history.snapshot.restore(snapshot);
+						jodit.e.fire('denyPaste.limit');
 						return false;
 					}
 				});
@@ -56,8 +57,7 @@ export class limit extends Plugin {
 	 * Action should be prevented
 	 */
 	private shouldPreventInsertHTML(
-		event: KeyboardEvent | null = null,
-		inputText: string = ''
+		event: KeyboardEvent | null = null
 	): boolean {
 		if (
 			event &&
@@ -66,18 +66,30 @@ export class limit extends Plugin {
 			return false;
 		}
 
+		return this.__shouldDenyInput(false);
+	}
+
+	private __shouldDenyInput(strict: boolean): boolean {
 		const { jodit } = this;
 		const { limitWords, limitChars } = jodit.o;
-		const text =
-			inputText || (jodit.o.limitHTML ? jodit.value : jodit.text);
+		const text = jodit.o.limitHTML ? jodit.value : jodit.text;
 
-		const words = this.splitWords(text);
+		const words = this.__splitWords(text);
 
-		if (limitWords && words.length >= limitWords) {
+		if (limitWords && isGt(words.length, limitWords, strict)) {
+			jodit.e.fire('denyWords.limit limit.limit');
 			return true;
 		}
 
-		return Boolean(limitChars) && words.join('').length > limitChars;
+		const should = Boolean(
+			limitChars && isGt(words.join('').length, limitChars, strict)
+		);
+
+		if (should) {
+			jodit.e.fire('denyChars.limit limit.limit');
+		}
+
+		return should;
 	}
 
 	/**
@@ -96,15 +108,8 @@ export class limit extends Plugin {
 	@autobind
 	private checkPreventChanging(newValue: string, oldValue: string): void {
 		const { jodit } = this;
-		const { limitWords, limitChars } = jodit.o;
 
-		const text = jodit.o.limitHTML ? newValue : stripTags(newValue),
-			words = this.splitWords(text);
-
-		if (
-			(limitWords && words.length > limitWords) ||
-			(Boolean(limitChars) && words.join('').length > limitChars)
-		) {
+		if (this.__shouldDenyInput(true)) {
 			jodit.value = oldValue;
 		}
 	}
@@ -112,7 +117,7 @@ export class limit extends Plugin {
 	/**
 	 * Split text on words without technical characters
 	 */
-	private splitWords(text: string): string[] {
+	private __splitWords(text: string): string[] {
 		return text
 			.replace(INVISIBLE_SPACE_REG_EXP(), '')
 			.split(SPACE_REG_EXP())
@@ -123,6 +128,10 @@ export class limit extends Plugin {
 	protected beforeDestruct(jodit: IJodit): void {
 		jodit.e.off('.limit');
 	}
+}
+
+function isGt(a: number, b: number, strict: boolean): boolean {
+	return strict ? a > b : a >= b;
 }
 
 pluginSystem.add('limit', limit);

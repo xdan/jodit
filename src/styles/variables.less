@@ -16,7 +16,8 @@
 @icon-middle-size: 14px;
 @icon-large-size: 16px;
 
-@color-background-selection: #b5d6fd;
+@color-blue: #b5d6fd;
+@color-background-selection: @color-blue;
 @color-dark: #4c4c4c;
 @color-white: #fff;
 @color-red: #ff3b3b;
@@ -26,7 +27,10 @@
 	--color-gray: #dadada;
 	--color-gray-dark: #a5a5a5;
 	--color-dark: @color-dark;
+	--color-blue: @color-blue;
+	--color-light-blue: fadeout(@color-blue, 50%);
 	--color-red: @color-red;
+	--color-light-red: fadeout(@color-red, 60%);
 
 	--color-default: var(--color-dark);
 	--color-text: #222222;
@@ -56,8 +60,8 @@
 	--color-background-progress: #b91f1f;
 	--color-background-filebrowser-folders: #3f3f3f;
 	--color-background-active: #2196f3;
-	--color-background-selection: @color-background-selection;
-	--color-background-selection_opacity50: rgba(181, 214, 253, 0.5);
+	--color-background-selection: @color-blue;
+	--color-background-selection_opacity50: fadeout(@color-blue, 0.5);
 
 	--color-source-area: #323232;
 

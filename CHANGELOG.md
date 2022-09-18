@@ -9,6 +9,19 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.20.4
+
+#### :house: Internal
+
+-   Improved appearance of popup messages in the [error-messages](https://xdsoft.net/jodit/docs/modules/plugins_error_messages.html) plugin
+
+#### :bug: Bug Fix
+
+-   Fixed a bug in the limit plugin. When the limit was reached, he checked the limits strictly,
+    when entering from the keyboard. Therefore, every time I change the input focus.
+-   Events are added to the same plugin when limits are reached.
+    More details can be found in the documentation [limit](https://xdsoft.net/jodit/docs/modules/plugins_limit.html)
+
 ## 3.20.3
 
 #### :house: Internal
@@ -1624,11 +1637,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                         	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                         ]
+-                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                   ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

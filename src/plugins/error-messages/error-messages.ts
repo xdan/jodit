@@ -39,7 +39,7 @@ Config.prototype.showMessageErrors = true;
 Config.prototype.showMessageErrorTime = 3000;
 Config.prototype.showMessageErrorOffsetPx = 3;
 
-const ELM_NAME = 'error-box-for-messages';
+const ELM_NAME = 'error-messages';
 
 /**
  * Plugin display pop-up messages in the lower right corner of the editor
@@ -93,14 +93,24 @@ export function errorMessages(editor: IJodit): void {
 
 					calcOffsets();
 
-					editor.async.setTimeout(() => {
+					let timer = 0;
+					const remove = (e?: MouseEvent): void => {
+						e && e.preventDefault();
+						editor.async.clearTimeout(timer);
 						msg.classList.remove(activeClass);
-
+						editor.e.off(msg, 'pointerdown', remove);
 						editor.async.setTimeout(() => {
 							Dom.safeRemove(msg);
 							calcOffsets();
 						}, 300);
-					}, timeout || editor.o.showMessageErrorTime);
+					};
+
+					editor.e.on(msg, 'pointerdown', remove);
+
+					timer = editor.async.setTimeout(
+						remove,
+						timeout || editor.o.showMessageErrorTime
+					);
 				}
 			);
 	}
