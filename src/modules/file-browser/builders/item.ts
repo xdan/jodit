@@ -22,6 +22,7 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 	type!: IFileBrowserItemWrapper['type'];
 
 	private constructor(readonly data: IFileBrowserItemElement) {
+		// TODO Check with Object.assign
 		Object.keys(data).forEach(key => {
 			(this as IDictionary)[key] = (data as IDictionary)[key];
 		});
