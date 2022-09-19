@@ -142,7 +142,7 @@ describe('Limit plugin', function () {
 		});
 
 		describe('Copy and paste maximum data in the empty editor', function () {
-			it.only('should allow insert content', done => {
+			it('should allow insert content', done => {
 				const editor = getJodit({
 					askBeforePasteHTML: false,
 					limitChars: 5,
@@ -179,8 +179,7 @@ describe('Limit plugin', function () {
 						}
 					});
 
-					editor.value = '11111';
-
+					editor.value = '<p>11111</p>';
 					editor.s.setCursorAfter(
 						editor.editor.firstChild.firstChild
 					);
@@ -198,7 +197,7 @@ describe('Limit plugin', function () {
 
 					const timeout = () => {
 						setTimeout(() => {
-							expect(editor.value).equals('<p>11111 aaa</p>');
+							expect(editor.value).equals('<p>11111 aaa aaa</p>');
 							done();
 						}, 200);
 					};
@@ -207,7 +206,7 @@ describe('Limit plugin', function () {
 					expect(editor.value).equals('<p>11111 aaa</p>');
 
 					paste();
-					expect(editor.value).equals('<p>11111 aaa</p>');
+					expect(editor.value).equals('<p>11111 aaa aaa</p>');
 
 					paste();
 					timeout();

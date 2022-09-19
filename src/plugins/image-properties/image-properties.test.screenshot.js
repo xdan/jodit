@@ -12,7 +12,7 @@ describe('Image properties screenshot testing', () => {
 		it('works', async function () {
 			await page.evaluate(() => {
 				editor.value =
-					'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" /></p>';
+					'<p><a target="_blank" href="https://xdsoft.net/jodit/files/th.jpg"><img alt="test image" title="test title" class="some-class" src="https://xdsoft.net/jodit/files/th.jpg"></a></p>';
 				simulateEvent('dblclick', editor.editor.querySelector('img'));
 			});
 

@@ -22,7 +22,6 @@ import 'jodit/plugins/copy-format/copy-format';
 import 'jodit/plugins/drag-and-drop/drag-and-drop';
 import 'jodit/plugins/drag-and-drop-element/drag-and-drop-element';
 import 'jodit/plugins/enter/enter';
-import 'jodit/plugins/error-messages/error-messages';
 import 'jodit/plugins/file/file';
 import 'jodit/plugins/focus/focus';
 import 'jodit/plugins/font/font';

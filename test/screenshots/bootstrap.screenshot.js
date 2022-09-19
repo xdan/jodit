@@ -73,6 +73,16 @@ if (typeof before !== 'undefined') {
 
 	beforeEach(async function () {
 		await global.page.reload({ waitUntil: 'networkidle2' });
+		await page.evaluate(() => {
+			window.editor?.destruct();
+			window.editor = Jodit.make('#editor-area', {
+				filebrowser: {
+					ajax: {
+						url: 'https://xdsoft.net/jodit/finder/'
+					}
+				}
+			});
+		});
 	});
 
 	if (!args.debug) {

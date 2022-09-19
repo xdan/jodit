@@ -39,12 +39,12 @@ export class limit extends Plugin {
 					snapshot = jodit.history.snapshot.make();
 				})
 				.on(
-					'keydown.limit keyup.limit beforeEnter.limit beforePaste.limit',
+					'keydown.limit keyup.limit beforeEnter.limit',
 					this.checkPreventKeyPressOrPaste
 				)
 				.on('change.limit', this.checkPreventChanging)
 				.on('afterPaste.limit', (): false | void => {
-					if (this.shouldPreventInsertHTML() && snapshot) {
+					if (this.__shouldDenyInput(true) && snapshot) {
 						jodit.history.snapshot.restore(snapshot);
 						jodit.e.fire('denyPaste.limit');
 						return false;
@@ -56,9 +56,7 @@ export class limit extends Plugin {
 	/**
 	 * Action should be prevented
 	 */
-	private shouldPreventInsertHTML(
-		event: KeyboardEvent | null = null
-	): boolean {
+	private shouldPreventInsertHTML(event: KeyboardEvent): boolean {
 		if (
 			event &&
 			(COMMAND_KEYS.includes(event.key) || event.ctrlKey || event.metaKey)

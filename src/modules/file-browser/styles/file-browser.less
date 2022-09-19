@@ -28,32 +28,6 @@
 	@media (max-width: @screen-xs) {
 		flex-flow: column-reverse;
 	}
-
-	&__status {
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		padding: 6px;
-		border-top: 1px solid rgba(127, 127, 127, 0.4);
-		background-color: #4a4a4a;
-		color: #b38888;
-		font-size: 12px;
-		opacity: 0;
-		text-align: right;
-		transition: opacity 0.3s linear;
-		visibility: hidden;
-		word-break: break-all;
-
-		&_success_true {
-			color: #c5c5c5;
-		}
-
-		&_active_true {
-			opacity: 1;
-			visibility: visible;
-		}
-	}
 }
 
 .jodit-dialog .jodit-dialog__header-title {

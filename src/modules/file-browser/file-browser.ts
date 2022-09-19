@@ -177,29 +177,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 			return;
 		}
 
-		const successClass = this.getFullElName('status', 'success', true),
-			activeClass = this.getFullElName('status', 'active', true);
-
-		this.status_line.classList.remove(successClass);
-		this.status_line.classList.add(activeClass);
-
-		const messageBox = this.c.div();
-		messageBox.textContent = message;
-		this.status_line.appendChild(messageBox);
-
-		if (success) {
-			this.status_line.classList.add(successClass);
-		}
-
-		this.async.setTimeout(
-			() => {
-				this.status_line.classList.remove(activeClass);
-				Dom.detach(this.status_line);
-			},
-			{
-				timeout: this.o.howLongShowMsg,
-				label: 'fileBrowser.status'
-			}
+		this.message.message(
+			message,
+			success ? 'success' : 'error',
+			this.o.howLongShowMsg
 		);
 	}
 
