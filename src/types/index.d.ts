@@ -30,3 +30,4 @@ export * from './types';
 export * from './ui';
 export * from './uploader';
 export * from './view';
+export * from './messages';

@@ -24,6 +24,7 @@ import type { IUIButtonState } from './ui';
 import type { IEventEmitter } from './events';
 import type { IPluginButton } from './plugin';
 import type { IElms, IMods } from './traits';
+import type { IMessages } from 'jodit/types/messages';
 
 interface ILanguageOptions {
 	language?: string;
@@ -133,6 +134,8 @@ interface IViewBased<T = IViewOptions>
 
 	readonly components: Set<IComponent>;
 	getInstance<T extends IComponent>(moduleName: string, options?: object): T;
+
+	readonly message: IMessages;
 }
 
 interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {

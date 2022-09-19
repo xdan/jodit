@@ -19,7 +19,8 @@ import type {
 	IViewOptions,
 	Nullable,
 	IDictionary,
-	IEventEmitter
+	IEventEmitter,
+	IMessages
 } from 'jodit/types';
 import { Storage } from '../storage';
 import {
@@ -44,6 +45,7 @@ import { modules } from 'jodit/core/global';
 import { hook, derive } from 'jodit/core/decorators';
 import { Elms, Mods } from 'jodit/core/traits';
 import { EventEmitter } from 'jodit/core/event-emitter';
+import { UIMessages } from 'jodit/modules/messages/messages';
 
 export interface View extends Mods, Elms {}
 
@@ -91,6 +93,8 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	 * @see copyformat plugin
 	 */
 	readonly buffer: IStorage = Storage.makeStorage();
+
+	readonly message: IMessages;
 
 	/**
 	 * Container for persistent set/get value
@@ -258,6 +262,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 		this.container = this.c.div(`jodit ${this.componentName}`);
 		this.progressbar = new ProgressBar(this);
+		this.message = new UIMessages(this);
 	}
 
 	private __modulesInstances: Map<string, IComponent> = new Map();
@@ -322,6 +327,9 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		if (this.isDestructed) {
 			return;
 		}
+
+		this.progressbar.destruct();
+		this.message.destruct();
 
 		if (this.async) {
 			this.async.destruct();

@@ -49,4 +49,5 @@ export { ToolbarEditorCollection } from './toolbar/collection/editor-collection'
 export { ToolbarCollection } from './toolbar/collection/collection';
 export * from './toolbar/button';
 export { Uploader } from './uploader/uploader';
+export { UIMessages } from './messages/messages';
 export { PluginSystem } from '../core/plugin/plugin-system';
