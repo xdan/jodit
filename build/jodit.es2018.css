@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.20.3
+ * Version: v3.20.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -21,7 +21,10 @@
   --jd-color-gray: #dadada;
   --jd-color-gray-dark: #a5a5a5;
   --jd-color-dark: #4c4c4c;
+  --jd-color-blue: #b5d6fd;
+  --jd-color-light-blue: rgba(181, 214, 253, 0.5);
   --jd-color-red: #ff3b3b;
+  --jd-color-light-red: rgba(255, 59, 59, 0.4);
   --jd-color-default: var(--jd-color-dark);
   --jd-color-text: #222222;
   --jd-color-label: var(--jd-color-gray-dark);
@@ -46,7 +49,7 @@
   --jd-color-background-filebrowser-folders: #3f3f3f;
   --jd-color-background-active: #2196f3;
   --jd-color-background-selection: #b5d6fd;
-  --jd-color-background-selection_opacity50: rgba(181, 214, 253, 0.5);
+  --jd-color-background-selection_opacity50: rgba(181, 214, 253, 0.995);
   --jd-color-source-area: #323232;
   --jd-color-button-background-hover: #dcdcdc;
   --jd-color-button-background-hover_opacity40: rgba(220, 220, 220, 0.4);
@@ -1980,109 +1983,60 @@ svg.jodit-icon {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-.jodit-toolbar-collection,
-.jodit-toolbar-editor-collection {
-  display: flex;
-  flex-direction: column;
+:root {
+  --jd-em-color-color: #084298;
+  --jd-em-color-bg: #cfe2ff;
+  --jd-em-color-border: #b6d4fe;
+  --jd-em-border-radius: 0.375rem;
+  --jd-em-padding: calc(1rem / 2) 1rem;
+  --jd-em-font-size: 1rem;
 }
-.jodit-toolbar-collection_mode_horizontal,
-.jodit-toolbar-editor-collection_mode_horizontal {
-  position: relative;
-  background-image: repeating-linear-gradient(transparent 0, transparent calc(var(--jd-button-size) - 1px), var(--jd-color-border) var(--jd-button-size));
-}
-.jodit-toolbar-collection_mode_horizontal:after,
-.jodit-toolbar-editor-collection_mode_horizontal:after {
+.jodit-ui-messages {
   position: absolute;
+  z-index: 3;
+  right: 0;
   bottom: 0;
-  left: 0;
+  overflow: visible;
+  width: 0;
+  height: 0;
+}
+.jodit-ui-message {
+  position: absolute;
+  right: calc(var(--jd-padding-default) / 2);
+  bottom: 0;
   display: block;
-  width: 100%;
-  height: 1px;
-  background-color: var(--jd-color-background-default);
-  content: '';
-}
-.jodit-toolbar-collection_size_tiny,
-.jodit-toolbar-editor-collection_size_tiny {
-  --jd-button-icon-size: 8px;
-}
-.jodit-toolbar-collection_size_tiny.jodit-toolbar-collection_mode_horizontal,
-.jodit-toolbar-editor-collection_size_tiny.jodit-toolbar-collection_mode_horizontal,
-.jodit-toolbar-collection_size_tiny.jodit-toolbar-editor-collection_mode_horizontal,
-.jodit-toolbar-editor-collection_size_tiny.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: repeating-linear-gradient(transparent 0, transparent 19px, var(--jd-color-border) 20px);
-}
-.jodit-toolbar-collection_size_xsmall,
-.jodit-toolbar-editor-collection_size_xsmall {
-  --jd-button-icon-size: 10px;
-}
-.jodit-toolbar-collection_size_xsmall.jodit-toolbar-collection_mode_horizontal,
-.jodit-toolbar-editor-collection_size_xsmall.jodit-toolbar-collection_mode_horizontal,
-.jodit-toolbar-collection_size_xsmall.jodit-toolbar-editor-collection_mode_horizontal,
-.jodit-toolbar-editor-collection_size_xsmall.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: repeating-linear-gradient(transparent 0, transparent 25px, var(--jd-color-border) 26px);
-}
-.jodit-toolbar-collection_size_small,
-.jodit-toolbar-editor-collection_size_small {
-  --jd-button-icon-size: 12px;
-}
-.jodit-toolbar-collection_size_small.jodit-toolbar-collection_mode_horizontal,
-.jodit-toolbar-editor-collection_size_small.jodit-toolbar-collection_mode_horizontal,
-.jodit-toolbar-collection_size_small.jodit-toolbar-editor-collection_mode_horizontal,
-.jodit-toolbar-editor-collection_size_small.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: repeating-linear-gradient(transparent 0, transparent 31px, var(--jd-color-border) 32px);
-}
-.jodit-toolbar-collection_size_middle,
-.jodit-toolbar-editor-collection_size_middle {
-  --jd-button-icon-size: 14px;
-}
-.jodit-toolbar-collection_size_middle.jodit-toolbar-collection_mode_horizontal,
-.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-collection_mode_horizontal,
-.jodit-toolbar-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal,
-.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: repeating-linear-gradient(transparent 0, transparent 37px, var(--jd-color-border) 38px);
-}
-.jodit-toolbar-collection_size_large,
-.jodit-toolbar-editor-collection_size_large {
-  --jd-button-icon-size: 16px;
-}
-.jodit-toolbar-collection_size_large.jodit-toolbar-collection_mode_horizontal,
-.jodit-toolbar-editor-collection_size_large.jodit-toolbar-collection_mode_horizontal,
-.jodit-toolbar-collection_size_large.jodit-toolbar-editor-collection_mode_horizontal,
-.jodit-toolbar-editor-collection_size_large.jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: repeating-linear-gradient(transparent 0, transparent 43px, var(--jd-color-border) 44px);
-}
-.jodit-toolbar-collection_mode_vertical .jodit-ui-group,
-.jodit-toolbar-editor-collection_mode_vertical .jodit-ui-group {
-  flex-direction: column;
-  border: 0;
-  background-color: transparent;
-}
-.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button,
-.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button {
-  height: auto;
-  min-height: var(--jd-button-size);
-}
-.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button__button,
-.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button__button {
-  width: 100%;
-  height: auto;
-  min-height: var(--jd-button-size);
+  padding: var(--jd-em-padding);
+  border: 1px solid var(--jd-em-color-border);
+  background: var(--jd-em-color-bg);
+  border-radius: var(--jd-em-border-radius);
+  color: var(--jd-em-color-color);
   cursor: pointer;
+  font-size: var(--jd-em-font-size);
+  opacity: 0;
+  transition: opacity 0.1s linear, bottom 0.3s linear, transform 0.1s ease-out;
+  white-space: pre;
 }
-.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button__text:not(:empty),
-.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button__text:not(:empty) {
-  justify-content: left;
+.jodit-ui-message_active_true {
+  opacity: 1;
 }
-.jodit-toolbar-collection .jodit-toolbar-content,
-.jodit-toolbar-editor-collection .jodit-toolbar-content,
-.jodit-toolbar-collection .jodit-toolbar-button,
-.jodit-toolbar-editor-collection .jodit-toolbar-button {
-  padding: 0;
-  margin: var(--jd-margin-v) 1px;
+.jodit-ui-message:active {
+  transform: scale(0.76);
 }
-.jodit-dialog .jodit-toolbar-collection_mode_horizontal,
-.jodit-dialog .jodit-toolbar-editor-collection_mode_horizontal {
-  background-image: none;
+.jodit-ui-message_variant_secondary {
+  --jd-em-alert-color: #41464b;
+  --jd-em-alert-bg: #e2e3e5;
+  --jd-em-alert-border-color: #d3d6d8;
+}
+.jodit-ui-message_variant_error,
+.jodit-ui-message_variant_danger {
+  --jd-em-color-color: #842029;
+  --jd-em-color-bg: #f8d7da;
+  --jd-em-color-border: #f5c2c7;
+}
+.jodit-ui-message_variant_success {
+  --jd-em-color-color: #0f5132;
+  --jd-em-color-bg: #d1e7dd;
+  --jd-em-color-border: #badbcc;
 }
 
 .jodit-ui-label {
@@ -2579,6 +2533,116 @@ svg.jodit-icon {
   right: 0;
   width: 20px;
   clip: rect(-6px, 22px, 14px, var(--jd-padding-default));
+}
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+.jodit-toolbar-collection,
+.jodit-toolbar-editor-collection {
+  display: flex;
+  flex-direction: column;
+}
+.jodit-toolbar-collection_mode_horizontal,
+.jodit-toolbar-editor-collection_mode_horizontal {
+  position: relative;
+  background-image: repeating-linear-gradient(transparent 0, transparent calc(var(--jd-button-size) - 1px), var(--jd-color-border) var(--jd-button-size));
+}
+.jodit-toolbar-collection_mode_horizontal:after,
+.jodit-toolbar-editor-collection_mode_horizontal:after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--jd-color-background-default);
+  content: '';
+}
+.jodit-toolbar-collection_size_tiny,
+.jodit-toolbar-editor-collection_size_tiny {
+  --jd-button-icon-size: 8px;
+}
+.jodit-toolbar-collection_size_tiny.jodit-toolbar-collection_mode_horizontal,
+.jodit-toolbar-editor-collection_size_tiny.jodit-toolbar-collection_mode_horizontal,
+.jodit-toolbar-collection_size_tiny.jodit-toolbar-editor-collection_mode_horizontal,
+.jodit-toolbar-editor-collection_size_tiny.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: repeating-linear-gradient(transparent 0, transparent 19px, var(--jd-color-border) 20px);
+}
+.jodit-toolbar-collection_size_xsmall,
+.jodit-toolbar-editor-collection_size_xsmall {
+  --jd-button-icon-size: 10px;
+}
+.jodit-toolbar-collection_size_xsmall.jodit-toolbar-collection_mode_horizontal,
+.jodit-toolbar-editor-collection_size_xsmall.jodit-toolbar-collection_mode_horizontal,
+.jodit-toolbar-collection_size_xsmall.jodit-toolbar-editor-collection_mode_horizontal,
+.jodit-toolbar-editor-collection_size_xsmall.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: repeating-linear-gradient(transparent 0, transparent 25px, var(--jd-color-border) 26px);
+}
+.jodit-toolbar-collection_size_small,
+.jodit-toolbar-editor-collection_size_small {
+  --jd-button-icon-size: 12px;
+}
+.jodit-toolbar-collection_size_small.jodit-toolbar-collection_mode_horizontal,
+.jodit-toolbar-editor-collection_size_small.jodit-toolbar-collection_mode_horizontal,
+.jodit-toolbar-collection_size_small.jodit-toolbar-editor-collection_mode_horizontal,
+.jodit-toolbar-editor-collection_size_small.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: repeating-linear-gradient(transparent 0, transparent 31px, var(--jd-color-border) 32px);
+}
+.jodit-toolbar-collection_size_middle,
+.jodit-toolbar-editor-collection_size_middle {
+  --jd-button-icon-size: 14px;
+}
+.jodit-toolbar-collection_size_middle.jodit-toolbar-collection_mode_horizontal,
+.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-collection_mode_horizontal,
+.jodit-toolbar-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal,
+.jodit-toolbar-editor-collection_size_middle.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: repeating-linear-gradient(transparent 0, transparent 37px, var(--jd-color-border) 38px);
+}
+.jodit-toolbar-collection_size_large,
+.jodit-toolbar-editor-collection_size_large {
+  --jd-button-icon-size: 16px;
+}
+.jodit-toolbar-collection_size_large.jodit-toolbar-collection_mode_horizontal,
+.jodit-toolbar-editor-collection_size_large.jodit-toolbar-collection_mode_horizontal,
+.jodit-toolbar-collection_size_large.jodit-toolbar-editor-collection_mode_horizontal,
+.jodit-toolbar-editor-collection_size_large.jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: repeating-linear-gradient(transparent 0, transparent 43px, var(--jd-color-border) 44px);
+}
+.jodit-toolbar-collection_mode_vertical .jodit-ui-group,
+.jodit-toolbar-editor-collection_mode_vertical .jodit-ui-group {
+  flex-direction: column;
+  border: 0;
+  background-color: transparent;
+}
+.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button,
+.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button {
+  height: auto;
+  min-height: var(--jd-button-size);
+}
+.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button__button,
+.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button__button {
+  width: 100%;
+  height: auto;
+  min-height: var(--jd-button-size);
+  cursor: pointer;
+}
+.jodit-toolbar-collection_mode_vertical .jodit-toolbar-button__text:not(:empty),
+.jodit-toolbar-editor-collection_mode_vertical .jodit-toolbar-button__text:not(:empty) {
+  justify-content: left;
+}
+.jodit-toolbar-collection .jodit-toolbar-content,
+.jodit-toolbar-editor-collection .jodit-toolbar-content,
+.jodit-toolbar-collection .jodit-toolbar-button,
+.jodit-toolbar-editor-collection .jodit-toolbar-button {
+  padding: 0;
+  margin: var(--jd-margin-v) 1px;
+}
+.jodit-dialog .jodit-toolbar-collection_mode_horizontal,
+.jodit-dialog .jodit-toolbar-editor-collection_mode_horizontal {
+  background-image: none;
 }
 
 /*!
@@ -3173,29 +3237,6 @@ svg.jodit-icon {
   .jodit-filebrowser {
     flex-flow: column-reverse;
   }
-}
-.jodit-filebrowser__status {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 6px;
-  border-top: 1px solid rgba(127, 127, 127, 0.4);
-  background-color: #4a4a4a;
-  color: #b38888;
-  font-size: 12px;
-  opacity: 0;
-  text-align: right;
-  transition: opacity 0.3s linear;
-  visibility: hidden;
-  word-break: break-all;
-}
-.jodit-filebrowser__status_success_true {
-  color: #c5c5c5;
-}
-.jodit-filebrowser__status_active_true {
-  opacity: 1;
-  visibility: visible;
 }
 .jodit-dialog .jodit-dialog__header-title.jodit-filebrowser__title-box {
   display: flex;
@@ -4060,48 +4101,6 @@ a + .jodit-filebrowser-tree__source-title {
 .jodit-tabs .jodit-tabs__wrapper .jodit-tab.jodit-tab_empty {
   min-width: 220px;
   min-height: 100px;
-}
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-.jodit-jodit__error-box-for-messages {
-  position: absolute;
-  z-index: 3;
-  right: 0;
-  bottom: 0;
-  overflow: visible;
-  width: 0;
-  height: 0;
-}
-.jodit-jodit__error-box-for-messages > * {
-  position: absolute;
-  right: calc(var(--jd-padding-default) / 2);
-  bottom: 0;
-  display: block;
-  padding: 2px 7px;
-  border: 1px solid rgba(226, 117, 117, 0.44);
-  background: rgba(255, 0, 0, 0.29);
-  color: #e02b2b;
-  font-size: 14px;
-  opacity: 0;
-  transition: opacity 0.1s linear, bottom 0.3s linear;
-  white-space: pre;
-}
-.jodit-jodit__error-box-for-messages_active_true {
-  opacity: 1;
-}
-.jodit-jodit__error-box-for-messages_type_info {
-  border: 1px solid rgba(154, 154, 154, 0.44);
-  background: rgba(204, 229, 247, 0.71);
-  color: #776565;
-}
-.jodit-jodit__error-box-for-messages_type_success {
-  border: 1px solid rgba(148, 148, 148, 0.44);
-  background: rgba(77, 236, 112, 0.29);
-  color: #5d5a5a;
 }
 
 /*!

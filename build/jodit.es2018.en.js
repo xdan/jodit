@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.20.3
+ * Version: v3.20.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -22,7 +22,7 @@ return /******/ (function() { // webpackBootstrap
 /***/ 11399:
 /***/ (function(module) {
 
-module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Upload","Browse","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","Chars: %d","Words: %d","Strike through","Underline","superscript","subscript","Cut selection","Select all","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Update","pencil","Eye"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Select %s","Vertical align","Split","Merge","Add column","Add row","License: %s","Delete","Split vertical","Split horizontal","Border","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Insert as Text","Insert only Text","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","Word Paste Detected","Clean","Insert className","Press Alt for custom resizing"]
+module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Free Non-commercial Version","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Clean","Insert as Text","Insert only Text","Word Paste Detected","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Browse","Upload","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Eye","pencil","Update"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Chars: %d","Words: %d","All","Select %s","Select all","Vertical align","Split","Split vertical","Split horizontal","Merge","Add column","Add row","Delete","Border","License: %s","Strike through","Underline","superscript","subscript","Cut selection","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","Insert className","Press Alt for custom resizing"]
 
 /***/ }),
 
@@ -1231,19 +1231,31 @@ Config.prototype.controls = {};
 
 /***/ }),
 
-/***/ 14722:
+/***/ 57389:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "e": function() { return /* binding */ Async; }
-/* harmony export */ });
-/* harmony import */ var jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(60232);
-/* harmony import */ var jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(84121);
-/* harmony import */ var jodit_core_helpers_checker_is_plain_object__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(77184);
-/* harmony import */ var jodit_core_helpers_checker_is_promise__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(30317);
-/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40607);
-/* harmony import */ var jodit_core_helpers_checker_is_number__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(93860);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "e": function() { return /* reexport */ Async; }
+});
+
+// EXTERNAL MODULE: ./src/core/helpers/async/set-timeout.ts
+var set_timeout = __webpack_require__(60232);
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
+var is_function = __webpack_require__(84121);
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-plain-object.ts
+var is_plain_object = __webpack_require__(77184);
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-promise.ts
+var is_promise = __webpack_require__(30317);
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
+var is_string = __webpack_require__(40607);
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-number.ts
+var is_number = __webpack_require__(93860);
+// EXTERNAL MODULE: ./src/core/helpers/utils/assert.ts
+var assert = __webpack_require__(39665);
+;// CONCATENATED MODULE: ./src/core/async/async.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -1255,10 +1267,12 @@ Config.prototype.controls = {};
 
 
 
+
 class Async {
     constructor() {
         var _a, _b, _c, _d;
         this.timers = new Map();
+        this.__callbacks = new Map();
         this.promisesRejections = new Set();
         this.requestsIdle = new Set();
         this.requestsRaf = new Set();
@@ -1285,29 +1299,41 @@ class Async {
             return 0;
         }
         let options = {};
-        if (!(0,jodit_core_helpers_checker_is_number__WEBPACK_IMPORTED_MODULE_0__/* .isNumber */ .h)(timeout)) {
+        if (!(0,is_number/* isNumber */.h)(timeout)) {
             options = timeout;
             timeout = options.timeout || 0;
         }
         if (options.label) {
             this.clearLabel(options.label);
         }
-        const timer = (0,jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_1__/* .setTimeout */ .i)(callback, timeout, ...args), key = options.label || timer;
+        const timer = (0,set_timeout/* setTimeout */.i)(callback, timeout, ...args), key = options.label || timer;
         this.timers.set(key, timer);
+        this.__callbacks.set(key, callback);
         return timer;
+    }
+    updateTimeout(label, timeout) {
+        (0,assert/* assert */.h)(label && this.timers.has(label), 'Label does not exist');
+        if (!label || !this.timers.has(label)) {
+            return null;
+        }
+        const callback = this.__callbacks.get(label);
+        (0,assert/* assert */.h)((0,is_function/* isFunction */.m)(callback), 'Callback is not a function');
+        return this.setTimeout(callback, { label, timeout });
     }
     clearLabel(label) {
         if (label && this.timers.has(label)) {
-            (0,jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_1__/* .clearTimeout */ .g)(this.timers.get(label));
+            (0,set_timeout/* clearTimeout */.g)(this.timers.get(label));
             this.timers.delete(label);
+            this.__callbacks.delete(label);
         }
     }
     clearTimeout(timerOrLabel) {
-        if ((0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__/* .isString */ .H)(timerOrLabel)) {
+        if ((0,is_string/* isString */.H)(timerOrLabel)) {
             return this.clearLabel(timerOrLabel);
         }
-        (0,jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_1__/* .clearTimeout */ .g)(timerOrLabel);
+        (0,set_timeout/* clearTimeout */.g)(timerOrLabel);
         this.timers.delete(timerOrLabel);
+        this.__callbacks.delete(timerOrLabel);
     }
     debounce(fn, timeout, firstCallImmediately = false) {
         let timer = 0, fired = false;
@@ -1322,7 +1348,7 @@ class Async {
                         promises.forEach(res => res());
                         promises.length = 0;
                     };
-                    (0,jodit_core_helpers_checker_is_promise__WEBPACK_IMPORTED_MODULE_3__/* .isPromise */ .t)(res) ? res.finally(runPromises) : runPromises();
+                    (0,is_promise/* isPromise */.t)(res) ? res.finally(runPromises) : runPromises();
                 }
             }
         };
@@ -1335,12 +1361,12 @@ class Async {
                 if (!timer && firstCallImmediately) {
                     callFn(...args);
                 }
-                (0,jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_1__/* .clearTimeout */ .g)(timer);
-                timer = this.setTimeout(() => callFn(...args), (0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_4__/* .isFunction */ .m)(timeout) ? timeout() : timeout);
+                (0,set_timeout/* clearTimeout */.g)(timer);
+                timer = this.setTimeout(() => callFn(...args), (0,is_function/* isFunction */.m)(timeout) ? timeout() : timeout);
                 this.timers.set(fn, timer);
             }
         };
-        return (0,jodit_core_helpers_checker_is_plain_object__WEBPACK_IMPORTED_MODULE_5__/* .isPlainObject */ .P)(timeout) && timeout.promisify
+        return (0,is_plain_object/* isPlainObject */.P)(timeout) && timeout.promisify
             ? (...args) => {
                 const promise = this.promise(res => {
                     promises.push(res);
@@ -1364,7 +1390,7 @@ class Async {
                     if (needInvoke) {
                         fn(...lastArgs);
                         needInvoke = false;
-                        timer = this.setTimeout(callee, (0,jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_4__/* .isFunction */ .m)(timeout) ? timeout() : timeout);
+                        timer = this.setTimeout(callee, (0,is_function/* isFunction */.m)(timeout) ? timeout() : timeout);
                         this.timers.set(callee, timer);
                     }
                     else {
@@ -1438,7 +1464,7 @@ class Async {
     clear() {
         this.requestsIdle.forEach(key => this.cancelIdleCallback(key));
         this.requestsRaf.forEach(key => this.cancelAnimationFrame(key));
-        this.timers.forEach(key => (0,jodit_core_helpers_async__WEBPACK_IMPORTED_MODULE_1__/* .clearTimeout */ .g)(this.timers.get(key)));
+        this.timers.forEach(key => (0,set_timeout/* clearTimeout */.g)(this.timers.get(key)));
         this.timers.clear();
         this.promisesRejections.forEach(reject => reject());
         this.promisesRejections.clear();
@@ -1448,6 +1474,14 @@ class Async {
         this.isDestructed = true;
     }
 }
+
+;// CONCATENATED MODULE: ./src/core/async/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
 
 
 /***/ }),
@@ -1462,7 +1496,7 @@ class Async {
 /* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(52607);
 /* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(58299);
 /* harmony import */ var jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10799);
-/* harmony import */ var jodit_core_async__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(14722);
+/* harmony import */ var jodit_core_async__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(57389);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -12291,7 +12325,7 @@ class ViewWithToolbar extends _view__WEBPACK_IMPORTED_MODULE_0__/* .View */ .G {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "G": function() { return /* binding */ View; }
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(20255);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(20255);
 /* harmony import */ var _storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(55937);
 /* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(52607);
 /* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10063);
@@ -12300,12 +12334,14 @@ class ViewWithToolbar extends _view__WEBPACK_IMPORTED_MODULE_0__/* .View */ .G {
 /* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(63345);
 /* harmony import */ var jodit_core_traits__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(34821);
 /* harmony import */ var jodit_core_event_emitter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(39266);
+/* harmony import */ var jodit_modules_messages_messages__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(99186);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var View_1;
+
 
 
 
@@ -12323,7 +12359,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.20.3";
+        this.version = "3.20.4";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -12339,6 +12375,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.create = new jodit_modules__WEBPACK_IMPORTED_MODULE_3__.Create(this.od);
         this.container = this.c.div(`jodit ${this.componentName}`);
         this.progressbar = new jodit_modules__WEBPACK_IMPORTED_MODULE_3__.ProgressBar(this);
+        this.message = new jodit_modules_messages_messages__WEBPACK_IMPORTED_MODULE_8__/* .UIMessages */ .D(this);
     }
     get basePath() {
         if (this.o.basePath) {
@@ -12404,10 +12441,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.20.3";
+        return "3.20.4";
     }
     static getVersion() {
-        return "3.20.3";
+        return "3.20.4";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -12457,6 +12494,8 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         if (this.isDestructed) {
             return;
         }
+        this.progressbar.destruct();
+        this.message.destruct();
         if (this.async) {
             this.async.destruct();
         }
@@ -12471,10 +12510,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
     }
 };
 View.esNext = true;
-(0,tslib__WEBPACK_IMPORTED_MODULE_8__/* .__decorate */ .gn)([
+(0,tslib__WEBPACK_IMPORTED_MODULE_9__/* .__decorate */ .gn)([
     (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.hook)(jodit_modules__WEBPACK_IMPORTED_MODULE_3__.STATUSES.beforeDestruct)
 ], View.prototype, "beforeDestruct", null);
-View = View_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_8__/* .__decorate */ .gn)([
+View = View_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_9__/* .__decorate */ .gn)([
     (0,jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__.derive)(jodit_core_traits__WEBPACK_IMPORTED_MODULE_6__/* .Mods */ .$t, jodit_core_traits__WEBPACK_IMPORTED_MODULE_6__/* .Elms */ .Fx)
 ], View);
 
@@ -14115,22 +14154,7 @@ let FileBrowser = class FileBrowser extends view_with_toolbar/* ViewWithToolbar 
         if (!(0,helpers.isString)(message) || !(0,helpers.trim)(message).length) {
             return;
         }
-        const successClass = this.getFullElName('status', 'success', true), activeClass = this.getFullElName('status', 'active', true);
-        this.status_line.classList.remove(successClass);
-        this.status_line.classList.add(activeClass);
-        const messageBox = this.c.div();
-        messageBox.textContent = message;
-        this.status_line.appendChild(messageBox);
-        if (success) {
-            this.status_line.classList.add(successClass);
-        }
-        this.async.setTimeout(() => {
-            this.status_line.classList.remove(activeClass);
-            dom/* Dom.detach */.i.detach(this.status_line);
-        }, {
-            timeout: this.o.howLongShowMsg,
-            label: 'fileBrowser.status'
-        });
+        this.message.message(message, success ? 'success' : 'error', this.o.howLongShowMsg);
     }
     open(callback = this.o
         .defaultCallback, onlyImages = false) {
@@ -14906,7 +14930,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.d(__webpack_exports__, {
   "Ajax": function() { return /* reexport */ core_request/* Ajax */.t; },
   "Alert": function() { return /* reexport */ Alert; },
-  "Async": function() { return /* reexport */ async_async/* Async */.e; },
+  "Async": function() { return /* reexport */ core_async/* Async */.e; },
   "CommitStyle": function() { return /* reexport */ selection/* CommitStyle */.RP; },
   "Component": function() { return /* reexport */ component/* Component */.wA; },
   "Confirm": function() { return /* reexport */ Confirm; },
@@ -14946,6 +14970,7 @@ __webpack_require__.d(__webpack_exports__, {
   "UIGroup": function() { return /* reexport */ ui/* UIGroup */.qe; },
   "UIInput": function() { return /* reexport */ ui/* UIInput */.u3; },
   "UIList": function() { return /* reexport */ ui/* UIList */.bz; },
+  "UIMessages": function() { return /* reexport */ messages/* UIMessages */.D; },
   "UISeparator": function() { return /* reexport */ ui/* UISeparator */.lU; },
   "UITextArea": function() { return /* reexport */ ui/* UITextArea */.GJ; },
   "Uploader": function() { return /* reexport */ Uploader; },
@@ -14959,8 +14984,8 @@ __webpack_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: ./src/core/event-emitter/index.ts + 2 modules
 var event_emitter = __webpack_require__(39266);
-// EXTERNAL MODULE: ./src/core/async/async.ts
-var async_async = __webpack_require__(14722);
+// EXTERNAL MODULE: ./src/core/async/index.ts + 1 modules
+var core_async = __webpack_require__(57389);
 // EXTERNAL MODULE: ./src/core/request/index.ts + 3 modules
 var core_request = __webpack_require__(26724);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 1 modules
@@ -16638,6 +16663,8 @@ class Uploader extends component/* ViewComponent */.Hr {
     }
 }
 
+// EXTERNAL MODULE: ./src/modules/messages/messages.ts + 1 modules
+var messages = __webpack_require__(99186);
 // EXTERNAL MODULE: ./src/core/plugin/plugin-system.ts
 var plugin_system = __webpack_require__(58153);
 ;// CONCATENATED MODULE: ./src/modules/index.ts
@@ -16671,6 +16698,155 @@ var plugin_system = __webpack_require__(58153);
 
 
 
+
+
+
+
+/***/ }),
+
+/***/ 99186:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "D": function() { return /* binding */ UIMessages; }
+});
+
+// EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
+var tslib_es6 = __webpack_require__(20255);
+// EXTERNAL MODULE: ./src/core/helpers/utils/css.ts
+var css = __webpack_require__(56672);
+// EXTERNAL MODULE: ./src/core/ui/group/group.ts
+var group = __webpack_require__(90181);
+// EXTERNAL MODULE: ./src/core/decorators/component/component.ts
+var component = __webpack_require__(99205);
+// EXTERNAL MODULE: ./src/core/decorators/watch/watch.ts
+var watch = __webpack_require__(44101);
+// EXTERNAL MODULE: ./src/core/helpers/index.ts + 14 modules
+var helpers = __webpack_require__(52607);
+// EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
+var ui = __webpack_require__(41685);
+;// CONCATENATED MODULE: ./src/modules/messages/message.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+let UIMessage = class UIMessage extends ui/* UIElement */.u1 {
+    className() {
+        return 'UIMessage';
+    }
+    constructor(jodit, options) {
+        super(jodit);
+        this.setMod('active', true);
+        this.setMod('variant', options.variant);
+        this.container.textContent = options.text;
+    }
+};
+UIMessage = (0,tslib_es6/* __decorate */.gn)([
+    component/* component */.w
+], UIMessage);
+
+
+;// CONCATENATED MODULE: ./src/modules/messages/messages.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+let UIMessages = class UIMessages extends group/* UIGroup */.q {
+    constructor(jodit, options = {
+        defaultTimeout: 3000,
+        defaultOffset: 5
+    }) {
+        super(jodit);
+        this.options = options;
+        this.__messages = new Set();
+    }
+    className() {
+        return 'UIMessages';
+    }
+    info(text, timeout) {
+        this.__message(text, 'info', timeout);
+    }
+    success(text, timeout) {
+        this.__message(text, 'success', timeout);
+    }
+    error(text, timeout) {
+        this.__message(text, 'error', timeout);
+    }
+    message(text, variant, timeout) {
+        this.__message(text, variant, timeout);
+    }
+    __message(text, variant = 'info', timeout) {
+        const key = text + ':' + variant;
+        if (this.__messages.has(key)) {
+            this.async.updateTimeout(key, timeout || this.options.defaultTimeout);
+            return;
+        }
+        const jodit = this.j;
+        if ((0,helpers.isJoditObject)(jodit)) {
+            jodit.workplace.appendChild(this.container);
+        }
+        else {
+            jodit.container.appendChild(this.container);
+        }
+        const msg = new UIMessage(this.j, { text, variant });
+        this.append(msg);
+        this.__calcOffsets();
+        this.__messages.add(key);
+        const remove = this.__getRemoveCallback(msg, key);
+        this.j.e.on(msg.container, 'pointerdown', remove);
+        this.async.setTimeout(remove, {
+            label: key,
+            timeout: timeout || this.options.defaultTimeout
+        });
+    }
+    __getRemoveCallback(msg, key) {
+        const remove = (e) => {
+            e && e.preventDefault();
+            if (msg.isInDestruct) {
+                return;
+            }
+            this.async.clearTimeout(key);
+            this.j.e.off(msg.container, 'pointerdown', remove);
+            this.__messages.delete(key);
+            msg.setMod('active', false);
+            this.async.setTimeout(() => {
+                this.remove(msg);
+                msg.destruct();
+                this.__calcOffsets();
+            }, 300);
+        };
+        return remove;
+    }
+    __calcOffsets() {
+        let height = 5;
+        this.elements.forEach(elm => {
+            (0,css/* css */.i)(elm.container, 'bottom', height + 'px');
+            height += elm.container.offsetHeight + this.options.defaultOffset;
+        });
+    }
+};
+(0,tslib_es6/* __decorate */.gn)([
+    (0,watch/* watch */.YP)(':errorMessage')
+], UIMessages.prototype, "__message", null);
+UIMessages = (0,tslib_es6/* __decorate */.gn)([
+    component/* component */.w
+], UIMessages);
 
 
 
@@ -23911,56 +24087,6 @@ class enter extends plugin_plugin/* Plugin */.S {
 ], enter.prototype, "onEnterKeyDown", null);
 global/* pluginSystem.add */.pw.add('enter', enter);
 
-// EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(42464);
-;// CONCATENATED MODULE: ./src/plugins/error-messages/error-messages.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-config/* Config.prototype.showMessageErrors */.D.prototype.showMessageErrors = true;
-config/* Config.prototype.showMessageErrorTime */.D.prototype.showMessageErrorTime = 3000;
-config/* Config.prototype.showMessageErrorOffsetPx */.D.prototype.showMessageErrorOffsetPx = 3;
-const ELM_NAME = 'error-box-for-messages';
-function errorMessages(editor) {
-    if (editor.o.showMessageErrors) {
-        const activeClass = editor.getFullElName(ELM_NAME, 'active', true), messagesBox = editor.c.div(editor.getFullElName(ELM_NAME)), calcOffsets = () => {
-            let height = 5;
-            (0,to_array/* toArray */.q)(messagesBox.childNodes).forEach(elm => {
-                (0,css/* css */.i)(elm, 'bottom', height + 'px');
-                height +=
-                    elm.offsetHeight + editor.o.showMessageErrorOffsetPx;
-            });
-        };
-        editor.e
-            .on('beforeDestruct', () => {
-            dom/* Dom.safeRemove */.i.safeRemove(messagesBox);
-        })
-            .on('errorMessage', (message, type, timeout) => {
-            editor.workplace.appendChild(messagesBox);
-            const msg = editor.c.div(activeClass, message);
-            msg.classList.add(editor.getFullElName(ELM_NAME, 'type', type));
-            messagesBox.appendChild(msg);
-            calcOffsets();
-            editor.async.setTimeout(() => {
-                msg.classList.remove(activeClass);
-                editor.async.setTimeout(() => {
-                    dom/* Dom.safeRemove */.i.safeRemove(msg);
-                    calcOffsets();
-                }, 300);
-            }, timeout || editor.o.showMessageErrorTime);
-        });
-    }
-}
-global/* pluginSystem.add */.pw.add('errorMessages', errorMessages);
-
 ;// CONCATENATED MODULE: ./src/plugins/file/file.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -26216,7 +26342,6 @@ config/* Config.prototype.limitHTML */.D.prototype.limitHTML = false;
 
 
 
-
 class limit extends core_plugin/* Plugin */.S {
     afterInit(jodit) {
         const { limitWords, limitChars } = jodit.o;
@@ -26227,29 +26352,38 @@ class limit extends core_plugin/* Plugin */.S {
                 .on('beforePaste.limit', () => {
                 snapshot = jodit.history.snapshot.make();
             })
-                .on('keydown.limit keyup.limit beforeEnter.limit beforePaste.limit', this.checkPreventKeyPressOrPaste)
+                .on('keydown.limit keyup.limit beforeEnter.limit', this.checkPreventKeyPressOrPaste)
                 .on('change.limit', this.checkPreventChanging)
                 .on('afterPaste.limit', () => {
-                if (this.shouldPreventInsertHTML() && snapshot) {
+                if (this.__shouldDenyInput(true) && snapshot) {
                     jodit.history.snapshot.restore(snapshot);
+                    jodit.e.fire('denyPaste.limit');
                     return false;
                 }
             });
         }
     }
-    shouldPreventInsertHTML(event = null, inputText = '') {
+    shouldPreventInsertHTML(event) {
         if (event &&
             (constants.COMMAND_KEYS.includes(event.key) || event.ctrlKey || event.metaKey)) {
             return false;
         }
+        return this.__shouldDenyInput(false);
+    }
+    __shouldDenyInput(strict) {
         const { jodit } = this;
         const { limitWords, limitChars } = jodit.o;
-        const text = inputText || (jodit.o.limitHTML ? jodit.value : jodit.text);
-        const words = this.splitWords(text);
-        if (limitWords && words.length >= limitWords) {
+        const text = jodit.o.limitHTML ? jodit.value : jodit.text;
+        const words = this.__splitWords(text);
+        if (limitWords && isGt(words.length, limitWords, strict)) {
+            jodit.e.fire('denyWords.limit limit.limit');
             return true;
         }
-        return Boolean(limitChars) && words.join('').length > limitChars;
+        const should = Boolean(limitChars && isGt(words.join('').length, limitChars, strict));
+        if (should) {
+            jodit.e.fire('denyChars.limit limit.limit');
+        }
+        return should;
     }
     checkPreventKeyPressOrPaste(event) {
         if (this.shouldPreventInsertHTML(event)) {
@@ -26258,14 +26392,11 @@ class limit extends core_plugin/* Plugin */.S {
     }
     checkPreventChanging(newValue, oldValue) {
         const { jodit } = this;
-        const { limitWords, limitChars } = jodit.o;
-        const text = jodit.o.limitHTML ? newValue : (0,helpers.stripTags)(newValue), words = this.splitWords(text);
-        if ((limitWords && words.length > limitWords) ||
-            (Boolean(limitChars) && words.join('').length > limitChars)) {
+        if (this.__shouldDenyInput(true)) {
             jodit.value = oldValue;
         }
     }
-    splitWords(text) {
+    __splitWords(text) {
         return text
             .replace((0,constants.INVISIBLE_SPACE_REG_EXP)(), '')
             .split((0,constants.SPACE_REG_EXP)())
@@ -26281,6 +26412,9 @@ class limit extends core_plugin/* Plugin */.S {
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], limit.prototype, "checkPreventChanging", null);
+function isGt(a, b, strict) {
+    return strict ? a > b : a >= b;
+}
 global/* pluginSystem.add */.pw.add('limit', limit);
 
 ;// CONCATENATED MODULE: ./src/plugins/line-height/config.ts
@@ -27858,6 +27992,8 @@ global/* pluginSystem.add */.pw.add('preview', preview);
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/default-language.ts
 var default_language = __webpack_require__(3588);
+// EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
+var to_array = __webpack_require__(42464);
 ;// CONCATENATED MODULE: ./src/plugins/print/lib/generate-critical-css.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -32351,7 +32487,6 @@ global/* pluginSystem.add */.pw.add('xpath', xpath);
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
 
 
 

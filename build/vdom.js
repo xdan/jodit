@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.20.3
+ * Version: v3.20.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -469,11 +469,13 @@ var is_plain_object_1 = __webpack_require__(77184);
 var is_promise_1 = __webpack_require__(30317);
 var is_string_1 = __webpack_require__(40607);
 var is_number_1 = __webpack_require__(93860);
+var assert_1 = __webpack_require__(39665);
 var Async = (function () {
     function Async() {
         var _this = this;
         var _a, _b, _c, _d;
         this.timers = new Map();
+        this.__callbacks = new Map();
         this.promisesRejections = new Set();
         this.requestsIdle = new Set();
         this.requestsRaf = new Set();
@@ -514,12 +516,23 @@ var Async = (function () {
         }
         var timer = async_1.setTimeout.apply(void 0, tslib_1.__spreadArray([callback, timeout], tslib_1.__read(args), false)), key = options.label || timer;
         this.timers.set(key, timer);
+        this.__callbacks.set(key, callback);
         return timer;
+    };
+    Async.prototype.updateTimeout = function (label, timeout) {
+        (0, assert_1.assert)(label && this.timers.has(label), 'Label does not exist');
+        if (!label || !this.timers.has(label)) {
+            return null;
+        }
+        var callback = this.__callbacks.get(label);
+        (0, assert_1.assert)((0, is_function_1.isFunction)(callback), 'Callback is not a function');
+        return this.setTimeout(callback, { label: label, timeout: timeout });
     };
     Async.prototype.clearLabel = function (label) {
         if (label && this.timers.has(label)) {
             (0, async_1.clearTimeout)(this.timers.get(label));
             this.timers.delete(label);
+            this.__callbacks.delete(label);
         }
     };
     Async.prototype.clearTimeout = function (timerOrLabel) {
@@ -528,6 +541,7 @@ var Async = (function () {
         }
         (0, async_1.clearTimeout)(timerOrLabel);
         this.timers.delete(timerOrLabel);
+        this.__callbacks.delete(timerOrLabel);
     };
     Async.prototype.debounce = function (fn, timeout, firstCallImmediately) {
         var _this = this;
@@ -910,6 +924,37 @@ function isWindow(obj) {
     return obj != null && obj === obj.window;
 }
 exports.isWindow = isWindow;
+
+
+/***/ }),
+
+/***/ 39665:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.assert = void 0;
+var tslib_1 = __webpack_require__(20255);
+var AssertionError = (function (_super) {
+    tslib_1.__extends(AssertionError, _super);
+    function AssertionError(message) {
+        var _this = _super.call(this, message) || this;
+        _this.name = 'AssertionError';
+        return _this;
+    }
+    return AssertionError;
+}(Error));
+function assert(condition, message) {
+    if (!condition) {
+        throw new AssertionError("Assertion failed: ".concat(message));
+    }
+}
+exports.assert = assert;
 
 
 /***/ }),
