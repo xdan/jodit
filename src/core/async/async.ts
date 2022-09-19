@@ -15,6 +15,7 @@ import type {
 	IAsync,
 	IAsyncParams,
 	ITimeout,
+	Nullable,
 	RejectablePromise
 } from 'jodit/types';
 import { setTimeout, clearTimeout } from 'jodit/core/helpers/async';
@@ -24,16 +25,20 @@ import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isPromise } from 'jodit/core/helpers/checker/is-promise';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isNumber } from 'jodit/core/helpers/checker/is-number';
+import { assert } from 'jodit/core/helpers/utils/assert';
+
+type Callback = (...args: any[]) => void;
 
 export class Async implements IAsync {
 	private timers: Map<number | string | Function, number> = new Map();
+	private __callbacks: Map<number | string, Callback> = new Map();
 
 	delay(timeout: number | IAsyncParams): RejectablePromise<void> {
 		return this.promise(resolve => this.setTimeout(resolve, timeout));
 	}
 
 	setTimeout(
-		callback: (...args: any[]) => void,
+		callback: Callback,
 		timeout: number | IAsyncParams,
 		...args: any[]
 	): number {
@@ -56,14 +61,28 @@ export class Async implements IAsync {
 			key = options.label || timer;
 
 		this.timers.set(key, timer);
+		this.__callbacks.set(key, callback);
 
 		return timer;
+	}
+
+	updateTimeout(label: string, timeout: number): Nullable<number> {
+		assert(label && this.timers.has(label), 'Label does not exist');
+
+		if (!label || !this.timers.has(label)) {
+			return null;
+		}
+
+		const callback = this.__callbacks.get(label);
+		assert(isFunction(callback), 'Callback is not a function');
+		return this.setTimeout(callback, { label, timeout });
 	}
 
 	private clearLabel(label: string): void {
 		if (label && this.timers.has(label)) {
 			clearTimeout(this.timers.get(label) as number);
 			this.timers.delete(label);
+			this.__callbacks.delete(label);
 		}
 	}
 
@@ -76,6 +95,7 @@ export class Async implements IAsync {
 
 		clearTimeout(timerOrLabel);
 		this.timers.delete(timerOrLabel);
+		this.__callbacks.delete(timerOrLabel);
 	}
 
 	/**
@@ -347,7 +367,6 @@ export class Async implements IAsync {
 		);
 
 		this.timers.clear();
-
 		this.promisesRejections.forEach(reject => reject());
 
 		this.promisesRejections.clear();

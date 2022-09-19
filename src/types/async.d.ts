@@ -9,6 +9,7 @@
  */
 
 import type { CallbackFunction, IDestructible } from './types';
+import { Nullable } from './types';
 
 export type ITimeout = number | (() => number);
 
@@ -31,6 +32,7 @@ export interface IAsync extends IDestructible {
 		timeout: number | IAsyncParams,
 		...args: T[]
 	): number;
+	updateTimeout(label: string, timeout: number): Nullable<number>
 
 	clearTimeout(timer: number): void;
 	clearTimeout(label: string): void;
@@ -61,8 +63,13 @@ export interface IAsync extends IDestructible {
 		firstCallImmediately?: boolean
 	): CallbackFunction;
 
-	requestIdleCallback(fn: IdleRequestCallback, options?: {timeout: number}): number;
-	requestIdlePromise(options?: {timeout: number}): RejectablePromise<number>;
+	requestIdleCallback(
+		fn: IdleRequestCallback,
+		options?: { timeout: number }
+	): number;
+	requestIdlePromise(options?: {
+		timeout: number;
+	}): RejectablePromise<number>;
 	cancelIdleCallback(request: number): void;
 
 	/**
