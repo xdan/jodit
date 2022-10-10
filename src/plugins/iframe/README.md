@@ -6,11 +6,11 @@ You can tell the editor to open the edit box in the iframe.
 ```js
 Jodit.make('#editor', {
 	iframe: true,
-  iframeDefaultSrc: 'http://xdsoft.net/jodit/docs/',
-  iframeBaseUrl: 'http://xdsoft.net/jodit/docs/',
-  iframeTitle: 'Jodit',
-  iframeStyle: 'html{margin: 0px;}',
-  iframeCSSLinks: ['styles/default.css'],
+	iframeDefaultSrc: 'http://xdsoft.net/jodit/docs/',
+	iframeBaseUrl: 'http://xdsoft.net/jodit/docs/',
+	iframeTitle: 'Jodit',
+	iframeStyle: 'html{margin: 0px;}',
+	iframeCSSLinks: ['styles/default.css']
 });
 ```
 

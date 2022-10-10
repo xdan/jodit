@@ -8,10 +8,10 @@ import { UIElement } from 'jodit/src/ui';
 
 @component
 class SomeClass extends UIElement {
-    @idle
-    runIdle(): void {
-		    // Do some havy work
-		    this.runIdle(); // This will work and won't go into stack depth error and break the main thread
-    }
+	@idle
+	runIdle(): void {
+		// Do some havy work
+		this.runIdle(); // This will work and won't go into stack depth error and break the main thread
+	}
 }
 ```

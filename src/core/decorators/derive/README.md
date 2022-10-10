@@ -12,15 +12,22 @@ Let's describe some functionality that we would like to reuse in other classes.
 import type { IComponent, IDictionary } from 'jodit/types';
 
 export abstract class SomeFuntionality {
-  abstract mods: IDictionary;
+	abstract mods: IDictionary;
 
-  setMode(this: IComponent & SomeFuntionality, name: string, value: string): void {
-    this.mods[name] = value;
-  }
+	setMode(
+		this: IComponent & SomeFuntionality,
+		name: string,
+		value: string
+	): void {
+		this.mods[name] = value;
+	}
 
-  getMode(this: IComponent & SomeFuntionality, name: string): CanUndef<string> {
-    return this.mods[name];
-  }
+	getMode(
+		this: IComponent & SomeFuntionality,
+		name: string
+	): CanUndef<string> {
+		return this.mods[name];
+	}
 }
 ```
 
@@ -37,8 +44,8 @@ import { SomeFuntionality } from './traits/some-functionality.ts';
 export interface SomeComponent extends SomeFuntionality {}
 
 @derive(SomeFuntionality)
-export class SomeComponent extends Component  {
-  mods: IDictionary = {};
+export class SomeComponent extends Component {
+	mods: IDictionary = {};
 }
 
 const component = new SomeComponent();
@@ -59,13 +66,13 @@ import { SomeFuntionality } from './traits/some-functionality.ts';
 export interface SomeComponent extends Mods, Dlgs, Elms, SomeFuntionality {}
 
 @derive(Mods, Dlgs, Elms, SomeFuntionality)
-export class SomeComponent extends Component  {
-  mods: IDictionary = {};
+export class SomeComponent extends Component {
+	mods: IDictionary = {};
 }
 
 const component = new SomeComponent();
 component.setMode('open', 'true'); // From SomeComponent
 component.setMod('open', 'true'); // From Mods
-component.alert('Hi');// From Dlgs
-component.getElm('header');// From Elms
+component.alert('Hi'); // From Dlgs
+component.getElm('header'); // From Elms
 ```

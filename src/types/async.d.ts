@@ -32,7 +32,7 @@ export interface IAsync extends IDestructible {
 		timeout: number | IAsyncParams,
 		...args: T[]
 	): number;
-	updateTimeout(label: string, timeout: number): Nullable<number>
+	updateTimeout(label: string, timeout: number): Nullable<number>;
 
 	clearTimeout(timer: number): void;
 	clearTimeout(label: string): void;

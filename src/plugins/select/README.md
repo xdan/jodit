@@ -5,6 +5,7 @@ A utility plugin that allows you to subscribe to a click/mousedown/touchstart/mo
 
 ```js
 const editor = Jodit.make('#editor');
-editor.e.on('clickImg', (img) => {
-  console.log(img.src);
-})
+editor.e.on('clickImg', img => {
+	console.log(img.src);
+});
+```

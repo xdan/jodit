@@ -83,12 +83,7 @@ export interface IUploaderOptions<T> {
 	 * });
 	 * ```
 	 */
-	getDisplayName(
-		this: T,
-		baseurl: string,
-		filename: string
-	): string;
-
+	getDisplayName(this: T, baseurl: string, filename: string): string;
 
 	pathVariableName: string;
 	withCredentials: boolean;

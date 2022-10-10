@@ -25,4 +25,27 @@ Jodit.make('#editor', {
 });
 ```
 
+You can also simply disable a tag. For example, let's disable `script` tags and pictures.
+
+```javascript
+Jodit.make('#editor', {
+	cleanHTML: {
+		denyTags: 'script,img'
+	}
+});
+```
+
+Or us object
+
+```javascript
+Jodit.make('#editor', {
+	cleanHTML: {
+		denyTags: {
+			script: true,
+      img: true
+    }
+	}
+});
+```
+
 Plugin settings are under the namespace [[Config.cleanHTML]]

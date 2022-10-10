@@ -9,7 +9,12 @@
  */
 
 import type { IDictionary, Nullable } from 'jodit/types';
-import type { IComponent, IContainer, IDialog, IDialogOptions } from 'jodit/types';
+import type {
+	IComponent,
+	IContainer,
+	IDialog,
+	IDialogOptions
+} from 'jodit/types';
 
 export type ModType = string | boolean | null;
 
@@ -17,7 +22,11 @@ export interface IMods {
 	/**
 	 * Set/remove modification (null - remove)
 	 */
-	setMod<T extends IComponent & IContainer & IMods>(this: T, name: string, value: ModType): T;
+	setMod<T extends IComponent & IContainer & IMods>(
+		this: T,
+		name: string,
+		value: ModType
+	): T;
 	afterSetMod(name: string, value: ModType): void;
 
 	getMod(name: string): ModType;
@@ -28,7 +37,6 @@ export interface IElms {
 	getElm(elementName: string): Nullable<HTMLElement>;
 	getElms(elementName: string): HTMLElement[];
 }
-
 
 export interface IDlgs {
 	dlg(options?: IDialogOptions): IDialog;

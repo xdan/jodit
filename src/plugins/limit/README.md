@@ -29,19 +29,22 @@ Jodit.make('#editor', {
 
 When limits are reached, a series of events occur:
 
-- `limit.limit` - Upon reaching any of the limits
-- `denyChars.limit` - When the character limit is reached
-- `denyWords.limit` - Upon reaching any words
-- `denyPaste.limit` - If the user wanted to insert text beyond the limits
+-   `limit.limit` - Upon reaching any of the limits
+-   `denyChars.limit` - When the character limit is reached
+-   `denyWords.limit` - Upon reaching any words
+-   `denyPaste.limit` - If the user wanted to insert text beyond the limits
 
 ```js
 const jodit = Jodit.make('#editor', {
-	limitWords: 100,
+	limitWords: 100
 });
 
-jodit.e.on('limit.limit', jodit.async.debounce(() => {
-  // Allow 'error' | 'info' | 'success' See error-messages plugin
-  editor.e.fire('errorMessage', 'Limit reached!', 'error');
-  return false;
-}, 300));
+jodit.e.on(
+	'limit.limit',
+	jodit.async.debounce(() => {
+		// Allow 'error' | 'info' | 'success' See error-messages plugin
+		editor.e.fire('errorMessage', 'Limit reached!', 'error');
+		return false;
+	}, 300)
+);
 ```

@@ -4,7 +4,7 @@ If editor has a fixed height, it adds a special button in right-bottom corner to
 
 ```js
 Jodit.make('#editor', {
-  allowResizeX: true,
-  allowResizeY: false,
+	allowResizeX: true,
+	allowResizeY: false
 });
 ```

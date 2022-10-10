@@ -26,34 +26,34 @@ const walker = new Jodit.modules.LazyWalker(new Jodit.modules.Async(), 100);
 const names = [];
 
 walker
-  .on('visit', node => {
-    names.push(node.nodeName.toLowerCase());
-  })
-  .on('end', () => {
-    expect(names).deep.eq([
-      'div',
-      'ul',
-      'li',
-      'strong',
-      '#text',
-      'span',
-      '#text',
-      'u',
-      '#text',
-      'li',
-      'i',
-      '#text',
-      'b',
-      '#text',
-      'u',
-      '#text',
-      'img'
-    ]);
-    done();
-  });
+	.on('visit', node => {
+		names.push(node.nodeName.toLowerCase());
+	})
+	.on('end', () => {
+		expect(names).deep.eq([
+			'div',
+			'ul',
+			'li',
+			'strong',
+			'#text',
+			'span',
+			'#text',
+			'u',
+			'#text',
+			'li',
+			'i',
+			'#text',
+			'b',
+			'#text',
+			'u',
+			'#text',
+			'img'
+		]);
+		done();
+	});
 
 const div = document.createElement('div');
 div.innerHTML =
-  "<ul><li><strong>test</strong><span>test</span><u>test</u></li><li><i>test</i><b>test</b><u>test</u><img src='' alt=''></li></ul>";
+	"<ul><li><strong>test</strong><span>test</span><u>test</u></li><li><i>test</i><b>test</b><u>test</u><img src='' alt=''></li></ul>";
 walker.setWork(div);
 ```

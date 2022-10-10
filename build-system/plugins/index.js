@@ -7,7 +7,8 @@
 const webpack = require('webpack');
 
 module.exports = vars => {
-	const { isProd, isTest, ESNext, onlyTS, debug, exclude, progressFunction } = vars;
+	const { isProd, isTest, ESNext, onlyTS, debug, exclude, progressFunction } =
+		vars;
 
 	const plugins = [require('./define')(vars)];
 

@@ -4,7 +4,6 @@ Adds an open button to the entire browser window. It also allows you to immediat
 
 ```js
 const editor = Jodit.make('#editor', {
-  fullsize: true
+	fullsize: true
 });
 ```
-

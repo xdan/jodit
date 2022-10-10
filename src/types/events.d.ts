@@ -125,10 +125,7 @@ interface IEventEmitter extends IDestructible {
 	 * parent.e.off('someGlobalEvents');
 	 * ```
 	 */
-	off(
-		events: CanArray<string>,
-		callback?: CallbackFunction
-	): IEventEmitter;
+	off(events: CanArray<string>, callback?: CallbackFunction): IEventEmitter;
 
 	off(
 		subjects: CanArray<Window | HTMLElement | object>,

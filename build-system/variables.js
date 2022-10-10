@@ -35,6 +35,7 @@ module.exports.variables = (argv, dir) => {
 	const isProd = mode === 'production';
 	const uglify = Boolean(!debug && argv && Bool(argv.uglify));
 	const excludeLangs = Bool(argv.excludeLangs);
+	const stat = Bool(argv.stat);
 	const exclude = (argv.exclude || '').split(/[,\s;]/);
 
 	const excludePlugins = (argv.excludePlugins || '').split(/[,\s;]/);
@@ -60,6 +61,7 @@ module.exports.variables = (argv, dir) => {
 		isTest,
 		isProd,
 		uglify,
+		stat,
 		excludeLangs,
 		excludeLanguages,
 		excludePlugins,

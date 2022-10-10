@@ -9,6 +9,40 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.20.5
+
+#### :house: Internal
+
+Update deps
+
+```
+core-js                            ^3.24.1  →   ^3.25.5
+@types/node                        ^18.7.3  →   ^18.8.3
+@typescript-eslint/eslint-plugin   ^5.33.0  →   ^5.39.0
+@typescript-eslint/parser          ^5.33.0  →   ^5.39.0
+autoprefixer                       ^10.4.8  →  ^10.4.12
+axios                              ^0.27.2  →    ^1.1.2
+css-minimizer-webpack-plugin        ^4.0.0  →    ^4.2.1
+eslint                             ^8.22.0  →   ^8.25.0
+eslint-plugin-tsdoc                ^0.2.16  →   ^0.2.17
+express                            ^4.18.1  →   ^4.18.2
+karma                               ^6.4.0  →    ^6.4.1
+less-loader                        ^11.0.0  →   ^11.1.0
+postcss                           >=8.4.16  →  >=8.4.17
+puppeteer                          ^17.0.0  →   ^18.2.1
+stylelint                         ^14.10.0  →  ^14.13.0
+stylelint-config-idiomatic-order    v8.1.0  →    v9.0.0
+stylelint-config-standard          ^27.0.0  →   ^28.0.0
+synchronous-promise                ^2.0.15  →   ^2.0.16
+terser-webpack-plugin               ^5.3.4  →    ^5.3.6
+ts-loader                           ^9.3.1  →    ^9.4.1
+typescript                          ^4.8.2  →    ^4.8.4
+webpack                             5.73.0  →    5.74.0
+webpack-dev-server                  ^4.9.3  →   ^4.11.1
+webpack-hot-middleware             ^2.25.1  →   ^2.25.2
+yargs                              ^17.5.1  →   ^17.6.0
+```
+
 ## 3.20.4
 
 #### :house: Internal

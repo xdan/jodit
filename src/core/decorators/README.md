@@ -35,5 +35,5 @@ class UISomeReactElement extends UIElement {
 
 const elm = new UISomeReactElement(jodit);
 elm.state.color = 'yellow';
-elm.state.counter =  55;
+elm.state.counter = 55;
 ```

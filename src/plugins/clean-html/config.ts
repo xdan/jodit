@@ -116,7 +116,7 @@ Config.prototype.cleanHTML = {
 		b: 'strong'
 	},
 	allowTags: false,
-	denyTags: false,
+	denyTags: 'script',
 
 	useIframeSandbox: false,
 	removeOnError: true,

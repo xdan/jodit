@@ -347,10 +347,10 @@ var editor = Jodit.make('#jodit', {
 		create: {
 			url: 'connector/create.php'
 		},
-    fileMove: {
+		fileMove: {
 			url: 'connector/move.php'
 		},
-    fileRemove: {
+		fileRemove: {
 			url: 'connector/remove.php'
 		},
 		items: {
