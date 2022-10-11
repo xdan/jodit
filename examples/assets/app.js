@@ -15,7 +15,8 @@ const links = {
 	'inline-mode.html': 'Inline mode',
 	'custom-icons.html': 'Custom Icons / Font Awesome',
 	'oneinstance.html': 'One Instance',
-	'color-picker.html': 'Color Picker'
+	'color-picker.html': 'Color Picker',
+	'theme.html': 'Dark theme'
 };
 
 if (examples) {

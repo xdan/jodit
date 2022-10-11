@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.20.4
+ * Version: v3.21.0
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -12492,7 +12492,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.20.4";
+        this.version = "3.21.0";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -12574,10 +12574,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.20.4";
+        return "3.21.0";
     }
     static getVersion() {
-        return "3.20.4";
+        return "3.21.0";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -23101,7 +23101,7 @@ config/* Config.prototype.cleanHTML */.D.prototype.cleanHTML = {
         b: 'strong'
     },
     allowTags: false,
-    denyTags: false,
+    denyTags: 'script',
     useIframeSandbox: false,
     removeOnError: true,
     safeJavaScriptLink: true,
@@ -32730,6 +32730,7 @@ global/* pluginSystem.add */.pw.add('xpath', xpath);
  */
 
 if (false) {}
+
 
 
 

@@ -12,7 +12,7 @@
 			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
 		/>
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Jodit Example</title>
+		<title>Jodit Dark theme</title>
 		<link rel="icon" type="image/png" href="assets/icon.png" />
 	</head>
 	<body>
@@ -61,10 +61,10 @@
         </code></pre>
 				<h3>JavaScript</h3>
 				<pre><code class="language-javascript">
-            const editor = Jodit.make('#editor', {
-            	//
+            var editor = Jodit.make('#editor', {
+              theme: 'dark'
             });
-            editor.value = '&lt;p>start&lt;/p>';
+            editor.value = '&lt;p>start&lt;/p>'
         </code></pre>
 			</div>
 			<div class="result">
@@ -114,8 +114,8 @@
 	<script src="assets/prism.js"></script>
 	<script src="assets/app.js"></script>
 	<script>
-		const editor = Jodit.make('#area_editor', {
-			//
+		var editor = Jodit.make('#area_editor', {
+			theme: 'dark'
 		});
 	</script>
 </html>

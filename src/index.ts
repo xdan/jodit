@@ -29,6 +29,8 @@ import * as Icons from './styles/icons/';
 
 import 'jodit/plugins/index';
 
+import './styles/themes/dark.less';
+
 // copy constants in Jodit
 Object.keys(constants).forEach((key: string) => {
 	(DefaultJodit as any)[key] = (constants as any)[key];

@@ -14,7 +14,7 @@ describe('Search screenshot testing', () => {
 				return clickButton('find', editor);
 			});
 
-			await page.waitForSelector('.jodit-ui-search');
+			await page.waitForSelector('.jodit-ui-search input:focus');
 			const element = await page.$('.jodit-ui-search__box');
 			const screenshot = await element.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this);
