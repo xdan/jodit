@@ -25,9 +25,9 @@ import {
 	isFunction,
 	refs,
 	isString,
-	attr,
-	assert
+	attr
 } from 'jodit/core/helpers/';
+import { assert } from 'jodit/core/helpers/utils/assert';
 
 import { Dom } from 'jodit/core/dom';
 import { INVISIBLE_SPACE } from 'jodit/core/constants';

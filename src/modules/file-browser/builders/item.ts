@@ -45,7 +45,7 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 	}
 
 	get imageURL(): string {
-		const timestamp: string = new Date().getTime().toString(),
+		const timestamp: string = this.time || new Date().getTime().toString(),
 			{ thumbIsAbsolute, source, thumb, file } = this.data,
 			path = thumb || file;
 
@@ -53,7 +53,7 @@ export class FileBrowserItem implements IFileBrowserItemWrapper {
 			? path
 			: normalizeUrl(source.baseurl, source.path, path || '') +
 					'?_tmst=' +
-					timestamp;
+					encodeURIComponent(timestamp);
 	}
 
 	get fileURL(): string {

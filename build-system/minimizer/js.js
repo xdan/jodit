@@ -29,12 +29,11 @@ module.exports = ({ ESNext, isTest, banner }) =>
 				drop_console: !isTest,
 				drop_debugger: !isTest,
 
+				keep_classnames: true,
 				pure_getters: true,
 				unsafe_comps: true,
 
-				pure_funcs: ['assert'],
-
-				passes: 4
+				passes: 3
 			},
 
 			output: {

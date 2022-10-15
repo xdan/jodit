@@ -25,7 +25,6 @@ import { KEY_ESC } from 'jodit/core/constants';
 import {
 	$$,
 	asArray,
-	assert,
 	attr,
 	ConfigProto,
 	css,
@@ -38,6 +37,7 @@ import {
 	splitArray,
 	toArray
 } from 'jodit/core/helpers/';
+import { assert } from 'jodit/core/helpers/utils/assert';
 import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
 import { Dom } from 'jodit/core/dom';
 import { STATUSES } from 'jodit/core/component';

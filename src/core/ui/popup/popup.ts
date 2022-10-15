@@ -25,7 +25,6 @@ import type {
 } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import {
-	assert,
 	attr,
 	css,
 	isString,
@@ -34,6 +33,7 @@ import {
 	position,
 	ucfirst
 } from 'jodit/core/helpers';
+import { assert } from 'jodit/core/helpers/utils/assert';
 import { UIElement } from 'jodit/core/ui/element';
 import { autobind, throttle } from 'jodit/core/decorators';
 import { Component } from 'jodit/core/component/component';

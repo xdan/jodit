@@ -6,17 +6,32 @@
 
 const path = require('path');
 
-module.exports = ({ superDirname, uglify, ES }) => {
+module.exports = ({ superDirname, uglify, ES, isProd }) => {
 	return {
 		test: /\.ts$/,
-		loader: 'ts-loader',
-		options: {
-			transpileOnly: uglify,
-			allowTsInNodeModules: true,
-			compilerOptions: {
-				target: ES
+		use: [
+			{
+				loader: 'ts-loader',
+				options: {
+					transpileOnly: uglify,
+					allowTsInNodeModules: true,
+					compilerOptions: {
+						target: ES
+					}
+				}
 			}
-		},
+		].concat(
+			isProd
+				? [
+						{
+							loader: path.resolve(
+								__dirname,
+								'../loaders/change-asserts.js'
+							)
+						}
+				  ]
+				: []
+		),
 		include: [path.resolve(superDirname, './src/')],
 		exclude: [/langs\/[a-z]{2}\.ts/, /langs\/[a-z]{2}_[a-z]{2}\.ts/]
 	};

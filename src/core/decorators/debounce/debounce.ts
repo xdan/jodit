@@ -23,7 +23,7 @@ import {
 } from 'jodit/core/helpers/checker';
 import { Component, STATUSES } from 'jodit/core/component';
 import { error } from 'jodit/core/helpers/utils/error';
-import { assert } from 'jodit/core/helpers';
+import { assert } from 'jodit/core/helpers/utils/assert';
 
 export function debounce<V extends IViewComponent = IViewComponent>(
 	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,

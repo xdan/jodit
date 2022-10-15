@@ -4,8 +4,11 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-module.exports = vars => ({
-	...require('./exclude-utils')(vars),
-	...require('./exclude-plugins')(vars),
-	...require('./exclude-languages')(vars)
-});
+module.exports = ({ isProd }) => {
+	return isProd
+		? {
+				'jodit/core/helpers/utils/assert': 'export {assert(){}};',
+				'./assert': 'export {assert(){}};'
+		  }
+		: {};
+};
