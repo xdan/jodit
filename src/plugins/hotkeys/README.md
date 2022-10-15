@@ -23,3 +23,23 @@ Jodit.make('#editor', {
 	}
 });
 ```
+
+## Events
+
+You can just set some callback on keyboard shortcuts:
+
+```js
+Jodit.make('#editor', { disablePlugins: ['bold'] }).e.on(['meta+b', 'control+b'], () => {
+	alert('Do smth with text');
+	return false;
+});
+```
+
+Pay attention to the order of the keys in this case, it should be like this: `meta`, `control`, `alt`, `shift`, `any`.
+
+For example:
+-   `meta+alt+t`
+-   `control+alt+p`
+-   `shift+d`
+
+> Please note that, unlike the plugin settings, the `ctrl` and `cmd` keys here should be written exactly like this `control` and `meta`.

@@ -23,6 +23,18 @@ Jodit.make('#editor', {
 });
 ```
 
+-   The order of the hotkeys plugin keys has been changed to a more popular one.
+    It used to be: `b+meta`, `b+ctrl`
+    Now: `meta+b`, `ctrl+b`
+    This is expressed in the installation of handlers for keyboard shortcuts:
+
+```js
+Jodit.make('#editor', { disablePlugins: ['bold'] }).e.on('meta+b', () => {
+	alert('Do smth with text');
+	return false;
+});
+```
+
 #### :house: Internal
 
 Update deps
@@ -1684,11 +1696,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                       ]
+-                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                           ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
