@@ -104,6 +104,11 @@ export class Create implements ICreate {
 		this.doc.body.appendChild(iframe);
 		const doc = iframe.contentWindow?.document;
 		assert(doc, 'iframe.contentWindow.document');
+
+		if (!doc) {
+			throw Error('Iframe error');
+		}
+
 		doc.open();
 		doc.write('<!DOCTYPE html><html><head></head><body></body></html>');
 		doc.close();

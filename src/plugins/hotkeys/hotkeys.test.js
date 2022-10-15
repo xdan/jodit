@@ -89,6 +89,21 @@ describe('Hotkeys', function () {
 			});
 		});
 
+		describe('Event handler', function () {
+			it('should call handler for hotkeys event', () => {
+				const editor = getJodit();
+				let count = 0;
+				editor.e.on('meta+alt+b.hotkey', () => {
+					count++;
+				});
+				simulateEvent('keydown', 'b', editor.editor, function (data) {
+					data.metaKey = true;
+					data.altKey = true;
+				});
+				expect(count).eq(1);
+			});
+		});
+
 		describe('Add ctrl+shift+i to default ctrl+i shortcut for italic command', function () {
 			it('Should work with each of shortcuts', function () {
 				const area = appendTestArea(),

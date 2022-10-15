@@ -9,14 +9,14 @@ describe('Test helpers', function () {
 		describe('normalizeKeyAliases', function () {
 			it('Should convert some hotkeys to normal', function () {
 				const hotkeys = {
-					'cmd+ alt+s': 'alt+meta+s',
-					'cmd++': '++meta',
-					'ctrl+ alt+s': 'alt+control+s',
+					'cmd+ alt+s': 'meta+alt+s',
+					'cmd++': 'meta++',
+					'ctrl+ alt+s': 'control+alt+s',
 					' command+s': 'meta+s',
-					'alt+s+ctrl': 'alt+control+s',
-					'shift+ctrl+cmd+D': 'control+d+meta+shift',
-					'meta+windows+win+ctrl+cmd': 'control+meta',
-					'cmd+ alt+ shift ': 'alt+meta+shift',
+					'alt+s+ctrl': 'control+alt+s',
+					'shift+ctrl+cmd+D': 'meta+control+shift+d',
+					'meta+windows+win+ctrl+cmd': 'meta+control',
+					'cmd+ alt+ shift ': 'meta+alt+shift',
 					'return + esc ': 'enter+escape'
 				};
 

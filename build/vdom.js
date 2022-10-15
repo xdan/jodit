@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.21.0
+ * Version: v3.21.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -451,7 +451,7 @@ exports.__classPrivateFieldIn = __classPrivateFieldIn;
 
 /***/ }),
 
-/***/ 14722:
+/***/ 36171:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -463,13 +463,13 @@ exports.__classPrivateFieldIn = __classPrivateFieldIn;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Async = void 0;
 var tslib_1 = __webpack_require__(20255);
-var async_1 = __webpack_require__(97336);
-var is_function_1 = __webpack_require__(84121);
-var is_plain_object_1 = __webpack_require__(77184);
-var is_promise_1 = __webpack_require__(30317);
-var is_string_1 = __webpack_require__(40607);
-var is_number_1 = __webpack_require__(93860);
-var assert_1 = __webpack_require__(39665);
+var async_1 = __webpack_require__(45044);
+var is_function_1 = __webpack_require__(87385);
+var is_plain_object_1 = __webpack_require__(76856);
+var is_promise_1 = __webpack_require__(15199);
+var is_string_1 = __webpack_require__(86129);
+var is_number_1 = __webpack_require__(98296);
+__webpack_require__(52378);
 var Async = (function () {
     function Async() {
         var _this = this;
@@ -520,12 +520,10 @@ var Async = (function () {
         return timer;
     };
     Async.prototype.updateTimeout = function (label, timeout) {
-        (0, assert_1.assert)(label && this.timers.has(label), 'Label does not exist');
         if (!label || !this.timers.has(label)) {
             return null;
         }
         var callback = this.__callbacks.get(label);
-        (0, assert_1.assert)((0, is_function_1.isFunction)(callback), 'Callback is not a function');
         return this.setTimeout(callback, { label: label, timeout: timeout });
     };
     Async.prototype.clearLabel = function (label) {
@@ -719,7 +717,7 @@ exports.Async = Async;
 
 /***/ }),
 
-/***/ 60588:
+/***/ 68029:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -730,12 +728,12 @@ exports.Async = Async;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(14722), exports);
+tslib_1.__exportStar(__webpack_require__(36171), exports);
 
 
 /***/ }),
 
-/***/ 97336:
+/***/ 45044:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -746,12 +744,12 @@ tslib_1.__exportStar(__webpack_require__(14722), exports);
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(60232), exports);
+tslib_1.__exportStar(__webpack_require__(81778), exports);
 
 
 /***/ }),
 
-/***/ 60232:
+/***/ 81778:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -785,7 +783,7 @@ exports.clearTimeout = clearTimeout;
 
 /***/ }),
 
-/***/ 2555:
+/***/ 41515:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -804,7 +802,7 @@ exports.isArray = isArray;
 
 /***/ }),
 
-/***/ 84121:
+/***/ 87385:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -823,7 +821,7 @@ exports.isFunction = isFunction;
 
 /***/ }),
 
-/***/ 93860:
+/***/ 98296:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -842,7 +840,7 @@ exports.isNumber = isNumber;
 
 /***/ }),
 
-/***/ 77184:
+/***/ 76856:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -853,7 +851,7 @@ exports.isNumber = isNumber;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isPlainObject = void 0;
-var is_window_1 = __webpack_require__(99562);
+var is_window_1 = __webpack_require__(64892);
 function isPlainObject(obj) {
     if (!obj || typeof obj !== 'object' || obj.nodeType || (0, is_window_1.isWindow)(obj)) {
         return false;
@@ -866,7 +864,7 @@ exports.isPlainObject = isPlainObject;
 
 /***/ }),
 
-/***/ 30317:
+/***/ 15199:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -885,7 +883,7 @@ exports.isPromise = isPromise;
 
 /***/ }),
 
-/***/ 40607:
+/***/ 86129:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -896,7 +894,7 @@ exports.isPromise = isPromise;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isStringArray = exports.isString = void 0;
-var is_array_1 = __webpack_require__(2555);
+var is_array_1 = __webpack_require__(41515);
 function isString(value) {
     return typeof value === 'string';
 }
@@ -909,7 +907,7 @@ exports.isStringArray = isStringArray;
 
 /***/ }),
 
-/***/ 99562:
+/***/ 64892:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -928,38 +926,7 @@ exports.isWindow = isWindow;
 
 /***/ }),
 
-/***/ 39665:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.assert = void 0;
-var tslib_1 = __webpack_require__(20255);
-var AssertionError = (function (_super) {
-    tslib_1.__extends(AssertionError, _super);
-    function AssertionError(message) {
-        var _this = _super.call(this, message) || this;
-        _this.name = 'AssertionError';
-        return _this;
-    }
-    return AssertionError;
-}(Error));
-function assert(condition, message) {
-    if (!condition) {
-        throw new AssertionError("Assertion failed: ".concat(message));
-    }
-}
-exports.assert = assert;
-
-
-/***/ }),
-
-/***/ 36211:
+/***/ 28033:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -1013,7 +980,7 @@ exports.domToVDom = domToVDom;
 
 /***/ }),
 
-/***/ 23336:
+/***/ 40793:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -1024,14 +991,14 @@ exports.domToVDom = domToVDom;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
-tslib_1.__exportStar(__webpack_require__(66814), exports);
-tslib_1.__exportStar(__webpack_require__(52464), exports);
-tslib_1.__exportStar(__webpack_require__(53401), exports);
+tslib_1.__exportStar(__webpack_require__(93401), exports);
+tslib_1.__exportStar(__webpack_require__(74651), exports);
+tslib_1.__exportStar(__webpack_require__(27245), exports);
 
 
 /***/ }),
 
-/***/ 66814:
+/***/ 93401:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -1045,7 +1012,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 /***/ }),
 
-/***/ 52464:
+/***/ 74651:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -1057,8 +1024,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.VDomRender = void 0;
 var tslib_1 = __webpack_require__(20255);
-var helpers_1 = __webpack_require__(36211);
-var async_1 = __webpack_require__(60588);
+var helpers_1 = __webpack_require__(28033);
+var async_1 = __webpack_require__(68029);
 var autobind_decorator_1 = __webpack_require__(70631);
 var isProperty = function (key) { return key !== 'children'; };
 var isNew = function (prev, next) {
@@ -1243,7 +1210,7 @@ exports.VDomRender = VDomRender;
 
 /***/ }),
 
-/***/ 53401:
+/***/ 27245:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -1255,7 +1222,7 @@ exports.VDomRender = VDomRender;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.VDomJodit = void 0;
 __webpack_require__(8058);
-var render_1 = __webpack_require__(52464);
+var render_1 = __webpack_require__(74651);
 var VDomJodit = (function () {
     function VDomJodit(elm) {
         var _a;
@@ -1288,6 +1255,13 @@ var VDomJodit = (function () {
 }());
 exports.VDomJodit = VDomJodit;
 
+
+/***/ }),
+
+/***/ 52378:
+/***/ (function(module) {
+
+module.exports = {assert(){}};;
 
 /***/ })
 
@@ -1334,7 +1308,7 @@ exports.VDomJodit = VDomJodit;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(23336);
+/******/ 	var __webpack_exports__ = __webpack_require__(40793);
 /******/ 	
 /******/ 	return __webpack_exports__;
 /******/ })()

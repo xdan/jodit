@@ -13,6 +13,8 @@
 
 #### :boom: Breaking Change
 
+-   Filebrowser adds a timestamp to the image preview url, now it will be the same as the server returned the `changed` field in the response.
+    This is necessary for better caching in the browser.
 -   `cleanHTML.denyTags` default equal `script` Those. script tags are disabled by default. If you need them then turn off this rule:
 
 ```js
@@ -1697,11 +1699,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                             ]
+-                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                 ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

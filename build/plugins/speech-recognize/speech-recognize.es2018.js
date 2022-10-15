@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.21.0
+ * Version: v3.21.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -25,7 +25,7 @@ module.exports = "<svg viewBox=\"0 0 16 16\" xml:space=\"preserve\" xmlns=\"http
 
 /***/ }),
 
-/***/ 86937:
+/***/ 27906:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80,7 +80,7 @@ const zh_tw = __webpack_require__(97957);
 
 /***/ }),
 
-/***/ 56949:
+/***/ 3815:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -95,17 +95,17 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(20255);
 // EXTERNAL MODULE: ./src/core/plugin/index.ts
-var core_plugin = __webpack_require__(35570);
+var core_plugin = __webpack_require__(76454);
 // EXTERNAL MODULE: ./src/core/decorators/watch/watch.ts
-var watch = __webpack_require__(44101);
+var watch = __webpack_require__(30192);
 // EXTERNAL MODULE: ./src/core/helpers/utils/utils.ts
-var utils = __webpack_require__(51976);
+var utils = __webpack_require__(32389);
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(58299);
+var global = __webpack_require__(16672);
 // EXTERNAL MODULE: ./src/core/dom/dom.ts
-var dom = __webpack_require__(43887);
+var dom = __webpack_require__(65401);
 // EXTERNAL MODULE: ./src/core/decorators/debounce/debounce.ts
-var debounce = __webpack_require__(1509);
+var debounce = __webpack_require__(2830);
 ;// CONCATENATED MODULE: ./src/plugins/speech-recognize/helpers/exec-spell-command.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -118,17 +118,17 @@ function execSpellCommand(jodit, commandSentence) {
 }
 
 // EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(27537);
+var config = __webpack_require__(80031);
 // EXTERNAL MODULE: ./src/core/helpers/utils/data-bind.ts
-var data_bind = __webpack_require__(70774);
+var data_bind = __webpack_require__(75698);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-boolean.ts
-var is_boolean = __webpack_require__(65131);
+var is_boolean = __webpack_require__(10152);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var icon = __webpack_require__(76381);
+var icon = __webpack_require__(80353);
 // EXTERNAL MODULE: ./src/core/event-emitter/eventify.ts
-var eventify = __webpack_require__(99437);
+var eventify = __webpack_require__(36090);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
-var decorators = __webpack_require__(63345);
+var decorators = __webpack_require__(63945);
 ;// CONCATENATED MODULE: ./src/plugins/speech-recognize/constants.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -457,7 +457,7 @@ class SpeechRecognizeNative extends core_plugin/* Plugin */.S {
     afterInit(jodit) {
         const { commands } = jodit.o.speechRecognize;
         if (commands) {
-            (0,global/* extendLang */.xl)(__webpack_require__(86937));
+            (0,global/* extendLang */.xl)(__webpack_require__(27906));
             (0,utils/* keys */.XP)(commands, false).forEach(words => {
                 const keys = words.split('|');
                 keys.forEach(key => {
@@ -935,7 +935,7 @@ module.exports = {
 },
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ var __webpack_exec__ = function(moduleId) { return __webpack_require__(__webpack_require__.s = moduleId); }
-/******/ var __webpack_exports__ = (__webpack_exec__(56949));
+/******/ var __webpack_exports__ = (__webpack_exec__(3815));
 /******/ return __webpack_exports__;
 /******/ }
 ]);

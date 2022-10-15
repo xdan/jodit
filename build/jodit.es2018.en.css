@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.21.0
+ * Version: v3.21.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -206,11 +206,11 @@
   box-sizing: border-box;
   padding: 0 var(--jd-padding-default);
   border: 1px solid var(--jd-color-border);
+  border-radius: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background-color: var(--jd-color-white);
-  border-radius: 0;
   line-height: var(--jd-input-height);
   outline: none;
 }
@@ -242,7 +242,7 @@
 }
 .jodit-select {
   padding-right: calc(var(--jd-padding-default) * 2);
-  background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+);
+  background-image: url("data:image/svg+xml,%3Csvg%20id%3D%22Layer_1%22%20data-name%3D%22Layer%201%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%204.95%2010%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23fff%3B%7D.cls-2%7Bfill%3A%23444%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ctitle%3Earrows%3C%2Ftitle%3E%3Crect%20class%3D%22cls-1%22%20width%3D%224.95%22%20height%3D%2210%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20points%3D%221.41%204.67%202.48%203.18%203.54%204.67%201.41%204.67%22%2F%3E%3Cpolygon%20class%3D%22cls-2%22%20points%3D%223.54%205.33%202.48%206.82%201.41%205.33%203.54%205.33%22%2F%3E%3C%2Fsvg%3E");
   background-position: 98% 50%;
   background-repeat: no-repeat;
 }
@@ -268,9 +268,9 @@
   justify-content: center;
   padding: 0 var(--jd-padding-default);
   border: 0;
+  border-radius: 0.25rem;
   margin: 0;
   background-color: var(--jd-color-background-gray);
-  border-radius: 0.25rem;
   color: var(--jd-color-default);
   cursor: pointer;
   line-height: 1;
@@ -326,8 +326,8 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: var(--jd-color-gray);
   border-radius: var(--jd-switche-height);
+  background-color: var(--jd-color-gray);
   cursor: pointer;
   transition: 0.4s;
 }
@@ -337,8 +337,8 @@
   left: var(--jd-switche-slider-margin);
   width: var(--jd-switche-slider-size);
   height: var(--jd-switche-slider-size);
-  background-color: white;
   border-radius: 50%;
+  background-color: white;
   content: '';
   transition: 0.4s;
 }
@@ -1902,11 +1902,11 @@ svg.jodit-icon {
   box-sizing: border-box;
   padding: 0 var(--jd-padding-default);
   border: 1px solid var(--jd-color-border);
+  border-radius: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background-color: var(--jd-color-white);
-  border-radius: 0;
   line-height: var(--jd-input-height);
   outline: none;
   border: 0;
@@ -2007,11 +2007,11 @@ svg.jodit-icon {
   box-sizing: border-box;
   padding: 0 var(--jd-padding-default);
   border: 1px solid var(--jd-color-border);
+  border-radius: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background-color: var(--jd-color-white);
-  border-radius: 0;
   line-height: var(--jd-input-height);
   outline: none;
   border: 0;
@@ -2136,11 +2136,11 @@ svg.jodit-icon {
   box-sizing: border-box;
   padding: 0 var(--jd-padding-default);
   border: 1px solid var(--jd-color-border);
+  border-radius: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background-color: var(--jd-color-white);
-  border-radius: 0;
   line-height: var(--jd-input-height);
   outline: none;
   border: 0;

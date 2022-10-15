@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.21.0
+ * Version: v3.21.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -19,7 +19,7 @@
 })(self, function() {
 return (self["webpackChunkjodit"] = self["webpackChunkjodit"] || []).push([[101],{
 
-/***/ 79816:
+/***/ 62844:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -31,11 +31,11 @@ return (self["webpackChunkjodit"] = self["webpackChunkjodit"] || []).push([[101]
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Debug = void 0;
 var tslib_1 = __webpack_require__(20255);
-var plugin_1 = __webpack_require__(35570);
-var global_1 = __webpack_require__(58299);
-var dom_1 = __webpack_require__(43887);
-var helpers_1 = __webpack_require__(92654);
-var constants_1 = __webpack_require__(10063);
+var plugin_1 = __webpack_require__(76454);
+var global_1 = __webpack_require__(16672);
+var dom_1 = __webpack_require__(65401);
+var helpers_1 = __webpack_require__(83370);
+var constants_1 = __webpack_require__(47386);
 var Debug = (function (_super) {
     tslib_1.__extends(Debug, _super);
     function Debug() {
@@ -89,7 +89,7 @@ global_1.pluginSystem.add('debug', Debug);
 },
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ var __webpack_exec__ = function(moduleId) { return __webpack_require__(__webpack_require__.s = moduleId); }
-/******/ var __webpack_exports__ = (__webpack_exec__(79816));
+/******/ var __webpack_exports__ = (__webpack_exec__(62844));
 /******/ return __webpack_exports__;
 /******/ }
 ]);

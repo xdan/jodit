@@ -13,7 +13,7 @@ module.exports = ({ superDirname, uglify, ES, isProd }) => {
 			{
 				loader: 'ts-loader',
 				options: {
-					transpileOnly: uglify,
+					transpileOnly: isProd,
 					allowTsInNodeModules: true,
 					compilerOptions: {
 						target: ES

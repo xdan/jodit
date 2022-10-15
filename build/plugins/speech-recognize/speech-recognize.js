@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.21.0
+ * Version: v3.21.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 38587:
+/***/ 97293:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -46,12 +46,12 @@ __webpack_require__.r(__webpack_exports__);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var config_1 = __webpack_require__(27537);
-var data_bind_1 = __webpack_require__(70774);
-var is_boolean_1 = __webpack_require__(65131);
-var icon_1 = __webpack_require__(76381);
-var recognize_manager_1 = __webpack_require__(94539);
-var api_1 = __webpack_require__(43467);
+var config_1 = __webpack_require__(80031);
+var data_bind_1 = __webpack_require__(75698);
+var is_boolean_1 = __webpack_require__(10152);
+var icon_1 = __webpack_require__(80353);
+var recognize_manager_1 = __webpack_require__(39406);
+var api_1 = __webpack_require__(67537);
 config_1.Config.prototype.speechRecognize = {
     api: api_1.SpeechRecognition,
     sound: true,
@@ -142,7 +142,7 @@ config_1.Config.prototype.controls.speechRecognize = {
 
 /***/ }),
 
-/***/ 28511:
+/***/ 2904:
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -160,7 +160,7 @@ exports.WARN = 940;
 
 /***/ }),
 
-/***/ 43467:
+/***/ 67537:
 /***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
@@ -178,7 +178,7 @@ exports.SpeechRecognition = window.SpeechRecognition ||
 
 /***/ }),
 
-/***/ 99829:
+/***/ 29917:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -200,7 +200,7 @@ exports.execSpellCommand = execSpellCommand;
 
 /***/ }),
 
-/***/ 94539:
+/***/ 39406:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -213,10 +213,10 @@ exports.execSpellCommand = execSpellCommand;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.RecognizeManager = void 0;
 var tslib_1 = __webpack_require__(20255);
-var eventify_1 = __webpack_require__(99437);
-var decorators_1 = __webpack_require__(9901);
-var sound_1 = __webpack_require__(87672);
-var constants_1 = __webpack_require__(28511);
+var eventify_1 = __webpack_require__(36090);
+var decorators_1 = __webpack_require__(18731);
+var sound_1 = __webpack_require__(10983);
+var constants_1 = __webpack_require__(2904);
 var RecognizeManager = (function (_super) {
     tslib_1.__extends(RecognizeManager, _super);
     function RecognizeManager(async, api) {
@@ -392,7 +392,7 @@ exports.RecognizeManager = RecognizeManager;
 
 /***/ }),
 
-/***/ 87672:
+/***/ 10983:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -404,7 +404,7 @@ exports.RecognizeManager = RecognizeManager;
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sound = void 0;
-var constants_1 = __webpack_require__(28511);
+var constants_1 = __webpack_require__(2904);
 function sound(_a) {
     var _b = _a === void 0 ? {} : _a, _c = _b.sec, sec = _c === void 0 ? 0.1 : _c, _d = _b.frequency, frequency = _d === void 0 ? constants_1.PII : _d, _e = _b.gain, gain = _e === void 0 ? 0.1 : _e, _f = _b.type, type = _f === void 0 ? 'sine' : _f;
     if (typeof window.AudioContext === 'undefined' &&
@@ -428,7 +428,7 @@ exports.sound = sound;
 
 /***/ }),
 
-/***/ 86937:
+/***/ 27906:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -482,7 +482,7 @@ exports.zh_tw = zh_tw;
 
 /***/ }),
 
-/***/ 40256:
+/***/ 4376:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -496,14 +496,14 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SpeechRecognizeNative = void 0;
 var tslib_1 = __webpack_require__(20255);
 __webpack_require__(57368);
-var plugin_1 = __webpack_require__(35570);
-var watch_1 = __webpack_require__(44101);
-var utils_1 = __webpack_require__(51976);
-var global_1 = __webpack_require__(58299);
-var dom_1 = __webpack_require__(43887);
-var debounce_1 = __webpack_require__(1509);
-var exec_spell_command_1 = __webpack_require__(99829);
-__webpack_require__(38587);
+var plugin_1 = __webpack_require__(76454);
+var watch_1 = __webpack_require__(30192);
+var utils_1 = __webpack_require__(32389);
+var global_1 = __webpack_require__(16672);
+var dom_1 = __webpack_require__(65401);
+var debounce_1 = __webpack_require__(2830);
+var exec_spell_command_1 = __webpack_require__(29917);
+__webpack_require__(97293);
 var SpeechRecognizeNative = (function (_super) {
     tslib_1.__extends(SpeechRecognizeNative, _super);
     function SpeechRecognizeNative(j) {
@@ -521,7 +521,7 @@ var SpeechRecognizeNative = (function (_super) {
         var _this = this;
         var commands = jodit.o.speechRecognize.commands;
         if (commands) {
-            (0, global_1.extendLang)(__webpack_require__(86937));
+            (0, global_1.extendLang)(__webpack_require__(27906));
             (0, utils_1.keys)(commands, false).forEach(function (words) {
                 var keys = words.split('|');
                 keys.forEach(function (key) {
@@ -1002,7 +1002,7 @@ module.exports = {
 },
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ var __webpack_exec__ = function(moduleId) { return __webpack_require__(__webpack_require__.s = moduleId); }
-/******/ var __webpack_exports__ = (__webpack_exec__(40256));
+/******/ var __webpack_exports__ = (__webpack_exec__(4376));
 /******/ return __webpack_exports__;
 /******/ }
 ]);

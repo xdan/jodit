@@ -82,13 +82,13 @@
 	box-sizing: border-box;
 	padding: 0 var(--padding-default);
 	border: 1px solid var(--color-border);
+	border-radius: 0;
 
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 
 	background-color: var(--color-white);
-	border-radius: 0;
 	line-height: var(--input-height);
 
 	outline: none;
@@ -130,7 +130,7 @@
 
 .jodit-select {
 	padding-right: calc(var(--padding-default) * 2);
-	background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+);
+	background-image: data-uri('./icons/pins.svg');
 	background-position: 98% 50%;
 	background-repeat: no-repeat;
 }
@@ -160,9 +160,9 @@
 	justify-content: center;
 	padding: 0 var(--padding-default);
 	border: 0;
+	border-radius: 0.25rem;
 	margin: 0;
 	background-color: var(--color-background-gray);
-	border-radius: 0.25rem;
 	color: var(--color-default);
 	cursor: pointer;
 	line-height: 1;
@@ -227,8 +227,8 @@
 		right: 0;
 		bottom: 0;
 		left: 0;
-		background-color: var(--color-gray);
 		border-radius: var(--switche-height);
+		background-color: var(--color-gray);
 		cursor: pointer;
 		transition: 0.4s;
 
@@ -238,8 +238,8 @@
 			left: var(--switche-slider-margin);
 			width: var(--switche-slider-size);
 			height: var(--switche-slider-size);
-			background-color: white;
 			border-radius: 50%;
+			background-color: white;
 			content: '';
 			transition: 0.4s;
 		}

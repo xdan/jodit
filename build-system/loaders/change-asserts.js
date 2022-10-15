@@ -5,5 +5,5 @@
  */
 
 module.exports = function (source) {
-	return source.replace(/(^[\s]*assert\()/gm, '!isProd && $1');
+	return source.replace(/\n[\s]+assert\([^;]+\);/g, '');
 };

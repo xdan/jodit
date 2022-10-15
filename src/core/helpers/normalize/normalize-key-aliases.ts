@@ -18,7 +18,13 @@ import { KEY_ALIASES } from 'jodit/core/constants';
 export function normalizeKeyAliases(keys: string): string {
 	const memory: IDictionary<boolean> = {};
 
-	const order: IDictionary = { meta: 1, ctrl: 2, alt: 3, shift: 4 };
+	const order: IDictionary = {
+		meta: 1,
+		ctrl: 2,
+		control: 2,
+		alt: 3,
+		shift: 4
+	};
 
 	return keys
 		.replace(/\+\+/g, '+add')
