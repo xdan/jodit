@@ -15,7 +15,10 @@ describe('Theme screenshot testing', () => {
 
 		const container = await page.$('.jodit');
 		const screenshot = await container.screenshot();
-		expect(screenshot).toMatchImageSnapshot(this);
+		expect(screenshot).toMatchImageSnapshot(this, {
+			failureThreshold: 0.1,
+			failureThresholdType: 'percent'
+		});
 	}).timeout(10000);
 
 	describe('Dark theme', () => {
