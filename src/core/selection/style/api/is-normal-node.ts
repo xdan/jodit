@@ -6,11 +6,17 @@
 
 import type { Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
+import { Select } from 'jodit/core/selection';
 
 /**
  * Is normal usual element
  * @private
  */
 export function isNormalNode(elm: Nullable<Node>): boolean {
-	return Boolean(elm && !Dom.isEmptyTextNode(elm) && !Dom.isTemporary(elm));
+	return Boolean(
+		elm &&
+			!Dom.isEmptyTextNode(elm) &&
+			!Dom.isTemporary(elm) &&
+			!Select.isMarker(elm)
+	);
 }

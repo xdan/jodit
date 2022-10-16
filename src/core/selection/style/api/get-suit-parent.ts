@@ -50,5 +50,10 @@ export function getSuitParent(
 		return parentNode;
 	}
 
+	// <strong style="color:red"><em>|test|</em></strong> => apply <strong>
+	if (style.isElementCommit && !Dom.isBlock(parentNode)) {
+		return getSuitParent(style, parentNode, root);
+	}
+
 	return null;
 }

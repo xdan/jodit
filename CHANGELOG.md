@@ -11,6 +11,10 @@
 
 ## 3.21.4
 
+#### :bug: Bug Fix
+
+- [Font Style Change when removing Bold or Italics](https://xdsoft.net/jodit/pro/cab/issues/6ef20dc4-fabe-43c3-a299-86797d328bdf)
+
 #### :house: Internal
 
 @types/node                    ^18.8.3  →  ^18.11.0

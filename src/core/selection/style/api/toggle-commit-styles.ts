@@ -4,6 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IJodit } from 'jodit/types';
 import type { CommitStyle } from '../commit-style';
 import { Dom } from 'jodit/core/dom';
 
@@ -14,13 +15,19 @@ import { Dom } from 'jodit/core/dom';
  */
 export function toggleCommitStyles(
 	commitStyle: CommitStyle,
-	elm: HTMLElement
+	elm: HTMLElement,
+	jodit: IJodit
 ): boolean {
 	if (
 		commitStyle.elementIsBlock ||
 		(Dom.isTag(elm, commitStyle.element) && !commitStyle.elementIsDefault)
 	) {
-		Dom.unwrap(elm);
+		if (elm.getAttribute('style')) {
+			Dom.replace(elm, commitStyle.defaultTag, jodit.createInside, true);
+		} else {
+			Dom.unwrap(elm);
+		}
+
 		return true;
 	}
 

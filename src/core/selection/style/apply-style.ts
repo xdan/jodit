@@ -114,7 +114,7 @@ export function ApplyStyle(jodit: IJodit, cs: CommitStyle): void {
 			toggleStyles(toggleElm: HTMLElement): void {
 				let mode: CommitMode = INITIAL;
 
-				if (toggleCommitStyles(cs, toggleElm)) {
+				if (toggleCommitStyles(cs, toggleElm, jodit)) {
 					mode = UNWRAP;
 				} else {
 					mode = toggleCSS(cs, toggleElm, jodit, mode);

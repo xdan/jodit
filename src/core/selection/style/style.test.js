@@ -19,6 +19,13 @@ describe('Apply style', () => {
 		describe('Base apply', () => {
 			[
 				[
+					'<p><strong style="font-family: Impact, Charcoal, sans-serif;"><em>|test|</em></strong></p>',
+					{
+						element: 'strong'
+					},
+					'<p><span style="font-family:Impact,Charcoal,sans-serif"><em>|test|</em></span></p>'
+				],
+				[
 					'<p>|Hello world|</p>',
 					{
 						element: 'ul',
