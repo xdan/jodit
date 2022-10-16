@@ -13,14 +13,16 @@
 import './tabs.less';
 
 import type { IDictionary, IJodit, IUIButton } from 'jodit/types';
-import { $$, isFunction } from 'jodit/core/helpers';
+import { $$ } from 'jodit/core/helpers';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { Button, UIElement } from 'jodit/core/ui';
 import { Component } from 'jodit/core/component';
+import { Dom } from 'jodit/src/core/dom/dom';
 
 export interface TabOption {
 	icon?: string;
 	name: string;
-	content: HTMLElement | (() => void) | UIElement;
+	content: HTMLElement | ((this: IJodit) => void) | UIElement;
 }
 
 /**
@@ -113,7 +115,7 @@ export const TabsWidget = (
 		button.onAction(() => {
 			setActive(name);
 
-			if (isFunction(content)) {
+			if (isFunction(content) && !Dom.isElement(content)) {
 				content.call(jodit);
 			}
 

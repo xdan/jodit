@@ -9,6 +9,19 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.21.4
+
+#### :house: Internal
+
+@types/node                    ^18.8.3  →  ^18.11.0
+axios                           ^1.1.2  →    ^1.1.3
+css-minimizer-webpack-plugin    ^4.2.1  →    ^4.2.2
+mocha                          ^10.0.0  →   ^10.1.0
+postcss                       >=8.4.17  →  >=8.4.18
+puppeteer                      ^18.2.1  →   ^19.0.0
+stylelint                     ^14.13.0  →  ^14.14.0
+stylelint-config-standard      ^28.0.0  →   ^29.0.0
+
 ## 3.21.1
 
 #### :boom: Breaking Change

@@ -189,14 +189,14 @@ export const cssPath = (el: Element): Nullable<string> => {
  * Try to find element by selector
  */
 export function resolveElement(
-	element: string | HTMLElement,
+	element: string | HTMLElement | unknown,
 	od: ShadowRoot | Document
 ): HTMLElement {
-	let resolved = element;
+	let resolved: string | Nullable<HTMLElement> | unknown = element;
 
 	if (isString(element)) {
 		try {
-			resolved = od.querySelector(element) as HTMLInputElement;
+			resolved = od.querySelector(element) as Nullable<HTMLInputElement>;
 		} catch {
 			throw error(
 				'String "' + element + '" should be valid HTML selector'
@@ -216,5 +216,5 @@ export function resolveElement(
 		);
 	}
 
-	return resolved;
+	return resolved as HTMLInputElement;
 }

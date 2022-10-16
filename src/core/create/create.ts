@@ -34,6 +34,7 @@ import { INVISIBLE_SPACE } from 'jodit/core/constants';
 
 export class Create implements ICreate {
 	private get doc(): Document {
+		// @ts-ignore - TODO it's a function
 		return isFunction(this.document) ? this.document() : this.document;
 	}
 

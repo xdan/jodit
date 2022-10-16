@@ -32,7 +32,12 @@ export function position(
 	let xPos = rect.left,
 		yPos = rect.top;
 
-	if (isJoditObject(jodit) && jodit.iframe && !recurse) {
+	if (
+		isJoditObject(jodit) &&
+		jodit.iframe &&
+		jodit.ed.body.contains(elm) &&
+		!recurse
+	) {
 		const { left, top } = position(jodit.iframe, jodit, true);
 
 		xPos += left;
