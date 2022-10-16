@@ -6,14 +6,14 @@
 
 const path = require('path');
 
-module.exports = ({ superDirname, uglify, ES, isProd }) => {
+module.exports = ({ superDirname, uglify, ES, isProd, isTest }) => {
 	return {
 		test: /\.ts$/,
 		use: [
 			{
 				loader: 'ts-loader',
 				options: {
-					transpileOnly: isProd,
+					transpileOnly: isProd && !isTest,
 					allowTsInNodeModules: true,
 					compilerOptions: {
 						target: ES
@@ -21,7 +21,7 @@ module.exports = ({ superDirname, uglify, ES, isProd }) => {
 				}
 			}
 		].concat(
-			isProd
+			isProd && !isTest
 				? [
 						{
 							loader: path.resolve(

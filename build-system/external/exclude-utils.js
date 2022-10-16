@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-module.exports = ({ isProd }) => {
-	return isProd
+module.exports = ({ isProd, isTest }) => {
+	return isProd && !isTest
 		? {
 				'jodit/core/helpers/utils/assert': 'export {assert(){}};',
 				'./assert': 'export {assert(){}};'
