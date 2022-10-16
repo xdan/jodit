@@ -5555,7 +5555,10 @@ var is_jodit_object = __webpack_require__(12866);
 function position(elm, jodit, recurse = false) {
     const rect = elm.getBoundingClientRect();
     let xPos = rect.left, yPos = rect.top;
-    if ((0,is_jodit_object/* isJoditObject */.Z)(jodit) && jodit.iframe && !recurse) {
+    if ((0,is_jodit_object/* isJoditObject */.Z)(jodit) &&
+        jodit.iframe &&
+        jodit.ed.body.contains(elm) &&
+        !recurse) {
         const { left, top } = position(jodit.iframe, jodit, true);
         xPos += left;
         yPos += top;
@@ -18476,14 +18479,20 @@ const ColorPickerWidget = (editor, callback, coldColor) => {
     return form;
 };
 
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
+var is_function = __webpack_require__(87385);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 1 modules
 var component = __webpack_require__(2624);
+// EXTERNAL MODULE: ./src/core/dom/dom.ts
+var dom_dom = __webpack_require__(65401);
 ;// CONCATENATED MODULE: ./src/modules/widget/tabs/tabs.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+
 
 
 
@@ -18515,7 +18524,7 @@ const TabsWidget = (jodit, tabs, state) => {
         buttons.appendChild(button.container);
         buttonList.push(button);
         button.container.classList.add('jodit-tabs__button', 'jodit-tabs__button_columns_' + tabs.length);
-        if (!(0,helpers.isFunction)(content)) {
+        if (!(0,is_function/* isFunction */.m)(content)) {
             tab.appendChild(component/* Component.isInstanceOf */.wA.isInstanceOf(content, ui/* UIElement */.u1)
                 ? content.container
                 : content);
@@ -18526,7 +18535,7 @@ const TabsWidget = (jodit, tabs, state) => {
         tabBox.appendChild(tab);
         button.onAction(() => {
             setActive(name);
-            if ((0,helpers.isFunction)(content)) {
+            if ((0,is_function/* isFunction */.m)(content) && !dom_dom/* Dom.isElement */.i.isElement(content)) {
                 content.call(jodit);
             }
             if (state) {
