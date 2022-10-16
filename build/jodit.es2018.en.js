@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.21.3
+ * Version: v3.21.4
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -22,7 +22,7 @@ return /******/ (function() { // webpackBootstrap
 /***/ 11399:
 /***/ (function(module) {
 
-module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Upload","Browse","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","Chars: %d","Words: %d","Strike through","Underline","superscript","subscript","Cut selection","Select all","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Update","pencil","Eye"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Select %s","Vertical align","Split","Merge","Add column","Add row","License: %s","Delete","Split vertical","Split horizontal","Border","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Insert as Text","Insert only Text","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","Word Paste Detected","Clean","Insert className","Press Alt for custom resizing"]
+module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Free Non-commercial Version","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Clean","Insert as Text","Insert only Text","Word Paste Detected","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Browse","Upload","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Eye","pencil","Update"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Chars: %d","Words: %d","All","Select %s","Select all","Vertical align","Split","Split vertical","Split horizontal","Merge","Add column","Add row","Delete","Border","License: %s","Strike through","Underline","superscript","subscript","Cut selection","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","Insert className","Press Alt for custom resizing"]
 
 /***/ }),
 
@@ -9192,8 +9192,12 @@ class FiniteStateMachine {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
 function isNormalNode(elm) {
-    return Boolean(elm && !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm) && !dom/* Dom.isTemporary */.i.isTemporary(elm));
+    return Boolean(elm &&
+        !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm) &&
+        !dom/* Dom.isTemporary */.i.isTemporary(elm) &&
+        !Select.isMarker(elm));
 }
 
 ;// CONCATENATED MODULE: ./src/core/selection/style/api/is-suit-element.ts
@@ -9275,6 +9279,9 @@ function getSuitParent(style, node, root) {
         (!dom/* Dom.isBlock */.i.isBlock(parentNode) || style.elementIsBlock)) {
         return parentNode;
     }
+    if (style.isElementCommit && !dom/* Dom.isBlock */.i.isBlock(parentNode)) {
+        return getSuitParent(style, parentNode, root);
+    }
     return null;
 }
 
@@ -9296,10 +9303,15 @@ function isInsideInvisibleElement(font, root) {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-function toggleCommitStyles(commitStyle, elm) {
+function toggleCommitStyles(commitStyle, elm, jodit) {
     if (commitStyle.elementIsBlock ||
         (dom/* Dom.isTag */.i.isTag(elm, commitStyle.element) && !commitStyle.elementIsDefault)) {
-        dom/* Dom.unwrap */.i.unwrap(elm);
+        if (elm.getAttribute('style')) {
+            dom/* Dom.replace */.i.replace(elm, commitStyle.defaultTag, jodit.createInside, true);
+        }
+        else {
+            dom/* Dom.unwrap */.i.unwrap(elm);
+        }
         return true;
     }
     return false;
@@ -9569,7 +9581,7 @@ function ApplyStyle(jodit, cs) {
         wholeElement: {
             toggleStyles(toggleElm) {
                 let mode = INITIAL;
-                if (toggleCommitStyles(cs, toggleElm)) {
+                if (toggleCommitStyles(cs, toggleElm, jodit)) {
                     mode = UNWRAP;
                 }
                 else {
@@ -12448,7 +12460,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.21.3";
+        this.version = "3.21.4";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -12530,10 +12542,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.21.3";
+        return "3.21.4";
     }
     static getVersion() {
-        return "3.21.3";
+        return "3.21.4";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));

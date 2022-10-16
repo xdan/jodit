@@ -91,7 +91,7 @@ module.exports = function (config) {
 
 			'app.css',
 			'node_modules/synchronous-promise/dist/synchronous-promise.js',
-			'src/index.ts',
+			'build/jodit.js',
 			'test/bootstrap.js',
 			{ pattern: argv.grep ?? 'src/**/*.test.js', watched: false },
 			{
