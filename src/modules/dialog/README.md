@@ -47,3 +47,24 @@ dialog.setFooter([
 ]);
 dialog.open();
 ```
+
+In all of these examples, the dialog opens regardless of Jodit's settings, specifically the selected language and theme.
+To make the dialog open in the same theme as the editor, you can set the theme in its settings, or you can use the [[IDlg]] trait.
+
+```js
+const dialog = new Jodit.modules.Dialog({
+  theme: 'dark'
+});
+
+// or
+
+const editor = new Jodit('#editor', {
+  theme: 'dark'
+});
+const dialog = editor.dlg();
+editor.alert('Hello world!');
+editor.confirm('Hello world?', (yes) => {
+	console.log('Ok?', yes);
+});
+```
+```
