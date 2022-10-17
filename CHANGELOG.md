@@ -9,6 +9,10 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.21.5
+
+- [Unnecessary message showing after reaching the limit](https://xdsoft.net/jodit/pro/cab/issues/380e8a02-00c5-4aa0-8923-5b957d503eb1)
+
 ## 3.21.4
 
 #### :bug: Bug Fix

@@ -44,6 +44,7 @@ export const MAY_BE_REMOVED_WITH_KEY = RegExp(
 	'i'
 );
 
+export const KEY_META = 'Meta';
 export const KEY_BACKSPACE = 'Backspace';
 export const KEY_TAB = 'Tab';
 export const KEY_ENTER = 'Enter';
@@ -64,6 +65,7 @@ export const NEARBY = 5;
 export const ACCURACY = 10;
 
 export const COMMAND_KEYS = [
+	KEY_META,
 	KEY_BACKSPACE,
 	KEY_DELETE,
 	KEY_UP,

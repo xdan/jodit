@@ -25,6 +25,40 @@ describe('Limit plugin', function () {
 			});
 
 			describe('For special keys (ctrl + c etc.)', function () {
+				describe('Events', () => {
+					it('should not emit limit events', () => {
+						const editor = getJodit({
+							limitChars: 5
+						});
+						editor.value = '<p>11111</p>';
+						let counter = 0;
+
+						editor.e.on('limit.limit', () => {
+							counter += 1;
+						});
+
+						simulateEvent(
+							['keydown', 'keyup'],
+							'c',
+							editor,
+							opts => {
+								opts.ctrlKey = true;
+							}
+						);
+
+						simulateEvent(
+							['keydown', 'keyup'],
+							'c',
+							editor,
+							opts => {
+								opts.metaKey = true;
+							}
+						);
+
+						expect(counter).equals(0);
+					});
+				});
+
 				it('should allow press them', done => {
 					const editor = getJodit({
 						limitChars: 5
