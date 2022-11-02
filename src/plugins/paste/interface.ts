@@ -22,3 +22,35 @@ export interface PastedData {
 	plain?: string;
 	rtf?: string;
 }
+
+declare module 'jodit/types/events' {
+	interface IEventEmitter {
+		/**
+		 * Emitted before a clipboard paste is processed
+		 * @event
+		 */
+		on(
+			event: 'beforePaste',
+			callback: (e: PasteEvent) => void | false
+		): this;
+
+		/**
+		 * Emitted after a clipboard paste is processed
+		 * @event
+		 */
+		on(event: 'afterPaste', callback: (e: PasteEvent) => false): this;
+
+		/**
+		 * Emitted before a clipboard paste if buffer content is like HTML
+		 * @event
+		 */
+		on(
+			event: 'processHTML',
+			callback: (
+				e: PasteEvent,
+				value: string,
+				texts: PastedData
+			) => void | true
+		): this;
+	}
+}
