@@ -9,26 +9,48 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.21.6
+
+#### :bug: Bug Fix
+
+-   [Select text formatting before writing #894](https://github.com/xdan/jodit/issues/894)
+
+#### :house: Internal
+
+```
+core-js                            ^3.25.5  →   ^3.26.0
+@types/node                       ^18.11.0  →  ^18.11.9
+@typescript-eslint/eslint-plugin   ^5.40.0  →   ^5.42.0
+@typescript-eslint/parser          ^5.40.0  →   ^5.42.0
+autoprefixer                      ^10.4.12  →  ^10.4.13
+cssnano-preset-advanced             ^5.3.8  →    ^5.3.9
+eslint                             ^8.25.0  →   ^8.26.0
+puppeteer                          ^19.0.0  →   ^19.2.1
+replace                             ^1.2.1  →    ^1.2.2
+tslib                               ^2.4.0  →    ^2.4.1
+yargs                              ^17.6.0  →   ^17.6.1
+```
+
 ## 3.21.5
 
-- [Unnecessary message showing after reaching the limit](https://xdsoft.net/jodit/pro/cab/issues/380e8a02-00c5-4aa0-8923-5b957d503eb1)
+-   [Unnecessary message showing after reaching the limit](https://xdsoft.net/jodit/pro/cab/issues/380e8a02-00c5-4aa0-8923-5b957d503eb1)
 
 ## 3.21.4
 
 #### :bug: Bug Fix
 
-- [Font Style Change when removing Bold or Italics](https://xdsoft.net/jodit/pro/cab/issues/6ef20dc4-fabe-43c3-a299-86797d328bdf)
+-   [Font Style Change when removing Bold or Italics](https://xdsoft.net/jodit/pro/cab/issues/6ef20dc4-fabe-43c3-a299-86797d328bdf)
 
 #### :house: Internal
 
-@types/node                    ^18.8.3  →  ^18.11.0
-axios                           ^1.1.2  →    ^1.1.3
-css-minimizer-webpack-plugin    ^4.2.1  →    ^4.2.2
-mocha                          ^10.0.0  →   ^10.1.0
-postcss                       >=8.4.17  →  >=8.4.18
-puppeteer                      ^18.2.1  →   ^19.0.0
-stylelint                     ^14.13.0  →  ^14.14.0
-stylelint-config-standard      ^28.0.0  →   ^29.0.0
+@types/node ^18.8.3 → ^18.11.0
+axios ^1.1.2 → ^1.1.3
+css-minimizer-webpack-plugin ^4.2.1 → ^4.2.2
+mocha ^10.0.0 → ^10.1.0
+postcss >=8.4.17 → >=8.4.18
+puppeteer ^18.2.1 → ^19.0.0
+stylelint ^14.13.0 → ^14.14.0
+stylelint-config-standard ^28.0.0 → ^29.0.0
 
 ## 3.21.1
 
@@ -1720,11 +1742,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                 ]
+-                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                       ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
