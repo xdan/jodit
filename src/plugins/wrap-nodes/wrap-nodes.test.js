@@ -136,9 +136,16 @@ describe('WrapNodes plugin test', function () {
 		});
 	});
 
-	describe('History', function () {
-		it('Should not change history stack length', function () {
-			const editor = getJodit();
+	describe('History', () => {
+		it('Should not change history stack length', async () => {
+			unmockPromise();
+			const editor = getJodit({
+				wrapNodes: {
+					emptyBlockAfterInit: true
+				}
+			});
+			await editor.async.requestIdlePromise();
+			expect(editor.value).equals('<p><br></p>');
 			editor.value = 'test';
 			expect(editor.value).equals('<p>test</p>');
 			expect(editor.history.length).equals(1);

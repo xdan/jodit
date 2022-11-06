@@ -15,10 +15,12 @@ declare module 'jodit/config' {
 	interface Config {
 		wrapNodes: {
 			exclude: HTMLTagNames[];
+			emptyBlockAfterInit: boolean;
 		};
 	}
 }
 
 Config.prototype.wrapNodes = {
-	exclude: ['hr', 'style', 'br']
+	exclude: ['hr', 'style', 'br'],
+	emptyBlockAfterInit: true
 };

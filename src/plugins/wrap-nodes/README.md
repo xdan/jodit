@@ -21,9 +21,14 @@ To prevent this from happening, you can explicitly set in the settings which tag
 ```js
 Jodit.make('#editor', {
 	wrapNodes: {
-		exclude: ['hr', 'style', 'my-component']
+		exclude: ['hr', 'style', 'my-component'],
+		emptyBlockAfterInit: true
 	}
 });
 ```
 
 Plugin settings are under the namespace [[Config.wrapNodes]]
+
+## Plugin settings
+
+-   `emptyBlockAfterInit` - If true, then after initialization, the plugin will add an empty paragraph block to the empty document.

@@ -31,7 +31,7 @@ class wrapNodes extends Plugin {
 
 		jodit.e
 			.on(
-				'drop.wtn focus.wtn keydown.wtn mousedown.wtn',
+				'drop.wtn focus.wtn keydown.wtn mousedown.wtn afterInit.wtn',
 				this.preprocessInput,
 				{
 					top: true
@@ -151,9 +151,14 @@ class wrapNodes extends Plugin {
 	 */
 	@autobind
 	private preprocessInput(): void {
-		const { jodit } = this;
+		const { jodit } = this,
+			isAfterInitEvent = jodit.e.current === 'afterInit';
 
-		if (!jodit.isEditorMode() || jodit.editor.firstChild) {
+		if (
+			!jodit.isEditorMode() ||
+			jodit.editor.firstChild ||
+			(!jodit.o.wrapNodes.emptyBlockAfterInit && isAfterInitEvent)
+		) {
 			return;
 		}
 
@@ -161,7 +166,9 @@ class wrapNodes extends Plugin {
 		const br = jodit.createInside.element('br');
 		Dom.append(box, br);
 		Dom.append(jodit.editor, box);
-		jodit.s.setCursorBefore(br);
+
+		jodit.s.isFocused() && jodit.s.setCursorBefore(br);
+		jodit.e.fire('internalChange');
 	}
 }
 
