@@ -11,10 +11,11 @@ describe('Search screenshot testing', () => {
 	describe('Open search popup', () => {
 		it('works', async function () {
 			await page.evaluate(() => {
-				return clickButton('find', editor);
+				clickButton('find', editor);
+				document.activeElement.blur();
 			});
 
-			await page.waitForSelector('.jodit-ui-search input:focus');
+			await page.waitForSelector('.jodit-ui-search input');
 			const element = await page.$('.jodit-ui-search__box');
 			const screenshot = await element.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this, {
@@ -29,6 +30,7 @@ describe('Search screenshot testing', () => {
 					clickTrigger('find', editor);
 					const popup = getOpenedPopup(editor);
 					clickButton('replace', popup);
+					document.activeElement.blur();
 				});
 
 				await page.waitForSelector('.jodit-ui-search');
