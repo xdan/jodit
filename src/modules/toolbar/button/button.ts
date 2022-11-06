@@ -15,6 +15,7 @@ import './button.less';
 import type {
 	Controls,
 	IControlType,
+	IControlListItem,
 	IControlTypeStrong,
 	IControlTypeStrongList,
 	IPopup,
@@ -37,7 +38,8 @@ import {
 	isJoditObject,
 	call,
 	isArray,
-	keys
+	keys,
+	isPlainObject
 } from 'jodit/core/helpers';
 import { Icon } from 'jodit/core/ui/icon';
 import { ToolbarCollection } from 'jodit/modules/toolbar/collection/collection';
@@ -417,9 +419,14 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 		toolbar.mode = 'vertical';
 
+		const isListItem = (
+			key: number | string | IControlListItem | IControlType
+		): key is IControlListItem =>
+			isPlainObject(key) && 'title' in key && 'value' in key;
+
 		const getButton = (
-			key: string,
-			value: string | number | object
+			key: number | string | IControlListItem | IControlType,
+			value?: string | number | object
 		): IControlTypeStrong => {
 			if (isString(value) && getControl(value)) {
 				return {
@@ -434,6 +441,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 					...getControl(key),
 					...(typeof value === 'object' ? value : {})
 				};
+			}
+
+			if (isListItem(key)) {
+				value = key.value;
+				key = key.title;
 			}
 
 			const { childTemplate } = control;

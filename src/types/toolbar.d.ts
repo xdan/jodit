@@ -143,7 +143,12 @@ interface IControlType<
 	 *  });
 	 * ```
 	 */
-	list?: IDictionary<string | number> | string[] | number[] | IControlType[];
+	list?:
+		| IDictionary<string | number>
+		| string[]
+		| number[]
+		| IControlType[]
+		| IControlListItem[];
 
 	/**
 	 * The command executes when the button is pressed. Allowed all
@@ -256,6 +261,11 @@ interface IControlType<
 	mods?: IMods['mods'];
 }
 
+interface IControlListItem {
+	title: string;
+	value: string;
+}
+
 interface IControlTypeStrong extends IControlType {
 	name: NonNullable<IControlType['name']>;
 }
@@ -295,9 +305,10 @@ export interface ButtonsGroup {
 export type ButtonsGroups = Array<IControlType | string | ButtonsGroup>;
 export type ButtonsOption = string | ButtonsGroups;
 
-interface IControlTypeStrongList extends IControlTypeStrong {
-	list: IDictionary<string> | string[];
-}
+type RequireKeys<T extends object, K extends keyof T> =
+	Required<Pick<T, K>> & Omit<T, K>;
+
+type IControlTypeStrongList = RequireKeys<IControlTypeStrong, 'list'>;
 
 interface IToolbarButton extends IUIButton {
 	control: IControlTypeStrong;
