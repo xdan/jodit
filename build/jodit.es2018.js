@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.21.5
+ * Version: v3.22.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -789,7 +789,7 @@ function __generator(thisArg, body) {
     function step(op) {
         if (f)
             throw new TypeError("Generator is already executing.");
-        while (_)
+        while (g && (g = 0, op[0] && (_ = 0)), _)
             try {
                 if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
                     return t;
@@ -8421,7 +8421,8 @@ class Select {
                 String(Math.random()).slice(2);
         marker.style.lineHeight = '0';
         marker.style.display = 'none';
-        marker.setAttribute('data-' + constants.MARKER_CLASS, atStart ? 'start' : 'end');
+        dom/* Dom.markTemporary */.i.markTemporary(marker);
+        (0,helpers.attr)(marker, 'data-' + constants.MARKER_CLASS, atStart ? 'start' : 'end');
         marker.appendChild(this.j.createInside.text(constants.INVISIBLE_SPACE));
         if (newRange) {
             if (dom/* Dom.isOrContains */.i.isOrContains(this.area, atStart ? newRange.startContainer : newRange.endContainer)) {
@@ -8615,7 +8616,6 @@ class Select {
         return null;
     }
     insertNode(node, insertCursorAfter = true, fireChange = true) {
-        var _a;
         this.errorNode(node);
         this.j.e.fire('safeHTML', node);
         if (!this.isFocused() && this.j.isEditorMode()) {
@@ -8623,36 +8623,39 @@ class Select {
             this.restore();
         }
         const sel = this.sel;
-        if (!this.isCollapsed()) {
-            this.j.execCommand('Delete');
-        }
-        this.j.e.fire('beforeInsertNode', node);
-        if (sel && sel.rangeCount) {
-            const range = sel.getRangeAt(0);
-            if (dom/* Dom.isOrContains */.i.isOrContains(this.area, range.commonAncestorContainer)) {
-                if (dom/* Dom.isTag */.i.isTag(range.startContainer, constants.INSEPARABLE_TAGS) &&
-                    range.collapsed) {
-                    (_a = range.startContainer.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(node, range.startContainer);
+        this.j.history.snapshot.transaction(() => {
+            var _a;
+            if (!this.isCollapsed()) {
+                this.j.execCommand('Delete');
+            }
+            this.j.e.fire('beforeInsertNode', node);
+            if (sel && sel.rangeCount) {
+                const range = sel.getRangeAt(0);
+                if (dom/* Dom.isOrContains */.i.isOrContains(this.area, range.commonAncestorContainer)) {
+                    if (dom/* Dom.isTag */.i.isTag(range.startContainer, constants.INSEPARABLE_TAGS) &&
+                        range.collapsed) {
+                        (_a = range.startContainer.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(node, range.startContainer);
+                    }
+                    else {
+                        dom/* Dom.safeInsertNode */.i.safeInsertNode(range, node);
+                    }
                 }
                 else {
-                    dom/* Dom.safeInsertNode */.i.safeInsertNode(range, node);
+                    this.area.appendChild(node);
                 }
             }
             else {
                 this.area.appendChild(node);
             }
-        }
-        else {
-            this.area.appendChild(node);
-        }
-        if (insertCursorAfter) {
-            if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-                node.lastChild && this.setCursorAfter(node.lastChild);
+            if (insertCursorAfter) {
+                if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+                    node.lastChild && this.setCursorAfter(node.lastChild);
+                }
+                else {
+                    this.setCursorAfter(node);
+                }
             }
-            else {
-                this.setCursorAfter(node);
-            }
-        }
+        });
         if (fireChange && this.j.events) {
             this.j.__imdSynchronizeValues();
         }
@@ -12596,7 +12599,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.21.5";
+        this.version = "3.22.1";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -12678,10 +12681,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.21.5";
+        return "3.22.1";
     }
     static getVersion() {
-        return "3.21.5";
+        return "3.22.1";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -15938,10 +15941,11 @@ var image_editor = __webpack_require__(37113);
  */
 
 
+
 class Snapshot extends component/* ViewComponent */.Hr {
     constructor() {
         super(...arguments);
-        this.isBlocked = false;
+        this.__isBlocked = false;
     }
     className() {
         return 'Snapshot';
@@ -15955,25 +15959,25 @@ class Snapshot extends component/* ViewComponent */.Hr {
             return 0;
         }
         const elms = elm.parentNode.childNodes;
-        let count = 0, last = null, j;
-        for (j = 0; j < elms.length; j += 1) {
-            if (last &&
-                !(dom/* Dom.isText */.i.isText(elms[j]) && elms[j].textContent === '') &&
-                !(dom/* Dom.isText */.i.isText(last) && dom/* Dom.isText */.i.isText(elms[j]))) {
+        let count = 0, previous = null;
+        for (let j = 0; j < elms.length; j += 1) {
+            if (previous &&
+                !this.isIgnoredNode(elms[j]) &&
+                !(dom/* Dom.isText */.i.isText(previous) && dom/* Dom.isText */.i.isText(elms[j]))) {
                 count += 1;
             }
             if (elms[j] === elm) {
                 return count;
             }
-            last = elms[j];
+            previous = elms[j];
         }
         return 0;
     }
     static strokeOffset(elm, offset) {
         while (dom/* Dom.isText */.i.isText(elm)) {
             elm = elm.previousSibling;
-            if (dom/* Dom.isText */.i.isText(elm) && elm.textContent != null) {
-                offset += elm.textContent.length;
+            if (dom/* Dom.isText */.i.isText(elm) && elm.nodeValue) {
+                offset += elm.nodeValue.length;
             }
         }
         return offset;
@@ -15984,7 +15988,7 @@ class Snapshot extends component/* ViewComponent */.Hr {
             return [];
         }
         while (elm && elm !== this.j.editor) {
-            if (elm) {
+            if (elm && !Snapshot.isIgnoredNode(elm)) {
                 counts.push(Snapshot.countNodesBeforeInParent(elm));
             }
             elm = elm.parentNode;
@@ -15998,6 +16002,22 @@ class Snapshot extends component/* ViewComponent */.Hr {
         }
         return n;
     }
+    get isBlocked() {
+        return this.__isBlocked;
+    }
+    __block(enable) {
+        this.__isBlocked = enable;
+    }
+    transaction(changes) {
+        this.__block(true);
+        try {
+            changes();
+        }
+        catch (e) {
+             false && 0;
+        }
+        this.__block(false);
+    }
     make() {
         const snapshot = {
             html: '',
@@ -16008,7 +16028,7 @@ class Snapshot extends component/* ViewComponent */.Hr {
                 endOffset: 0
             }
         };
-        snapshot.html = this.removeJoditSelection(this.j.getNativeEditorValue());
+        snapshot.html = this.removeJoditSelection(this.j.editor);
         const sel = this.j.s.sel;
         if (sel && sel.rangeCount) {
             const range = sel.getRangeAt(0), startContainer = this.calcHierarchyLadder(range.startContainer), endContainer = this.calcHierarchyLadder(range.endContainer);
@@ -16030,15 +16050,17 @@ class Snapshot extends component/* ViewComponent */.Hr {
         return snapshot;
     }
     restore(snapshot) {
-        this.isBlocked = true;
-        const scroll = this.storeScrollState();
-        const value = this.j.getNativeEditorValue();
-        if (value !== snapshot.html) {
-            this.j.value = snapshot.html;
-        }
-        this.restoreOnlySelection(snapshot);
-        this.restoreScrollState(scroll);
-        this.isBlocked = false;
+        this.transaction(() => {
+            const scroll = this.storeScrollState();
+            const value = this.j.getNativeEditorValue();
+            if (value !== snapshot.html) {
+                this.j.value = snapshot.html;
+            }
+            if (this.j.s.isFocused()) {
+                this.restoreOnlySelection(snapshot);
+            }
+            this.restoreScrollState(scroll);
+        });
     }
     storeScrollState() {
         return [this.j.ow.scrollY, this.j.editor.scrollTop];
@@ -16064,11 +16086,16 @@ class Snapshot extends component/* ViewComponent */.Hr {
         }
     }
     destruct() {
-        this.isBlocked = false;
+        this.__block(false);
         super.destruct();
     }
-    removeJoditSelection(nativeEditorValue) {
-        return nativeEditorValue.replace(/<span[^>]*jodit-selection_marker[^>]*><\/span>/g, '');
+    static isIgnoredNode(node) {
+        return (dom/* Dom.isText */.i.isText(node) && !node.nodeValue) || dom/* Dom.isTemporary */.i.isTemporary(node);
+    }
+    removeJoditSelection(node) {
+        const clone = node.cloneNode(true);
+        clone.querySelectorAll(`[${constants.TEMP_ATTR}]`).forEach(dom/* Dom.unwrap */.i.unwrap);
+        return clone.innerHTML;
     }
 }
 
@@ -16181,7 +16208,7 @@ class History extends component/* ViewComponent */.Hr {
     constructor(editor, stack = new Stack(editor.o.history.maxHistoryLength), snapshot = new Snapshot(editor)) {
         super(editor);
         this.updateTick = 0;
-        this.stack = stack;
+        this.__stack = stack;
         this.snapshot = snapshot;
         if (editor.o.history.enable) {
             editor.e.on('afterAddPlace.history', () => {
@@ -16222,14 +16249,14 @@ class History extends component/* ViewComponent */.Hr {
     set startValue(value) {
         this.__startValue = value;
     }
-    upTick() {
+    __upTick() {
         this.updateTick += 1;
     }
     onChange() {
-        this.processChanges();
+        this.__processChanges();
     }
-    processChanges() {
-        if (this.snapshot.isBlocked) {
+    __processChanges() {
+        if (this.snapshot.isBlocked || !this.j.o.history.enable) {
             return;
         }
         this.updateStack();
@@ -16239,43 +16266,43 @@ class History extends component/* ViewComponent */.Hr {
         if (!Snapshot.equal(newValue, this.startValue)) {
             const newCommand = new Command(this.startValue, newValue, this, this.updateTick);
             if (replace) {
-                const command = this.stack.current();
+                const command = this.__stack.current();
                 if (command && this.updateTick === command.tick) {
-                    this.stack.replace(newCommand);
+                    this.__stack.replace(newCommand);
                 }
             }
             else {
-                this.stack.push(newCommand);
+                this.__stack.push(newCommand);
             }
             this.startValue = newValue;
             this.fireChangeStack();
         }
     }
     redo() {
-        if (this.stack.redo()) {
+        if (this.__stack.redo()) {
             this.startValue = this.snapshot.make();
             this.fireChangeStack();
         }
     }
     canRedo() {
-        return this.stack.canRedo();
+        return this.__stack.canRedo();
     }
     undo() {
-        if (this.stack.undo()) {
+        if (this.__stack.undo()) {
             this.startValue = this.snapshot.make();
             this.fireChangeStack();
         }
     }
     canUndo() {
-        return this.stack.canUndo();
+        return this.__stack.canUndo();
     }
     clear() {
         this.startValue = this.snapshot.make();
-        this.stack.clear();
+        this.__stack.clear();
         this.fireChangeStack();
     }
     get length() {
-        return this.stack.length;
+        return this.__stack.length;
     }
     fireChangeStack() {
         var _a;
@@ -17933,6 +17960,7 @@ let ToolbarButton = class ToolbarButton extends jodit_core_ui_button__WEBPACK_IM
         menu.parentElement = this;
         toolbar.parentElement = menu;
         toolbar.mode = 'vertical';
+        const isListItem = (key) => (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_5__.isPlainObject)(key) && 'title' in key && 'value' in key;
         const getButton = (key, value) => {
             if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_5__.isString)(value) && getControl(value)) {
                 return {
@@ -17946,6 +17974,10 @@ let ToolbarButton = class ToolbarButton extends jodit_core_ui_button__WEBPACK_IM
                     ...getControl(key),
                     ...(typeof value === 'object' ? value : {})
                 };
+            }
+            if (isListItem(key)) {
+                value = key.value;
+                key = key.title;
             }
             const { childTemplate } = control;
             const childControl = {
@@ -20971,7 +21003,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
     }
     set value(html) {
         this.setEditorValue(html);
-        this.history.processChanges();
+        this.history.__processChanges();
     }
     synchronizeValues() {
         this.__imdSynchronizeValues();
@@ -21025,7 +21057,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
             this.__callChangeCount += 1;
             if (false) {}
             try {
-                this.history.upTick();
+                this.history.__upTick();
                 this.e.fire('change', new_value, old_value);
                 this.e.fire(this.history, 'change', new_value, old_value);
             }
@@ -21103,7 +21135,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
             return this.execCommand(commandName);
         });
     }
-    execCommand(command, showUI = false, value = null) {
+    execCommand(command, showUI, value, ...args) {
         if (!this.s.isFocused()) {
             this.s.focus();
         }
@@ -21113,9 +21145,9 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         }
         let result;
         command = command.toLowerCase();
-        result = this.e.fire('beforeCommand', command, showUI, value);
+        result = this.e.fire('beforeCommand', command, showUI, value, ...args);
         if (result !== false) {
-            result = this.execCustomCommands(command, showUI, value);
+            result = this.execCustomCommands(command, showUI, value, ...args);
         }
         if (result !== false) {
             this.s.focus();
@@ -21136,7 +21168,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         this.setEditorValue();
         return result;
     }
-    nativeExecCommand(command, showUI = false, value = null) {
+    nativeExecCommand(command, showUI, value) {
         this.isSilentChange = true;
         try {
             return this.ed.execCommand(command, showUI, value);
@@ -21145,7 +21177,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
             this.isSilentChange = false;
         }
     }
-    execCustomCommands(commandName, second = false, third = null) {
+    execCustomCommands(commandName, second, third, ...args) {
         commandName = commandName.toLowerCase();
         const commands = this.commands.get(commandName);
         if (commands !== undefined) {
@@ -21158,7 +21190,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
                 else {
                     callback = command.exec;
                 }
-                const resultCurrent = callback.call(this, commandName, second, third);
+                const resultCurrent = callback.call(this, commandName, second, third, ...args);
                 if (resultCurrent !== undefined) {
                     result = resultCurrent;
                 }
@@ -23127,7 +23159,7 @@ function removeEmptyTextNode(jodit, node, hadEffect, arg, argi, currentNode) {
 
 
 function removeInvTextNodes(jodit, node, hadEffect, arg, argi, currentNode) {
-    if (!dom_dom/* Dom.isText */.i.isText(node) || node.nodeValue == null) {
+    if (currentNode === node || !dom_dom/* Dom.isText */.i.isText(node) || node.nodeValue == null) {
         return hadEffect;
     }
     if ((0,constants.INVISIBLE_SPACE_REG_EXP)().test(node.nodeValue)) {
@@ -29466,7 +29498,7 @@ let UISearch = class UISearch extends ui/* UIElement */.u1 {
                 break;
         }
     }
-    open(searchAndReplace = false) {
+    open(query, replace, searchAndReplace = false) {
         if (!this.isOpened) {
             this.j.workplace.appendChild(this.container);
             this.isOpened = true;
@@ -29474,9 +29506,12 @@ let UISearch = class UISearch extends ui/* UIElement */.u1 {
         this.calcSticky(this.j.e.fire('getStickyState.sticky') || false);
         this.j.e.fire('hidePopup');
         this.setMod('replace', searchAndReplace);
-        const selStr = (this.j.s.sel || '').toString();
+        const selStr = query !== null && query !== void 0 ? query : (this.j.s.sel || '').toString();
         if (selStr) {
             this.queryInput.value = selStr;
+        }
+        if (replace) {
+            this.replaceInput.value = replace;
         }
         this.setMod('empty-query', !selStr.length);
         this.j.e.fire(this, 'needUpdateCounters');
@@ -29613,12 +29648,13 @@ function wrapRangesTextsInTmpSpan(rng, restRanges, ci, root) {
     const span = ci.element('span', {
         [TMP_ATTR]: true
     });
+    dom_dom/* Dom.markTemporary */.i.markTemporary(span);
     const startText = rng.startContainer.nodeValue;
     let diff = 0;
     if (rng.startOffset !== 0) {
         const text = ci.text(startText.substring(0, rng.startOffset));
         rng.startContainer.nodeValue = startText.substring(rng.startOffset);
-        dom/* Dom.before */.i.before(rng.startContainer, text);
+        dom_dom/* Dom.before */.i.before(rng.startContainer, text);
         if (rng.startContainer === rng.endContainer) {
             diff = rng.startOffset;
             rng.endOffset -= diff;
@@ -29629,7 +29665,7 @@ function wrapRangesTextsInTmpSpan(rng, restRanges, ci, root) {
     if (rng.endOffset !== endText.length) {
         const text = ci.text(endText.substring(rng.endOffset));
         rng.endContainer.nodeValue = endText.substring(0, rng.endOffset);
-        dom/* Dom.after */.i.after(rng.endContainer, text);
+        dom_dom/* Dom.after */.i.after(rng.endContainer, text);
         for (const range of restRanges) {
             if (range.startContainer === rng.endContainer) {
                 range.startContainer = text;
@@ -29650,8 +29686,8 @@ function wrapRangesTextsInTmpSpan(rng, restRanges, ci, root) {
         if (!next) {
             break;
         }
-        if (dom/* Dom.isText */.i.isText(next) && !isSelectionWrapper(next.parentNode)) {
-            dom/* Dom.wrap */.i.wrap(next, span.cloneNode(), ci);
+        if (dom_dom/* Dom.isText */.i.isText(next) && !isSelectionWrapper(next.parentNode)) {
+            dom_dom/* Dom.wrap */.i.wrap(next, span.cloneNode(), ci);
         }
         if (next === rng.endContainer) {
             break;
@@ -29670,13 +29706,13 @@ function getSelectionWrappers(root) {
     return (0,selector.$$)(`[${TMP_ATTR}]`, root);
 }
 function clearSelectionWrappers(root) {
-    getSelectionWrappers(root).forEach(span => dom/* Dom.unwrap */.i.unwrap(span));
+    getSelectionWrappers(root).forEach(span => dom_dom/* Dom.unwrap */.i.unwrap(span));
 }
 function clearSelectionWrappersFromHTML(root) {
     return root.replace(RegExp(`<span[^>]+${TMP_ATTR}[^>]+>(.*?)</span>`, 'g'), '$1');
 }
 function isSelectionWrapper(node) {
-    return dom/* Dom.isElement */.i.isElement(node) && node.hasAttribute(TMP_ATTR);
+    return dom_dom/* Dom.isElement */.i.isElement(node) && node.hasAttribute(TMP_ATTR);
 }
 
 ;// CONCATENATED MODULE: ./src/plugins/search/helpers/index.ts
@@ -29694,6 +29730,7 @@ function isSelectionWrapper(node) {
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 config/* Config.prototype.useSearch */.D.prototype.useSearch = true;
@@ -29783,24 +29820,28 @@ class search extends core_plugin/* Plugin */.S {
             (0,helpers.scrollIntoViewIfNeeded)(parentBox, this.j.editor, this.j.ed);
     }
     async calcCounts(query) {
-        if (this.walkerCount) {
-            this.walkerCount.break();
+        return (await this.findQueryBounds(query, 'walkerCount')).length;
+    }
+    async findQueryBounds(query, walkerKey) {
+        let walker = this[walkerKey];
+        if (walker) {
+            walker.break();
         }
-        this.walkerCount = new dom/* LazyWalker */.b(this.j.async, {
+        walker = new dom/* LazyWalker */.b(this.j.async, {
             timeout: this.j.o.search.lazyIdleTimeout
         });
-        const result = await this.find(this.walkerCount, query).catch(() => []);
-        return result.length;
+        this[walkerKey] = walker;
+        return this.find(walker, query).catch(e => {
+             false && 0;
+            return [];
+        });
     }
     async findAndReplace(query) {
-        if (this.walker) {
-            this.walker.break();
+        const bounds = await this.findQueryBounds(query, 'walker');
+        if (!bounds.length) {
+            return false;
         }
-        this.walker = new dom/* LazyWalker */.b(this.j.async, {
-            timeout: this.j.o.search.lazyIdleTimeout
-        });
-        const range = this.j.s.range, bounds = await this.find(this.walker, query).catch(() => []);
-        let currentIndex = this.findCurrentIndexInRanges(bounds, range);
+        let currentIndex = this.findCurrentIndexInRanges(bounds, this.j.s.range);
         if (currentIndex === -1) {
             currentIndex = 0;
         }
@@ -29813,12 +29854,19 @@ class search extends core_plugin/* Plugin */.S {
                 rng.deleteContents();
                 const textNode = this.j.createInside.text(this.ui.replace);
                 dom/* Dom.safeInsertNode */.i.safeInsertNode(rng, textNode);
-                this.j.s.select(textNode);
+                clearSelectionWrappers(this.j.editor);
+                this.j.s.setCursorAfter(textNode);
                 this.tryScrollToElement(textNode);
                 this.cache = {};
+                this.ui.currentIndex = currentIndex;
+                await this.findAndSelect(query, true).catch(e => {
+                     false && 0;
+                    return null;
+                });
+            }
+            finally {
                 this.j.synchronizeValues();
             }
-            catch (_a) { }
             this.j.e.fire('afterFindAndReplace');
             return true;
         }
@@ -29826,13 +29874,7 @@ class search extends core_plugin/* Plugin */.S {
     }
     async findAndSelect(query, next) {
         var _a;
-        if (this.walker) {
-            this.walker.break();
-        }
-        this.walker = new dom/* LazyWalker */.b(this.j.async, {
-            timeout: this.j.defaultTimeout
-        });
-        const bounds = await this.find(this.walker, query);
+        const bounds = await this.findQueryBounds(query, 'walker');
         if (!bounds.length) {
             return false;
         }
@@ -29865,7 +29907,9 @@ class search extends core_plugin/* Plugin */.S {
                 rng.setEnd(bound.endContainer, bound.endOffset);
                 this.j.s.selectRange(rng);
             }
-            catch (e) { }
+            catch (e) {
+                 false && 0;
+            }
             this.tryScrollToElement(bound.startContainer);
             await this.updateCounters();
             await this.drawPromise;
@@ -29898,8 +29942,8 @@ class search extends core_plugin/* Plugin */.S {
         if (cache && (await this.isValidCache(cache))) {
             return cache;
         }
-        const sentence = new SentenceFinder(this.j.o.search.fuzzySearch);
         this.cache[query] = this.j.async.promise(resolve => {
+            const sentence = new SentenceFinder(this.j.o.search.fuzzySearch);
             walker
                 .on('break', () => {
                 resolve([]);
@@ -29981,33 +30025,37 @@ class search extends core_plugin/* Plugin */.S {
                 }
                 return self
                     .findAndSelect(self.ui.query, editor.e.current === 'searchNext')
-                    .catch(() => { });
+                    .catch(e => {
+                     false && 0;
+                });
             })
                 .on('search.search', (value, next = true) => {
                 this.ui.currentIndex = 0;
-                return self
-                    .findAndSelect(value || '', next)
-                    .catch(() => { });
+                return self.findAndSelect(value || '', next).catch(e => {
+                     false && 0;
+                });
             });
             editor
                 .registerCommand('search', {
                 exec: (command, value, next = true) => {
                     value &&
-                        self.findAndSelect(value, next).catch(() => { });
+                        self.findAndSelect(value, next).catch(e => {
+                             false && 0;
+                        });
                     return false;
                 }
             })
                 .registerCommand('openSearchDialog', {
-                exec: () => {
-                    self.ui.open();
+                exec: (command, value) => {
+                    self.ui.open(value);
                     return false;
                 },
                 hotkeys: ['ctrl+f', 'cmd+f']
             })
                 .registerCommand('openReplaceDialog', {
-                exec: () => {
+                exec: (command, query, replace) => {
                     if (!editor.o.readonly) {
-                        self.ui.open(true);
+                        self.ui.open(query, replace, true);
                     }
                     return false;
                 },
@@ -30029,6 +30077,9 @@ class search extends core_plugin/* Plugin */.S {
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)('ui:pressReplaceButton')
 ], search.prototype, "onPressReplaceButton", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], search.prototype, "findQueryBounds", null);
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], search.prototype, "findAndReplace", null);
@@ -32369,7 +32420,8 @@ global/* pluginSystem.add */.pw.add('video', video);
  */
 
 config/* Config.prototype.wrapNodes */.D.prototype.wrapNodes = {
-    exclude: ['hr', 'style', 'br']
+    exclude: ['hr', 'style', 'br'],
+    emptyBlockAfterInit: true
 };
 
 ;// CONCATENATED MODULE: ./src/plugins/wrap-nodes/wrap-nodes.ts
@@ -32399,7 +32451,7 @@ class wrapNodes extends core_plugin/* Plugin */.S {
             return;
         }
         jodit.e
-            .on('drop.wtn focus.wtn keydown.wtn mousedown.wtn', this.preprocessInput, {
+            .on('drop.wtn focus.wtn keydown.wtn mousedown.wtn afterInit.wtn', this.preprocessInput, {
             top: true
         })
             .on('afterInit.wtn postProcessSetEditorValue.wtn', this.postProcessSetEditorValue);
@@ -32462,15 +32514,18 @@ class wrapNodes extends core_plugin/* Plugin */.S {
         return result;
     }
     preprocessInput() {
-        const { jodit } = this;
-        if (!jodit.isEditorMode() || jodit.editor.firstChild) {
+        const { jodit } = this, isAfterInitEvent = jodit.e.current === 'afterInit';
+        if (!jodit.isEditorMode() ||
+            jodit.editor.firstChild ||
+            (!jodit.o.wrapNodes.emptyBlockAfterInit && isAfterInitEvent)) {
             return;
         }
         const box = jodit.createInside.element(jodit.o.enter);
         const br = jodit.createInside.element('br');
         dom/* Dom.append */.i.append(box, br);
         dom/* Dom.append */.i.append(jodit.editor, box);
-        jodit.s.setCursorBefore(br);
+        jodit.s.isFocused() && jodit.s.setCursorBefore(br);
+        jodit.e.fire('internalChange');
     }
 }
 (0,tslib_es6/* __decorate */.gn)([
