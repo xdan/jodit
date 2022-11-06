@@ -87,9 +87,9 @@ describe('Focus test', () => {
 					)
 				).eq(
 					'<p>t' +
-						'<span data-jodit-selection_marker="start" id="jodit-selection_marker_" style="display:none;line-height:0"></span>' +
+						'<span data-jodit-selection_marker="start" data-jodit-temp="true" id="jodit-selection_marker_" style="display:none;line-height:0"></span>' +
 						'es' +
-						'<span data-jodit-selection_marker="end" id="jodit-selection_marker_" style="display:none;line-height:0"></span>' +
+						'<span data-jodit-selection_marker="end" data-jodit-temp="true" id="jodit-selection_marker_" style="display:none;line-height:0"></span>' +
 						't</p>'
 				);
 			});

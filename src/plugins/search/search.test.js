@@ -6,9 +6,19 @@
 
 describe('Search plugin', function () {
 	const search = Jodit.plugins.get('search');
-	// findSomePartOfString = search.findSomePartOfString,
-	// getSomePartOfStringIndex = (needle, haystack) =>
-	// 	findSomePartOfString(needle, haystack, true);
+
+	beforeEach(() => {
+		unmockPromise();
+	});
+
+	function getSearchInputs(editor) {
+		const search = editor.container.querySelector('.jodit-ui-search');
+		const query = search.querySelector('[data-ref="query"]');
+		const replace = search.querySelector('[data-ref="replace"]');
+		const replaceButton = search.querySelector('[data-ref="replace-btn"]');
+
+		return { search, query, replace, replaceButton };
+	}
 
 	describe('Disable option', function () {
 		it('Should not init plugin', function () {
@@ -78,7 +88,7 @@ describe('Search plugin', function () {
 		});
 
 		describe('Press Replace button', function () {
-			it('Should replace value form query field to value from replace field in editor', function (done) {
+			it('Should replace value form query field to value from replace field in editor', done => {
 				const editor = getJodit({
 					defaultTimeout: 0
 				});
@@ -88,14 +98,9 @@ describe('Search plugin', function () {
 				expect(editor.container.querySelector('.jodit-ui-search')).is
 					.null;
 
-				simulateEvent(
-					'keydown',
-					'h',
-					editor.editor,
-					function (options) {
-						options.ctrlKey = true;
-					}
-				);
+				simulateEvent('keydown', 'h', editor.editor, options => {
+					options.ctrlKey = true;
+				});
 
 				const search =
 					editor.container.querySelector('.jodit-ui-search');
@@ -109,11 +114,8 @@ describe('Search plugin', function () {
 						search.querySelector('[data-ref="query"]')
 				);
 
-				const query = search.querySelector('[data-ref="query"]');
-				const replace = search.querySelector('[data-ref="replace"]');
-				const replaceButton = search.querySelector(
-					'[data-ref="replace-btn"]'
-				);
+				const { query, replace, replaceButton } =
+					getSearchInputs(editor);
 
 				query.value = 't';
 				replace.value = 'w';
@@ -125,12 +127,58 @@ describe('Search plugin', function () {
 						cnt++;
 						simulateEvent('pointerdown', replaceButton);
 					} else {
-						expect(editor.value).equals('<p>wesw wesw test</p>');
-						done();
+						replaceCursorToChar(editor);
+
+						try {
+							expect(editor.value).equals(
+								'<p>wesw wesw |t|est</p>'
+							);
+							done();
+						} catch (e) {
+							done(e);
+						}
 					}
 				});
 
 				simulateEvent('pointerdown', replaceButton);
+			});
+
+			describe('After replacing', () => {
+				it('Should set selection on next found posision', done => {
+					unmockPromise();
+
+					const editor = getJodit({
+						defaultTimeout: 0
+					});
+
+					editor.value = '<p>test test test</p>';
+
+					simulateEvent('keydown', 'h', editor.editor, options => {
+						options.ctrlKey = true;
+					});
+
+					const { query, replace, replaceButton } =
+						getSearchInputs(editor);
+
+					query.value = 'test';
+					replace.value = 'pop';
+
+					let cnt = 1;
+
+					editor.e.on('afterFindAndReplace', () => {
+						replaceCursorToChar(editor);
+						try {
+							expect(editor.value).equals(
+								'<p>pop |test| test</p>'
+							);
+							done();
+						} catch (e) {
+							done(e);
+						}
+					});
+
+					simulateEvent('pointerdown', replaceButton);
+				});
 			});
 		});
 	});
@@ -140,9 +188,7 @@ describe('Search plugin', function () {
 			unmockPromise();
 		});
 
-		it('Should find a next match', function (done) {
-			unmockPromise();
-
+		it('Should find a next match', async () => {
 			const editor = getJodit({
 				defaultTimeout: 0
 			});
@@ -153,47 +199,51 @@ describe('Search plugin', function () {
 			expect(editor.container.querySelector('.jodit-ui-search')).is.null;
 
 			// press ctrl(cmd) + f
-			simulateEvent('keydown', 'f', editor.editor, function (options) {
+			simulateEvent('keydown', 'f', editor.editor, options => {
 				options.ctrlKey = true;
 			});
 
-			const search = editor.container.querySelector('.jodit-ui-search');
-			expect(
-				editor.ownerDocument.activeElement ===
-					search.querySelector('[data-ref="query"]')
-			).is.true;
+			const { query } = getSearchInputs(editor);
+			expect(editor.ownerDocument.activeElement === query).is.true;
+			expect(query.value).eq('test');
 
 			editor.s.removeMarkers();
 			Jodit.modules.Helpers.normalizeNode(editor.editor.firstChild); // because Select module splits text node
 
-			editor.events.fire('searchNext').then(() => {
-				simulateEvent(
-					'keydown',
-					'F3',
-					editor.editor,
-					function (options) {
-						options.shiftKey = false;
-					}
-				);
+			await new Promise((resolve, reject) => {
+				editor.events.fire('searchNext').then(() => {
+					simulateEvent(
+						'keydown',
+						'F3',
+						editor.editor,
+						function (options) {
+							options.shiftKey = false;
+						}
+					);
 
-				editor.e.on('afterFindAndSelect', () => {
-					const sel = editor.s.sel;
+					editor.e.on('afterFindAndSelect', () => {
+						try {
+							const sel = editor.s.sel;
 
-					expect(1).equals(sel.rangeCount);
-					const range = sel.getRangeAt(0);
+							expect(1).equals(sel.rangeCount);
+							const range = sel.getRangeAt(0);
 
-					expect(
-						editor.editor.firstChild.firstChild.nextElementSibling
-							.firstChild
-					).equals(range.startContainer);
-					expect(0).equals(range.startOffset);
-					expect(
-						editor.editor.firstChild.firstChild.nextElementSibling
-							.firstChild
-					).equals(range.endContainer);
-					expect(4).equals(range.endOffset);
-					editor.destruct();
-					done();
+							expect(
+								editor.editor.firstChild.firstChild
+									.nextElementSibling.firstChild
+							).equals(range.startContainer);
+							expect(0).equals(range.startOffset);
+							expect(
+								editor.editor.firstChild.firstChild
+									.nextElementSibling.firstChild
+							).equals(range.endContainer);
+							expect(4).equals(range.endOffset);
+							editor.destruct();
+							resolve();
+						} catch (e) {
+							reject(e);
+						}
+					});
 				});
 			});
 		});
@@ -396,6 +446,35 @@ describe('Search plugin', function () {
 			});
 		});
 
+		describe('Case insensitive', function () {
+			it('Should select some elements which consists query string', function () {
+				const editor = getJodit({
+					defaultTimeout: 0
+				});
+
+				editor.value =
+					'<p><span>Mr</span> <span>John</span> <span>Smith</span> <span>washed</span> <span>window</span></p>';
+				const sel = editor.s.sel;
+				sel.removeAllRanges();
+
+				editor.events.fire('search', 'tH WaS').then(() => {
+					expect(1).equals(sel.rangeCount);
+					const range = sel.getRangeAt(0);
+
+					expect(
+						editor.editor.firstChild.childNodes[4].firstChild
+					).equals(range.startContainer);
+					expect(3).equals(range.startOffset);
+
+					expect(
+						editor.editor.firstChild.childNodes[6].firstChild
+					).equals(range.endContainer);
+
+					expect(3).equals(range.startOffset);
+				});
+			});
+		});
+
 		describe('Find by toolbar button event', function () {
 			describe('Press Search button', function () {
 				it('Should open search dialog', function () {
@@ -425,6 +504,78 @@ describe('Search plugin', function () {
 						)
 					).is.not.null;
 				});
+			});
+		});
+	});
+
+	describe('Search highlight', () => {
+		it('Should not put highlighting into history stack', async () => {
+			const editor = getJodit({
+				defaultTimeout: 0
+			});
+
+			editor.value = '<p>test</p>';
+			editor.history.clear();
+
+			editor.events.fire('search', 't');
+			await editor.async.requestIdlePromise();
+
+			expect(sortAttributes(editor.getNativeEditorValue())).equals(
+				'<p><span data-jodit-temp="true" jd-tmp-selection="true">t</span>es<span data-jodit-temp="true" jd-tmp-selection="true">t</span></p>'
+			);
+			expect(editor.history.length).equals(0);
+		});
+
+		describe('After replacing', () => {
+			it('Should not put highlighting into history stack', done => {
+				const editor = getJodit({
+					defaultTimeout: 0
+				});
+
+				editor.value = '<p>test</p>';
+				editor.history.clear();
+
+				editor.execCommand('openReplaceDialog', 't', 'p');
+
+				const { query, replace, replaceButton } =
+					getSearchInputs(editor);
+				expect(query.value).eq('t');
+				expect(replace.value).eq('p');
+
+				editor.e.on('afterFindAndReplace', async () => {
+					try {
+						await editor.async.requestIdlePromise();
+
+						expect(
+							sortAttributes(editor.getNativeEditorValue())
+						).equals(
+							'<p>pes<span data-jodit-temp="true" jd-tmp-selection="true">t</span></p>'
+						);
+						expect(editor.history.length).equals(1);
+
+						editor.s.insertHTML('stop');
+						expect(
+							sortAttributes(editor.getNativeEditorValue())
+						).equals('<p>pesstop</p>');
+
+						editor.execCommand('undo');
+
+						expect(
+							sortAttributes(editor.getNativeEditorValue())
+						).equals('<p>pest</p>');
+
+						editor.execCommand('redo');
+
+						expect(
+							sortAttributes(editor.getNativeEditorValue())
+						).equals('<p>pesstop</p>');
+						done();
+					} catch (e) {
+						done(e);
+					}
+				});
+
+				simulateEvent('pointerdown', replaceButton);
 			});
 		});
 	});

@@ -9,3 +9,4 @@ yarn-error.log
 .vs
 /types/
 /JODIT-DEVELOPMENT-GUIDE.md
+.npmrc

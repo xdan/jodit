@@ -750,6 +750,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				if (stop) {
 					stop.shouldStop = shouldStop ?? true;
 				}
+
 				return this.execCommand(commandName); // because need `beforeCommand`
 			});
 	}
@@ -770,8 +771,9 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	 */
 	execCommand(
 		command: string,
-		showUI: boolean = false,
-		value: null | any = null
+		showUI?: boolean,
+		value?: null | any,
+		...args: unknown[]
 	): void {
 		if (!this.s.isFocused()) {
 			this.s.focus();
@@ -805,10 +807,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		 * })
 		 * ```
 		 */
-		result = this.e.fire('beforeCommand', command, showUI, value);
+		result = this.e.fire('beforeCommand', command, showUI, value, ...args);
 
 		if (result !== false) {
-			result = this.execCustomCommands(command, showUI, value);
+			result = this.execCustomCommands(command, showUI, value, ...args);
 		}
 
 		if (result !== false) {
@@ -851,8 +853,8 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	 */
 	nativeExecCommand(
 		command: string,
-		showUI: boolean = false,
-		value: null | any = null
+		showUI?: boolean,
+		value?: null | any
 	): boolean {
 		this.isSilentChange = true;
 
@@ -865,8 +867,9 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 	private execCustomCommands<C extends string>(
 		commandName: C,
-		second: any = false,
-		third: null | any = null
+		second?: any,
+		third?: null | any,
+		...args: unknown[]
 	): false | void {
 		commandName = commandName.toLowerCase() as C;
 
@@ -888,7 +891,8 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 					this,
 					commandName,
 					second,
-					third
+					third,
+					...args
 				);
 
 				if (resultCurrent !== undefined) {

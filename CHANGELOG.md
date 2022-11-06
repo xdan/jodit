@@ -9,7 +9,19 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
-## 3.21.6
+#### :boom: Breaking Change
+
+-   `ISnapshot.isBlocked` - is readonly now
+-   `IHistory.snapshot` - is readonly now
+-   `IHistory.processChanges` and `IHistory.upTick` were removed.
+-   Instead of `IHistory.snapshot.isBlocked=true...IHistory.snapshot.isBlocked=false` should be used `IHistory.snapshot.transaction(() => {...})`
+-   `IJodit.registerCommand<C extends string>` - is generic now
+-   `IJodit.getNativeEditorValue` - marked as internal, please do not use it in your code
+-   To class `.jodit-container` was added `background-color: var(--color-background-light-gray);`
+-   To class `.jodit-workplace` was added `background-color: var(--color-background-default);`
+-   Selection markers now are marked as temporary with `Dom.markTemporary`
+-   Search plugin move selection to the next found element after replacing. See bug fix section
+-   WrapNodes plugin added `emptyBlockAfterInit=true` option. After the editor is initialized, if it is empty, an empty block will be added to it.
 
 #### :bug: Bug Fix
 
@@ -1742,11 +1754,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                       ]
+-                                                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                                   ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

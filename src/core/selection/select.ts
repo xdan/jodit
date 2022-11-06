@@ -269,10 +269,8 @@ export class Select implements ISelect {
 		marker.style.lineHeight = '0';
 		marker.style.display = 'none';
 
-		marker.setAttribute(
-			'data-' + consts.MARKER_CLASS,
-			atStart ? 'start' : 'end'
-		);
+		Dom.markTemporary(marker);
+		attr(marker, 'data-' + consts.MARKER_CLASS, atStart ? 'start' : 'end');
 
 		marker.appendChild(this.j.createInside.text(consts.INVISIBLE_SPACE));
 
@@ -590,41 +588,45 @@ export class Select implements ISelect {
 
 		const sel = this.sel;
 
-		if (!this.isCollapsed()) {
-			this.j.execCommand('Delete');
-		}
+		this.j.history.snapshot.transaction(() => {
+			if (!this.isCollapsed()) {
+				this.j.execCommand('Delete');
+			}
 
-		this.j.e.fire('beforeInsertNode', node);
+			this.j.e.fire('beforeInsertNode', node);
 
-		if (sel && sel.rangeCount) {
-			const range = sel.getRangeAt(0);
+			if (sel && sel.rangeCount) {
+				const range = sel.getRangeAt(0);
 
-			if (Dom.isOrContains(this.area, range.commonAncestorContainer)) {
 				if (
-					Dom.isTag(range.startContainer, INSEPARABLE_TAGS) &&
-					range.collapsed
+					Dom.isOrContains(this.area, range.commonAncestorContainer)
 				) {
-					range.startContainer.parentNode?.insertBefore(
-						node,
-						range.startContainer
-					);
+					if (
+						Dom.isTag(range.startContainer, INSEPARABLE_TAGS) &&
+						range.collapsed
+					) {
+						range.startContainer.parentNode?.insertBefore(
+							node,
+							range.startContainer
+						);
+					} else {
+						Dom.safeInsertNode(range, node);
+					}
 				} else {
-					Dom.safeInsertNode(range, node);
+					this.area.appendChild(node);
 				}
 			} else {
 				this.area.appendChild(node);
 			}
-		} else {
-			this.area.appendChild(node);
-		}
 
-		if (insertCursorAfter) {
-			if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-				node.lastChild && this.setCursorAfter(node.lastChild);
-			} else {
-				this.setCursorAfter(node);
+			if (insertCursorAfter) {
+				if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+					node.lastChild && this.setCursorAfter(node.lastChild);
+				} else {
+					this.setCursorAfter(node);
+				}
 			}
-		}
+		});
 
 		if (fireChange && this.j.events) {
 			this.j.__imdSynchronizeValues();

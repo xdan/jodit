@@ -185,7 +185,11 @@ export class UISearch extends UIElement<IJodit> {
 	isOpened: boolean = false;
 
 	@autobind
-	open(searchAndReplace: boolean = false): void {
+	open(
+		query?: string,
+		replace?: string,
+		searchAndReplace: boolean = false
+	): void {
 		if (!this.isOpened) {
 			this.j.workplace.appendChild(this.container);
 			this.isOpened = true;
@@ -199,10 +203,14 @@ export class UISearch extends UIElement<IJodit> {
 
 		// this.current = this.j.s.current();
 
-		const selStr: string = (this.j.s.sel || '').toString();
+		const selStr: string = query ?? (this.j.s.sel || '').toString();
 
 		if (selStr) {
 			this.queryInput.value = selStr;
+		}
+
+		if (replace) {
+			this.replaceInput.value = replace;
 		}
 
 		this.setMod('empty-query', !selStr.length);

@@ -382,7 +382,9 @@ Jodit.defaultOptions.events.afterInit = function (editor) {
 	editor &&
 		editor.container.setAttribute('data-test-case', window.mochaTestName);
 };
+
 Jodit.defaultOptions.filebrowser.saveStateInStorage = false;
+Jodit.defaultOptions.wrapNodes.emptyBlockAfterInit = false;
 Jodit.defaultOptions.history.timeout = 0;
 Jodit.defaultOptions.defaultTimeout = 0;
 Jodit.defaultOptions.filebrowser.defaultTimeout = 0;
@@ -491,7 +493,7 @@ function appendTestArea(id, noput) {
  *
  * @param {object} [options]
  * @param {HTMLElement|undefined} [element]
- * @return {Jodit}
+ * @return {IJodit}
  */
 function getJodit(options, element) {
 	const editor = Jodit.make(element || appendTestArea(), options);

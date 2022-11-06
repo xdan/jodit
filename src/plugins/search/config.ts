@@ -12,6 +12,8 @@ import type { FuzzySearch, IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
 
+import './interface';
+
 declare module 'jodit/config' {
 	interface Config {
 		/**
@@ -31,7 +33,7 @@ declare module 'jodit/config' {
 			 * Jodit.make('#editor', {
 			 *   search: {
 			 *     fuzzySearch: (needle, haystack, offset) => {
-			 *       return [haystack.indexOf(needle, offset), needle.length];
+			 *       return [haystack.toLowerCase().indexOf(needle.toLowerCase(), offset), needle.length];
 			 *     }
 			 *   }
 			 * })

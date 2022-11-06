@@ -81,7 +81,7 @@ export class search extends Plugin {
 
 	private tryScrollToElement(startContainer: Node): void {
 		// find scrollable element
-		let parentBox: HTMLElement | false = Dom.closest(
+		let parentBox = Dom.closest(
 			startContainer,
 			Dom.isElement,
 			this.j.editor
@@ -101,32 +101,44 @@ export class search extends Plugin {
 	}
 
 	protected async calcCounts(query: string): Promise<number> {
-		if (this.walkerCount) {
-			this.walkerCount.break();
+		return (await this.findQueryBounds(query, 'walkerCount')).length;
+	}
+
+	@autobind
+	async findQueryBounds(
+		query: string,
+		walkerKey: 'walker' | 'walkerCount'
+	): Promise<ISelectionRange[]> {
+		let walker = this[walkerKey];
+
+		if (walker) {
+			walker.break();
 		}
 
-		this.walkerCount = new LazyWalker(this.j.async, {
+		walker = new LazyWalker(this.j.async, {
 			timeout: this.j.o.search.lazyIdleTimeout
 		});
 
-		const result = await this.find(this.walkerCount, query).catch(() => []);
-		return result.length;
+		this[walkerKey] = walker;
+
+		return this.find(walker, query).catch(e => {
+			!isProd && console.error(e);
+			return [];
+		});
 	}
 
 	@autobind
 	async findAndReplace(query: string): Promise<boolean> {
-		if (this.walker) {
-			this.walker.break();
+		const bounds = await this.findQueryBounds(query, 'walker');
+
+		if (!bounds.length) {
+			return false;
 		}
 
-		this.walker = new LazyWalker(this.j.async, {
-			timeout: this.j.o.search.lazyIdleTimeout
-		});
-
-		const range = this.j.s.range,
-			bounds = await this.find(this.walker, query).catch(() => []);
-
-		let currentIndex = this.findCurrentIndexInRanges(bounds, range);
+		let currentIndex = this.findCurrentIndexInRanges(
+			bounds,
+			this.j.s.range
+		);
 
 		if (currentIndex === -1) {
 			currentIndex = 0;
@@ -145,11 +157,19 @@ export class search extends Plugin {
 				const textNode = this.j.createInside.text(this.ui.replace);
 
 				Dom.safeInsertNode(rng, textNode);
-				this.j.s.select(textNode);
+				clearSelectionWrappers(this.j.editor);
+				this.j.s.setCursorAfter(textNode);
 				this.tryScrollToElement(textNode);
+
 				this.cache = {};
+				this.ui.currentIndex = currentIndex;
+				await this.findAndSelect(query, true).catch(e => {
+					!isProd && console.error(e);
+					return null;
+				});
+			} finally {
 				this.j.synchronizeValues();
-			} catch {}
+			}
 
 			this.j.e.fire('afterFindAndReplace');
 
@@ -164,15 +184,7 @@ export class search extends Plugin {
 
 	@autobind
 	async findAndSelect(query: string, next: boolean): Promise<boolean> {
-		if (this.walker) {
-			this.walker.break();
-		}
-
-		this.walker = new LazyWalker(this.j.async, {
-			timeout: this.j.defaultTimeout
-		});
-
-		const bounds = await this.find(this.walker, query);
+		const bounds = await this.findQueryBounds(query, 'walker');
 		if (!bounds.length) {
 			return false;
 		}
@@ -212,7 +224,9 @@ export class search extends Plugin {
 				rng.setStart(bound.startContainer, bound.startOffset);
 				rng.setEnd(bound.endContainer, bound.endOffset);
 				this.j.s.selectRange(rng);
-			} catch (e) {}
+			} catch (e) {
+				!isProd && console.error(e);
+			}
 
 			this.tryScrollToElement(bound.startContainer);
 
@@ -271,9 +285,9 @@ export class search extends Plugin {
 			return cache;
 		}
 
-		const sentence = new SentenceFinder(this.j.o.search.fuzzySearch);
-
 		this.cache[query] = this.j.async.promise(resolve => {
+			const sentence = new SentenceFinder(this.j.o.search.fuzzySearch);
+
 			walker
 				.on('break', (): void => {
 					resolve([]);
@@ -382,13 +396,15 @@ export class search extends Plugin {
 							self.ui.query,
 							editor.e.current === 'searchNext'
 						)
-						.catch(() => {});
+						.catch(e => {
+							!isProd && console.error('Search error', e);
+						});
 				})
 				.on('search.search', (value: string, next: boolean = true) => {
 					this.ui.currentIndex = 0;
-					return self
-						.findAndSelect(value || '', next)
-						.catch(() => {});
+					return self.findAndSelect(value || '', next).catch(e => {
+						!isProd && console.error('Search error', e);
+					});
 				});
 
 			editor
@@ -399,22 +415,28 @@ export class search extends Plugin {
 						next: boolean = true
 					) => {
 						value &&
-							self.findAndSelect(value, next).catch(() => {});
+							self.findAndSelect(value, next).catch(e => {
+								!isProd && console.error('Search error', e);
+							});
 
 						return false;
 					}
 				})
 				.registerCommand('openSearchDialog', {
-					exec: () => {
-						self.ui.open();
+					exec: (command: string, value?: string) => {
+						self.ui.open(value);
 						return false;
 					},
 					hotkeys: ['ctrl+f', 'cmd+f']
 				})
 				.registerCommand('openReplaceDialog', {
-					exec: () => {
+					exec: (
+						command: string,
+						query?: string,
+						replace?: string
+					) => {
 						if (!editor.o.readonly) {
-							self.ui.open(true);
+							self.ui.open(query, replace, true);
 						}
 						return false;
 					},

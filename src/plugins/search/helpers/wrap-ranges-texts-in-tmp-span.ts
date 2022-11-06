@@ -9,7 +9,7 @@
  */
 
 import type { CanUndef, ICreate, ISelectionRange, Nullable } from 'jodit/types';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { $$ } from 'jodit/core/helpers/utils/selector';
 
 const TMP_ATTR = 'jd-tmp-selection';
@@ -30,6 +30,8 @@ export function wrapRangesTextsInTmpSpan(
 	const span = ci.element('span', {
 		[TMP_ATTR]: true
 	});
+
+	Dom.markTemporary(span);
 
 	const startText = rng.startContainer.nodeValue;
 

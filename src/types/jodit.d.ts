@@ -121,7 +121,12 @@ interface IJodit extends IViewWithToolbar, IDlgs {
 
 	editorIsActive: boolean;
 
-	execCommand(command: string, showUI?: any, value?: null | any): any;
+	execCommand(
+		command: string,
+		showUI?: any,
+		value?: null | any,
+		...args: unknown[]
+	): any;
 	nativeExecCommand(
 		command: string,
 		showUI?: any,

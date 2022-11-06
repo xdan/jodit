@@ -151,13 +151,15 @@ export type ExecCommandCallback<T, C extends string> =
 			this: T,
 			command: C,
 			value?: string,
-			next?: any
+			next?: any,
+			...args: unknown[]
 	  ) => void | boolean | Promise<void | boolean>)
 	| ((
 			this: T,
 			command: C,
 			value: string,
-			next: string
+			next: string,
+			...args: unknown[]
 	  ) => void | boolean | Promise<void | boolean>);
 
 export interface ICommandType<T, C extends string> {
@@ -165,7 +167,9 @@ export interface ICommandType<T, C extends string> {
 	hotkeys?: string | string[];
 }
 
-export type CustomCommand<T, C extends string> = ICommandType<T, C> | ExecCommandCallback<T, C>;
+export type CustomCommand<T, C extends string> =
+	| ICommandType<T, C>
+	| ExecCommandCallback<T, C>;
 
 export interface IHasScroll {
 	clientTop: number;
