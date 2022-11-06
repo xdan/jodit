@@ -34,23 +34,23 @@ export interface IStack {
 }
 
 export interface ISnapshot {
-	isBlocked: boolean;
+	readonly isBlocked: boolean;
 	make(): SnapshotType;
 	restoreOnlySelection(snapshot: SnapshotType): void;
 	restore(snapshot: SnapshotType): void;
+	transaction(changes: () => void): void;
 }
 
 export interface IHistory {
-	snapshot: ISnapshot;
+	readonly snapshot: ISnapshot;
 
 	redo(): void;
 	canRedo(): boolean;
+
 	undo(): void;
 	canUndo(): boolean;
-	readonly length: number;
-
-	processChanges(): void;
 
 	clear(): void;
-	upTick(): void;
+
+	readonly length: number;
 }

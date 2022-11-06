@@ -195,7 +195,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		Plugin
 	};
 
-	private readonly commands: Map<string, Array<CustomCommand<IJodit>>> =
+	private readonly commands: Map<string, CustomCommand<IJodit, string>[]> =
 		new Map();
 
 	private __selectionLocked: MarkerInfo[] | null = null;
@@ -406,6 +406,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 	/**
 	 * Return real HTML value from WYSIWYG editor.
+	 * @internal
 	 */
 	getNativeEditorValue(): string {
 		const value: string = this.e.fire('beforeGetNativeEditorValue');
@@ -447,7 +448,8 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 	set value(html: string) {
 		this.setEditorValue(html);
-		this.history.processChanges();
+		// @ts-ignore Internal method
+		this.history.__processChanges();
 	}
 
 	@throttle()
@@ -595,7 +597,8 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			}
 
 			try {
-				this.history.upTick();
+				// @ts-ignore Internal method
+				this.history.__upTick();
 				this.e.fire('change', new_value, old_value);
 				this.e.fire(this.history, 'change', new_value, old_value);
 			} finally {
@@ -693,9 +696,9 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	 *
 	 * ```
 	 */
-	registerCommand(
-		commandNameOriginal: string,
-		command: CustomCommand<IJodit>,
+	registerCommand<C extends string>(
+		commandNameOriginal: C,
+		command: CustomCommand<IJodit, C>,
 		options?: {
 			stopPropagation: boolean;
 		}
@@ -708,7 +711,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			this.commands.set(commandName, commands);
 		}
 
-		commands.push(command);
+		commands.push(command as CustomCommand<IJodit, string>);
 
 		if (!isFunction(command)) {
 			const hotkeys: string | string[] | void =
@@ -860,20 +863,20 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		}
 	}
 
-	private execCustomCommands(
-		commandName: string,
+	private execCustomCommands<C extends string>(
+		commandName: C,
 		second: any = false,
 		third: null | any = null
 	): false | void {
-		commandName = commandName.toLowerCase();
+		commandName = commandName.toLowerCase() as C;
 
 		const commands = this.commands.get(commandName);
 
 		if (commands !== undefined) {
 			let result: any;
 
-			commands.forEach((command: CustomCommand<Jodit>) => {
-				let callback: ExecCommandCallback<Jodit>;
+			commands.forEach((command: CustomCommand<Jodit, C>) => {
+				let callback: ExecCommandCallback<Jodit, C>;
 
 				if (isFunction(command)) {
 					callback = command;
@@ -881,7 +884,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 					callback = command.exec;
 				}
 
-				const resultCurrent: any = (callback as any).call(
+				const resultCurrent: any = callback.call(
 					this,
 					commandName,
 					second,

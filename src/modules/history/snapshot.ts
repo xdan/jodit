@@ -8,9 +8,10 @@
  * @module modules/history
  */
 
-import type { IJodit, ISnapshot, SnapshotType } from 'jodit/types';
+import type { IJodit, ISnapshot, Nullable, SnapshotType } from 'jodit/types';
 import { ViewComponent } from 'jodit/core/component';
 import { Dom } from 'jodit/core/dom';
+import { TEMP_ATTR } from 'jodit/core/constants';
 
 /**
  * Module for creating snapshot of editor which includes html content and the current selection
@@ -42,16 +43,16 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 			return 0;
 		}
 
-		const elms: NodeList = elm.parentNode.childNodes;
-		let count: number = 0,
-			last: Node | null = null,
-			j: number;
+		const elms = elm.parentNode.childNodes;
 
-		for (j = 0; j < elms.length; j += 1) {
+		let count: number = 0,
+			previous: Nullable<Node> = null;
+
+		for (let j = 0; j < elms.length; j += 1) {
 			if (
-				last &&
-				!(Dom.isText(elms[j]) && elms[j].textContent === '') &&
-				!(Dom.isText(last) && Dom.isText(elms[j]))
+				previous &&
+				!this.isIgnoredNode(elms[j]) &&
+				!(Dom.isText(previous) && Dom.isText(elms[j]))
 			) {
 				count += 1;
 			}
@@ -60,7 +61,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 				return count;
 			}
 
-			last = elms[j];
+			previous = elms[j];
 		}
 
 		return 0;
@@ -69,12 +70,12 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/**
 	 * Calc normal offset in joined text nodes
 	 */
-	private static strokeOffset(elm: Node | null, offset: number): number {
+	private static strokeOffset(elm: Nullable<Node>, offset: number): number {
 		while (Dom.isText(elm)) {
 			elm = elm.previousSibling;
 
-			if (Dom.isText(elm) && elm.textContent != null) {
-				offset += elm.textContent.length;
+			if (Dom.isText(elm) && elm.nodeValue) {
+				offset += elm.nodeValue.length;
 			}
 		}
 
@@ -84,7 +85,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/**
 	 * Calc whole hierarchy path before some element in editor's tree
 	 */
-	private calcHierarchyLadder(elm: Node | null): number[] {
+	private calcHierarchyLadder(elm: Nullable<Node>): number[] {
 		const counts: number[] = [];
 
 		if (!elm || !elm.parentNode || !Dom.isOrContains(this.j.editor, elm)) {
@@ -92,7 +93,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		}
 
 		while (elm && elm !== this.j.editor) {
-			if (elm) {
+			if (elm && !Snapshot.isIgnoredNode(elm)) {
 				counts.push(Snapshot.countNodesBeforeInParent(elm));
 			}
 
@@ -113,7 +114,26 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		return n;
 	}
 
-	isBlocked: boolean = false;
+	private __isBlocked: boolean = false;
+	get isBlocked(): boolean {
+		return this.__isBlocked;
+	}
+
+	private __block(enable: boolean): void {
+		this.__isBlocked = enable;
+	}
+
+	transaction(changes: () => void): void {
+		this.__block(true);
+
+		try {
+			changes();
+		} catch (e) {
+			!isProd && console.error(e);
+		}
+
+		this.__block(false);
+	}
 
 	/**
 	 * Creates object a snapshot of editor: html and the current selection. Current selection calculate by
@@ -132,9 +152,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 			}
 		};
 
-		snapshot.html = this.removeJoditSelection(
-			this.j.getNativeEditorValue()
-		);
+		snapshot.html = this.removeJoditSelection(this.j.editor);
 
 		const sel = this.j.s.sel;
 
@@ -181,19 +199,20 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	 * @see make
 	 */
 	restore(snapshot: SnapshotType): void {
-		this.isBlocked = true;
+		this.transaction(() => {
+			const scroll = this.storeScrollState();
 
-		const scroll = this.storeScrollState();
+			const value = this.j.getNativeEditorValue();
+			if (value !== snapshot.html) {
+				this.j.value = snapshot.html;
+			}
 
-		const value = this.j.getNativeEditorValue();
-		if (value !== snapshot.html) {
-			this.j.value = snapshot.html;
-		}
+			if (this.j.s.isFocused()) {
+				this.restoreOnlySelection(snapshot);
+			}
 
-		this.restoreOnlySelection(snapshot);
-
-		this.restoreScrollState(scroll);
-		this.isBlocked = false;
+			this.restoreScrollState(scroll);
+		});
 	}
 
 	private storeScrollState(): [number, number] {
@@ -243,14 +262,19 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	}
 
 	override destruct(): void {
-		this.isBlocked = false;
+		this.__block(false);
 		super.destruct();
 	}
 
-	private removeJoditSelection(nativeEditorValue: string): string {
-		return nativeEditorValue.replace(
-			/<span[^>]*jodit-selection_marker[^>]*><\/span>/g,
-			''
-		);
+	private static isIgnoredNode(node: Node): boolean {
+		return (Dom.isText(node) && !node.nodeValue) || Dom.isTemporary(node);
+	}
+
+	private removeJoditSelection(node: HTMLElement): string {
+		const clone = node.cloneNode(true) as HTMLElement;
+
+		clone.querySelectorAll(`[${TEMP_ATTR}]`).forEach(Dom.unwrap);
+
+		return clone.innerHTML;
 	}
 }

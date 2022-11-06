@@ -143,7 +143,7 @@ interface IControlType<
 	 *  });
 	 * ```
 	 */
-	list?: IDictionary<string> | string[] | number[] | IControlType[];
+	list?: IDictionary<string | number> | string[] | number[] | IControlType[];
 
 	/**
 	 * The command executes when the button is pressed. Allowed all
@@ -264,6 +264,7 @@ interface IControlTypeContent extends IControlTypeStrong {
 	getContent: NonNullable<IControlTypeStrong['getContent']>;
 }
 
+// @ts-ignore
 export type Controls = IDictionary<IControlType | Controls>;
 
 export type Buttons = Array<string | IControlType>;

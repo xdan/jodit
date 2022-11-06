@@ -128,9 +128,9 @@ interface IJodit extends IViewWithToolbar, IDlgs {
 		value?: null | any
 	): boolean;
 
-	registerCommand(
-		commandNameOriginal: string,
-		command: CustomCommand<IJodit>,
+	registerCommand<C extends string>(
+		commandNameOriginal: C,
+		command: CustomCommand<IJodit, C>,
 		options?: {
 			stopPropagation: boolean;
 		}

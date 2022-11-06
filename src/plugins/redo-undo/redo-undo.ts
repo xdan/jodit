@@ -55,9 +55,8 @@ export class redoUndo extends Plugin {
 	}
 
 	protected override afterInit(editor: IJodit): void {
-		const callback = (command: string): void | false => {
-			editor.history[command as 'redo' | 'undo']();
-
+		const callback = (command: 'redo' | 'undo'): void | false => {
+			editor.history[command]();
 			return false;
 		};
 

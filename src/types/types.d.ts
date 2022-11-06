@@ -11,9 +11,9 @@
 import type { IViewBased } from 'jodit/types/view';
 import type { IAsync } from 'jodit/types/async';
 
-export interface IDictionary<T = any, K = string> {
-	[key: string]: T;
-}
+export type IDictionary<T = any, K extends string = string> = {
+	[key in K]: T;
+};
 
 export type CanPromise<T> = T | Promise<T>;
 export type CanUndef<T> = T | undefined;
@@ -146,26 +146,26 @@ export interface IPermissions {
 export type CallbackFunction<T = any> = (this: T, ...args: any[]) => any | void;
 export type BooleanFunction<T = any> = (this: T, ...args: any[]) => boolean;
 
-export type ExecCommandCallback<T> =
+export type ExecCommandCallback<T, C extends string> =
 	| ((
 			this: T,
-			command: string,
+			command: C,
 			value?: string,
 			next?: any
 	  ) => void | boolean | Promise<void | boolean>)
 	| ((
 			this: T,
-			command: string,
+			command: C,
 			value: string,
 			next: string
 	  ) => void | boolean | Promise<void | boolean>);
 
-export interface ICommandType<T> {
-	exec: ExecCommandCallback<T>;
+export interface ICommandType<T, C extends string> {
+	exec: ExecCommandCallback<T, C>;
 	hotkeys?: string | string[];
 }
 
-export type CustomCommand<T> = ICommandType<T> | ExecCommandCallback<T>;
+export type CustomCommand<T, C extends string> = ICommandType<T, C> | ExecCommandCallback<T, C>;
 
 export interface IHasScroll {
 	clientTop: number;

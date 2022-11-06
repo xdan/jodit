@@ -75,8 +75,8 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 		this.__startValue = value;
 	}
 
-	private readonly stack: IStack;
-	public snapshot: ISnapshot & IDestructible;
+	private readonly __stack: IStack;
+	snapshot: ISnapshot & IDestructible;
 
 	constructor(
 		editor: IJodit,
@@ -85,7 +85,7 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	) {
 		super(editor);
 
-		this.stack = stack;
+		this.__stack = stack;
 		this.snapshot = snapshot;
 
 		if (editor.o.history.enable) {
@@ -130,7 +130,11 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 
 	private updateTick: number = 0;
 
-	upTick(): void {
+	/**
+	 * Update change counter
+	 * @internal
+	 */
+	protected __upTick(): void {
 		this.updateTick += 1;
 	}
 
@@ -139,11 +143,14 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	 */
 	@debounce()
 	private onChange(): void {
-		this.processChanges();
+		this.__processChanges();
 	}
 
-	processChanges(): void {
-		if (this.snapshot.isBlocked) {
+	/**
+	 * @internal
+	 */
+	protected __processChanges(): void {
+		if (this.snapshot.isBlocked || !this.j.o.history.enable) {
 			return;
 		}
 
@@ -165,13 +172,13 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 			);
 
 			if (replace) {
-				const command = this.stack.current();
+				const command = this.__stack.current();
 
 				if (command && this.updateTick === command.tick) {
-					this.stack.replace(newCommand);
+					this.__stack.replace(newCommand);
 				}
 			} else {
-				this.stack.push(newCommand);
+				this.__stack.push(newCommand);
 			}
 
 			this.startValue = newValue;
@@ -183,38 +190,38 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	 * Return state of the WYSIWYG editor to step back
 	 */
 	redo(): void {
-		if (this.stack.redo()) {
+		if (this.__stack.redo()) {
 			this.startValue = this.snapshot.make();
 			this.fireChangeStack();
 		}
 	}
 
 	canRedo(): boolean {
-		return this.stack.canRedo();
+		return this.__stack.canRedo();
 	}
 
 	/**
 	 * Return the state of the WYSIWYG editor to step forward
 	 */
 	undo(): void {
-		if (this.stack.undo()) {
+		if (this.__stack.undo()) {
 			this.startValue = this.snapshot.make();
 			this.fireChangeStack();
 		}
 	}
 
 	canUndo(): boolean {
-		return this.stack.canUndo();
+		return this.__stack.canUndo();
 	}
 
 	clear(): void {
 		this.startValue = this.snapshot.make();
-		this.stack.clear();
+		this.__stack.clear();
 		this.fireChangeStack();
 	}
 
 	get length(): number {
-		return this.stack.length;
+		return this.__stack.length;
 	}
 
 	private fireChangeStack(): void {
