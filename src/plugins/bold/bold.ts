@@ -10,57 +10,14 @@
  * @module plugins/bold
  */
 
-import type { IDictionary, IJodit, IControlType } from 'jodit/types';
+import type { IDictionary, IJodit, IControlType, CanUndef } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { isArray } from 'jodit/core/helpers';
 import { pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 
-Config.prototype.controls.subscript = {
-	tags: ['sub'],
-	tooltip: 'subscript'
-} as IControlType;
-
-Config.prototype.controls.superscript = {
-	tags: ['sup'],
-	tooltip: 'superscript'
-} as IControlType;
-
-Config.prototype.controls.bold = {
-	tagRegExp: /^(strong|b)$/i,
-	tags: ['strong', 'b'],
-	css: {
-		'font-weight': ['bold', '700']
-	},
-	tooltip: 'Bold'
-} as IControlType;
-
-Config.prototype.controls.italic = {
-	tagRegExp: /^(em|i)$/i,
-	tags: ['em', 'i'],
-	css: {
-		'font-style': 'italic'
-	},
-	tooltip: 'Italic'
-} as IControlType;
-
-Config.prototype.controls.underline = {
-	tagRegExp: /^(u)$/i,
-	tags: ['u'],
-	css: {
-		'text-decoration-line': 'underline'
-	},
-	tooltip: 'Underline'
-} as IControlType;
-
-Config.prototype.controls.strikethrough = {
-	tagRegExp: /^(s)$/i,
-	tags: ['s'],
-	css: {
-		'text-decoration-line': 'line-through'
-	},
-	tooltip: 'Strike through'
-} as IControlType;
+import './interface';
+import './config';
 
 /**
  * Adds `bold`,` strikethrough`, `underline` and` italic` buttons to Jodit
@@ -74,10 +31,15 @@ export function bold(editor: IJodit): void {
 				| IDictionary<string | string[]>
 				| IDictionary<(editor: IJodit, value: string) => boolean> = {
 				...control.css
-			},
-			cssRules: IDictionary<string> = {};
+			};
+
+		let cssRules: CanUndef<IDictionary<string>>;
 
 		Object.keys(cssOptions).forEach((key: string) => {
+			if (!cssRules) {
+				cssRules = {};
+			}
+
 			cssRules[key] = isArray(cssOptions[key])
 				? (cssOptions[key] as any)[0]
 				: cssOptions[key];
@@ -87,7 +49,7 @@ export function bold(editor: IJodit): void {
 			element: control.tags ? control.tags[0] : undefined
 		});
 
-		editor.e.fire('synchro');
+		editor.synchronizeValues();
 
 		return false;
 	};
@@ -123,6 +85,14 @@ export function bold(editor: IJodit): void {
 		})
 
 		.registerCommand('strikethrough', {
+			exec: callBack
+		})
+
+		.registerCommand('subscript', {
+			exec: callBack
+		})
+
+		.registerCommand('superscript', {
 			exec: callBack
 		});
 }

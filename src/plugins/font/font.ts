@@ -49,7 +49,7 @@ export function font(editor: IJodit): void {
 				break;
 		}
 
-		editor.e.fire('synchro');
+		editor.synchronizeValues();
 
 		return false;
 	};

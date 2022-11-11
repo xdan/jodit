@@ -11,11 +11,13 @@
 import { IViewOptions, IViewWithToolbar } from './view';
 import type { Config } from 'jodit/config';
 import type {
+	AjaxOptions,
 	CustomCommand,
 	ICreate,
 	IDestructible,
 	IDlgs,
 	IHistory,
+	IResponse,
 	IStatusBar,
 	Modes
 } from './';
@@ -54,7 +56,12 @@ interface IJodit extends IViewWithToolbar, IDlgs {
 	getEditorValue(removeSelectionMarkers?: boolean, consumer?: string): string;
 	setEditorValue(value?: string): void;
 
+	/**
+	 * @internal
+	 * @private
+	 */
 	synchronizeValues(): void;
+
 	/**
 	 * This is an internal method, do not use it in your applications.
 	 * @private
@@ -120,6 +127,14 @@ interface IJodit extends IViewWithToolbar, IDlgs {
 	toggleMode(): void;
 
 	editorIsActive: boolean;
+
+	focus(): void;
+	readonly isFocused: boolean;
+
+	fetch<Response extends object = any>(
+		url: string,
+		options?: Partial<AjaxOptions>
+	): Promise<IResponse<Response>>;
 
 	execCommand(
 		command: string,

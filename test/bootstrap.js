@@ -1263,3 +1263,15 @@ function drawElement(element) {
 		}
 	});
 }
+
+const stylesList = [];
+function applyGlobalStyle(styles) {
+	const style = document.createElement('style');
+	style.innerHTML = styles;
+	document.head.appendChild(style);
+	stylesList.push(style);
+}
+
+afterEach(() => {
+	stylesList.forEach(style => style.remove());
+});

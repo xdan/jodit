@@ -196,9 +196,9 @@ export class source extends Plugin {
 				);
 
 				this.setMirrorValue(
-					value.substr(0, selectionStart) +
+					value.substring(0, selectionStart) +
 						this.clnInv(marker.outerHTML) +
-						value.substr(selectionStart)
+						value.substring(selectionStart)
 				);
 			} else {
 				const markerStart = this.j.s.marker(true);
@@ -214,14 +214,14 @@ export class source extends Plugin {
 				);
 
 				this.setMirrorValue(
-					value.substr(0, selectionStart) +
+					value.substring(0, selectionStart) +
 						this.clnInv(markerStart.outerHTML) +
-						value.substr(
+						value.substring(
 							selectionStart,
 							selectionEnd - selectionStart
 						) +
 						this.clnInv(markerEnd.outerHTML) +
-						value.substr(selectionEnd)
+						value.substring(selectionEnd)
 				);
 			}
 

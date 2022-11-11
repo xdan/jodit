@@ -159,7 +159,7 @@ export class addNewLine extends Plugin {
 		editor.s.setCursorIn(p);
 		scrollIntoViewIfNeeded(p, editor.editor, editor.ed);
 
-		editor.e.fire('synchro');
+		editor.synchronizeValues();
 		this.hideForce();
 
 		e.preventDefault();

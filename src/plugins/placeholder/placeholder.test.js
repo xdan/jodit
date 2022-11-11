@@ -10,7 +10,7 @@ describe('Placeholder plugin', function () {
 
 			area.value = '';
 
-			const editor = new Jodit(area);
+			const editor = Jodit.make(area);
 
 			expect(
 				editor.container.querySelectorAll('.jodit-placeholder')
@@ -25,7 +25,7 @@ describe('Placeholder plugin', function () {
 		it('Should hide placeholder', function () {
 			const area = appendTestArea();
 			area.value = '111';
-			const editor = new Jodit(area);
+			const editor = Jodit.make(area);
 			expect(
 				!editor.container.querySelectorAll('.jodit-placeholder').length
 			).is.true;
@@ -35,7 +35,7 @@ describe('Placeholder plugin', function () {
 			it('Should show placeholder', function () {
 				const area = appendTestArea();
 				area.value = '<p><br></p>';
-				const editor = new Jodit(area);
+				const editor = Jodit.make(area);
 
 				expect(editor.container.querySelector('.jodit-placeholder')).is
 					.not.null;
@@ -46,7 +46,7 @@ describe('Placeholder plugin', function () {
 			it('Should not show placeholder', function () {
 				const area = appendTestArea();
 				area.value = '<ul><li><br></li></ul>';
-				const editor = new Jodit(area);
+				const editor = Jodit.make(area);
 
 				expect(editor.container.querySelector('.jodit-placeholder')).is
 					.null;
@@ -57,7 +57,7 @@ describe('Placeholder plugin', function () {
 	describe('Add text inside editor', function () {
 		it('should show placeholder', function () {
 			const area = appendTestArea();
-			const editor = new Jodit(area);
+			const editor = Jodit.make(area);
 
 			editor.value = '';
 
@@ -79,7 +79,7 @@ describe('Placeholder plugin', function () {
 	describe('For element with fontsize 12px', function () {
 		it("Should set Placeholder's fontsize", function () {
 			const area = appendTestArea();
-			const editor = new Jodit(area);
+			const editor = Jodit.make(area);
 
 			editor.editor.style.fontSize = '12px';
 			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
@@ -117,12 +117,29 @@ describe('Placeholder plugin', function () {
 		});
 	});
 
+	describe('For different editor padding', function () {
+		it('Should set same padding for placeholder', function () {
+			const editor = getJodit();
+			applyGlobalStyle('.jodit-wysiwyg { padding: 16px !important; }');
+
+			editor.value = '<p>|<br></p>';
+			setCursorToChar(editor);
+
+			const placeholder = editor.container.querySelector(
+				'[data-ref="placeholder"]'
+			);
+
+			const style = editor.ow.getComputedStyle(placeholder);
+			expect(style.paddingTop).eq('16px');
+		});
+	});
+
 	describe('ReadOnly', function () {
 		it('Should hide placeholder', function () {
 			const table_editor_interface = appendTestArea();
 			table_editor_interface.value = '';
 
-			const editor = new Jodit(table_editor_interface, {
+			const editor = Jodit.make(table_editor_interface, {
 				readonly: true
 			});
 

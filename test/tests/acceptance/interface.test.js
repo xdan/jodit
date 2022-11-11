@@ -5,6 +5,62 @@
  */
 
 describe('Test interface', function () {
+	describe('Style', function () {
+		it('Should apply style to the editable area', () => {
+			const editor = getJodit({
+				style: {
+					color: '#F9D90F'
+				}
+			});
+
+			expect(
+				Jodit.modules.Helpers.normalizeColor(editor.editor.style.color)
+			).eq('#F9D90F');
+		});
+	});
+
+	describe('containerStyle', function () {
+		it('Should apply style to the main container area', () => {
+			const editor = getJodit({
+				containerStyle: {
+					color: '#F9D90F'
+				}
+			});
+
+			expect(
+				Jodit.modules.Helpers.normalizeColor(
+					editor.container.style.color
+				)
+			).eq('#F9D90F');
+		});
+	});
+
+	describe('className', function () {
+		it('Should apply className to the main container area', () => {
+			const editor = getJodit({
+				className: 'a b c'
+			});
+
+			expect(editor.container.classList.contains('jodit-container')).is.true;
+			expect(editor.container.classList.contains('a')).is.true;
+			expect(editor.container.classList.contains('b')).is.true;
+			expect(editor.container.classList.contains('c')).is.true;
+		});
+	});
+
+	describe('editorClassName', function () {
+		it('Should apply className to the editable area', () => {
+			const editor = getJodit({
+				editorClassName: 'a b c'
+			});
+
+			expect(editor.editor.classList.contains('jodit-wysiwyg')).is.true;
+			expect(editor.editor.classList.contains('a')).is.true;
+			expect(editor.editor.classList.contains('b')).is.true;
+			expect(editor.editor.classList.contains('c')).is.true;
+		});
+	});
+
 	describe('Style values', function () {
 		describe('Set styleValues dictionary', () => {
 			it('Should apply keys of it ass custom properties in CSS in instance', () => {

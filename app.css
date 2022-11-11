@@ -89,6 +89,14 @@ video {
 	vertical-align: baseline;
 }
 
+sup {
+	vertical-align: super;
+}
+
+sub {
+	vertical-align: sub;
+}
+
 body {
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 16px;

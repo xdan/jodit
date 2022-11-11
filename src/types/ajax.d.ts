@@ -39,10 +39,7 @@ export interface IAjax<T> extends IDestructible {
 	options: AjaxOptions;
 	o: this['options'];
 
-	jodit: IViewBased;
-
 	abort(): IAjax<T>;
-
 	send(): Promise<IResponse<T>>;
 
 	prepareRequest(): IRequest;

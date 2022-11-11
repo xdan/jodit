@@ -134,23 +134,6 @@ export class Config implements IViewOptions {
 	shadowRoot: Nullable<ShadowRoot> = null;
 
 	/**
-	 * Dictionary of variable values in css, a complete list can be found here
-	 * https://github.com/xdan/jodit/blob/master/src/styles/variables.less#L25
-	 *
-	 * @example
-	 * ```js
-	 * const editor = Jodit.make('#editor', {
-	 *   styleValues: {
-	 *		'color-text': 'red',
-	 *		colorBorder: 'black',
-	 *		'color-panel': 'blue'
-	 *   }
-	 * });
-	 * ```
-	 */
-	styleValues: IDictionary = {};
-
-	/**
 	 * z-index For editor
 	 */
 	zIndex: number = 0;
@@ -215,7 +198,7 @@ export class Config implements IViewOptions {
 	saveModeInStorage: boolean = false;
 
 	/**
-	 * Class name that can be appended to the editor
+	 * Class name that can be appended to the editable area
 	 *
 	 * @see [[Config.iframeCSSLinks]]
 	 * @see [[Config.iframeStyle]]
@@ -234,16 +217,44 @@ export class Config implements IViewOptions {
 	 * </style>
 	 * ```
 	 */
+	editorClassName: false | string = false;
+
+	/**
+	 * Alias for editorClassName
+	 * @deprecated
+	 */
 	editorCssClass: false | string = false;
 
 	/**
-	 * The font of editor
+	 * Class name that can be appended to the main editor container
+	 * @example
+	 * ```javascript
+	 * const jodit = Jodit.make('#editor', {
+	 *    className: 'some_my_class'
+	 * });
 	 *
+	 * console.log(jodit.container.classList.contains('some_my_class')); // true
+	 * ```
+	 * ```html
+	 * <style>
+	 * .some_my_class {
+	 *    max-width: 600px;
+	 *    margin: 0 auto;
+	 * }
+	 * </style>
+	 * ```
+	 */
+	className: false | string = false;
+
+	/**
+	 * The internal styles of the editable area. They are intended to change
+	 * not the appearance of the editor, but to change the appearance of the content.
 	 * @example
 	 * ```javascript
 	 * Jodit.make('#editor', {
 	 * 		style: {
-	 * 		 font: '12px Arial'
+	 * 		 font: '12px Arial',
+	 * 		 color: '#0c0c0c'
 	 * 		}
 	 * });
 	 * ```
@@ -251,11 +262,42 @@ export class Config implements IViewOptions {
 	style: false | IDictionary = false;
 
 	/**
+	 *
+	 * @example
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 		editorStyle: {
+	 * 		 font: '12px Arial',
+	 * 		 color: '#0c0c0c'
+	 * 		}
+	 * });
+	 * ```
+	 */
+	containerStyle: false | IDictionary = false;
+
+	/**
+	 * Dictionary of variable values in css, a complete list can be found here
+	 * https://github.com/xdan/jodit/blob/master/src/styles/variables.less#L25
+	 *
+	 * @example
+	 * ```js
+	 * const editor = Jodit.make('#editor', {
+	 *   styleValues: {
+	 *		'color-text': 'red',
+	 *		colorBorder: 'black',
+	 *		'color-panel': 'blue'
+	 *   }
+	 * });
+	 * ```
+	 */
+	styleValues: IDictionary = {};
+
+	/**
 	 * After all changes in editors for textarea will call change trigger
 	 *
 	 * @example
 	 * ```javascript
-	 * var editor = Jodit.make('#editor');
+	 * const editor = Jodit.make('#editor');
 	 * document.getElementById('editor').addEventListener('change', function () {
 	 *      console.log(this.value);
 	 * })
@@ -268,6 +310,7 @@ export class Config implements IViewOptions {
 	 * (an empty string) – Indicates that content direction will be the same as either the editor UI direction or
 	 * the page element direction. 'ltr' – Indicates a Left-To-Right text direction (like in English).
 	 * 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
+	 *
 	 * @example
 	 * ```javascript
 	 * Jodit.make('.editor', {

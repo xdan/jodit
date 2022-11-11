@@ -24,7 +24,7 @@ export function send(
 	const sendData = (
 		request: FormData | IDictionary<string> | string
 	): Promise<any> => {
-		const ajax = new Ajax<IUploaderAnswer>(uploader.j, {
+		const ajax = new Ajax<IUploaderAnswer>({
 			xhr: (): XMLHttpRequest => {
 				const xhr = new XMLHttpRequest();
 
@@ -82,6 +82,8 @@ export function send(
 
 		instances.add(ajax);
 
+		uploader.j.e.one('beforeDestruct', ajax.destruct);
+
 		return ajax
 			.send()
 			.then(resp => resp.json())
@@ -89,6 +91,7 @@ export function send(
 				uploader.o.error.call(uploader, error);
 			})
 			.finally(() => {
+				ajax.destruct();
 				instances?.delete(ajax);
 			});
 	};

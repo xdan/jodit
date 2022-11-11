@@ -13,11 +13,11 @@
 import type {
 	IDictionary,
 	IRequest,
-	IViewBased,
 	AjaxOptions,
 	IAjax,
 	RejectablePromise,
-	IResponse
+	IResponse,
+	IAsync
 } from 'jodit/types';
 
 import { Config } from 'jodit/config';
@@ -32,19 +32,24 @@ import {
 } from 'jodit/core/helpers';
 import * as error from 'jodit/core/helpers/utils/error';
 import { Response } from './response';
+import { Async } from 'jodit/core/async';
+import { autobind } from 'jodit/core/decorators';
 
 import './config';
 
 export class Ajax<T extends object = any> implements IAjax<T> {
-	constructor(readonly jodit: IViewBased, options: Partial<AjaxOptions>) {
+	private __async: IAsync = new Async();
+
+	constructor(
+		options: Partial<AjaxOptions>,
+		defaultAjaxOptions: AjaxOptions = Config.prototype.defaultAjaxOptions
+	) {
 		this.options = ConfigProto(
 			options || {},
-			Config.prototype.defaultAjaxOptions
+			defaultAjaxOptions
 		) as AjaxOptions;
 
 		this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
-
-		jodit && jodit.e && jodit.e.on('beforeDestruct', () => this.destruct());
 	}
 
 	static log: IRequest[] = [];
@@ -61,8 +66,8 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 
 		if (
 			isString(obj) ||
-			((this.j.ow as any).FormData &&
-				obj instanceof (this.j.ow as any).FormData)
+			obj instanceof window.FormData ||
+			(typeof obj === 'object' && obj != null && isFunction(obj.append))
 		) {
 			return obj as string | FormData;
 		}
@@ -75,45 +80,38 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 		return this.options;
 	}
 
-	/**
-	 * Alias for this.jodit
-	 */
-	get j(): this['jodit'] {
-		return this.jodit;
-	}
-
 	abort(): Ajax {
-		if (this.isFulfilled) {
+		if (this.__isFulfilled) {
 			return this;
 		}
 
 		try {
-			this.isFulfilled = true;
+			this.__isFulfilled = true;
 			this.xhr.abort();
 		} catch {}
 
 		return this;
 	}
 
-	private isFulfilled = false;
+	private __isFulfilled = false;
 
-	private activated = false;
+	private __activated = false;
 
 	send(): RejectablePromise<IResponse<T>> {
-		this.activated = true;
+		this.__activated = true;
 
 		const { xhr, o } = this;
 
 		const request = this.prepareRequest();
 
-		return this.j.async.promise(async (resolve, reject) => {
+		return this.__async.promise(async (resolve, reject) => {
 			const onReject = (): void => {
-				this.isFulfilled = true;
+				this.__isFulfilled = true;
 				reject(error.connection('Connection error'));
 			};
 
 			const onResolve = (): void => {
-				this.isFulfilled = true;
+				this.__isFulfilled = true;
 
 				resolve(
 					new Response<T>(
@@ -127,7 +125,7 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 
 			xhr.onload = onResolve;
 			xhr.onabort = (): void => {
-				this.isFulfilled = true;
+				this.__isFulfilled = true;
 				reject(error.abort('Abort connection'));
 			};
 
@@ -155,7 +153,7 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 					if (o.successStatuses.includes(xhr.status)) {
 						onResolve();
 					} else if (xhr.statusText) {
-						this.isFulfilled = true;
+						this.__isFulfilled = true;
 						reject(error.connection(xhr.statusText));
 					}
 				}
@@ -186,7 +184,7 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 			}
 
 			// IE
-			this.j.async.setTimeout(() => {
+			this.__async.setTimeout(() => {
 				xhr.send(data ? this.__buildParams(data) : undefined);
 			}, 0);
 		});
@@ -229,10 +227,19 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 		return request;
 	}
 
+	private __isDestructed: boolean = false;
+
+	@autobind
 	destruct(): void {
-		if (this.activated && !this.isFulfilled) {
-			this.abort();
-			this.isFulfilled = true;
+		if (!this.__isDestructed) {
+			this.__isDestructed = true;
+
+			if (this.__activated && !this.__isFulfilled) {
+				this.abort();
+				this.__isFulfilled = true;
+			}
+
+			this.__async.destruct();
 		}
 	}
 }

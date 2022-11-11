@@ -151,6 +151,7 @@ export class placeholder extends Plugin {
 				editor.editor;
 
 		const style = editor.ew.getComputedStyle(wrapper);
+		const styleEditor = editor.ew.getComputedStyle(editor.editor);
 
 		editor.workplace.appendChild(this.placeholderElm);
 
@@ -178,6 +179,9 @@ export class placeholder extends Plugin {
 		css(this.placeholderElm, {
 			display: 'block',
 			textAlign: style.getPropertyValue('text-align'),
+			paddingTop: parseInt(styleEditor.paddingTop, 10) + 'px',
+			paddingLeft: parseInt(styleEditor.paddingLeft, 10) + 'px',
+			paddingRight: parseInt(styleEditor.paddingRight, 10) + 'px',
 			marginTop: Math.max(
 				parseInt(style.getPropertyValue('margin-top'), 10),
 				marginTop

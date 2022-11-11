@@ -982,4 +982,172 @@ describe('Selection Module Tests', function () {
 			});
 		});
 	});
+
+	describe('Selection module', function () {
+		it('Current selection element should be inside editor', function () {
+			const editor = getJodit(),
+				div = document.createElement('div');
+
+			document.body.appendChild(div);
+			div.innerHTML = 'jingl';
+
+			const sel = window.getSelection(),
+				range = document.createRange();
+
+			range.selectNodeContents(div);
+			range.collapse(false);
+			sel.removeAllRanges();
+			sel.addRange(range);
+
+			expect(editor.s.current()).is.null;
+			div.parentNode.removeChild(div);
+		});
+
+		it('Current selection element', function () {
+			const editor = getJodit(),
+				div = editor.ed.createElement('div'),
+				text = editor.createInside.text('jingl');
+
+			editor.value = '';
+			div.appendChild(text);
+			editor.s.insertNode(div);
+			editor.s.setCursorIn(text);
+
+			expect(editor.s.current()).equals(text);
+		});
+
+		it('Insert simple text node in editor', function () {
+			const area = appendTestArea();
+			const editor = new Jodit(area);
+			editor.s.insertNode(editor.createInside.text('Test'));
+			expect(editor.value).equals('<p>Test</p>');
+			editor.destruct();
+		});
+
+		it('Insert 3 divs', function () {
+			const editor = getJodit();
+
+			function insert(digit) {
+				const div = editor.ed.createElement('div');
+
+				div.innerHTML = digit;
+				editor.s.insertNode(div);
+			}
+
+			insert(1);
+			insert(2);
+			insert(3);
+
+			expect(editor.value).equals('<div>1</div><div>2</div><div>3</div>');
+			editor.destruct();
+		});
+
+		it('Insert wrong data', function () {
+			const editor = getJodit();
+
+			expect(function () {
+				editor.s.insertNode();
+			}).to.throw(/node must be/);
+
+			expect(function () {
+				editor.s.insertNode('Text');
+			}).to.throw(/node must be/);
+
+			expect(function () {
+				editor.s.insertNode(null);
+			}).to.throw(/node must be/);
+
+			editor.destruct();
+		});
+
+		it('Select all and delete. Check plugin "backspace"', function () {
+			const editor = getJodit();
+			editor.value = '<p>asdasd</p><p>asdasd</p><p>asd</p>';
+			editor.execCommand('selectall');
+			editor.execCommand('delete');
+			expect(editor.value).equals('');
+			editor.destruct();
+		});
+
+		describe('Editor after focus and after blur', function () {
+			it('Should change editorIsActive field', function () {
+				const input = document.createElement('input'),
+					p = document.createElement('p'),
+					editor = getJodit();
+
+				editor.s.focus({
+					preventScroll: false
+				});
+
+				input.type = 'input';
+				document.body.appendChild(input);
+
+				p.textContent = 'Hi';
+				document.body.appendChild(p);
+
+				editor.value = '<p>Hello world</p>';
+				editor.s.focus();
+				editor.s.setCursorAfter(editor.editor.firstChild);
+
+				expect(editor.editorIsActive).is.true;
+
+				input.focus();
+				simulateEvent('blur', editor.editor);
+				expect(editor.editorIsActive).is.false;
+				document.body.removeChild(input);
+
+				editor.s.focus();
+				simulateEvent('focus', editor.editor);
+				editor.s.setCursorAfter(editor.editor.firstChild);
+				expect(editor.editorIsActive).is.true;
+
+				const range = editor.s.createRange(true);
+
+				range.selectNodeContents(p);
+
+				simulateEvent('blur', editor.editor);
+				expect(editor.editorIsActive).is.false;
+				document.body.removeChild(p);
+			});
+		});
+
+		describe('Cursor position', function () {
+			it('Should set cursor after node', function () {
+				const editor = getJodit({
+					cleanHTML: {
+						removeEmptyElements: false
+					}
+				});
+
+				editor.value = '<p></p>';
+				editor.s.setCursorIn(editor.editor.firstChild);
+
+				const spans = [
+					editor.ed.createElement('span'),
+					editor.ed.createElement('span'),
+					editor.ed.createElement('span')
+				];
+
+				editor.s.insertNode(spans[0]);
+				editor.s.insertNode(spans[1]);
+				editor.s.insertNode(spans[2]);
+
+				editor.s.setCursorAfter(spans[1]);
+				editor.s.insertNode(editor.ed.createElement('em'));
+
+				expect(editor.value).equals(
+					'<p><span></span><span></span><em></em><span></span></p>'
+				);
+			});
+
+			it('Set cursor in non placed element', function () {
+				const editor = getJodit();
+
+				expect(function () {
+					const div = editor.ed.createElement('div');
+					editor.s.setCursorIn(div);
+				}).to.Throw(/in editor/);
+			});
+		});
+	});
 });
