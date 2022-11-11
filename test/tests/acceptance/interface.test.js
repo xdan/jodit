@@ -41,7 +41,8 @@ describe('Test interface', function () {
 				className: 'a b c'
 			});
 
-			expect(editor.container.classList.contains('jodit-container')).is.true;
+			expect(editor.container.classList.contains('jodit-container')).is
+				.true;
 			expect(editor.container.classList.contains('a')).is.true;
 			expect(editor.container.classList.contains('b')).is.true;
 			expect(editor.container.classList.contains('c')).is.true;

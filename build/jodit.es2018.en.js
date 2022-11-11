@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.22.1
+ * Version: v3.23.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -930,7 +930,6 @@ class Config {
             ? window
             : null);
         this.shadowRoot = null;
-        this.styleValues = {};
         this.zIndex = 0;
         this.readonly = false;
         this.disabled = false;
@@ -948,8 +947,12 @@ class Config {
         this.inline = false;
         this.theme = 'default';
         this.saveModeInStorage = false;
+        this.editorClassName = false;
         this.editorCssClass = false;
+        this.className = false;
         this.style = false;
+        this.containerStyle = false;
+        this.styleValues = {};
         this.triggerChangeEvent = true;
         this.direction = '';
         this.language = 'auto';
@@ -7731,6 +7734,8 @@ __webpack_require__.d(__webpack_exports__, {
   "H": function() { return /* reexport */ Response; }
 });
 
+// EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
+var tslib_es6 = __webpack_require__(20255);
 // EXTERNAL MODULE: ./src/config.ts
 var config = __webpack_require__(80031);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts
@@ -7764,6 +7769,10 @@ class Response {
     }
 }
 
+// EXTERNAL MODULE: ./src/core/async/index.ts + 1 modules
+var core_async = __webpack_require__(83735);
+// EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
+var decorators = __webpack_require__(63945);
 ;// CONCATENATED MODULE: ./src/core/request/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7798,22 +7807,25 @@ config/* Config.prototype.defaultAjaxOptions */.D.prototype.defaultAjaxOptions =
 
 
 
+
+
+
 class Ajax {
-    constructor(jodit, options) {
-        this.jodit = jodit;
-        this.isFulfilled = false;
-        this.activated = false;
-        this.options = (0,helpers.ConfigProto)(options || {}, config/* Config.prototype.defaultAjaxOptions */.D.prototype.defaultAjaxOptions);
+    constructor(options, defaultAjaxOptions = config/* Config.prototype.defaultAjaxOptions */.D.prototype.defaultAjaxOptions) {
+        this.__async = new core_async/* Async */.e();
+        this.__isFulfilled = false;
+        this.__activated = false;
+        this.__isDestructed = false;
+        this.options = (0,helpers.ConfigProto)(options || {}, defaultAjaxOptions);
         this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
-        jodit && jodit.e && jodit.e.on('beforeDestruct', () => this.destruct());
     }
     __buildParams(obj, prefix) {
         if ((0,helpers.isFunction)(this.o.queryBuild)) {
             return this.o.queryBuild.call(this, obj, prefix);
         }
         if ((0,helpers.isString)(obj) ||
-            (this.j.ow.FormData &&
-                obj instanceof this.j.ow.FormData)) {
+            obj instanceof window.FormData ||
+            (typeof obj === 'object' && obj != null && (0,helpers.isFunction)(obj.append))) {
             return obj;
         }
         return (0,helpers.buildQuery)(obj);
@@ -7821,37 +7833,34 @@ class Ajax {
     get o() {
         return this.options;
     }
-    get j() {
-        return this.jodit;
-    }
     abort() {
-        if (this.isFulfilled) {
+        if (this.__isFulfilled) {
             return this;
         }
         try {
-            this.isFulfilled = true;
+            this.__isFulfilled = true;
             this.xhr.abort();
         }
         catch (_a) { }
         return this;
     }
     send() {
-        this.activated = true;
+        this.__activated = true;
         const { xhr, o } = this;
         const request = this.prepareRequest();
-        return this.j.async.promise(async (resolve, reject) => {
+        return this.__async.promise(async (resolve, reject) => {
             var _a;
             const onReject = () => {
-                this.isFulfilled = true;
+                this.__isFulfilled = true;
                 reject(error/* connection */.ZI('Connection error'));
             };
             const onResolve = () => {
-                this.isFulfilled = true;
+                this.__isFulfilled = true;
                 resolve(new Response(request, xhr.status, xhr.statusText, !xhr.responseType ? xhr.responseText : xhr.response));
             };
             xhr.onload = onResolve;
             xhr.onabort = () => {
-                this.isFulfilled = true;
+                this.__isFulfilled = true;
                 reject(error/* abort */.JG('Abort connection'));
             };
             xhr.onerror = onReject;
@@ -7875,7 +7884,7 @@ class Ajax {
                         onResolve();
                     }
                     else if (xhr.statusText) {
-                        this.isFulfilled = true;
+                        this.__isFulfilled = true;
                         reject(error/* connection */.ZI(xhr.statusText));
                     }
                 }
@@ -7895,7 +7904,7 @@ class Ajax {
                     xhr.setRequestHeader(key, headers[key]);
                 });
             }
-            this.j.async.setTimeout(() => {
+            this.__async.setTimeout(() => {
                 xhr.send(data ? this.__buildParams(data) : undefined);
             }, 0);
         });
@@ -7930,13 +7939,20 @@ class Ajax {
         return request;
     }
     destruct() {
-        if (this.activated && !this.isFulfilled) {
-            this.abort();
-            this.isFulfilled = true;
+        if (!this.__isDestructed) {
+            this.__isDestructed = true;
+            if (this.__activated && !this.__isFulfilled) {
+                this.abort();
+                this.__isFulfilled = true;
+            }
+            this.__async.destruct();
         }
     }
 }
 Ajax.log = [];
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], Ajax.prototype, "destruct", null);
 
 ;// CONCATENATED MODULE: ./src/core/request/index.ts
 /*!
@@ -12466,7 +12482,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.22.1";
+        this.version = "3.23.1";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -12548,10 +12564,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.22.1";
+        return "3.23.1";
     }
     static getVersion() {
-        return "3.22.1";
+        return "3.23.1";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -12846,7 +12862,7 @@ let DataProvider = class DataProvider {
         if (opts.prepareData) {
             opts.data = opts.prepareData.call(this, opts.data);
         }
-        const ajax = new request/* Ajax */.t(this.parent, opts);
+        const ajax = new request/* Ajax */.t(opts);
         ai.set(name, ajax);
         const promise = ajax.send();
         promise
@@ -16363,7 +16379,7 @@ const ajaxInstances = new WeakMap();
 function send(uploader, data) {
     const requestData = buildData(uploader, data);
     const sendData = (request) => {
-        const ajax = new core_request/* Ajax */.t(uploader.j, {
+        const ajax = new core_request/* Ajax */.t({
             xhr: () => {
                 const xhr = new XMLHttpRequest();
                 if (uploader.j.ow.FormData !== undefined &&
@@ -16405,6 +16421,7 @@ function send(uploader, data) {
             ajaxInstances.set(uploader, instances);
         }
         instances.add(ajax);
+        uploader.j.e.one('beforeDestruct', ajax.destruct);
         return ajax
             .send()
             .then(resp => resp.json())
@@ -16412,6 +16429,7 @@ function send(uploader, data) {
             uploader.o.error.call(uploader, error);
         })
             .finally(() => {
+            ajax.destruct();
             instances === null || instances === void 0 ? void 0 : instances.delete(ajax);
         });
     };
@@ -20619,6 +20637,8 @@ var global = __webpack_require__(16672);
 var decorators = __webpack_require__(63945);
 // EXTERNAL MODULE: ./src/core/traits/index.ts + 3 modules
 var traits = __webpack_require__(63711);
+// EXTERNAL MODULE: ./src/core/request/index.ts + 3 modules
+var request = __webpack_require__(5887);
 ;// CONCATENATED MODULE: ./src/jodit.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -20626,6 +20646,7 @@ var traits = __webpack_require__(63711);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var Jodit_1;
+
 
 
 
@@ -20649,8 +20670,8 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         this.editorIsActive = false;
         this.__mode = constants.MODE_WYSIWYG;
         this.__callChangeCount = 0;
-        this.isSilentChange = false;
-        this.elementToPlace = new Map();
+        this.__isSilentChange = false;
+        this.__elementToPlace = new Map();
         try {
             const elementSource = (0,helpers.resolveElement)(element, this.o.shadowRoot || this.od);
             if (Jodit_1.isJoditAssigned(elementSource)) {
@@ -20673,7 +20694,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
                 this.e.fire('resize');
             }
         });
-        this.e.on('prepareWYSIWYGEditor', this.prepareWYSIWYGEditor);
+        this.e.on('prepareWYSIWYGEditor', this.__prepareWYSIWYGEditor);
         this.selection = new modules.Select(this);
         const beforeInitHookResult = this.beforeInitHook();
         (0,helpers.callPromise)(beforeInitHookResult, () => {
@@ -20743,7 +20764,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
     static get defaultOptions() {
         return config/* Config.defaultOptions */.D.defaultOptions;
     }
-    setPlaceField(field, value) {
+    __setPlaceField(field, value) {
         if (!this.currentPlace) {
             this.currentPlace = {};
             this.places = [this.currentPlace];
@@ -20757,13 +20778,13 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         return this.currentPlace.editor;
     }
     set editor(editor) {
-        this.setPlaceField('editor', editor);
+        this.__setPlaceField('editor', editor);
     }
     get container() {
         return this.currentPlace.container;
     }
     set container(container) {
-        this.setPlaceField('container', container);
+        this.__setPlaceField('container', container);
     }
     get workplace() {
         return this.currentPlace.workplace;
@@ -20775,7 +20796,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         return this.currentPlace.iframe;
     }
     set iframe(iframe) {
-        this.setPlaceField('iframe', iframe);
+        this.__setPlaceField('iframe', iframe);
     }
     get history() {
         return this.currentPlace.history;
@@ -20787,7 +20808,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         return this.currentPlace.editorWindow;
     }
     set editorWindow(win) {
-        this.setPlaceField('editorWindow', win);
+        this.__setPlaceField('editorWindow', win);
     }
     get ew() {
         return this.editorWindow;
@@ -20802,7 +20823,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         return this.currentPlace.options;
     }
     set options(opt) {
-        this.setPlaceField('options', opt);
+        this.__setPlaceField('options', opt);
     }
     get s() {
         return this.selection;
@@ -20917,7 +20938,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         }
         this.e.fire('postProcessSetEditorValue');
         const old_value = this.getElementValue(), new_value = this.getEditorValue();
-        if (!this.isSilentChange &&
+        if (!this.__isSilentChange &&
             old_value !== new_value &&
             this.__callChangeCount < constants.SAFE_COUNT_CHANGE_CALL) {
             this.__setElementValue(new_value);
@@ -21014,7 +21035,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         command = command.toLowerCase();
         result = this.e.fire('beforeCommand', command, showUI, value, ...args);
         if (result !== false) {
-            result = this.execCustomCommands(command, showUI, value, ...args);
+            result = this.__execCustomCommands(command, showUI, value, ...args);
         }
         if (result !== false) {
             this.s.focus();
@@ -21036,15 +21057,15 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         return result;
     }
     nativeExecCommand(command, showUI, value) {
-        this.isSilentChange = true;
+        this.__isSilentChange = true;
         try {
             return this.ed.execCommand(command, showUI, value);
         }
         finally {
-            this.isSilentChange = false;
+            this.__isSilentChange = false;
         }
     }
-    execCustomCommands(commandName, second, third, ...args) {
+    __execCustomCommands(commandName, second, third, ...args) {
         commandName = commandName.toLowerCase();
         const commands = this.commands.get(commandName);
         if (commands !== undefined) {
@@ -21180,6 +21201,14 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
     getReadOnly() {
         return this.o.readonly;
     }
+    focus() {
+        if (this.getMode() !== constants.MODE_SOURCE) {
+            this.s.focus();
+        }
+    }
+    get isFocused() {
+        return this.s.isFocused();
+    }
     beforeInitHook() {
     }
     afterInitHook() {
@@ -21214,6 +21243,10 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         container.classList.add('jodit');
         container.classList.add('jodit-container');
         container.classList.add(`jodit_theme_${this.o.theme || 'default'}`);
+        addClassNames(this.o.className, container);
+        if (this.o.containerStyle) {
+            (0,helpers.css)(container, this.o.containerStyle);
+        }
         const { styleValues } = this.o;
         Object.keys(styleValues).forEach(key => {
             const property = (0,helpers.kebabCase)(key);
@@ -21267,11 +21300,11 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
             history: new modules.History(this),
             editorWindow: this.ow
         };
-        this.elementToPlace.set(editor, currentPlace);
+        this.__elementToPlace.set(editor, currentPlace);
         this.setCurrentPlace(currentPlace);
         this.places.push(currentPlace);
         this.setNativeEditorValue(this.getElementValue());
-        const initResult = this.initEditor(buffer);
+        const initResult = this.__initEditor(buffer);
         const opt = this.options;
         const init = () => {
             if (opt.enableDragAndDropFileToEditor &&
@@ -21279,8 +21312,8 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
                 (opt.uploader.url || opt.uploader.insertImageAsBase64URI)) {
                 this.uploader.bind(this.editor);
             }
-            if (!this.elementToPlace.get(this.editor)) {
-                this.elementToPlace.set(this.editor, currentPlace);
+            if (!this.__elementToPlace.get(this.editor)) {
+                this.__elementToPlace.set(this.editor, currentPlace);
             }
             this.e.fire('afterAddPlace', currentPlace);
         };
@@ -21302,8 +21335,8 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
             this.e.fire('changePlace', place);
         }
     }
-    initEditor(buffer) {
-        const result = this.createEditor();
+    __initEditor(buffer) {
+        const result = this.__createEditor();
         return (0,helpers.callPromise)(result, () => {
             if (this.isInDestruct) {
                 return;
@@ -21346,7 +21379,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
             catch (_c) { }
         });
     }
-    createEditor() {
+    __createEditor() {
         const defaultEditorArea = this.editor;
         const stayDefault = this.e.fire('createEditor', this);
         return (0,helpers.callPromise)(stayDefault, () => {
@@ -21356,6 +21389,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
             if (stayDefault === false || (0,helpers.isPromise)(stayDefault)) {
                 modules.Dom.safeRemove(defaultEditorArea);
             }
+            addClassNames(this.o.editorClassName || this.o.editorCssClass, this.editor);
             if (this.o.editorCssClass) {
                 this.editor.classList.add(this.o.editorCssClass);
             }
@@ -21370,7 +21404,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
                 this.editorIsActive = true;
             })
                 .on('blur', () => (this.editorIsActive = false));
-            this.prepareWYSIWYGEditor();
+            this.__prepareWYSIWYGEditor();
             if (this.o.direction) {
                 const direction = this.o.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
                 this.container.style.direction = direction;
@@ -21384,7 +21418,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
             }
         });
     }
-    prepareWYSIWYGEditor() {
+    __prepareWYSIWYGEditor() {
         const { editor } = this;
         if (this.o.direction) {
             const direction = this.o.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
@@ -21393,7 +21427,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         }
         this.e
             .on(editor, 'mousedown touchstart focus', () => {
-            const place = this.elementToPlace.get(editor);
+            const place = this.__elementToPlace.get(editor);
             if (place) {
                 this.setCurrentPlace(place);
             }
@@ -21401,7 +21435,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
             .on(editor, 'compositionend', this.synchronizeValues)
             .on(editor, 'selectionchange selectionstart keydown keyup input keypress dblclick mousedown mouseup ' +
             'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur', (event) => {
-            if (this.o.readonly || this.isSilentChange) {
+            if (this.o.readonly || this.__isSilentChange) {
                 return;
             }
             const w = this.ew;
@@ -21417,12 +21451,26 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
             }
         });
     }
+    fetch(url, options) {
+        const ajax = new request/* Ajax */.t({
+            url,
+            ...options
+        }, this.o.defaultAjaxOptions);
+        const destroy = () => {
+            this.e.off('beforeDestruct', destroy);
+            ajax.destruct();
+        };
+        this.e.one('beforeDestruct', destroy);
+        const promise = ajax.send();
+        promise.finally(destroy).catch(() => null);
+        return promise;
+    }
     destruct() {
         if (this.isInDestruct) {
             return;
         }
         this.setStatus(modules.STATUSES.beforeDestruct);
-        this.elementToPlace.clear();
+        this.__elementToPlace.clear();
         if (!this.editor) {
             return;
         }
@@ -21509,11 +21557,16 @@ Jodit.core = {
 ], Jodit.prototype, "updateElementValue", null);
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
-], Jodit.prototype, "prepareWYSIWYGEditor", null);
+], Jodit.prototype, "__prepareWYSIWYGEditor", null);
 Jodit = Jodit_1 = (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.derive)(traits/* Dlgs */.lf)
 ], Jodit);
 
+function addClassNames(className, elm) {
+    if (className) {
+        className.split(/\s+/).forEach(cn => elm.classList.add(cn));
+    }
+}
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 7 modules
 var checker = __webpack_require__(43435);
@@ -21765,7 +21818,7 @@ class addNewLine extends modules.Plugin {
             }
             editor.s.setCursorIn(p);
             (0,helpers.scrollIntoViewIfNeeded)(p, editor.editor, editor.ed);
-            editor.e.fire('synchro');
+            editor.synchronizeValues();
             this.hideForce();
             e.preventDefault();
         };
@@ -22528,15 +22581,12 @@ class backspace extends core_plugin/* Plugin */.S {
 }
 global/* pluginSystem.add */.pw.add('backspace', backspace);
 
-;// CONCATENATED MODULE: ./src/plugins/bold/bold.ts
+;// CONCATENATED MODULE: ./src/plugins/bold/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
-
-
 
 config/* Config.prototype.controls.subscript */.D.prototype.controls.subscript = {
     tags: ['sub'],
@@ -22578,12 +22628,29 @@ config/* Config.prototype.controls.strikethrough */.D.prototype.controls.striket
     },
     tooltip: 'Strike through'
 };
+
+;// CONCATENATED MODULE: ./src/plugins/bold/bold.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
 function bold(editor) {
     const callBack = (command) => {
         const control = config/* Config.defaultOptions.controls */.D.defaultOptions.controls[command], cssOptions = {
             ...control.css
-        }, cssRules = {};
+        };
+        let cssRules;
         Object.keys(cssOptions).forEach((key) => {
+            if (!cssRules) {
+                cssRules = {};
+            }
             cssRules[key] = (0,helpers.isArray)(cssOptions[key])
                 ? cssOptions[key][0]
                 : cssOptions[key];
@@ -22591,7 +22658,7 @@ function bold(editor) {
         editor.s.applyStyle(cssRules, {
             element: control.tags ? control.tags[0] : undefined
         });
-        editor.e.fire('synchro');
+        editor.synchronizeValues();
         return false;
     };
     ['bold', 'italic', 'underline', 'strikethrough'].forEach(name => {
@@ -22620,6 +22687,12 @@ function bold(editor) {
         hotkeys: ['ctrl+u', 'cmd+u']
     })
         .registerCommand('strikethrough', {
+        exec: callBack
+    })
+        .registerCommand('subscript', {
+        exec: callBack
+    })
+        .registerCommand('superscript', {
         exec: callBack
     });
 }
@@ -24498,7 +24571,7 @@ function font(editor) {
                 });
                 break;
         }
-        editor.e.fire('synchro');
+        editor.synchronizeValues();
         return false;
     };
     editor
@@ -28037,6 +28110,7 @@ class placeholder extends plugin_plugin/* Plugin */.S {
         const current = editor.s.current(), wrapper = (current && dom/* Dom.closest */.i.closest(current, dom/* Dom.isBlock */.i.isBlock, editor.editor)) ||
             editor.editor;
         const style = editor.ew.getComputedStyle(wrapper);
+        const styleEditor = editor.ew.getComputedStyle(editor.editor);
         editor.workplace.appendChild(this.placeholderElm);
         const { firstChild } = editor.editor;
         if (dom/* Dom.isElement */.i.isElement(firstChild) && !selection/* Select.isMarker */.Ph.isMarker(firstChild)) {
@@ -28057,6 +28131,9 @@ class placeholder extends plugin_plugin/* Plugin */.S {
         (0,helpers.css)(this.placeholderElm, {
             display: 'block',
             textAlign: style.getPropertyValue('text-align'),
+            paddingTop: parseInt(styleEditor.paddingTop, 10) + 'px',
+            paddingLeft: parseInt(styleEditor.paddingLeft, 10) + 'px',
+            paddingRight: parseInt(styleEditor.paddingRight, 10) + 'px',
             marginTop: Math.max(parseInt(style.getPropertyValue('margin-top'), 10), marginTop),
             marginLeft: Math.max(parseInt(style.getPropertyValue('margin-left'), 10), marginLeft)
         });
@@ -31024,20 +31101,20 @@ class source extends core_plugin/* Plugin */.S {
             if (this.getSelectionStart() === this.getSelectionEnd()) {
                 const marker = this.j.s.marker(true);
                 const selectionStart = this.getNormalPosition(this.getSelectionStart(), this.getMirrorValue());
-                this.setMirrorValue(value.substr(0, selectionStart) +
+                this.setMirrorValue(value.substring(0, selectionStart) +
                     this.clnInv(marker.outerHTML) +
-                    value.substr(selectionStart));
+                    value.substring(selectionStart));
             }
             else {
                 const markerStart = this.j.s.marker(true);
                 const markerEnd = this.j.s.marker(false);
                 const selectionStart = this.getNormalPosition(this.getSelectionStart(), value);
                 const selectionEnd = this.getNormalPosition(this.getSelectionEnd(), value);
-                this.setMirrorValue(value.substr(0, selectionStart) +
+                this.setMirrorValue(value.substring(0, selectionStart) +
                     this.clnInv(markerStart.outerHTML) +
-                    value.substr(selectionStart, selectionEnd - selectionStart) +
+                    value.substring(selectionStart, selectionEnd - selectionStart) +
                     this.clnInv(markerEnd.outerHTML) +
-                    value.substr(selectionEnd));
+                    value.substring(selectionEnd));
             }
             this.toWYSIWYG();
         }
