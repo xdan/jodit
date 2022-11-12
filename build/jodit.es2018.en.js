@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.23.1
+ * Version: v3.23.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -7782,7 +7782,6 @@ var decorators = __webpack_require__(63945);
 
 config/* Config.prototype.defaultAjaxOptions */.D.prototype.defaultAjaxOptions = {
     successStatuses: [200, 201, 202],
-    dataType: 'json',
     method: 'GET',
     url: '',
     data: null,
@@ -7820,6 +7819,11 @@ class Ajax {
         this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
     }
     __buildParams(obj, prefix) {
+        if ((0,helpers.isPlainObject)(obj) &&
+            this.options.contentType &&
+            this.options.contentType.includes('application/json')) {
+            return JSON.stringify(obj);
+        }
         if ((0,helpers.isFunction)(this.o.queryBuild)) {
             return this.o.queryBuild.call(this, obj, prefix);
         }
@@ -12482,7 +12486,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.23.1";
+        this.version = "3.23.2";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -12564,10 +12568,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.23.1";
+        return "3.23.2";
     }
     static getVersion() {
-        return "3.23.1";
+        return "3.23.2";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -13938,13 +13942,11 @@ config/* Config.prototype.filebrowser */.D.prototype.filebrowser = {
     ajax: {
         ...config/* Config.prototype.defaultAjaxOptions */.D.prototype.defaultAjaxOptions,
         url: '',
-        async: true,
         data: {},
         cache: true,
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         method: 'POST',
         processData: true,
-        dataType: 'json',
         headers: {},
         prepareData(data) {
             return data;
@@ -15939,9 +15941,7 @@ class Snapshot extends component/* ViewComponent */.Hr {
             if (value !== snapshot.html) {
                 this.j.value = snapshot.html;
             }
-            if (this.j.s.isFocused()) {
-                this.restoreOnlySelection(snapshot);
-            }
+            this.restoreOnlySelection(snapshot);
             this.restoreScrollState(scroll);
         });
     }
@@ -16412,7 +16412,6 @@ function send(uploader, data) {
             headers: uploader.o.headers,
             queryBuild: uploader.o.queryBuild,
             contentType: uploader.o.contentType.call(uploader, request),
-            dataType: uploader.o.format || 'json',
             withCredentials: uploader.o.withCredentials || false
         });
         let instances = ajaxInstances.get(uploader);
@@ -21458,9 +21457,11 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         }, this.o.defaultAjaxOptions);
         const destroy = () => {
             this.e.off('beforeDestruct', destroy);
+            this.progressbar.progress(100).hide();
             ajax.destruct();
         };
         this.e.one('beforeDestruct', destroy);
+        this.progressbar.show().progress(30);
         const promise = ajax.send();
         promise.finally(destroy).catch(() => null);
         return promise;
