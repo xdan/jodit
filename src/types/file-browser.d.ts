@@ -70,7 +70,6 @@ export interface IFileBrowserProcessor {
 }
 export interface IFileBrowserAjaxOptions {
 	url?: string;
-	async?: boolean;
 
 	data: IDictionary<string | IDictionary>;
 	cache?: boolean;
@@ -78,7 +77,6 @@ export interface IFileBrowserAjaxOptions {
 
 	method?: string;
 	processData?: boolean;
-	dataType?: string;
 
 	headers?:
 		| IDictionary<string>

@@ -227,7 +227,6 @@ Config.prototype.filebrowser = {
 		...Config.prototype.defaultAjaxOptions,
 
 		url: '',
-		async: true,
 
 		data: {},
 		cache: true,
@@ -235,7 +234,6 @@ Config.prototype.filebrowser = {
 
 		method: 'POST',
 		processData: true,
-		dataType: 'json',
 
 		headers: {},
 

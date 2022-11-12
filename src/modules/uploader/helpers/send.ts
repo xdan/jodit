@@ -69,7 +69,6 @@ export function send(
 			headers: uploader.o.headers,
 			queryBuild: uploader.o.queryBuild,
 			contentType: uploader.o.contentType.call(uploader, request),
-			dataType: uploader.o.format || 'json',
 			withCredentials: uploader.o.withCredentials || false
 		});
 

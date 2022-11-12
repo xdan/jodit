@@ -1643,10 +1643,12 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 		const destroy = (): void => {
 			this.e.off('beforeDestruct', destroy);
+			this.progressbar.progress(100).hide();
 			ajax.destruct();
 		};
 		this.e.one('beforeDestruct', destroy);
 
+		this.progressbar.show().progress(30);
 		const promise = ajax.send();
 
 		promise.finally(destroy).catch(() => null);

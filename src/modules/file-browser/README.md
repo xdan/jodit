@@ -205,7 +205,6 @@ const response = {
 
 -   filebrowser.ajax.url='' Address entry point on the server for AJAX connection
 -   filebrowser.ajax.data={} Default data to send to the server
--   filebrowser.ajax.dataType='json' The format of the returned data
 -   filebrowser.ajax.headers={} An object of additional header key/value pairs toWYSIWYG
     send along with requests using the `XMLHttpRequest` transport. The header `X-Requested-With: XMLHttpRequest`
     is always added, but its default `XMLHttpRequest` value can be changed here.
@@ -254,7 +253,6 @@ const options = {
 		headers: {},
 		method: 'POST',
 		processData: true,
-		dataType: 'json',
 		headers: {},
 		prepareData: function (data) {
 			return data;
@@ -314,7 +312,6 @@ Jodit.make('#editor2', {
 		ajax: {
 			url: 'ajax.php',
 			method: 'GET',
-			dataType: 'text',
 			headers: {
 				'X-CSRF-Token': document
 					.querySelector('meta[name="csrf-token"]')

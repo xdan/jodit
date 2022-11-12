@@ -23,7 +23,6 @@ declare module 'jodit/config' {
 Config.prototype.defaultAjaxOptions = {
 	successStatuses: [200, 201, 202],
 
-	dataType: 'json',
 	method: 'GET',
 	url: '',
 	data: null,

@@ -60,6 +60,14 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 		obj: string | IDictionary<string | object> | FormData,
 		prefix?: string
 	): string | FormData {
+		if (
+			isPlainObject(obj) &&
+			this.options.contentType &&
+			this.options.contentType.includes('application/json')
+		) {
+			return JSON.stringify(obj);
+		}
+
 		if (isFunction(this.o.queryBuild)) {
 			return this.o.queryBuild.call(this, obj, prefix);
 		}

@@ -49,12 +49,6 @@ export interface AjaxOptions {
 	successStatuses: number[];
 
 	/**
-	 * json or text The type of data that you're expecting back
-	 * from the server. if `json` the return value passes through the `JSON.parse`
-	 */
-	dataType?: string;
-
-	/**
 	 * The HTTP method to use for the request
 	 * (e.g. "POST", "GET", "PUT")
 	 */
