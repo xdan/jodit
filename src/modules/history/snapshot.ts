@@ -207,9 +207,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 				this.j.value = snapshot.html;
 			}
 
-			if (this.j.s.isFocused()) {
-				this.restoreOnlySelection(snapshot);
-			}
+			this.restoreOnlySelection(snapshot);
 
 			this.restoreScrollState(scroll);
 		});
