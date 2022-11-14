@@ -25,7 +25,7 @@ import type { IFileBrowser } from './file-browser';
 import type { IUIButton, IUIElement, IUIList } from './ui';
 
 interface IControlType<
-	T = IJodit | IViewBased | IFileBrowser,
+	T extends IViewBased = IJodit | IViewBased | IFileBrowser,
 	B = IToolbarButton
 > {
 	name?: string;
@@ -200,9 +200,45 @@ interface IControlType<
 	 * This function will be executed when the button is pressed.
 	 */
 	exec?: (
-		jodit: T,
+		view: T,
 		current: Nullable<Node>,
 		options: {
+			control: IControlType<T, B>;
+			originalEvent: Event;
+			button: IToolbarButton;
+		}
+	) => any;
+
+	/**
+	 * Allows you to set a separate handler for list items
+	 * @example
+	 * ```javascript
+	 * Jodit.make('.editor', {
+	 * 	buttons: [
+	 * 		{
+	 * 			name: 'add-date',
+	 * 			iconURL: 'stuf/dummy.png',
+	 * 			list: {
+	 * 				options: 'Open options',
+	 * 			},
+	 * 			exec(editor, current, control) {
+	 * 				editor.s.insertHTML(new Date().toString());
+	 * 			},
+	 * 			childExec(editor, current, control) {
+	 * 				if (control.args[0] === 'options') {
+	 * 					editor.alert('Options');
+	 * 				}
+	 * 			}
+	 * 		}
+	 * 	]
+	 * })
+	 * ```
+	 */
+	childExec?: (
+		view: T,
+		current: Nullable<Node>,
+		options: {
+			parentControl: IControlType<T, B>;
 			control: IControlType<T, B>;
 			originalEvent: Event;
 			button: IToolbarButton;
@@ -274,8 +310,9 @@ interface IControlTypeContent extends IControlTypeStrong {
 	getContent: NonNullable<IControlTypeStrong['getContent']>;
 }
 
-// @ts-ignore
-export type Controls = IDictionary<IControlType | Controls>;
+export interface Controls<T extends IViewBased = IJodit | IViewBased> {
+	[controlName: string]: IControlType<T> | Controls<T>;
+}
 
 export type Buttons = Array<string | IControlType>;
 
@@ -305,8 +342,8 @@ export interface ButtonsGroup {
 export type ButtonsGroups = Array<IControlType | string | ButtonsGroup>;
 export type ButtonsOption = string | ButtonsGroups;
 
-type RequireKeys<T extends object, K extends keyof T> =
-	Required<Pick<T, K>> & Omit<T, K>;
+type RequireKeys<T extends object, K extends keyof T> = Required<Pick<T, K>> &
+	Omit<T, K>;
 
 type IControlTypeStrongList = RequireKeys<IControlTypeStrong, 'list'>;
 

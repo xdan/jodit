@@ -454,7 +454,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				template:
 					childTemplate &&
 					((j, k, v): string => childTemplate(j, k, v, this)),
-				exec: control.exec,
+				exec: control.childExec
+					? (view, current, options): unknown =>
+							control.childExec?.(view, current, {
+								...options,
+								parentControl: control
+							})
+					: control.exec,
 				data: control.data,
 				command: control.command,
 				isActive: control.isChildActive,

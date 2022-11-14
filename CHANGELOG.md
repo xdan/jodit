@@ -9,6 +9,34 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.23.3
+
+#### :rocket: New Feature
+
+-   Added option `IControlType.childExec` Allows you to set a separate handler for list items
+
+```javascript
+Jodit.make('.editor', {
+	buttons: [
+		{
+			name: 'add-date',
+			iconURL: 'stuf/dummy.png',
+			list: {
+				options: 'Open options'
+			},
+			exec(editor, current, control) {
+				editor.s.insertHTML(new Date().toString());
+			},
+			childExec(editor, current, control) {
+				if (control.args[0] === 'options') {
+					editor.alert('Options');
+				}
+			}
+		}
+	]
+});
+```
+
 ## 3.23.2
 
 #### :bug: Bug Fix
@@ -1796,11 +1824,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                                                     ]
+-                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                                                           ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

@@ -151,17 +151,21 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		const result = this.render(options);
 
 		if (isString(result)) {
-			const elm = this.j.c.fromHTML(
-				result
-					.replace(/\*([^*]+?)\*/g, (_, name) => Icon.get(name) || '')
-					.replace(/&__/g, this.componentName + '__')
-					.replace(/~([^~]+?)~/g, (_, s) => this.i18n(s))
-			);
+			const elm = this.parseTemplate(result);
 			elm.classList.add(this.componentName);
 			return elm;
 		}
 
 		return result;
+	}
+
+	protected parseTemplate(result: string): HTMLElement {
+		return this.j.c.fromHTML(
+			result
+				.replace(/\*([^*]+?)\*/g, (_, name) => Icon.get(name) || '')
+				.replace(/&__/g, this.componentName + '__')
+				.replace(/~([^~]+?)~/g, (_, s) => this.i18n(s))
+		);
 	}
 
 	/** @override */
