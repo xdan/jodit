@@ -174,3 +174,7 @@ interface IEventEmitter extends IDestructible {
 export interface IObservable {
 	on(event: string | string[], callback: CallbackFunction): this;
 }
+
+interface IEventEmitter {
+	on(object: Document, event: 'selectionchange', callback: CallbackFunction): this;
+}
