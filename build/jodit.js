@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.23.2
+ * Version: v3.23.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -16199,17 +16199,20 @@ var UIElement = (function (_super) {
         return this.j.c.div(this.componentName);
     };
     UIElement.prototype.createContainer = function (options) {
-        var _this = this;
         var result = this.render(options);
         if ((0, is_string_1.isString)(result)) {
-            var elm = this.j.c.fromHTML(result
-                .replace(/\*([^*]+?)\*/g, function (_, name) { return icon_1.Icon.get(name) || ''; })
-                .replace(/&__/g, this.componentName + '__')
-                .replace(/~([^~]+?)~/g, function (_, s) { return _this.i18n(s); }));
+            var elm = this.parseTemplate(result);
             elm.classList.add(this.componentName);
             return elm;
         }
         return result;
+    };
+    UIElement.prototype.parseTemplate = function (result) {
+        var _this = this;
+        return this.j.c.fromHTML(result
+            .replace(/\*([^*]+?)\*/g, function (_, name) { return icon_1.Icon.get(name) || ''; })
+            .replace(/&__/g, this.componentName + '__')
+            .replace(/~([^~]+?)~/g, function (_, s) { return _this.i18n(s); }));
     };
     UIElement.prototype.destruct = function () {
         dom_1.Dom.safeRemove(this.container);
@@ -18121,7 +18124,7 @@ var View = (function (_super) {
         _this.parent = null;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.23.2";
+        _this.version = "3.23.3";
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
         _this.OPTIONS = View_1.defaultOptions;
@@ -18248,10 +18251,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.23.2";
+        return "3.23.3";
     };
     View.getVersion = function () {
-        return "3.23.2";
+        return "3.23.3";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -24267,7 +24270,12 @@ var ToolbarButton = (function (_super) {
                 name: key.toString(),
                 template: childTemplate &&
                     (function (j, k, v) { return childTemplate(j, k, v, _this); }),
-                exec: control.exec,
+                exec: control.childExec
+                    ? function (view, current, options) {
+                        var _a;
+                        return (_a = control.childExec) === null || _a === void 0 ? void 0 : _a.call(control, view, current, tslib_1.__assign(tslib_1.__assign({}, options), { parentControl: control }));
+                    }
+                    : control.exec,
                 data: control.data,
                 command: control.command,
                 isActive: control.isChildActive,

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.23.2
+ * Version: v3.23.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -10584,14 +10584,17 @@ let UIElement = UIElement_1 = class UIElement extends jodit_core_component__WEBP
     createContainer(options) {
         const result = this.render(options);
         if ((0,jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_5__/* .isString */ .H)(result)) {
-            const elm = this.j.c.fromHTML(result
-                .replace(/\*([^*]+?)\*/g, (_, name) => jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_3__/* .Icon.get */ .J.get(name) || '')
-                .replace(/&__/g, this.componentName + '__')
-                .replace(/~([^~]+?)~/g, (_, s) => this.i18n(s)));
+            const elm = this.parseTemplate(result);
             elm.classList.add(this.componentName);
             return elm;
         }
         return result;
+    }
+    parseTemplate(result) {
+        return this.j.c.fromHTML(result
+            .replace(/\*([^*]+?)\*/g, (_, name) => jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_3__/* .Icon.get */ .J.get(name) || '')
+            .replace(/&__/g, this.componentName + '__')
+            .replace(/~([^~]+?)~/g, (_, s) => this.i18n(s)));
     }
     destruct() {
         jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(this.container);
@@ -12486,7 +12489,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.23.2";
+        this.version = "3.23.3";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -12568,10 +12571,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.23.2";
+        return "3.23.3";
     }
     static getVersion() {
-        return "3.23.2";
+        return "3.23.3";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -17868,7 +17871,15 @@ let ToolbarButton = class ToolbarButton extends jodit_core_ui_button__WEBPACK_IM
                 name: key.toString(),
                 template: childTemplate &&
                     ((j, k, v) => childTemplate(j, k, v, this)),
-                exec: control.exec,
+                exec: control.childExec
+                    ? (view, current, options) => {
+                        var _a;
+                        return (_a = control.childExec) === null || _a === void 0 ? void 0 : _a.call(control, view, current, {
+                            ...options,
+                            parentControl: control
+                        });
+                    }
+                    : control.exec,
                 data: control.data,
                 command: control.command,
                 isActive: control.isChildActive,
