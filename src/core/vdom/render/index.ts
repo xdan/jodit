@@ -98,7 +98,7 @@ export class VDomRender {
 
 	private commitDeletion(fiber: CanUndef<IFiber>, domParent: Node): void {
 		if (fiber?.dom) {
-			domParent.removeChild(fiber.dom);
+			fiber.dom.isConnected && domParent.removeChild(fiber.dom);
 		} else {
 			this.commitDeletion(fiber?.child, domParent);
 		}
@@ -228,12 +228,15 @@ export class VDomRender {
 		}
 	}
 
-	htmlToVDom(html: string): IVDom {
+	htmlToVDom(html: string): MapIVDom {
 		const box = document.createElement('div');
 		box.innerHTML = html;
 
-		return domToVDom(
-			box.children.length > 1 || !box.firstChild ? box : box.firstChild
-		);
+		return domToVDom(box);
 	}
+}
+
+export interface MapIVDom {
+	vdom: IVDom;
+	map: Map<HTMLElement, IVDom>;
 }
