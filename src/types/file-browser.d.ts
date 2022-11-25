@@ -27,7 +27,7 @@ import type { IDlgs } from './traits';
  * The module creates a web browser dialog box. In a Web browser ,you can select an image, remove, drag it. Upload new
  */
 export interface ISourceFile {
-	type: 'folder' | 'image' | 'file';
+	type: 'image' | 'file' | 'folder';
 	file?: string;
 	fileIsAbsolute?: boolean;
 	name?: string;
@@ -210,6 +210,15 @@ export interface IFileBrowserDataProvider extends IDestructible {
 		mods?: IFileBrowserDataProviderItemsMods
 	): Promise<IFileBrowserItem[]>;
 
+	itemsEx(
+		path: string,
+		source: string,
+		mods?: IFileBrowserDataProviderItemsMods
+	): Promise<{
+		items: IFileBrowserItem[];
+		loadedTotal: number;
+	}>;
+
 	tree(path: string, source: string): Promise<ISourcesFiles>;
 
 	createFolder(name: string, path: string, source: string): Promise<boolean>;
@@ -286,11 +295,6 @@ export interface IFileBrowser<
 	status(message: string | Error, success?: boolean): void;
 }
 
-export interface IFileBrowserMessage {
-	message: string;
-	type: 'success' | 'error';
-}
-
 export interface IFileBrowserState {
 	currentPath: string;
 	currentSource: string;
@@ -304,8 +308,6 @@ export interface IFileBrowserState {
 	elements: IFileBrowserItem[];
 	activeElements: IFileBrowserItem[];
 	sources: ISourcesFiles;
-
-	messages: IFileBrowserMessage[];
 }
 
 export interface IFileBrowserFolder {
@@ -319,12 +321,17 @@ export interface IFileBrowserItemElement extends ISourceFile {
 	sourceName: string;
 }
 
-export interface IFileBrowserItemWrapper extends IFileBrowserItemElement {
+export interface IUniqueHash {
+	uniqueHashKey: string;
+}
+
+export interface IFileBrowserItemWrapper
+	extends IFileBrowserItemElement,
+		IUniqueHash {
 	path: string;
 	fileURL: string;
 	imageURL: string;
 	time: string;
-	uniqueHashKey: string;
 }
 
 export type IFileBrowserItem = IFileBrowserItemWrapper &

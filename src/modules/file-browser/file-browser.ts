@@ -79,7 +79,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 
 		activeElements: [],
 		elements: [],
-		messages: [],
 		sources: [],
 		view: 'tiles',
 		sortBy: 'changed-desc',

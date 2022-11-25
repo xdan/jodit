@@ -70,7 +70,7 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 
 	allowTabNavigation?: boolean;
 
-	zIndex?: number;
+	zIndex?: number | string;
 	fullsize?: boolean;
 	globalFullSize?: boolean;
 

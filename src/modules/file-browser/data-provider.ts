@@ -190,14 +190,12 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		);
 	}
 
-	/**
-	 * Load items list by path and source
-	 */
-	items(
+	private __items<Result>(
 		path: string,
 		source: string,
-		mods: IFileBrowserDataProviderItemsMods = {}
-	): Promise<IFileBrowserItem[]> {
+		mods: IFileBrowserDataProviderItemsMods,
+		onResult: (resp: IFileBrowserAnswer) => Result
+	): Promise<Result> {
 		const opt = this.options;
 
 		if (!opt.items) {
@@ -220,8 +218,38 @@ export default class DataProvider implements IFileBrowserDataProvider {
 				resp = process.call(self, resp);
 			}
 
-			return this.generateItemsList(resp.data.sources, mods);
+			return onResult(resp);
 		});
+	}
+
+	/**
+	 * Load items list by path and source
+	 */
+	items(
+		path: string,
+		source: string,
+		mods: IFileBrowserDataProviderItemsMods = {}
+	): Promise<IFileBrowserItem[]> {
+		return this.__items(path, source, mods, resp =>
+			this.generateItemsList(resp.data.sources, mods)
+		);
+	}
+
+	/**
+	 * Load items list by path and source
+	 */
+	itemsEx(
+		path: string,
+		source: string,
+		mods: IFileBrowserDataProviderItemsMods = {}
+	): ReturnType<IFileBrowserDataProvider['itemsEx']> {
+		const calcTotal = (sources: ISourcesFiles): number =>
+			sources.reduce((acc, source) => acc + source.files.length, 0);
+
+		return this.__items(path, source, mods, resp => ({
+			items: this.generateItemsList(resp.data.sources, mods),
+			loadedTotal: calcTotal(resp.data.sources)
+		}));
 	}
 
 	private generateItemsList(
@@ -231,11 +259,15 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		const elements: IFileBrowserItem[] = [];
 
 		const canBeFile = (item: ISourceFile): boolean =>
-				!mods.onlyImages || item.isImage === undefined || item.isImage,
-			inFilter = (item: ISourceFile): boolean =>
-				!mods.filterWord?.length ||
-				this.o.filter === undefined ||
-				this.o.filter(item, mods.filterWord);
+			item.type === 'folder' ||
+			!mods.onlyImages ||
+			item.isImage === undefined ||
+			item.isImage;
+
+		const inFilter = (item: ISourceFile): boolean =>
+			!mods.filterWord?.length ||
+			this.o.filter === undefined ||
+			this.o.filter(item, mods.filterWord);
 
 		sources.forEach(source => {
 			if (source.files && source.files.length) {

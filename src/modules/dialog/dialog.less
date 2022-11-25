@@ -95,7 +95,8 @@
 	}
 
 	&_static_true {
-		position: static;
+		position: relative;
+		z-index: inherit;
 		display: block;
 		width: auto;
 		height: auto;
@@ -104,6 +105,7 @@
 
 	&_static_true &__panel {
 		position: relative;
+		z-index: inherit;
 		top: auto !important;
 		left: auto !important;
 		width: 100% !important;

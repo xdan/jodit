@@ -66,7 +66,11 @@ Config.prototype.dialog = {
 	 */
 	draggable: true,
 	buttons: ['dialog.close'],
-	removeButtons: []
+	removeButtons: [],
+
+	toolbarButtonSize: 'middle',
+
+	zIndex: 'inherit'
 };
 
 Config.prototype.controls.dialog = {
@@ -495,6 +499,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 * Sets the maximum z-index dialog box, displaying it on top of all the dialog boxes
 	 */
 	setMaxZIndex(): void {
+		if (this.getMod('static')) return;
+
 		let maxZIndex: number = 20000004,
 			zIndex: number = 0;
 
@@ -582,9 +588,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.destination.appendChild(this.container);
 
-		this.setPosition(this.offsetX, this.offsetY);
-
-		this.setMaxZIndex();
+		if (this.getMod('static') !== true) {
+			this.setPosition(this.offsetX, this.offsetY);
+			this.setMaxZIndex();
+		} else {
+			this.container.style.removeProperty('z-index');
+		}
 
 		if (this.o.fullsize) {
 			this.toggleFullSize(true);
@@ -677,20 +686,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		return this;
 	}
 
-	constructor(options?: Partial<IDialogOptions>) {
+	constructor(options: Partial<IDialogOptions> = {}) {
 		super(options);
 
 		const self: Dialog = this;
 
 		self.options = ConfigProto(
-			options ?? {},
-
-			ConfigProto(
-				{
-					toolbarButtonSize: 'middle'
-				},
-				ConfigProto(Config.prototype.dialog, View.defaultOptions)
-			)
+			options,
+			ConfigProto(Config.prototype.dialog, View.defaultOptions)
 		) as IDialogOptions;
 
 		Dom.safeRemove(self.container);
@@ -698,7 +701,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		const n = this.getFullElName.bind(this);
 
 		self.container = this.c.fromHTML(
-			`<div style="z-index:${self.o.zIndex}" class="jodit jodit-dialog ${
+			`<div class="jodit jodit-dialog ${
 				this.componentName
 			}">
 				<div class="${n('overlay')}"></div>
@@ -713,6 +716,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 				</div>
 			</div>`
 		) as HTMLDivElement;
+
+		if (this.o.zIndex) {
+			this.container.style.zIndex = this.o.zIndex.toString();
+		}
 
 		attr(self.container, 'role', 'dialog');
 
