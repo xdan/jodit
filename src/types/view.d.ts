@@ -135,7 +135,7 @@ interface IViewBased<T = IViewOptions>
 	readonly components: Set<IComponent>;
 	getInstance<T extends IComponent>(moduleName: string, options?: object): T;
 
-	readonly message: IMessages;
+	message: IMessages;
 }
 
 interface IViewWithToolbar<T = IViewOptions> extends IViewBased<T> {

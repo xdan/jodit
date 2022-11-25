@@ -45,6 +45,7 @@ import {
 	Select,
 	StatusBar,
 	STATUSES,
+	UIMessages,
 	ViewWithToolbar
 } from 'jodit/modules/';
 
@@ -1358,6 +1359,9 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		});
 
 		container.appendChild(workplace);
+
+		this.message.destruct()
+		this.message = new UIMessages(this, workplace);
 
 		if (element.parentNode && element !== container) {
 			element.parentNode.insertBefore(container, element);

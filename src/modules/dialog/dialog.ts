@@ -45,6 +45,7 @@ import { eventEmitter, pluginSystem } from 'jodit/core/global';
 import { component, autobind, hook } from 'jodit/core/decorators';
 import { View } from 'jodit/core/view/view';
 import { Icon } from 'jodit/core/ui';
+import { UIMessages } from '../messages/messages';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -701,9 +702,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		const n = this.getFullElName.bind(this);
 
 		self.container = this.c.fromHTML(
-			`<div class="jodit jodit-dialog ${
-				this.componentName
-			}">
+			`<div class="jodit jodit-dialog ${this.componentName}">
 				<div class="${n('overlay')}"></div>
 				<div class="${this.getFullElName('panel')}">
 					<div class="${n('header')}">
@@ -752,6 +751,9 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			dialogbox_toolbar != null,
 			'header-toolbar element does not exist'
 		);
+
+		this.message.destruct();
+		this.message = new UIMessages(this, dialog);
 
 		this.dialog = dialog;
 		this.resizer = resizer;

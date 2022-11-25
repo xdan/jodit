@@ -21,8 +21,7 @@ import type {
 import { css } from 'jodit/core/helpers/utils/css';
 import { UIGroup } from 'jodit/core/ui/group/group';
 import { component } from 'jodit/core/decorators/component/component';
-import { watch } from 'jodit/src/core/decorators/watch/watch';
-import { isJoditObject } from 'jodit/core/helpers';
+import { watch } from 'jodit/core/decorators/watch/watch';
 import { UIMessage } from 'jodit/modules/messages/message';
 
 /**
@@ -36,6 +35,7 @@ export class UIMessages extends UIGroup implements IMessages {
 
 	constructor(
 		jodit: IViewBased,
+		private readonly __box: HTMLElement,
 		override readonly options: {
 			defaultTimeout: number;
 			defaultOffset: number;
@@ -94,12 +94,7 @@ export class UIMessages extends UIGroup implements IMessages {
 			return;
 		}
 
-		const jodit = this.j;
-		if (isJoditObject(jodit)) {
-			jodit.workplace.appendChild(this.container);
-		} else {
-			jodit.container.appendChild(this.container);
-		}
+		this.__box.appendChild(this.container);
 
 		const msg = new UIMessage(this.j, { text, variant });
 		this.append(msg);

@@ -94,7 +94,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	 */
 	readonly buffer: IStorage = Storage.makeStorage();
 
-	readonly message: IMessages;
+	message: IMessages;
 
 	/**
 	 * Container for persistent set/get value
@@ -262,7 +262,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 		this.container = this.c.div(`jodit ${this.componentName}`);
 		this.progressbar = new ProgressBar(this);
-		this.message = new UIMessages(this);
+		this.message = new UIMessages(this, this.container);
 	}
 
 	private __modulesInstances: Map<string, IComponent> = new Map();
