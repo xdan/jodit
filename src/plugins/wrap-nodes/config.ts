@@ -15,6 +15,9 @@ declare module 'jodit/config' {
 	interface Config {
 		wrapNodes: {
 			exclude: HTMLTagNames[];
+			/**
+			 * If the editor is empty then insert an empty paragraph into it
+			 */
 			emptyBlockAfterInit: boolean;
 		};
 	}

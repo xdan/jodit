@@ -228,7 +228,7 @@ export class VDomRender {
 		}
 	}
 
-	htmlToVDom(html: string): MapIVDom {
+	htmlToVDom(html: string): IVDom {
 		const box = document.createElement('div');
 		box.innerHTML = html;
 
@@ -236,7 +236,3 @@ export class VDomRender {
 	}
 }
 
-export interface MapIVDom {
-	vdom: IVDom;
-	map: Map<HTMLElement, IVDom>;
-}

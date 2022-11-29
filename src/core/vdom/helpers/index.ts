@@ -10,7 +10,6 @@
 
 import type { HTMLTagNames, IDictionary } from 'jodit/types';
 import type { IVDom } from '../interface';
-import { MapIVDom } from '../render';
 
 export function attrsToDict(elm: Node): IDictionary<string> {
 	const result: IDictionary<string> = {};
@@ -36,7 +35,7 @@ export function attrsToDict(elm: Node): IDictionary<string> {
 	return result;
 }
 
-export function domToVDom(elm: Node, noNode: boolean = true): MapIVDom {
+export function domToVDom(elm: Node, noNode: boolean = true): IVDom {
 	if (elm.nodeType === Node.TEXT_NODE) {
 		return {
 			type: 'TEXT_ELEMENT',
