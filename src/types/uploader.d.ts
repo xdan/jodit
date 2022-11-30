@@ -40,6 +40,19 @@ export interface IUploaderOptions<T> {
 		| string
 		| ((request: FormData | IDictionary<string> | string) => string);
 	insertImageAsBase64URI: boolean;
+
+	/**
+	 * List of extensions for images
+	 * @default ['jpg', 'png', 'jpeg', 'gif']
+	 * @example
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 	uploader: {
+	 * 		imagesExtensions: ['jpg', 'png', 'jpeg', 'gif', 'svg', 'webp']
+	 * 	}
+	 * });
+	 * ```
+	 */
 	imagesExtensions: string[];
 	headers?:
 		| IDictionary<string>
