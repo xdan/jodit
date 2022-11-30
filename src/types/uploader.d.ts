@@ -48,6 +48,7 @@ export interface IUploaderOptions<T> {
 	 * ```javascript
 	 * Jodit.make('#editor', {
 	 * 	uploader: {
+	 * 		insertImageAsBase64URI: true,
 	 * 		imagesExtensions: ['jpg', 'png', 'jpeg', 'gif', 'svg', 'webp']
 	 * 	}
 	 * });
