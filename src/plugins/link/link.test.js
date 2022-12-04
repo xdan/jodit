@@ -21,6 +21,25 @@ describe('Link plugin', function () {
 				);
 			});
 
+			describe('For not collapsed selection', function () {
+				it('Should insert as link with selected content', function () {
+					const editor = getJodit();
+
+					editor.value = '<p>test |test|</p>';
+					setCursorToChar(editor);
+
+					simulatePaste(
+						editor.editor,
+						'https://sitename.com',
+						'text/plain'
+					);
+
+					expect(editor.value).equal(
+						'<p>test <a href="https://sitename.com">test</a></p>'
+					);
+				});
+			});
+
 			describe('Disable', function () {
 				describe('Disable any convert', function () {
 					it('Should not change source link', function () {

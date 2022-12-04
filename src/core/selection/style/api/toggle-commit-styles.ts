@@ -7,6 +7,7 @@
 import type { IJodit } from 'jodit/types';
 import type { CommitStyle } from '../commit-style';
 import { Dom } from 'jodit/core/dom';
+import { isSameAttributes } from 'jodit/core/selection/style/api/is-same-attributes';
 
 /**
  * Add or remove styles to element
@@ -18,18 +19,25 @@ export function toggleCommitStyles(
 	elm: HTMLElement,
 	jodit: IJodit
 ): boolean {
-	if (
-		commitStyle.elementIsBlock ||
-		(Dom.isTag(elm, commitStyle.element) && !commitStyle.elementIsDefault)
-	) {
-		if (elm.getAttribute('style')) {
-			Dom.replace(elm, commitStyle.defaultTag, jodit.createInside, true);
-		} else {
-			Dom.unwrap(elm);
-		}
+	const { elementIsBlock, elementIsDefault, options } = commitStyle;
 
-		return true;
+	if (
+		!elementIsBlock &&
+		(elementIsDefault ||
+			!Dom.isTag(elm, commitStyle.element) ||
+			!isSameAttributes(elm, commitStyle.options.attributes))
+	) {
+		return false;
 	}
 
-	return false;
+	if (
+		elm.attributes.length &&
+		(!options.attributes || !isSameAttributes(elm, options.attributes))
+	) {
+		Dom.replace(elm, commitStyle.defaultTag, jodit.createInside, true);
+	} else {
+		Dom.unwrap(elm);
+	}
+
+	return true;
 }

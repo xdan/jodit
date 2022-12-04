@@ -80,14 +80,30 @@ export interface ISelect {
 		tagOrCallback: HTMLTagNames | ((font: HTMLElement) => any)
 	): HTMLElement[];
 
+	/** @deprecated Instead use commitStyle */
 	applyStyle(
 		style: CanUndef<IStyle>,
 		options?: {
 			element?: HTMLTagNames;
+			/** @deprecated Instead use attributes.class*/
 			className?: string;
+			attributes?: IDictionary<string | number>;
 			defaultTag?: HTMLTagNames;
 		}
 	): void;
+
+	commitStyle(options: {
+		style?: IStyle;
+		/**
+		 * equal CSSRule (e.g. strong === font-weight: 700)
+		 */
+		element?: HTMLTagNames;
+		attributes?: IDictionary<string | number>;
+		/**
+		 * tag for wrapping and apply styles
+		 */
+		defaultTag?: HTMLTagNames;
+	}): void;
 
 	eachSelection(callback: (current: Node) => void): void;
 	splitSelection(currentBox: HTMLElement): Nullable<Element>;

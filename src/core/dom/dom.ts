@@ -207,15 +207,29 @@ export class Dom {
 	 * // Replace the first <span> element to the < p >
 	 * ```
 	 */
+	static replace<T extends HTMLElement>(
+		elm: Node,
+		newTagName: HTMLTagNames,
+		create: ICreate,
+		withAttributes?: boolean,
+		notMoveContent?: boolean
+	): T;
 	static replace<T extends Node>(
 		elm: Node,
-		newTagName: HTMLTagNames | Node | string,
+		newTagName: T | string,
+		create: ICreate,
+		withAttributes?: boolean,
+		notMoveContent?: boolean
+	): T;
+	static replace<T extends Node>(
+		elm: Node,
+		newTagName: HTMLTagNames | T | string,
 		create: ICreate,
 		withAttributes = false,
 		notMoveContent = false
 	): T {
 		if (isHTML(newTagName)) {
-			newTagName = create.fromHTML(newTagName);
+			newTagName = create.fromHTML(newTagName) as unknown as T;
 		}
 
 		const tag = isString(newTagName)

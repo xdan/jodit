@@ -25,7 +25,7 @@ import {
 	wrapAndCommitStyle,
 	isSuitElement,
 	extractSelectedPart,
-	toggleCSS,
+	toggleAttributes,
 	FiniteStateMachine
 } from './api';
 
@@ -117,7 +117,7 @@ export function ApplyStyle(jodit: IJodit, cs: CommitStyle): void {
 				if (toggleCommitStyles(cs, toggleElm, jodit)) {
 					mode = UNWRAP;
 				} else {
-					mode = toggleCSS(cs, toggleElm, jodit, mode);
+					mode = toggleAttributes(cs, toggleElm, jodit, mode);
 				}
 
 				this.setState('generator', mode);
@@ -156,7 +156,7 @@ export function ApplyStyle(jodit: IJodit, cs: CommitStyle): void {
 			toggleStyles(font: HTMLElement): void {
 				if (this.getSubState() !== 'unwrap') {
 					const toggleElm = wrapAndCommitStyle(cs, font, jodit);
-					toggleCSS(cs, toggleElm, jodit, WRAP);
+					toggleAttributes(cs, toggleElm, jodit, WRAP);
 				}
 
 				this.setState('generator');

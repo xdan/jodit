@@ -9,7 +9,7 @@ import type { CommitStyle } from '../commit-style';
 import { Dom } from 'jodit/core/dom';
 import { wrapUnwrappedText } from './wrap-unwrapped-text';
 import { attr } from 'jodit/core/helpers';
-import { wrapOrderedList } from './wrap-ordered-list';
+import { wrapList } from './wrap-list';
 
 /**
  * Replaces the parent tag with the applicable one, or wraps the text and also replaces the tag
@@ -23,7 +23,7 @@ export function wrapAndCommitStyle(
 	const wrapper = findOrCreateWrapper(commitStyle, font, jodit);
 
 	return commitStyle.elementIsList
-		? wrapOrderedList(commitStyle, wrapper, jodit)
+		? wrapList(commitStyle, wrapper, jodit)
 		: Dom.replace(wrapper, commitStyle.element, jodit.createInside, true);
 }
 

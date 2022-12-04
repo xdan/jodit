@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+const { Dom } = Jodit.modules;
+
 describe('Apply style', () => {
 	describe('Test Style module', function () {
 		let editor;
@@ -16,8 +18,120 @@ describe('Apply style', () => {
 			editor.execCommand('selectall');
 		});
 
-		describe('Base apply', () => {
+		describe.only('Base apply', () => {
 			[
+				[
+					'<ul class="todo-list"><li>test|</li></ul>',
+					{
+						element: 'ul'
+					},
+					'<p replaced="true">test|</p>',
+					{
+						events: {
+							applyStyleAfterToggleOrderedList(mode, li) {
+								if (mode === 'unwrap') {
+									li.setAttribute('replaced', true);
+								}
+							}
+						}
+					}
+				],
+				[
+					'<ul class="todo-list"><li>test|</li></ul>',
+					{
+						element: 'ol'
+					},
+					'<ol><li>test|</li></ol>'
+				],
+				[
+					'<p>|test|</p>',
+					{
+						element: 'a',
+						attributes: {
+							href: 'https://xdsoft.net'
+						}
+					},
+					'<p>|<a href="https://xdsoft.net">test</a>|</p>'
+				],
+				[
+					'<p>|test|</p>',
+					{
+						element: 'ul',
+						attributes: {
+							class: 'todo-list'
+						}
+					},
+					'<ul class="todo-list"><li><label class="jodit_todo_label"><input type="checkbox"></label>|test|</li></ul>',
+					{
+						events: {
+							applyStyleWrapList: (wrapper, cs, jodit) => {
+								const li = Dom.replace(
+									wrapper,
+									'li',
+									jodit.createInside
+								);
+
+								const label = jodit.createInside.element(
+									'label',
+									{ class: 'jodit_todo_label' }
+								);
+
+								const input = jodit.createInside.element(
+									'input',
+									{
+										type: 'checkbox'
+									}
+								);
+								label.appendChild(input);
+								Dom.prepend(li, label);
+
+								return li;
+							}
+						}
+					}
+				],
+				[
+					'<p><a href="https://xdsoft.net">|test|</a></p>',
+					{
+						element: 'a',
+						attributes: {
+							href: 'https://xdsoft.net'
+						}
+					},
+					'<p>|test|</p>'
+				],
+				[
+					'<p><a href="https://xdsoft.net">|test|</a></p>',
+					{
+						element: 'a',
+						attributes: {
+							title: 'book',
+							href: 'https://sitename.net'
+						}
+					},
+					'<p><a href="https://sitename.net" title="book">|test|</a></p>'
+				],
+				[
+					'<p><span>|test|</span></p>',
+					{
+						element: 'a',
+						attributes: {
+							title: 'book',
+							href: 'https://sitename.net'
+						}
+					},
+					'<p><span>|<a href="https://sitename.net" title="book">test</a>|</span></p>'
+				],
+				[
+					'<p><a href="https://xdsoft.net">|test|</a></p>',
+					{
+						element: 'a',
+						attributes: {
+							href: 'https://sitename.net'
+						}
+					},
+					'<p><a href="https://sitename.net">|test|</a></p>'
+				],
 				[
 					'<p>|test|</p>',
 					{
@@ -55,6 +169,42 @@ describe('Apply style', () => {
 						className: 'class1'
 					},
 					'<p><strong class="class1">|test|</strong></p>'
+				],
+				[
+					'<p><strong>|test|</strong></p>',
+					{
+						attributes: {
+							class: 'class1'
+						}
+					},
+					'<p><strong class="class1">|test|</strong></p>'
+				],
+				[
+					'<p><strong class="class2">|test|</strong></p>',
+					{
+						attributes: {
+							class: 'class1'
+						}
+					},
+					'<p><strong class="class2 class1">|test|</strong></p>'
+				],
+				[
+					'<p><strong class="class1">|test|</strong></p>',
+					{
+						attributes: {
+							class: 'class1'
+						}
+					},
+					'<p><strong>|test|</strong></p>'
+				],
+				[
+					'<p><strong class="class1 class2">|test|</strong></p>',
+					{
+						attributes: {
+							class: 'class1'
+						}
+					},
+					'<p><strong class="class2">|test|</strong></p>'
 				],
 				[
 					'<p><strong>|test|</strong></p>',

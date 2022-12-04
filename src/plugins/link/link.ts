@@ -49,7 +49,7 @@ export class link extends Plugin {
 			jodit.e.on('processPaste.link', this.onProcessPasteLink);
 		}
 
-		jodit.e.on('generateLinkForm.link', this.generateForm);
+		jodit.e.on('generateLinkForm.link', this.__generateForm);
 
 		jodit.registerCommand('openLinkDialog', {
 			exec: () => {
@@ -57,7 +57,7 @@ export class link extends Plugin {
 					resizable: false
 				});
 
-				const htmlForm = this.generateForm(jodit.s.current(), () => {
+				const htmlForm = this.__generateForm(jodit.s.current(), () => {
 					dialog.close();
 				}) as UIForm;
 
@@ -92,35 +92,45 @@ export class link extends Plugin {
 	private onProcessPasteLink(
 		ignore: ClipboardEvent,
 		html: string
-	): HTMLAnchorElement | void {
+	): HTMLAnchorElement | void | true {
 		const { jodit } = this;
 
-		if (isURL(html)) {
-			if (jodit.o.link.processVideoLink) {
-				const embed = convertMediaUrlToVideoEmbed(html);
+		if (!isURL(html) || !jodit.o.link.processPastedLink) {
+			return;
+		}
 
-				if (embed !== html) {
-					jodit.e.stopPropagation('processPaste');
+		jodit.e.stopPropagation('processPaste');
 
-					return jodit.createInside.fromHTML(
-						embed
-					) as HTMLAnchorElement;
-				}
+		if (jodit.o.link.processVideoLink) {
+			const embed = convertMediaUrlToVideoEmbed(html);
+
+			if (embed !== html) {
+				return jodit.createInside.fromHTML(embed) as HTMLAnchorElement;
 			}
+		}
 
+		if (jodit.s.isCollapsed()) {
 			const a = jodit.createInside.element('a');
 
 			a.setAttribute('href', html);
 			a.textContent = html;
 
-			jodit.e.stopPropagation('processPaste');
 			jodit.e.fire('applyLink', jodit, a, null);
 			return a;
 		}
+
+		jodit.s.applyStyle(undefined, {
+			element: 'a',
+			attributes: {
+				href: html
+			}
+		});
+
+		return true;
 	}
 
 	@autobind
-	private generateForm(
+	private __generateForm(
 		current: Nullable<Node>,
 		close: Function
 	): HTMLElement | IUIForm {
@@ -406,7 +416,7 @@ export class link extends Plugin {
 	/** @override */
 	protected override beforeDestruct(jodit: IJodit): void {
 		jodit.e
-			.off('generateLinkForm.link', this.generateForm)
+			.off('generateLinkForm.link', this.__generateForm)
 			.off('dblclick.link', this.onDblClickOnLink)
 			.off('processPaste.link', this.onProcessPasteLink);
 	}

@@ -13,16 +13,14 @@ import type { CommitStyle } from '../commit-style';
  * adds a new item to the nearest old list
  * @private
  */
-export function wrapOrderedList(
+export function wrapList(
 	commitStyle: CommitStyle,
 	wrapper: HTMLElement,
 	jodit: IJodit
 ): HTMLElement {
-	const newWrapper = Dom.replace<HTMLElement>(
-		wrapper,
-		'li',
-		jodit.createInside
-	);
+	const newWrapper =
+		jodit.e.fire('applyStyleWrapList', wrapper, commitStyle, jodit) ??
+		Dom.replace<HTMLElement>(wrapper, 'li', jodit.createInside);
 
 	let list =
 		newWrapper.previousElementSibling || newWrapper.nextElementSibling;

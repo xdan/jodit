@@ -8,17 +8,23 @@
  * @module types
  */
 
-import type { CanUndef, HTMLTagNames, IDictionary } from './types';
+import type { HTMLTagNames, IDictionary } from './types';
 
 export type StyleValue = number | string | null | undefined;
 
 export type IStyle = IDictionary<StyleValue>;
+export type IAttributes = {
+	[K in string]: IStyle | string | number | boolean | null;
+};
 
 export interface IStyleOptions {
-	style: CanUndef<IStyle>;
-	element: CanUndef<HTMLTagNames>;
-	className: CanUndef<string>;
-	defaultTag: CanUndef<HTMLTagNames>;
+	element?: HTMLTagNames;
+	attributes?: IAttributes;
+	defaultTag?: HTMLTagNames;
+	/** @deprecated */
+	style?: IStyle;
+	/** @deprecated */
+	className?: string;
 }
 
 export type CommitMode =

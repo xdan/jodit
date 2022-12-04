@@ -8,8 +8,10 @@ import type { IJodit, CommitMode } from 'jodit/types';
 import type { CommitStyle } from '../../commit-style';
 import { Dom } from 'jodit/core/dom';
 import { extractSelectedPart } from '../extract';
-import { CHANGE, INITIAL, REPLACE } from '../../commit-style';
-import { toggleCSS } from './toggle-css';
+import { CHANGE, INITIAL, REPLACE, UNWRAP } from '../../commit-style';
+import { toggleAttributes } from './toggle-attributes';
+
+const en = 'applyStyleAfterToggleOrderedList';
 
 /**
  * Replaces `ul->ol` or `ol->ul`, apply styles to the list, or remove a list item from it
@@ -38,17 +40,21 @@ export function toggleOrderedList(
 			style.element,
 			jodit.createInside
 		);
-		toggleCSS(style, newList, jodit, mode);
+		toggleAttributes(style, newList, jodit, mode);
+		jodit.e.fire(en, REPLACE, li, style, jodit);
 		return REPLACE;
 	}
 
-	if (toggleCSS(style, li.parentElement, jodit, INITIAL, true) === CHANGE) {
-		return toggleCSS(style, li.parentElement, jodit, mode);
+	if (toggleAttributes(style, li.parentElement, jodit, INITIAL, true) === CHANGE) {
+		const result = toggleAttributes(style, li.parentElement, jodit, mode);
+		jodit.e.fire(en, CHANGE, li, style, jodit);
+		return result;
 	}
 
 	extractSelectedPart(list, li, jodit);
 	Dom.unwrap(li.parentElement);
-	Dom.replace(li, jodit.o.enter, jodit.createInside);
+	const wrapper = Dom.replace(li, jodit.o.enter, jodit.createInside);
+	jodit.e.fire(en, UNWRAP, wrapper, style, jodit);
 
 	return mode;
 }

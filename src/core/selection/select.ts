@@ -17,6 +17,7 @@ import type {
 	IJodit,
 	ISelect,
 	IStyle,
+	IStyleOptions,
 	MarkerInfo,
 	Nullable
 } from 'jodit/types';
@@ -32,6 +33,7 @@ import {
 import { Dom } from 'jodit/core/dom';
 
 import {
+	size,
 	attr,
 	error,
 	isFunction,
@@ -45,6 +47,7 @@ import {
 import { CommitStyle } from './style/commit-style';
 import { autobind } from 'jodit/core/decorators';
 import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers';
+import { assert } from 'jodit/core/helpers/utils/assert';
 
 export class Select implements ISelect {
 	constructor(readonly jodit: IJodit) {
@@ -1289,9 +1292,34 @@ export class Select implements ISelect {
 	 * editor.value = 'test';
 	 * editor.execCommand('selectall');
 	 *
+	 * editor.s.commitStyle({
+	 * 	style: {color: 'red'}
+	 * }) // will wrap `text` in `span` and add style `color:red`
+	 * editor.s.commitStyle({
+	 * 	style: {color: 'red'}
+	 * }) // will remove `color:red` from `span`
+	 * ```
+	 */
+	commitStyle(options: IStyleOptions): void {
+		assert(size(options) > 0, 'Need to pass at least one option');
+
+		const styleElm = new CommitStyle(options);
+
+		styleElm.apply(this.j);
+	}
+
+	/**
+	 * Apply some css rules for all selections. It method wraps selections in nodeName tag.
+	 * @example
+	 * ```js
+	 * const editor = Jodit.make('#editor');
+	 * editor.value = 'test';
+	 * editor.execCommand('selectall');
+	 *
 	 * editor.s.applyStyle({color: 'red'}) // will wrap `text` in `span` and add style `color:red`
 	 * editor.s.applyStyle({color: 'red'}) // will remove `color:red` from `span`
 	 * ```
+	 * @deprecated
 	 */
 	applyStyle(
 		style: CanUndef<IStyle>,
@@ -1300,21 +1328,19 @@ export class Select implements ISelect {
 			 * equal CSSRule (e.g. strong === font-weight: 700)
 			 */
 			element?: HTMLTagNames;
+			/** @deprecated Instead use attributes.class*/
 			className?: string;
+			attributes?: IDictionary<string | number>;
 			/**
 			 * tag for wrapping and apply styles
 			 */
 			defaultTag?: HTMLTagNames;
 		} = {}
 	): void {
-		const styleElm = new CommitStyle({
+		this.commitStyle({
 			style,
-			element: options.element,
-			className: options.className,
-			defaultTag: options.defaultTag
+			...options
 		});
-
-		styleElm.apply(this.j);
 	}
 
 	/**
