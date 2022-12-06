@@ -35,11 +35,6 @@ export function normalizeCssValue(
 	key: string,
 	value: string | number
 ): string | number {
-	const num = normalizeCssNumericValue(key, value);
-	if (num !== value) {
-		return num as string | number;
-	}
-
 	switch (kebabCase(key)) {
 		case 'font-weight':
 			switch (value.toString().toLowerCase()) {

@@ -10,6 +10,7 @@
 
 export * from './normalize-key-aliases';
 export * from './normalize-license';
+export * from './normalize-node';
 export * from './normalize-path';
 export * from './normalize-relative-path';
 export * from './normalize-size';
