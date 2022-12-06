@@ -7,6 +7,7 @@
 import type { IJodit, Nullable } from 'jodit/types';
 import type { CommitStyle } from '../commit-style';
 import { Dom } from 'jodit/core/dom';
+import { Select } from 'jodit/core/selection';
 
 /**
  * Wrap text or inline elements inside Block element
@@ -15,8 +16,7 @@ import { Dom } from 'jodit/core/dom';
 export function wrapUnwrappedText(
 	style: CommitStyle,
 	elm: Node,
-	jodit: IJodit,
-	getRange: () => Range
+	jodit: IJodit
 ): HTMLElement {
 	const root = jodit.editor,
 		ci = jodit.createInside,
@@ -24,7 +24,7 @@ export function wrapUnwrappedText(
 			let edgeNode: Node = n,
 				node: Nullable<Node> = n;
 
-			while (node) {
+			while (node && !Select.isMarker(node)) {
 				if (Dom.isTag(node, jodit.o.enter)) {
 					break;
 				}
@@ -53,7 +53,7 @@ export function wrapUnwrappedText(
 	const start: Node = edge(elm),
 		end: Node = edge(elm, 'nextSibling');
 
-	const range = getRange();
+	const range = jodit.s.createRange();
 	range.setStartBefore(start);
 	range.setEndAfter(end);
 	const fragment = range.extractContents();

@@ -8,9 +8,15 @@
  * @module selection
  */
 
-import type { HTMLTagNames, IJodit, IStyleOptions } from 'jodit/types';
+import type {
+	HTMLTagNames,
+	IJodit,
+	IStyleOptions,
+	IAttributes
+} from 'jodit/types';
 import { IS_BLOCK } from 'jodit/core/constants';
 import { ApplyStyle } from './apply-style';
+import { camelCase } from 'jodit/core/helpers';
 
 export const WRAP = 'wrap';
 export const UNWRAP = 'unwrap';
@@ -18,6 +24,7 @@ export const CHANGE = 'change';
 export const UNSET = 'unset';
 export const INITIAL = 'initial';
 export const REPLACE = 'replace';
+export const _PREFIX = 'commitStyle';
 
 export class CommitStyle {
 	get elementIsList(): boolean {
@@ -61,9 +68,56 @@ export class CommitStyle {
 		return this.element === this.defaultTag;
 	}
 
-	constructor(readonly options: IStyleOptions) {}
+	constructor(readonly options: IStyleOptions) {
+		options.attributes = deprecatedUsing(this, options.attributes);
+	}
 
 	apply(jodit: IJodit): void {
-		ApplyStyle(jodit, this);
+		const { hooks } = this.options;
+
+		try {
+			hooks &&
+				Object.keys(hooks).forEach(key => {
+					// @ts-ignore
+					jodit.e.on(camelCase(_PREFIX + '_' + key), hooks[key]);
+				});
+
+			ApplyStyle(jodit, this);
+		} finally {
+			hooks &&
+				Object.keys(hooks).forEach(key => {
+					// @ts-ignore
+					jodit.e.off(camelCase(_PREFIX + '_' + key), hooks[key]);
+				});
+		}
 	}
+}
+
+function deprecatedUsing(
+	commitStyle: CommitStyle,
+	attributes?: IAttributes | undefined
+): IAttributes | undefined {
+	const { style, className } = commitStyle.options;
+
+	// For compatibility with older versions
+	if (style) {
+		if (attributes) {
+			attributes.style = style;
+		} else {
+			attributes = { style };
+		}
+		delete commitStyle.options.style;
+	}
+
+	// For compatibility with older versions
+	if (className) {
+		if (attributes) {
+			attributes['class'] = className;
+		} else {
+			attributes = { class: className };
+		}
+		delete commitStyle.options.className;
+	}
+
+	return attributes;
 }

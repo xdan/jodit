@@ -8,196 +8,74 @@
  * @module selection
  */
 
-import type { IJodit, Nullable, CanUndef, CommitMode } from 'jodit/types';
+import type { IJodit } from 'jodit/types';
 import type { CommitStyle } from './commit-style';
-import { normalizeNode } from 'jodit/core/helpers';
-import {
-	getSuitParent,
-	getSuitChild,
-	isInsideInvisibleElement,
-	toggleCommitStyles,
-	unwrapChildren
-} from './api';
-import { CHANGE, INITIAL, REPLACE, UNWRAP, WRAP } from './commit-style';
-import { Dom } from 'jodit/core/dom';
-import {
-	toggleOrderedList,
-	wrapAndCommitStyle,
-	isSuitElement,
-	extractSelectedPart,
-	toggleAttributes,
-	FiniteStateMachine
-} from './api';
+import { Dom } from 'jodit/core/dom/dom';
+import { INVISIBLE_SPACE_REG_EXP } from 'jodit/core/constants';
+import { FiniteStateMachine } from './api';
+import { IStyleTransactionValue, states, transactions } from './transactions';
+import { INITIAL } from './commit-style';
 
+/** @internal */
 export function ApplyStyle(jodit: IJodit, cs: CommitStyle): void {
 	const { s: sel, editor } = jodit;
 
-	const fsm = new FiniteStateMachine('start', {
-		start: {
-			start(): void {
-				sel.save();
-				normalizeNode(editor.firstChild); // FF fix for test "commandsTest - Exec command "bold"
-				this.setState('generator');
-			}
-		},
+	sel.save();
 
-		generator: {
-			initGenerator(): Generator {
-				return jodit.s.wrapInTagGen();
-			},
+	normalizeNode(editor.firstChild); // FF fix for test "commandsTest - Exec command "bold"
+	const gen = jodit.s.wrapInTagGen();
 
-			nextFont(gen: Generator<HTMLElement>): CanUndef<HTMLElement> {
-				const font = gen.next();
+	let font = gen.next();
 
-				if (font.done) {
-					this.setState('end');
-					return;
-				}
+	let state: IStyleTransactionValue = {
+		mode: INITIAL,
+		element: font.value,
+		next: states.START,
+		jodit,
+		style: cs
+	};
 
-				if (
-					isInsideInvisibleElement(font.value, editor) ||
-					Dom.isEmptyContent(font.value)
-				) {
-					return;
-				}
+	while (font && !font.done) {
+		const machine = new FiniteStateMachine<
+			keyof typeof states,
+			IStyleTransactionValue
+		>(states.START, transactions);
+		machine.disableSilent();
 
-				this.setState('check');
+		state.element = font.value;
 
-				return font.value;
-			}
-		},
-
-		check: {
-			work(font: HTMLElement): Nullable<HTMLElement> {
-				let elm =
-					getSuitParent(cs, font, jodit.editor) ||
-					getSuitChild(cs, font);
-
-				if (elm) {
-					this.setState('wholeElement');
-					return elm;
-				}
-
-				elm = Dom.closest(
-					font,
-					node => isSuitElement(cs, node, true),
-					jodit.editor
-				);
-
-				if (elm) {
-					if (!cs.elementIsBlock) {
-						extractSelectedPart(elm, font, jodit);
-					}
-				}
-
-				if (cs.elementIsList && Dom.isTag(elm, ['ul', 'ol'])) {
-					this.setState('orderList');
-					return font;
-				}
-
-				if (elm) {
-					this.setState('wholeElement');
-					return elm;
-				}
-
-				if (unwrapChildren(cs, font)) {
-					this.setState('endProcess');
-					return null;
-				}
-
-				this.setState('wrap');
-				return font;
-			}
-		},
-
-		wholeElement: {
-			toggleStyles(toggleElm: HTMLElement): void {
-				let mode: CommitMode = INITIAL;
-
-				if (toggleCommitStyles(cs, toggleElm, jodit)) {
-					mode = UNWRAP;
-				} else {
-					mode = toggleAttributes(cs, toggleElm, jodit, mode);
-				}
-
-				this.setState('generator', mode);
-			}
-		},
-
-		orderList: {
-			toggleStyles(font: HTMLElement): void {
-				let mode: CommitMode = INITIAL;
-				const li = Dom.closest(font, 'li', jodit.editor);
-
-				if (!li) {
-					this.setState('generator');
-					return;
-				}
-
-				const ul = Dom.closest(font, ['ul', 'ol'], jodit.editor);
-
-				if (!ul) {
-					this.setState('generator');
-					return;
-				}
-
-				mode = toggleOrderedList(cs, li, jodit, mode);
-
-				if (mode === REPLACE || mode === UNWRAP || mode === CHANGE) {
-					this.setState('endWhile');
-					return;
-				}
-
-				this.setState('generator');
-			}
-		},
-
-		wrap: {
-			toggleStyles(font: HTMLElement): void {
-				if (this.getSubState() !== 'unwrap') {
-					const toggleElm = wrapAndCommitStyle(cs, font, jodit);
-					toggleAttributes(cs, toggleElm, jodit, WRAP);
-				}
-
-				this.setState('generator');
-			}
-		},
-
-		endWhile: {
-			nextFont(gen: Generator<HTMLElement>): void {
-				const font = gen.next();
-
-				if (font.done) {
-					this.setState('end');
-				}
-			}
-		},
-
-		endProcess: {
-			toggleStyles(): void {
-				this.setState('generator');
-			}
-		},
-
-		end: {
-			finalize(): void {
-				sel.restore();
-			}
+		while (machine.getState() !== states.END) {
+			state = machine.dispatch('exec', state);
 		}
-	});
 
-	fsm.dispatch('start');
-
-	const gen = fsm.dispatch('initGenerator');
-
-	while (fsm.getState() !== 'end') {
-		const font = fsm.dispatch<HTMLElement>('nextFont', gen);
-
-		if (font) {
-			const wrapper = fsm.dispatch<HTMLElement>('work', font);
-			fsm.dispatch('toggleStyles', wrapper);
-		}
+		font = gen.next();
 	}
 
-	fsm.dispatch('finalize', gen);
+	sel.restore();
+}
+
+/** @internal */
+function normalizeNode(node: Node | null): void {
+	if (!node) {
+		return;
+	}
+
+	if (Dom.isText(node) && node.nodeValue != null && node.parentNode) {
+		while (Dom.isText(node.nextSibling)) {
+			if (node.nextSibling.nodeValue != null) {
+				node.nodeValue += node.nextSibling.nodeValue;
+			}
+
+			node.nodeValue = node.nodeValue.replace(
+				INVISIBLE_SPACE_REG_EXP(),
+				''
+			);
+
+			Dom.safeRemove(node.nextSibling);
+		}
+	} else {
+		normalizeNode(node.firstChild);
+	}
+
+	normalizeNode(node.nextSibling);
 }

@@ -9,7 +9,7 @@
  */
 
 import type { CanUndef, HTMLTagNames, IDictionary, Nullable } from './types';
-import type { IStyle } from './style';
+import type { IStyle, IStyleOptions } from './style';
 
 export interface MarkerInfo {
 	startId: string;
@@ -92,18 +92,7 @@ export interface ISelect {
 		}
 	): void;
 
-	commitStyle(options: {
-		style?: IStyle;
-		/**
-		 * equal CSSRule (e.g. strong === font-weight: 700)
-		 */
-		element?: HTMLTagNames;
-		attributes?: IDictionary<string | number>;
-		/**
-		 * tag for wrapping and apply styles
-		 */
-		defaultTag?: HTMLTagNames;
-	}): void;
+	commitStyle(options: IStyleOptions): void;
 
 	eachSelection(callback: (current: Node) => void): void;
 	splitSelection(currentBox: HTMLElement): Nullable<Element>;

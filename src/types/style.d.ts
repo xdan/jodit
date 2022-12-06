@@ -20,6 +20,22 @@ export type IAttributes = {
 export interface IStyleOptions {
 	element?: HTMLTagNames;
 	attributes?: IAttributes;
+	hooks?: {
+		beforeWrapList?(mode: CommitMode, li: HTMLElement): void;
+		afterWrapList?(mode: CommitMode, li: HTMLElement, style: IStyleOptions): void;
+		beforeToggleOrderedList?(
+			mode: CommitMode,
+			list: HTMLElement,
+			style: IStyleOptions
+		): void | CommitMode;
+		afterToggleOrderedList?(mode: CommitMode, list: HTMLElement): void;
+		afterToggleAttribute?(
+			mode: CommitMode,
+			elm: HTMLElement,
+			key: string,
+			value?: string | number | null | boolean
+		): void;
+	};
 	defaultTag?: HTMLTagNames;
 	/** @deprecated */
 	style?: IStyle;

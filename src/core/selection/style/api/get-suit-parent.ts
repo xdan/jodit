@@ -43,6 +43,7 @@ export function getSuitParent(
 		return getSuitParent(style, parentNode, root);
 	}
 
+	debugger
 	if (
 		isSuitElement(style, parentNode, false) &&
 		(!Dom.isBlock(parentNode) || style.elementIsBlock)

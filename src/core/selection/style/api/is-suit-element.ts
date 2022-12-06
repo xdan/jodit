@@ -3,7 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import type { Nullable } from 'jodit/types';
+import type { IStyle, Nullable } from 'jodit/types';
 import type { CommitStyle } from '../commit-style';
 import { isNormalNode } from './is-normal-node';
 import {
@@ -34,7 +34,8 @@ export function isSuitElement(
 	const { element, elementIsDefault, options } = commitStyle;
 
 	const elmHasSameStyle = Boolean(
-		options.style && elementHasSameStyle(elm, options.style)
+		options.attributes?.style &&
+			elementHasSameStyle(elm, options.attributes.style as IStyle)
 	);
 
 	const elmIsSame =
@@ -50,6 +51,18 @@ export function isSuitElement(
 
 	return Boolean(
 		!elmIsSame && !strict && elementIsDefault && Dom.isInlineBlock(elm)
+	);
+}
+
+export function findSuitClosest(
+	commitStyle: CommitStyle,
+	element: HTMLElement,
+	root: HTMLElement
+): Nullable<HTMLElement> {
+	return Dom.closest(
+		element,
+		node => isSuitElement(commitStyle, node, true),
+		root
 	);
 }
 
@@ -75,7 +88,8 @@ export function isSameStyleChild(
 	const elmIsSame = elm.nodeName.toLowerCase() === element;
 
 	const elmHasSameStyle = Boolean(
-		options.style && elementHasSameStyleKeys(elm, options.style)
+		options.attributes?.style &&
+			elementHasSameStyleKeys(elm, options.attributes?.style as IStyle)
 	);
 
 	return elmIsSame && elmHasSameStyle;

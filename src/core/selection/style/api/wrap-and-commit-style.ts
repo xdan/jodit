@@ -57,10 +57,8 @@ function findOrCreateWrapper(
 		if (box) {
 			return box;
 		}
-	}
 
-	if (commitStyle.elementIsBlock) {
-		return wrapUnwrappedText(commitStyle, font, jodit, jodit.s.createRange);
+		return wrapUnwrappedText(commitStyle, font, jodit);
 	}
 
 	attr(font, 'size', null);

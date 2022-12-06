@@ -6,7 +6,7 @@
 
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
-import type { CommitStyle } from '../commit-style';
+import { _PREFIX, CommitStyle, REPLACE, WRAP } from '../commit-style';
 
 /**
  * Replaces non-leaf items with leaf items and either creates a new list or
@@ -18,9 +18,9 @@ export function wrapList(
 	wrapper: HTMLElement,
 	jodit: IJodit
 ): HTMLElement {
+	const result = jodit.e.fire(`${_PREFIX}BeforeWrapList`, REPLACE, wrapper);
 	const newWrapper =
-		jodit.e.fire('applyStyleWrapList', wrapper, commitStyle, jodit) ??
-		Dom.replace<HTMLElement>(wrapper, 'li', jodit.createInside);
+		result ?? Dom.replace<HTMLElement>(wrapper, 'li', jodit.createInside);
 
 	let list =
 		newWrapper.previousElementSibling || newWrapper.nextElementSibling;
@@ -35,6 +35,8 @@ export function wrapList(
 	} else {
 		Dom.prepend(list, newWrapper);
 	}
+
+	jodit.e.fire(`${_PREFIX}AfterWrapList`, WRAP, list, commitStyle.options);
 
 	return <HTMLElement>list;
 }

@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CommitMode, IAttributes, IJodit, IStyle } from 'jodit/types';
+import type { CommitMode, IJodit, IStyle } from 'jodit/types';
 import type { CommitStyle } from 'jodit/core/selection/style/commit-style';
 import { assert, attr } from 'jodit/core/helpers/utils';
 import { css } from 'jodit/core/helpers/utils/css';
@@ -13,7 +13,12 @@ import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
 import { normalizeCssValue } from 'jodit/core/helpers/normalize/normalize-css-value';
 import { size } from 'jodit/core/helpers/size/object-size';
 import { Dom } from 'jodit/core/dom';
-import { CHANGE, UNSET, UNWRAP } from 'jodit/core/selection/style/commit-style';
+import {
+	_PREFIX,
+	CHANGE,
+	UNSET,
+	UNWRAP
+} from 'jodit/core/selection/style/commit-style';
 import { getContainer } from 'jodit/core/global';
 import {
 	isBoolean,
@@ -33,9 +38,7 @@ export function toggleAttributes(
 	mode: CommitMode,
 	dry: boolean = false
 ): CommitMode {
-	let { attributes } = commitStyle.options;
-
-	attributes = deprecatedUsing(commitStyle, attributes);
+	const { attributes } = commitStyle.options;
 
 	if (attributes && size(attributes) > 0) {
 		Object.keys(attributes).forEach((key: string) => {
@@ -44,23 +47,23 @@ export function toggleAttributes(
 			switch (key) {
 				case 'style': {
 					mode = toggleStyle(
+						commitStyle,
+						jodit,
 						value,
 						elm,
-						jodit,
 						dry,
-						mode,
-						commitStyle
+						mode
 					);
 
 					break;
 				}
 
 				case 'class':
-					mode = toggleClass(value, elm, mode, dry);
+					mode = toggleClass(jodit, value, elm, mode, dry);
 					break;
 
 				default:
-					mode = toggleAttribute(value, elm, key, dry, mode);
+					mode = toggleAttribute(jodit, value, elm, key, dry, mode);
 			}
 		});
 	}
@@ -69,26 +72,31 @@ export function toggleAttributes(
 }
 
 function toggleStyle(
+	commitStyle: CommitStyle,
+	jodit: IJodit,
 	style: IStyle | string | number | boolean | null,
 	elm: HTMLElement,
-	jodit: IJodit,
 	dry: boolean,
-	mode: CommitMode,
-	commitStyle: CommitStyle
+	mode: CommitMode
 ): CommitMode {
 	assert(isPlainObject(style) && size(style), 'Style must be an object');
 
 	Object.keys(style).forEach((rule: string) => {
 		const inlineValue = elm.style.getPropertyValue(kebabCase(rule));
+		const newValue = style[rule];
 
-		if (inlineValue === '' && style[rule] == null) {
+		if (inlineValue === '' && newValue == null) {
 			return;
 		}
 
 		if (
 			getNativeCSSValue(jodit, elm, rule) ===
-			normalizeCssValue(rule, style[rule] as string)
+			normalizeCssValue(rule, newValue as string)
 		) {
+			if (!inlineValue) {
+				return;
+			}
+
 			!dry && css(elm, rule, null);
 			mode = UNSET;
 			mode = removeExtraStyleAttribute(commitStyle, elm, mode);
@@ -98,14 +106,16 @@ function toggleStyle(
 		mode = CHANGE;
 
 		if (!dry) {
-			css(elm, rule, style[rule]);
+			css(elm, rule, newValue);
 			mode = removeExtraStyleAttribute(commitStyle, elm, mode);
 		}
 	});
+
 	return mode;
 }
 
 function toggleClass(
+	jodit: IJodit,
 	value: string | unknown,
 	elm: HTMLElement,
 	mode: CommitMode,
@@ -113,22 +123,30 @@ function toggleClass(
 ): CommitMode {
 	assert(isString(value), 'Class name must be a string');
 
+	const hook = jodit.e.fire.bind(jodit.e, `${_PREFIX}AfterToggleAttribute`);
+
 	if (elm.classList.contains(value.toString())) {
 		mode = UNSET;
 		if (!dry) {
 			elm.classList.remove(value);
 			if (elm.classList.length === 0) {
 				attr(elm, 'class', null);
+				hook(mode, elm, 'class', null);
 			}
 		}
 	} else {
 		mode = CHANGE;
-		!dry && elm.classList.add(value);
+		if (!dry) {
+			elm.classList.add(value);
+			hook(mode, elm, 'class', value);
+		}
 	}
+
 	return mode;
 }
 
 function toggleAttribute(
+	jodit: IJodit,
 	value: string | number | null | boolean | unknown,
 	elm: HTMLElement,
 	key: string,
@@ -140,14 +158,20 @@ function toggleAttribute(
 		'Attribute value must be a string or number or boolean or null'
 	);
 
+	const hook = jodit.e.fire.bind(jodit.e, `${_PREFIX}AfterToggleAttribute`);
+
 	if (attr(elm, key) === value) {
 		!dry && attr(elm, key, null);
 		mode = UNSET;
+		!dry && hook(mode, elm, key, value);
 		return mode;
 	}
 
 	mode = CHANGE;
-	!dry && attr(elm, key, value);
+	if (!dry) {
+		attr(elm, key, value);
+		hook(mode, elm, key, value);
+	}
 
 	return mode;
 }
@@ -217,31 +241,4 @@ function getNativeCSSValue(
 	const result = css(newElm, key);
 	Dom.safeRemove(newElm);
 	return result;
-}
-
-function deprecatedUsing(
-	commitStyle: CommitStyle,
-	attributes?: IAttributes | undefined
-): IAttributes | undefined {
-	const { style, className } = commitStyle.options;
-
-	// For compatibility with older versions
-	if (style) {
-		if (attributes) {
-			attributes.style = style;
-		} else {
-			attributes = { style };
-		}
-	}
-
-	// For compatibility with older versions
-	if (className) {
-		if (attributes) {
-			attributes['class'] = className;
-		} else {
-			attributes = { class: className };
-		}
-	}
-
-	return attributes;
 }

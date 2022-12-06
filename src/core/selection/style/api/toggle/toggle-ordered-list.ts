@@ -8,17 +8,15 @@ import type { IJodit, CommitMode } from 'jodit/types';
 import type { CommitStyle } from '../../commit-style';
 import { Dom } from 'jodit/core/dom';
 import { extractSelectedPart } from '../extract';
-import { CHANGE, INITIAL, REPLACE, UNWRAP } from '../../commit-style';
+import { _PREFIX, CHANGE, INITIAL, REPLACE, UNWRAP } from '../../commit-style';
 import { toggleAttributes } from './toggle-attributes';
-
-const en = 'applyStyleAfterToggleOrderedList';
 
 /**
  * Replaces `ul->ol` or `ol->ul`, apply styles to the list, or remove a list item from it
  * @private
  */
 export function toggleOrderedList(
-	style: CommitStyle,
+	commitStyle: CommitStyle,
 	li: HTMLElement,
 	jodit: IJodit,
 	mode: CommitMode
@@ -33,28 +31,52 @@ export function toggleOrderedList(
 		return mode;
 	}
 
+	const result = jodit.e.fire(
+		`${_PREFIX}BeforeToggleOrderedList`,
+		mode,
+		commitStyle.options,
+		list
+	);
+	if (result !== undefined) {
+		return result as CommitMode;
+	}
+
+	const hook = jodit.e.fire.bind(jodit.e, `${_PREFIX}AfterToggleOrderedList`);
+
 	// ul => ol, ol => ul
-	if (list.tagName.toLowerCase() !== style.element) {
+	if (list.tagName.toLowerCase() !== commitStyle.element) {
 		const newList = Dom.replace<HTMLElement>(
 			list,
-			style.element,
+			commitStyle.element,
 			jodit.createInside
 		);
-		toggleAttributes(style, newList, jodit, mode);
-		jodit.e.fire(en, REPLACE, li, style, jodit);
+		toggleAttributes(commitStyle, newList, jodit, mode);
+		hook(REPLACE, li);
 		return REPLACE;
 	}
 
-	if (toggleAttributes(style, li.parentElement, jodit, INITIAL, true) === CHANGE) {
-		const result = toggleAttributes(style, li.parentElement, jodit, mode);
-		jodit.e.fire(en, CHANGE, li, style, jodit);
+	if (
+		toggleAttributes(
+			commitStyle,
+			li.parentElement,
+			jodit,
+			INITIAL,
+			true
+		) === CHANGE
+	) {
+		const result = toggleAttributes(
+			commitStyle,
+			li.parentElement,
+			jodit,
+			mode
+		);
+		hook(CHANGE, li);
 		return result;
 	}
 
 	extractSelectedPart(list, li, jodit);
 	Dom.unwrap(li.parentElement);
 	const wrapper = Dom.replace(li, jodit.o.enter, jodit.createInside);
-	jodit.e.fire(en, UNWRAP, wrapper, style, jodit);
-
+	hook(UNWRAP, wrapper);
 	return mode;
 }

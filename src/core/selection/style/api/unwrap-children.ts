@@ -5,7 +5,7 @@
  */
 
 import type { CommitStyle } from '../commit-style';
-import type { IDictionary } from 'jodit/types';
+import type { IDictionary, IStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { isSameStyleChild, isSuitElement } from './is-suit-element';
 import { attr, css } from 'jodit/core/helpers';
@@ -21,7 +21,7 @@ export function unwrapChildren(style: CommitStyle, font: HTMLElement): boolean {
 
 	let firstElementSuit: boolean | undefined;
 
-	const cssStyle = style.options.style;
+	const cssStyle = style.options.attributes?.style as IStyle;
 
 	if (font.firstChild) {
 		const gen = Dom.eachGen(font);

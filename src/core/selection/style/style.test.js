@@ -18,30 +18,26 @@ describe('Apply style', () => {
 			editor.execCommand('selectall');
 		});
 
-		describe.only('Base apply', () => {
+		describe('Base apply', () => {
 			[
 				[
-					'<ul class="todo-list"><li>test|</li></ul>',
-					{
-						element: 'ul'
-					},
-					'<p replaced="true">test|</p>',
-					{
-						events: {
-							applyStyleAfterToggleOrderedList(mode, li) {
-								if (mode === 'unwrap') {
-									li.setAttribute('replaced', true);
-								}
-							}
-						}
-					}
+					'<p>|test|</p>',
+					{ element: 'strong' },
+					'<p>|<strong>test</strong>|</p>'
 				],
 				[
-					'<ul class="todo-list"><li>test|</li></ul>',
+					'<p>|test|</p>',
 					{
-						element: 'ol'
+						element: 'sub'
 					},
-					'<ol><li>test|</li></ol>'
+					'<p>|<sub>test</sub>|</p>'
+				],
+				[
+					'<p><sub>|test|</sub></p>',
+					{
+						element: 'sub'
+					},
+					'<p>|test|</p>'
 				],
 				[
 					'<p>|test|</p>',
@@ -52,43 +48,6 @@ describe('Apply style', () => {
 						}
 					},
 					'<p>|<a href="https://xdsoft.net">test</a>|</p>'
-				],
-				[
-					'<p>|test|</p>',
-					{
-						element: 'ul',
-						attributes: {
-							class: 'todo-list'
-						}
-					},
-					'<ul class="todo-list"><li><label class="jodit_todo_label"><input type="checkbox"></label>|test|</li></ul>',
-					{
-						events: {
-							applyStyleWrapList: (wrapper, cs, jodit) => {
-								const li = Dom.replace(
-									wrapper,
-									'li',
-									jodit.createInside
-								);
-
-								const label = jodit.createInside.element(
-									'label',
-									{ class: 'jodit_todo_label' }
-								);
-
-								const input = jodit.createInside.element(
-									'input',
-									{
-										type: 'checkbox'
-									}
-								);
-								label.appendChild(input);
-								Dom.prepend(li, label);
-
-								return li;
-							}
-						}
-					}
 				],
 				[
 					'<p><a href="https://xdsoft.net">|test|</a></p>',
@@ -133,35 +92,11 @@ describe('Apply style', () => {
 					'<p><a href="https://sitename.net">|test|</a></p>'
 				],
 				[
-					'<p>|test|</p>',
-					{
-						element: 'sub'
-					},
-					'<p>|<sub>test</sub>|</p>'
-				],
-				[
-					'<p><sub>|test|</sub></p>',
-					{
-						element: 'sub'
-					},
-					'<p>|test|</p>'
-				],
-				[
 					'<p><strong style="font-family: Impact, Charcoal, sans-serif;"><em>|test|</em></strong></p>',
 					{
 						element: 'strong'
 					},
 					'<p><span style="font-family:Impact,Charcoal,sans-serif"><em>|test|</em></span></p>'
-				],
-				[
-					'<p>|Hello world|</p>',
-					{
-						element: 'ul',
-						style: {
-							listStyleType: 'circle'
-						}
-					},
-					'<ul style="list-style-type:circle"><li>|Hello world|</li></ul>'
 				],
 				[
 					'<p><strong>|test|</strong></p>',
@@ -284,145 +219,6 @@ describe('Apply style', () => {
 					'<p>|<span style="font-family:Helvetica,sans-serif">test</span></p><style>.a {color: red}</style><p><span style="font-family:Helvetica,sans-serif">stop</span>|</p>'
 				],
 				[
-					'<p>|test</p><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<p>|test</p><p>ordered</p><p>list|</p>',
-					{ element: 'ol', style: { listStyleType: null } },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<p>|test1</p>\n\n<p>ordered</p>\n\n<p>list1|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test1</li><li>ordered</li><li>list1|</li></ol>'
-				],
-
-				[
-					'<h1>|test</h1><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-				[
-					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>'
-				],
-				[
-					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>',
-					{ element: 'ol' },
-					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>'
-				],
-				[
-					'<ol><li>test</li><li>ord|ered</li><li>list</li></ol>',
-					{ element: 'ol' },
-					'<ol><li>test</li></ol><p>ord|ered</p><ol><li>list</li></ol>'
-				],
-				[
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>',
-					{ element: 'ol' },
-					'<p>|test</p><p>ordered</p><p>list|</p>'
-				],
-
-				[
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
-					{ element: 'ul' },
-					'<p>|test</p><p>unordered</p><p>list|</p>'
-				],
-
-				[
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
-					{
-						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
-					},
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>',
-					{
-						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
-					},
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>ordered</li><li>list|</li></ol>',
-					{
-						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
-					},
-					'<p>|test</p><p>ordered</p><p>list|</p>'
-				],
-
-				[
-					'<ol style="list-style-type:lower-alpha"><li>|test</li><li>unordered</li><li>list|</li></ol>',
-					{
-						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
-					},
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<p>|test</p><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<p>|test</p><p>ordered</p><p>list</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li></ol><p>ordered</p><p>list</p>'
-				],
-
-				[
-					'<h1>|test</h1><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<p>te|st</p><p>ordered</p><p>li|st</p>',
-					{ element: 'ol' },
-					'<ol><li>te|st</li><li>ordered</li><li>li|st</li></ol>'
-				],
-
-				[
-					'<p>|test</p><p>unordered</p><p>list|</p>',
-					{ element: 'ul' },
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>'
-				],
-				[
-					'<ul><li>|1</li><li>2</li><li>3|</li></ul>',
-					{ element: 'h1' },
-					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>'
-				],
-
-				[
-					'test|<br>test<br>test<br>test',
-					{ element: 'h1' },
-					'<h1>test|</h1><br>test<br>test<br>test',
-					{ enter: 'BR' }
-				],
-
-				[
-					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
-					{ element: 'h1' },
-					'<ul><li>|1</li><li>2</li><li>3|</li></ul>'
-				],
-				[
 					'<p>test|<u>test</u>|test</p>',
 					{ style: { color: '#FFF000' } },
 					'<p>test|<u style="color:#FFF000">test</u>|test</p>'
@@ -446,11 +242,6 @@ describe('Apply style', () => {
 					'<p><strong>|test|</strong></p>',
 					{ style: { color: '#FFF000' } },
 					'<p><strong style="color:#FFF000">|test|</strong></p>'
-				],
-				[
-					'<p>|test|</p>',
-					{ element: 'strong' },
-					'<p>|<strong>test</strong>|</p>'
 				],
 				[
 					'<p>test|</p>',
@@ -531,6 +322,235 @@ describe('Apply style', () => {
 						element: 'p'
 					},
 					'<p><span style="color:#00FF00">|pop test test test|</span></p>'
+				],
+				[
+					'test|<br>test<br>test<br>test',
+					{ element: 'h1' },
+					'<h1>test|</h1><br>test<br>test<br>test',
+					{ enter: 'BR' }
+				],
+				[
+					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>'
+				],
+				[
+					'<p>|Hello world|</p>',
+					{
+						element: 'ul',
+						style: {
+							listStyleType: 'circle'
+						}
+					},
+					'<ul style="list-style-type:circle"><li>|Hello world|</li></ul>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list|</p>',
+					{ element: 'ol', style: { listStyleType: null } },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test1</p>\n\n<p>ordered</p>\n\n<p>list1|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test1</li><li>ordered</li><li>list1|</li></ol>'
+				],
+				[
+					'<h1>|test</h1><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>'
+				],
+				[
+					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>'
+				],
+				[
+					'<ol><li>test</li><li>ord|ered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>test</li></ol><p>ord|ered</p><ol><li>list</li></ol>'
+				],
+				[
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>',
+					{ element: 'ol' },
+					'<p>|test</p><p>ordered</p><p>list|</p>'
+				],
+				[
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+					{ element: 'ul' },
+					'<p>|test</p><p>unordered</p><p>list|</p>'
+				],
+				[
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+				[
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+				[
+					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+				[
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>ordered</li><li>list|</li></ol>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<p>|test</p><p>ordered</p><p>list|</p>'
+				],
+				[
+					'<ol style="list-style-type:lower-alpha"><li>|test</li><li>unordered</li><li>list|</li></ol>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li></ol><p>ordered</p><p>list</p>'
+				],
+				[
+					'<h1>|test</h1><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>te|st</p><p>ordered</p><p>li|st</p>',
+					{ element: 'ol' },
+					'<ol><li>te|st</li><li>ordered</li><li>li|st</li></ol>'
+				],
+				[
+					'<p>|test</p><p>unordered</p><p>list|</p>',
+					{ element: 'ul' },
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>'
+				],
+				[
+					'<ul><li>|1</li><li>2</li><li>3|</li></ul>',
+					{ element: 'h1' },
+					'<ul><li>|<h1>1</h1></li><li><h1>2</h1></li><li><h1>3</h1>|</li></ul>'
+				],
+				[
+					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
+					{ element: 'h1' },
+					'<ul><li>|1</li><li>2</li><li>3|</li></ul>'
+				],
+				[
+					'<ul class="todo-list"><li>test|</li></ul>',
+					{
+						element: 'ul',
+						hooks: {
+							beforeToggleOrderedList(mode, style, list) {
+								Dom.replace(
+									list,
+									style.element,
+									editor.createInside
+								);
+								return 'replace';
+							}
+						}
+					},
+					'<ul><li>test|</li></ul>'
+				],
+				[
+					'<ul class="todo-list"><li>test|</li></ul>',
+					{
+						element: 'ul',
+						hooks: {
+							afterToggleOrderedList(mode, li) {
+								if (mode === 'unwrap') {
+									li.setAttribute('replaced', true);
+								}
+							}
+						}
+					},
+					'<p replaced="true">test|</p>'
+				],
+				[
+					'<ul class="todo-list"><li>test|</li></ul>',
+					{
+						element: 'ol'
+					},
+					'<ol><li>test|</li></ol>'
+				],
+				[
+					'<p>|test|</p>',
+					{
+						element: 'ul',
+						hooks: {
+							beforeWrapList(_, wrapper) {
+								const li = Dom.replace(
+									wrapper,
+									'li',
+									editor.createInside
+								);
+
+								const label = editor.createInside.element(
+									'label',
+									{ class: 'jodit_todo_label' }
+								);
+
+								const input = editor.createInside.element(
+									'input',
+									{
+										type: 'checkbox'
+									}
+								);
+								label.appendChild(input);
+								Dom.prepend(li, label);
+
+								return li;
+							}
+						},
+						attributes: {
+							class: 'todo-list'
+						}
+					},
+					'<ul class="todo-list"><li><label class="jodit_todo_label"><input type="checkbox"></label>|test|</li></ul>'
+				],
+				[
+					'<p>|pop|</p>',
+					{
+						element: 'ul',
+						hooks: {
+							afterWrapList(_, wrapper, style) {
+								wrapper.querySelectorAll('li').forEach(li => {
+									li.className =
+										'test ' + style.attributes.class;
+								});
+							}
+						},
+						attributes: {
+							class: 'todo-list'
+						}
+					},
+					'<ul class="todo-list"><li class="test todo-list">|pop|</li></ul>'
 				]
 			].forEach(([input, opt, output, jSettings]) => {
 				describe(`For selection ${input} apply style ${JSON.stringify(
@@ -730,7 +750,7 @@ describe('Apply style', () => {
 						});
 
 						describe('Without editing', function () {
-							it('Should unwap empty SPAN', function () {
+							it('Should unwrap empty SPAN', function () {
 								editor.value = '<p>test|</p>';
 								setCursorToChar(editor);
 
@@ -1081,9 +1101,8 @@ describe('Apply style', () => {
 
 						describe('Double times', function () {
 							it('Should create new SPAN inside first', function () {
-								editor.s.setCursorAfter(
-									editor.editor.firstChild.firstChild
-								);
+								editor.value = '<p>test|</p>';
+								setCursorToChar(editor);
 
 								const style = new Style({
 									style: {
@@ -1110,11 +1129,10 @@ describe('Apply style', () => {
 								);
 							});
 
-							describe('With same style', function () {
+							describe('With same style 1', function () {
 								it('Should break first SPAN', function () {
-									editor.s.setCursorAfter(
-										editor.editor.firstChild.firstChild
-									);
+									editor.value = '<p>test|</p>';
+									setCursorToChar(editor);
 
 									const style = new Style({
 										style: {
