@@ -18,7 +18,7 @@ describe('Apply style', () => {
 			editor.execCommand('selectall');
 		});
 
-		describe('Base apply', () => {
+		describe.only('Base apply', () => {
 			[
 				[
 					'<p>|test|</p>',
@@ -329,6 +329,52 @@ describe('Apply style', () => {
 					'<h1>test|</h1><br>test<br>test<br>test',
 					{ enter: 'BR' }
 				],
+				// Lists
+				[
+					'<ol><li>ordered</li><li>|list</li><li>pop</li></ol>',
+					{ element: 'ul' },
+					'<ol><li>ordered</li></ol><ul><li>|list</li></ul><ol><li>pop</li></ol>'
+				],
+				[
+					'<ol><li>|ordered</li><li>list</li></ol><p>test|</p>',
+					{ element: 'ol' },
+					'<p>|ordered</p><p>list</p><p>test|</p>'
+				],
+				[
+					'<p>|test</p><ol><li>ordered</li><li>list|</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<ol><li>ordered</li></ol><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>ordered</li><li>|test</li><li>list</li><li>pop</li></ol>'
+				],
+				[
+					'<ul><li>ordered</li></ul><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+					{ element: 'ol' },
+					'<ul><li>ordered</li></ul><ol><li>|test</li><li>list</li><li>pop</li></ol>'
+				],
+				[
+					'<ul><li>ordered</li></ul><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+					{ element: 'ul' },
+					'<ul><li>ordered</li><li>|test</li></ul><ol><li>list</li><li>pop</li></ol>'
+				],
+				[
+					'<ol class="p"><li>ordered</li></ol><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+					{ element: 'ol' },
+					'<ol class="p"><li>ordered</li><li>|test</li></ol><ol><li>list</li><li>pop</li></ol>'
+				],
+				[
+					'<ol><li>ordered</li><li>list</li></ol><p>|test</p><p>pop|</p>',
+					{ element: 'ol' },
+					'<ol><li>ordered</li><li>list</li><li>|test</li><li>pop|</li></ol>'
+				],
+				[
+					'<p>|test</p><p>pop|</p><ol><li>ordered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>pop|</li><li>ordered</li><li>list</li></ol>'
+				],
 				[
 					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
 					{ element: 'ol' },
@@ -348,6 +394,16 @@ describe('Apply style', () => {
 					'<p>|test</p><p>ordered</p><p>list|</p>',
 					{ element: 'ol' },
 					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list|</p>',
+					{ element: 'ol', attributes: { class: 'test' } },
+					'<ol class="test"><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list</p><p>a few</p><p>leafs|</p>',
+					{ element: 'ol', attributes: { class: 'test' } },
+					'<ol class="test"><li>|test</li><li>ordered</li><li>list</li><li>a few</li><li>leafs|</li></ol>'
 				],
 				[
 					'<p>|test</p><p>ordered</p><p>list|</p>',
@@ -466,7 +522,7 @@ describe('Apply style', () => {
 					{
 						element: 'ul',
 						hooks: {
-							beforeToggleOrderedList(mode, style, list) {
+							beforeToggleList(mode, style, list) {
 								Dom.replace(
 									list,
 									style.element,
@@ -483,7 +539,7 @@ describe('Apply style', () => {
 					{
 						element: 'ul',
 						hooks: {
-							afterToggleOrderedList(mode, li) {
+							afterToggleList(mode, li) {
 								if (mode === 'unwrap') {
 									li.setAttribute('replaced', true);
 								}

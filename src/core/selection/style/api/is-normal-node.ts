@@ -5,8 +5,8 @@
  */
 
 import type { Nullable } from 'jodit/types';
-import { Dom } from 'jodit/core/dom';
-import { Select } from 'jodit/core/selection';
+import { Dom } from 'jodit/core/dom/dom';
+import { Select } from 'jodit/core/selection/select';
 
 /**
  * Is normal usual element

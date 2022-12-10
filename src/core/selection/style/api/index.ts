@@ -4,8 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-export * from './toggle/toggle-attributes';
-export * from './toggle/toggle-ordered-list';
+export * from './toggle-attributes';
+export * from './list/toggle-ordered-list';
+export * from './list/wrap-list';
 export * from './element-has-same-style';
 export * from './extract';
 export * from './finite-state-machine';
@@ -15,8 +16,6 @@ export * from './is-inside-invisible-element';
 export * from './is-same-attributes';
 export * from './is-normal-node';
 export * from './is-suit-element';
-export * from './toggle-commit-styles';
 export * from './unwrap-children';
 export * from './wrap-and-commit-style';
-export * from './wrap-list';
 export * from './wrap-unwrapped-text';

@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CommitStyle } from '../commit-style';
 import type { IDictionary, IStyle } from 'jodit/types';
-import { Dom } from 'jodit/core/dom';
-import { isSameStyleChild, isSuitElement } from './is-suit-element';
+import type { CommitStyle } from '../commit-style';
+import { Dom } from 'jodit/core/dom/dom';
 import { attr, css } from 'jodit/core/helpers';
 import { elementHasSameStyleKeys } from 'jodit/core/selection/style/api/element-has-same-style';
+import { isSameStyleChild, isSuitElement } from './is-suit-element';
 
 /**
  * Unwrap all suit elements inside

@@ -29,3 +29,17 @@ export function isSameAttributes(
 
 	return Object.keys(attrs).every(key => attr(elm, key) === attrs[key]);
 }
+
+export function elementsEqualAttributes(
+	elm1: HTMLElement,
+	elm2: HTMLElement
+): boolean {
+	return (
+		elm1.attributes.length === elm2.attributes.length &&
+		Array.from(elm1.attributes).every(
+			attr =>
+				elm2.hasAttribute(attr.name) &&
+				elm2.getAttribute(attr.name) === attr.value
+		)
+	);
+}

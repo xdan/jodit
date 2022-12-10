@@ -29,6 +29,7 @@ export const states = {
 	CHANGE: 'CHANGE',
 	REPLACE_DEFAULT: 'REPLACE_DEFAULT',
 	LIST: 'LIST',
+	TOGGLE_LIST: 'TOGGLE_LIST',
 	WRAP: 'WRAP',
 	EXTRACT: 'EXTRACT',
 	END: 'END'
@@ -89,9 +90,9 @@ export const transactions: IStyleTransactions = {
 
 	[states.LIST]: {
 		exec(value) {
-			const { element, jodit, style, mode } = value;
+			const { element, jodit, mode } = value;
 
-			if (mode !== INITIAL) {
+			if (mode !== INITIAL && mode !== UNWRAP && mode !== REPLACE) {
 				return { ...value, next: states.END };
 			}
 
@@ -103,13 +104,27 @@ export const transactions: IStyleTransactions = {
 
 			const list = Dom.closest(element, ['ul', 'ol'], jodit.editor);
 
-			if (!list) {
-				return { ...value, next: states.END };
+			if (list) {
+				return { ...value, element: li, next: states.TOGGLE_LIST };
 			}
 
 			return {
 				...value,
-				mode: toggleOrderedList(style, li, jodit, mode),
+				next: states.END
+			};
+		}
+	},
+
+	[states.TOGGLE_LIST]: {
+		exec(value) {
+			return {
+				...value,
+				mode: toggleOrderedList(
+					value.style,
+					value.element,
+					value.jodit,
+					value.mode
+				),
 				next: states.END
 			};
 		}
@@ -185,19 +200,20 @@ export const transactions: IStyleTransactions = {
 
 	[states.CHANGE]: {
 		exec(value) {
-			const { style, element, jodit } = value;
+			const { style, element, jodit, mode } = value;
 
-			const mode = toggleAttributes(style, element, jodit, INITIAL);
+			const newMode = toggleAttributes(style, element, jodit, value.mode);
 
 			if (
-				mode === UNSET &&
+				mode !== WRAP &&
+				newMode === UNSET &&
 				!element.attributes.length &&
 				Dom.isTag(element, style.element)
 			) {
 				return { ...value, next: states.UNWRAP };
 			}
 
-			return { ...value, mode, next: states.END };
+			return { ...value, mode: newMode, next: states.END };
 		}
 	},
 

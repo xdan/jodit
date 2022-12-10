@@ -7,7 +7,7 @@
 const path = require('path');
 const { removeAsserts } = require('../utils/remove-asserts');
 
-module.exports = ({ ES, superDirname }) => {
+module.exports = ({ ES, superDirname, isProd, isTest }) => {
 	return {
 		test: /\.(js|ts)$/,
 		loader: 'ts-loader',

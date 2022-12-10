@@ -8,8 +8,8 @@ import type { IJodit } from 'jodit/types';
 import type { CommitStyle } from '../commit-style';
 import { Dom } from 'jodit/core/dom';
 import { wrapUnwrappedText } from './wrap-unwrapped-text';
-import { attr } from 'jodit/core/helpers';
-import { wrapList } from './wrap-list';
+import { attr } from 'jodit/core/helpers/utils/utils';
+import { wrapList } from './list/wrap-list';
 
 /**
  * Replaces the parent tag with the applicable one, or wraps the text and also replaces the tag

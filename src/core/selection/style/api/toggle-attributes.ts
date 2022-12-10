@@ -12,7 +12,7 @@ import { dataBind } from 'jodit/core/helpers/utils/data-bind';
 import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
 import { normalizeCssValue } from 'jodit/core/helpers/normalize/normalize-css-value';
 import { size } from 'jodit/core/helpers/size/object-size';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import {
 	_PREFIX,
 	CHANGE,

@@ -20,15 +20,29 @@ export type IAttributes = {
 export interface IStyleOptions {
 	element?: HTMLTagNames;
 	attributes?: IAttributes;
+	defaultTag?: HTMLTagNames;
 	hooks?: {
 		beforeWrapList?(mode: CommitMode, li: HTMLElement): void;
-		afterWrapList?(mode: CommitMode, li: HTMLElement, style: IStyleOptions): void;
-		beforeToggleOrderedList?(
+		afterWrapList?(
+			mode: CommitMode,
+			li: HTMLElement,
+			style: IStyleOptions
+		): void;
+		beforeToggleList?(
 			mode: CommitMode,
 			list: HTMLElement,
 			style: IStyleOptions
 		): void | CommitMode;
-		afterToggleOrderedList?(mode: CommitMode, list: HTMLElement): void;
+		beforeUnwrapList?(
+			mode: 'unwrap',
+			list: HTMLElement,
+			style: IStyleOptions
+		): void | CommitMode;
+		afterToggleList?(
+			mode: CommitMode,
+			list: HTMLElement,
+			style: IStyleOptions
+		): void;
 		afterToggleAttribute?(
 			mode: CommitMode,
 			elm: HTMLElement,
@@ -36,7 +50,6 @@ export interface IStyleOptions {
 			value?: string | number | null | boolean
 		): void;
 	};
-	defaultTag?: HTMLTagNames;
 	/** @deprecated */
 	style?: IStyle;
 	/** @deprecated */

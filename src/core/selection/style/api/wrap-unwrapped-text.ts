@@ -6,8 +6,8 @@
 
 import type { IJodit, Nullable } from 'jodit/types';
 import type { CommitStyle } from '../commit-style';
-import { Dom } from 'jodit/core/dom';
-import { Select } from 'jodit/core/selection';
+import { Dom } from 'jodit/core/dom/dom';
+import { Select } from 'jodit/core/selection/select';
 
 /**
  * Wrap text or inline elements inside Block element

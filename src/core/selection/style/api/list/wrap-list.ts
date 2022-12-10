@@ -6,7 +6,13 @@
 
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
-import { _PREFIX, CommitStyle, REPLACE, WRAP } from '../commit-style';
+import {
+	_PREFIX,
+	CommitStyle,
+	REPLACE,
+	WRAP
+} from 'jodit/core/selection/style/commit-style';
+import { elementsEqualAttributes } from 'jodit/core/selection/style/api';
 
 /**
  * Replaces non-leaf items with leaf items and either creates a new list or
@@ -22,18 +28,28 @@ export function wrapList(
 	const newWrapper =
 		result ?? Dom.replace<HTMLElement>(wrapper, 'li', jodit.createInside);
 
-	let list =
-		newWrapper.previousElementSibling || newWrapper.nextElementSibling;
+	const prev = newWrapper.previousElementSibling;
+	const next = newWrapper.nextElementSibling;
+	let list = Dom.isTag(prev, commitStyle.element) ? prev : null;
+	list ??= Dom.isTag(next, commitStyle.element) ? next : null;
 
 	if (!Dom.isTag(list, ['ul', 'ol'])) {
 		list = jodit.createInside.element(commitStyle.element);
 		Dom.before(newWrapper, list);
 	}
 
-	if (newWrapper.previousElementSibling === list) {
+	if (prev === list) {
 		Dom.append(list, newWrapper);
 	} else {
 		Dom.prepend(list, newWrapper);
+	}
+
+	if (
+		Dom.isTag(list.nextElementSibling, commitStyle.element) &&
+		elementsEqualAttributes(list, list.nextElementSibling)
+	) {
+		Dom.append(list, Array.from(list.nextElementSibling.childNodes));
+		Dom.safeRemove(list.nextElementSibling);
 	}
 
 	jodit.e.fire(`${_PREFIX}AfterWrapList`, WRAP, list, commitStyle.options);

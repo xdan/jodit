@@ -6,7 +6,7 @@
 
 import type { Nullable } from 'jodit/types';
 import type { CommitStyle } from '../commit-style';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { isNormalNode } from './is-normal-node';
 import { isSuitElement } from './is-suit-element';
 
@@ -43,7 +43,6 @@ export function getSuitParent(
 		return getSuitParent(style, parentNode, root);
 	}
 
-	debugger
 	if (
 		isSuitElement(style, parentNode, false) &&
 		(!Dom.isBlock(parentNode) || style.elementIsBlock)
