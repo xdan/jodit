@@ -5,6 +5,7 @@
  */
 
 const path = require('path');
+const { removeAsserts } = require('../utils/remove-asserts');
 
 module.exports = ({ superDirname, uglify, ES, isProd, isTest }) => {
 	return {
@@ -17,21 +18,13 @@ module.exports = ({ superDirname, uglify, ES, isProd, isTest }) => {
 					allowTsInNodeModules: true,
 					compilerOptions: {
 						target: ES
-					}
+					},
+					getCustomTransformers: () => ({
+						before: isProd && !isTest ? [removeAsserts()] : []
+					})
 				}
 			}
-		].concat(
-			isProd && !isTest
-				? [
-						{
-							loader: path.resolve(
-								__dirname,
-								'../loaders/change-asserts.js'
-							)
-						}
-				  ]
-				: []
-		),
+		],
 		include: [path.resolve(superDirname, './src/')],
 		exclude: [/langs\/[a-z]{2}\.ts/, /langs\/[a-z]{2}_[a-z]{2}\.ts/]
 	};
