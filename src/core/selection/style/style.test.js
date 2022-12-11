@@ -521,6 +521,16 @@ describe('Apply style', () => {
 					'<ul><li>test</li></ul><p>unordered|</p><ul><li>list</li></ul>'
 				],
 				[
+					'<ul><li>test</li></ul><p>unordered|</p><ul><li>list</li></ul>',
+					{ element: 'ul' },
+					'<ul><li>test</li><li>unordered|</li><li>list</li></ul>'
+				],
+				[
+					'<ul class="test"><li>test</li></ul><p>unordered|</p><ul class="test"><li>list</li></ul>',
+					{ element: 'ul', attributes: { class: 'test' } },
+					'<ul class="test"><li>test</li><li>unordered|</li><li>list</li></ul>'
+				],
+				[
 					'<ul><li>test</li><li>unor|der|ed</li><li>list</li></ul>',
 					{ element: 'ul' },
 					'<ul><li>test</li></ul><p>unor|der|ed</p><ul><li>list</li></ul>'
