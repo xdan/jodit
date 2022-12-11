@@ -10,6 +10,7 @@
 
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
+import { INSEPARABLE_TAGS } from 'jodit/core/constants';
 
 /**
  * @private
@@ -22,7 +23,7 @@ export function fillEmptyParagraph(
 	if (
 		jodit.o.cleanHTML.fillEmptyParagraph &&
 		Dom.isBlock(nodeElm) &&
-		Dom.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)
+		Dom.isEmpty(nodeElm, INSEPARABLE_TAGS)
 	) {
 		const br = jodit.createInside.element('br');
 		nodeElm.appendChild(br);

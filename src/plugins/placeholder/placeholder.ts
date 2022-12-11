@@ -12,14 +12,14 @@
 
 import './placeholder.less';
 
-import type { IJodit } from 'jodit/types';
+import type { IJodit, HTMLTagNames } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { attr } from 'jodit/core/helpers/utils/utils';
 import { css } from 'jodit/core/helpers/utils/css';
 import { isMarker } from 'jodit/core/helpers/checker/is-marker';
 import { Dom } from 'jodit/core/dom/dom';
 import { Plugin } from 'jodit/core/plugin/plugin';
-import { MAY_BE_REMOVED_WITH_KEY } from 'jodit/core/constants';
+import { INSEPARABLE_TAGS } from 'jodit/core/constants';
 import { debounce } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
 
@@ -36,7 +36,7 @@ export function isEditorEmpty(root: HTMLElement): boolean {
 	const first = root.firstChild;
 
 	if (
-		MAY_BE_REMOVED_WITH_KEY.test(first.nodeName) ||
+		INSEPARABLE_TAGS.has(first.nodeName?.toLowerCase() as HTMLTagNames) ||
 		/^(TABLE)$/i.test(first.nodeName)
 	) {
 		return false;

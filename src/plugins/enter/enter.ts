@@ -20,6 +20,7 @@ import {
 	KEY_ENTER
 } from 'jodit/core/constants';
 import { watch } from 'jodit/core/decorators';
+import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
 
 import {
 	checkBR,
@@ -33,6 +34,7 @@ import {
 	moveCursorOutFromSpecialTags
 } from './helpers';
 import { pluginSystem } from 'jodit/core/global';
+import './interface';
 
 /**
  * One of most important core plugins. It is responsible for all the browsers to have the same effect when the Enter
@@ -63,10 +65,6 @@ export class enter extends Plugin {
 		if (event.key === KEY_ENTER) {
 			const editor = this.j;
 
-			/**
-			 * Fired on processing `Enter` key. If return some value, plugin `enter` will do nothing.
-			 * if return false - prevent default Enter behavior
-			 */
 			const beforeEnter = editor.e.fire('beforeEnter', event);
 
 			if (beforeEnter !== undefined) {
@@ -80,6 +78,7 @@ export class enter extends Plugin {
 			editor.s.focus();
 
 			this.onEnter(event);
+			editor.e.fire('afterEnter', event);
 			editor.synchronizeValues(); // fire change
 
 			return false;
@@ -119,12 +118,17 @@ export class enter extends Plugin {
 			return false;
 		}
 
-		if (isLi && Dom.isEmpty(currentBox)) {
+		if (isLi && this.__isEmptyListLeaf(currentBox)) {
 			processEmptyLILeaf(jodit, currentBox);
 			return false;
 		}
 
 		splitFragment(jodit, currentBox);
+	}
+
+	private __isEmptyListLeaf(li: HTMLElement): boolean {
+		const result = this.j.e.fire('enterIsEmptyListLeaf', li);
+		return isBoolean(result) ? result : Dom.isEmpty(li);
 	}
 
 	private getCurrentOrFillEmpty(editor: IJodit): Node {

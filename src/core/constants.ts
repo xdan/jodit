@@ -8,7 +8,7 @@
  * @module constants
  */
 
-import type { IDictionary } from 'jodit/types';
+import type { HTMLTagNames, IDictionary } from 'jodit/types';
 
 export const INVISIBLE_SPACE = '\uFEFF';
 export const NBSP_SPACE = '\u00A0';
@@ -25,10 +25,10 @@ export const IS_BLOCK =
 
 export const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
 
-export const INSEPARABLE_TAGS: Array<keyof HTMLElementTagNameMap> = [
+const __INSEPARABLE_TAGS: HTMLTagNames[] = [
 	'img',
-	'br',
 	'video',
+	'svg',
 	'iframe',
 	'script',
 	'input',
@@ -39,10 +39,12 @@ export const INSEPARABLE_TAGS: Array<keyof HTMLElementTagNameMap> = [
 	'jodit-media'
 ];
 
-export const MAY_BE_REMOVED_WITH_KEY = RegExp(
-	`^${INSEPARABLE_TAGS.join('|')}$`,
-	'i'
-);
+export const INSEPARABLE_TAGS: Set<HTMLTagNames> = new Set([
+	...__INSEPARABLE_TAGS,
+	'br'
+]);
+
+export const NO_EMPTY_TAGS: Set<HTMLTagNames> = new Set(__INSEPARABLE_TAGS);
 
 export const KEY_META = 'Meta';
 export const KEY_BACKSPACE = 'Backspace';

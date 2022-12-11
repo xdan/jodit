@@ -31,7 +31,7 @@ import { asArray, toArray } from 'jodit/core/helpers/array';
 import { trim } from 'jodit/core/helpers/string';
 import { $$, attr, call, css, dataBind, error } from 'jodit/core/helpers/utils';
 import { isMarker } from 'jodit/core/helpers/checker/is-marker';
-import { TEMP_ATTR } from 'jodit/core/constants';
+import { NO_EMPTY_TAGS, TEMP_ATTR } from 'jodit/core/constants';
 
 /**
  * Module for working with DOM
@@ -292,25 +292,41 @@ export class Dom {
 	 */
 	static isEmpty(
 		node: Node,
-		condNoEmptyElement: RegExp = /^(img|svg|canvas|input|textarea|form)$/
+		condNoEmptyElement: (node: Element) => boolean
+	): boolean;
+	static isEmpty(node: Node, noEmptyTags?: Set<string>): boolean;
+	static isEmpty(
+		node: Node,
+		condNoEmptyElement:
+			| ((elm: Element) => boolean)
+			| Set<string> = NO_EMPTY_TAGS
 	): boolean {
 		if (!node) {
 			return true;
 		}
 
-		if (Dom.isText(node)) {
-			return node.nodeValue == null || trim(node.nodeValue).length === 0;
+		let cond: (elm: Element) => boolean;
+
+		if (!isFunction(condNoEmptyElement)) {
+			cond = (elm: Node): boolean =>
+				condNoEmptyElement.has(elm.nodeName.toLowerCase());
+		} else {
+			cond = condNoEmptyElement;
+		}
+
+		const emptyText = (node: Text): boolean =>
+			node.nodeValue == null || trim(node.nodeValue).length === 0;
+
+		if (Dom.isText(node) && emptyText(node)) {
+			return true;
 		}
 
 		return (
-			!condNoEmptyElement.test(node.nodeName.toLowerCase()) &&
+			!(Dom.isElement(node) && cond(node)) &&
 			Dom.each(node as HTMLElement, (elm: Node | null): false | void => {
 				if (
-					(Dom.isText(elm) &&
-						elm.nodeValue != null &&
-						trim(elm.nodeValue).length !== 0) ||
-					(Dom.isElement(elm) &&
-						condNoEmptyElement.test(elm.nodeName.toLowerCase()))
+					(Dom.isText(elm) && !emptyText(elm)) ||
+					(Dom.isElement(elm) && cond(elm))
 				) {
 					return false;
 				}
@@ -930,14 +946,28 @@ export class Dom {
 	/**
 	 * Move all content to another element
 	 */
-	static moveContent(from: Node, to: Node, inStart: boolean = false): void {
+	static moveContent(
+		from: Node,
+		to: Node,
+		inStart: boolean = false,
+		filter: (node: Node) => boolean = (): boolean => true
+	): void {
 		const fragment: DocumentFragment = (
 			from.ownerDocument || document
 		).createDocumentFragment();
 
-		toArray(from.childNodes).forEach((node: Node) => {
-			fragment.appendChild(node);
-		});
+		toArray(from.childNodes)
+			.filter(elm => {
+				if (filter(elm)) {
+					return true;
+				}
+
+				Dom.safeRemove(elm);
+				return false;
+			})
+			.forEach((node: Node) => {
+				fragment.appendChild(node);
+			});
 
 		if (!inStart || !to.firstChild) {
 			to.appendChild(fragment);
@@ -1029,14 +1059,26 @@ export class Dom {
 
 	static isTag<K extends HTMLTagNames>(
 		node: Node | null | undefined | false | EventTarget,
-		tagNames: K[] | K
+		tagNames: Set<K>
+	): node is HTMLElementTagNameMap[K];
+
+	static isTag<K extends HTMLTagNames>(
+		node: Node | null | undefined | false | EventTarget,
+		tagNames: K[] | K | Set<K>
 	): node is HTMLElementTagNameMap[K] {
+		if (tagNames instanceof Set) {
+			return (
+				this.isElement(node) &&
+				tagNames.has(node.tagName.toLowerCase() as K)
+			);
+		}
+
 		const tags = asArray(tagNames).map(String);
 
 		for (let i = 0; i < tags.length; i += 1) {
 			if (
 				this.isElement(node) &&
-				node.tagName.toLowerCase() === tags[i].toLowerCase()
+				node.tagName.toLowerCase() === tags[i]
 			) {
 				return true;
 			}

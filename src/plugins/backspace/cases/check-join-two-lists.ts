@@ -11,6 +11,7 @@
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { call } from 'jodit/core/helpers/utils/utils';
+import { getMoveFilter } from 'jodit/plugins/backspace/helpers';
 
 /**
  * Try join two UL elements
@@ -47,7 +48,7 @@ export function checkJoinTwoLists(
 
 		call(!backspace ? Dom.append : Dom.prepend, second, fakeNode);
 
-		Dom.moveContent(prev, next, !backspace);
+		Dom.moveContent(prev, next, !backspace, getMoveFilter(jodit));
 		Dom.safeRemove(prev);
 
 		call(backspace ? Dom.append : Dom.prepend, target, fakeNode);
@@ -58,3 +59,5 @@ export function checkJoinTwoLists(
 
 	return false;
 }
+
+

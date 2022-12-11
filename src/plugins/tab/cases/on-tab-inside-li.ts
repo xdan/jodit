@@ -34,7 +34,13 @@ export function onTabInsideLi(jodit: IJodit): boolean {
 		const list = Dom.closest(li, ['ol', 'ul'], jodit.editor);
 
 		if (list) {
-			const newList = jodit.createInside.element(list.tagName);
+			const newList = jodit.createInside.element(
+				list.tagName,
+				Array.from(list.attributes).reduce((acc, attr) => {
+					acc[attr.name] = attr.value;
+					return acc;
+				}, {} as Record<string, string>)
+			);
 			const previousLi = li.previousElementSibling;
 
 			newList.appendChild(li);

@@ -28,6 +28,10 @@ describe('Tab test', () => {
 				'<ol><li>test<ol><li>|test</li></ol></li></ol>'
 			],
 			[
+				'<ol class="test"><li>test</li><li>|test</li></ol>',
+				'<ol class="test"><li>test<ol class="test"><li>|test</li></ol></li></ol>'
+			],
+			[
 				'<ol><li>|test</li><li>test</li></ol>',
 				'<ol><li>|test</li><li>test</li></ol>'
 			]

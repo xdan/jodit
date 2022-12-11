@@ -48,6 +48,8 @@ import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers';
 import { assert } from 'jodit/core/helpers/utils/assert';
 import { isMarker, isFunction, isString } from 'jodit/core/helpers/checker';
 
+import './interface';
+
 export class Select implements ISelect {
 	constructor(readonly jodit: IJodit) {
 		jodit.e.on('removeMarkers', () => {
@@ -917,8 +919,17 @@ export class Select implements ISelect {
 		const container = start ? range.startContainer : range.endContainer;
 		const offset = start ? range.startOffset : range.endOffset;
 
-		const check = (elm: Node | null): boolean =>
-			Boolean(elm && !Dom.isTag(elm, 'br') && !Dom.isEmptyTextNode(elm));
+		const isSignificant = (elm: Node | null): boolean =>
+			Boolean(
+				elm &&
+					!Dom.isTag(elm, 'br') &&
+					!Dom.isEmptyTextNode(elm) &&
+					!Dom.isTemporary(elm) &&
+					!(
+						Dom.isElement(elm) &&
+						this.j.e.fire('isInvisibleForCursor', elm) === true
+					)
+			);
 
 		// check right offset
 		if (Dom.isText(container)) {
@@ -940,17 +951,27 @@ export class Select implements ISelect {
 			const children = toArray(container.childNodes);
 
 			if (end) {
-				if (children.slice(offset).some(check)) {
+				if (children.slice(offset).some(isSignificant)) {
 					return false;
 				}
 			} else {
-				if (children.slice(0, offset).some(check)) {
+				if (children.slice(0, offset).some(isSignificant)) {
 					return false;
 				}
 			}
 		}
 
-		return !call(start ? Dom.prev : Dom.next, current, check, parentBlock);
+		let next = Dom.sibling(current, start);
+
+		while (next && next.parentElement !== parentBlock) {
+			if (next && isSignificant(next)) {
+				return false;
+			}
+
+			next = Dom.sibling(next, start) ?? next.parentElement;
+		}
+
+		return true;
 	}
 
 	/**
