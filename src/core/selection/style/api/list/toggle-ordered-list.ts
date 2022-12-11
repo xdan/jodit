@@ -44,21 +44,27 @@ export function toggleOrderedList(
 
 	const hook = jodit.e.fire.bind(jodit.e, `${_PREFIX}AfterToggleList`);
 
-	const isChangeMode =
-		toggleAttributes(
-			commitStyle,
-			li.parentElement,
-			jodit,
-			INITIAL,
-			true
-		) === CHANGE;
+	if (mode !== UNWRAP) {
+		const isChangeMode =
+			toggleAttributes(
+				commitStyle,
+				li.parentElement,
+				jodit,
+				INITIAL,
+				true
+			) === CHANGE;
 
-	// ul => ol, ol => ul
-	if (isChangeMode || list.tagName.toLowerCase() !== commitStyle.element) {
-		const wrapper = unwrapList(REPLACE, list, li, jodit, commitStyle);
-		const newList = wrapList(commitStyle, wrapper, jodit);
-		hook(mode, newList, commitStyle);
-		return mode;
+		// ul => ol, ol => ul or ul => ul.class1
+		if (
+			mode === REPLACE ||
+			isChangeMode ||
+			list.tagName.toLowerCase() !== commitStyle.element
+		) {
+			const wrapper = unwrapList(REPLACE, list, li, jodit, commitStyle);
+			const newList = wrapList(commitStyle, wrapper, jodit);
+			hook(REPLACE, newList, commitStyle);
+			return REPLACE;
+		}
 	}
 
 	const wrapper = unwrapList(UNWRAP, list, li, jodit, commitStyle);

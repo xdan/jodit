@@ -98,7 +98,6 @@ class wrapNodes extends Plugin {
 	}
 
 	private checkAloneListLeaf(child: Node, jodit: IJodit): Node {
-		// debugger
 		let result = child;
 		let next: Nullable<Node> = child;
 

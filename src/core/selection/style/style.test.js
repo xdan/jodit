@@ -456,6 +456,31 @@ describe('Apply style', () => {
 					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>'
 				],
 				[
+					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li><li>6|</li></ul>',
+					{ element: 'ol' },
+					'<p>|1</p><p>2</p><p>3</p><p>4</p><p>5</p><p>6|</p>'
+				],
+				[
+					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li><li>6|</li></ul>',
+					{ element: 'ul' },
+					'<ul><li>|1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6|</li></ul>'
+				],
+				[
+					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li></ul><p>6|</p>',
+					{ element: 'ul' },
+					'<ul><li>|1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6|</li></ul>'
+				],
+				[
+					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>3.5</li></ul><ul><li>4</li><li>5</li></ul><p>6|</p>',
+					{ element: 'ul' },
+					'<ul><li>|1</li><li>2</li><li>3</li><li>3.5</li><li>4</li><li>5</li><li>6|</li></ul>'
+				],
+				[
+					'<ol><li>|1</li><li>2</li><li>3</li></ol><ol><li>3.5</li></ol><ul><li>4</li><li>5</li></ul><p>6|</p>',
+					{ element: 'ul' },
+					'<ul><li>|1</li><li>2</li><li>3</li><li>3.5</li><li>4</li><li>5</li><li>6|</li></ul>'
+				],
+				[
 					'<ol><li>test</li><li>ord|ered</li><li>list</li></ol>',
 					{ element: 'ol' },
 					'<ol><li>test</li></ol><p>ord|ered</p><ol><li>list</li></ol>'

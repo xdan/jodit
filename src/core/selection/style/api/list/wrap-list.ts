@@ -42,7 +42,6 @@ export function wrapList(
 	let list = Dom.isTag(prev, commitStyle.element) ? prev : null;
 	list ??= Dom.isTag(next, commitStyle.element) ? next : null;
 
-	debugger
 	if (
 		!Dom.isTag(list, ['ul', 'ol']) ||
 		!isSameAttributes(list, commitStyle.options.attributes)
