@@ -18,8 +18,23 @@ describe('Apply style', () => {
 			editor.execCommand('selectall');
 		});
 
-		describe.only('Base apply', () => {
+		describe('Base apply', () => {
 			[
+				[
+					'<p><strong>|test</strong> pop <strong>test|</strong></p>',
+					{
+						element: 'strong'
+					},
+					'<p>|test pop test|</p>'
+				],
+				[
+					'<p><strong>|test</strong> pop <strong>test|</strong></p>',
+					{
+						element: 'strong',
+						attributes: { style: { fontWeight: 700 } }
+					},
+					'<p>|test pop test|</p>'
+				],
 				[
 					'<p>|test|</p>',
 					{ element: 'strong' },
@@ -860,7 +875,12 @@ describe('Apply style', () => {
 								'<p>test<span style="font-size:12px">stop</span></p>'
 							);
 
-							style.apply(editor);
+							const style2 = new Style({
+								style: {
+									fontSize: 12
+								}
+							});
+							style2.apply(editor);
 
 							editor.s.insertHTML('elem');
 
@@ -883,7 +903,13 @@ describe('Apply style', () => {
 								});
 
 								style.apply(editor);
-								style.apply(editor);
+
+								const style2 = new Style({
+									style: {
+										fontSize: 12
+									}
+								});
+								style2.apply(editor);
 
 								editor.s.insertHTML('elem');
 

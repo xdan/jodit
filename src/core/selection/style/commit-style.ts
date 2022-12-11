@@ -108,6 +108,8 @@ export class CommitStyle implements ICommitStyle {
 					// @ts-ignore
 					jodit.e.off(camelCase(_PREFIX + '_' + key), hooks[key]);
 				});
+
+			this.__applyMap = new WeakMap();
 		}
 	}
 }
