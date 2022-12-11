@@ -57,10 +57,10 @@ export function hasSameStyleKeys(elm: Node, rules: IStyle): boolean {
 			Object.keys(rules).every(property => {
 				const value = css(elm, property, true);
 
-				return !isVoid(value) && value !== '';
+				return !isVoid(value);
 			})
 	);
 }
 
 assert(hasSameStyleKeys(elm, { color: 'red' }), 'Style test');
-assert(!hasSameStyleKeys(elm, { font: 'Arial', color: 'red' }), 'Style test');
+assert(hasSameStyleKeys(elm, { font: 'Arial', color: 'red' }), 'Style test');
