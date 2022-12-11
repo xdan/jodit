@@ -181,7 +181,7 @@ export const transactions: IStyleTransactions = {
 
 			return {
 				...value,
-				next: states.CHANGE,
+				next: style.elementIsList ? states.END : states.CHANGE,
 				mode: WRAP,
 				element: wrapper
 			};
