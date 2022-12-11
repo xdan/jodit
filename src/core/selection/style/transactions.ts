@@ -4,8 +4,13 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, IDictionary, CommitMode } from 'jodit/types';
-import { CommitStyle, REPLACE } from 'jodit/core/selection';
+import type {
+	IJodit,
+	IDictionary,
+	CommitMode,
+	ICommitStyle
+} from 'jodit/types';
+import { REPLACE } from 'jodit/core/selection';
 import {
 	extractSelectedPart,
 	getSuitChild,
@@ -14,7 +19,7 @@ import {
 	toggleAttributes,
 	unwrapChildren,
 	isInsideInvisibleElement,
-	wrapAndCommitStyle,
+	wrap,
 	toggleOrderedList
 } from 'jodit/core/selection/style/api';
 import { Dom } from 'jodit/core/dom';
@@ -38,7 +43,7 @@ export const states = {
 export interface IStyleTransactionValue {
 	next: keyof typeof states;
 	element: HTMLElement;
-	style: CommitStyle;
+	style: ICommitStyle;
 	jodit: IJodit;
 	mode: CommitMode;
 }
@@ -172,7 +177,7 @@ export const transactions: IStyleTransactions = {
 		exec(value) {
 			const { element, jodit, style } = value;
 
-			const wrapper = wrapAndCommitStyle(style, element, jodit);
+			const wrapper = wrap(style, element, jodit);
 
 			return {
 				...value,

@@ -4,17 +4,16 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, Nullable } from 'jodit/types';
-import type { CommitStyle } from '../commit-style';
+import type { IJodit, Nullable, ICommitStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
-import { Select } from 'jodit/core/selection/select';
+import { isMarker } from 'jodit/core/helpers/checker/is-marker';
 
 /**
  * Wrap text or inline elements inside Block element
  * @private
  */
 export function wrapUnwrappedText(
-	style: CommitStyle,
+	style: ICommitStyle,
 	elm: Node,
 	jodit: IJodit
 ): HTMLElement {
@@ -24,7 +23,7 @@ export function wrapUnwrappedText(
 			let edgeNode: Node = n,
 				node: Nullable<Node> = n;
 
-			while (node && !Select.isMarker(node)) {
+			while (node && !isMarker(node)) {
 				if (Dom.isTag(node, jodit.o.enter)) {
 					break;
 				}

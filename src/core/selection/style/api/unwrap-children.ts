@@ -4,18 +4,20 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IDictionary, IStyle } from 'jodit/types';
-import type { CommitStyle } from '../commit-style';
+import type { IDictionary, IStyle, ICommitStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { attr, css } from 'jodit/core/helpers';
-import { elementHasSameStyleKeys } from 'jodit/core/selection/style/api/element-has-same-style';
+import { hasSameStyleKeys } from 'jodit/core/selection/style/api/has-same-style';
 import { isSameStyleChild, isSuitElement } from './is-suit-element';
 
 /**
  * Unwrap all suit elements inside
  * @private
  */
-export function unwrapChildren(style: CommitStyle, font: HTMLElement): boolean {
+export function unwrapChildren(
+	style: ICommitStyle,
+	font: HTMLElement
+): boolean {
 	const needUnwrap: Node[] = [];
 	const needChangeStyle: any[] = [];
 
@@ -33,7 +35,7 @@ export function unwrapChildren(style: CommitStyle, font: HTMLElement): boolean {
 
 			if (
 				isSuitElement(style, elm as HTMLElement, true) &&
-				(!cssStyle || elementHasSameStyleKeys(elm, cssStyle))
+				(!cssStyle || hasSameStyleKeys(elm, cssStyle))
 			) {
 				if (firstElementSuit === undefined) {
 					firstElementSuit = true;

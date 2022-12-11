@@ -4,8 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CommitMode, IJodit, IStyle } from 'jodit/types';
-import type { CommitStyle } from 'jodit/core/selection/style/commit-style';
+import type { CommitMode, IJodit, IStyle, ICommitStyle } from 'jodit/types';
 import { assert, attr } from 'jodit/core/helpers/utils';
 import { css } from 'jodit/core/helpers/utils/css';
 import { dataBind } from 'jodit/core/helpers/utils/data-bind';
@@ -27,17 +26,25 @@ import {
 	isString
 } from 'jodit/core/helpers/checker';
 
+const tak = 'toggleAttributes';
+
 /**
  * Toggles attributes
  * @private
  */
 export function toggleAttributes(
-	commitStyle: CommitStyle,
+	commitStyle: ICommitStyle,
 	elm: HTMLElement,
 	jodit: IJodit,
 	mode: CommitMode,
 	dry: boolean = false
 ): CommitMode {
+	if (!dry && commitStyle.isApplied(elm, tak)) {
+		return mode;
+	}
+
+	!dry && commitStyle.setApplied(elm, tak);
+
 	const { attributes } = commitStyle.options;
 
 	if (attributes && size(attributes) > 0) {
@@ -72,7 +79,7 @@ export function toggleAttributes(
 }
 
 function toggleStyle(
-	commitStyle: CommitStyle,
+	commitStyle: ICommitStyle,
 	jodit: IJodit,
 	style: IStyle | string | number | boolean | null,
 	elm: HTMLElement,
@@ -128,6 +135,7 @@ function toggleClass(
 	if (elm.classList.contains(value.toString())) {
 		mode = UNSET;
 		if (!dry) {
+			!dry && console.log('unset', 'class', value);
 			elm.classList.remove(value);
 			if (elm.classList.length === 0) {
 				attr(elm, 'class', null);
@@ -137,6 +145,7 @@ function toggleClass(
 	} else {
 		mode = CHANGE;
 		if (!dry) {
+			!dry && console.log('change', 'class', value);
 			elm.classList.add(value);
 			hook(mode, elm, 'class', value);
 		}
@@ -181,7 +190,7 @@ function toggleAttribute(
  * and if it is default, it removes the element itself
  */
 function removeExtraStyleAttribute(
-	commitStyle: CommitStyle,
+	commitStyle: ICommitStyle,
 	elm: HTMLElement,
 	mode: CommitMode
 ): CommitMode {

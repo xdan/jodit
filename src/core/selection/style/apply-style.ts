@@ -8,15 +8,14 @@
  * @module selection
  */
 
-import type { IJodit } from 'jodit/types';
-import type { CommitStyle } from './commit-style';
+import type { IJodit, ICommitStyle } from 'jodit/types';
 import { normalizeNode } from 'jodit/core/helpers/normalize/normalize-node';
 import { FiniteStateMachine } from './api';
 import { IStyleTransactionValue, states, transactions } from './transactions';
 import { INITIAL } from './commit-style';
 
 /** @internal */
-export function ApplyStyle(jodit: IJodit, cs: CommitStyle): void {
+export function ApplyStyle(jodit: IJodit, cs: ICommitStyle): void {
 	const { s: sel, editor } = jodit;
 
 	sel.save();
@@ -46,6 +45,7 @@ export function ApplyStyle(jodit: IJodit, cs: CommitStyle): void {
 			state = machine.dispatch('exec', state);
 			console.log(machine.getState(), state);
 		}
+		console.log('-------------------');
 
 		font = gen.next();
 	}

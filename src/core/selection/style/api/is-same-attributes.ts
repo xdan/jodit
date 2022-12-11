@@ -4,10 +4,11 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IDictionary } from 'jodit/types';
+import type { IDictionary, IStyle } from 'jodit/types';
 import { attr } from 'jodit/core/helpers/utils';
 import { size } from 'jodit/core/helpers/size/object-size';
 import { assert } from 'jodit/core/helpers/utils/assert';
+import { hasSameStyle } from './has-same-style';
 
 /**
  * Compares whether the given attributes match the element's own attributes
@@ -27,7 +28,17 @@ export function isSameAttributes(
 
 	assert(attrs, 'Attrs must be a non-empty object');
 
-	return Object.keys(attrs).every(key => attr(elm, key) === attrs[key]);
+	return Object.keys(attrs).every(key => {
+		if (key === 'class') {
+			return elm.classList.contains(attrs[key]);
+		}
+
+		if (key === 'style') {
+			return hasSameStyle(elm, attrs[key] as IStyle);
+		}
+
+		return attr(elm, key) === attrs[key];
+	});
 }
 
 export function elementsEqualAttributes(

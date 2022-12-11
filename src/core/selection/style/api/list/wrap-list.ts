@@ -4,15 +4,19 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit } from 'jodit/types';
+import type { IJodit, ICommitStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import {
 	_PREFIX,
-	CommitStyle,
 	REPLACE,
-	WRAP
+	WRAP,
+	INITIAL
 } from 'jodit/core/selection/style/commit-style';
-import { elementsEqualAttributes } from 'jodit/core/selection/style/api';
+import {
+	elementsEqualAttributes,
+	isSameAttributes,
+	toggleAttributes
+} from 'jodit/core/selection/style/api';
 
 /**
  * Replaces non-leaf items with leaf items and either creates a new list or
@@ -20,11 +24,16 @@ import { elementsEqualAttributes } from 'jodit/core/selection/style/api';
  * @private
  */
 export function wrapList(
-	commitStyle: CommitStyle,
+	commitStyle: ICommitStyle,
 	wrapper: HTMLElement,
 	jodit: IJodit
 ): HTMLElement {
-	const result = jodit.e.fire(`${_PREFIX}BeforeWrapList`, REPLACE, wrapper);
+	const result = jodit.e.fire(
+		`${_PREFIX}BeforeWrapList`,
+		REPLACE,
+		wrapper,
+		commitStyle
+	);
 	const newWrapper =
 		result ?? Dom.replace<HTMLElement>(wrapper, 'li', jodit.createInside);
 
@@ -33,8 +42,13 @@ export function wrapList(
 	let list = Dom.isTag(prev, commitStyle.element) ? prev : null;
 	list ??= Dom.isTag(next, commitStyle.element) ? next : null;
 
-	if (!Dom.isTag(list, ['ul', 'ol'])) {
+	debugger
+	if (
+		!Dom.isTag(list, ['ul', 'ol']) ||
+		!isSameAttributes(list, commitStyle.options.attributes)
+	) {
 		list = jodit.createInside.element(commitStyle.element);
+		toggleAttributes(commitStyle, list, jodit, INITIAL);
 		Dom.before(newWrapper, list);
 	}
 
@@ -52,7 +66,7 @@ export function wrapList(
 		Dom.safeRemove(list.nextElementSibling);
 	}
 
-	jodit.e.fire(`${_PREFIX}AfterWrapList`, WRAP, list, commitStyle.options);
+	jodit.e.fire(`${_PREFIX}AfterWrapList`, WRAP, list, commitStyle);
 
 	return <HTMLElement>list;
 }

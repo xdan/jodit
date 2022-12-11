@@ -7,7 +7,7 @@
 export * from './toggle-attributes';
 export * from './list/toggle-ordered-list';
 export * from './list/wrap-list';
-export * from './element-has-same-style';
+export * from './has-same-style';
 export * from './extract';
 export * from './finite-state-machine';
 export * from './get-suit-child';
@@ -17,5 +17,5 @@ export * from './is-same-attributes';
 export * from './is-normal-node';
 export * from './is-suit-element';
 export * from './unwrap-children';
-export * from './wrap-and-commit-style';
+export * from './wrap';
 export * from './wrap-unwrapped-text';

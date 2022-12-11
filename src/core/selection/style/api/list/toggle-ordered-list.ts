@@ -4,8 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, CommitMode, IStyleOptions } from 'jodit/types';
-import type { CommitStyle } from '../../commit-style';
+import type { IJodit, CommitMode, ICommitStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { assert } from 'jodit/core/helpers/utils/assert';
 import { extractSelectedPart } from '../extract';
@@ -18,7 +17,7 @@ import { wrapList } from 'jodit/core/selection/style/api';
  * @private
  */
 export function toggleOrderedList(
-	commitStyle: CommitStyle,
+	commitStyle: ICommitStyle,
 	li: HTMLElement,
 	jodit: IJodit,
 	mode: CommitMode
@@ -36,7 +35,7 @@ export function toggleOrderedList(
 	const result = jodit.e.fire(
 		`${_PREFIX}BeforeToggleList`,
 		mode,
-		commitStyle.options,
+		commitStyle,
 		list
 	);
 	if (result !== undefined) {
@@ -45,42 +44,25 @@ export function toggleOrderedList(
 
 	const hook = jodit.e.fire.bind(jodit.e, `${_PREFIX}AfterToggleList`);
 
-	// ul => ol, ol => ul
-	if (list.tagName.toLowerCase() !== commitStyle.element) {
-		const wrapper = unwrapList(
-			REPLACE,
-			list,
-			li,
-			jodit,
-			commitStyle.options
-		);
-		const newList = wrapList(commitStyle, wrapper, jodit);
-		toggleAttributes(commitStyle, newList, jodit, mode);
-		hook(REPLACE, newList, commitStyle.options);
-		return REPLACE;
-	}
-
-	if (
+	const isChangeMode =
 		toggleAttributes(
 			commitStyle,
 			li.parentElement,
 			jodit,
 			INITIAL,
 			true
-		) === CHANGE
-	) {
-		const result = toggleAttributes(
-			commitStyle,
-			li.parentElement,
-			jodit,
-			mode
-		);
-		hook(CHANGE, list, commitStyle.options);
-		return result;
+		) === CHANGE;
+
+	// ul => ol, ol => ul
+	if (isChangeMode || list.tagName.toLowerCase() !== commitStyle.element) {
+		const wrapper = unwrapList(REPLACE, list, li, jodit, commitStyle);
+		const newList = wrapList(commitStyle, wrapper, jodit);
+		hook(mode, newList, commitStyle);
+		return mode;
 	}
 
-	const wrapper = unwrapList(UNWRAP, list, li, jodit, commitStyle.options);
-	hook(UNWRAP, wrapper, commitStyle.options);
+	const wrapper = unwrapList(UNWRAP, list, li, jodit, commitStyle);
+	hook(UNWRAP, wrapper, commitStyle);
 
 	return UNWRAP;
 }
@@ -90,7 +72,7 @@ function unwrapList(
 	list: HTMLElement,
 	li: HTMLElement,
 	jodit: IJodit,
-	cs: IStyleOptions
+	cs: ICommitStyle
 ): HTMLElement {
 	const result = jodit.e.fire(`${_PREFIX}BeforeUnwrapList`, mode, list, cs);
 

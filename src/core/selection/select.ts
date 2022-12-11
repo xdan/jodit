@@ -36,8 +36,6 @@ import {
 	size,
 	attr,
 	error,
-	isFunction,
-	isString,
 	$$,
 	css,
 	call,
@@ -48,6 +46,7 @@ import { CommitStyle } from './style/commit-style';
 import { autobind } from 'jodit/core/decorators';
 import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers';
 import { assert } from 'jodit/core/helpers/utils/assert';
+import { isMarker, isFunction, isString } from 'jodit/core/helpers/checker';
 
 export class Select implements ISelect {
 	constructor(readonly jodit: IJodit) {
@@ -215,17 +214,6 @@ export class Select implements ISelect {
 		} catch {}
 
 		return false;
-	}
-
-	/**
-	 * Define element is selection helper
-	 */
-	static isMarker(elm: Nullable<Node>): elm is HTMLElement {
-		return (
-			Dom.isNode(elm) &&
-			Dom.isTag(elm, 'span') &&
-			elm.hasAttribute('data-' + consts.MARKER_CLASS)
-		);
 	}
 
 	/**
@@ -840,7 +828,7 @@ export class Select implements ISelect {
 					node &&
 					node !== root &&
 					!Dom.isEmptyTextNode(node) &&
-					!Select.isMarker(node as HTMLElement)
+					!isMarker(node as HTMLElement)
 				) {
 					nodes.push(node);
 				}
@@ -1224,17 +1212,17 @@ export class Select implements ISelect {
 			if (
 				firstChild &&
 				firstChild === lastChild &&
-				Select.isMarker(firstChild)
+				isMarker(firstChild)
 			) {
 				Dom.unwrap(font);
 				continue;
 			}
 
-			if (firstChild && Select.isMarker(firstChild)) {
+			if (firstChild && isMarker(firstChild)) {
 				Dom.before(font, firstChild);
 			}
 
-			if (lastChild && Select.isMarker(lastChild)) {
+			if (lastChild && isMarker(lastChild)) {
 				Dom.after(font, lastChild);
 			}
 
@@ -1256,7 +1244,7 @@ export class Select implements ISelect {
 				if (
 					font.firstChild &&
 					font.firstChild === font.lastChild &&
-					Select.isMarker(font.firstChild)
+					isMarker(font.firstChild)
 				) {
 					continue;
 				}

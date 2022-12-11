@@ -4,8 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { Nullable } from 'jodit/types';
-import type { CommitStyle } from '../commit-style';
+import type { Nullable, ICommitStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { isNormalNode } from './is-normal-node';
 import { isSuitElement } from './is-suit-element';
@@ -19,7 +18,7 @@ import { isSuitElement } from './is-suit-element';
  * @private
  */
 export function getSuitChild(
-	style: CommitStyle,
+	style: ICommitStyle,
 	font: HTMLElement
 ): Nullable<HTMLElement> {
 	let { firstChild: child } = font;

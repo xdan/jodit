@@ -30,3 +30,4 @@ export * from './is-url';
 export * from './is-valid-name';
 export * from './is-void';
 export * from './is-window';
+export * from './is-marker';

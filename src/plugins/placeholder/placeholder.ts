@@ -14,12 +14,13 @@ import './placeholder.less';
 
 import type { IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
-import { css, attr } from 'jodit/core/helpers';
-import { Dom } from 'jodit/core/dom';
+import { attr } from 'jodit/core/helpers/utils/utils';
+import { css } from 'jodit/core/helpers/utils/css';
+import { isMarker } from 'jodit/core/helpers/checker/is-marker';
+import { Dom } from 'jodit/core/dom/dom';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { MAY_BE_REMOVED_WITH_KEY } from 'jodit/core/constants';
 import { debounce } from 'jodit/core/decorators';
-import { Select } from 'jodit/core/selection';
 import { pluginSystem } from 'jodit/core/global';
 
 import './config';
@@ -157,7 +158,7 @@ export class placeholder extends Plugin {
 
 		const { firstChild } = editor.editor;
 
-		if (Dom.isElement(firstChild) && !Select.isMarker(firstChild)) {
+		if (Dom.isElement(firstChild) && !isMarker(firstChild)) {
 			const style2 = editor.ew.getComputedStyle(firstChild);
 
 			marginTop = parseInt(style2.getPropertyValue('margin-top'), 10);

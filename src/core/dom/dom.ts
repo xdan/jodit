@@ -21,22 +21,16 @@ import type {
 } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import {
-	$$,
-	asArray,
-	attr,
-	call,
-	css,
-	dataBind,
-	error,
 	isArray,
 	isFunction,
 	isHTML,
 	isString,
-	isVoid,
-	toArray,
-	trim
-} from 'jodit/core/helpers';
-import { Select } from 'jodit/core/selection';
+	isVoid
+} from 'jodit/core/helpers/checker';
+import { asArray, toArray } from 'jodit/core/helpers/array';
+import { trim } from 'jodit/core/helpers/string';
+import { $$, attr, call, css, dataBind, error } from 'jodit/core/helpers/utils';
+import { isMarker } from 'jodit/core/helpers/checker/is-marker';
 import { TEMP_ATTR } from 'jodit/core/constants';
 
 /**
@@ -1071,7 +1065,7 @@ export class Dom {
 			return false;
 		}
 
-		return Select.isMarker(element) || attr(element, TEMP_ATTR) === 'true';
+		return isMarker(element) || attr(element, TEMP_ATTR) === 'true';
 	}
 
 	/**

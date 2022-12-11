@@ -4,8 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit } from 'jodit/types';
-import type { CommitStyle } from '../commit-style';
+import type { IJodit, ICommitStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { wrapUnwrappedText } from './wrap-unwrapped-text';
 import { attr } from 'jodit/core/helpers/utils/utils';
@@ -15,8 +14,8 @@ import { wrapList } from './list/wrap-list';
  * Replaces the parent tag with the applicable one, or wraps the text and also replaces the tag
  * @private
  */
-export function wrapAndCommitStyle(
-	commitStyle: CommitStyle,
+export function wrap(
+	commitStyle: ICommitStyle,
 	font: HTMLElement,
 	jodit: IJodit
 ): HTMLElement {
@@ -32,7 +31,7 @@ export function wrapAndCommitStyle(
  * otherwise it wraps free text in an element.
  */
 function findOrCreateWrapper(
-	commitStyle: CommitStyle,
+	commitStyle: ICommitStyle,
 	font: HTMLElement,
 	jodit: IJodit
 ): HTMLElement {

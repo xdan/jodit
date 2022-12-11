@@ -12,11 +12,12 @@ import type {
 	HTMLTagNames,
 	IJodit,
 	IStyleOptions,
-	IAttributes
+	IAttributes,
+	ICommitStyle
 } from 'jodit/types';
 import { IS_BLOCK } from 'jodit/core/constants';
+import { camelCase } from 'jodit/core/helpers/string/camel-case';
 import { ApplyStyle } from './apply-style';
-import { camelCase } from 'jodit/core/helpers';
 
 export const WRAP = 'wrap';
 export const UNWRAP = 'unwrap';
@@ -26,7 +27,25 @@ export const INITIAL = 'initial';
 export const REPLACE = 'replace';
 export const _PREFIX = 'commitStyle';
 
-export class CommitStyle {
+export class CommitStyle implements ICommitStyle {
+	private __applyMap: WeakMap<HTMLElement, Record<string, boolean>> =
+		new WeakMap();
+
+	isApplied(elm: HTMLElement, key: string): boolean {
+		const data = this.__applyMap.get(elm);
+		if (!data) {
+			return false;
+		}
+
+		return data[key];
+	}
+
+	setApplied(elm: HTMLElement, key: string): void {
+		const data = this.__applyMap.get(elm) ?? {};
+		data[key] = true;
+		this.__applyMap.set(elm, data);
+	}
+
 	get elementIsList(): boolean {
 		return Boolean(
 			this.options.element && ['ul', 'ol'].includes(this.options.element)
@@ -94,7 +113,7 @@ export class CommitStyle {
 }
 
 function deprecatedUsing(
-	commitStyle: CommitStyle,
+	commitStyle: ICommitStyle,
 	attributes?: IAttributes | undefined
 ): IAttributes | undefined {
 	const { style, className } = commitStyle.options;

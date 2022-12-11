@@ -50,6 +50,16 @@ describe('Apply style', () => {
 					'<p>|<a href="https://xdsoft.net">test</a>|</p>'
 				],
 				[
+					'<p>|test|</p>',
+					{
+						element: 'h1',
+						attributes: {
+							class: 'header'
+						}
+					},
+					'<h1 class="header">|test|</h1>'
+				],
+				[
 					'<p><a href="https://xdsoft.net">|test|</a></p>',
 					{
 						element: 'a',
@@ -182,7 +192,7 @@ describe('Apply style', () => {
 					'<p>|test|</p>'
 				],
 				[
-					// (st) => getClosestWrapper -> extractSelectedPart -> toggleCommitStyles -> unwrap -> toggleCSS
+					// (st) => getClosestWrapper -> extractSelectedPart -> toggleICommitStyles -> unwrap -> toggleCSS
 					// (so) => ----
 					'<p><strong>te|st</strong> so|me</p>',
 					{
@@ -406,6 +416,21 @@ describe('Apply style', () => {
 					'<ol class="test"><li>|test</li><li>ordered</li><li>list</li><li>a few</li><li>leafs|</li></ol>'
 				],
 				[
+					'<p>|text</p><p>pop</p><p>oup</p><p>test|</p>',
+					{
+						element: 'ul',
+						attributes: {
+							class: 'todo-list2'
+						}
+					},
+					'<ul class="todo-list2"><li>|text</li><li>pop</li><li>oup</li><li>test|</li></ul>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list</p><p>a few</p><p>leafs|</p>',
+					{ element: 'ul', attributes: { class: 'test' } },
+					'<ul class="test"><li>|test</li><li>ordered</li><li>list</li><li>a few</li><li>leafs|</li></ul>'
+				],
+				[
 					'<p>|test</p><p>ordered</p><p>list|</p>',
 					{ element: 'ol', style: { listStyleType: null } },
 					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
@@ -449,6 +474,21 @@ describe('Apply style', () => {
 					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
 					{ element: 'ol' },
 					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+				[
+					'<ul><li>test</li><li>unordered|</li><li>list</li></ul>',
+					{ element: 'ul' },
+					'<ul><li>test</li></ul><p>unordered|</p><ul><li>list</li></ul>'
+				],
+				[
+					'<ul><li>test</li><li>unor|der|ed</li><li>list</li></ul>',
+					{ element: 'ul' },
+					'<ul><li>test</li></ul><p>unor|der|ed</p><ul><li>list</li></ul>'
+				],
+				[
+					'<ul><li>test</li><li>unor|der|ed</li><li>list</li></ul>',
+					{ element: 'ul', attributes: { class: 'test' } },
+					'<ul><li>test</li></ul><ul class="test"><li>unor|der|ed</li></ul><ul><li>list</li></ul>'
 				],
 				[
 					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
@@ -598,7 +638,8 @@ describe('Apply style', () => {
 							afterWrapList(_, wrapper, style) {
 								wrapper.querySelectorAll('li').forEach(li => {
 									li.className =
-										'test ' + style.attributes.class;
+										'test ' +
+										style.options.attributes.class;
 								});
 							}
 						},
