@@ -961,14 +961,19 @@ export class Select implements ISelect {
 			}
 		}
 
-		let next = Dom.sibling(current, start);
+		let next: Nullable<Node> = current;
 
-		while (next && next.parentElement !== parentBlock) {
+		while (next && next !== parentBlock) {
+			const nextOne = Dom.sibling(next, start);
+			if (!nextOne) {
+				next = next.parentNode;
+				continue;
+			}
+			next = nextOne;
+
 			if (next && isSignificant(next)) {
 				return false;
 			}
-
-			next = Dom.sibling(next, start) ?? next.parentElement;
 		}
 
 		return true;

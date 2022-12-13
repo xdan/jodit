@@ -25,7 +25,7 @@ export const IS_BLOCK =
 
 export const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
 
-const __INSEPARABLE_TAGS: HTMLTagNames[] = [
+const __UNSEPARABLE_TAGS: HTMLTagNames[] = [
 	'img',
 	'video',
 	'svg',
@@ -33,18 +33,18 @@ const __INSEPARABLE_TAGS: HTMLTagNames[] = [
 	'script',
 	'input',
 	'textarea',
-	'hr',
 	'link',
 	'jodit',
 	'jodit-media'
 ];
 
 export const INSEPARABLE_TAGS: Set<HTMLTagNames> = new Set([
-	...__INSEPARABLE_TAGS,
-	'br'
+	...__UNSEPARABLE_TAGS,
+	'br',
+	'hr'
 ]);
 
-export const NO_EMPTY_TAGS: Set<HTMLTagNames> = new Set(__INSEPARABLE_TAGS);
+export const NO_EMPTY_TAGS: Set<HTMLTagNames> = new Set(__UNSEPARABLE_TAGS);
 
 export const KEY_META = 'Meta';
 export const KEY_BACKSPACE = 'Backspace';

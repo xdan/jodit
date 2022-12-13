@@ -41,13 +41,13 @@ module.exports = (env, argv, dir = process.cwd(), onlyTS = false) => {
 		devtool: debug ? 'inline-source-map' : false,
 
 		entry: {
-			// ...(!isProd || (!uglify && !ESNext)
-			// 	? { vdom: ['./src/core/vdom/index'] }
-			// 	: {}),
-			jodit: // debug
-				// ? ['webpack-hot-middleware/client.js', './src/index']
-				['./src/index'],
-			// ...pluginsEntries
+			...(!isProd || (!uglify && !ESNext)
+				? { vdom: ['./src/core/vdom/index'] }
+				: {}),
+			jodit: debug
+				? ['webpack-hot-middleware/client.js', './src/index']
+				: ['./src/index'],
+			...pluginsEntries
 		},
 
 		output: {

@@ -317,8 +317,8 @@ export class Dom {
 		const emptyText = (node: Text): boolean =>
 			node.nodeValue == null || trim(node.nodeValue).length === 0;
 
-		if (Dom.isText(node) && emptyText(node)) {
-			return true;
+		if (Dom.isText(node)) {
+			return emptyText(node);
 		}
 
 		return (
@@ -1066,20 +1066,21 @@ export class Dom {
 		node: Node | null | undefined | false | EventTarget,
 		tagNames: K[] | K | Set<K>
 	): node is HTMLElementTagNameMap[K] {
-		if (tagNames instanceof Set) {
-			return (
-				this.isElement(node) &&
-				tagNames.has(node.tagName.toLowerCase() as K)
-			);
+		if (!this.isElement(node)) {
+			return false;
 		}
 
-		const tags = asArray(tagNames).map(String);
+		const nameL = node.tagName.toLowerCase() as K;
+		const nameU = node.tagName.toUpperCase() as K;
+
+		if (tagNames instanceof Set) {
+			return tagNames.has(nameL) || tagNames.has(nameU);
+		}
+
+		const tags = asArray(tagNames).map(s => String(s).toLowerCase());
 
 		for (let i = 0; i < tags.length; i += 1) {
-			if (
-				this.isElement(node) &&
-				node.tagName.toLowerCase() === tags[i]
-			) {
+			if (nameL === tags[i] || nameU === tags[i]) {
 				return true;
 			}
 		}
