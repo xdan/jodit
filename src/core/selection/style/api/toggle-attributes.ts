@@ -135,7 +135,6 @@ function toggleClass(
 	if (elm.classList.contains(value.toString())) {
 		mode = UNSET;
 		if (!dry) {
-			!dry && console.log('unset', 'class', value);
 			elm.classList.remove(value);
 			if (elm.classList.length === 0) {
 				attr(elm, 'class', null);
@@ -145,7 +144,6 @@ function toggleClass(
 	} else {
 		mode = CHANGE;
 		if (!dry) {
-			!dry && console.log('change', 'class', value);
 			elm.classList.add(value);
 			hook(mode, elm, 'class', value);
 		}
