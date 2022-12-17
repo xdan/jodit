@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe.only('Tab test', () => {
+describe('Tab test', () => {
 	describe('Inside LI', () => {
 		[
 			[
