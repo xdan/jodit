@@ -37,7 +37,7 @@ export function onTabInsideLi(jodit: IJodit, shift: boolean = false): boolean {
 
 		const list = Dom.closest(li, ['ol', 'ul'], jodit.editor);
 
-		if (!list) {
+		if (!list || (shift && !Dom.closest(list, 'li', jodit.editor))) {
 			return false;
 		}
 

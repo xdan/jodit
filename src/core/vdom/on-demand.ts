@@ -7,7 +7,7 @@
 class OnDemand {
 	state: {
 		cursor: {
-			startContainer
-		}
-	}
+			startContainer;
+		};
+	};
 }

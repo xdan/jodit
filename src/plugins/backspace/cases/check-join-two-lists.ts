@@ -59,5 +59,3 @@ export function checkJoinTwoLists(
 
 	return false;
 }
-
-

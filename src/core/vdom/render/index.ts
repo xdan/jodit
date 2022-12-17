@@ -235,4 +235,3 @@ export class VDomRender {
 		return domToVDom(box);
 	}
 }
-

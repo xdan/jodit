@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.23.3
+ * Version: v3.24.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -19,18 +19,18 @@
 })(self, function() {
 return (self["webpackChunkjodit"] = self["webpackChunkjodit"] || []).push([[101],{
 
-/***/ 62844:
+/***/ 86206:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Debug": function() { return /* binding */ Debug; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_plugin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(76454);
-/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16672);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(65401);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(83370);
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(47386);
+/* harmony import */ var jodit_core_plugin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57549);
+/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17332);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24263);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(40332);
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(86893);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -90,7 +90,7 @@ jodit_core_global__WEBPACK_IMPORTED_MODULE_1__/* .pluginSystem.add */ .pw.add('d
 },
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ var __webpack_exec__ = function(moduleId) { return __webpack_require__(__webpack_require__.s = moduleId); }
-/******/ var __webpack_exports__ = (__webpack_exec__(62844));
+/******/ var __webpack_exports__ = (__webpack_exec__(86206));
 /******/ return __webpack_exports__;
 /******/ }
 ]);

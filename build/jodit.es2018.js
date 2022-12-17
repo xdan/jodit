@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.23.3
+ * Version: v3.24.1
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -390,7 +390,7 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 48 48\">
 
 /***/ }),
 
-/***/ 6102:
+/***/ 18548:
 /***/ (function(module) {
 
 module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 1792\"> <path d=\"M512 1248v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm-1280-1024v192q0 40-28 68t-68 28h-320q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h320q40 0 68 28t28 68zm1280 512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68zm0-512v192q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h960q40 0 68 28t28 68z\"/> </svg>"
@@ -1019,14 +1019,14 @@ function __classPrivateFieldIn(state, receiver) {
 
 /***/ }),
 
-/***/ 80031:
+/***/ 93166:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "D": function() { return /* binding */ Config; }
 /* harmony export */ });
-/* harmony import */ var _core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47386);
+/* harmony import */ var _core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86893);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -1367,7 +1367,7 @@ Config.prototype.controls = {};
 
 /***/ }),
 
-/***/ 83735:
+/***/ 21317:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1378,17 +1378,17 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/async/set-timeout.ts
-var set_timeout = __webpack_require__(81778);
+var set_timeout = __webpack_require__(27512);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
-var is_function = __webpack_require__(87385);
+var is_function = __webpack_require__(42096);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-plain-object.ts
-var is_plain_object = __webpack_require__(76856);
+var is_plain_object = __webpack_require__(79736);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-promise.ts
-var is_promise = __webpack_require__(15199);
+var is_promise = __webpack_require__(26335);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
-var is_string = __webpack_require__(86129);
+var is_string = __webpack_require__(24421);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-number.ts
-var is_number = __webpack_require__(98296);
+var is_number = __webpack_require__(61817);
 // EXTERNAL MODULE: external "{assert(){}};"
 var external_assert_ = __webpack_require__(52378);
 ;// CONCATENATED MODULE: ./src/core/async/async.ts
@@ -1448,10 +1448,12 @@ class Async {
         return timer;
     }
     updateTimeout(label, timeout) {
+        void 0;
         if (!label || !this.timers.has(label)) {
             return null;
         }
         const callback = this.__callbacks.get(label);
+        void 0;
         return this.setTimeout(callback, { label, timeout });
     }
     clearLabel(label) {
@@ -1620,17 +1622,17 @@ class Async {
 
 /***/ }),
 
-/***/ 16867:
+/***/ 45113:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "w": function() { return /* binding */ Component; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(83370);
-/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(16672);
-/* harmony import */ var jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(71685);
-/* harmony import */ var jodit_core_async__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(83735);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40332);
+/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17332);
+/* harmony import */ var jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(29411);
+/* harmony import */ var jodit_core_async__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(21317);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -1642,12 +1644,6 @@ class Async {
 
 const StatusListHandlers = new Map();
 class Component {
-    constructor() {
-        this.async = new jodit_core_async__WEBPACK_IMPORTED_MODULE_3__/* .Async */ .e();
-        this.ownerWindow = window;
-        this.__componentStatus = jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.beforeInit */ .n.beforeInit;
-        this.uid = 'jodit-uid-' + (0,jodit_core_global__WEBPACK_IMPORTED_MODULE_1__/* .uniqueUid */ .fe)();
-    }
     get componentName() {
         if (!this.__componentName) {
             this.__componentName =
@@ -1694,6 +1690,12 @@ class Component {
     bindDestruct(component) {
         component.hookStatus(jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.beforeDestruct */ .n.beforeDestruct, () => !this.isInDestruct && this.destruct());
         return this;
+    }
+    constructor() {
+        this.async = new jodit_core_async__WEBPACK_IMPORTED_MODULE_3__/* .Async */ .e();
+        this.ownerWindow = window;
+        this.__componentStatus = jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.beforeInit */ .n.beforeInit;
+        this.uid = 'jodit-uid-' + (0,jodit_core_global__WEBPACK_IMPORTED_MODULE_1__/* .uniqueUid */ .fe)();
     }
     destruct() {
         this.setStatus(jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/* .STATUSES.destructed */ .n.destructed);
@@ -1747,7 +1749,7 @@ Component.STATUSES = jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_2__/
 
 /***/ }),
 
-/***/ 2624:
+/***/ 90549:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1760,9 +1762,9 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/component/statuses.ts
-var statuses = __webpack_require__(71685);
+var statuses = __webpack_require__(29411);
 // EXTERNAL MODULE: ./src/core/component/component.ts
-var component = __webpack_require__(16867);
+var component = __webpack_require__(45113);
 ;// CONCATENATED MODULE: ./src/core/component/view-component.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -1771,10 +1773,6 @@ var component = __webpack_require__(16867);
  */
 
 class ViewComponent extends component/* Component */.w {
-    constructor(jodit) {
-        super();
-        this.setParentView(jodit);
-    }
     get j() {
         return this.jodit;
     }
@@ -1788,6 +1786,10 @@ class ViewComponent extends component/* Component */.w {
         this.jodit = jodit;
         jodit.components.add(this);
         return this;
+    }
+    constructor(jodit) {
+        super();
+        this.setParentView(jodit);
     }
     destruct() {
         this.j.components.delete(this);
@@ -1808,7 +1810,7 @@ class ViewComponent extends component/* Component */.w {
 
 /***/ }),
 
-/***/ 71685:
+/***/ 29411:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1830,7 +1832,7 @@ const STATUSES = {
 
 /***/ }),
 
-/***/ 47386:
+/***/ 86893:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1870,12 +1872,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "KEY_TAB": function() { return /* binding */ KEY_TAB; },
 /* harmony export */   "KEY_UP": function() { return /* binding */ KEY_UP; },
 /* harmony export */   "MARKER_CLASS": function() { return /* binding */ MARKER_CLASS; },
-/* harmony export */   "MAY_BE_REMOVED_WITH_KEY": function() { return /* binding */ MAY_BE_REMOVED_WITH_KEY; },
 /* harmony export */   "MODE_SOURCE": function() { return /* binding */ MODE_SOURCE; },
 /* harmony export */   "MODE_SPLIT": function() { return /* binding */ MODE_SPLIT; },
 /* harmony export */   "MODE_WYSIWYG": function() { return /* binding */ MODE_WYSIWYG; },
 /* harmony export */   "NBSP_SPACE": function() { return /* binding */ NBSP_SPACE; },
 /* harmony export */   "NEARBY": function() { return /* binding */ NEARBY; },
+/* harmony export */   "NO_EMPTY_TAGS": function() { return /* binding */ NO_EMPTY_TAGS; },
 /* harmony export */   "PARAGRAPH": function() { return /* binding */ PARAGRAPH; },
 /* harmony export */   "SAFE_COUNT_CHANGE_CALL": function() { return /* binding */ SAFE_COUNT_CHANGE_CALL; },
 /* harmony export */   "SOURCE_CONSUMER": function() { return /* binding */ SOURCE_CONSUMER; },
@@ -1903,20 +1905,24 @@ const SPACE_REG_EXP_START = () => /^[\s\n\t\r\uFEFF\u200b]+/g;
 const SPACE_REG_EXP_END = () => /[\s\n\t\r\uFEFF\u200b]+$/g;
 const IS_BLOCK = /^(ADDRESS|ARTICLE|ASIDE|BLOCKQUOTE|CANVAS|DD|DFN|DIV|DL|DT|FIELDSET|FIGCAPTION|FIGURE|FOOTER|FORM|H[1-6]|HEADER|HGROUP|HR|LI|MAIN|NAV|NOSCRIPT|OUTPUT|P|PRE|RUBY|SCRIPT|STYLE|OBJECT|OL|SECTION|IFRAME|JODIT|JODIT-MEDIA|UL|TR|TD|TH|TBODY|THEAD|TFOOT|TABLE|BODY|HTML|VIDEO)$/i;
 const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
-const INSEPARABLE_TAGS = [
+const __UNSEPARABLE_TAGS = [
     'img',
-    'br',
     'video',
+    'svg',
     'iframe',
     'script',
     'input',
     'textarea',
-    'hr',
     'link',
     'jodit',
     'jodit-media'
 ];
-const MAY_BE_REMOVED_WITH_KEY = RegExp(`^${INSEPARABLE_TAGS.join('|')}$`, 'i');
+const INSEPARABLE_TAGS = new Set([
+    ...__UNSEPARABLE_TAGS,
+    'br',
+    'hr'
+]);
+const NO_EMPTY_TAGS = new Set(__UNSEPARABLE_TAGS);
 const KEY_META = 'Meta';
 const KEY_BACKSPACE = 'Backspace';
 const KEY_TAB = 'Tab';
@@ -2016,7 +2022,7 @@ const SOURCE_CONSUMER = 'source-consumer';
 
 /***/ }),
 
-/***/ 45466:
+/***/ 11441:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2047,7 +2053,7 @@ function component(constructorFunction) {
 
 /***/ }),
 
-/***/ 2830:
+/***/ 55773:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2055,9 +2061,9 @@ function component(constructorFunction) {
 /* harmony export */   "D": function() { return /* binding */ debounce; },
 /* harmony export */   "P": function() { return /* binding */ throttle; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43435);
-/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2624);
-/* harmony import */ var jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(70843);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(78411);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(90549);
+/* harmony import */ var jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(14582);
 /* harmony import */ var jodit_core_helpers_utils_assert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(52378);
 /* harmony import */ var jodit_core_helpers_utils_assert__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jodit_core_helpers_utils_assert__WEBPACK_IMPORTED_MODULE_3__);
 /*!
@@ -2077,6 +2083,7 @@ function debounce(timeout, firstCallImmediately = false, method = 'debounce') {
         }
         target.hookStatus(jodit_core_component__WEBPACK_IMPORTED_MODULE_1__/* .STATUSES.ready */ .n$.ready, (component) => {
             const { async } = component;
+            void 0;
             const realTimeout = (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isFunction */ .mf)(timeout)
                 ? timeout(component)
                 : timeout;
@@ -2102,7 +2109,7 @@ function throttle(timeout, firstCallImmediately = false) {
 
 /***/ }),
 
-/***/ 63945:
+/***/ 67493:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2127,7 +2134,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
+var helpers = __webpack_require__(40332);
 ;// CONCATENATED MODULE: ./src/core/decorators/cache/cache.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2156,11 +2163,11 @@ function cache(target, name, descriptor) {
 }
 
 // EXTERNAL MODULE: ./src/core/decorators/component/component.ts
-var component = __webpack_require__(45466);
+var component = __webpack_require__(11441);
 // EXTERNAL MODULE: ./src/core/decorators/debounce/debounce.ts
-var debounce = __webpack_require__(2830);
+var debounce = __webpack_require__(55773);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 1 modules
-var core_component = __webpack_require__(2624);
+var core_component = __webpack_require__(90549);
 ;// CONCATENATED MODULE: ./src/core/decorators/idle/idle.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2183,9 +2190,9 @@ function idle() {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 7 modules
-var checker = __webpack_require__(43435);
+var checker = __webpack_require__(78411);
 // EXTERNAL MODULE: ./src/core/helpers/utils/error/index.ts + 5 modules
-var error = __webpack_require__(70843);
+var error = __webpack_require__(14582);
 ;// CONCATENATED MODULE: ./src/core/decorators/hook/hook.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2228,7 +2235,7 @@ const nonenumerable = (target, propertyKey) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-view-object.ts
-var is_view_object = __webpack_require__(33679);
+var is_view_object = __webpack_require__(96574);
 ;// CONCATENATED MODULE: ./src/core/decorators/persistent/persistent.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2289,7 +2296,7 @@ function wait(condition) {
 }
 
 // EXTERNAL MODULE: ./src/core/decorators/watch/watch.ts
-var watch = __webpack_require__(30192);
+var watch = __webpack_require__(46163);
 ;// CONCATENATED MODULE: ./src/core/decorators/derive/derive.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -2412,7 +2419,7 @@ function autobind() {
 
 /***/ }),
 
-/***/ 30192:
+/***/ 46163:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2420,13 +2427,13 @@ function autobind() {
 /* harmony export */   "YP": function() { return /* binding */ watch; },
 /* harmony export */   "w7": function() { return /* binding */ getPropertyDescriptor; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(87385);
-/* harmony import */ var jodit_core_helpers_checker_is_plain_object__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(76856);
-/* harmony import */ var jodit_core_helpers_checker_is_view_object__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(33679);
-/* harmony import */ var jodit_core_event_emitter_observable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(34526);
-/* harmony import */ var jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(71685);
-/* harmony import */ var jodit_core_helpers_array_split_array__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(11986);
-/* harmony import */ var jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(70843);
+/* harmony import */ var jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(42096);
+/* harmony import */ var jodit_core_helpers_checker_is_plain_object__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(79736);
+/* harmony import */ var jodit_core_helpers_checker_is_view_object__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(96574);
+/* harmony import */ var jodit_core_event_emitter_observable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(88418);
+/* harmony import */ var jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(29411);
+/* harmony import */ var jodit_core_helpers_array_split_array__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(14556);
+/* harmony import */ var jodit_core_helpers_utils_error__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(14582);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -2528,21 +2535,27 @@ function watch(observeFields, context) {
 
 /***/ }),
 
-/***/ 65401:
+/***/ 24263:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "i": function() { return /* binding */ Dom; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47386);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(83370);
-/* harmony import */ var jodit_core_selection__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(92415);
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86893);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(78411);
+/* harmony import */ var jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56888);
+/* harmony import */ var jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(89170);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(76502);
+/* harmony import */ var jodit_core_helpers_checker_is_marker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(37204);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
+
+
 
 
 
@@ -2573,7 +2586,7 @@ class Dom {
                 last = tmp;
             }
         } while (needFindNext);
-        const wrapper = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(tag) ? editor.createInside.element(tag) : tag;
+        const wrapper = (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isString */ .HD)(tag) ? editor.createInside.element(tag) : tag;
         if (first.parentNode) {
             first.parentNode.insertBefore(wrapper, first);
         }
@@ -2590,10 +2603,10 @@ class Dom {
         return wrapper;
     }
     static wrap(current, tag, create) {
-        const wrapper = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(tag) ? create.element(tag) : tag;
+        const wrapper = (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isString */ .HD)(tag) ? create.element(tag) : tag;
         if (Dom.isNode(current)) {
             if (!current.parentNode) {
-                throw (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.error)('Element should be in DOM');
+                throw (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_4__.error)('Element should be in DOM');
             }
             current.parentNode.insertBefore(wrapper, current);
             wrapper.appendChild(current);
@@ -2631,10 +2644,10 @@ class Dom {
         }
     }
     static replace(elm, newTagName, create, withAttributes = false, notMoveContent = false) {
-        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isHTML)(newTagName)) {
+        if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isHTML */ .FP)(newTagName)) {
             newTagName = create.fromHTML(newTagName);
         }
-        const tag = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(newTagName)
+        const tag = (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isString */ .HD)(newTagName)
             ? create.element(newTagName)
             : newTagName;
         if (!notMoveContent) {
@@ -2643,7 +2656,7 @@ class Dom {
             }
         }
         if (withAttributes && Dom.isElement(elm) && Dom.isElement(tag)) {
-            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.toArray)(elm.attributes).forEach(attr => {
+            (0,jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_2__/* .toArray */ .qo)(elm.attributes).forEach(attr => {
                 tag.setAttribute(attr.name, attr.value);
             });
         }
@@ -2667,30 +2680,35 @@ class Dom {
             !Dom.closest(node, elm => Dom.isElement(elm) &&
                 elm.getAttribute('contenteditable') === 'false', root));
     }
-    static isEmpty(node, condNoEmptyElement = /^(img|svg|canvas|input|textarea|form)$/) {
+    static isEmpty(node, condNoEmptyElement = jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.NO_EMPTY_TAGS) {
         if (!node) {
             return true;
         }
-        if (Dom.isText(node)) {
-            return node.nodeValue == null || (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)(node.nodeValue).length === 0;
+        let cond;
+        if (!(0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isFunction */ .mf)(condNoEmptyElement)) {
+            cond = (elm) => condNoEmptyElement.has(elm.nodeName.toLowerCase());
         }
-        return (!condNoEmptyElement.test(node.nodeName.toLowerCase()) &&
+        else {
+            cond = condNoEmptyElement;
+        }
+        const emptyText = (node) => node.nodeValue == null || (0,jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__/* .trim */ .fy)(node.nodeValue).length === 0;
+        if (Dom.isText(node)) {
+            return emptyText(node);
+        }
+        return (!(Dom.isElement(node) && cond(node)) &&
             Dom.each(node, (elm) => {
-                if ((Dom.isText(elm) &&
-                    elm.nodeValue != null &&
-                    (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)(elm.nodeValue).length !== 0) ||
-                    (Dom.isElement(elm) &&
-                        condNoEmptyElement.test(elm.nodeName.toLowerCase()))) {
+                if ((Dom.isText(elm) && !emptyText(elm)) ||
+                    (Dom.isElement(elm) && cond(elm))) {
                     return false;
                 }
             }));
     }
     static isNode(object) {
         return Boolean(object &&
-            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(object.nodeName) &&
+            (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isString */ .HD)(object.nodeName) &&
             typeof object.nodeType === 'number' &&
             object.childNodes &&
-            (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isFunction)(object.appendChild));
+            (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isFunction */ .mf)(object.appendChild));
     }
     static isCell(elm) {
         return Dom.isNode(elm) && /^(td|th)$/i.test(elm.nodeName);
@@ -2699,7 +2717,7 @@ class Dom {
         return (Dom.isNode(elm) && /^(img|svg|picture|canvas)$/i.test(elm.nodeName));
     }
     static isBlock(node) {
-        return (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isVoid)(node) &&
+        return (!(0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isVoid */ .nj)(node) &&
             typeof node === 'object' &&
             Dom.isNode(node) &&
             jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.IS_BLOCK.test(node.nodeName));
@@ -2734,10 +2752,10 @@ class Dom {
     static isInlineBlock(node) {
         return (Dom.isElement(node) &&
             !/^(BR|HR)$/i.test(node.tagName) &&
-            ['inline', 'inline-block'].indexOf((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.css)(node, 'display').toString()) !== -1);
+            ['inline', 'inline-block'].indexOf((0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_4__.css)(node, 'display').toString()) !== -1);
     }
     static canSplitBlock(node) {
-        return (!(0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isVoid)(node) &&
+        return (!(0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isVoid */ .nj)(node) &&
             Dom.isHTMLElement(node) &&
             Dom.isBlock(node) &&
             !/^(TD|TH|CAPTION|FORM)$/.test(node.nodeName) &&
@@ -2873,11 +2891,11 @@ class Dom {
         return Dom.findSibling(node, left, n => {
             var _a;
             return (!Dom.isEmptyTextNode(n) &&
-                Boolean(!Dom.isText(n) || (((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length) && (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)(n.nodeValue))));
+                Boolean(!Dom.isText(n) || (((_a = n.nodeValue) === null || _a === void 0 ? void 0 : _a.length) && (0,jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__/* .trim */ .fy)(n.nodeValue))));
         });
     }
     static findNotEmptyNeighbor(node, left, root) {
-        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.call)(left ? Dom.prev : Dom.next, node, n => Boolean(n && (!Dom.isText(n) || (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.trim)((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)), root);
+        return (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_4__.call)(left ? Dom.prev : Dom.next, node, n => Boolean(n && (!Dom.isText(n) || (0,jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__/* .trim */ .fy)((n === null || n === void 0 ? void 0 : n.nodeValue) || '').length)), root);
     }
     static sibling(node, left) {
         return left ? node.previousSibling : node.nextSibling;
@@ -2903,15 +2921,16 @@ class Dom {
     }
     static closest(node, tagsOrCondition, root) {
         let condition;
-        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isFunction)(tagsOrCondition)) {
+        const lc = (s) => s.toLowerCase();
+        if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isFunction */ .mf)(tagsOrCondition)) {
             condition = tagsOrCondition;
         }
-        else if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isArray)(tagsOrCondition)) {
-            condition = (tag) => Boolean(tag &&
-                tagsOrCondition.includes(tag.nodeName.toLowerCase()));
+        else if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isArray */ .kJ)(tagsOrCondition)) {
+            const set = new Set(tagsOrCondition.map(lc));
+            condition = (tag) => Boolean(tag && set.has(lc(tag.nodeName)));
         }
         else {
-            condition = (tag) => Boolean(tag && tagsOrCondition === tag.nodeName.toLowerCase());
+            condition = (tag) => Boolean(tag && lc(tagsOrCondition) === lc(tag.nodeName));
         }
         return Dom.up(node, condition, root);
     }
@@ -2959,7 +2978,7 @@ class Dom {
         root.insertBefore(newElement, root.firstChild);
     }
     static append(root, newElement) {
-        if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isArray)(newElement)) {
+        if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_1__/* .isArray */ .kJ)(newElement)) {
             newElement.forEach(node => {
                 this.append(root, node);
             });
@@ -2968,9 +2987,17 @@ class Dom {
             root.appendChild(newElement);
         }
     }
-    static moveContent(from, to, inStart = false) {
+    static moveContent(from, to, inStart = false, filter = () => true) {
         const fragment = (from.ownerDocument || document).createDocumentFragment();
-        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.toArray)(from.childNodes).forEach((node) => {
+        (0,jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_2__/* .toArray */ .qo)(from.childNodes)
+            .filter(elm => {
+            if (filter(elm)) {
+                return true;
+            }
+            Dom.safeRemove(elm);
+            return false;
+        })
+            .forEach((node) => {
             fragment.appendChild(node);
         });
         if (!inStart || !to.firstChild) {
@@ -3000,51 +3027,58 @@ class Dom {
         if (!node) {
             return;
         }
-        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.dataBind)(node, '__old_display', node.style.display);
+        (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_4__.dataBind)(node, '__old_display', node.style.display);
         node.style.display = 'none';
     }
     static show(node) {
         if (!node) {
             return;
         }
-        const display = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.dataBind)(node, '__old_display');
+        const display = (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_4__.dataBind)(node, '__old_display');
         if (node.style.display === 'none') {
             node.style.display = display || '';
         }
     }
     static isTag(node, tagNames) {
-        const tags = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.asArray)(tagNames).map(String);
+        if (!this.isElement(node)) {
+            return false;
+        }
+        const nameL = node.tagName.toLowerCase();
+        const nameU = node.tagName.toUpperCase();
+        if (tagNames instanceof Set) {
+            return tagNames.has(nameL) || tagNames.has(nameU);
+        }
+        const tags = (0,jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_2__/* .asArray */ ._2)(tagNames).map(s => String(s).toLowerCase());
         for (let i = 0; i < tags.length; i += 1) {
-            if (this.isElement(node) &&
-                node.tagName.toLowerCase() === tags[i].toLowerCase()) {
+            if (nameL === tags[i] || nameU === tags[i]) {
                 return true;
             }
         }
         return false;
     }
     static markTemporary(element, attributes) {
-        attributes && (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(element, attributes);
-        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(element, jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR, true);
+        attributes && (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_4__.attr)(element, attributes);
+        (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_4__.attr)(element, jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR, true);
         return element;
     }
     static isTemporary(element) {
         if (!Dom.isElement(element)) {
             return false;
         }
-        return jodit_core_selection__WEBPACK_IMPORTED_MODULE_2__/* .Select.isMarker */ .Ph.isMarker(element) || (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(element, jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR) === 'true';
+        return (0,jodit_core_helpers_checker_is_marker__WEBPACK_IMPORTED_MODULE_5__/* .isMarker */ ._)(element) || (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_4__.attr)(element, jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR) === 'true';
     }
     static replaceTemporaryFromString(value) {
         return value.replace(/<([a-z]+)[^>]+data-jodit-temp[^>]+>(.+?)<\/\1>/gi, '$2');
     }
     static temporaryList(root) {
-        return (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.$$)(`[${jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR}]`, root);
+        return (0,jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_4__.$$)(`[${jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.TEMP_ATTR}]`, root);
     }
 }
 
 
 /***/ }),
 
-/***/ 36516:
+/***/ 64968:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3052,8 +3086,8 @@ class Dom {
 /* harmony export */   "b": function() { return /* reexport safe */ _lazy_walker__WEBPACK_IMPORTED_MODULE_1__.b; },
 /* harmony export */   "i": function() { return /* reexport safe */ _dom__WEBPACK_IMPORTED_MODULE_0__.i; }
 /* harmony export */ });
-/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(65401);
-/* harmony import */ var _lazy_walker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(20847);
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24263);
+/* harmony import */ var _lazy_walker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(33841);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3065,7 +3099,7 @@ class Dom {
 
 /***/ }),
 
-/***/ 20847:
+/***/ 33841:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3073,9 +3107,9 @@ class Dom {
 /* harmony export */   "b": function() { return /* binding */ LazyWalker; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_event_emitter_eventify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36090);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63945);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(65401);
+/* harmony import */ var jodit_core_event_emitter_eventify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(73852);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(67493);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24263);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3086,6 +3120,15 @@ class Dom {
 
 
 class LazyWalker extends jodit_core_event_emitter_eventify__WEBPACK_IMPORTED_MODULE_2__/* .Eventify */ .a {
+    setWork(root) {
+        if (this.isWorked) {
+            this.break();
+        }
+        this.workNodes = jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.eachGen */ .i.eachGen(root, !this.options.reverse);
+        this.isFinished = false;
+        this.startIdleRequest();
+        return this;
+    }
     constructor(async, options = {}) {
         super();
         this.async = async;
@@ -3095,15 +3138,6 @@ class LazyWalker extends jodit_core_event_emitter_eventify__WEBPACK_IMPORTED_MOD
         this.isWorked = false;
         this.isFinished = false;
         this.idleId = 0;
-    }
-    setWork(root) {
-        if (this.isWorked) {
-            this.break();
-        }
-        this.workNodes = jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.eachGen */ .i.eachGen(root, !this.options.reverse);
-        this.isFinished = false;
-        this.startIdleRequest();
-        return this;
     }
     startIdleRequest() {
         var _a;
@@ -3178,7 +3212,7 @@ class LazyWalker extends jodit_core_event_emitter_eventify__WEBPACK_IMPORTED_MOD
 
 /***/ }),
 
-/***/ 36090:
+/***/ 73852:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3227,7 +3261,7 @@ class Eventify {
 
 /***/ }),
 
-/***/ 18122:
+/***/ 4567:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3244,7 +3278,7 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: external "{assert(){}};"
 var external_assert_ = __webpack_require__(52378);
 // EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(58260);
+var to_array = __webpack_require__(1853);
 ;// CONCATENATED MODULE: ./src/core/event-emitter/store.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3261,6 +3295,7 @@ class EventHandlersStore {
     get(event, namespace) {
         if (this.__store.has(namespace)) {
             const ns = this.__store.get(namespace);
+            void 0;
             return ns[event];
         }
     }
@@ -3317,15 +3352,15 @@ class EventHandlersStore {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
-var is_string = __webpack_require__(86129);
+var is_string = __webpack_require__(24421);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
-var is_function = __webpack_require__(87385);
+var is_function = __webpack_require__(42096);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
-var is_array = __webpack_require__(41515);
+var is_array = __webpack_require__(49781);
 // EXTERNAL MODULE: ./src/core/helpers/utils/error/index.ts + 5 modules
-var error = __webpack_require__(70843);
+var error = __webpack_require__(14582);
 // EXTERNAL MODULE: ./src/core/helpers/array/split-array.ts
-var split_array = __webpack_require__(11986);
+var split_array = __webpack_require__(14556);
 ;// CONCATENATED MODULE: ./src/core/event-emitter/event-emitter.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3339,55 +3374,6 @@ var split_array = __webpack_require__(11986);
 
 
 class EventEmitter {
-    constructor(doc) {
-        this.__mutedEvents = new Set();
-        this.__key = '__JoditEventEmitterNamespaces';
-        this.__doc = document;
-        this.__prepareEvent = (e) => {
-            if (e.cancelBubble) {
-                return;
-            }
-            if (e.composed && (0,is_function/* isFunction */.m)(e.composedPath) && e.composedPath()[0]) {
-                Object.defineProperty(e, 'target', {
-                    value: e.composedPath()[0],
-                    configurable: true,
-                    enumerable: true
-                });
-            }
-            if (e.type.match(/^touch/) &&
-                e.changedTouches &&
-                e.changedTouches.length) {
-                ['clientX', 'clientY', 'pageX', 'pageY'].forEach((key) => {
-                    Object.defineProperty(e, key, {
-                        value: e.changedTouches[0][key],
-                        configurable: true,
-                        enumerable: true
-                    });
-                });
-            }
-            if (!e.originalEvent) {
-                e.originalEvent = e;
-            }
-            if (e.type === 'paste' &&
-                e.clipboardData === undefined &&
-                this.__doc.defaultView.clipboardData) {
-                Object.defineProperty(e, 'clipboardData', {
-                    get: () => {
-                        return this.__doc.defaultView.clipboardData;
-                    },
-                    configurable: true,
-                    enumerable: true
-                });
-            }
-        };
-        this.currents = [];
-        this.__stopped = [];
-        this.__isDestructed = false;
-        if (doc) {
-            this.__doc = doc;
-        }
-        this.__key += new Date().getTime();
-    }
     mute(event) {
         this.__mutedEvents.add(event !== null && event !== void 0 ? event : '*');
         return this;
@@ -3753,6 +3739,55 @@ class EventEmitter {
         }
         return result;
     }
+    constructor(doc) {
+        this.__mutedEvents = new Set();
+        this.__key = '__JoditEventEmitterNamespaces';
+        this.__doc = document;
+        this.__prepareEvent = (e) => {
+            if (e.cancelBubble) {
+                return;
+            }
+            if (e.composed && (0,is_function/* isFunction */.m)(e.composedPath) && e.composedPath()[0]) {
+                Object.defineProperty(e, 'target', {
+                    value: e.composedPath()[0],
+                    configurable: true,
+                    enumerable: true
+                });
+            }
+            if (e.type.match(/^touch/) &&
+                e.changedTouches &&
+                e.changedTouches.length) {
+                ['clientX', 'clientY', 'pageX', 'pageY'].forEach((key) => {
+                    Object.defineProperty(e, key, {
+                        value: e.changedTouches[0][key],
+                        configurable: true,
+                        enumerable: true
+                    });
+                });
+            }
+            if (!e.originalEvent) {
+                e.originalEvent = e;
+            }
+            if (e.type === 'paste' &&
+                e.clipboardData === undefined &&
+                this.__doc.defaultView.clipboardData) {
+                Object.defineProperty(e, 'clipboardData', {
+                    get: () => {
+                        return this.__doc.defaultView.clipboardData;
+                    },
+                    configurable: true,
+                    enumerable: true
+                });
+            }
+        };
+        this.currents = [];
+        this.__stopped = [];
+        this.__isDestructed = false;
+        if (doc) {
+            this.__doc = doc;
+        }
+        this.__key += new Date().getTime();
+    }
     destruct() {
         if (!this.__isDestructed) {
             return;
@@ -3765,9 +3800,9 @@ class EventEmitter {
 }
 
 // EXTERNAL MODULE: ./src/core/event-emitter/eventify.ts
-var eventify = __webpack_require__(36090);
+var eventify = __webpack_require__(73852);
 // EXTERNAL MODULE: ./src/core/event-emitter/observable.ts
-var observable = __webpack_require__(34526);
+var observable = __webpack_require__(88418);
 ;// CONCATENATED MODULE: ./src/core/event-emitter/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -3782,17 +3817,17 @@ var observable = __webpack_require__(34526);
 
 /***/ }),
 
-/***/ 34526:
+/***/ 88418:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "L": function() { return /* binding */ observable; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_checker_is_array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41515);
-/* harmony import */ var jodit_core_helpers_checker_is_equal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(13739);
-/* harmony import */ var jodit_core_helpers_checker_is_plain_object__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(76856);
-/* harmony import */ var jodit_core_decorators_watch_watch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30192);
+/* harmony import */ var jodit_core_helpers_checker_is_array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(49781);
+/* harmony import */ var jodit_core_helpers_checker_is_equal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(32756);
+/* harmony import */ var jodit_core_helpers_checker_is_plain_object__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(79736);
+/* harmony import */ var jodit_core_decorators_watch_watch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46163);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -3906,7 +3941,7 @@ function observable(obj) {
 
 /***/ }),
 
-/***/ 16672:
+/***/ 17332:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3919,14 +3954,14 @@ function observable(obj) {
 /* harmony export */   "qz": function() { return /* binding */ modules; },
 /* harmony export */   "xl": function() { return /* binding */ extendLang; }
 /* harmony export */ });
-/* harmony import */ var _plugin_plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(60154);
-/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36516);
-/* harmony import */ var _event_emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18122);
-/* harmony import */ var _helpers_checker_is_jodit_object__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(12866);
-/* harmony import */ var _helpers_checker_is_view_object__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(33679);
-/* harmony import */ var _helpers_utils_get_class_name__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(870);
-/* harmony import */ var _helpers_string_kebab_case__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(72919);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(47386);
+/* harmony import */ var _plugin_plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44540);
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(64968);
+/* harmony import */ var _event_emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4567);
+/* harmony import */ var _helpers_checker_is_jodit_object__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(77892);
+/* harmony import */ var _helpers_checker_is_view_object__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(96574);
+/* harmony import */ var _helpers_utils_get_class_name__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(87247);
+/* harmony import */ var _helpers_string_kebab_case__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(11278);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(86893);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4010,7 +4045,7 @@ const eventEmitter = new _event_emitter__WEBPACK_IMPORTED_MODULE_2__/* .EventEmi
 
 /***/ }),
 
-/***/ 90824:
+/***/ 56888:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4023,7 +4058,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
-var is_array = __webpack_require__(41515);
+var is_array = __webpack_require__(49781);
 ;// CONCATENATED MODULE: ./src/core/helpers/array/as-array.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4034,9 +4069,9 @@ var is_array = __webpack_require__(41515);
 const asArray = (a) => ((0,is_array/* isArray */.k)(a) ? a : [a]);
 
 // EXTERNAL MODULE: ./src/core/helpers/array/split-array.ts
-var split_array = __webpack_require__(11986);
+var split_array = __webpack_require__(14556);
 // EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(58260);
+var to_array = __webpack_require__(1853);
 ;// CONCATENATED MODULE: ./src/core/helpers/array/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4050,7 +4085,7 @@ var to_array = __webpack_require__(58260);
 
 /***/ }),
 
-/***/ 11986:
+/***/ 14556:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4069,15 +4104,15 @@ function splitArray(a) {
 
 /***/ }),
 
-/***/ 58260:
+/***/ 1853:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "q": function() { return /* binding */ toArray; }
 /* harmony export */ });
-/* harmony import */ var _utils_reset__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(943);
-/* harmony import */ var _checker_is_native_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(67940);
+/* harmony import */ var _utils_reset__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(80861);
+/* harmony import */ var _checker_is_native_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(28069);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4096,7 +4131,7 @@ const toArray = function toArray(...args) {
 
 /***/ }),
 
-/***/ 45044:
+/***/ 4696:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4104,7 +4139,7 @@ const toArray = function toArray(...args) {
 /* harmony export */   "g": function() { return /* reexport safe */ _set_timeout__WEBPACK_IMPORTED_MODULE_0__.g; },
 /* harmony export */   "i": function() { return /* reexport safe */ _set_timeout__WEBPACK_IMPORTED_MODULE_0__.i; }
 /* harmony export */ });
-/* harmony import */ var _set_timeout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(81778);
+/* harmony import */ var _set_timeout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27512);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4115,7 +4150,7 @@ const toArray = function toArray(...args) {
 
 /***/ }),
 
-/***/ 81778:
+/***/ 27512:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4144,7 +4179,7 @@ function clearTimeout(timer) {
 
 /***/ }),
 
-/***/ 43435:
+/***/ 78411:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4165,6 +4200,7 @@ __webpack_require__.d(__webpack_exports__, {
   "GN": function() { return /* reexport */ isInt; },
   "Zu": function() { return /* reexport */ is_jodit_object/* isJoditObject */.Z; },
   "A1": function() { return /* reexport */ isLicense; },
+  "_V": function() { return /* reexport */ is_marker/* isMarker */._; },
   "QC": function() { return /* reexport */ is_native_function/* isNativeFunction */.Q; },
   "hj": function() { return /* reexport */ is_number/* isNumber */.h; },
   "kE": function() { return /* reexport */ is_numeric/* isNumeric */.k; },
@@ -4190,8 +4226,8 @@ function hasBrowserColorPicker() {
     try {
         const a = document.createElement('input');
         a.type = 'color';
-        supportsColor =
-            a.type === 'color' && typeof a.selectionStart !== 'number';
+        a.value = '!';
+        supportsColor = a.type === 'color' && a.value !== '!';
     }
     catch (e) {
         supportsColor = false;
@@ -4200,15 +4236,15 @@ function hasBrowserColorPicker() {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
-var is_array = __webpack_require__(41515);
+var is_array = __webpack_require__(49781);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-boolean.ts
-var is_boolean = __webpack_require__(10152);
+var is_boolean = __webpack_require__(67749);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-equal.ts
-var is_equal = __webpack_require__(13739);
+var is_equal = __webpack_require__(32756);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
-var is_function = __webpack_require__(87385);
+var is_function = __webpack_require__(42096);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
-var is_string = __webpack_require__(86129);
+var is_string = __webpack_require__(24421);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-html.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4232,9 +4268,9 @@ function isHtmlFromWord(data) {
 }
 
 // EXTERNAL MODULE: ./src/core/dom/dom.ts
-var dom = __webpack_require__(65401);
+var dom = __webpack_require__(24263);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-void.ts
-var is_void = __webpack_require__(62061);
+var is_void = __webpack_require__(24021);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-imp-interface.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4255,7 +4291,7 @@ function hasContainer(value) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-numeric.ts
-var is_numeric = __webpack_require__(37381);
+var is_numeric = __webpack_require__(57649);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-int.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4272,9 +4308,9 @@ function isInt(value) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-jodit-object.ts
-var is_jodit_object = __webpack_require__(12866);
+var is_jodit_object = __webpack_require__(77892);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-view-object.ts
-var is_view_object = __webpack_require__(33679);
+var is_view_object = __webpack_require__(96574);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-license.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4287,15 +4323,15 @@ const isLicense = (license) => (0,is_string/* isString */.H)(license) &&
     /^[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}-[a-z0-9]{5}$/i.test(license);
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-native-function.ts
-var is_native_function = __webpack_require__(67940);
+var is_native_function = __webpack_require__(28069);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-number.ts
-var is_number = __webpack_require__(98296);
+var is_number = __webpack_require__(61817);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-plain-object.ts
-var is_plain_object = __webpack_require__(76856);
+var is_plain_object = __webpack_require__(79736);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-promise.ts
-var is_promise = __webpack_require__(15199);
+var is_promise = __webpack_require__(26335);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-url.ts
-var is_url = __webpack_require__(42139);
+var is_url = __webpack_require__(64350);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/is-valid-name.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4310,7 +4346,9 @@ function isValidName(name) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-window.ts
-var is_window = __webpack_require__(64892);
+var is_window = __webpack_require__(85994);
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-marker.ts
+var is_marker = __webpack_require__(37204);
 ;// CONCATENATED MODULE: ./src/core/helpers/checker/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4341,9 +4379,10 @@ var is_window = __webpack_require__(64892);
 
 
 
+
 /***/ }),
 
-/***/ 41515:
+/***/ 49781:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4362,7 +4401,7 @@ function isArray(elm) {
 
 /***/ }),
 
-/***/ 10152:
+/***/ 67749:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4381,7 +4420,7 @@ function isBoolean(elm) {
 
 /***/ }),
 
-/***/ 13739:
+/***/ 32756:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4389,7 +4428,7 @@ function isBoolean(elm) {
 /* harmony export */   "L": function() { return /* binding */ isFastEqual; },
 /* harmony export */   "X": function() { return /* binding */ isEqual; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_string_stringify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(58753);
+/* harmony import */ var jodit_core_helpers_string_stringify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42554);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4406,7 +4445,7 @@ function isFastEqual(a, b) {
 
 /***/ }),
 
-/***/ 87385:
+/***/ 42096:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4425,14 +4464,14 @@ function isFunction(value) {
 
 /***/ }),
 
-/***/ 12866:
+/***/ 77892:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": function() { return /* binding */ isJoditObject; }
 /* harmony export */ });
-/* harmony import */ var _is_function__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(87385);
+/* harmony import */ var _is_function__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42096);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4450,7 +4489,32 @@ function isJoditObject(jodit) {
 
 /***/ }),
 
-/***/ 67940:
+/***/ 37204:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "_": function() { return /* binding */ isMarker; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24263);
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86893);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function isMarker(elm) {
+    return (jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isNode */ .i.isNode(elm) &&
+        jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.isTag */ .i.isTag(elm, 'span') &&
+        elm.hasAttribute('data-' + jodit_core_constants__WEBPACK_IMPORTED_MODULE_1__.MARKER_CLASS));
+}
+
+
+/***/ }),
+
+/***/ 28069:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4472,7 +4536,7 @@ function isNativeFunction(f) {
 
 /***/ }),
 
-/***/ 98296:
+/***/ 61817:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4491,14 +4555,14 @@ function isNumber(value) {
 
 /***/ }),
 
-/***/ 37381:
+/***/ 57649:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "k": function() { return /* binding */ isNumeric; }
 /* harmony export */ });
-/* harmony import */ var _is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86129);
+/* harmony import */ var _is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24421);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4518,14 +4582,14 @@ function isNumeric(value) {
 
 /***/ }),
 
-/***/ 76856:
+/***/ 79736:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "P": function() { return /* binding */ isPlainObject; }
 /* harmony export */ });
-/* harmony import */ var _is_window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(64892);
+/* harmony import */ var _is_window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(85994);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4543,7 +4607,7 @@ function isPlainObject(obj) {
 
 /***/ }),
 
-/***/ 15199:
+/***/ 26335:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4562,7 +4626,7 @@ function isPromise(val) {
 
 /***/ }),
 
-/***/ 86129:
+/***/ 24421:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4570,7 +4634,7 @@ function isPromise(val) {
 /* harmony export */   "G": function() { return /* binding */ isStringArray; },
 /* harmony export */   "H": function() { return /* binding */ isString; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_checker_is_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(41515);
+/* harmony import */ var jodit_core_helpers_checker_is_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(49781);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4587,7 +4651,7 @@ function isStringArray(value) {
 
 /***/ }),
 
-/***/ 42139:
+/***/ 64350:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4620,14 +4684,14 @@ function isURL(str) {
 
 /***/ }),
 
-/***/ 33679:
+/***/ 96574:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "f": function() { return /* binding */ isViewObject; }
 /* harmony export */ });
-/* harmony import */ var _is_function__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(87385);
+/* harmony import */ var _is_function__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42096);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4644,7 +4708,7 @@ function isViewObject(jodit) {
 
 /***/ }),
 
-/***/ 62061:
+/***/ 24021:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4663,7 +4727,7 @@ function isVoid(value) {
 
 /***/ }),
 
-/***/ 64892:
+/***/ 85994:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4682,7 +4746,7 @@ function isWindow(obj) {
 
 /***/ }),
 
-/***/ 96485:
+/***/ 13203:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4720,14 +4784,14 @@ const colorToHex = (color) => {
 
 /***/ }),
 
-/***/ 24044:
+/***/ 61354:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "h": function() { return /* reexport safe */ _color_to_hex__WEBPACK_IMPORTED_MODULE_0__.h; }
 /* harmony export */ });
-/* harmony import */ var _color_to_hex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96485);
+/* harmony import */ var _color_to_hex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13203);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -4738,7 +4802,7 @@ const colorToHex = (color) => {
 
 /***/ }),
 
-/***/ 29516:
+/***/ 69678:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4755,11 +4819,11 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/dom/dom.ts
-var dom = __webpack_require__(65401);
+var dom = __webpack_require__(24263);
 // EXTERNAL MODULE: ./src/core/helpers/utils/index.ts
-var utils = __webpack_require__(38301);
+var utils = __webpack_require__(76502);
 // EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
-var trim = __webpack_require__(89681);
+var trim = __webpack_require__(33941);
 ;// CONCATENATED MODULE: ./src/core/helpers/html/apply-styles.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4852,7 +4916,7 @@ function applyStyles(html) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(58260);
+var to_array = __webpack_require__(1853);
 ;// CONCATENATED MODULE: ./src/core/helpers/html/clean-from-word.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4936,7 +5000,7 @@ function htmlspecialchars(html) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
-var is_string = __webpack_require__(86129);
+var is_string = __webpack_require__(24421);
 ;// CONCATENATED MODULE: ./src/core/helpers/html/strip-tags.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4972,7 +5036,7 @@ function stripTags(html, doc = document) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/html/safe-html.ts
-var safe_html = __webpack_require__(46860);
+var safe_html = __webpack_require__(67128);
 ;// CONCATENATED MODULE: ./src/core/helpers/html/nl2br.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -4999,7 +5063,7 @@ function nl2br(html) {
 
 /***/ }),
 
-/***/ 46860:
+/***/ 67128:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5007,8 +5071,8 @@ function nl2br(html) {
 /* harmony export */   "e": function() { return /* binding */ safeHTML; },
 /* harmony export */   "n": function() { return /* binding */ sanitizeHTMLElement; }
 /* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(38301);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(65401);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(76502);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24263);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5052,13 +5116,14 @@ function sanitizeHTMLElement(elm, { safeJavaScriptLink, removeOnError } = {
 
 /***/ }),
 
-/***/ 83370:
+/***/ 40332:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "CamelCaseToKebabCase": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.gP; },
+/* harmony export */   "NUMBER_FIELDS_REG": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.DO; },
 /* harmony export */   "applyStyles": function() { return /* reexport safe */ _html__WEBPACK_IMPORTED_MODULE_5__.Zs; },
 /* harmony export */   "asArray": function() { return /* reexport safe */ _array__WEBPACK_IMPORTED_MODULE_1__._2; },
 /* harmony export */   "camelCase": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.eV; },
@@ -5085,6 +5150,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isInt": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.GN; },
 /* harmony export */   "isJoditObject": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.Zu; },
 /* harmony export */   "isLicense": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.A1; },
+/* harmony export */   "isMarker": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__._V; },
 /* harmony export */   "isNativeFunction": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.QC; },
 /* harmony export */   "isNumber": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.hj; },
 /* harmony export */   "isNumeric": function() { return /* reexport safe */ _checker__WEBPACK_IMPORTED_MODULE_3__.kE; },
@@ -5100,6 +5166,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "kebabCase": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.GL; },
 /* harmony export */   "nl2br": function() { return /* reexport safe */ _html__WEBPACK_IMPORTED_MODULE_5__.hU; },
 /* harmony export */   "normalizeColor": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.ut; },
+/* harmony export */   "normalizeCssNumericValue": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.xI; },
 /* harmony export */   "normalizeCssValue": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.Zh; },
 /* harmony export */   "normalizeKeyAliases": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.T2; },
 /* harmony export */   "normalizeLicense": function() { return /* reexport safe */ _normalize__WEBPACK_IMPORTED_MODULE_6__.Pd; },
@@ -5123,18 +5190,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "trimInv": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.as; },
 /* harmony export */   "ucfirst": function() { return /* reexport safe */ _string__WEBPACK_IMPORTED_MODULE_8__.Ps; }
 /* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(38301);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(76502);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _utils__WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = function(key) { return _utils__WEBPACK_IMPORTED_MODULE_0__[key]; }.bind(0, __WEBPACK_IMPORT_KEY__)
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-/* harmony import */ var _array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(90824);
-/* harmony import */ var _async__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45044);
-/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(43435);
-/* harmony import */ var _color__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24044);
-/* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(29516);
-/* harmony import */ var _normalize__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(57561);
-/* harmony import */ var _size__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(19751);
-/* harmony import */ var _string__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(68181);
+/* harmony import */ var _array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(56888);
+/* harmony import */ var _async__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4696);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(78411);
+/* harmony import */ var _color__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(61354);
+/* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(69678);
+/* harmony import */ var _normalize__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(46361);
+/* harmony import */ var _size__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(52438);
+/* harmony import */ var _string__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(89170);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5153,18 +5220,20 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 57561:
+/***/ 46361:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
+  "DO": function() { return /* reexport */ normalize_css_value/* NUMBER_FIELDS_REG */.DO; },
   "ut": function() { return /* reexport */ normalizeColor; },
-  "Zh": function() { return /* reexport */ normalize_css_value/* normalizeCssValue */.Z; },
+  "xI": function() { return /* reexport */ normalize_css_value/* normalizeCssNumericValue */.xI; },
+  "Zh": function() { return /* reexport */ normalize_css_value/* normalizeCssValue */.Zh; },
   "T2": function() { return /* reexport */ normalizeKeyAliases; },
   "Pd": function() { return /* reexport */ normalizeLicense; },
-  "Tz": function() { return /* reexport */ normalizeNode; },
+  "Tz": function() { return /* reexport */ normalize_node/* normalizeNode */.T; },
   "AH": function() { return /* reexport */ normalizePath; },
   "Jf": function() { return /* reexport */ normalizeRelativePath; },
   "aC": function() { return /* reexport */ normalizeSize; },
@@ -5172,9 +5241,9 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
-var trim = __webpack_require__(89681);
+var trim = __webpack_require__(33941);
 // EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(47386);
+var constants = __webpack_require__(86893);
 ;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-key-aliases.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5230,37 +5299,10 @@ const normalizeLicense = (license, count = 8) => {
     return parts.join('-');
 };
 
-// EXTERNAL MODULE: ./src/core/dom/dom.ts
-var dom = __webpack_require__(65401);
-;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-node.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-const normalizeNode = (node) => {
-    if (!node) {
-        return;
-    }
-    if (dom/* Dom.isText */.i.isText(node) && node.nodeValue != null && node.parentNode) {
-        while (dom/* Dom.isText */.i.isText(node.nextSibling)) {
-            if (node.nextSibling.nodeValue != null) {
-                node.nodeValue += node.nextSibling.nodeValue;
-            }
-            node.nodeValue = node.nodeValue.replace((0,constants.INVISIBLE_SPACE_REG_EXP)(), '');
-            dom/* Dom.safeRemove */.i.safeRemove(node.nextSibling);
-        }
-    }
-    else {
-        normalizeNode(node.firstChild);
-    }
-    normalizeNode(node.nextSibling);
-};
-
+// EXTERNAL MODULE: ./src/core/helpers/normalize/normalize-node.ts
+var normalize_node = __webpack_require__(74504);
 // EXTERNAL MODULE: ./src/core/helpers/string/index.ts + 2 modules
-var string = __webpack_require__(68181);
+var string = __webpack_require__(89170);
 ;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-path.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5341,9 +5383,9 @@ const normalizeUrl = (...urls) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/normalize/normalize-css-value.ts
-var normalize_css_value = __webpack_require__(80686);
+var normalize_css_value = __webpack_require__(49353);
 // EXTERNAL MODULE: ./src/core/helpers/color/color-to-hex.ts
-var color_to_hex = __webpack_require__(96485);
+var color_to_hex = __webpack_require__(13203);
 ;// CONCATENATED MODULE: ./src/core/helpers/normalize/normalize-color.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5392,16 +5434,19 @@ const normalizeColor = (colorInput) => {
 
 /***/ }),
 
-/***/ 80686:
+/***/ 49353:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": function() { return /* binding */ normalizeCssValue; }
+/* harmony export */   "DO": function() { return /* binding */ NUMBER_FIELDS_REG; },
+/* harmony export */   "Zh": function() { return /* binding */ normalizeCssValue; },
+/* harmony export */   "xI": function() { return /* binding */ normalizeCssNumericValue; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_numeric__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(37381);
-/* harmony import */ var _string_kebab_case__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(72919);
-/* harmony import */ var _color_color_to_hex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(96485);
+/* harmony import */ var _checker_is_numeric__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(57649);
+/* harmony import */ var _string_kebab_case__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11278);
+/* harmony import */ var _color_color_to_hex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13203);
+/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24021);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5410,8 +5455,18 @@ const normalizeColor = (colorInput) => {
 
 
 
+
+const NUMBER_FIELDS_REG = /^(left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size)/i;
+function normalizeCssNumericValue(key, value) {
+    if (!(0,_checker_is_void__WEBPACK_IMPORTED_MODULE_0__/* .isVoid */ .n)(value) &&
+        NUMBER_FIELDS_REG.test(key) &&
+        (0,_checker_is_numeric__WEBPACK_IMPORTED_MODULE_1__/* .isNumeric */ .k)(value.toString())) {
+        return parseInt(value.toString(), 10) + 'px';
+    }
+    return value;
+}
 function normalizeCssValue(key, value) {
-    switch ((0,_string_kebab_case__WEBPACK_IMPORTED_MODULE_0__/* .kebabCase */ .G)(key)) {
+    switch ((0,_string_kebab_case__WEBPACK_IMPORTED_MODULE_2__/* .kebabCase */ .G)(key)) {
         case 'font-weight':
             switch (value.toString().toLowerCase()) {
                 case '700':
@@ -5427,7 +5482,7 @@ function normalizeCssValue(key, value) {
             return (0,_checker_is_numeric__WEBPACK_IMPORTED_MODULE_1__/* .isNumeric */ .k)(value) ? Number(value) : value;
     }
     if (/color/i.test(key) && /^rgb/i.test(value.toString())) {
-        return (0,_color_color_to_hex__WEBPACK_IMPORTED_MODULE_2__/* .colorToHex */ .h)(value.toString()) || value;
+        return (0,_color_color_to_hex__WEBPACK_IMPORTED_MODULE_3__/* .colorToHex */ .h)(value.toString()) || value;
     }
     return value;
 }
@@ -5435,7 +5490,45 @@ function normalizeCssValue(key, value) {
 
 /***/ }),
 
-/***/ 19751:
+/***/ 74504:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "T": function() { return /* binding */ normalizeNode; }
+/* harmony export */ });
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86893);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24263);
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function normalizeNode(node) {
+    if (!node) {
+        return;
+    }
+    if (jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(node) && node.nodeValue != null && node.parentNode) {
+        while (jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.isText */ .i.isText(node.nextSibling)) {
+            if (node.nextSibling.nodeValue != null) {
+                node.nodeValue += node.nextSibling.nodeValue;
+            }
+            node.nodeValue = node.nodeValue.replace((0,jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__.INVISIBLE_SPACE_REG_EXP)(), '');
+            jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(node.nextSibling);
+        }
+    }
+    else {
+        normalizeNode(node.firstChild);
+    }
+    normalizeNode(node.nextSibling);
+}
+
+
+/***/ }),
+
+/***/ 52438:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5462,9 +5555,9 @@ const getContentWidth = (element, win) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/index.ts
-var utils = __webpack_require__(38301);
+var utils = __webpack_require__(76502);
 // EXTERNAL MODULE: ./src/core/dom/dom.ts
-var dom = __webpack_require__(65401);
+var dom = __webpack_require__(24263);
 ;// CONCATENATED MODULE: ./src/core/helpers/size/get-scroll-parent.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5550,7 +5643,7 @@ const offset = (elm, jodit, doc, recurse = false) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-jodit-object.ts
-var is_jodit_object = __webpack_require__(12866);
+var is_jodit_object = __webpack_require__(77892);
 ;// CONCATENATED MODULE: ./src/core/helpers/size/position.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5578,7 +5671,7 @@ function position(elm, jodit, recurse = false) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/size/object-size.ts
-var object_size = __webpack_require__(74395);
+var object_size = __webpack_require__(16492);
 ;// CONCATENATED MODULE: ./src/core/helpers/size/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5595,14 +5688,14 @@ var object_size = __webpack_require__(74395);
 
 /***/ }),
 
-/***/ 74395:
+/***/ 16492:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "d": function() { return /* binding */ size; }
 /* harmony export */ });
-/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43435);
+/* harmony import */ var _checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(78411);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5622,7 +5715,7 @@ function size(subject) {
 
 /***/ }),
 
-/***/ 79417:
+/***/ 26596:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5643,14 +5736,14 @@ const camelCase = (key) => {
 
 /***/ }),
 
-/***/ 83212:
+/***/ 93163:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Q": function() { return /* binding */ fuzzySearchIndex; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47386);
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86893);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5690,7 +5783,7 @@ function fuzzySearchIndex(needle, haystack, offset = 0, maxDistance = 1) {
 
 /***/ }),
 
-/***/ 68181:
+/***/ 89170:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5710,15 +5803,15 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/string/camel-case.ts
-var camel_case = __webpack_require__(79417);
+var camel_case = __webpack_require__(26596);
 // EXTERNAL MODULE: ./src/core/helpers/string/fuzzy-search-index.ts
-var fuzzy_search_index = __webpack_require__(83212);
+var fuzzy_search_index = __webpack_require__(93163);
 // EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(80031);
+var config = __webpack_require__(93166);
 // EXTERNAL MODULE: ./src/core/helpers/utils/index.ts
-var utils = __webpack_require__(38301);
+var utils = __webpack_require__(76502);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
-var is_string = __webpack_require__(86129);
+var is_string = __webpack_require__(24421);
 ;// CONCATENATED MODULE: ./src/core/helpers/string/ucfirst.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5733,7 +5826,7 @@ function ucfirst(value) {
 }
 
 // EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(47386);
+var constants = __webpack_require__(86893);
 ;// CONCATENATED MODULE: ./src/core/helpers/string/i18n.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5818,11 +5911,11 @@ function i18n(key, params, options) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/string/kebab-case.ts
-var kebab_case = __webpack_require__(72919);
+var kebab_case = __webpack_require__(11278);
 // EXTERNAL MODULE: ./src/core/helpers/string/stringify.ts
-var stringify = __webpack_require__(58753);
+var stringify = __webpack_require__(42554);
 // EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
-var trim = __webpack_require__(89681);
+var trim = __webpack_require__(33941);
 ;// CONCATENATED MODULE: ./src/core/helpers/string/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -5840,7 +5933,7 @@ var trim = __webpack_require__(89681);
 
 /***/ }),
 
-/***/ 72919:
+/***/ 11278:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5870,7 +5963,7 @@ const CamelCaseToKebabCase = (key) => {
 
 /***/ }),
 
-/***/ 58753:
+/***/ 42554:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5906,7 +5999,7 @@ function stringify(value, options = {}) {
 
 /***/ }),
 
-/***/ 89681:
+/***/ 33941:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5914,7 +6007,7 @@ function stringify(value, options = {}) {
 /* harmony export */   "a": function() { return /* binding */ trimInv; },
 /* harmony export */   "f": function() { return /* binding */ trim; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47386);
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86893);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -5935,7 +6028,7 @@ function trimInv(value) {
 
 /***/ }),
 
-/***/ 55667:
+/***/ 60303:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5944,8 +6037,8 @@ function trimInv(value) {
 /* harmony export */   "wL": function() { return /* binding */ clearAlign; },
 /* harmony export */   "zC": function() { return /* binding */ hAlignElement; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36516);
-/* harmony import */ var _utils_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76239);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(64968);
+/* harmony import */ var _utils_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(26911);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6011,7 +6104,7 @@ function alignElement(command, box) {
 
 /***/ }),
 
-/***/ 23502:
+/***/ 62462:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6022,9 +6115,9 @@ function alignElement(command, box) {
 /* harmony export */   "uR": function() { return /* binding */ appendScript; },
 /* harmony export */   "wY": function() { return /* binding */ loadNext; }
 /* harmony export */ });
-/* harmony import */ var _complete_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(39188);
-/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(87385);
-/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86129);
+/* harmony import */ var _complete_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(48240);
+/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42096);
+/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24421);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6100,7 +6193,33 @@ const loadNextStyle = (jodit, urls, i = 0) => {
 
 /***/ }),
 
-/***/ 1856:
+/***/ 603:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export assert */
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+class AssertionError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'AssertionError';
+    }
+}
+function assert(condition, message) {
+    if (!condition) {
+        throw new AssertionError(`Assertion failed: ${message}`);
+    }
+}
+
+
+
+/***/ }),
+
+/***/ 37682:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6139,14 +6258,14 @@ const browser = (browser) => {
 
 /***/ }),
 
-/***/ 95101:
+/***/ 71567:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "X": function() { return /* binding */ buildQuery; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_plain_object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(76856);
+/* harmony import */ var _checker_is_plain_object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(79736);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6169,7 +6288,7 @@ const buildQuery = (data, prefix) => {
 
 /***/ }),
 
-/***/ 39188:
+/***/ 48240:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6191,7 +6310,7 @@ const completeUrl = (url) => {
 
 /***/ }),
 
-/***/ 48202:
+/***/ 64981:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6199,13 +6318,13 @@ const completeUrl = (url) => {
 /* harmony export */   "I": function() { return /* binding */ ConfigProto; },
 /* harmony export */   "t": function() { return /* binding */ ConfigFlatten; }
 /* harmony export */ });
-/* harmony import */ var _extend__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(54739);
-/* harmony import */ var _checker_is_array__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(41515);
-/* harmony import */ var _checker_is_plain_object__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(76856);
-/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86129);
-/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(62061);
-/* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(80031);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32389);
+/* harmony import */ var _extend__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7935);
+/* harmony import */ var _checker_is_array__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(49781);
+/* harmony import */ var _checker_is_plain_object__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(79736);
+/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24421);
+/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24021);
+/* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(93166);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(67309);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6260,15 +6379,15 @@ function ConfigFlatten(obj) {
 
 /***/ }),
 
-/***/ 93194:
+/***/ 42051:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "U": function() { return /* binding */ convertMediaUrlToVideoEmbed; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42139);
-/* harmony import */ var _parse_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(19814);
+/* harmony import */ var _checker_is_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(64350);
+/* harmony import */ var _parse_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(67285);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6327,7 +6446,7 @@ const convertMediaUrlToVideoEmbed = (url, width = 400, height = 345) => {
 
 /***/ }),
 
-/***/ 76239:
+/***/ 26911:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6335,13 +6454,11 @@ const convertMediaUrlToVideoEmbed = (url, width = 400, height = 345) => {
 /* harmony export */   "b": function() { return /* binding */ clearCenterAlign; },
 /* harmony export */   "i": function() { return /* binding */ css; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_plain_object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76856);
-/* harmony import */ var _checker_is_numeric__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(37381);
-/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(62061);
-/* harmony import */ var _checker_is_boolean__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10152);
-/* harmony import */ var _normalize_normalize_css_value__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(80686);
-/* harmony import */ var _string_camel_case__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(79417);
-/* harmony import */ var _string_kebab_case__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(72919);
+/* harmony import */ var _checker_is_plain_object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(79736);
+/* harmony import */ var _checker_is_boolean__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(67749);
+/* harmony import */ var _normalize_normalize_css_value__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(49353);
+/* harmony import */ var _string_camel_case__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(26596);
+/* harmony import */ var _string_kebab_case__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(11278);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6352,39 +6469,32 @@ const convertMediaUrlToVideoEmbed = (url, width = 400, height = 345) => {
 
 
 
-
-
 function css(element, key, value, onlyStyleMode = false) {
-    const numberFieldsReg = /^(left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size)/i;
     if ((0,_checker_is_boolean__WEBPACK_IMPORTED_MODULE_0__/* .isBoolean */ .j)(value)) {
         onlyStyleMode = value;
         value = undefined;
     }
     if ((0,_checker_is_plain_object__WEBPACK_IMPORTED_MODULE_1__/* .isPlainObject */ .P)(key) || value !== undefined) {
         const setValue = (elm, _key, _value) => {
-            if (!(0,_checker_is_void__WEBPACK_IMPORTED_MODULE_2__/* .isVoid */ .n)(_value) &&
-                numberFieldsReg.test(_key) &&
-                (0,_checker_is_numeric__WEBPACK_IMPORTED_MODULE_3__/* .isNumeric */ .k)(_value.toString())) {
-                _value = parseInt(_value.toString(), 10) + 'px';
-            }
+            _value = (0,_normalize_normalize_css_value__WEBPACK_IMPORTED_MODULE_2__/* .normalizeCssNumericValue */ .xI)(_key, _value);
             if (_value !== undefined &&
                 (_value == null ||
-                    css(elm, _key, true) !== (0,_normalize_normalize_css_value__WEBPACK_IMPORTED_MODULE_4__/* .normalizeCssValue */ .Z)(_key, _value))) {
+                    css(elm, _key, true) !== (0,_normalize_normalize_css_value__WEBPACK_IMPORTED_MODULE_2__/* .normalizeCssValue */ .Zh)(_key, _value))) {
                 elm.style[_key] = _value;
             }
         };
         if ((0,_checker_is_plain_object__WEBPACK_IMPORTED_MODULE_1__/* .isPlainObject */ .P)(key)) {
             const keys = Object.keys(key);
             for (let j = 0; j < keys.length; j += 1) {
-                setValue(element, (0,_string_camel_case__WEBPACK_IMPORTED_MODULE_5__/* .camelCase */ .e)(keys[j]), key[keys[j]]);
+                setValue(element, (0,_string_camel_case__WEBPACK_IMPORTED_MODULE_3__/* .camelCase */ .e)(keys[j]), key[keys[j]]);
             }
         }
         else {
-            setValue(element, (0,_string_camel_case__WEBPACK_IMPORTED_MODULE_5__/* .camelCase */ .e)(key), value);
+            setValue(element, (0,_string_camel_case__WEBPACK_IMPORTED_MODULE_3__/* .camelCase */ .e)(key), value);
         }
         return '';
     }
-    const key2 = (0,_string_kebab_case__WEBPACK_IMPORTED_MODULE_6__/* .kebabCase */ .G)(key), doc = element.ownerDocument || document, win = doc ? doc.defaultView || doc.parentWindow : false;
+    const key2 = (0,_string_kebab_case__WEBPACK_IMPORTED_MODULE_4__/* .kebabCase */ .G)(key), doc = element.ownerDocument || document, win = doc ? doc.defaultView || doc.parentWindow : false;
     const currentValue = element.style[key];
     let result = '';
     if (currentValue !== undefined && currentValue !== '') {
@@ -6393,11 +6503,11 @@ function css(element, key, value, onlyStyleMode = false) {
     else if (win && !onlyStyleMode) {
         result = win.getComputedStyle(element).getPropertyValue(key2);
     }
-    if (numberFieldsReg.test(key) &&
+    if (_normalize_normalize_css_value__WEBPACK_IMPORTED_MODULE_2__/* .NUMBER_FIELDS_REG.test */ .DO.test(key) &&
         /^[-+]?[0-9.]+px$/.test(result.toString())) {
         result = parseInt(result.toString(), 10);
     }
-    return (0,_normalize_normalize_css_value__WEBPACK_IMPORTED_MODULE_4__/* .normalizeCssValue */ .Z)(key, result);
+    return (0,_normalize_normalize_css_value__WEBPACK_IMPORTED_MODULE_2__/* .normalizeCssValue */ .Zh)(key, result);
 }
 const clearCenterAlign = (image) => {
     if (css(image, 'display') === 'block') {
@@ -6413,7 +6523,7 @@ const clearCenterAlign = (image) => {
 
 /***/ }),
 
-/***/ 7009:
+/***/ 2522:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6441,14 +6551,14 @@ const ctrlKey = (e) => {
 
 /***/ }),
 
-/***/ 75698:
+/***/ 63122:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "q": function() { return /* binding */ dataBind; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_view_object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(33679);
+/* harmony import */ var _checker_is_view_object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96574);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6483,14 +6593,14 @@ const dataBind = (elm, key, value) => {
 
 /***/ }),
 
-/***/ 4371:
+/***/ 93351:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "X": function() { return /* binding */ defaultLanguage; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86129);
+/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24421);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6513,7 +6623,7 @@ const defaultLanguage = (language, defaultLanguage = 'en') => {
 
 /***/ }),
 
-/***/ 70843:
+/***/ 14582:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6614,7 +6724,7 @@ function isAbort(error) {
 
 /***/ }),
 
-/***/ 54739:
+/***/ 7935:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6623,7 +6733,7 @@ function isAbort(error) {
 /* harmony export */   "V8": function() { return /* binding */ fastClone; },
 /* harmony export */   "XT": function() { return /* binding */ markAsAtomic; }
 /* harmony export */ });
-/* harmony import */ var _string_stringify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(58753);
+/* harmony import */ var _string_stringify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42554);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6648,7 +6758,7 @@ function fastClone(object) {
 
 /***/ }),
 
-/***/ 870:
+/***/ 87247:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6656,7 +6766,7 @@ function fastClone(object) {
 /* harmony export */   "g": function() { return /* binding */ getClassName; },
 /* harmony export */   "k": function() { return /* binding */ keepNames; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(87385);
+/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42096);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6684,15 +6794,15 @@ const getClassName = (obj) => {
 
 /***/ }),
 
-/***/ 56143:
+/***/ 69384:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "U": function() { return /* binding */ get; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86129);
-/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(62061);
+/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24421);
+/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24021);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6726,7 +6836,7 @@ function get(chain, obj) {
 
 /***/ }),
 
-/***/ 24891:
+/***/ 6102:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6751,7 +6861,7 @@ const humanSizeToBytes = (human) => {
 
 /***/ }),
 
-/***/ 38301:
+/***/ 76502:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6815,37 +6925,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "set": function() { return /* reexport safe */ _set__WEBPACK_IMPORTED_MODULE_23__.t; },
 /* harmony export */   "val": function() { return /* reexport safe */ _val__WEBPACK_IMPORTED_MODULE_26__.P; }
 /* harmony export */ });
-/* harmony import */ var _align__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(55667);
-/* harmony import */ var _append_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23502);
+/* harmony import */ var _align__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(60303);
+/* harmony import */ var _append_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(62462);
 /* harmony import */ var _assert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52378);
 /* harmony import */ var _assert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_assert__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _assert__WEBPACK_IMPORTED_MODULE_2__) if(["default","alignElement","clearAlign","hAlignElement","appendScript","appendScriptAsync","appendStyleAsync","loadNext","loadNextStyle"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = function(key) { return _assert__WEBPACK_IMPORTED_MODULE_2__[key]; }.bind(0, __WEBPACK_IMPORT_KEY__)
 /* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-/* harmony import */ var _browser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1856);
-/* harmony import */ var _build_query__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(95101);
-/* harmony import */ var _complete_url__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(39188);
-/* harmony import */ var _config_proto__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(48202);
-/* harmony import */ var _convert_media_url_to_video_embed__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(93194);
-/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(76239);
-/* harmony import */ var _ctrl_key__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7009);
-/* harmony import */ var _data_bind__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(75698);
-/* harmony import */ var _default_language__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(4371);
-/* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(70843);
-/* harmony import */ var _extend__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(54739);
-/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(56143);
-/* harmony import */ var _get_class_name__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(870);
-/* harmony import */ var _human_size_to_bytes__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(24891);
-/* harmony import */ var _mark_deprecated__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(16385);
-/* harmony import */ var _parse_query__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(19814);
-/* harmony import */ var _print__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(25846);
-/* harmony import */ var _reset__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(943);
-/* harmony import */ var _scroll_into_view__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(14475);
-/* harmony import */ var _selector__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(73549);
-/* harmony import */ var _set__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(55736);
-/* harmony import */ var _stack__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(14923);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(32389);
-/* harmony import */ var _val__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(2717);
+/* harmony import */ var _browser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(37682);
+/* harmony import */ var _build_query__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(71567);
+/* harmony import */ var _complete_url__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(48240);
+/* harmony import */ var _config_proto__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(64981);
+/* harmony import */ var _convert_media_url_to_video_embed__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(42051);
+/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(26911);
+/* harmony import */ var _ctrl_key__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(2522);
+/* harmony import */ var _data_bind__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(63122);
+/* harmony import */ var _default_language__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(93351);
+/* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(14582);
+/* harmony import */ var _extend__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(7935);
+/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(69384);
+/* harmony import */ var _get_class_name__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(87247);
+/* harmony import */ var _human_size_to_bytes__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(6102);
+/* harmony import */ var _mark_deprecated__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(47580);
+/* harmony import */ var _parse_query__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(67285);
+/* harmony import */ var _print__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(21498);
+/* harmony import */ var _reset__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(80861);
+/* harmony import */ var _scroll_into_view__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(9005);
+/* harmony import */ var _selector__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(54188);
+/* harmony import */ var _set__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(21518);
+/* harmony import */ var _stack__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(37228);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(67309);
+/* harmony import */ var _val__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(22362);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -6882,7 +6992,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 16385:
+/***/ 47580:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6907,7 +7017,7 @@ function markDeprecated(method, names = [''], ctx = null) {
 
 /***/ }),
 
-/***/ 19814:
+/***/ 67285:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6931,18 +7041,18 @@ const parseQuery = (queryString) => {
 
 /***/ }),
 
-/***/ 25846:
+/***/ 21498:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "$": function() { return /* binding */ previewBox; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(86129);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(65401);
-/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(76239);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(32389);
-/* harmony import */ var _selector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(73549);
+/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24421);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24263);
+/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(26911);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(67309);
+/* harmony import */ var _selector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(54188);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7090,15 +7200,15 @@ function previewBox(editor, defaultValue, points = 'px', container = null) {
 
 /***/ }),
 
-/***/ 943:
+/***/ 80861:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "m": function() { return /* binding */ reset; }
 /* harmony export */ });
-/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(56143);
-/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(87385);
+/* harmony import */ var _get__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(69384);
+/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(42096);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7135,7 +7245,7 @@ const reset = function (key) {
 
 /***/ }),
 
-/***/ 14475:
+/***/ 9005:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7143,7 +7253,7 @@ const reset = function (key) {
 /* harmony export */   "j": function() { return /* binding */ inView; },
 /* harmony export */   "n": function() { return /* binding */ scrollIntoViewIfNeeded; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(65401);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24263);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7181,7 +7291,7 @@ function scrollIntoViewIfNeeded(elm, root, doc) {
 
 /***/ }),
 
-/***/ 73549:
+/***/ 54188:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7192,14 +7302,14 @@ function scrollIntoViewIfNeeded(elm, root, doc) {
 /* harmony export */   "iN": function() { return /* binding */ cssPath; },
 /* harmony export */   "xL": function() { return /* binding */ refs; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47386);
-/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(86129);
-/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(38301);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(65401);
-/* harmony import */ var jodit_core_helpers_string_camel_case__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(79417);
-/* harmony import */ var jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(58260);
-/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(96659);
-/* harmony import */ var jodit_core_component_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(16867);
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86893);
+/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(24421);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76502);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24263);
+/* harmony import */ var jodit_core_helpers_string_camel_case__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(26596);
+/* harmony import */ var jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1853);
+/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(53929);
+/* harmony import */ var jodit_core_component_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(45113);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7307,17 +7417,17 @@ function resolveElement(element, od) {
 
 /***/ }),
 
-/***/ 55736:
+/***/ 21518:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "t": function() { return /* binding */ set; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86129);
-/* harmony import */ var _checker_is_numeric__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(37381);
-/* harmony import */ var _checker_is_array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(41515);
-/* harmony import */ var _checker_is_plain_object__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(76856);
+/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24421);
+/* harmony import */ var _checker_is_numeric__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(57649);
+/* harmony import */ var _checker_is_array__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(49781);
+/* harmony import */ var _checker_is_plain_object__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(79736);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7348,7 +7458,7 @@ function set(chain, value, obj) {
 
 /***/ }),
 
-/***/ 14923:
+/***/ 37228:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7383,7 +7493,7 @@ class LimitedStack {
 
 /***/ }),
 
-/***/ 32389:
+/***/ 67309:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7397,14 +7507,14 @@ class LimitedStack {
 /* harmony export */   "qu": function() { return /* binding */ getDataTransfer; },
 /* harmony export */   "u3": function() { return /* binding */ memorizeExec; }
 /* harmony export */ });
-/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(87385);
-/* harmony import */ var _checker_is_promise__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(15199);
-/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(62061);
-/* harmony import */ var _checker_is_plain_object__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(76856);
-/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86129);
-/* harmony import */ var _data_bind__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75698);
-/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(76239);
-/* harmony import */ var _string_kebab_case__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(72919);
+/* harmony import */ var _checker_is_function__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(42096);
+/* harmony import */ var _checker_is_promise__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(26335);
+/* harmony import */ var _checker_is_void__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(24021);
+/* harmony import */ var _checker_is_plain_object__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(79736);
+/* harmony import */ var _checker_is_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24421);
+/* harmony import */ var _data_bind__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(63122);
+/* harmony import */ var _css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(26911);
+/* harmony import */ var _string_kebab_case__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(11278);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7527,7 +7637,7 @@ const getDataTransfer = (event) => {
 
 /***/ }),
 
-/***/ 2717:
+/***/ 22362:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7553,15 +7663,15 @@ const val = (elm, selector, value) => {
 
 /***/ }),
 
-/***/ 76454:
+/***/ 57549:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "S": function() { return /* reexport safe */ _plugin__WEBPACK_IMPORTED_MODULE_1__.S; }
 /* harmony export */ });
-/* harmony import */ var _plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(60154);
-/* harmony import */ var _plugin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(90431);
+/* harmony import */ var _plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44540);
+/* harmony import */ var _plugin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(85605);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7573,19 +7683,19 @@ const val = (elm, selector, value) => {
 
 /***/ }),
 
-/***/ 60154:
+/***/ 44540:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "h": function() { return /* binding */ PluginSystem; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43435);
-/* harmony import */ var jodit_core_helpers_utils_append_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23502);
-/* harmony import */ var jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(90824);
-/* harmony import */ var jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(68181);
-/* harmony import */ var jodit_core_helpers_utils_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(32389);
-/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(16672);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(78411);
+/* harmony import */ var jodit_core_helpers_utils_append_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(62462);
+/* harmony import */ var jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56888);
+/* harmony import */ var jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(89170);
+/* harmony import */ var jodit_core_helpers_utils_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(67309);
+/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(17332);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7787,7 +7897,7 @@ PluginSystem.styles = new Set();
 
 /***/ }),
 
-/***/ 90431:
+/***/ 85605:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7795,9 +7905,9 @@ PluginSystem.styles = new Set();
 /* harmony export */   "S": function() { return /* binding */ Plugin; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(20255);
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2624);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(63945);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(83370);
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(90549);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(67493);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40332);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7808,6 +7918,9 @@ PluginSystem.styles = new Set();
 
 
 class Plugin extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent */ .Hr {
+    className() {
+        return '';
+    }
     constructor(jodit) {
         super(jodit);
         this.requires = [];
@@ -7827,9 +7940,6 @@ class Plugin extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent */
             this.afterInit(jodit);
         })
             .on('beforeDestruct', this.destruct);
-    }
-    className() {
-        return '';
     }
     init(jodit) {
     }
@@ -7856,7 +7966,7 @@ class Plugin extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent */
 
 /***/ }),
 
-/***/ 5887:
+/***/ 12709:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7870,11 +7980,11 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(20255);
 // EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(80031);
+var config = __webpack_require__(93166);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
+var helpers = __webpack_require__(40332);
 // EXTERNAL MODULE: ./src/core/helpers/utils/error/index.ts + 5 modules
-var error = __webpack_require__(70843);
+var error = __webpack_require__(14582);
 ;// CONCATENATED MODULE: ./src/core/request/response.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7882,14 +7992,14 @@ var error = __webpack_require__(70843);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class Response {
+    get url() {
+        return this.request.url;
+    }
     constructor(request, status, statusText, body) {
         this.request = request;
         this.status = status;
         this.statusText = statusText;
         this.body = body;
-    }
-    get url() {
-        return this.request.url;
     }
     async json() {
         return JSON.parse(this.body);
@@ -7903,9 +8013,9 @@ class Response {
 }
 
 // EXTERNAL MODULE: ./src/core/async/index.ts + 1 modules
-var core_async = __webpack_require__(83735);
+var core_async = __webpack_require__(21317);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
-var decorators = __webpack_require__(63945);
+var decorators = __webpack_require__(67493);
 ;// CONCATENATED MODULE: ./src/core/request/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -8103,7 +8213,7 @@ Ajax.log = [];
 
 /***/ }),
 
-/***/ 37424:
+/***/ 80805:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8115,9 +8225,9 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/dom/index.ts
-var dom = __webpack_require__(36516);
+var dom = __webpack_require__(64968);
 // EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(47386);
+var constants = __webpack_require__(86893);
 ;// CONCATENATED MODULE: ./src/core/selection/helpers/move-node-inside-start.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -8177,1697 +8287,7 @@ function moveTheNodeAlongTheEdgeOutward(node, start, root) {
 
 /***/ }),
 
-/***/ 92415:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "RP": function() { return /* reexport */ CommitStyle; },
-  "Ph": function() { return /* reexport */ Select; }
-});
-
-// UNUSED EXPORTS: CHANGE, INITIAL, REPLACE, UNSET, UNWRAP, WRAP
-
-// EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(47386);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
-// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts
-var utils = __webpack_require__(38301);
-// EXTERNAL MODULE: ./src/core/helpers/utils/css.ts
-var css = __webpack_require__(76239);
-// EXTERNAL MODULE: ./src/core/helpers/utils/data-bind.ts
-var data_bind = __webpack_require__(75698);
-// EXTERNAL MODULE: ./src/core/helpers/string/kebab-case.ts
-var kebab_case = __webpack_require__(72919);
-// EXTERNAL MODULE: ./src/core/helpers/normalize/normalize-css-value.ts
-var normalize_css_value = __webpack_require__(80686);
-// EXTERNAL MODULE: ./src/core/helpers/size/object-size.ts
-var object_size = __webpack_require__(74395);
-// EXTERNAL MODULE: ./src/core/dom/index.ts
-var dom = __webpack_require__(36516);
-// EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(16672);
-;// CONCATENATED MODULE: ./src/core/selection/style/api/toggle/toggle-css.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-function toggleCSS(commitStyle, elm, jodit, mode, dry = false) {
-    const { style, className } = commitStyle.options;
-    if (style && (0,object_size/* size */.d)(style) > 0) {
-        Object.keys(style).forEach((rule) => {
-            const inlineValue = elm.style.getPropertyValue((0,kebab_case/* kebabCase */.G)(rule));
-            if (inlineValue === '' && style[rule] == null) {
-                return;
-            }
-            if (getNativeCSSValue(jodit, elm, rule) ===
-                (0,normalize_css_value/* normalizeCssValue */.Z)(rule, style[rule])) {
-                !dry && (0,css/* css */.i)(elm, rule, null);
-                mode = UNSET;
-                mode = removeExtraStyleAttribute(commitStyle, elm, mode);
-                return;
-            }
-            mode = CHANGE;
-            !dry && (0,css/* css */.i)(elm, rule, style[rule]);
-            if (!dry) {
-                mode = removeExtraStyleAttribute(commitStyle, elm, mode);
-            }
-        });
-    }
-    if (className) {
-        if (elm.classList.contains(className)) {
-            elm.classList.remove(className);
-            mode = UNSET;
-        }
-        else {
-            elm.classList.add(className);
-            mode = CHANGE;
-        }
-    }
-    return mode;
-}
-function removeExtraStyleAttribute(commitStyle, elm, mode) {
-    if (!(0,utils.attr)(elm, 'style')) {
-        (0,utils.attr)(elm, 'style', null);
-        if (elm.tagName.toLowerCase() === commitStyle.defaultTag) {
-            dom/* Dom.unwrap */.i.unwrap(elm);
-            mode = UNWRAP;
-        }
-    }
-    return mode;
-}
-function getShadowRoot(jodit) {
-    var _a;
-    if ((0,data_bind/* dataBind */.q)(jodit, 'shadowRoot') !== undefined) {
-        return (0,data_bind/* dataBind */.q)(jodit, 'shadowRoot');
-    }
-    const container = (0,global/* getContainer */.ZO)(jodit);
-    const iframe = document.createElement('iframe');
-    (0,css/* css */.i)(iframe, {
-        width: 0,
-        height: 0,
-        position: 'absolute',
-        border: 0
-    });
-    iframe.src = 'about:blank';
-    container.appendChild(iframe);
-    const doc = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document;
-    const shadowRoot = !doc ? jodit.od.body : doc.body;
-    (0,data_bind/* dataBind */.q)(jodit, 'shadowRoot', shadowRoot);
-    return shadowRoot;
-}
-function getNativeCSSValue(jodit, elm, key) {
-    const newElm = jodit.create.element(elm.tagName.toLowerCase());
-    newElm.style.cssText = elm.style.cssText;
-    const root = getShadowRoot(jodit);
-    root.appendChild(newElm);
-    const result = (0,css/* css */.i)(newElm, key);
-    dom/* Dom.safeRemove */.i.safeRemove(newElm);
-    return result;
-}
-
-// EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
-var tslib_es6 = __webpack_require__(20255);
-// EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
-var decorators = __webpack_require__(63945);
-// EXTERNAL MODULE: ./src/core/selection/helpers/index.ts + 2 modules
-var selection_helpers = __webpack_require__(37424);
-;// CONCATENATED MODULE: ./src/core/selection/select.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-class Select {
-    constructor(jodit) {
-        this.jodit = jodit;
-        jodit.e.on('removeMarkers', () => {
-            this.removeMarkers();
-        });
-    }
-    get j() {
-        return this.jodit;
-    }
-    errorNode(node) {
-        if (!dom/* Dom.isNode */.i.isNode(node)) {
-            throw (0,helpers.error)('Parameter node must be instance of Node');
-        }
-    }
-    get area() {
-        return this.j.editor;
-    }
-    get win() {
-        return this.j.ew;
-    }
-    get doc() {
-        return this.j.ed;
-    }
-    get sel() {
-        if (this.j.o.shadowRoot &&
-            (0,helpers.isFunction)(this.j.o.shadowRoot.getSelection)) {
-            return this.j.o.shadowRoot.getSelection();
-        }
-        return this.win.getSelection();
-    }
-    get range() {
-        const sel = this.sel;
-        return sel && sel.rangeCount ? sel.getRangeAt(0) : this.createRange();
-    }
-    get isInsideArea() {
-        const { sel } = this;
-        const range = (sel === null || sel === void 0 ? void 0 : sel.rangeCount) ? sel.getRangeAt(0) : null;
-        return !(!range || !dom/* Dom.isOrContains */.i.isOrContains(this.area, range.startContainer));
-    }
-    createRange(select = false) {
-        const range = this.doc.createRange();
-        if (select) {
-            this.selectRange(range);
-        }
-        return range;
-    }
-    remove() {
-        const sel = this.sel, current = this.current();
-        if (sel && current) {
-            for (let i = 0; i < sel.rangeCount; i += 1) {
-                sel.getRangeAt(i).deleteContents();
-                sel.getRangeAt(i).collapse(true);
-            }
-        }
-    }
-    clear() {
-        var _a, _b;
-        if ((_a = this.sel) === null || _a === void 0 ? void 0 : _a.rangeCount) {
-            (_b = this.sel) === null || _b === void 0 ? void 0 : _b.removeAllRanges();
-        }
-    }
-    removeNode(node) {
-        if (!dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, node, true)) {
-            throw (0,helpers.error)("Selection.removeNode can remove only editor's children");
-        }
-        dom/* Dom.safeRemove */.i.safeRemove(node);
-        this.j.e.fire('afterRemoveNode', node);
-    }
-    insertCursorAtPoint(x, y) {
-        this.removeMarkers();
-        try {
-            const rng = this.createRange();
-            (() => {
-                if (this.doc.caretPositionFromPoint) {
-                    const caret = this.doc.caretPositionFromPoint(x, y);
-                    if (caret) {
-                        rng.setStart(caret.offsetNode, caret.offset);
-                        return;
-                    }
-                }
-                if (this.doc.caretRangeFromPoint) {
-                    const caret = this.doc.caretRangeFromPoint(x, y);
-                    rng.setStart(caret.startContainer, caret.startOffset);
-                }
-            })();
-            rng.collapse(true);
-            this.selectRange(rng);
-            return true;
-        }
-        catch (_a) { }
-        return false;
-    }
-    static isMarker(elm) {
-        return (dom/* Dom.isNode */.i.isNode(elm) &&
-            dom/* Dom.isTag */.i.isTag(elm, 'span') &&
-            elm.hasAttribute('data-' + constants.MARKER_CLASS));
-    }
-    get hasMarkers() {
-        return Boolean(this.markers.length);
-    }
-    get markers() {
-        return (0,helpers.$$)('span[data-' + constants.MARKER_CLASS + ']', this.area);
-    }
-    removeMarkers() {
-        dom/* Dom.safeRemove.apply */.i.safeRemove.apply(null, this.markers);
-    }
-    marker(atStart = false, range) {
-        let newRange = null;
-        if (range) {
-            newRange = range.cloneRange();
-            newRange.collapse(atStart);
-        }
-        const marker = this.j.createInside.span();
-        marker.id =
-            constants.MARKER_CLASS +
-                '_' +
-                Number(new Date()) +
-                '_' +
-                String(Math.random()).slice(2);
-        marker.style.lineHeight = '0';
-        marker.style.display = 'none';
-        dom/* Dom.markTemporary */.i.markTemporary(marker);
-        (0,helpers.attr)(marker, 'data-' + constants.MARKER_CLASS, atStart ? 'start' : 'end');
-        marker.appendChild(this.j.createInside.text(constants.INVISIBLE_SPACE));
-        if (newRange) {
-            if (dom/* Dom.isOrContains */.i.isOrContains(this.area, atStart ? newRange.startContainer : newRange.endContainer)) {
-                newRange.insertNode(marker);
-            }
-        }
-        return marker;
-    }
-    restore() {
-        let range = false;
-        const markAttr = (start) => `span[data-${constants.MARKER_CLASS}=${start ? 'start' : 'end'}]`;
-        const start = this.area.querySelector(markAttr(true)), end = this.area.querySelector(markAttr(false));
-        if (!start) {
-            return;
-        }
-        range = this.createRange();
-        if (!end) {
-            const previousNode = start.previousSibling;
-            if (dom/* Dom.isText */.i.isText(previousNode)) {
-                range.setStart(previousNode, previousNode.nodeValue ? previousNode.nodeValue.length : 0);
-            }
-            else {
-                range.setStartBefore(start);
-            }
-            dom/* Dom.safeRemove */.i.safeRemove(start);
-            range.collapse(true);
-        }
-        else {
-            range.setStartAfter(start);
-            dom/* Dom.safeRemove */.i.safeRemove(start);
-            range.setEndBefore(end);
-            dom/* Dom.safeRemove */.i.safeRemove(end);
-        }
-        if (range) {
-            this.selectRange(range);
-        }
-    }
-    save(silent = false) {
-        if (this.hasMarkers) {
-            return [];
-        }
-        const sel = this.sel;
-        if (!sel || !sel.rangeCount) {
-            return [];
-        }
-        const info = [], length = sel.rangeCount, ranges = [];
-        for (let i = 0; i < length; i += 1) {
-            ranges[i] = sel.getRangeAt(i);
-            if (ranges[i].collapsed) {
-                const start = this.marker(true, ranges[i]);
-                info[i] = {
-                    startId: start.id,
-                    collapsed: true,
-                    startMarker: start.outerHTML
-                };
-            }
-            else {
-                const start = this.marker(true, ranges[i]);
-                const end = this.marker(false, ranges[i]);
-                info[i] = {
-                    startId: start.id,
-                    endId: end.id,
-                    collapsed: false,
-                    startMarker: start.outerHTML,
-                    endMarker: end.outerHTML
-                };
-            }
-        }
-        if (!silent) {
-            sel.removeAllRanges();
-            for (let i = length - 1; i >= 0; --i) {
-                const startElm = this.doc.getElementById(info[i].startId);
-                if (startElm) {
-                    if (info[i].collapsed) {
-                        ranges[i].setStartAfter(startElm);
-                        ranges[i].collapse(true);
-                    }
-                    else {
-                        ranges[i].setStartBefore(startElm);
-                        if (info[i].endId) {
-                            const endElm = this.doc.getElementById(info[i].endId);
-                            if (endElm) {
-                                ranges[i].setEndAfter(endElm);
-                            }
-                        }
-                    }
-                }
-                try {
-                    sel.addRange(ranges[i].cloneRange());
-                }
-                catch (_a) { }
-            }
-        }
-        return info;
-    }
-    focus(options = {
-        preventScroll: true
-    }) {
-        var _a, _b;
-        if (!this.isFocused()) {
-            const scrollParent = (0,helpers.getScrollParent)(this.j.container), scrollTop = scrollParent === null || scrollParent === void 0 ? void 0 : scrollParent.scrollTop;
-            if (this.j.iframe) {
-                if (this.doc.readyState === 'complete') {
-                    this.j.iframe.focus(options);
-                }
-            }
-            this.win.focus();
-            this.area.focus(options);
-            if (scrollTop && (scrollParent === null || scrollParent === void 0 ? void 0 : scrollParent.scrollTo)) {
-                scrollParent.scrollTo(0, scrollTop);
-            }
-            const sel = this.sel, range = (sel === null || sel === void 0 ? void 0 : sel.rangeCount) ? sel === null || sel === void 0 ? void 0 : sel.getRangeAt(0) : null;
-            if (!range || !dom/* Dom.isOrContains */.i.isOrContains(this.area, range.startContainer)) {
-                const range = this.createRange();
-                range.setStart(this.area, 0);
-                range.collapse(true);
-                this.selectRange(range, false);
-            }
-            if (!this.j.editorIsActive) {
-                (_b = (_a = this.j) === null || _a === void 0 ? void 0 : _a.events) === null || _b === void 0 ? void 0 : _b.fire('focus');
-            }
-            return true;
-        }
-        return false;
-    }
-    isCollapsed() {
-        const sel = this.sel;
-        for (let r = 0; sel && r < sel.rangeCount; r += 1) {
-            if (!sel.getRangeAt(r).collapsed) {
-                return false;
-            }
-        }
-        return true;
-    }
-    isFocused() {
-        return (this.doc.hasFocus &&
-            this.doc.hasFocus() &&
-            this.area === this.doc.activeElement);
-    }
-    current(checkChild = true) {
-        if (this.j.getRealMode() === constants.MODE_WYSIWYG) {
-            const sel = this.sel;
-            if (!sel || sel.rangeCount === 0) {
-                return null;
-            }
-            const range = sel.getRangeAt(0);
-            let node = range.startContainer, rightMode = false;
-            const child = (nd) => rightMode ? nd.lastChild : nd.firstChild;
-            if (dom/* Dom.isTag */.i.isTag(node, 'br') && sel.isCollapsed) {
-                return node;
-            }
-            if (!dom/* Dom.isText */.i.isText(node)) {
-                node = range.startContainer.childNodes[range.startOffset];
-                if (!node) {
-                    node =
-                        range.startContainer.childNodes[range.startOffset - 1];
-                    rightMode = true;
-                }
-                if (node && sel.isCollapsed && !dom/* Dom.isText */.i.isText(node)) {
-                    if (!rightMode && dom/* Dom.isText */.i.isText(node.previousSibling)) {
-                        node = node.previousSibling;
-                    }
-                    else if (checkChild) {
-                        let current = child(node);
-                        while (current) {
-                            if (current && dom/* Dom.isText */.i.isText(current)) {
-                                node = current;
-                                break;
-                            }
-                            current = child(current);
-                        }
-                    }
-                }
-                if (node && !sel.isCollapsed && !dom/* Dom.isText */.i.isText(node)) {
-                    let leftChild = node, rightChild = node;
-                    do {
-                        leftChild = leftChild.firstChild;
-                        rightChild = rightChild.lastChild;
-                    } while (leftChild && rightChild && !dom/* Dom.isText */.i.isText(leftChild));
-                    if (leftChild === rightChild &&
-                        leftChild &&
-                        dom/* Dom.isText */.i.isText(leftChild)) {
-                        node = leftChild;
-                    }
-                }
-            }
-            if (node && dom/* Dom.isOrContains */.i.isOrContains(this.area, node)) {
-                return node;
-            }
-        }
-        return null;
-    }
-    insertNode(node, insertCursorAfter = true, fireChange = true) {
-        this.errorNode(node);
-        this.j.e.fire('safeHTML', node);
-        if (!this.isFocused() && this.j.isEditorMode()) {
-            this.focus();
-            this.restore();
-        }
-        const sel = this.sel;
-        this.j.history.snapshot.transaction(() => {
-            var _a;
-            if (!this.isCollapsed()) {
-                this.j.execCommand('Delete');
-            }
-            this.j.e.fire('beforeInsertNode', node);
-            if (sel && sel.rangeCount) {
-                const range = sel.getRangeAt(0);
-                if (dom/* Dom.isOrContains */.i.isOrContains(this.area, range.commonAncestorContainer)) {
-                    if (dom/* Dom.isTag */.i.isTag(range.startContainer, constants.INSEPARABLE_TAGS) &&
-                        range.collapsed) {
-                        (_a = range.startContainer.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(node, range.startContainer);
-                    }
-                    else {
-                        dom/* Dom.safeInsertNode */.i.safeInsertNode(range, node);
-                    }
-                }
-                else {
-                    this.area.appendChild(node);
-                }
-            }
-            else {
-                this.area.appendChild(node);
-            }
-            if (insertCursorAfter) {
-                if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-                    node.lastChild && this.setCursorAfter(node.lastChild);
-                }
-                else {
-                    this.setCursorAfter(node);
-                }
-            }
-        });
-        if (fireChange && this.j.events) {
-            this.j.__imdSynchronizeValues();
-        }
-        if (this.j.events) {
-            this.j.e.fire('afterInsertNode', node);
-        }
-    }
-    insertHTML(html, insertCursorAfter = true) {
-        if (html === '') {
-            return;
-        }
-        const node = this.j.createInside.div(), fragment = this.j.createInside.fragment();
-        let lastChild;
-        if (!this.isFocused() && this.j.isEditorMode()) {
-            this.focus();
-            this.restore();
-        }
-        if (!dom/* Dom.isNode */.i.isNode(html)) {
-            node.innerHTML = html.toString();
-        }
-        else {
-            node.appendChild(html);
-        }
-        if (!this.j.isEditorMode() &&
-            this.j.e.fire('insertHTML', node.innerHTML) === false) {
-            return;
-        }
-        lastChild = node.lastChild;
-        if (!lastChild) {
-            return;
-        }
-        while (node.firstChild) {
-            lastChild = node.firstChild;
-            fragment.appendChild(node.firstChild);
-        }
-        this.insertNode(fragment.firstChild && fragment.firstChild === fragment.lastChild
-            ? fragment.lastChild
-            : fragment, false, false);
-        if (insertCursorAfter) {
-            if (lastChild) {
-                this.setCursorAfter(lastChild);
-            }
-            else {
-                this.setCursorIn(fragment);
-            }
-        }
-        this.j.__imdSynchronizeValues();
-    }
-    insertImage(url, styles = null, defaultWidth = null) {
-        const image = (0,helpers.isString)(url) ? this.j.createInside.element('img') : url;
-        if ((0,helpers.isString)(url)) {
-            image.setAttribute('src', url);
-        }
-        if (defaultWidth != null) {
-            let dw = defaultWidth.toString();
-            if (dw &&
-                'auto' !== dw &&
-                String(dw).indexOf('px') < 0 &&
-                String(dw).indexOf('%') < 0) {
-                dw += 'px';
-            }
-            (0,helpers.call)(this.j.o.resizer.forImageChangeAttributes ? helpers.attr : helpers.css, image, 'width', dw);
-        }
-        if (styles && typeof styles === 'object') {
-            (0,helpers.css)(image, styles);
-        }
-        const onload = () => {
-            if (image.naturalHeight < image.offsetHeight ||
-                image.naturalWidth < image.offsetWidth) {
-                image.style.width = '';
-                image.style.height = '';
-            }
-            image.removeEventListener('load', onload);
-        };
-        this.j.e.on(image, 'load', onload);
-        if (image.complete) {
-            onload();
-        }
-        this.insertNode(image);
-        this.j.e.fire('afterInsertImage', image);
-    }
-    eachSelection(callback) {
-        var _a;
-        const sel = this.sel;
-        if (sel && sel.rangeCount) {
-            const range = sel.getRangeAt(0);
-            let root = range.commonAncestorContainer;
-            if (!dom/* Dom.isHTMLElement */.i.isHTMLElement(root)) {
-                root = root.parentElement;
-            }
-            const nodes = [], startOffset = range.startOffset, length = root.childNodes.length, elementOffset = startOffset < length ? startOffset : length - 1;
-            let start = range.startContainer === this.area
-                ? root.childNodes[elementOffset]
-                : range.startContainer, end = range.endContainer === this.area
-                ? root.childNodes[range.endOffset - 1]
-                : range.endContainer;
-            if (dom/* Dom.isText */.i.isText(start) &&
-                start === range.startContainer &&
-                range.startOffset === ((_a = start.nodeValue) === null || _a === void 0 ? void 0 : _a.length) &&
-                start.nextSibling) {
-                start = start.nextSibling;
-            }
-            if (dom/* Dom.isText */.i.isText(end) &&
-                end === range.endContainer &&
-                range.endOffset === 0 &&
-                end.previousSibling) {
-                end = end.previousSibling;
-            }
-            const checkElm = (node) => {
-                if (node &&
-                    node !== root &&
-                    !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(node) &&
-                    !Select.isMarker(node)) {
-                    nodes.push(node);
-                }
-            };
-            checkElm(start);
-            if (start !== end && dom/* Dom.isOrContains */.i.isOrContains(root, start, true)) {
-                dom/* Dom.find */.i.find(start, node => {
-                    checkElm(node);
-                    return (node === end ||
-                        (node && node.contains && node.contains(end)));
-                }, root, true, false);
-            }
-            const forEvery = (current) => {
-                if (!dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, current, true)) {
-                    return;
-                }
-                if (current.nodeName.match(/^(UL|OL)$/)) {
-                    return (0,helpers.toArray)(current.childNodes).forEach(forEvery);
-                }
-                if (dom/* Dom.isTag */.i.isTag(current, 'li')) {
-                    if (current.firstChild) {
-                        current = current.firstChild;
-                    }
-                    else {
-                        const currentB = this.j.createInside.text(constants.INVISIBLE_SPACE);
-                        current.appendChild(currentB);
-                        current = currentB;
-                    }
-                }
-                callback(current);
-            };
-            if (nodes.length === 0 && dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(start)) {
-                nodes.push(start);
-            }
-            if (nodes.length === 0 && start.firstChild) {
-                nodes.push(start.firstChild);
-            }
-            nodes.forEach(forEvery);
-        }
-    }
-    cursorInTheEdge(start, parentBlock) {
-        var _a, _b;
-        const end = !start, range = (_a = this.sel) === null || _a === void 0 ? void 0 : _a.getRangeAt(0), current = this.current(false);
-        if (!range ||
-            !current ||
-            !dom/* Dom.isOrContains */.i.isOrContains(parentBlock, current, true)) {
-            return null;
-        }
-        const container = start ? range.startContainer : range.endContainer;
-        const offset = start ? range.startOffset : range.endOffset;
-        const check = (elm) => Boolean(elm && !dom/* Dom.isTag */.i.isTag(elm, 'br') && !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm));
-        if (dom/* Dom.isText */.i.isText(container)) {
-            const text = ((_b = container.nodeValue) === null || _b === void 0 ? void 0 : _b.length) ? container.nodeValue : '';
-            if (end && text.replace((0,constants.INVISIBLE_SPACE_REG_EXP_END)(), '').length > offset) {
-                return false;
-            }
-            const inv = (0,constants.INVISIBLE_SPACE_REG_EXP_START)().exec(text);
-            if (start &&
-                ((inv && inv[0].length < offset) || (!inv && offset > 0))) {
-                return false;
-            }
-        }
-        else {
-            const children = (0,helpers.toArray)(container.childNodes);
-            if (end) {
-                if (children.slice(offset).some(check)) {
-                    return false;
-                }
-            }
-            else {
-                if (children.slice(0, offset).some(check)) {
-                    return false;
-                }
-            }
-        }
-        return !(0,helpers.call)(start ? dom/* Dom.prev */.i.prev : dom/* Dom.next */.i.next, current, check, parentBlock);
-    }
-    cursorOnTheLeft(parentBlock) {
-        return this.cursorInTheEdge(true, parentBlock);
-    }
-    cursorOnTheRight(parentBlock) {
-        return this.cursorInTheEdge(false, parentBlock);
-    }
-    setCursorAfter(node) {
-        return this.setCursorNearWith(node, false);
-    }
-    setCursorBefore(node) {
-        return this.setCursorNearWith(node, true);
-    }
-    setCursorNearWith(node, inStart) {
-        var _a, _b;
-        this.errorNode(node);
-        if (!dom/* Dom.up */.i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
-            throw (0,helpers.error)('Node element must be in editor');
-        }
-        const range = this.createRange();
-        let fakeNode = null;
-        if (!dom/* Dom.isText */.i.isText(node)) {
-            fakeNode = this.j.createInside.text(constants.INVISIBLE_SPACE);
-            inStart ? range.setStartBefore(node) : range.setEndAfter(node);
-            range.collapse(inStart);
-            dom/* Dom.safeInsertNode */.i.safeInsertNode(range, fakeNode);
-            range.selectNode(fakeNode);
-        }
-        else {
-            if (inStart) {
-                range.setStart(node, 0);
-            }
-            else {
-                range.setEnd(node, (_b = (_a = node.nodeValue) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0);
-            }
-        }
-        range.collapse(inStart);
-        this.selectRange(range);
-        return fakeNode;
-    }
-    setCursorIn(node, inStart = false) {
-        this.errorNode(node);
-        if (!dom/* Dom.up */.i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
-            throw (0,helpers.error)('Node element must be in editor');
-        }
-        const range = this.createRange();
-        let start = node, last = node;
-        do {
-            if (dom/* Dom.isText */.i.isText(start)) {
-                break;
-            }
-            last = start;
-            start = inStart ? start.firstChild : start.lastChild;
-        } while (start);
-        if (!start) {
-            const fakeNode = this.j.createInside.text(constants.INVISIBLE_SPACE);
-            if (!/^(img|br|input)$/i.test(last.nodeName)) {
-                last.appendChild(fakeNode);
-                last = fakeNode;
-            }
-            else {
-                start = last;
-            }
-        }
-        range.selectNodeContents(start || last);
-        range.collapse(inStart);
-        this.selectRange(range);
-        return last;
-    }
-    selectRange(range, focus = true) {
-        const sel = this.sel;
-        if (focus && !this.isFocused()) {
-            this.focus();
-        }
-        if (sel) {
-            sel.removeAllRanges();
-            sel.addRange(range);
-        }
-        this.j.e.fire('changeSelection');
-        return this;
-    }
-    select(node, inward = false) {
-        this.errorNode(node);
-        if (!dom/* Dom.up */.i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
-            throw (0,helpers.error)('Node element must be in editor');
-        }
-        const range = this.createRange();
-        range[inward ? 'selectNodeContents' : 'selectNode'](node);
-        return this.selectRange(range);
-    }
-    get html() {
-        const sel = this.sel;
-        if (sel && sel.rangeCount > 0) {
-            const range = sel.getRangeAt(0);
-            const clonedSelection = range.cloneContents();
-            const div = this.j.createInside.div();
-            div.appendChild(clonedSelection);
-            return div.innerHTML;
-        }
-        return '';
-    }
-    *wrapInTagGen() {
-        if (this.isCollapsed()) {
-            const font = this.jodit.createInside.element('font', constants.INVISIBLE_SPACE);
-            this.insertNode(font, false, false);
-            const [marker] = this.markers;
-            if (marker) {
-                font.appendChild(marker);
-            }
-            else {
-                this.setCursorIn(font);
-                this.save();
-            }
-            yield font;
-            dom/* Dom.unwrap */.i.unwrap(font);
-            return;
-        }
-        (0,helpers.$$)('*[style*=font-size]', this.area).forEach(elm => (0,helpers.attr)(elm, 'data-font-size', elm.style.fontSize.toString()));
-        if (!this.isCollapsed()) {
-            this.j.nativeExecCommand('fontsize', false, '7');
-        }
-        else {
-            const font = this.j.createInside.element('font');
-            (0,helpers.attr)(font, 'size', 7);
-            this.insertNode(font, false, false);
-        }
-        (0,helpers.$$)('*[data-font-size]', this.area).forEach(elm => {
-            const fontSize = (0,helpers.attr)(elm, 'data-font-size');
-            if (fontSize) {
-                elm.style.fontSize = fontSize;
-                (0,helpers.attr)(elm, 'data-font-size', null);
-            }
-        });
-        const elms = (0,helpers.$$)('font[size="7"]', this.area);
-        for (const font of elms) {
-            const { firstChild, lastChild } = font;
-            if (firstChild &&
-                firstChild === lastChild &&
-                Select.isMarker(firstChild)) {
-                dom/* Dom.unwrap */.i.unwrap(font);
-                continue;
-            }
-            if (firstChild && Select.isMarker(firstChild)) {
-                dom/* Dom.before */.i.before(font, firstChild);
-            }
-            if (lastChild && Select.isMarker(lastChild)) {
-                dom/* Dom.after */.i.after(font, lastChild);
-            }
-            yield font;
-            dom/* Dom.unwrap */.i.unwrap(font);
-        }
-    }
-    wrapInTag(tagOrCallback) {
-        const result = [];
-        for (const font of this.wrapInTagGen()) {
-            try {
-                if (font.firstChild &&
-                    font.firstChild === font.lastChild &&
-                    Select.isMarker(font.firstChild)) {
-                    continue;
-                }
-                if ((0,helpers.isFunction)(tagOrCallback)) {
-                    tagOrCallback(font);
-                }
-                else {
-                    result.push(dom/* Dom.replace */.i.replace(font, tagOrCallback, this.j.createInside));
-                }
-            }
-            finally {
-                const pn = font.parentNode;
-                if (pn) {
-                    dom/* Dom.unwrap */.i.unwrap(font);
-                    if (dom/* Dom.isEmpty */.i.isEmpty(pn)) {
-                        dom/* Dom.unwrap */.i.unwrap(pn);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-    applyStyle(style, options = {}) {
-        const styleElm = new CommitStyle({
-            style,
-            element: options.element,
-            className: options.className,
-            defaultTag: options.defaultTag
-        });
-        styleElm.apply(this.j);
-    }
-    splitSelection(currentBox) {
-        if (!this.isCollapsed()) {
-            return null;
-        }
-        const leftRange = this.createRange();
-        const range = this.range;
-        leftRange.setStartBefore(currentBox);
-        const cursorOnTheRight = this.cursorOnTheRight(currentBox);
-        const cursorOnTheLeft = this.cursorOnTheLeft(currentBox);
-        const br = this.j.createInside.element('br'), prevFake = this.j.createInside.text(constants.INVISIBLE_SPACE), nextFake = prevFake.cloneNode();
-        try {
-            if (cursorOnTheRight || cursorOnTheLeft) {
-                dom/* Dom.safeInsertNode */.i.safeInsertNode(range, br);
-                const clearBR = (start, getNext) => {
-                    let next = getNext(start);
-                    while (next) {
-                        const nextSib = getNext(next);
-                        if (next &&
-                            (dom/* Dom.isTag */.i.isTag(next, 'br') || dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(next))) {
-                            dom/* Dom.safeRemove */.i.safeRemove(next);
-                        }
-                        else {
-                            break;
-                        }
-                        next = nextSib;
-                    }
-                };
-                clearBR(br, (n) => n.nextSibling);
-                clearBR(br, (n) => n.previousSibling);
-                dom/* Dom.after */.i.after(br, nextFake);
-                dom/* Dom.before */.i.before(br, prevFake);
-                if (cursorOnTheRight) {
-                    leftRange.setEndBefore(br);
-                    range.setEndBefore(br);
-                }
-                else {
-                    leftRange.setEndAfter(br);
-                    range.setEndAfter(br);
-                }
-            }
-            else {
-                leftRange.setEnd(range.startContainer, range.startOffset);
-            }
-            const fragment = leftRange.extractContents();
-            const clearEmpties = (node) => dom/* Dom.each */.i.each(node, node => dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(node) && dom/* Dom.safeRemove */.i.safeRemove(node));
-            if (currentBox.parentNode) {
-                try {
-                    clearEmpties(fragment);
-                    clearEmpties(currentBox);
-                    currentBox.parentNode.insertBefore(fragment, currentBox);
-                    if (cursorOnTheRight && (br === null || br === void 0 ? void 0 : br.parentNode)) {
-                        const range = this.createRange();
-                        range.setStartBefore(br);
-                        this.selectRange(range);
-                    }
-                }
-                catch (e) {
-                    if (false) {}
-                }
-            }
-            const fillFakeParent = (fake) => {
-                var _a, _b, _c;
-                if (((_a = fake === null || fake === void 0 ? void 0 : fake.parentNode) === null || _a === void 0 ? void 0 : _a.firstChild) === ((_b = fake === null || fake === void 0 ? void 0 : fake.parentNode) === null || _b === void 0 ? void 0 : _b.lastChild)) {
-                    (_c = fake === null || fake === void 0 ? void 0 : fake.parentNode) === null || _c === void 0 ? void 0 : _c.appendChild(br.cloneNode());
-                }
-            };
-            fillFakeParent(prevFake);
-            fillFakeParent(nextFake);
-        }
-        finally {
-            dom/* Dom.safeRemove */.i.safeRemove(prevFake);
-            dom/* Dom.safeRemove */.i.safeRemove(nextFake);
-        }
-        return currentBox.previousElementSibling;
-    }
-    expandSelection() {
-        if (this.isCollapsed()) {
-            return this;
-        }
-        const { range } = this, c = range.cloneRange();
-        if (!dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, range.commonAncestorContainer, true)) {
-            return this;
-        }
-        const moveMaxEdgeFake = (start) => {
-            const fake = this.j.createInside.fake();
-            const r = range.cloneRange();
-            r.collapse(start);
-            dom/* Dom.safeInsertNode */.i.safeInsertNode(r, fake);
-            (0,selection_helpers/* moveTheNodeAlongTheEdgeOutward */.f)(fake, start, this.j.editor);
-            return fake;
-        };
-        const leftFake = moveMaxEdgeFake(true);
-        const rightFake = moveMaxEdgeFake(false);
-        c.setStartAfter(leftFake);
-        c.setEndBefore(rightFake);
-        const leftBox = dom/* Dom.findSibling */.i.findSibling(leftFake, false);
-        const rightBox = dom/* Dom.findSibling */.i.findSibling(rightFake, true);
-        if (leftBox !== rightBox) {
-            const rightInsideLeft = dom/* Dom.isElement */.i.isElement(leftBox) &&
-                dom/* Dom.isOrContains */.i.isOrContains(leftBox, rightFake), leftInsideRight = !rightInsideLeft &&
-                dom/* Dom.isElement */.i.isElement(rightBox) &&
-                dom/* Dom.isOrContains */.i.isOrContains(rightBox, leftFake);
-            if (rightInsideLeft || leftInsideRight) {
-                let child = (rightInsideLeft ? leftBox : rightBox), container = child;
-                while (dom/* Dom.isElement */.i.isElement(child)) {
-                    child = rightInsideLeft
-                        ? child.firstElementChild
-                        : child.lastElementChild;
-                    if (child) {
-                        const isInside = rightInsideLeft
-                            ? dom/* Dom.isOrContains */.i.isOrContains(child, rightFake)
-                            : dom/* Dom.isOrContains */.i.isOrContains(child, leftFake);
-                        if (isInside) {
-                            container = child;
-                        }
-                    }
-                }
-                if (rightInsideLeft) {
-                    c.setStart(container, 0);
-                }
-                else {
-                    c.setEnd(container, container.childNodes.length);
-                }
-            }
-        }
-        this.selectRange(c);
-        dom/* Dom.safeRemove */.i.safeRemove(leftFake, rightFake);
-        return this;
-    }
-}
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
-], Select.prototype, "createRange", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
-], Select.prototype, "focus", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
-], Select.prototype, "setCursorAfter", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
-], Select.prototype, "setCursorBefore", null);
-(0,tslib_es6/* __decorate */.gn)([
-    decorators.autobind
-], Select.prototype, "setCursorIn", null);
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/extract.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function extractSelectedPart(wrapper, font, jodit) {
-    const range = jodit.s.createRange();
-    const leftEdge = Select.isMarker(font.previousSibling)
-        ? font.previousSibling
-        : font;
-    range.setStartBefore(wrapper);
-    range.setEndBefore(leftEdge);
-    extractAndMove(wrapper, range, true);
-    const rightEdge = Select.isMarker(font.nextSibling)
-        ? font.nextSibling
-        : font;
-    range.setStartAfter(rightEdge);
-    range.setEndAfter(wrapper);
-    extractAndMove(wrapper, range, false);
-}
-function extractAndMove(wrapper, range, left) {
-    const fragment = range.extractContents();
-    if ((!fragment.textContent || !(0,helpers.trim)(fragment.textContent).length) &&
-        fragment.firstChild) {
-        dom/* Dom.unwrap */.i.unwrap(fragment.firstChild);
-    }
-    if (wrapper.parentNode) {
-        (0,helpers.call)(left ? dom/* Dom.before */.i.before : dom/* Dom.after */.i.after, wrapper, fragment);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/toggle/toggle-ordered-list.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-function toggleOrderedList(style, li, jodit, mode) {
-    if (!li) {
-        return mode;
-    }
-    const list = li.parentElement;
-    if (!list) {
-        return mode;
-    }
-    if (list.tagName.toLowerCase() !== style.element) {
-        const newList = dom/* Dom.replace */.i.replace(list, style.element, jodit.createInside);
-        toggleCSS(style, newList, jodit, mode);
-        return REPLACE;
-    }
-    if (toggleCSS(style, li.parentElement, jodit, INITIAL, true) === CHANGE) {
-        return toggleCSS(style, li.parentElement, jodit, mode);
-    }
-    extractSelectedPart(list, li, jodit);
-    dom/* Dom.unwrap */.i.unwrap(li.parentElement);
-    dom/* Dom.replace */.i.replace(li, jodit.o.enter, jodit.createInside);
-    return mode;
-}
-
-// EXTERNAL MODULE: ./src/core/helpers/checker/is-void.ts
-var is_void = __webpack_require__(62061);
-;// CONCATENATED MODULE: ./src/core/selection/style/api/element-has-same-style.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-function elementHasSameStyle(elm, rules) {
-    return Boolean(!dom/* Dom.isTag */.i.isTag(elm, 'font') &&
-        dom/* Dom.isHTMLElement */.i.isHTMLElement(elm) &&
-        Object.keys(rules).every(property => {
-            const value = (0,css/* css */.i)(elm, property, true);
-            return (!(0,is_void/* isVoid */.n)(value) &&
-                value !== '' &&
-                !(0,is_void/* isVoid */.n)(rules[property]) &&
-                (0,normalize_css_value/* normalizeCssValue */.Z)(property, rules[property])
-                    .toString()
-                    .toLowerCase() === value.toString().toLowerCase());
-        }));
-}
-function elementHasSameStyleKeys(elm, rules) {
-    return Boolean(!dom/* Dom.isTag */.i.isTag(elm, 'font') &&
-        dom/* Dom.isHTMLElement */.i.isHTMLElement(elm) &&
-        Object.keys(rules).every(property => !(0,is_void/* isVoid */.n)((0,css/* css */.i)(elm, property, true))));
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/finite-state-machine.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-class FiniteStateMachine {
-    constructor(state, transitions) {
-        this.state = state;
-        this.transitions = transitions;
-        this.subState = '';
-        this.silent = true;
-    }
-    setState(state, subState) {
-        this.state = state;
-        if (subState != null) {
-            this.subState = subState;
-        }
-    }
-    getState() {
-        return this.state;
-    }
-    getSubState() {
-        return this.subState;
-    }
-    disableSilent() {
-        this.silent = false;
-    }
-    dispatch(actionName, ...attrs) {
-        const action = this.transitions[this.state][actionName];
-        if (action) {
-            if (!this.silent) {
-                console.log('State: ' + this.state, 'Action: ' + actionName);
-            }
-            const res = action.call(this, ...attrs);
-            if (!this.silent) {
-                console.log('State: ' + this.state);
-            }
-            return res;
-        }
-        if (!this.silent) {
-            throw new Error('invalid action: ' + this.state + '.' + actionName);
-        }
-        return;
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/is-normal-node.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-function isNormalNode(elm) {
-    return Boolean(elm &&
-        !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm) &&
-        !dom/* Dom.isTemporary */.i.isTemporary(elm) &&
-        !Select.isMarker(elm));
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/is-suit-element.ts
-
-
-
-function isSuitElement(commitStyle, elm, strict) {
-    if (!elm) {
-        return false;
-    }
-    const { element, elementIsDefault, options } = commitStyle;
-    const elmHasSameStyle = Boolean(options.style && elementHasSameStyle(elm, options.style));
-    const elmIsSame = elm.nodeName.toLowerCase() === element ||
-        (dom/* Dom.isTag */.i.isTag(elm, ['ul', 'ol']) && commitStyle.elementIsList);
-    if (((!elementIsDefault || !strict) && elmIsSame) ||
-        (elmHasSameStyle && isNormalNode(elm))) {
-        return true;
-    }
-    return Boolean(!elmIsSame && !strict && elementIsDefault && dom/* Dom.isInlineBlock */.i.isInlineBlock(elm));
-}
-function isSameStyleChild(commitStyle, elm) {
-    const { element, options } = commitStyle;
-    if (!elm || !isNormalNode(elm)) {
-        return false;
-    }
-    const elmIsSame = elm.nodeName.toLowerCase() === element;
-    const elmHasSameStyle = Boolean(options.style && elementHasSameStyleKeys(elm, options.style));
-    return elmIsSame && elmHasSameStyle;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/get-suit-child.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function getSuitChild(style, font) {
-    let { firstChild: child } = font;
-    while (child && !isNormalNode(child)) {
-        child = child.nextSibling;
-        if (!child) {
-            return null;
-        }
-    }
-    if (child &&
-        !dom/* Dom.next */.i.next(child, isNormalNode, font) &&
-        isSuitElement(style, child, false)) {
-        return child;
-    }
-    return null;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/get-suit-parent.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-function getSuitParent(style, node, root) {
-    const { parentNode } = node;
-    if (parentNode === root ||
-        !dom/* Dom.isHTMLElement */.i.isHTMLElement(parentNode) ||
-        dom/* Dom.next */.i.next(node, isNormalNode, parentNode) ||
-        dom/* Dom.prev */.i.prev(node, isNormalNode, parentNode)) {
-        return null;
-    }
-    if (style.isElementCommit &&
-        style.elementIsBlock &&
-        !dom/* Dom.isBlock */.i.isBlock(parentNode)) {
-        return getSuitParent(style, parentNode, root);
-    }
-    if (isSuitElement(style, parentNode, false) &&
-        (!dom/* Dom.isBlock */.i.isBlock(parentNode) || style.elementIsBlock)) {
-        return parentNode;
-    }
-    if (style.isElementCommit && !dom/* Dom.isBlock */.i.isBlock(parentNode)) {
-        return getSuitParent(style, parentNode, root);
-    }
-    return null;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/is-inside-invisible-element.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function isInsideInvisibleElement(font, root) {
-    return Boolean(dom/* Dom.closest */.i.closest(font, ['style', 'script'], root));
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/toggle-commit-styles.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function toggleCommitStyles(commitStyle, elm, jodit) {
-    if (commitStyle.elementIsBlock ||
-        (dom/* Dom.isTag */.i.isTag(elm, commitStyle.element) && !commitStyle.elementIsDefault)) {
-        if (elm.getAttribute('style')) {
-            dom/* Dom.replace */.i.replace(elm, commitStyle.defaultTag, jodit.createInside, true);
-        }
-        else {
-            dom/* Dom.unwrap */.i.unwrap(elm);
-        }
-        return true;
-    }
-    return false;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/unwrap-children.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-function unwrapChildren(style, font) {
-    const needUnwrap = [];
-    const needChangeStyle = [];
-    let firstElementSuit;
-    const cssStyle = style.options.style;
-    if (font.firstChild) {
-        const gen = dom/* Dom.eachGen */.i.eachGen(font);
-        let item = gen.next();
-        while (!item.done) {
-            const elm = item.value;
-            if (isSuitElement(style, elm, true) &&
-                (!cssStyle || elementHasSameStyleKeys(elm, cssStyle))) {
-                if (firstElementSuit === undefined) {
-                    firstElementSuit = true;
-                }
-                needUnwrap.push(elm);
-            }
-            else if (cssStyle && isSameStyleChild(style, elm)) {
-                if (firstElementSuit === undefined) {
-                    firstElementSuit = false;
-                }
-                needChangeStyle.push(() => {
-                    (0,helpers.css)(elm, Object.keys(cssStyle).reduce((acc, key) => {
-                        acc[key] = null;
-                        return acc;
-                    }, {}));
-                    if (!(0,helpers.attr)(elm, 'style')) {
-                        (0,helpers.attr)(elm, 'style', null);
-                    }
-                    if (!(0,helpers.attr)(elm, 'style') &&
-                        elm.nodeName.toLowerCase() === style.element) {
-                        needUnwrap.push(elm);
-                    }
-                });
-            }
-            else if (!dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm)) {
-                if (firstElementSuit === undefined) {
-                    firstElementSuit = false;
-                }
-            }
-            item = gen.next();
-        }
-    }
-    needChangeStyle.forEach(clb => clb());
-    needUnwrap.forEach(dom/* Dom.unwrap */.i.unwrap);
-    return Boolean(firstElementSuit);
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/wrap-unwrapped-text.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function wrapUnwrappedText(style, elm, jodit, getRange) {
-    const root = jodit.editor, ci = jodit.createInside, edge = (n, key = 'previousSibling') => {
-        let edgeNode = n, node = n;
-        while (node) {
-            if (dom/* Dom.isTag */.i.isTag(node, jodit.o.enter)) {
-                break;
-            }
-            edgeNode = node;
-            if (node[key]) {
-                node = node[key];
-            }
-            else {
-                node =
-                    node.parentNode &&
-                        !dom/* Dom.isBlock */.i.isBlock(node.parentNode) &&
-                        node.parentNode !== root
-                        ? node.parentNode
-                        : null;
-            }
-            if (dom/* Dom.isBlock */.i.isBlock(node)) {
-                break;
-            }
-        }
-        return edgeNode;
-    };
-    const start = edge(elm), end = edge(elm, 'nextSibling');
-    const range = getRange();
-    range.setStartBefore(start);
-    range.setEndAfter(end);
-    const fragment = range.extractContents();
-    const wrapper = ci.element(style.element);
-    wrapper.appendChild(fragment);
-    dom/* Dom.safeInsertNode */.i.safeInsertNode(range, wrapper);
-    if (style.elementIsBlock) {
-        if (dom/* Dom.isEmpty */.i.isEmpty(wrapper) &&
-            !dom/* Dom.isTag */.i.isTag(wrapper.firstElementChild, 'br')) {
-            wrapper.appendChild(ci.element('br'));
-        }
-    }
-    return wrapper;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/wrap-ordered-list.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function wrapOrderedList(commitStyle, wrapper, jodit) {
-    const newWrapper = dom/* Dom.replace */.i.replace(wrapper, 'li', jodit.createInside);
-    let list = newWrapper.previousElementSibling || newWrapper.nextElementSibling;
-    if (!dom/* Dom.isTag */.i.isTag(list, ['ul', 'ol'])) {
-        list = jodit.createInside.element(commitStyle.element);
-        dom/* Dom.before */.i.before(newWrapper, list);
-    }
-    if (newWrapper.previousElementSibling === list) {
-        dom/* Dom.append */.i.append(list, newWrapper);
-    }
-    else {
-        dom/* Dom.prepend */.i.prepend(list, newWrapper);
-    }
-    return list;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/wrap-and-commit-style.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-function wrapAndCommitStyle(commitStyle, font, jodit) {
-    const wrapper = findOrCreateWrapper(commitStyle, font, jodit);
-    return commitStyle.elementIsList
-        ? wrapOrderedList(commitStyle, wrapper, jodit)
-        : dom/* Dom.replace */.i.replace(wrapper, commitStyle.element, jodit.createInside, true);
-}
-function findOrCreateWrapper(commitStyle, font, jodit) {
-    if (commitStyle.elementIsBlock) {
-        const box = dom/* Dom.up */.i.up(font, node => dom/* Dom.isBlock */.i.isBlock(node) &&
-            !dom/* Dom.isTag */.i.isTag(node, [
-                'td',
-                'th',
-                'tr',
-                'tbody',
-                'table',
-                'li',
-                'ul',
-                'ol'
-            ]), jodit.editor);
-        if (box) {
-            return box;
-        }
-    }
-    if (commitStyle.elementIsBlock) {
-        return wrapUnwrappedText(commitStyle, font, jodit, jodit.s.createRange);
-    }
-    (0,helpers.attr)(font, 'size', null);
-    return font;
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/api/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;// CONCATENATED MODULE: ./src/core/selection/style/apply-style.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-
-function ApplyStyle(jodit, cs) {
-    const { s: sel, editor } = jodit;
-    const fsm = new FiniteStateMachine('start', {
-        start: {
-            start() {
-                sel.save();
-                (0,helpers.normalizeNode)(editor.firstChild);
-                this.setState('generator');
-            }
-        },
-        generator: {
-            initGenerator() {
-                return jodit.s.wrapInTagGen();
-            },
-            nextFont(gen) {
-                const font = gen.next();
-                if (font.done) {
-                    this.setState('end');
-                    return;
-                }
-                if (isInsideInvisibleElement(font.value, editor) ||
-                    dom/* Dom.isEmptyContent */.i.isEmptyContent(font.value)) {
-                    return;
-                }
-                this.setState('check');
-                return font.value;
-            }
-        },
-        check: {
-            work(font) {
-                let elm = getSuitParent(cs, font, jodit.editor) ||
-                    getSuitChild(cs, font);
-                if (elm) {
-                    this.setState('wholeElement');
-                    return elm;
-                }
-                elm = dom/* Dom.closest */.i.closest(font, node => isSuitElement(cs, node, true), jodit.editor);
-                if (elm) {
-                    if (!cs.elementIsBlock) {
-                        extractSelectedPart(elm, font, jodit);
-                    }
-                }
-                if (cs.elementIsList && dom/* Dom.isTag */.i.isTag(elm, ['ul', 'ol'])) {
-                    this.setState('orderList');
-                    return font;
-                }
-                if (elm) {
-                    this.setState('wholeElement');
-                    return elm;
-                }
-                if (unwrapChildren(cs, font)) {
-                    this.setState('endProcess');
-                    return null;
-                }
-                this.setState('wrap');
-                return font;
-            }
-        },
-        wholeElement: {
-            toggleStyles(toggleElm) {
-                let mode = INITIAL;
-                if (toggleCommitStyles(cs, toggleElm, jodit)) {
-                    mode = UNWRAP;
-                }
-                else {
-                    mode = toggleCSS(cs, toggleElm, jodit, mode);
-                }
-                this.setState('generator', mode);
-            }
-        },
-        orderList: {
-            toggleStyles(font) {
-                let mode = INITIAL;
-                const li = dom/* Dom.closest */.i.closest(font, 'li', jodit.editor);
-                if (!li) {
-                    this.setState('generator');
-                    return;
-                }
-                const ul = dom/* Dom.closest */.i.closest(font, ['ul', 'ol'], jodit.editor);
-                if (!ul) {
-                    this.setState('generator');
-                    return;
-                }
-                mode = toggleOrderedList(cs, li, jodit, mode);
-                if (mode === REPLACE || mode === UNWRAP || mode === CHANGE) {
-                    this.setState('endWhile');
-                    return;
-                }
-                this.setState('generator');
-            }
-        },
-        wrap: {
-            toggleStyles(font) {
-                if (this.getSubState() !== 'unwrap') {
-                    const toggleElm = wrapAndCommitStyle(cs, font, jodit);
-                    toggleCSS(cs, toggleElm, jodit, WRAP);
-                }
-                this.setState('generator');
-            }
-        },
-        endWhile: {
-            nextFont(gen) {
-                const font = gen.next();
-                if (font.done) {
-                    this.setState('end');
-                }
-            }
-        },
-        endProcess: {
-            toggleStyles() {
-                this.setState('generator');
-            }
-        },
-        end: {
-            finalize() {
-                sel.restore();
-            }
-        }
-    });
-    fsm.dispatch('start');
-    const gen = fsm.dispatch('initGenerator');
-    while (fsm.getState() !== 'end') {
-        const font = fsm.dispatch('nextFont', gen);
-        if (font) {
-            const wrapper = fsm.dispatch('work', font);
-            fsm.dispatch('toggleStyles', wrapper);
-        }
-    }
-    fsm.dispatch('finalize', gen);
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/style/commit-style.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-const WRAP = 'wrap';
-const UNWRAP = 'unwrap';
-const CHANGE = 'change';
-const UNSET = 'unset';
-const INITIAL = 'initial';
-const REPLACE = 'replace';
-class CommitStyle {
-    constructor(options) {
-        this.options = options;
-    }
-    get elementIsList() {
-        return Boolean(this.options.element && ['ul', 'ol'].includes(this.options.element));
-    }
-    get element() {
-        return this.options.element || this.defaultTag;
-    }
-    get elementIsBlock() {
-        return Boolean(this.options.element && constants.IS_BLOCK.test(this.options.element));
-    }
-    get isElementCommit() {
-        return Boolean(this.options.element &&
-            this.options.element !== this.options.defaultTag);
-    }
-    get defaultTag() {
-        if (this.options.defaultTag) {
-            return this.options.defaultTag;
-        }
-        return this.elementIsBlock ? 'p' : 'span';
-    }
-    get elementIsDefault() {
-        return this.element === this.defaultTag;
-    }
-    apply(jodit) {
-        ApplyStyle(jodit, this);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/core/selection/index.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-
-
-
-/***/ }),
-
-/***/ 94707:
+/***/ 88755:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9906,9 +8326,6 @@ const canUsePersistentStorage = (() => {
     };
 })();
 class LocalStorageProvider {
-    constructor(rootKey) {
-        this.rootKey = rootKey;
-    }
     set(key, value) {
         try {
             const buffer = localStorage.getItem(this.rootKey);
@@ -9937,6 +8354,9 @@ class LocalStorageProvider {
     exists(key) {
         return this.get(key) != null;
     }
+    constructor(rootKey) {
+        this.rootKey = rootKey;
+    }
     clear() {
         try {
             localStorage.removeItem(this.rootKey);
@@ -9947,7 +8367,7 @@ class LocalStorageProvider {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
+var helpers = __webpack_require__(40332);
 ;// CONCATENATED MODULE: ./src/core/storage/engines/memory-storage-provider.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -9989,13 +8409,6 @@ class MemoryStorageProvider {
 
 const StorageKey = 'Jodit_';
 class Storage {
-    constructor(provider, suffix) {
-        this.provider = provider;
-        this.prefix = StorageKey;
-        if (suffix) {
-            this.prefix += suffix;
-        }
-    }
     set(key, value) {
         this.provider.set((0,helpers.camelCase)(this.prefix + key), value);
         return this;
@@ -10013,6 +8426,13 @@ class Storage {
     clear() {
         this.provider.clear();
         return this;
+    }
+    constructor(provider, suffix) {
+        this.provider = provider;
+        this.prefix = StorageKey;
+        if (suffix) {
+            this.prefix += suffix;
+        }
     }
     static makeStorage(persistent = false, suffix) {
         let provider;
@@ -10039,7 +8459,7 @@ class Storage {
 
 /***/ }),
 
-/***/ 63711:
+/***/ 72452:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10052,7 +8472,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(58260);
+var to_array = __webpack_require__(1853);
 ;// CONCATENATED MODULE: ./src/core/traits/elms.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -10070,7 +8490,7 @@ class Elms {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-void.ts
-var is_void = __webpack_require__(62061);
+var is_void = __webpack_require__(24021);
 ;// CONCATENATED MODULE: ./src/core/traits/mods.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -10105,10 +8525,10 @@ class Mods {
     }
 }
 
-// EXTERNAL MODULE: ./src/modules/index.ts + 20 modules
-var modules = __webpack_require__(5687);
+// EXTERNAL MODULE: ./src/modules/index.ts + 41 modules
+var modules = __webpack_require__(22705);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
+var helpers = __webpack_require__(40332);
 ;// CONCATENATED MODULE: ./src/core/traits/dlgs.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -10171,7 +8591,7 @@ class Dlgs {
 
 /***/ }),
 
-/***/ 6816:
+/***/ 96031:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10181,15 +8601,15 @@ class Dlgs {
 /* harmony export */   "zx": function() { return /* binding */ Button; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96659);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(65401);
-/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(38301);
-/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(86129);
-/* harmony import */ var jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(87385);
-/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(80353);
-/* harmony import */ var jodit_core_ui_group_list__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(27682);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(63945);
-/* harmony import */ var jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(71685);
+/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53929);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24263);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(76502);
+/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(24421);
+/* harmony import */ var jodit_core_helpers_checker_is_function__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(42096);
+/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(77904);
+/* harmony import */ var jodit_core_ui_group_list__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6442);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(67493);
+/* harmony import */ var jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(29411);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -10224,20 +8644,6 @@ const UIButtonState = () => ({
     tabIndex: undefined
 });
 let UIButton = class UIButton extends jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__/* .UIElement */ .u {
-    constructor(jodit, state) {
-        super(jodit);
-        this.isButton = true;
-        this.state = UIButtonState();
-        this.actionHandlers = [];
-        this.updateSize();
-        this.onChangeSize();
-        this.onChangeStatus();
-        if (state) {
-            this.hookStatus(jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_6__/* .STATUSES.ready */ .n.ready, () => {
-                this.setState(state);
-            });
-        }
-    }
     className() {
         return 'UIButton';
     }
@@ -10320,6 +8726,20 @@ let UIButton = class UIButton extends jodit_core_ui_element__WEBPACK_IMPORTED_MO
         this.j.e.on(button, 'click', this.onActionFire);
         return button;
     }
+    constructor(jodit, state) {
+        super(jodit);
+        this.isButton = true;
+        this.state = UIButtonState();
+        this.actionHandlers = [];
+        this.updateSize();
+        this.onChangeSize();
+        this.onChangeStatus();
+        if (state) {
+            this.hookStatus(jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_6__/* .STATUSES.ready */ .n.ready, () => {
+                this.setState(state);
+            });
+        }
+    }
     destruct() {
         this.j.e.off(this.container);
         return super.destruct();
@@ -10400,7 +8820,7 @@ function Button(jodit, stateOrText, text, variant) {
 
 /***/ }),
 
-/***/ 81402:
+/***/ 55310:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10416,13 +8836,13 @@ __webpack_require__.d(__webpack_exports__, {
 // UNUSED EXPORTS: UIButtonGroup
 
 // EXTERNAL MODULE: ./src/core/ui/button/button/button.ts
-var button_button = __webpack_require__(6816);
+var button_button = __webpack_require__(96031);
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(20255);
 // EXTERNAL MODULE: ./src/core/ui/group/group.ts
-var group = __webpack_require__(31454);
+var group = __webpack_require__(61479);
 // EXTERNAL MODULE: ./src/core/decorators/component/component.ts
-var component = __webpack_require__(45466);
+var component = __webpack_require__(11441);
 // EXTERNAL MODULE: external "{assert(){}};"
 var external_assert_ = __webpack_require__(52378);
 ;// CONCATENATED MODULE: ./src/core/ui/button/group/group.ts
@@ -10438,6 +8858,20 @@ var external_assert_ = __webpack_require__(52378);
 
 
 let UIButtonGroup = class UIButtonGroup extends group/* UIGroup */.q {
+    className() {
+        return 'UIButtonGroup';
+    }
+    render(options) {
+        return `<div>
+			<div class="&__label">~${options.label}~</div>
+			<div class="&__options"></div>
+		</div>`;
+    }
+    appendChildToContainer(childContainer) {
+        const options = this.getElm('options');
+        void 0;
+        options.appendChild(childContainer);
+    }
     constructor(jodit, options = {
         radio: true
     }) {
@@ -10455,19 +8889,6 @@ let UIButtonGroup = class UIButtonGroup extends group/* UIGroup */.q {
         }), options);
         this.options = options;
         this.select((_b = options.value) !== null && _b !== void 0 ? _b : 0);
-    }
-    className() {
-        return 'UIButtonGroup';
-    }
-    render(options) {
-        return `<div>
-			<div class="&__label">~${options.label}~</div>
-			<div class="&__options"></div>
-		</div>`;
-    }
-    appendChildToContainer(childContainer) {
-        const options = this.getElm('options');
-        options.appendChild(childContainer);
     }
     select(indexOrValue) {
         var _a, _b;
@@ -10495,13 +8916,13 @@ UIButtonGroup = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
+var helpers = __webpack_require__(40332);
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(16672);
+var global = __webpack_require__(17332);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
-var decorators = __webpack_require__(63945);
+var decorators = __webpack_require__(67493);
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(96659);
+var ui_element = __webpack_require__(53929);
 ;// CONCATENATED MODULE: ./src/core/ui/button/tooltip/tooltip.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -10515,6 +8936,9 @@ var ui_element = __webpack_require__(96659);
 
 
 class UITooltip extends ui_element/* UIElement */.u {
+    className() {
+        return 'UITooltip';
+    }
     constructor(view) {
         super(view);
         this.__isOpened = false;
@@ -10534,9 +8958,6 @@ class UITooltip extends ui_element/* UIElement */.u {
             this.j.async.clearTimeout(this.__delayShowTimeout);
             timeout = view.async.setTimeout(this.__close, this.j.defaultTimeout);
         });
-    }
-    className() {
-        return 'UITooltip';
     }
     static make(view) {
         let instance = (0,helpers.dataBind)(view, 'ui-tooltip');
@@ -10609,7 +9030,7 @@ class UITooltip extends ui_element/* UIElement */.u {
 
 /***/ }),
 
-/***/ 96659:
+/***/ 53929:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10617,12 +9038,12 @@ class UITooltip extends ui_element/* UIElement */.u {
 /* harmony export */   "u": function() { return /* binding */ UIElement; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2624);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(65401);
-/* harmony import */ var jodit_core_traits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(63711);
-/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(86129);
-/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(80353);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(63945);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(90549);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(24263);
+/* harmony import */ var jodit_core_traits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(72452);
+/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(24421);
+/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(77904);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(67493);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -10637,17 +9058,6 @@ var UIElement_1;
 
 
 let UIElement = UIElement_1 = class UIElement extends jodit_core_component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent */ .Hr {
-    constructor(jodit, options) {
-        super(jodit);
-        this.name = '';
-        this.__parentElement = null;
-        this.mods = {};
-        this.container = this.createContainer(options);
-        Object.defineProperty(this.container, 'component', {
-            value: this,
-            configurable: true
-        });
-    }
     get parentElement() {
         return this.__parentElement;
     }
@@ -10729,6 +9139,17 @@ let UIElement = UIElement_1 = class UIElement extends jodit_core_component__WEBP
             .replace(/&__/g, this.componentName + '__')
             .replace(/~([^~]+?)~/g, (_, s) => this.i18n(s)));
     }
+    constructor(jodit, options) {
+        super(jodit);
+        this.name = '';
+        this.__parentElement = null;
+        this.mods = {};
+        this.container = this.createContainer(options);
+        Object.defineProperty(this.container, 'component', {
+            value: this,
+            configurable: true
+        });
+    }
     destruct() {
         jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_1__/* .Dom.safeRemove */ .i.safeRemove(this.container);
         this.parentElement = null;
@@ -10743,7 +9164,7 @@ UIElement = UIElement_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_6__/* .__decorate */
 
 /***/ }),
 
-/***/ 18839:
+/***/ 80567:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10763,15 +9184,15 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(20255);
 // EXTERNAL MODULE: ./src/core/ui/group/group.ts
-var group = __webpack_require__(31454);
+var group = __webpack_require__(61479);
 // EXTERNAL MODULE: ./src/core/ui/form/inputs/input/input.ts
-var input = __webpack_require__(97288);
+var input = __webpack_require__(30194);
 // EXTERNAL MODULE: ./src/core/helpers/utils/utils.ts
-var utils = __webpack_require__(32389);
+var utils = __webpack_require__(67309);
 // EXTERNAL MODULE: ./src/core/decorators/component/component.ts
-var component = __webpack_require__(45466);
+var component = __webpack_require__(11441);
 // EXTERNAL MODULE: ./src/core/ui/form/validators/index.ts + 2 modules
-var validators = __webpack_require__(83518);
+var validators = __webpack_require__(49587);
 ;// CONCATENATED MODULE: ./src/core/ui/form/inputs/select/select.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -10786,11 +9207,6 @@ var UISelect_1;
 
 
 let UISelect = UISelect_1 = class UISelect extends input/* UIInput */.u {
-    constructor(jodit, state) {
-        super(jodit, state);
-        this.state = { ...UISelect_1.defaultState };
-        Object.assign(this.state, state);
-    }
     className() {
         return 'UISelect';
     }
@@ -10829,6 +9245,11 @@ let UISelect = UISelect_1 = class UISelect extends input/* UIInput */.u {
             this.validators.add(validators/* selectValidators.required */.s.C);
         }
     }
+    constructor(jodit, state) {
+        super(jodit, state);
+        this.state = { ...UISelect_1.defaultState };
+        Object.assign(this.state, state);
+    }
 };
 UISelect.defaultState = {
     ...input/* UIInput.defaultState */.u.defaultState,
@@ -10842,9 +9263,9 @@ UISelect = UISelect_1 = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/index.ts
-var helpers_utils = __webpack_require__(38301);
+var helpers_utils = __webpack_require__(76502);
 // EXTERNAL MODULE: ./src/core/component/component.ts
-var component_component = __webpack_require__(16867);
+var component_component = __webpack_require__(45113);
 ;// CONCATENATED MODULE: ./src/core/ui/form/form.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -10859,13 +9280,6 @@ var component_component = __webpack_require__(16867);
 
 
 let UIForm = class UIForm extends group/* UIGroup */.q {
-    constructor(...args) {
-        var _a, _b;
-        super(...args);
-        if ((_a = this.options) === null || _a === void 0 ? void 0 : _a.className) {
-            this.container.classList.add((_b = this.options) === null || _b === void 0 ? void 0 : _b.className);
-        }
-    }
     className() {
         return 'UIForm';
     }
@@ -10906,6 +9320,13 @@ let UIForm = class UIForm extends group/* UIGroup */.q {
         (0,helpers_utils.attr)(form, 'dir', this.j.o.direction || 'auto');
         return form;
     }
+    constructor(...args) {
+        var _a, _b;
+        super(...args);
+        if ((_a = this.options) === null || _a === void 0 ? void 0 : _a.className) {
+            this.container.classList.add((_b = this.options) === null || _b === void 0 ? void 0 : _b.className);
+        }
+    }
 };
 UIForm = (0,tslib_es6/* __decorate */.gn)([
     component/* component */.w
@@ -10924,6 +9345,13 @@ var UITextArea_1;
 
 
 let UITextArea = UITextArea_1 = class UITextArea extends input/* UIInput */.u {
+    className() {
+        return 'UITextArea';
+    }
+    createContainer(options) {
+        this.nativeInput = this.j.create.element('textarea');
+        return super.createContainer(options);
+    }
     constructor(jodit, state) {
         super(jodit, state);
         this.state = { ...UITextArea_1.defaultState };
@@ -10931,13 +9359,6 @@ let UITextArea = UITextArea_1 = class UITextArea extends input/* UIInput */.u {
         if (this.state.resizable === false) {
             this.nativeInput.style.resize = 'none';
         }
-    }
-    className() {
-        return 'UITextArea';
-    }
-    createContainer(options) {
-        this.nativeInput = this.j.create.element('textarea');
-        return super.createContainer(options);
     }
 };
 UITextArea.defaultState = {
@@ -10951,9 +9372,9 @@ UITextArea = UITextArea_1 = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
-var decorators = __webpack_require__(63945);
+var decorators = __webpack_require__(67493);
 // EXTERNAL MODULE: ./src/core/dom/dom.ts
-var dom = __webpack_require__(65401);
+var dom = __webpack_require__(24263);
 ;// CONCATENATED MODULE: ./src/core/ui/form/inputs/checkbox/checkbox.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -10967,11 +9388,6 @@ var UICheckbox_1;
 
 
 let UICheckbox = UICheckbox_1 = class UICheckbox extends input/* UIInput */.u {
-    constructor(jodit, options) {
-        super(jodit, { ...options, type: 'checkbox' });
-        this.state = { ...UICheckbox_1.defaultState };
-        Object.assign(this.state, options);
-    }
     className() {
         return 'UICheckbox';
     }
@@ -10979,6 +9395,11 @@ let UICheckbox = UICheckbox_1 = class UICheckbox extends input/* UIInput */.u {
         return this.j.c.element('label', {
             className: this.componentName
         });
+    }
+    constructor(jodit, options) {
+        super(jodit, { ...options, type: 'checkbox' });
+        this.state = { ...UICheckbox_1.defaultState };
+        Object.assign(this.state, options);
     }
     onChangeChecked() {
         this.value = this.state.checked.toString();
@@ -11024,7 +9445,7 @@ UICheckbox = UICheckbox_1 = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./src/core/ui/form/inputs/file/file.ts
-var file = __webpack_require__(32460);
+var file = __webpack_require__(41374);
 ;// CONCATENATED MODULE: ./src/core/ui/form/inputs/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -11049,6 +9470,9 @@ var file = __webpack_require__(32460);
 
 
 let UIBlock = class UIBlock extends group/* UIGroup */.q {
+    className() {
+        return 'UIBlock';
+    }
     constructor(jodit, elements, options = {
         align: 'left'
     }) {
@@ -11061,9 +9485,6 @@ let UIBlock = class UIBlock extends group/* UIGroup */.q {
             this.container.classList.add(this.options.className);
         (0,helpers_utils.attr)(this.container, 'data-ref', options.ref);
         (0,helpers_utils.attr)(this.container, 'ref', options.ref);
-    }
-    className() {
-        return 'UIBlock';
     }
 };
 UIBlock = (0,tslib_es6/* __decorate */.gn)([
@@ -11084,7 +9505,7 @@ UIBlock = (0,tslib_es6/* __decorate */.gn)([
 
 /***/ }),
 
-/***/ 32460:
+/***/ 41374:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11092,9 +9513,9 @@ UIBlock = (0,tslib_es6/* __decorate */.gn)([
 /* harmony export */   "Z": function() { return /* binding */ UIFileInput; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(97288);
-/* harmony import */ var jodit_core_decorators_component_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(45466);
-/* harmony import */ var jodit_core_ui_button_button_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6816);
+/* harmony import */ var jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(30194);
+/* harmony import */ var jodit_core_decorators_component_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(11441);
+/* harmony import */ var jodit_core_ui_button_button_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(96031);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -11106,17 +9527,6 @@ UIBlock = (0,tslib_es6/* __decorate */.gn)([
 
 
 let UIFileInput = class UIFileInput extends jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__/* .UIInput */ .u {
-    constructor(jodit, options) {
-        super(jodit, {
-            type: 'file',
-            ...options
-        });
-        this.state = {
-            ...jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__/* .UIInput.defaultState */ .u.defaultState,
-            type: 'file',
-            onlyImages: true
-        };
-    }
     className() {
         return 'UIFileInput';
     }
@@ -11145,6 +9555,17 @@ let UIFileInput = class UIFileInput extends jodit_core_ui_form_inputs_input_inpu
 			multiple=""
 		/>`);
     }
+    constructor(jodit, options) {
+        super(jodit, {
+            type: 'file',
+            ...options
+        });
+        this.state = {
+            ...jodit_core_ui_form_inputs_input_input__WEBPACK_IMPORTED_MODULE_0__/* .UIInput.defaultState */ .u.defaultState,
+            type: 'file',
+            onlyImages: true
+        };
+    }
 };
 UIFileInput = (0,tslib__WEBPACK_IMPORTED_MODULE_2__/* .__decorate */ .gn)([
     jodit_core_decorators_component_component__WEBPACK_IMPORTED_MODULE_3__/* .component */ .w
@@ -11154,7 +9575,7 @@ UIFileInput = (0,tslib__WEBPACK_IMPORTED_MODULE_2__/* .__decorate */ .gn)([
 
 /***/ }),
 
-/***/ 97288:
+/***/ 30194:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11162,13 +9583,13 @@ UIFileInput = (0,tslib__WEBPACK_IMPORTED_MODULE_2__/* .__decorate */ .gn)([
 /* harmony export */   "u": function() { return /* binding */ UIInput; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96659);
-/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(38301);
-/* harmony import */ var jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(58260);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(65401);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(63945);
-/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(80353);
-/* harmony import */ var jodit_core_ui_form_validators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(83518);
+/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53929);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76502);
+/* harmony import */ var jodit_core_helpers_array_to_array__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1853);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24263);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(67493);
+/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(77904);
+/* harmony import */ var jodit_core_ui_form_validators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(49587);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -11185,40 +9606,6 @@ var UIInput_1;
 
 
 let UIInput = UIInput_1 = class UIInput extends jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__/* .UIElement */ .u {
-    constructor(jodit, options) {
-        super(jodit, options);
-        this.label = this.j.c.span(this.getFullElName('label'));
-        this.icon = this.j.c.span(this.getFullElName('icon'));
-        this.clearButton = this.j.c.span(this.getFullElName('clear'), jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_5__/* .Icon.get */ .J.get('cancel'));
-        this.state = { ...UIInput_1.defaultState };
-        this.__errorBox = this.j.c.span(this.getFullElName('error'));
-        this.validators = new Set([]);
-        if ((options === null || options === void 0 ? void 0 : options.value) !== undefined) {
-            options.value = options.value.toString();
-        }
-        Object.assign(this.state, options);
-        if (this.state.clearButton !== undefined) {
-            this.j.e
-                .on(this.clearButton, 'click', (e) => {
-                e.preventDefault();
-                this.nativeInput.value = '';
-                this.j.e.fire(this.nativeInput, 'input');
-                this.focus();
-            })
-                .on(this.nativeInput, 'input', () => {
-                this.state.clearButton = Boolean(this.value.length);
-            });
-            this.state.clearButton = Boolean(this.value.length);
-        }
-        this.j.e
-            .on(this.nativeInput, 'focus blur', () => {
-            this.onChangeFocus();
-        })
-            .on(this.nativeInput, 'input change', this.onChangeValue);
-        this.onChangeState();
-        this.onChangeClassName();
-        this.onChangeStateValue();
-    }
     className() {
         return 'UIInput';
     }
@@ -11326,6 +9713,40 @@ let UIInput = UIInput_1 = class UIInput extends jodit_core_ui_element__WEBPACK_I
     createNativeInput(options) {
         return this.j.create.element('input');
     }
+    constructor(jodit, options) {
+        super(jodit, options);
+        this.label = this.j.c.span(this.getFullElName('label'));
+        this.icon = this.j.c.span(this.getFullElName('icon'));
+        this.clearButton = this.j.c.span(this.getFullElName('clear'), jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_5__/* .Icon.get */ .J.get('cancel'));
+        this.state = { ...UIInput_1.defaultState };
+        this.__errorBox = this.j.c.span(this.getFullElName('error'));
+        this.validators = new Set([]);
+        if ((options === null || options === void 0 ? void 0 : options.value) !== undefined) {
+            options.value = options.value.toString();
+        }
+        Object.assign(this.state, options);
+        if (this.state.clearButton !== undefined) {
+            this.j.e
+                .on(this.clearButton, 'click', (e) => {
+                e.preventDefault();
+                this.nativeInput.value = '';
+                this.j.e.fire(this.nativeInput, 'input');
+                this.focus();
+            })
+                .on(this.nativeInput, 'input', () => {
+                this.state.clearButton = Boolean(this.value.length);
+            });
+            this.state.clearButton = Boolean(this.value.length);
+        }
+        this.j.e
+            .on(this.nativeInput, 'focus blur', () => {
+            this.onChangeFocus();
+        })
+            .on(this.nativeInput, 'input change', this.onChangeValue);
+        this.onChangeState();
+        this.onChangeClassName();
+        this.onChangeStateValue();
+    }
     focus() {
         this.nativeInput.focus();
     }
@@ -11380,7 +9801,7 @@ UIInput = UIInput_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_7__/* .__decorate */ .gn
 
 /***/ }),
 
-/***/ 83518:
+/***/ 49587:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11407,9 +9828,9 @@ __webpack_require__.d(select_namespaceObject, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-url.ts
-var is_url = __webpack_require__(42139);
+var is_url = __webpack_require__(64350);
 // EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
-var trim = __webpack_require__(89681);
+var trim = __webpack_require__(33941);
 ;// CONCATENATED MODULE: ./src/core/ui/form/validators/input.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -11462,7 +9883,7 @@ const select_required = function (select) {
 
 /***/ }),
 
-/***/ 31454:
+/***/ 61479:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11470,13 +9891,13 @@ const select_required = function (select) {
 /* harmony export */   "q": function() { return /* binding */ UIGroup; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(20255);
-/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96659);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(63945);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(83370);
+/* harmony import */ var _element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53929);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(67493);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40332);
 /* harmony import */ var jodit_core_helpers_utils_assert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(52378);
 /* harmony import */ var jodit_core_helpers_utils_assert__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jodit_core_helpers_utils_assert__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(65401);
-/* harmony import */ var jodit_core_component_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(16867);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24263);
+/* harmony import */ var jodit_core_component_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(45113);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -11492,17 +9913,6 @@ var UIGroup_1;
 
 
 let UIGroup = UIGroup_1 = class UIGroup extends _element__WEBPACK_IMPORTED_MODULE_0__/* .UIElement */ .u {
-    constructor(jodit, elements, options) {
-        super(jodit, options);
-        this.options = options;
-        this.syncMod = false;
-        this.elements = [];
-        this.buttonSize = 'middle';
-        elements === null || elements === void 0 ? void 0 : elements.forEach(elm => elm && this.append(elm));
-        if (options === null || options === void 0 ? void 0 : options.name) {
-            this.name = options.name;
-        }
-    }
     className() {
         return 'UIGroup';
     }
@@ -11540,6 +9950,7 @@ let UIGroup = UIGroup_1 = class UIGroup extends _element__WEBPACK_IMPORTED_MODUL
         }
         if (distElement) {
             const distElm = this.getElm(distElement);
+            void 0;
             distElm.appendChild(elm.container);
         }
         else {
@@ -11571,6 +9982,17 @@ let UIGroup = UIGroup_1 = class UIGroup extends _element__WEBPACK_IMPORTED_MODUL
         this.elements.length = 0;
         return this;
     }
+    constructor(jodit, elements, options) {
+        super(jodit, options);
+        this.options = options;
+        this.syncMod = false;
+        this.elements = [];
+        this.buttonSize = 'middle';
+        elements === null || elements === void 0 ? void 0 : elements.forEach(elm => elm && this.append(elm));
+        if (options === null || options === void 0 ? void 0 : options.name) {
+            this.name = options.name;
+        }
+    }
     destruct() {
         this.clear();
         return super.destruct();
@@ -11587,7 +10009,7 @@ UIGroup = UIGroup_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_6__/* .__decorate */ .gn
 
 /***/ }),
 
-/***/ 27682:
+/***/ 6442:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11600,13 +10022,13 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(20255);
 // EXTERNAL MODULE: ./src/core/ui/helpers/get-control-type.ts
-var get_control_type = __webpack_require__(58240);
+var get_control_type = __webpack_require__(38546);
 // EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(80031);
+var config = __webpack_require__(93166);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
-var is_array = __webpack_require__(41515);
+var is_array = __webpack_require__(49781);
 // EXTERNAL MODULE: ./src/core/helpers/utils/index.ts
-var utils = __webpack_require__(38301);
+var utils = __webpack_require__(76502);
 ;// CONCATENATED MODULE: ./src/core/ui/helpers/get-strong-control-types.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -11628,21 +10050,21 @@ function getStrongControlTypes(items, controls) {
 }
 
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
-var decorators = __webpack_require__(63945);
+var decorators = __webpack_require__(67493);
 // EXTERNAL MODULE: ./src/core/ui/group/group.ts
-var group = __webpack_require__(31454);
+var group = __webpack_require__(61479);
 // EXTERNAL MODULE: ./src/core/ui/group/separator.ts
-var separator = __webpack_require__(33250);
+var separator = __webpack_require__(75018);
 // EXTERNAL MODULE: ./src/core/ui/group/spacer.ts
-var spacer = __webpack_require__(35756);
+var spacer = __webpack_require__(58495);
 // EXTERNAL MODULE: ./src/core/ui/button/button/button.ts
-var button_button = __webpack_require__(6816);
+var button_button = __webpack_require__(96031);
 // EXTERNAL MODULE: ./src/core/ui/helpers/buttons.ts
-var buttons = __webpack_require__(20220);
+var buttons = __webpack_require__(97642);
 // EXTERNAL MODULE: ./src/core/helpers/array/split-array.ts
-var split_array = __webpack_require__(11986);
+var split_array = __webpack_require__(14556);
 // EXTERNAL MODULE: ./src/core/component/component.ts
-var component = __webpack_require__(16867);
+var component = __webpack_require__(45113);
 ;// CONCATENATED MODULE: ./src/core/ui/group/list.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -11662,17 +10084,17 @@ var component = __webpack_require__(16867);
 
 
 let UIList = class UIList extends group/* UIGroup */.q {
-    constructor(jodit) {
-        super(jodit);
-        this.mode = 'horizontal';
-        this.removeButtons = [];
-        this.onChangeMode();
-    }
     className() {
         return 'UIList';
     }
     onChangeMode() {
         this.setMod('mode', this.mode);
+    }
+    constructor(jodit) {
+        super(jodit);
+        this.mode = 'horizontal';
+        this.removeButtons = [];
+        this.onChangeMode();
     }
     makeGroup() {
         return new group/* UIGroup */.q(this.jodit);
@@ -11774,7 +10196,7 @@ UIList = (0,tslib_es6/* __decorate */.gn)([
 
 /***/ }),
 
-/***/ 33250:
+/***/ 75018:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11782,8 +10204,8 @@ UIList = (0,tslib_es6/* __decorate */.gn)([
 /* harmony export */   "l": function() { return /* binding */ UISeparator; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96659);
-/* harmony import */ var jodit_core_decorators_component_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45466);
+/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53929);
+/* harmony import */ var jodit_core_decorators_component_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11441);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -11805,7 +10227,7 @@ UISeparator = (0,tslib__WEBPACK_IMPORTED_MODULE_1__/* .__decorate */ .gn)([
 
 /***/ }),
 
-/***/ 35756:
+/***/ 58495:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11813,8 +10235,8 @@ UISeparator = (0,tslib__WEBPACK_IMPORTED_MODULE_1__/* .__decorate */ .gn)([
 /* harmony export */   "W": function() { return /* binding */ UISpacer; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96659);
-/* harmony import */ var jodit_core_decorators_component_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(45466);
+/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(53929);
+/* harmony import */ var jodit_core_decorators_component_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(11441);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -11836,7 +10258,7 @@ UISpacer = (0,tslib__WEBPACK_IMPORTED_MODULE_1__/* .__decorate */ .gn)([
 
 /***/ }),
 
-/***/ 20220:
+/***/ 97642:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11844,7 +10266,7 @@ UISpacer = (0,tslib__WEBPACK_IMPORTED_MODULE_1__/* .__decorate */ .gn)([
 /* harmony export */   "A": function() { return /* binding */ isButtonGroup; },
 /* harmony export */   "q": function() { return /* binding */ flatButtonsSet; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_checker_is_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(41515);
+/* harmony import */ var jodit_core_helpers_checker_is_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(49781);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -11874,7 +10296,7 @@ function flatButtonsSet(buttons, jodit) {
 
 /***/ }),
 
-/***/ 58240:
+/***/ 38546:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11882,8 +10304,8 @@ function flatButtonsSet(buttons, jodit) {
 /* harmony export */   "Y": function() { return /* binding */ getControlType; },
 /* harmony export */   "z": function() { return /* binding */ findControlType; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(83370);
-/* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(80031);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40332);
+/* harmony import */ var jodit_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(93166);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -11936,15 +10358,15 @@ function findControlType(path, controls) {
 
 /***/ }),
 
-/***/ 80353:
+/***/ 77904:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "J": function() { return /* binding */ Icon; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers_utils_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76239);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(83370);
+/* harmony import */ var jodit_core_helpers_utils_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(26911);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40332);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -12011,7 +10433,7 @@ Icon.icons = {};
 
 /***/ }),
 
-/***/ 55865:
+/***/ 93801:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12038,19 +10460,19 @@ __webpack_require__.d(__webpack_exports__, {
 // UNUSED EXPORTS: UIButtonGroup, UIButtonState, UIFileInput, UISelect, UISpacer
 
 // EXTERNAL MODULE: ./src/core/ui/element.ts
-var ui_element = __webpack_require__(96659);
+var ui_element = __webpack_require__(53929);
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(81402);
+var ui_button = __webpack_require__(55310);
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts
-var popup = __webpack_require__(36649);
+var popup = __webpack_require__(35799);
 // EXTERNAL MODULE: ./src/core/ui/group/group.ts
-var group = __webpack_require__(31454);
+var group = __webpack_require__(61479);
 // EXTERNAL MODULE: ./src/core/ui/group/list.ts + 1 modules
-var list = __webpack_require__(27682);
+var list = __webpack_require__(6442);
 // EXTERNAL MODULE: ./src/core/ui/group/separator.ts
-var separator = __webpack_require__(33250);
+var separator = __webpack_require__(75018);
 // EXTERNAL MODULE: ./src/core/ui/group/spacer.ts
-var spacer = __webpack_require__(35756);
+var spacer = __webpack_require__(58495);
 ;// CONCATENATED MODULE: ./src/core/ui/group/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -12063,11 +10485,11 @@ var spacer = __webpack_require__(35756);
 
 
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 6 modules
-var ui_form = __webpack_require__(18839);
+var ui_form = __webpack_require__(80567);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var icon = __webpack_require__(80353);
+var icon = __webpack_require__(77904);
 // EXTERNAL MODULE: ./src/core/dom/dom.ts
-var dom = __webpack_require__(65401);
+var dom = __webpack_require__(24263);
 ;// CONCATENATED MODULE: ./src/core/ui/progress-bar/progress-bar.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -12120,14 +10542,14 @@ class ProgressBar extends ui_element/* UIElement */.u {
 
 /***/ }),
 
-/***/ 36649:
+/***/ 35799:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "G": function() { return /* reexport safe */ _popup__WEBPACK_IMPORTED_MODULE_0__.G; }
 /* harmony export */ });
-/* harmony import */ var _popup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(78900);
+/* harmony import */ var _popup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12680);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -12138,7 +10560,7 @@ class ProgressBar extends ui_element/* UIElement */.u {
 
 /***/ }),
 
-/***/ 78900:
+/***/ 12680:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12146,14 +10568,14 @@ class ProgressBar extends ui_element/* UIElement */.u {
 /* harmony export */   "G": function() { return /* binding */ Popup; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(65401);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(83370);
+/* harmony import */ var jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(24263);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40332);
 /* harmony import */ var jodit_core_helpers_utils_assert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52378);
 /* harmony import */ var jodit_core_helpers_utils_assert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jodit_core_helpers_utils_assert__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(96659);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(63945);
-/* harmony import */ var jodit_core_component_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(16867);
-/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(16672);
+/* harmony import */ var jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(53929);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(67493);
+/* harmony import */ var jodit_core_component_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(45113);
+/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(17332);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -12169,20 +10591,6 @@ class ProgressBar extends ui_element/* UIElement */.u {
 
 
 class Popup extends jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_3__/* .UIElement */ .u {
-    constructor(jodit, smart = true) {
-        super(jodit);
-        this.smart = smart;
-        this.isOpened = false;
-        this.strategy = 'leftBottom';
-        this.viewBound = () => ({
-            left: 0,
-            top: 0,
-            width: this.ow.innerWidth,
-            height: this.ow.innerHeight
-        });
-        this.childrenPopups = new Set();
-        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(this.container, 'role', 'popup');
-    }
     className() {
         return 'Popup';
     }
@@ -12419,12 +10827,27 @@ class Popup extends jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_3__/* .UIElem
             .off(this.container, 'scroll mousewheel', up)
             .off(ow, 'scroll', up)
             .off(ow, 'resize', up);
+        void 0;
         jodit_core_dom_dom__WEBPACK_IMPORTED_MODULE_0__/* .Dom.up */ .i.up(this.j.container, box => {
             box && this.j.e.off(box, 'scroll mousewheel', up);
         });
     }
     setZIndex(index) {
         this.container.style.zIndex = index.toString();
+    }
+    constructor(jodit, smart = true) {
+        super(jodit);
+        this.smart = smart;
+        this.isOpened = false;
+        this.strategy = 'leftBottom';
+        this.viewBound = () => ({
+            left: 0,
+            top: 0,
+            width: this.ow.innerWidth,
+            height: this.ow.innerHeight
+        });
+        this.childrenPopups = new Set();
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.attr)(this.container, 'role', 'popup');
     }
     destruct() {
         this.close();
@@ -12448,7 +10871,7 @@ class Popup extends jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_3__/* .UIElem
 
 /***/ }),
 
-/***/ 67555:
+/***/ 43608:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12456,13 +10879,13 @@ class Popup extends jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_3__/* .UIElem
 /* harmony export */   "C": function() { return /* binding */ ViewWithToolbar; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(20255);
-/* harmony import */ var _view__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(49896);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(83370);
-/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36516);
-/* harmony import */ var jodit_modules_toolbar_factory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5243);
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2624);
-/* harmony import */ var _ui_helpers_buttons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(20220);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(63945);
+/* harmony import */ var _view__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(75902);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40332);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(64968);
+/* harmony import */ var jodit_modules_toolbar_factory__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(81438);
+/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(90549);
+/* harmony import */ var _ui_helpers_buttons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(97642);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(67493);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -12478,16 +10901,6 @@ class Popup extends jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_3__/* .UIElem
 
 
 class ViewWithToolbar extends _view__WEBPACK_IMPORTED_MODULE_0__/* .View */ .G {
-    constructor(options, isJodit = false) {
-        super(options, isJodit);
-        this.toolbar = (0,jodit_modules_toolbar_factory__WEBPACK_IMPORTED_MODULE_3__/* .makeCollection */ .R)(this);
-        this.defaultToolbarContainer = this.c.div('jodit-toolbar__box');
-        this.registeredButtons = new Set();
-        this.groupToButtons = {};
-        this.isJodit = false;
-        this.isJodit = isJodit;
-        this.e.on('beforeToolbarBuild', this.beforeToolbarBuild);
-    }
     get toolbarContainer() {
         if (!this.o.fullsize &&
             ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.isString)(this.o.toolbar) || jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__/* .Dom.isHTMLElement */ .i.isHTMLElement(this.o.toolbar))) {
@@ -12564,6 +10977,16 @@ class ViewWithToolbar extends _view__WEBPACK_IMPORTED_MODULE_0__/* .View */ .G {
             });
         }
     }
+    constructor(options, isJodit = false) {
+        super(options, isJodit);
+        this.toolbar = (0,jodit_modules_toolbar_factory__WEBPACK_IMPORTED_MODULE_3__/* .makeCollection */ .R)(this);
+        this.defaultToolbarContainer = this.c.div('jodit-toolbar__box');
+        this.registeredButtons = new Set();
+        this.groupToButtons = {};
+        this.isJodit = false;
+        this.isJodit = isJodit;
+        this.e.on('beforeToolbarBuild', this.beforeToolbarBuild);
+    }
     destruct() {
         if (this.isDestructed) {
             return;
@@ -12581,7 +11004,7 @@ class ViewWithToolbar extends _view__WEBPACK_IMPORTED_MODULE_0__/* .View */ .G {
 
 /***/ }),
 
-/***/ 49896:
+/***/ 75902:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12589,15 +11012,15 @@ class ViewWithToolbar extends _view__WEBPACK_IMPORTED_MODULE_0__/* .View */ .G {
 /* harmony export */   "G": function() { return /* binding */ View; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(20255);
-/* harmony import */ var _storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(94707);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(83370);
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(47386);
-/* harmony import */ var jodit_modules__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5687);
-/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(16672);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(63945);
-/* harmony import */ var jodit_core_traits__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(63711);
-/* harmony import */ var jodit_core_event_emitter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(18122);
-/* harmony import */ var jodit_modules_messages_messages__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(28351);
+/* harmony import */ var _storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(88755);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40332);
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86893);
+/* harmony import */ var jodit_modules__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(22705);
+/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(17332);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(67493);
+/* harmony import */ var jodit_core_traits__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(72452);
+/* harmony import */ var jodit_core_event_emitter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4567);
+/* harmony import */ var jodit_modules_messages_messages__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(17832);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -12615,31 +11038,6 @@ var View_1;
 
 
 let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3__.Component {
-    constructor(options, isJodit = false) {
-        super();
-        this.isJodit = isJodit;
-        this.isView = true;
-        this.parent = null;
-        this.mods = {};
-        this.components = new Set();
-        this.version = "3.23.3";
-        this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
-        this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
-        this.OPTIONS = View_1.defaultOptions;
-        this.__isFullSize = false;
-        this.__whoLocked = '';
-        this.isLockedNotBy = (name) => this.isLocked && this.__whoLocked !== name;
-        this.__modulesInstances = new Map();
-        this.id = new Date().getTime().toString();
-        this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
-        this.initOptions(options);
-        this.initOwners();
-        this.events = new jodit_core_event_emitter__WEBPACK_IMPORTED_MODULE_7__/* .EventEmitter */ .vp(this.od);
-        this.create = new jodit_modules__WEBPACK_IMPORTED_MODULE_3__.Create(this.od);
-        this.container = this.c.div(`jodit ${this.componentName}`);
-        this.progressbar = new jodit_modules__WEBPACK_IMPORTED_MODULE_3__.ProgressBar(this);
-        this.message = new jodit_modules_messages_messages__WEBPACK_IMPORTED_MODULE_8__/* .UIMessages */ .D(this);
-    }
     get basePath() {
         if (this.o.basePath) {
             return this.o.basePath;
@@ -12704,10 +11102,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.23.3";
+        return "3.24.1";
     }
     static getVersion() {
-        return "3.23.3";
+        return "3.24.1";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -12722,6 +11120,31 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         }
         const e = options === null || options === void 0 ? void 0 : options.events;
         e && Object.keys(e).forEach((key) => this.e.on(key, e[key]));
+    }
+    constructor(options, isJodit = false) {
+        super();
+        this.isJodit = isJodit;
+        this.isView = true;
+        this.parent = null;
+        this.mods = {};
+        this.components = new Set();
+        this.version = "3.24.1";
+        this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
+        this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
+        this.OPTIONS = View_1.defaultOptions;
+        this.__isFullSize = false;
+        this.__whoLocked = '';
+        this.isLockedNotBy = (name) => this.isLocked && this.__whoLocked !== name;
+        this.__modulesInstances = new Map();
+        this.id = new Date().getTime().toString();
+        this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
+        this.initOptions(options);
+        this.initOwners();
+        this.events = new jodit_core_event_emitter__WEBPACK_IMPORTED_MODULE_7__/* .EventEmitter */ .vp(this.od);
+        this.create = new jodit_modules__WEBPACK_IMPORTED_MODULE_3__.Create(this.od);
+        this.container = this.c.div(`jodit ${this.componentName}`);
+        this.progressbar = new jodit_modules__WEBPACK_IMPORTED_MODULE_3__.ProgressBar(this);
+        this.message = new jodit_modules_messages_messages__WEBPACK_IMPORTED_MODULE_8__/* .UIMessages */ .D(this, this.container);
     }
     getInstance(moduleName, options) {
         const instance = this.e.fire((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.camelCase)('getInstance_' + moduleName), options);
@@ -12798,7 +11221,7 @@ View.defaultOptions = {
 
 /***/ }),
 
-/***/ 82616:
+/***/ 60403:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12806,10 +11229,10 @@ View.defaultOptions = {
 /* harmony export */   "x": function() { return /* binding */ ContextMenu; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_ui_popup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36649);
-/* harmony import */ var jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(81402);
-/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(43435);
-/* harmony import */ var jodit_core_decorators_component_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(45466);
+/* harmony import */ var jodit_core_ui_popup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(35799);
+/* harmony import */ var jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(55310);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(78411);
+/* harmony import */ var jodit_core_decorators_component_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(11441);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -12856,7 +11279,7 @@ ContextMenu = (0,tslib__WEBPACK_IMPORTED_MODULE_3__/* .__decorate */ .gn)([
 
 /***/ }),
 
-/***/ 75121:
+/***/ 8649:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12870,19 +11293,19 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(20255);
 // EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(80031);
+var config = __webpack_require__(93166);
 // EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(47386);
+var constants = __webpack_require__(86893);
 // EXTERNAL MODULE: ./src/core/storage/index.ts + 3 modules
-var storage = __webpack_require__(94707);
+var storage = __webpack_require__(88755);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
+var helpers = __webpack_require__(40332);
 // EXTERNAL MODULE: ./src/core/dom/index.ts
-var dom = __webpack_require__(36516);
+var dom = __webpack_require__(64968);
 // EXTERNAL MODULE: ./src/core/request/index.ts + 3 modules
-var request = __webpack_require__(5887);
+var request = __webpack_require__(12709);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
-var decorators = __webpack_require__(63945);
+var decorators = __webpack_require__(67493);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/builders/item.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -13054,7 +11477,7 @@ let DataProvider = class DataProvider {
             this.__currentPermissions[rule] === undefined ||
             this.__currentPermissions[rule]);
     }
-    items(path, source, mods = {}) {
+    __items(path, source, mods, onResult) {
         const opt = this.options;
         if (!opt.items) {
             return Promise.reject('Set Items api options');
@@ -13070,12 +11493,26 @@ let DataProvider = class DataProvider {
             if (process) {
                 resp = process.call(self, resp);
             }
-            return this.generateItemsList(resp.data.sources, mods);
+            return onResult(resp);
         });
+    }
+    items(path, source, mods = {}) {
+        return this.__items(path, source, mods, resp => this.generateItemsList(resp.data.sources, mods));
+    }
+    itemsEx(path, source, mods = {}) {
+        const calcTotal = (sources) => sources.reduce((acc, source) => acc + source.files.length, 0);
+        return this.__items(path, source, mods, resp => ({
+            items: this.generateItemsList(resp.data.sources, mods),
+            loadedTotal: calcTotal(resp.data.sources)
+        }));
     }
     generateItemsList(sources, mods = {}) {
         const elements = [];
-        const canBeFile = (item) => !mods.onlyImages || item.isImage === undefined || item.isImage, inFilter = (item) => {
+        const canBeFile = (item) => item.type === 'folder' ||
+            !mods.onlyImages ||
+            item.isImage === undefined ||
+            item.isImage;
+        const inFilter = (item) => {
             var _a;
             return !((_a = mods.filterWord) === null || _a === void 0 ? void 0 : _a.length) ||
                 this.o.filter === undefined ||
@@ -13250,7 +11687,7 @@ DataProvider = (0,tslib_es6/* __decorate */.gn)([
 /* harmony default export */ var data_provider = (DataProvider);
 
 // EXTERNAL MODULE: ./src/modules/context-menu/context-menu.ts
-var context_menu = __webpack_require__(82616);
+var context_menu = __webpack_require__(60403);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/factories.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -13266,10 +11703,10 @@ function makeContextMenu(parent) {
     return new context_menu/* ContextMenu */.x(parent);
 }
 
-// EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts + 8 modules
-var normalize = __webpack_require__(57561);
+// EXTERNAL MODULE: ./src/core/helpers/normalize/index.ts + 7 modules
+var normalize = __webpack_require__(46361);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(55865);
+var ui = __webpack_require__(93801);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/builders/elements-map.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -13483,7 +11920,7 @@ function stateListeners() {
 }
 
 // EXTERNAL MODULE: ./src/modules/image-editor/image-editor.ts + 2 modules
-var image_editor = __webpack_require__(37113);
+var image_editor = __webpack_require__(99583);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/fetch/delete-file.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -13754,7 +12191,7 @@ function nativeListeners() {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 7 modules
-var checker = __webpack_require__(43435);
+var checker = __webpack_require__(78411);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/listeners/self-listeners.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -13920,17 +12357,17 @@ class FileBrowserTree extends ui/* UIGroup */.qe {
 
 
 // EXTERNAL MODULE: ./src/core/event-emitter/index.ts + 2 modules
-var event_emitter = __webpack_require__(18122);
+var event_emitter = __webpack_require__(4567);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 1 modules
-var component = __webpack_require__(2624);
+var component = __webpack_require__(90549);
 // EXTERNAL MODULE: ./src/core/traits/index.ts + 3 modules
-var traits = __webpack_require__(63711);
+var traits = __webpack_require__(72452);
 // EXTERNAL MODULE: ./src/core/view/view-with-toolbar.ts
-var view_with_toolbar = __webpack_require__(67555);
+var view_with_toolbar = __webpack_require__(43608);
 // EXTERNAL MODULE: ./src/core/ui/form/inputs/file/file.ts
-var file = __webpack_require__(32460);
+var file = __webpack_require__(41374);
 // EXTERNAL MODULE: ./src/core/helpers/utils/human-size-to-bytes.ts
-var human_size_to_bytes = __webpack_require__(24891);
+var human_size_to_bytes = __webpack_require__(6102);
 ;// CONCATENATED MODULE: ./src/modules/file-browser/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -14265,6 +12702,96 @@ config/* Config.prototype.controls.filebrowser */.D.prototype.controls.filebrows
 
 
 let FileBrowser = class FileBrowser extends view_with_toolbar/* ViewWithToolbar */.C {
+    className() {
+        return 'Filebrowser';
+    }
+    onSelect(callback) {
+        return () => {
+            if (this.state.activeElements.length) {
+                const files = [];
+                const isImages = [];
+                this.state.activeElements.forEach(elm => {
+                    const url = elm.fileURL;
+                    if (url) {
+                        files.push(url);
+                        isImages.push(elm.isImage || false);
+                    }
+                });
+                this.close();
+                const data = {
+                    baseurl: '',
+                    files,
+                    isImages
+                };
+                if ((0,helpers.isFunction)(callback)) {
+                    callback(data);
+                }
+                this.close();
+            }
+            return false;
+        };
+    }
+    get isOpened() {
+        return this._dialog.isOpened && this.browser.style.display !== 'none';
+    }
+    status(message, success) {
+        if (!message || (0,helpers.isAbort)(message)) {
+            return;
+        }
+        if (!(0,helpers.isString)(message)) {
+            message = message.message;
+        }
+        if (!(0,helpers.isString)(message) || !(0,helpers.trim)(message).length) {
+            return;
+        }
+        this.message.message(message, success ? 'success' : 'error', this.o.howLongShowMsg);
+    }
+    open(callback = this.o
+        .defaultCallback, onlyImages = false) {
+        this.state.onlyImages = onlyImages;
+        return this.async.promise((resolve, reject) => {
+            var _a;
+            if (!this.o.items || !this.o.items.url) {
+                throw (0,helpers.error)('Need set options.filebrowser.ajax.url');
+            }
+            let localTimeout = 0;
+            this.e
+                .off(this.files.container, 'dblclick')
+                .on(this.files.container, 'dblclick', this.onSelect(callback))
+                .on(this.files.container, 'touchstart', () => {
+                const now = new Date().getTime();
+                if (now - localTimeout < constants.EMULATE_DBLCLICK_TIMEOUT) {
+                    this.onSelect(callback)();
+                }
+                localTimeout = now;
+            })
+                .off('select.filebrowser')
+                .on('select.filebrowser', this.onSelect(callback));
+            const header = this.c.div();
+            this.toolbar.build((_a = this.o.buttons) !== null && _a !== void 0 ? _a : []).appendTo(header);
+            this._dialog.open(this.browser, header);
+            this.e.fire('sort.filebrowser', this.state.sortBy);
+            loadTree(this).then(resolve, reject);
+        });
+    }
+    initUploader(editor) {
+        var _a;
+        const self = this, options = (_a = editor === null || editor === void 0 ? void 0 : editor.options) === null || _a === void 0 ? void 0 : _a.uploader, uploaderOptions = (0,helpers.ConfigProto)(options || {}, config/* Config.defaultOptions.uploader */.D.defaultOptions.uploader);
+        const uploadHandler = () => loadItems(this);
+        self.uploader = self.getInstance('Uploader', uploaderOptions);
+        self.uploader
+            .setPath(self.state.currentPath)
+            .setSource(self.state.currentSource)
+            .bind(self.browser, uploadHandler, self.errorHandler);
+        this.state.on(['change.currentPath', 'change.currentSource'], () => {
+            this.uploader
+                .setPath(this.state.currentPath)
+                .setSource(this.state.currentSource);
+        });
+        self.e.on('bindUploader.filebrowser', (button) => {
+            self.uploader.bind(button, uploadHandler, self.errorHandler);
+        });
+    }
     constructor(options) {
         var _a;
         super(options);
@@ -14278,7 +12805,6 @@ let FileBrowser = class FileBrowser extends view_with_toolbar/* ViewWithToolbar 
             currentBaseUrl: '',
             activeElements: [],
             elements: [],
-            messages: [],
             sources: [],
             view: 'tiles',
             sortBy: 'changed-desc',
@@ -14373,96 +12899,6 @@ let FileBrowser = class FileBrowser extends view_with_toolbar/* ViewWithToolbar 
         self.initUploader(self);
         self.setStatus(component/* STATUSES.ready */.n$.ready);
     }
-    className() {
-        return 'Filebrowser';
-    }
-    onSelect(callback) {
-        return () => {
-            if (this.state.activeElements.length) {
-                const files = [];
-                const isImages = [];
-                this.state.activeElements.forEach(elm => {
-                    const url = elm.fileURL;
-                    if (url) {
-                        files.push(url);
-                        isImages.push(elm.isImage || false);
-                    }
-                });
-                this.close();
-                const data = {
-                    baseurl: '',
-                    files,
-                    isImages
-                };
-                if ((0,helpers.isFunction)(callback)) {
-                    callback(data);
-                }
-                this.close();
-            }
-            return false;
-        };
-    }
-    get isOpened() {
-        return this._dialog.isOpened && this.browser.style.display !== 'none';
-    }
-    status(message, success) {
-        if (!message || (0,helpers.isAbort)(message)) {
-            return;
-        }
-        if (!(0,helpers.isString)(message)) {
-            message = message.message;
-        }
-        if (!(0,helpers.isString)(message) || !(0,helpers.trim)(message).length) {
-            return;
-        }
-        this.message.message(message, success ? 'success' : 'error', this.o.howLongShowMsg);
-    }
-    open(callback = this.o
-        .defaultCallback, onlyImages = false) {
-        this.state.onlyImages = onlyImages;
-        return this.async.promise((resolve, reject) => {
-            var _a;
-            if (!this.o.items || !this.o.items.url) {
-                throw (0,helpers.error)('Need set options.filebrowser.ajax.url');
-            }
-            let localTimeout = 0;
-            this.e
-                .off(this.files.container, 'dblclick')
-                .on(this.files.container, 'dblclick', this.onSelect(callback))
-                .on(this.files.container, 'touchstart', () => {
-                const now = new Date().getTime();
-                if (now - localTimeout < constants.EMULATE_DBLCLICK_TIMEOUT) {
-                    this.onSelect(callback)();
-                }
-                localTimeout = now;
-            })
-                .off('select.filebrowser')
-                .on('select.filebrowser', this.onSelect(callback));
-            const header = this.c.div();
-            this.toolbar.build((_a = this.o.buttons) !== null && _a !== void 0 ? _a : []).appendTo(header);
-            this._dialog.open(this.browser, header);
-            this.e.fire('sort.filebrowser', this.state.sortBy);
-            loadTree(this).then(resolve, reject);
-        });
-    }
-    initUploader(editor) {
-        var _a;
-        const self = this, options = (_a = editor === null || editor === void 0 ? void 0 : editor.options) === null || _a === void 0 ? void 0 : _a.uploader, uploaderOptions = (0,helpers.ConfigProto)(options || {}, config/* Config.defaultOptions.uploader */.D.defaultOptions.uploader);
-        const uploadHandler = () => loadItems(this);
-        self.uploader = self.getInstance('Uploader', uploaderOptions);
-        self.uploader
-            .setPath(self.state.currentPath)
-            .setSource(self.state.currentSource)
-            .bind(self.browser, uploadHandler, self.errorHandler);
-        this.state.on(['change.currentPath', 'change.currentSource'], () => {
-            this.uploader
-                .setPath(this.state.currentPath)
-                .setSource(this.state.currentSource);
-        });
-        self.e.on('bindUploader.filebrowser', (button) => {
-            self.uploader.bind(button, uploadHandler, self.errorHandler);
-        });
-    }
     proxyDialogEvents(self) {
         ['afterClose', 'beforeOpen'].forEach(proxyEvent => {
             self._dialog.events.on(self.dlg, proxyEvent, () => {
@@ -14506,7 +12942,7 @@ function isFileBrowserFilesItem(target) {
 
 /***/ }),
 
-/***/ 37113:
+/***/ 99583:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14520,17 +12956,17 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(20255);
 // EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(80031);
+var config = __webpack_require__(93166);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 1 modules
-var component = __webpack_require__(2624);
+var component = __webpack_require__(90549);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
+var helpers = __webpack_require__(40332);
 // EXTERNAL MODULE: ./src/core/dom/index.ts
-var dom = __webpack_require__(36516);
+var dom = __webpack_require__(64968);
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(81402);
+var ui_button = __webpack_require__(55310);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(55865);
+var ui = __webpack_require__(93801);
 ;// CONCATENATED MODULE: ./src/modules/image-editor/templates/form.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -14614,9 +13050,9 @@ const form_form = (editor, o) => {
 };
 
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
-var decorators = __webpack_require__(63945);
+var decorators = __webpack_require__(67493);
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var icon = __webpack_require__(80353);
+var icon = __webpack_require__(77904);
 ;// CONCATENATED MODULE: ./src/modules/image-editor/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -14665,6 +13101,199 @@ const TABS = {
     crop: 'crop'
 };
 let ImageEditor = ImageEditor_1 = class ImageEditor extends component/* ViewComponent */.Hr {
+    className() {
+        return 'ImageEditor';
+    }
+    onTitleModeClick(e) {
+        const self = this, title = e.target;
+        const slide = title === null || title === void 0 ? void 0 : title.parentElement;
+        if (!slide) {
+            return;
+        }
+        (0,helpers.$$)(`.${image_editor_jie}__slider,.${image_editor_jie}__area`, self.editor).forEach(elm => elm.classList.remove(`${image_editor_jie}_active`));
+        slide.classList.add(`${image_editor_jie}_active`);
+        this.activeTab = (0,helpers.attr)(slide, '-area') || TABS.resize;
+        const tab = self.editor.querySelector(`.${image_editor_jie}__area.${image_editor_jie}__area_` + self.activeTab);
+        if (tab) {
+            tab.classList.add(`${image_editor_jie}_active`);
+        }
+        if (self.activeTab === TABS.crop) {
+            self.showCrop();
+        }
+    }
+    onChangeSizeInput(e) {
+        const self = this, input = e.target, { widthInput, heightInput } = (0,helpers.refs)(this.editor), isWidth = (0,helpers.attr)(input, 'data-ref') === 'widthInput', x = parseInt(input.value, 10), minX = isWidth ? self.o.min_width : self.o.min_height, minY = !isWidth ? self.o.min_width : self.o.min_height;
+        let y;
+        if (x > minX) {
+            (0,helpers.css)(self.image, isWidth ? 'width' : 'height', x);
+            if (self.resizeUseRatio) {
+                y = isWidth
+                    ? Math.round(x / self.ratio)
+                    : Math.round(x * self.ratio);
+                if (y > minY) {
+                    (0,helpers.css)(self.image, !isWidth ? 'width' : 'height', y);
+                    if (isWidth) {
+                        heightInput.value = y.toString();
+                    }
+                    else {
+                        widthInput.value = y.toString();
+                    }
+                }
+            }
+        }
+        this.j.e.fire(self.resizeHandler, 'updatesize');
+    }
+    onResizeHandleMouseDown(e) {
+        const self = this;
+        self.target = e.target;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        self.clicked = true;
+        self.start_x = e.clientX;
+        self.start_y = e.clientY;
+        if (self.activeTab === TABS.crop) {
+            self.top_x = (0,helpers.css)(self.cropHandler, 'left');
+            self.top_y = (0,helpers.css)(self.cropHandler, 'top');
+            self.width = self.cropHandler.offsetWidth;
+            self.height = self.cropHandler.offsetHeight;
+        }
+        else {
+            self.width = self.image.offsetWidth;
+            self.height = self.image.offsetHeight;
+        }
+        self.j.e
+            .on(this.j.ow, 'mousemove', this.onGlobalMouseMove)
+            .one(this.j.ow, 'mouseup', this.onGlobalMouseUp);
+    }
+    onGlobalMouseUp(e) {
+        if (this.clicked) {
+            this.clicked = false;
+            e.stopImmediatePropagation();
+            this.j.e.off(this.j.ow, 'mousemove', this.onGlobalMouseMove);
+        }
+    }
+    onGlobalMouseMove(e) {
+        const self = this;
+        if (!self.clicked) {
+            return;
+        }
+        const { widthInput, heightInput } = (0,helpers.refs)(this.editor);
+        self.diff_x = e.clientX - self.start_x;
+        self.diff_y = e.clientY - self.start_y;
+        if ((self.activeTab === TABS.resize && self.resizeUseRatio) ||
+            (self.activeTab === TABS.crop && self.cropUseRatio)) {
+            if (self.diff_x) {
+                self.new_w = self.width + self.diff_x;
+                self.new_h = Math.round(self.new_w / self.ratio);
+            }
+            else {
+                self.new_h = self.height + self.diff_y;
+                self.new_w = Math.round(self.new_h * self.ratio);
+            }
+        }
+        else {
+            self.new_w = self.width + self.diff_x;
+            self.new_h = self.height + self.diff_y;
+        }
+        if (self.activeTab === TABS.resize) {
+            if (self.new_w > self.o.resizeMinWidth) {
+                (0,helpers.css)(self.image, 'width', self.new_w + 'px');
+                widthInput.value = self.new_w.toString();
+            }
+            if (self.new_h > self.o.resizeMinHeight) {
+                (0,helpers.css)(self.image, 'height', self.new_h + 'px');
+                heightInput.value = self.new_h.toString();
+            }
+            this.j.e.fire(self.resizeHandler, 'updatesize');
+        }
+        else {
+            if (self.target !== self.cropHandler) {
+                if (self.top_x + self.new_w > self.cropImage.offsetWidth) {
+                    self.new_w = self.cropImage.offsetWidth - self.top_x;
+                }
+                if (self.top_y + self.new_h > self.cropImage.offsetHeight) {
+                    self.new_h = self.cropImage.offsetHeight - self.top_y;
+                }
+                (0,helpers.css)(self.cropHandler, {
+                    width: self.new_w,
+                    height: self.new_h
+                });
+            }
+            else {
+                if (self.top_x + self.diff_x + self.cropHandler.offsetWidth >
+                    self.cropImage.offsetWidth) {
+                    self.diff_x =
+                        self.cropImage.offsetWidth -
+                            self.top_x -
+                            self.cropHandler.offsetWidth;
+                }
+                (0,helpers.css)(self.cropHandler, 'left', self.top_x + self.diff_x);
+                if (self.top_y + self.diff_y + self.cropHandler.offsetHeight >
+                    self.cropImage.offsetHeight) {
+                    self.diff_y =
+                        self.cropImage.offsetHeight -
+                            self.top_y -
+                            self.cropHandler.offsetHeight;
+                }
+                (0,helpers.css)(self.cropHandler, 'top', self.top_y + self.diff_y);
+            }
+            this.j.e.fire(self.cropHandler, 'updatesize');
+        }
+    }
+    get o() {
+        return this.options;
+    }
+    hide() {
+        this._dialog.close();
+    }
+    open(url, save) {
+        return this.j.async.promise((resolve) => {
+            const timestamp = new Date().getTime();
+            this.image = this.j.c.element('img');
+            (0,helpers.$$)('img,.jodit-icon_loader', this.resize_box).forEach(dom/* Dom.safeRemove */.i.safeRemove);
+            (0,helpers.$$)('img,.jodit-icon_loader', this.crop_box).forEach(dom/* Dom.safeRemove */.i.safeRemove);
+            (0,helpers.css)(this.cropHandler, 'background', 'transparent');
+            this.onSave = save;
+            this.resize_box.appendChild(this.j.c.element('i', { class: 'jodit-icon_loader' }));
+            this.crop_box.appendChild(this.j.c.element('i', { class: 'jodit-icon_loader' }));
+            if (/\?/.test(url)) {
+                url += '&_tst=' + timestamp;
+            }
+            else {
+                url += '?_tst=' + timestamp;
+            }
+            this.image.setAttribute('src', url);
+            this._dialog.open();
+            const { widthInput, heightInput } = (0,helpers.refs)(this.editor);
+            const onload = () => {
+                if (this.isDestructed) {
+                    return;
+                }
+                this.image.removeEventListener('load', onload);
+                this.naturalWidth = this.image.naturalWidth;
+                this.naturalHeight = this.image.naturalHeight;
+                widthInput.value = this.naturalWidth.toString();
+                heightInput.value = this.naturalHeight.toString();
+                this.ratio = this.naturalWidth / this.naturalHeight;
+                this.resize_box.appendChild(this.image);
+                this.cropImage = this.image.cloneNode(true);
+                this.crop_box.appendChild(this.cropImage);
+                dom/* Dom.safeRemove.apply */.i.safeRemove.apply(null, (0,helpers.$$)('.jodit-icon_loader', this.editor));
+                if (this.activeTab === TABS.crop) {
+                    this.showCrop();
+                }
+                this.j.e.fire(this.resizeHandler, 'updatesize');
+                this.j.e.fire(this.cropHandler, 'updatesize');
+                this._dialog.setPosition();
+                this.j.e.fire('afterImageEditor');
+                resolve(this._dialog);
+            };
+            this.image.addEventListener('load', onload);
+            if (this.image.complete) {
+                onload();
+            }
+        });
+    }
     constructor(editor) {
         super(editor);
         this.resizeUseRatio = true;
@@ -14906,199 +13535,6 @@ let ImageEditor = ImageEditor_1 = class ImageEditor extends component/* ViewComp
         ]);
         this.setHandlers();
     }
-    className() {
-        return 'ImageEditor';
-    }
-    onTitleModeClick(e) {
-        const self = this, title = e.target;
-        const slide = title === null || title === void 0 ? void 0 : title.parentElement;
-        if (!slide) {
-            return;
-        }
-        (0,helpers.$$)(`.${image_editor_jie}__slider,.${image_editor_jie}__area`, self.editor).forEach(elm => elm.classList.remove(`${image_editor_jie}_active`));
-        slide.classList.add(`${image_editor_jie}_active`);
-        this.activeTab = (0,helpers.attr)(slide, '-area') || TABS.resize;
-        const tab = self.editor.querySelector(`.${image_editor_jie}__area.${image_editor_jie}__area_` + self.activeTab);
-        if (tab) {
-            tab.classList.add(`${image_editor_jie}_active`);
-        }
-        if (self.activeTab === TABS.crop) {
-            self.showCrop();
-        }
-    }
-    onChangeSizeInput(e) {
-        const self = this, input = e.target, { widthInput, heightInput } = (0,helpers.refs)(this.editor), isWidth = (0,helpers.attr)(input, 'data-ref') === 'widthInput', x = parseInt(input.value, 10), minX = isWidth ? self.o.min_width : self.o.min_height, minY = !isWidth ? self.o.min_width : self.o.min_height;
-        let y;
-        if (x > minX) {
-            (0,helpers.css)(self.image, isWidth ? 'width' : 'height', x);
-            if (self.resizeUseRatio) {
-                y = isWidth
-                    ? Math.round(x / self.ratio)
-                    : Math.round(x * self.ratio);
-                if (y > minY) {
-                    (0,helpers.css)(self.image, !isWidth ? 'width' : 'height', y);
-                    if (isWidth) {
-                        heightInput.value = y.toString();
-                    }
-                    else {
-                        widthInput.value = y.toString();
-                    }
-                }
-            }
-        }
-        this.j.e.fire(self.resizeHandler, 'updatesize');
-    }
-    onResizeHandleMouseDown(e) {
-        const self = this;
-        self.target = e.target;
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        self.clicked = true;
-        self.start_x = e.clientX;
-        self.start_y = e.clientY;
-        if (self.activeTab === TABS.crop) {
-            self.top_x = (0,helpers.css)(self.cropHandler, 'left');
-            self.top_y = (0,helpers.css)(self.cropHandler, 'top');
-            self.width = self.cropHandler.offsetWidth;
-            self.height = self.cropHandler.offsetHeight;
-        }
-        else {
-            self.width = self.image.offsetWidth;
-            self.height = self.image.offsetHeight;
-        }
-        self.j.e
-            .on(this.j.ow, 'mousemove', this.onGlobalMouseMove)
-            .one(this.j.ow, 'mouseup', this.onGlobalMouseUp);
-    }
-    onGlobalMouseUp(e) {
-        if (this.clicked) {
-            this.clicked = false;
-            e.stopImmediatePropagation();
-            this.j.e.off(this.j.ow, 'mousemove', this.onGlobalMouseMove);
-        }
-    }
-    onGlobalMouseMove(e) {
-        const self = this;
-        if (!self.clicked) {
-            return;
-        }
-        const { widthInput, heightInput } = (0,helpers.refs)(this.editor);
-        self.diff_x = e.clientX - self.start_x;
-        self.diff_y = e.clientY - self.start_y;
-        if ((self.activeTab === TABS.resize && self.resizeUseRatio) ||
-            (self.activeTab === TABS.crop && self.cropUseRatio)) {
-            if (self.diff_x) {
-                self.new_w = self.width + self.diff_x;
-                self.new_h = Math.round(self.new_w / self.ratio);
-            }
-            else {
-                self.new_h = self.height + self.diff_y;
-                self.new_w = Math.round(self.new_h * self.ratio);
-            }
-        }
-        else {
-            self.new_w = self.width + self.diff_x;
-            self.new_h = self.height + self.diff_y;
-        }
-        if (self.activeTab === TABS.resize) {
-            if (self.new_w > self.o.resizeMinWidth) {
-                (0,helpers.css)(self.image, 'width', self.new_w + 'px');
-                widthInput.value = self.new_w.toString();
-            }
-            if (self.new_h > self.o.resizeMinHeight) {
-                (0,helpers.css)(self.image, 'height', self.new_h + 'px');
-                heightInput.value = self.new_h.toString();
-            }
-            this.j.e.fire(self.resizeHandler, 'updatesize');
-        }
-        else {
-            if (self.target !== self.cropHandler) {
-                if (self.top_x + self.new_w > self.cropImage.offsetWidth) {
-                    self.new_w = self.cropImage.offsetWidth - self.top_x;
-                }
-                if (self.top_y + self.new_h > self.cropImage.offsetHeight) {
-                    self.new_h = self.cropImage.offsetHeight - self.top_y;
-                }
-                (0,helpers.css)(self.cropHandler, {
-                    width: self.new_w,
-                    height: self.new_h
-                });
-            }
-            else {
-                if (self.top_x + self.diff_x + self.cropHandler.offsetWidth >
-                    self.cropImage.offsetWidth) {
-                    self.diff_x =
-                        self.cropImage.offsetWidth -
-                            self.top_x -
-                            self.cropHandler.offsetWidth;
-                }
-                (0,helpers.css)(self.cropHandler, 'left', self.top_x + self.diff_x);
-                if (self.top_y + self.diff_y + self.cropHandler.offsetHeight >
-                    self.cropImage.offsetHeight) {
-                    self.diff_y =
-                        self.cropImage.offsetHeight -
-                            self.top_y -
-                            self.cropHandler.offsetHeight;
-                }
-                (0,helpers.css)(self.cropHandler, 'top', self.top_y + self.diff_y);
-            }
-            this.j.e.fire(self.cropHandler, 'updatesize');
-        }
-    }
-    get o() {
-        return this.options;
-    }
-    hide() {
-        this._dialog.close();
-    }
-    open(url, save) {
-        return this.j.async.promise((resolve) => {
-            const timestamp = new Date().getTime();
-            this.image = this.j.c.element('img');
-            (0,helpers.$$)('img,.jodit-icon_loader', this.resize_box).forEach(dom/* Dom.safeRemove */.i.safeRemove);
-            (0,helpers.$$)('img,.jodit-icon_loader', this.crop_box).forEach(dom/* Dom.safeRemove */.i.safeRemove);
-            (0,helpers.css)(this.cropHandler, 'background', 'transparent');
-            this.onSave = save;
-            this.resize_box.appendChild(this.j.c.element('i', { class: 'jodit-icon_loader' }));
-            this.crop_box.appendChild(this.j.c.element('i', { class: 'jodit-icon_loader' }));
-            if (/\?/.test(url)) {
-                url += '&_tst=' + timestamp;
-            }
-            else {
-                url += '?_tst=' + timestamp;
-            }
-            this.image.setAttribute('src', url);
-            this._dialog.open();
-            const { widthInput, heightInput } = (0,helpers.refs)(this.editor);
-            const onload = () => {
-                if (this.isDestructed) {
-                    return;
-                }
-                this.image.removeEventListener('load', onload);
-                this.naturalWidth = this.image.naturalWidth;
-                this.naturalHeight = this.image.naturalHeight;
-                widthInput.value = this.naturalWidth.toString();
-                heightInput.value = this.naturalHeight.toString();
-                this.ratio = this.naturalWidth / this.naturalHeight;
-                this.resize_box.appendChild(this.image);
-                this.cropImage = this.image.cloneNode(true);
-                this.crop_box.appendChild(this.cropImage);
-                dom/* Dom.safeRemove.apply */.i.safeRemove.apply(null, (0,helpers.$$)('.jodit-icon_loader', this.editor));
-                if (this.activeTab === TABS.crop) {
-                    this.showCrop();
-                }
-                this.j.e.fire(this.resizeHandler, 'updatesize');
-                this.j.e.fire(this.cropHandler, 'updatesize');
-                this._dialog.setPosition();
-                this.j.e.fire('afterImageEditor');
-                resolve(this._dialog);
-            };
-            this.image.addEventListener('load', onload);
-            if (this.image.complete) {
-                onload();
-            }
-        });
-    }
     destruct() {
         if (this.isDestructed) {
             return;
@@ -15180,7 +13616,7 @@ function openImageEditor(href, name, path, source, onSuccess, onFailed) {
 
 /***/ }),
 
-/***/ 5687:
+/***/ 22705:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15192,7 +13628,7 @@ __webpack_require__.d(__webpack_exports__, {
   "Ajax": function() { return /* reexport */ core_request/* Ajax */.t; },
   "Alert": function() { return /* reexport */ Alert; },
   "Async": function() { return /* reexport */ core_async/* Async */.e; },
-  "CommitStyle": function() { return /* reexport */ selection/* CommitStyle */.RP; },
+  "CommitStyle": function() { return /* reexport */ CommitStyle; },
   "Component": function() { return /* reexport */ component/* Component */.wA; },
   "Confirm": function() { return /* reexport */ Confirm; },
   "ContextMenu": function() { return /* reexport */ context_menu/* ContextMenu */.x; },
@@ -15215,7 +13651,7 @@ __webpack_require__.d(__webpack_exports__, {
   "Prompt": function() { return /* reexport */ Prompt; },
   "Response": function() { return /* reexport */ core_request/* Response */.H; },
   "STATUSES": function() { return /* reexport */ component/* STATUSES */.n$; },
-  "Select": function() { return /* reexport */ selection/* Select */.Ph; },
+  "Select": function() { return /* reexport */ Select; },
   "Snapshot": function() { return /* reexport */ Snapshot; },
   "StatusBar": function() { return /* reexport */ StatusBar; },
   "Table": function() { return /* reexport */ table/* Table */.i; },
@@ -15244,37 +13680,39 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/event-emitter/index.ts + 2 modules
-var event_emitter = __webpack_require__(18122);
+var event_emitter = __webpack_require__(4567);
 // EXTERNAL MODULE: ./src/core/async/index.ts + 1 modules
-var core_async = __webpack_require__(83735);
+var core_async = __webpack_require__(21317);
 // EXTERNAL MODULE: ./src/core/request/index.ts + 3 modules
-var core_request = __webpack_require__(5887);
+var core_request = __webpack_require__(12709);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 1 modules
-var component = __webpack_require__(2624);
+var component = __webpack_require__(90549);
 // EXTERNAL MODULE: ./src/modules/context-menu/context-menu.ts
-var context_menu = __webpack_require__(82616);
+var context_menu = __webpack_require__(60403);
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(20255);
 // EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(80031);
+var config = __webpack_require__(93166);
 // EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(47386);
+var constants = __webpack_require__(86893);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
+var helpers = __webpack_require__(40332);
 // EXTERNAL MODULE: external "{assert(){}};"
 var external_assert_ = __webpack_require__(52378);
 // EXTERNAL MODULE: ./src/core/view/view-with-toolbar.ts
-var view_with_toolbar = __webpack_require__(67555);
+var view_with_toolbar = __webpack_require__(43608);
 // EXTERNAL MODULE: ./src/core/dom/index.ts
-var dom = __webpack_require__(36516);
+var dom = __webpack_require__(64968);
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(16672);
+var global = __webpack_require__(17332);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
-var decorators = __webpack_require__(63945);
+var decorators = __webpack_require__(67493);
 // EXTERNAL MODULE: ./src/core/view/view.ts
-var view = __webpack_require__(49896);
+var view = __webpack_require__(75902);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(55865);
+var ui = __webpack_require__(93801);
+// EXTERNAL MODULE: ./src/modules/messages/messages.ts + 1 modules
+var messages = __webpack_require__(17832);
 ;// CONCATENATED MODULE: ./src/modules/dialog/dialog.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -15294,13 +13732,16 @@ var ui = __webpack_require__(55865);
 
 
 
+
 config/* Config.prototype.dialog */.D.prototype.dialog = {
     namespace: '',
     extraButtons: [],
     resizable: true,
     draggable: true,
     buttons: ['dialog.close'],
-    removeButtons: []
+    removeButtons: [],
+    toolbarButtonSize: 'middle',
+    zIndex: 'inherit'
 };
 config/* Config.prototype.controls.dialog */.D.prototype.controls.dialog = {
     close: {
@@ -15311,84 +13752,6 @@ config/* Config.prototype.controls.dialog */.D.prototype.controls.dialog = {
     }
 };
 let Dialog = class Dialog extends view_with_toolbar/* ViewWithToolbar */.C {
-    constructor(options) {
-        super(options);
-        this.destroyAfterClose = false;
-        this.moved = false;
-        this.resizable = false;
-        this.draggable = false;
-        this.startX = 0;
-        this.startY = 0;
-        this.startPoint = { x: 0, y: 0, w: 0, h: 0 };
-        this.lockSelect = () => {
-            this.setMod('moved', true);
-        };
-        this.unlockSelect = () => {
-            this.setMod('moved', false);
-        };
-        this.onResize = () => {
-            if (this.options &&
-                this.o.resizable &&
-                !this.moved &&
-                this.isOpened &&
-                !this.offsetX &&
-                !this.offsetY) {
-                this.setPosition();
-            }
-        };
-        this.isModal = false;
-        this.isOpened = false;
-        const self = this;
-        self.options = (0,helpers.ConfigProto)(options !== null && options !== void 0 ? options : {}, (0,helpers.ConfigProto)({
-            toolbarButtonSize: 'middle'
-        }, (0,helpers.ConfigProto)(config/* Config.prototype.dialog */.D.prototype.dialog, view/* View.defaultOptions */.G.defaultOptions)));
-        dom/* Dom.safeRemove */.i.safeRemove(self.container);
-        const n = this.getFullElName.bind(this);
-        self.container = this.c.fromHTML(`<div style="z-index:${self.o.zIndex}" class="jodit jodit-dialog ${this.componentName}">
-				<div class="${n('overlay')}"></div>
-				<div class="${this.getFullElName('panel')}">
-					<div class="${n('header')}">
-						<div class="${n('header-title')}"></div>
-						<div class="${n('header-toolbar')}"></div>
-					</div>
-					<div class="${n('content')}"></div>
-					<div class="${n('footer')}"></div>
-					<div class="${n('resizer')}">${ui/* Icon.get */.JO.get('resize_handler')}</div>
-				</div>
-			</div>`);
-        (0,helpers.attr)(self.container, 'role', 'dialog');
-        Object.defineProperty(self.container, 'component', {
-            value: this
-        });
-        self.setMod('theme', self.o.theme || 'default').setMod('resizable', Boolean(self.o.resizable));
-        const dialog = self.getElm('panel');
-        const resizer = self.getElm('resizer');
-        const dialogbox_header = self.getElm('header-title');
-        const dialogbox_content = self.getElm('content');
-        const dialogbox_footer = self.getElm('footer');
-        const dialogbox_toolbar = self.getElm('header-toolbar');
-        this.dialog = dialog;
-        this.resizer = resizer;
-        this.dialogbox_header = dialogbox_header;
-        this.dialogbox_content = dialogbox_content;
-        this.dialogbox_footer = dialogbox_footer;
-        this.dialogbox_toolbar = dialogbox_toolbar;
-        (0,helpers.css)(self.dialog, {
-            maxWidth: self.options.maxWidth,
-            minHeight: self.options.minHeight,
-            minWidth: self.options.minWidth
-        });
-        const headerBox = self.getElm('header');
-        headerBox &&
-            self.e.on(headerBox, 'pointerdown touchstart', self.onHeaderMouseDown);
-        self.e.on(self.resizer, 'mousedown touchstart', self.onResizerMouseDown);
-        const fullSize = global/* pluginSystem.get */.pw.get('fullsize');
-        (0,helpers.isFunction)(fullSize) && fullSize(self);
-        this.e
-            .on(self.container, 'close_dialog', self.close)
-            .on(this.ow, 'keydown', this.onEsc)
-            .on(this.ow, 'resize', this.onResize);
-    }
     className() {
         return 'Dialog';
     }
@@ -15574,6 +13937,8 @@ let Dialog = class Dialog extends view_with_toolbar/* ViewWithToolbar */.C {
         return res;
     }
     setMaxZIndex() {
+        if (this.getMod('static'))
+            return;
         let maxZIndex = 20000004, zIndex = 0;
         (0,helpers.$$)('.jodit-dialog', this.destination).forEach(dialog => {
             zIndex = parseInt((0,helpers.css)(dialog, 'zIndex'), 10);
@@ -15612,8 +13977,13 @@ let Dialog = class Dialog extends view_with_toolbar/* ViewWithToolbar */.C {
         this.isOpened = true;
         this.setModal(modal);
         this.destination.appendChild(this.container);
-        this.setPosition(this.offsetX, this.offsetY);
-        this.setMaxZIndex();
+        if (this.getMod('static') !== true) {
+            this.setPosition(this.offsetX, this.offsetY);
+            this.setMaxZIndex();
+        }
+        else {
+            this.container.style.removeProperty('z-index');
+        }
         if (this.o.fullsize) {
             this.toggleFullSize(true);
         }
@@ -15647,6 +14017,93 @@ let Dialog = class Dialog extends view_with_toolbar/* ViewWithToolbar */.C {
         this.e.fire(this, 'afterClose');
         this.e.fire(this.ow, 'joditCloseDialog');
         return this;
+    }
+    constructor(options = {}) {
+        super(options);
+        this.destroyAfterClose = false;
+        this.moved = false;
+        this.resizable = false;
+        this.draggable = false;
+        this.startX = 0;
+        this.startY = 0;
+        this.startPoint = { x: 0, y: 0, w: 0, h: 0 };
+        this.lockSelect = () => {
+            this.setMod('moved', true);
+        };
+        this.unlockSelect = () => {
+            this.setMod('moved', false);
+        };
+        this.onResize = () => {
+            if (this.options &&
+                this.o.resizable &&
+                !this.moved &&
+                this.isOpened &&
+                !this.offsetX &&
+                !this.offsetY) {
+                this.setPosition();
+            }
+        };
+        this.isModal = false;
+        this.isOpened = false;
+        const self = this;
+        self.options = (0,helpers.ConfigProto)(options, (0,helpers.ConfigProto)(config/* Config.prototype.dialog */.D.prototype.dialog, view/* View.defaultOptions */.G.defaultOptions));
+        dom/* Dom.safeRemove */.i.safeRemove(self.container);
+        const n = this.getFullElName.bind(this);
+        self.container = this.c.fromHTML(`<div class="jodit jodit-dialog ${this.componentName}">
+				<div class="${n('overlay')}"></div>
+				<div class="${this.getFullElName('panel')}">
+					<div class="${n('header')}">
+						<div class="${n('header-title')}"></div>
+						<div class="${n('header-toolbar')}"></div>
+					</div>
+					<div class="${n('content')}"></div>
+					<div class="${n('footer')}"></div>
+					<div class="${n('resizer')}">${ui/* Icon.get */.JO.get('resize_handler')}</div>
+				</div>
+			</div>`);
+        if (this.o.zIndex) {
+            this.container.style.zIndex = this.o.zIndex.toString();
+        }
+        (0,helpers.attr)(self.container, 'role', 'dialog');
+        Object.defineProperty(self.container, 'component', {
+            value: this
+        });
+        self.setMod('theme', self.o.theme || 'default').setMod('resizable', Boolean(self.o.resizable));
+        const dialog = self.getElm('panel');
+        void 0;
+        const resizer = self.getElm('resizer');
+        void 0;
+        const dialogbox_header = self.getElm('header-title');
+        void 0;
+        const dialogbox_content = self.getElm('content');
+        void 0;
+        const dialogbox_footer = self.getElm('footer');
+        void 0;
+        const dialogbox_toolbar = self.getElm('header-toolbar');
+        void 0;
+        this.message.destruct();
+        this.message = new messages/* UIMessages */.D(this, dialog);
+        this.dialog = dialog;
+        this.resizer = resizer;
+        this.dialogbox_header = dialogbox_header;
+        this.dialogbox_content = dialogbox_content;
+        this.dialogbox_footer = dialogbox_footer;
+        this.dialogbox_toolbar = dialogbox_toolbar;
+        (0,helpers.css)(self.dialog, {
+            maxWidth: self.options.maxWidth,
+            minHeight: self.options.minHeight,
+            minWidth: self.options.minWidth
+        });
+        const headerBox = self.getElm('header');
+        headerBox &&
+            self.e.on(headerBox, 'pointerdown touchstart', self.onHeaderMouseDown);
+        self.e.on(self.resizer, 'mousedown touchstart', self.onResizerMouseDown);
+        const fullSize = global/* pluginSystem.get */.pw.get('fullsize');
+        (0,helpers.isFunction)(fullSize) && fullSize(self);
+        this.e
+            .on(self.container, 'close_dialog', self.close)
+            .on(this.ow, 'keydown', this.onEsc)
+            .on(this.ow, 'resize', this.onResize);
     }
     buildToolbar() {
         this.o.buttons &&
@@ -15779,9 +14236,9 @@ function Prompt(msg, title, callback, placeholder, defaultValue) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
-var is_function = __webpack_require__(87385);
+var is_function = __webpack_require__(42096);
 // EXTERNAL MODULE: ./src/core/ui/button/button/button.ts
-var button_button = __webpack_require__(6816);
+var button_button = __webpack_require__(96031);
 ;// CONCATENATED MODULE: ./src/modules/dialog/confirm.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -15830,7 +14287,7 @@ function Confirm(msg, title, callback) {
 
 
 // EXTERNAL MODULE: ./src/core/plugin/index.ts
-var core_plugin = __webpack_require__(76454);
+var core_plugin = __webpack_require__(57549);
 ;// CONCATENATED MODULE: ./src/core/create/create.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -15842,12 +14299,12 @@ var core_plugin = __webpack_require__(76454);
 
 
 class Create {
+    get doc() {
+        return (0,helpers.isFunction)(this.document) ? this.document() : this.document;
+    }
     constructor(document, createAttributes) {
         this.document = document;
         this.createAttributes = createAttributes;
-    }
-    get doc() {
-        return (0,helpers.isFunction)(this.document) ? this.document() : this.document;
     }
     element(tagName, childrenOrAttributes, children) {
         const elm = this.doc.createElement(tagName.toLowerCase());
@@ -15877,6 +14334,7 @@ class Create {
         const iframe = this.element('iframe', { sandbox: 'allow-same-origin' });
         this.doc.body.appendChild(iframe);
         const doc = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document;
+        void 0;
         if (!doc) {
             throw Error('Iframe error');
         }
@@ -15951,9 +14409,9 @@ class Create {
 
 
 // EXTERNAL MODULE: ./src/modules/file-browser/index.ts + 16 modules
-var file_browser = __webpack_require__(75121);
+var file_browser = __webpack_require__(8649);
 // EXTERNAL MODULE: ./src/modules/image-editor/image-editor.ts + 2 modules
-var image_editor = __webpack_require__(37113);
+var image_editor = __webpack_require__(99583);
 ;// CONCATENATED MODULE: ./src/modules/history/snapshot.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -16190,17 +14648,17 @@ class Stack {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class Command {
-    constructor(oldValue, newValue, history, tick) {
-        this.oldValue = oldValue;
-        this.newValue = newValue;
-        this.history = history;
-        this.tick = tick;
-    }
     undo() {
         this.history.snapshot.restore(this.oldValue);
     }
     redo() {
         this.history.snapshot.restore(this.newValue);
+    }
+    constructor(oldValue, newValue, history, tick) {
+        this.oldValue = oldValue;
+        this.newValue = newValue;
+        this.history = history;
+        this.tick = tick;
     }
 }
 
@@ -16224,6 +14682,15 @@ config/* Config.prototype.history */.D.prototype.history = {
 };
 config/* Config.prototype.observer */.D.prototype.observer = config/* Config.prototype.history */.D.prototype.history;
 class History extends component/* ViewComponent */.Hr {
+    className() {
+        return 'History';
+    }
+    get startValue() {
+        return this.__startValue;
+    }
+    set startValue(value) {
+        this.__startValue = value;
+    }
     constructor(editor, stack = new Stack(editor.o.history.maxHistoryLength), snapshot = new Snapshot(editor)) {
         super(editor);
         this.updateTick = 0;
@@ -16258,15 +14725,6 @@ class History extends component/* ViewComponent */.Hr {
                     .on(this, 'change.history', this.onChange);
             });
         }
-    }
-    className() {
-        return 'History';
-    }
-    get startValue() {
-        return this.__startValue;
-    }
-    set startValue(value) {
-        this.__startValue = value;
     }
     __upTick() {
         this.updateTick += 1;
@@ -16342,10 +14800,1937 @@ class History extends component/* ViewComponent */.Hr {
     (0,decorators.debounce)()
 ], History.prototype, "onChange", null);
 
-// EXTERNAL MODULE: ./src/core/selection/index.ts + 19 modules
-var selection = __webpack_require__(92415);
+// EXTERNAL MODULE: ./src/core/helpers/string/camel-case.ts
+var camel_case = __webpack_require__(26596);
+// EXTERNAL MODULE: ./src/core/helpers/normalize/normalize-node.ts
+var normalize_node = __webpack_require__(74504);
+// EXTERNAL MODULE: ./src/core/helpers/utils/index.ts
+var utils = __webpack_require__(76502);
+// EXTERNAL MODULE: ./src/core/helpers/utils/css.ts
+var css = __webpack_require__(26911);
+// EXTERNAL MODULE: ./src/core/helpers/utils/data-bind.ts
+var data_bind = __webpack_require__(63122);
+// EXTERNAL MODULE: ./src/core/helpers/string/kebab-case.ts
+var kebab_case = __webpack_require__(11278);
+// EXTERNAL MODULE: ./src/core/helpers/normalize/normalize-css-value.ts
+var normalize_css_value = __webpack_require__(49353);
+// EXTERNAL MODULE: ./src/core/helpers/size/object-size.ts
+var object_size = __webpack_require__(16492);
+// EXTERNAL MODULE: ./src/core/dom/dom.ts
+var dom_dom = __webpack_require__(24263);
+// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 7 modules
+var checker = __webpack_require__(78411);
+;// CONCATENATED MODULE: ./src/core/selection/style/api/toggle-attributes.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+
+
+const tak = 'toggleAttributes';
+function toggleAttributes(commitStyle, elm, jodit, mode, dry = false) {
+    if (!dry && commitStyle.isApplied(elm, tak)) {
+        return mode;
+    }
+    !dry && commitStyle.setApplied(elm, tak);
+    const { attributes } = commitStyle.options;
+    if (attributes && (0,object_size/* size */.d)(attributes) > 0) {
+        Object.keys(attributes).forEach((key) => {
+            const value = attributes[key];
+            switch (key) {
+                case 'style': {
+                    mode = toggleStyle(commitStyle, jodit, value, elm, dry, mode);
+                    break;
+                }
+                case 'class':
+                    mode = toggleClass(jodit, value, elm, mode, dry);
+                    break;
+                default:
+                    mode = toggleAttribute(jodit, value, elm, key, dry, mode);
+            }
+        });
+    }
+    return mode;
+}
+function toggleStyle(commitStyle, jodit, style, elm, dry, mode) {
+    void 0;
+    Object.keys(style).forEach((rule) => {
+        const inlineValue = elm.style.getPropertyValue((0,kebab_case/* kebabCase */.G)(rule));
+        const newValue = style[rule];
+        if (inlineValue === '' && newValue == null) {
+            return;
+        }
+        if (getNativeCSSValue(jodit, elm, rule) ===
+            (0,normalize_css_value/* normalizeCssValue */.Zh)(rule, newValue)) {
+            if (!inlineValue) {
+                return;
+            }
+            !dry && (0,css/* css */.i)(elm, rule, null);
+            mode = UNSET;
+            mode = removeExtraStyleAttribute(commitStyle, elm, mode);
+            return;
+        }
+        mode = CHANGE;
+        if (!dry) {
+            (0,css/* css */.i)(elm, rule, newValue);
+            mode = removeExtraStyleAttribute(commitStyle, elm, mode);
+        }
+    });
+    return mode;
+}
+function toggleClass(jodit, value, elm, mode, dry) {
+    void 0;
+    const hook = jodit.e.fire.bind(jodit.e, `${_PREFIX}AfterToggleAttribute`);
+    if (elm.classList.contains(value.toString())) {
+        mode = UNSET;
+        if (!dry) {
+            elm.classList.remove(value);
+            if (elm.classList.length === 0) {
+                (0,utils.attr)(elm, 'class', null);
+                hook(mode, elm, 'class', null);
+            }
+        }
+    }
+    else {
+        mode = CHANGE;
+        if (!dry) {
+            elm.classList.add(value);
+            hook(mode, elm, 'class', value);
+        }
+    }
+    return mode;
+}
+function toggleAttribute(jodit, value, elm, key, dry, mode) {
+    void 0;
+    const hook = jodit.e.fire.bind(jodit.e, `${_PREFIX}AfterToggleAttribute`);
+    if ((0,utils.attr)(elm, key) === value) {
+        !dry && (0,utils.attr)(elm, key, null);
+        mode = UNSET;
+        !dry && hook(mode, elm, key, value);
+        return mode;
+    }
+    mode = CHANGE;
+    if (!dry) {
+        (0,utils.attr)(elm, key, value);
+        hook(mode, elm, key, value);
+    }
+    return mode;
+}
+function removeExtraStyleAttribute(commitStyle, elm, mode) {
+    if (!(0,utils.attr)(elm, 'style')) {
+        (0,utils.attr)(elm, 'style', null);
+        if (elm.tagName.toLowerCase() === commitStyle.defaultTag) {
+            dom_dom/* Dom.unwrap */.i.unwrap(elm);
+            mode = UNWRAP;
+        }
+    }
+    return mode;
+}
+function getShadowRoot(jodit) {
+    var _a;
+    if ((0,data_bind/* dataBind */.q)(jodit, 'shadowRoot') !== undefined) {
+        return (0,data_bind/* dataBind */.q)(jodit, 'shadowRoot');
+    }
+    const container = (0,global/* getContainer */.ZO)(jodit);
+    const iframe = document.createElement('iframe');
+    (0,css/* css */.i)(iframe, {
+        width: 0,
+        height: 0,
+        position: 'absolute',
+        border: 0
+    });
+    iframe.src = 'about:blank';
+    container.appendChild(iframe);
+    const doc = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document;
+    const shadowRoot = !doc ? jodit.od.body : doc.body;
+    (0,data_bind/* dataBind */.q)(jodit, 'shadowRoot', shadowRoot);
+    return shadowRoot;
+}
+function getNativeCSSValue(jodit, elm, key) {
+    const newElm = jodit.create.element(elm.tagName.toLowerCase());
+    newElm.style.cssText = elm.style.cssText;
+    const root = getShadowRoot(jodit);
+    root.appendChild(newElm);
+    const result = (0,css/* css */.i)(newElm, key);
+    dom_dom/* Dom.safeRemove */.i.safeRemove(newElm);
+    return result;
+}
+
+// EXTERNAL MODULE: ./src/core/helpers/utils/utils.ts
+var utils_utils = __webpack_require__(67309);
+// EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
+var trim = __webpack_require__(33941);
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-marker.ts
+var is_marker = __webpack_require__(37204);
+;// CONCATENATED MODULE: ./src/core/selection/style/api/extract.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function extractSelectedPart(wrapper, font, jodit) {
+    const range = jodit.s.createRange();
+    const leftEdge = (0,is_marker/* isMarker */._)(font.previousSibling)
+        ? font.previousSibling
+        : font;
+    range.setStartBefore(wrapper);
+    range.setEndBefore(leftEdge);
+    extractAndMove(wrapper, range, true);
+    const rightEdge = (0,is_marker/* isMarker */._)(font.nextSibling) ? font.nextSibling : font;
+    range.setStartAfter(rightEdge);
+    range.setEndAfter(wrapper);
+    extractAndMove(wrapper, range, false);
+}
+function extractAndMove(wrapper, range, left) {
+    const fragment = range.extractContents();
+    if ((!fragment.textContent || !(0,trim/* trim */.f)(fragment.textContent).length) &&
+        fragment.firstChild) {
+        dom_dom/* Dom.unwrap */.i.unwrap(fragment.firstChild);
+    }
+    if (wrapper.parentNode) {
+        (0,utils_utils/* call */.RE)(left ? dom_dom/* Dom.before */.i.before : dom_dom/* Dom.after */.i.after, wrapper, fragment);
+    }
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/list/toggle-ordered-list.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+function toggleOrderedList(commitStyle, li, jodit, mode) {
+    if (!li) {
+        return mode;
+    }
+    const list = li.parentElement;
+    if (!list) {
+        return mode;
+    }
+    const result = jodit.e.fire(`${_PREFIX}BeforeToggleList`, mode, commitStyle, list);
+    if (result !== undefined) {
+        return result;
+    }
+    const hook = jodit.e.fire.bind(jodit.e, `${_PREFIX}AfterToggleList`);
+    if (mode !== UNWRAP) {
+        const isChangeMode = toggleAttributes(commitStyle, li.parentElement, jodit, INITIAL, true) === CHANGE;
+        if (mode === REPLACE ||
+            isChangeMode ||
+            list.tagName.toLowerCase() !== commitStyle.element) {
+            const wrapper = unwrapList(REPLACE, list, li, jodit, commitStyle);
+            const newList = wrapList(commitStyle, wrapper, jodit);
+            hook(REPLACE, newList, commitStyle);
+            return REPLACE;
+        }
+    }
+    const wrapper = unwrapList(UNWRAP, list, li, jodit, commitStyle);
+    hook(UNWRAP, wrapper, commitStyle);
+    return UNWRAP;
+}
+function unwrapList(mode, list, li, jodit, cs) {
+    const result = jodit.e.fire(`${_PREFIX}BeforeUnwrapList`, mode, list, cs);
+    if (result) {
+        void 0;
+        return result;
+    }
+    extractSelectedPart(list, li, jodit);
+    void 0;
+    dom_dom/* Dom.unwrap */.i.unwrap(li.parentElement);
+    return dom_dom/* Dom.replace */.i.replace(li, jodit.o.enter, jodit.createInside);
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/list/wrap-list.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function wrapList(commitStyle, wrapper, jodit) {
+    const result = jodit.e.fire(`${_PREFIX}BeforeWrapList`, REPLACE, wrapper, commitStyle);
+    const newWrapper = result !== null && result !== void 0 ? result : dom/* Dom.replace */.i.replace(wrapper, 'li', jodit.createInside);
+    const prev = newWrapper.previousElementSibling;
+    const next = newWrapper.nextElementSibling;
+    let list = dom/* Dom.isTag */.i.isTag(prev, commitStyle.element) ? prev : null;
+    list !== null && list !== void 0 ? list : (list = dom/* Dom.isTag */.i.isTag(next, commitStyle.element) ? next : null);
+    if (!dom/* Dom.isTag */.i.isTag(list, ['ul', 'ol']) ||
+        !isSameAttributes(list, commitStyle.options.attributes)) {
+        list = jodit.createInside.element(commitStyle.element);
+        toggleAttributes(commitStyle, list, jodit, INITIAL);
+        dom/* Dom.before */.i.before(newWrapper, list);
+    }
+    if (prev === list) {
+        dom/* Dom.append */.i.append(list, newWrapper);
+    }
+    else {
+        dom/* Dom.prepend */.i.prepend(list, newWrapper);
+    }
+    if (dom/* Dom.isTag */.i.isTag(list.nextElementSibling, commitStyle.element) &&
+        elementsEqualAttributes(list, list.nextElementSibling)) {
+        dom/* Dom.append */.i.append(list, Array.from(list.nextElementSibling.childNodes));
+        dom/* Dom.safeRemove */.i.safeRemove(list.nextElementSibling);
+    }
+    jodit.e.fire(`${_PREFIX}AfterWrapList`, WRAP, list, commitStyle);
+    return list;
+}
+
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-void.ts
+var is_void = __webpack_require__(24021);
+;// CONCATENATED MODULE: ./src/core/selection/style/api/has-same-style.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+function hasSameStyle(elm, rules) {
+    return Boolean(!dom_dom/* Dom.isTag */.i.isTag(elm, 'font') &&
+        dom_dom/* Dom.isHTMLElement */.i.isHTMLElement(elm) &&
+        Object.keys(rules).every(property => {
+            const value = (0,css/* css */.i)(elm, property, true);
+            if (value === '' &&
+                (rules[property] === '' || rules[property] == null)) {
+                return true;
+            }
+            return (!(0,is_void/* isVoid */.n)(value) &&
+                value !== '' &&
+                !(0,is_void/* isVoid */.n)(rules[property]) &&
+                (0,normalize_css_value/* normalizeCssValue */.Zh)(property, rules[property])
+                    .toString()
+                    .toLowerCase() === value.toString().toLowerCase());
+        }));
+}
+const elm = document.createElement('div');
+elm.style.color = 'red';
+void 0;
+void 0;
+void 0;
+function hasSameStyleKeys(elm, rules) {
+    return Boolean(!dom_dom/* Dom.isTag */.i.isTag(elm, 'font') &&
+        dom_dom/* Dom.isHTMLElement */.i.isHTMLElement(elm) &&
+        Object.keys(rules).every(property => {
+            const value = (0,css/* css */.i)(elm, property, true);
+            return !(0,is_void/* isVoid */.n)(value);
+        }));
+}
+void 0;
+void 0;
+
+// EXTERNAL MODULE: ./src/core/helpers/utils/assert.ts
+var assert = __webpack_require__(603);
+;// CONCATENATED MODULE: ./src/core/selection/style/api/finite-state-machine.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+class FiniteStateMachine {
+    setState(state) {
+        void 0;
+        this.__previewsStates.add(state);
+        this.__state = state;
+    }
+    getState() {
+        return this.__state;
+    }
+    disableSilent() {
+        this.silent = false;
+    }
+    constructor(state, transitions) {
+        this.transitions = transitions;
+        this.silent = true;
+        this.__previewsStates = new Set();
+        this.setState(state);
+    }
+    dispatch(actionName, value) {
+        const action = this.transitions[this.getState()][actionName];
+        if (action) {
+            const res = action.call(this, value);
+            void 0;
+            void 0;
+            void 0;
+            this.setState(res.next);
+            if (false) {}
+            return res;
+        }
+        throw new Error(`invalid action: ${this.getState()}.${actionName.toString()}`);
+    }
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/is-normal-node.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function isNormalNode(elm) {
+    return Boolean(elm &&
+        !dom_dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm) &&
+        !dom_dom/* Dom.isTemporary */.i.isTemporary(elm) &&
+        !(0,is_marker/* isMarker */._)(elm));
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/is-suit-element.ts
+
+
+
+function isSuitElement(commitStyle, elm, strict) {
+    var _a;
+    if (!elm) {
+        return false;
+    }
+    const { element, elementIsDefault, options } = commitStyle;
+    const elmHasSameStyle = Boolean(((_a = options.attributes) === null || _a === void 0 ? void 0 : _a.style) &&
+        hasSameStyle(elm, options.attributes.style));
+    const elmIsSame = elm.nodeName.toLowerCase() === element ||
+        (dom_dom/* Dom.isTag */.i.isTag(elm, ['ul', 'ol']) && commitStyle.elementIsList);
+    if (((!elementIsDefault || !strict) && elmIsSame) ||
+        (elmHasSameStyle && isNormalNode(elm) && !commitStyle.elementIsList)) {
+        return true;
+    }
+    return Boolean(!elmIsSame && !strict && elementIsDefault && dom_dom/* Dom.isInlineBlock */.i.isInlineBlock(elm));
+}
+function findSuitClosest(commitStyle, element, root) {
+    return dom_dom/* Dom.closest */.i.closest(element, node => isSuitElement(commitStyle, node, true), root);
+}
+function isSameStyleChild(commitStyle, elm) {
+    var _a, _b;
+    const { element, options } = commitStyle;
+    if (!elm || !isNormalNode(elm)) {
+        return false;
+    }
+    const elmIsSame = elm.nodeName.toLowerCase() === element;
+    const elmHasSameStyle = Boolean(((_a = options.attributes) === null || _a === void 0 ? void 0 : _a.style) &&
+        hasSameStyleKeys(elm, (_b = options.attributes) === null || _b === void 0 ? void 0 : _b.style));
+    return elmIsSame && elmHasSameStyle;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/get-suit-child.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function getSuitChild(style, font) {
+    let { firstChild: child } = font;
+    while (child && !isNormalNode(child)) {
+        child = child.nextSibling;
+        if (!child) {
+            return null;
+        }
+    }
+    if (child &&
+        !dom_dom/* Dom.next */.i.next(child, isNormalNode, font) &&
+        isSuitElement(style, child, false)) {
+        return child;
+    }
+    return null;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/get-suit-parent.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+function getSuitParent(style, node, root) {
+    const { parentNode } = node;
+    if (parentNode === root ||
+        !dom_dom/* Dom.isHTMLElement */.i.isHTMLElement(parentNode) ||
+        dom_dom/* Dom.next */.i.next(node, isNormalNode, parentNode) ||
+        dom_dom/* Dom.prev */.i.prev(node, isNormalNode, parentNode)) {
+        return null;
+    }
+    if (style.isElementCommit &&
+        style.elementIsBlock &&
+        !dom_dom/* Dom.isBlock */.i.isBlock(parentNode)) {
+        return getSuitParent(style, parentNode, root);
+    }
+    if (isSuitElement(style, parentNode, false) &&
+        (!dom_dom/* Dom.isBlock */.i.isBlock(parentNode) || style.elementIsBlock)) {
+        return parentNode;
+    }
+    if (style.isElementCommit && !dom_dom/* Dom.isBlock */.i.isBlock(parentNode)) {
+        return getSuitParent(style, parentNode, root);
+    }
+    return null;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/is-inside-invisible-element.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function isInsideInvisibleElement(font, root) {
+    return Boolean(dom_dom/* Dom.closest */.i.closest(font, ['style', 'script'], root));
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/is-same-attributes.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function isSameAttributes(elm, attrs) {
+    if (!elm.attributes.length && !(0,object_size/* size */.d)(attrs)) {
+        return true;
+    }
+    if (!(0,object_size/* size */.d)(attrs)) {
+        return true;
+    }
+    void 0;
+    return Object.keys(attrs).every(key => {
+        if (key === 'class') {
+            return elm.classList.contains(attrs[key]);
+        }
+        if (key === 'style') {
+            return hasSameStyle(elm, attrs[key]);
+        }
+        return (0,utils.attr)(elm, key) === attrs[key];
+    });
+}
+function elementsEqualAttributes(elm1, elm2) {
+    return (elm1.attributes.length === elm2.attributes.length &&
+        Array.from(elm1.attributes).every(attr => elm2.hasAttribute(attr.name) &&
+            elm2.getAttribute(attr.name) === attr.value));
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/unwrap-children.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function unwrapChildren(style, font) {
+    var _a;
+    const needUnwrap = [];
+    const needChangeStyle = [];
+    let firstElementSuit;
+    const cssStyle = (_a = style.options.attributes) === null || _a === void 0 ? void 0 : _a.style;
+    if (font.firstChild) {
+        const gen = dom_dom/* Dom.eachGen */.i.eachGen(font);
+        let item = gen.next();
+        while (!item.done) {
+            const elm = item.value;
+            if (isSuitElement(style, elm, true) &&
+                (!cssStyle || hasSameStyleKeys(elm, cssStyle))) {
+                if (firstElementSuit === undefined) {
+                    firstElementSuit = true;
+                }
+                needUnwrap.push(elm);
+            }
+            else if (cssStyle && isSameStyleChild(style, elm)) {
+                if (firstElementSuit === undefined) {
+                    firstElementSuit = false;
+                }
+                needChangeStyle.push(() => {
+                    (0,helpers.css)(elm, Object.keys(cssStyle).reduce((acc, key) => {
+                        acc[key] = null;
+                        return acc;
+                    }, {}));
+                    if (!(0,helpers.attr)(elm, 'style')) {
+                        (0,helpers.attr)(elm, 'style', null);
+                    }
+                    if (!(0,helpers.attr)(elm, 'style') &&
+                        elm.nodeName.toLowerCase() === style.element) {
+                        needUnwrap.push(elm);
+                    }
+                });
+            }
+            else if (!dom_dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm)) {
+                if (firstElementSuit === undefined) {
+                    firstElementSuit = false;
+                }
+            }
+            item = gen.next();
+        }
+    }
+    needChangeStyle.forEach(clb => clb());
+    needUnwrap.forEach(dom_dom/* Dom.unwrap */.i.unwrap);
+    return Boolean(firstElementSuit);
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/wrap-unwrapped-text.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function wrapUnwrappedText(style, elm, jodit) {
+    const root = jodit.editor, ci = jodit.createInside, edge = (n, key = 'previousSibling') => {
+        let edgeNode = n, node = n;
+        while (node && !(0,is_marker/* isMarker */._)(node)) {
+            if (dom_dom/* Dom.isTag */.i.isTag(node, jodit.o.enter)) {
+                break;
+            }
+            edgeNode = node;
+            if (node[key]) {
+                node = node[key];
+            }
+            else {
+                node =
+                    node.parentNode &&
+                        !dom_dom/* Dom.isBlock */.i.isBlock(node.parentNode) &&
+                        node.parentNode !== root
+                        ? node.parentNode
+                        : null;
+            }
+            if (dom_dom/* Dom.isBlock */.i.isBlock(node)) {
+                break;
+            }
+        }
+        return edgeNode;
+    };
+    const start = edge(elm), end = edge(elm, 'nextSibling');
+    const range = jodit.s.createRange();
+    range.setStartBefore(start);
+    range.setEndAfter(end);
+    const fragment = range.extractContents();
+    const wrapper = ci.element(style.element);
+    wrapper.appendChild(fragment);
+    dom_dom/* Dom.safeInsertNode */.i.safeInsertNode(range, wrapper);
+    if (style.elementIsBlock) {
+        if (dom_dom/* Dom.isEmpty */.i.isEmpty(wrapper) &&
+            !dom_dom/* Dom.isTag */.i.isTag(wrapper.firstElementChild, 'br')) {
+            wrapper.appendChild(ci.element('br'));
+        }
+    }
+    return wrapper;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/wrap.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function wrap(commitStyle, font, jodit) {
+    const wrapper = findOrCreateWrapper(commitStyle, font, jodit);
+    return commitStyle.elementIsList
+        ? wrapList(commitStyle, wrapper, jodit)
+        : dom/* Dom.replace */.i.replace(wrapper, commitStyle.element, jodit.createInside, true);
+}
+function findOrCreateWrapper(commitStyle, font, jodit) {
+    if (commitStyle.elementIsBlock) {
+        const box = dom/* Dom.up */.i.up(font, node => dom/* Dom.isBlock */.i.isBlock(node) &&
+            !dom/* Dom.isTag */.i.isTag(node, [
+                'td',
+                'th',
+                'tr',
+                'tbody',
+                'table',
+                'li',
+                'ul',
+                'ol'
+            ]), jodit.editor);
+        if (box) {
+            return box;
+        }
+        return wrapUnwrappedText(commitStyle, font, jodit);
+    }
+    (0,utils_utils/* attr */.Lj)(font, 'size', null);
+    return font;
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/api/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;// CONCATENATED MODULE: ./src/core/selection/style/transactions.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+const states = {
+    START: 'START',
+    ELEMENT: 'ELEMENT',
+    UNWRAP: 'UNWRAP',
+    UNWRAP_CHILDREN: 'UNWRAP_CHILDREN',
+    CHANGE: 'CHANGE',
+    REPLACE_DEFAULT: 'REPLACE_DEFAULT',
+    LIST: 'LIST',
+    TOGGLE_LIST: 'TOGGLE_LIST',
+    WRAP: 'WRAP',
+    EXTRACT: 'EXTRACT',
+    END: 'END'
+};
+const transactions = {
+    [states.START]: {
+        exec(value) {
+            const { element, jodit, style, mode } = value;
+            if (isInsideInvisibleElement(element, jodit.editor) ||
+                dom/* Dom.isEmptyContent */.i.isEmptyContent(element)) {
+                return { ...value, next: states.END };
+            }
+            const elm = getSuitParent(style, element, jodit.editor) ||
+                getSuitChild(style, element);
+            if (elm) {
+                return { ...value, next: states.ELEMENT, element: elm };
+            }
+            const suit = findSuitClosest(style, element, jodit.editor);
+            if (style.elementIsList && dom/* Dom.isTag */.i.isTag(suit, ['ul', 'ol'])) {
+                return { ...value, next: states.LIST };
+            }
+            if (suit) {
+                return {
+                    ...value,
+                    next: states.EXTRACT
+                };
+            }
+            return {
+                ...value,
+                next: mode !== UNWRAP ? states.UNWRAP_CHILDREN : states.END
+            };
+        }
+    },
+    [states.LIST]: {
+        exec(value) {
+            const { element, jodit, mode } = value;
+            if (mode !== INITIAL && mode !== UNWRAP && mode !== REPLACE) {
+                return { ...value, next: states.END };
+            }
+            const li = dom/* Dom.closest */.i.closest(element, 'li', jodit.editor);
+            if (!li) {
+                return { ...value, next: states.END };
+            }
+            const list = dom/* Dom.closest */.i.closest(element, ['ul', 'ol'], jodit.editor);
+            if (list) {
+                return { ...value, element: li, next: states.TOGGLE_LIST };
+            }
+            return {
+                ...value,
+                next: states.END
+            };
+        }
+    },
+    [states.TOGGLE_LIST]: {
+        exec(value) {
+            return {
+                ...value,
+                mode: toggleOrderedList(value.style, value.element, value.jodit, value.mode),
+                next: states.END
+            };
+        }
+    },
+    [states.EXTRACT]: {
+        exec(value) {
+            const { element, jodit, style } = value;
+            const suit = findSuitClosest(style, element, jodit.editor);
+            void 0;
+            if (!style.elementIsBlock) {
+                extractSelectedPart(suit, element, jodit);
+            }
+            return {
+                ...value,
+                element: suit,
+                next: states.ELEMENT
+            };
+        }
+    },
+    [states.UNWRAP_CHILDREN]: {
+        exec(value) {
+            const { element, style } = value;
+            if (!unwrapChildren(style, element)) {
+                return {
+                    ...value,
+                    next: states.WRAP
+                };
+            }
+            return {
+                ...value,
+                mode: UNWRAP,
+                next: states.END
+            };
+        }
+    },
+    [states.WRAP]: {
+        exec(value) {
+            const { element, jodit, style } = value;
+            const wrapper = wrap(style, element, jodit);
+            return {
+                ...value,
+                next: style.elementIsList ? states.END : states.CHANGE,
+                mode: WRAP,
+                element: wrapper
+            };
+        }
+    },
+    [states.ELEMENT]: {
+        exec(value) {
+            const { style, element, jodit } = value;
+            if (toggleAttributes(style, element, jodit, INITIAL, true) !==
+                INITIAL) {
+                return { ...value, next: states.CHANGE };
+            }
+            return { ...value, next: states.UNWRAP };
+        }
+    },
+    [states.CHANGE]: {
+        exec(value) {
+            const { style, element, jodit, mode } = value;
+            const newMode = toggleAttributes(style, element, jodit, value.mode);
+            if (mode !== WRAP &&
+                newMode === UNSET &&
+                !element.attributes.length &&
+                dom/* Dom.isTag */.i.isTag(element, style.element)) {
+                return { ...value, next: states.UNWRAP };
+            }
+            return { ...value, mode: newMode, next: states.END };
+        }
+    },
+    [states.UNWRAP]: {
+        exec(value) {
+            if (value.element.attributes.length &&
+                dom/* Dom.isTag */.i.isTag(value.element, value.style.element)) {
+                return { ...value, next: states.REPLACE_DEFAULT };
+            }
+            dom/* Dom.unwrap */.i.unwrap(value.element);
+            return { ...value, mode: UNWRAP, next: states.END };
+        }
+    },
+    [states.REPLACE_DEFAULT]: {
+        exec(value) {
+            dom/* Dom.replace */.i.replace(value.element, value.style.defaultTag, value.jodit.createInside, true);
+            return { ...value, mode: REPLACE, next: states.END };
+        }
+    },
+    [states.END]: {
+        exec(value) {
+            return value;
+        }
+    }
+};
+
+;// CONCATENATED MODULE: ./src/core/selection/style/apply-style.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+function ApplyStyle(jodit, cs) {
+    const { s: sel, editor } = jodit;
+    sel.save();
+    (0,normalize_node/* normalizeNode */.T)(editor.firstChild);
+    const gen = jodit.s.wrapInTagGen();
+    let font = gen.next();
+    let state = {
+        mode: INITIAL,
+        element: font.value,
+        next: states.START,
+        jodit,
+        style: cs
+    };
+    while (font && !font.done) {
+        const machine = new FiniteStateMachine(states.START, transactions);
+        state.element = font.value;
+        while (machine.getState() !== states.END) {
+            state = machine.dispatch('exec', state);
+        }
+        font = gen.next();
+    }
+    sel.restore();
+}
+
+;// CONCATENATED MODULE: ./src/core/selection/style/commit-style.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+const WRAP = 'wrap';
+const UNWRAP = 'unwrap';
+const CHANGE = 'change';
+const UNSET = 'unset';
+const INITIAL = 'initial';
+const REPLACE = 'replace';
+const _PREFIX = 'commitStyle';
+class CommitStyle {
+    isApplied(elm, key) {
+        const data = this.__applyMap.get(elm);
+        if (!data) {
+            return false;
+        }
+        return data[key];
+    }
+    setApplied(elm, key) {
+        var _a;
+        const data = (_a = this.__applyMap.get(elm)) !== null && _a !== void 0 ? _a : {};
+        data[key] = true;
+        this.__applyMap.set(elm, data);
+    }
+    get elementIsList() {
+        return Boolean(this.options.element && ['ul', 'ol'].includes(this.options.element));
+    }
+    get element() {
+        return this.options.element || this.defaultTag;
+    }
+    get elementIsBlock() {
+        return Boolean(this.options.element && constants.IS_BLOCK.test(this.options.element));
+    }
+    get isElementCommit() {
+        return Boolean(this.options.element &&
+            this.options.element !== this.options.defaultTag);
+    }
+    get defaultTag() {
+        if (this.options.defaultTag) {
+            return this.options.defaultTag;
+        }
+        return this.elementIsBlock ? 'p' : 'span';
+    }
+    get elementIsDefault() {
+        return this.element === this.defaultTag;
+    }
+    constructor(options) {
+        this.options = options;
+        this.__applyMap = new WeakMap();
+        options.attributes = deprecatedUsing(this, options.attributes);
+    }
+    apply(jodit) {
+        const { hooks } = this.options;
+        try {
+            hooks &&
+                Object.keys(hooks).forEach(key => {
+                    jodit.e.on((0,camel_case/* camelCase */.e)(_PREFIX + '_' + key), hooks[key]);
+                });
+            ApplyStyle(jodit, this);
+        }
+        finally {
+            hooks &&
+                Object.keys(hooks).forEach(key => {
+                    jodit.e.off((0,camel_case/* camelCase */.e)(_PREFIX + '_' + key), hooks[key]);
+                });
+            this.__applyMap = new WeakMap();
+        }
+    }
+}
+function deprecatedUsing(commitStyle, attributes) {
+    const { style, className } = commitStyle.options;
+    if (style) {
+        if (attributes) {
+            attributes.style = style;
+        }
+        else {
+            attributes = { style };
+        }
+        delete commitStyle.options.style;
+    }
+    if (className) {
+        if (attributes) {
+            attributes['class'] = className;
+        }
+        else {
+            attributes = { class: className };
+        }
+        delete commitStyle.options.className;
+    }
+    return attributes;
+}
+
+// EXTERNAL MODULE: ./src/core/selection/helpers/index.ts + 2 modules
+var selection_helpers = __webpack_require__(80805);
+;// CONCATENATED MODULE: ./src/core/selection/select.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+
+
+
+
+
+
+
+
+class Select {
+    constructor(jodit) {
+        this.jodit = jodit;
+        jodit.e.on('removeMarkers', () => {
+            this.removeMarkers();
+        });
+    }
+    get j() {
+        return this.jodit;
+    }
+    errorNode(node) {
+        if (!dom/* Dom.isNode */.i.isNode(node)) {
+            throw (0,helpers.error)('Parameter node must be instance of Node');
+        }
+    }
+    get area() {
+        return this.j.editor;
+    }
+    get win() {
+        return this.j.ew;
+    }
+    get doc() {
+        return this.j.ed;
+    }
+    get sel() {
+        if (this.j.o.shadowRoot &&
+            (0,checker/* isFunction */.mf)(this.j.o.shadowRoot.getSelection)) {
+            return this.j.o.shadowRoot.getSelection();
+        }
+        return this.win.getSelection();
+    }
+    get range() {
+        const sel = this.sel;
+        return sel && sel.rangeCount ? sel.getRangeAt(0) : this.createRange();
+    }
+    get isInsideArea() {
+        const { sel } = this;
+        const range = (sel === null || sel === void 0 ? void 0 : sel.rangeCount) ? sel.getRangeAt(0) : null;
+        return !(!range || !dom/* Dom.isOrContains */.i.isOrContains(this.area, range.startContainer));
+    }
+    createRange(select = false) {
+        const range = this.doc.createRange();
+        if (select) {
+            this.selectRange(range);
+        }
+        return range;
+    }
+    remove() {
+        const sel = this.sel, current = this.current();
+        if (sel && current) {
+            for (let i = 0; i < sel.rangeCount; i += 1) {
+                sel.getRangeAt(i).deleteContents();
+                sel.getRangeAt(i).collapse(true);
+            }
+        }
+    }
+    clear() {
+        var _a, _b;
+        if ((_a = this.sel) === null || _a === void 0 ? void 0 : _a.rangeCount) {
+            (_b = this.sel) === null || _b === void 0 ? void 0 : _b.removeAllRanges();
+        }
+    }
+    removeNode(node) {
+        if (!dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, node, true)) {
+            throw (0,helpers.error)("Selection.removeNode can remove only editor's children");
+        }
+        dom/* Dom.safeRemove */.i.safeRemove(node);
+        this.j.e.fire('afterRemoveNode', node);
+    }
+    insertCursorAtPoint(x, y) {
+        this.removeMarkers();
+        try {
+            const rng = this.createRange();
+            (() => {
+                if (this.doc.caretPositionFromPoint) {
+                    const caret = this.doc.caretPositionFromPoint(x, y);
+                    if (caret) {
+                        rng.setStart(caret.offsetNode, caret.offset);
+                        return;
+                    }
+                }
+                if (this.doc.caretRangeFromPoint) {
+                    const caret = this.doc.caretRangeFromPoint(x, y);
+                    rng.setStart(caret.startContainer, caret.startOffset);
+                }
+            })();
+            rng.collapse(true);
+            this.selectRange(rng);
+            return true;
+        }
+        catch (_a) { }
+        return false;
+    }
+    get hasMarkers() {
+        return Boolean(this.markers.length);
+    }
+    get markers() {
+        return (0,helpers.$$)('span[data-' + constants.MARKER_CLASS + ']', this.area);
+    }
+    removeMarkers() {
+        dom/* Dom.safeRemove.apply */.i.safeRemove.apply(null, this.markers);
+    }
+    marker(atStart = false, range) {
+        let newRange = null;
+        if (range) {
+            newRange = range.cloneRange();
+            newRange.collapse(atStart);
+        }
+        const marker = this.j.createInside.span();
+        marker.id =
+            constants.MARKER_CLASS +
+                '_' +
+                Number(new Date()) +
+                '_' +
+                String(Math.random()).slice(2);
+        marker.style.lineHeight = '0';
+        marker.style.display = 'none';
+        dom/* Dom.markTemporary */.i.markTemporary(marker);
+        (0,helpers.attr)(marker, 'data-' + constants.MARKER_CLASS, atStart ? 'start' : 'end');
+        marker.appendChild(this.j.createInside.text(constants.INVISIBLE_SPACE));
+        if (newRange) {
+            if (dom/* Dom.isOrContains */.i.isOrContains(this.area, atStart ? newRange.startContainer : newRange.endContainer)) {
+                newRange.insertNode(marker);
+            }
+        }
+        return marker;
+    }
+    restore() {
+        let range = false;
+        const markAttr = (start) => `span[data-${constants.MARKER_CLASS}=${start ? 'start' : 'end'}]`;
+        const start = this.area.querySelector(markAttr(true)), end = this.area.querySelector(markAttr(false));
+        if (!start) {
+            return;
+        }
+        range = this.createRange();
+        if (!end) {
+            const previousNode = start.previousSibling;
+            if (dom/* Dom.isText */.i.isText(previousNode)) {
+                range.setStart(previousNode, previousNode.nodeValue ? previousNode.nodeValue.length : 0);
+            }
+            else {
+                range.setStartBefore(start);
+            }
+            dom/* Dom.safeRemove */.i.safeRemove(start);
+            range.collapse(true);
+        }
+        else {
+            range.setStartAfter(start);
+            dom/* Dom.safeRemove */.i.safeRemove(start);
+            range.setEndBefore(end);
+            dom/* Dom.safeRemove */.i.safeRemove(end);
+        }
+        if (range) {
+            this.selectRange(range);
+        }
+    }
+    save(silent = false) {
+        if (this.hasMarkers) {
+            return [];
+        }
+        const sel = this.sel;
+        if (!sel || !sel.rangeCount) {
+            return [];
+        }
+        const info = [], length = sel.rangeCount, ranges = [];
+        for (let i = 0; i < length; i += 1) {
+            ranges[i] = sel.getRangeAt(i);
+            if (ranges[i].collapsed) {
+                const start = this.marker(true, ranges[i]);
+                info[i] = {
+                    startId: start.id,
+                    collapsed: true,
+                    startMarker: start.outerHTML
+                };
+            }
+            else {
+                const start = this.marker(true, ranges[i]);
+                const end = this.marker(false, ranges[i]);
+                info[i] = {
+                    startId: start.id,
+                    endId: end.id,
+                    collapsed: false,
+                    startMarker: start.outerHTML,
+                    endMarker: end.outerHTML
+                };
+            }
+        }
+        if (!silent) {
+            sel.removeAllRanges();
+            for (let i = length - 1; i >= 0; --i) {
+                const startElm = this.doc.getElementById(info[i].startId);
+                if (startElm) {
+                    if (info[i].collapsed) {
+                        ranges[i].setStartAfter(startElm);
+                        ranges[i].collapse(true);
+                    }
+                    else {
+                        ranges[i].setStartBefore(startElm);
+                        if (info[i].endId) {
+                            const endElm = this.doc.getElementById(info[i].endId);
+                            if (endElm) {
+                                ranges[i].setEndAfter(endElm);
+                            }
+                        }
+                    }
+                }
+                try {
+                    sel.addRange(ranges[i].cloneRange());
+                }
+                catch (_a) { }
+            }
+        }
+        return info;
+    }
+    focus(options = {
+        preventScroll: true
+    }) {
+        var _a, _b;
+        if (!this.isFocused()) {
+            const scrollParent = (0,helpers.getScrollParent)(this.j.container), scrollTop = scrollParent === null || scrollParent === void 0 ? void 0 : scrollParent.scrollTop;
+            if (this.j.iframe) {
+                if (this.doc.readyState === 'complete') {
+                    this.j.iframe.focus(options);
+                }
+            }
+            this.win.focus();
+            this.area.focus(options);
+            if (scrollTop && (scrollParent === null || scrollParent === void 0 ? void 0 : scrollParent.scrollTo)) {
+                scrollParent.scrollTo(0, scrollTop);
+            }
+            const sel = this.sel, range = (sel === null || sel === void 0 ? void 0 : sel.rangeCount) ? sel === null || sel === void 0 ? void 0 : sel.getRangeAt(0) : null;
+            if (!range || !dom/* Dom.isOrContains */.i.isOrContains(this.area, range.startContainer)) {
+                const range = this.createRange();
+                range.setStart(this.area, 0);
+                range.collapse(true);
+                this.selectRange(range, false);
+            }
+            if (!this.j.editorIsActive) {
+                (_b = (_a = this.j) === null || _a === void 0 ? void 0 : _a.events) === null || _b === void 0 ? void 0 : _b.fire('focus');
+            }
+            return true;
+        }
+        return false;
+    }
+    isCollapsed() {
+        const sel = this.sel;
+        for (let r = 0; sel && r < sel.rangeCount; r += 1) {
+            if (!sel.getRangeAt(r).collapsed) {
+                return false;
+            }
+        }
+        return true;
+    }
+    isFocused() {
+        return (this.doc.hasFocus &&
+            this.doc.hasFocus() &&
+            this.area === this.doc.activeElement);
+    }
+    current(checkChild = true) {
+        if (this.j.getRealMode() === constants.MODE_WYSIWYG) {
+            const sel = this.sel;
+            if (!sel || sel.rangeCount === 0) {
+                return null;
+            }
+            const range = sel.getRangeAt(0);
+            let node = range.startContainer, rightMode = false;
+            const child = (nd) => rightMode ? nd.lastChild : nd.firstChild;
+            if (dom/* Dom.isTag */.i.isTag(node, 'br') && sel.isCollapsed) {
+                return node;
+            }
+            if (!dom/* Dom.isText */.i.isText(node)) {
+                node = range.startContainer.childNodes[range.startOffset];
+                if (!node) {
+                    node =
+                        range.startContainer.childNodes[range.startOffset - 1];
+                    rightMode = true;
+                }
+                if (node && sel.isCollapsed && !dom/* Dom.isText */.i.isText(node)) {
+                    if (!rightMode && dom/* Dom.isText */.i.isText(node.previousSibling)) {
+                        node = node.previousSibling;
+                    }
+                    else if (checkChild) {
+                        let current = child(node);
+                        while (current) {
+                            if (current && dom/* Dom.isText */.i.isText(current)) {
+                                node = current;
+                                break;
+                            }
+                            current = child(current);
+                        }
+                    }
+                }
+                if (node && !sel.isCollapsed && !dom/* Dom.isText */.i.isText(node)) {
+                    let leftChild = node, rightChild = node;
+                    do {
+                        leftChild = leftChild.firstChild;
+                        rightChild = rightChild.lastChild;
+                    } while (leftChild && rightChild && !dom/* Dom.isText */.i.isText(leftChild));
+                    if (leftChild === rightChild &&
+                        leftChild &&
+                        dom/* Dom.isText */.i.isText(leftChild)) {
+                        node = leftChild;
+                    }
+                }
+            }
+            if (node && dom/* Dom.isOrContains */.i.isOrContains(this.area, node)) {
+                return node;
+            }
+        }
+        return null;
+    }
+    insertNode(node, insertCursorAfter = true, fireChange = true) {
+        this.errorNode(node);
+        this.j.e.fire('safeHTML', node);
+        if (!this.isFocused() && this.j.isEditorMode()) {
+            this.focus();
+            this.restore();
+        }
+        const sel = this.sel;
+        this.j.history.snapshot.transaction(() => {
+            var _a;
+            if (!this.isCollapsed()) {
+                this.j.execCommand('Delete');
+            }
+            this.j.e.fire('beforeInsertNode', node);
+            if (sel && sel.rangeCount) {
+                const range = sel.getRangeAt(0);
+                if (dom/* Dom.isOrContains */.i.isOrContains(this.area, range.commonAncestorContainer)) {
+                    if (dom/* Dom.isTag */.i.isTag(range.startContainer, constants.INSEPARABLE_TAGS) &&
+                        range.collapsed) {
+                        (_a = range.startContainer.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(node, range.startContainer);
+                    }
+                    else {
+                        dom/* Dom.safeInsertNode */.i.safeInsertNode(range, node);
+                    }
+                }
+                else {
+                    this.area.appendChild(node);
+                }
+            }
+            else {
+                this.area.appendChild(node);
+            }
+            if (insertCursorAfter) {
+                if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+                    node.lastChild && this.setCursorAfter(node.lastChild);
+                }
+                else {
+                    this.setCursorAfter(node);
+                }
+            }
+        });
+        if (fireChange && this.j.events) {
+            this.j.__imdSynchronizeValues();
+        }
+        if (this.j.events) {
+            this.j.e.fire('afterInsertNode', node);
+        }
+    }
+    insertHTML(html, insertCursorAfter = true) {
+        if (html === '') {
+            return;
+        }
+        const node = this.j.createInside.div(), fragment = this.j.createInside.fragment();
+        let lastChild;
+        if (!this.isFocused() && this.j.isEditorMode()) {
+            this.focus();
+            this.restore();
+        }
+        if (!dom/* Dom.isNode */.i.isNode(html)) {
+            node.innerHTML = html.toString();
+        }
+        else {
+            node.appendChild(html);
+        }
+        if (!this.j.isEditorMode() &&
+            this.j.e.fire('insertHTML', node.innerHTML) === false) {
+            return;
+        }
+        lastChild = node.lastChild;
+        if (!lastChild) {
+            return;
+        }
+        while (node.firstChild) {
+            lastChild = node.firstChild;
+            fragment.appendChild(node.firstChild);
+        }
+        this.insertNode(fragment.firstChild && fragment.firstChild === fragment.lastChild
+            ? fragment.lastChild
+            : fragment, false, false);
+        if (insertCursorAfter) {
+            if (lastChild) {
+                this.setCursorAfter(lastChild);
+            }
+            else {
+                this.setCursorIn(fragment);
+            }
+        }
+        this.j.__imdSynchronizeValues();
+    }
+    insertImage(url, styles = null, defaultWidth = null) {
+        const image = (0,checker/* isString */.HD)(url) ? this.j.createInside.element('img') : url;
+        if ((0,checker/* isString */.HD)(url)) {
+            image.setAttribute('src', url);
+        }
+        if (defaultWidth != null) {
+            let dw = defaultWidth.toString();
+            if (dw &&
+                'auto' !== dw &&
+                String(dw).indexOf('px') < 0 &&
+                String(dw).indexOf('%') < 0) {
+                dw += 'px';
+            }
+            (0,helpers.call)(this.j.o.resizer.forImageChangeAttributes ? helpers.attr : helpers.css, image, 'width', dw);
+        }
+        if (styles && typeof styles === 'object') {
+            (0,helpers.css)(image, styles);
+        }
+        const onload = () => {
+            if (image.naturalHeight < image.offsetHeight ||
+                image.naturalWidth < image.offsetWidth) {
+                image.style.width = '';
+                image.style.height = '';
+            }
+            image.removeEventListener('load', onload);
+        };
+        this.j.e.on(image, 'load', onload);
+        if (image.complete) {
+            onload();
+        }
+        this.insertNode(image);
+        this.j.e.fire('afterInsertImage', image);
+    }
+    eachSelection(callback) {
+        var _a;
+        const sel = this.sel;
+        if (sel && sel.rangeCount) {
+            const range = sel.getRangeAt(0);
+            let root = range.commonAncestorContainer;
+            if (!dom/* Dom.isHTMLElement */.i.isHTMLElement(root)) {
+                root = root.parentElement;
+            }
+            const nodes = [], startOffset = range.startOffset, length = root.childNodes.length, elementOffset = startOffset < length ? startOffset : length - 1;
+            let start = range.startContainer === this.area
+                ? root.childNodes[elementOffset]
+                : range.startContainer, end = range.endContainer === this.area
+                ? root.childNodes[range.endOffset - 1]
+                : range.endContainer;
+            if (dom/* Dom.isText */.i.isText(start) &&
+                start === range.startContainer &&
+                range.startOffset === ((_a = start.nodeValue) === null || _a === void 0 ? void 0 : _a.length) &&
+                start.nextSibling) {
+                start = start.nextSibling;
+            }
+            if (dom/* Dom.isText */.i.isText(end) &&
+                end === range.endContainer &&
+                range.endOffset === 0 &&
+                end.previousSibling) {
+                end = end.previousSibling;
+            }
+            const checkElm = (node) => {
+                if (node &&
+                    node !== root &&
+                    !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(node) &&
+                    !(0,checker/* isMarker */._V)(node)) {
+                    nodes.push(node);
+                }
+            };
+            checkElm(start);
+            if (start !== end && dom/* Dom.isOrContains */.i.isOrContains(root, start, true)) {
+                dom/* Dom.find */.i.find(start, node => {
+                    checkElm(node);
+                    return (node === end ||
+                        (node && node.contains && node.contains(end)));
+                }, root, true, false);
+            }
+            const forEvery = (current) => {
+                if (!dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, current, true)) {
+                    return;
+                }
+                if (current.nodeName.match(/^(UL|OL)$/)) {
+                    return (0,helpers.toArray)(current.childNodes).forEach(forEvery);
+                }
+                if (dom/* Dom.isTag */.i.isTag(current, 'li')) {
+                    if (current.firstChild) {
+                        current = current.firstChild;
+                    }
+                    else {
+                        const currentB = this.j.createInside.text(constants.INVISIBLE_SPACE);
+                        current.appendChild(currentB);
+                        current = currentB;
+                    }
+                }
+                callback(current);
+            };
+            if (nodes.length === 0 && dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(start)) {
+                nodes.push(start);
+            }
+            if (nodes.length === 0 && start.firstChild) {
+                nodes.push(start.firstChild);
+            }
+            nodes.forEach(forEvery);
+        }
+    }
+    cursorInTheEdge(start, parentBlock) {
+        var _a, _b;
+        const end = !start, range = (_a = this.sel) === null || _a === void 0 ? void 0 : _a.getRangeAt(0), current = this.current(false);
+        if (!range ||
+            !current ||
+            !dom/* Dom.isOrContains */.i.isOrContains(parentBlock, current, true)) {
+            return null;
+        }
+        const container = start ? range.startContainer : range.endContainer;
+        const offset = start ? range.startOffset : range.endOffset;
+        const isSignificant = (elm) => Boolean(elm &&
+            !dom/* Dom.isTag */.i.isTag(elm, 'br') &&
+            !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(elm) &&
+            !dom/* Dom.isTemporary */.i.isTemporary(elm) &&
+            !(dom/* Dom.isElement */.i.isElement(elm) &&
+                this.j.e.fire('isInvisibleForCursor', elm) === true));
+        if (dom/* Dom.isText */.i.isText(container)) {
+            const text = ((_b = container.nodeValue) === null || _b === void 0 ? void 0 : _b.length) ? container.nodeValue : '';
+            if (end && text.replace((0,constants.INVISIBLE_SPACE_REG_EXP_END)(), '').length > offset) {
+                return false;
+            }
+            const inv = (0,constants.INVISIBLE_SPACE_REG_EXP_START)().exec(text);
+            if (start &&
+                ((inv && inv[0].length < offset) || (!inv && offset > 0))) {
+                return false;
+            }
+        }
+        else {
+            const children = (0,helpers.toArray)(container.childNodes);
+            if (end) {
+                if (children.slice(offset).some(isSignificant)) {
+                    return false;
+                }
+            }
+            else {
+                if (children.slice(0, offset).some(isSignificant)) {
+                    return false;
+                }
+            }
+        }
+        let next = current;
+        while (next && next !== parentBlock) {
+            const nextOne = dom/* Dom.sibling */.i.sibling(next, start);
+            if (!nextOne) {
+                next = next.parentNode;
+                continue;
+            }
+            next = nextOne;
+            if (next && isSignificant(next)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    cursorOnTheLeft(parentBlock) {
+        return this.cursorInTheEdge(true, parentBlock);
+    }
+    cursorOnTheRight(parentBlock) {
+        return this.cursorInTheEdge(false, parentBlock);
+    }
+    setCursorAfter(node) {
+        return this.setCursorNearWith(node, false);
+    }
+    setCursorBefore(node) {
+        return this.setCursorNearWith(node, true);
+    }
+    setCursorNearWith(node, inStart) {
+        var _a, _b;
+        this.errorNode(node);
+        if (!dom/* Dom.up */.i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
+            throw (0,helpers.error)('Node element must be in editor');
+        }
+        const range = this.createRange();
+        let fakeNode = null;
+        if (!dom/* Dom.isText */.i.isText(node)) {
+            fakeNode = this.j.createInside.text(constants.INVISIBLE_SPACE);
+            inStart ? range.setStartBefore(node) : range.setEndAfter(node);
+            range.collapse(inStart);
+            dom/* Dom.safeInsertNode */.i.safeInsertNode(range, fakeNode);
+            range.selectNode(fakeNode);
+        }
+        else {
+            if (inStart) {
+                range.setStart(node, 0);
+            }
+            else {
+                range.setEnd(node, (_b = (_a = node.nodeValue) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0);
+            }
+        }
+        range.collapse(inStart);
+        this.selectRange(range);
+        return fakeNode;
+    }
+    setCursorIn(node, inStart = false) {
+        this.errorNode(node);
+        if (!dom/* Dom.up */.i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
+            throw (0,helpers.error)('Node element must be in editor');
+        }
+        const range = this.createRange();
+        let start = node, last = node;
+        do {
+            if (dom/* Dom.isText */.i.isText(start)) {
+                break;
+            }
+            last = start;
+            start = inStart ? start.firstChild : start.lastChild;
+        } while (start);
+        if (!start) {
+            const fakeNode = this.j.createInside.text(constants.INVISIBLE_SPACE);
+            if (!/^(img|br|input)$/i.test(last.nodeName)) {
+                last.appendChild(fakeNode);
+                last = fakeNode;
+            }
+            else {
+                start = last;
+            }
+        }
+        range.selectNodeContents(start || last);
+        range.collapse(inStart);
+        this.selectRange(range);
+        return last;
+    }
+    selectRange(range, focus = true) {
+        const sel = this.sel;
+        if (focus && !this.isFocused()) {
+            this.focus();
+        }
+        if (sel) {
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+        this.j.e.fire('changeSelection');
+        return this;
+    }
+    select(node, inward = false) {
+        this.errorNode(node);
+        if (!dom/* Dom.up */.i.up(node, (elm) => elm === this.area || (elm && elm.parentNode === this.area), this.area)) {
+            throw (0,helpers.error)('Node element must be in editor');
+        }
+        const range = this.createRange();
+        range[inward ? 'selectNodeContents' : 'selectNode'](node);
+        return this.selectRange(range);
+    }
+    get html() {
+        const sel = this.sel;
+        if (sel && sel.rangeCount > 0) {
+            const range = sel.getRangeAt(0);
+            const clonedSelection = range.cloneContents();
+            const div = this.j.createInside.div();
+            div.appendChild(clonedSelection);
+            return div.innerHTML;
+        }
+        return '';
+    }
+    *wrapInTagGen() {
+        if (this.isCollapsed()) {
+            const font = this.jodit.createInside.element('font', constants.INVISIBLE_SPACE);
+            this.insertNode(font, false, false);
+            const [marker] = this.markers;
+            if (marker) {
+                font.appendChild(marker);
+            }
+            else {
+                this.setCursorIn(font);
+                this.save();
+            }
+            yield font;
+            dom/* Dom.unwrap */.i.unwrap(font);
+            return;
+        }
+        (0,helpers.$$)('*[style*=font-size]', this.area).forEach(elm => (0,helpers.attr)(elm, 'data-font-size', elm.style.fontSize.toString()));
+        if (!this.isCollapsed()) {
+            this.j.nativeExecCommand('fontsize', false, '7');
+        }
+        else {
+            const font = this.j.createInside.element('font');
+            (0,helpers.attr)(font, 'size', 7);
+            this.insertNode(font, false, false);
+        }
+        (0,helpers.$$)('*[data-font-size]', this.area).forEach(elm => {
+            const fontSize = (0,helpers.attr)(elm, 'data-font-size');
+            if (fontSize) {
+                elm.style.fontSize = fontSize;
+                (0,helpers.attr)(elm, 'data-font-size', null);
+            }
+        });
+        const elms = (0,helpers.$$)('font[size="7"]', this.area);
+        for (const font of elms) {
+            const { firstChild, lastChild } = font;
+            if (firstChild &&
+                firstChild === lastChild &&
+                (0,checker/* isMarker */._V)(firstChild)) {
+                dom/* Dom.unwrap */.i.unwrap(font);
+                continue;
+            }
+            if (firstChild && (0,checker/* isMarker */._V)(firstChild)) {
+                dom/* Dom.before */.i.before(font, firstChild);
+            }
+            if (lastChild && (0,checker/* isMarker */._V)(lastChild)) {
+                dom/* Dom.after */.i.after(font, lastChild);
+            }
+            yield font;
+            dom/* Dom.unwrap */.i.unwrap(font);
+        }
+    }
+    wrapInTag(tagOrCallback) {
+        const result = [];
+        for (const font of this.wrapInTagGen()) {
+            try {
+                if (font.firstChild &&
+                    font.firstChild === font.lastChild &&
+                    (0,checker/* isMarker */._V)(font.firstChild)) {
+                    continue;
+                }
+                if ((0,checker/* isFunction */.mf)(tagOrCallback)) {
+                    tagOrCallback(font);
+                }
+                else {
+                    result.push(dom/* Dom.replace */.i.replace(font, tagOrCallback, this.j.createInside));
+                }
+            }
+            finally {
+                const pn = font.parentNode;
+                if (pn) {
+                    dom/* Dom.unwrap */.i.unwrap(font);
+                    if (dom/* Dom.isEmpty */.i.isEmpty(pn)) {
+                        dom/* Dom.unwrap */.i.unwrap(pn);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    commitStyle(options) {
+        void 0;
+        const styleElm = new CommitStyle(options);
+        styleElm.apply(this.j);
+    }
+    applyStyle(style, options = {}) {
+        this.commitStyle({
+            style,
+            ...options
+        });
+    }
+    splitSelection(currentBox) {
+        if (!this.isCollapsed()) {
+            return null;
+        }
+        const leftRange = this.createRange();
+        const range = this.range;
+        leftRange.setStartBefore(currentBox);
+        const cursorOnTheRight = this.cursorOnTheRight(currentBox);
+        const cursorOnTheLeft = this.cursorOnTheLeft(currentBox);
+        const br = this.j.createInside.element('br'), prevFake = this.j.createInside.text(constants.INVISIBLE_SPACE), nextFake = prevFake.cloneNode();
+        try {
+            if (cursorOnTheRight || cursorOnTheLeft) {
+                dom/* Dom.safeInsertNode */.i.safeInsertNode(range, br);
+                const clearBR = (start, getNext) => {
+                    let next = getNext(start);
+                    while (next) {
+                        const nextSib = getNext(next);
+                        if (next &&
+                            (dom/* Dom.isTag */.i.isTag(next, 'br') || dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(next))) {
+                            dom/* Dom.safeRemove */.i.safeRemove(next);
+                        }
+                        else {
+                            break;
+                        }
+                        next = nextSib;
+                    }
+                };
+                clearBR(br, (n) => n.nextSibling);
+                clearBR(br, (n) => n.previousSibling);
+                dom/* Dom.after */.i.after(br, nextFake);
+                dom/* Dom.before */.i.before(br, prevFake);
+                if (cursorOnTheRight) {
+                    leftRange.setEndBefore(br);
+                    range.setEndBefore(br);
+                }
+                else {
+                    leftRange.setEndAfter(br);
+                    range.setEndAfter(br);
+                }
+            }
+            else {
+                leftRange.setEnd(range.startContainer, range.startOffset);
+            }
+            const fragment = leftRange.extractContents();
+            const clearEmpties = (node) => dom/* Dom.each */.i.each(node, node => dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(node) && dom/* Dom.safeRemove */.i.safeRemove(node));
+            if (currentBox.parentNode) {
+                try {
+                    clearEmpties(fragment);
+                    clearEmpties(currentBox);
+                    currentBox.parentNode.insertBefore(fragment, currentBox);
+                    if (cursorOnTheRight && (br === null || br === void 0 ? void 0 : br.parentNode)) {
+                        const range = this.createRange();
+                        range.setStartBefore(br);
+                        this.selectRange(range);
+                    }
+                }
+                catch (e) {
+                    if (false) {}
+                }
+            }
+            const fillFakeParent = (fake) => {
+                var _a, _b, _c;
+                if (((_a = fake === null || fake === void 0 ? void 0 : fake.parentNode) === null || _a === void 0 ? void 0 : _a.firstChild) === ((_b = fake === null || fake === void 0 ? void 0 : fake.parentNode) === null || _b === void 0 ? void 0 : _b.lastChild)) {
+                    (_c = fake === null || fake === void 0 ? void 0 : fake.parentNode) === null || _c === void 0 ? void 0 : _c.appendChild(br.cloneNode());
+                }
+            };
+            fillFakeParent(prevFake);
+            fillFakeParent(nextFake);
+        }
+        finally {
+            dom/* Dom.safeRemove */.i.safeRemove(prevFake);
+            dom/* Dom.safeRemove */.i.safeRemove(nextFake);
+        }
+        return currentBox.previousElementSibling;
+    }
+    expandSelection() {
+        if (this.isCollapsed()) {
+            return this;
+        }
+        const { range } = this, c = range.cloneRange();
+        if (!dom/* Dom.isOrContains */.i.isOrContains(this.j.editor, range.commonAncestorContainer, true)) {
+            return this;
+        }
+        const moveMaxEdgeFake = (start) => {
+            const fake = this.j.createInside.fake();
+            const r = range.cloneRange();
+            r.collapse(start);
+            dom/* Dom.safeInsertNode */.i.safeInsertNode(r, fake);
+            (0,selection_helpers/* moveTheNodeAlongTheEdgeOutward */.f)(fake, start, this.j.editor);
+            return fake;
+        };
+        const leftFake = moveMaxEdgeFake(true);
+        const rightFake = moveMaxEdgeFake(false);
+        c.setStartAfter(leftFake);
+        c.setEndBefore(rightFake);
+        const leftBox = dom/* Dom.findSibling */.i.findSibling(leftFake, false);
+        const rightBox = dom/* Dom.findSibling */.i.findSibling(rightFake, true);
+        if (leftBox !== rightBox) {
+            const rightInsideLeft = dom/* Dom.isElement */.i.isElement(leftBox) &&
+                dom/* Dom.isOrContains */.i.isOrContains(leftBox, rightFake), leftInsideRight = !rightInsideLeft &&
+                dom/* Dom.isElement */.i.isElement(rightBox) &&
+                dom/* Dom.isOrContains */.i.isOrContains(rightBox, leftFake);
+            if (rightInsideLeft || leftInsideRight) {
+                let child = (rightInsideLeft ? leftBox : rightBox), container = child;
+                while (dom/* Dom.isElement */.i.isElement(child)) {
+                    child = rightInsideLeft
+                        ? child.firstElementChild
+                        : child.lastElementChild;
+                    if (child) {
+                        const isInside = rightInsideLeft
+                            ? dom/* Dom.isOrContains */.i.isOrContains(child, rightFake)
+                            : dom/* Dom.isOrContains */.i.isOrContains(child, leftFake);
+                        if (isInside) {
+                            container = child;
+                        }
+                    }
+                }
+                if (rightInsideLeft) {
+                    c.setStart(container, 0);
+                }
+                else {
+                    c.setEnd(container, container.childNodes.length);
+                }
+            }
+        }
+        this.selectRange(c);
+        dom/* Dom.safeRemove */.i.safeRemove(leftFake, rightFake);
+        return this;
+    }
+}
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], Select.prototype, "createRange", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], Select.prototype, "focus", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], Select.prototype, "setCursorAfter", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], Select.prototype, "setCursorBefore", null);
+(0,tslib_es6/* __decorate */.gn)([
+    decorators.autobind
+], Select.prototype, "setCursorIn", null);
+
+;// CONCATENATED MODULE: ./src/core/selection/index.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
 // EXTERNAL MODULE: ./src/core/traits/index.ts + 3 modules
-var traits = __webpack_require__(63711);
+var traits = __webpack_require__(72452);
 ;// CONCATENATED MODULE: ./src/modules/status-bar/status-bar.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -16359,14 +16744,6 @@ var traits = __webpack_require__(63711);
 
 
 let StatusBar = class StatusBar extends component/* ViewComponent */.Hr {
-    constructor(jodit, target) {
-        super(jodit);
-        this.target = target;
-        this.mods = {};
-        this.container = jodit.c.div('jodit-status-bar');
-        target.appendChild(this.container);
-        this.hide();
-    }
     className() {
         return 'StatusBar';
     }
@@ -16406,6 +16783,14 @@ let StatusBar = class StatusBar extends component/* ViewComponent */.Hr {
         }
         this.j.e.fire('resize');
     }
+    constructor(jodit, target) {
+        super(jodit);
+        this.target = target;
+        this.mods = {};
+        this.container = jodit.c.div('jodit-status-bar');
+        target.appendChild(this.container);
+        this.hide();
+    }
     destruct() {
         if (this.isInDestruct) {
             return;
@@ -16422,15 +16807,15 @@ StatusBar = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./src/modules/table/table.ts
-var table = __webpack_require__(70218);
+var table = __webpack_require__(25120);
 // EXTERNAL MODULE: ./src/modules/toolbar/collection/editor-collection.ts
-var editor_collection = __webpack_require__(98714);
+var editor_collection = __webpack_require__(81698);
 // EXTERNAL MODULE: ./src/modules/toolbar/collection/collection.ts
-var collection = __webpack_require__(50);
+var collection = __webpack_require__(72719);
 // EXTERNAL MODULE: ./src/modules/toolbar/button/button.ts
-var toolbar_button_button = __webpack_require__(95169);
+var toolbar_button_button = __webpack_require__(48197);
 // EXTERNAL MODULE: ./src/modules/toolbar/button/content.ts
-var content = __webpack_require__(3973);
+var content = __webpack_require__(34375);
 ;// CONCATENATED MODULE: ./src/modules/toolbar/button/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -16702,9 +17087,9 @@ function hasItems(data) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-array.ts
-var is_array = __webpack_require__(41515);
+var is_array = __webpack_require__(49781);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-jodit-object.ts
-var is_jodit_object = __webpack_require__(12866);
+var is_jodit_object = __webpack_require__(77892);
 ;// CONCATENATED MODULE: ./src/modules/uploader/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -16800,12 +17185,6 @@ config/* Config.prototype.uploader */.D.prototype.uploader = {
 
 
 class Uploader extends component/* ViewComponent */.Hr {
-    constructor(editor, options) {
-        super(editor);
-        this.path = '';
-        this.source = 'default';
-        this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(config/* Config.defaultOptions.uploader */.D.defaultOptions.uploader, (0,helpers.isJoditObject)(editor) ? editor.o.uploader : {}));
-    }
     get j() {
         return this.jodit;
     }
@@ -16931,6 +17310,12 @@ class Uploader extends component/* ViewComponent */.Hr {
         })
             .catch(e => handlerE.call(uploader, e));
     }
+    constructor(editor, options) {
+        super(editor);
+        this.path = '';
+        this.source = 'default';
+        this.options = (0,helpers.ConfigProto)(options || {}, (0,helpers.ConfigProto)(config/* Config.defaultOptions.uploader */.D.defaultOptions.uploader, (0,helpers.isJoditObject)(editor) ? editor.o.uploader : {}));
+    }
     destruct() {
         this.setStatus(component/* STATUSES.beforeDestruct */.n$.beforeDestruct);
         const instances = ajaxInstances.get(this);
@@ -16947,10 +17332,8 @@ class Uploader extends component/* ViewComponent */.Hr {
     }
 }
 
-// EXTERNAL MODULE: ./src/modules/messages/messages.ts + 1 modules
-var messages = __webpack_require__(28351);
 // EXTERNAL MODULE: ./src/core/plugin/plugin-system.ts
-var plugin_system = __webpack_require__(60154);
+var plugin_system = __webpack_require__(44540);
 ;// CONCATENATED MODULE: ./src/modules/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -16988,7 +17371,7 @@ var plugin_system = __webpack_require__(60154);
 
 /***/ }),
 
-/***/ 28351:
+/***/ 17832:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17001,17 +17384,15 @@ __webpack_require__.d(__webpack_exports__, {
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(20255);
 // EXTERNAL MODULE: ./src/core/helpers/utils/css.ts
-var css = __webpack_require__(76239);
+var css = __webpack_require__(26911);
 // EXTERNAL MODULE: ./src/core/ui/group/group.ts
-var group = __webpack_require__(31454);
+var group = __webpack_require__(61479);
 // EXTERNAL MODULE: ./src/core/decorators/component/component.ts
-var component = __webpack_require__(45466);
+var component = __webpack_require__(11441);
 // EXTERNAL MODULE: ./src/core/decorators/watch/watch.ts
-var watch = __webpack_require__(30192);
-// EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
+var watch = __webpack_require__(46163);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(55865);
+var ui = __webpack_require__(93801);
 ;// CONCATENATED MODULE: ./src/modules/messages/message.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -17050,18 +17431,18 @@ UIMessage = (0,tslib_es6/* __decorate */.gn)([
 
 
 
-
 let UIMessages = class UIMessages extends group/* UIGroup */.q {
-    constructor(jodit, options = {
+    className() {
+        return 'UIMessages';
+    }
+    constructor(jodit, __box, options = {
         defaultTimeout: 3000,
         defaultOffset: 5
     }) {
         super(jodit);
+        this.__box = __box;
         this.options = options;
         this.__messages = new Set();
-    }
-    className() {
-        return 'UIMessages';
     }
     info(text, timeout) {
         this.__message(text, 'info', timeout);
@@ -17081,13 +17462,7 @@ let UIMessages = class UIMessages extends group/* UIGroup */.q {
             this.async.updateTimeout(key, timeout || this.options.defaultTimeout);
             return;
         }
-        const jodit = this.j;
-        if ((0,helpers.isJoditObject)(jodit)) {
-            jodit.workplace.appendChild(this.container);
-        }
-        else {
-            jodit.container.appendChild(this.container);
-        }
+        this.__box.appendChild(this.container);
         const msg = new UIMessage(this.j, { text, variant });
         this.append(msg);
         this.__calcOffsets();
@@ -17136,7 +17511,7 @@ UIMessages = (0,tslib_es6/* __decorate */.gn)([
 
 /***/ }),
 
-/***/ 70218:
+/***/ 25120:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17144,12 +17519,12 @@ UIMessages = (0,tslib_es6/* __decorate */.gn)([
 /* harmony export */   "i": function() { return /* binding */ Table; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47386);
-/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36516);
-/* harmony import */ var jodit_core_helpers___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(83370);
-/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2624);
-/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(16672);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(63945);
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86893);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(64968);
+/* harmony import */ var jodit_core_helpers___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40332);
+/* harmony import */ var jodit_core_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(90549);
+/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(17332);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(67493);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -17733,7 +18108,7 @@ const instance = (j) => j.getInstance('Table', j.o);
 
 /***/ }),
 
-/***/ 95169:
+/***/ 48197:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17741,16 +18116,16 @@ const instance = (j) => j.getInstance('Table', j.o);
 /* harmony export */   "h": function() { return /* binding */ ToolbarButton; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(81402);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(63945);
-/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36516);
-/* harmony import */ var jodit_core_ui_popup_popup__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(78900);
-/* harmony import */ var jodit_modules_toolbar_factory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5243);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(83370);
-/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(80353);
-/* harmony import */ var jodit_modules_toolbar_collection_collection__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(50);
-/* harmony import */ var jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(71685);
-/* harmony import */ var jodit_core_ui_helpers_get_control_type__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(58240);
+/* harmony import */ var jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(55310);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(67493);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(64968);
+/* harmony import */ var jodit_core_ui_popup_popup__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(12680);
+/* harmony import */ var jodit_modules_toolbar_factory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(81438);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(40332);
+/* harmony import */ var jodit_core_ui_icon__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(77904);
+/* harmony import */ var jodit_modules_toolbar_collection_collection__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(72719);
+/* harmony import */ var jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(29411);
+/* harmony import */ var jodit_core_ui_helpers_get_control_type__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(38546);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -17769,30 +18144,6 @@ const instance = (j) => j.getInstance('Table', j.o);
 
 
 let ToolbarButton = class ToolbarButton extends jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_0__/* .UIButton */ .y3 {
-    constructor(jodit, control, target = null) {
-        super(jodit);
-        this.control = control;
-        this.target = target;
-        this.state = {
-            ...(0,jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_0__/* .UIButtonState */ .Yc)(),
-            theme: 'toolbar',
-            currentValue: '',
-            hasTrigger: false
-        };
-        this.openedPopup = null;
-        jodit.e.on([this.button, this.trigger], 'mousedown', (e) => e.preventDefault());
-        this.onAction(this.onClick);
-        this.hookStatus(jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_8__/* .STATUSES.ready */ .n.ready, () => {
-            this.initFromControl();
-            this.initTooltip();
-            this.update();
-        });
-        if (control.mods) {
-            Object.keys(control.mods).forEach(mod => {
-                control.mods && this.setMod(mod, control.mods[mod]);
-            });
-        }
-    }
     className() {
         return 'ToolbarButton';
     }
@@ -17906,6 +18257,30 @@ let ToolbarButton = class ToolbarButton extends jodit_core_ui_button__WEBPACK_IM
             })
                 .on(this.container, 'mouseleave', () => {
                 this.j.e.fire('hideTooltip');
+            });
+        }
+    }
+    constructor(jodit, control, target = null) {
+        super(jodit);
+        this.control = control;
+        this.target = target;
+        this.state = {
+            ...(0,jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_0__/* .UIButtonState */ .Yc)(),
+            theme: 'toolbar',
+            currentValue: '',
+            hasTrigger: false
+        };
+        this.openedPopup = null;
+        jodit.e.on([this.button, this.trigger], 'mousedown', (e) => e.preventDefault());
+        this.onAction(this.onClick);
+        this.hookStatus(jodit_core_component_statuses__WEBPACK_IMPORTED_MODULE_8__/* .STATUSES.ready */ .n.ready, () => {
+            this.initFromControl();
+            this.initTooltip();
+            this.update();
+        });
+        if (control.mods) {
+            Object.keys(control.mods).forEach(mod => {
+                control.mods && this.setMod(mod, control.mods[mod]);
             });
         }
     }
@@ -18123,7 +18498,7 @@ ToolbarButton = (0,tslib__WEBPACK_IMPORTED_MODULE_10__/* .__decorate */ .gn)([
 
 /***/ }),
 
-/***/ 3973:
+/***/ 34375:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18131,10 +18506,10 @@ ToolbarButton = (0,tslib__WEBPACK_IMPORTED_MODULE_10__/* .__decorate */ .gn)([
 /* harmony export */   "c": function() { return /* binding */ ToolbarContent; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(81402);
-/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(36516);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(83370);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(63945);
+/* harmony import */ var jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(55310);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(64968);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(40332);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(67493);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -18147,13 +18522,6 @@ ToolbarButton = (0,tslib__WEBPACK_IMPORTED_MODULE_10__/* .__decorate */ .gn)([
 
 
 let ToolbarContent = class ToolbarContent extends jodit_core_ui_button__WEBPACK_IMPORTED_MODULE_0__/* .UIButton */ .y3 {
-    constructor(jodit, control, target = null) {
-        super(jodit);
-        this.control = control;
-        this.target = target;
-        this.container.classList.add(`${this.componentName}_${this.clearName(control.name)}`);
-        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(this.container, 'role', 'content');
-    }
     className() {
         return 'ToolbarContent';
     }
@@ -18168,6 +18536,13 @@ let ToolbarContent = class ToolbarContent extends jodit_core_ui_button__WEBPACK_
     createContainer() {
         return this.j.c.span(this.componentName);
     }
+    constructor(jodit, control, target = null) {
+        super(jodit);
+        this.control = control;
+        this.target = target;
+        this.container.classList.add(`${this.componentName}_${this.clearName(control.name)}`);
+        (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.attr)(this.container, 'role', 'content');
+    }
 };
 ToolbarContent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
     jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.component
@@ -18177,7 +18552,7 @@ ToolbarContent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
 
 /***/ }),
 
-/***/ 50:
+/***/ 72719:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18185,10 +18560,10 @@ ToolbarContent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
 /* harmony export */   "n": function() { return /* binding */ ToolbarCollection; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(20255);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(83370);
-/* harmony import */ var jodit_core_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(55865);
-/* harmony import */ var _factory__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5243);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(63945);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40332);
+/* harmony import */ var jodit_core_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(93801);
+/* harmony import */ var _factory__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(81438);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(67493);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -18201,15 +18576,6 @@ ToolbarContent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
 
 
 let ToolbarCollection = class ToolbarCollection extends jodit_core_ui__WEBPACK_IMPORTED_MODULE_1__/* .UIList */ .bz {
-    constructor(jodit) {
-        super(jodit);
-        this.listenEvents = 'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
-            'selectionchange changeSelection focus afterSetMode touchstart focus blur';
-        this.update = this.j.async.debounce(this.immediateUpdate, () => this.j.defaultTimeout);
-        this.__tooltip = null;
-        this.initEvents();
-        this.__tooltip = jodit_core_ui__WEBPACK_IMPORTED_MODULE_1__/* .UITooltip.make */ .Ne.make(jodit);
-    }
     className() {
         return 'ToolbarCollection';
     }
@@ -18239,6 +18605,15 @@ let ToolbarCollection = class ToolbarCollection extends jodit_core_ui__WEBPACK_I
     setDirection(direction) {
         this.container.style.direction = direction;
         this.container.setAttribute('dir', direction);
+    }
+    constructor(jodit) {
+        super(jodit);
+        this.listenEvents = 'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
+            'selectionchange changeSelection focus afterSetMode touchstart focus blur';
+        this.update = this.j.async.debounce(this.immediateUpdate, () => this.j.defaultTimeout);
+        this.__tooltip = null;
+        this.initEvents();
+        this.__tooltip = jodit_core_ui__WEBPACK_IMPORTED_MODULE_1__/* .UITooltip.make */ .Ne.make(jodit);
     }
     initEvents() {
         this.j.e
@@ -18285,7 +18660,7 @@ ToolbarCollection = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)(
 
 /***/ }),
 
-/***/ 98714:
+/***/ 81698:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18293,11 +18668,11 @@ ToolbarCollection = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)(
 /* harmony export */   "N": function() { return /* binding */ ToolbarEditorCollection; }
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(20255);
-/* harmony import */ var _collection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(50);
-/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(47386);
-/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(36516);
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(83370);
-/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(63945);
+/* harmony import */ var _collection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(72719);
+/* harmony import */ var jodit_core_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86893);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(64968);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(40332);
+/* harmony import */ var jodit_core_decorators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(67493);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -18310,28 +18685,6 @@ ToolbarCollection = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)(
 
 
 let ToolbarEditorCollection = class ToolbarEditorCollection extends _collection__WEBPACK_IMPORTED_MODULE_0__/* .ToolbarCollection */ .n {
-    constructor(jodit) {
-        super(jodit);
-        this.checkActiveStatus = (cssObject, node) => {
-            let matches = 0, total = 0;
-            Object.keys(cssObject).forEach((cssProperty) => {
-                const cssValue = cssObject[cssProperty];
-                if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.isFunction)(cssValue)) {
-                    if (cssValue(this.j, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.css)(node, cssProperty).toString())) {
-                        matches += 1;
-                    }
-                }
-                else {
-                    if (cssValue.indexOf((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.css)(node, cssProperty).toString()) !== -1) {
-                        matches += 1;
-                    }
-                }
-                total += 1;
-            });
-            return total === matches;
-        };
-        this.prependInvisibleInput(this.container);
-    }
     className() {
         return 'ToolbarEditorCollection';
     }
@@ -18383,6 +18736,28 @@ let ToolbarEditorCollection = class ToolbarEditorCollection extends _collection_
     getTarget(button) {
         return button.target || this.j.s.current() || null;
     }
+    constructor(jodit) {
+        super(jodit);
+        this.checkActiveStatus = (cssObject, node) => {
+            let matches = 0, total = 0;
+            Object.keys(cssObject).forEach((cssProperty) => {
+                const cssValue = cssObject[cssProperty];
+                if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.isFunction)(cssValue)) {
+                    if (cssValue(this.j, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.css)(node, cssProperty).toString())) {
+                        matches += 1;
+                    }
+                }
+                else {
+                    if (cssValue.indexOf((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_3__.css)(node, cssProperty).toString()) !== -1) {
+                        matches += 1;
+                    }
+                }
+                total += 1;
+            });
+            return total === matches;
+        };
+        this.prependInvisibleInput(this.container);
+    }
     prependInvisibleInput(container) {
         const input = this.j.create.element('input', {
             tabIndex: -1,
@@ -18412,7 +18787,7 @@ ToolbarEditorCollection = (0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */
 
 /***/ }),
 
-/***/ 5243:
+/***/ 81438:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18420,11 +18795,11 @@ ToolbarEditorCollection = (0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */
 /* harmony export */   "R": function() { return /* binding */ makeCollection; },
 /* harmony export */   "g": function() { return /* binding */ makeButton; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(83370);
-/* harmony import */ var _collection_collection__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(50);
-/* harmony import */ var _collection_editor_collection__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(98714);
-/* harmony import */ var _button_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(95169);
-/* harmony import */ var _button_content__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3973);
+/* harmony import */ var jodit_core_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40332);
+/* harmony import */ var _collection_collection__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(72719);
+/* harmony import */ var _collection_editor_collection__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(81698);
+/* harmony import */ var _button_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(48197);
+/* harmony import */ var _button_content__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(34375);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -18462,7 +18837,7 @@ function makeButton(jodit, control, target = null) {
 
 /***/ }),
 
-/***/ 51308:
+/***/ 74331:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18475,11 +18850,11 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
+var helpers = __webpack_require__(40332);
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(55865);
+var ui = __webpack_require__(93801);
 // EXTERNAL MODULE: ./src/core/dom/index.ts
-var dom = __webpack_require__(36516);
+var dom = __webpack_require__(64968);
 ;// CONCATENATED MODULE: ./src/modules/widget/color-picker/color-picker.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -18555,11 +18930,11 @@ const ColorPickerWidget = (editor, callback, coldColor) => {
 };
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-function.ts
-var is_function = __webpack_require__(87385);
+var is_function = __webpack_require__(42096);
 // EXTERNAL MODULE: ./src/core/component/index.ts + 1 modules
-var component = __webpack_require__(2624);
+var component = __webpack_require__(90549);
 // EXTERNAL MODULE: ./src/core/dom/dom.ts
-var dom_dom = __webpack_require__(65401);
+var dom_dom = __webpack_require__(24263);
 ;// CONCATENATED MODULE: ./src/modules/widget/tabs/tabs.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -18764,7 +19139,7 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
 
 /***/ }),
 
-/***/ 28255:
+/***/ 9188:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18819,11 +19194,11 @@ const zh_tw = __webpack_require__(28765);
 
 /***/ }),
 
-/***/ 60953:
+/***/ 27487:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(38301);
+/* harmony import */ var jodit_core_helpers_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(76502);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -18854,13 +19229,13 @@ const zh_tw = __webpack_require__(28765);
 
 /***/ }),
 
-/***/ 76306:
+/***/ 59500:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43435);
-/* harmony import */ var jodit_core_helpers_utils_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(76239);
-/* harmony import */ var jodit_modules_widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(51308);
+/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(78411);
+/* harmony import */ var jodit_core_helpers_utils_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(26911);
+/* harmony import */ var jodit_modules_widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74331);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -18990,11 +19365,11 @@ const cmd = (control) => control.args && (0,jodit_core_helpers_checker__WEBPACK_
 
 /***/ }),
 
-/***/ 94695:
+/***/ 66686:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _img__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45687);
+/* harmony import */ var _img__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(97425);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -19015,17 +19390,17 @@ const cmd = (control) => control.args && (0,jodit_core_helpers_checker__WEBPACK_
 
 /***/ }),
 
-/***/ 45687:
+/***/ 97425:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "A": function() { return /* binding */ align; }
 /* harmony export */ });
-/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(36516);
-/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(86129);
-/* harmony import */ var jodit_core_helpers_utils_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(76239);
-/* harmony import */ var jodit_core_helpers_utils_align__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(55667);
+/* harmony import */ var jodit_core_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(64968);
+/* harmony import */ var jodit_core_helpers_checker_is_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24421);
+/* harmony import */ var jodit_core_helpers_utils_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(26911);
+/* harmony import */ var jodit_core_helpers_utils_align__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(60303);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -19101,7 +19476,7 @@ const align = {
 
 /***/ }),
 
-/***/ 57503:
+/***/ 55350:
 /***/ (function(__unused_webpack_module, __webpack_exports__) {
 
 "use strict";
@@ -19141,7 +19516,7 @@ const align = {
 
 /***/ }),
 
-/***/ 78124:
+/***/ 26752:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19196,7 +19571,7 @@ const zh_tw = __webpack_require__(58214);
 
 /***/ }),
 
-/***/ 37942:
+/***/ 87882:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19251,7 +19626,7 @@ const zh_tw = __webpack_require__(98364);
 
 /***/ }),
 
-/***/ 52546:
+/***/ 21236:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20699,6 +21074,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
+  "CommitMode": function() { return /* binding */ CommitMode; },
   "Jodit": function() { return /* reexport */ Jodit; }
 });
 
@@ -20765,23 +21141,23 @@ __webpack_require__.d(after_insert_namespaceObject, {
 // EXTERNAL MODULE: ./node_modules/tslib/tslib.es6.js
 var tslib_es6 = __webpack_require__(20255);
 // EXTERNAL MODULE: ./src/config.ts
-var config = __webpack_require__(80031);
+var config = __webpack_require__(93166);
 // EXTERNAL MODULE: ./src/core/constants.ts
-var constants = __webpack_require__(47386);
-// EXTERNAL MODULE: ./src/modules/index.ts + 20 modules
-var modules = __webpack_require__(5687);
+var constants = __webpack_require__(86893);
+// EXTERNAL MODULE: ./src/modules/index.ts + 41 modules
+var modules = __webpack_require__(22705);
 // EXTERNAL MODULE: ./src/core/helpers/index.ts
-var helpers = __webpack_require__(83370);
+var helpers = __webpack_require__(40332);
 // EXTERNAL MODULE: ./src/core/storage/index.ts + 3 modules
-var storage = __webpack_require__(94707);
+var storage = __webpack_require__(88755);
 // EXTERNAL MODULE: ./src/core/global.ts
-var global = __webpack_require__(16672);
+var global = __webpack_require__(17332);
 // EXTERNAL MODULE: ./src/core/decorators/index.ts + 8 modules
-var decorators = __webpack_require__(63945);
+var decorators = __webpack_require__(67493);
 // EXTERNAL MODULE: ./src/core/traits/index.ts + 3 modules
-var traits = __webpack_require__(63711);
+var traits = __webpack_require__(72452);
 // EXTERNAL MODULE: ./src/core/request/index.ts + 3 modules
-var request = __webpack_require__(5887);
+var request = __webpack_require__(12709);
 ;// CONCATENATED MODULE: ./src/jodit.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -20803,67 +21179,6 @@ var Jodit_1;
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 const __defaultClassesKey = 'data-jodit-default-classes';
 let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
-    constructor(element, options) {
-        super(options, true);
-        this.isJodit = true;
-        this.commands = new Map();
-        this.__selectionLocked = null;
-        this.__wasReadOnly = false;
-        this.createInside = new modules.Create(() => this.ed, this.o.createAttributes);
-        this.editorIsActive = false;
-        this.__mode = constants.MODE_WYSIWYG;
-        this.__callChangeCount = 0;
-        this.__isSilentChange = false;
-        this.__elementToPlace = new Map();
-        try {
-            const elementSource = (0,helpers.resolveElement)(element, this.o.shadowRoot || this.od);
-            if (Jodit_1.isJoditAssigned(elementSource)) {
-                return elementSource.component;
-            }
-        }
-        catch (e) {
-            this.destruct();
-            throw e;
-        }
-        this.setStatus(modules.STATUSES.beforeInit);
-        this.id =
-            (0,helpers.attr)((0,helpers.resolveElement)(element, this.o.shadowRoot || this.od), 'id') ||
-                new Date().getTime().toString();
-        global/* instances */.as[this.id] = this;
-        this.storage = storage/* Storage.makeStorage */.Ke.makeStorage(true, this.id);
-        this.attachEvents(options);
-        this.e.on(this.ow, 'resize', () => {
-            if (this.e) {
-                this.e.fire('resize');
-            }
-        });
-        this.e.on('prepareWYSIWYGEditor', this.__prepareWYSIWYGEditor);
-        this.selection = new modules.Select(this);
-        const beforeInitHookResult = this.beforeInitHook();
-        (0,helpers.callPromise)(beforeInitHookResult, () => {
-            this.e.fire('beforeInit', this);
-            const initPluginsResult = global/* pluginSystem.init */.pw.init(this);
-            (0,helpers.callPromise)(initPluginsResult, () => {
-                this.e.fire('afterPluginSystemInit', this);
-                this.e.on('changePlace', () => {
-                    this.setReadOnly(this.o.readonly);
-                    this.setDisabled(this.o.disabled);
-                });
-                this.places.length = 0;
-                const addPlaceResult = this.addPlace(element, options);
-                global/* instances */.as[this.id] = this;
-                const init = () => {
-                    if (this.e) {
-                        this.e.fire('afterInit', this);
-                    }
-                    this.afterInitHook();
-                    this.setStatus(modules.STATUSES.ready);
-                    this.e.fire('afterConstructor', this);
-                };
-                (0,helpers.callPromise)(addPlaceResult, init);
-            });
-        });
-    }
     className() {
         return 'Jodit';
     }
@@ -21363,6 +21678,67 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         this.editorWindow = this.o.ownerWindow;
         this.ownerWindow = this.o.ownerWindow;
     }
+    constructor(element, options) {
+        super(options, true);
+        this.isJodit = true;
+        this.commands = new Map();
+        this.__selectionLocked = null;
+        this.__wasReadOnly = false;
+        this.createInside = new modules.Create(() => this.ed, this.o.createAttributes);
+        this.editorIsActive = false;
+        this.__mode = constants.MODE_WYSIWYG;
+        this.__callChangeCount = 0;
+        this.__isSilentChange = false;
+        this.__elementToPlace = new Map();
+        try {
+            const elementSource = (0,helpers.resolveElement)(element, this.o.shadowRoot || this.od);
+            if (Jodit_1.isJoditAssigned(elementSource)) {
+                return elementSource.component;
+            }
+        }
+        catch (e) {
+            this.destruct();
+            throw e;
+        }
+        this.setStatus(modules.STATUSES.beforeInit);
+        this.id =
+            (0,helpers.attr)((0,helpers.resolveElement)(element, this.o.shadowRoot || this.od), 'id') ||
+                new Date().getTime().toString();
+        global/* instances */.as[this.id] = this;
+        this.storage = storage/* Storage.makeStorage */.Ke.makeStorage(true, this.id);
+        this.attachEvents(options);
+        this.e.on(this.ow, 'resize', () => {
+            if (this.e) {
+                this.e.fire('resize');
+            }
+        });
+        this.e.on('prepareWYSIWYGEditor', this.__prepareWYSIWYGEditor);
+        this.selection = new modules.Select(this);
+        const beforeInitHookResult = this.beforeInitHook();
+        (0,helpers.callPromise)(beforeInitHookResult, () => {
+            this.e.fire('beforeInit', this);
+            const initPluginsResult = global/* pluginSystem.init */.pw.init(this);
+            (0,helpers.callPromise)(initPluginsResult, () => {
+                this.e.fire('afterPluginSystemInit', this);
+                this.e.on('changePlace', () => {
+                    this.setReadOnly(this.o.readonly);
+                    this.setDisabled(this.o.disabled);
+                });
+                this.places.length = 0;
+                const addPlaceResult = this.addPlace(element, options);
+                global/* instances */.as[this.id] = this;
+                const init = () => {
+                    if (this.e) {
+                        this.e.fire('afterInit', this);
+                    }
+                    this.afterInitHook();
+                    this.setStatus(modules.STATUSES.ready);
+                    this.e.fire('afterConstructor', this);
+                };
+                (0,helpers.callPromise)(addPlaceResult, init);
+            });
+        });
+    }
     addPlace(source, options) {
         const element = (0,helpers.resolveElement)(source, this.o.shadowRoot || this.od);
         this.attachEvents(options);
@@ -21417,6 +21793,8 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
             contenteditable: false
         });
         container.appendChild(workplace);
+        this.message.destruct();
+        this.message = new modules.UIMessages(this, workplace);
         if (element.parentNode && element !== container) {
             element.parentNode.insertBefore(container, element);
         }
@@ -21714,7 +22092,7 @@ function addClassNames(className, elm) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 7 modules
-var checker = __webpack_require__(43435);
+var checker = __webpack_require__(78411);
 ;// CONCATENATED MODULE: ./src/langs/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -21876,7 +22254,7 @@ var valign = __webpack_require__(2304);
 
 
 // EXTERNAL MODULE: ./src/core/ui/icon.ts
-var icon = __webpack_require__(80353);
+var icon = __webpack_require__(77904);
 ;// CONCATENATED MODULE: ./src/plugins/about/about.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -21928,7 +22306,7 @@ global/* pluginSystem.add */.pw.add('about', about);
 icon/* Icon.set */.J.set('about', __webpack_require__(84279));
 
 // EXTERNAL MODULE: ./src/core/ui/index.ts + 2 modules
-var ui = __webpack_require__(55865);
+var ui = __webpack_require__(93801);
 ;// CONCATENATED MODULE: ./src/plugins/add-new-line/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -22164,21 +22542,51 @@ class addNewLine extends modules.Plugin {
 global/* pluginSystem.add */.pw.add('addNewLine', addNewLine);
 
 // EXTERNAL MODULE: ./src/core/plugin/index.ts
-var core_plugin = __webpack_require__(76454);
+var core_plugin = __webpack_require__(57549);
 // EXTERNAL MODULE: ./src/core/dom/index.ts
-var dom = __webpack_require__(36516);
+var dom = __webpack_require__(64968);
 // EXTERNAL MODULE: ./src/core/selection/helpers/index.ts + 2 modules
-var selection_helpers = __webpack_require__(37424);
+var selection_helpers = __webpack_require__(80805);
 // EXTERNAL MODULE: ./src/core/dom/dom.ts
-var dom_dom = __webpack_require__(65401);
+var dom_dom = __webpack_require__(24263);
 // EXTERNAL MODULE: ./src/core/helpers/utils/utils.ts
-var utils = __webpack_require__(32389);
+var utils = __webpack_require__(67309);
+;// CONCATENATED MODULE: ./src/plugins/backspace/helpers.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function findMostNestedNeighbor(node, right, root, onlyInlide = false) {
+    const nextChild = (node) => right ? node.firstChild : node.lastChild;
+    let next = dom/* Dom.findNotEmptyNeighbor */.i.findNotEmptyNeighbor(node, !right, root);
+    if (onlyInlide && dom/* Dom.isElement */.i.isElement(next) && !dom/* Dom.isInlineBlock */.i.isInlineBlock(next)) {
+        return null;
+    }
+    if (next) {
+        do {
+            if (nextChild(next)) {
+                next = nextChild(next);
+            }
+            else {
+                return next;
+            }
+        } while (next);
+    }
+    return null;
+}
+function getMoveFilter(jodit) {
+    return (node) => jodit.e.fire('backSpaceIsMovedIgnore', node) !== true;
+}
+
 ;// CONCATENATED MODULE: ./src/plugins/backspace/cases/check-join-two-lists.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 
 
 function checkJoinTwoLists(jodit, fakeNode, backspace) {
@@ -22191,7 +22599,7 @@ function checkJoinTwoLists(jodit, fakeNode, backspace) {
         const { setCursorBefore, setCursorAfter } = jodit.s;
         const target = next.lastElementChild, second = prev.firstElementChild;
         (0,utils/* call */.RE)(!backspace ? dom_dom/* Dom.append */.i.append : dom_dom/* Dom.prepend */.i.prepend, second, fakeNode);
-        dom_dom/* Dom.moveContent */.i.moveContent(prev, next, !backspace);
+        dom_dom/* Dom.moveContent */.i.moveContent(prev, next, !backspace, getMoveFilter(jodit));
         dom_dom/* Dom.safeRemove */.i.safeRemove(prev);
         (0,utils/* call */.RE)(backspace ? dom_dom/* Dom.append */.i.append : dom_dom/* Dom.prepend */.i.prepend, target, fakeNode);
         (0,utils/* call */.RE)(backspace ? setCursorBefore : setCursorAfter, fakeNode);
@@ -22295,32 +22703,6 @@ function checkRemoveContentNotEditable(jodit, fakeNode, backspace) {
         return true;
     }
     return false;
-}
-
-;// CONCATENATED MODULE: ./src/plugins/backspace/helpers.ts
-/*!
- * Jodit Editor (https://xdsoft.net/jodit/)
- * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
- */
-
-function findMostNestedNeighbor(node, right, root, onlyInlide = false) {
-    const nextChild = (node) => right ? node.firstChild : node.lastChild;
-    let next = dom/* Dom.findNotEmptyNeighbor */.i.findNotEmptyNeighbor(node, !right, root);
-    if (onlyInlide && dom/* Dom.isElement */.i.isElement(next) && !dom/* Dom.isInlineBlock */.i.isInlineBlock(next)) {
-        return null;
-    }
-    if (next) {
-        do {
-            if (nextChild(next)) {
-                next = nextChild(next);
-            }
-            else {
-                return next;
-            }
-        } while (next);
-    }
-    return null;
 }
 
 ;// CONCATENATED MODULE: ./src/plugins/backspace/cases/check-remove-char.ts
@@ -22492,6 +22874,7 @@ function checkRemoveEmptyNeighbor(jodit, fakeNode, backspace) {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
 function checkJoinNeighbors(jodit, fakeNode, backspace) {
     let nextBox = fakeNode, mainClosestBox = nextBox;
     while (nextBox &&
@@ -22528,7 +22911,7 @@ function checkMoveListContent(jodit, mainClosestBox, sibling, backspace) {
 }
 function moveContentAndRemoveEmpty(jodit, mainClosestBox, sibling, backspace) {
     if (mainClosestBox && dom_dom/* Dom.isElement */.i.isElement(sibling)) {
-        dom_dom/* Dom.moveContent */.i.moveContent(mainClosestBox, sibling, !backspace);
+        dom_dom/* Dom.moveContent */.i.moveContent(mainClosestBox, sibling, !backspace, getMoveFilter(jodit));
         let remove = mainClosestBox;
         while (remove && remove !== jodit.editor && dom_dom/* Dom.isEmpty */.i.isEmpty(remove)) {
             const parent = remove.parentElement;
@@ -22541,7 +22924,7 @@ function moveContentAndRemoveEmpty(jodit, mainClosestBox, sibling, backspace) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/index.ts
-var helpers_utils = __webpack_require__(38301);
+var helpers_utils = __webpack_require__(76502);
 ;// CONCATENATED MODULE: ./src/plugins/backspace/cases/check-unwrap-first-list-item.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -22719,6 +23102,9 @@ class backspace extends core_plugin/* Plugin */.S {
             if (!dom/* Dom.isOrContains */.i.isOrContains(jodit.editor, fakeNode)) {
                 return;
             }
+            if (jodit.e.fire('backSpaceBeforeCases', backspace, fakeNode)) {
+                return false;
+            }
             (0,selection_helpers/* moveNodeInsideStart */.F)(jodit, fakeNode, backspace);
             if (cases.some((func) => {
                 if ((0,helpers.isFunction)(func) &&
@@ -22735,6 +23121,7 @@ class backspace extends core_plugin/* Plugin */.S {
             throw e;
         }
         finally {
+            jodit.e.fire('backSpaceAfterDelete', backspace, fakeNode);
             this.safeRemoveEmptyNode(fakeNode);
         }
         return false;
@@ -22969,15 +23356,15 @@ global/* pluginSystem.add */.pw.add('classSpan', classSpan);
 ui/* Icon.set */.JO.set('class-span', __webpack_require__(20026));
 
 // EXTERNAL MODULE: ./src/core/helpers/html/safe-html.ts
-var safe_html = __webpack_require__(46860);
+var safe_html = __webpack_require__(67128);
 // EXTERNAL MODULE: ./src/core/plugin/plugin.ts
-var plugin_plugin = __webpack_require__(90431);
+var plugin_plugin = __webpack_require__(85605);
 // EXTERNAL MODULE: ./src/core/dom/lazy-walker.ts
-var lazy_walker = __webpack_require__(20847);
+var lazy_walker = __webpack_require__(33841);
 // EXTERNAL MODULE: ./src/core/helpers/string/trim.ts
-var trim = __webpack_require__(89681);
+var trim = __webpack_require__(33941);
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-string.ts
-var is_string = __webpack_require__(86129);
+var is_string = __webpack_require__(24421);
 ;// CONCATENATED MODULE: ./src/plugins/clean-html/helpers/get-hash.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -23177,10 +23564,11 @@ function allowAttributes(jodit, nodeElm, hadEffect, allow) {
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
 function fillEmptyParagraph(jodit, nodeElm, hadEffect) {
     if (jodit.o.cleanHTML.fillEmptyParagraph &&
         dom_dom/* Dom.isBlock */.i.isBlock(nodeElm) &&
-        dom_dom/* Dom.isEmpty */.i.isEmpty(nodeElm, /^(img|svg|canvas|input|textarea|form|br)$/)) {
+        dom_dom/* Dom.isEmpty */.i.isEmpty(nodeElm, constants.INSEPARABLE_TAGS)) {
         const br = jodit.createInside.element('br');
         nodeElm.appendChild(br);
         return true;
@@ -23558,7 +23946,7 @@ class clipboard {
 global/* pluginSystem.add */.pw.add('clipboard', clipboard);
 
 // EXTERNAL MODULE: ./src/modules/widget/index.ts + 3 modules
-var widget = __webpack_require__(51308);
+var widget = __webpack_require__(74331);
 ;// CONCATENATED MODULE: ./src/plugins/color/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -23716,7 +24104,7 @@ function color(editor) {
 global/* pluginSystem.add */.pw.add('color', color);
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/css.ts
-var css = __webpack_require__(76239);
+var css = __webpack_require__(26911);
 ;// CONCATENATED MODULE: ./src/plugins/copy-format/copy-format.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -23816,13 +24204,13 @@ function copyFormat(editor) {
         name: 'copyformat',
         group: 'clipboard'
     });
-    (0,global/* extendLang */.xl)(__webpack_require__(28255));
+    (0,global/* extendLang */.xl)(__webpack_require__(9188));
 }
 global/* pluginSystem.add */.pw.add('copyformat', copyFormat);
 icon/* Icon.set */.J.set('copyformat', __webpack_require__(83301));
 
 // EXTERNAL MODULE: ./src/modules/file-browser/index.ts + 16 modules
-var file_browser = __webpack_require__(75121);
+var file_browser = __webpack_require__(8649);
 ;// CONCATENATED MODULE: ./src/plugins/drag-and-drop/drag-and-drop.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -24171,8 +24559,10 @@ class dragAndDropElement extends core_plugin/* Plugin */.S {
 ], dragAndDropElement.prototype, "onDrop", null);
 global/* pluginSystem.add */.pw.add('dragAndDropElement', dragAndDropElement);
 
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-boolean.ts
+var is_boolean = __webpack_require__(67749);
 // EXTERNAL MODULE: ./src/core/helpers/utils/scroll-into-view.ts
-var scroll_into_view = __webpack_require__(14475);
+var scroll_into_view = __webpack_require__(9005);
 ;// CONCATENATED MODULE: ./src/plugins/enter/helpers/check-br.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -24222,7 +24612,7 @@ function checkUnsplittableBox(jodit, currentBox) {
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/selector.ts
-var selector = __webpack_require__(73549);
+var selector = __webpack_require__(54188);
 ;// CONCATENATED MODULE: ./src/plugins/enter/helpers/insert-paragraph.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -24436,6 +24826,8 @@ function moveCursorOutFromSpecialTags(jodit, current, tags) {
 
 
 
+
+
 class enter extends plugin_plugin/* Plugin */.S {
     afterInit(editor) {
         const defaultTag = editor.o.enter.toLowerCase();
@@ -24459,6 +24851,7 @@ class enter extends plugin_plugin/* Plugin */.S {
             }
             editor.s.focus();
             this.onEnter(event);
+            editor.e.fire('afterEnter', event);
             editor.synchronizeValues();
             return false;
         }
@@ -24483,11 +24876,15 @@ class enter extends plugin_plugin/* Plugin */.S {
         if (!checkUnsplittableBox(jodit, currentBox)) {
             return false;
         }
-        if (isLi && dom_dom/* Dom.isEmpty */.i.isEmpty(currentBox)) {
+        if (isLi && this.__isEmptyListLeaf(currentBox)) {
             processEmptyLILeaf(jodit, currentBox);
             return false;
         }
         splitFragment(jodit, currentBox);
+    }
+    __isEmptyListLeaf(li) {
+        const result = this.j.e.fire('enterIsEmptyListLeaf', li);
+        return (0,is_boolean/* isBoolean */.j)(result) ? result : dom_dom/* Dom.isEmpty */.i.isEmpty(li);
     }
     getCurrentOrFillEmpty(editor) {
         const { s } = editor;
@@ -24856,7 +25253,7 @@ function formatBlock(editor) {
 global/* pluginSystem.add */.pw.add('formatBlock', formatBlock);
 
 // EXTERNAL MODULE: ./src/core/helpers/checker/is-jodit-object.ts
-var is_jodit_object = __webpack_require__(12866);
+var is_jodit_object = __webpack_require__(77892);
 ;// CONCATENATED MODULE: ./src/plugins/fullsize/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -25437,7 +25834,7 @@ global/* pluginSystem.add */.pw.add('iframe', iframe);
 
 icon/* Icon.set */.J.set('image', __webpack_require__(53477));
 config/* Config.prototype.controls.image */.D.prototype.controls.image = {
-    popup: (editor, current, self, close) => {
+    popup: (editor, current, ignore, close) => {
         let sourceImage = null;
         if (current &&
             !dom/* Dom.isText */.i.isText(current) &&
@@ -25603,9 +26000,9 @@ function dataURItoBlob(dataURI) {
 global/* pluginSystem.add */.pw.add('imageProcessor', imageProcessor);
 
 // EXTERNAL MODULE: ./src/core/ui/button/index.ts + 2 modules
-var ui_button = __webpack_require__(81402);
+var ui_button = __webpack_require__(55310);
 // EXTERNAL MODULE: ./src/modules/image-editor/image-editor.ts + 2 modules
-var image_editor = __webpack_require__(37113);
+var image_editor = __webpack_require__(99583);
 ;// CONCATENATED MODULE: ./src/plugins/image-properties/templates/form.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -26323,9 +26720,9 @@ function indent(editor) {
 global/* pluginSystem.add */.pw.add('indent', indent);
 
 // EXTERNAL MODULE: ./src/modules/toolbar/factory.ts
-var factory = __webpack_require__(5243);
+var factory = __webpack_require__(81438);
 // EXTERNAL MODULE: ./src/core/ui/popup/index.ts
-var popup = __webpack_require__(36649);
+var popup = __webpack_require__(35799);
 ;// CONCATENATED MODULE: ./src/plugins/inline-popup/config/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -26344,15 +26741,15 @@ icon/* Icon.set */.J.set('addcolumn', __webpack_require__(78321))
     .set('th', __webpack_require__(52242))
     .set('splitg', __webpack_require__(44563))
     .set('splitv', __webpack_require__(53183))
-    .set('th-list', __webpack_require__(6102));
+    .set('th-list', __webpack_require__(18548));
 config/* Config.prototype.popup */.D.prototype.popup = {
-    a: (__webpack_require__(60953)/* ["default"] */ .Z),
-    img: (__webpack_require__(45687)/* ["default"] */ .Z),
-    cells: (__webpack_require__(76306)/* ["default"] */ .Z),
-    toolbar: (__webpack_require__(57503)/* ["default"] */ .Z),
-    jodit: (__webpack_require__(94695)/* ["default"] */ .Z),
-    iframe: (__webpack_require__(94695)/* ["default"] */ .Z),
-    'jodit-media': (__webpack_require__(94695)/* ["default"] */ .Z),
+    a: (__webpack_require__(27487)/* ["default"] */ .Z),
+    img: (__webpack_require__(97425)/* ["default"] */ .Z),
+    cells: (__webpack_require__(59500)/* ["default"] */ .Z),
+    toolbar: (__webpack_require__(55350)/* ["default"] */ .Z),
+    jodit: (__webpack_require__(66686)/* ["default"] */ .Z),
+    iframe: (__webpack_require__(66686)/* ["default"] */ .Z),
+    'jodit-media': (__webpack_require__(66686)/* ["default"] */ .Z),
     selection: [
         'bold',
         'underline',
@@ -26593,7 +26990,7 @@ class inlinePopup extends core_plugin/* Plugin */.S {
 global/* pluginSystem.add */.pw.add('inlinePopup', inlinePopup);
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/align.ts
-var align = __webpack_require__(55667);
+var align = __webpack_require__(60303);
 ;// CONCATENATED MODULE: ./src/plugins/justify/justify.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -26879,7 +27276,7 @@ class lineHeight extends core_plugin/* Plugin */.S {
                 group: 'font'
             }
         ];
-        (0,global/* extendLang */.xl)(__webpack_require__(78124));
+        (0,global/* extendLang */.xl)(__webpack_require__(26752));
     }
     afterInit(jodit) {
         (0,helpers.css)(jodit.editor, {
@@ -26932,7 +27329,7 @@ class lineHeight extends core_plugin/* Plugin */.S {
 global/* pluginSystem.add */.pw.add('lineHeight', lineHeight);
 
 // EXTERNAL MODULE: ./src/core/ui/form/index.ts + 6 modules
-var ui_form = __webpack_require__(18839);
+var ui_form = __webpack_require__(80567);
 ;// CONCATENATED MODULE: ./src/plugins/link/template.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -27096,13 +27493,13 @@ class link_link extends core_plugin/* Plugin */.S {
         if (jodit.o.link.processPastedLink) {
             jodit.e.on('processPaste.link', this.onProcessPasteLink);
         }
-        jodit.e.on('generateLinkForm.link', this.generateForm);
+        jodit.e.on('generateLinkForm.link', this.__generateForm);
         jodit.registerCommand('openLinkDialog', {
             exec: () => {
                 const dialog = jodit.dlg({
                     resizable: false
                 });
-                const htmlForm = this.generateForm(jodit.s.current(), () => {
+                const htmlForm = this.__generateForm(jodit.s.current(), () => {
                     dialog.close();
                 });
                 htmlForm.container.classList.add('jodit-dialog_alert');
@@ -27128,23 +27525,32 @@ class link_link extends core_plugin/* Plugin */.S {
     }
     onProcessPasteLink(ignore, html) {
         const { jodit } = this;
-        if ((0,helpers.isURL)(html)) {
-            if (jodit.o.link.processVideoLink) {
-                const embed = (0,helpers.convertMediaUrlToVideoEmbed)(html);
-                if (embed !== html) {
-                    jodit.e.stopPropagation('processPaste');
-                    return jodit.createInside.fromHTML(embed);
-                }
+        if (!(0,helpers.isURL)(html) || !jodit.o.link.processPastedLink) {
+            return;
+        }
+        jodit.e.stopPropagation('processPaste');
+        if (jodit.o.link.processVideoLink) {
+            const embed = (0,helpers.convertMediaUrlToVideoEmbed)(html);
+            if (embed !== html) {
+                return jodit.createInside.fromHTML(embed);
             }
+        }
+        if (jodit.s.isCollapsed()) {
             const a = jodit.createInside.element('a');
             a.setAttribute('href', html);
             a.textContent = html;
-            jodit.e.stopPropagation('processPaste');
             jodit.e.fire('applyLink', jodit, a, null);
             return a;
         }
+        jodit.s.applyStyle(undefined, {
+            element: 'a',
+            attributes: {
+                href: html
+            }
+        });
+        return true;
     }
-    generateForm(current, close) {
+    __generateForm(current, close) {
         const { jodit } = this;
         const i18n = jodit.i18n.bind(jodit), { openInNewTabCheckbox, noFollowCheckbox, formTemplate, formClassName, modeClassName } = jodit.o.link;
         const html = formTemplate(jodit), form = (0,helpers.isString)(html)
@@ -27339,7 +27745,7 @@ class link_link extends core_plugin/* Plugin */.S {
     }
     beforeDestruct(jodit) {
         jodit.e
-            .off('generateLinkForm.link', this.generateForm)
+            .off('generateLinkForm.link', this.__generateForm)
             .off('dblclick.link', this.onDblClickOnLink)
             .off('processPaste.link', this.onProcessPasteLink);
     }
@@ -27352,7 +27758,7 @@ class link_link extends core_plugin/* Plugin */.S {
 ], link_link.prototype, "onProcessPasteLink", null);
 (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
-], link_link.prototype, "generateForm", null);
+], link_link.prototype, "__generateForm", null);
 global/* pluginSystem.add */.pw.add('link', link_link);
 
 ;// CONCATENATED MODULE: ./src/plugins/media/config.ts
@@ -27434,9 +27840,9 @@ function media(editor) {
 global/* pluginSystem.add */.pw.add('media', media);
 
 // EXTERNAL MODULE: ./src/core/ui/helpers/buttons.ts
-var helpers_buttons = __webpack_require__(20220);
+var helpers_buttons = __webpack_require__(97642);
 // EXTERNAL MODULE: ./src/modules/toolbar/collection/collection.ts
-var collection = __webpack_require__(50);
+var collection = __webpack_require__(72719);
 ;// CONCATENATED MODULE: ./src/plugins/mobile/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -27548,7 +27954,7 @@ function mobile(editor) {
 global/* pluginSystem.add */.pw.add('mobile', mobile);
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/data-bind.ts
-var data_bind = __webpack_require__(75698);
+var data_bind = __webpack_require__(63122);
 ;// CONCATENATED MODULE: ./src/plugins/ordered-list/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -27640,7 +28046,7 @@ class orderedList extends core_plugin/* Plugin */.S {
 global/* pluginSystem.add */.pw.add('orderedList', orderedList);
 
 // EXTERNAL MODULE: ./src/core/ui/button/button/button.ts
-var button_button = __webpack_require__(6816);
+var button_button = __webpack_require__(96031);
 ;// CONCATENATED MODULE: ./src/plugins/paste/helpers.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -28193,8 +28599,8 @@ class pasteStorage extends plugin_plugin/* Plugin */.S {
 }
 global/* pluginSystem.add */.pw.add('pasteStorage', pasteStorage);
 
-// EXTERNAL MODULE: ./src/core/selection/index.ts + 19 modules
-var selection = __webpack_require__(92415);
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-marker.ts
+var is_marker = __webpack_require__(37204);
 ;// CONCATENATED MODULE: ./src/plugins/placeholder/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -28223,22 +28629,24 @@ config/* Config.prototype.useInputsPlaceholder */.D.prototype.useInputsPlacehold
 
 
 
+
 function isEditorEmpty(root) {
+    var _a;
     if (!root.firstChild) {
         return true;
     }
     const first = root.firstChild;
-    if (constants.MAY_BE_REMOVED_WITH_KEY.test(first.nodeName) ||
+    if (constants.INSEPARABLE_TAGS.has((_a = first.nodeName) === null || _a === void 0 ? void 0 : _a.toLowerCase()) ||
         /^(TABLE)$/i.test(first.nodeName)) {
         return false;
     }
-    const next = dom/* Dom.next */.i.next(first, node => node && !dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(node), root);
-    if (dom/* Dom.isText */.i.isText(first) && !next) {
-        return dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(first);
+    const next = dom_dom/* Dom.next */.i.next(first, node => node && !dom_dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(node), root);
+    if (dom_dom/* Dom.isText */.i.isText(first) && !next) {
+        return dom_dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(first);
     }
     return (!next &&
-        dom/* Dom.each */.i.each(first, elm => !dom/* Dom.isTag */.i.isTag(elm, ['ul', 'li', 'ol']) &&
-            (dom/* Dom.isEmpty */.i.isEmpty(elm) || dom/* Dom.isTag */.i.isTag(elm, 'br'))));
+        dom_dom/* Dom.each */.i.each(first, elm => !dom_dom/* Dom.isTag */.i.isTag(elm, ['ul', 'li', 'ol']) &&
+            (dom_dom/* Dom.isEmpty */.i.isEmpty(elm) || dom_dom/* Dom.isTag */.i.isTag(elm, 'br'))));
 }
 class placeholder extends plugin_plugin/* Plugin */.S {
     constructor() {
@@ -28253,7 +28661,7 @@ class placeholder extends plugin_plugin/* Plugin */.S {
             if (editor.o.useInputsPlaceholder &&
                 editor.element.hasAttribute('placeholder')) {
                 this.placeholderElm.innerHTML =
-                    (0,helpers.attr)(editor.element, 'placeholder') || '';
+                    (0,utils/* attr */.Lj)(editor.element, 'placeholder') || '';
             }
             editor.e.fire('placeholder', this.placeholderElm.innerHTML);
             editor.e
@@ -28293,13 +28701,13 @@ class placeholder extends plugin_plugin/* Plugin */.S {
             return;
         }
         let marginTop = 0, marginLeft = 0;
-        const current = editor.s.current(), wrapper = (current && dom/* Dom.closest */.i.closest(current, dom/* Dom.isBlock */.i.isBlock, editor.editor)) ||
+        const current = editor.s.current(), wrapper = (current && dom_dom/* Dom.closest */.i.closest(current, dom_dom/* Dom.isBlock */.i.isBlock, editor.editor)) ||
             editor.editor;
         const style = editor.ew.getComputedStyle(wrapper);
         const styleEditor = editor.ew.getComputedStyle(editor.editor);
         editor.workplace.appendChild(this.placeholderElm);
         const { firstChild } = editor.editor;
-        if (dom/* Dom.isElement */.i.isElement(firstChild) && !selection/* Select.isMarker */.Ph.isMarker(firstChild)) {
+        if (dom_dom/* Dom.isElement */.i.isElement(firstChild) && !(0,is_marker/* isMarker */._)(firstChild)) {
             const style2 = editor.ew.getComputedStyle(firstChild);
             marginTop = parseInt(style2.getPropertyValue('margin-top'), 10);
             marginLeft = parseInt(style2.getPropertyValue('margin-left'), 10);
@@ -28314,7 +28722,7 @@ class placeholder extends plugin_plugin/* Plugin */.S {
             this.placeholderElm.style.lineHeight =
                 style.getPropertyValue('line-height');
         }
-        (0,helpers.css)(this.placeholderElm, {
+        (0,css/* css */.i)(this.placeholderElm, {
             display: 'block',
             textAlign: style.getPropertyValue('text-align'),
             paddingTop: parseInt(styleEditor.paddingTop, 10) + 'px',
@@ -28325,7 +28733,7 @@ class placeholder extends plugin_plugin/* Plugin */.S {
         });
     }
     hide() {
-        dom/* Dom.safeRemove */.i.safeRemove(this.placeholderElm);
+        dom_dom/* Dom.safeRemove */.i.safeRemove(this.placeholderElm);
     }
     toggle() {
         const editor = this.j;
@@ -28382,7 +28790,7 @@ function poweredByJodit(jodit) {
 global/* pluginSystem.add */.pw.add('poweredByJodit', poweredByJodit);
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/print.ts
-var print = __webpack_require__(25846);
+var print = __webpack_require__(21498);
 ;// CONCATENATED MODULE: ./src/plugins/preview/preview.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -28416,9 +28824,9 @@ function preview(editor) {
 global/* pluginSystem.add */.pw.add('preview', preview);
 
 // EXTERNAL MODULE: ./src/core/helpers/utils/default-language.ts
-var default_language = __webpack_require__(4371);
+var default_language = __webpack_require__(93351);
 // EXTERNAL MODULE: ./src/core/helpers/array/to-array.ts
-var to_array = __webpack_require__(58260);
+var to_array = __webpack_require__(1853);
 ;// CONCATENATED MODULE: ./src/plugins/print/lib/generate-critical-css.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -29471,6 +29879,46 @@ global/* pluginSystem.add */.pw.add('resizer', resizer);
 
 
 let UISearch = class UISearch extends ui/* UIElement */.u1 {
+    className() {
+        return 'UISearch';
+    }
+    render() {
+        return `<div>
+			<div class="&__box">
+				<div class="&__inputs">
+					<input data-ref="query" tabindex="0" placeholder="~Search for~" type="text"/>
+					<input data-ref="replace" tabindex="0" placeholder="~Replace with~" type="text"/>
+				</div>
+				<div class="&__counts">
+					<span data-ref="counter-box">
+						<span data-ref="current">0</span><span>/</span><span data-ref="count">0</span>
+					</span>
+				</div>
+				<div class="&__buttons">
+					<button data-ref="next" tabindex="0" type="button">${ui/* Icon.get */.JO.get('angle-down')}</button>
+					<button data-ref="prev" tabindex="0" type="button">${ui/* Icon.get */.JO.get('angle-up')}</button>
+					<button data-ref="cancel" tabindex="0" type="button">${ui/* Icon.get */.JO.get('cancel')}</button>
+					<button data-ref="replace-btn" tabindex="0" type="button" class="jodit-ui-button">~Replace~</button>
+				</div>
+			</div>
+		</div>`;
+    }
+    get currentIndex() {
+        return this._currentIndex;
+    }
+    set currentIndex(value) {
+        this._currentIndex = value;
+        this.currentBox.innerText = value.toString();
+    }
+    set count(value) {
+        this.countBox.innerText = value.toString();
+    }
+    get query() {
+        return this.queryInput.value;
+    }
+    get replace() {
+        return this.replaceInput.value;
+    }
     constructor(jodit) {
         super(jodit);
         this.selInfo = null;
@@ -29526,46 +29974,6 @@ let UISearch = class UISearch extends ui/* UIElement */.u1 {
                     break;
             }
         }, this.j.defaultTimeout));
-    }
-    className() {
-        return 'UISearch';
-    }
-    render() {
-        return `<div>
-			<div class="&__box">
-				<div class="&__inputs">
-					<input data-ref="query" tabindex="0" placeholder="~Search for~" type="text"/>
-					<input data-ref="replace" tabindex="0" placeholder="~Replace with~" type="text"/>
-				</div>
-				<div class="&__counts">
-					<span data-ref="counter-box">
-						<span data-ref="current">0</span><span>/</span><span data-ref="count">0</span>
-					</span>
-				</div>
-				<div class="&__buttons">
-					<button data-ref="next" tabindex="0" type="button">${ui/* Icon.get */.JO.get('angle-down')}</button>
-					<button data-ref="prev" tabindex="0" type="button">${ui/* Icon.get */.JO.get('angle-up')}</button>
-					<button data-ref="cancel" tabindex="0" type="button">${ui/* Icon.get */.JO.get('cancel')}</button>
-					<button data-ref="replace-btn" tabindex="0" type="button" class="jodit-ui-button">~Replace~</button>
-				</div>
-			</div>
-		</div>`;
-    }
-    get currentIndex() {
-        return this._currentIndex;
-    }
-    set currentIndex(value) {
-        this._currentIndex = value;
-        this.currentBox.innerText = value.toString();
-    }
-    set count(value) {
-        this.countBox.innerText = value.toString();
-    }
-    get query() {
-        return this.queryInput.value;
-    }
-    get replace() {
-        return this.replaceInput.value;
     }
     onEditorKeyDown(e) {
         if (!this.isOpened) {
@@ -29657,7 +30065,7 @@ UISearch = (0,tslib_es6/* __decorate */.gn)([
 
 
 // EXTERNAL MODULE: ./src/core/helpers/string/fuzzy-search-index.ts
-var fuzzy_search_index = __webpack_require__(83212);
+var fuzzy_search_index = __webpack_require__(93163);
 ;// CONCATENATED MODULE: ./src/plugins/search/helpers/sentence-finder.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -30184,7 +30592,7 @@ class search extends core_plugin/* Plugin */.S {
 global/* pluginSystem.add */.pw.add('search', search);
 
 // EXTERNAL MODULE: ./src/core/helpers/string/camel-case.ts
-var camel_case = __webpack_require__(79417);
+var camel_case = __webpack_require__(26596);
 ;// CONCATENATED MODULE: ./src/plugins/select/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -31499,7 +31907,7 @@ class spellcheck extends core_plugin/* Plugin */.S {
                 name: 'spellcheck'
             }
         ];
-        (0,global/* extendLang */.xl)(__webpack_require__(37942));
+        (0,global/* extendLang */.xl)(__webpack_require__(87882));
     }
     afterInit(jodit) {
         jodit.e.on('afterInit afterAddPlace prepareWYSIWYGEditor', this.toggleSpellcheck);
@@ -31960,7 +32368,7 @@ class symbols extends plugin_plugin/* Plugin */.S {
             }
         ];
         this.countInRow = 17;
-        (0,global/* extendLang */.xl)(__webpack_require__(52546));
+        (0,global/* extendLang */.xl)(__webpack_require__(21236));
     }
     afterInit(jodit) {
         jodit.e.on('generateSpecialCharactersTable.symbols', () => {
@@ -32061,6 +32469,8 @@ class symbols extends plugin_plugin/* Plugin */.S {
 }
 global/* pluginSystem.add */.pw.add('symbols', symbols);
 
+// EXTERNAL MODULE: ./src/core/helpers/utils/assert.ts
+var assert = __webpack_require__(603);
 ;// CONCATENATED MODULE: ./src/plugins/tab/cases/on-tab-inside-li.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -32068,29 +32478,99 @@ global/* pluginSystem.add */.pw.add('symbols', symbols);
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-function onTabInsideLi(jodit) {
-    if (!jodit.o.tab.tabInsideLiInsertNewList || !jodit.s.isCollapsed()) {
+
+function onTabInsideLi(jodit, shift = false) {
+    if (!jodit.o.tab.tabInsideLiInsertNewList) {
         return false;
     }
-    const fake = jodit.createInside.fake();
-    jodit.s.insertNode(fake);
-    const li = dom_dom/* Dom.closest */.i.closest(fake, 'li', jodit.editor);
-    if (li &&
-        jodit.s.cursorOnTheLeft(li) &&
-        dom_dom/* Dom.isTag */.i.isTag(li.previousElementSibling, 'li')) {
+    const [fake, fake2] = fakeCursors(jodit);
+    try {
+        const li = getParentLeaf(jodit, fake, shift);
+        if (!li) {
+            return false;
+        }
+        if (!isSameLeftCursorPosition(li, jodit, fake)) {
+            return false;
+        }
         const list = dom_dom/* Dom.closest */.i.closest(li, ['ol', 'ul'], jodit.editor);
-        if (list) {
-            const newList = jodit.createInside.element(list.tagName);
-            const previousLi = li.previousElementSibling;
-            newList.appendChild(li);
-            previousLi.appendChild(newList);
-            jodit.s.setCursorAfter(fake);
-            dom_dom/* Dom.safeRemove */.i.safeRemove(fake);
-            return true;
+        if (!list || (shift && !dom_dom/* Dom.closest */.i.closest(list, 'li', jodit.editor))) {
+            return false;
+        }
+        if (!shift) {
+            appendNestedList(jodit, list, li);
+        }
+        else {
+            removeNestedList(jodit, list, li);
+        }
+        return true;
+    }
+    finally {
+        const range = jodit.s.createRange();
+        range.setStartAfter(fake);
+        range.setEndBefore(fake2);
+        jodit.s.selectRange(range);
+        dom_dom/* Dom.safeRemove */.i.safeRemove(fake);
+        dom_dom/* Dom.safeRemove */.i.safeRemove(fake2);
+    }
+    return false;
+}
+function fakeCursors(jodit) {
+    const fake = jodit.createInside.fake();
+    const fake2 = jodit.createInside.fake();
+    const r = jodit.s.range.cloneRange();
+    r.collapse(true);
+    r.insertNode(fake);
+    const r2 = jodit.s.range.cloneRange();
+    r2.collapse(false);
+    r2.insertNode(fake2);
+    return [fake, fake2];
+}
+function getParentLeaf(jodit, fake, shift) {
+    const li = dom_dom/* Dom.closest */.i.closest(fake, 'li', jodit.editor);
+    if (!li) {
+        return false;
+    }
+    if (!shift && !dom_dom/* Dom.isTag */.i.isTag(li.previousElementSibling, 'li')) {
+        return false;
+    }
+    if (shift && !dom_dom/* Dom.closest */.i.closest(li, 'li', jodit.editor)) {
+        return false;
+    }
+    return li;
+}
+function isSameLeftCursorPosition(li, jodit, fake) {
+    const li2 = dom_dom/* Dom.closest */.i.closest(fake, 'li', jodit.editor);
+    return !(!li2 || (li2 !== li && !li.contains(li2)));
+}
+function appendNestedList(jodit, list, li) {
+    const previousLi = li.previousElementSibling;
+    void 0;
+    const lastElm = previousLi.lastElementChild;
+    const newList = dom_dom/* Dom.isTag */.i.isTag(lastElm, list.tagName)
+        ? lastElm
+        : jodit.createInside.element(list.tagName, Array.from(list.attributes).reduce((acc, attr) => {
+            acc[attr.name] = attr.value;
+            return acc;
+        }, {}));
+    newList.appendChild(li);
+    lastElm !== newList && previousLi.appendChild(newList);
+}
+function removeNestedList(jodit, list, li) {
+    const parentLi = dom_dom/* Dom.closest */.i.closest(list, 'li', jodit.editor);
+    void 0;
+    const items = Array.from(list.children).filter(t => dom_dom/* Dom.isTag */.i.isTag(t, 'li'));
+    dom_dom/* Dom.after */.i.after(parentLi, li);
+    const index = items.indexOf(li);
+    if (index === 0 || items.length === 1) {
+        dom_dom/* Dom.safeRemove */.i.safeRemove(list);
+    }
+    if (index !== items.length - 1) {
+        const clone = list.cloneNode();
+        dom_dom/* Dom.append */.i.append(li, clone);
+        for (let i = index + 1; i < items.length; i += 1) {
+            dom_dom/* Dom.append */.i.append(clone, items[i]);
         }
     }
-    dom_dom/* Dom.safeRemove */.i.safeRemove(fake);
-    return false;
 }
 
 ;// CONCATENATED MODULE: ./src/plugins/tab/cases/index.ts
@@ -32127,16 +32607,32 @@ config/* Config.prototype.tab */.D.prototype.tab = {
 
 class tab extends core_plugin/* Plugin */.S {
     afterInit(jodit) { }
-    onTab(event) {
-        if (event.key === constants.KEY_TAB && onTabInsideLi(this.j)) {
+    __onTab(event) {
+        if (event.key === constants.KEY_TAB && this.__onShift(event.shiftKey)) {
             return false;
         }
+    }
+    __onCommand(command) {
+        if ((command === 'indent' || command === 'outdent') &&
+            this.__onShift(command === 'outdent')) {
+            return false;
+        }
+    }
+    __onShift(shift) {
+        const res = onTabInsideLi(this.j, shift);
+        if (res) {
+            this.j.e.fire('afterTab', shift);
+        }
+        return res;
     }
     beforeDestruct(jodit) { }
 }
 (0,tslib_es6/* __decorate */.gn)([
     (0,decorators.watch)(':keydown.tab')
-], tab.prototype, "onTab", null);
+], tab.prototype, "__onTab", null);
+(0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.watch)(':beforeCommand.tab')
+], tab.prototype, "__onCommand", null);
 global/* pluginSystem.add */.pw.add('tab', tab);
 
 ;// CONCATENATED MODULE: ./src/plugins/table/config.ts
@@ -32302,7 +32798,7 @@ function table(editor) {
 global/* pluginSystem.add */.pw.add('table', table);
 
 // EXTERNAL MODULE: ./src/modules/table/table.ts
-var table_table = __webpack_require__(70218);
+var table_table = __webpack_require__(25120);
 ;// CONCATENATED MODULE: ./src/plugins/table-keyboard-navigation/table-keyboard-navigation.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -32626,7 +33122,7 @@ class wrapNodes extends core_plugin/* Plugin */.S {
 global/* pluginSystem.add */.pw.add('wrapNodes', wrapNodes);
 
 // EXTERNAL MODULE: ./src/core/decorators/watch/watch.ts
-var watch = __webpack_require__(30192);
+var watch = __webpack_require__(46163);
 ;// CONCATENATED MODULE: ./src/plugins/dtd/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -32768,7 +33264,7 @@ class dtd extends core_plugin/* Plugin */.S {
 global/* pluginSystem.add */.pw.add('dtd', dtd);
 
 // EXTERNAL MODULE: ./src/modules/context-menu/context-menu.ts
-var context_menu = __webpack_require__(82616);
+var context_menu = __webpack_require__(60403);
 ;// CONCATENATED MODULE: ./src/plugins/xpath/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -33040,6 +33536,8 @@ Object.keys(langs)
     Jodit.lang[key] = langs[key];
 });
 
+class CommitMode {
+}
 
 }();
 __webpack_exports__ = __webpack_require__.O(__webpack_exports__);

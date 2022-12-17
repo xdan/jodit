@@ -12,7 +12,6 @@ export type DeleteMode = 'char' | 'word' | 'sentence';
 
 declare module 'jodit/types/events' {
 	interface IEventEmitter {
-
 		/**
 		 * Allows you to prepare the content before deletion or completely override the deletion logic if you return true
 		 */

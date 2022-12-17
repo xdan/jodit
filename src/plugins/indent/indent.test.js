@@ -8,15 +8,9 @@ describe('Test editor indent plugin', function () {
 		describe('Exec Indent command several times', function () {
 			it('Should increase margin-left', function () {
 				const editor = getJodit();
-				editor.value = '<ul><li>test</li></ul>';
+				editor.value = '<ul><li>|test</li></ul>';
 
-				const range = editor.s.createRange();
-				range.setStart(
-					editor.editor.firstChild.firstChild.firstChild,
-					0
-				);
-				range.collapse(true);
-				editor.s.selectRange(range);
+				setCursorToChar(editor);
 
 				editor.execCommand('indent');
 				expect(editor.value).equals(

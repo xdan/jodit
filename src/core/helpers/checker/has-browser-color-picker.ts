@@ -19,8 +19,7 @@ export function hasBrowserColorPicker(): boolean {
 
 		a.type = 'color';
 		a.value = '!';
-		supportsColor =
-			a.type === 'color' && a.value !== '!';
+		supportsColor = a.type === 'color' && a.value !== '!';
 	} catch (e) {
 		supportsColor = false;
 	}
