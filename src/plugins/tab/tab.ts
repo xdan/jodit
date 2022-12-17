@@ -23,8 +23,18 @@ class tab extends Plugin {
 	protected afterInit(jodit: IJodit): void {}
 
 	@watch(':keydown.tab')
-	protected onTab(event: KeyboardEvent): false | void {
-		if (event.key === KEY_TAB && onTabInsideLi(this.j)) {
+	protected __onTab(event: KeyboardEvent): false | void {
+		if (event.key === KEY_TAB && onTabInsideLi(this.j, event.shiftKey)) {
+			return false;
+		}
+	}
+
+	@watch(':beforeCommand.tab')
+	protected __onCommand(command: string): false | void {
+		if (
+			(command === 'indent' || command === 'outdent') &&
+			onTabInsideLi(this.j, command === 'outdent')
+		) {
 			return false;
 		}
 	}

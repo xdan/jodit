@@ -825,19 +825,17 @@ export class Dom {
 	): Nullable<T> {
 		let condition: NodeCondition;
 
+		const lc = (s: string): string => s.toLowerCase();
+
 		if (isFunction(tagsOrCondition)) {
 			condition = tagsOrCondition;
 		} else if (isArray(tagsOrCondition)) {
+			const set = new Set(tagsOrCondition.map(lc));
 			condition = (tag: Node | null): boolean =>
-				Boolean(
-					tag &&
-						tagsOrCondition.includes(
-							tag.nodeName.toLowerCase() as HTMLTagNames
-						)
-				);
+				Boolean(tag && set.has(lc(tag.nodeName) as HTMLTagNames));
 		} else {
 			condition = (tag: Node | null): boolean =>
-				Boolean(tag && tagsOrCondition === tag.nodeName.toLowerCase());
+				Boolean(tag && lc(tagsOrCondition) === lc(tag.nodeName));
 		}
 
 		return Dom.up(node, condition, root);
