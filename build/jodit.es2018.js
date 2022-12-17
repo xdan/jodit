@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.24.1
+ * Version: v3.24.2
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -7945,7 +7945,7 @@ class Plugin extends _component__WEBPACK_IMPORTED_MODULE_0__/* .ViewComponent */
     }
     destruct() {
         var _a, _b, _c;
-        if (!this.isInDestruct) {
+        if (this.isReady) {
             this.setStatus(_component__WEBPACK_IMPORTED_MODULE_0__/* .STATUSES.beforeDestruct */ .n$.beforeDestruct);
             const { j } = this;
             if ((0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_2__.isJoditObject)(j)) {
@@ -11102,10 +11102,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.24.1";
+        return "3.24.2";
     }
     static getVersion() {
-        return "3.24.1";
+        return "3.24.2";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -11128,7 +11128,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.24.1";
+        this.version = "3.24.2";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -21212,7 +21212,7 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         return (0,helpers.markAsAtomic)(object);
     }
     static make(element, options) {
-        return new Jodit_1(element, options);
+        return new this(element, options);
     }
     static isJoditAssigned(element) {
         return (element &&
@@ -25092,13 +25092,13 @@ config/* Config.prototype.controls.font */.D.prototype.controls.font = {
     command: 'fontname',
     list: {
         '': 'Default',
-        'Helvetica,sans-serif': 'Helvetica',
-        'Arial,Helvetica,sans-serif': 'Arial',
-        'Georgia,serif': 'Georgia',
-        'Impact,Charcoal,sans-serif': 'Impact',
-        'Tahoma,Geneva,sans-serif': 'Tahoma',
-        'Times New Roman,Times,serif': 'Times New Roman',
-        'Verdana,Geneva,sans-serif': 'Verdana'
+        'helvetica,sans-serif': 'Helvetica',
+        'arial,helvetica,sans-serif': 'Arial',
+        'georgia,palatino,serif': 'Georgia',
+        'impact,charcoal,sans-serif': 'Impact',
+        'tahoma,geneva,sans-serif': 'Tahoma',
+        'times new roman,times,serif': 'Times New Roman',
+        'verdana,geneva,sans-serif': 'Verdana'
     },
     childTemplate: (editor, key, value) => {
         let isAvailable = false;
@@ -25108,7 +25108,7 @@ config/* Config.prototype.controls.font */.D.prototype.controls.font = {
                     document.fonts.check(`16px ${key}`, value);
         }
         catch (_a) { }
-        return `<span style="${isAvailable ? `font-family: ${key}!important;` : ''}">${value}</span>`;
+        return `<span data-style="${key}" style="${isAvailable ? `font-family: ${key}!important;` : ''}">${value}</span>`;
     },
     data: {
         cssRule: 'font-family',
@@ -26089,6 +26089,22 @@ function mainTab(editor) {
 
 function positionTab(editor) {
     const opt = editor.o, i18n = editor.i18n.bind(editor), gi = icon/* Icon.get.bind */.J.get.bind(icon/* Icon */.J);
+    const classInput = [];
+    if (opt.image.availableClasses.length > 0) {
+        classInput.push('<select data-ref="classes" class="jodit-input jodit-select">');
+        opt.image.availableClasses.forEach(item => {
+            if (typeof item === 'string') {
+                classInput.push(`<option value="${item}">${item}</option>`);
+            }
+            else {
+                classInput.push(`<option value="${item[0]}">${item[1]}</option>`);
+            }
+        });
+        classInput.push('</select>');
+    }
+    else {
+        classInput.push('<input data-ref="classes" type="text" class="jodit-input"/>');
+    }
     return editor.c.fromHTML(`<div style="${!opt.image.editMargins ? 'display:none' : ''}" class="jodit-form__group">
 			<label>${i18n('Margins')}</label>
 			<div class="jodit-grid jodit_vertical_middle">
@@ -26117,7 +26133,7 @@ function positionTab(editor) {
 		</div>
 		<div style="${!opt.image.editClass ? 'display:none' : ''}" class="jodit-form__group">
 			<label>${i18n('Classes')}</label>
-			<input data-ref="classes" type="text" class="jodit-input"/>
+			${classInput.join('')}
 		</div>
 		<div style="${!opt.image.editId ? 'display:none' : ''}" class="jodit-form__group">
 			<label>Id</label>
@@ -26151,6 +26167,7 @@ config/* Config.prototype.image */.D.prototype.image = {
     editBorderRadius: true,
     editMargins: true,
     editClass: true,
+    availableClasses: [],
     editStyle: true,
     editId: true,
     editAlign: true,
