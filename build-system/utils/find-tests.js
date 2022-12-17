@@ -22,7 +22,7 @@ list.push(
 
 fs.writeFileSync(
 	dir + 'test/loader.js',
-	`const fileCasesJodit = ${JSON.stringify(list)};`
+	`window.fileCasesJodit = ${JSON.stringify(list)};`
 );
 
 console.log(`Found: ${list.length} files`);

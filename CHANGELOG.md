@@ -9,6 +9,12 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.24.2
+
+#### :rocket: New Feature
+
+-   [Fix #909 Add option to provide pre-defined classes for img elements. #910](https://github.com/xdan/jodit/pull/910)
+
 ## 3.24.1
 
 #### :boom: Breaking Change
@@ -1884,11 +1890,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                 	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ]
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                   	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

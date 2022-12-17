@@ -58,9 +58,9 @@ ES2018 Version (if your users use only modern browsers)
 ```html
 <link
 	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.23.2/jodit.es2018.min.css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.2/jodit.es2018.min.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.23.2/jodit.es2018.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.2/jodit.es2018.min.js"></script>
 ```
 
 #### unpkg
@@ -69,9 +69,9 @@ ES2018 Version (if your users use only modern browsers)
 ```html
 <link
 	rel="stylesheet"
-	href="https://unpkg.com/jodit@3.23.2/build/jodit.es2018.min.css"
+	href="https://unpkg.com/jodit@3.24.2/build/jodit.es2018.min.css"
 />
-<script src="https://unpkg.com/jodit@3.23.2/build/jodit.es2018.min.js"></script>
+<script src="https://unpkg.com/jodit@3.24.2/build/jodit.es2018.min.js"></script>
 ```
 
 
