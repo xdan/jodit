@@ -170,7 +170,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	 * Factory for creating Jodit instance
 	 */
 	static make(element: HTMLElement | string, options?: object): Jodit {
-		return new Jodit(element, options);
+		return new this(element, options);
 	}
 
 	/**

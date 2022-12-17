@@ -50,7 +50,12 @@ describe('Enter behavior Tests', function () {
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(
+						sortAttributes(editor.value).replace(
+							/<style class="jodit jodit--container jodit-box _theme_default"><\/style>/,
+							''
+						)
+					).equals(
 						'<!DOCTYPE html><html lang="en" style="overflow-y:hidden">' +
 							'<head><title>Jodit Editor</title></head>' +
 							'<body spellcheck="false"><p>Some text</p><p> a </p></body>' +
@@ -477,7 +482,9 @@ describe('Enter behavior Tests', function () {
 
 		describe('In PRE or BLOCKQUOTE tag', function () {
 			it('Should add <br> element', function () {
-				const editor = getJodit();
+				const editor = getJodit({
+					disablePlugins: ['paste-code']
+				});
 
 				editor.value = '<pre>test</pre>';
 
@@ -493,7 +500,9 @@ describe('Enter behavior Tests', function () {
 			describe('with SHIFT button', function () {
 				describe('In the end', function () {
 					it('should add new P element after PRE', function () {
-						const editor = getJodit();
+						const editor = getJodit({
+							disablePlugins: ['paste-code']
+						});
 
 						editor.value = '<pre>test|</pre>';
 						setCursorToChar(editor);
@@ -517,7 +526,9 @@ describe('Enter behavior Tests', function () {
 
 				describe('In the start', function () {
 					it('should add new P element before blockquote', function () {
-						const editor = getJodit();
+						const editor = getJodit({
+							disablePlugins: ['paste-code']
+						});
 
 						editor.value = '<blockquote>test</blockquote>';
 
@@ -544,7 +555,9 @@ describe('Enter behavior Tests', function () {
 
 				describe('In the middle', function () {
 					it('should split PRE element', function () {
-						const editor = getJodit();
+						const editor = getJodit({
+							disablePlugins: ['paste-code']
+						});
 
 						editor.value = '<pre>test</pre>';
 

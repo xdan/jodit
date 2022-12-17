@@ -83,7 +83,11 @@ describe('Test interface', function () {
 				expect(getKey(editor.container, 'color-border')).eq('#1AB942');
 				expect(getKey(editor.container, 'color-panel')).eq('#E23DAA');
 
-				expect(getKey(document.body, 'color-text')).eq('#222222'); // only for instance
+				expect(
+					Jodit.modules.Helpers.normalizeColor(
+						getKey(document.body, 'color-text')
+					)
+				).eq('#222222'); // only for instance
 
 				expect(
 					Jodit.modules.Helpers.normalizeColor(

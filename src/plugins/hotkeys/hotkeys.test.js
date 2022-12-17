@@ -7,19 +7,15 @@
 describe('Hotkeys', function () {
 	describe('Override default shortcuts for some commands', function () {
 		it('Should work default shortcuts for another commands', function () {
-			const area = appendTestArea(),
-				editor = new Jodit(area, {
-					commandToHotkeys: {
-						bold: 'ctrl+shift+b',
-						italic: ['ctrl+i', 'ctrl+shift+i']
-					}
-				});
+			const editor = getJodit({
+				commandToHotkeys: {
+					bold: 'ctrl+shift+b',
+					italic: ['ctrl+i', 'ctrl+shift+i']
+				}
+			});
 
-			editor.value = 'test test test';
-
-			const range = editor.s.createRange(true);
-			range.setStart(editor.editor.firstChild.firstChild, 4);
-			range.setEnd(editor.editor.firstChild.firstChild, 8);
+			editor.value = '<p>test| tes|t test</p>';
+			setCursorToChar(editor);
 
 			// standart ctrl+u
 			simulateEvent('keydown', 85, editor.editor, function (data) {
@@ -29,21 +25,18 @@ describe('Hotkeys', function () {
 
 			expect(editor.value).equals('<p>test<u> tes</u>t test</p>');
 		});
-		describe('Replace ctrl+b to ctrl+shift+b for bold command', function () {
+
+		describe('Replace ctrl+b to ctrl+alt+b for bold command', function () {
 			it('Should not execute bold on ctrl+b', function () {
-				const area = appendTestArea(),
-					editor = new Jodit(area, {
-						commandToHotkeys: {
-							bold: 'ctrl+shift+b',
-							italic: ['ctrl+i', 'ctrl+shift+i']
-						}
-					});
+				const editor = getJodit({
+					commandToHotkeys: {
+						bold: 'ctrl+alt+b',
+						italic: ['ctrl+i', 'ctrl+shift+i']
+					}
+				});
 
-				editor.value = 'test test test';
-
-				const range = editor.s.createRange(true);
-				range.setStart(editor.editor.firstChild.firstChild, 4);
-				range.setEnd(editor.editor.firstChild.firstChild, 8);
+				editor.value = '<p>test| tes|t test</p>';
+				setCursorToChar(editor);
 
 				// standart ctrl+b
 				simulateEvent('keydown', 66, editor.editor, function (data) {
@@ -54,7 +47,7 @@ describe('Hotkeys', function () {
 				expect(editor.value).equals('<p>test test test</p>'); // should not sork
 
 				simulateEvent('keydown', 66, editor.editor, function (data) {
-					data.shiftKey = true;
+					data.altKey = true;
 					data.ctrlKey = true;
 				});
 
@@ -63,23 +56,19 @@ describe('Hotkeys', function () {
 				);
 			});
 
-			it('Should execute bold on ctrl+shift+b', function () {
-				const area = appendTestArea(),
-					editor = new Jodit(area, {
-						commandToHotkeys: {
-							bold: 'ctrl+shift+b',
-							italic: ['ctrl+i', 'ctrl+shift+i']
-						}
-					});
+			it('Should execute bold on ctrl+alt+b', function () {
+				const editor = getJodit({
+					commandToHotkeys: {
+						bold: 'ctrl+alt+b',
+						italic: ['ctrl+i', 'ctrl+shift+i']
+					}
+				});
 
-				editor.value = 'test test test';
-
-				const range = editor.s.createRange(true);
-				range.setStart(editor.editor.firstChild.firstChild, 4);
-				range.setEnd(editor.editor.firstChild.firstChild, 8);
+				editor.value = '<p>test| tes|t test</p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', 66, editor.editor, function (data) {
-					data.shiftKey = true;
+					data.altKey = true;
 					data.ctrlKey = true;
 				});
 
@@ -106,13 +95,12 @@ describe('Hotkeys', function () {
 
 		describe('Add ctrl+shift+i to default ctrl+i shortcut for italic command', function () {
 			it('Should work with each of shortcuts', function () {
-				const area = appendTestArea(),
-					editor = new Jodit(area, {
-						commandToHotkeys: {
-							bold: 'ctrl+shift+b',
-							italic: ['ctrl+i', 'ctrl+shift+i']
-						}
-					});
+				const editor = getJodit({
+					commandToHotkeys: {
+						bold: 'ctrl+shift+b',
+						italic: ['ctrl+i', 'ctrl+shift+i']
+					}
+				});
 
 				editor.value = '<p>test| tes|t test</p>';
 				setCursorToChar(editor);

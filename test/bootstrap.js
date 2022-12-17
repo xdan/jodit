@@ -36,6 +36,14 @@ function unmockPromise() {
 	window.Promise = naturalPromise;
 }
 
+if (typeof window.skipTest === 'undefined') {
+	window.skipTest = {};
+}
+
+if (typeof window.toolbarButtonsCount !== 'number') {
+	window.toolbarButtonsCount = 39;
+}
+
 /**
  *
  * @param {number} timeout

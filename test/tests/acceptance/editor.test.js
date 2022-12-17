@@ -663,43 +663,47 @@ describe('Jodit Editor Tests', function () {
 
 		describe('Check Cache decorator', function () {
 			describe('Get filebrowser and uploader property from editor', function () {
-				describe('FileBrowser', function () {
-					it('should create instance of Filebrowser  only one time and in lazy mode', function () {
-						const editor = getJodit();
+				('filebrowser' in window.skipTest ? describe.skip : describe)(
+					'FileBrowser',
+					function () {
+						it('should create instance of Filebrowser  only one time and in lazy mode', function () {
+							const editor = getJodit();
 
-						editor.components.forEach(function (cmp) {
+							editor.components.forEach(function (cmp) {
+								expect(
+									cmp instanceof Jodit.modules.FileBrowser
+								).is.false;
+							});
+
+							const filebrowser = editor.filebrowser;
 							expect(
-								cmp instanceof Jodit.modules.FileBrowser
-							).is.false;
+								filebrowser instanceof Jodit.modules.FileBrowser
+							).is.true;
+
+							let instanceCount = 0;
+
+							editor.components.forEach(function (cmp) {
+								if (cmp instanceof Jodit.modules.FileBrowser) {
+									instanceCount += 1;
+									expect(filebrowser === cmp).is.true;
+								}
+							});
+
+							expect(instanceCount).equals(1);
+
+							const filebrowser2 = editor.filebrowser;
+							editor.components.forEach(function (cmp) {
+								if (cmp instanceof Jodit.modules.FileBrowser) {
+									instanceCount += 1;
+									expect(filebrowser === cmp).is.true;
+								}
+							});
+
+							expect(instanceCount).equals(2);
+							expect(filebrowser2 === filebrowser).is.true;
 						});
-
-						const filebrowser = editor.filebrowser;
-						expect(filebrowser instanceof Jodit.modules.FileBrowser)
-							.is.true;
-
-						let instanceCount = 0;
-
-						editor.components.forEach(function (cmp) {
-							if (cmp instanceof Jodit.modules.FileBrowser) {
-								instanceCount += 1;
-								expect(filebrowser === cmp).is.true;
-							}
-						});
-
-						expect(instanceCount).equals(1);
-
-						const filebrowser2 = editor.filebrowser;
-						editor.components.forEach(function (cmp) {
-							if (cmp instanceof Jodit.modules.FileBrowser) {
-								instanceCount += 1;
-								expect(filebrowser === cmp).is.true;
-							}
-						});
-
-						expect(instanceCount).equals(2);
-						expect(filebrowser2 === filebrowser).is.true;
-					});
-				});
+					}
+				);
 
 				describe('Uploader', function () {
 					it('should create instance of Uploader  only one time and in lazy mode', function () {

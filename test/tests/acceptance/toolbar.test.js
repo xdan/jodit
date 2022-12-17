@@ -12,7 +12,7 @@ describe('Toolbar', function () {
 		expect(
 			editor.toolbar.container.querySelectorAll('.jodit-toolbar-button')
 				.length
-		).equals(39);
+		).equals(window.toolbarButtonsCount);
 	});
 
 	describe('Custom buttons', function () {
@@ -1658,42 +1658,45 @@ describe('Toolbar', function () {
 		});
 	});
 
-	describe('In fileBrowser', function () {
-		describe('Hide buttons ', function () {
-			it('should hide toolbar buttons', function () {
-				const editor = getJodit({
-					filebrowser: {
-						buttons: Jodit.atom([
-							'filebrowser.list',
-							'filebrowser.tiles',
-							'filebrowser.sort'
-						]),
-						ajax: {
-							url: 'https://xdsoft.net/jodit/connector/index.php'
+	('filebrowser' in window.skipTest ? describe.skip : describe)(
+		'In fileBrowser',
+		function () {
+			describe('Hide buttons ', function () {
+				it('should hide toolbar buttons', function () {
+					const editor = getJodit({
+						filebrowser: {
+							buttons: Jodit.atom([
+								'filebrowser.list',
+								'filebrowser.tiles',
+								'filebrowser.sort'
+							]),
+							ajax: {
+								url: 'https://xdsoft.net/jodit/connector/index.php'
+							}
 						}
-					}
+					});
+
+					clickButton('image', editor);
+
+					const popup = getOpenedPopup(editor);
+
+					expect(popup).is.not.null;
+
+					simulateEvent('click', popup.querySelector('button'));
+					const dialog = getOpenedDialog(editor);
+
+					expect(dialog).is.not.null;
+
+					expect(3).equals(
+						dialog.querySelectorAll(
+							'.jodit-dialog__header .jodit-dialog__header-title button,' +
+								'.jodit-dialog__header .jodit-dialog__header-title select'
+						).length
+					);
 				});
-
-				clickButton('image', editor);
-
-				const popup = getOpenedPopup(editor);
-
-				expect(popup).is.not.null;
-
-				simulateEvent('click', popup.querySelector('button'));
-				const dialog = getOpenedDialog(editor);
-
-				expect(dialog).is.not.null;
-
-				expect(3).equals(
-					dialog.querySelectorAll(
-						'.jodit-dialog__header .jodit-dialog__header-title button,' +
-							'.jodit-dialog__header .jodit-dialog__header-title select'
-					).length
-				);
 			});
-		});
-	});
+		}
+	);
 
 	describe('One toolbar for several editors', function () {
 		it('Should create one Jodit instance but with several edit places', function () {

@@ -284,9 +284,8 @@ describe('Edit image tests', function () {
 
 		describe('Resize mode', function () {
 			describe('Enable ratio', function () {
-				it('Should deny resize image without ratio', function (done) {
-					const area = appendTestArea();
-					const editor = Jodit.make(area, {
+				it('Should deny resize image without ratio', done => {
+					const editor = getJodit({
 						history: {
 							timeout: 0
 						},
@@ -309,98 +308,94 @@ describe('Edit image tests', function () {
 
 					const dialog = getOpenedDialog(editor);
 
-					editor.filebrowser.events.on(
-						'afterImageEditor',
-						function () {
-							const imageEditor = getOpenedDialog(editor);
-							expect(imageEditor).is.not.null;
+					editor.filebrowser.events.on('afterImageEditor', () => {
+						const imageEditor = getOpenedDialog(editor);
+						expect(imageEditor).is.not.null;
 
-							expect(
-								imageEditor.querySelectorAll(
-									'[data-area=resize]'
-								).length
-							).equals(1);
-							expect(
-								imageEditor.querySelectorAll(
-									'[data-area=resize].jodit-image-editor_active'
-								).length
-							).equals(1); // default mode
+						expect(
+							imageEditor.querySelectorAll('[data-area=resize]')
+								.length
+						).equals(1);
+						expect(
+							imageEditor.querySelectorAll(
+								'[data-area=resize].jodit-image-editor_active'
+							).length
+						).equals(1); // default mode
 
-							simulateEvent(
-								'click',
-								0,
-								imageEditor.querySelector(
-									'[data-area=resize] > div'
-								)
-							);
+						simulateEvent(
+							'click',
+							0,
+							imageEditor.querySelector(
+								'[data-area=resize] > div'
+							)
+						);
 
-							expect(
-								imageEditor.querySelectorAll(
-									'[data-area=resize].jodit-image-editor_active'
-								).length
-							).equals(1);
+						expect(
+							imageEditor.querySelectorAll(
+								'[data-area=resize].jodit-image-editor_active'
+							).length
+						).equals(1);
 
-							const resizer = imageEditor.querySelector(
-								'.jodit-image-editor__resizer'
-							);
+						const resizer = imageEditor.querySelector(
+							'.jodit-image-editor__resizer'
+						);
 
-							expect(resizer).not.is.null;
+						expect(resizer).not.is.null;
 
-							const oldRatio =
-								resizer.offsetWidth / resizer.offsetHeight;
+						const oldRatio =
+							resizer.offsetWidth / resizer.offsetHeight;
 
-							simulateEvent(
-								'mousedown',
-								resizer.querySelector('.jodit_bottomright'),
-								function (e) {
-									const pos = Jodit.modules.Helpers.offset(
-										resizer,
-										editor,
-										editor.ownerDocument
-									);
-									e.clientX = pos.left + pos.width;
-									e.clientY = pos.top + pos.height;
-								}
-							);
+						simulateEvent(
+							'mousedown',
+							resizer.querySelector('.jodit_bottomright'),
+							function (e) {
+								const pos = Jodit.modules.Helpers.offset(
+									resizer,
+									editor,
+									editor.ownerDocument
+								);
+								e.clientX = pos.left + pos.width;
+								e.clientY = pos.top + pos.height;
+							}
+						);
 
-							simulateEvent(
-								'mousemove',
-								editor.ownerWindow,
-								function (e) {
-									const pos = Jodit.modules.Helpers.offset(
-										resizer,
-										editor,
-										editor.ownerDocument
-									);
-									e.clientX = pos.left + pos.width - 250;
-									e.clientY = pos.top + pos.height - 150;
-								}
-							);
+						simulateEvent(
+							'mousemove',
+							editor.ownerWindow,
+							function (e) {
+								const pos = Jodit.modules.Helpers.offset(
+									resizer,
+									editor,
+									editor.ownerDocument
+								);
+								e.clientX = pos.left + pos.width - 250;
+								e.clientY = pos.top + pos.height - 150;
+							}
+						);
 
-							simulateEvent(
-								'mouseup',
-								editor.ownerWindow,
-								function (e) {
-									const pos = Jodit.modules.Helpers.offset(
-										resizer,
-										editor,
-										editor.ownerDocument
-									);
-									e.clientX = pos.left + pos.width - 250;
-									e.clientY = pos.top + pos.height - 150;
-								}
-							);
+						simulateEvent(
+							'mouseup',
+							editor.ownerWindow,
+							function (e) {
+								const pos = Jodit.modules.Helpers.offset(
+									resizer,
+									editor,
+									editor.ownerDocument
+								);
+								e.clientX = pos.left + pos.width - 250;
+								e.clientY = pos.top + pos.height - 150;
+							}
+						);
 
-							expect(
-								Math.abs(
-									resizer.offsetWidth / resizer.offsetHeight -
-										oldRatio
-								) < 0.05
-							).is.true;
+						expect(
+							Math.abs(
+								resizer.offsetWidth / resizer.offsetHeight -
+									oldRatio
+							) < 0.05
+						).is.true;
 
-							done();
-						}
-					);
+						done();
+					});
 
 					simulateEvent(
 						'click',

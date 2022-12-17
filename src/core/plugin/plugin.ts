@@ -61,7 +61,7 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 
 	@autobind
 	override destruct(): void {
-		if (!this.isInDestruct) {
+		if (this.isReady) {
 			this.setStatus(STATUSES.beforeDestruct);
 
 			const { j } = this;

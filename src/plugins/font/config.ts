@@ -114,13 +114,13 @@ Config.prototype.controls.font = {
 
 	list: {
 		'': 'Default',
-		'Helvetica,sans-serif': 'Helvetica',
-		'Arial,Helvetica,sans-serif': 'Arial',
-		'Georgia,serif': 'Georgia',
-		'Impact,Charcoal,sans-serif': 'Impact',
-		'Tahoma,Geneva,sans-serif': 'Tahoma',
-		'Times New Roman,Times,serif': 'Times New Roman',
-		'Verdana,Geneva,sans-serif': 'Verdana'
+		'helvetica,sans-serif': 'Helvetica',
+		'arial,helvetica,sans-serif': 'Arial',
+		'georgia,palatino,serif': 'Georgia',
+		'impact,charcoal,sans-serif': 'Impact',
+		'tahoma,geneva,sans-serif': 'Tahoma',
+		'times new roman,times,serif': 'Times New Roman',
+		'verdana,geneva,sans-serif': 'Verdana'
 	},
 
 	childTemplate: (editor, key: string, value: string) => {
@@ -132,7 +132,7 @@ Config.prototype.controls.font = {
 				document.fonts.check(`16px ${key}`, value);
 		} catch {}
 
-		return `<span style="${
+		return `<span data-style="${key}" style="${
 			isAvailable ? `font-family: ${key}!important;` : ''
 		}">${value}</span>`;
 	},

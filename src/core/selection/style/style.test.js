@@ -636,7 +636,10 @@ describe('Apply style', () => {
 							}
 						}
 					},
-					'<p replaced="true">test|</p>'
+					'<p replaced="true">test|</p>',
+					{
+						disablePlugins: ['todo-list']
+					}
 				],
 				[
 					'<ul class="todo-list"><li>test|</li></ul>',
