@@ -18,8 +18,9 @@ export function hasBrowserColorPicker(): boolean {
 		const a = document.createElement('input');
 
 		a.type = 'color';
+		a.value = '!';
 		supportsColor =
-			a.type === 'color' && typeof a.selectionStart !== 'number';
+			a.type === 'color' && a.value !== '!';
 	} catch (e) {
 		supportsColor = false;
 	}
