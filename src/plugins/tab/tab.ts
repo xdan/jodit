@@ -24,7 +24,7 @@ class tab extends Plugin {
 
 	@watch(':keydown.tab')
 	protected __onTab(event: KeyboardEvent): false | void {
-		if (event.key === KEY_TAB && onTabInsideLi(this.j, event.shiftKey)) {
+		if (event.key === KEY_TAB && this.__onShift(event.shiftKey)) {
 			return false;
 		}
 	}
@@ -33,10 +33,20 @@ class tab extends Plugin {
 	protected __onCommand(command: string): false | void {
 		if (
 			(command === 'indent' || command === 'outdent') &&
-			onTabInsideLi(this.j, command === 'outdent')
+			this.__onShift(command === 'outdent')
 		) {
 			return false;
 		}
+	}
+
+	private __onShift(shift: boolean): boolean {
+		const res = onTabInsideLi(this.j, shift);
+
+		if (res) {
+			this.j.e.fire('afterTab', shift);
+		}
+
+		return res;
 	}
 
 	protected beforeDestruct(jodit: IJodit): void {}
