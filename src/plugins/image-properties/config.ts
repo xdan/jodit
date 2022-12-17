@@ -62,6 +62,27 @@ declare module 'jodit/config' {
 			editClass: boolean;
 
 			/**
+			 * Pre-define available classes to select from
+			 *
+			 * Classes can be provided as list of strings or as list of tuples
+			 * `["classname", "human label"]`.
+			 *
+			 * @example
+			 * ```javascript
+			 * new Jodit('#editor', {
+			 *    image: {
+			 *        availableClasses: [
+			 *            "rte-image-width-50",
+			 *            ["rte-image-width-75", "75 % width"]
+			 *        ]
+			 *    }
+			 * })
+			 * ```
+			 */
+
+			availableClasses: [string, string][] | string[];
+
+			/**
 			 * Show style edit input
 			 */
 			editStyle: boolean;
@@ -101,6 +122,7 @@ Config.prototype.image = {
 	editBorderRadius: true,
 	editMargins: true,
 	editClass: true,
+	availableClasses: [],
 	editStyle: true,
 	editId: true,
 	editAlign: true,

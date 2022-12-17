@@ -16,6 +16,27 @@ export function positionTab(editor: IJodit): HTMLElement {
 		i18n = editor.i18n.bind(editor),
 		gi = Icon.get.bind(Icon);
 
+	const classInput = [];
+	if (opt.image.availableClasses.length > 0) {
+		classInput.push(
+			'<select data-ref="classes" class="jodit-input jodit-select">'
+		);
+		opt.image.availableClasses.forEach(item => {
+			if (typeof item === 'string') {
+				classInput.push(`<option value="${item}">${item}</option>`);
+			} else {
+				classInput.push(
+					`<option value="${item[0]}">${item[1]}</option>`
+				);
+			}
+		});
+		classInput.push('</select>');
+	} else {
+		classInput.push(
+			'<input data-ref="classes" type="text" class="jodit-input"/>'
+		);
+	}
+
 	return editor.c.fromHTML(`<div style="${
 		!opt.image.editMargins ? 'display:none' : ''
 	}" class="jodit-form__group">
@@ -60,7 +81,7 @@ export function positionTab(editor: IJodit): HTMLElement {
 			!opt.image.editClass ? 'display:none' : ''
 		}" class="jodit-form__group">
 			<label>${i18n('Classes')}</label>
-			<input data-ref="classes" type="text" class="jodit-input"/>
+			${classInput.join('')}
 		</div>
 		<div style="${
 			!opt.image.editId ? 'display:none' : ''

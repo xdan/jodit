@@ -539,5 +539,91 @@ describe('Edit image tests', function () {
 				}).timeout(7000);
 			});
 		});
+		describe('Classes', function () {
+			describe('No available classes defined', function () {
+				it('Should render as input box', function (done) {
+					const area = appendTestArea();
+					const editor = Jodit.make(area, {
+						history: {
+							timeout: 0
+						},
+						disablePlugins: 'mobile'
+					});
+
+					editor.value =
+						'<img alt="" src="https://xdsoft.net/jodit/files/th.jpg">';
+
+					simulateEvent(
+						'dblclick',
+						editor.editor.querySelector('img')
+					);
+
+					const dialog = getOpenedDialog(editor);
+
+					expect(dialog).is.not.null;
+					expect(
+						dialog.querySelectorAll('[data-ref="editImage"]').length
+					).equals(1);
+
+					expect(
+						dialog.querySelectorAll('input[data-ref="classes"]')
+							.length
+					).equals(1);
+
+					done();
+				}).timeout(7000);
+			});
+			describe('Available classes defined', function () {
+				it('Should render as select box', function (done) {
+					const area = appendTestArea();
+					const editor = Jodit.make(area, {
+						history: {
+							timeout: 0
+						},
+						image: {
+							availableClasses: [
+								'rte-image-width-50',
+								['rte-image-width-75', '75 % width']
+							]
+						},
+						disablePlugins: 'mobile'
+					});
+
+					editor.value =
+						'<img alt="" src="https://xdsoft.net/jodit/files/th.jpg">';
+
+					simulateEvent(
+						'dblclick',
+						editor.editor.querySelector('img')
+					);
+
+					const dialog = getOpenedDialog(editor);
+
+					expect(dialog).is.not.null;
+					expect(
+						dialog.querySelectorAll('[data-ref="editImage"]').length
+					).equals(1);
+
+					expect(
+						dialog.querySelectorAll('select[data-ref="classes"]')
+							.length
+					).equals(1);
+
+					const options = [];
+					dialog
+						.querySelectorAll('select[data-ref="classes"] option')
+						.forEach(option => {
+							options.push([option.value, option.textContent]);
+						});
+
+					expect(options).to.eql([
+						['rte-image-width-50', 'rte-image-width-50'],
+						['rte-image-width-75', '75 % width']
+					]);
+
+					done();
+				}).timeout(7000);
+			});
+		});
 	});
 });
