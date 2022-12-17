@@ -3,14 +3,10 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import type { Nullable } from 'jodit/types';
-import type { CommitStyle } from '../commit-style';
+import type { IStyle, Nullable, ICommitStyle } from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
 import { isNormalNode } from './is-normal-node';
-import {
-	elementHasSameStyle,
-	elementHasSameStyleKeys
-} from './element-has-same-style';
-import { Dom } from 'jodit/core/dom';
+import { hasSameStyle, hasSameStyleKeys } from './has-same-style';
 
 /**
  * Checks if an item is suitable for applying a commit. The element suits us if it
@@ -23,7 +19,7 @@ import { Dom } from 'jodit/core/dom';
  * @private
  */
 export function isSuitElement(
-	commitStyle: CommitStyle,
+	commitStyle: ICommitStyle,
 	elm: Nullable<Node>,
 	strict: boolean
 ): elm is HTMLElement {
@@ -34,7 +30,8 @@ export function isSuitElement(
 	const { element, elementIsDefault, options } = commitStyle;
 
 	const elmHasSameStyle = Boolean(
-		options.style && elementHasSameStyle(elm, options.style)
+		options.attributes?.style &&
+			hasSameStyle(elm, options.attributes.style as IStyle)
 	);
 
 	const elmIsSame =
@@ -43,13 +40,25 @@ export function isSuitElement(
 
 	if (
 		((!elementIsDefault || !strict) && elmIsSame) ||
-		(elmHasSameStyle && isNormalNode(elm))
+		(elmHasSameStyle && isNormalNode(elm) && !commitStyle.elementIsList)
 	) {
 		return true;
 	}
 
 	return Boolean(
 		!elmIsSame && !strict && elementIsDefault && Dom.isInlineBlock(elm)
+	);
+}
+
+export function findSuitClosest(
+	commitStyle: ICommitStyle,
+	element: HTMLElement,
+	root: HTMLElement
+): Nullable<HTMLElement> {
+	return Dom.closest(
+		element,
+		node => isSuitElement(commitStyle, node, true),
+		root
 	);
 }
 
@@ -63,7 +72,7 @@ export function isSuitElement(
  * Apply `{element:'strong'}`
  */
 export function isSameStyleChild(
-	commitStyle: CommitStyle,
+	commitStyle: ICommitStyle,
 	elm: Nullable<Node>
 ): elm is HTMLElement {
 	const { element, options } = commitStyle;
@@ -75,7 +84,8 @@ export function isSameStyleChild(
 	const elmIsSame = elm.nodeName.toLowerCase() === element;
 
 	const elmHasSameStyle = Boolean(
-		options.style && elementHasSameStyleKeys(elm, options.style)
+		options.attributes?.style &&
+			hasSameStyleKeys(elm, options.attributes?.style as IStyle)
 	);
 
 	return elmIsSame && elmHasSameStyle;

@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+const { Dom } = Jodit.modules;
+
 describe('Apply style', () => {
 	describe('Test Style module', function () {
 		let editor;
@@ -19,6 +21,26 @@ describe('Apply style', () => {
 		describe('Base apply', () => {
 			[
 				[
+					'<p><strong>|test</strong> pop <strong>test|</strong></p>',
+					{
+						element: 'strong'
+					},
+					'<p>|test pop test|</p>'
+				],
+				[
+					'<p><strong>|test</strong> pop <strong>test|</strong></p>',
+					{
+						element: 'strong',
+						attributes: { style: { fontWeight: 700 } }
+					},
+					'<p>|test pop test|</p>'
+				],
+				[
+					'<p>|test|</p>',
+					{ element: 'strong' },
+					'<p>|<strong>test</strong>|</p>'
+				],
+				[
 					'<p>|test|</p>',
 					{
 						element: 'sub'
@@ -33,6 +55,68 @@ describe('Apply style', () => {
 					'<p>|test|</p>'
 				],
 				[
+					'<p>|test|</p>',
+					{
+						element: 'a',
+						attributes: {
+							href: 'https://xdsoft.net'
+						}
+					},
+					'<p>|<a href="https://xdsoft.net">test</a>|</p>'
+				],
+				[
+					'<p>|test|</p>',
+					{
+						element: 'h1',
+						attributes: {
+							class: 'header'
+						}
+					},
+					'<h1 class="header">|test|</h1>'
+				],
+				[
+					'<p><a href="https://xdsoft.net">|test|</a></p>',
+					{
+						element: 'a',
+						attributes: {
+							href: 'https://xdsoft.net'
+						}
+					},
+					'<p>|test|</p>'
+				],
+				[
+					'<p><a href="https://xdsoft.net">|test|</a></p>',
+					{
+						element: 'a',
+						attributes: {
+							title: 'book',
+							href: 'https://sitename.net'
+						}
+					},
+					'<p><a href="https://sitename.net" title="book">|test|</a></p>'
+				],
+				[
+					'<p><span>|test|</span></p>',
+					{
+						element: 'a',
+						attributes: {
+							title: 'book',
+							href: 'https://sitename.net'
+						}
+					},
+					'<p><span>|<a href="https://sitename.net" title="book">test</a>|</span></p>'
+				],
+				[
+					'<p><a href="https://xdsoft.net">|test|</a></p>',
+					{
+						element: 'a',
+						attributes: {
+							href: 'https://sitename.net'
+						}
+					},
+					'<p><a href="https://sitename.net">|test|</a></p>'
+				],
+				[
 					'<p><strong style="font-family: Impact, Charcoal, sans-serif;"><em>|test|</em></strong></p>',
 					{
 						element: 'strong'
@@ -40,21 +124,47 @@ describe('Apply style', () => {
 					'<p><span style="font-family:Impact,Charcoal,sans-serif"><em>|test|</em></span></p>'
 				],
 				[
-					'<p>|Hello world|</p>',
-					{
-						element: 'ul',
-						style: {
-							listStyleType: 'circle'
-						}
-					},
-					'<ul style="list-style-type:circle"><li>|Hello world|</li></ul>'
-				],
-				[
 					'<p><strong>|test|</strong></p>',
 					{
 						className: 'class1'
 					},
 					'<p><strong class="class1">|test|</strong></p>'
+				],
+				[
+					'<p><strong>|test|</strong></p>',
+					{
+						attributes: {
+							class: 'class1'
+						}
+					},
+					'<p><strong class="class1">|test|</strong></p>'
+				],
+				[
+					'<p><strong class="class2">|test|</strong></p>',
+					{
+						attributes: {
+							class: 'class1'
+						}
+					},
+					'<p><strong class="class2 class1">|test|</strong></p>'
+				],
+				[
+					'<p><strong class="class1">|test|</strong></p>',
+					{
+						attributes: {
+							class: 'class1'
+						}
+					},
+					'<p><strong>|test|</strong></p>'
+				],
+				[
+					'<p><strong class="class1 class2">|test|</strong></p>',
+					{
+						attributes: {
+							class: 'class1'
+						}
+					},
+					'<p><strong class="class2">|test|</strong></p>'
 				],
 				[
 					'<p><strong>|test|</strong></p>',
@@ -97,7 +207,7 @@ describe('Apply style', () => {
 					'<p>|test|</p>'
 				],
 				[
-					// (st) => getClosestWrapper -> extractSelectedPart -> toggleCommitStyles -> unwrap -> toggleCSS
+					// (st) => getClosestWrapper -> extractSelectedPart -> toggleICommitStyles -> unwrap -> toggleCSS
 					// (so) => ----
 					'<p><strong>te|st</strong> so|me</p>',
 					{
@@ -134,145 +244,6 @@ describe('Apply style', () => {
 					'<p>|<span style="font-family:Helvetica,sans-serif">test</span></p><style>.a {color: red}</style><p><span style="font-family:Helvetica,sans-serif">stop</span>|</p>'
 				],
 				[
-					'<p>|test</p><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<p>|test</p><p>ordered</p><p>list|</p>',
-					{ element: 'ol', style: { listStyleType: null } },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<p>|test1</p>\n\n<p>ordered</p>\n\n<p>list1|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test1</li><li>ordered</li><li>list1|</li></ol>'
-				],
-
-				[
-					'<h1>|test</h1><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-				[
-					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>'
-				],
-				[
-					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>',
-					{ element: 'ol' },
-					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>'
-				],
-				[
-					'<ol><li>test</li><li>ord|ered</li><li>list</li></ol>',
-					{ element: 'ol' },
-					'<ol><li>test</li></ol><p>ord|ered</p><ol><li>list</li></ol>'
-				],
-				[
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>',
-					{ element: 'ol' },
-					'<p>|test</p><p>ordered</p><p>list|</p>'
-				],
-
-				[
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
-					{ element: 'ul' },
-					'<p>|test</p><p>unordered</p><p>list|</p>'
-				],
-
-				[
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
-					{
-						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
-					},
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>',
-					{
-						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
-					},
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>ordered</li><li>list|</li></ol>',
-					{
-						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
-					},
-					'<p>|test</p><p>ordered</p><p>list|</p>'
-				],
-
-				[
-					'<ol style="list-style-type:lower-alpha"><li>|test</li><li>unordered</li><li>list|</li></ol>',
-					{
-						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
-					},
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<p>|test</p><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<p>|test</p><p>ordered</p><p>list</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li></ol><p>ordered</p><p>list</p>'
-				],
-
-				[
-					'<h1>|test</h1><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-
-				[
-					'<p>te|st</p><p>ordered</p><p>li|st</p>',
-					{ element: 'ol' },
-					'<ol><li>te|st</li><li>ordered</li><li>li|st</li></ol>'
-				],
-
-				[
-					'<p>|test</p><p>unordered</p><p>list|</p>',
-					{ element: 'ul' },
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>'
-				],
-				[
-					'<ul><li>|1</li><li>2</li><li>3|</li></ul>',
-					{ element: 'h1' },
-					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>'
-				],
-
-				[
-					'test|<br>test<br>test<br>test',
-					{ element: 'h1' },
-					'<h1>test|</h1><br>test<br>test<br>test',
-					{ enter: 'BR' }
-				],
-
-				[
-					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
-					{ element: 'h1' },
-					'<ul><li>|1</li><li>2</li><li>3|</li></ul>'
-				],
-				[
 					'<p>test|<u>test</u>|test</p>',
 					{ style: { color: '#FFF000' } },
 					'<p>test|<u style="color:#FFF000">test</u>|test</p>'
@@ -296,11 +267,6 @@ describe('Apply style', () => {
 					'<p><strong>|test|</strong></p>',
 					{ style: { color: '#FFF000' } },
 					'<p><strong style="color:#FFF000">|test|</strong></p>'
-				],
-				[
-					'<p>|test|</p>',
-					{ element: 'strong' },
-					'<p>|<strong>test</strong>|</p>'
 				],
 				[
 					'<p>test|</p>',
@@ -381,6 +347,357 @@ describe('Apply style', () => {
 						element: 'p'
 					},
 					'<p><span style="color:#00FF00">|pop test test test|</span></p>'
+				],
+				[
+					'test|<br>test<br>test<br>test',
+					{ element: 'h1' },
+					'<h1>test|</h1><br>test<br>test<br>test',
+					{ enter: 'BR' }
+				],
+				// Lists
+				[
+					'<ol><li>ordered</li><li>|list</li><li>pop</li></ol>',
+					{ element: 'ul' },
+					'<ol><li>ordered</li></ol><ul><li>|list</li></ul><ol><li>pop</li></ol>'
+				],
+				[
+					'<ol><li>|ordered</li><li>list</li></ol><p>test|</p>',
+					{ element: 'ol' },
+					'<p>|ordered</p><p>list</p><p>test|</p>'
+				],
+				[
+					'<p>|test</p><ol><li>ordered</li><li>list|</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<ol><li>ordered</li></ol><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>ordered</li><li>|test</li><li>list</li><li>pop</li></ol>'
+				],
+				[
+					'<ul><li>ordered</li></ul><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+					{ element: 'ol' },
+					'<ul><li>ordered</li></ul><ol><li>|test</li><li>list</li><li>pop</li></ol>'
+				],
+				[
+					'<ul><li>ordered</li></ul><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+					{ element: 'ul' },
+					'<ul><li>ordered</li><li>|test</li></ul><ol><li>list</li><li>pop</li></ol>'
+				],
+				[
+					'<ol class="p"><li>ordered</li></ol><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+					{ element: 'ol' },
+					'<ol class="p"><li>ordered</li><li>|test</li></ol><ol><li>list</li><li>pop</li></ol>'
+				],
+				[
+					'<ol><li>ordered</li><li>list</li></ol><p>|test</p><p>pop|</p>',
+					{ element: 'ol' },
+					'<ol><li>ordered</li><li>list</li><li>|test</li><li>pop|</li></ol>'
+				],
+				[
+					'<p>|test</p><p>pop|</p><ol><li>ordered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>pop|</li><li>ordered</li><li>list</li></ol>'
+				],
+				[
+					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>'
+				],
+				[
+					'<p>|Hello world|</p>',
+					{
+						element: 'ul',
+						style: {
+							listStyleType: 'circle'
+						}
+					},
+					'<ul style="list-style-type:circle"><li>|Hello world|</li></ul>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list|</p>',
+					{ element: 'ol', attributes: { class: 'test' } },
+					'<ol class="test"><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list</p><p>a few</p><p>leafs|</p>',
+					{ element: 'ol', attributes: { class: 'test' } },
+					'<ol class="test"><li>|test</li><li>ordered</li><li>list</li><li>a few</li><li>leafs|</li></ol>'
+				],
+				[
+					'<p>|text</p><p>pop</p><p>oup</p><p>test|</p>',
+					{
+						element: 'ul',
+						attributes: {
+							class: 'todo-list2'
+						}
+					},
+					'<ul class="todo-list2"><li>|text</li><li>pop</li><li>oup</li><li>test|</li></ul>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list</p><p>a few</p><p>leafs|</p>',
+					{ element: 'ul', attributes: { class: 'test' } },
+					'<ul class="test"><li>|test</li><li>ordered</li><li>list</li><li>a few</li><li>leafs|</li></ul>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list|</p>',
+					{ element: 'ol', style: { listStyleType: null } },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test1</p>\n\n<p>ordered</p>\n\n<p>list1|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test1</li><li>ordered</li><li>list1|</li></ol>'
+				],
+				[
+					'<h1>|test</h1><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>'
+				],
+				[
+					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>'
+				],
+				[
+					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li><li>6|</li></ul>',
+					{ element: 'ol' },
+					'<p>|1</p><p>2</p><p>3</p><p>4</p><p>5</p><p>6|</p>'
+				],
+				[
+					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li><li>6|</li></ul>',
+					{ element: 'ul' },
+					'<ul><li>|1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6|</li></ul>'
+				],
+				[
+					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li></ul><p>6|</p>',
+					{ element: 'ul' },
+					'<ul><li>|1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6|</li></ul>'
+				],
+				[
+					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>3.5</li></ul><ul><li>4</li><li>5</li></ul><p>6|</p>',
+					{ element: 'ul' },
+					'<ul><li>|1</li><li>2</li><li>3</li><li>3.5</li><li>4</li><li>5</li><li>6|</li></ul>'
+				],
+				[
+					'<ol><li>|1</li><li>2</li><li>3</li></ol><ol><li>3.5</li></ol><ul><li>4</li><li>5</li></ul><p>6|</p>',
+					{ element: 'ul' },
+					'<ul><li>|1</li><li>2</li><li>3</li><li>3.5</li><li>4</li><li>5</li><li>6|</li></ul>'
+				],
+				[
+					'<ol><li>test</li><li>ord|ered</li><li>list</li></ol>',
+					{ element: 'ol' },
+					'<ol><li>test</li></ol><p>ord|ered</p><ol><li>list</li></ol>'
+				],
+				[
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>',
+					{ element: 'ol' },
+					'<p>|test</p><p>ordered</p><p>list|</p>'
+				],
+				[
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+					{ element: 'ul' },
+					'<p>|test</p><p>unordered</p><p>list|</p>'
+				],
+				[
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+				[
+					'<ul><li>test</li><li>unordered|</li><li>list</li></ul>',
+					{ element: 'ul' },
+					'<ul><li>test</li></ul><p>unordered|</p><ul><li>list</li></ul>'
+				],
+				[
+					'<ul><li>test</li></ul><p>unordered|</p><ul><li>list</li></ul>',
+					{ element: 'ul' },
+					'<ul><li>test</li><li>unordered|</li><li>list</li></ul>'
+				],
+				[
+					'<ul class="test"><li>test</li></ul><p>unordered|</p><ul class="test"><li>list</li></ul>',
+					{ element: 'ul', attributes: { class: 'test' } },
+					'<ul class="test"><li>test</li><li>unordered|</li><li>list</li></ul>'
+				],
+				[
+					'<ul><li>test</li><li>unor|der|ed</li><li>list</li></ul>',
+					{ element: 'ul' },
+					'<ul><li>test</li></ul><p>unor|der|ed</p><ul><li>list</li></ul>'
+				],
+				[
+					'<ul><li>test</li><li>unor|der|ed</li><li>list</li></ul>',
+					{ element: 'ul', attributes: { class: 'test' } },
+					'<ul><li>test</li></ul><ul class="test"><li>unor|der|ed</li></ul><ul><li>list</li></ul>'
+				],
+				[
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+				[
+					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+				[
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>ordered</li><li>list|</li></ol>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<p>|test</p><p>ordered</p><p>list|</p>'
+				],
+				[
+					'<ol style="list-style-type:lower-alpha"><li>|test</li><li>unordered</li><li>list|</li></ol>',
+					{
+						element: 'ol',
+						style: { 'list-style-type': 'lower-roman' }
+					},
+					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>|test</p><p>ordered</p><p>list</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li></ol><p>ordered</p><p>list</p>'
+				],
+				[
+					'<h1>|test</h1><p>ordered</p><p>list|</p>',
+					{ element: 'ol' },
+					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+				],
+				[
+					'<p>te|st</p><p>ordered</p><p>li|st</p>',
+					{ element: 'ol' },
+					'<ol><li>te|st</li><li>ordered</li><li>li|st</li></ol>'
+				],
+				[
+					'<p>|test</p><p>unordered</p><p>list|</p>',
+					{ element: 'ul' },
+					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>'
+				],
+				[
+					'<ul><li>|1</li><li>2</li><li>3|</li></ul>',
+					{ element: 'h1' },
+					'<ul><li>|<h1>1</h1></li><li><h1>2</h1></li><li><h1>3</h1>|</li></ul>'
+				],
+				[
+					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
+					{ element: 'h1' },
+					'<ul><li>|1</li><li>2</li><li>3|</li></ul>'
+				],
+				[
+					'<ul class="todo-list"><li>test|</li></ul>',
+					{
+						element: 'ul',
+						hooks: {
+							beforeToggleList(mode, style, list) {
+								Dom.replace(
+									list,
+									style.element,
+									editor.createInside
+								);
+								return 'replace';
+							}
+						}
+					},
+					'<ul><li>test|</li></ul>'
+				],
+				[
+					'<ul class="todo-list"><li>test|</li></ul>',
+					{
+						element: 'ul',
+						hooks: {
+							afterToggleList(mode, li) {
+								if (mode === 'unwrap') {
+									li.setAttribute('replaced', true);
+								}
+							}
+						}
+					},
+					'<p replaced="true">test|</p>'
+				],
+				[
+					'<ul class="todo-list"><li>test|</li></ul>',
+					{
+						element: 'ol'
+					},
+					'<ol><li>test|</li></ol>'
+				],
+				[
+					'<p>|test|</p>',
+					{
+						element: 'ul',
+						hooks: {
+							beforeWrapList(_, wrapper) {
+								const li = Dom.replace(
+									wrapper,
+									'li',
+									editor.createInside
+								);
+
+								const label = editor.createInside.element(
+									'label',
+									{ class: 'jodit_todo_label' }
+								);
+
+								const input = editor.createInside.element(
+									'input',
+									{
+										type: 'checkbox'
+									}
+								);
+								label.appendChild(input);
+								Dom.prepend(li, label);
+
+								return li;
+							}
+						},
+						attributes: {
+							class: 'todo-list'
+						}
+					},
+					'<ul class="todo-list"><li><label class="jodit_todo_label"><input type="checkbox"></label>|test|</li></ul>'
+				],
+				[
+					'<p>|pop|</p>',
+					{
+						element: 'ul',
+						hooks: {
+							afterWrapList(_, wrapper, style) {
+								wrapper.querySelectorAll('li').forEach(li => {
+									li.className =
+										'test ' +
+										style.options.attributes.class;
+								});
+							}
+						},
+						attributes: {
+							class: 'todo-list'
+						}
+					},
+					'<ul class="todo-list"><li class="test todo-list">|pop|</li></ul>'
 				]
 			].forEach(([input, opt, output, jSettings]) => {
 				describe(`For selection ${input} apply style ${JSON.stringify(
@@ -568,7 +885,12 @@ describe('Apply style', () => {
 								'<p>test<span style="font-size:12px">stop</span></p>'
 							);
 
-							style.apply(editor);
+							const style2 = new Style({
+								style: {
+									fontSize: 12
+								}
+							});
+							style2.apply(editor);
 
 							editor.s.insertHTML('elem');
 
@@ -580,7 +902,7 @@ describe('Apply style', () => {
 						});
 
 						describe('Without editing', function () {
-							it('Should unwap empty SPAN', function () {
+							it('Should unwrap empty SPAN', function () {
 								editor.value = '<p>test|</p>';
 								setCursorToChar(editor);
 
@@ -591,7 +913,13 @@ describe('Apply style', () => {
 								});
 
 								style.apply(editor);
-								style.apply(editor);
+
+								const style2 = new Style({
+									style: {
+										fontSize: 12
+									}
+								});
+								style2.apply(editor);
 
 								editor.s.insertHTML('elem');
 
@@ -931,9 +1259,8 @@ describe('Apply style', () => {
 
 						describe('Double times', function () {
 							it('Should create new SPAN inside first', function () {
-								editor.s.setCursorAfter(
-									editor.editor.firstChild.firstChild
-								);
+								editor.value = '<p>test|</p>';
+								setCursorToChar(editor);
 
 								const style = new Style({
 									style: {
@@ -960,11 +1287,10 @@ describe('Apply style', () => {
 								);
 							});
 
-							describe('With same style', function () {
+							describe('With same style 1', function () {
 								it('Should break first SPAN', function () {
-									editor.s.setCursorAfter(
-										editor.editor.firstChild.firstChild
-									);
+									editor.value = '<p>test|</p>';
+									setCursorToChar(editor);
 
 									const style = new Style({
 										style: {

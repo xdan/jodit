@@ -8,6 +8,6 @@
  * @module helpers/checker
  */
 
-export function isBoolean(elm: unknown): elm is Boolean {
+export function isBoolean(elm: unknown): elm is boolean {
 	return typeof elm === 'boolean';
 }

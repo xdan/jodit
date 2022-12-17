@@ -8,7 +8,7 @@
  * @module plugins/keyboard
  */
 
-import type { Nullable } from 'jodit/types';
+import type { IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 
 /**
@@ -41,4 +41,12 @@ export function findMostNestedNeighbor(
 	}
 
 	return null;
+}
+
+/**
+ * @private
+ */
+export function getMoveFilter(jodit: IJodit): (node: Node) => boolean {
+	return (node: Node): boolean =>
+		jodit.e.fire('backSpaceIsMovedIgnore', node) !== true;
 }

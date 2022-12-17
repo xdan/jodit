@@ -8,7 +8,8 @@ const glob = require('glob');
 const path = require('path');
 const fs = require('fs');
 
-const dir = path.resolve(__dirname, '../../') + '/';
+const dir = path.resolve(process.cwd()) + '/';
+console.log('Find directory:', dir);
 
 const list = [];
 // options is optional

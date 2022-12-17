@@ -631,15 +631,8 @@ describe('Backspace/Delete key', function () {
 
 		describe('HR before P', function () {
 			it('Should simple remove HR but cursor should leave inside P', function () {
-				editor.value = '<p>lets</p><hr><p>test</p>';
-
-				const range = editor.s.createRange();
-
-				// set cursor in start of element
-
-				range.selectNodeContents(editor.editor.lastChild);
-				range.collapse(true);
-				editor.s.selectRange(range);
+				editor.value = '<p>lets</p><hr><p>|test</p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 

@@ -17,6 +17,7 @@ import type {
 	IJodit,
 	ISelect,
 	IStyle,
+	IStyleOptions,
 	MarkerInfo,
 	Nullable
 } from 'jodit/types';
@@ -32,10 +33,9 @@ import {
 import { Dom } from 'jodit/core/dom';
 
 import {
+	size,
 	attr,
 	error,
-	isFunction,
-	isString,
 	$$,
 	css,
 	call,
@@ -45,6 +45,10 @@ import {
 import { CommitStyle } from './style/commit-style';
 import { autobind } from 'jodit/core/decorators';
 import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers';
+import { assert } from 'jodit/core/helpers/utils/assert';
+import { isMarker, isFunction, isString } from 'jodit/core/helpers/checker';
+
+import './interface';
 
 export class Select implements ISelect {
 	constructor(readonly jodit: IJodit) {
@@ -212,17 +216,6 @@ export class Select implements ISelect {
 		} catch {}
 
 		return false;
-	}
-
-	/**
-	 * Define element is selection helper
-	 */
-	static isMarker(elm: Nullable<Node>): elm is HTMLElement {
-		return (
-			Dom.isNode(elm) &&
-			Dom.isTag(elm, 'span') &&
-			elm.hasAttribute('data-' + consts.MARKER_CLASS)
-		);
 	}
 
 	/**
@@ -837,7 +830,7 @@ export class Select implements ISelect {
 					node &&
 					node !== root &&
 					!Dom.isEmptyTextNode(node) &&
-					!Select.isMarker(node as HTMLElement)
+					!isMarker(node as HTMLElement)
 				) {
 					nodes.push(node);
 				}
@@ -926,8 +919,17 @@ export class Select implements ISelect {
 		const container = start ? range.startContainer : range.endContainer;
 		const offset = start ? range.startOffset : range.endOffset;
 
-		const check = (elm: Node | null): boolean =>
-			Boolean(elm && !Dom.isTag(elm, 'br') && !Dom.isEmptyTextNode(elm));
+		const isSignificant = (elm: Node | null): boolean =>
+			Boolean(
+				elm &&
+					!Dom.isTag(elm, 'br') &&
+					!Dom.isEmptyTextNode(elm) &&
+					!Dom.isTemporary(elm) &&
+					!(
+						Dom.isElement(elm) &&
+						this.j.e.fire('isInvisibleForCursor', elm) === true
+					)
+			);
 
 		// check right offset
 		if (Dom.isText(container)) {
@@ -949,17 +951,32 @@ export class Select implements ISelect {
 			const children = toArray(container.childNodes);
 
 			if (end) {
-				if (children.slice(offset).some(check)) {
+				if (children.slice(offset).some(isSignificant)) {
 					return false;
 				}
 			} else {
-				if (children.slice(0, offset).some(check)) {
+				if (children.slice(0, offset).some(isSignificant)) {
 					return false;
 				}
 			}
 		}
 
-		return !call(start ? Dom.prev : Dom.next, current, check, parentBlock);
+		let next: Nullable<Node> = current;
+
+		while (next && next !== parentBlock) {
+			const nextOne = Dom.sibling(next, start);
+			if (!nextOne) {
+				next = next.parentNode;
+				continue;
+			}
+			next = nextOne;
+
+			if (next && isSignificant(next)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -1221,17 +1238,17 @@ export class Select implements ISelect {
 			if (
 				firstChild &&
 				firstChild === lastChild &&
-				Select.isMarker(firstChild)
+				isMarker(firstChild)
 			) {
 				Dom.unwrap(font);
 				continue;
 			}
 
-			if (firstChild && Select.isMarker(firstChild)) {
+			if (firstChild && isMarker(firstChild)) {
 				Dom.before(font, firstChild);
 			}
 
-			if (lastChild && Select.isMarker(lastChild)) {
+			if (lastChild && isMarker(lastChild)) {
 				Dom.after(font, lastChild);
 			}
 
@@ -1253,7 +1270,7 @@ export class Select implements ISelect {
 				if (
 					font.firstChild &&
 					font.firstChild === font.lastChild &&
-					Select.isMarker(font.firstChild)
+					isMarker(font.firstChild)
 				) {
 					continue;
 				}
@@ -1289,9 +1306,34 @@ export class Select implements ISelect {
 	 * editor.value = 'test';
 	 * editor.execCommand('selectall');
 	 *
+	 * editor.s.commitStyle({
+	 * 	style: {color: 'red'}
+	 * }) // will wrap `text` in `span` and add style `color:red`
+	 * editor.s.commitStyle({
+	 * 	style: {color: 'red'}
+	 * }) // will remove `color:red` from `span`
+	 * ```
+	 */
+	commitStyle(options: IStyleOptions): void {
+		assert(size(options) > 0, 'Need to pass at least one option');
+
+		const styleElm = new CommitStyle(options);
+
+		styleElm.apply(this.j);
+	}
+
+	/**
+	 * Apply some css rules for all selections. It method wraps selections in nodeName tag.
+	 * @example
+	 * ```js
+	 * const editor = Jodit.make('#editor');
+	 * editor.value = 'test';
+	 * editor.execCommand('selectall');
+	 *
 	 * editor.s.applyStyle({color: 'red'}) // will wrap `text` in `span` and add style `color:red`
 	 * editor.s.applyStyle({color: 'red'}) // will remove `color:red` from `span`
 	 * ```
+	 * @deprecated
 	 */
 	applyStyle(
 		style: CanUndef<IStyle>,
@@ -1300,21 +1342,19 @@ export class Select implements ISelect {
 			 * equal CSSRule (e.g. strong === font-weight: 700)
 			 */
 			element?: HTMLTagNames;
+			/** @deprecated Instead use attributes.class*/
 			className?: string;
+			attributes?: IDictionary<string | number>;
 			/**
 			 * tag for wrapping and apply styles
 			 */
 			defaultTag?: HTMLTagNames;
 		} = {}
 	): void {
-		const styleElm = new CommitStyle({
+		this.commitStyle({
 			style,
-			element: options.element,
-			className: options.className,
-			defaultTag: options.defaultTag
+			...options
 		});
-
-		styleElm.apply(this.j);
 	}
 
 	/**

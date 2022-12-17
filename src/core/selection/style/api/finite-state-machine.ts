@@ -4,28 +4,32 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CanUndef, IDictionary } from 'jodit/types';
+import type { IDictionary } from 'jodit/types';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { assert } from 'jodit/src/core/helpers/utils/assert';
 
 /**
  * A state machine implementation for applying styles.
  */
-export class FiniteStateMachine {
-	setState(state: string, subState?: string): void {
-		this.state = state;
+export class FiniteStateMachine<
+	K extends string,
+	V extends object & { next: K },
+	T extends IDictionary<IDictionary<(value: V) => V>, K> = IDictionary<
+		IDictionary<(...attrs: any[]) => any>,
+		K
+	>,
+	A extends keyof T[K] = keyof T[K]
+> {
+	private __state!: K;
+	private setState(state: K): void {
+		assert(!this.__previewsStates.has(state), 'Circled states');
 
-		if (subState != null) {
-			this.subState = subState;
-		}
+		this.__previewsStates.add(state);
+		this.__state = state;
 	}
 
-	private subState: string = '';
-
-	getState(): string {
-		return this.state;
-	}
-
-	getSubState(): string {
-		return this.subState;
+	getState(): K {
+		return this.__state;
 	}
 
 	private silent: boolean = true;
@@ -33,34 +37,35 @@ export class FiniteStateMachine {
 		this.silent = false;
 	}
 
-	constructor(
-		private state: string,
-		private readonly transitions: IDictionary<
-			IDictionary<(this: FiniteStateMachine, ...attrs: any[]) => any>
-		>
-	) {}
+	private __previewsStates: Set<K> = new Set();
+	constructor(state: K, private readonly transitions: T) {
+		this.setState(state);
+	}
 
-	dispatch<T>(actionName: string, ...attrs: any[]): CanUndef<T> {
-		const action = this.transitions[this.state][actionName];
+	dispatch(actionName: A, value: V): V {
+		const action = this.transitions[this.getState()][actionName];
 
 		if (action) {
-			if (!this.silent) {
-				console.log('State: ' + this.state, 'Action: ' + actionName);
+			const res = action.call(this, value);
+
+			assert(res && res !== value, 'Action should return new value');
+			assert(isString(res.next), 'Value should contains next state');
+			assert(
+				res.next !== this.getState(),
+				'The new state should not be equal to the old one.'
+			);
+
+			this.setState(res.next);
+
+			if (!isProd && !this.silent) {
+				console.log(`State: ${this.getState()}`);
 			}
 
-			const res = action.call(this, ...attrs);
-
-			if (!this.silent) {
-				console.log('State: ' + this.state);
-			}
-
-			return <T>res;
+			return res;
 		}
 
-		if (!this.silent) {
-			throw new Error('invalid action: ' + this.state + '.' + actionName);
-		}
-
-		return;
+		throw new Error(
+			`invalid action: ${this.getState()}.${actionName.toString()}`
+		);
 	}
 }

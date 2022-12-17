@@ -21,23 +21,17 @@ import type {
 } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import {
-	$$,
-	asArray,
-	attr,
-	call,
-	css,
-	dataBind,
-	error,
 	isArray,
 	isFunction,
 	isHTML,
 	isString,
-	isVoid,
-	toArray,
-	trim
-} from 'jodit/core/helpers';
-import { Select } from 'jodit/core/selection';
-import { TEMP_ATTR } from 'jodit/core/constants';
+	isVoid
+} from 'jodit/core/helpers/checker';
+import { asArray, toArray } from 'jodit/core/helpers/array';
+import { trim } from 'jodit/core/helpers/string';
+import { $$, attr, call, css, dataBind, error } from 'jodit/core/helpers/utils';
+import { isMarker } from 'jodit/core/helpers/checker/is-marker';
+import { NO_EMPTY_TAGS, TEMP_ATTR } from 'jodit/core/constants';
 
 /**
  * Module for working with DOM
@@ -207,15 +201,29 @@ export class Dom {
 	 * // Replace the first <span> element to the < p >
 	 * ```
 	 */
+	static replace<T extends HTMLElement>(
+		elm: Node,
+		newTagName: HTMLTagNames,
+		create: ICreate,
+		withAttributes?: boolean,
+		notMoveContent?: boolean
+	): T;
 	static replace<T extends Node>(
 		elm: Node,
-		newTagName: HTMLTagNames | Node | string,
+		newTagName: T | string,
+		create: ICreate,
+		withAttributes?: boolean,
+		notMoveContent?: boolean
+	): T;
+	static replace<T extends Node>(
+		elm: Node,
+		newTagName: HTMLTagNames | T | string,
 		create: ICreate,
 		withAttributes = false,
 		notMoveContent = false
 	): T {
 		if (isHTML(newTagName)) {
-			newTagName = create.fromHTML(newTagName);
+			newTagName = create.fromHTML(newTagName) as unknown as T;
 		}
 
 		const tag = isString(newTagName)
@@ -284,25 +292,41 @@ export class Dom {
 	 */
 	static isEmpty(
 		node: Node,
-		condNoEmptyElement: RegExp = /^(img|svg|canvas|input|textarea|form)$/
+		condNoEmptyElement: (node: Element) => boolean
+	): boolean;
+	static isEmpty(node: Node, noEmptyTags?: Set<string>): boolean;
+	static isEmpty(
+		node: Node,
+		condNoEmptyElement:
+			| ((elm: Element) => boolean)
+			| Set<string> = NO_EMPTY_TAGS
 	): boolean {
 		if (!node) {
 			return true;
 		}
 
+		let cond: (elm: Element) => boolean;
+
+		if (!isFunction(condNoEmptyElement)) {
+			cond = (elm: Node): boolean =>
+				condNoEmptyElement.has(elm.nodeName.toLowerCase());
+		} else {
+			cond = condNoEmptyElement;
+		}
+
+		const emptyText = (node: Text): boolean =>
+			node.nodeValue == null || trim(node.nodeValue).length === 0;
+
 		if (Dom.isText(node)) {
-			return node.nodeValue == null || trim(node.nodeValue).length === 0;
+			return emptyText(node);
 		}
 
 		return (
-			!condNoEmptyElement.test(node.nodeName.toLowerCase()) &&
+			!(Dom.isElement(node) && cond(node)) &&
 			Dom.each(node as HTMLElement, (elm: Node | null): false | void => {
 				if (
-					(Dom.isText(elm) &&
-						elm.nodeValue != null &&
-						trim(elm.nodeValue).length !== 0) ||
-					(Dom.isElement(elm) &&
-						condNoEmptyElement.test(elm.nodeName.toLowerCase()))
+					(Dom.isText(elm) && !emptyText(elm)) ||
+					(Dom.isElement(elm) && cond(elm))
 				) {
 					return false;
 				}
@@ -801,19 +825,17 @@ export class Dom {
 	): Nullable<T> {
 		let condition: NodeCondition;
 
+		const lc = (s: string): string => s.toLowerCase();
+
 		if (isFunction(tagsOrCondition)) {
 			condition = tagsOrCondition;
 		} else if (isArray(tagsOrCondition)) {
+			const set = new Set(tagsOrCondition.map(lc));
 			condition = (tag: Node | null): boolean =>
-				Boolean(
-					tag &&
-						tagsOrCondition.includes(
-							tag.nodeName.toLowerCase() as HTMLTagNames
-						)
-				);
+				Boolean(tag && set.has(lc(tag.nodeName) as HTMLTagNames));
 		} else {
 			condition = (tag: Node | null): boolean =>
-				Boolean(tag && tagsOrCondition === tag.nodeName.toLowerCase());
+				Boolean(tag && lc(tagsOrCondition) === lc(tag.nodeName));
 		}
 
 		return Dom.up(node, condition, root);
@@ -922,14 +944,28 @@ export class Dom {
 	/**
 	 * Move all content to another element
 	 */
-	static moveContent(from: Node, to: Node, inStart: boolean = false): void {
+	static moveContent(
+		from: Node,
+		to: Node,
+		inStart: boolean = false,
+		filter: (node: Node) => boolean = (): boolean => true
+	): void {
 		const fragment: DocumentFragment = (
 			from.ownerDocument || document
 		).createDocumentFragment();
 
-		toArray(from.childNodes).forEach((node: Node) => {
-			fragment.appendChild(node);
-		});
+		toArray(from.childNodes)
+			.filter(elm => {
+				if (filter(elm)) {
+					return true;
+				}
+
+				Dom.safeRemove(elm);
+				return false;
+			})
+			.forEach((node: Node) => {
+				fragment.appendChild(node);
+			});
 
 		if (!inStart || !to.firstChild) {
 			to.appendChild(fragment);
@@ -1021,15 +1057,28 @@ export class Dom {
 
 	static isTag<K extends HTMLTagNames>(
 		node: Node | null | undefined | false | EventTarget,
-		tagNames: K[] | K
+		tagNames: Set<K>
+	): node is HTMLElementTagNameMap[K];
+
+	static isTag<K extends HTMLTagNames>(
+		node: Node | null | undefined | false | EventTarget,
+		tagNames: K[] | K | Set<K>
 	): node is HTMLElementTagNameMap[K] {
-		const tags = asArray(tagNames).map(String);
+		if (!this.isElement(node)) {
+			return false;
+		}
+
+		const nameL = node.tagName.toLowerCase() as K;
+		const nameU = node.tagName.toUpperCase() as K;
+
+		if (tagNames instanceof Set) {
+			return tagNames.has(nameL) || tagNames.has(nameU);
+		}
+
+		const tags = asArray(tagNames).map(s => String(s).toLowerCase());
 
 		for (let i = 0; i < tags.length; i += 1) {
-			if (
-				this.isElement(node) &&
-				node.tagName.toLowerCase() === tags[i].toLowerCase()
-			) {
+			if (nameL === tags[i] || nameU === tags[i]) {
 				return true;
 			}
 		}
@@ -1057,7 +1106,7 @@ export class Dom {
 			return false;
 		}
 
-		return Select.isMarker(element) || attr(element, TEMP_ATTR) === 'true';
+		return isMarker(element) || attr(element, TEMP_ATTR) === 'true';
 	}
 
 	/**

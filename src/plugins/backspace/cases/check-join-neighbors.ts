@@ -10,6 +10,7 @@
 
 import type { IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
+import { getMoveFilter } from 'jodit/plugins/backspace/helpers';
 
 /**
  * Check if two separate elements can be connected
@@ -103,7 +104,12 @@ function moveContentAndRemoveEmpty(
 ): boolean {
 	// Move content and remove empty nodes
 	if (mainClosestBox && Dom.isElement(sibling)) {
-		Dom.moveContent(mainClosestBox, sibling, !backspace);
+		Dom.moveContent(
+			mainClosestBox,
+			sibling,
+			!backspace,
+			getMoveFilter(jodit)
+		);
 
 		let remove: Nullable<Node> = mainClosestBox;
 

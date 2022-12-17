@@ -74,3 +74,6 @@ Object.keys(Languages)
 	});
 
 export { DefaultJodit as Jodit };
+
+export class CommitMode {
+}

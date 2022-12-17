@@ -25,7 +25,7 @@ import { Icon } from 'jodit/core/ui/icon';
 Icon.set('image', require('./image.svg'));
 
 Config.prototype.controls.image = {
-	popup: (editor: IJodit, current, self, close) => {
+	popup: (editor: IJodit, current, ignore, close) => {
 		let sourceImage: HTMLImageElement | null = null;
 
 		if (

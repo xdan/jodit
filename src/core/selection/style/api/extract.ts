@@ -5,9 +5,10 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Select } from '../../select';
-import { call, trim } from 'jodit/core/helpers';
-import { Dom } from 'jodit/core/dom';
+import { call } from 'jodit/core/helpers/utils/utils';
+import { trim } from 'jodit/core/helpers/string/trim';
+import { Dom } from 'jodit/core/dom/dom';
+import { isMarker } from 'jodit/core/helpers/checker/is-marker';
 
 /**
  * If the selection area is inside an element that matches the commit (suitable relative),
@@ -33,7 +34,7 @@ export function extractSelectedPart(
 	const range = jodit.s.createRange();
 
 	// Left part
-	const leftEdge = Select.isMarker(font.previousSibling)
+	const leftEdge = isMarker(font.previousSibling)
 		? font.previousSibling
 		: font;
 
@@ -43,9 +44,7 @@ export function extractSelectedPart(
 	extractAndMove(wrapper, range, true);
 
 	// Right part
-	const rightEdge = Select.isMarker(font.nextSibling)
-		? font.nextSibling
-		: font;
+	const rightEdge = isMarker(font.nextSibling) ? font.nextSibling : font;
 
 	range.setStartAfter(rightEdge);
 	range.setEndAfter(wrapper);

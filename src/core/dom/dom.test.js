@@ -223,6 +223,21 @@ describe('Test Dom module', function () {
 		});
 	});
 
+	describe('Method isTag', () => {
+		it('Should return true then element is same tag', () => {
+			for (const tag of ['div', 'span', 'p', 'img']) {
+				const div = document.createElement(tag);
+				expect(Dom.isTag(div, new Set([tag]))).is.true;
+				expect(Dom.isTag(div, new Set([tag.toUpperCase()]))).is.true;
+				expect(Dom.isTag(div, [tag])).is.true;
+				expect(Dom.isTag(div, tag)).is.true;
+				expect(Dom.isTag(div, tag.toUpperCase())).is.true;
+				expect(Dom.isTag(div, 'br')).is.false;
+				expect(Dom.isTag(div, ['br'])).is.false;
+			}
+		});
+	});
+
 	describe('Method isEmpty', function () {
 		it('Should return true then element is empty', function () {
 			expect(true).equals(Dom.isEmpty(document.createElement('div')));
@@ -236,6 +251,7 @@ describe('Test Dom module', function () {
 
 			expect(true).equals(Dom.isEmpty(node));
 		});
+
 		it('Should return false then element is not empty', function () {
 			expect(false).equals(Dom.isEmpty(document.documentElement));
 			expect(false).equals(Dom.isEmpty(document.createTextNode('test')));
@@ -249,6 +265,15 @@ describe('Test Dom module', function () {
 				'</ul>';
 
 			expect(false).equals(Dom.isEmpty(node));
+		});
+
+		describe('Own second argument', function () {
+			it('Should return true then element is empty', () => {
+				const node = document.createElement('div');
+				node.innerHTML = '<ul>' + '<li><img></li>' + '</ul>';
+
+				expect(Dom.isEmpty(node, new Set([]))).is.true;
+			});
 		});
 	});
 

@@ -109,15 +109,8 @@ describe('Selection Module Tests', function () {
 					describe('Cursor in the end of text node', function () {
 						it('Should work correct', function () {
 							const editor = getJodit();
-							editor.value = '<ul><li><p>test</p></li></ul>';
-
-							const range = editor.s.createRange();
-
-							range.setStartAfter(
-								editor.editor.querySelector('p').firstChild
-							);
-							range.collapse(true);
-							editor.s.selectRange(range);
+							editor.value = '<ul><li><p>test|</p></li></ul>';
+							setCursorToChar(editor);
 
 							['li', 'p'].forEach(function (tag) {
 								expect(
@@ -185,13 +178,8 @@ describe('Selection Module Tests', function () {
 			describe('Cursor in the end of text node but after this has image', function () {
 				it('Should return false', function () {
 					const editor = getJodit();
-					editor.value = '<p>test<img/></p>';
-
-					const range = editor.s.createRange();
-
-					range.setStart(editor.editor.firstChild.firstChild, 4);
-					range.collapse(true);
-					editor.s.selectRange(range);
+					editor.value = '<p>test|<img/></p>';
+					setCursorToChar(editor);
 
 					expect(editor.s.cursorOnTheRight(editor.editor.firstChild))
 						.is.false;
@@ -538,7 +526,7 @@ describe('Selection Module Tests', function () {
 			});
 		});
 
-		describe('Curson in the end of span inside P and check cursorInTheEdge(true)', function () {
+		describe('Cursor in the end of span inside P and check cursorInTheEdge(true)', function () {
 			it('Should return false', function () {
 				const editor = getJodit();
 				editor.value = '<p>Some <span>|text|</span></p>';

@@ -131,6 +131,10 @@ export class backspace extends Plugin {
 				return;
 			}
 
+			if (jodit.e.fire('backSpaceBeforeCases', backspace, fakeNode)) {
+				return false;
+			}
+
 			moveNodeInsideStart(jodit, fakeNode, backspace);
 
 			if (
@@ -155,6 +159,7 @@ export class backspace extends Plugin {
 
 			throw e;
 		} finally {
+			jodit.e.fire('backSpaceAfterDelete', backspace, fakeNode);
 			this.safeRemoveEmptyNode(fakeNode);
 		}
 

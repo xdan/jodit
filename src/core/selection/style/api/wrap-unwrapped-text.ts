@@ -4,19 +4,18 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, Nullable } from 'jodit/types';
-import type { CommitStyle } from '../commit-style';
-import { Dom } from 'jodit/core/dom';
+import type { IJodit, Nullable, ICommitStyle } from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
+import { isMarker } from 'jodit/core/helpers/checker/is-marker';
 
 /**
  * Wrap text or inline elements inside Block element
  * @private
  */
 export function wrapUnwrappedText(
-	style: CommitStyle,
+	style: ICommitStyle,
 	elm: Node,
-	jodit: IJodit,
-	getRange: () => Range
+	jodit: IJodit
 ): HTMLElement {
 	const root = jodit.editor,
 		ci = jodit.createInside,
@@ -24,7 +23,7 @@ export function wrapUnwrappedText(
 			let edgeNode: Node = n,
 				node: Nullable<Node> = n;
 
-			while (node) {
+			while (node && !isMarker(node)) {
 				if (Dom.isTag(node, jodit.o.enter)) {
 					break;
 				}
@@ -53,7 +52,7 @@ export function wrapUnwrappedText(
 	const start: Node = edge(elm),
 		end: Node = edge(elm, 'nextSibling');
 
-	const range = getRange();
+	const range = jodit.s.createRange();
 	range.setStartBefore(start);
 	range.setEndAfter(end);
 	const fragment = range.extractContents();

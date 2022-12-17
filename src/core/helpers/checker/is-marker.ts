@@ -6,17 +6,15 @@
 
 import type { Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
-import { isMarker } from 'jodit/core/helpers/checker/is-marker';
+import { MARKER_CLASS } from 'jodit/core/constants';
 
 /**
- * Is normal usual element
- * @private
+ * Define element is selection helper
  */
-export function isNormalNode(elm: Nullable<Node>): boolean {
-	return Boolean(
-		elm &&
-			!Dom.isEmptyTextNode(elm) &&
-			!Dom.isTemporary(elm) &&
-			!isMarker(elm)
+export function isMarker(elm: Nullable<Node>): elm is HTMLElement {
+	return (
+		Dom.isNode(elm) &&
+		Dom.isTag(elm, 'span') &&
+		elm.hasAttribute('data-' + MARKER_CLASS)
 	);
 }

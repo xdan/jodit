@@ -8,8 +8,15 @@
  * @module selection
  */
 
-import type { HTMLTagNames, IJodit, IStyleOptions } from 'jodit/types';
+import type {
+	HTMLTagNames,
+	IJodit,
+	IStyleOptions,
+	IAttributes,
+	ICommitStyle
+} from 'jodit/types';
 import { IS_BLOCK } from 'jodit/core/constants';
+import { camelCase } from 'jodit/core/helpers/string/camel-case';
 import { ApplyStyle } from './apply-style';
 
 export const WRAP = 'wrap';
@@ -18,8 +25,27 @@ export const CHANGE = 'change';
 export const UNSET = 'unset';
 export const INITIAL = 'initial';
 export const REPLACE = 'replace';
+export const _PREFIX = 'commitStyle';
 
-export class CommitStyle {
+export class CommitStyle implements ICommitStyle {
+	private __applyMap: WeakMap<HTMLElement, Record<string, boolean>> =
+		new WeakMap();
+
+	isApplied(elm: HTMLElement, key: string): boolean {
+		const data = this.__applyMap.get(elm);
+		if (!data) {
+			return false;
+		}
+
+		return data[key];
+	}
+
+	setApplied(elm: HTMLElement, key: string): void {
+		const data = this.__applyMap.get(elm) ?? {};
+		data[key] = true;
+		this.__applyMap.set(elm, data);
+	}
+
 	get elementIsList(): boolean {
 		return Boolean(
 			this.options.element && ['ul', 'ol'].includes(this.options.element)
@@ -61,9 +87,58 @@ export class CommitStyle {
 		return this.element === this.defaultTag;
 	}
 
-	constructor(readonly options: IStyleOptions) {}
+	constructor(readonly options: IStyleOptions) {
+		options.attributes = deprecatedUsing(this, options.attributes);
+	}
 
 	apply(jodit: IJodit): void {
-		ApplyStyle(jodit, this);
+		const { hooks } = this.options;
+
+		try {
+			hooks &&
+				Object.keys(hooks).forEach(key => {
+					// @ts-ignore
+					jodit.e.on(camelCase(_PREFIX + '_' + key), hooks[key]);
+				});
+
+			ApplyStyle(jodit, this);
+		} finally {
+			hooks &&
+				Object.keys(hooks).forEach(key => {
+					// @ts-ignore
+					jodit.e.off(camelCase(_PREFIX + '_' + key), hooks[key]);
+				});
+
+			this.__applyMap = new WeakMap();
+		}
 	}
+}
+
+function deprecatedUsing(
+	commitStyle: ICommitStyle,
+	attributes?: IAttributes | undefined
+): IAttributes | undefined {
+	const { style, className } = commitStyle.options;
+
+	// For compatibility with older versions
+	if (style) {
+		if (attributes) {
+			attributes.style = style;
+		} else {
+			attributes = { style };
+		}
+		delete commitStyle.options.style;
+	}
+
+	// For compatibility with older versions
+	if (className) {
+		if (attributes) {
+			attributes['class'] = className;
+		} else {
+			attributes = { class: className };
+		}
+		delete commitStyle.options.className;
+	}
+
+	return attributes;
 }

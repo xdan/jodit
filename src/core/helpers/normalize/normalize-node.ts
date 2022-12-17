@@ -11,7 +11,7 @@
 import { INVISIBLE_SPACE_REG_EXP } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 
-export const normalizeNode = (node: Node | null): void => {
+export function normalizeNode(node: Node | null): void {
 	if (!node) {
 		return;
 	}
@@ -34,4 +34,4 @@ export const normalizeNode = (node: Node | null): void => {
 	}
 
 	normalizeNode(node.nextSibling);
-};
+}

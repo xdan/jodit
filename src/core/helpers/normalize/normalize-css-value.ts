@@ -11,6 +11,25 @@
 import { isNumeric } from '../checker/is-numeric';
 import { kebabCase } from '../string/kebab-case';
 import { colorToHex } from '../color/color-to-hex';
+import { isVoid } from '../checker/is-void';
+
+export const NUMBER_FIELDS_REG =
+	/^(left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size)/i;
+
+export function normalizeCssNumericValue(
+	key: string,
+	value: string | number | undefined | null
+): string | number | undefined | null {
+	if (
+		!isVoid(value) &&
+		NUMBER_FIELDS_REG.test(key) &&
+		isNumeric(value.toString())
+	) {
+		return parseInt(value.toString(), 10) + 'px';
+	}
+
+	return value;
+}
 
 export function normalizeCssValue(
 	key: string,

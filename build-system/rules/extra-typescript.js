@@ -5,8 +5,9 @@
  */
 
 const path = require('path');
+const { removeAsserts } = require('../utils/remove-asserts');
 
-module.exports = ({ ES, superDirname }) => {
+module.exports = ({ ES, superDirname, isProd, isTest }) => {
 	return {
 		test: /\.(js|ts)$/,
 		loader: 'ts-loader',
@@ -15,7 +16,10 @@ module.exports = ({ ES, superDirname }) => {
 			allowTsInNodeModules: true,
 			compilerOptions: {
 				target: ES
-			}
+			},
+			getCustomTransformers: () => ({
+				before: isProd && !isTest ? [removeAsserts()] : []
+			})
 		},
 		include: [path.resolve(superDirname, './node_modules')]
 	};

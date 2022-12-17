@@ -9,7 +9,7 @@
  */
 
 import type { CanUndef, HTMLTagNames, IDictionary, Nullable } from './types';
-import type { IStyle } from './style';
+import type { IStyle, IStyleOptions } from './style';
 
 export interface MarkerInfo {
 	startId: string;
@@ -80,14 +80,19 @@ export interface ISelect {
 		tagOrCallback: HTMLTagNames | ((font: HTMLElement) => any)
 	): HTMLElement[];
 
+	/** @deprecated Instead use commitStyle */
 	applyStyle(
 		style: CanUndef<IStyle>,
 		options?: {
 			element?: HTMLTagNames;
+			/** @deprecated Instead use attributes.class*/
 			className?: string;
+			attributes?: IDictionary<string | number>;
 			defaultTag?: HTMLTagNames;
 		}
 	): void;
+
+	commitStyle(options: IStyleOptions): void;
 
 	eachSelection(callback: (current: Node) => void): void;
 	splitSelection(currentBox: HTMLElement): Nullable<Element>;

@@ -10,10 +10,12 @@
 
 import type { IStyle, StyleValue } from 'jodit/types';
 import { isPlainObject } from '../checker/is-plain-object';
-import { isNumeric } from '../checker/is-numeric';
-import { isVoid } from '../checker/is-void';
 import { isBoolean } from '../checker/is-boolean';
-import { normalizeCssValue } from '../normalize/normalize-css-value';
+import {
+	normalizeCssValue,
+	normalizeCssNumericValue,
+	NUMBER_FIELDS_REG
+} from '../normalize/normalize-css-value';
 import { camelCase } from '../string/camel-case';
 import { kebabCase } from '../string/kebab-case';
 
@@ -53,9 +55,6 @@ export function css(
 	value?: StyleValue | boolean,
 	onlyStyleMode: boolean = false
 ): string | number {
-	const numberFieldsReg =
-		/^(left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size)/i;
-
 	if (isBoolean(value)) {
 		onlyStyleMode = value;
 		value = undefined;
@@ -67,13 +66,7 @@ export function css(
 			_key: string,
 			_value: StyleValue
 		): void => {
-			if (
-				!isVoid(_value) &&
-				numberFieldsReg.test(_key) &&
-				isNumeric(_value.toString())
-			) {
-				_value = parseInt(_value.toString(), 10) + 'px';
-			}
+			_value = normalizeCssNumericValue(_key, _value);
 
 			if (
 				_value !== undefined &&
@@ -114,7 +107,7 @@ export function css(
 	}
 
 	if (
-		numberFieldsReg.test(key as string) &&
+		NUMBER_FIELDS_REG.test(key as string) &&
 		/^[-+]?[0-9.]+px$/.test(result.toString())
 	) {
 		result = parseInt(result.toString(), 10);
