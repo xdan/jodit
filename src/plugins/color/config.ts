@@ -109,8 +109,6 @@ Config.prototype.controls.brush = {
 
 				dataBind(button, 'color', value);
 				dataBind(button, 'color-mode', 'background');
-
-				close();
 			},
 			bg_color
 		);
@@ -126,8 +124,6 @@ Config.prototype.controls.brush = {
 
 				dataBind(button, 'color', value);
 				dataBind(button, 'color-mode', 'color');
-
-				close();
 			},
 			colorHEX
 		);
