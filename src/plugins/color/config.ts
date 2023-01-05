@@ -109,6 +109,10 @@ Config.prototype.controls.brush = {
 
 				dataBind(button, 'color', value);
 				dataBind(button, 'color-mode', 'background');
+				
+				if (navigator.userAgent.indexOf('Safari') < 0) {
+					close();
+				}
 			},
 			bg_color
 		);
@@ -124,6 +128,10 @@ Config.prototype.controls.brush = {
 
 				dataBind(button, 'color', value);
 				dataBind(button, 'color-mode', 'color');
+				
+				if (navigator.userAgent.indexOf('Safari') < 0) {
+					close();
+				}
 			},
 			colorHEX
 		);
