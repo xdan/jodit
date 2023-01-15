@@ -138,7 +138,7 @@ module.exports = {
 	Border: 'Rand',
 	'Embed code': 'Code einbetten',
 	Update: 'Aktualisieren',
-	superscript: 'Hochgestellen',
+	superscript: 'Hochstellen',
 	subscript: 'Tiefstellen',
 	'Cut selection': 'Auswahl ausschneiden',
 	Paste: 'Einfügen',
