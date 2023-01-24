@@ -73,7 +73,6 @@ module.exports = {
 	'Open link in new tab': 'פתח בכרטיסיה חדשה',
 	Image: 'תמונה',
 	file: 'קובץ',
-	Advansed: 'מתקדם',
 	'Image properties': 'מאפייני תמונה',
 	Cancel: 'ביטול',
 	Ok: 'אישור',

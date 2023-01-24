@@ -75,7 +75,6 @@ module.exports = {
 	'Open link in new tab': 'Otwórz w nowej zakładce',
 	Image: 'Grafika',
 	file: 'Plik',
-	Advansed: 'Zaawansowne',
 	'Image properties': 'Właściwości grafiki',
 	Cancel: 'Anuluj',
 	Ok: 'OK',

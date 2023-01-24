@@ -73,7 +73,6 @@ module.exports = {
 	'Open link in new tab': 'Abrir link em nova aba',
 	Image: 'Imagem',
 	file: 'Arquivo',
-	Advansed: 'Avançado',
 	'Image properties': 'Propriedades da imagem',
 	Cancel: 'Cancelar',
 	Ok: 'Ok',
