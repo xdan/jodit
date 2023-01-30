@@ -24,14 +24,14 @@ export class UISearch extends UIElement<IJodit> {
 		return 'UISearch';
 	}
 
-	private queryInput: HTMLInputElement;
-	private replaceInput: HTMLInputElement;
+	private __queryInput: HTMLInputElement;
+	private __replaceInput: HTMLInputElement;
 	selInfo: Nullable<MarkerInfo[]> = null;
 
-	private closeButton: HTMLButtonElement;
-	private replaceButton: HTMLButtonElement;
-	private currentBox: HTMLSpanElement;
-	private countBox: HTMLSpanElement;
+	private __closeButton: HTMLButtonElement;
+	private __replaceButton: HTMLButtonElement;
+	private __currentBox: HTMLSpanElement;
+	private __countBox: HTMLSpanElement;
 
 	override render(): string {
 		return `<div>
@@ -61,27 +61,27 @@ export class UISearch extends UIElement<IJodit> {
 		</div>`;
 	}
 
-	private _currentIndex: number = 0;
+	private __currentIndex: number = 0;
 
 	get currentIndex(): number {
-		return this._currentIndex;
+		return this.__currentIndex;
 	}
 
 	set currentIndex(value: number) {
-		this._currentIndex = value;
-		this.currentBox.innerText = value.toString();
+		this.__currentIndex = value;
+		this.__currentBox.innerText = value.toString();
 	}
 
 	set count(value: number) {
-		this.countBox.innerText = value.toString();
+		this.__countBox.innerText = value.toString();
 	}
 
 	get query(): string {
-		return this.queryInput.value;
+		return this.__queryInput.value;
 	}
 
 	get replace(): string {
-		return this.replaceInput.value;
+		return this.__replaceInput.value;
 	}
 
 	constructor(jodit: IJodit) {
@@ -98,29 +98,29 @@ export class UISearch extends UIElement<IJodit> {
 			count
 		} = refs(this.container);
 
-		this.queryInput = query as HTMLInputElement;
-		this.replaceInput = replace as HTMLInputElement;
-		this.closeButton = cancel as HTMLButtonElement;
-		this.replaceButton = replaceBtn as HTMLButtonElement;
+		this.__queryInput = query as HTMLInputElement;
+		this.__replaceInput = replace as HTMLInputElement;
+		this.__closeButton = cancel as HTMLButtonElement;
+		this.__replaceButton = replaceBtn as HTMLButtonElement;
 
-		this.currentBox = current as HTMLSpanElement;
-		this.countBox = count as HTMLSpanElement;
+		this.__currentBox = current as HTMLSpanElement;
+		this.__countBox = count as HTMLSpanElement;
 
 		jodit.e
-			.on(this.closeButton, 'pointerdown', () => {
+			.on(this.__closeButton, 'pointerdown', () => {
 				this.close();
 				return false;
 			})
-			.on(this.queryInput, 'input', () => {
+			.on(this.__queryInput, 'input', () => {
 				this.currentIndex = 0;
 			})
-			.on(this.queryInput, 'pointerdown', () => {
+			.on(this.__queryInput, 'pointerdown', () => {
 				if (jodit.s.isFocused()) {
 					jodit.s.removeMarkers();
 					this.selInfo = jodit.s.save();
 				}
 			})
-			.on(this.replaceButton, 'pointerdown', () => {
+			.on(this.__replaceButton, 'pointerdown', () => {
 				jodit.e.fire(this, 'pressReplaceButton');
 				return false;
 			})
@@ -132,11 +132,14 @@ export class UISearch extends UIElement<IJodit> {
 				jodit.e.fire('searchPrevious');
 				return false;
 			})
-			.on(this.queryInput, 'input', () => {
-				this.setMod('empty-query', !trim(this.queryInput.value).length);
+			.on(this.__queryInput, 'input', () => {
+				this.setMod(
+					'empty-query',
+					!trim(this.__queryInput.value).length
+				);
 			})
 			.on(
-				this.queryInput,
+				this.__queryInput,
 				'keydown',
 				this.j.async.debounce((e: KeyboardEvent) => {
 					switch (e.key) {
@@ -174,7 +177,7 @@ export class UISearch extends UIElement<IJodit> {
 				break;
 
 			case consts.KEY_F3:
-				if (this.queryInput.value) {
+				if (this.__queryInput.value) {
 					j.e.fire(!e.shiftKey ? 'searchNext' : 'searchPrevious');
 					e.preventDefault();
 				}
@@ -195,7 +198,7 @@ export class UISearch extends UIElement<IJodit> {
 			this.isOpened = true;
 		}
 
-		this.calcSticky(this.j.e.fire('getStickyState.sticky') || false);
+		this.__calcSticky(this.j.e.fire('getStickyState.sticky') || false);
 
 		this.j.e.fire('hidePopup');
 
@@ -206,11 +209,11 @@ export class UISearch extends UIElement<IJodit> {
 		const selStr: string = query ?? (this.j.s.sel || '').toString();
 
 		if (selStr) {
-			this.queryInput.value = selStr;
+			this.__queryInput.value = selStr;
 		}
 
 		if (replace) {
-			this.replaceInput.value = replace;
+			this.__replaceInput.value = replace;
 		}
 
 		this.setMod('empty-query', !selStr.length);
@@ -218,9 +221,9 @@ export class UISearch extends UIElement<IJodit> {
 		this.j.e.fire(this, 'needUpdateCounters');
 
 		if (selStr) {
-			this.queryInput.select();
+			this.__queryInput.select();
 		} else {
-			this.queryInput.focus();
+			this.__queryInput.focus();
 		}
 	}
 
@@ -242,7 +245,7 @@ export class UISearch extends UIElement<IJodit> {
 	 * Calculate position if sticky is enabled
 	 */
 	@watch(':toggleSticky')
-	private calcSticky(enabled: boolean): void {
+	private __calcSticky(enabled: boolean): void {
 		if (this.isOpened) {
 			this.setMod('sticky', enabled);
 

@@ -590,7 +590,7 @@ export class Dom {
 				next = leftToRight ? next.nextSibling : next.previousSibling;
 			}
 
-			yield* this.runInStack(start, stack, leftToRight, withChild);
+			yield* this.__runInStack(start, stack, leftToRight, withChild);
 
 			currentNode = currentNode.parentNode;
 		} while (currentNode && currentNode !== root);
@@ -633,10 +633,10 @@ export class Dom {
 	}
 
 	static eachGen(root: Node, leftToRight: boolean = true): Generator<Node> {
-		return this.runInStack(root, [root], leftToRight);
+		return this.__runInStack(root, [root], leftToRight);
 	}
 
-	private static *runInStack(
+	private static *__runInStack(
 		start: Node,
 		stack: Node[],
 		leftToRight: boolean,

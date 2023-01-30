@@ -24,53 +24,56 @@ import { Dom } from 'jodit/core/dom/dom';
 import { attr, toArray } from 'jodit/core/helpers';
 import { Button } from 'jodit/core/ui/button/button/button';
 import { pluginSystem } from 'jodit/core/global';
+import { autobind } from 'jodit/core/decorators';
 
 /**
  * Show dialog choose content to paste
  */
 export class pasteStorage extends Plugin {
-	private currentIndex: number = 0;
+	private __currentIndex: number = 0;
 
-	private list: string[] = [];
+	private __list: string[] = [];
 
-	private container: HTMLElement | null = null;
-	private listBox: HTMLElement | null = null;
-	private previewBox: HTMLElement | null = null;
+	private __container: HTMLElement | null = null;
+	private __listBox: HTMLElement | null = null;
+	private __previewBox: HTMLElement | null = null;
 
-	private dialog: IDialog | null = null;
+	private __dialog: IDialog | null = null;
 
-	private paste = (): void => {
+	@autobind
+	private __paste(): void {
 		this.j.s.focus();
-		this.j.s.insertHTML(this.list[this.currentIndex]);
+		this.j.s.insertHTML(this.__list[this.__currentIndex]);
 
-		if (this.currentIndex !== 0) {
-			const buffer = this.list[0];
+		if (this.__currentIndex !== 0) {
+			const buffer = this.__list[0];
 
-			this.list[0] = this.list[this.currentIndex];
-			this.list[this.currentIndex] = buffer;
+			this.__list[0] = this.__list[this.__currentIndex];
+			this.__list[this.__currentIndex] = buffer;
 		}
 
-		this.dialog && this.dialog.close();
+		this.__dialog && this.__dialog.close();
 		this.j.synchronizeValues();
 
 		this.j.e.fire('afterPaste');
-	};
+	}
 
-	private onKeyDown = (e: KeyboardEvent): void => {
-		let index: number = this.currentIndex;
+	@autobind
+	private __onKeyDown(e: KeyboardEvent): void {
+		let index: number = this.__currentIndex;
 		if ([KEY_UP, KEY_DOWN, KEY_ENTER].indexOf(e.key) === -1) {
 			return;
 		}
 
 		if (e.key === KEY_UP) {
 			if (index === 0) {
-				index = this.list.length - 1;
+				index = this.__list.length - 1;
 			} else {
 				index -= 1;
 			}
 		}
 		if (e.key === KEY_DOWN) {
-			if (index === this.list.length - 1) {
+			if (index === this.__list.length - 1) {
 				index = 0;
 			} else {
 				index += 1;
@@ -78,102 +81,104 @@ export class pasteStorage extends Plugin {
 		}
 
 		if (e.key === KEY_ENTER) {
-			this.paste();
+			this.__paste();
 			return;
 		}
 
-		if (index !== this.currentIndex) {
-			this.selectIndex(index);
+		if (index !== this.__currentIndex) {
+			this.__selectIndex(index);
 		}
 
 		e.stopImmediatePropagation();
 		e.preventDefault();
-	};
+	}
 
-	private selectIndex = (index: number): void => {
-		if (this.listBox) {
+	@autobind
+	private __selectIndex(index: number): void {
+		if (this.__listBox) {
 			toArray(
-				this.listBox.childNodes as NodeListOf<HTMLAnchorElement>
+				this.__listBox.childNodes as NodeListOf<HTMLAnchorElement>
 			).forEach((a, i) => {
 				a.classList.remove('jodit_active');
-				if (index === i && this.previewBox) {
+				if (index === i && this.__previewBox) {
 					a.classList.add('jodit_active');
-					this.previewBox.innerHTML = this.list[index];
+					this.__previewBox.innerHTML = this.__list[index];
 					a.focus();
 				}
 			});
 		}
 
-		this.currentIndex = index;
-	};
+		this.__currentIndex = index;
+	}
 
-	private showDialog = (): void => {
-		if (this.list.length < 2) {
+	@autobind
+	private __showDialog(): void {
+		if (this.__list.length < 2) {
 			return;
 		}
 
-		this.dialog || this.createDialog();
+		this.__dialog || this.__createDialog();
 
-		if (this.listBox) {
-			this.listBox.innerHTML = '';
+		if (this.__listBox) {
+			this.__listBox.innerHTML = '';
 		}
 
-		if (this.previewBox) {
-			this.previewBox.innerHTML = '';
+		if (this.__previewBox) {
+			this.__previewBox.innerHTML = '';
 		}
 
-		this.list.forEach((html: string, index: number) => {
+		this.__list.forEach((html: string, index: number) => {
 			const a: HTMLElement = this.j.c.element('a');
 			a.textContent =
 				index + 1 + '. ' + html.replace(SPACE_REG_EXP(), '');
 
-			this.j.e.on(a, 'keydown', this.onKeyDown);
+			this.j.e.on(a, 'keydown', this.__onKeyDown);
 
 			attr(a, 'href', '#');
 			attr(a, 'data-index', index.toString());
 			attr(a, 'tab-index', '-1');
 
-			this.listBox && this.listBox.appendChild(a);
+			this.__listBox && this.__listBox.appendChild(a);
 		});
 
-		this.dialog && this.dialog.open();
+		this.__dialog && this.__dialog.open();
 
 		this.j.async.setTimeout(() => {
-			this.selectIndex(0);
+			this.__selectIndex(0);
 		}, 100);
-	};
+	}
 
-	private createDialog(): void {
-		this.dialog = this.j.dlg();
+	private __createDialog(): void {
+		this.__dialog = this.j.dlg();
 
 		const pasteButton = Button(this.j, 'paste', 'Paste', 'primary');
 
-		pasteButton.onAction(this.paste);
+		pasteButton.onAction(this.__paste);
 
 		const cancelButton = Button(this.j, '', 'Cancel');
 
-		cancelButton.onAction(this.dialog.close);
+		cancelButton.onAction(this.__dialog.close);
 
-		this.container = this.j.c.div();
-		this.container.classList.add('jodit-paste-storage');
-		this.listBox = this.j.c.div();
-		this.previewBox = this.j.c.div();
+		this.__container = this.j.c.div();
+		this.__container.classList.add('jodit-paste-storage');
+		this.__listBox = this.j.c.div();
+		this.__previewBox = this.j.c.div();
 
-		this.container.appendChild(this.listBox);
-		this.container.appendChild(this.previewBox);
+		this.__container.appendChild(this.__listBox);
+		this.__container.appendChild(this.__previewBox);
 
-		this.dialog.setHeader(this.j.i18n('Choose Content to Paste'));
-		this.dialog.setContent(this.container);
-		this.dialog.setFooter([pasteButton, cancelButton]);
+		this.__dialog.setHeader(this.j.i18n('Choose Content to Paste'));
+		this.__dialog.setContent(this.__container);
+		this.__dialog.setFooter([pasteButton, cancelButton]);
 
-		this.j.e.on(this.listBox, 'click dblclick', (e: MouseEvent) => {
+		this.j.e.on(this.__listBox, 'click dblclick', (e: MouseEvent) => {
 			const a = e.target as HTMLAnchorElement;
 			if (Dom.isTag(a, 'a') && a.hasAttribute('data-index')) {
-				this.selectIndex(parseInt(attr(a, '-index') || '0', 10));
+				this.__selectIndex(parseInt(attr(a, '-index') || '0', 10));
 			}
 
 			if (e.type === 'dblclick') {
-				this.paste();
+				this.__paste();
 			}
 
 			return false;
@@ -183,39 +188,39 @@ export class pasteStorage extends Plugin {
 	afterInit(): void {
 		this.j.e
 			.off('afterCopy.paste-storage')
-			.on('pasteStorageList.paste-storage', () => this.list.length)
+			.on('pasteStorageList.paste-storage', () => this.__list.length)
 			.on('afterCopy.paste-storage', (html: string) => {
-				if (this.list.indexOf(html) !== -1) {
-					this.list.splice(this.list.indexOf(html), 1);
+				if (this.__list.indexOf(html) !== -1) {
+					this.__list.splice(this.__list.indexOf(html), 1);
 				}
 
-				this.list.unshift(html);
-				if (this.list.length > 5) {
-					this.list.length = 5;
+				this.__list.unshift(html);
+				if (this.__list.length > 5) {
+					this.__list.length = 5;
 				}
 			});
 
 		this.j.registerCommand('showPasteStorage', {
-			exec: this.showDialog,
+			exec: this.__showDialog,
 			hotkeys: ['ctrl+shift+v', 'cmd+shift+v']
 		});
 	}
 
 	beforeDestruct(): void {
-		this.dialog && this.dialog.destruct();
+		this.__dialog && this.__dialog.destruct();
 
 		this.j.e.off('.paste-storage');
 
-		Dom.safeRemove(this.previewBox);
-		Dom.safeRemove(this.listBox);
-		Dom.safeRemove(this.container);
+		Dom.safeRemove(this.__previewBox);
+		Dom.safeRemove(this.__listBox);
+		Dom.safeRemove(this.__container);
 
-		this.container = null;
-		this.listBox = null;
-		this.previewBox = null;
-		this.dialog = null;
+		this.__container = null;
+		this.__listBox = null;
+		this.__previewBox = null;
+		this.__dialog = null;
 
-		this.list = [];
+		this.__list = [];
 	}
 }
 

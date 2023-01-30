@@ -34,12 +34,12 @@ export class orderedList extends Plugin {
 
 	protected afterInit(jodit: IJodit): void {
 		jodit
-			.registerCommand('insertUnorderedList', this.onCommand)
-			.registerCommand('insertOrderedList', this.onCommand);
+			.registerCommand('insertUnorderedList', this.__onCommand)
+			.registerCommand('insertOrderedList', this.__onCommand);
 	}
 
 	@autobind
-	private onCommand(command: string, _: unknown, type: string): false {
+	private __onCommand(command: string, _: unknown, type: string): false {
 		this.jodit.s.applyStyle(
 			{
 				listStyleType: type ?? null

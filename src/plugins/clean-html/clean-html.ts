@@ -42,7 +42,7 @@ export class cleanHtml extends Plugin {
 	/** @override */
 	protected override afterInit(jodit: IJodit): void {}
 
-	private get isEditMode(): boolean {
+	private get __isEditMode(): boolean {
 		return !(
 			this.j.isInDestruct ||
 			!this.j.isEditorMode() ||
@@ -55,19 +55,19 @@ export class cleanHtml extends Plugin {
 	 */
 	@watch([':change', ':afterSetMode', ':afterInit', ':mousedown', ':keydown'])
 	protected onChangeCleanHTML(): void {
-		if (!this.isEditMode) {
+		if (!this.__isEditMode) {
 			return;
 		}
 
 		const editor = this.j;
 
-		this.walker.setWork(editor.editor);
-		this.currentSelectionNode = editor.s.current();
+		this.__walker.setWork(editor.editor);
+		this.__currentSelectionNode = editor.s.current();
 	}
 
-	private currentSelectionNode: Nullable<Node> = null;
+	private __currentSelectionNode: Nullable<Node> = null;
 
-	private walker: LazyWalker = new LazyWalker(this.j.async, {
+	private __walker: LazyWalker = new LazyWalker(this.j.async, {
 		timeout: this.j.o.cleanHTML.timeout
 	});
 
@@ -78,14 +78,14 @@ export class cleanHtml extends Plugin {
 		const allow = getHash(this.j.o.cleanHTML.allowTags);
 		const deny = getHash(this.j.o.cleanHTML.denyTags);
 
-		this.walker
+		this.__walker
 			.on('visit', (node: Node) =>
 				visitNodeWalker(
 					jodit,
 					node,
 					allow,
 					deny,
-					this.currentSelectionNode
+					this.__currentSelectionNode
 				)
 			)
 			.on('end', (affected: boolean): void => {
@@ -134,7 +134,7 @@ export class cleanHtml extends Plugin {
 
 	/** @override */
 	protected override beforeDestruct(): void {
-		this.walker.destruct();
+		this.__walker.destruct();
 	}
 }
 

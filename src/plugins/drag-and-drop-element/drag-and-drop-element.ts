@@ -29,58 +29,58 @@ enum DragState {
  * Process drag and drop image or another element inside the editor
  */
 export class dragAndDropElement extends Plugin {
-	private dragList: string[] = [];
+	private __dragList: string[] = [];
 
-	private draggable: Nullable<HTMLElement> = null;
-	private isCopyMode: boolean = false;
+	private __draggable: Nullable<HTMLElement> = null;
+	private __isCopyMode: boolean = false;
 
 	/**
 	 * Shift in pixels after which we consider that the transfer of the element has begun
 	 */
-	private diffStep = 10;
+	private __diffStep = 10;
 
-	private startX = 0;
-	private startY = 0;
+	private __startX = 0;
+	private __startY = 0;
 
-	private state: DragState = DragState.IDLE;
+	private __state: DragState = DragState.IDLE;
 
 	/** @override */
 	protected afterInit(): void {
-		this.dragList = this.j.o.draggableTags
+		this.__dragList = this.j.o.draggableTags
 			? splitArray(this.j.o.draggableTags)
 					.filter(Boolean)
 					.map(item => item.toLowerCase())
 			: [];
 
-		if (!this.dragList.length) {
+		if (!this.__dragList.length) {
 			return;
 		}
 
-		this.j.e.on('mousedown dragstart', this.onDragStart);
+		this.j.e.on('mousedown dragstart', this.__onDragStart);
 	}
 
 	/**
 	 * Drag start handler
 	 */
 	@autobind
-	private onDragStart(event: DragEvent): void | false {
-		if (event.type === 'dragstart' && this.draggable) {
+	private __onDragStart(event: DragEvent): void | false {
+		if (event.type === 'dragstart' && this.__draggable) {
 			return false;
 		}
 
-		if (this.state > DragState.IDLE) {
+		if (this.__state > DragState.IDLE) {
 			return;
 		}
 
 		const target: Nullable<Node> = event.target as Nullable<Node>;
 
-		if (!this.dragList.length || !target) {
+		if (!this.__dragList.length || !target) {
 			return;
 		}
 
 		const matched = (node: Nullable<Node>): boolean =>
 			Boolean(
-				node && this.dragList.includes(node.nodeName.toLowerCase())
+				node && this.__dragList.includes(node.nodeName.toLowerCase())
 			);
 
 		let lastTarget: Nullable<HTMLElement> =
@@ -99,24 +99,24 @@ export class dragAndDropElement extends Plugin {
 			lastTarget = lastTarget.parentElement;
 		}
 
-		this.startX = event.clientX;
-		this.startY = event.clientY;
+		this.__startX = event.clientX;
+		this.__startY = event.clientY;
 
-		this.isCopyMode = ctrlKey(event); // we can move only element from editor
-		this.draggable = lastTarget.cloneNode(true) as HTMLElement;
-		dataBind(this.draggable, 'target', lastTarget);
+		this.__isCopyMode = ctrlKey(event); // we can move only element from editor
+		this.__draggable = lastTarget.cloneNode(true) as HTMLElement;
+		dataBind(this.__draggable, 'target', lastTarget);
 
-		this.state = DragState.WAIT_DRAGGING;
+		this.__state = DragState.WAIT_DRAGGING;
 
-		this.addDragListeners();
+		this.__addDragListeners();
 	}
 
 	/**
 	 * Mouse move handler handler
 	 */
 	@throttle<IViewComponent>(ctx => ctx.defaultTimeout / 10)
-	private onDrag(event: DragEvent): void {
-		if (!this.draggable || this.state === DragState.IDLE) {
+	private __onDrag(event: DragEvent): void {
+		if (!this.__draggable || this.__state === DragState.IDLE) {
 			return;
 		}
 
@@ -124,25 +124,25 @@ export class dragAndDropElement extends Plugin {
 			y = event.clientY;
 
 		if (
-			this.state === DragState.WAIT_DRAGGING &&
+			this.__state === DragState.WAIT_DRAGGING &&
 			Math.sqrt(
-				Math.pow(x - this.startX, 2) + Math.pow(y - this.startY, 2)
-			) < this.diffStep
+				Math.pow(x - this.__startX, 2) + Math.pow(y - this.__startY, 2)
+			) < this.__diffStep
 		) {
 			return;
 		}
 
-		if (this.state === DragState.WAIT_DRAGGING) {
+		if (this.__state === DragState.WAIT_DRAGGING) {
 			this.j.lock('drag-and-drop-element');
-			this.state = DragState.DRAGGING;
+			this.__state = DragState.DRAGGING;
 		}
 
 		this.j.e.fire('hidePopup hideResizer');
 
-		if (!this.draggable.parentNode) {
-			const target = dataBind(this.draggable, 'target');
+		if (!this.__draggable.parentNode) {
+			const target = dataBind(this.__draggable, 'target');
 
-			css(this.draggable, {
+			css(this.__draggable, {
 				zIndex: 10000000000000,
 				pointerEvents: 'none',
 				pointer: 'drag',
@@ -156,11 +156,11 @@ export class dragAndDropElement extends Plugin {
 			});
 
 			getContainer(this.j, dragAndDropElement).appendChild(
-				this.draggable
+				this.__draggable
 			);
 		}
 
-		css(this.draggable, {
+		css(this.__draggable, {
 			left: event.clientX,
 			top: event.clientY
 		});
@@ -172,18 +172,18 @@ export class dragAndDropElement extends Plugin {
 	 * Mouseup handler in any place
 	 */
 	@autobind
-	private onDragEnd(): void {
+	private __onDragEnd(): void {
 		if (this.isInDestruct) {
 			return;
 		}
 
-		this.removeDragListeners();
+		this.__removeDragListeners();
 		this.j.unlock();
-		this.state = DragState.IDLE;
+		this.__state = DragState.IDLE;
 
-		if (this.draggable) {
-			Dom.safeRemove(this.draggable);
-			this.draggable = null;
+		if (this.__draggable) {
+			Dom.safeRemove(this.__draggable);
+			this.__draggable = null;
 		}
 	}
 
@@ -191,17 +191,17 @@ export class dragAndDropElement extends Plugin {
 	 * Mouseup handler inside editor
 	 */
 	@autobind
-	private onDrop(): void {
-		if (!this.draggable || this.state < DragState.DRAGGING) {
-			this.onDragEnd();
+	private __onDrop(): void {
+		if (!this.__draggable || this.__state < DragState.DRAGGING) {
+			this.__onDragEnd();
 			return;
 		}
 
-		let fragment = dataBind<HTMLElement>(this.draggable, 'target');
+		let fragment = dataBind<HTMLElement>(this.__draggable, 'target');
 
-		this.onDragEnd();
+		this.__onDragEnd();
 
-		if (this.isCopyMode) {
+		if (this.__isCopyMode) {
 			fragment = fragment.cloneNode(true) as HTMLElement;
 		}
 
@@ -227,30 +227,30 @@ export class dragAndDropElement extends Plugin {
 	/**
 	 * Add global event listener after drag start
 	 */
-	private addDragListeners(): void {
+	private __addDragListeners(): void {
 		this.j.e
-			.on(this.j.editor, 'mousemove', this.onDrag)
-			.on('mouseup', this.onDrop)
-			.on([this.j.ew, this.ow], 'mouseup', this.onDragEnd);
+			.on(this.j.editor, 'mousemove', this.__onDrag)
+			.on('mouseup', this.__onDrop)
+			.on([this.j.ew, this.ow], 'mouseup', this.__onDragEnd);
 	}
 
 	/**
 	 * Remove global event listener after drag start
 	 */
-	private removeDragListeners(): void {
+	private __removeDragListeners(): void {
 		this.j.e
-			.off(this.j.editor, 'mousemove', this.onDrag)
-			.off('mouseup', this.onDrop)
-			.off([this.j.ew, this.ow], 'mouseup', this.onDragEnd);
+			.off(this.j.editor, 'mousemove', this.__onDrag)
+			.off('mouseup', this.__onDrop)
+			.off([this.j.ew, this.ow], 'mouseup', this.__onDragEnd);
 	}
 
 	/** @override */
 	protected beforeDestruct(): void {
-		this.onDragEnd();
+		this.__onDragEnd();
 
-		this.j.e.off('mousedown dragstart', this.onDragStart);
+		this.j.e.off('mousedown dragstart', this.__onDragStart);
 
-		this.removeDragListeners();
+		this.__removeDragListeners();
 	}
 }
 

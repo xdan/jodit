@@ -40,9 +40,9 @@ export class limit extends Plugin {
 				})
 				.on(
 					'keydown.limit keyup.limit beforeEnter.limit',
-					this.checkPreventKeyPressOrPaste
+					this.__checkPreventKeyPressOrPaste
 				)
-				.on('change.limit', this.checkPreventChanging)
+				.on('change.limit', this.__checkPreventChanging)
 				.on('afterPaste.limit', (): false | void => {
 					if (this.__shouldDenyInput(true) && snapshot) {
 						jodit.history.snapshot.restore(snapshot);
@@ -56,7 +56,7 @@ export class limit extends Plugin {
 	/**
 	 * Action should be prevented
 	 */
-	private shouldPreventInsertHTML(event: KeyboardEvent): boolean {
+	private __shouldPreventInsertHTML(event: KeyboardEvent): boolean {
 		if (
 			event &&
 			(COMMAND_KEYS.includes(event.key) || event.ctrlKey || event.metaKey)
@@ -94,8 +94,8 @@ export class limit extends Plugin {
 	 * Check if some keypress or paste should be prevented
 	 */
 	@autobind
-	private checkPreventKeyPressOrPaste(event: KeyboardEvent): void | false {
-		if (this.shouldPreventInsertHTML(event)) {
+	private __checkPreventKeyPressOrPaste(event: KeyboardEvent): void | false {
+		if (this.__shouldPreventInsertHTML(event)) {
 			return false;
 		}
 	}
@@ -104,7 +104,7 @@ export class limit extends Plugin {
 	 * Check if some external changing should be prevented
 	 */
 	@autobind
-	private checkPreventChanging(newValue: string, oldValue: string): void {
+	private __checkPreventChanging(newValue: string, oldValue: string): void {
 		const { jodit } = this;
 
 		if (this.__shouldDenyInput(true)) {

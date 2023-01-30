@@ -60,14 +60,14 @@ export class Select implements ISelect {
 	/**
 	 * Short alias for this.jodit
 	 */
-	private get j(): this['jodit'] {
+	private get __j(): this['jodit'] {
 		return this.jodit;
 	}
 
 	/**
 	 * Throw Error exception if parameter is not Node
 	 */
-	private errorNode(node: unknown): void {
+	private __errorNode(node: unknown): void {
 		if (!Dom.isNode(node)) {
 			throw error('Parameter node must be instance of Node');
 		}
@@ -76,22 +76,22 @@ export class Select implements ISelect {
 	/**
 	 * Return current work place - for Jodit is Editor
 	 */
-	private get area(): HTMLElement {
-		return this.j.editor;
+	private get __area(): HTMLElement {
+		return this.__j.editor;
 	}
 
 	/**
 	 * Editor Window - it can be different for iframe mode
 	 */
-	private get win(): Window {
-		return this.j.ew;
+	private get __win(): Window {
+		return this.__j.ew;
 	}
 
 	/**
 	 * Current jodit editor doc
 	 */
-	private get doc(): Document {
-		return this.j.ed;
+	private get __doc(): Document {
+		return this.__j.ed;
 	}
 
 	/**
@@ -99,13 +99,13 @@ export class Select implements ISelect {
 	 */
 	get sel(): ISelect['sel'] {
 		if (
-			this.j.o.shadowRoot &&
-			isFunction(this.j.o.shadowRoot.getSelection)
+			this.__j.o.shadowRoot &&
+			isFunction(this.__j.o.shadowRoot.getSelection)
 		) {
-			return this.j.o.shadowRoot.getSelection();
+			return this.__j.o.shadowRoot.getSelection();
 		}
 
-		return this.win.getSelection();
+		return this.__win.getSelection();
 	}
 
 	/**
@@ -124,7 +124,9 @@ export class Select implements ISelect {
 		const { sel } = this;
 		const range = sel?.rangeCount ? sel.getRangeAt(0) : null;
 
-		return !(!range || !Dom.isOrContains(this.area, range.startContainer));
+		return !(
+			!range || !Dom.isOrContains(this.__area, range.startContainer)
+		);
 	}
 
 	/**
@@ -133,7 +135,7 @@ export class Select implements ISelect {
 	 */
 	@autobind
 	createRange(select: boolean = false): Range {
-		const range = this.doc.createRange();
+		const range = this.__doc.createRange();
 
 		if (select) {
 			this.selectRange(range);
@@ -170,14 +172,14 @@ export class Select implements ISelect {
 	 * Remove node element from editor
 	 */
 	removeNode(node: Node): void {
-		if (!Dom.isOrContains(this.j.editor, node, true)) {
+		if (!Dom.isOrContains(this.__j.editor, node, true)) {
 			throw error(
 				"Selection.removeNode can remove only editor's children"
 			);
 		}
 
 		Dom.safeRemove(node);
-		this.j.e.fire('afterRemoveNode', node);
+		this.__j.e.fire('afterRemoveNode', node);
 	}
 
 	/**
@@ -194,8 +196,8 @@ export class Select implements ISelect {
 			const rng = this.createRange();
 
 			((): void => {
-				if (this.doc.caretPositionFromPoint) {
-					const caret = this.doc.caretPositionFromPoint(x, y);
+				if (this.__doc.caretPositionFromPoint) {
+					const caret = this.__doc.caretPositionFromPoint(x, y);
 
 					if (caret) {
 						rng.setStart(caret.offsetNode, caret.offset);
@@ -203,8 +205,8 @@ export class Select implements ISelect {
 					}
 				}
 
-				if (this.doc.caretRangeFromPoint) {
-					const caret = this.doc.caretRangeFromPoint(x, y);
+				if (this.__doc.caretRangeFromPoint) {
+					const caret = this.__doc.caretRangeFromPoint(x, y);
 					rng.setStart(caret.startContainer, caret.startOffset);
 				}
 			})();
@@ -229,7 +231,7 @@ export class Select implements ISelect {
 	 * Check if editor has selection markers
 	 */
 	get markers(): HTMLElement[] {
-		return $$('span[data-' + consts.MARKER_CLASS + ']', this.area);
+		return $$('span[data-' + consts.MARKER_CLASS + ']', this.__area);
 	}
 
 	/**
@@ -250,7 +252,7 @@ export class Select implements ISelect {
 			newRange.collapse(atStart);
 		}
 
-		const marker = this.j.createInside.span();
+		const marker = this.__j.createInside.span();
 
 		marker.id =
 			consts.MARKER_CLASS +
@@ -265,12 +267,12 @@ export class Select implements ISelect {
 		Dom.markTemporary(marker);
 		attr(marker, 'data-' + consts.MARKER_CLASS, atStart ? 'start' : 'end');
 
-		marker.appendChild(this.j.createInside.text(consts.INVISIBLE_SPACE));
+		marker.appendChild(this.__j.createInside.text(consts.INVISIBLE_SPACE));
 
 		if (newRange) {
 			if (
 				Dom.isOrContains(
-					this.area,
+					this.__area,
 					atStart ? newRange.startContainer : newRange.endContainer
 				)
 			) {
@@ -293,8 +295,8 @@ export class Select implements ISelect {
 		const markAttr = (start: boolean): string =>
 			`span[data-${consts.MARKER_CLASS}=${start ? 'start' : 'end'}]`;
 
-		const start = this.area.querySelector(markAttr(true)),
-			end = this.area.querySelector(markAttr(false));
+		const start = this.__area.querySelector(markAttr(true)),
+			end = this.__area.querySelector(markAttr(false));
 
 		if (!start) {
 			return;
@@ -378,7 +380,7 @@ export class Select implements ISelect {
 			sel.removeAllRanges();
 
 			for (let i = length - 1; i >= 0; --i) {
-				const startElm = this.doc.getElementById(info[i].startId);
+				const startElm = this.__doc.getElementById(info[i].startId);
 
 				if (startElm) {
 					if (info[i].collapsed) {
@@ -388,7 +390,7 @@ export class Select implements ISelect {
 						ranges[i].setStartBefore(startElm);
 
 						if (info[i].endId) {
-							const endElm = this.doc.getElementById(
+							const endElm = this.__doc.getElementById(
 								info[i].endId as string
 							);
 
@@ -418,17 +420,17 @@ export class Select implements ISelect {
 		}
 	): boolean {
 		if (!this.isFocused()) {
-			const scrollParent = getScrollParent(this.j.container),
+			const scrollParent = getScrollParent(this.__j.container),
 				scrollTop = scrollParent?.scrollTop;
 
-			if (this.j.iframe) {
-				if (this.doc.readyState === 'complete') {
-					this.j.iframe.focus(options);
+			if (this.__j.iframe) {
+				if (this.__doc.readyState === 'complete') {
+					this.__j.iframe.focus(options);
 				}
 			}
 
-			this.win.focus();
-			this.area.focus(options);
+			this.__win.focus();
+			this.__area.focus(options);
 
 			if (scrollTop && scrollParent?.scrollTo) {
 				scrollParent.scrollTo(0, scrollTop);
@@ -437,15 +439,18 @@ export class Select implements ISelect {
 			const sel = this.sel,
 				range = sel?.rangeCount ? sel?.getRangeAt(0) : null;
 
-			if (!range || !Dom.isOrContains(this.area, range.startContainer)) {
+			if (
+				!range ||
+				!Dom.isOrContains(this.__area, range.startContainer)
+			) {
 				const range = this.createRange();
-				range.setStart(this.area, 0);
+				range.setStart(this.__area, 0);
 				range.collapse(true);
 				this.selectRange(range, false);
 			}
 
-			if (!this.j.editorIsActive) {
-				this.j?.events?.fire('focus');
+			if (!this.__j.editorIsActive) {
+				this.__j?.events?.fire('focus');
 			}
 
 			return true;
@@ -475,9 +480,9 @@ export class Select implements ISelect {
 	 */
 	isFocused(): boolean {
 		return (
-			this.doc.hasFocus &&
-			this.doc.hasFocus() &&
-			this.area === this.doc.activeElement
+			this.__doc.hasFocus &&
+			this.__doc.hasFocus() &&
+			this.__area === this.__doc.activeElement
 		);
 	}
 
@@ -485,7 +490,7 @@ export class Select implements ISelect {
 	 * Returns the current element under the cursor inside editor
 	 */
 	current(checkChild: boolean = true): null | Node {
-		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
+		if (this.__j.getRealMode() === consts.MODE_WYSIWYG) {
 			const sel = this.sel;
 
 			if (!sel || sel.rangeCount === 0) {
@@ -551,7 +556,7 @@ export class Select implements ISelect {
 			}
 
 			// check - cursor inside editor
-			if (node && Dom.isOrContains(this.area, node)) {
+			if (node && Dom.isOrContains(this.__area, node)) {
 				return node;
 			}
 		}
@@ -570,29 +575,29 @@ export class Select implements ISelect {
 		insertCursorAfter: boolean = true,
 		fireChange: boolean = true
 	): void {
-		this.errorNode(node);
+		this.__errorNode(node);
 
-		this.j.e.fire('safeHTML', node);
+		this.__j.e.fire('safeHTML', node);
 
-		if (!this.isFocused() && this.j.isEditorMode()) {
+		if (!this.isFocused() && this.__j.isEditorMode()) {
 			this.focus();
 			this.restore();
 		}
 
 		const sel = this.sel;
 
-		this.j.history.snapshot.transaction(() => {
+		this.__j.history.snapshot.transaction(() => {
 			if (!this.isCollapsed()) {
-				this.j.execCommand('Delete');
+				this.__j.execCommand('Delete');
 			}
 
-			this.j.e.fire('beforeInsertNode', node);
+			this.__j.e.fire('beforeInsertNode', node);
 
 			if (sel && sel.rangeCount) {
 				const range = sel.getRangeAt(0);
 
 				if (
-					Dom.isOrContains(this.area, range.commonAncestorContainer)
+					Dom.isOrContains(this.__area, range.commonAncestorContainer)
 				) {
 					if (
 						Dom.isTag(range.startContainer, INSEPARABLE_TAGS) &&
@@ -606,10 +611,10 @@ export class Select implements ISelect {
 						Dom.safeInsertNode(range, node);
 					}
 				} else {
-					this.area.appendChild(node);
+					this.__area.appendChild(node);
 				}
 			} else {
-				this.area.appendChild(node);
+				this.__area.appendChild(node);
 			}
 
 			if (insertCursorAfter) {
@@ -621,12 +626,12 @@ export class Select implements ISelect {
 			}
 		});
 
-		if (fireChange && this.j.events) {
-			this.j.__imdSynchronizeValues();
+		if (fireChange && this.__j.events) {
+			this.__j.__imdSynchronizeValues();
 		}
 
-		if (this.j.events) {
-			this.j.e.fire('afterInsertNode', node);
+		if (this.__j.events) {
+			this.__j.e.fire('afterInsertNode', node);
 		}
 	}
 
@@ -647,12 +652,12 @@ export class Select implements ISelect {
 			return;
 		}
 
-		const node = this.j.createInside.div(),
-			fragment = this.j.createInside.fragment();
+		const node = this.__j.createInside.div(),
+			fragment = this.__j.createInside.fragment();
 
 		let lastChild: Node | null;
 
-		if (!this.isFocused() && this.j.isEditorMode()) {
+		if (!this.isFocused() && this.__j.isEditorMode()) {
 			this.focus();
 			this.restore();
 		}
@@ -664,8 +669,8 @@ export class Select implements ISelect {
 		}
 
 		if (
-			!this.j.isEditorMode() &&
-			this.j.e.fire('insertHTML', node.innerHTML) === false
+			!this.__j.isEditorMode() &&
+			this.__j.e.fire('insertHTML', node.innerHTML) === false
 		) {
 			return;
 		}
@@ -698,7 +703,7 @@ export class Select implements ISelect {
 		}
 
 		// There is no need to use synchronizeValues because you need to apply the changes immediately
-		this.j.__imdSynchronizeValues();
+		this.__j.__imdSynchronizeValues();
 	}
 
 	/**
@@ -712,7 +717,9 @@ export class Select implements ISelect {
 		styles: Nullable<IDictionary<string>> = null,
 		defaultWidth: Nullable<number | string> = null
 	): void {
-		const image = isString(url) ? this.j.createInside.element('img') : url;
+		const image = isString(url)
+			? this.__j.createInside.element('img')
+			: url;
 
 		if (isString(url)) {
 			image.setAttribute('src', url);
@@ -732,7 +739,7 @@ export class Select implements ISelect {
 
 			call(
 				// @ts-ignore
-				this.j.o.resizer.forImageChangeAttributes ? attr : css,
+				this.__j.o.resizer.forImageChangeAttributes ? attr : css,
 				image,
 				'width',
 				// @ts-ignore
@@ -756,7 +763,7 @@ export class Select implements ISelect {
 			image.removeEventListener('load', onload);
 		};
 
-		this.j.e.on(image, 'load', onload);
+		this.__j.e.on(image, 'load', onload);
 
 		if (image.complete) {
 			onload();
@@ -775,7 +782,7 @@ export class Select implements ISelect {
 		 * });
 		 * ```
 		 */
-		this.j.e.fire('afterInsertImage', image);
+		this.__j.e.fire('afterInsertImage', image);
 	}
 
 	/**
@@ -799,11 +806,11 @@ export class Select implements ISelect {
 				elementOffset = startOffset < length ? startOffset : length - 1;
 
 			let start: Node =
-					range.startContainer === this.area
+					range.startContainer === this.__area
 						? root.childNodes[elementOffset]
 						: range.startContainer,
 				end: Node =
-					range.endContainer === this.area
+					range.endContainer === this.__area
 						? root.childNodes[range.endOffset - 1]
 						: range.endContainer;
 
@@ -857,7 +864,7 @@ export class Select implements ISelect {
 			}
 
 			const forEvery = (current: Node): void => {
-				if (!Dom.isOrContains(this.j.editor, current, true)) {
+				if (!Dom.isOrContains(this.__j.editor, current, true)) {
 					return;
 				}
 
@@ -870,7 +877,7 @@ export class Select implements ISelect {
 						current = current.firstChild;
 					} else {
 						const currentB =
-							this.j.createInside.text(INVISIBLE_SPACE);
+							this.__j.createInside.text(INVISIBLE_SPACE);
 
 						current.appendChild(currentB);
 						current = currentB;
@@ -927,7 +934,7 @@ export class Select implements ISelect {
 					!Dom.isTemporary(elm) &&
 					!(
 						Dom.isElement(elm) &&
-						this.j.e.fire('isInvisibleForCursor', elm) === true
+						this.__j.e.fire('isInvisibleForCursor', elm) === true
 					)
 			);
 
@@ -999,7 +1006,7 @@ export class Select implements ISelect {
 	 */
 	@autobind
 	setCursorAfter(node: Node): Nullable<Text> {
-		return this.setCursorNearWith(node, false);
+		return this.__setCursorNearWith(node, false);
 	}
 
 	/**
@@ -1008,21 +1015,22 @@ export class Select implements ISelect {
 	 */
 	@autobind
 	setCursorBefore(node: Node): Nullable<Text> {
-		return this.setCursorNearWith(node, true);
+		return this.__setCursorNearWith(node, true);
 	}
 
 	/**
 	 * Add fake node for new cursor position
 	 */
-	private setCursorNearWith(node: Node, inStart: boolean): Nullable<Text> {
-		this.errorNode(node);
+	private __setCursorNearWith(node: Node, inStart: boolean): Nullable<Text> {
+		this.__errorNode(node);
 
 		if (
 			!Dom.up(
 				node,
 				(elm: Node | null) =>
-					elm === this.area || (elm && elm.parentNode === this.area),
-				this.area
+					elm === this.__area ||
+					(elm && elm.parentNode === this.__area),
+				this.__area
 			)
 		) {
 			throw error('Node element must be in editor');
@@ -1032,7 +1040,7 @@ export class Select implements ISelect {
 		let fakeNode: Nullable<Text> = null;
 
 		if (!Dom.isText(node)) {
-			fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
+			fakeNode = this.__j.createInside.text(consts.INVISIBLE_SPACE);
 
 			inStart ? range.setStartBefore(node) : range.setEndAfter(node);
 
@@ -1060,14 +1068,15 @@ export class Select implements ISelect {
 	 */
 	@autobind
 	setCursorIn(node: Node, inStart: boolean = false): Node {
-		this.errorNode(node);
+		this.__errorNode(node);
 
 		if (
 			!Dom.up(
 				node,
 				(elm: Node | null) =>
-					elm === this.area || (elm && elm.parentNode === this.area),
-				this.area
+					elm === this.__area ||
+					(elm && elm.parentNode === this.__area),
+				this.__area
 			)
 		) {
 			throw error('Node element must be in editor');
@@ -1087,7 +1096,7 @@ export class Select implements ISelect {
 		} while (start);
 
 		if (!start) {
-			const fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
+			const fakeNode = this.__j.createInside.text(consts.INVISIBLE_SPACE);
 
 			if (!/^(img|br|input)$/i.test(last.nodeName)) {
 				last.appendChild(fakeNode);
@@ -1123,7 +1132,7 @@ export class Select implements ISelect {
 		/**
 		 * Fired after change selection
 		 */
-		this.j.e.fire('changeSelection');
+		this.__j.e.fire('changeSelection');
 
 		return this;
 	}
@@ -1136,14 +1145,15 @@ export class Select implements ISelect {
 		node: Node | HTMLElement | HTMLTableElement | HTMLTableCellElement,
 		inward = false
 	): this {
-		this.errorNode(node);
+		this.__errorNode(node);
 
 		if (
 			!Dom.up(
 				node,
 				(elm: Node | null) =>
-					elm === this.area || (elm && elm.parentNode === this.area),
-				this.area
+					elm === this.__area ||
+					(elm && elm.parentNode === this.__area),
+				this.__area
 			)
 		) {
 			throw error('Node element must be in editor');
@@ -1171,7 +1181,7 @@ export class Select implements ISelect {
 		if (sel && sel.rangeCount > 0) {
 			const range = sel.getRangeAt(0);
 			const clonedSelection = range.cloneContents();
-			const div = this.j.createInside.div();
+			const div = this.__j.createInside.div();
 
 			div.appendChild(clonedSelection);
 
@@ -1209,19 +1219,19 @@ export class Select implements ISelect {
 		}
 
 		// fix issue https://github.com/xdan/jodit/issues/65
-		$$('*[style*=font-size]', this.area).forEach(elm =>
+		$$('*[style*=font-size]', this.__area).forEach(elm =>
 			attr(elm, 'data-font-size', elm.style.fontSize.toString())
 		);
 
 		if (!this.isCollapsed()) {
-			this.j.nativeExecCommand('fontsize', false, '7');
+			this.__j.nativeExecCommand('fontsize', false, '7');
 		} else {
-			const font = this.j.createInside.element('font');
+			const font = this.__j.createInside.element('font');
 			attr(font, 'size', 7);
 			this.insertNode(font, false, false);
 		}
 
-		$$('*[data-font-size]', this.area).forEach(elm => {
+		$$('*[data-font-size]', this.__area).forEach(elm => {
 			const fontSize = attr(elm, 'data-font-size');
 
 			if (fontSize) {
@@ -1230,7 +1240,7 @@ export class Select implements ISelect {
 			}
 		});
 
-		const elms = $$('font[size="7"]', this.area);
+		const elms = $$('font[size="7"]', this.__area);
 
 		for (const font of elms) {
 			const { firstChild, lastChild } = font;
@@ -1279,7 +1289,7 @@ export class Select implements ISelect {
 					tagOrCallback(font);
 				} else {
 					result.push(
-						Dom.replace(font, tagOrCallback, this.j.createInside)
+						Dom.replace(font, tagOrCallback, this.__j.createInside)
 					);
 				}
 			} finally {
@@ -1319,7 +1329,7 @@ export class Select implements ISelect {
 
 		const styleElm = new CommitStyle(options);
 
-		styleElm.apply(this.j);
+		styleElm.apply(this.__j);
 	}
 
 	/**
@@ -1373,8 +1383,8 @@ export class Select implements ISelect {
 		const cursorOnTheRight = this.cursorOnTheRight(currentBox);
 		const cursorOnTheLeft = this.cursorOnTheLeft(currentBox);
 
-		const br = this.j.createInside.element('br'),
-			prevFake = this.j.createInside.text(INVISIBLE_SPACE),
+		const br = this.__j.createInside.element('br'),
+			prevFake = this.__j.createInside.text(INVISIBLE_SPACE),
 			nextFake = prevFake.cloneNode();
 
 		try {
@@ -1475,7 +1485,7 @@ export class Select implements ISelect {
 
 		if (
 			!Dom.isOrContains(
-				this.j.editor,
+				this.__j.editor,
 				range.commonAncestorContainer,
 				true
 			)
@@ -1484,13 +1494,13 @@ export class Select implements ISelect {
 		}
 
 		const moveMaxEdgeFake = (start: boolean): Node => {
-			const fake = this.j.createInside.fake();
+			const fake = this.__j.createInside.fake();
 			const r = range.cloneRange();
 
 			r.collapse(start);
 			Dom.safeInsertNode(r, fake);
 
-			moveTheNodeAlongTheEdgeOutward(fake, start, this.j.editor);
+			moveTheNodeAlongTheEdgeOutward(fake, start, this.__j.editor);
 
 			return fake;
 		};

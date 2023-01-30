@@ -19,7 +19,7 @@ import type {
 	IBound
 } from 'jodit/types';
 import { css, isFunction } from 'jodit/core/helpers';
-import { component } from 'jodit/core/decorators';
+import { autobind, component } from 'jodit/core/decorators';
 
 @component
 export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
@@ -93,7 +93,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 					elm,
 					(node: Node | null): boolean | void => {
 						if (node && !Dom.isText(node)) {
-							return this.checkActiveStatus(
+							return this.__checkActiveStatus(
 								css,
 								node as HTMLElement
 							);
@@ -109,12 +109,13 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 		return false;
 	}
 
-	private checkActiveStatus = (
+	@autobind
+	private __checkActiveStatus(
 		cssObject:
 			| IDictionary<string | string[]>
 			| IDictionary<(editor: IViewBased, value: string) => boolean>,
 		node: HTMLElement
-	): boolean => {
+	): boolean {
 		let matches: number = 0,
 			total: number = 0;
 
@@ -137,7 +138,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 		});
 
 		return total === matches;
-	};
+	}
 
 	/** @override */
 	override getTarget(button: IToolbarButton): Node | null {
@@ -147,7 +148,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	/** @override */
 	constructor(jodit: IJodit) {
 		super(jodit);
-		this.prependInvisibleInput(this.container);
+		this.__prependInvisibleInput(this.container);
 	}
 
 	/**
@@ -156,7 +157,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	 *
 	 * @see https://github.com/jodit/jodit-react/issues/138
 	 */
-	private prependInvisibleInput(container: HTMLElement): void {
+	private __prependInvisibleInput(container: HTMLElement): void {
 		const input = this.j.create.element('input', {
 			tabIndex: -1,
 			disabled: true, // Because <label> can trigger click

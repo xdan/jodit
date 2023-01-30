@@ -21,7 +21,7 @@ export class FiniteStateMachine<
 	A extends keyof T[K] = keyof T[K]
 > {
 	private __state!: K;
-	private setState(state: K): void {
+	private __setState(state: K): void {
 		assert(!this.__previewsStates.has(state), 'Circled states');
 
 		this.__previewsStates.add(state);
@@ -32,18 +32,18 @@ export class FiniteStateMachine<
 		return this.__state;
 	}
 
-	private silent: boolean = true;
+	private __silent: boolean = true;
 	disableSilent(): void {
-		this.silent = false;
+		this.__silent = false;
 	}
 
 	private __previewsStates: Set<K> = new Set();
-	constructor(state: K, private readonly transitions: T) {
-		this.setState(state);
+	constructor(state: K, private readonly __transitions: T) {
+		this.__setState(state);
 	}
 
 	dispatch(actionName: A, value: V): V {
-		const action = this.transitions[this.getState()][actionName];
+		const action = this.__transitions[this.getState()][actionName];
 
 		if (action) {
 			const res = action.call(this, value);
@@ -55,9 +55,9 @@ export class FiniteStateMachine<
 				'The new state should not be equal to the old one.'
 			);
 
-			this.setState(res.next);
+			this.__setState(res.next);
 
-			if (!isProd && !this.silent) {
+			if (!isProd && !this.__silent) {
 				console.log(`State: ${this.getState()}`);
 			}
 

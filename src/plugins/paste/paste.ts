@@ -50,26 +50,29 @@ import './config';
  * Ask before paste HTML source
  */
 export class paste extends Plugin {
-	private pasteStack: LimitedStack<PastedValue> = new LimitedStack(20);
+	private __pasteStack: LimitedStack<PastedValue> = new LimitedStack(20);
 
 	/** @override **/
 	protected afterInit(jodit: IJodit): void {
 		jodit.e
-			.on('paste.paste', this.onPaste)
+			.on('paste.paste', this.__onPaste)
 			.on('pasteStack.paste', (item: PastedValue) =>
-				this.pasteStack.push(item)
+				this.__pasteStack.push(item)
 			);
 
 		if (jodit.o.nl2brInPlainText) {
-			this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
+			this.j.e.on(
+				'processPaste.paste',
+				this.__onProcessPasteReplaceNl2Br
+			);
 		}
 	}
 
 	/** @override **/
 	protected beforeDestruct(jodit: IJodit): void {
 		jodit.e
-			.off('paste.paste', this.onPaste)
-			.off('processPaste.paste', this.onProcessPasteReplaceNl2Br)
+			.off('paste.paste', this.__onPaste)
+			.off('processPaste.paste', this.__onProcessPasteReplaceNl2Br)
 			.off('.paste');
 	}
 
@@ -77,17 +80,17 @@ export class paste extends Plugin {
 	 * Paste event handler
 	 */
 	@autobind
-	private onPaste(e: PasteEvent): void | false {
+	private __onPaste(e: PasteEvent): void | false {
 		try {
 			if (
-				this.customPasteProcess(e) === false ||
+				this.__customPasteProcess(e) === false ||
 				this.j.e.fire('beforePaste', e) === false
 			) {
 				e.preventDefault();
 				return false;
 			}
 
-			this.defaultPasteProcess(e);
+			this.__defaultPasteProcess(e);
 		} finally {
 			this.j.e.fire('afterPaste', e);
 		}
@@ -96,7 +99,7 @@ export class paste extends Plugin {
 	/**
 	 * Process before paste
 	 */
-	private customPasteProcess(e: PasteEvent): void | false {
+	private __customPasteProcess(e: PasteEvent): void | false {
 		if (!this.j.o.processPasteHTML) {
 			return;
 		}
@@ -116,7 +119,7 @@ export class paste extends Plugin {
 			if (
 				isHTML(value) &&
 				(this.j.e.fire('processHTML', e, value, texts) ||
-					this.processHTML(e, value))
+					this.__processHTML(e, value))
 			) {
 				return false;
 			}
@@ -126,7 +129,7 @@ export class paste extends Plugin {
 	/**
 	 * Default paster process
 	 */
-	private defaultPasteProcess(e: PasteEvent): void {
+	private __defaultPasteProcess(e: PasteEvent): void {
 		const dt = getDataTransfer(e);
 		let text = dt?.getData(TEXT_HTML) || dt?.getData(TEXT_PLAIN);
 
@@ -154,15 +157,15 @@ export class paste extends Plugin {
 	/**
 	 * The dialog box was already open
 	 */
-	private _isDialogOpened: boolean = false;
+	private __isDialogOpened: boolean = false;
 
 	/**
 	 * Process usual HTML text fragment
 	 */
-	private processHTML(e: PasteEvent, html: string): boolean {
+	private __processHTML(e: PasteEvent, html: string): boolean {
 		if (this.j.o.askBeforePasteHTML) {
 			if (this.j.o.memorizeChoiceWhenPasteFragment) {
-				const cached = this.pasteStack.find(
+				const cached = this.__pasteStack.find(
 					cachedItem => cachedItem.html === html
 				);
 
@@ -177,7 +180,7 @@ export class paste extends Plugin {
 				}
 			}
 
-			if (this._isDialogOpened) {
+			if (this.__isDialogOpened) {
 				return true;
 			}
 
@@ -186,16 +189,16 @@ export class paste extends Plugin {
 				'Your code is similar to HTML. Keep as HTML?',
 				'Paste as HTML',
 				insertType => {
-					this._isDialogOpened = false;
+					this.__isDialogOpened = false;
 					this.insertByType(e, html, insertType);
 				},
 				this.j.o.pasteHTMLActionList
 			);
 
 			if (dialog) {
-				this._isDialogOpened = true;
+				this.__isDialogOpened = true;
 				dialog.e.on('beforeClose', () => {
-					this._isDialogOpened = false;
+					this.__isDialogOpened = false;
 				});
 			}
 
@@ -209,7 +212,7 @@ export class paste extends Plugin {
 	 * Insert HTML by option type
 	 */
 	insertByType(e: PasteEvent, html: string | Node, action: InsertMode): void {
-		this.pasteStack.push({ html, action });
+		this.__pasteStack.push({ html, action });
 
 		if (isString(html)) {
 			this.j.buffer.set(CLIPBOARD_ID, html);
@@ -238,7 +241,7 @@ export class paste extends Plugin {
 	 * Replace all \\n chars in plain text to br
 	 */
 	@autobind
-	private onProcessPasteReplaceNl2Br(
+	private __onProcessPasteReplaceNl2Br(
 		ignore: PasteEvent,
 		text: string,
 		type: string

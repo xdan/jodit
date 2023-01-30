@@ -71,12 +71,12 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return this.options;
 	}
 
-	private ajaxInstances: Map<string, IAjax<IFileBrowserAnswer>> = new Map();
+	private __ajaxInstances: Map<string, IAjax<IFileBrowserAnswer>> = new Map();
 
 	protected get<T extends IFileBrowserAnswer = IFileBrowserAnswer>(
 		name: keyof IFileBrowserOptions
 	): Promise<T> {
-		const ai = this.ajaxInstances;
+		const ai = this.__ajaxInstances;
 
 		if (ai.has(name)) {
 			const ajax = ai.get(name);
@@ -91,7 +91,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 			ConfigProto(
 				{
-					onProgress: this.progressHandler
+					onProgress: this.__progressHandler
 				},
 				this.o.ajax
 			)
@@ -111,7 +111,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 				ajax.destruct();
 				ai.delete(name);
 
-				this.progressHandler(100);
+				this.__progressHandler(100);
 			})
 			.catch(() => null);
 
@@ -126,10 +126,10 @@ export default class DataProvider implements IFileBrowserDataProvider {
 			});
 	}
 
-	private progressHandler = (ignore: number): void => {};
+	private __progressHandler = (ignore: number): void => {};
 
 	onProgress(callback: (percentage: number) => void): void {
-		this.progressHandler = callback;
+		this.__progressHandler = callback;
 	}
 
 	/**
@@ -231,7 +231,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		mods: IFileBrowserDataProviderItemsMods = {}
 	): Promise<IFileBrowserItem[]> {
 		return this.__items(path, source, mods, resp =>
-			this.generateItemsList(resp.data.sources, mods)
+			this.__generateItemsList(resp.data.sources, mods)
 		);
 	}
 
@@ -247,12 +247,12 @@ export default class DataProvider implements IFileBrowserDataProvider {
 			sources.reduce((acc, source) => acc + source.files.length, 0);
 
 		return this.__items(path, source, mods, resp => ({
-			items: this.generateItemsList(resp.data.sources, mods),
+			items: this.__generateItemsList(resp.data.sources, mods),
 			loadedTotal: calcTotal(resp.data.sources)
 		}));
 	}
 
-	private generateItemsList(
+	private __generateItemsList(
 		sources: ISourcesFiles,
 		mods: IFileBrowserDataProviderItemsMods = {}
 	): IFileBrowserItem[] {
@@ -406,7 +406,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param file - The filename
 	 * @param source - Source
 	 */
-	private remove(
+	private __remove(
 		action: 'fileRemove' | 'folderRemove',
 		path: string,
 		file: string,
@@ -439,7 +439,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param source - Source
 	 */
 	fileRemove(path: string, file: string, source: string): Promise<string> {
-		return this.remove('fileRemove', path, file, source);
+		return this.__remove('fileRemove', path, file, source);
 	}
 
 	/**
@@ -450,7 +450,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param source - Source
 	 */
 	folderRemove(path: string, file: string, source: string): Promise<string> {
-		return this.remove('folderRemove', path, file, source);
+		return this.__remove('folderRemove', path, file, source);
 	}
 
 	/**
@@ -461,7 +461,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param newname - New name
 	 * @param source - Source
 	 */
-	private rename(
+	private __rename(
 		action: 'fileRename' | 'folderRename',
 		path: string,
 		name: string,
@@ -497,7 +497,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string,
 		source: string
 	): Promise<string> {
-		return this.rename('folderRename', path, name, newname, source);
+		return this.__rename('folderRename', path, name, newname, source);
 	}
 
 	/**
@@ -509,10 +509,10 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string,
 		source: string
 	): Promise<string> {
-		return this.rename('fileRename', path, name, newname, source);
+		return this.__rename('fileRename', path, name, newname, source);
 	}
 
-	private changeImage(
+	private __changeImage(
 		type: 'resize' | 'crop',
 		path: string,
 		source: string,
@@ -560,7 +560,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string | void,
 		box: ImageBox | void
 	): Promise<boolean> {
-		return this.changeImage('crop', path, source, name, newname, box);
+		return this.__changeImage('crop', path, source, name, newname, box);
 	}
 
 	/**
@@ -573,7 +573,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string | void,
 		box: ImageBox | void
 	): Promise<boolean> {
-		return this.changeImage('resize', path, source, name, newname, box);
+		return this.__changeImage('resize', path, source, name, newname, box);
 	}
 
 	getMessage(resp: IFileBrowserAnswer): string {
@@ -585,7 +585,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	}
 
 	destruct(): any {
-		this.ajaxInstances.forEach(a => a.destruct());
-		this.ajaxInstances.clear();
+		this.__ajaxInstances.forEach(a => a.destruct());
+		this.__ajaxInstances.clear();
 	}
 }

@@ -22,27 +22,27 @@ export class LazyWalker
 	}>
 	implements IDestructible
 {
-	private workNodes: Nullable<Generator<Node>> = null;
+	private __workNodes: Nullable<Generator<Node>> = null;
 
 	setWork(root: Node): this {
-		if (this.isWorked) {
+		if (this.__isWorked) {
 			this.break();
 		}
 
-		this.workNodes = Dom.eachGen(root, !this.options.reverse);
+		this.__workNodes = Dom.eachGen(root, !this.__options.reverse);
 
-		this.isFinished = false;
-		this.startIdleRequest();
+		this.__isFinished = false;
+		this.__startIdleRequest();
 		return this;
 	}
 
-	private hadAffect: boolean = false;
-	private isWorked: boolean = false;
-	private isFinished: boolean = false;
+	private __hadAffect: boolean = false;
+	private __isWorked: boolean = false;
+	private __isFinished: boolean = false;
 
 	constructor(
-		private readonly async: IAsync,
-		private readonly options: {
+		private readonly __async: IAsync,
+		private readonly __options: {
 			readonly timeout?: number;
 			readonly whatToShow?: number;
 			readonly reverse?: boolean;
@@ -52,58 +52,58 @@ export class LazyWalker
 		super();
 	}
 
-	private idleId: number = 0;
+	private __idleId: number = 0;
 
-	private startIdleRequest(): void {
-		this.idleId = this.async.requestIdleCallback(this.workPerform, {
-			timeout: this.options.timeout ?? 10
+	private __startIdleRequest(): void {
+		this.__idleId = this.__async.requestIdleCallback(this.__workPerform, {
+			timeout: this.__options.timeout ?? 10
 		});
 	}
 
 	break(reason?: string): void {
-		if (this.isWorked) {
-			this.stop();
+		if (this.__isWorked) {
+			this.__stop();
 			this.emit('break', reason);
 		}
 	}
 
 	end(): void {
-		if (this.isWorked) {
-			this.stop();
-			this.emit('end', this.hadAffect);
-			this.hadAffect = false;
+		if (this.__isWorked) {
+			this.__stop();
+			this.emit('end', this.__hadAffect);
+			this.__hadAffect = false;
 		}
 	}
 
-	private stop(): void {
-		this.isWorked = false;
-		this.isFinished = true;
-		this.workNodes = null;
-		this.async.cancelIdleCallback(this.idleId);
+	private __stop(): void {
+		this.__isWorked = false;
+		this.__isFinished = true;
+		this.__workNodes = null;
+		this.__async.cancelIdleCallback(this.__idleId);
 	}
 
 	override destruct(): void {
 		super.destruct();
-		this.stop();
+		this.__stop();
 	}
 
 	@autobind
-	private workPerform(deadline: IdleDeadline): void {
-		if (this.workNodes) {
-			this.isWorked = true;
+	private __workPerform(deadline: IdleDeadline): void {
+		if (this.__workNodes) {
+			this.__isWorked = true;
 
 			let count = 0;
-			const chunkSize = this.options.timeoutChunkSize ?? 50;
+			const chunkSize = this.__options.timeoutChunkSize ?? 50;
 
 			while (
-				!this.isFinished &&
+				!this.__isFinished &&
 				(deadline.timeRemaining() > 0 ||
 					(deadline.didTimeout && count <= chunkSize))
 			) {
-				const item = this.workNodes.next();
+				const item = this.__workNodes.next();
 				count += 1;
-				if (this.visitNode(item.value)) {
-					this.hadAffect = true;
+				if (this.__visitNode(item.value)) {
+					this.__hadAffect = true;
 				}
 
 				if (item.done) {
@@ -115,16 +115,16 @@ export class LazyWalker
 			this.end();
 		}
 
-		if (!this.isFinished) {
-			this.startIdleRequest();
+		if (!this.__isFinished) {
+			this.__startIdleRequest();
 		}
 	}
 
-	private visitNode(nodeElm: CanUndef<Nullable<Element | Node>>): boolean {
+	private __visitNode(nodeElm: CanUndef<Nullable<Element | Node>>): boolean {
 		if (
 			!nodeElm ||
-			(this.options.whatToShow !== undefined &&
-				nodeElm.nodeType !== this.options.whatToShow)
+			(this.__options.whatToShow !== undefined &&
+				nodeElm.nodeType !== this.__options.whatToShow)
 		) {
 			return false;
 		}

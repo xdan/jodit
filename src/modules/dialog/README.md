@@ -53,18 +53,21 @@ To make the dialog open in the same theme as the editor, you can set the theme i
 
 ```js
 const dialog = new Jodit.modules.Dialog({
-  theme: 'dark'
+	theme: 'dark'
 });
 
 // or
 
 const editor = new Jodit('#editor', {
-  theme: 'dark'
+	theme: 'dark'
 });
 const dialog = editor.dlg();
 editor.alert('Hello world!');
-editor.confirm('Hello world?', (yes) => {
+editor.confirm('Hello world?', yes => {
 	console.log('Ok?', yes);
 });
 ```
+
+```
+
 ```

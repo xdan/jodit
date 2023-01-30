@@ -49,12 +49,12 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 			defaultAjaxOptions
 		) as AjaxOptions;
 
-		this.xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
+		this.__xhr = this.o.xhr ? this.o.xhr() : new XMLHttpRequest();
 	}
 
 	static log: IRequest[] = [];
 
-	private readonly xhr!: XMLHttpRequest;
+	private readonly __xhr!: XMLHttpRequest;
 
 	private __buildParams(
 		obj: string | IDictionary<string | object> | FormData,
@@ -95,7 +95,7 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 
 		try {
 			this.__isFulfilled = true;
-			this.xhr.abort();
+			this.__xhr.abort();
 		} catch {}
 
 		return this;
@@ -108,7 +108,7 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 	send(): RejectablePromise<IResponse<T>> {
 		this.__activated = true;
 
-		const { xhr, o } = this;
+		const { __xhr, o } = this;
 
 		const request = this.prepareRequest();
 
@@ -124,27 +124,27 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 				resolve(
 					new Response<T>(
 						request,
-						xhr.status,
-						xhr.statusText,
-						!xhr.responseType ? xhr.responseText : xhr.response
+						__xhr.status,
+						__xhr.statusText,
+						!__xhr.responseType ? __xhr.responseText : __xhr.response
 					)
 				);
 			};
 
-			xhr.onload = onResolve;
-			xhr.onabort = (): void => {
+			__xhr.onload = onResolve;
+			__xhr.onabort = (): void => {
 				this.__isFulfilled = true;
 				reject(error.abort('Abort connection'));
 			};
 
-			xhr.onerror = onReject;
-			xhr.ontimeout = onReject;
+			__xhr.onerror = onReject;
+			__xhr.ontimeout = onReject;
 
 			if (o.responseType) {
-				xhr.responseType = o.responseType;
+				__xhr.responseType = o.responseType;
 			}
 
-			xhr.onprogress = (e): void => {
+			__xhr.onprogress = (e): void => {
 				let percentComplete = 0;
 
 				if (e.lengthComputable) {
@@ -154,27 +154,27 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 				this.options.onProgress?.(percentComplete);
 			};
 
-			xhr.onreadystatechange = (): void => {
+			__xhr.onreadystatechange = (): void => {
 				this.options.onProgress?.(10);
 
-				if (xhr.readyState === XMLHttpRequest.DONE) {
-					if (o.successStatuses.includes(xhr.status)) {
+				if (__xhr.readyState === XMLHttpRequest.DONE) {
+					if (o.successStatuses.includes(__xhr.status)) {
 						onResolve();
-					} else if (xhr.statusText) {
+					} else if (__xhr.statusText) {
 						this.__isFulfilled = true;
-						reject(error.connection(xhr.statusText));
+						reject(error.connection(__xhr.statusText));
 					}
 				}
 			};
 
-			xhr.withCredentials = o.withCredentials ?? false;
+			__xhr.withCredentials = o.withCredentials ?? false;
 
 			const { url, data, method } = request;
 
-			xhr.open(method, url, true);
+			__xhr.open(method, url, true);
 
-			if (o.contentType && xhr.setRequestHeader) {
-				xhr.setRequestHeader('Content-type', o.contentType);
+			if (o.contentType && __xhr.setRequestHeader) {
+				__xhr.setRequestHeader('Content-type', o.contentType);
 			}
 
 			let { headers } = o;
@@ -182,9 +182,9 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 				headers = await headers.call(this);
 			}
 
-			if (headers && xhr.setRequestHeader) {
+			if (headers && __xhr.setRequestHeader) {
 				Object.keys(headers).forEach(key => {
-					xhr.setRequestHeader(
+					__xhr.setRequestHeader(
 						key,
 						(headers as IDictionary<string>)[key]
 					);
@@ -193,7 +193,7 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 
 			// IE
 			this.__async.setTimeout(() => {
-				xhr.send(data ? this.__buildParams(data) : undefined);
+				__xhr.send(data ? this.__buildParams(data) : undefined);
 			}, 0);
 		});
 	}

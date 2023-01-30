@@ -27,7 +27,7 @@ import './config';
  * Show path to current element in status bar
  */
 class xpath extends Plugin {
-	private onContext = (bindElement: Node, event: MouseEvent): boolean => {
+	private __onContext = (bindElement: Node, event: MouseEvent): boolean => {
 		if (!this.menu) {
 			this.menu = new ContextMenu(this.j);
 		}
@@ -57,7 +57,10 @@ class xpath extends Plugin {
 		return false;
 	};
 
-	private onSelectPath = (bindElement: Node, event: MouseEvent): boolean => {
+	private __onSelectPath = (
+		bindElement: Node,
+		event: MouseEvent
+	): boolean => {
 		this.j.s.focus();
 
 		const path = attr(event.target as HTMLElement, '-path') || '/';
@@ -83,7 +86,7 @@ class xpath extends Plugin {
 		return false;
 	};
 
-	private tpl = (
+	private __tpl = (
 		bindElement: Node,
 		path: string,
 		name: string,
@@ -98,39 +101,39 @@ class xpath extends Plugin {
 		const a = item.firstChild as HTMLAnchorElement;
 
 		this.j.e
-			.on(a, 'click', this.onSelectPath.bind(this, bindElement))
-			.on(a, 'contextmenu', this.onContext.bind(this, bindElement));
+			.on(a, 'click', this.__onSelectPath.bind(this, bindElement))
+			.on(a, 'contextmenu', this.__onContext.bind(this, bindElement));
 
 		return item;
 	};
 
-	private selectAllButton?: IToolbarButton;
+	private __selectAllButton?: IToolbarButton;
 
-	private removeSelectAll = (): void => {
-		if (this.selectAllButton) {
-			this.selectAllButton.destruct();
-			delete this.selectAllButton;
+	private __removeSelectAll = (): void => {
+		if (this.__selectAllButton) {
+			this.__selectAllButton.destruct();
+			delete this.__selectAllButton;
 		}
 	};
 
-	private appendSelectAll = (): void => {
-		this.removeSelectAll();
+	private __appendSelectAll = (): void => {
+		this.__removeSelectAll();
 
-		this.selectAllButton = makeButton(this.j, {
+		this.__selectAllButton = makeButton(this.j, {
 			name: 'selectall',
 			...this.j.o.controls.selectall
 		} as IControlTypeStrong);
 
-		this.selectAllButton.state.size = 'tiny';
+		this.__selectAllButton.state.size = 'tiny';
 
 		this.container &&
 			this.container.insertBefore(
-				this.selectAllButton.container,
+				this.__selectAllButton.container,
 				this.container.firstChild
 			);
 	};
 
-	private calcPathImd = (): void => {
+	private __calcPathImd = (): void => {
 		if (this.isDestructed) {
 			return;
 		}
@@ -153,7 +156,7 @@ class xpath extends Plugin {
 							elm as HTMLElement,
 							this.j.editor
 						).replace(/^\//, '');
-						li = this.tpl(
+						li = this.__tpl(
 							elm,
 							xpth,
 							name,
@@ -171,11 +174,11 @@ class xpath extends Plugin {
 			);
 		}
 
-		this.appendSelectAll();
+		this.__appendSelectAll();
 	};
 
-	private calcPath: () => void = this.j.async.debounce(
-		this.calcPathImd,
+	private __calcPath: () => void = this.j.async.debounce(
+		this.__calcPathImd,
 		this.j.defaultTimeout * 2
 	);
 
@@ -190,7 +193,7 @@ class xpath extends Plugin {
 				.off('.xpath')
 				.on(
 					'mouseup.xpath change.xpath keydown.xpath changeSelection.xpath',
-					this.calcPath
+					this.__calcPath
 				)
 				.on(
 					'afterSetMode.xpath afterInit.xpath changePlace.xpath',
@@ -202,17 +205,17 @@ class xpath extends Plugin {
 						this.j.statusbar.append(this.container);
 
 						if (this.j.getRealMode() === MODE_WYSIWYG) {
-							this.calcPath();
+							this.__calcPath();
 						} else {
 							if (this.container) {
 								this.container.innerHTML = INVISIBLE_SPACE;
 							}
-							this.appendSelectAll();
+							this.__appendSelectAll();
 						}
 					}
 				);
 
-			this.calcPath();
+			this.__calcPath();
 		}
 	}
 
@@ -221,7 +224,7 @@ class xpath extends Plugin {
 			this.j.e.off('.xpath');
 		}
 
-		this.removeSelectAll();
+		this.__removeSelectAll();
 
 		this.menu && this.menu.destruct();
 		Dom.safeRemove(this.container);

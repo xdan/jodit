@@ -180,10 +180,10 @@ export class Uploader extends ViewComponent implements IUploader {
 			self.j.e.on('beforePaste', onPaste);
 		}
 
-		this.attachEvents(form, handlerSuccess, handlerError, onFinally);
+		this.__attachEvents(form, handlerSuccess, handlerError, onFinally);
 	}
 
-	private attachEvents(
+	private __attachEvents(
 		form: HTMLElement,
 		handlerSuccess?: HandlerSuccess,
 		handlerError?: HandlerError,

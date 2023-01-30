@@ -26,7 +26,7 @@ editor.events.on(editor.editor, 'contextmenu', event => {
 		}
 	]);
 
-  return false; // prevent default context menu
+	return false; // prevent default context menu
 });
 ```
 

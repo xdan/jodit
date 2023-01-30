@@ -32,14 +32,14 @@ class wrapNodes extends Plugin {
 		jodit.e
 			.on(
 				'drop.wtn focus.wtn keydown.wtn mousedown.wtn afterInit.wtn',
-				this.preprocessInput,
+				this.__preprocessInput,
 				{
 					top: true
 				}
 			)
 			.on(
 				'afterInit.wtn postProcessSetEditorValue.wtn',
-				this.postProcessSetEditorValue
+				this.__postProcessSetEditorValue
 			);
 	}
 
@@ -52,7 +52,7 @@ class wrapNodes extends Plugin {
 	 * Process changed value
 	 */
 	@autobind
-	private postProcessSetEditorValue(): void {
+	private __postProcessSetEditorValue(): void {
 		const { jodit } = this;
 
 		if (!jodit.isEditorMode()) {
@@ -63,9 +63,9 @@ class wrapNodes extends Plugin {
 			isChanged: boolean = false;
 
 		while (child) {
-			child = this.checkAloneListLeaf(child, jodit);
+			child = this.__checkAloneListLeaf(child, jodit);
 
-			if (this.isSuitableStart(child)) {
+			if (this.__isSuitableStart(child)) {
 				if (!isChanged) {
 					jodit.s.save();
 				}
@@ -75,7 +75,7 @@ class wrapNodes extends Plugin {
 
 				Dom.before(child, box);
 
-				while (child && this.isSuitable(child)) {
+				while (child && this.__isSuitable(child)) {
 					const next: Nullable<Node> = child.nextSibling;
 					box.appendChild(child);
 					child = next;
@@ -97,7 +97,7 @@ class wrapNodes extends Plugin {
 		}
 	}
 
-	private checkAloneListLeaf(child: Node, jodit: IJodit): Node {
+	private __checkAloneListLeaf(child: Node, jodit: IJodit): Node {
 		let result = child;
 		let next: Nullable<Node> = child;
 
@@ -128,20 +128,20 @@ class wrapNodes extends Plugin {
 	/**
 	 * Found Node which should be wrapped
 	 */
-	private isSuitableStart = (n: Nullable<Node>): boolean =>
+	private __isSuitableStart = (n: Nullable<Node>): boolean =>
 		(Dom.isText(n) && isString(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
-		(this.isNotClosed(n) && !Dom.isTemporary(n));
+		(this.__isNotClosed(n) && !Dom.isTemporary(n));
 
 	/**
 	 * Node should add in block element
 	 */
-	private isSuitable = (n: Nullable<Node>): boolean =>
-		Dom.isText(n) || this.isNotClosed(n);
+	private __isSuitable = (n: Nullable<Node>): boolean =>
+		Dom.isText(n) || this.__isNotClosed(n);
 
 	/**
 	 * Some element which need append in block
 	 */
-	private isNotClosed = (n: Nullable<Node>): n is Element =>
+	private __isNotClosed = (n: Nullable<Node>): n is Element =>
 		Dom.isElement(n) &&
 		!(Dom.isBlock(n) || Dom.isTag(n, this.j.o.wrapNodes.exclude));
 
@@ -149,7 +149,7 @@ class wrapNodes extends Plugin {
 	 * Process input without parent box
 	 */
 	@autobind
-	private preprocessInput(): void {
+	private __preprocessInput(): void {
 		const { jodit } = this,
 			isAfterInitEvent = jodit.e.current === 'afterInit';
 

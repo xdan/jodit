@@ -52,7 +52,7 @@ async function prettier(fileName) {
 			resolve();
 		});
 	});
-};
+}
 
 module.exports.saveJson = function saveJson(fileName, data) {
 	!fs.existsSync(path.dirname(fileName)) &&

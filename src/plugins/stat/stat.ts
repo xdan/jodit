@@ -15,6 +15,7 @@ import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from 'jodit/core/constants';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { autobind, throttle } from 'jodit/core/decorators';
 
 import './config';
 
@@ -22,47 +23,51 @@ import './config';
  * Show stat data - words and chars count
  */
 export class stat extends Plugin {
-	private charCounter: Nullable<HTMLElement> = null;
-	private wordCounter: Nullable<HTMLElement> = null;
+	private __charCounter: Nullable<HTMLElement> = null;
+	private __wordCounter: Nullable<HTMLElement> = null;
 
-	private reInit = (): void => {
-		if (this.j.o.showCharsCounter && this.charCounter) {
-			this.j.statusbar.append(this.charCounter, true);
+	@autobind
+	private __reInit(): void {
+		if (this.j.o.showCharsCounter && this.__charCounter) {
+			this.j.statusbar.append(this.__charCounter, true);
 		}
 
-		if (this.j.o.showWordsCounter && this.wordCounter) {
-			this.j.statusbar.append(this.wordCounter, true);
+		if (this.j.o.showWordsCounter && this.__wordCounter) {
+			this.j.statusbar.append(this.__wordCounter, true);
 		}
 
-		this.j.e.off('change keyup', this.calc).on('change keyup', this.calc);
+		this.j.e
+			.off('change keyup', this.__calc)
+			.on('change keyup', this.__calc);
 
-		this.calc();
-	};
+		this.__calc();
+	}
 
 	/** @override */
 	afterInit(): void {
-		this.charCounter = this.j.c.span();
-		this.wordCounter = this.j.c.span();
-		this.j.e.on('afterInit changePlace afterAddPlace', this.reInit);
-		this.reInit();
+		this.__charCounter = this.j.c.span();
+		this.__wordCounter = this.j.c.span();
+		this.j.e.on('afterInit changePlace afterAddPlace', this.__reInit);
+		this.__reInit();
 	}
 
-	private calc = this.j.async.throttle(() => {
+	@throttle()
+	private __calc(): void {
 		const text = this.j.text;
 
-		if (this.j.o.showCharsCounter && this.charCounter) {
+		if (this.j.o.showCharsCounter && this.__charCounter) {
 			const chars = this.j.o.countHTMLChars
 				? this.j.value
 				: text.replace(SPACE_REG_EXP(), '');
 
-			this.charCounter.textContent = this.j.i18n(
+			this.__charCounter.textContent = this.j.i18n(
 				'Chars: %d',
 				chars.length
 			);
 		}
 
-		if (this.j.o.showWordsCounter && this.wordCounter) {
-			this.wordCounter.textContent = this.j.i18n(
+		if (this.j.o.showWordsCounter && this.__wordCounter) {
+			this.__wordCounter.textContent = this.j.i18n(
 				'Words: %d',
 				text
 					.replace(INVISIBLE_SPACE_REG_EXP(), '')
@@ -70,17 +75,17 @@ export class stat extends Plugin {
 					.filter((e: string) => e.length).length
 			);
 		}
-	}, this.j.defaultTimeout);
+	}
 
 	/** @override */
 	beforeDestruct(): void {
-		Dom.safeRemove(this.charCounter);
-		Dom.safeRemove(this.wordCounter);
+		Dom.safeRemove(this.__charCounter);
+		Dom.safeRemove(this.__wordCounter);
 
-		this.j.e.off('afterInit changePlace afterAddPlace', this.reInit);
+		this.j.e.off('afterInit changePlace afterAddPlace', this.__reInit);
 
-		this.charCounter = null;
-		this.wordCounter = null;
+		this.__charCounter = null;
+		this.__wordCounter = null;
 	}
 }
 

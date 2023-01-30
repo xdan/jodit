@@ -109,11 +109,11 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 
 	constructor(jodit: IViewBased) {
 		super(jodit as T);
-		this.initEvents();
+		this.__initEvents();
 		this.__tooltip = UITooltip.make(jodit);
 	}
 
-	private initEvents(): void {
+	private __initEvents(): void {
 		this.j.e
 			.on(this.listenEvents, this.update)
 			.on('afterSetMode focus', this.immediateUpdate);

@@ -20,7 +20,7 @@ import { isMarker } from 'jodit/core/helpers/checker/is-marker';
 import { Dom } from 'jodit/core/dom/dom';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { INSEPARABLE_TAGS } from 'jodit/core/constants';
-import { debounce } from 'jodit/core/decorators';
+import { autobind, debounce } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
 
 import './config';
@@ -67,76 +67,78 @@ export function isEditorEmpty(root: HTMLElement): boolean {
  * Show placeholder inside empty editor
  */
 export class placeholder extends Plugin {
-	private placeholderElm!: HTMLElement;
+	private __placeholderElm!: HTMLElement;
 
 	protected afterInit(editor: IJodit): void {
 		if (!editor.o.showPlaceholder) {
 			return;
 		}
 
-		this.placeholderElm = editor.c.fromHTML(
+		this.__placeholderElm = editor.c.fromHTML(
 			`<span data-ref="placeholder" style="display: none;" class="jodit-placeholder">${editor.i18n(
 				editor.o.placeholder
 			)}</span>`
 		);
 
 		if (editor.o.direction === 'rtl') {
-			this.placeholderElm.style.right = '0px';
-			this.placeholderElm.style.direction = 'rtl';
+			this.__placeholderElm.style.right = '0px';
+			this.__placeholderElm.style.direction = 'rtl';
 		}
 
 		editor.e
 			.on('readonly', (isReadOnly: boolean) => {
 				if (isReadOnly) {
-					this.hide();
+					this.__hide();
 				} else {
-					this.toggle();
+					this.__toggle();
 				}
 			})
-			.on('changePlace', this.addEvents);
+			.on('changePlace', this.__addEvents);
 
-		this.addEvents();
+		this.__addEvents();
 	}
 
-	private addNativeListeners = (): void => {
+	@autobind
+	private __addNativeListeners(): void {
 		this.j.e
 			.off(this.j.editor, 'input.placeholder keydown.placeholder')
 			.on(
 				this.j.editor,
 				'input.placeholder keydown.placeholder',
-				this.toggle
+				this.__toggle
 			);
-	};
+	}
 
-	private addEvents = (): void => {
+	@autobind
+	private __addEvents(): void {
 		const editor = this.j;
 
 		if (
 			editor.o.useInputsPlaceholder &&
 			editor.element.hasAttribute('placeholder')
 		) {
-			this.placeholderElm.innerHTML =
+			this.__placeholderElm.innerHTML =
 				attr(editor.element, 'placeholder') || '';
 		}
 
-		editor.e.fire('placeholder', this.placeholderElm.innerHTML);
+		editor.e.fire('placeholder', this.__placeholderElm.innerHTML);
 
 		editor.e
 			.off('.placeholder')
-			.on('changePlace.placeholder', this.addNativeListeners)
+			.on('changePlace.placeholder', this.__addNativeListeners)
 			.on(
 				'change.placeholder focus.placeholder keyup.placeholder mouseup.placeholder keydown.placeholder ' +
 					'mousedown.placeholder afterSetMode.placeholder changePlace.placeholder',
-				this.toggle
+				this.__toggle
 			)
-			.on(window, 'load', this.toggle);
+			.on(window, 'load', this.__toggle);
 
-		this.addNativeListeners();
+		this.__addNativeListeners();
 
-		this.toggle();
-	};
+		this.__toggle();
+	}
 
-	private show(): void {
+	private __show(): void {
 		const editor = this.j;
 
 		if (editor.o.readonly) {
@@ -154,7 +156,7 @@ export class placeholder extends Plugin {
 		const style = editor.ew.getComputedStyle(wrapper);
 		const styleEditor = editor.ew.getComputedStyle(editor.editor);
 
-		editor.workplace.appendChild(this.placeholderElm);
+		editor.workplace.appendChild(this.__placeholderElm);
 
 		const { firstChild } = editor.editor;
 
@@ -164,20 +166,20 @@ export class placeholder extends Plugin {
 			marginTop = parseInt(style2.getPropertyValue('margin-top'), 10);
 			marginLeft = parseInt(style2.getPropertyValue('margin-left'), 10);
 
-			this.placeholderElm.style.fontSize =
+			this.__placeholderElm.style.fontSize =
 				parseInt(style2.getPropertyValue('font-size'), 10) + 'px';
 
-			this.placeholderElm.style.lineHeight =
+			this.__placeholderElm.style.lineHeight =
 				style2.getPropertyValue('line-height');
 		} else {
-			this.placeholderElm.style.fontSize =
+			this.__placeholderElm.style.fontSize =
 				parseInt(style.getPropertyValue('font-size'), 10) + 'px';
 
-			this.placeholderElm.style.lineHeight =
+			this.__placeholderElm.style.lineHeight =
 				style.getPropertyValue('line-height');
 		}
 
-		css(this.placeholderElm, {
+		css(this.__placeholderElm, {
 			display: 'block',
 			textAlign: style.getPropertyValue('text-align'),
 			paddingTop: parseInt(styleEditor.paddingTop, 10) + 'px',
@@ -194,12 +196,12 @@ export class placeholder extends Plugin {
 		});
 	}
 
-	private hide(): void {
-		Dom.safeRemove(this.placeholderElm);
+	private __hide(): void {
+		Dom.safeRemove(this.__placeholderElm);
 	}
 
 	@debounce(ctx => ctx.defaultTimeout / 10, true)
-	private toggle(): void {
+	private __toggle(): void {
 		const editor = this.j;
 
 		if (!editor.editor || editor.isInDestruct) {
@@ -207,21 +209,21 @@ export class placeholder extends Plugin {
 		}
 
 		if (editor.getRealMode() !== consts.MODE_WYSIWYG) {
-			this.hide();
+			this.__hide();
 			return;
 		}
 
 		if (!isEditorEmpty(editor.editor)) {
-			this.hide();
+			this.__hide();
 		} else {
-			this.show();
+			this.__show();
 		}
 	}
 
 	protected beforeDestruct(jodit: IJodit): void {
-		this.hide();
+		this.__hide();
 
-		jodit.e.off('.placeholder').off(window, 'load', this.toggle);
+		jodit.e.off('.placeholder').off(window, 'load', this.__toggle);
 	}
 }
 

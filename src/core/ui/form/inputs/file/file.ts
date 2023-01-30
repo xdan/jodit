@@ -17,7 +17,7 @@ import { UIButton } from 'jodit/core/ui/button/button/button';
 
 @component
 export class UIFileInput extends UIInput {
-	private button!: IUIButton;
+	private __button!: IUIButton;
 
 	override state: UIInput['state'] & {
 		onlyImages: boolean;
@@ -35,13 +35,13 @@ export class UIFileInput extends UIInput {
 	protected override createContainer(
 		options: Partial<this['state']>
 	): HTMLElement {
-		this.button = new UIButton(this.j, {
+		this.__button = new UIButton(this.j, {
 			icon: {
 				name: 'plus'
 			}
 		});
 
-		const { container } = this.button;
+		const { container } = this.__button;
 
 		if (!this.nativeInput) {
 			this.nativeInput = this.createNativeInput(options);

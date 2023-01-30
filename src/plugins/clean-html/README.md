@@ -42,8 +42,8 @@ Jodit.make('#editor', {
 	cleanHTML: {
 		denyTags: {
 			script: true,
-      img: true
-    }
+			img: true
+		}
 	}
 });
 ```

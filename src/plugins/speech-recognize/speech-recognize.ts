@@ -46,13 +46,13 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 
 				keys.forEach(key => {
 					key = key.trim().toLowerCase();
-					this._commandToWord[key] = commands[words];
+					this.__commandToWord[key] = commands[words];
 
 					const translatedKeys = jodit.i18n(key);
 
 					if (translatedKeys !== key) {
 						translatedKeys.split('|').forEach(translatedKey => {
-							this._commandToWord[
+							this.__commandToWord[
 								translatedKey.trim().toLowerCase()
 							] = commands[words].trim();
 						});
@@ -64,21 +64,21 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 
 	protected override beforeDestruct(jodit: IJodit): void {}
 
-	private messagePopup!: HTMLElement;
+	private __messagePopup!: HTMLElement;
 
 	@watch(':speechRecognizeProgressResult')
 	@debounce()
 	protected onSpeechRecognizeProgressResult(text: string): void {
-		if (!this.messagePopup) {
-			this.messagePopup = this.j.create.div(
+		if (!this.__messagePopup) {
+			this.__messagePopup = this.j.create.div(
 				'jodit-speech-recognize__popup'
 			);
 		}
 
-		this.j.workplace.appendChild(this.messagePopup);
+		this.j.workplace.appendChild(this.__messagePopup);
 		this.j.async.setTimeout(
 			() => {
-				Dom.safeRemove(this.messagePopup);
+				Dom.safeRemove(this.__messagePopup);
 			},
 			{
 				label: 'onSpeechRecognizeProgressResult',
@@ -86,7 +86,7 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 			}
 		);
 
-		this.messagePopup.innerText = text + '|';
+		this.__messagePopup.innerText = text + '|';
 	}
 
 	@watch(':speechRecognizeResult')
@@ -94,9 +94,9 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 		const { j } = this,
 			{ s } = j;
 
-		Dom.safeRemove(this.messagePopup);
+		Dom.safeRemove(this.__messagePopup);
 
-		if (!this._checkCommand(text)) {
+		if (!this.__checkCommand(text)) {
 			const { range } = s,
 				node = s.current();
 
@@ -122,18 +122,18 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 		}
 	}
 
-	private _checkCommand(command: string): boolean {
+	private __checkCommand(command: string): boolean {
 		command = command.toLowerCase().replace(/\./g, '');
 
-		if (this._commandToWord[command]) {
-			execSpellCommand(this.j, this._commandToWord[command]);
+		if (this.__commandToWord[command]) {
+			execSpellCommand(this.j, this.__commandToWord[command]);
 			return true;
 		}
 
 		return false;
 	}
 
-	private _commandToWord: IDictionary<string> = {};
+	private __commandToWord: IDictionary<string> = {};
 }
 
 declare const Jodit: {

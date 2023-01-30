@@ -56,7 +56,7 @@ export class enter extends Plugin {
 		editor.registerCommand(
 			'enter',
 			(command: string, value?: string, event: any = {}): false | void =>
-				this.onEnter(event)
+				this.__onEnter(event)
 		);
 	}
 
@@ -77,7 +77,7 @@ export class enter extends Plugin {
 
 			editor.s.focus();
 
-			this.onEnter(event);
+			this.__onEnter(event);
 			editor.e.fire('afterEnter', event);
 			editor.synchronizeValues(); // fire change
 
@@ -85,10 +85,10 @@ export class enter extends Plugin {
 		}
 	}
 
-	private onEnter(event?: KeyboardEvent): false | void {
+	private __onEnter(event?: KeyboardEvent): false | void {
 		const jodit = this.j;
 
-		const current = this.getCurrentOrFillEmpty(jodit);
+		const current = this.__getCurrentOrFillEmpty(jodit);
 
 		moveCursorOutFromSpecialTags(jodit, current, ['a']);
 
@@ -131,7 +131,7 @@ export class enter extends Plugin {
 		return isBoolean(result) ? result : Dom.isEmpty(li);
 	}
 
-	private getCurrentOrFillEmpty(editor: IJodit): Node {
+	private __getCurrentOrFillEmpty(editor: IJodit): Node {
 		const { s } = editor;
 		let current = s.current(false);
 

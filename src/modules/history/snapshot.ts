@@ -38,7 +38,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/**
 	 * Calc count element before some node in parentNode. All text nodes are joined
 	 */
-	private static countNodesBeforeInParent(elm: Node): number {
+	private static __countNodesBeforeInParent(elm: Node): number {
 		if (!elm.parentNode) {
 			return 0;
 		}
@@ -51,7 +51,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		for (let j = 0; j < elms.length; j += 1) {
 			if (
 				previous &&
-				!this.isIgnoredNode(elms[j]) &&
+				!this.__isIgnoredNode(elms[j]) &&
 				!(Dom.isText(previous) && Dom.isText(elms[j]))
 			) {
 				count += 1;
@@ -70,7 +70,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/**
 	 * Calc normal offset in joined text nodes
 	 */
-	private static strokeOffset(elm: Nullable<Node>, offset: number): number {
+	private static __strokeOffset(elm: Nullable<Node>, offset: number): number {
 		while (Dom.isText(elm)) {
 			elm = elm.previousSibling;
 
@@ -85,7 +85,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	/**
 	 * Calc whole hierarchy path before some element in editor's tree
 	 */
-	private calcHierarchyLadder(elm: Nullable<Node>): number[] {
+	private __calcHierarchyLadder(elm: Nullable<Node>): number[] {
 		const counts: number[] = [];
 
 		if (!elm || !elm.parentNode || !Dom.isOrContains(this.j.editor, elm)) {
@@ -93,8 +93,8 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		}
 
 		while (elm && elm !== this.j.editor) {
-			if (elm && !Snapshot.isIgnoredNode(elm)) {
-				counts.push(Snapshot.countNodesBeforeInParent(elm));
+			if (elm && !Snapshot.__isIgnoredNode(elm)) {
+				counts.push(Snapshot.__countNodesBeforeInParent(elm));
 			}
 
 			elm = elm.parentNode;
@@ -103,7 +103,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		return counts.reverse();
 	}
 
-	private getElementByLadder(ladder: number[]): Node {
+	private __getElementByLadder(ladder: number[]): Node {
 		let n: Node = this.j.editor as Node,
 			i: number;
 
@@ -152,20 +152,22 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 			}
 		};
 
-		snapshot.html = this.removeJoditSelection(this.j.editor);
+		snapshot.html = this.__removeJoditSelection(this.j.editor);
 
 		const sel = this.j.s.sel;
 
 		if (sel && sel.rangeCount) {
 			const range = sel.getRangeAt(0),
-				startContainer = this.calcHierarchyLadder(range.startContainer),
-				endContainer = this.calcHierarchyLadder(range.endContainer);
+				startContainer = this.__calcHierarchyLadder(
+					range.startContainer
+				),
+				endContainer = this.__calcHierarchyLadder(range.endContainer);
 
-			let startOffset = Snapshot.strokeOffset(
+			let startOffset = Snapshot.__strokeOffset(
 					range.startContainer,
 					range.startOffset
 				),
-				endOffset = Snapshot.strokeOffset(
+				endOffset = Snapshot.__strokeOffset(
 					range.endContainer,
 					range.endOffset
 				);
@@ -200,7 +202,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	 */
 	restore(snapshot: SnapshotType): void {
 		this.transaction(() => {
-			const scroll = this.storeScrollState();
+			const scroll = this.__storeScrollState();
 
 			const value = this.j.getNativeEditorValue();
 			if (value !== snapshot.html) {
@@ -209,15 +211,15 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 
 			this.restoreOnlySelection(snapshot);
 
-			this.restoreScrollState(scroll);
+			this.__restoreScrollState(scroll);
 		});
 	}
 
-	private storeScrollState(): [number, number] {
+	private __storeScrollState(): [number, number] {
 		return [this.j.ow.scrollY, this.j.editor.scrollTop];
 	}
 
-	private restoreScrollState(scrolls: [number, number]): void {
+	private __restoreScrollState(scrolls: [number, number]): void {
 		const { j } = this,
 			{ ow } = j;
 
@@ -237,12 +239,12 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 				const range = this.j.ed.createRange();
 
 				range.setStart(
-					this.getElementByLadder(snapshot.range.startContainer),
+					this.__getElementByLadder(snapshot.range.startContainer),
 					snapshot.range.startOffset
 				);
 
 				range.setEnd(
-					this.getElementByLadder(snapshot.range.endContainer),
+					this.__getElementByLadder(snapshot.range.endContainer),
 					snapshot.range.endOffset
 				);
 
@@ -264,11 +266,11 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		super.destruct();
 	}
 
-	private static isIgnoredNode(node: Node): boolean {
+	private static __isIgnoredNode(node: Node): boolean {
 		return (Dom.isText(node) && !node.nodeValue) || Dom.isTemporary(node);
 	}
 
-	private removeJoditSelection(node: HTMLElement): string {
+	private __removeJoditSelection(node: HTMLElement): string {
 		const clone = node.cloneNode(true) as HTMLElement;
 
 		clone.querySelectorAll(`[${TEMP_ATTR}]`).forEach(Dom.unwrap);

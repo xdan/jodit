@@ -206,7 +206,7 @@ export class UIButton extends UIElement implements IUIButton {
 		button.appendChild(this.icon);
 		button.appendChild(this.text);
 
-		this.j.e.on(button, 'click', this.onActionFire);
+		this.j.e.on(button, 'click', this.__onActionFire);
 
 		return button;
 	}
@@ -230,13 +230,13 @@ export class UIButton extends UIElement implements IUIButton {
 		return super.destruct();
 	}
 
-	private readonly actionHandlers: Function[] = [];
+	private readonly __actionHandlers: Function[] = [];
 
 	/**
 	 * Add action handler
 	 */
 	onAction(callback: (originalEvent: MouseEvent) => void): this {
-		this.actionHandlers.push(callback);
+		this.__actionHandlers.push(callback);
 		return this;
 	}
 
@@ -244,12 +244,12 @@ export class UIButton extends UIElement implements IUIButton {
 	 * Fire all click handlers
 	 */
 	@autobind
-	private onActionFire(e: MouseEvent): void {
+	private __onActionFire(e: MouseEvent): void {
 		e.buffer = {
 			actionTrigger: this
 		};
 
-		this.actionHandlers.forEach(callback => callback.call(this, e));
+		this.__actionHandlers.forEach(callback => callback.call(this, e));
 	}
 }
 

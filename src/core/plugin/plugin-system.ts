@@ -52,16 +52,16 @@ import { eventEmitter } from 'jodit/core/global';
  * ```
  */
 export class PluginSystem implements IPluginSystem {
-	private normalizeName(name: string): string {
+	private __normalizeName(name: string): string {
 		return kebabCase(name).toLowerCase();
 	}
 
-	private _items = new Map<string, PluginType>();
+	private __itemsMap = new Map<string, PluginType>();
 
-	private items(filter: Nullable<string[]>): Array<[string, PluginType]> {
+	private __items(filter: Nullable<string[]>): Array<[string, PluginType]> {
 		const results: Array<[string, PluginType]> = [];
 
-		this._items.forEach((plugin, name) => {
+		this.__itemsMap.forEach((plugin, name) => {
 			results.push([name, plugin]);
 		});
 
@@ -72,7 +72,7 @@ export class PluginSystem implements IPluginSystem {
 	 * Add plugin in store
 	 */
 	add(name: string, plugin: PluginType): void {
-		this._items.set(this.normalizeName(name), plugin);
+		this.__itemsMap.set(this.__normalizeName(name), plugin);
 		eventEmitter.fire(`plugin:${name}:ready`);
 	}
 
@@ -80,14 +80,14 @@ export class PluginSystem implements IPluginSystem {
 	 * Get plugin from store
 	 */
 	get(name: string): PluginType | void {
-		return this._items.get(this.normalizeName(name));
+		return this.__itemsMap.get(this.__normalizeName(name));
 	}
 
 	/**
 	 * Remove plugin from store
 	 */
 	remove(name: string): void {
-		this._items.delete(this.normalizeName(name));
+		this.__itemsMap.delete(this.__normalizeName(name));
 	}
 
 	/**
@@ -98,7 +98,7 @@ export class PluginSystem implements IPluginSystem {
 				isString(s) ? { name: s } : s
 			),
 			disableList = splitArray(jodit.o.disablePlugins).map(s => {
-				const name = this.normalizeName(s);
+				const name = this.__normalizeName(s);
 
 				// @ts-ignore
 				if (!isProd && !this._items.has(name)) {
@@ -127,7 +127,7 @@ export class PluginSystem implements IPluginSystem {
 				if (
 					requires &&
 					isArray(requires) &&
-					this.hasDisabledRequires(disableList, requires)
+					this.__hasDisabledRequires(disableList, requires)
 				) {
 					return;
 				}
@@ -135,7 +135,7 @@ export class PluginSystem implements IPluginSystem {
 				const instance = PluginSystem.makePluginInstance(jodit, plugin);
 
 				if (instance) {
-					this.initOrWait(
+					this.__initOrWait(
 						jodit,
 						name,
 						instance,
@@ -148,14 +148,14 @@ export class PluginSystem implements IPluginSystem {
 				}
 			};
 
-		const resultLoadExtras = this.loadExtras(jodit, extrasList);
+		const resultLoadExtras = this.__loadExtras(jodit, extrasList);
 
 		return callPromise(resultLoadExtras, () => {
 			if (jodit.isInDestruct) {
 				return;
 			}
 
-			this.items(
+			this.__items(
 				jodit.o.safeMode
 					? jodit.o.safePluginsList.concat(
 							extrasList.map(s => s.name)
@@ -163,7 +163,7 @@ export class PluginSystem implements IPluginSystem {
 					: null
 			).forEach(makeAndInit);
 
-			this.addListenerOnBeforeDestruct(jodit, plugins);
+			this.__addListenerOnBeforeDestruct(jodit, plugins);
 
 			(jodit as any).__plugins = pluginsMap;
 		});
@@ -190,7 +190,7 @@ export class PluginSystem implements IPluginSystem {
 	/**
 	 * Plugin type has disabled requires
 	 */
-	private hasDisabledRequires(
+	private __hasDisabledRequires(
 		disableList: string[],
 		requires: string[]
 	): boolean {
@@ -230,7 +230,7 @@ export class PluginSystem implements IPluginSystem {
 	/**
 	 * Init plugin if it has not dependencies in another case wait requires plugins will be init
 	 */
-	private initOrWait(
+	private __initOrWait(
 		jodit: IJodit,
 		pluginName: string,
 		instance: PluginInstance,
@@ -271,7 +271,7 @@ export class PluginSystem implements IPluginSystem {
 			}
 
 			if ((plugin as IPlugin).hasStyle) {
-				PluginSystem.loadStyle(jodit, name);
+				PluginSystem.__loadStyle(jodit, name);
 			}
 
 			return true;
@@ -296,7 +296,7 @@ export class PluginSystem implements IPluginSystem {
 	/**
 	 * Destroy all plugins before - Jodit will be destroyed
 	 */
-	private addListenerOnBeforeDestruct(
+	private __addListenerOnBeforeDestruct(
 		jodit: IJodit,
 		plugins: PluginInstance[]
 	): void {
@@ -316,7 +316,7 @@ export class PluginSystem implements IPluginSystem {
 	/**
 	 * Download plugins
 	 */
-	private load(jodit: IJodit, pluginList: IExtraPlugin[]): Promise<any> {
+	private __load(jodit: IJodit, pluginList: IExtraPlugin[]): Promise<any> {
 		const reflect = (p: Promise<any>): Promise<any> =>
 			p.then(
 				(v: any) => ({ v, status: 'fulfilled' }),
@@ -327,34 +327,34 @@ export class PluginSystem implements IPluginSystem {
 			pluginList.map(extra => {
 				const url =
 					extra.url ||
-					PluginSystem.getFullUrl(jodit, extra.name, true);
+					PluginSystem.__getFullUrl(jodit, extra.name, true);
 
 				return reflect(appendScriptAsync(jodit, url));
 			})
 		);
 	}
 
-	private static async loadStyle(
+	private static async __loadStyle(
 		jodit: IJodit,
 		pluginName: string
 	): Promise<void> {
-		const url = PluginSystem.getFullUrl(jodit, pluginName, false);
+		const url = PluginSystem.__getFullUrl(jodit, pluginName, false);
 
-		if (this.styles.has(url)) {
+		if (this.__styles.has(url)) {
 			return;
 		}
 
-		this.styles.add(url);
+		this.__styles.add(url);
 
 		return appendStyleAsync(jodit, url);
 	}
 
-	private static styles: Set<string> = new Set();
+	private static __styles: Set<string> = new Set();
 
 	/**
 	 * Call full url to the script or style file
 	 */
-	private static getFullUrl(
+	private static __getFullUrl(
 		jodit: IJodit,
 		name: string,
 		js: boolean
@@ -372,18 +372,19 @@ export class PluginSystem implements IPluginSystem {
 		);
 	}
 
-	private loadExtras(
+	private __loadExtras(
 		jodit: IJodit,
 		extrasList: IExtraPlugin[]
 	): CanPromise<void> {
 		if (extrasList && extrasList.length) {
 			try {
 				const needLoadExtras = extrasList.filter(
-					extra => !this._items.has(this.normalizeName(extra.name))
+					extra =>
+						!this.__itemsMap.has(this.__normalizeName(extra.name))
 				);
 
 				if (needLoadExtras.length) {
-					return this.load(jodit, needLoadExtras);
+					return this.__load(jodit, needLoadExtras);
 				}
 			} catch (e) {
 				// @ts-ignore

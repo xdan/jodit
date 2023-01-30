@@ -18,7 +18,10 @@ module.exports = ({ ESNext, isTest, banner }) =>
 			ecma: ESNext ? 8 : 5,
 
 			mangle: {
-				reserved: ['Jodit']
+				reserved: ['Jodit'],
+				properties: {
+					regex: '^__'
+				}
 			},
 
 			compress: {

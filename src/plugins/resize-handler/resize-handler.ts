@@ -41,30 +41,30 @@ export class resizeHandler extends Plugin {
 
 			editor.e
 				.on('toggleFullSize.resizeHandler', () => {
-					this.handle.style.display = editor.isFullSize
+					this.__handle.style.display = editor.isFullSize
 						? 'none'
 						: 'block';
 				})
 				.on(
-					this.handle,
+					this.__handle,
 					'mousedown touchstart',
-					this.onHandleResizeStart
+					this.__onHandleResizeStart
 				)
-				.on(editor.ow, 'mouseup touchend', this.onHandleResizeEnd);
+				.on(editor.ow, 'mouseup touchend', this.__onHandleResizeEnd);
 
-			editor.container.appendChild(this.handle);
+			editor.container.appendChild(this.__handle);
 		}
 	}
 
 	/**
 	 * Plugin in resize process
 	 */
-	private isResized: boolean = false;
+	private __isResized: boolean = false;
 
 	/**
 	 * Start point
 	 */
-	private start: IPointBound = {
+	private __start: IPointBound = {
 		x: 0,
 		y: 0,
 		w: 0,
@@ -74,17 +74,17 @@ export class resizeHandler extends Plugin {
 	/**
 	 * Handler: Click on handle - start resizing
 	 */
-	private onHandleResizeStart(e: MouseEvent): void {
-		this.isResized = true;
+	private __onHandleResizeStart(e: MouseEvent): void {
+		this.__isResized = true;
 
-		this.start.x = e.clientX;
-		this.start.y = e.clientY;
-		this.start.w = this.j.container.offsetWidth;
-		this.start.h = this.j.container.offsetHeight;
+		this.__start.x = e.clientX;
+		this.__start.y = e.clientY;
+		this.__start.w = this.j.container.offsetWidth;
+		this.__start.h = this.j.container.offsetHeight;
 
 		this.j.lock();
 
-		this.j.e.on(this.j.ow, 'mousemove touchmove', this.onHandleResize);
+		this.j.e.on(this.j.ow, 'mousemove touchmove', this.__onHandleResize);
 
 		e.preventDefault();
 	}
@@ -92,17 +92,23 @@ export class resizeHandler extends Plugin {
 	/**
 	 * Handler: Mouse move after start resizing
 	 */
-	private onHandleResize(e: MouseEvent): void {
-		if (!this.isResized) {
+	private __onHandleResize(e: MouseEvent): void {
+		if (!this.__isResized) {
 			return;
 		}
 
 		if (this.j.o.allowResizeY) {
-			this.j.e.fire('setHeight', this.start.h + e.clientY - this.start.y);
+			this.j.e.fire(
+				'setHeight',
+				this.__start.h + e.clientY - this.__start.y
+			);
 		}
 
 		if (this.j.o.allowResizeX) {
-			this.j.e.fire('setWidth', this.start.w + e.clientX - this.start.x);
+			this.j.e.fire(
+				'setWidth',
+				this.__start.w + e.clientX - this.__start.x
+			);
 		}
 
 		this.j.e.fire('resize');
@@ -111,11 +117,15 @@ export class resizeHandler extends Plugin {
 	/**
 	 * End of resizing
 	 */
-	private onHandleResizeEnd(): void {
-		if (this.isResized) {
-			this.isResized = false;
+	private __onHandleResizeEnd(): void {
+		if (this.__isResized) {
+			this.__isResized = false;
 
-			this.j.e.off(this.j.ow, 'mousemove touchmove', this.onHandleResize);
+			this.j.e.off(
+				this.j.ow,
+				'mousemove touchmove',
+				this.__onHandleResize
+			);
 
 			this.j.unlock();
 		}
@@ -124,16 +134,16 @@ export class resizeHandler extends Plugin {
 	/**
 	 * Resize handle
 	 */
-	private handle = this.j.c.div(
+	private __handle = this.j.c.div(
 		'jodit-editor__resize',
 		Icon.get('resize_handler')
 	);
 
 	/** @override **/
 	protected beforeDestruct(): void {
-		Dom.safeRemove(this.handle);
+		Dom.safeRemove(this.__handle);
 
-		this.j.e.off(this.j.ow, 'mouseup touchsend', this.onHandleResizeEnd);
+		this.j.e.off(this.j.ow, 'mouseup touchsend', this.__onHandleResizeEnd);
 	}
 }
 

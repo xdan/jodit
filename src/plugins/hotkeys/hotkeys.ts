@@ -20,6 +20,7 @@ import {
 } from 'jodit/core/helpers';
 import { KEY_ESC } from 'jodit/core/constants';
 import { pluginSystem } from 'jodit/core/global';
+import { autobind } from 'jodit/core/decorators';
 
 import './config';
 
@@ -27,7 +28,8 @@ import './config';
  * Allow set hotkey for command or button
  */
 export class hotkeys extends Plugin {
-	private onKeyPress = (event: KeyboardEvent): string => {
+	@autobind
+	private __onKeyPress(event: KeyboardEvent): string {
 		const special: string | false = this.specialKeys[event.which],
 			character: string = (
 				event.key || String.fromCharCode(event.which)
@@ -42,7 +44,7 @@ export class hotkeys extends Plugin {
 		});
 
 		return normalizeKeyAliases(modif.join('+'));
-	};
+	}
 
 	specialKeys: { [key: number]: string } = {
 		8: 'backspace',
@@ -140,7 +142,7 @@ export class hotkeys extends Plugin {
 			.on(
 				'keydown.hotkeys',
 				(event: KeyboardEvent): void | false => {
-					const shortcut: string = this.onKeyPress(event),
+					const shortcut: string = this.__onKeyPress(event),
 						stop = {
 							shouldStop: true
 						};

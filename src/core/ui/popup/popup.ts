@@ -57,26 +57,26 @@ export class Popup extends UIElement implements IPopup {
 		height: this.ow.innerHeight
 	});
 
-	private targetBound!: () => IBound;
+	private __targetBound!: () => IBound;
 
-	private childrenPopups: Set<IPopup> = new Set();
+	private __childrenPopups: Set<IPopup> = new Set();
 
 	/** @override */
 	override updateParentElement(target: IUIElement): this {
 		if (target !== this && Component.isInstanceOf<Popup>(target, Popup)) {
-			this.childrenPopups.forEach(popup => {
+			this.__childrenPopups.forEach(popup => {
 				if (!target.closest(popup) && popup.isOpened) {
 					popup.close();
 				}
 			});
 
-			if (!this.childrenPopups.has(target)) {
+			if (!this.__childrenPopups.has(target)) {
 				this.j.e.on(target, 'beforeClose', () => {
-					this.childrenPopups.delete(target);
+					this.__childrenPopups.delete(target);
 				});
 			}
 
-			this.childrenPopups.add(target);
+			this.__childrenPopups.add(target);
 		}
 
 		return super.updateParentElement(target);
@@ -120,12 +120,12 @@ export class Popup extends UIElement implements IPopup {
 	): this {
 		markOwner(this.jodit, this.container);
 
-		this.calculateZIndex();
+		this.__calculateZIndex();
 
 		this.isOpened = true;
-		this.addGlobalListeners();
+		this.__addGlobalListeners();
 
-		this.targetBound = !keepPosition
+		this.__targetBound = !keepPosition
 			? getBound
 			: this.getKeepBound(getBound);
 
@@ -146,7 +146,7 @@ export class Popup extends UIElement implements IPopup {
 		return this;
 	}
 
-	private calculateZIndex(): void {
+	private __calculateZIndex(): void {
 		if (this.container.style.zIndex) {
 			return;
 		}
@@ -239,8 +239,8 @@ export class Popup extends UIElement implements IPopup {
 			return this;
 		}
 
-		const [pos, strategy] = this.calculatePosition(
-			this.targetBound(),
+		const [pos, strategy] = this.__calculatePosition(
+			this.__targetBound(),
 			this.viewBound(),
 			position(this.container, this.j)
 		);
@@ -252,7 +252,7 @@ export class Popup extends UIElement implements IPopup {
 			top: pos.top
 		});
 
-		this.childrenPopups.forEach(popup => popup.updatePosition());
+		this.__childrenPopups.forEach(popup => popup.updatePosition());
 
 		return this;
 	}
@@ -266,7 +266,7 @@ export class Popup extends UIElement implements IPopup {
 	/**
 	 * Calculate start point
 	 */
-	private calculatePosition(
+	private __calculatePosition(
 		target: IBound,
 		view: IBound,
 		container: IBound,
@@ -305,12 +305,12 @@ export class Popup extends UIElement implements IPopup {
 		const getMatchStrategy = (inBox: IBound): Nullable<PopupStrategy> => {
 			let strategy: Nullable<PopupStrategy> = null;
 
-			if (Popup.boxInView(getPointByStrategy(defaultStrategy), inBox)) {
+			if (Popup.__boxInView(getPointByStrategy(defaultStrategy), inBox)) {
 				strategy = defaultStrategy;
 			} else {
 				strategy =
 					list.find((key): CanUndef<string> => {
-						if (Popup.boxInView(getPointByStrategy(key), inBox)) {
+						if (Popup.__boxInView(getPointByStrategy(key), inBox)) {
 							return key;
 						}
 
@@ -325,7 +325,10 @@ export class Popup extends UIElement implements IPopup {
 		let strategy = getMatchStrategy(position(this.j.container, this.j));
 
 		// If not found or is not inside window view
-		if (!strategy || !Popup.boxInView(getPointByStrategy(strategy), view)) {
+		if (
+			!strategy ||
+			!Popup.__boxInView(getPointByStrategy(strategy), view)
+		) {
 			// Find match strategy inside window view
 			strategy = getMatchStrategy(view) || strategy || defaultStrategy;
 		}
@@ -336,7 +339,7 @@ export class Popup extends UIElement implements IPopup {
 	/**
 	 * Check if one box is inside second
 	 */
-	private static boxInView(box: IBound, view: IBound): boolean {
+	private static __boxInView(box: IBound, view: IBound): boolean {
 		const accuracy = 2;
 
 		return (
@@ -358,12 +361,12 @@ export class Popup extends UIElement implements IPopup {
 
 		this.isOpened = false;
 
-		this.childrenPopups.forEach(popup => popup.close());
+		this.__childrenPopups.forEach(popup => popup.close());
 
 		this.j.e.fire(this, 'beforeClose');
 		this.j.e.fire('beforePopupClose', this);
 
-		this.removeGlobalListeners();
+		this.__removeGlobalListeners();
 		Dom.safeRemove(this.container);
 
 		return this;
@@ -373,7 +376,7 @@ export class Popup extends UIElement implements IPopup {
 	 * Close popup if click was in outside
 	 */
 	@autobind
-	private closeOnOutsideClick(e: MouseEvent): void {
+	private __closeOnOutsideClick(e: MouseEvent): void {
 		if (!this.isOpened || this.isOwnClick(e)) {
 			return;
 		}
@@ -391,7 +394,7 @@ export class Popup extends UIElement implements IPopup {
 		return Boolean(box && (this === box || box.closest(this)));
 	}
 
-	private addGlobalListeners(): void {
+	private __addGlobalListeners(): void {
 		const up = this.throttleUpdatePosition,
 			ow = this.ow;
 
@@ -400,8 +403,8 @@ export class Popup extends UIElement implements IPopup {
 		if (this.smart) {
 			this.j.e
 				.on('escape', this.close)
-				.on('mousedown touchstart', this.closeOnOutsideClick)
-				.on(ow, 'mousedown touchstart', this.closeOnOutsideClick);
+				.on('mousedown touchstart', this.__closeOnOutsideClick)
+				.on(ow, 'mousedown touchstart', this.__closeOnOutsideClick);
 		}
 
 		this.j.e
@@ -416,7 +419,7 @@ export class Popup extends UIElement implements IPopup {
 		});
 	}
 
-	private removeGlobalListeners(): void {
+	private __removeGlobalListeners(): void {
 		const up = this.throttleUpdatePosition,
 			ow = this.ow;
 
@@ -425,8 +428,8 @@ export class Popup extends UIElement implements IPopup {
 		if (this.smart) {
 			this.j.e
 				.off('escape', this.close)
-				.off('mousedown touchstart', this.closeOnOutsideClick)
-				.off(ow, 'mousedown touchstart', this.closeOnOutsideClick);
+				.off('mousedown touchstart', this.__closeOnOutsideClick)
+				.off(ow, 'mousedown touchstart', this.__closeOnOutsideClick);
 		}
 
 		this.j.e

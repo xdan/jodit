@@ -38,11 +38,11 @@ export class lineHeight extends Plugin {
 			lineHeight: jodit.o.defaultLineHeight
 		});
 
-		jodit.registerCommand('applyLineHeight', this.applyLineHeight);
+		jodit.registerCommand('applyLineHeight', this.__applyLineHeight);
 	}
 
 	@autobind
-	private applyLineHeight(ignore: string, ignoreA: any, value: any): void {
+	private __applyLineHeight(ignore: string, ignoreA: any, value: any): void {
 		const { s, createInside: c, editor: root, o } = this.j;
 
 		if (!s.isFocused()) {

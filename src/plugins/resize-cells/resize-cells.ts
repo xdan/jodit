@@ -37,31 +37,31 @@ export class resizeCells extends Plugin {
 	/**
 	 * Shortcut for Table module
 	 */
-	private get module(): Table {
+	private get __module(): Table {
 		return this.j.getInstance<Table>('Table', this.j.o);
 	}
 
 	/**
 	 * Now editor has rtl direction
 	 */
-	private get isRTL(): boolean {
+	private get __isRTL(): boolean {
 		return this.j.o.direction === 'rtl';
 	}
 
-	private selectMode: boolean = false;
+	private __selectMode: boolean = false;
 
-	private resizeDelta: number = 0;
-	private resizeHandler!: HTMLElement;
+	private __resizeDelta: number = 0;
+	private __resizeHandler!: HTMLElement;
 
-	private showResizeHandle(): void {
-		this.j.async.clearTimeout(this.hideTimeout);
-		this.j.workplace.appendChild(this.resizeHandler);
+	private __showResizeHandle(): void {
+		this.j.async.clearTimeout(this.__hideTimeout);
+		this.j.workplace.appendChild(this.__resizeHandler);
 	}
 
-	private hideResizeHandle(): void {
-		this.hideTimeout = this.j.async.setTimeout(
+	private __hideResizeHandle(): void {
+		this.__hideTimeout = this.j.async.setTimeout(
 			() => {
-				Dom.safeRemove(this.resizeHandler);
+				Dom.safeRemove(this.__resizeHandler);
 			},
 			{
 				timeout: this.j.defaultTimeout,
@@ -70,96 +70,101 @@ export class resizeCells extends Plugin {
 		);
 	}
 
-	private createResizeHandle = (): void => {
-		if (!this.resizeHandler) {
-			this.resizeHandler = this.j.c.div('jodit-table-resizer');
+	@autobind
+	private __createResizeHandle(): void {
+		if (!this.__resizeHandler) {
+			this.__resizeHandler = this.j.c.div('jodit-table-resizer');
 
 			this.j.e
 				.on(
-					this.resizeHandler,
+					this.__resizeHandler,
 					'mousedown.table touchstart.table',
-					this.onHandleMouseDown
+					this.__onHandleMouseDown
 				)
-				.on(this.resizeHandler, 'mouseenter.table', () => {
-					this.j.async.clearTimeout(this.hideTimeout);
+				.on(this.__resizeHandler, 'mouseenter.table', () => {
+					this.j.async.clearTimeout(this.__hideTimeout);
 				});
 		}
-	};
+	}
 
-	private hideTimeout: number = 0;
+	private __hideTimeout: number = 0;
 
-	private drag: boolean = false;
+	private __drag: boolean = false;
 
-	private wholeTable!: boolean | null;
-	private workCell!: HTMLTableCellElement;
-	private workTable!: HTMLTableElement;
+	private __wholeTable!: boolean | null;
+	private __workCell!: HTMLTableCellElement;
+	private __workTable!: HTMLTableElement;
 
-	private minX: number = 0;
-	private maxX: number = 0;
+	private __minX: number = 0;
+	private __maxX: number = 0;
 
-	private startX: number = 0;
+	private __startX: number = 0;
 
 	/**
 	 * Click on resize handle
 	 */
 	@autobind
-	private onHandleMouseDown(event: MouseEvent): boolean | void {
+	private __onHandleMouseDown(event: MouseEvent): boolean | void {
 		if (this.j.isLocked) {
 			return;
 		}
 
-		this.drag = true;
+		this.__drag = true;
 
 		this.j.e
 			.on(
 				this.j.ow,
 				'mouseup.resize-cells touchend.resize-cells',
-				this.onMouseUp
+				this.__onMouseUp
 			)
-			.on(this.j.ew, 'mousemove.table touchmove.table', this.onMouseMove);
+			.on(
+				this.j.ew,
+				'mousemove.table touchmove.table',
+				this.__onMouseMove
+			);
 
-		this.startX = event.clientX;
+		this.__startX = event.clientX;
 
 		this.j.lock(key);
-		this.resizeHandler.classList.add('jodit-table-resizer_moved');
+		this.__resizeHandler.classList.add('jodit-table-resizer_moved');
 
 		let box: ClientRect,
-			tableBox = this.workTable.getBoundingClientRect();
+			tableBox = this.__workTable.getBoundingClientRect();
 
-		this.minX = 0;
-		this.maxX = 1000000;
+		this.__minX = 0;
+		this.__maxX = 1000000;
 
-		if (this.wholeTable != null) {
+		if (this.__wholeTable != null) {
 			tableBox = (
-				this.workTable.parentNode as HTMLElement
+				this.__workTable.parentNode as HTMLElement
 			).getBoundingClientRect();
 
-			this.minX = tableBox.left;
-			this.maxX = this.minX + tableBox.width;
+			this.__minX = tableBox.left;
+			this.__maxX = this.__minX + tableBox.width;
 		} else {
 			// find maximum columns
 			const coordinate = Table.formalCoordinate(
-				this.workTable,
-				this.workCell,
+				this.__workTable,
+				this.__workCell,
 				true
 			);
 
-			Table.formalMatrix(this.workTable, (td, i, j) => {
+			Table.formalMatrix(this.__workTable, (td, i, j) => {
 				if (coordinate[1] === j) {
 					box = td.getBoundingClientRect();
 
-					this.minX = Math.max(
+					this.__minX = Math.max(
 						box.left + consts.NEARBY / 2,
-						this.minX
+						this.__minX
 					);
 				}
 
-				if (coordinate[1] + (this.isRTL ? -1 : 1) === j) {
+				if (coordinate[1] + (this.__isRTL ? -1 : 1) === j) {
 					box = td.getBoundingClientRect();
 
-					this.maxX = Math.min(
+					this.__maxX = Math.min(
 						box.left + box.width - consts.NEARBY / 2,
-						this.maxX
+						this.__maxX
 					);
 				}
 			});
@@ -172,8 +177,8 @@ export class resizeCells extends Plugin {
 	 * Mouse move after click on resize handle
 	 */
 	@autobind
-	private onMouseMove(event: MouseEvent): void {
-		if (!this.drag) {
+	private __onMouseMove(event: MouseEvent): void {
+		if (!this.__drag) {
 			return;
 		}
 
@@ -182,25 +187,25 @@ export class resizeCells extends Plugin {
 		let x = event.clientX;
 
 		const workplacePosition: IBound = offset(
-			(this.resizeHandler.parentNode ||
+			(this.__resizeHandler.parentNode ||
 				this.j.od.documentElement) as HTMLElement,
 			this.j,
 			this.j.od,
 			true
 		);
 
-		if (x < this.minX) {
-			x = this.minX;
+		if (x < this.__minX) {
+			x = this.__minX;
 		}
 
-		if (x > this.maxX) {
-			x = this.maxX;
+		if (x > this.__maxX) {
+			x = this.__maxX;
 		}
 
-		this.resizeDelta =
-			x - this.startX + (!this.j.o.iframe ? 0 : workplacePosition.left);
+		this.__resizeDelta =
+			x - this.__startX + (!this.j.o.iframe ? 0 : workplacePosition.left);
 
-		this.resizeHandler.style.left =
+		this.__resizeHandler.style.left =
 			x - (this.j.o.iframe ? 0 : workplacePosition.left) + 'px';
 
 		const sel = this.j.s.sel;
@@ -212,32 +217,32 @@ export class resizeCells extends Plugin {
 	 * Mouse up every where after move and click
 	 */
 	@autobind
-	private onMouseUp(e: MouseEvent): void {
-		if (this.selectMode || this.drag) {
-			this.selectMode = false;
+	private __onMouseUp(e: MouseEvent): void {
+		if (this.__selectMode || this.__drag) {
+			this.__selectMode = false;
 			this.j.unlock();
 		}
 
-		if (!this.resizeHandler || !this.drag) {
+		if (!this.__resizeHandler || !this.__drag) {
 			return;
 		}
 
-		this.drag = false;
+		this.__drag = false;
 
 		this.j.e.off(
 			this.j.ew,
 			'mousemove.table touchmove.table',
-			this.onMouseMove
+			this.__onMouseMove
 		);
 
-		this.resizeHandler.classList.remove('jodit-table-resizer_moved');
+		this.__resizeHandler.classList.remove('jodit-table-resizer_moved');
 
-		if (this.startX !== e.clientX) {
+		if (this.__startX !== e.clientX) {
 			// resize column
-			if (this.wholeTable == null) {
-				this.resizeColumns();
+			if (this.__wholeTable == null) {
+				this.__resizeColumns();
 			} else {
-				this.resizeTable();
+				this.__resizeTable();
 			}
 		}
 
@@ -248,29 +253,29 @@ export class resizeCells extends Plugin {
 	/**
 	 * Resize only one column
 	 */
-	private resizeColumns(): void {
-		const delta = this.resizeDelta;
+	private __resizeColumns(): void {
+		const delta = this.__resizeDelta;
 
 		const marked: HTMLTableCellElement[] = [];
 
 		Table.setColumnWidthByDelta(
-			this.workTable,
-			Table.formalCoordinate(this.workTable, this.workCell, true)[1],
+			this.__workTable,
+			Table.formalCoordinate(this.__workTable, this.__workCell, true)[1],
 			delta,
 			true,
 			marked
 		);
 
 		const nextTD = call(
-			this.isRTL ? Dom.prev : Dom.next,
-			this.workCell,
+			this.__isRTL ? Dom.prev : Dom.next,
+			this.__workCell,
 			Dom.isCell,
-			this.workCell.parentNode as HTMLElement
+			this.__workCell.parentNode as HTMLElement
 		) as HTMLTableCellElement;
 
 		Table.setColumnWidthByDelta(
-			this.workTable,
-			Table.formalCoordinate(this.workTable, nextTD)[1],
+			this.__workTable,
+			Table.formalCoordinate(this.__workTable, nextTD)[1],
 			-delta,
 			false,
 			marked
@@ -280,35 +285,35 @@ export class resizeCells extends Plugin {
 	/**
 	 * Resize whole table
 	 */
-	private resizeTable(): void {
-		const delta = this.resizeDelta * (this.isRTL ? -1 : 1);
+	private __resizeTable(): void {
+		const delta = this.__resizeDelta * (this.__isRTL ? -1 : 1);
 
-		const width = this.workTable.offsetWidth,
+		const width = this.__workTable.offsetWidth,
 			parentWidth = getContentWidth(
-				this.workTable.parentNode as HTMLElement,
+				this.__workTable.parentNode as HTMLElement,
 				this.j.ew
 			);
 
 		// for RTL use mirror logic
-		const rightSide = !this.wholeTable;
-		const needChangeWidth = this.isRTL ? !rightSide : rightSide;
+		const rightSide = !this.__wholeTable;
+		const needChangeWidth = this.__isRTL ? !rightSide : rightSide;
 
 		// right side
 		if (needChangeWidth) {
-			this.workTable.style.width =
+			this.__workTable.style.width =
 				((width + delta) / parentWidth) * 100 + '%';
 		} else {
-			const side = this.isRTL ? 'marginRight' : 'marginLeft';
+			const side = this.__isRTL ? 'marginRight' : 'marginLeft';
 
 			const margin = parseInt(
-				this.j.ew.getComputedStyle(this.workTable)[side] || '0',
+				this.j.ew.getComputedStyle(this.__workTable)[side] || '0',
 				10
 			);
 
-			this.workTable.style.width =
+			this.__workTable.style.width =
 				((width - delta) / parentWidth) * 100 + '%';
 
-			this.workTable.style[side] =
+			this.__workTable.style[side] =
 				((margin + delta) / parentWidth) * 100 + '%';
 		}
 	}
@@ -319,15 +324,15 @@ export class resizeCells extends Plugin {
 	 * @param wholeTable - resize whole table by left side,
 	 * false - resize whole table by right side, null - resize column
 	 */
-	private setWorkCell(
+	private __setWorkCell(
 		cell: HTMLTableCellElement,
 		wholeTable: boolean | null = null
 	): void {
-		this.wholeTable = wholeTable;
+		this.__wholeTable = wholeTable;
 
-		this.workCell = cell;
+		this.__workCell = cell;
 
-		this.workTable = Dom.up(
+		this.__workTable = Dom.up(
 			cell,
 			(elm: Node | null) => Dom.isTag(elm, 'table'),
 			this.j.editor
@@ -337,7 +342,7 @@ export class resizeCells extends Plugin {
 	/**
 	 * Calc helper resize handle position
 	 */
-	private calcHandlePosition(
+	private __calcHandlePosition(
 		table: HTMLTableElement,
 		cell: HTMLTableCellElement,
 		offsetX: number = 0,
@@ -346,7 +351,7 @@ export class resizeCells extends Plugin {
 		const box = offset(cell, this.j, this.j.ed);
 
 		if (offsetX > consts.NEARBY && offsetX < box.width - consts.NEARBY) {
-			this.hideResizeHandle();
+			this.__hideResizeHandle();
 			return;
 		}
 
@@ -358,37 +363,37 @@ export class resizeCells extends Plugin {
 			),
 			parentBox: IBound = offset(table, this.j, this.j.ed);
 
-		this.resizeHandler.style.left =
+		this.__resizeHandler.style.left =
 			(offsetX <= consts.NEARBY ? box.left : box.left + box.width) -
 			workplacePosition.left +
 			delta +
 			'px';
 
-		Object.assign(this.resizeHandler.style, {
+		Object.assign(this.__resizeHandler.style, {
 			height: parentBox.height + 'px',
 			top: parentBox.top - workplacePosition.top + 'px'
 		});
 
-		this.showResizeHandle();
+		this.__showResizeHandle();
 
 		if (offsetX <= consts.NEARBY) {
 			const prevTD = call(
-				this.isRTL ? Dom.next : Dom.prev,
+				this.__isRTL ? Dom.next : Dom.prev,
 				cell,
 				Dom.isCell,
 				cell.parentNode as HTMLElement
 			) as HTMLTableCellElement;
 
-			this.setWorkCell(prevTD || cell, prevTD ? null : true);
+			this.__setWorkCell(prevTD || cell, prevTD ? null : true);
 		} else {
 			const nextTD = call(
-				!this.isRTL ? Dom.next : Dom.prev,
+				!this.__isRTL ? Dom.next : Dom.prev,
 				cell,
 				Dom.isCell,
 				cell.parentNode as HTMLElement
 			);
 
-			this.setWorkCell(cell, !nextTD ? false : null);
+			this.__setWorkCell(cell, !nextTD ? false : null);
 		}
 	}
 
@@ -404,28 +409,28 @@ export class resizeCells extends Plugin {
 			.on(
 				'change.resize-cells afterCommand.resize-cells afterSetMode.resize-cells',
 				() => {
-					$$('table', editor.editor).forEach(this.observe);
+					$$('table', editor.editor).forEach(this.__observe);
 				}
 			)
 			.on(this.j.ow, 'scroll.resize-cells', () => {
-				if (!this.drag) {
+				if (!this.__drag) {
 					return;
 				}
 
 				const parent = Dom.up(
-					this.workCell,
+					this.__workCell,
 					(elm: Node | null) => Dom.isTag(elm, 'table'),
 					editor.editor
 				) as HTMLElement;
 
 				if (parent) {
 					const parentBox = parent.getBoundingClientRect();
-					this.resizeHandler.style.top = parentBox.top + 'px';
+					this.__resizeHandler.style.top = parentBox.top + 'px';
 				}
 			})
 			.on('beforeSetMode.resize-cells', () => {
-				this.module.getAllSelectedCells().forEach(td => {
-					this.module.removeSelection(td);
+				this.__module.getAllSelectedCells().forEach(td => {
+					this.__module.removeSelection(td);
 					Table.normalizeTable(
 						Dom.closest(
 							td,
@@ -441,7 +446,7 @@ export class resizeCells extends Plugin {
 	 * Add to every Table listeners
 	 */
 	@autobind
-	private observe(table: HTMLTableElement): void {
+	private __observe(table: HTMLTableElement): void {
 		if (dataBind(table, key)) {
 			return;
 		}
@@ -451,10 +456,10 @@ export class resizeCells extends Plugin {
 		this.j.e
 			.on(table, 'mouseleave.resize-cells', (e: MouseEvent) => {
 				if (
-					this.resizeHandler &&
-					this.resizeHandler !== e.relatedTarget
+					this.__resizeHandler &&
+					this.__resizeHandler !== e.relatedTarget
 				) {
-					this.hideResizeHandle();
+					this.__hideResizeHandle();
 				}
 			})
 			.on(
@@ -476,7 +481,7 @@ export class resizeCells extends Plugin {
 							return;
 						}
 
-						this.calcHandlePosition(table, cell, event.offsetX);
+						this.__calcHandlePosition(table, cell, event.offsetX);
 					},
 					{
 						timeout: this.j.defaultTimeout
@@ -484,7 +489,7 @@ export class resizeCells extends Plugin {
 				)
 			);
 
-		this.createResizeHandle();
+		this.__createResizeHandle();
 	}
 
 	beforeDestruct(jodit: IJodit): void {

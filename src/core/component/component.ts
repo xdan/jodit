@@ -217,13 +217,13 @@ export abstract class Component implements IComponent {
 	 * @see ComponentStatus
 	 */
 	setStatus(componentStatus: ComponentStatus): void {
-		return this.setStatusComponent(componentStatus, this);
+		return this.__setStatusComponent(componentStatus, this);
 	}
 
 	/**
 	 * Set status recursively on all parents
 	 */
-	private setStatusComponent(
+	private __setStatusComponent(
 		componentStatus: ComponentStatus,
 		component: this
 	): void {
@@ -237,8 +237,8 @@ export abstract class Component implements IComponent {
 
 		const proto = Object.getPrototypeOf(this);
 
-		if (proto && isFunction(proto.setStatusComponent)) {
-			proto.setStatusComponent(componentStatus, component);
+		if (proto && isFunction(proto.__setStatusComponent)) {
+			proto.__setStatusComponent(componentStatus, component);
 		}
 
 		const statuses = StatusListHandlers.get(this),

@@ -19,7 +19,7 @@ export class Response<T> implements IResponse<T> {
 		return this.request.url;
 	}
 
-	private readonly body: string | Blob;
+	private readonly __body: string | Blob;
 
 	constructor(
 		request: IRequest,
@@ -30,18 +30,18 @@ export class Response<T> implements IResponse<T> {
 		this.request = request;
 		this.status = status;
 		this.statusText = statusText;
-		this.body = body;
+		this.__body = body;
 	}
 
 	async json(): Promise<T> {
-		return JSON.parse(this.body as string);
+		return JSON.parse(this.__body as string);
 	}
 
 	text(): Promise<string> {
-		return Promise.resolve(this.body as string);
+		return Promise.resolve(this.__body as string);
 	}
 
 	async blob(): Promise<Blob> {
-		return this.body as Blob;
+		return this.__body as Blob;
 	}
 }

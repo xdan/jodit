@@ -30,7 +30,7 @@ import { assert } from 'jodit/core/helpers/utils/assert';
 type Callback = (...args: any[]) => void;
 
 export class Async implements IAsync {
-	private timers: Map<number | string | Function, number> = new Map();
+	private __timers: Map<number | string | Function, number> = new Map();
 	private __callbacks: Map<number | string, Callback> = new Map();
 
 	delay(timeout: number | IAsyncParams): RejectablePromise<void> {
@@ -54,22 +54,22 @@ export class Async implements IAsync {
 		}
 
 		if (options.label) {
-			this.clearLabel(options.label);
+			this.__clearLabel(options.label);
 		}
 
 		const timer = setTimeout(callback, timeout, ...args),
 			key = options.label || timer;
 
-		this.timers.set(key, timer);
+		this.__timers.set(key, timer);
 		this.__callbacks.set(key, callback);
 
 		return timer;
 	}
 
 	updateTimeout(label: string, timeout: number): Nullable<number> {
-		assert(label && this.timers.has(label), 'Label does not exist');
+		assert(label && this.__timers.has(label), 'Label does not exist');
 
-		if (!label || !this.timers.has(label)) {
+		if (!label || !this.__timers.has(label)) {
 			return null;
 		}
 
@@ -78,10 +78,10 @@ export class Async implements IAsync {
 		return this.setTimeout(callback, { label, timeout });
 	}
 
-	private clearLabel(label: string): void {
-		if (label && this.timers.has(label)) {
-			clearTimeout(this.timers.get(label) as number);
-			this.timers.delete(label);
+	private __clearLabel(label: string): void {
+		if (label && this.__timers.has(label)) {
+			clearTimeout(this.__timers.get(label) as number);
+			this.__timers.delete(label);
 			this.__callbacks.delete(label);
 		}
 	}
@@ -90,11 +90,11 @@ export class Async implements IAsync {
 	clearTimeout(label: string): void;
 	clearTimeout(timerOrLabel: number | string): void {
 		if (isString(timerOrLabel)) {
-			return this.clearLabel(timerOrLabel);
+			return this.__clearLabel(timerOrLabel);
 		}
 
 		clearTimeout(timerOrLabel);
-		this.timers.delete(timerOrLabel);
+		this.__timers.delete(timerOrLabel);
 		this.__callbacks.delete(timerOrLabel);
 	}
 
@@ -154,7 +154,7 @@ export class Async implements IAsync {
 					isFunction(timeout) ? timeout() : timeout
 				);
 
-				this.timers.set(fn, timer);
+				this.__timers.set(fn, timer);
 			}
 		};
 
@@ -212,7 +212,7 @@ export class Async implements IAsync {
 							isFunction(timeout) ? timeout() : timeout
 						);
 
-						this.timers.set(callee, timer);
+						this.__timers.set(callee, timer);
 					} else {
 						timer = null;
 					}
@@ -223,7 +223,7 @@ export class Async implements IAsync {
 		};
 	}
 
-	private promisesRejections: Set<Function> = new Set();
+	private __promisesRejections: Set<Function> = new Set();
 
 	promise<T>(
 		executor: (
@@ -234,7 +234,7 @@ export class Async implements IAsync {
 		let rejectCallback: RejectablePromise<T>['rejectCallback'] = () => {};
 
 		const promise = new Promise<T>((resolve, reject) => {
-			this.promisesRejections.add(reject);
+			this.__promisesRejections.add(reject);
 			rejectCallback = reject;
 			return executor(resolve, reject);
 		});
@@ -250,7 +250,7 @@ export class Async implements IAsync {
 
 		promise
 			.finally(() => {
-				this.promisesRejections.delete(rejectCallback);
+				this.__promisesRejections.delete(rejectCallback);
 			})
 			.catch(() => null);
 
@@ -297,10 +297,10 @@ export class Async implements IAsync {
 		);
 	}
 
-	private requestsIdle: Set<number> = new Set();
-	private requestsRaf: Set<number> = new Set();
+	private __requestsIdle: Set<number> = new Set();
+	private __requestsRaf: Set<number> = new Set();
 
-	private requestIdleCallbackNative =
+	private __requestIdleCallbackNative =
 		(window as any)['requestIdleCallback']?.bind(window) ??
 		((
 			callback: IdleRequestCallback,
@@ -316,7 +316,7 @@ export class Async implements IAsync {
 			}, options?.timeout ?? 1);
 		});
 
-	private cancelIdleCallbackNative =
+	private __cancelIdleCallbackNative =
 		(window as any)['cancelIdleCallback']?.bind(window) ??
 		((request: number): void => {
 			this.clearTimeout(request);
@@ -326,8 +326,8 @@ export class Async implements IAsync {
 		callback: IdleRequestCallback,
 		options?: { timeout: number }
 	): number {
-		const request = this.requestIdleCallbackNative(callback, options);
-		this.requestsIdle.add(request);
+		const request = this.__requestIdleCallbackNative(callback, options);
+		this.__requestsIdle.add(request);
 		return request;
 	}
 
@@ -343,33 +343,33 @@ export class Async implements IAsync {
 	}
 
 	cancelIdleCallback(request: number): void {
-		this.requestsIdle.delete(request);
-		return this.cancelIdleCallbackNative(request);
+		this.__requestsIdle.delete(request);
+		return this.__cancelIdleCallbackNative(request);
 	}
 
 	requestAnimationFrame(callback: FrameRequestCallback): number {
 		const request = requestAnimationFrame(callback);
-		this.requestsRaf.add(request);
+		this.__requestsRaf.add(request);
 		return request;
 	}
 
 	cancelAnimationFrame(request: number): void {
-		this.requestsRaf.delete(request);
+		this.__requestsRaf.delete(request);
 		cancelAnimationFrame(request);
 	}
 
 	clear(): void {
-		this.requestsIdle.forEach(key => this.cancelIdleCallback(key));
-		this.requestsRaf.forEach(key => this.cancelAnimationFrame(key));
+		this.__requestsIdle.forEach(key => this.cancelIdleCallback(key));
+		this.__requestsRaf.forEach(key => this.cancelAnimationFrame(key));
 
-		this.timers.forEach(key =>
-			clearTimeout(this.timers.get(key) as number)
+		this.__timers.forEach(key =>
+			clearTimeout(this.__timers.get(key) as number)
 		);
 
-		this.timers.clear();
-		this.promisesRejections.forEach(reject => reject());
+		this.__timers.clear();
+		this.__promisesRejections.forEach(reject => reject());
 
-		this.promisesRejections.clear();
+		this.__promisesRejections.clear();
 	}
 
 	isDestructed: boolean = false;

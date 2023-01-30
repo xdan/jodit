@@ -89,18 +89,18 @@ export class imageProperties extends Plugin {
 		marginIsLocked: true
 	};
 
-	private activeTabState: { __activeTab: 'Image' | 'Advanced' } = {
+	private __activeTabState: { __activeTab: 'Image' | 'Advanced' } = {
 		__activeTab: 'Image'
 	};
 
 	@watch('state.marginIsLocked')
 	protected onChangeMarginIsLocked(): void {
-		if (!this.form) {
+		if (!this.__form) {
 			return;
 		}
 
 		const { marginRight, marginBottom, marginLeft, lockMargin } =
-			refs<HTMLInputElement>(this.form);
+			refs<HTMLInputElement>(this.__form);
 
 		[marginRight, marginBottom, marginLeft].forEach(elm => {
 			attr(elm, 'disabled', this.state.marginIsLocked || null);
@@ -113,11 +113,11 @@ export class imageProperties extends Plugin {
 
 	@watch('state.sizeIsLocked')
 	protected onChangeSizeIsLocked(): void {
-		if (!this.form) {
+		if (!this.__form) {
 			return;
 		}
 
-		const { lockSize, imageWidth } = refs<HTMLInputElement>(this.form);
+		const { lockSize, imageWidth } = refs<HTMLInputElement>(this.__form);
 
 		lockSize.innerHTML = Icon.get(
 			this.state.sizeIsLocked ? 'lock' : 'unlock'
@@ -135,12 +135,12 @@ export class imageProperties extends Plugin {
 		this.j.e.fire(imageWidth, 'change');
 	}
 
-	private form!: HTMLElement;
+	private __form!: HTMLElement;
 
 	/**
 	 * Dialog for form
 	 */
-	private dialog!: IDialog;
+	private __dialog!: IDialog;
 
 	/**
 	 * Open dialog editing image properties
@@ -157,12 +157,12 @@ export class imageProperties extends Plugin {
 	 * ```
 	 */
 	protected open(): void | false {
-		this.makeForm();
-		this.activeTabState.__activeTab = 'Image';
+		this.__makeForm();
+		this.__activeTabState.__activeTab = 'Image';
 
 		this.j.e.fire('hidePopup');
 
-		markOwner(this.j, this.dialog.container);
+		markOwner(this.j, this.__dialog.container);
 
 		this.state.marginIsLocked = true;
 		this.state.sizeIsLocked = true;
@@ -170,9 +170,9 @@ export class imageProperties extends Plugin {
 		this.onChangeMarginIsLocked();
 		this.onChangeSizeIsLocked();
 
-		this.updateValues();
+		this.__updateValues();
 
-		this.dialog.open().setModal(true).setPosition();
+		this.__dialog.open().setModal(true).setPosition();
 
 		return false;
 	}
@@ -180,12 +180,12 @@ export class imageProperties extends Plugin {
 	/**
 	 * Create form for edit image properties
 	 */
-	private makeForm(): void {
-		if (this.dialog) {
+	private __makeForm(): void {
+		if (this.__dialog) {
 			return;
 		}
 
-		this.dialog = this.j.dlg({
+		this.__dialog = this.j.dlg({
 			minWidth: Math.min(400, screen.width),
 			minHeight: 590,
 			buttons: ['fullsize', 'dialog.close']
@@ -199,7 +199,7 @@ export class imageProperties extends Plugin {
 				remove: Button(editor, 'bin', 'Delete')
 			};
 
-		editor.e.on(this.dialog, 'afterClose', () => {
+		editor.e.on(this.__dialog, 'afterClose', () => {
 			if (
 				this.state.image.parentNode &&
 				opt.image.selectImageAfterClose
@@ -210,19 +210,19 @@ export class imageProperties extends Plugin {
 
 		buttons.remove.onAction(() => {
 			editor.s.removeNode(this.state.image);
-			this.dialog.close();
+			this.__dialog.close();
 		});
 
-		const { dialog } = this;
+		const { __dialog } = this;
 
-		dialog.setHeader(i18n('Image properties'));
+		__dialog.setHeader(i18n('Image properties'));
 
 		const mainForm = form(editor);
-		this.form = mainForm;
+		this.__form = mainForm;
 
-		dialog.setContent(mainForm);
+		__dialog.setContent(mainForm);
 
-		const { tabsBox } = refs<HTMLInputElement>(this.form);
+		const { tabsBox } = refs<HTMLInputElement>(this.__form);
 
 		if (tabsBox) {
 			tabsBox.appendChild(
@@ -232,19 +232,19 @@ export class imageProperties extends Plugin {
 						{ name: 'Image', content: mainTab(editor) },
 						{ name: 'Advanced', content: positionTab(editor) }
 					],
-					this.activeTabState
+					this.__activeTabState
 				)
 			);
 		}
 
-		buttons.check.onAction(this.onApply);
+		buttons.check.onAction(this.__onApply);
 
-		const { changeImage, editImage } = refs<HTMLInputElement>(this.form);
+		const { changeImage, editImage } = refs<HTMLInputElement>(this.__form);
 
-		editor.e.on(changeImage, 'click', this.openImagePopup);
+		editor.e.on(changeImage, 'click', this.__openImagePopup);
 
 		if (opt.image.useImageEditor) {
-			editor.e.on(editImage, 'click', this.openImageEditor);
+			editor.e.on(editImage, 'click', this.__openImageEditor);
 		}
 
 		const { lockSize, lockMargin, imageWidth, imageHeight } =
@@ -291,15 +291,15 @@ export class imageProperties extends Plugin {
 			}
 		);
 
-		dialog.setFooter([buttons.remove, buttons.check]);
+		__dialog.setFooter([buttons.remove, buttons.check]);
 
-		dialog.setSize(this.j.o.image.dialogWidth);
+		__dialog.setSize(this.j.o.image.dialogWidth);
 	}
 
 	/**
 	 * Set input values from image
 	 */
-	private updateValues(): void {
+	private __updateValues(): void {
 		const opt = this.j.o;
 
 		const { image } = this.state;
@@ -324,7 +324,7 @@ export class imageProperties extends Plugin {
 			imageLinkOpenInNewTab,
 			imageViewSrc,
 			lockSize
-		} = refs<HTMLInputElement>(this.form);
+		} = refs<HTMLInputElement>(this.__form);
 
 		const updateLock = (): void => {
 				lockMargin.checked = this.state.marginIsLocked;
@@ -480,7 +480,7 @@ export class imageProperties extends Plugin {
 	 * Apply form's values to image
 	 */
 	@autobind
-	private onApply(): void {
+	private __onApply(): void {
 		const {
 			style,
 			imageSrc,
@@ -498,7 +498,7 @@ export class imageProperties extends Plugin {
 			align,
 			classes,
 			id
-		} = refs<HTMLInputElement>(this.form);
+		} = refs<HTMLInputElement>(this.__form);
 
 		const opt = this.j.o;
 		const { image } = this.state;
@@ -513,7 +513,7 @@ export class imageProperties extends Plugin {
 			attr(image, 'src', imageSrc.value);
 		} else {
 			Dom.safeRemove(image);
-			this.dialog.close();
+			this.__dialog.close();
 			return;
 		}
 
@@ -598,14 +598,14 @@ export class imageProperties extends Plugin {
 		}
 
 		this.j.synchronizeValues();
-		this.dialog.close();
+		this.__dialog.close();
 	}
 
 	/**
 	 * Open image editor dialog
 	 */
 	@autobind
-	private openImageEditor(): void {
+	private __openImageEditor(): void {
 		const url: string = attr(this.state.image, 'src') || '',
 			a = this.j.c.element('a'),
 			loadExternal = (): void => {
@@ -630,7 +630,7 @@ export class imageProperties extends Plugin {
 															resp.newfilename
 													);
 
-													this.updateValues();
+													this.__updateValues();
 												}
 											}
 										);
@@ -672,7 +672,7 @@ export class imageProperties extends Plugin {
 								timestamp.toString()
 						);
 
-						this.updateValues();
+						this.__updateValues();
 					},
 					error => {
 						this.j.alert(error.message);
@@ -688,11 +688,11 @@ export class imageProperties extends Plugin {
 	 * Open popup with filebrowser/uploader buttons for image
 	 */
 	@autobind
-	private openImagePopup(event: MouseEvent): void {
+	private __openImagePopup(event: MouseEvent): void {
 		const popup = new Popup(this.j),
-			{ changeImage } = refs(this.form);
+			{ changeImage } = refs(this.__form);
 
-		popup.setZIndex(this.dialog.getZIndex() + 1);
+		popup.setZIndex(this.__dialog.getZIndex() + 1);
 
 		popup
 			.setContent(
@@ -708,7 +708,7 @@ export class imageProperties extends Plugin {
 								);
 							}
 
-							this.updateValues();
+							this.__updateValues();
 
 							popup.close();
 						},
@@ -722,7 +722,7 @@ export class imageProperties extends Plugin {
 								attr(this.state.image, 'src', data.files[0]);
 								popup.close();
 
-								this.updateValues();
+								this.__updateValues();
 							}
 						}
 					},
@@ -787,7 +787,7 @@ export class imageProperties extends Plugin {
 
 	/** @override */
 	protected beforeDestruct(editor: IJodit): void {
-		this.dialog && this.dialog.destruct();
+		this.__dialog && this.__dialog.destruct();
 		editor.e.off(editor.editor, '.imageproperties').off('.imageproperties');
 	}
 }

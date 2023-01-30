@@ -75,57 +75,57 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 		return 'ImageEditor';
 	}
 
-	private resizeUseRatio: boolean = true;
-	private cropUseRatio: boolean = true;
+	private __resizeUseRatio: boolean = true;
+	private __cropUseRatio: boolean = true;
 
-	private readonly _dialog: IDialog;
-	private image!: HTMLImageElement;
-	private cropImage!: HTMLImageElement;
-	private clicked = false;
-	private target!: HTMLElement;
+	private readonly __dialog: IDialog;
+	private __image!: HTMLImageElement;
+	private __cropImage!: HTMLImageElement;
+	private __clicked = false;
+	private __target!: HTMLElement;
 
-	private start_x: number = 0;
-	private start_y: number = 0;
-	private top_x: number = 0;
-	private top_y: number = 0;
+	private __startX: number = 0;
+	private __startY: number = 0;
+	private __topX: number = 0;
+	private __topY: number = 0;
 
-	private width: number = 0;
-	private height: number = 0;
+	private __width: number = 0;
+	private __height: number = 0;
 
-	private activeTab: ImageAction = TABS.resize;
+	private __activeTab: ImageAction = TABS.resize;
 
-	private naturalWidth: number = 0;
-	private naturalHeight: number = 0;
+	private __naturalWidth: number = 0;
+	private __naturalHeight: number = 0;
 
-	private ratio: number = 0;
-	private new_h: number = 0;
-	private new_w: number = 0;
-	private diff_x: number = 0;
-	private diff_y: number = 0;
+	private __ratio: number = 0;
+	private __newH: number = 0;
+	private __newW: number = 0;
+	private __diffX: number = 0;
+	private __diffY: number = 0;
 
-	private readonly buttons: IDictionary<IUIButton>;
-	private readonly editor: HTMLElement;
-	private readonly resize_box: HTMLElement;
-	private readonly crop_box: HTMLElement;
+	private readonly __buttons: IDictionary<IUIButton>;
+	private readonly __editor: HTMLElement;
+	private readonly __resizeBox: HTMLElement;
+	private readonly __cropBox: HTMLElement;
 
-	private sizes: HTMLElement;
+	private __sizes: HTMLElement;
 
-	private readonly resizeHandler: HTMLElement;
-	private readonly cropHandler: HTMLElement;
+	private readonly __resizeHandler: HTMLElement;
+	private readonly __cropHandler: HTMLElement;
 
-	private readonly cropBox = {
+	private readonly __cropBoxRect = {
 		x: 0,
 		y: 0,
 		w: 0,
 		h: 0
 	};
 
-	private readonly resizeBox = {
+	private readonly __resizeBoxRect = {
 		w: 0,
 		h: 0
 	};
 
-	private static calcValueByPercent = (
+	private static __calcValueByPercent = (
 		value: number | string,
 		percent: string | number
 	): number => {
@@ -148,20 +148,21 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 		return valueNbr || 0;
 	};
 
-	private calcCropBox = (): void => {
-		const node = this.crop_box.parentNode as HTMLElement,
+	@autobind
+	private __calcCropBox(): void {
+		const node = this.__cropBox.parentNode as HTMLElement,
 			w = node.offsetWidth * 0.8,
 			h = node.offsetHeight * 0.8;
 
 		let wn: number = w,
 			hn: number = h;
 
-		const { naturalWidth: nw, naturalHeight: nh } = this;
+		const { __naturalWidth: nw, __naturalHeight: nh } = this;
 
 		if (w > nw && h > nh) {
 			wn = nw;
 			hn = nh;
-		} else if (this.ratio > w / h) {
+		} else if (this.__ratio > w / h) {
 			wn = w;
 			hn = nh * (w / nw);
 		} else {
@@ -169,137 +170,154 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 			hn = h;
 		}
 
-		css(this.crop_box, {
+		css(this.__cropBox, {
 			width: wn,
 			height: hn
 		});
-	};
+	}
 
-	private showCrop = (): void => {
-		if (!this.cropImage) {
+	@autobind
+	private __showCrop(): void {
+		if (!this.__cropImage) {
 			return;
 		}
 
-		this.calcCropBox();
+		this.__calcCropBox();
 
 		const w =
-			this.cropImage.offsetWidth ||
-			this.image.offsetWidth ||
-			this.image.naturalWidth;
+			this.__cropImage.offsetWidth ||
+			this.__image.offsetWidth ||
+			this.__image.naturalWidth;
 
-		this.new_w = ImageEditor.calcValueByPercent(w, this.o.cropDefaultWidth);
+		this.__newW = ImageEditor.__calcValueByPercent(
+			w,
+			this.o.cropDefaultWidth
+		);
 
 		const h =
-			this.cropImage.offsetHeight ||
-			this.image.offsetHeight ||
-			this.image.naturalHeight;
+			this.__cropImage.offsetHeight ||
+			this.__image.offsetHeight ||
+			this.__image.naturalHeight;
 
-		if (this.cropUseRatio) {
-			this.new_h = this.new_w / this.ratio;
+		if (this.__cropUseRatio) {
+			this.__newH = this.__newW / this.__ratio;
 		} else {
-			this.new_h = ImageEditor.calcValueByPercent(
+			this.__newH = ImageEditor.__calcValueByPercent(
 				h,
 				this.o.cropDefaultHeight
 			);
 		}
 
-		css(this.cropHandler, {
-			backgroundImage: 'url(' + attr(this.cropImage, 'src') + ')',
-			width: this.new_w,
-			height: this.new_h,
-			left: w / 2 - this.new_w / 2,
-			top: h / 2 - this.new_h / 2
+		css(this.__cropHandler, {
+			backgroundImage: 'url(' + attr(this.__cropImage, 'src') + ')',
+			width: this.__newW,
+			height: this.__newH,
+			left: w / 2 - this.__newW / 2,
+			top: h / 2 - this.__newH / 2
 		});
 
-		this.j.e.fire(this.cropHandler, 'updatesize');
-	};
+		this.j.e.fire(this.__cropHandler, 'updatesize');
+	}
 
-	private updateCropBox = (): void => {
-		if (!this.cropImage) {
+	@autobind
+	private __updateCropBox(): void {
+		if (!this.__cropImage) {
 			return;
 		}
 
-		const ratioX = this.cropImage.offsetWidth / this.naturalWidth,
-			ratioY = this.cropImage.offsetHeight / this.naturalHeight;
+		const ratioX = this.__cropImage.offsetWidth / this.__naturalWidth,
+			ratioY = this.__cropImage.offsetHeight / this.__naturalHeight;
 
-		this.cropBox.x = (css(this.cropHandler, 'left') as number) / ratioX;
-		this.cropBox.y = (css(this.cropHandler, 'top') as number) / ratioY;
-		this.cropBox.w = this.cropHandler.offsetWidth / ratioX;
-		this.cropBox.h = this.cropHandler.offsetHeight / ratioY;
+		this.__cropBoxRect.x =
+			(css(this.__cropHandler, 'left') as number) / ratioX;
+		this.__cropBoxRect.y =
+			(css(this.__cropHandler, 'top') as number) / ratioY;
+		this.__cropBoxRect.w = this.__cropHandler.offsetWidth / ratioX;
+		this.__cropBoxRect.h = this.__cropHandler.offsetHeight / ratioY;
 
-		this.sizes.textContent =
-			this.cropBox.w.toFixed(0) + 'x' + this.cropBox.h.toFixed(0);
-	};
+		this.__sizes.textContent =
+			this.__cropBoxRect.w.toFixed(0) +
+			'x' +
+			this.__cropBoxRect.h.toFixed(0);
+	}
 
-	private updateResizeBox = (): void => {
-		this.resizeBox.w = this.image.offsetWidth || this.naturalWidth;
-		this.resizeBox.h = this.image.offsetHeight || this.naturalHeight;
-	};
+	@autobind
+	private __updateResizeBox(): void {
+		this.__resizeBoxRect.w =
+			this.__image.offsetWidth || this.__naturalWidth;
+		this.__resizeBoxRect.h =
+			this.__image.offsetHeight || this.__naturalHeight;
+	}
 
-	private setHandlers = (): void => {
+	@autobind
+	private __setHandlers(): void {
 		const self: ImageEditor = this;
 
-		const { widthInput, heightInput } = refs<HTMLInputElement>(this.editor);
+		const { widthInput, heightInput } = refs<HTMLInputElement>(
+			this.__editor
+		);
 
 		self.j.e
 			.on(
 				[
-					self.editor.querySelector('.jodit_bottomright'),
-					self.cropHandler
+					self.__editor.querySelector('.jodit_bottomright'),
+					self.__cropHandler
 				],
 				`mousedown.${jie}`,
-				this.onResizeHandleMouseDown
+				this.__onResizeHandleMouseDown
 			)
 
 			.on(this.j.ow, `resize.${jie}`, () => {
-				this.j.e.fire(self.resizeHandler, 'updatesize');
-				self.showCrop();
-				this.j.e.fire(self.cropHandler, 'updatesize');
+				this.j.e.fire(self.__resizeHandler, 'updatesize');
+				self.__showCrop();
+				this.j.e.fire(self.__cropHandler, 'updatesize');
 			});
 
 		self.j.e
 			.on(
-				toArray(this.editor.querySelectorAll(`.${jie}__slider-title`)),
+				toArray(
+					this.__editor.querySelectorAll(`.${jie}__slider-title`)
+				),
 				'click',
-				this.onTitleModeClick
+				this.__onTitleModeClick
 			)
-			.on([widthInput, heightInput], 'input', this.onChangeSizeInput);
+			.on([widthInput, heightInput], 'input', this.__onChangeSizeInput);
 
 		const { keepAspectRatioResize, keepAspectRatioCrop } =
-			refs<HTMLInputElement>(this.editor);
+			refs<HTMLInputElement>(this.__editor);
 
 		if (keepAspectRatioResize) {
 			keepAspectRatioResize.addEventListener('change', () => {
-				this.resizeUseRatio = keepAspectRatioResize.checked;
+				this.__resizeUseRatio = keepAspectRatioResize.checked;
 			});
 		}
 
 		if (keepAspectRatioCrop) {
 			keepAspectRatioCrop.addEventListener('change', () => {
-				this.cropUseRatio = keepAspectRatioCrop.checked;
+				this.__cropUseRatio = keepAspectRatioCrop.checked;
 			});
 		}
 
 		self.j.e
-			.on(self.resizeHandler, 'updatesize', () => {
-				css(self.resizeHandler, {
+			.on(self.__resizeHandler, 'updatesize', () => {
+				css(self.__resizeHandler, {
 					top: 0,
 					left: 0,
-					width: self.image.offsetWidth || self.naturalWidth,
-					height: self.image.offsetHeight || self.naturalHeight
+					width: self.__image.offsetWidth || self.__naturalWidth,
+					height: self.__image.offsetHeight || self.__naturalHeight
 				});
 
-				this.updateResizeBox();
+				this.__updateResizeBox();
 			})
-			.on(self.cropHandler, 'updatesize', () => {
-				if (!self.cropImage) {
+			.on(self.__cropHandler, 'updatesize', () => {
+				if (!self.__cropImage) {
 					return;
 				}
 
-				let new_x = css(self.cropHandler, 'left') as number,
-					new_y = css(self.cropHandler, 'top') as number,
-					new_width = self.cropHandler.offsetWidth,
-					new_height = self.cropHandler.offsetHeight;
+				let new_x = css(self.__cropHandler, 'left') as number,
+					new_y = css(self.__cropHandler, 'top') as number,
+					new_width = self.__cropHandler.offsetWidth,
+					new_height = self.__cropHandler.offsetHeight;
 
 				if (new_x < 0) {
 					new_x = 0;
@@ -309,23 +327,23 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 					new_y = 0;
 				}
 
-				if (new_x + new_width > self.cropImage.offsetWidth) {
-					new_width = self.cropImage.offsetWidth - new_x;
+				if (new_x + new_width > self.__cropImage.offsetWidth) {
+					new_width = self.__cropImage.offsetWidth - new_x;
 
-					if (self.cropUseRatio) {
-						new_height = new_width / self.ratio;
+					if (self.__cropUseRatio) {
+						new_height = new_width / self.__ratio;
 					}
 				}
 
-				if (new_y + new_height > self.cropImage.offsetHeight) {
-					new_height = self.cropImage.offsetHeight - new_y;
+				if (new_y + new_height > self.__cropImage.offsetHeight) {
+					new_height = self.__cropImage.offsetHeight - new_y;
 
-					if (self.cropUseRatio) {
-						new_width = new_height * self.ratio;
+					if (self.__cropUseRatio) {
+						new_width = new_height * self.__ratio;
 					}
 				}
 
-				css(self.cropHandler, {
+				css(self.__cropHandler, {
 					width: new_width,
 					height: new_height,
 					left: new_x,
@@ -333,27 +351,27 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 					backgroundPosition:
 						-new_x - 1 + 'px ' + (-new_y - 1) + 'px',
 					backgroundSize:
-						self.cropImage.offsetWidth +
+						self.__cropImage.offsetWidth +
 						'px ' +
-						self.cropImage.offsetHeight +
+						self.__cropImage.offsetHeight +
 						'px'
 				});
 
-				self.updateCropBox();
+				self.__updateCropBox();
 			});
 
-		Object.values(self.buttons).forEach(button => {
+		Object.values(self.__buttons).forEach(button => {
 			button.onAction(() => {
 				const data = {
-					action: self.activeTab,
+					action: self.__activeTab,
 					box:
-						self.activeTab === TABS.resize
-							? self.resizeBox
-							: self.cropBox
+						self.__activeTab === TABS.resize
+							? self.__resizeBoxRect
+							: self.__cropBoxRect
 				} as ImageEditorActionBox;
 
 				switch (button) {
-					case self.buttons.saveas:
+					case self.__buttons.saveas:
 						self.j.prompt(
 							'Enter new name',
 							'Save in new file',
@@ -378,35 +396,35 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 						);
 						break;
 
-					case self.buttons.save:
+					case self.__buttons.save:
 						self.onSave(undefined, data, self.hide, (e: Error) => {
 							self.j.alert(e.message);
 						});
 						break;
 
-					case self.buttons.reset:
-						if (self.activeTab === TABS.resize) {
-							css(self.image, {
+					case self.__buttons.reset:
+						if (self.__activeTab === TABS.resize) {
+							css(self.__image, {
 								width: null,
 								height: null
 							});
 
-							widthInput.value = self.naturalWidth.toString();
-							heightInput.value = self.naturalHeight.toString();
+							widthInput.value = self.__naturalWidth.toString();
+							heightInput.value = self.__naturalHeight.toString();
 
-							self.j.e.fire(self.resizeHandler, 'updatesize');
+							self.j.e.fire(self.__resizeHandler, 'updatesize');
 						} else {
-							self.showCrop();
+							self.__showCrop();
 						}
 
 						break;
 				}
 			});
 		});
-	};
+	}
 
 	@autobind
-	private onTitleModeClick(e: MouseEvent): void {
+	private __onTitleModeClick(e: MouseEvent): void {
 		const self = this,
 			title = e.target as HTMLElement;
 
@@ -416,32 +434,32 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 			return;
 		}
 
-		$$(`.${jie}__slider,.${jie}__area`, self.editor).forEach(elm =>
+		$$(`.${jie}__slider,.${jie}__area`, self.__editor).forEach(elm =>
 			elm.classList.remove(`${jie}_active`)
 		);
 
 		slide.classList.add(`${jie}_active`);
-		this.activeTab = (attr(slide, '-area') as ImageAction) || TABS.resize;
+		this.__activeTab = (attr(slide, '-area') as ImageAction) || TABS.resize;
 
-		const tab = self.editor.querySelector(
-			`.${jie}__area.${jie}__area_` + self.activeTab
+		const tab = self.__editor.querySelector(
+			`.${jie}__area.${jie}__area_` + self.__activeTab
 		);
 
 		if (tab) {
 			tab.classList.add(`${jie}_active`);
 		}
 
-		if (self.activeTab === TABS.crop) {
-			self.showCrop();
+		if (self.__activeTab === TABS.crop) {
+			self.__showCrop();
 		}
 	}
 
 	@debounce()
 	@autobind
-	private onChangeSizeInput(e: MouseEvent): void {
+	private __onChangeSizeInput(e: MouseEvent): void {
 		const self = this,
 			input = e.target as HTMLInputElement,
-			{ widthInput, heightInput } = refs<HTMLInputElement>(this.editor),
+			{ widthInput, heightInput } = refs<HTMLInputElement>(this.__editor),
 			isWidth = attr(input, 'data-ref') === 'widthInput',
 			x = parseInt(input.value, 10),
 			minX = isWidth ? self.o.min_width : self.o.min_height,
@@ -450,15 +468,15 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 		let y: number;
 
 		if (x > minX) {
-			css(self.image, isWidth ? 'width' : 'height', x);
+			css(self.__image, isWidth ? 'width' : 'height', x);
 
-			if (self.resizeUseRatio) {
+			if (self.__resizeUseRatio) {
 				y = isWidth
-					? Math.round(x / self.ratio)
-					: Math.round(x * self.ratio);
+					? Math.round(x / self.__ratio)
+					: Math.round(x * self.__ratio);
 
 				if (y > minY) {
-					css(self.image, !isWidth ? 'width' : 'height', y);
+					css(self.__image, !isWidth ? 'width' : 'height', y);
 
 					if (isWidth) {
 						heightInput.value = y.toString();
@@ -469,124 +487,130 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 			}
 		}
 
-		this.j.e.fire(self.resizeHandler, 'updatesize');
+		this.j.e.fire(self.__resizeHandler, 'updatesize');
 	}
 
 	@autobind
-	private onResizeHandleMouseDown(e: MouseEvent): void {
+	private __onResizeHandleMouseDown(e: MouseEvent): void {
 		const self = this;
 
-		self.target = e.target as HTMLElement;
+		self.__target = e.target as HTMLElement;
 
 		e.preventDefault();
 		e.stopImmediatePropagation();
 
-		self.clicked = true;
+		self.__clicked = true;
 
-		self.start_x = e.clientX;
-		self.start_y = e.clientY;
+		self.__startX = e.clientX;
+		self.__startY = e.clientY;
 
-		if (self.activeTab === TABS.crop) {
-			self.top_x = css(self.cropHandler, 'left') as number;
-			self.top_y = css(self.cropHandler, 'top') as number;
-			self.width = self.cropHandler.offsetWidth;
-			self.height = self.cropHandler.offsetHeight;
+		if (self.__activeTab === TABS.crop) {
+			self.__topX = css(self.__cropHandler, 'left') as number;
+			self.__topY = css(self.__cropHandler, 'top') as number;
+			self.__width = self.__cropHandler.offsetWidth;
+			self.__height = self.__cropHandler.offsetHeight;
 		} else {
-			self.width = self.image.offsetWidth;
-			self.height = self.image.offsetHeight;
+			self.__width = self.__image.offsetWidth;
+			self.__height = self.__image.offsetHeight;
 		}
 
 		self.j.e
-			.on(this.j.ow, 'mousemove', this.onGlobalMouseMove)
-			.one(this.j.ow, 'mouseup', this.onGlobalMouseUp);
+			.on(this.j.ow, 'mousemove', this.__onGlobalMouseMove)
+			.one(this.j.ow, 'mouseup', this.__onGlobalMouseUp);
 	}
 
 	@autobind
-	private onGlobalMouseUp(e: MouseEvent): void {
-		if (this.clicked) {
-			this.clicked = false;
+	private __onGlobalMouseUp(e: MouseEvent): void {
+		if (this.__clicked) {
+			this.__clicked = false;
 			e.stopImmediatePropagation();
 
-			this.j.e.off(this.j.ow, 'mousemove', this.onGlobalMouseMove);
+			this.j.e.off(this.j.ow, 'mousemove', this.__onGlobalMouseMove);
 		}
 	}
 
 	@throttle(10)
-	private onGlobalMouseMove(e: MouseEvent): void {
+	private __onGlobalMouseMove(e: MouseEvent): void {
 		const self = this;
-		if (!self.clicked) {
+		if (!self.__clicked) {
 			return;
 		}
-		const { widthInput, heightInput } = refs<HTMLInputElement>(this.editor);
+		const { widthInput, heightInput } = refs<HTMLInputElement>(
+			this.__editor
+		);
 
-		self.diff_x = e.clientX - self.start_x;
-		self.diff_y = e.clientY - self.start_y;
+		self.__diffX = e.clientX - self.__startX;
+		self.__diffY = e.clientY - self.__startY;
 
 		if (
-			(self.activeTab === TABS.resize && self.resizeUseRatio) ||
-			(self.activeTab === TABS.crop && self.cropUseRatio)
+			(self.__activeTab === TABS.resize && self.__resizeUseRatio) ||
+			(self.__activeTab === TABS.crop && self.__cropUseRatio)
 		) {
-			if (self.diff_x) {
-				self.new_w = self.width + self.diff_x;
-				self.new_h = Math.round(self.new_w / self.ratio);
+			if (self.__diffX) {
+				self.__newW = self.__width + self.__diffX;
+				self.__newH = Math.round(self.__newW / self.__ratio);
 			} else {
-				self.new_h = self.height + self.diff_y;
-				self.new_w = Math.round(self.new_h * self.ratio);
+				self.__newH = self.__height + self.__diffY;
+				self.__newW = Math.round(self.__newH * self.__ratio);
 			}
 		} else {
-			self.new_w = self.width + self.diff_x;
-			self.new_h = self.height + self.diff_y;
+			self.__newW = self.__width + self.__diffX;
+			self.__newH = self.__height + self.__diffY;
 		}
 
-		if (self.activeTab === TABS.resize) {
-			if (self.new_w > self.o.resizeMinWidth) {
-				css(self.image, 'width', self.new_w + 'px');
-				widthInput.value = self.new_w.toString();
+		if (self.__activeTab === TABS.resize) {
+			if (self.__newW > self.o.resizeMinWidth) {
+				css(self.__image, 'width', self.__newW + 'px');
+				widthInput.value = self.__newW.toString();
 			}
 
-			if (self.new_h > self.o.resizeMinHeight) {
-				css(self.image, 'height', self.new_h + 'px');
-				heightInput.value = self.new_h.toString();
+			if (self.__newH > self.o.resizeMinHeight) {
+				css(self.__image, 'height', self.__newH + 'px');
+				heightInput.value = self.__newH.toString();
 			}
 
-			this.j.e.fire(self.resizeHandler, 'updatesize');
+			this.j.e.fire(self.__resizeHandler, 'updatesize');
 		} else {
-			if (self.target !== self.cropHandler) {
-				if (self.top_x + self.new_w > self.cropImage.offsetWidth) {
-					self.new_w = self.cropImage.offsetWidth - self.top_x;
+			if (self.__target !== self.__cropHandler) {
+				if (self.__topX + self.__newW > self.__cropImage.offsetWidth) {
+					self.__newW = self.__cropImage.offsetWidth - self.__topX;
 				}
-				if (self.top_y + self.new_h > self.cropImage.offsetHeight) {
-					self.new_h = self.cropImage.offsetHeight - self.top_y;
+				if (self.__topY + self.__newH > self.__cropImage.offsetHeight) {
+					self.__newH = self.__cropImage.offsetHeight - self.__topY;
 				}
-				css(self.cropHandler, {
-					width: self.new_w,
-					height: self.new_h
+				css(self.__cropHandler, {
+					width: self.__newW,
+					height: self.__newH
 				});
 			} else {
 				if (
-					self.top_x + self.diff_x + self.cropHandler.offsetWidth >
-					self.cropImage.offsetWidth
+					self.__topX +
+						self.__diffX +
+						self.__cropHandler.offsetWidth >
+					self.__cropImage.offsetWidth
 				) {
-					self.diff_x =
-						self.cropImage.offsetWidth -
-						self.top_x -
-						self.cropHandler.offsetWidth;
+					self.__diffX =
+						self.__cropImage.offsetWidth -
+						self.__topX -
+						self.__cropHandler.offsetWidth;
 				}
 
-				css(self.cropHandler, 'left', self.top_x + self.diff_x);
+				css(self.__cropHandler, 'left', self.__topX + self.__diffX);
 
 				if (
-					self.top_y + self.diff_y + self.cropHandler.offsetHeight >
-					self.cropImage.offsetHeight
+					self.__topY +
+						self.__diffY +
+						self.__cropHandler.offsetHeight >
+					self.__cropImage.offsetHeight
 				) {
-					self.diff_y =
-						self.cropImage.offsetHeight -
-						self.top_y -
-						self.cropHandler.offsetHeight;
+					self.__diffY =
+						self.__cropImage.offsetHeight -
+						self.__topY -
+						self.__cropHandler.offsetHeight;
 				}
-				css(self.cropHandler, 'top', self.top_y + self.diff_y);
+				css(self.__cropHandler, 'top', self.__topY + self.__diffY);
 			}
-			this.j.e.fire(self.cropHandler, 'updatesize');
+			this.j.e.fire(self.__cropHandler, 'updatesize');
 		}
 	}
 
@@ -607,7 +631,7 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 	 */
 	@autobind
 	hide(): void {
-		this._dialog.close();
+		this.__dialog.close();
 	}
 
 	/**
@@ -639,23 +663,25 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 		return this.j.async.promise<IDialog>((resolve: Function): void => {
 			const timestamp = new Date().getTime();
 
-			this.image = this.j.c.element('img');
+			this.__image = this.j.c.element('img');
 
-			$$('img,.jodit-icon_loader', this.resize_box).forEach(
+			$$('img,.jodit-icon_loader', this.__resizeBox).forEach(
 				Dom.safeRemove
 			);
 
-			$$('img,.jodit-icon_loader', this.crop_box).forEach(Dom.safeRemove);
+			$$('img,.jodit-icon_loader', this.__cropBox).forEach(
+				Dom.safeRemove
+			);
 
-			css(this.cropHandler, 'background', 'transparent');
+			css(this.__cropHandler, 'background', 'transparent');
 
 			this.onSave = save;
 
-			this.resize_box.appendChild(
+			this.__resizeBox.appendChild(
 				this.j.c.element('i', { class: 'jodit-icon_loader' })
 			);
 
-			this.crop_box.appendChild(
+			this.__cropBox.appendChild(
 				this.j.c.element('i', { class: 'jodit-icon_loader' })
 			);
 
@@ -665,12 +691,12 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 				url += '?_tst=' + timestamp;
 			}
 
-			this.image.setAttribute('src', url);
+			this.__image.setAttribute('src', url);
 
-			this._dialog.open();
+			this.__dialog.open();
 
 			const { widthInput, heightInput } = refs<HTMLInputElement>(
-				this.editor
+				this.__editor
 			);
 
 			const onload = (): void => {
@@ -678,43 +704,45 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 					return;
 				}
 
-				this.image.removeEventListener('load', onload);
-				this.naturalWidth = this.image.naturalWidth;
-				this.naturalHeight = this.image.naturalHeight;
+				this.__image.removeEventListener('load', onload);
+				this.__naturalWidth = this.__image.naturalWidth;
+				this.__naturalHeight = this.__image.naturalHeight;
 
-				widthInput.value = this.naturalWidth.toString();
-				heightInput.value = this.naturalHeight.toString();
+				widthInput.value = this.__naturalWidth.toString();
+				heightInput.value = this.__naturalHeight.toString();
 
-				this.ratio = this.naturalWidth / this.naturalHeight;
+				this.__ratio = this.__naturalWidth / this.__naturalHeight;
 
-				this.resize_box.appendChild(this.image);
+				this.__resizeBox.appendChild(this.__image);
 
-				this.cropImage = this.image.cloneNode(true) as HTMLImageElement;
+				this.__cropImage = this.__image.cloneNode(
+					true
+				) as HTMLImageElement;
 
-				this.crop_box.appendChild(this.cropImage);
+				this.__cropBox.appendChild(this.__cropImage);
 
 				Dom.safeRemove.apply(
 					null,
-					$$('.jodit-icon_loader', this.editor)
+					$$('.jodit-icon_loader', this.__editor)
 				);
 
-				if (this.activeTab === TABS.crop) {
-					this.showCrop();
+				if (this.__activeTab === TABS.crop) {
+					this.__showCrop();
 				}
 
-				this.j.e.fire(this.resizeHandler, 'updatesize');
-				this.j.e.fire(this.cropHandler, 'updatesize');
+				this.j.e.fire(this.__resizeHandler, 'updatesize');
+				this.j.e.fire(this.__cropHandler, 'updatesize');
 
-				this._dialog.setPosition();
+				this.__dialog.setPosition();
 
 				this.j.e.fire('afterImageEditor');
 
-				resolve(this._dialog);
+				resolve(this.__dialog);
 			};
 
-			this.image.addEventListener('load', onload);
+			this.__image.addEventListener('load', onload);
 
-			if (this.image.complete) {
+			if (this.__image.complete) {
 				onload();
 			}
 		});
@@ -730,50 +758,50 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 
 		const o = this.options;
 
-		this.resizeUseRatio = o.resizeUseRatio;
-		this.cropUseRatio = o.cropUseRatio;
+		this.__resizeUseRatio = o.resizeUseRatio;
+		this.__cropUseRatio = o.cropUseRatio;
 
-		this.buttons = {
+		this.__buttons = {
 			reset: Button(this.j, 'update', 'Reset'),
 			save: Button(this.j, 'save', 'Save'),
 			saveas: Button(this.j, 'save', 'Save as ...')
 		};
 
-		this.activeTab = o.resize ? TABS.resize : TABS.crop;
+		this.__activeTab = o.resize ? TABS.resize : TABS.crop;
 
-		this.editor = form(this.j, this.options);
+		this.__editor = form(this.j, this.options);
 
-		const { resizeBox, cropBox } = refs<HTMLInputElement>(this.editor);
+		const { resizeBox, cropBox } = refs<HTMLInputElement>(this.__editor);
 
-		this.resize_box = resizeBox;
-		this.crop_box = cropBox;
+		this.__resizeBox = resizeBox;
+		this.__cropBox = cropBox;
 
-		this.sizes = this.editor.querySelector(
+		this.__sizes = this.__editor.querySelector(
 			`.${jie}__area.${jie}__area_crop .jodit-image-editor__sizes`
 		) as HTMLElement;
 
-		this.resizeHandler = this.editor.querySelector(
+		this.__resizeHandler = this.__editor.querySelector(
 			`.${jie}__resizer`
 		) as HTMLElement;
 
-		this.cropHandler = this.editor.querySelector(
+		this.__cropHandler = this.__editor.querySelector(
 			`.${jie}__croper`
 		) as HTMLElement;
 
-		this._dialog = this.j.dlg({
+		this.__dialog = this.j.dlg({
 			buttons: ['fullsize', 'dialog.close']
 		});
 
-		this._dialog.setContent(this.editor);
+		this.__dialog.setContent(this.__editor);
 
-		this._dialog.setSize(this.o.width, this.o.height);
-		this._dialog.setHeader([
-			this.buttons.reset,
-			this.buttons.save,
-			this.buttons.saveas
+		this.__dialog.setSize(this.o.width, this.o.height);
+		this.__dialog.setHeader([
+			this.__buttons.reset,
+			this.__buttons.save,
+			this.__buttons.saveas
 		]);
 
-		this.setHandlers();
+		this.__setHandlers();
 	}
 
 	/** @override */
@@ -782,16 +810,16 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 			return;
 		}
 
-		if (this._dialog && !this._dialog.isInDestruct) {
-			this._dialog.destruct();
+		if (this.__dialog && !this.__dialog.isInDestruct) {
+			this.__dialog.destruct();
 		}
 
-		Dom.safeRemove(this.editor);
+		Dom.safeRemove(this.__editor);
 
 		if (this.j.e) {
 			this.j.e
-				.off(this.j.ow, 'mousemove', this.onGlobalMouseMove)
-				.off(this.j.ow, 'mouseup', this.onGlobalMouseUp)
+				.off(this.j.ow, 'mousemove', this.__onGlobalMouseMove)
+				.off(this.j.ow, 'mouseup', this.__onGlobalMouseUp)
 				.off(this.ow, `.${jie}`)
 				.off(`.${jie}`);
 		}

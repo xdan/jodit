@@ -58,7 +58,7 @@ export class UIList<T extends IViewBased = IViewBased>
 	/**
 	 * Make new group and append it in list of elements
 	 */
-	private makeGroup(): IUIGroup {
+	private __makeGroup(): IUIGroup {
 		return new UIGroup(this.jodit);
 	}
 
@@ -94,7 +94,7 @@ export class UIList<T extends IViewBased = IViewBased>
 
 		let lastBtnSeparator: boolean = false;
 
-		let line = this.makeGroup();
+		let line = this.__makeGroup();
 		this.append(line);
 		line.setMod('line', true);
 
@@ -105,9 +105,9 @@ export class UIList<T extends IViewBased = IViewBased>
 
 			switch (control.name) {
 				case '\n':
-					line = this.makeGroup();
+					line = this.__makeGroup();
 					line.setMod('line', true);
-					group = this.makeGroup();
+					group = this.__makeGroup();
 					line.append(group);
 					this.append(line);
 					break;
@@ -125,7 +125,7 @@ export class UIList<T extends IViewBased = IViewBased>
 					const space = new UISpacer(this.j);
 					line.append(space);
 
-					group = this.makeGroup();
+					group = this.__makeGroup();
 					line.append(group);
 					lastBtnSeparator = false;
 
@@ -139,7 +139,7 @@ export class UIList<T extends IViewBased = IViewBased>
 
 			if (elm) {
 				if (!group) {
-					group = this.makeGroup();
+					group = this.__makeGroup();
 					line.append(group);
 				}
 
@@ -155,7 +155,7 @@ export class UIList<T extends IViewBased = IViewBased>
 				const buttons = item.buttons.filter(b => b);
 
 				if (buttons.length) {
-					group = this.makeGroup();
+					group = this.__makeGroup();
 					group.setMod('separated', true).setMod('group', item.group);
 
 					line.append(group);
@@ -166,7 +166,7 @@ export class UIList<T extends IViewBased = IViewBased>
 				}
 			} else {
 				if (!group) {
-					group = this.makeGroup();
+					group = this.__makeGroup();
 					line.append(group);
 				}
 

@@ -126,7 +126,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 	static get ready(): Promise<IJodit> {
 		return new Promise(resolve => {
-			eventEmitter.on('oditready', resolve);
+			eventEmitter.on('joditready', resolve);
 		});
 	}
 
@@ -210,7 +210,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		Plugin
 	};
 
-	private readonly commands: Map<string, CustomCommand<IJodit, string>[]> =
+	private readonly __commands: Map<string, CustomCommand<IJodit, string>[]> =
 		new Map();
 
 	private __selectionLocked: MarkerInfo[] | null = null;
@@ -721,10 +721,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	): IJodit {
 		const commandName: string = commandNameOriginal.toLowerCase();
 
-		let commands = this.commands.get(commandName);
+		let commands = this.__commands.get(commandName);
 		if (commands === undefined) {
 			commands = [];
-			this.commands.set(commandName, commands);
+			this.__commands.set(commandName, commands);
 		}
 
 		commands.push(command as CustomCommand<IJodit, string>);
@@ -889,7 +889,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	): false | void {
 		commandName = commandName.toLowerCase() as C;
 
-		const commands = this.commands.get(commandName);
+		const commands = this.__commands.get(commandName);
 
 		if (commands !== undefined) {
 			let result: any;
@@ -1680,7 +1680,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 		this.storage.clear();
 		this.buffer.clear();
-		this.commands.clear();
+		this.__commands.clear();
 
 		this.__selectionLocked = null;
 

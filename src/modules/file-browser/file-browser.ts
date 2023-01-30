@@ -66,8 +66,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		return 'Filebrowser';
 	}
 
-	private browser = this.c.div(this.componentName);
-	private status_line = this.c.div(this.getFullElName('status'));
+	private __browser = this.c.div(this.componentName);
+	private __statusLine = this.c.div(this.getFullElName('status'));
 
 	tree = new FileBrowserTree(this);
 	files = new FileBrowserFiles(this);
@@ -89,7 +89,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	dataProvider!: IFileBrowserDataProvider;
 
 	// eslint-disable-next-line no-unused-vars
-	private onSelect(
+	private __onSelect(
 		callback?: (_: IFileBrowserCallBackData) => void
 	): CallbackFunction {
 		return (): boolean => {
@@ -125,7 +125,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		};
 	}
 
-	private errorHandler = (resp: Error | IFileBrowserAnswer): void => {
+	@autobind
+	private __errorHandler(resp: Error | IFileBrowserAnswer): void {
 		if (isAbort(resp)) {
 			return;
 		}
@@ -135,11 +136,11 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		} else {
 			this.status(this.dataProvider.getMessage(resp));
 		}
-	};
+	}
 
 	override OPTIONS!: IFileBrowserOptions;
 
-	private _dialog!: IDialog;
+	private __dialog!: IDialog;
 
 	/**
 	 * Container for set/get value
@@ -149,7 +150,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	uploader!: IUploader;
 
 	get isOpened(): boolean {
-		return this._dialog.isOpened && this.browser.style.display !== 'none';
+		return (
+			this.__dialog.isOpened && this.__browser.style.display !== 'none'
+		);
 	}
 
 	/**
@@ -187,7 +190,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	 * Close dialog
 	 */
 	close = (): void => {
-		this._dialog.close();
+		this.__dialog.close();
 	};
 
 	/**
@@ -223,24 +226,24 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 
 			this.e
 				.off(this.files.container, 'dblclick')
-				.on(this.files.container, 'dblclick', this.onSelect(callback))
+				.on(this.files.container, 'dblclick', this.__onSelect(callback))
 				.on(this.files.container, 'touchstart', () => {
 					const now = new Date().getTime();
 
 					if (now - localTimeout < consts.EMULATE_DBLCLICK_TIMEOUT) {
-						this.onSelect(callback)();
+						this.__onSelect(callback)();
 					}
 
 					localTimeout = now;
 				})
 				.off('select.filebrowser')
-				.on('select.filebrowser', this.onSelect(callback));
+				.on('select.filebrowser', this.__onSelect(callback));
 
 			const header = this.c.div();
 
 			this.toolbar.build(this.o.buttons ?? []).appendTo(header);
 
-			this._dialog.open(this.browser, header);
+			this.__dialog.open(this.__browser, header);
 
 			this.e.fire('sort.filebrowser', this.state.sortBy);
 
@@ -248,7 +251,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		});
 	}
 
-	private initUploader(editor?: IFileBrowser | IJodit): void {
+	private __initUploader(editor?: IFileBrowser | IJodit): void {
 		const self = this,
 			options = editor?.options?.uploader,
 			uploaderOptions: IUploaderOptions<IUploader> = ConfigProto(
@@ -262,7 +265,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		self.uploader
 			.setPath(self.state.currentPath)
 			.setSource(self.state.currentSource)
-			.bind(self.browser, uploadHandler, self.errorHandler);
+			.bind(self.__browser, uploadHandler, self.__errorHandler);
 
 		this.state.on(['change.currentPath', 'change.currentSource'], () => {
 			this.uploader
@@ -271,7 +274,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		});
 
 		self.e.on('bindUploader.filebrowser', (button: HTMLElement) => {
-			self.uploader.bind(button, uploadHandler, self.errorHandler);
+			self.uploader.bind(button, uploadHandler, self.__errorHandler);
 		});
 	}
 
@@ -294,29 +297,29 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 
 		self.dataProvider = makeDataProvider(self, self.options);
 
-		self._dialog = this.dlg({
+		self.__dialog = this.dlg({
 			minWidth: Math.min(700, screen.width),
 			minHeight: 300,
 			buttons: this.o.headerButtons ?? ['fullsize', 'dialog.close']
 		});
 
-		this.proxyDialogEvents(self);
+		this.__proxyDialogEvents(self);
 
-		self.browser.component = this;
-		self.container = self.browser;
+		self.__browser.component = this;
+		self.container = self.__browser;
 
 		if (self.o.showFoldersPanel) {
-			self.browser.appendChild(self.tree.container);
+			self.__browser.appendChild(self.tree.container);
 		}
 
-		self.browser.appendChild(self.files.container);
-		self.browser.appendChild(self.status_line);
+		self.__browser.appendChild(self.files.container);
+		self.__browser.appendChild(self.__statusLine);
 
 		selfListeners.call(self);
 		nativeListeners.call(self);
 		stateListeners.call(self);
 
-		self._dialog.setSize(self.o.width, self.o.height);
+		self.__dialog.setSize(self.o.width, self.o.height);
 
 		const keys: Array<keyof IFileBrowserOptions> = [
 			'getLocalFileByUrl',
@@ -380,13 +383,13 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 			self.state.currentSource = currentSource ?? '';
 		}
 
-		self.initUploader(self);
+		self.__initUploader(self);
 		self.setStatus(STATUSES.ready);
 	}
 
-	private proxyDialogEvents(self: FileBrowser): void {
+	private __proxyDialogEvents(self: FileBrowser): void {
 		['afterClose', 'beforeOpen'].forEach(proxyEvent => {
-			self._dialog.events.on(self.dlg, proxyEvent, () => {
+			self.__dialog.events.on(self.dlg, proxyEvent, () => {
 				this.e.fire(proxyEvent);
 			});
 		});
@@ -399,7 +402,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 
 		super.destruct();
 
-		this._dialog.destruct();
+		this.__dialog.destruct();
 		this.events && this.e.off('.filebrowser');
 		this.uploader && this.uploader.destruct();
 	}

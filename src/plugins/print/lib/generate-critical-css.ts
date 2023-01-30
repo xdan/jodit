@@ -39,7 +39,7 @@ export function generateCriticalCSS(jodit: IJodit): string {
 	};
 
 	class CSSCriticalPath {
-		private css: IDictionary = {};
+		private __css: IDictionary = {};
 
 		constructor(w: Window, d: Document, opts: IDictionary) {
 			const opt = opts || {};
@@ -51,8 +51,8 @@ export function generateCriticalCSS(jodit: IJodit): string {
 					.sort()
 					.join(',');
 
-				if (Boolean(this.css[selectorText]) === false) {
-					this.css[selectorText] = {};
+				if (Boolean(this.__css[selectorText]) === false) {
+					this.__css[selectorText] = {};
 				}
 
 				const styles = r.style.cssText.split(/;(?![A-Za-z0-9])/);
@@ -65,7 +65,7 @@ export function generateCriticalCSS(jodit: IJodit): string {
 					const pair = styles[i].split(':');
 					pair[0] = pair[0].trim();
 					pair[1] = pair[1].trim();
-					this.css[selectorText][pair[0]] = pair[1].replace(
+					this.__css[selectorText][pair[0]] = pair[1].replace(
 						/var\(([^)]+)\)/g,
 						(varValue: string, key: string): string => {
 							const [name, def] = key.split(',');
@@ -112,15 +112,15 @@ export function generateCriticalCSS(jodit: IJodit): string {
 		generateCSS(): string {
 			let finalCSS = '';
 
-			for (const k in this.css) {
+			for (const k in this.__css) {
 				if (/:not\(/.test(k)) {
 					continue;
 				}
 
 				finalCSS += k + ' { ';
 
-				for (const j in this.css[k]) {
-					finalCSS += j + ': ' + this.css[k][j] + '; ';
+				for (const j in this.__css[k]) {
+					finalCSS += j + ': ' + this.__css[k][j] + '; ';
 				}
 
 				finalCSS += '}\n';

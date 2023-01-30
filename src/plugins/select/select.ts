@@ -32,7 +32,7 @@ import './config';
  * ```
  */
 export class select extends Plugin {
-	private proxyEventsList = [
+	private __proxyEventsList = [
 		'click',
 		'mousedown',
 		'touchstart',
@@ -41,19 +41,19 @@ export class select extends Plugin {
 	];
 
 	protected override afterInit(jodit: IJodit): void {
-		this.proxyEventsList.forEach(eventName => {
-			jodit.e.on(eventName + '.select', this.onStartSelection);
+		this.__proxyEventsList.forEach(eventName => {
+			jodit.e.on(eventName + '.select', this.__onStartSelection);
 		});
 	}
 
 	protected override beforeDestruct(jodit: IJodit): void {
-		this.proxyEventsList.forEach(eventName => {
-			jodit.e.on(eventName + '.select', this.onStartSelection);
+		this.__proxyEventsList.forEach(eventName => {
+			jodit.e.on(eventName + '.select', this.__onStartSelection);
 		});
 	}
 
 	@autobind
-	private onStartSelection(e: MouseEvent): void {
+	private __onStartSelection(e: MouseEvent): void {
 		const { j } = this;
 
 		let result,

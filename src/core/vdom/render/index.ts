@@ -61,17 +61,17 @@ const createDom = (fiber: IFiber): Node => {
 
 @autobind
 export class VDomRender {
-	private async: Async = new Async();
+	private __async: Async = new Async();
 
-	private commitRoot(): void {
-		this.deletions.forEach(this.commitWork);
-		this.deletions.length = 0;
-		this.commitWork(this.wipRoot?.child);
-		this.currentRoot = this.wipRoot;
-		this.wipRoot = undefined;
+	private __commitRoot(): void {
+		this.__deletions.forEach(this.__commitWork);
+		this.__deletions.length = 0;
+		this.__commitWork(this.__wipRoot?.child);
+		this.__currentRoot = this.__wipRoot;
+		this.__wipRoot = undefined;
 	}
 
-	private commitWork(fiber: CanUndef<IFiber>): void {
+	private __commitWork(fiber: CanUndef<IFiber>): void {
 		if (!fiber) {
 			return;
 		}
@@ -89,62 +89,64 @@ export class VDomRender {
 		} else if (fiber.effectTag === 'UPDATE' && fiber.dom != null) {
 			updateDom(fiber.dom, fiber.alternate?.props ?? {}, fiber.props);
 		} else if (fiber.effectTag === 'DELETION') {
-			this.commitDeletion(fiber, domParent);
+			this.__commitDeletion(fiber, domParent);
 		}
 
-		this.commitWork(fiber?.child);
-		this.commitWork(fiber?.sibling);
+		this.__commitWork(fiber?.child);
+		this.__commitWork(fiber?.sibling);
 	}
 
-	private commitDeletion(fiber: CanUndef<IFiber>, domParent: Node): void {
+	private __commitDeletion(fiber: CanUndef<IFiber>, domParent: Node): void {
 		if (fiber?.dom) {
 			fiber.dom.isConnected && domParent.removeChild(fiber.dom);
 		} else {
-			this.commitDeletion(fiber?.child, domParent);
+			this.__commitDeletion(fiber?.child, domParent);
 		}
 	}
 
 	render(element: IVDom, container: Node): void {
-		this.wipRoot = {
+		this.__wipRoot = {
 			type: 'div',
 			dom: container,
 			props: {
 				children: [element]
 			},
-			alternate: this.currentRoot ?? undefined
+			alternate: this.__currentRoot ?? undefined
 		};
 
-		this.deletions = [];
-		this.nextUnitOfWork = this.wipRoot;
+		this.__deletions = [];
+		this.__nextUnitOfWork = this.__wipRoot;
 	}
 
-	private nextUnitOfWork: CanUndef<IFiber> = undefined;
+	private __nextUnitOfWork: CanUndef<IFiber> = undefined;
 
-	private currentRoot: CanUndef<IFiber> = undefined;
-	private wipRoot: CanUndef<IFiber> = undefined;
+	private __currentRoot: CanUndef<IFiber> = undefined;
+	private __wipRoot: CanUndef<IFiber> = undefined;
 
-	private deletions: IFiber[] = [];
+	private __deletions: IFiber[] = [];
 
-	private workLoop(deadline: IdleDeadline): void {
+	private __workLoop(deadline: IdleDeadline): void {
 		let shouldYield = false;
 
-		while (this.nextUnitOfWork && !shouldYield) {
-			this.nextUnitOfWork = this.performUnitOfWork(this.nextUnitOfWork);
+		while (this.__nextUnitOfWork && !shouldYield) {
+			this.__nextUnitOfWork = this.__performUnitOfWork(
+				this.__nextUnitOfWork
+			);
 			shouldYield = deadline.timeRemaining() < 1;
 		}
 
-		if (!this.nextUnitOfWork && this.wipRoot) {
-			this.commitRoot();
+		if (!this.__nextUnitOfWork && this.__wipRoot) {
+			this.__commitRoot();
 		}
 
-		this.async.requestIdleCallback(this.workLoop);
+		this.__async.requestIdleCallback(this.__workLoop);
 	}
 
 	constructor() {
-		this.async.requestIdleCallback(this.workLoop);
+		this.__async.requestIdleCallback(this.__workLoop);
 	}
 
-	private performUnitOfWork(fiber: IFiber): CanUndef<IFiber> {
+	private __performUnitOfWork(fiber: IFiber): CanUndef<IFiber> {
 		this.__updateHostComponent(fiber);
 
 		if (fiber.child) {
@@ -210,7 +212,7 @@ export class VDomRender {
 
 			if (oldFiber && !sameType) {
 				oldFiber.effectTag = 'DELETION';
-				this.deletions.push(oldFiber);
+				this.__deletions.push(oldFiber);
 			}
 
 			if (oldFiber) {

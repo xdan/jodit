@@ -49,24 +49,27 @@ import './config/config';
 export class inlinePopup extends Plugin {
 	override requires = ['select'];
 
-	private type: Nullable<string> = null;
+	private __type: Nullable<string> = null;
 
-	private popup: IPopup = new Popup(this.jodit, false);
+	private __popup: IPopup = new Popup(this.jodit, false);
 
-	private toolbar: IToolbarCollection = makeCollection(
+	private __toolbar: IToolbarCollection = makeCollection(
 		this.jodit,
-		this.popup
+		this.__popup
 	);
 
 	@autobind
-	private onClick(node: Node): void | false {
-		const elements = this.elmsList as HTMLTagNames[],
+	private __onClick(node: Node): void | false {
+		const elements = this.__elmsList as HTMLTagNames[],
 			target = Dom.isTag(node, 'img')
 				? node
 				: Dom.closest(node, elements, this.j.editor);
 
-		if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
-			this.showPopup(
+		if (
+			target &&
+			this.__canShowPopupForType(target.nodeName.toLowerCase())
+		) {
+			this.__showPopup(
 				() => position(target, this.j),
 				target.nodeName.toLowerCase(),
 				target
@@ -82,80 +85,80 @@ export class inlinePopup extends Plugin {
 	 * @param type - selection, img, a etc.
 	 */
 	@wait((ctx: IViewComponent) => !ctx.j.isLocked)
-	private showPopup(
+	private __showPopup(
 		rect: () => IBound,
 		type: string,
 		target?: HTMLElement
 	): boolean {
 		type = type.toLowerCase();
 
-		if (!this.canShowPopupForType(type)) {
+		if (!this.__canShowPopupForType(type)) {
 			return false;
 		}
 
-		if (this.type !== type || target !== this.previousTarget) {
-			this.previousTarget = target;
+		if (this.__type !== type || target !== this.__previousTarget) {
+			this.__previousTarget = target;
 
 			const data = this.j.o.popup[type];
 
 			let content;
 
 			if (isFunction(data)) {
-				content = data(this.j, target, this.popup.close);
+				content = data(this.j, target, this.__popup.close);
 			} else {
 				content = data;
 			}
 
 			if (isArray(content)) {
-				this.toolbar.build(content, target);
-				this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
-				content = this.toolbar.container;
+				this.__toolbar.build(content, target);
+				this.__toolbar.buttonSize = this.j.o.toolbarButtonSize;
+				content = this.__toolbar.container;
 			}
-			this.popup.setContent(content);
+			this.__popup.setContent(content);
 
-			this.type = type;
+			this.__type = type;
 		}
 
-		this.popup.open(rect);
+		this.__popup.open(rect);
 
 		return true;
 	}
 
-	private previousTarget?: HTMLElement;
+	private __previousTarget?: HTMLElement;
 
 	/**
 	 * Hide opened popup
 	 */
 	@watch(':clickEditor')
 	@autobind
-	private hidePopup(type?: string): void {
-		if (!isString(type) || type === this.type) {
-			this.popup.close();
+	private __hidePopup(type?: string): void {
+		if (!isString(type) || type === this.__type) {
+			this.__popup.close();
 		}
 	}
 
 	@watch(':outsideClick')
 	protected onOutsideClick(): void {
-		this.popup.close();
+		this.__popup.close();
 	}
 
 	/**
 	 * Can show popup for this type
 	 */
-	private canShowPopupForType(type: string): boolean {
+	private __canShowPopupForType(type: string): boolean {
 		const data = this.j.o.popup[type.toLowerCase()];
 
 		if (this.j.o.readonly || !this.j.o.toolbarInline || !data) {
 			return false;
 		}
 
-		return !this.isExcludedTarget(type);
+		return !this.__isExcludedTarget(type);
 	}
 
 	/**
 	 * For some elements do not show popup
 	 */
-	private isExcludedTarget(type: string): boolean {
+	private __isExcludedTarget(type: string): boolean {
 		return splitArray(this.j.o.toolbarInlineDisableFor)
 			.map(a => a.toLowerCase())
 			.includes(type.toLowerCase());
@@ -167,8 +170,8 @@ export class inlinePopup extends Plugin {
 			.on(
 				'getDiffButtons.mobile',
 				(toolbar: IToolbarCollection): void | Buttons => {
-					if (this.toolbar === toolbar) {
-						const names = this.toolbar.getButtonsNames();
+					if (this.__toolbar === toolbar) {
+						const names = this.__toolbar.getButtonsNames();
 
 						return toArray(jodit.registeredButtons)
 							.filter(
@@ -190,8 +193,8 @@ export class inlinePopup extends Plugin {
 					}
 				}
 			)
-			.on('hidePopup', this.hidePopup)
-			.on('showInlineToolbar', this.showInlineToolbar)
+			.on('hidePopup', this.__hidePopup)
+			.on('showInlineToolbar', this.__showInlineToolbar)
 			.on(
 				'showPopup',
 				(
@@ -199,38 +202,38 @@ export class inlinePopup extends Plugin {
 					rect: () => IBound,
 					type?: string
 				) => {
-					this.showPopup(
+					this.__showPopup(
 						rect,
 						type || (isString(elm) ? elm : elm.nodeName),
 						isString(elm) ? undefined : elm
 					);
 				}
 			)
-			.on('mousedown keydown', this.onSelectionStart)
+			.on('mousedown keydown', this.__onSelectionStart)
 			.on('change', () => {
 				if (
-					this.popup.isOpened &&
-					this.previousTarget &&
-					!this.previousTarget.parentNode
+					this.__popup.isOpened &&
+					this.__previousTarget &&
+					!this.__previousTarget.parentNode
 				) {
-					this.hidePopup();
-					this.previousTarget = undefined;
+					this.__hidePopup();
+					this.__previousTarget = undefined;
 				}
 			})
-			.on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
+			.on([this.j.ew, this.j.ow], 'mouseup keyup', this.__onSelectionEnd);
 
-		this.addListenersForElements();
+		this.__addListenersForElements();
 	}
 
-	private snapRange: Nullable<Range> = null;
+	private __snapRange: Nullable<Range> = null;
 
 	@autobind
-	private onSelectionStart(): void {
-		this.snapRange = this.j.s.range.cloneRange();
+	private __onSelectionStart(): void {
+		this.__snapRange = this.j.s.range.cloneRange();
 	}
 
 	@autobind
-	private onSelectionEnd(e: MouseEvent): void {
+	private __onSelectionEnd(e: MouseEvent): void {
 		if (
 			e &&
 			e.target &&
@@ -239,18 +242,18 @@ export class inlinePopup extends Plugin {
 			return;
 		}
 
-		const { snapRange } = this,
+		const { __snapRange } = this,
 			{ range } = this.j.s;
 
 		if (
-			!snapRange ||
+			!__snapRange ||
 			range.collapsed ||
-			range.startContainer !== snapRange.startContainer ||
-			range.startOffset !== snapRange.startOffset ||
-			range.endContainer !== snapRange.endContainer ||
-			range.endOffset !== snapRange.endOffset
+			range.startContainer !== __snapRange.startContainer ||
+			range.startOffset !== __snapRange.startOffset ||
+			range.endContainer !== __snapRange.endContainer ||
+			range.endOffset !== __snapRange.endOffset
 		) {
-			this.onSelectionChange();
+			this.__onSelectionChange();
 		}
 	}
 
@@ -258,7 +261,7 @@ export class inlinePopup extends Plugin {
 	 * Selection change handler
 	 */
 	@debounce(ctx => ctx.defaultTimeout)
-	private onSelectionChange(): void {
+	private __onSelectionChange(): void {
 		if (!this.j.o.toolbarInlineForSelection) {
 			return;
 		}
@@ -269,11 +272,11 @@ export class inlinePopup extends Plugin {
 
 		if (
 			sel?.isCollapsed ||
-			this.isSelectedTarget(range) ||
-			this.tableModule.getAllSelectedCells().length
+			this.__isSelectedTarget(range) ||
+			this.__tableModule.getAllSelectedCells().length
 		) {
-			if (this.type === type && this.popup.isOpened) {
-				this.hidePopup();
+			if (this.__type === type && this.__popup.isOpened) {
+				this.__hidePopup();
 			}
 
 			return;
@@ -285,13 +288,13 @@ export class inlinePopup extends Plugin {
 			return;
 		}
 
-		this.showPopup(() => range.getBoundingClientRect(), type);
+		this.__showPopup(() => range.getBoundingClientRect(), type);
 	}
 
 	/**
 	 * In not collapsed selection - only one image
 	 */
-	private isSelectedTarget(r: Range): boolean {
+	private __isSelectedTarget(r: Range): boolean {
 		const sc = r.startContainer;
 
 		return (
@@ -308,7 +311,7 @@ export class inlinePopup extends Plugin {
 	/**
 	 * Shortcut for Table module
 	 */
-	private get tableModule(): Table {
+	private get __tableModule(): Table {
 		return this.j.getInstance<Table>('Table', this.j.o);
 	}
 
@@ -316,37 +319,41 @@ export class inlinePopup extends Plugin {
 	protected beforeDestruct(jodit: IJodit): void {
 		jodit.e
 			.off('showPopup')
-			.off([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
+			.off(
+				[this.j.ew, this.j.ow],
+				'mouseup keyup',
+				this.__onSelectionEnd
+			);
 
-		this.removeListenersForElements();
+		this.__removeListenersForElements();
 	}
 
-	private elmsList: string[] = keys(this.j.o.popup, false).filter(
-		s => !this.isExcludedTarget(s)
+	private __elmsList: string[] = keys(this.j.o.popup, false).filter(
+		s => !this.__isExcludedTarget(s)
 	);
 
-	private _eventsList(): string {
-		const el = this.elmsList;
+	private __eventsList(): string {
+		const el = this.__elmsList;
 		return el
 			.map(e => camelCase(`click_${e}`))
 			.concat(el.map(e => camelCase(`touchstart_${e}`)))
 			.join(' ');
 	}
 
-	private addListenersForElements(): void {
-		this.j.e.on(this._eventsList(), this.onClick);
+	private __addListenersForElements(): void {
+		this.j.e.on(this.__eventsList(), this.__onClick);
 	}
 
-	private removeListenersForElements(): void {
-		this.j.e.off(this._eventsList(), this.onClick);
+	private __removeListenersForElements(): void {
+		this.j.e.off(this.__eventsList(), this.__onClick);
 	}
 
 	/**
 	 * Show the inline WYSIWYG toolbar editor.
 	 */
 	@autobind
-	private showInlineToolbar(bound?: IBound): void {
-		this.showPopup(() => {
+	private __showInlineToolbar(bound?: IBound): void {
+		this.__showPopup(() => {
 			if (bound) {
 				return bound;
 			}

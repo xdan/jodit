@@ -8,7 +8,7 @@ import type { VDomRender } from './index';
 
 export class Patcher {
 	constructor(
-		private readonly render: VDomRender,
-		private readonly updateWip: () => void
+		private readonly __render: VDomRender,
+		private readonly __updateWip: () => void
 	) {}
 }

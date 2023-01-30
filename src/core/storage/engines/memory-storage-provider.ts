@@ -13,28 +13,28 @@ import type { IStorage, StorageValueType } from 'jodit/types';
 export class MemoryStorageProvider<T = StorageValueType>
 	implements IStorage<T>
 {
-	private data: Map<string, T> = new Map();
+	private __data: Map<string, T> = new Map();
 
 	set(key: string, value: T): IStorage<T> {
-		this.data.set(key, value);
+		this.__data.set(key, value);
 		return this;
 	}
 
 	delete(key: string): IStorage<T> {
-		this.data.delete(key);
+		this.__data.delete(key);
 		return this;
 	}
 
 	get<R = T>(key: string): R | void {
-		return this.data.get(key) as R | void;
+		return this.__data.get(key) as R | void;
 	}
 
 	exists(key: string): boolean {
-		return this.data.has(key);
+		return this.__data.has(key);
 	}
 
 	clear(): IStorage<T> {
-		this.data.clear();
+		this.__data.clear();
 		return this;
 	}
 }

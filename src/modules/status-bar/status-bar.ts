@@ -65,7 +65,7 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 		return this.container?.offsetHeight ?? 0;
 	}
 
-	private findEmpty(inTheRight: boolean = false): CanUndef<HTMLElement> {
+	private __findEmpty(inTheRight: boolean = false): CanUndef<HTMLElement> {
 		const items = this.getElms(inTheRight ? 'item-right' : 'item');
 
 		for (let i = 0; i < items.length; i += 1) {
@@ -82,7 +82,7 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 	 */
 	append(child: HTMLElement, inTheRight: boolean = false): void {
 		const wrapper =
-			this.findEmpty(inTheRight) ||
+			this.__findEmpty(inTheRight) ||
 			this.j.c.div(this.getFullElName('item'));
 
 		if (inTheRight) {

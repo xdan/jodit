@@ -39,20 +39,20 @@ const keyBInd = '__jodit-resizer_binded';
  * The module creates a supporting frame for resizing of the elements img and table
  */
 export class resizer extends Plugin {
-	private LOCK_KEY = 'resizer';
-	private handle!: HTMLElement;
-	private element: null | HTMLElement = null;
+	private __lockKey = 'resizer';
+	private __handle!: HTMLElement;
+	private __element: null | HTMLElement = null;
 
-	private isResizeMode: boolean = false;
-	private isShown: boolean = false;
+	private __isResizeMode: boolean = false;
+	private __isShown: boolean = false;
 
-	private startX: number = 0;
-	private startY: number = 0;
-	private width: number = 0;
-	private height: number = 0;
-	private ratio: number = 0;
+	private __startX: number = 0;
+	private __startY: number = 0;
+	private __width: number = 0;
+	private __height: number = 0;
+	private __ratio: number = 0;
 
-	private rect = this.j.c.fromHTML(
+	private __rect = this.j.c.fromHTML(
 		`<div title="${this.j.i18n(
 			'Press Alt for custom resizing'
 		)}" class="jodit-resizer">
@@ -64,28 +64,28 @@ export class resizer extends Plugin {
 			</div>`
 	);
 
-	private sizeViewer: HTMLSpanElement =
-		this.rect.getElementsByTagName('span')[0];
+	private __sizeViewer: HTMLSpanElement =
+		this.__rect.getElementsByTagName('span')[0];
 
 	/** @override */
 	protected afterInit(editor: IJodit): void {
-		$$('div', this.rect).forEach((resizeHandle: HTMLElement) => {
+		$$('div', this.__rect).forEach((resizeHandle: HTMLElement) => {
 			editor.e.on(
 				resizeHandle,
 				'mousedown.resizer touchstart.resizer',
-				this.onStartResizing.bind(this, resizeHandle)
+				this.__onStartResizing.bind(this, resizeHandle)
 			);
 		});
 
-		eventEmitter.on('hideHelpers', this.hide);
+		eventEmitter.on('hideHelpers', this.__hide);
 
 		editor.e
 			.on('readonly', (isReadOnly: boolean) => {
 				if (isReadOnly) {
-					this.hide();
+					this.__hide();
 				}
 			})
-			.on('afterInit changePlace', this.addEventListeners.bind(this))
+			.on('afterInit changePlace', this.__addEventListeners.bind(this))
 			.on(
 				'afterGetValueFromEditor.resizer',
 				(data: { value: string }) => {
@@ -97,11 +97,11 @@ export class resizer extends Plugin {
 					}
 				}
 			)
-			.on('hideResizer', this.hide)
-			.on('change afterInit afterSetMode', this.onChangeEditor);
+			.on('hideResizer', this.__hide)
+			.on('change afterInit afterSetMode', this.__onChangeEditor);
 
-		this.addEventListeners();
-		this.onChangeEditor();
+		this.__addEventListeners();
+		this.__onChangeEditor();
 	}
 
 	/**
@@ -118,8 +118,8 @@ export class resizer extends Plugin {
 
 		while (node && node !== editor) {
 			if (Dom.isTag(node, allowResizeTags)) {
-				this.bind(node);
-				this.onClickElement(node);
+				this.__bind(node);
+				this.__onClickElement(node);
 				return;
 			}
 
@@ -127,7 +127,7 @@ export class resizer extends Plugin {
 		}
 	}
 
-	private addEventListeners(): void {
+	private __addEventListeners(): void {
 		const editor = this.j;
 
 		editor.e
@@ -135,41 +135,41 @@ export class resizer extends Plugin {
 			.off(editor.ow, '.resizer')
 			.on(editor.editor, 'keydown.resizer', (e: KeyboardEvent) => {
 				if (
-					this.isShown &&
+					this.__isShown &&
 					e.key === consts.KEY_DELETE &&
-					this.element &&
-					!Dom.isTag(this.element, 'table')
+					this.__element &&
+					!Dom.isTag(this.__element, 'table')
 				) {
-					this.onDelete(e);
+					this.__onDelete(e);
 				}
 			})
-			.on(editor.ow, 'resize.resizer', this.updateSize)
-			.on('resize.resizer', this.updateSize)
+			.on(editor.ow, 'resize.resizer', this.__updateSize)
+			.on('resize.resizer', this.__updateSize)
 			.on([editor.ow, editor.editor], 'scroll.resizer', () => {
-				if (this.isShown && !this.isResizeMode) {
-					this.hide();
+				if (this.__isShown && !this.__isResizeMode) {
+					this.__hide();
 				}
 			})
-			.on(editor.ow, 'keydown.resizer', this.onKeyDown)
-			.on(editor.ow, 'keyup.resizer', this.onKeyUp)
+			.on(editor.ow, 'keydown.resizer', this.__onKeyDown)
+			.on(editor.ow, 'keyup.resizer', this.__onKeyUp)
 			.on(
 				editor.ow,
 				'mouseup.resizer touchend.resizer',
-				this.onClickOutside
+				this.__onClickOutside
 			);
 	}
 
 	@autobind
-	private onStartResizing(
+	private __onStartResizing(
 		resizeHandle: HTMLElement,
 		e: MouseEvent
 	): false | void {
-		if (!this.element || !this.element.parentNode) {
-			this.hide();
+		if (!this.__element || !this.__element.parentNode) {
+			this.__hide();
 			return false;
 		}
 
-		this.handle = resizeHandle;
+		this.__handle = resizeHandle;
 
 		if (e.cancelable) {
 			e.preventDefault();
@@ -177,63 +177,63 @@ export class resizer extends Plugin {
 
 		e.stopImmediatePropagation();
 
-		this.width = this.element.offsetWidth;
-		this.height = this.element.offsetHeight;
-		this.ratio = this.width / this.height;
+		this.__width = this.__element.offsetWidth;
+		this.__height = this.__element.offsetHeight;
+		this.__ratio = this.__width / this.__height;
 
-		this.isResizeMode = true;
+		this.__isResizeMode = true;
 
-		this.startX = e.clientX;
-		this.startY = e.clientY;
-		this.pointerX = e.clientX;
-		this.pointerY = e.clientY;
+		this.__startX = e.clientX;
+		this.__startY = e.clientY;
+		this.__pointerX = e.clientX;
+		this.__pointerY = e.clientY;
 
 		const { j } = this;
 
 		j.e.fire('hidePopup');
 
-		j.lock(this.LOCK_KEY);
+		j.lock(this.__lockKey);
 
-		j.e.on(j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
+		j.e.on(j.ow, 'mousemove.resizer touchmove.resizer', this.__onResize);
 	}
 
 	@autobind
-	private onEndResizing(): void {
+	private __onEndResizing(): void {
 		const { j } = this;
 
 		j.unlock();
-		this.isResizeMode = false;
-		this.isAltMode = false;
+		this.__isResizeMode = false;
+		this.__isAltMode = false;
 		j.synchronizeValues();
 
-		j.e.off(j.ow, 'mousemove.resizer touchmove.resizer', this.onResize);
+		j.e.off(j.ow, 'mousemove.resizer touchmove.resizer', this.__onResize);
 	}
 
-	private pointerX: number = 0;
-	private pointerY: number = 0;
+	private __pointerX: number = 0;
+	private __pointerY: number = 0;
 
 	@autobind
-	private onResize(e: MouseEvent): void {
-		if (this.isResizeMode) {
-			if (!this.element) {
+	private __onResize(e: MouseEvent): void {
+		if (this.__isResizeMode) {
+			if (!this.__element) {
 				return;
 			}
 
-			this.pointerX = e.clientX;
-			this.pointerY = e.clientY;
+			this.__pointerX = e.clientX;
+			this.__pointerY = e.clientY;
 
 			let diff_x, diff_y;
 
 			if (this.j.options.iframe) {
-				const workplacePosition = this.getWorkplacePosition();
-				diff_x = e.clientX + workplacePosition.left - this.startX;
-				diff_y = e.clientY + workplacePosition.top - this.startY;
+				const workplacePosition = this.__getWorkplacePosition();
+				diff_x = e.clientX + workplacePosition.left - this.__startX;
+				diff_y = e.clientY + workplacePosition.top - this.__startY;
 			} else {
-				diff_x = this.pointerX - this.startX;
-				diff_y = this.pointerY - this.startY;
+				diff_x = this.__pointerX - this.__startX;
+				diff_y = this.__pointerY - this.__startY;
 			}
 
-			const className = this.handle.className;
+			const className = this.__handle.className;
 
 			let new_w = 0,
 				new_h = 0;
@@ -241,104 +241,107 @@ export class resizer extends Plugin {
 			const uar = this.j.o.resizer.useAspectRatio;
 
 			if (
-				!this.isAltMode &&
+				!this.__isAltMode &&
 				(uar === true ||
-					(Array.isArray(uar) && Dom.isTag(this.element, uar)))
+					(Array.isArray(uar) && Dom.isTag(this.__element, uar)))
 			) {
 				if (diff_x) {
 					new_w =
-						this.width +
+						this.__width +
 						(className.match(/left/) ? -1 : 1) * diff_x;
-					new_h = Math.round(new_w / this.ratio);
+					new_h = Math.round(new_w / this.__ratio);
 				} else {
 					new_h =
-						this.height +
+						this.__height +
 						(className.match(/top/) ? -1 : 1) * diff_y;
-					new_w = Math.round(new_h * this.ratio);
+					new_w = Math.round(new_h * this.__ratio);
 				}
 
 				if (new_w > innerWidth(this.j.editor, this.j.ow)) {
 					new_w = innerWidth(this.j.editor, this.j.ow);
-					new_h = Math.round(new_w / this.ratio);
+					new_h = Math.round(new_w / this.__ratio);
 				}
 			} else {
 				new_w =
-					this.width + (className.match(/left/) ? -1 : 1) * diff_x;
+					this.__width + (className.match(/left/) ? -1 : 1) * diff_x;
 				new_h =
-					this.height + (className.match(/top/) ? -1 : 1) * diff_y;
+					this.__height + (className.match(/top/) ? -1 : 1) * diff_y;
 			}
 
 			if (new_w > this.j.o.resizer.min_width) {
-				if (new_w < (this.rect.parentNode as HTMLElement).offsetWidth) {
-					this.applySize(this.element, 'width', new_w);
+				if (
+					new_w < (this.__rect.parentNode as HTMLElement).offsetWidth
+				) {
+					this.__applySize(this.__element, 'width', new_w);
 				} else {
-					this.applySize(this.element, 'width', '100%');
+					this.__applySize(this.__element, 'width', '100%');
 				}
 			}
 
 			if (new_h > this.j.o.resizer.min_height) {
-				this.applySize(this.element, 'height', new_h);
+				this.__applySize(this.__element, 'height', new_h);
 			}
 
-			this.updateSize();
+			this.__updateSize();
 
-			this.showSizeViewer(
-				this.element.offsetWidth,
-				this.element.offsetHeight
+			this.__showSizeViewer(
+				this.__element.offsetWidth,
+				this.__element.offsetHeight
 			);
 
 			e.stopImmediatePropagation();
 		}
 	}
 
-	private isAltMode: boolean = false;
+	private __isAltMode: boolean = false;
 
 	@autobind
-	private onKeyDown(e: KeyboardEvent): void {
-		this.isAltMode = e.key === KEY_ALT;
+	private __onKeyDown(e: KeyboardEvent): void {
+		this.__isAltMode = e.key === KEY_ALT;
 
-		if (!this.isAltMode && this.isResizeMode) {
-			this.onEndResizing();
+		if (!this.__isAltMode && this.__isResizeMode) {
+			this.__onEndResizing();
 		}
 	}
 
 	@autobind
-	private onKeyUp(): void {
-		if (this.isAltMode && this.isResizeMode && this.element) {
-			this.width = this.element.offsetWidth;
-			this.height = this.element.offsetHeight;
-			this.ratio = this.width / this.height;
-			this.startX = this.pointerX;
-			this.startY = this.pointerY;
+	private __onKeyUp(): void {
+		if (this.__isAltMode && this.__isResizeMode && this.__element) {
+			this.__width = this.__element.offsetWidth;
+			this.__height = this.__element.offsetHeight;
+			this.__ratio = this.__width / this.__height;
+			this.__startX = this.__pointerX;
+			this.__startY = this.__pointerY;
 		}
 
-		this.isAltMode = false;
+		this.__isAltMode = false;
 	}
 
 	@autobind
-	private onClickOutside(e: MouseEvent): void {
-		if (!this.isShown) {
+	private __onClickOutside(e: MouseEvent): void {
+		if (!this.__isShown) {
 			return;
 		}
 
-		if (!this.isResizeMode) {
-			return this.hide();
+		if (!this.__isResizeMode) {
+			return this.__hide();
 		}
 
 		e.stopImmediatePropagation();
-		this.onEndResizing();
+		this.__onEndResizing();
 	}
 
-	private getWorkplacePosition(): IBound {
+	private __getWorkplacePosition(): IBound {
 		return offset(
-			(this.rect.parentNode || this.j.od.documentElement) as HTMLElement,
+			(this.__rect.parentNode ||
+				this.j.od.documentElement) as HTMLElement,
 			this.j,
 			this.j.od,
 			true
 		);
 	}
 
-	private applySize(
+	private __applySize(
 		element: HTMLElement,
 		key: 'width' | 'height',
 		value: number | string
@@ -355,31 +358,31 @@ export class resizer extends Plugin {
 		}
 	}
 
-	private onDelete(e: KeyboardEvent): void {
-		if (!this.element) {
+	private __onDelete(e: KeyboardEvent): void {
+		if (!this.__element) {
 			return;
 		}
 
-		if (this.element.tagName !== 'JODIT') {
-			this.j.s.select(this.element);
+		if (this.__element.tagName !== 'JODIT') {
+			this.j.s.select(this.__element);
 		} else {
-			Dom.safeRemove(this.element);
-			this.hide();
+			Dom.safeRemove(this.__element);
+			this.__hide();
 			e.preventDefault();
 		}
 	}
 
 	@debounce()
-	private onChangeEditor(): void {
-		if (this.isShown) {
-			if (!this.element || !this.element.parentNode) {
-				this.hide();
+	private __onChangeEditor(): void {
+		if (this.__isShown) {
+			if (!this.__element || !this.__element.parentNode) {
+				this.__hide();
 			} else {
-				this.updateSize();
+				this.__updateSize();
 			}
 		}
 
-		$$('iframe', this.j.editor).forEach(this.bind);
+		$$('iframe', this.j.editor).forEach(this.__bind);
 	}
 
 	/**
@@ -387,7 +390,7 @@ export class resizer extends Plugin {
 	 * @param element - The element that you want to add a function to resize
 	 */
 	@autobind
-	private bind(element: HTMLElement): void {
+	private __bind(element: HTMLElement): void {
 		if (
 			!Dom.isHTMLElement(element) ||
 			!this.j.o.allowResizeTags.includes(
@@ -452,7 +455,7 @@ export class resizer extends Plugin {
 				});
 		}
 
-		this.j.e.on(element, 'dragstart', this.hide);
+		this.j.e.on(element, 'dragstart', this.__hide);
 
 		if (!isESNext && IS_IE) {
 			// for IE don't show native resizer
@@ -464,35 +467,37 @@ export class resizer extends Plugin {
 		}
 	}
 
-	private onClickElement = (element: HTMLElement): void => {
-		if (this.isResizeMode) {
+	@autobind
+	private __onClickElement(element: HTMLElement): void {
+		if (this.__isResizeMode) {
 			return;
 		}
 
-		if (this.element !== element || !this.isShown) {
-			this.element = element;
+		if (this.__element !== element || !this.__isShown) {
+			this.__element = element;
 
-			this.show();
+			this.__show();
 
-			if (Dom.isTag(this.element, 'img') && !this.element.complete) {
-				this.j.e.one(this.element, 'load', this.updateSize);
+			if (Dom.isTag(this.__element, 'img') && !this.__element.complete) {
+				this.j.e.one(this.__element, 'load', this.__updateSize);
 			}
 		}
-	};
+	}
 
-	private updateSize = (): void => {
-		if (this.isInDestruct || !this.isShown) {
+	@autobind
+	private __updateSize(): void {
+		if (this.isInDestruct || !this.__isShown) {
 			return;
 		}
 
-		if (this.element && this.rect) {
-			const workplacePosition = this.getWorkplacePosition();
+		if (this.__element && this.__rect) {
+			const workplacePosition = this.__getWorkplacePosition();
 
-			const pos = offset(this.element, this.j, this.j.ed),
-				left = parseInt(this.rect.style.left || '0', 10),
-				top = parseInt(this.rect.style.top || '0', 10),
-				w = this.rect.offsetWidth,
-				h = this.rect.offsetHeight;
+			const pos = offset(this.__element, this.j, this.j.ed),
+				left = parseInt(this.__rect.style.left || '0', 10),
+				top = parseInt(this.__rect.style.top || '0', 10),
+				w = this.__rect.offsetWidth,
+				h = this.__rect.offsetHeight;
 
 			const newTop = pos.top - workplacePosition.top,
 				newLeft = pos.left - workplacePosition.left;
@@ -500,18 +505,18 @@ export class resizer extends Plugin {
 			if (
 				top !== newTop ||
 				left !== newLeft ||
-				w !== this.element.offsetWidth ||
-				h !== this.element.offsetHeight
+				w !== this.__element.offsetWidth ||
+				h !== this.__element.offsetHeight
 			) {
-				css(this.rect, {
+				css(this.__rect, {
 					top: newTop,
 					left: newLeft,
-					width: this.element.offsetWidth,
-					height: this.element.offsetHeight
+					width: this.__element.offsetWidth,
+					height: this.__element.offsetHeight
 				});
 
 				if (this.j.events) {
-					this.j.e.fire(this.element, 'changesize');
+					this.j.e.fire(this.__element, 'changesize');
 
 					// check for first init. Ex. inlinePopup hides when it was fired
 					if (!isNaN(left)) {
@@ -520,25 +525,25 @@ export class resizer extends Plugin {
 				}
 			}
 		}
-	};
+	}
 
-	private showSizeViewer(w: number, h: number): void {
+	private __showSizeViewer(w: number, h: number): void {
 		if (!this.j.o.resizer.showSize) {
 			return;
 		}
 
 		if (
-			w < this.sizeViewer.offsetWidth ||
-			h < this.sizeViewer.offsetHeight
+			w < this.__sizeViewer.offsetWidth ||
+			h < this.__sizeViewer.offsetHeight
 		) {
-			this.hideSizeViewer();
+			this.__hideSizeViewer();
 			return;
 		}
 
-		this.sizeViewer.style.opacity = '1';
-		this.sizeViewer.textContent = `${w} x ${h}`;
+		this.__sizeViewer.style.opacity = '1';
+		this.__sizeViewer.textContent = `${w} x ${h}`;
 
-		this.j.async.setTimeout(this.hideSizeViewer, {
+		this.j.async.setTimeout(this.__hideSizeViewer, {
 			timeout: this.j.o.resizer.hideSizeTimeout,
 			label: 'hideSizeViewer'
 		});
@@ -547,49 +552,53 @@ export class resizer extends Plugin {
 	/**
 	 * Show resizer
 	 */
-	private show(): void {
-		if (this.j.o.readonly || this.isShown) {
+	private __show(): void {
+		if (this.j.o.readonly || this.__isShown) {
 			return;
 		}
 
-		this.isShown = true;
+		this.__isShown = true;
 
-		if (!this.rect.parentNode) {
-			markOwner(this.j, this.rect);
-			this.j.workplace.appendChild(this.rect);
+		if (!this.__rect.parentNode) {
+			markOwner(this.j, this.__rect);
+			this.j.workplace.appendChild(this.__rect);
 		}
 
 		if (this.j.isFullSize) {
-			this.rect.style.zIndex = css(this.j.container, 'zIndex').toString();
+			this.__rect.style.zIndex = css(
+				this.j.container,
+				'zIndex'
+			).toString();
 		}
 
-		this.updateSize();
+		this.__updateSize();
 	}
 
 	/**
 	 * Hide resizer
 	 */
 	@autobind
-	private hide(): void {
-		if (!this.isResizeMode) {
-			this.isResizeMode = false;
-			this.isShown = false;
-			this.element = null;
-			Dom.safeRemove(this.rect);
+	private __hide(): void {
+		if (!this.__isResizeMode) {
+			this.__isResizeMode = false;
+			this.__isShown = false;
+			this.__element = null;
+			Dom.safeRemove(this.__rect);
 			$$("[data-jodit-wrapper_active='true']", this.j.editor).forEach(
 				elm => attr(elm, 'data-jodit-wrapper_active', false)
 			);
 		}
 	}
 
-	private hideSizeViewer = (): void => {
-		this.sizeViewer.style.opacity = '0';
-	};
+	@autobind
+	private __hideSizeViewer(): void {
+		this.__sizeViewer.style.opacity = '0';
+	}
 
 	protected beforeDestruct(jodit: IJodit): void {
-		this.hide();
+		this.__hide();
 
-		eventEmitter.off('hideHelpers', this.hide);
+		eventEmitter.off('hideHelpers', this.__hide);
 
 		jodit.e.off(this.j.ow, '.resizer').off('.resizer');
 	}

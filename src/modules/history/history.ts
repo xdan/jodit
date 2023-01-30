@@ -123,26 +123,26 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 							}
 						}
 					)
-					.on(this, 'change.history', this.onChange);
+					.on(this, 'change.history', this.__onChange);
 			});
 		}
 	}
 
-	private updateTick: number = 0;
+	private __updateTick: number = 0;
 
 	/**
 	 * Update change counter
 	 * @internal
 	 */
 	protected __upTick(): void {
-		this.updateTick += 1;
+		this.__updateTick += 1;
 	}
 
 	/**
 	 * Push new command in stack on some changes
 	 */
 	@debounce()
-	private onChange(): void {
+	private __onChange(): void {
 		this.__processChanges();
 	}
 
@@ -154,13 +154,13 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 			return;
 		}
 
-		this.updateStack();
+		this.__updateStack();
 	}
 
 	/**
 	 * Update history stack
 	 */
-	private updateStack(replace: boolean = false): void {
+	private __updateStack(replace: boolean = false): void {
 		const newValue = this.snapshot.make();
 
 		if (!Snapshot.equal(newValue, this.startValue)) {
@@ -168,13 +168,13 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 				this.startValue,
 				newValue,
 				this,
-				this.updateTick
+				this.__updateTick
 			);
 
 			if (replace) {
 				const command = this.__stack.current();
 
-				if (command && this.updateTick === command.tick) {
+				if (command && this.__updateTick === command.tick) {
 					this.__stack.replace(newCommand);
 				}
 			} else {
@@ -182,7 +182,7 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 			}
 
 			this.startValue = newValue;
-			this.fireChangeStack();
+			this.__fireChangeStack();
 		}
 	}
 
@@ -192,7 +192,7 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	redo(): void {
 		if (this.__stack.redo()) {
 			this.startValue = this.snapshot.make();
-			this.fireChangeStack();
+			this.__fireChangeStack();
 		}
 	}
 
@@ -206,7 +206,7 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	undo(): void {
 		if (this.__stack.undo()) {
 			this.startValue = this.snapshot.make();
-			this.fireChangeStack();
+			this.__fireChangeStack();
 		}
 	}
 
@@ -217,14 +217,14 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	clear(): void {
 		this.startValue = this.snapshot.make();
 		this.__stack.clear();
-		this.fireChangeStack();
+		this.__fireChangeStack();
 	}
 
 	get length(): number {
 		return this.__stack.length;
 	}
 
-	private fireChangeStack(): void {
+	private __fireChangeStack(): void {
 		this.j && !this.j.isInDestruct && this.j.events?.fire('changeStack');
 	}
 

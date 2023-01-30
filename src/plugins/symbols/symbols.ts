@@ -39,7 +39,7 @@ export class symbols extends Plugin {
 		}
 	];
 
-	private countInRow: number = 17;
+	private __countInRow: number = 17;
 
 	constructor(jodit: IJodit) {
 		super(jodit);
@@ -71,7 +71,8 @@ export class symbols extends Plugin {
 
 				for (
 					let j = 0;
-					j < this.countInRow && i < jodit.o.specialCharacters.length;
+					j < this.__countInRow &&
+					i < jodit.o.specialCharacters.length;
 					j += 1, i += 1
 				) {
 					const td = jodit.c.element('td'),
@@ -136,22 +137,22 @@ export class symbols extends Plugin {
 							case KEY_DOWN:
 								newIndex =
 									e.key === KEY_UP
-										? index - self.countInRow
-										: index + self.countInRow;
+										? index - self.__countInRow
+										: index + self.__countInRow;
 
 								if (chars[newIndex] === undefined) {
 									newIndex =
 										e.key === KEY_UP
 											? Math.floor(
 													chars.length /
-														self.countInRow
+														self.__countInRow
 											  ) *
-													self.countInRow +
+													self.__countInRow +
 											  jIndex
 											: jIndex;
 
 									if (newIndex > chars.length - 1) {
-										newIndex -= self.countInRow;
+										newIndex -= self.__countInRow;
 									}
 								}
 

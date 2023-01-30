@@ -18,7 +18,7 @@ export class TextAreaEditor
 	extends SourceEditor<HTMLTextAreaElement>
 	implements ISourceEditor
 {
-	private autosize = this.j.async.debounce(() => {
+	private __autosize = this.j.async.debounce(() => {
 		this.instance.style.height = 'auto';
 		this.instance.style.height = this.instance.scrollHeight + 'px';
 	}, this.j.defaultTimeout);
@@ -42,14 +42,14 @@ export class TextAreaEditor
 			.on(
 				this.instance,
 				'change keydown mousedown touchstart input',
-				this.autosize
+				this.__autosize
 			)
-			.on('afterSetMode.source', this.autosize)
+			.on('afterSetMode.source', this.__autosize)
 			.on(this.instance, 'mousedown focus', (e: Event) => {
 				editor.e.fire(e.type, e);
 			});
 
-		this.autosize();
+		this.__autosize();
 
 		this.onReady();
 	}

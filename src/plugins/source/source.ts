@@ -44,21 +44,21 @@ export class source extends Plugin {
 
 	sourceEditor?: ISourceEditor;
 
-	private mirrorContainer!: HTMLDivElement;
+	private __mirrorContainer!: HTMLDivElement;
 
 	private __lock = false;
 	private __oldMirrorValue = '';
 
-	private tempMarkerStart = '{start-jodit-selection}';
-	private tempMarkerStartReg = /{start-jodit-selection}/g;
-	private tempMarkerEnd = '{end-jodit-selection}';
-	private tempMarkerEndReg = /{end-jodit-selection}/g;
+	private __tempMarkerStart = '{start-jodit-selection}';
+	private __tempMarkerStartReg = /{start-jodit-selection}/g;
+	private __tempMarkerEnd = '{end-jodit-selection}';
+	private __tempMarkerEndReg = /{end-jodit-selection}/g;
 
 	@watch(':insertHTML.source')
 	protected onInsertHTML(html: string): void | false {
 		if (!this.j.o.readonly && !this.j.isEditorMode()) {
 			this.sourceEditor?.insertRaw(html);
-			this.toWYSIWYG();
+			this.__toWYSIWYG();
 			return false;
 		}
 	}
@@ -67,13 +67,13 @@ export class source extends Plugin {
 	 * Update source editor from WYSIWYG area
 	 */
 	@autobind
-	private fromWYSIWYG(force: boolean | string = false): void {
+	private __fromWYSIWYG(force: boolean | string = false): void {
 		if (!this.__lock || force === true) {
 			this.__lock = true;
 			const new_value = this.j.getEditorValue(false, SOURCE_CONSUMER);
 
-			if (new_value !== this.getMirrorValue()) {
-				this.setMirrorValue(new_value);
+			if (new_value !== this.__getMirrorValue()) {
+				this.__setMirrorValue(new_value);
 			}
 
 			this.__lock = false;
@@ -84,12 +84,12 @@ export class source extends Plugin {
 	 * Update WYSIWYG area from source editor
 	 */
 	@autobind
-	private toWYSIWYG(): void {
+	private __toWYSIWYG(): void {
 		if (this.__lock) {
 			return;
 		}
 
-		const value: string = this.getMirrorValue();
+		const value: string = this.__getMirrorValue();
 
 		if (value === this.__oldMirrorValue) {
 			return;
@@ -102,7 +102,7 @@ export class source extends Plugin {
 	}
 
 	@autobind
-	private getNormalPosition(pos: number, str: string): number {
+	private __getNormalPosition(pos: number, str: string): number {
 		str = str.replace(/<(script|style|iframe)[^>]*>[^]*?<\/\1>/im, m => {
 			let res = '';
 
@@ -138,7 +138,7 @@ export class source extends Plugin {
 		return pos;
 	}
 
-	private clnInv(str: string): string {
+	private __clnInv(str: string): string {
 		return str.replace(consts.INVISIBLE_SPACE_REG_EXP(), '');
 	}
 
@@ -154,23 +154,25 @@ export class source extends Plugin {
 	}
 
 	// override it for ace editors
-	private getSelectionStart = (): number => {
+	@autobind
+	private __getSelectionStart(): number {
 		return this.sourceEditor?.getSelectionStart() ?? 0;
-	};
+	}
 
-	private getSelectionEnd = (): number => {
+	@autobind
+	private __getSelectionEnd(): number {
 		return this.sourceEditor?.getSelectionEnd() ?? 0;
-	};
+	}
 
-	private getMirrorValue(): string {
+	private __getMirrorValue(): string {
 		return this.sourceEditor?.getValue() || '';
 	}
 
-	private setMirrorValue(value: string): void {
+	private __setMirrorValue(value: string): void {
 		this.sourceEditor?.setValue(value);
 	}
 
-	private setFocusToMirror(): void {
+	private __setFocusToMirror(): void {
 		this.sourceEditor?.focus();
 	}
 
@@ -179,53 +181,53 @@ export class source extends Plugin {
 		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
 			this.j.s.save();
 			this.j.synchronizeValues();
-			this.fromWYSIWYG(true);
+			this.__fromWYSIWYG(true);
 		} else {
 			if (this.j.o.editHTMLDocumentMode) {
 				return;
 			}
 
-			const value: string = this.getMirrorValue();
+			const value: string = this.__getMirrorValue();
 
-			if (this.getSelectionStart() === this.getSelectionEnd()) {
+			if (this.__getSelectionStart() === this.__getSelectionEnd()) {
 				const marker = this.j.s.marker(true);
 
-				const selectionStart = this.getNormalPosition(
-					this.getSelectionStart(),
-					this.getMirrorValue()
+				const selectionStart = this.__getNormalPosition(
+					this.__getSelectionStart(),
+					this.__getMirrorValue()
 				);
 
-				this.setMirrorValue(
+				this.__setMirrorValue(
 					value.substring(0, selectionStart) +
-						this.clnInv(marker.outerHTML) +
+						this.__clnInv(marker.outerHTML) +
 						value.substring(selectionStart)
 				);
 			} else {
 				const markerStart = this.j.s.marker(true);
 				const markerEnd = this.j.s.marker(false);
 
-				const selectionStart = this.getNormalPosition(
-					this.getSelectionStart(),
+				const selectionStart = this.__getNormalPosition(
+					this.__getSelectionStart(),
 					value
 				);
-				const selectionEnd = this.getNormalPosition(
-					this.getSelectionEnd(),
+				const selectionEnd = this.__getNormalPosition(
+					this.__getSelectionEnd(),
 					value
 				);
 
-				this.setMirrorValue(
+				this.__setMirrorValue(
 					value.substring(0, selectionStart) +
-						this.clnInv(markerStart.outerHTML) +
+						this.__clnInv(markerStart.outerHTML) +
 						value.substring(
 							selectionStart,
 							selectionEnd - selectionStart
 						) +
-						this.clnInv(markerEnd.outerHTML) +
+						this.__clnInv(markerEnd.outerHTML) +
 						value.substring(selectionEnd)
 				);
 			}
 
-			this.toWYSIWYG();
+			this.__toWYSIWYG();
 		}
 	}
 
@@ -238,7 +240,7 @@ export class source extends Plugin {
 			return;
 		}
 
-		let value: string = this.getMirrorValue();
+		let value: string = this.__getMirrorValue();
 		let selectionStart: number = 0,
 			selectionEnd: number = 0;
 
@@ -246,11 +248,11 @@ export class source extends Plugin {
 			value = value
 				.replace(
 					/<span[^>]+data-jodit-selection_marker=(["'])start\1[^>]*>[<>]*?<\/span>/gim,
-					this.tempMarkerStart
+					this.__tempMarkerStart
 				)
 				.replace(
 					/<span[^>]+data-jodit-selection_marker=(["'])end\1[^>]*>[<>]*?<\/span>/gim,
-					this.tempMarkerEnd
+					this.__tempMarkerEnd
 				);
 
 			if (!this.j.o.editHTMLDocumentMode && this.j.o.beautifyHTML) {
@@ -261,60 +263,60 @@ export class source extends Plugin {
 				}
 			}
 
-			selectionStart = value.indexOf(this.tempMarkerStart);
+			selectionStart = value.indexOf(this.__tempMarkerStart);
 			selectionEnd = selectionStart;
 
-			value = value.replace(this.tempMarkerStartReg, '');
+			value = value.replace(this.__tempMarkerStartReg, '');
 
 			if (selectionStart !== -1) {
-				const selectionEndCursor = value.indexOf(this.tempMarkerEnd);
+				const selectionEndCursor = value.indexOf(this.__tempMarkerEnd);
 
 				if (selectionEndCursor !== -1) {
 					selectionEnd = selectionEndCursor;
 				}
 			}
 
-			value = value.replace(this.tempMarkerEndReg, '');
+			value = value.replace(this.__tempMarkerEndReg, '');
 		} finally {
 			value = value
-				.replace(this.tempMarkerEndReg, '')
-				.replace(this.tempMarkerStartReg, '');
+				.replace(this.__tempMarkerEndReg, '')
+				.replace(this.__tempMarkerStartReg, '');
 		}
 
-		this.setMirrorValue(value);
+		this.__setMirrorValue(value);
 
-		this.setMirrorSelectionRange(selectionStart, selectionEnd);
+		this.__setMirrorSelectionRange(selectionStart, selectionEnd);
 
-		this.toWYSIWYG();
+		this.__toWYSIWYG();
 
-		this.setFocusToMirror(); // need for setting focus after change mode
+		this.__setFocusToMirror(); // need for setting focus after change mode
 	}
 
 	@autobind
-	private setMirrorSelectionRange(start: number, end: number): void {
+	private __setMirrorSelectionRange(start: number, end: number): void {
 		this.sourceEditor?.setSelectionRange(start, end);
 	}
 
 	@watch(':readonly.source')
-	private onReadonlyReact(): void {
+	private __onReadonlyReact(): void {
 		this.sourceEditor?.setReadOnly(this.j.o.readonly);
 	}
 
 	/** @override */
 	afterInit(editor: IJodit): void {
-		this.mirrorContainer = editor.c.div('jodit-source');
-		editor.workplace.appendChild(this.mirrorContainer);
+		this.__mirrorContainer = editor.c.div('jodit-source');
+		editor.workplace.appendChild(this.__mirrorContainer);
 
 		editor.e.on('afterAddPlace changePlace afterInit', () => {
-			editor.workplace.appendChild(this.mirrorContainer);
+			editor.workplace.appendChild(this.__mirrorContainer);
 		});
 
 		this.sourceEditor = createSourceEditor(
 			'area',
 			editor,
-			this.mirrorContainer,
-			this.toWYSIWYG,
-			this.fromWYSIWYG
+			this.__mirrorContainer,
+			this.__toWYSIWYG,
+			this.__fromWYSIWYG
 		);
 
 		editor.e.on(editor.ow, 'keydown', (e: KeyboardEvent) => {
@@ -323,13 +325,13 @@ export class source extends Plugin {
 			}
 		});
 
-		this.onReadonlyReact();
+		this.__onReadonlyReact();
 
 		editor.e
 			.on('placeholder.source', (text: string) => {
 				this.sourceEditor?.setPlaceHolder(text);
 			})
-			.on('change.source', this.syncValueFromWYSIWYG)
+			.on('change.source', this.__syncValueFromWYSIWYG)
 			.on('beautifyHTML', html => html);
 
 		if (editor.o.beautifyHTML) {
@@ -354,41 +356,41 @@ export class source extends Plugin {
 			}
 		}
 
-		this.syncValueFromWYSIWYG(true);
-		this.initSourceEditor(editor);
+		this.__syncValueFromWYSIWYG(true);
+		this.__initSourceEditor(editor);
 	}
 
 	@autobind
-	private syncValueFromWYSIWYG(force: boolean = false): void {
+	private __syncValueFromWYSIWYG(force: boolean = false): void {
 		const editor = this.j;
 
 		if (
 			editor.getMode() === MODE_SPLIT ||
 			editor.getMode() === MODE_SOURCE
 		) {
-			this.fromWYSIWYG(force);
+			this.__fromWYSIWYG(force);
 		}
 	}
 
-	private initSourceEditor(editor: IJodit): void {
+	private __initSourceEditor(editor: IJodit): void {
 		if (editor.o.sourceEditor !== 'area') {
 			const sourceEditor = createSourceEditor(
 				editor.o.sourceEditor,
 				editor,
-				this.mirrorContainer,
-				this.toWYSIWYG,
-				this.fromWYSIWYG
+				this.__mirrorContainer,
+				this.__toWYSIWYG,
+				this.__fromWYSIWYG
 			);
 
 			sourceEditor.onReadyAlways(() => {
 				this.sourceEditor?.destruct();
 				this.sourceEditor = sourceEditor;
-				this.syncValueFromWYSIWYG(true);
+				this.__syncValueFromWYSIWYG(true);
 				editor.events?.fire('sourceEditorReady', editor);
 			});
 		} else {
 			this.sourceEditor?.onReadyAlways(() => {
-				this.syncValueFromWYSIWYG(true);
+				this.__syncValueFromWYSIWYG(true);
 				editor.events?.fire('sourceEditorReady', editor);
 			});
 		}
@@ -401,7 +403,7 @@ export class source extends Plugin {
 			delete this.sourceEditor;
 		}
 
-		Dom.safeRemove(this.mirrorContainer);
+		Dom.safeRemove(this.__mirrorContainer);
 	}
 }
 

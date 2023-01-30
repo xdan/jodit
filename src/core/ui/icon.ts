@@ -18,20 +18,20 @@ import { css } from 'jodit/core/helpers/utils/css';
 import { camelCase, kebabCase } from 'jodit/core/helpers';
 
 export class Icon {
-	private static icons: IDictionary<string> = {};
+	private static __icons: IDictionary<string> = {};
 
-	private static getIcon(name: string): string | undefined {
+	private static __getIcon(name: string): string | undefined {
 		if (/<svg/i.test(name)) {
 			return name;
 		}
 
 		const icon =
-			Icon.icons[name] ||
-			Icon.icons[name.replace(/-/g, '_')] ||
-			Icon.icons[name.replace(/_/g, '-')] ||
-			Icon.icons[camelCase(name)] ||
-			Icon.icons[kebabCase(name)] ||
-			Icon.icons[name.toLowerCase()];
+			Icon.__icons[name] ||
+			Icon.__icons[name.replace(/-/g, '_')] ||
+			Icon.__icons[name.replace(/_/g, '-')] ||
+			Icon.__icons[camelCase(name)] ||
+			Icon.__icons[kebabCase(name)] ||
+			Icon.__icons[name.toLowerCase()];
 
 		if (!isProd && !icon) {
 			console.log(`Icon "${name}" not found`);
@@ -44,21 +44,21 @@ export class Icon {
 	 * Check if icon exist in store
 	 */
 	static exists(name: string): boolean {
-		return this.getIcon(name) !== undefined;
+		return this.__getIcon(name) !== undefined;
 	}
 
 	/**
 	 * Return SVG icon
 	 */
 	static get(name: string, defaultValue: string = '<span></span>'): string {
-		return this.getIcon(name) || defaultValue;
+		return this.__getIcon(name) || defaultValue;
 	}
 
 	/**
 	 * Set SVG in store
 	 */
 	static set(name: string, value: string): typeof Icon {
-		this.icons[name.replace('_', '-')] = value;
+		this.__icons[name.replace('_', '-')] = value;
 		return this;
 	}
 

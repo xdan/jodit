@@ -33,14 +33,14 @@ export class UIInput extends UIElement implements IUIInput {
 
 	nativeInput!: IUIInput['nativeInput'];
 
-	private label = this.j.c.span(this.getFullElName('label'));
-	private icon = this.j.c.span(this.getFullElName('icon'));
-	private clearButton = this.j.c.span(
+	private __label = this.j.c.span(this.getFullElName('label'));
+	private __icon = this.j.c.span(this.getFullElName('icon'));
+	private __clearButton = this.j.c.span(
 		this.getFullElName('clear'),
 		Icon.get('cancel')
 	);
 
-	private wrapper!: HTMLElement;
+	private __wrapper!: HTMLElement;
 
 	static defaultState: IUIInput['state'] = {
 		className: '',
@@ -61,9 +61,9 @@ export class UIInput extends UIElement implements IUIInput {
 	@watch('state.clearButton')
 	protected onChangeClear(): void {
 		if (this.state.clearButton) {
-			Dom.after(this.nativeInput, this.clearButton);
+			Dom.after(this.nativeInput, this.__clearButton);
 		} else {
-			Dom.safeRemove(this.clearButton);
+			Dom.safeRemove(this.__clearButton);
 		}
 	}
 
@@ -107,17 +107,17 @@ export class UIInput extends UIElement implements IUIInput {
 		attr(input, 'placeholder', placeholder ? this.j.i18n(placeholder) : '');
 
 		if (icon && Icon.exists(icon)) {
-			Dom.before(input, this.icon);
-			this.icon.innerHTML = Icon.get(icon);
+			Dom.before(input, this.__icon);
+			this.__icon.innerHTML = Icon.get(icon);
 		} else {
-			Dom.safeRemove(this.icon);
+			Dom.safeRemove(this.__icon);
 		}
 
 		if (label) {
-			Dom.before(this.wrapper, this.label);
-			this.label.innerText = this.j.i18n(label);
+			Dom.before(this.__wrapper, this.__label);
+			this.__label.innerText = this.j.i18n(label);
 		} else {
-			Dom.safeRemove(this.label);
+			Dom.safeRemove(this.__label);
 		}
 
 		this.updateValidators();
@@ -206,7 +206,7 @@ export class UIInput extends UIElement implements IUIInput {
 	): HTMLElement {
 		const container = super.createContainer();
 
-		this.wrapper = this.j.c.div(this.getFullElName('wrapper'));
+		this.__wrapper = this.j.c.div(this.getFullElName('wrapper'));
 
 		if (!this.nativeInput) {
 			this.nativeInput = this.createNativeInput();
@@ -216,8 +216,8 @@ export class UIInput extends UIElement implements IUIInput {
 
 		nativeInput.classList.add(this.getFullElName('input'));
 
-		this.wrapper.appendChild(nativeInput);
-		container.appendChild(this.wrapper);
+		this.__wrapper.appendChild(nativeInput);
+		container.appendChild(this.__wrapper);
 
 		attr(nativeInput, 'dir', this.j.o.direction || 'auto');
 
@@ -245,7 +245,7 @@ export class UIInput extends UIElement implements IUIInput {
 
 		if (this.state.clearButton !== undefined) {
 			this.j.e
-				.on(this.clearButton, 'click', (e: MouseEvent) => {
+				.on(this.__clearButton, 'click', (e: MouseEvent) => {
 					e.preventDefault();
 					this.nativeInput.value = '';
 					this.j.e.fire(this.nativeInput, 'input');
@@ -260,7 +260,7 @@ export class UIInput extends UIElement implements IUIInput {
 
 		this.j.e
 			.on(this.nativeInput, 'focus blur', () => {
-				this.onChangeFocus();
+				this.__onChangeFocus();
 			})
 			.on(this.nativeInput, 'input change', this.onChangeValue);
 
@@ -280,7 +280,7 @@ export class UIInput extends UIElement implements IUIInput {
 	/**
 	 * Set `focused` mod on change focus
 	 */
-	private onChangeFocus(): void {
+	private __onChangeFocus(): void {
 		this.setMod('focused', this.isFocused);
 	}
 }

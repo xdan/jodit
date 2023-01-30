@@ -34,19 +34,19 @@ export class spellcheck extends Plugin {
 	protected afterInit(jodit: IJodit): void {
 		jodit.e.on(
 			'afterInit afterAddPlace prepareWYSIWYGEditor',
-			this.toggleSpellcheck
+			this.__toggleSpellcheck
 		);
-		this.toggleSpellcheck();
+		this.__toggleSpellcheck();
 
 		jodit.registerCommand('toggleSpellcheck', () => {
 			this.jodit.o.spellcheck = !this.jodit.o.spellcheck;
-			this.toggleSpellcheck();
+			this.__toggleSpellcheck();
 			this.j.e.fire('updateToolbar');
 		});
 	}
 
 	@autobind
-	private toggleSpellcheck(): void {
+	private __toggleSpellcheck(): void {
 		attr(this.jodit.editor, 'spellcheck', this.jodit.o.spellcheck);
 	}
 

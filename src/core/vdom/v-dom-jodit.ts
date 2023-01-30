@@ -12,39 +12,39 @@ import { VDomRender } from './render';
 import { EventEmitter } from '../event-emitter';
 
 export class VDomJodit {
-	private container: HTMLElement;
-	private editor: HTMLElement;
-	private mirror: HTMLElement;
-	private astMirror: HTMLElement;
+	private __container: HTMLElement;
+	private __editor: HTMLElement;
+	private __mirror: HTMLElement;
+	private __astMirror: HTMLElement;
 
-	private vdom!: IVDom;
+	private __vdom!: IVDom;
 
-	private render: VDomRender = new VDomRender();
-	private render2: VDomRender = new VDomRender();
-	private event: IEventEmitter = new EventEmitter();
+	private __render: VDomRender = new VDomRender();
+	private __render2: VDomRender = new VDomRender();
+	private __event: IEventEmitter = new EventEmitter();
 
 	set value(v: string) {
-		this.vdom = this.render.htmlToVDom(v);
-		this.render.render(this.vdom, this.editor);
+		this.__vdom = this.__render.htmlToVDom(v);
+		this.__render.render(this.__vdom, this.__editor);
 	}
 
 	private constructor(elm: HTMLInputElement) {
-		this.container = document.createElement('div');
-		this.editor = document.createElement('div');
-		this.mirror = document.createElement('div');
-		this.astMirror = document.createElement('pre');
+		this.__container = document.createElement('div');
+		this.__editor = document.createElement('div');
+		this.__mirror = document.createElement('div');
+		this.__astMirror = document.createElement('pre');
 		elm.style.display = 'none';
-		elm.parentElement?.insertBefore(this.container, elm);
-		this.editor.setAttribute('contenteditable', 'true');
+		elm.parentElement?.insertBefore(this.__container, elm);
+		this.__editor.setAttribute('contenteditable', 'true');
 
-		this.container.classList.add('jodit-v-dom-container');
-		this.editor.classList.add('jodit-v-dom-editor');
-		this.astMirror.classList.add('jodit-v-dom-ast-mirror');
-		this.container.appendChild(this.editor);
-		this.container.appendChild(this.astMirror);
-		this.container.appendChild(this.mirror);
+		this.__container.classList.add('jodit-v-dom-container');
+		this.__editor.classList.add('jodit-v-dom-editor');
+		this.__astMirror.classList.add('jodit-v-dom-ast-mirror');
+		this.__container.appendChild(this.__editor);
+		this.__container.appendChild(this.__astMirror);
+		this.__container.appendChild(this.__mirror);
 		this.value = elm.value;
-		this.event.on(document, 'selectionchange', () => {
+		this.__event.on(document, 'selectionchange', () => {
 			console.log(111);
 		});
 
@@ -60,23 +60,23 @@ export class VDomJodit {
 			for (const mutation of mutationList) {
 				console.log(mutation);
 			}
-			const vdom = this.render2.htmlToVDom(this.editor.innerHTML);
-			this.astMirror.textContent = JSON.stringify(vdom, null, ' ');
+			const vdom = this.__render2.htmlToVDom(this.__editor.innerHTML);
+			this.__astMirror.textContent = JSON.stringify(vdom, null, ' ');
 
-			this.render2.render(vdom, this.mirror);
+			this.__render2.render(vdom, this.__mirror);
 		};
 		const observer = new MutationObserver(callback);
-		observer.observe(this.editor, config);
+		observer.observe(this.__editor, config);
 
-		this.preventAllInputEvents();
+		this.__preventAllInputEvents();
 	}
 
 	static make(elm: HTMLInputElement): VDomJodit {
 		return new VDomJodit(elm);
 	}
 
-	private preventAllInputEvents(): void {
-		this.container.addEventListener('keydown', e => {
+	private __preventAllInputEvents(): void {
+		this.__container.addEventListener('keydown', e => {
 			// e.preventDefault();
 		});
 	}

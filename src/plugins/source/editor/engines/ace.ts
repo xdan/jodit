@@ -20,37 +20,37 @@ export class AceEditor
 {
 	override className = 'jodit_ace_editor';
 
-	private aceExists(): boolean {
+	private __aceExists(): boolean {
 		return (this.j.ow as any).ace !== undefined;
 	}
 
 	/**
 	 * Proxy Method
 	 */
-	private proxyOnBlur = (e: MouseEvent): void => {
+	private __proxyOnBlur = (e: MouseEvent): void => {
 		this.j.e.fire('blur', e);
 	};
 
-	private proxyOnFocus = (e: MouseEvent): void => {
+	private __proxyOnFocus = (e: MouseEvent): void => {
 		this.j.e.fire('focus', e);
 	};
 
-	private proxyOnMouseDown = (e: MouseEvent): void => {
+	private __proxyOnMouseDown = (e: MouseEvent): void => {
 		this.j.e.fire('mousedown', e);
 	};
 
-	private getLastColumnIndex(row: number): number {
+	private __getLastColumnIndex(row: number): number {
 		return this.instance.session.getLine(row).length;
 	}
 
-	private getLastColumnIndices(): number[] {
+	private __getLastColumnIndices(): number[] {
 		const rows = this.instance.session.getLength();
 		const lastColumnIndices: number[] = [];
 
 		let lastColIndex = 0;
 
 		for (let i = 0; i < rows; i++) {
-			lastColIndex += this.getLastColumnIndex(i);
+			lastColIndex += this.__getLastColumnIndex(i);
 
 			if (i > 0) {
 				lastColIndex += 1;
@@ -62,11 +62,11 @@ export class AceEditor
 		return lastColumnIndices;
 	}
 
-	private getRowColumnIndices(characterIndex: number): {
+	private __getRowColumnIndices(characterIndex: number): {
 		row: number;
 		column: number;
 	} {
-		const lastColumnIndices: number[] = this.getLastColumnIndices();
+		const lastColumnIndices: number[] = this.__getLastColumnIndices();
 
 		if (characterIndex <= lastColumnIndices[0]) {
 			return { row: 0, column: characterIndex };
@@ -85,9 +85,9 @@ export class AceEditor
 		return { row, column };
 	}
 
-	private setSelectionRangeIndices(start: number, end: number): void {
-		const startRowColumn = this.getRowColumnIndices(start);
-		const endRowColumn = this.getRowColumnIndices(end);
+	private __setSelectionRangeIndices(start: number, end: number): void {
+		const startRowColumn = this.__getRowColumnIndices(start);
+		const endRowColumn = this.__getRowColumnIndices(end);
 
 		this.instance.getSelection().setSelectionRange({
 			start: startRowColumn,
@@ -95,15 +95,15 @@ export class AceEditor
 		});
 	}
 
-	private getIndexByRowColumn(row: number, column: number): number {
-		const lastColumnIndices: number[] = this.getLastColumnIndices();
+	private __getIndexByRowColumn(row: number, column: number): number {
+		const lastColumnIndices: number[] = this.__getLastColumnIndices();
 
-		return lastColumnIndices[row] - this.getLastColumnIndex(row) + column;
+		return lastColumnIndices[row] - this.__getLastColumnIndex(row) + column;
 	}
 
 	init(editor: IJodit): any {
 		const tryInitAceEditor = (): void => {
-			if (this.instance !== undefined || !this.aceExists()) {
+			if (this.instance !== undefined || !this.__aceExists()) {
 				return;
 			}
 
@@ -140,9 +140,9 @@ export class AceEditor
 			this.instance.$blockScrolling = Infinity;
 
 			this.instance.on('change', this.toWYSIWYG as any);
-			this.instance.on('focus', this.proxyOnFocus);
-			this.instance.on('mousedown', this.proxyOnMouseDown);
-			this.instance.on('blur', this.proxyOnBlur);
+			this.instance.on('focus', this.__proxyOnFocus);
+			this.instance.on('mousedown', this.__proxyOnMouseDown);
+			this.instance.on('blur', this.__proxyOnBlur);
 
 			if (editor.getRealMode() !== constants.MODE_WYSIWYG) {
 				this.setValue(this.getValue());
@@ -188,7 +188,7 @@ export class AceEditor
 		tryInitAceEditor();
 
 		// global add ace editor in browser
-		if (!this.aceExists()) {
+		if (!this.__aceExists()) {
 			loadNext(editor, editor.o.sourceEditorCDNUrlsJS)
 				.then(() => {
 					if (!editor.isInDestruct) {
@@ -201,8 +201,8 @@ export class AceEditor
 
 	destruct(): any {
 		this.instance.off('change', this.toWYSIWYG);
-		this.instance.off('focus', this.proxyOnFocus);
-		this.instance.off('mousedown', this.proxyOnMouseDown);
+		this.instance.off('focus', this.__proxyOnFocus);
+		this.instance.off('mousedown', this.__proxyOnMouseDown);
 		this.instance.destroy();
 
 		this.j?.events?.off('aceInited.source');
@@ -245,13 +245,13 @@ export class AceEditor
 	getSelectionStart(): number {
 		const range = this.instance.selection.getRange();
 
-		return this.getIndexByRowColumn(range.start.row, range.start.column);
+		return this.__getIndexByRowColumn(range.start.row, range.start.column);
 	}
 
 	getSelectionEnd(): number {
 		const range = this.instance.selection.getRange();
 
-		return this.getIndexByRowColumn(range.end.row, range.end.column);
+		return this.__getIndexByRowColumn(range.end.row, range.end.column);
 	}
 
 	selectAll(): void {
@@ -272,7 +272,7 @@ export class AceEditor
 	}
 
 	setSelectionRange(start: number, end: number): void {
-		this.setSelectionRangeIndices(start, end);
+		this.__setSelectionRangeIndices(start, end);
 	}
 
 	setPlaceHolder(title: string): void {

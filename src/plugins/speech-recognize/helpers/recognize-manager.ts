@@ -27,95 +27,96 @@ export class RecognizeManager
 	}>
 	implements IDestructible
 {
-	private _lang: CanUndef<string>;
+	private __lang: CanUndef<string>;
 	set lang(v: CanUndef<string>) {
-		this._lang = v;
-		this._api.lang = v;
+		this.__lang = v;
+		this.__api.lang = v;
 	}
 	get lang(): CanUndef<string> {
-		return this._lang;
+		return this.__lang;
 	}
 
-	private _continuous: boolean = false;
+	private __continuous: boolean = false;
 	set continuous(v: boolean) {
-		this._continuous = v;
-		this._api.continuous = v;
+		this.__continuous = v;
+		this.__api.continuous = v;
 	}
 	get continuous(): boolean {
-		return this._continuous;
+		return this.__continuous;
 	}
 
-	private _interimResults: boolean = false;
+	private __interimResults: boolean = false;
+
 	set interimResults(v: boolean) {
-		this._interimResults = v;
-		this._api.interimResults = v;
+		this.__interimResults = v;
+		this.__api.interimResults = v;
 	}
 	get interimResults(): boolean {
-		return this._interimResults;
+		return this.__interimResults;
 	}
 
 	sound: boolean = true;
 
-	constructor(private async: IAsync, api: ISpeechRecognize) {
+	constructor(private __async: IAsync, api: ISpeechRecognize) {
 		super();
-		this._api = api;
-		RecognizeManager._instances.add(this);
+		this.__api = api;
+		RecognizeManager.__instances.add(this);
 	}
 
-	private static _instances: Set<RecognizeManager> = new Set();
+	private static __instances: Set<RecognizeManager> = new Set();
 
 	override destruct(): void {
 		this.stop();
-		RecognizeManager._instances.delete(this);
+		RecognizeManager.__instances.delete(this);
 		super.destruct();
 	}
 
-	private _isEnabled: boolean = false;
+	private __isEnabled: boolean = false;
 	get isEnabled(): boolean {
-		return this._isEnabled;
+		return this.__isEnabled;
 	}
 
 	start(): void {
-		if (this._isEnabled) {
+		if (this.__isEnabled) {
 			return;
 		}
 
-		this._isEnabled = true;
+		this.__isEnabled = true;
 
-		RecognizeManager._instances.forEach(instance => {
+		RecognizeManager.__instances.forEach(instance => {
 			if (instance !== this) {
 				instance.stop();
 			}
 		});
 
-		this._api.start();
-		this.__on('speechstart', this._onSpeechStart)
-			.__on('error', this._onError)
-			.__on('result', this._onResult);
+		this.__api.start();
+		this.__on('speechstart', this.__onSpeechStart)
+			.__on('error', this.__onError)
+			.__on('result', this.__onResult);
 	}
 
 	stop(): void {
-		if (!this._isEnabled) {
+		if (!this.__isEnabled) {
 			return;
 		}
 
 		try {
-			this._api.abort();
-			this._api.stop();
+			this.__api.abort();
+			this.__api.stop();
 		} catch {}
 
-		this.__off('speechstart', this._onSpeechStart)
-			.__off('error', this._onError)
-			.__off('result', this._onResult);
+		this.__off('speechstart', this.__onSpeechStart)
+			.__off('error', this.__onError)
+			.__off('result', this.__onResult);
 
-		this.async.clearTimeout(this._restartTimeout);
+		this.__async.clearTimeout(this.__restartTimeout);
 
-		this._isEnabled = false;
+		this.__isEnabled = false;
 		this.emit('pulse', false);
 	}
 
 	toggle(): void {
-		if (!this._isEnabled) {
+		if (!this.__isEnabled) {
 			this.start();
 		} else {
 			this.stop();
@@ -127,78 +128,81 @@ export class RecognizeManager
 		this.start();
 	}
 
-	private _restartTimeout: number = 0;
+	private __restartTimeout: number = 0;
 
-	private _onSpeechStart = (e: any): void => {
-		if (!this._isEnabled) {
+	private __onSpeechStart = (e: any): void => {
+		if (!this.__isEnabled) {
 			return;
 		}
 
-		this.async.clearTimeout(this._restartTimeout);
-		this._restartTimeout = this.async.setTimeout(() => {
+		this.__async.clearTimeout(this.__restartTimeout);
+		this.__restartTimeout = this.__async.setTimeout(() => {
 			this.restart();
 			this.emit('pulse', false);
-			this._makeSound(WARN);
+			this.__makeSound(WARN);
 		}, 5000);
 
 		this.emit('pulse', true);
 	};
 
-	private readonly _api: ISpeechRecognize;
+	private readonly __api: ISpeechRecognize;
 
 	private __on(event: string, callback: Function): this {
-		this._api.addEventListener(event, callback);
+		this.__api.addEventListener(event, callback);
 		return this;
 	}
 
 	private __off(event: string, callback: Function): this {
-		this._api.removeEventListener(event, callback);
+		this.__api.removeEventListener(event, callback);
 		return this;
 	}
 
-	private _progressTimeout: number = 0;
-	private _onResult(e: ISpeechRecognizeResult): void {
-		if (!this._isEnabled) {
+	private __progressTimeout: number = 0;
+	private __onResult(e: ISpeechRecognizeResult): void {
+		if (!this.__isEnabled) {
 			return;
 		}
 
-		this.async.clearTimeout(this._progressTimeout);
+		this.__async.clearTimeout(this.__progressTimeout);
 
 		const resultItem = e.results.item(e.resultIndex);
 		const { transcript } = resultItem.item(0);
 
 		const resultHandler = (): void => {
 			try {
-				this.async.clearTimeout(this._restartTimeout);
+				this.__async.clearTimeout(this.__restartTimeout);
 				this.emit('result', transcript);
 			} catch {}
 
 			this.restart();
 
 			this.emit('pulse', false);
-			this._makeSound(PII);
+			this.__makeSound(PII);
 		};
 
 		if (resultItem.isFinal === false) {
 			this.emit('progress', transcript);
-			this._progressTimeout = this.async.setTimeout(resultHandler, 500);
+			this.__progressTimeout = this.__async.setTimeout(
+				resultHandler,
+				500
+			);
 			return;
 		}
 
 		resultHandler();
 	}
 
-	private _onError(): void {
-		if (!this._isEnabled) {
+	private __onError(): void {
+		if (!this.__isEnabled) {
 			return;
 		}
 
-		this._makeSound(WARN);
+		this.__makeSound(WARN);
 		this.emit('pulse', false);
 		this.restart();
 	}
 
-	private _makeSound(frequency: number): void {
+	private __makeSound(frequency: number): void {
 		if (this.sound) {
 			sound({ frequency });
 		}

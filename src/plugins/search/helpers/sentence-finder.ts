@@ -28,10 +28,12 @@ interface QueueItem {
 }
 
 export class SentenceFinder {
-	private queue: QueueItem[] = [];
-	private value: string = '';
+	private __queue: QueueItem[] = [];
+	private __value: string = '';
 
-	constructor(private readonly searchIndex: FuzzySearch = fuzzySearchIndex) {}
+	constructor(
+		private readonly __searchIndex: FuzzySearch = fuzzySearchIndex
+	) {}
 
 	add(node: Text): void {
 		const value = (node.nodeValue ?? '').toLowerCase();
@@ -40,15 +42,15 @@ export class SentenceFinder {
 			return;
 		}
 
-		const index = this.value.length;
+		const index = this.__value.length;
 
-		this.queue.push({
+		this.__queue.push({
 			startIndex: index,
 			endIndex: index + value.length,
 			node
 		});
 
-		this.value += value;
+		this.__value += value;
 	}
 
 	ranges(needle: string, position: number = 0): Nullable<ISelectionRange[]> {
@@ -60,7 +62,7 @@ export class SentenceFinder {
 
 		// Find all ranges in substring
 		do {
-			[index, len] = this.searchIndex(needle, this.value, index);
+			[index, len] = this.__searchIndex(needle, this.__value, index);
 
 			if (index !== -1) {
 				let startContainer: CanUndef<Text>,
@@ -68,18 +70,18 @@ export class SentenceFinder {
 					endContainer: CanUndef<Text>,
 					endOffset: number = 0;
 
-				for (let i = startQueueIndex; i < this.queue.length; i += 1) {
-					if (!startContainer && this.queue[i].endIndex > index) {
-						startContainer = this.queue[i].node;
-						startOffset = index - this.queue[i].startIndex;
+				for (let i = startQueueIndex; i < this.__queue.length; i += 1) {
+					if (!startContainer && this.__queue[i].endIndex > index) {
+						startContainer = this.__queue[i].node;
+						startOffset = index - this.__queue[i].startIndex;
 					}
 
 					if (
 						startContainer &&
-						this.queue[i].endIndex >= index + len
+						this.__queue[i].endIndex >= index + len
 					) {
-						endContainer = this.queue[i].node;
-						endOffset = index + len - this.queue[i].startIndex;
+						endContainer = this.__queue[i].node;
+						endOffset = index + len - this.__queue[i].startIndex;
 						startQueueIndex = i;
 						break;
 					}

@@ -30,7 +30,7 @@ export class backspace extends Plugin {
 	protected override afterInit(jodit: IJodit): void {
 		jodit.e.on('afterCommand.delete', (command: 'delete' | string) => {
 			if (command === 'delete') {
-				this.afterDeleteCommand();
+				this.__afterDeleteCommand();
 			}
 		});
 
@@ -38,7 +38,7 @@ export class backspace extends Plugin {
 			.registerCommand(
 				'deleteButton',
 				{
-					exec: () => this.onDelete(false),
+					exec: () => this.__onDelete(false),
 					hotkeys: jodit.o.delete.hotkeys.delete
 				},
 				{
@@ -48,7 +48,7 @@ export class backspace extends Plugin {
 			.registerCommand(
 				'backspaceButton',
 				{
-					exec: () => this.onDelete(true),
+					exec: () => this.__onDelete(true),
 					hotkeys: jodit.o.delete.hotkeys.backspace
 				},
 				{
@@ -56,19 +56,19 @@ export class backspace extends Plugin {
 				}
 			)
 			.registerCommand('deleteWordButton', {
-				exec: () => this.onDelete(false, 'word'),
+				exec: () => this.__onDelete(false, 'word'),
 				hotkeys: jodit.o.delete.hotkeys.deleteWord
 			})
 			.registerCommand('backspaceWordButton', {
-				exec: () => this.onDelete(true, 'word'),
+				exec: () => this.__onDelete(true, 'word'),
 				hotkeys: jodit.o.delete.hotkeys.backspaceWord
 			})
 			.registerCommand('deleteSentenceButton', {
-				exec: () => this.onDelete(false, 'sentence'),
+				exec: () => this.__onDelete(false, 'sentence'),
 				hotkeys: jodit.o.delete.hotkeys.deleteSentence
 			})
 			.registerCommand('backspaceSentenceButton', {
-				exec: () => this.onDelete(true, 'sentence'),
+				exec: () => this.__onDelete(true, 'sentence'),
 				hotkeys: jodit.o.delete.hotkeys.backspaceSentence
 			});
 	}
@@ -80,7 +80,7 @@ export class backspace extends Plugin {
 	/**
 	 * After Delete command remove extra BR
 	 */
-	private afterDeleteCommand(): void {
+	private __afterDeleteCommand(): void {
 		const jodit = this.j;
 
 		const current = jodit.s.current();
@@ -105,7 +105,7 @@ export class backspace extends Plugin {
 	/**
 	 * Listener BackSpace or Delete button
 	 */
-	private onDelete(
+	private __onDelete(
 		backspace: boolean,
 		mode: DeleteMode = 'char'
 	): false | void {
@@ -160,7 +160,7 @@ export class backspace extends Plugin {
 			throw e;
 		} finally {
 			jodit.e.fire('backSpaceAfterDelete', backspace, fakeNode);
-			this.safeRemoveEmptyNode(fakeNode);
+			this.__safeRemoveEmptyNode(fakeNode);
 		}
 
 		return false;
@@ -169,7 +169,7 @@ export class backspace extends Plugin {
 	/**
 	 * Remove node and replace cursor position out of it
 	 */
-	private safeRemoveEmptyNode(fakeNode: Node): void {
+	private __safeRemoveEmptyNode(fakeNode: Node): void {
 		const { range } = this.j.s;
 
 		if (range.startContainer === fakeNode) {

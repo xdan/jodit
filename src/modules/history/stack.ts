@@ -12,50 +12,50 @@ import type { CanUndef, IStack } from 'jodit/types';
 import type { Command } from './command';
 
 export class Stack implements IStack {
-	private readonly commands: Command[] = [];
-	private stackPosition: number = -1;
+	private readonly __commands: Command[] = [];
+	private __stackPosition: number = -1;
 
-	constructor(private readonly size: number) {}
+	constructor(private readonly __size: number) {}
 
 	get length(): number {
-		return this.commands.length;
+		return this.__commands.length;
 	}
 
-	private clearRedo(): void {
-		this.commands.length = this.stackPosition + 1;
+	private __clearRedo(): void {
+		this.__commands.length = this.__stackPosition + 1;
 	}
 
 	clear(): void {
-		this.commands.length = 0;
-		this.stackPosition = -1;
+		this.__commands.length = 0;
+		this.__stackPosition = -1;
 	}
 
 	push(command: Command): void {
-		this.clearRedo();
-		this.commands.push(command);
-		this.stackPosition += 1;
+		this.__clearRedo();
+		this.__commands.push(command);
+		this.__stackPosition += 1;
 
-		if (this.commands.length > this.size) {
-			this.commands.shift();
-			this.stackPosition -= 1;
+		if (this.__commands.length > this.__size) {
+			this.__commands.shift();
+			this.__stackPosition -= 1;
 		}
 	}
 
 	replace(command: Command): void {
-		this.commands[this.stackPosition] = command;
+		this.__commands[this.__stackPosition] = command;
 	}
 
 	current(): CanUndef<Command> {
-		return this.commands[this.stackPosition];
+		return this.__commands[this.__stackPosition];
 	}
 
 	undo(): boolean {
 		if (this.canUndo()) {
-			if (this.commands[this.stackPosition]) {
-				this.commands[this.stackPosition].undo();
+			if (this.__commands[this.__stackPosition]) {
+				this.__commands[this.__stackPosition].undo();
 			}
 
-			this.stackPosition -= 1;
+			this.__stackPosition -= 1;
 
 			return true;
 		}
@@ -65,10 +65,10 @@ export class Stack implements IStack {
 
 	redo(): boolean {
 		if (this.canRedo()) {
-			this.stackPosition += 1;
+			this.__stackPosition += 1;
 
-			if (this.commands[this.stackPosition]) {
-				this.commands[this.stackPosition].redo();
+			if (this.__commands[this.__stackPosition]) {
+				this.__commands[this.__stackPosition].redo();
 			}
 
 			return true;
@@ -78,10 +78,10 @@ export class Stack implements IStack {
 	}
 
 	canUndo(): boolean {
-		return this.stackPosition >= 0;
+		return this.__stackPosition >= 0;
 	}
 
 	canRedo(): boolean {
-		return this.stackPosition < this.commands.length - 1;
+		return this.__stackPosition < this.__commands.length - 1;
 	}
 }

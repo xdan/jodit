@@ -27,29 +27,29 @@ import './config';
 export class size extends Plugin {
 	protected afterInit(editor: IJodit): void {
 		editor.e
-			.on('setHeight.size', this.setHeight)
-			.on('setWidth.size', this.setWidth)
-			.on('afterInit.size changePlace.size', this.initialize, {
+			.on('setHeight.size', this.__setHeight)
+			.on('setWidth.size', this.__setWidth)
+			.on('afterInit.size changePlace.size', this.__initialize, {
 				top: true
 			})
-			.on(editor.ow, 'load.size', this.resizeWorkspaces)
+			.on(editor.ow, 'load.size', this.__resizeWorkspaces)
 			.on(
 				'afterInit.size resize.size afterUpdateToolbar.size ' +
 					'scroll.size afterResize.size',
-				this.resizeWorkspaces
+				this.__resizeWorkspaces
 			)
 			.on(
 				'toggleFullSize.size toggleToolbar.size',
-				this.resizeWorkspaceImd
+				this.__resizeWorkspaceImd
 			);
 
-		this.initialize();
+		this.__initialize();
 	}
 
 	/**
 	 * Set editor size by options
 	 */
-	private initialize(): void {
+	private __initialize(): void {
 		const { j } = this;
 
 		if (j.o.inline) {
@@ -77,14 +77,14 @@ export class size extends Plugin {
 			maxWidth: j.o.maxWidth
 		});
 
-		this.setHeight(height);
-		this.setWidth(j.o.width);
+		this.__setHeight(height);
+		this.__setWidth(j.o.width);
 	}
 
 	/**
 	 * Manually change height
 	 */
-	private setHeight(height: number | string): void {
+	private __setHeight(height: number | string): void {
 		if (isNumber(height)) {
 			const { minHeight, maxHeight } = this.j.o;
 
@@ -103,13 +103,13 @@ export class size extends Plugin {
 			this.j.storage.set('height', height);
 		}
 
-		this.resizeWorkspaceImd();
+		this.__resizeWorkspaceImd();
 	}
 
 	/**
 	 * Manually change width
 	 */
-	private setWidth(width: number | string): void {
+	private __setWidth(width: number | string): void {
 		if (isNumber(width)) {
 			const { minWidth, maxWidth } = this.j.o;
 
@@ -124,13 +124,13 @@ export class size extends Plugin {
 
 		css(this.j.container, 'width', width);
 
-		this.resizeWorkspaceImd();
+		this.__resizeWorkspaceImd();
 	}
 
 	/**
 	 * Returns service spaces: toolbar + statusbar
 	 */
-	private getNotWorkHeight(): number {
+	private __getNotWorkHeight(): number {
 		return (
 			(this.j.toolbarContainer?.offsetHeight || 0) +
 			(this.j.statusbar?.getHeight() || 0) +
@@ -142,7 +142,7 @@ export class size extends Plugin {
 	 * Calculate workspace height
 	 */
 	@autobind
-	private resizeWorkspaceImd(): void {
+	private __resizeWorkspaceImd(): void {
 		if (!this.j || this.j.isDestructed || !this.j.o || this.j.o.inline) {
 			return;
 		}
@@ -153,7 +153,7 @@ export class size extends Plugin {
 
 		const minHeight =
 			((css(this.j.container, 'minHeight') as number) || 0) -
-			this.getNotWorkHeight();
+			this.__getNotWorkHeight();
 
 		if (isNumber(minHeight) && minHeight > 0) {
 			[this.j.workplace, this.j.iframe, this.j.editor].map(elm => {
@@ -164,7 +164,7 @@ export class size extends Plugin {
 		}
 
 		if (isNumber(this.j.o.maxHeight)) {
-			const maxHeight = this.j.o.maxHeight - this.getNotWorkHeight();
+			const maxHeight = this.j.o.maxHeight - this.__getNotWorkHeight();
 
 			[this.j.workplace, this.j.iframe, this.j.editor].map(elm => {
 				elm && css(elm, 'maxHeight', maxHeight);
@@ -178,7 +178,7 @@ export class size extends Plugin {
 				this.j.workplace,
 				'height',
 				this.j.o.height !== 'auto' || this.j.isFullSize
-					? this.j.container.offsetHeight - this.getNotWorkHeight()
+					? this.j.container.offsetHeight - this.__getNotWorkHeight()
 					: 'auto'
 			);
 		}
@@ -187,15 +187,17 @@ export class size extends Plugin {
 	/**
 	 * Debounced wrapper for resizeWorkspaceImd
 	 */
-	private resizeWorkspaces = this.j.async.debounce(
-		this.resizeWorkspaceImd,
+	private __resizeWorkspaces = this.j.async.debounce(
+		this.__resizeWorkspaceImd,
 		this.j.defaultTimeout,
 		true
 	);
 
 	/** @override **/
 	protected beforeDestruct(jodit: IJodit): void {
-		jodit.e.off(jodit.ow, 'load.size', this.resizeWorkspaces).off('.size');
+		jodit.e
+			.off(jodit.ow, 'load.size', this.__resizeWorkspaces)
+			.off('.size');
 	}
 }
 

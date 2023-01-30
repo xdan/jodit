@@ -31,7 +31,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	TOOLBAR!: IToolbarCollection;
 	readonly toolbar: this['TOOLBAR'] = makeCollection(this);
 
-	private defaultToolbarContainer: HTMLElement =
+	private __defaultToolbarContainer: HTMLElement =
 		this.c.div('jodit-toolbar__box');
 
 	/**
@@ -46,9 +46,12 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		}
 
 		this.o.toolbar &&
-			Dom.appendChildFirst(this.container, this.defaultToolbarContainer);
+			Dom.appendChildFirst(
+				this.container,
+				this.__defaultToolbarContainer
+			);
 
-		return this.defaultToolbarContainer;
+		return this.__defaultToolbarContainer;
 	}
 
 	/**
@@ -78,10 +81,10 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	}
 
 	registeredButtons: Set<IPluginButton> = new Set();
-	private groupToButtons: IDictionary<string[]> = {};
+	private __groupToButtons: IDictionary<string[]> = {};
 
 	getRegisteredButtonGroups(): IDictionary<string[]> {
-		return this.groupToButtons;
+		return this.__groupToButtons;
 	}
 
 	/**
@@ -91,14 +94,14 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		this.registeredButtons.add(btn);
 		const group = btn.group ?? 'other';
 
-		if (!this.groupToButtons[group]) {
-			this.groupToButtons[group] = [];
+		if (!this.__groupToButtons[group]) {
+			this.__groupToButtons[group] = [];
 		}
 
 		if (btn.position != null) {
-			this.groupToButtons[group][btn.position] = btn.name;
+			this.__groupToButtons[group][btn.position] = btn.name;
 		} else {
-			this.groupToButtons[group].push(btn.name);
+			this.__groupToButtons[group].push(btn.name);
 		}
 
 		return this;
@@ -111,7 +114,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		this.registeredButtons.delete(btn);
 
 		const groupName = btn.group ?? 'other',
-			group = this.groupToButtons[groupName];
+			group = this.__groupToButtons[groupName];
 
 		if (group) {
 			const index = group.indexOf(btn.name);
@@ -121,7 +124,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 			}
 
 			if (group.length === 0) {
-				delete this.groupToButtons[groupName];
+				delete this.__groupToButtons[groupName];
 			}
 		}
 
@@ -132,19 +135,19 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	 * Prepare toolbar items and append buttons in groups
 	 */
 	@autobind
-	private beforeToolbarBuild(items: ButtonsGroups): ButtonsGroups | void {
-		if (Object.keys(this.groupToButtons).length) {
+	private __beforeToolbarBuild(items: ButtonsGroups): ButtonsGroups | void {
+		if (Object.keys(this.__groupToButtons).length) {
 			return items.map(item => {
 				if (
 					isButtonGroup(item) &&
 					item.group &&
-					this.groupToButtons[item.group]
+					this.__groupToButtons[item.group]
 				) {
 					return {
 						group: item.group,
 						buttons: [
 							...item.buttons,
-							...this.groupToButtons[item.group]
+							...this.__groupToButtons[item.group]
 						]
 					};
 				}
@@ -164,7 +167,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		super(options, isJodit);
 		this.isJodit = isJodit;
 
-		this.e.on('beforeToolbarBuild', this.beforeToolbarBuild);
+		this.e.on('beforeToolbarBuild', this.__beforeToolbarBuild);
 	}
 
 	override destruct(): void {
@@ -173,7 +176,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		}
 
 		this.setStatus(STATUSES.beforeDestruct);
-		this.e.off('beforeToolbarBuild', this.beforeToolbarBuild);
+		this.e.off('beforeToolbarBuild', this.__beforeToolbarBuild);
 		this.toolbar.destruct();
 		super.destruct();
 	}

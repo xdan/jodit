@@ -36,20 +36,20 @@ export class Table extends ViewComponent<IJodit> {
 		return 'Table';
 	}
 
-	private selected: Set<HTMLTableCellElement> = new Set();
+	private __selected: Set<HTMLTableCellElement> = new Set();
 
-	private static selectedByTable: WeakMap<
+	private static __selectedByTable: WeakMap<
 		HTMLTableElement,
 		Set<HTMLTableCellElement>
 	> = new WeakMap();
 
 	@debounce()
-	private recalculateStyles(): void {
+	private __recalculateStyles(): void {
 		const style = getContainer(this.j, Table, 'style', true);
 
 		const selectors: string[] = [];
 
-		this.selected.forEach(td => {
+		this.__selected.forEach(td => {
 			const selector = cssPath(td);
 			selector && selectors.push(selector);
 		});
@@ -62,33 +62,33 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	addSelection(td: HTMLTableCellElement): void {
-		this.selected.add(td);
-		this.recalculateStyles();
+		this.__selected.add(td);
+		this.__recalculateStyles();
 
 		const table = Dom.closest(td, 'table', this.j.editor);
 
 		if (table) {
-			const cells = Table.selectedByTable.get(table) || new Set();
+			const cells = Table.__selectedByTable.get(table) || new Set();
 			cells.add(td);
-			Table.selectedByTable.set(table, cells);
+			Table.__selectedByTable.set(table, cells);
 		}
 	}
 
 	removeSelection(td: HTMLTableCellElement): void {
-		this.selected.delete(td);
+		this.__selected.delete(td);
 
-		this.recalculateStyles();
+		this.__recalculateStyles();
 
 		const table = Dom.closest(td, 'table', this.j.editor);
 
 		if (table) {
-			const cells = Table.selectedByTable.get(table);
+			const cells = Table.__selectedByTable.get(table);
 
 			if (cells) {
 				cells.delete(td);
 
 				if (!cells.size) {
-					Table.selectedByTable.delete(table);
+					Table.__selectedByTable.delete(table);
 				}
 			}
 		}
@@ -98,19 +98,19 @@ export class Table extends ViewComponent<IJodit> {
 	 * Returns array of selected cells
 	 */
 	getAllSelectedCells(): HTMLTableCellElement[] {
-		return toArray(this.selected);
+		return toArray(this.__selected);
 	}
 
 	static getSelectedCellsByTable(
 		table: HTMLTableElement
 	): HTMLTableCellElement[] {
-		const cells = Table.selectedByTable.get(table);
+		const cells = Table.__selectedByTable.get(table);
 		return cells ? toArray(cells) : [];
 	}
 
 	/** @override **/
 	override destruct(): any {
-		this.selected.clear();
+		this.__selected.clear();
 		return super.destruct();
 	}
 
@@ -532,7 +532,7 @@ export class Table extends ViewComponent<IJodit> {
 						continue; // broken table
 					}
 
-					Table.mark(
+					Table.__mark(
 						box[i][j],
 						'colspan',
 						box[i][j].colSpan - min + 1,
@@ -564,7 +564,7 @@ export class Table extends ViewComponent<IJodit> {
 						continue; // broken table
 					}
 
-					Table.mark(
+					Table.__mark(
 						box[i][j],
 						'rowspan',
 						box[i][j].rowSpan - min + 1,
@@ -604,7 +604,7 @@ export class Table extends ViewComponent<IJodit> {
 			}
 		}
 
-		Table.unmark(__marked);
+		Table.__unmark(__marked);
 	}
 
 	/**
@@ -670,7 +670,7 @@ export class Table extends ViewComponent<IJodit> {
 								first = cell;
 								first_j = j;
 							} else {
-								Table.mark(td, 'remove', 1, __marked);
+								Table.__mark(td, 'remove', 1, __marked);
 
 								instance(jodit).removeSelection(td);
 							}
@@ -684,14 +684,14 @@ export class Table extends ViewComponent<IJodit> {
 
 			if (first) {
 				if (cols > 1) {
-					Table.mark(first, 'colspan', cols, __marked);
+					Table.__mark(first, 'colspan', cols, __marked);
 				}
 				if (rows > 1) {
-					Table.mark(first, 'rowspan', rows, __marked);
+					Table.__mark(first, 'rowspan', rows, __marked);
 				}
 
 				if (w) {
-					Table.mark(
+					Table.__mark(
 						first,
 						'width',
 						((w / table.offsetWidth) * 100).toFixed(
@@ -716,7 +716,7 @@ export class Table extends ViewComponent<IJodit> {
 
 				alreadyMerged.delete(first);
 
-				Table.unmark(__marked);
+				Table.__unmark(__marked);
 
 				Table.normalizeTable(table);
 
@@ -756,7 +756,7 @@ export class Table extends ViewComponent<IJodit> {
 							coord[1] !== j &&
 							tdElm !== cell
 						) {
-							Table.mark(
+							Table.__mark(
 								tdElm,
 								'rowspan',
 								tdElm.rowSpan + 1,
@@ -772,7 +772,7 @@ export class Table extends ViewComponent<IJodit> {
 
 					tr.appendChild(td);
 				} else {
-					Table.mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
+					Table.__mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
 
 					Table.formalMatrix(
 						table,
@@ -800,10 +800,10 @@ export class Table extends ViewComponent<IJodit> {
 				}
 
 				if (cell.colSpan > 1) {
-					Table.mark(td, 'colspan', cell.colSpan, __marked);
+					Table.__mark(td, 'colspan', cell.colSpan, __marked);
 				}
 
-				Table.unmark(__marked);
+				Table.__unmark(__marked);
 				instance(jodit).removeSelection(cell);
 			}
 		);
@@ -825,7 +825,7 @@ export class Table extends ViewComponent<IJodit> {
 			if (cell.colSpan < 2) {
 				Table.formalMatrix(table, (tdElm, i, j) => {
 					if (coord[1] === j && coord[0] !== i && tdElm !== cell) {
-						Table.mark(
+						Table.__mark(
 							tdElm,
 							'colspan',
 							tdElm.colSpan + 1,
@@ -834,14 +834,14 @@ export class Table extends ViewComponent<IJodit> {
 					}
 				});
 			} else {
-				Table.mark(cell, 'colspan', cell.colSpan - 1, __marked);
+				Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
 			}
 
 			td = jodit.createInside.element('td');
 			td.appendChild(jodit.createInside.element('br'));
 
 			if (cell.rowSpan > 1) {
-				Table.mark(td, 'rowspan', cell.rowSpan, __marked);
+				Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
 			}
 
 			const oldWidth = cell.offsetWidth; // get old width
@@ -850,21 +850,21 @@ export class Table extends ViewComponent<IJodit> {
 
 			percentage = oldWidth / table.offsetWidth / 2;
 
-			Table.mark(
+			Table.__mark(
 				cell,
 				'width',
 				(percentage * 100).toFixed(consts.ACCURACY) + '%',
 				__marked
 			);
 
-			Table.mark(
+			Table.__mark(
 				td,
 				'width',
 				(percentage * 100).toFixed(consts.ACCURACY) + '%',
 				__marked
 			);
 
-			Table.unmark(__marked);
+			Table.__unmark(__marked);
 
 			instance(jodit).removeSelection(cell);
 		});
@@ -895,7 +895,7 @@ export class Table extends ViewComponent<IJodit> {
 			const w = cell.offsetWidth;
 			const percent = ((w + delta) / table.offsetWidth) * 100;
 
-			Table.mark(
+			Table.__mark(
 				cell,
 				'width',
 				percent.toFixed(consts.ACCURACY) + '%',
@@ -909,15 +909,15 @@ export class Table extends ViewComponent<IJodit> {
 		for (let i = clearWidthIndex + 1; i < box.length; i += 1) {
 			const cell = box[i][column];
 
-			Table.mark(cell, 'width', null, marked);
+			Table.__mark(cell, 'width', null, marked);
 		}
 
 		if (!noUnmark) {
-			Table.unmark(marked);
+			Table.__unmark(marked);
 		}
 	}
 
-	private static mark(
+	private static __mark(
 		cell: HTMLTableCellElement,
 		key: string,
 		value: string | number | null,
@@ -930,7 +930,7 @@ export class Table extends ViewComponent<IJodit> {
 		markedValue.set(cell, dict);
 	}
 
-	private static unmark(marked: HTMLTableCellElement[]): void {
+	private static __unmark(marked: HTMLTableCellElement[]): void {
 		marked.forEach(cell => {
 			const dict = markedValue.get(cell);
 

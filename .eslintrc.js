@@ -72,7 +72,26 @@ module.exports = {
 		'@typescript-eslint/no-unused-vars': 'off',
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'error',
-		'no-fallthrough': 'off'
+		'no-fallthrough': 'off',
+		'@typescript-eslint/naming-convention': [
+			'error',
+			{
+				selector: 'default',
+				format: null
+			},
+			// {
+			// 	selector: 'memberLike',
+			// 	modifiers: ['protected'],
+			// 	format: ['camelCase'],
+			// 	leadingUnderscore: 'requireDouble'
+			// },
+			{
+				selector: 'memberLike',
+				modifiers: ['private'],
+				format: ['camelCase'],
+				leadingUnderscore: 'requireDouble'
+			}
+		]
 	},
 	overrides: [
 		{

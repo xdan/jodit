@@ -33,7 +33,7 @@ import { Dom } from 'jodit/core/dom';
 import { INVISIBLE_SPACE } from 'jodit/core/constants';
 
 export class Create implements ICreate {
-	private get doc(): Document {
+	private get __doc(): Document {
 		// @ts-ignore - TODO it's a function
 		return isFunction(this.document) ? this.document() : this.document;
 	}
@@ -59,7 +59,7 @@ export class Create implements ICreate {
 		childrenOrAttributes?: Attributes | Children,
 		children?: Children
 	): HTMLElement {
-		const elm = this.doc.createElement(tagName.toLowerCase());
+		const elm = this.__doc.createElement(tagName.toLowerCase());
 
 		this.applyCreateAttributes(elm);
 
@@ -102,7 +102,7 @@ export class Create implements ICreate {
 
 	sandbox(): HTMLElement {
 		const iframe = this.element('iframe', { sandbox: 'allow-same-origin' });
-		this.doc.body.appendChild(iframe);
+		this.__doc.body.appendChild(iframe);
 		const doc = iframe.contentWindow?.document;
 		assert(doc, 'iframe.contentWindow.document');
 
@@ -164,7 +164,7 @@ export class Create implements ICreate {
 	 * Create text node
 	 */
 	text(value: string): Text {
-		return this.doc.createTextNode(value);
+		return this.__doc.createTextNode(value);
 	}
 
 	/**
@@ -178,7 +178,7 @@ export class Create implements ICreate {
 	 * Create HTML Document fragment element
 	 */
 	fragment(): DocumentFragment {
-		return this.doc.createDocumentFragment();
+		return this.__doc.createDocumentFragment();
 	}
 
 	/**
