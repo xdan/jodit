@@ -6,6 +6,7 @@
 
 const path = require('path');
 const { removeAsserts } = require('../utils/remove-asserts');
+const { mangleMembers } = require('../utils/mangle-members');
 
 module.exports = ({ superDirname, uglify, ES, isProd, isTest }) => {
 	return {
@@ -19,8 +20,11 @@ module.exports = ({ superDirname, uglify, ES, isProd, isTest }) => {
 					compilerOptions: {
 						target: ES
 					},
-					getCustomTransformers: () => ({
-						before: isProd && !isTest ? [removeAsserts()] : []
+					getCustomTransformers: program => ({
+						before:
+							isProd && !isTest
+								? [removeAsserts(), mangleMembers(program)]
+								: [mangleMembers(program)]
 					})
 				}
 			}

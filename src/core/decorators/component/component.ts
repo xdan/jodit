@@ -4,6 +4,9 @@
  * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import { assert } from 'jodit/core/helpers/utils/assert';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+
 /**
  * [[include:core/decorators/component/README.md]]
  * @packageDocumentation
@@ -21,6 +24,11 @@ interface ComponentCompatible {
 export function component<T extends ComponentCompatible>(
 	constructorFunction: T
 ): T {
+	assert(
+		isFunction(constructorFunction.prototype.className),
+		'Component decorator can be used only for component classes'
+	);
+
 	class newConstructorFunction extends constructorFunction {
 		constructor(...args: any[]) {
 			super(...args);

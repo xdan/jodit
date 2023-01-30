@@ -28,6 +28,7 @@ import {
 import { uniqueUid } from 'jodit/core/global';
 import { STATUSES } from 'jodit/core/component/statuses';
 import { Async } from 'jodit/core/async';
+import { autobind } from 'jodit/core/decorators';
 
 const StatusListHandlers: Map<
 	Component,
@@ -223,6 +224,7 @@ export abstract class Component implements IComponent {
 	/**
 	 * Set status recursively on all parents
 	 */
+	@autobind
 	private __setStatusComponent(
 		componentStatus: ComponentStatus,
 		component: this
