@@ -75,7 +75,6 @@ module.exports = {
 	'Open link in new tab': 'Link megnyitása új lapon',
 	Image: 'Kép',
 	file: 'Fájl',
-	Advansed: 'További beállítás',
 	'Image properties': 'Kép tulajdonságai',
 	Cancel: 'Mégsem',
 	Ok: 'OK',

@@ -73,7 +73,6 @@ module.exports = {
 	'Open link in new tab': '在新窗口打開鏈接',
 	Image: '圖片',
 	file: 'file',
-	Advansed: '高級',
 	'Image properties': '圖片屬性',
 	Cancel: '取消',
 	Ok: '確定',

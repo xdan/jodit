@@ -74,7 +74,6 @@ module.exports = {
 	'Open link in new tab': 'باز کزدن لینک در تب جدید',
 	Image: 'عکس',
 	file: 'فایل',
-	Advansed: 'پیشرفته',
 	'Image properties': 'مقادیر عکس',
 	Cancel: 'بیخیال',
 	Ok: 'تایید',

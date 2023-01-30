@@ -73,7 +73,6 @@ module.exports = {
 	'Open link in new tab': '新しいタブで開く',
 	Image: '画像',
 	file: 'ファイル',
-	Advansed: 'Advansed',
 	'Image properties': '画像のプロパティー',
 	Cancel: 'キャンセル',
 	Ok: '確定',

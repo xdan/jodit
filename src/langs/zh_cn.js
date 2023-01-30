@@ -74,7 +74,6 @@ module.exports = {
 	'Open link in new tab': '在新窗口打开链接',
 	Image: '图片',
 	file: 'file',
-	Advansed: '高级',
 	'Image properties': '图片属性',
 	Cancel: '取消',
 	Ok: '确定',

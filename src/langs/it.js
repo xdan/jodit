@@ -74,7 +74,6 @@ module.exports = {
 	'Open link in new tab': 'Apri il link in una nuova scheda',
 	Image: 'Immagine',
 	file: 'Archivio',
-	Advansed: 'Avanzato',
 	'Image properties': "Proprietà dell'immagine",
 	Cancel: 'Annulla',
 	Ok: 'Accetta',

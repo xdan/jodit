@@ -73,7 +73,6 @@ module.exports = {
 	'Open link in new tab': 'Bağlantıyı yeni sekmede aç',
 	Image: 'Resim',
 	file: 'Dosya',
-	Advansed: 'Gelişmiş',
 	'Image properties': 'Resim özellikleri',
 	Cancel: 'İptal',
 	Ok: 'Tamam',
