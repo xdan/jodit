@@ -22,7 +22,7 @@
 		"docker:screenshots:run": "docker run -v $(pwd)/build:/app/build/ -v $(pwd)/test:/app/test/ -v $(pwd)/src:/app/src/ jodit-screenshots ./node_modules/.bin/mocha ./src/**/**.screenshot.js",
 		"docker:screenshots:run:es2018": "docker run -v $(pwd)/build:/app/build/ -v $(pwd)/test:/app/test/ -v $(pwd)/src:/app/src/ jodit-screenshots ./node_modules/.bin/mocha ./src/**/**.screenshot.js --build=es2018",
 		"docker:screenshots:update": "docker run -v $(pwd)/build:/app/build/ -v $(pwd)/test:/app/test/ -e SNAPSHOT_UPDATE=true -v $(pwd)/src:/app/src/ jodit-screenshots  ./node_modules/.bin/mocha ./src/**/**.screenshot.js",
-		"test": "npm run test:find && npm run clean && webpack --progress --mode production --env es=es2018 --env uglify=false --env isTest=true && npm run test:only-run",
+		"test": "npm run test:find && npm run clean && webpack --progress --mode production --env es=es2018 --env uglify=true --env isTest=true && npm run test:only-run",
 		"test:find": "node ./build-system/utils/find-tests.js",
 		"test:debug": "karma start --browsers Chrome karma.conf.js  --single-run false",
 		"test:chrome": "karma start --browsers Chrome karma.conf.js",
