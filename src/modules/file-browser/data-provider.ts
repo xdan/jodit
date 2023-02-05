@@ -175,12 +175,17 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	}
 
 	canI(action: string): boolean {
-		const rule = 'allow' + action;
+		const rule: keyof IPermissions = 'allow' + action;
 
 		if (!isProd) {
 			if (!possibleRules.includes(rule)) {
 				throw error('Wrong action ' + action);
 			}
+		}
+
+		const preset = this.o.permissionsPresets[rule];
+		if (preset !== undefined) {
+			return preset;
 		}
 
 		return (

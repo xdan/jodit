@@ -28,7 +28,8 @@ import type {
 	IDialog,
 	CanUndef,
 	IViewOptions,
-	CallbackFunction
+	CallbackFunction,
+	ButtonsOption
 } from 'jodit/types';
 
 import { Storage } from 'jodit/core/storage';
@@ -238,13 +239,38 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 
 			const header = this.c.div();
 
-			this.toolbar.build(this.o.buttons ?? []).appendTo(header);
+			this.toolbar.build(this.__getButtons()).appendTo(header);
 
 			this._dialog.open(this.browser, header);
 
 			this.e.fire('sort.filebrowser', this.state.sortBy);
 
 			loadTree(this).then(resolve, reject);
+		});
+	}
+
+	private __getButtons(): ButtonsOption {
+		const options = (this.o.buttons ?? ([] as ButtonsOption)) as Exclude<
+			ButtonsOption,
+			string
+		>;
+
+		return options.filter((btn): boolean => {
+			if (!isString(btn)) {
+				return true;
+			}
+
+			switch (btn) {
+				case 'filebrowser.edit':
+					return (
+						this.dataProvider.canI('ImageResize') ||
+						this.dataProvider.canI('ImageCrop')
+					);
+				case 'filebrowser.remove':
+					return this.dataProvider.canI('FileRemove');
+			}
+
+			return true;
 		});
 	}
 

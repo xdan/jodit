@@ -122,6 +122,25 @@ Config.prototype.filebrowser = {
 	moveFolder: true,
 	moveFile: true,
 
+	permissionsPresets: {
+		allowFileDownload: undefined,
+		allowFileMove: undefined,
+		allowFileRemove: undefined,
+		allowFileRename: undefined,
+		allowFileUpload: undefined,
+		allowFileUploadRemote: undefined,
+		allowFiles: undefined,
+		allowFolderCreate: undefined,
+		allowFolderMove: undefined,
+		allowFolderRemove: undefined,
+		allowFolderRename: undefined,
+		allowFolderTree: undefined,
+		allowFolders: undefined,
+		allowGeneratePdf: undefined,
+		allowImageCrop: undefined,
+		allowImageResize: undefined
+	},
+
 	showFoldersPanel: true,
 	storeLastOpenedFolder: true,
 

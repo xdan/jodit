@@ -97,7 +97,6 @@ export interface IFileBrowserOptions extends IViewOptions {
 
 	sort: false | ((a: any, b: any, sortBy?: string) => number);
 
-	editImage: boolean;
 	preview: boolean;
 	showPreviewNavigation: boolean;
 	showSelectButtonInPreview: boolean;
@@ -115,11 +114,20 @@ export interface IFileBrowserOptions extends IViewOptions {
 	howLongShowMsg: number;
 	pixelOffsetLoadNewChunk: number;
 
+	/** @deprecated Instead use permissionsPresets.allowImageCrop and permissionsPresets.allowImageResize */
+	editImage: boolean;
+	/** @deprecated Instead use permissionsPresets.allowFolderCreate */
 	createNewFolder: boolean;
+	/** @deprecated Instead use permissionsPresets.allowFolderRemove */
 	deleteFolder: boolean;
+	/** @deprecated Instead use permissionsPresets.allowFolderRename */
 	renameFolder: boolean;
+	/** @deprecated Instead use permissionsPresets.allowFolderMove */
 	moveFolder: boolean;
+	/** @deprecated Instead use permissionsPresets.allowFileMove */
 	moveFile: boolean;
+
+	permissionsPresets: Partial<IPermissions>,
 
 	showFoldersPanel: boolean;
 
