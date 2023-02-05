@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.24.2
+ * Version: v3.24.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -113,7 +113,7 @@ exports["default"] = autobind;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.__classPrivateFieldIn = exports.__classPrivateFieldSet = exports.__classPrivateFieldGet = exports.__importDefault = exports.__importStar = exports.__makeTemplateObject = exports.__asyncValues = exports.__asyncDelegator = exports.__asyncGenerator = exports.__await = exports.__spreadArray = exports.__spreadArrays = exports.__spread = exports.__read = exports.__values = exports.__exportStar = exports.__createBinding = exports.__generator = exports.__awaiter = exports.__metadata = exports.__param = exports.__decorate = exports.__rest = exports.__assign = exports.__extends = void 0;
+exports.__classPrivateFieldIn = exports.__classPrivateFieldSet = exports.__classPrivateFieldGet = exports.__importDefault = exports.__importStar = exports.__makeTemplateObject = exports.__asyncValues = exports.__asyncDelegator = exports.__asyncGenerator = exports.__await = exports.__spreadArray = exports.__spreadArrays = exports.__spread = exports.__read = exports.__values = exports.__exportStar = exports.__createBinding = exports.__generator = exports.__awaiter = exports.__metadata = exports.__setFunctionName = exports.__propKey = exports.__runInitializers = exports.__esDecorate = exports.__param = exports.__decorate = exports.__rest = exports.__assign = exports.__extends = void 0;
 var extendStatics = function (d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -171,6 +171,68 @@ function __param(paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); };
 }
 exports.__param = __param;
+function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function")
+        throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn)
+            context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access)
+            context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done)
+            throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0)
+                continue;
+            if (result === null || typeof result !== "object")
+                throw new TypeError("Object expected");
+            if (_ = accept(result.get))
+                descriptor.get = _;
+            if (_ = accept(result.set))
+                descriptor.set = _;
+            if (_ = accept(result.init))
+                initializers.push(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field")
+                initializers.push(_);
+            else
+                descriptor[key] = _;
+        }
+    }
+    if (target)
+        Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+}
+exports.__esDecorate = __esDecorate;
+;
+function __runInitializers(thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+}
+exports.__runInitializers = __runInitializers;
+;
+function __propKey(x) {
+    return typeof x === "symbol" ? x : "".concat(x);
+}
+exports.__propKey = __propKey;
+;
+function __setFunctionName(f, name, prefix) {
+    if (typeof name === "symbol")
+        name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+}
+exports.__setFunctionName = __setFunctionName;
+;
 function __metadata(metadataKey, metadataValue) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
         return Reflect.metadata(metadataKey, metadataValue);
@@ -379,7 +441,7 @@ exports.__asyncGenerator = __asyncGenerator;
 function __asyncDelegator(o) {
     var i, p;
     return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
-    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: false } : f ? f(v) : v; } : f; }
 }
 exports.__asyncDelegator = __asyncDelegator;
 function __asyncValues(o) {
@@ -458,7 +520,7 @@ exports.__classPrivateFieldIn = __classPrivateFieldIn;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Async = void 0;
@@ -726,7 +788,7 @@ exports.Async = Async;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
@@ -742,7 +804,7 @@ tslib_1.__exportStar(__webpack_require__(77536), exports);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.STATUSES = void 0;
@@ -763,7 +825,7 @@ exports.STATUSES = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.watch = exports.getPropertyDescriptor = void 0;
@@ -878,7 +940,7 @@ exports["default"] = watch;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.EventEmitter = void 0;
@@ -1351,7 +1413,7 @@ exports.EventEmitter = EventEmitter;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Eventify = void 0;
@@ -1406,7 +1468,7 @@ exports.Eventify = Eventify;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
@@ -1425,7 +1487,7 @@ tslib_1.__exportStar(__webpack_require__(83611), exports);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.observable = void 0;
@@ -1550,7 +1612,7 @@ exports.observable = observable;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.EventHandlersStore = exports.defaultNameSpace = void 0;
@@ -1634,7 +1696,7 @@ exports.EventHandlersStore = EventHandlersStore;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.splitArray = void 0;
@@ -1653,7 +1715,7 @@ exports.splitArray = splitArray;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.toArray = void 0;
@@ -1681,7 +1743,7 @@ exports.toArray = function toArray() {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
@@ -1697,7 +1759,7 @@ tslib_1.__exportStar(__webpack_require__(27512), exports);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.clearTimeout = exports.setTimeout = void 0;
@@ -1731,7 +1793,7 @@ exports.clearTimeout = clearTimeout;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isArray = void 0;
@@ -1750,7 +1812,7 @@ exports.isArray = isArray;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isFastEqual = exports.isEqual = void 0;
@@ -1774,7 +1836,7 @@ exports.isFastEqual = isFastEqual;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isFunction = void 0;
@@ -1793,7 +1855,7 @@ exports.isFunction = isFunction;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isNativeFunction = void 0;
@@ -1815,7 +1877,7 @@ exports.isNativeFunction = isNativeFunction;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isNumber = void 0;
@@ -1834,7 +1896,7 @@ exports.isNumber = isNumber;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isPlainObject = void 0;
@@ -1858,7 +1920,7 @@ exports.isPlainObject = isPlainObject;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isPromise = void 0;
@@ -1877,7 +1939,7 @@ exports.isPromise = isPromise;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isStringArray = exports.isString = void 0;
@@ -1901,7 +1963,7 @@ exports.isStringArray = isStringArray;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isViewObject = void 0;
@@ -1924,7 +1986,7 @@ exports.isViewObject = isViewObject;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isVoid = void 0;
@@ -1943,7 +2005,7 @@ exports.isVoid = isVoid;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isWindow = void 0;
@@ -1962,7 +2024,7 @@ exports.isWindow = isWindow;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.stringify = void 0;
@@ -1999,7 +2061,7 @@ exports.stringify = stringify;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isAbort = exports.abort = exports.options = exports.connection = exports.error = void 0;
@@ -2035,7 +2097,7 @@ exports.isAbort = isAbort;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AbortError = void 0;
@@ -2061,7 +2123,7 @@ exports.AbortError = AbortError;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ConnectionError = void 0;
@@ -2087,7 +2149,7 @@ exports.ConnectionError = ConnectionError;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
@@ -2105,7 +2167,7 @@ tslib_1.__exportStar(__webpack_require__(47403), exports);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OptionsError = void 0;
@@ -2131,7 +2193,7 @@ exports.OptionsError = OptionsError;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
@@ -2148,7 +2210,7 @@ tslib_1.__exportStar(__webpack_require__(45339), exports);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.get = void 0;
@@ -2200,7 +2262,7 @@ exports.get = get;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.reset = void 0;
@@ -2243,7 +2305,7 @@ exports.reset = reset;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.domToVDom = exports.attrsToDict = void 0;
@@ -2297,7 +2359,7 @@ exports.domToVDom = domToVDom;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(20255);
@@ -2315,7 +2377,7 @@ tslib_1.__exportStar(__webpack_require__(67122), exports);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 
@@ -2329,7 +2391,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.VDomRender = void 0;
@@ -2527,7 +2589,7 @@ exports.VDomRender = VDomRender;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.insertChar = exports.VDomJodit = void 0;

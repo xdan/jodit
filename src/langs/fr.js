@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19,7 +19,8 @@ module.exports = {
 	'Open in new tab': 'Ouvrir dans un nouvel onglet',
 	'Open in fullsize': "Ouvrir l'éditeur en pleine page",
 	'Clear Formatting': 'Supprimer le formattage',
-	'Fill color or set the text color':	'Modifier la couleur du fond ou du texte',
+	'Fill color or set the text color':
+		'Modifier la couleur du fond ou du texte',
 	Redo: 'Refaire',
 	Undo: 'Défaire',
 	Bold: 'Gras',

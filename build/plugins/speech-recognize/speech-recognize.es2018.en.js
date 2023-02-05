@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.24.2
+ * Version: v3.24.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -54,7 +54,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const ar = __webpack_require__(5466);
 const cs_cz = __webpack_require__(65226);
@@ -110,7 +110,7 @@ var debounce = __webpack_require__(55773);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function execSpellCommand(jodit, commandSentence) {
     const [command, value] = commandSentence.split('::');
@@ -133,7 +133,7 @@ var decorators = __webpack_require__(67493);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const PII = 440;
 const WARN = 940;
@@ -142,7 +142,7 @@ const WARN = 940;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function sound({ sec = 0.1, frequency = PII, gain = 0.1, type = 'sine' } = {}) {
@@ -167,7 +167,7 @@ function sound({ sec = 0.1, frequency = PII, gain = 0.1, type = 'sine' } = {}) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var RecognizeManager_1;
 
@@ -328,7 +328,7 @@ RecognizeManager = RecognizeManager_1 = (0,tslib_es6/* __decorate */.gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const SpeechRecognition = window.SpeechRecognition ||
     window.webkitSpeechRecognition;
@@ -337,7 +337,7 @@ const SpeechRecognition = window.SpeechRecognition ||
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -431,7 +431,7 @@ config/* Config.prototype.controls.speechRecognize */.D.prototype.controls.speec
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -539,7 +539,7 @@ if (typeof Jodit !== 'undefined') {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -560,7 +560,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -581,7 +581,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -602,7 +602,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -623,7 +623,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -644,7 +644,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -665,7 +665,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -686,7 +686,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -707,7 +707,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -728,7 +728,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -749,7 +749,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -770,7 +770,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -791,7 +791,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -812,7 +812,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -833,7 +833,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -854,7 +854,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -875,7 +875,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -896,7 +896,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -917,7 +917,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {

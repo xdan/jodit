@@ -9,6 +9,42 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.24.3
+
+#### :house: Internal
+
+```plain
+ core-js                            ^3.26.1  →    ^3.27.2
+ @types/node                       ^18.11.9  →  ^18.11.19
+ @typescript-eslint/eslint-plugin   ^5.45.0  →    ^5.50.0
+ @typescript-eslint/parser          ^5.45.0  →    ^5.50.0
+ axios                               ^1.2.0  →     ^1.3.2
+ css-loader                          ^6.7.2  →     ^6.7.3
+ eslint                             ^8.28.0  →    ^8.33.0
+ eslint-config-prettier              ^8.5.0  →     ^8.6.0
+ eslint-plugin-import               ^2.26.0  →    ^2.27.5
+ expect-mocha-image-snapshot        ^2.0.14  →     ^3.0.1
+ glob                                ^8.0.3  →     ^8.1.0
+ husky                               ^8.0.2  →     ^8.0.3
+ lint-staged                        ^13.0.4  →    ^13.1.0
+ mini-css-extract-plugin             ^2.7.0  →     ^2.7.2
+ mocha                              ^10.1.0  →    ^10.2.0
+ nock                               ^13.2.9  →    ^13.3.0
+ postcss                           >=8.4.19  →   >=8.4.21
+ postcss-loader                      ^7.0.1  →     ^7.0.2
+ prettier                            ^2.8.0  →     ^2.8.3
+ puppeteer                          ^19.3.0  →    ^19.6.3
+ stylelint                         ^14.15.0  →   ^14.16.1
+ synchronous-promise                 2.0.15  →     2.0.17
+ ts-loader                           ^9.4.1  →     ^9.4.2
+ tsc-alias                           ^1.7.1  →     ^1.8.2
+ tslib                               ^2.4.1  →     ^2.5.0
+ typescript                          ^4.9.3  →     ^4.9.5
+ webpack-cli                         ^5.0.0  →     ^5.0.1
+```
+
+
+
 ## 3.24.2
 
 #### :rocket: New Feature

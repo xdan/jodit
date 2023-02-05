@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.24.2
+ * Version: v3.24.3
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -22,21 +22,21 @@ return /******/ (function() { // webpackBootstrap
 /***/ 90643:
 /***/ (function(module) {
 
-module.exports["default"] = ["إبدأ في الكتابة...","حول جوديت","محرر جوديت","دليل مستخدم جوديت","يحتوي على مساعدة مفصلة للاستخدام","للحصول على معلومات حول الترخيص، يرجى الذهاب لموقعنا:","شراء النسخة الكاملة","حقوق الطبع والنشر © XDSoft.net - Chupurnov Valeriy. كل الحقوق محفوظة.","مِرْساة","فتح في نافذة جديدة","فتح المحرر في الحجم الكامل","مسح التنسيق","ملء اللون أو تعيين لون النص","إعادة","تراجع","عريض","مائل","إدراج قائمة غير مرتبة","إدراج قائمة مرتبة","محاذاة للوسط","محاذاة مثبتة","محاذاة لليسار","محاذاة لليمين","إدراج خط أفقي","إدراج صورة","ادخال الملف","إدراج فيديو يوتيوب/فيميو ","إدراج رابط","حجم الخط","نوع الخط","إدراج كتلة تنسيق","عادي","عنوان 1","عنوان 2","عنوان 3","عنوان 4","إقتباس","كود","إدراج","إدراج جدول","تقليل المسافة البادئة","زيادة المسافة البادئة","تحديد أحرف خاصة","إدراج حرف خاص","تنسيق الرسم","تغيير الوضع","هوامش","أعلى","يمين","أسفل","يسار","الأنماط","الطبقات","محاذاة","اليمين","الوسط","اليسار","--غير مضبوط--","Src","العنوان","العنوان البديل","الرابط","افتح الرابط في نافذة جديدة","الصورة","ملف","متقدم","خصائص الصورة","إلغاء","حسنا","متصفح الملفات","حدث خطأ في تحميل القائمة ","حدث خطأ في تحميل المجلدات","هل أنت واثق؟","أدخل اسم المجلد","إنشاء مجلد","أكتب إسم","إسقاط صورة","إسقاط الملف","أو أنقر","النص البديل","رفع","تصفح","الخلفية","نص","أعلى","الوسط","الأسفل","إدراج عمود قبل","إدراج عمود بعد","إدراج صف أعلى","إدراج صف أسفل","حذف الجدول","حذف الصف","حذف العمود","خلية فارغة","%d حرف","%d كلام","اضرب من خلال","أكد","حرف فوقي","مخطوطة","قطع الاختيار","اختر الكل","استراحة","البحث عن","استبدل ب","محل","معجون","اختر محتوى للصق","مصدر","بالخط العريض","مائل","شغل","صلة","إلغاء","كرر","طاولة","صورة","نظيف","فقرة","حجم الخط","فيديو","الخط","حول المحرر","طباعة","أكد","شطب","المسافة البادئة","نتوء","ملء الشاشة","الحجم التقليدي","الخط","قائمة","قائمة مرقمة","قطع","اختر الكل","قانون","فتح الرابط","تعديل الرابط","سمة Nofollow","إزالة الرابط","تحديث","لتحرير","مراجعة","URL","تحرير","محاذاة أفقية","فلتر","عن طريق التغيير","بالاسم","حسب الحجم","إضافة مجلد","إعادة","احتفظ","حفظ باسم","تغيير الحجم","حجم القطع","عرض","ارتفاع","حافظ على النسب","أن","لا","حذف","تميز","تميز %s","محاذاة عمودية","انشق، مزق","اذهب","أضف العمود","اضف سطر","رخصة %s","حذف","انقسام عمودي","تقسيم أفقي","الحدود","يشبه الكود الخاص بك HTML. تبقي كما HTML؟","الصق ك HTML","احتفظ","إدراج كنص","إدراج النص فقط","يمكنك فقط تحرير صورك الخاصة. تحميل هذه الصورة على المضيف؟","تم تحميل الصورة بنجاح على الخادم!","لوحة","لا توجد ملفات في هذا الدليل.","إعادة تسمية","أدخل اسم جديد","معاينة","تحميل","لصق من الحافظة","متصفحك لا يدعم إمكانية الوصول المباشر إلى الحافظة.","نسخ التحديد","نسخ","دائرة نصف قطرها الحدود","عرض كل","تطبيق","يرجى ملء هذا المجال","يرجى إدخال عنوان ويب","الافتراضي","دائرة","نقطة","المربعة","البحث","تجد السابقة","تجد التالي","للصق المحتوى قادم من Microsoft Word/Excel الوثيقة. هل تريد أن تبقي شكل أو تنظيفه ؟ ","كلمة لصق الكشف عن","نظيفة","أدخل اسم الفصل","اضغط البديل لتغيير حجم مخصص"]
+module.exports["default"] = ["إبدأ في الكتابة...","حول جوديت","محرر جوديت",null,"دليل مستخدم جوديت","يحتوي على مساعدة مفصلة للاستخدام","للحصول على معلومات حول الترخيص، يرجى الذهاب لموقعنا:","شراء النسخة الكاملة","حقوق الطبع والنشر © XDSoft.net - Chupurnov Valeriy. كل الحقوق محفوظة.","مِرْساة","فتح في نافذة جديدة","فتح المحرر في الحجم الكامل","مسح التنسيق","ملء اللون أو تعيين لون النص","إعادة","تراجع","عريض","مائل","إدراج قائمة غير مرتبة","إدراج قائمة مرتبة","محاذاة للوسط","محاذاة مثبتة","محاذاة لليسار","محاذاة لليمين","إدراج خط أفقي","إدراج صورة","ادخال الملف","إدراج فيديو يوتيوب/فيميو ","إدراج رابط","حجم الخط","نوع الخط","إدراج كتلة تنسيق","عادي","عنوان 1","عنوان 2","عنوان 3","عنوان 4","إقتباس","كود","إدراج","إدراج جدول","تقليل المسافة البادئة","زيادة المسافة البادئة","تحديد أحرف خاصة","إدراج حرف خاص","تنسيق الرسم","تغيير الوضع","هوامش","أعلى","يمين","أسفل","يسار","الأنماط","الطبقات","محاذاة","اليمين","الوسط","اليسار","--غير مضبوط--","Src","العنوان","العنوان البديل","الرابط","افتح الرابط في نافذة جديدة","الصورة","ملف","متقدم","خصائص الصورة","إلغاء","حسنا","يشبه الكود الخاص بك HTML. تبقي كما HTML؟","الصق ك HTML","احتفظ","نظيفة","إدراج كنص","إدراج النص فقط","كلمة لصق الكشف عن","للصق المحتوى قادم من Microsoft Word/Excel الوثيقة. هل تريد أن تبقي شكل أو تنظيفه ؟ ","متصفح الملفات","حدث خطأ في تحميل القائمة ","حدث خطأ في تحميل المجلدات","هل أنت واثق؟","أدخل اسم المجلد","إنشاء مجلد","أكتب إسم","إسقاط صورة","إسقاط الملف","أو أنقر","النص البديل","تصفح","رفع","الخلفية","نص","أعلى","الوسط","الأسفل","إدراج عمود قبل","إدراج عمود بعد","إدراج صف أعلى","إدراج صف أسفل","حذف الجدول","حذف الصف","حذف العمود","خلية فارغة","مصدر","بالخط العريض","مائل","شغل","صلة","إلغاء","كرر","طاولة","صورة","نظيف","فقرة","حجم الخط","فيديو","الخط","حول المحرر","طباعة","أكد","شطب","المسافة البادئة","نتوء","ملء الشاشة","الحجم التقليدي","الخط","قائمة","قائمة مرقمة","قطع","اختر الكل","قانون","فتح الرابط","تعديل الرابط","سمة Nofollow","إزالة الرابط","مراجعة","لتحرير","تحديث","URL","تحرير","محاذاة أفقية","فلتر","عن طريق التغيير","بالاسم","حسب الحجم","إضافة مجلد","إعادة","احتفظ","حفظ باسم","تغيير الحجم","حجم القطع","عرض","ارتفاع","حافظ على النسب","أن","لا","حذف","تميز","%d حرف","%d كلام",null,"تميز %s","اختر الكل","محاذاة عمودية","انشق، مزق","انقسام عمودي","تقسيم أفقي","اذهب","أضف العمود","اضف سطر","حذف","الحدود","رخصة %s","اضرب من خلال","أكد","حرف فوقي","مخطوطة","قطع الاختيار","استراحة","البحث عن","استبدل ب","محل","معجون","اختر محتوى للصق","يمكنك فقط تحرير صورك الخاصة. تحميل هذه الصورة على المضيف؟","تم تحميل الصورة بنجاح على الخادم!","لوحة","لا توجد ملفات في هذا الدليل.","إعادة تسمية","أدخل اسم جديد","معاينة","تحميل","لصق من الحافظة","متصفحك لا يدعم إمكانية الوصول المباشر إلى الحافظة.","نسخ التحديد","نسخ","دائرة نصف قطرها الحدود","عرض كل","تطبيق","يرجى ملء هذا المجال","يرجى إدخال عنوان ويب","الافتراضي","دائرة","نقطة","المربعة","البحث","تجد السابقة","تجد التالي","أدخل اسم الفصل","اضغط البديل لتغيير حجم مخصص"]
 
 /***/ }),
 
 /***/ 52532:
 /***/ (function(module) {
 
-module.exports["default"] = ["Napiš něco","O Jodit","Editor Jodit","Jodit Uživatelská příručka","obsahuje detailní nápovědu","Pro informace o licenci, prosím, přejděte na naši stránku:","Koupit plnou verzi","Copyright © XDSoft.net - Chupurnov Valeriy. Všechna práva vyhrazena.","Anchor","Otevřít v nové záložce","Otevřít v celoobrazovkovém režimu","Vyčistit formátování","Barva výplně a písma","Vpřed","Zpět","Tučné","Kurzíva","Odrážky","Číslovaný seznam","Zarovnat na střed","Zarovnat do bloku","Zarovnat vlevo","Zarovnat vpravo","Vložit horizontální linku","Vložit obrázek","Vložit soubor","Vložit video (YT/Vimeo)","Vložit odkaz","Velikost písma","Typ písma","Formátovat blok","Normální text","Nadpis 1","Nadpis 2","Nadpis 3","Nadpis 4","Citát","Kód","Vložit","Vložit tabulku","Zmenšit odsazení","Zvětšit odsazení","Vybrat speciální symbol","Vložit speciální symbol","Použít formát","Změnit mód","Okraje","horní","pravý","spodní","levý","Styly","Třídy","Zarovnání","Vpravo","Na střed","Vlevo","--nenastaveno--","src","Titulek","Alternativní text (alt)","Link","Otevřít link v nové záložce","Obrázek","soubor","Rozšířené","Vlastnosti obrázku","Zpět","Ok","Prohlížeč souborů","Chyba při načítání seznamu souborů","Chyba při načítání složek","Jste si jistý(á)?","Název složky","Vytvořit složku","název","Přetáhněte sem obrázek","Přetáhněte sem soubor","nebo klikněte","Alternativní text","Nahrát","Server","Pozadí","Text","Nahoru","Na střed","Dolu","Vložit sloupec před","Vložit sloupec za","Vložit řádek nad","Vložit řádek pod","Vymazat tabulku","Vymazat řádku","Vymazat sloupec","Vyčistit buňku","Znaky: %d","Slova: %d","Přeškrtnuto","Podtrženo","Horní index","Dolní index","Vyjmout označené","Označit vše","Zalomení","Najdi","Nahradit za","Vyměňte","Vložit","Vyber obsah pro vložení","HTML","tučně","kurzíva","štětec","odkaz","zpět","vpřed","tabulka","obrázek","guma","odstavec","velikost písma","video","písmo","о editoru","tisk","podtrženo","přeškrtnuto","zvětšit odsazení","zmenšit odsazení","celoobrazovkový režim","smrsknout","Linka","Odrážka","Číslovaný seznam","Vyjmout","Označit vše","Kód","Otevřít odkaz","Upravit odkaz","Atribut no-follow","Odstranit odkaz","Aktualizovat","Chcete-li upravit","Zobrazit","URL","Editovat","Horizontální zarovnání","Filtr","Dle poslední změny","Dle názvu","Dle velikosti","Přidat složku","Reset","Uložit","Uložit jako...","Změnit rozměr","Ořezat","Šířka","Výška","Ponechat poměr","Ano","Ne","Vyjmout","Označit","Označit %s","Vertikální zarovnání","Rozdělit","Spojit","Přidat sloupec","Přidat řádek","Licence: %s","Vymazat","Rozdělit vertikálně","Rozdělit horizontálně","Okraj","Váš text se podobá HTML. Vložit ho jako HTML?","Vložit jako HTML","Ponechat originál","Vložit jako TEXT","Vložit pouze TEXT","Můžete upravovat pouze své obrázky. Načíst obrázek?","Obrázek byl úspěšně nahrán!","paleta","V tomto adresáři nejsou žádné soubory.","přejmenovat","Zadejte nový název","náhled","Stažení","Vložit ze schránky","Váš prohlížeč nepodporuje přímý přístup do schránky.","Kopírovat výběr","kopírování","Border radius","Zobrazit všechny","Platí","Prosím, vyplňte toto pole","Prosím, zadejte webovou adresu","Výchozí","Kruh","Dot","Quadrate","Najít","Najít Předchozí","Najít Další","Obsah, který vkládáte, je pravděpodobně z Microsoft Word / Excel. Chcete ponechat formát nebo vložit pouze text?","Detekován fragment z Wordu nebo Excelu","Vyčistit","Vložte název třídy","Stiskněte Alt pro vlastní změnu velikosti"]
+module.exports["default"] = ["Napiš něco","O Jodit","Editor Jodit","Verze pro nekomerční použití","Jodit Uživatelská příručka","obsahuje detailní nápovědu","Pro informace o licenci, prosím, přejděte na naši stránku:","Koupit plnou verzi","Copyright © XDSoft.net - Chupurnov Valeriy. Všechna práva vyhrazena.","Anchor","Otevřít v nové záložce","Otevřít v celoobrazovkovém režimu","Vyčistit formátování","Barva výplně a písma","Vpřed","Zpět","Tučné","Kurzíva","Odrážky","Číslovaný seznam","Zarovnat na střed","Zarovnat do bloku","Zarovnat vlevo","Zarovnat vpravo","Vložit horizontální linku","Vložit obrázek","Vložit soubor","Vložit video (YT/Vimeo)","Vložit odkaz","Velikost písma","Typ písma","Formátovat blok","Normální text","Nadpis 1","Nadpis 2","Nadpis 3","Nadpis 4","Citát","Kód","Vložit","Vložit tabulku","Zmenšit odsazení","Zvětšit odsazení","Vybrat speciální symbol","Vložit speciální symbol","Použít formát","Změnit mód","Okraje","horní","pravý","spodní","levý","Styly","Třídy","Zarovnání","Vpravo","Na střed","Vlevo","--nenastaveno--","src","Titulek","Alternativní text (alt)","Link","Otevřít link v nové záložce","Obrázek","soubor","Rozšířené","Vlastnosti obrázku","Zpět","Ok","Váš text se podobá HTML. Vložit ho jako HTML?","Vložit jako HTML","Ponechat originál","Vyčistit","Vložit jako TEXT","Vložit pouze TEXT","Detekován fragment z Wordu nebo Excelu","Obsah, který vkládáte, je pravděpodobně z Microsoft Word / Excel. Chcete ponechat formát nebo vložit pouze text?","Prohlížeč souborů","Chyba při načítání seznamu souborů","Chyba při načítání složek","Jste si jistý(á)?","Název složky","Vytvořit složku","název","Přetáhněte sem obrázek","Přetáhněte sem soubor","nebo klikněte","Alternativní text","Server","Nahrát","Pozadí","Text","Nahoru","Na střed","Dolu","Vložit sloupec před","Vložit sloupec za","Vložit řádek nad","Vložit řádek pod","Vymazat tabulku","Vymazat řádku","Vymazat sloupec","Vyčistit buňku","HTML","tučně","kurzíva","štětec","odkaz","zpět","vpřed","tabulka","obrázek","guma","odstavec","velikost písma","video","písmo","о editoru","tisk","podtrženo","přeškrtnuto","zvětšit odsazení","zmenšit odsazení","celoobrazovkový režim","smrsknout","Linka","Odrážka","Číslovaný seznam","Vyjmout","Označit vše","Kód","Otevřít odkaz","Upravit odkaz","Atribut no-follow","Odstranit odkaz","Zobrazit","Chcete-li upravit","Aktualizovat","URL","Editovat","Horizontální zarovnání","Filtr","Dle poslední změny","Dle názvu","Dle velikosti","Přidat složku","Reset","Uložit","Uložit jako...","Změnit rozměr","Ořezat","Šířka","Výška","Ponechat poměr","Ano","Ne","Vyjmout","Označit","Znaky: %d","Slova: %d","Vše","Označit %s","Označit vše","Vertikální zarovnání","Rozdělit","Rozdělit vertikálně","Rozdělit horizontálně","Spojit","Přidat sloupec","Přidat řádek","Vymazat","Okraj","Licence: %s","Přeškrtnuto","Podtrženo","Horní index","Dolní index","Vyjmout označené","Zalomení","Najdi","Nahradit za","Vyměňte","Vložit","Vyber obsah pro vložení","Můžete upravovat pouze své obrázky. Načíst obrázek?","Obrázek byl úspěšně nahrán!","paleta","V tomto adresáři nejsou žádné soubory.","přejmenovat","Zadejte nový název","náhled","Stažení","Vložit ze schránky","Váš prohlížeč nepodporuje přímý přístup do schránky.","Kopírovat výběr","kopírování","Border radius","Zobrazit všechny","Platí","Prosím, vyplňte toto pole","Prosím, zadejte webovou adresu","Výchozí","Kruh","Dot","Quadrate","Najít","Najít Předchozí","Najít Další","Vložte název třídy","Stiskněte Alt pro vlastní změnu velikosti"]
 
 /***/ }),
 
 /***/ 75178:
 /***/ (function(module) {
 
-module.exports["default"] = ["Bitte geben Sie einen Text ein","Über Jodit","Jodit Editor","Das Jodit Benutzerhandbuch","beinhaltet ausführliche Informationen wie Sie den Editor verwenden können.","Für Informationen zur Lizenz, besuchen Sie bitte unsere Web-Präsenz:","Vollversion kaufen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Anker","In neuer Registerkarte öffnen","Editor in voller Größe öffnen","Formatierung löschen","Füllfarbe oder Textfarbe ändern","Wiederholen","Rückgängig machen","Fett","Kursiv","Unsortierte Liste einfügen","Nummerierte Liste einfügen","Mittig ausrichten","Blocksatz","Links ausrichten","Rechts ausrichten","Horizontale Linie einfügen","Bild einfügen","Datei einfügen","Youtube/vimeo Video einfügen","Link einfügen","Schriftgröße","Schriftfamilie","Formatblock einfügen","Normal","Überschrift 1","Überschrift 2","Überschrift 3","Überschrift 4","Zitat","Code","Einfügen","Tabelle einfügen","Einzug verkleinern","Einzug vergrößern","Sonderzeichen auswählen","Sonderzeichen einfügen","Format kopieren","Änderungsmodus","Ränder","Oben","Rechts","Unten","Links","CSS Stil","CSS Klassen","Ausrichtung","Rechts","Zentriert","Links","Keine","Pfad","Titel","Alternativer Text","Link","Link in neuem Tab öffnen","Bild","Datei","Fortgeschritten","Bildeigenschaften","Abbrechen","OK","Dateibrowser","Fehler beim Laden der Liste","Fehler beim Laden der Ordner","Sind Sie sicher?","Geben Sie den Verzeichnisnamen ein","Verzeichnis erstellen","Typname","Bild hier hinziehen","Datei löschen","oder hier klicken","Alternativtext","Hochladen","Auswählen","Hintergrund","Text","Oben","Mittig","Unten","Spalte davor einfügen","Spalte danach einfügen","Zeile oberhalb einfügen","Zeile unterhalb einfügen","Tabelle löschen","Zeile löschen","Spalte löschen","Zelle leeren","Zeichen: %d","Wörter: %d","Durchstreichen","Unterstreichen","Hochgestellen","Tiefstellen","Auswahl ausschneiden","Alles markieren","Pause","Suche nach","Ersetzen durch","Ersetzen","Einfügen","Wählen Sie den Inhalt zum Einfügen aus","HTML","Fett gedruckt","Kursiv","Bürste","Verknüpfung","Rückgängig machen","Wiederholen","Tabelle","Bild","Radiergummi","Absatz","Schriftgröße","Video","Schriftart","Über","Drucken","Unterstreichen","Durchstreichen","Einzug","Herausstellen","Vollgröße","Schrumpfen","die Linie","Liste von","Nummerierte Liste","Schneiden","Wählen Sie Alle aus","Code einbetten","Link öffnen","Link bearbeiten","Nofollow-Attribut","Link entfernen","Aktualisieren","Bearbeiten","Ansehen","URL","Bearbeiten","Horizontale Ausrichtung","Filter","Sortieren nach geändert","Nach Name sortieren","Nach Größe sortiert","Ordner hinzufügen","Wiederherstellen","Speichern","Speichern als","Größe ändern","Größe anpassen","Breite","Höhe","Seitenverhältnis beibehalten","Ja","Nein","Entfernen","Markieren","Markieren: %s","Vertikale Ausrichtung","Unterteilen","Vereinen","Spalte hinzufügen","Zeile hinzufügen",null,"Löschen","Vertikal unterteilen","Horizontal unterteilen","Rand","Ihr Text ähnelt HTML-Code. Als HTML beibehalten?","Als HTML einfügen?","Original speichern","Als Text einfügen","Nur Text einfügen","Sie können nur Ihre eigenen Bilder bearbeiten. Dieses Bild auf den Host herunterladen?","Das Bild wurde erfolgreich auf den Server hochgeladen!","Palette","In diesem Verzeichnis befinden sich keine Dateien.","Umbenennen","Geben Sie einen neuen Namen ein","Vorschau","Herunterladen","Aus Zwischenablage einfügen","Ihr Browser unterstützt keinen direkten Zugriff auf die Zwischenablage.","Auswahl kopieren","Kopieren","Radius für abgerundete Ecken","Alle anzeigen","Anwenden","Bitte füllen Sie dieses Feld aus","Bitte geben Sie eine Web-Adresse ein","Standard","Kreis","Punkte","Quadrate","Suchen","Suche vorherige","Weitersuchen","Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder bereinigen?","In Word formatierter Text erkannt","Säubern","className (CSS) einfügen","Drücken Sie Alt für benutzerdefinierte Größenanpassung"]
+module.exports["default"] = ["Bitte geben Sie einen Text ein","Über Jodit","Jodit Editor",null,"Das Jodit Benutzerhandbuch","beinhaltet ausführliche Informationen wie Sie den Editor verwenden können.","Für Informationen zur Lizenz, besuchen Sie bitte unsere Web-Präsenz:","Vollversion kaufen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Anker","In neuer Registerkarte öffnen","Editor in voller Größe öffnen","Formatierung löschen","Füllfarbe oder Textfarbe ändern","Wiederholen","Rückgängig machen","Fett","Kursiv","Unsortierte Liste einfügen","Nummerierte Liste einfügen","Mittig ausrichten","Blocksatz","Links ausrichten","Rechts ausrichten","Horizontale Linie einfügen","Bild einfügen","Datei einfügen","Youtube/vimeo Video einfügen","Link einfügen","Schriftgröße","Schriftfamilie","Formatblock einfügen","Normal","Überschrift 1","Überschrift 2","Überschrift 3","Überschrift 4","Zitat","Code","Einfügen","Tabelle einfügen","Einzug verkleinern","Einzug vergrößern","Sonderzeichen auswählen","Sonderzeichen einfügen","Format kopieren","Änderungsmodus","Ränder","Oben","Rechts","Unten","Links","CSS Stil","CSS Klassen","Ausrichtung","Rechts","Zentriert","Links","Keine","Pfad","Titel","Alternativer Text","Link","Link in neuem Tab öffnen","Bild","Datei","Fortgeschritten","Bildeigenschaften","Abbrechen","OK","Ihr Text ähnelt HTML-Code. Als HTML beibehalten?","Als HTML einfügen?","Original speichern","Säubern","Als Text einfügen","Nur Text einfügen","In Word formatierter Text erkannt","Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder bereinigen?","Dateibrowser","Fehler beim Laden der Liste","Fehler beim Laden der Ordner","Sind Sie sicher?","Geben Sie den Verzeichnisnamen ein","Verzeichnis erstellen","Typname","Bild hier hinziehen","Datei löschen","oder hier klicken","Alternativtext","Auswählen","Hochladen","Hintergrund","Text","Oben","Mittig","Unten","Spalte davor einfügen","Spalte danach einfügen","Zeile oberhalb einfügen","Zeile unterhalb einfügen","Tabelle löschen","Zeile löschen","Spalte löschen","Zelle leeren","HTML","Fett gedruckt","Kursiv","Bürste","Verknüpfung","Rückgängig machen","Wiederholen","Tabelle","Bild","Radiergummi","Absatz","Schriftgröße","Video","Schriftart","Über","Drucken","Unterstreichen","Durchstreichen","Einzug","Herausstellen","Vollgröße","Schrumpfen","die Linie","Liste von","Nummerierte Liste","Schneiden","Wählen Sie Alle aus","Code einbetten","Link öffnen","Link bearbeiten","Nofollow-Attribut","Link entfernen","Ansehen","Bearbeiten","Aktualisieren","URL","Bearbeiten","Horizontale Ausrichtung","Filter","Sortieren nach geändert","Nach Name sortieren","Nach Größe sortiert","Ordner hinzufügen","Wiederherstellen","Speichern","Speichern als","Größe ändern","Größe anpassen","Breite","Höhe","Seitenverhältnis beibehalten","Ja","Nein","Entfernen","Markieren","Zeichen: %d","Wörter: %d","Alles markieren","Markieren: %s","Alles markieren","Vertikale Ausrichtung","Unterteilen","Vertikal unterteilen","Horizontal unterteilen","Vereinen","Spalte hinzufügen","Zeile hinzufügen","Löschen","Rand",null,"Durchstreichen","Unterstreichen","Hochstellen","Tiefstellen","Auswahl ausschneiden","Pause","Suche nach","Ersetzen durch","Ersetzen","Einfügen","Wählen Sie den Inhalt zum Einfügen aus","Sie können nur Ihre eigenen Bilder bearbeiten. Dieses Bild auf den Host herunterladen?","Das Bild wurde erfolgreich auf den Server hochgeladen!","Palette","In diesem Verzeichnis befinden sich keine Dateien.","Umbenennen","Geben Sie einen neuen Namen ein","Vorschau","Herunterladen","Aus Zwischenablage einfügen","Ihr Browser unterstützt keinen direkten Zugriff auf die Zwischenablage.","Auswahl kopieren","Kopieren","Radius für abgerundete Ecken","Alle anzeigen","Anwenden","Bitte füllen Sie dieses Feld aus","Bitte geben Sie eine Web-Adresse ein","Standard","Kreis","Punkte","Quadrate","Suchen","Suche vorherige","Weitersuchen","className (CSS) einfügen","Drücken Sie Alt für benutzerdefinierte Größenanpassung"]
 
 /***/ }),
 
@@ -50,112 +50,112 @@ module.exports["default"] = {"Type something":"Start writing...","pencil":"Edit"
 /***/ 22999:
 /***/ (function(module) {
 
-module.exports["default"] = ["Escriba algo...","Acerca de Jodit","Jodit Editor","Guía de usuario Jodit","contiene ayuda detallada para el uso.","Para información sobre la licencia, por favor visite nuestro sitio:","Compre la versión completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos los derechos reservados.","Anclar","Abrir en nueva pestaña","Abrir editor en pantalla completa","Limpiar formato","Color de relleno o de letra","Rehacer","Deshacer","Negrita","Cursiva","Insertar lista no ordenada","Insertar lista ordenada","Alinear Centrado","Alinear Justificado","Alinear Izquierda","Alinear Derecha","Insertar línea horizontal","Insertar imagen","Insertar archivo","Insertar video de Youtube/vimeo","Insertar vínculo","Tamaño de letra","Familia de letra","Insertar bloque","Normal","Encabezado 1","Encabezado 2","Encabezado 3","Encabezado 4","Cita","Código","Insertar","Insertar tabla","Disminuir sangría","Aumentar sangría","Seleccionar caracter especial","Insertar caracter especial","Copiar formato","Cambiar modo","Márgenes","arriba","derecha","abajo","izquierda","Estilos CSS","Clases CSS","Alinear","Derecha","Centrado","Izquierda","--No Establecido--","Fuente","Título","Texto Alternativo","Vínculo","Abrir vínculo en nueva pestaña","Imagen","Archivo","Avanzado","Propiedades de imagen","Cancelar","Aceptar","Buscar archivo","Error al cargar la lista","Error al cargar las carpetas","¿Está seguro?","Entre nombre de carpeta","Crear carpeta","Entre el nombre","Soltar imagen","Soltar archivo","o click","Texto alternativo","Subir","Buscar","Fondo","Texto","Arriba","Centro","Abajo","Insertar columna antes","Interar columna después","Insertar fila arriba","Insertar fila debajo","Borrar tabla","Borrar fila","Borrar columna","Vaciar celda","Caracteres: %d","Palabras: %d","Tachado","Subrayado","superíndice","subíndice","Cortar selección","Seleccionar todo","Pausa","Buscar","Reemplazar con","Reemplazar","Pegar","Seleccionar contenido para pegar","HTML","negrita","cursiva","Brocha","Vínculo","deshacer","rehacer","Tabla","Imagen","Borrar","Párrafo","Tamaño de letra","Video","Letra","Acerca de","Imprimir","subrayar","tachar","sangría","quitar sangría","Tamaño completo","encoger","línea horizontal","lista sin ordenar","lista ordenada","Cortar","Seleccionar todo","Incluir código","Abrir vínculo","Editar vínculo","No seguir","Desvincular","Actualizar","Para editar","Ver","URL","Editar","Alineación horizontal","filtrar","Ordenar por fecha modificación","Ordenar por nombre","Ordenar por tamaño","Agregar carpeta","Resetear","Guardar","Guardar como...","Redimensionar","Recortar","Ancho","Alto","Mantener relación de aspecto","Si","No","Quitar","Seleccionar","Seleccionar: %s","Alineación vertical","Dividir","Mezclar","Agregar columna","Agregar fila",null,"Borrar","Dividir vertical","Dividir horizontal","Borde","El código es similar a HTML. ¿Mantener como HTML?","Pegar como HTML?","Mantener","Insertar como texto","Insertar solo texto","Solo puedes editar tus propias imágenes. ¿Descargar esta imagen en el servidor?","¡La imagen se ha subido correctamente al servidor!","paleta","No hay archivos en este directorio.","renombrar","Ingresa un nuevo nombre","avance","Descargar","Pegar desde el portapapeles","Su navegador no soporta el acceso directo en el portapapeles.","Selección de copia","copia","Radio frontera","Mostrar todos los","Aplicar","Por favor, rellene este campo","Por favor, introduzca una dirección web","Predeterminado","Círculo","Punto","Cuadro","Encontrar","Buscar Anterior","Buscar Siguiente","El contenido pegado proviene de un documento de Microsoft Word/Excel. ¿Desea mantener el formato o limpiarlo?","Pegado desde Word detectado","Limpiar","Insertar nombre de clase","Presione Alt para cambiar el tamaño personalizado"]
+module.exports["default"] = ["Escriba algo...","Acerca de Jodit","Jodit Editor",null,"Guía de usuario Jodit","contiene ayuda detallada para el uso.","Para información sobre la licencia, por favor visite nuestro sitio:","Compre la versión completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos los derechos reservados.","Anclar","Abrir en nueva pestaña","Abrir editor en pantalla completa","Limpiar formato","Color de relleno o de letra","Rehacer","Deshacer","Negrita","Cursiva","Insertar lista no ordenada","Insertar lista ordenada","Alinear Centrado","Alinear Justificado","Alinear Izquierda","Alinear Derecha","Insertar línea horizontal","Insertar imagen","Insertar archivo","Insertar video de Youtube/vimeo","Insertar vínculo","Tamaño de letra","Familia de letra","Insertar bloque","Normal","Encabezado 1","Encabezado 2","Encabezado 3","Encabezado 4","Cita","Código","Insertar","Insertar tabla","Disminuir sangría","Aumentar sangría","Seleccionar caracter especial","Insertar caracter especial","Copiar formato","Cambiar modo","Márgenes","arriba","derecha","abajo","izquierda","Estilos CSS","Clases CSS","Alinear","Derecha","Centrado","Izquierda","--No Establecido--","Fuente","Título","Texto Alternativo","Vínculo","Abrir vínculo en nueva pestaña","Imagen","Archivo","Avanzado","Propiedades de imagen","Cancelar","Aceptar","El código es similar a HTML. ¿Mantener como HTML?","Pegar como HTML?","Mantener","Limpiar","Insertar como texto","Insertar solo texto","Pegado desde Word detectado","El contenido pegado proviene de un documento de Microsoft Word/Excel. ¿Desea mantener el formato o limpiarlo?","Buscar archivo","Error al cargar la lista","Error al cargar las carpetas","¿Está seguro?","Entre nombre de carpeta","Crear carpeta","Entre el nombre","Soltar imagen","Soltar archivo","o click","Texto alternativo","Buscar","Subir","Fondo","Texto","Arriba","Centro","Abajo","Insertar columna antes","Interar columna después","Insertar fila arriba","Insertar fila debajo","Borrar tabla","Borrar fila","Borrar columna","Vaciar celda","HTML","negrita","cursiva","Brocha","Vínculo","deshacer","rehacer","Tabla","Imagen","Borrar","Párrafo","Tamaño de letra","Video","Letra","Acerca de","Imprimir","subrayar","tachar","sangría","quitar sangría","Tamaño completo","encoger","línea horizontal","lista sin ordenar","lista ordenada","Cortar","Seleccionar todo","Incluir código","Abrir vínculo","Editar vínculo","No seguir","Desvincular","Ver","Para editar","Actualizar","URL","Editar","Alineación horizontal","Filtrar","Ordenar por fecha modificación","Ordenar por nombre","Ordenar por tamaño","Agregar carpeta","Resetear","Guardar","Guardar como...","Redimensionar","Recortar","Ancho","Alto","Mantener relación de aspecto","Si","No","Quitar","Seleccionar","Caracteres: %d","Palabras: %d","Todo","Seleccionar: %s","Seleccionar todo","Alineación vertical","Dividir","Dividir vertical","Dividir horizontal","Mezclar","Agregar columna","Agregar fila","Borrar","Borde",null,"Tachado","Subrayado","superíndice","subíndice","Cortar selección","Pausa","Buscar","Reemplazar con","Reemplazar","Pegar","Seleccionar contenido para pegar","Solo puedes editar tus propias imágenes. ¿Descargar esta imagen en el servidor?","¡La imagen se ha subido correctamente al servidor!","paleta","No hay archivos en este directorio.","renombrar","Ingresa un nuevo nombre","avance","Descargar","Pegar desde el portapapeles","Su navegador no soporta el acceso directo en el portapapeles.","Selección de copia","copia","Radio frontera","Mostrar todos los","Aplicar","Por favor, rellene este campo","Por favor, introduzca una dirección web","Predeterminado","Círculo","Punto","Cuadro","Encontrar","Buscar Anterior","Buscar Siguiente","Insertar nombre de clase","Presione Alt para cambiar el tamaño personalizado"]
 
 /***/ }),
 
 /***/ 34145:
 /***/ (function(module) {
 
-module.exports["default"] = ["Ecrivez ici","A propos de Jodit","Editeur Jodit","Guide de l'utilisateur","Aide détaillée à l'utilisation","Consulter la licence sur notre site web:","Acheter la version complète","Copyright © XDSoft.net - Chupurnov Valeriy. Tous droits réservés.","Ancre","Ouvrir dans un nouvel onglet","Ouvrir l'éditeur en pleine page","Supprimer le formattage","Modifier la couleur du fond ou du texte","Refaire","Défaire","Gras","Italique","Liste non ordonnée","Liste ordonnée","Centrer","Justifier","Aligner à gauche ","Aligner à droite","Insérer une ligne horizontale","Insérer une image","Insérer un fichier","Insérer une vidéo","Insérer un lien","Taille des caractères","Famille des caractères","Bloc formatté","Normal","Titre 1","Titre 2","Titre 3","Titre 4","Citation","Code","Insérer","Insérer un tableau","Diminuer le retrait","Retrait plus","Sélectionnez un caractère spécial","Insérer un caractère spécial","Cloner le format","Mode wysiwyg <-> code html","Marges","haut","droite","Bas","gauche","Styles","Classes","Alignement","Droite","Centre","Gauche","--Non disponible--","Source","Titre","Alternative","Lien","Ouvrir le lien dans un nouvel onglet","Image","fichier","Avancé","Propriétés de l'image","Annuler","OK","Explorateur de fichiers","Erreur de liste de chargement","Erreur de dossier de chargement","Etes-vous sûrs ?","Entrer le non de dossier","Créer un dossier","type de fichier","Coller une image","Déposer un fichier","ou cliquer","Texte de remplacemement","Charger","Chercher","Arrière-plan","Texte","Haut","Milieu","Bas","Insérer une colonne avant","Insérer une colonne après","Insérer une ligne en dessus","Insérer une ligne en dessous","Supprimer le tableau","Supprimer la ligne","Supprimer la colonne","Vider la cellule","Symboles: %d","Mots: %d","Frapper à travers","Souligner","exposant","indice","Couper la sélection","Tout sélectionner","Pause","Rechercher","Remplacer par","Remplacer","Coller","Choisissez le contenu à coller","la source","graisseux","italique","verser","lien","abolir","prêt","graphique","Image","la gommen","clause","taille de police","Video","police","à propos de l'éditeur","impression","souligné","barré","indentation","indifférent","taille réelle","taille conventionnelle","la ligne","Liste des","Liste numérotée","Couper","Sélectionner tout",null,"Ouvrir le lien","Modifier le lien","Attribut Nofollow","Supprimer le lien","Mettre à jour","Pour éditer","Voir","URL",null,"Alignement horizontal","Filtre","Trier par modifié","Trier par nom","Classer par taille","Ajouter le dossier","Restaurer","Sauvegarder","Enregistrer sous","Changer la taille","Taille de garniture","Largeur","Hauteur","Garder les proportions","Oui","Non","Supprimer","Mettre en évidence","Mettre en évidence: %s","Alignement vertical","Split","aller","Ajouter une colonne","Ajouter une rangée",null,"Effacer","Split vertical","Split horizontal",null,"Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?","Coller en HTML?","Sauvegarder l'original","Coller en tant que texte","Coller le texte seulement","Vous ne pouvez éditer que vos propres images. Téléchargez cette image sur l'hôte?","L'image a été téléchargée avec succès sur le serveur!null","Palette","Il n'y a aucun fichier dans ce répertoire.","renommer","Entrez un nouveau nom","Aperçu","Télécharger","Coller à partir du presse-papiers","Votre navigateur ne prend pas en charge l'accès direct à la presse-papiers.","Copier la sélection","copie","Rayon des frontières","Afficher tous les","Appliquer","Veuillez remplir ce champ","Veuillez entrer une adresse web","Par défaut","Cercle","Dot","Quadrate","Trouver","Trouvez Précédente","Suivant","Le contenu que vous insérez provient d'un document Microsoft Word / Excel. Voulez-vous enregistrer le format ou l'effacer?","C'est peut-être un fragment de Word ou Excel","Nettoyer","Insérer un nom de classe","Appuyez sur Alt pour un redimensionnement personnalisé"]
+module.exports["default"] = ["Ecrivez ici","A propos de Jodit","Editeur Jodit",null,"Guide de l'utilisateur","Aide détaillée à l'utilisation","Consulter la licence sur notre site web:","Acheter la version complète","Copyright © XDSoft.net - Chupurnov Valeriy. Tous droits réservés.","Ancre","Ouvrir dans un nouvel onglet","Ouvrir l'éditeur en pleine page","Supprimer le formattage","Modifier la couleur du fond ou du texte","Refaire","Défaire","Gras","Italique","Liste non ordonnée","Liste ordonnée","Centrer","Justifier","Aligner à gauche ","Aligner à droite","Insérer une ligne horizontale","Insérer une image","Insérer un fichier","Insérer une vidéo","Insérer un lien","Taille des caractères","Famille des caractères","Bloc formatté","Normal","Titre 1","Titre 2","Titre 3","Titre 4","Citation","Code","Insérer","Insérer un tableau","Diminuer le retrait","Retrait plus","Sélectionnez un caractère spécial","Insérer un caractère spécial","Cloner le format","Mode wysiwyg <-> code html","Marges","haut","droite","Bas","gauche","Styles","Classes","Alignement","Droite","Centre","Gauche","--Non disponible--","Source","Titre","Alternative","Lien","Ouvrir le lien dans un nouvel onglet","Image","fichier","Avancé","Propriétés de l'image","Annuler","OK","Votre texte que vous essayez de coller est similaire au HTML. Collez-le en HTML?","Coller en HTML?","Sauvegarder l'original","Nettoyer","Coller en tant que texte","Coller le texte seulement","C'est peut-être un fragment de Word ou Excel","Le contenu que vous insérez provient d'un document Microsoft Word / Excel. Voulez-vous enregistrer le format ou l'effacer?","Explorateur de fichiers","Erreur de liste de chargement","Erreur de dossier de chargement","Etes-vous sûrs ?","Entrer le nom de dossier","Créer un dossier","type de fichier","Coller une image","Déposer un fichier","ou cliquer","Texte de remplacemement","Chercher","Charger","Arrière-plan","Texte","Haut","Milieu","Bas","Insérer une colonne avant","Insérer une colonne après","Insérer une ligne au dessus","Insérer une ligne en dessous","Supprimer le tableau","Supprimer la ligne","Supprimer la colonne","Vider la cellule","la source","gras","italique","pinceau","lien","annuler","refaire","tableau","image","gomme","clause","taille de police","Video","police","à propos de l'éditeur","impression","souligné","barré","indentation","retrait","taille réelle","taille conventionnelle","la ligne","Liste","Liste numérotée","Couper","Sélectionner tout",null,"Ouvrir le lien","Modifier le lien","Attribut Nofollow","Supprimer le lien","Voir","Pour éditer","Mettre à jour","URL",null,"Alignement horizontal","Filtre","Trier par modification","Trier par nom","Trier par taille","Créer le dossier","Restaurer","Sauvegarder","Enregistrer sous","Changer la taille","Taille de garniture","Largeur","Hauteur","Garder les proportions","Oui","Non","Supprimer","Mettre en évidence","Symboles: %d","Mots: %d",null,"Mettre en évidence: %s","Tout sélectionner","Alignement vertical","Split","Split vertical","Split horizontal","aller","Ajouter une colonne","Ajouter une rangée","Effacer","Bordure",null,"Barrer","Souligner","exposant","indice","Couper la sélection","Pause","Rechercher","Remplacer par","Remplacer","Coller","Choisissez le contenu à coller","Vous ne pouvez éditer que vos propres images. Téléchargez cette image sur l'hôte?","L'image a été téléchargée avec succès sur le serveur!","Palette","Il n'y a aucun fichier dans ce répertoire.","renommer","Entrez un nouveau nom","Aperçu","Télécharger","Coller à partir du presse-papiers","Votre navigateur ne prend pas en charge l'accès direct au presse-papiers.","Copier la sélection","copie","Rayon des bordures","Afficher tous","Appliquer","Veuillez remplir ce champ","Veuillez entrer une adresse web","Par défaut","Cercle","Point","Quadratique","Trouver","Précédent","Suivant","Insérer un nom de classe","Appuyez sur Alt pour un redimensionnement personnalisé"]
 
 /***/ }),
 
 /***/ 40272:
 /***/ (function(module) {
 
-module.exports["default"] = ["הקלד משהו...","About Jodit","Jodit Editor","Jodit User's Guide","contains detailed help for using.","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","מקום עיגון","פתח בכרטיסיה חדשה","פתח את העורך בחלון חדש","נקה עיצוב","שנה צבע טקסט או רקע","בצע שוב","בטל","מודגש","נטוי","הכנס רשימת תבליטים","הכנס רשימה ממוספרת","מרכז","ישר ","ישר לשמאל","ישר לימין","הכנס קו אופקי","הכנס תמונה","הכנס קובץ","הכנס סרטון וידאו מYouTube/Vimeo","הכנס קישור","גודל גופן","גופן","מעוצב מראש","רגיל","כותרת 1","כותרת 2","כותרת 3","כותרת 4","ציטוט","קוד","הכנס","הכנס טבלה","הקטן כניסה","הגדל כניסה","בחר תו מיוחד","הכנס תו מיוחד","העתק עיצוב","החלף מצב","ריווח","עליון","ימין","תחתון","שמאל","עיצוב CSS","מחלקת CSS","יישור","ימין","מרכז","שמאל","--לא נקבע--","מקור","כותרת","כיתוב חלופי","קישור","פתח בכרטיסיה חדשה","תמונה","קובץ","מתקדם","מאפייני תמונה","ביטול","אישור","סייר הקבצים","שגיאה  בזמן טעינת רשימה","שגיאה בזמן טעינת תקיות","האם אתה בטוח?","הכנס שם תקיה","צור תקיה","סוג הקובץ","הסר תמונה","הסר קובץ","או לחץ","כיתוב חלופי","העלה","סייר","רקע","טקסט","עליון","מרכז","תחתון","הכנס עמודה לפני","הכנס עמודה אחרי","הכנס שורה מעל","הכנס שורה מתחת","מחק טבלה","מחק שורה","מחק עמודה","רוקן תא","תווים: %d","מילים: %d","קו חוצה","קו תחתון","superscript","subscript","גזור בחירה","בחר הכל","שבירת שורה","חפש","החלף ב","להחליף","הדבק","בחר תוכן להדבקה","HTML","מודגש","נטוי","מברשת","קישור","בטל","בצע שוב","טבלה","תמונה","מחק","פסקה","גודל גופן","וידאו","גופן","עלינו","הדפס","קו תחתון","קו חוצה","הגדל כניסה","הקטן כניסה","גודל מלא","כווץ","קו אופקי","רשימת תבליטים","רשימה ממוספרת","חתוך","בחר הכל","הוסף קוד","פתח קישור","ערוך קישור","ללא מעקב","בטל קישור","עדכן","כדי לערוך","הצג","כתובת","ערוך","יישור אופקי","סנן","מין לפי שינוי","מיין לפי שם","מיין לפי גודל","הוסף תקייה","אפס","שמור","שמור בשם...","שנה גודל","חתוך","רוחב","גובה","שמור יחס","כן","לא","הסר","בחר","נבחר: %s","יישור אנכי","פיצול","מזג","הוסף עמודה","הוסף שורה",null,"מחק","פיצול אנכי","פיצול אופקי","מסגרת","הקוד דומה לHTML, האם להשאיר כHTML","הדבק כHTML","השאר","הכנס כטקסט","הכנס טקסט בלבד","רק קבצים המשוייכים שלך ניתנים לעריכה. האם להוריד את הקובץ?","התמונה עלתה בהצלחה!","לוח","אין קבצים בספריה זו.","הונגרית","הזן שם חדש","תצוגה מקדימה","הורד","להדביק מהלוח","הדפדפן שלך לא תומך גישה ישירה ללוח.","העתק בחירה","העתק","רדיוס הגבול","הצג את כל","החל","נא למלא שדה זה","אנא הזן כתובת אינטרנט","ברירת המחדל","מעגל","נקודה","הריבוע הזה","למצוא","מצא את הקודם","חפש את הבא","התוכן המודבק מגיע ממסמך וורד/אקסל. האם ברצונך להשאיר את העיצוב או לנקותו","זוהתה הדבקה מ\"וורד\"","נקה","הכנס את שם הכיתה","לחץ על אלט לשינוי גודל מותאם אישית"]
+module.exports["default"] = ["הקלד משהו...","About Jodit","Jodit Editor",null,"Jodit User's Guide","contains detailed help for using.","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","מקום עיגון","פתח בכרטיסיה חדשה","פתח את העורך בחלון חדש","נקה עיצוב","שנה צבע טקסט או רקע","בצע שוב","בטל","מודגש","נטוי","הכנס רשימת תבליטים","הכנס רשימה ממוספרת","מרכז","ישר ","ישר לשמאל","ישר לימין","הכנס קו אופקי","הכנס תמונה","הכנס קובץ","הכנס סרטון וידאו מYouTube/Vimeo","הכנס קישור","גודל גופן","גופן","מעוצב מראש","רגיל","כותרת 1","כותרת 2","כותרת 3","כותרת 4","ציטוט","קוד","הכנס","הכנס טבלה","הקטן כניסה","הגדל כניסה","בחר תו מיוחד","הכנס תו מיוחד","העתק עיצוב","החלף מצב","ריווח","עליון","ימין","תחתון","שמאל","עיצוב CSS","מחלקת CSS","יישור","ימין","מרכז","שמאל","--לא נקבע--","מקור","כותרת","כיתוב חלופי","קישור","פתח בכרטיסיה חדשה","תמונה","קובץ","מתקדם","מאפייני תמונה","ביטול","אישור","הקוד דומה לHTML, האם להשאיר כHTML","הדבק כHTML","השאר","נקה","הכנס כטקסט","הכנס טקסט בלבד","זוהתה הדבקה מ\"וורד\"","התוכן המודבק מגיע ממסמך וורד/אקסל. האם ברצונך להשאיר את העיצוב או לנקותו","סייר הקבצים","שגיאה  בזמן טעינת רשימה","שגיאה בזמן טעינת תקיות","האם אתה בטוח?","הכנס שם תקיה","צור תקיה","סוג הקובץ","הסר תמונה","הסר קובץ","או לחץ","כיתוב חלופי","סייר","העלה","רקע","טקסט","עליון","מרכז","תחתון","הכנס עמודה לפני","הכנס עמודה אחרי","הכנס שורה מעל","הכנס שורה מתחת","מחק טבלה","מחק שורה","מחק עמודה","רוקן תא","HTML","מודגש","נטוי","מברשת","קישור","בטל","בצע שוב","טבלה","תמונה","מחק","פסקה","גודל גופן","וידאו","גופן","עלינו","הדפס","קו תחתון","קו חוצה","הגדל כניסה","הקטן כניסה","גודל מלא","כווץ","קו אופקי","רשימת תבליטים","רשימה ממוספרת","חתוך","בחר הכל","הוסף קוד","פתח קישור","ערוך קישור","ללא מעקב","בטל קישור","הצג","כדי לערוך","עדכן","כתובת","ערוך","יישור אופקי","סנן","מין לפי שינוי","מיין לפי שם","מיין לפי גודל","הוסף תקייה","אפס","שמור","שמור בשם...","שנה גודל","חתוך","רוחב","גובה","שמור יחס","כן","לא","הסר","בחר","תווים: %d","מילים: %d","הכל","נבחר: %s","בחר הכל","יישור אנכי","פיצול","פיצול אנכי","פיצול אופקי","מזג","הוסף עמודה","הוסף שורה","מחק","מסגרת",null,"קו חוצה","קו תחתון","superscript","subscript","גזור בחירה","שבירת שורה","חפש","החלף ב","להחליף","הדבק","בחר תוכן להדבקה","רק קבצים המשוייכים שלך ניתנים לעריכה. האם להוריד את הקובץ?","התמונה עלתה בהצלחה!","לוח","אין קבצים בספריה זו.","הונגרית","הזן שם חדש","תצוגה מקדימה","הורד","להדביק מהלוח","הדפדפן שלך לא תומך גישה ישירה ללוח.","העתק בחירה","העתק","רדיוס הגבול","הצג את כל","החל","נא למלא שדה זה","אנא הזן כתובת אינטרנט","ברירת המחדל","מעגל","נקודה","הריבוע הזה","למצוא","מצא את הקודם","חפש את הבא","הכנס את שם הכיתה","לחץ על אלט לשינוי גודל מותאם אישית"]
 
 /***/ }),
 
 /***/ 2978:
 /***/ (function(module) {
 
-module.exports["default"] = ["Írjon be valamit","Joditról","Jodit Editor","Jodit útmutató","további segítséget tartalmaz","További licence információkért látogassa meg a weboldalunkat:","Teljes verzió megvásárlása","Copyright © XDSoft.net - Chupurnov Valeriy. Minden jog fenntartva.","Horgony","Megnyitás új lapon","Megnyitás teljes méretben","Formázás törlése","Háttér/szöveg szín","Újra","Visszavon","Félkövér","Dőlt","Pontozott lista","Számozott lista","Középre zárt","Sorkizárt","Balra zárt","Jobbra zárt","Vízszintes vonal beszúrása","Kép beszúrás","Fájl beszúrás","Youtube videó beszúrása","Link beszúrás","Betűméret","Betűtípus","Formázott blokk beszúrása","Normál","Fejléc 1","Fejléc 2","Fejléc 3","Fejléc 4","Idézet","Kód","Beszúr","Táblázat beszúrása","Behúzás csökkentése","Behúzás növelése","Speciális karakter kiválasztása","Speciális karakter beszúrása","Kép formázása","Nézet váltása","Szegélyek","felső","jobb","alsó","bal","CSS stílusok","CSS osztályok","Igazítás","Jobbra","Középre","Balra","Nincs","Forrás","Cím","Helyettesítő szöveg","Link","Link megnyitása új lapon","Kép","Fájl","Haladó","Kép tulajdonságai","Mégsem","OK","Fájl tallózó","Hiba a lista betöltése közben","Hiba a mappák betöltése közben","Biztosan ezt szeretné?","Írjon be egy mappanevet","Mappa létrehozása","írjon be bevet","Húzza ide a képet","Húzza ide a fájlt","vagy kattintson","Helyettesítő szöveg","Feltölt","Tallóz","Háttér","Szöveg","Fent","Középen","Lent","Oszlop beszúrás elé","Oszlop beszúrás utána","Sor beszúrás fölé","Sor beszúrás alá","Táblázat törlése","Sor törlése","Oszlop törlése","Cella tartalmának törlése","Karakterek száma: %d","Szavak száma: %d","Áthúzott","Aláhúzott","Felső index","Alsó index","Kivágás","Összes kijelölése","Szünet","Keresés","Csere erre","Cserélje ki","Beillesztés","Válasszon tartalmat a beillesztéshez","HTML","Félkövér","Dőlt","Ecset","Link","Visszavon","Újra","Táblázat","Kép","Törlés","Paragráfus","Betűméret","Videó","Betű","Rólunk","Nyomtat","Aláhúzott","Áthúzott","Behúzás","Aussenseiter","Teljes méret","Összenyom","Egyenes vonal","Lista","Számozott lista","Kivág","Összes kijelölése","Beágyazott kód","Link megnyitása","Link szerkesztése","Nincs követés","Link leválasztása","Frissít","Szerkesztés","felülvizsgálat","URL","Szerkeszt","Vízszintes igazítás","Szűrő","Rendezés módosítás szerint","Rendezés név szerint","Rendezés méret szerint","Mappa hozzáadás","Visszaállít","Mentés","Mentés másként...","Átméretezés","Kivág","Szélesség","Magasság","Képarány megtartása","Igen","Nem","Eltávolít","Kijelöl","Kijelöl: %s","Függőleges igazítás","Felosztás","Összevonás","Oszlop hozzáadás","Sor hozzáadás",null,"Törlés","Függőleges felosztás","Vízszintes felosztás","Szegély","A beillesztett szöveg HTML-nek tűnik. Megtartsuk HTML-ként?","Beszúrás HTML-ként","Megtartás","Beszúrás szövegként","Csak szöveg beillesztése","Csak a saját képeit tudja szerkeszteni. Letölti ezt a képet?","Kép sikeresen feltöltve!","Palette","Er zijn geen bestanden in deze map.","átnevezés","Adja meg az új nevet","előnézet","Letöltés","Illessze be a vágólap","A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.","Másolás kiválasztása","másolás","Határ sugár","Összes","Alkalmazni","Kérjük, töltse ki ezt a mezőt,","Kérjük, írja be a webcímet","Alapértelmezett","Kör","Pont","Quadrate","Találni","Megtalálja Előző","Következő Keresése","A beillesztett tartalom Microsoft Word/Excel dokumentumból származik. Meg szeretné tartani a formátumát?","Word-ből másolt szöveg","Elvetés","Helyezze be az osztály nevét","Nyomja meg az Alt egyéni átméretezés"]
+module.exports["default"] = ["Írjon be valamit","Joditról","Jodit Editor","Ingyenes változat","Jodit útmutató","további segítséget tartalmaz","További licence információkért látogassa meg a weboldalunkat:","Teljes verzió megvásárlása","Copyright © XDSoft.net - Chupurnov Valeriy. Minden jog fenntartva.","Horgony","Megnyitás új lapon","Megnyitás teljes méretben","Formázás törlése","Háttér/szöveg szín","Újra","Visszavon","Félkövér","Dőlt","Pontozott lista","Számozott lista","Középre zárt","Sorkizárt","Balra zárt","Jobbra zárt","Vízszintes vonal beszúrása","Kép beszúrás","Fájl beszúrás","Youtube videó beszúrása","Link beszúrás","Betűméret","Betűtípus","Formázott blokk beszúrása","Normál","Fejléc 1","Fejléc 2","Fejléc 3","Fejléc 4","Idézet","Kód","Beszúr","Táblázat beszúrása","Behúzás csökkentése","Behúzás növelése","Speciális karakter kiválasztása","Speciális karakter beszúrása","Kép formázása","Nézet váltása","Szegélyek","felső","jobb","alsó","bal","CSS stílusok","CSS osztályok","Igazítás","Jobbra","Középre","Balra","Nincs","Forrás","Cím","Helyettesítő szöveg","Link","Link megnyitása új lapon","Kép","Fájl","Haladó","Kép tulajdonságai","Mégsem","OK","A beillesztett szöveg HTML-nek tűnik. Megtartsuk HTML-ként?","Beszúrás HTML-ként","Megtartás","Elvetés","Beszúrás szövegként","Csak szöveg beillesztése","Word-ből másolt szöveg","A beillesztett tartalom Microsoft Word/Excel dokumentumból származik. Meg szeretné tartani a formátumát?","Fájl tallózó","Hiba a lista betöltése közben","Hiba a mappák betöltése közben","Biztosan ezt szeretné?","Írjon be egy mappanevet","Mappa létrehozása","írjon be bevet","Húzza ide a képet","Húzza ide a fájlt","vagy kattintson","Helyettesítő szöveg","Tallóz","Feltölt","Háttér","Szöveg","Fent","Középen","Lent","Oszlop beszúrás elé","Oszlop beszúrás utána","Sor beszúrás fölé","Sor beszúrás alá","Táblázat törlése","Sor törlése","Oszlop törlése","Cella tartalmának törlése","HTML","Félkövér","Dőlt","Ecset","Link","Visszavon","Újra","Táblázat","Kép","Törlés","Paragráfus","Betűméret","Videó","Betű","Rólunk","Nyomtat","Aláhúzott","Áthúzott","Behúzás","Aussenseiter","Teljes méret","Összenyom","Egyenes vonal","Lista","Számozott lista","Kivág","Összes kijelölése","Beágyazott kód","Link megnyitása","Link szerkesztése","Nincs követés","Link leválasztása","felülvizsgálat","Szerkesztés","Frissít","URL","Szerkeszt","Vízszintes igazítás","Szűrő","Rendezés módosítás szerint","Rendezés név szerint","Rendezés méret szerint","Mappa hozzáadás","Visszaállít","Mentés","Mentés másként...","Átméretezés","Kivág","Szélesség","Magasság","Képarány megtartása","Igen","Nem","Eltávolít","Kijelöl","Karakterek száma: %d","Szavak száma: %d","Összes","Kijelöl: %s","Összes kijelölése","Függőleges igazítás","Felosztás","Függőleges felosztás","Vízszintes felosztás","Összevonás","Oszlop hozzáadás","Sor hozzáadás","Törlés","Szegély",null,"Áthúzott","Aláhúzott","Felső index","Alsó index","Kivágás","Szünet","Keresés","Csere erre","Cserélje ki","Beillesztés","Válasszon tartalmat a beillesztéshez","Csak a saját képeit tudja szerkeszteni. Letölti ezt a képet?","Kép sikeresen feltöltve!","Palette","Er zijn geen bestanden in deze map.","átnevezés","Adja meg az új nevet","előnézet","Letöltés","Illessze be a vágólap","A böngésző nem támogatja a közvetlen hozzáférést biztosít a vágólapra.","Másolás kiválasztása","másolás","Határ sugár","Összes","Alkalmazni","Kérjük, töltse ki ezt a mezőt,","Kérjük, írja be a webcímet","Alapértelmezett","Kör","Pont","Quadrate","Találni","Megtalálja Előző","Következő Keresése","Helyezze be az osztály nevét","Nyomja meg az Alt egyéni átméretezés"]
 
 /***/ }),
 
 /***/ 99113:
 /***/ (function(module) {
 
-module.exports["default"] = ["Ketik sesuatu","Tentang Jodit","Editor Jodit","Panduan Pengguna Jodit","mencakup detail bantuan penggunaan","Untuk informasi tentang lisensi, silakan kunjungi website:","Beli versi lengkap","Hak Cipta © XDSoft.net - Chupurnov Valeriy. Hak cipta dilindungi undang-undang.","Tautan","Buka di tab baru","Buka editor dalam ukuran penuh","Hapus Pemformatan","Isi warna atau atur warna teks","Ulangi","Batalkan","Tebal","Miring","Sisipkan Daftar Tidak Berurut","Sisipkan Daftar Berurut","Tengah","Penuh","Kiri","Kanan","Sisipkan Garis Horizontal","Sisipkan Gambar","Sisipkan Berkas","Sisipkan video youtube/vimeo","Sisipkan tautan","Ukuran font","Keluarga font","Sisipkan blok format","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Kutip","Kode","Sisipkan","Sisipkan tabel","Kurangi Indentasi","Tambah Indentasi","Pilih Karakter Spesial","Sisipkan Karakter Spesial","Formar warna","Ubah mode","Batas","atas","kanan","bawah","kiri","Gaya","Class","Rata","Kanan","Tengah","Kiri","--Tidak diset--","Src","Judul","Teks alternatif","Tautan","Buka tautan di tab baru","Gambar","berkas","Lanjutan","Properti gambar","Batal","Ya","Penjelajah Berkas","Error ketika memuat list","Error ketika memuat folder","Apakah Anda yakin?","Masukkan nama Direktori","Buat direktori","ketik nama","Letakkan gambar","Letakkan berkas","atau klik","Teks alternatif","Unggah","Jelajahi","Latar Belakang","Teks","Atas","Tengah","Bawah","Sisipkan kolom sebelumnya","Sisipkan kolom setelahnya","Sisipkan baris di atasnya","Sisipkan baris di bawahnya","Hapus tabel","Hapus baris","Hapus kolom","Kosongkan cell","Karakter: %d","Kata: %d","Coret","Garis Bawah","Superskrip","Subskrip","Potong pilihan","Pilih semua","Berhenti","Mencari","Ganti dengan","Mengganti","Paste","Pilih konten untuk dipaste","sumber","tebal","miring","sikat","tautan","batalkan","ulangi","tabel","gambar","penghapus","paragraf","ukuran font","video","font","tentang","cetak","garis bawah","coret","menjorok ke dalam","menjorok ke luar","ukuran penuh","menyusut","hr","ul","ol","potong","Pilih semua","Kode embed","Buka tautan","Edit tautan","No follow","Hapus tautan","Perbarui","pensil","Mata","URL","Edit","Perataan horizontal","Filter","Urutkan berdasarkan perubahan","Urutkan berdasarkan nama","Urutkan berdasarkan ukuran","Tambah folder","Reset","Simpan","Simpan sebagai...","Ubah ukuran","Crop","Lebar","Tinggi","Jaga aspek rasio","Ya","Tidak","Copot","Pilih","Pilih %s","Rata vertikal","Bagi","Gabungkan","Tambah kolom","tambah baris","Lisensi: %s","Hapus","Bagi secara vertikal","Bagi secara horizontal","Bingkai","Kode Anda cenderung ke HTML. Biarkan sebagai HTML?","Paste sebagai HTML","Jaga","Sisipkan sebagai teks","Sisipkan hanya teks","Anda hanya dapat mengedit gambar Anda sendiri. Unduh gambar ini di host?","Gambar telah sukses diunggah ke host!","palet","Tidak ada berkas","ganti nama","Masukkan nama baru","pratinjau","Unduh","Paste dari clipboard","Browser anda tidak mendukung akses langsung ke clipboard.","Copy seleksi","copy","Border radius","Tampilkan semua","Menerapkan","Silahkan mengisi kolom ini","Silahkan masukkan alamat web","Default","Lingkaran","Dot","Kuadrat","Menemukan","Menemukan Sebelumnya","Menemukan Berikutnya","Konten dipaste dari dokumen Microsoft Word/Excel. Apakah Anda ingin tetap menjaga format atau membersihkannya?","Terdeteksi paste dari Word","Bersih","Masukkan nama kelas","Tekan Alt untuk mengubah ukuran kustom"]
+module.exports["default"] = ["Ketik sesuatu","Tentang Jodit","Editor Jodit","Versi Bebas Non-komersil","Panduan Pengguna Jodit","mencakup detail bantuan penggunaan","Untuk informasi tentang lisensi, silakan kunjungi website:","Beli versi lengkap","Hak Cipta © XDSoft.net - Chupurnov Valeriy. Hak cipta dilindungi undang-undang.","Tautan","Buka di tab baru","Buka editor dalam ukuran penuh","Hapus Pemformatan","Isi warna atau atur warna teks","Ulangi","Batalkan","Tebal","Miring","Sisipkan Daftar Tidak Berurut","Sisipkan Daftar Berurut","Tengah","Penuh","Kiri","Kanan","Sisipkan Garis Horizontal","Sisipkan Gambar","Sisipkan Berkas","Sisipkan video youtube/vimeo","Sisipkan tautan","Ukuran font","Keluarga font","Sisipkan blok format","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Kutip","Kode","Sisipkan","Sisipkan tabel","Kurangi Indentasi","Tambah Indentasi","Pilih Karakter Spesial","Sisipkan Karakter Spesial","Formar warna","Ubah mode","Batas","atas","kanan","bawah","kiri","Gaya","Class","Rata","Kanan","Tengah","Kiri","--Tidak diset--","Src","Judul","Teks alternatif","Tautan","Buka tautan di tab baru","Gambar","berkas","Lanjutan","Properti gambar","Batal","Ya","Kode Anda cenderung ke HTML. Biarkan sebagai HTML?","Paste sebagai HTML","Jaga","Bersih","Sisipkan sebagai teks","Sisipkan hanya teks","Terdeteksi paste dari Word","Konten dipaste dari dokumen Microsoft Word/Excel. Apakah Anda ingin tetap menjaga format atau membersihkannya?","Penjelajah Berkas","Error ketika memuat list","Error ketika memuat folder","Apakah Anda yakin?","Masukkan nama Direktori","Buat direktori","ketik nama","Letakkan gambar","Letakkan berkas","atau klik","Teks alternatif","Jelajahi","Unggah","Latar Belakang","Teks","Atas","Tengah","Bawah","Sisipkan kolom sebelumnya","Sisipkan kolom setelahnya","Sisipkan baris di atasnya","Sisipkan baris di bawahnya","Hapus tabel","Hapus baris","Hapus kolom","Kosongkan cell","sumber","tebal","miring","sikat","tautan","batalkan","ulangi","tabel","gambar","penghapus","paragraf","ukuran font","video","font","tentang","cetak","garis bawah","coret","menjorok ke dalam","menjorok ke luar","ukuran penuh","menyusut","hr","ul","ol","potong","Pilih semua","Kode embed","Buka tautan","Edit tautan","No follow","Hapus tautan","Mata","pensil","Perbarui","URL","Edit","Perataan horizontal","Filter","Urutkan berdasarkan perubahan","Urutkan berdasarkan nama","Urutkan berdasarkan ukuran","Tambah folder","Reset","Simpan","Simpan sebagai...","Ubah ukuran","Crop","Lebar","Tinggi","Jaga aspek rasio","Ya","Tidak","Copot","Pilih","Karakter: %d","Kata: %d","Semua","Pilih %s","Pilih semua","Rata vertikal","Bagi","Bagi secara vertikal","Bagi secara horizontal","Gabungkan","Tambah kolom","tambah baris","Hapus","Bingkai","Lisensi: %s","Coret","Garis Bawah","Superskrip","Subskrip","Potong pilihan","Berhenti","Mencari","Ganti dengan","Mengganti","Paste","Pilih konten untuk dipaste","Anda hanya dapat mengedit gambar Anda sendiri. Unduh gambar ini di host?","Gambar telah sukses diunggah ke host!","palet","Tidak ada berkas","ganti nama","Masukkan nama baru","pratinjau","Unduh","Paste dari clipboard","Browser anda tidak mendukung akses langsung ke clipboard.","Copy seleksi","copy","Border radius","Tampilkan semua","Menerapkan","Silahkan mengisi kolom ini","Silahkan masukkan alamat web","Default","Lingkaran","Dot","Kuadrat","Menemukan","Menemukan Sebelumnya","Menemukan Berikutnya","Masukkan nama kelas","Tekan Alt untuk mengubah ukuran kustom"]
 
 /***/ }),
 
 /***/ 51923:
 /***/ (function(module) {
 
-module.exports["default"] = ["Scrivi qualcosa...","A proposito di Jodit","Jodit Editor","Guida utente di Jodit","contiene una guida dettagliata per l'uso.","Per informazioni sulla licenza, si prega di visitare il nostro sito:","Acquista la versione completa","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Ancora","Apri in una nuova scheda","Apri l'editor a schermo intero","Formato chiaro","Riempi colore o lettera","Ripristina","Annulla","Grassetto","Corsivo","Inserisci lista non ordinata","Inserisci l'elenco ordinato","Allinea Centra","Allineare Giustificato","Allinea a Sinistra","Allinea a Destra","Inserisci la linea orizzontale","Inserisci immagine","Inserisci un file","Inserisci video Youtube/Vimeo","Inserisci il link","Dimensione del carattere","Tipo di font","Inserisci blocco","Normale","Heading 1","Heading 2","Heading 3","Heading 4","Citazione","Codice","Inserisci","Inserisci tabella","Riduci il rientro","Aumenta il rientro","Seleziona una funzione speciale","Inserisci un carattere speciale","Copia formato","Cambia modo","Margini","su","destra","giù","sinistra","Stili CSS","Classi CSS","Allinea","Destra","Centro","Sinistra","--Non Impostato--","Fonte","Titolo","Testo Alternativo","Link","Apri il link in una nuova scheda","Immagine","Archivio","Avanzato","Proprietà dell'immagine","Annulla","Accetta","Cerca il file","Errore durante il caricamento dell'elenco","Errore durante il caricamento delle cartelle","Sei sicuro?","Inserisci il nome della cartella","Crea cartella","Entre el nombre","Rilascia l'immagine","Rilascia file","o click","Testo alternativo","Carica","Sfoglia","Sfondo","Testo","Su","Centro","Sotto","Inserisci prima la colonna","Inserisci colonna dopo","Inserisci la riga sopra","Inserisci la riga sotto","Elimina tabella","Elimina riga","Elimina colonna","Cella vuota","Caratteri: %d","Parole: %d","Barrato","Sottolineato","indice","deponente","Taglia la selezione","Seleziona tutto","Pausa","Cerca","Sostituisci con","Sostituire","Incolla","Seleziona il contenuto da incollare","HTML","Grassetto","Corsivo","Pennello","Link","Annulla","Ripristina","Tabella","Immagine","Gomma","Paragrafo","Dimensione del carattere","Video","Font","Approposito di","Stampa","Sottolineato","Barrato","trattino","annulla rientro","A grandezza normale","comprimere","linea orizzontale","lista non ordinata","lista ordinata","Taglia","Seleziona tutto","Includi codice","Apri link","Modifica link","Non seguire","Togli link","Aggiornare","Per modificare","Recensione"," URL","Modifica","Allineamento orizzontale","Filtro","Ordina per data di modifica","Ordina per nome","Ordina per dimensione","Aggiungi cartella","Reset","Salva","Salva con nome...","Ridimensiona","Tagliare","Larghezza","Altezza","Mantenere le proporzioni","Si","No","Rimuovere","Seleziona","Seleziona: %s","Allineamento verticala","Dividere","Fondi","Aggiungi colonna","Aggiungi riga",null,"Cancella","Dividere verticalmente","Diviso orizzontale","Bordo","Il codice è simile all'HTML. Mantieni come HTML?","Incolla come HTML?","Mantieni","Inserisci come testo","Inserisci solo il testo","Puoi modificare solo le tue immagini. Scarica questa immagine sul server?","L'immagine è stata caricata con successo sul server!","tavolozza","Non ci sono file in questa directory.","ungherese","Inserisci un nuovo nome","anteprima","Scaricare","Incolla dagli appunti","Il tuo browser non supporta l'accesso diretto agli appunti.","Selezione di copia","copia","Border radius","Mostra tutti","Applicare","Si prega di compilare questo campo","Si prega di inserire un indirizzo web","Di Default","Cerchio","Dot","Quadrate","Trovare","Trova Precedente","Trova Successivo","Il contenuto incollato proviene da un documento Microsoft Word / Excel. Vuoi mantenere il formato o pulirlo?","Incollato da Word rilevato","Pulisci","Inserisci il nome della classe","Premere Alt per il ridimensionamento personalizzato"]
+module.exports["default"] = ["Scrivi qualcosa...","A proposito di Jodit","Jodit Editor",null,"Guida utente di Jodit","contiene una guida dettagliata per l'uso.","Per informazioni sulla licenza, si prega di visitare il nostro sito:","Acquista la versione completa","Copyright © XDSoft.net - Chupurnov Valeriy. Alle Rechte vorbehalten.","Ancora","Apri in una nuova scheda","Apri l'editor a schermo intero","Formato chiaro","Riempi colore o lettera","Ripristina","Annulla","Grassetto","Corsivo","Inserisci lista non ordinata","Inserisci l'elenco ordinato","Allinea Centra","Allineare Giustificato","Allinea a Sinistra","Allinea a Destra","Inserisci la linea orizzontale","Inserisci immagine","Inserisci un file","Inserisci video Youtube/Vimeo","Inserisci il link","Dimensione del carattere","Tipo di font","Inserisci blocco","Normale","Heading 1","Heading 2","Heading 3","Heading 4","Citazione","Codice","Inserisci","Inserisci tabella","Riduci il rientro","Aumenta il rientro","Seleziona una funzione speciale","Inserisci un carattere speciale","Copia formato","Cambia modo","Margini","su","destra","giù","sinistra","Stili CSS","Classi CSS","Allinea","Destra","Centro","Sinistra","--Non Impostato--","Fonte","Titolo","Testo Alternativo","Link","Apri il link in una nuova scheda","Immagine","Archivio","Avanzato","Proprietà dell'immagine","Annulla","Accetta","Il codice è simile all'HTML. Mantieni come HTML?","Incolla come HTML?","Mantieni","Pulisci","Inserisci come testo","Inserisci solo il testo","Incollato da Word rilevato","Il contenuto incollato proviene da un documento Microsoft Word / Excel. Vuoi mantenere il formato o pulirlo?","Cerca il file","Errore durante il caricamento dell'elenco","Errore durante il caricamento delle cartelle","Sei sicuro?","Inserisci il nome della cartella","Crea cartella","Entre el nombre","Rilascia l'immagine","Rilascia file","o click","Testo alternativo","Sfoglia","Carica","Sfondo","Testo","Su","Centro","Sotto","Inserisci prima la colonna","Inserisci colonna dopo","Inserisci la riga sopra","Inserisci la riga sotto","Elimina tabella","Elimina riga","Elimina colonna","Cella vuota","HTML","Grassetto","Corsivo","Pennello","Link","Annulla","Ripristina","Tabella","Immagine","Gomma","Paragrafo","Dimensione del carattere","Video","Font","Approposito di","Stampa","Sottolineato","Barrato","trattino","annulla rientro","A grandezza normale","comprimere","linea orizzontale","lista non ordinata","lista ordinata","Taglia","Seleziona tutto","Includi codice","Apri link","Modifica link","Non seguire","Togli link","Recensione","Per modificare","Aggiornare"," URL","Modifica","Allineamento orizzontale","Filtro","Ordina per data di modifica","Ordina per nome","Ordina per dimensione","Aggiungi cartella","Reset","Salva","Salva con nome...","Ridimensiona","Tagliare","Larghezza","Altezza","Mantenere le proporzioni","Si","No","Rimuovere","Seleziona","Caratteri: %d","Parole: %d","Tutto","Seleziona: %s","Seleziona tutto","Allineamento verticala","Dividere","Dividere verticalmente","Diviso orizzontale","Fondi","Aggiungi colonna","Aggiungi riga","Cancella","Bordo",null,"Barrato","Sottolineato","indice","deponente","Taglia la selezione","Pausa","Cerca","Sostituisci con","Sostituire","Incolla","Seleziona il contenuto da incollare","Puoi modificare solo le tue immagini. Scarica questa immagine sul server?","L'immagine è stata caricata con successo sul server!","tavolozza","Non ci sono file in questa directory.","ungherese","Inserisci un nuovo nome","anteprima","Scaricare","Incolla dagli appunti","Il tuo browser non supporta l'accesso diretto agli appunti.","Selezione di copia","copia","Border radius","Mostra tutti","Applicare","Si prega di compilare questo campo","Si prega di inserire un indirizzo web","Di Default","Cerchio","Dot","Quadrate","Trovare","Trova Precedente","Trova Successivo","Inserisci il nome della classe","Premere Alt per il ridimensionamento personalizzato"]
 
 /***/ }),
 
 /***/ 21268:
 /***/ (function(module) {
 
-module.exports["default"] = ["なにかタイプしてください","Joditについて","Jodit Editor","Jodit ユーザーズ・ガイド","詳しい使い方","ライセンス詳細についてはJodit Webサイトを確認ください：","フルバージョンを購入","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","新しいタブで開く","エディターのサイズ（フル/ノーマル）","書式をクリア","テキストの色","やり直し","元に戻す","太字","斜体","箇条書き","番号付きリスト","中央揃え","両端揃え","左揃え","右揃え","区切り線を挿入","画像を挿入","ファイルを挿入","Youtube/Vimeo 動画","リンクを挿入","フォントサイズ","フォント","テキストのスタイル","指定なし","タイトル1","タイトル2","タイトル3","タイトル4","引用","コード","挿入","表を挿入","インデント減","インデント増","特殊文字を選択","特殊文字を挿入","書式を貼付け","編集モード切替え","マージン","上","右","下","左","スタイル","クラス","配置","右寄せ","中央寄せ","左寄せ","指定なし","ソース","タイトル","代替テキスト","リンク","新しいタブで開く","画像","ファイル","高度な設定","画像のプロパティー","キャンセル","確定","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","ここに画像をドロップ","ここにファイルをドロップ","or クリック","代替テキスト","アップロード","ブラウズ","背景","文字","上","中央","下","左に列を挿入","右に列を挿入","上に行を挿入","下に行を挿入","表を削除","行を削除","列を削除","セルを空にする","文字数: %d","単語数: %d","取り消し線","下線","上付き文字","下付き文字","切り取り","すべて選択","Pause","検索","置換","交換","貼付け","選択した内容を貼付け","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","分割線","箇条書き","番号付きリスト","切り取り","すべて選択","埋め込みコード","リンクを開く","リンクを編集","No follow","リンク解除","更新","鉛筆","サイトを確認","URL","編集","水平方向の配置","Filter","Sort by changed","Sort by name","Sort by size","Add folder","リセット","保存","Save as ...","リサイズ","Crop","幅","高さ","縦横比を保持","はい","いいえ","移除","選択","選択: %s","垂直方向の配置","分割","セルの結合","列を追加","行を追加",null,"削除","セルの分割（垂直方向）","セルの分割（水平方向）","境界線","HTMLコードを保持しますか？","HTMLで貼付け","HTMLを保持","HTMLをテキストにする","テキストだけ","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","パレット","There are no files","Rename","Enter new name","プレビュー","ダウンロード","貼り付け","お使いのブラウザはクリップボードを使用できません","コピー","copy","角の丸み","全て表示","適用","まだこの分野","を入力してくださいウェブアドレス","デフォルト","白丸","黒丸","四角","見","探前","由来","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","Word Paste Detected","Clean","クラス名を挿入","カスタムサイズ変更のためのAltキーを押します"]
+module.exports["default"] = ["なにかタイプしてください","Joditについて","Jodit Editor",null,"Jodit ユーザーズ・ガイド","詳しい使い方","ライセンス詳細についてはJodit Webサイトを確認ください：","フルバージョンを購入","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","新しいタブで開く","エディターのサイズ（フル/ノーマル）","書式をクリア","テキストの色","やり直し","元に戻す","太字","斜体","箇条書き","番号付きリスト","中央揃え","両端揃え","左揃え","右揃え","区切り線を挿入","画像を挿入","ファイルを挿入","Youtube/Vimeo 動画","リンクを挿入","フォントサイズ","フォント","テキストのスタイル","指定なし","タイトル1","タイトル2","タイトル3","タイトル4","引用","コード","挿入","表を挿入","インデント減","インデント増","特殊文字を選択","特殊文字を挿入","書式を貼付け","編集モード切替え","マージン","上","右","下","左","スタイル","クラス","配置","右寄せ","中央寄せ","左寄せ","指定なし","ソース","タイトル","代替テキスト","リンク","新しいタブで開く","画像","ファイル","高度な設定","画像のプロパティー","キャンセル","確定","HTMLコードを保持しますか？","HTMLで貼付け","HTMLを保持","Clean","HTMLをテキストにする","テキストだけ","Word Paste Detected","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","ここに画像をドロップ","ここにファイルをドロップ","or クリック","代替テキスト","ブラウズ","アップロード","背景","文字","上","中央","下","左に列を挿入","右に列を挿入","上に行を挿入","下に行を挿入","表を削除","行を削除","列を削除","セルを空にする","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","分割線","箇条書き","番号付きリスト","切り取り","すべて選択","埋め込みコード","リンクを開く","リンクを編集","No follow","リンク解除","サイトを確認","鉛筆","更新","URL","編集","水平方向の配置","Filter","Sort by changed","Sort by name","Sort by size","Add folder","リセット","保存","Save as ...","リサイズ","Crop","幅","高さ","縦横比を保持","はい","いいえ","移除","選択","文字数: %d","単語数: %d","全部","選択: %s","すべて選択","垂直方向の配置","分割","セルの分割（垂直方向）","セルの分割（水平方向）","セルの結合","列を追加","行を追加","削除","境界線",null,"取り消し線","下線","上付き文字","下付き文字","切り取り","Pause","検索","置換","交換","貼付け","選択した内容を貼付け","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","パレット","There are no files","Rename","Enter new name","プレビュー","ダウンロード","貼り付け","お使いのブラウザはクリップボードを使用できません","コピー","copy","角の丸み","全て表示","適用","まだこの分野","を入力してくださいウェブアドレス","デフォルト","白丸","黒丸","四角","見","探前","由来","クラス名を挿入","カスタムサイズ変更のためのAltキーを押します"]
 
 /***/ }),
 
 /***/ 11399:
 /***/ (function(module) {
 
-module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Upload","Browse","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","Chars: %d","Words: %d","Strike through","Underline","superscript","subscript","Cut selection","Select all","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Update","pencil","Eye"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Select %s","Vertical align","Split","Merge","Add column","Add row","License: %s","Delete","Split vertical","Split horizontal","Border","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Insert as Text","Insert only Text","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","Word Paste Detected","Clean","Insert className","Press Alt for custom resizing"]
+module.exports["default"] = ["Type something","About Jodit","Jodit Editor","Free Non-commercial Version","Jodit User's Guide","contains detailed help for using","For information about the license, please go to our website:","Buy full version","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","Open in new tab","Open in fullsize","Clear Formatting","Fill color or set the text color","Redo","Undo","Bold","Italic","Insert Unordered List","Insert Ordered List","Align Center","Align Justify","Align Left","Align Right","Insert Horizontal Line","Insert Image","Insert file","Insert youtube/vimeo video","Insert link","Font size","Font family","Insert format block","Normal","Heading 1","Heading 2","Heading 3","Heading 4","Quote","Code","Insert","Insert table","Decrease Indent","Increase Indent","Select Special Character","Insert Special Character","Paint format","Change mode","Margins","top","right","bottom","left","Styles","Classes","Align","Right","Center","Left","--Not Set--","Src","Title","Alternative","Link","Open link in new tab","Image","file","Advanced","Image properties","Cancel","Ok","Your code is similar to HTML. Keep as HTML?","Paste as HTML","Keep","Clean","Insert as Text","Insert only Text","Word Paste Detected","The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?","File Browser","Error on load list","Error on load folders","Are you sure?","Enter Directory name","Create directory","type name","Drop image","Drop file","or click","Alternative text","Browse","Upload","Background","Text","Top","Middle","Bottom","Insert column before","Insert column after","Insert row above","Insert row below","Delete table","Delete row","Delete column","Empty cell","source","bold","italic","brush","link","undo","redo","table","image","eraser","paragraph","fontsize","video","font","about","print","underline","strikethrough","indent","outdent","fullsize","shrink","hr","ul","ol","cut","selectall","Embed code","Open link","Edit link","No follow","Unlink","Eye","pencil","Update"," URL","Edit","Horizontal align","Filter","Sort by changed","Sort by name","Sort by size","Add folder","Reset","Save","Save as ...","Resize","Crop","Width","Height","Keep Aspect Ratio","Yes","No","Remove","Select","Chars: %d","Words: %d","All","Select %s","Select all","Vertical align","Split","Split vertical","Split horizontal","Merge","Add column","Add row","Delete","Border","License: %s","Strike through","Underline","superscript","subscript","Cut selection","Break","Search for","Replace with","Replace","Paste","Choose Content to Paste","You can only edit your own images. Download this image on the host?","The image has been successfully uploaded to the host!","palette","There are no files","Rename","Enter new name","preview","download","Paste from clipboard","Your browser doesn't support direct access to the clipboard.","Copy selection","copy","Border radius","Show all","Apply","Please fill out this field","Please enter a web address","Default","Circle","Dot","Quadrate","Find","Find Previous","Find Next","Insert className","Press Alt for custom resizing"]
 
 /***/ }),
 
 /***/ 37289:
 /***/ (function(module) {
 
-module.exports["default"] = ["무엇이든 입력하세요","Jodit에 대하여","Jodit Editor","Jodit 사용자 안내서","자세한 도움말이 들어있어요","라이센스에 관해서는 Jodit 웹 사이트를 방문해주세요：","풀 버전 구입하기","© XDSoft.net - Chupurnov Valeriy. 에게 저작권과 모든 권리가 있습니다.","Anchor","새 탭에서 열기","전체 크기로 보기","서식 지우기","글씨 색상","재실행","실행 취소","굵게","기울임","글머리 목록","번호 목록","가운데 정렬","양쪽 정렬","왼쪽 정렬","오른쪽 정렬","수평 구분선 넣기","이미지 넣기","파일 넣기","Youtube/Vimeo 동영상","링크 넣기","글꼴 크기","글꼴","블록 요소 넣기","일반 텍스트","제목 1","제목 2","제목 3","제목 4","인용","코드","붙여 넣기","테이블","들여쓰기 감소","들여쓰기 증가","특수문자 선택","특수문자 입력","페인트 형식","편집모드 변경","마진","위","오른쪽","아래","왼쪽","스타일","클래스","정렬","오른쪽으로","가운데로","왼쪽으로","--지정 안 함--","경로(src)","제목","대체 텍스트(alt)","링크","새 탭에서 열기",null,"파일","고급","이미지 속성","취소","확인","파일 탐색기","목록 불러오기 에러","폴더 불러오기","정말 진행할까요?","디렉토리 이름 입력","디렉토리 생성","이름 입력","이미지 드래그","파일 드래그","혹은 클릭","대체 텍스트","업로드","탐색","배경","텍스트","위","중앙","아래","이전 열에 삽입","다음 열에 삽입","위 행에 삽입","아래 행에 삽입","테이블 삭제","행 삭제","열 삭제","빈 셀","문자수: %d","단어수: %d","취소선","밑줄","윗첨자","아래첨자","선택 잘라내기","모두 선택","구분자","검색","대체하기","대체","붙여넣기","붙여넣을 내용 선택","HTML 소스","볼드","이탤릭","브러시","링크","실행 취소","재실행","테이블","이미지","지우개","문단","글꼴 크기","비디오","글꼴","편집기 정보","프린트","밑줄","취소선","들여쓰기","내어쓰기","전체 화면","일반 화면","구분선","글머리 목록","번호 목록","잘라내기","모두 선택","Embed 코드","링크 열기","링크 편집","No follow","링크 제거","갱신","연필","사이트 확인","URL","편집","수평 정렬","필터","변경일 정렬","이름 정렬","크기 정렬","새 폴더","초기화","저장","새로 저장하기 ...","리사이즈","크롭","가로 길이","세로 높이","비율 유지하기","네","아니오","제거","선택","선택: %s","수직 정렬","분할","셀 병합","열 추가","행 추가","라이센스: %s","삭제","세로 셀 분할","가로 셀 분할","외곽선","HTML 코드로 감지했어요. 코드인채로 붙여넣을까요?","HTML로 붙여넣기","원본 유지","텍스트로 넣기","텍스트만 넣기","외부 이미지는 편집할 수 없어요. 외부 이미지를 다운로드 할까요?","이미지를 무사히 업로드 했어요!","팔레트","파일이 없어요","이름 변경","새 이름 입력","미리보기","다운로드","클립보드 붙여넣기","사용중인 브라우저가 클립보드 접근을 지원하지 않아요.","선택 복사","복사","둥근 테두리","모두 보기","적용","이 항목을 입력해주세요!","웹 URL을 입력해주세요.","기본","원","점","정사각형","찾기","이전 찾기","다음 찾기","Microsoft Word/Excel 문서로 감지했어요. 서식을 유지한채로 붙여넣을까요?","Word 붙여넣기 감지","지우기","className 입력","사용자 지정 크기 조정에 대 한 고도 누르십시오"]
+module.exports["default"] = ["무엇이든 입력하세요","Jodit에 대하여","Jodit Editor",null,"Jodit 사용자 안내서","자세한 도움말이 들어있어요","라이센스에 관해서는 Jodit 웹 사이트를 방문해주세요：","풀 버전 구입하기","© XDSoft.net - Chupurnov Valeriy. 에게 저작권과 모든 권리가 있습니다.","Anchor","새 탭에서 열기","전체 크기로 보기","서식 지우기","글씨 색상","재실행","실행 취소","굵게","기울임","글머리 목록","번호 목록","가운데 정렬","양쪽 정렬","왼쪽 정렬","오른쪽 정렬","수평 구분선 넣기","이미지 넣기","파일 넣기","Youtube/Vimeo 동영상","링크 넣기","글꼴 크기","글꼴","블록 요소 넣기","일반 텍스트","제목 1","제목 2","제목 3","제목 4","인용","코드","붙여 넣기","테이블","들여쓰기 감소","들여쓰기 증가","특수문자 선택","특수문자 입력","페인트 형식","편집모드 변경","마진","위","오른쪽","아래","왼쪽","스타일","클래스","정렬","오른쪽으로","가운데로","왼쪽으로","--지정 안 함--","경로(src)","제목","대체 텍스트(alt)","링크","새 탭에서 열기",null,"파일","고급","이미지 속성","취소","확인","HTML 코드로 감지했어요. 코드인채로 붙여넣을까요?","HTML로 붙여넣기","원본 유지","지우기","텍스트로 넣기","텍스트만 넣기","Word 붙여넣기 감지","Microsoft Word/Excel 문서로 감지했어요. 서식을 유지한채로 붙여넣을까요?","파일 탐색기","목록 불러오기 에러","폴더 불러오기","정말 진행할까요?","디렉토리 이름 입력","디렉토리 생성","이름 입력","이미지 드래그","파일 드래그","혹은 클릭","대체 텍스트","탐색","업로드","배경","텍스트","위","중앙","아래","이전 열에 삽입","다음 열에 삽입","위 행에 삽입","아래 행에 삽입","테이블 삭제","행 삭제","열 삭제","빈 셀","HTML 소스","볼드","이탤릭","브러시","링크","실행 취소","재실행","테이블","이미지","지우개","문단","글꼴 크기","비디오","글꼴","편집기 정보","프린트","밑줄","취소선","들여쓰기","내어쓰기","전체 화면","일반 화면","구분선","글머리 목록","번호 목록","잘라내기","모두 선택","Embed 코드","링크 열기","링크 편집","No follow","링크 제거","사이트 확인","연필","갱신","URL","편집","수평 정렬","필터","변경일 정렬","이름 정렬","크기 정렬","새 폴더","초기화","저장","새로 저장하기 ...","리사이즈","크롭","가로 길이","세로 높이","비율 유지하기","네","아니오","제거","선택","문자수: %d","단어수: %d","모두","선택: %s","모두 선택","수직 정렬","분할","세로 셀 분할","가로 셀 분할","셀 병합","열 추가","행 추가","삭제","외곽선","라이센스: %s","취소선","밑줄","윗첨자","아래첨자","선택 잘라내기","구분자","검색","대체하기","대체","붙여넣기","붙여넣을 내용 선택","외부 이미지는 편집할 수 없어요. 외부 이미지를 다운로드 할까요?","이미지를 무사히 업로드 했어요!","팔레트","파일이 없어요","이름 변경","새 이름 입력","미리보기","다운로드","클립보드 붙여넣기","사용중인 브라우저가 클립보드 접근을 지원하지 않아요.","선택 복사","복사","둥근 테두리","모두 보기","적용","이 항목을 입력해주세요!","웹 URL을 입력해주세요.","기본","원","점","정사각형","찾기","이전 찾기","다음 찾기","className 입력","사용자 지정 크기 조정에 대 한 고도 누르십시오"]
 
 /***/ }),
 
 /***/ 17084:
 /***/ (function(module) {
 
-module.exports["default"] = ["Begin met typen..","Over Jodit","Jodit Editor","Jodit gebruikershandleiding","bevat gedetailleerde informatie voor gebruik.","Voor informatie over de licentie, ga naar onze website:","Volledige versie kopen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle rechten voorbehouden.","Anker","Open in nieuwe tab","Editor in volledig scherm openen","Opmaak verwijderen","Vulkleur of tekstkleur aanpassen","Opnieuw","Ongedaan maken","Vet","Cursief","Geordende list invoegen","Ongeordende lijst invoegen","Centreren","Uitlijnen op volledige breedte","Links uitlijnen","Rechts uitlijnen","Horizontale lijn invoegen","Afbeelding invoegen","Bestand invoegen","Youtube/Vimeo video invoegen","Link toevoegen","Tekstgrootte","Lettertype","Format blok invoegen","Normaal","Koptekst 1","Koptekst 2","Koptekst 3","Koptekst 4","Citaat","Code","Invoegen","Tabel invoegen","Inspringing verkleinen","Inspringing vergroten","Symbool selecteren","Symbool invoegen","Opmaak kopieren","Modus veranderen","Marges","Boven","Rechts","Onder","Links","CSS styles","CSS classes","Uitlijning","Rechts","Gecentreerd","Links","--Leeg--","Src","Titel","Alternatieve tekst","Link","Link in nieuwe tab openen","Afbeelding","Bestand","Geavanceerd","Afbeeldingseigenschappen","Annuleren","OK","Bestandsbrowser","Fout bij het laden van de lijst","Fout bij het laden van de mappenlijst","Weet je het zeker?","Geef de map een naam","Map aanmaken","Type naam","Sleep hier een afbeelding naartoe","Sleep hier een bestand naartoe","of klik","Alternatieve tekst","Uploaden","Bladeren","Achtergrond","Tekst","Boven","Midden","Onder","Kolom invoegen (voor)","Kolom invoegen (na)","Rij invoegen (boven)","Rij invoegen (onder)","Tabel verwijderen","Rij verwijderen","Kolom verwijderen","Cel leegmaken","Tekens: %d","Woorden: %d","Doorstrepen","Onderstrepen","Superscript","Subscript","Selectie knippen","Selecteer alles","Enter","Zoek naar","Vervangen door","Vervangen","Plakken","Kies content om te plakken","Broncode","vet","cursief","kwast","link","ongedaan maken","opnieuw","tabel","afbeelding","gum","paragraaf","lettergrootte","video","lettertype","over","afdrukken","onderstreept","doorgestreept","inspringen","minder inspringen","volledige grootte","kleiner maken","horizontale lijn","lijst","genummerde lijst","knip","alles selecteren","Embed code","link openen","link aanpassen","niet volgen","link verwijderen","Updaten","Om te bewerken","Recensie"," URL","Bewerken","Horizontaal uitlijnen","Filteren","Sorteren op wijzigingsdatum","Sorteren op naam","Sorteren op grootte","Map toevoegen","Herstellen","Opslaan","Opslaan als ...","Grootte aanpassen","Bijknippen","Breedte","Hoogte","Verhouding behouden","Ja","Nee","Verwijderen","Selecteren","Selecteer: %s","Verticaal uitlijnen","Splitsen","Samenvoegen","Kolom toevoegen","Rij toevoegen",null,"Verwijderen","Verticaal splitsen","Horizontaal splitsen","Rand","Deze code lijkt op HTML. Als HTML behouden?","Invoegen als HTML","Origineel behouden","Als tekst invoegen","Als onopgemaakte tekst invoegen","Je kunt alleen je eigen afbeeldingen aanpassen. Deze afbeelding downloaden?","De afbeelding is succesvol geüploadet!","Palette","Er zijn geen bestanden in deze map.","Hongaars","Voer een nieuwe naam in","voorvertoning","Download","Plakken van klembord","Uw browser ondersteunt geen directe toegang tot het klembord.","Selectie kopiëren","kopiëren","Border radius","Toon alle","Toepassing","Vul dit veld","Voer een webadres","Standaard","Cirkel","Dot","Quadrate","Zoeken","Vorige Zoeken","Volgende Zoeken","De geplakte tekst is afkomstig van een Microsoft Word/Excel document. Wil je de opmaak behouden of opschonen?","Word-tekst gedetecteerd","Opschonen","Voeg de klassenaam in","Druk op Alt voor aangepaste grootte"]
+module.exports["default"] = ["Begin met typen..","Over Jodit","Jodit Editor","Gratis niet-commerciële versie","Jodit gebruikershandleiding","bevat gedetailleerde informatie voor gebruik.","Voor informatie over de licentie, ga naar onze website:","Volledige versie kopen","Copyright © XDSoft.net - Chupurnov Valeriy. Alle rechten voorbehouden.","Anker","Open in nieuwe tab","Editor in volledig scherm openen","Opmaak verwijderen","Vulkleur of tekstkleur aanpassen","Opnieuw","Ongedaan maken","Vet","Cursief","Geordende list invoegen","Ongeordende lijst invoegen","Centreren","Uitlijnen op volledige breedte","Links uitlijnen","Rechts uitlijnen","Horizontale lijn invoegen","Afbeelding invoegen","Bestand invoegen","Youtube/Vimeo video invoegen","Link toevoegen","Tekstgrootte","Lettertype","Format blok invoegen","Normaal","Koptekst 1","Koptekst 2","Koptekst 3","Koptekst 4","Citaat","Code","Invoegen","Tabel invoegen","Inspringing verkleinen","Inspringing vergroten","Symbool selecteren","Symbool invoegen","Opmaak kopieren","Modus veranderen","Marges","Boven","Rechts","Onder","Links","CSS styles","CSS classes","Uitlijning","Rechts","Gecentreerd","Links","--Leeg--","Src","Titel","Alternatieve tekst","Link","Link in nieuwe tab openen","Afbeelding","Bestand","Geavanceerd","Afbeeldingseigenschappen","Annuleren","OK","Deze code lijkt op HTML. Als HTML behouden?","Invoegen als HTML","Origineel behouden","Opschonen","Als tekst invoegen","Als onopgemaakte tekst invoegen","Word-tekst gedetecteerd","De geplakte tekst is afkomstig van een Microsoft Word/Excel document. Wil je de opmaak behouden of opschonen?","Bestandsbrowser","Fout bij het laden van de lijst","Fout bij het laden van de mappenlijst","Weet je het zeker?","Geef de map een naam","Map aanmaken","Type naam","Sleep hier een afbeelding naartoe","Sleep hier een bestand naartoe","of klik","Alternatieve tekst","Bladeren","Uploaden","Achtergrond","Tekst","Boven","Midden","Onder","Kolom invoegen (voor)","Kolom invoegen (na)","Rij invoegen (boven)","Rij invoegen (onder)","Tabel verwijderen","Rij verwijderen","Kolom verwijderen","Cel leegmaken","Broncode","vet","cursief","kwast","link","ongedaan maken","opnieuw","tabel","afbeelding","gum","paragraaf","lettergrootte","video","lettertype","over","afdrukken","onderstreept","doorgestreept","inspringen","minder inspringen","volledige grootte","kleiner maken","horizontale lijn","lijst","genummerde lijst","knip","alles selecteren","Embed code","link openen","link aanpassen","niet volgen","link verwijderen","Recensie","Om te bewerken","Updaten"," URL","Bewerken","Horizontaal uitlijnen","Filteren","Sorteren op wijzigingsdatum","Sorteren op naam","Sorteren op grootte","Map toevoegen","Herstellen","Opslaan","Opslaan als ...","Grootte aanpassen","Bijknippen","Breedte","Hoogte","Verhouding behouden","Ja","Nee","Verwijderen","Selecteren","Tekens: %d","Woorden: %d","Alles","Selecteer: %s","Selecteer alles","Verticaal uitlijnen","Splitsen","Verticaal splitsen","Horizontaal splitsen","Samenvoegen","Kolom toevoegen","Rij toevoegen","Verwijderen","Rand",null,"Doorstrepen","Onderstrepen","Superscript","Subscript","Selectie knippen","Enter","Zoek naar","Vervangen door","Vervangen","Plakken","Kies content om te plakken","Je kunt alleen je eigen afbeeldingen aanpassen. Deze afbeelding downloaden?","De afbeelding is succesvol geüploadet!","Palette","Er zijn geen bestanden in deze map.","Hongaars","Voer een nieuwe naam in","voorvertoning","Download","Plakken van klembord","Uw browser ondersteunt geen directe toegang tot het klembord.","Selectie kopiëren","kopiëren","Border radius","Toon alle","Toepassing","Vul dit veld","Voer een webadres","Standaard","Cirkel","Dot","Quadrate","Zoeken","Vorige Zoeken","Volgende Zoeken","Voeg de klassenaam in","Druk op Alt voor aangepaste grootte"]
 
 /***/ }),
 
 /***/ 96891:
 /***/ (function(module) {
 
-module.exports["default"] = ["Napisz coś","O Jodit","Edytor Jodit","Instrukcja Jodit","zawiera szczegółowe informacje dotyczące użytkowania.","Odwiedź naszą stronę, aby uzyskać więcej informacji na temat licencji:","Zakup pełnej wersji","Copyright © XDSoft.net - Chupurnov Valeriy. Wszystkie prawa zastrzeżone.","Kotwica","Otwórz w nowej zakładce","Otwórz edytor w pełnym rozmiarze","Wyczyść formatowanie","Kolor wypełnienia lub ustaw kolor tekstu","Ponów","Cofnij","Pogrubienie","Kursywa","Wstaw listę wypunktowaną","Wstaw listę numeryczną","Wyśrodkuj","Wyjustuj","Wyrównaj do lewej","Wyrównaj do prawej","Wstaw linię poziomą","Wstaw grafikę","Wstaw plik","Wstaw film Youtube/vimeo","Wstaw link","Rozmiar tekstu","Krój czcionki","Wstaw formatowanie","Normalne","Nagłówek 1","Nagłówek 2","Nagłówek 3","Nagłówek 4","Cytat","Kod","Wstaw","Wstaw tabelę","Zmniejsz wcięcie","Zwiększ wcięcie","Wybierz znak specjalny","Wstaw znak specjalny","Malarz formatów","Zmień tryb","Marginesy","Górny","Prawy","Dolny","Levy","Style CSS","Klasy CSS","Wyrównanie","Prawa","środek","Lewa","brak","Źródło","Tytuł","Tekst alternatywny","Link","Otwórz w nowej zakładce","Grafika","Plik","Zaawansowane","Właściwości grafiki","Anuluj","OK","Przeglądarka plików","Błąd ładowania listy plików","Błąd ładowania folderów","Czy jesteś pewien?","Wprowadź nazwę folderu","Utwórz folder","wprowadź nazwę","Upuść plik graficzny","Upuść plik","lub kliknij tu","Tekst alternatywny","Wczytaj","Przeglądaj","Tło","Treść","Góra","Środek","Dół","Wstaw kolumnę przed","Wstaw kolumnę po","Wstaw wiersz przed","Wstaw wiersz po","Usuń tabelę","Usuń wiersz","Usuń kolumnę","Wyczyść komórkę","Znaki: %d","Słowa: %d","Przekreślenie","Podkreślenie","indeks górny","index dolny","Wytnij zaznaczenie","Wybierz wszystko","Przerwa","Szukaj","Zamień na","Wymienić","Wklej","Wybierz zawartość do wklejenia","HTML","pogrubienie","kursywa","pędzel","link","cofnij","ponów","tabela","grafika","wyczyść","akapit","rozmiar czcionki","wideo","czcionka","O programie","drukuj","podkreślenie","przekreślenie","wcięcie","wycięcie","pełen rozmiar","przytnij","linia pozioma","lista","lista numerowana","wytnij","zaznacz wszystko","Wstaw kod","otwórz link","edytuj link","Atrybut no-follow","Usuń link","Aktualizuj","edytuj","szukaj","URL","Edytuj","Wyrównywanie w poziomie","Filtruj","Sortuj wg zmiany","Sortuj wg nazwy","Sortuj wg rozmiaru","Dodaj folder","wyczyść","zapisz","zapisz jako","Zmień rozmiar","Przytnij","Szerokość","Wysokość","Zachowaj proporcje","Tak","Nie","Usuń","Wybierz","Wybierz: %s","Wyrównywanie w pionie","Podziel","Scal","Dodaj kolumnę","Dodaj wiersz",null,"Usuń","Podziel w pionie","Podziel w poziomie","Obramowanie","Twój kod wygląda jak HTML. Zachować HTML?","Wkleić jako HTML?","Oryginalny tekst","Wstaw jako tekst","Wstaw tylko treść","Możesz edytować tylko swoje grafiki. Czy chcesz pobrać tą grafikę?","Grafika została pomyślnienie dodana na serwer","Paleta","Brak plików.","zmień nazwę","Wprowadź nową nazwę","podgląd","pobierz","Wklej ze schowka","Twoja przeglądarka nie obsługuje schowka","Kopiuj zaznaczenie","kopiuj","Zaokrąglenie krawędzi","Pokaż wszystkie","Zastosuj","Proszę wypełnić to pole","Proszę, wpisz adres sieci web","Domyślnie","Koło","Punkt","Kwadrat","Znaleźć","Znaleźć Poprzednie","Znajdź Dalej","Wklejany tekst pochodzi z dokumentu Microsoft Word/Excel. Chcesz zachować ten format czy wyczyścić go? ","Wykryto tekst w formacie Word","Wyczyść","Wstaw nazwę zajęć","Naciśnij Alt, aby zmienić rozmiar"]
+module.exports["default"] = ["Napisz coś","O Jodit","Edytor Jodit",null,"Instrukcja Jodit","zawiera szczegółowe informacje dotyczące użytkowania.","Odwiedź naszą stronę, aby uzyskać więcej informacji na temat licencji:","Zakup pełnej wersji","Copyright © XDSoft.net - Chupurnov Valeriy. Wszystkie prawa zastrzeżone.","Kotwica","Otwórz w nowej zakładce","Otwórz edytor w pełnym rozmiarze","Wyczyść formatowanie","Kolor wypełnienia lub ustaw kolor tekstu","Ponów","Cofnij","Pogrubienie","Kursywa","Wstaw listę wypunktowaną","Wstaw listę numeryczną","Wyśrodkuj","Wyjustuj","Wyrównaj do lewej","Wyrównaj do prawej","Wstaw linię poziomą","Wstaw grafikę","Wstaw plik","Wstaw film Youtube/vimeo","Wstaw link","Rozmiar tekstu","Krój czcionki","Wstaw formatowanie","Normalne","Nagłówek 1","Nagłówek 2","Nagłówek 3","Nagłówek 4","Cytat","Kod","Wstaw","Wstaw tabelę","Zmniejsz wcięcie","Zwiększ wcięcie","Wybierz znak specjalny","Wstaw znak specjalny","Malarz formatów","Zmień tryb","Marginesy","Górny","Prawy","Dolny","Levy","Style CSS","Klasy CSS","Wyrównanie","Prawa","środek","Lewa","brak","Źródło","Tytuł","Tekst alternatywny","Link","Otwórz w nowej zakładce","Grafika","Plik","Zaawansowane","Właściwości grafiki","Anuluj","OK","Twój kod wygląda jak HTML. Zachować HTML?","Wkleić jako HTML?","Oryginalny tekst","Wyczyść","Wstaw jako tekst","Wstaw tylko treść","Wykryto tekst w formacie Word","Wklejany tekst pochodzi z dokumentu Microsoft Word/Excel. Chcesz zachować ten format czy wyczyścić go? ","Przeglądarka plików","Błąd ładowania listy plików","Błąd ładowania folderów","Czy jesteś pewien?","Wprowadź nazwę folderu","Utwórz folder","wprowadź nazwę","Upuść plik graficzny","Upuść plik","lub kliknij tu","Tekst alternatywny","Przeglądaj","Wczytaj","Tło","Treść","Góra","Środek","Dół","Wstaw kolumnę przed","Wstaw kolumnę po","Wstaw wiersz przed","Wstaw wiersz po","Usuń tabelę","Usuń wiersz","Usuń kolumnę","Wyczyść komórkę","HTML","pogrubienie","kursywa","pędzel","link","cofnij","ponów","tabela","grafika","wyczyść","akapit","rozmiar czcionki","wideo","czcionka","O programie","drukuj","podkreślenie","przekreślenie","wcięcie","wycięcie","pełen rozmiar","przytnij","linia pozioma","lista","lista numerowana","wytnij","zaznacz wszystko","Wstaw kod","otwórz link","edytuj link","Atrybut no-follow","Usuń link","szukaj","edytuj","Aktualizuj","URL","Edytuj","Wyrównywanie w poziomie","Filtruj","Sortuj wg zmiany","Sortuj wg nazwy","Sortuj wg rozmiaru","Dodaj folder","wyczyść","zapisz","zapisz jako","Zmień rozmiar","Przytnij","Szerokość","Wysokość","Zachowaj proporcje","Tak","Nie","Usuń","Wybierz","Znaki: %d","Słowa: %d","Wszystko","Wybierz: %s","Wybierz wszystko","Wyrównywanie w pionie","Podziel","Podziel w pionie","Podziel w poziomie","Scal","Dodaj kolumnę","Dodaj wiersz","Usuń","Obramowanie",null,"Przekreślenie","Podkreślenie","indeks górny","index dolny","Wytnij zaznaczenie","Przerwa","Szukaj","Zamień na","Wymienić","Wklej","Wybierz zawartość do wklejenia","Możesz edytować tylko swoje grafiki. Czy chcesz pobrać tą grafikę?","Grafika została pomyślnienie dodana na serwer","Paleta","Brak plików.","zmień nazwę","Wprowadź nową nazwę","podgląd","pobierz","Wklej ze schowka","Twoja przeglądarka nie obsługuje schowka","Kopiuj zaznaczenie","kopiuj","Zaokrąglenie krawędzi","Pokaż wszystkie","Zastosuj","Proszę wypełnić to pole","Proszę, wpisz adres sieci web","Domyślnie","Koło","Punkt","Kwadrat","Znaleźć","Znaleźć Poprzednie","Znajdź Dalej","Wstaw nazwę zajęć","Naciśnij Alt, aby zmienić rozmiar"]
 
 /***/ }),
 
 /***/ 31211:
 /***/ (function(module) {
 
-module.exports["default"] = ["Escreva algo...","Sobre o Jodit","Editor Jodit","Guia de usuário Jodit","contém ajuda detalhada para o uso.","Para informação sobre a licença, por favor visite nosso site:","Compre a versão completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos os direitos reservados.","Link","Abrir em nova aba","Abrir editor em tela cheia","Limpar formatação","Cor de preenchimento ou cor do texto","Refazer","Desfazer","Negrito","Itálico","Inserir lista não ordenada","Inserir lista ordenada","Centralizar","Justificar","Alinhar à Esquerda","Alinhar à Direita","Inserir linha horizontal","Inserir imagem","Inserir arquivo","Inserir vídeo do Youtube/vimeo","Inserir link","Tamanho da letra","Fonte","Inserir bloco","Normal","Cabeçalho 1","Cabeçalho 2","Cabeçalho 3","Cabeçalho 4","Citação","Código","Inserir","Inserir tabela","Diminuir recuo","Aumentar recuo","Selecionar caractere especial","Inserir caractere especial","Copiar formato","Mudar modo","Margens","cima","direta","baixo","esquerda","Estilos CSS","Classes CSS","Alinhamento","Direita","Centro","Esquerda","--Não Estabelecido--","Fonte","Título","Texto Alternativo","Link","Abrir link em nova aba","Imagem","Arquivo","Avançado","Propriedades da imagem","Cancelar","Ok","Procurar arquivo","Erro ao carregar a lista","Erro ao carregar as pastas","Você tem certeza?","Escreva o nome da pasta","Criar pasta","Escreva seu nome","Soltar imagem","Soltar arquivo","ou clique","Texto alternativo","Upload","Explorar","Fundo","Texto","Cima","Meio","Baixo","Inserir coluna antes","Inserir coluna depois","Inserir linha acima","Inserir linha abaixo","Excluir tabela","Excluir linha","Excluir coluna","Limpar célula","Caracteres: %d","Palavras: %d","Tachado","Sublinhar","sobrescrito","subscrito","Cortar seleção","Selecionar tudo","Pausa","Procurar por","Substituir com","Substituir","Colar","Escolher conteúdo para colar","HTML","negrito","itálico","pincel","link","desfazer","refazer","tabela","imagem","apagar","parágrafo","tamanho da letra","vídeo","fonte","Sobre de","Imprimir","sublinhar","tachado","recuar","diminuir recuo","Tamanho completo","diminuir","linha horizontal","lista não ordenada","lista ordenada","Cortar","Selecionar tudo","Incluir código","Abrir link","Editar link","Não siga","Remover link","Atualizar","Editar","Visualizar","URL","Editar","Alinhamento horizontal","filtrar","Ordenar por modificação","Ordenar por nome","Ordenar por tamanho","Adicionar pasta","Resetar","Salvar","Salvar como...","Redimensionar","Recortar","Largura","Altura","Manter a proporção","Sim","Não","Remover","Selecionar","Selecionar: %s","Alinhamento vertical","Dividir","Mesclar","Adicionar coluna","Adicionar linha",null,"Excluir","Dividir vertical","Dividir horizontal","Borda","Seu código é similar ao HTML. Manter como HTML?","Colar como HTML?","Manter","Inserir como Texto","Inserir somente o Texto","Você só pode editar suas próprias imagens. Baixar essa imagem pro servidor?","A imagem foi enviada com sucesso para o servidor!","Palette","Não há arquivos nesse diretório.","Húngara","Digite um novo nome","preview","Baixar","Colar da área de transferência","O seu navegador não oferece suporte a acesso direto para a área de transferência.","Selecção de cópia","cópia","Border radius","Mostrar todos os","Aplicar","Por favor, preencha este campo","Por favor introduza um endereço web","Padrão","Círculo","Ponto","Quadro","Encontrar","Encontrar Anteriores","Localizar Próxima","O conteúdo colado veio de um documento Microsoft Word/Excel. Você deseja manter o formato ou limpa-lo?","Colado do Word Detectado","Limpar","Insira o nome da classe","Pressione Alt para redimensionamento personalizado"]
+module.exports["default"] = ["Escreva algo...","Sobre o Jodit","Editor Jodit",null,"Guia de usuário Jodit","contém ajuda detalhada para o uso.","Para informação sobre a licença, por favor visite nosso site:","Compre a versão completa","Copyright © XDSoft.net - Chupurnov Valeriy. Todos os direitos reservados.","Link","Abrir em nova aba","Abrir editor em tela cheia","Limpar formatação","Cor de preenchimento ou cor do texto","Refazer","Desfazer","Negrito","Itálico","Inserir lista não ordenada","Inserir lista ordenada","Centralizar","Justificar","Alinhar à Esquerda","Alinhar à Direita","Inserir linha horizontal","Inserir imagem","Inserir arquivo","Inserir vídeo do Youtube/vimeo","Inserir link","Tamanho da letra","Fonte","Inserir bloco","Normal","Cabeçalho 1","Cabeçalho 2","Cabeçalho 3","Cabeçalho 4","Citação","Código","Inserir","Inserir tabela","Diminuir recuo","Aumentar recuo","Selecionar caractere especial","Inserir caractere especial","Copiar formato","Mudar modo","Margens","cima","direta","baixo","esquerda","Estilos CSS","Classes CSS","Alinhamento","Direita","Centro","Esquerda","--Não Estabelecido--","Fonte","Título","Texto Alternativo","Link","Abrir link em nova aba","Imagem","Arquivo","Avançado","Propriedades da imagem","Cancelar","Ok","Seu código é similar ao HTML. Manter como HTML?","Colar como HTML?","Manter","Limpar","Inserir como Texto","Inserir somente o Texto","Colado do Word Detectado","O conteúdo colado veio de um documento Microsoft Word/Excel. Você deseja manter o formato ou limpa-lo?","Procurar arquivo","Erro ao carregar a lista","Erro ao carregar as pastas","Você tem certeza?","Escreva o nome da pasta","Criar pasta","Escreva seu nome","Soltar imagem","Soltar arquivo","ou clique","Texto alternativo","Explorar","Upload","Fundo","Texto","Cima","Meio","Baixo","Inserir coluna antes","Inserir coluna depois","Inserir linha acima","Inserir linha abaixo","Excluir tabela","Excluir linha","Excluir coluna","Limpar célula","HTML","negrito","itálico","pincel","link","desfazer","refazer","tabela","imagem","apagar","parágrafo","tamanho da letra","vídeo","fonte","Sobre de","Imprimir","sublinhar","tachado","recuar","diminuir recuo","Tamanho completo","diminuir","linha horizontal","lista não ordenada","lista ordenada","Cortar","Selecionar tudo","Incluir código","Abrir link","Editar link","Não siga","Remover link","Visualizar","Editar","Atualizar","URL","Editar","Alinhamento horizontal","filtrar","Ordenar por modificação","Ordenar por nome","Ordenar por tamanho","Adicionar pasta","Resetar","Salvar","Salvar como...","Redimensionar","Recortar","Largura","Altura","Manter a proporção","Sim","Não","Remover","Selecionar","Caracteres: %d","Palavras: %d","Tudo","Selecionar: %s","Selecionar tudo","Alinhamento vertical","Dividir","Dividir vertical","Dividir horizontal","Mesclar","Adicionar coluna","Adicionar linha","Excluir","Borda",null,"Tachado","Sublinhar","sobrescrito","subscrito","Cortar seleção","Pausa","Procurar por","Substituir com","Substituir","Colar","Escolher conteúdo para colar","Você só pode editar suas próprias imagens. Baixar essa imagem pro servidor?","A imagem foi enviada com sucesso para o servidor!","Palette","Não há arquivos nesse diretório.","Húngara","Digite um novo nome","preview","Baixar","Colar da área de transferência","O seu navegador não oferece suporte a acesso direto para a área de transferência.","Selecção de cópia","cópia","Border radius","Mostrar todos os","Aplicar","Por favor, preencha este campo","Por favor introduza um endereço web","Padrão","Círculo","Ponto","Quadro","Encontrar","Encontrar Anteriores","Localizar Próxima","Insira o nome da classe","Pressione Alt para redimensionamento personalizado"]
 
 /***/ }),
 
 /***/ 31109:
 /***/ (function(module) {
 
-module.exports["default"] = ["Напишите что-либо","О Jodit","Редактор Jodit","Jodit Руководство пользователя","содержит детальную информацию по использованию","Для получения сведений о лицензии , пожалуйста, перейдите на наш сайт:","Купить полную версию","Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.","Анкор","Открывать ссылку в новой вкладке","Открыть редактор в полном размере","Очистить форматирование","Цвет заливки или цвет текста","Повтор","Отмена","Жирный","Наклонный","Вставка маркированного списка","Вставить нумерованный список","Выровнять по центру","Выровнять по ширине","Выровнять по левому краю","Выровнять по правому краю","Вставить горизонтальную линию","Вставить изображение","Вставить файл","Вставьте видео","Вставить ссылку","Размер шрифта","Шрифт","Вставить блочный элемент","Нормальный текст","Заголовок 1","Заголовок 2","Заголовок 3","Заголовок 4","Цитата","Код","Вставить","Вставить таблицу","Уменьшить отступ","Увеличить отступ","Выберите специальный символ","Вставить специальный символ","Формат краски","Источник","Отступы","сверху","справа","снизу","слева","Стили","Классы","Выравнивание","По правому краю","По центру","По левому краю","--не устанавливать--","src","Заголовок","Альтернативный текст (alt)","Ссылка","Открывать ссылку в новом окне",null,"Файл","Расширенные","Свойства изображения","Отмена","Ок","Браузер файлов","Ошибка при загрузке списка изображений","Ошибка при загрузке списка директорий","Вы уверены?","Введите название директории","Создать директорию","введите название","Перетащите сюда изображение","Перетащите сюда файл","или нажмите","Альтернативный текст","Загрузка","Сервер","Фон","Текст"," К верху","По середине","К низу","Вставить столбец до","Вставить столбец после","Вставить ряд выше","Вставить ряд ниже","Удалить таблицу","Удалять ряд","Удалить столбец","Очистить ячейку","Символов: %d","Слов: %d","Перечеркнуть","Подчеркивание","верхний индекс","индекс","Вырезать","Выделить все","Разделитель","Найти","Заменить на","Заменить","Вставить","Выбрать контент для вставки","HTML","жирный","курсив","заливка","ссылка","отменить","повторить","таблица","Изображение","очистить","параграф","размер шрифта","видео","шрифт","о редакторе","печать","подчеркнутый","перечеркнутый","отступ","выступ","во весь экран","обычный размер","линия","Список","Нумерованный список","Вырезать","Выделить все","Код","Открыть ссылку","Редактировать ссылку","Атрибут nofollow","Убрать ссылку","Обновить","Редактировать","Просмотр","URL","Редактировать","Горизонтальное выравнивание","Фильтр","По изменению","По имени","По размеру","Добавить папку","Восстановить","Сохранить","Сохранить как","Изменить размер","Обрезать размер","Ширина","Высота","Сохранять пропорции","Да","Нет","Удалить","Выделить","Выделить: %s","Вертикальное выравнивание","Разделить","Объединить в одну","Добавить столбец","Добавить строку","Лицензия: %s","Удалить","Разделить по вертикали","Разделить по горизонтали","Рамка","Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?","Вставить как HTML?","Сохранить оригинал","Вставить как текст","Вставить только текст","Вы можете редактировать только свои собственные изображения. Загрузить это изображение на ваш сервер?","Изображение успешно загружено на сервер!","палитра","В данном каталоге нет файлов","Переименовать","Введите новое имя","Предпросмотр","Скачать","Вставить из буфера обмена","Ваш браузер не поддерживает прямой доступ к буферу обмена.","Скопировать выделенное","копия","Радиус границы","Показать все","Применить","Пожалуйста, заполните это поле","Пожалуйста, введите веб-адрес","По умолчанию","Круг","Точка","Квадрат","Найти","Найти Предыдущие","Найти Далее","Контент который вы вставляете поступает из документа Microsoft Word / Excel. Вы хотите сохранить формат или очистить его?","Возможно это фрагмент Word или Excel","Почистить","Вставить название класса","Нажмите Alt для изменения пользовательского размера"]
+module.exports["default"] = ["Напишите что-либо","О Jodit","Редактор Jodit",null,"Jodit Руководство пользователя","содержит детальную информацию по использованию","Для получения сведений о лицензии , пожалуйста, перейдите на наш сайт:","Купить полную версию","Авторские права © XDSoft.net - Чупурнов Валерий. Все права защищены.","Анкор","Открывать ссылку в новой вкладке","Открыть редактор в полном размере","Очистить форматирование","Цвет заливки или цвет текста","Повтор","Отмена","Жирный","Наклонный","Вставка маркированного списка","Вставить нумерованный список","Выровнять по центру","Выровнять по ширине","Выровнять по левому краю","Выровнять по правому краю","Вставить горизонтальную линию","Вставить изображение","Вставить файл","Вставьте видео","Вставить ссылку","Размер шрифта","Шрифт","Вставить блочный элемент","Нормальный текст","Заголовок 1","Заголовок 2","Заголовок 3","Заголовок 4","Цитата","Код","Вставить","Вставить таблицу","Уменьшить отступ","Увеличить отступ","Выберите специальный символ","Вставить специальный символ","Формат краски","Источник","Отступы","сверху","справа","снизу","слева","Стили","Классы","Выравнивание","По правому краю","По центру","По левому краю","--не устанавливать--","src","Заголовок","Альтернативный текст (alt)","Ссылка","Открывать ссылку в новом окне",null,"Файл","Расширенные","Свойства изображения","Отмена","Ок","Ваш текст, который вы пытаетесь вставить похож на HTML. Вставить его как HTML?","Вставить как HTML?","Сохранить оригинал","Почистить","Вставить как текст","Вставить только текст","Возможно это фрагмент Word или Excel","Контент который вы вставляете поступает из документа Microsoft Word / Excel. Вы хотите сохранить формат или очистить его?","Браузер файлов","Ошибка при загрузке списка изображений","Ошибка при загрузке списка директорий","Вы уверены?","Введите название директории","Создать директорию","введите название","Перетащите сюда изображение","Перетащите сюда файл","или нажмите","Альтернативный текст","Сервер","Загрузка","Фон","Текст"," К верху","По середине","К низу","Вставить столбец до","Вставить столбец после","Вставить ряд выше","Вставить ряд ниже","Удалить таблицу","Удалять ряд","Удалить столбец","Очистить ячейку","HTML","жирный","курсив","заливка","ссылка","отменить","повторить","таблица","Изображение","очистить","параграф","размер шрифта","видео","шрифт","о редакторе","печать","подчеркнутый","перечеркнутый","отступ","выступ","во весь экран","обычный размер","линия","Список","Нумерованный список","Вырезать","Выделить все","Код","Открыть ссылку","Редактировать ссылку","Атрибут nofollow","Убрать ссылку","Просмотр","Редактировать","Обновить","URL","Редактировать","Горизонтальное выравнивание","Фильтр","По изменению","По имени","По размеру","Добавить папку","Восстановить","Сохранить","Сохранить как","Изменить размер","Обрезать размер","Ширина","Высота","Сохранять пропорции","Да","Нет","Удалить","Выделить","Символов: %d","Слов: %d","Выделить все","Выделить: %s","Выделить все","Вертикальное выравнивание","Разделить","Разделить по вертикали","Разделить по горизонтали","Объединить в одну","Добавить столбец","Добавить строку","Удалить","Рамка","Лицензия: %s","Перечеркнуть","Подчеркивание","верхний индекс","индекс","Вырезать","Разделитель","Найти","Заменить на","Заменить","Вставить","Выбрать контент для вставки","Вы можете редактировать только свои собственные изображения. Загрузить это изображение на ваш сервер?","Изображение успешно загружено на сервер!","палитра","В данном каталоге нет файлов","Переименовать","Введите новое имя","Предпросмотр","Скачать","Вставить из буфера обмена","Ваш браузер не поддерживает прямой доступ к буферу обмена.","Скопировать выделенное","копия","Радиус границы","Показать все","Применить","Пожалуйста, заполните это поле","Пожалуйста, введите веб-адрес","По умолчанию","Круг","Точка","Квадрат","Найти","Найти Предыдущие","Найти Далее","Вставить название класса","Нажмите Alt для изменения пользовательского размера"]
 
 /***/ }),
 
 /***/ 79375:
 /***/ (function(module) {
 
-module.exports["default"] = ["Bir şeyler yaz","Jodit Hakkında","Jodit Editor","Jodit Kullanım Kılavuzu","kullanım için detaylı bilgiler içerir","Lisans hakkında bilgi için lütfen web sitemize gidin:","Tam versiyonunu satın al","Copyright © XDSoft.net - Chupurnov Valeriy. Tüm hakları saklıdır.","Bağlantı","Yeni sekmede aç","Editörü tam ekranda aç","Stili temizle","Renk doldur veya yazı rengi seç","Yinele","Geri Al","Kalın","İtalik","Sırasız Liste Ekle","Sıralı Liste Ekle","Ortala","Kenarlara Yasla","Sola Yasla","Sağa Yasla","Yatay Çizgi Ekle","Resim Ekle","Dosya Ekle","Youtube/Vimeo Videosu Ekle","Bağlantı Ekle","Font Boyutu","Font Ailesi","Blok Ekle","Normal","Başlık 1","Başlık 2","Başlık 3","Başlık 4","Alıntı","Kod","Ekle","Tablo Ekle","Girintiyi Azalt","Girintiyi Arttır","Özel Karakter Seç","Özel Karakter Ekle","Resim Biçimi","Mod Değiştir","Boşluklar","Üst","Sağ","Alt","Sol","CSS Stilleri","CSS Sınıfları","Hizalama","Sağ","Ortalı","Sol","Belirsiz","Kaynak","Başlık","Alternatif Yazı","Link","Bağlantıyı yeni sekmede aç","Resim","Dosya","Gelişmiş","Resim özellikleri","İptal","Tamam","Dosya Listeleyici","Liste yüklenirken hata oluştu","Klasörler yüklenirken hata oluştur","Emin misiniz?","Dizin yolu giriniz","Dizin oluştur","İsim yaz","Resim bırak","Dosya bırak","veya tıkla","Alternatif yazı","Yükle","Gözat","Arka plan","Yazı","Üst","Orta","Aşağı","Öncesine kolon ekle","Sonrasına kolon ekle","Üstüne satır ekle","Altına satır ekle","Tabloyu sil","Satırı sil","Kolonu sil","Hücreyi temizle","Harfler: %d","Kelimeler: %d","Üstü çizili","Alt çizgi","Üst yazı","Alt yazı","Seçilimi kes","Tümünü seç","Satır sonu","Ara","Şununla değiştir","Değiştir","Yapıştır","Yapıştırılacak içerik seç","Kaynak","Kalın","italik","Fırça","Bağlantı","Geri al","Yinele","Tablo","Resim","Silgi","Paragraf","Font boyutu","Video","Font","Hakkında","Yazdır","Alt çizgi","Üstü çizili","Girinti","Çıkıntı","Tam ekran","Küçült","Ayraç","Sırasız liste","Sıralı liste","Kes","Tümünü seç","Kod ekle","Bağlantıyı aç","Bağlantıyı düzenle","Nofollow özelliği","Bağlantıyı kaldır","Güncelle","Düzenlemek için","Yorumu","URL","Düzenle","Yatay hizala","Filtre","Değişime göre sırala","İsme göre sırala","Boyuta göre sırala","Klasör ekle","Sıfırla","Kaydet","Farklı kaydet","Boyutlandır","Kırp","Genişlik","Yükseklik","En boy oranını koru","Evet","Hayır","Sil","Seç","Seç: %s","Dikey hizala","Ayır","Birleştir","Kolon ekle","Satır ekle",null,"Sil","Dikey ayır","Yatay ayır","Kenarlık","Kodunuz HTML koduna benziyor. HTML olarak devam etmek ister misiniz?","HTML olarak yapıştır","Sakla","Yazı olarak ekle","Sadece yazıyı ekle","Sadece kendi resimlerinizi düzenleyebilirsiniz. Bu görseli kendi hostunuza indirmek ister misiniz?","Görsel başarıyla hostunuza yüklendi","Palet","Bu dizinde dosya yok","Yeniden isimlendir","Yeni isim girin","Ön izleme","İndir","Panodan yapıştır ","Tarayıcınız panoya doğrudan erişimi desteklemiyor.","Seçimi kopyala","Kopyala","Sınır yarıçapı","Tümünü Göster","Uygula","Lütfen bu alanı doldurun","Lütfen bir web adresi girin","Varsayılan","Daire","Nokta","Kare","Bul","Öncekini Bul","Sonrakini Bul","Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder löschen?","Word biçiminde yapıştırma algılandı","Temizle","Sınıf adı girin","Özel yeniden boyutlandırma için Alt tuşuna basın"]
+module.exports["default"] = ["Bir şeyler yaz","Jodit Hakkında","Jodit Editor",null,"Jodit Kullanım Kılavuzu","kullanım için detaylı bilgiler içerir","Lisans hakkında bilgi için lütfen web sitemize gidin:","Tam versiyonunu satın al","Copyright © XDSoft.net - Chupurnov Valeriy. Tüm hakları saklıdır.","Bağlantı","Yeni sekmede aç","Editörü tam ekranda aç","Stili temizle","Renk doldur veya yazı rengi seç","Yinele","Geri Al","Kalın","İtalik","Sırasız Liste Ekle","Sıralı Liste Ekle","Ortala","Kenarlara Yasla","Sola Yasla","Sağa Yasla","Yatay Çizgi Ekle","Resim Ekle","Dosya Ekle","Youtube/Vimeo Videosu Ekle","Bağlantı Ekle","Font Boyutu","Font Ailesi","Blok Ekle","Normal","Başlık 1","Başlık 2","Başlık 3","Başlık 4","Alıntı","Kod","Ekle","Tablo Ekle","Girintiyi Azalt","Girintiyi Arttır","Özel Karakter Seç","Özel Karakter Ekle","Resim Biçimi","Mod Değiştir","Boşluklar","Üst","Sağ","Alt","Sol","CSS Stilleri","CSS Sınıfları","Hizalama","Sağ","Ortalı","Sol","Belirsiz","Kaynak","Başlık","Alternatif Yazı","Link","Bağlantıyı yeni sekmede aç","Resim","Dosya","Gelişmiş","Resim özellikleri","İptal","Tamam","Kodunuz HTML koduna benziyor. HTML olarak devam etmek ister misiniz?","HTML olarak yapıştır","Sakla","Temizle","Yazı olarak ekle","Sadece yazıyı ekle","Word biçiminde yapıştırma algılandı","Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder löschen?","Dosya Listeleyici","Liste yüklenirken hata oluştu","Klasörler yüklenirken hata oluştur","Emin misiniz?","Dizin yolu giriniz","Dizin oluştur","İsim yaz","Resim bırak","Dosya bırak","veya tıkla","Alternatif yazı","Gözat","Yükle","Arka plan","Yazı","Üst","Orta","Aşağı","Öncesine kolon ekle","Sonrasına kolon ekle","Üstüne satır ekle","Altına satır ekle","Tabloyu sil","Satırı sil","Kolonu sil","Hücreyi temizle","Kaynak","Kalın","italik","Fırça","Bağlantı","Geri al","Yinele","Tablo","Resim","Silgi","Paragraf","Font boyutu","Video","Font","Hakkında","Yazdır","Alt çizgi","Üstü çizili","Girinti","Çıkıntı","Tam ekran","Küçült","Ayraç","Sırasız liste","Sıralı liste","Kes","Tümünü seç","Kod ekle","Bağlantıyı aç","Bağlantıyı düzenle","Nofollow özelliği","Bağlantıyı kaldır","Yorumu","Düzenlemek için","Güncelle","URL","Düzenle","Yatay hizala","Filtre","Değişime göre sırala","İsme göre sırala","Boyuta göre sırala","Klasör ekle","Sıfırla","Kaydet","Farklı kaydet","Boyutlandır","Kırp","Genişlik","Yükseklik","En boy oranını koru","Evet","Hayır","Sil","Seç","Harfler: %d","Kelimeler: %d","Tümü","Seç: %s","Tümünü seç","Dikey hizala","Ayır","Dikey ayır","Yatay ayır","Birleştir","Kolon ekle","Satır ekle","Sil","Kenarlık",null,"Üstü çizili","Alt çizgi","Üst yazı","Alt yazı","Seçilimi kes","Satır sonu","Ara","Şununla değiştir","Değiştir","Yapıştır","Yapıştırılacak içerik seç","Sadece kendi resimlerinizi düzenleyebilirsiniz. Bu görseli kendi hostunuza indirmek ister misiniz?","Görsel başarıyla hostunuza yüklendi","Palet","Bu dizinde dosya yok","Yeniden isimlendir","Yeni isim girin","Ön izleme","İndir","Panodan yapıştır ","Tarayıcınız panoya doğrudan erişimi desteklemiyor.","Seçimi kopyala","Kopyala","Sınır yarıçapı","Tümünü Göster","Uygula","Lütfen bu alanı doldurun","Lütfen bir web adresi girin","Varsayılan","Daire","Nokta","Kare","Bul","Öncekini Bul","Sonrakini Bul","Sınıf adı girin","Özel yeniden boyutlandırma için Alt tuşuna basın"]
 
 /***/ }),
 
 /***/ 21042:
 /***/ (function(module) {
 
-module.exports["default"] = ["输入一些内容","关于Jodit","Jodit Editor","开发者指南","使用帮助","有关许可证的信息，请访问我们的网站：","购买完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. 版权所有","Anchor","在新窗口打开","全屏编辑","清除样式","颜色","重做","撤销","粗体","斜体","符号列表","编号","居中","对齐文本","左对齐","右对齐","分割线","图片","文件","视频","链接","字号","字体","格式块","默认","标题1","标题2","标题3","标题4","引用","代码","插入","表格","减少缩进","增加缩进","选择特殊符号","特殊符号","格式复制","改变模式","外边距（Margins）","top","right","bottom","left","样式","Classes","对齐方式","居右","居中","居左","无","Src","Title","Alternative","Link","在新窗口打开链接","图片","file","高级","图片属性","取消","确定","文件管理","加载list错误","加载folders错误","你确定吗？","输入路径","创建路径","type name","拖动图片到此","拖动文件到此","或点击","Alternative text","上传","浏览","背景色","文字","顶部","中间","底部","在之前插入列","在之后插入列","在之前插入行","在之后插入行","删除表格","删除行","删除列","清除内容","字符数: %d","单词数: %d","删除线","下划线","上标","下标","剪切","全选","Break","查找","替换为","替换","粘贴","选择内容并粘贴","源码","粗体","斜体","颜色","链接","撤销","重做","表格","图片","橡皮擦","段落","字号","视频","字体","关于","打印","下划线","上出现","增加缩进","减少缩进","全屏","收缩","分割线","无序列表","顺序列表","剪切","全选","嵌入代码","打开链接","编辑链接","No follow","取消链接","更新","铅笔","预览","URL","编辑","水平对齐","筛选","修改时间排序","名称排序","大小排序","新建文件夹","重置","保存","保存为","调整大小","剪切","宽","高","保持长宽比","是","不","移除","选择","选择: %s","垂直对齐","拆分","合并","添加列","添加行",null,"删除","垂直拆分","水平拆分","边框","你粘贴的文本是一段html代码，是否保留源格式","html粘贴","保留源格式","把html代码视为普通文本","只保留文本","你只能编辑你自己的图片。Download this image on the host?","图片上传成功","调色板","此目录中沒有文件。","重命名","输入新名称","预览","下载","粘贴从剪贴板","你浏览器不支持直接访问的剪贴板。","复制选中内容","复制","边界半径","显示所有","应用","请填写这个字段","请输入一个网址","默认","圆圈","点","方形","搜索","查找上一个","查找下一个","正在粘贴 Word/Excel 的文本，是否保留源格式？","文本粘贴","匹配目标格式","插入班级名称","按Alt自定义调整大小"]
+module.exports["default"] = ["输入一些内容","关于Jodit","Jodit Editor","Free Non-commercial Version","开发者指南","使用帮助","有关许可证的信息，请访问我们的网站：","购买完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. 版权所有","Anchor","在新窗口打开","全屏编辑","清除样式","颜色","重做","撤销","粗体","斜体","符号列表","编号","居中","对齐文本","左对齐","右对齐","分割线","图片","文件","视频","链接","字号","字体","格式块","默认","标题1","标题2","标题3","标题4","引用","代码","插入","表格","减少缩进","增加缩进","选择特殊符号","特殊符号","格式复制","改变模式","外边距（Margins）","top","right","bottom","left","样式","Classes","对齐方式","居右","居中","居左","无","Src","Title","Alternative","Link","在新窗口打开链接","图片","file","高级","图片属性","取消","确定","你粘贴的文本是一段html代码，是否保留源格式","html粘贴","保留源格式","匹配目标格式","把html代码视为普通文本","只保留文本","文本粘贴","正在粘贴 Word/Excel 的文本，是否保留源格式？","文件管理","加载list错误","加载folders错误","你确定吗？","输入路径","创建路径","type name","拖动图片到此","拖动文件到此","或点击","Alternative text","浏览","上传","背景色","文字","顶部","中间","底部","在之前插入列","在之后插入列","在之前插入行","在之后插入行","删除表格","删除行","删除列","清除内容","源码","粗体","斜体","颜色","链接","撤销","重做","表格","图片","橡皮擦","段落","字号","视频","字体","关于","打印","下划线","上出现","增加缩进","减少缩进","全屏","收缩","分割线","无序列表","顺序列表","剪切","全选","嵌入代码","打开链接","编辑链接","No follow","取消链接","预览","铅笔","更新","URL","编辑","水平对齐","筛选","修改时间排序","名称排序","大小排序","新建文件夹","重置","保存","保存为","调整大小","剪切","宽","高","保持长宽比","是","不","移除","选择","字符数: %d","单词数: %d","全部","选择: %s","全选","垂直对齐","拆分","垂直拆分","水平拆分","合并","添加列","添加行","删除","边框",null,"删除线","下划线","上标","下标","剪切","Break","查找","替换为","替换","粘贴","选择内容并粘贴","你只能编辑你自己的图片。Download this image on the host?","图片上传成功","调色板","此目录中沒有文件。","重命名","输入新名称","预览","下载","粘贴从剪贴板","你浏览器不支持直接访问的剪贴板。","复制选中内容","复制","边界半径","显示所有","应用","请填写这个字段","请输入一个网址","默认","圆圈","点","方形","搜索","查找上一个","查找下一个","插入班级名称","按Alt自定义调整大小"]
 
 /***/ }),
 
 /***/ 73895:
 /***/ (function(module) {
 
-module.exports["default"] = ["輸入一些內容","關於Jodit","Jodit Editor","開發者指南","使用幫助","有關許可證的信息，請訪問我們的網站：","購買完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打開","全屏編輯","清除樣式","顏色","重做","撤銷","粗體","斜體","符號列表","編號","居中","對齊文本","左對齊","右對齊","分割線","圖片","文件","youtube/vimeo 影片","鏈接","字號","字體","格式塊","文本","標題1","標題2","標題3","標題4","引用","代碼","插入","表格","減少縮進","增加縮進","選擇特殊符號","特殊符號","格式複製","改變模式","外邊距（Margins）","top","right","bottom","left","樣式","Classes","對齊方式","居右","居中","居左","無","Src","Title","替代","Link","在新窗口打開鏈接","圖片","file","高級","圖片屬性","取消","確定","文件管理","加載list錯誤","加載folders錯誤","你確定嗎？","輸入路徑","創建路徑","type name","拖動圖片到此","拖動文件到此","或點擊","替代文字","上傳","瀏覽","背景色","文字","頂部","中間","底部","在之前插入列","在之後插入列","在之前插入行","在之後插入行","刪除表格","刪除行","刪除列","清除內容","字符數: %d","單詞數: %d","刪除線","下劃線","上標","下標","剪切","全選","Pause","查找","替換為","แทนที่","黏貼","選擇內容並黏貼","源碼","粗體","斜體","顏色","鏈接","撤銷","重做","表格","圖片","橡皮擦","段落","字號","影片","字體","關於","打印","下劃線","上出現","增加縮進","減少縮進","全屏","收縮","分割線","無序列表","順序列表","剪切","全選","嵌入代碼","打開鏈接","編輯鏈接","No follow","取消連結","更新","鉛筆","回顧","URL",null,"水平對齊","篩選","修改時間排序","名稱排序","大小排序","新建文件夾","重置","保存","保存為","調整大小","Crop","寬","高","保存長寬比","是","不","移除","選擇","選擇: %s","垂直對齊","拆分","合併","添加列","添加行",null,"刪除","垂直拆分","水平拆分","邊框","你黏貼的文本是一段html代碼，是否保留源格式","html黏貼","保留源格式","把html代碼視為普通文本","只保留文本","你只能編輯你自己的圖片。是否下載此圖片到本地?","圖片上傳成功","調色板","此目錄中沒有文件。","重命名","輸入新名稱","預覽","下載","從剪貼板貼上","瀏覽器無法存取剪贴板。","複製已選取項目","複製","邊框圓角","顯示所有","應用","ได้โปรดกรอกช่องข้อมูลนี้","โปรดเติมที่อยู่บนเว็บ","ค่าปริยาย","วงกลม","จุด","Quadrate","ค้นหา","ค้นหาก่อนหน้านี้","ค้นหาถัดไป","正在黏貼 Word/Excel 的文本，是否保留源格式？","文本黏貼","匹配目標格式","ใส่ชื่อคลาส","กดอัลท์สำหรับการปรับขนาดที่กำหนดเอง"]
+module.exports["default"] = ["輸入一些內容","關於Jodit","Jodit Editor",null,"開發者指南","使用幫助","有關許可證的信息，請訪問我們的網站：","購買完整版本","Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.","Anchor","在新窗口打開","全屏編輯","清除樣式","顏色","重做","撤銷","粗體","斜體","符號列表","編號","居中","對齊文本","左對齊","右對齊","分割線","圖片","文件","youtube/vimeo 影片","鏈接","字號","字體","格式塊","文本","標題1","標題2","標題3","標題4","引用","代碼","插入","表格","減少縮進","增加縮進","選擇特殊符號","特殊符號","格式複製","改變模式","外邊距（Margins）","top","right","bottom","left","樣式","Classes","對齊方式","居右","居中","居左","無","Src","Title","替代","Link","在新窗口打開鏈接","圖片","file","高級","圖片屬性","取消","確定","你黏貼的文本是一段html代碼，是否保留源格式","html黏貼","保留源格式","匹配目標格式","把html代碼視為普通文本","只保留文本","文本黏貼","正在黏貼 Word/Excel 的文本，是否保留源格式？","文件管理","加載list錯誤","加載folders錯誤","你確定嗎？","輸入路徑","創建路徑","type name","拖動圖片到此","拖動文件到此","或點擊","替代文字","瀏覽","上傳","背景色","文字","頂部","中間","底部","在之前插入列","在之後插入列","在之前插入行","在之後插入行","刪除表格","刪除行","刪除列","清除內容","源碼","粗體","斜體","顏色","鏈接","撤銷","重做","表格","圖片","橡皮擦","段落","字號","影片","字體","關於","打印","下劃線","上出現","增加縮進","減少縮進","全屏","收縮","分割線","無序列表","順序列表","剪切","全選","嵌入代碼","打開鏈接","編輯鏈接","No follow","取消連結","回顧","鉛筆","更新","URL",null,"水平對齊","篩選","修改時間排序","名稱排序","大小排序","新建文件夾","重置","保存","保存為","調整大小","Crop","寬","高","保存長寬比","是","不","移除","選擇","字符數: %d","單詞數: %d","全部","選擇: %s","全選","垂直對齊","拆分","垂直拆分","水平拆分","合併","添加列","添加行","刪除","邊框",null,"刪除線","下劃線","上標","下標","剪切","Pause","查找","替換為","แทนที่","黏貼","選擇內容並黏貼","你只能編輯你自己的圖片。是否下載此圖片到本地?","圖片上傳成功","調色板","此目錄中沒有文件。","重命名","輸入新名稱","預覽","下載","從剪貼板貼上","瀏覽器無法存取剪贴板。","複製已選取項目","複製","邊框圓角","顯示所有","應用","ได้โปรดกรอกช่องข้อมูลนี้","โปรดเติมที่อยู่บนเว็บ","ค่าปริยาย","วงกลม","จุด","Quadrate","ค้นหา","ค้นหาก่อนหน้านี้","ค้นหาถัดไป","ใส่ชื่อคลาส","กดอัลท์สำหรับการปรับขนาดที่กำหนดเอง"]
 
 /***/ }),
 
@@ -705,7 +705,7 @@ module.exports = "<svg xmlns='http://www.w3.org/2000/svg' viewBox=\"0 0 1792 179
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "gn": function() { return /* binding */ __decorate; }
 /* harmony export */ });
-/* unused harmony exports __extends, __assign, __rest, __param, __metadata, __awaiter, __generator, __createBinding, __exportStar, __values, __read, __spread, __spreadArrays, __spreadArray, __await, __asyncGenerator, __asyncDelegator, __asyncValues, __makeTemplateObject, __importStar, __importDefault, __classPrivateFieldGet, __classPrivateFieldSet, __classPrivateFieldIn */
+/* unused harmony exports __extends, __assign, __rest, __param, __esDecorate, __runInitializers, __propKey, __setFunctionName, __metadata, __awaiter, __generator, __createBinding, __exportStar, __values, __read, __spread, __spreadArrays, __spreadArray, __await, __asyncGenerator, __asyncDelegator, __asyncValues, __makeTemplateObject, __importStar, __importDefault, __classPrivateFieldGet, __classPrivateFieldSet, __classPrivateFieldIn */
 var extendStatics = function (d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -758,6 +758,64 @@ function __decorate(decorators, target, key, desc) {
 function __param(paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); };
 }
+function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) { if (f !== void 0 && typeof f !== "function")
+        throw new TypeError("Function expected"); return f; }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for (var i = decorators.length - 1; i >= 0; i--) {
+        var context = {};
+        for (var p in contextIn)
+            context[p] = p === "access" ? {} : contextIn[p];
+        for (var p in contextIn.access)
+            context.access[p] = contextIn.access[p];
+        context.addInitializer = function (f) { if (done)
+            throw new TypeError("Cannot add initializers after decoration has completed"); extraInitializers.push(accept(f || null)); };
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0)
+                continue;
+            if (result === null || typeof result !== "object")
+                throw new TypeError("Object expected");
+            if (_ = accept(result.get))
+                descriptor.get = _;
+            if (_ = accept(result.set))
+                descriptor.set = _;
+            if (_ = accept(result.init))
+                initializers.push(_);
+        }
+        else if (_ = accept(result)) {
+            if (kind === "field")
+                initializers.push(_);
+            else
+                descriptor[key] = _;
+        }
+    }
+    if (target)
+        Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+}
+;
+function __runInitializers(thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for (var i = 0; i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    }
+    return useValue ? value : void 0;
+}
+;
+function __propKey(x) {
+    return typeof x === "symbol" ? x : "".concat(x);
+}
+;
+function __setFunctionName(f, name, prefix) {
+    if (typeof name === "symbol")
+        name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+}
+;
 function __metadata(metadataKey, metadataValue) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
         return Reflect.metadata(metadataKey, metadataValue);
@@ -955,7 +1013,7 @@ function __asyncGenerator(thisArg, _arguments, generator) {
 function __asyncDelegator(o) {
     var i, p;
     return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
-    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: false } : f ? f(v) : v; } : f; }
 }
 function __asyncValues(o) {
     if (!Symbol.asyncIterator)
@@ -1030,7 +1088,7 @@ function __classPrivateFieldIn(state, receiver) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -1395,7 +1453,7 @@ var external_assert_ = __webpack_require__(52378);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -1615,7 +1673,7 @@ class Async {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -1636,7 +1694,7 @@ class Async {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -1769,7 +1827,7 @@ var component = __webpack_require__(45113);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 class ViewComponent extends component/* Component */.w {
@@ -1801,7 +1859,7 @@ class ViewComponent extends component/* Component */.w {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -1820,7 +1878,7 @@ class ViewComponent extends component/* Component */.w {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const STATUSES = {
     beforeInit: 'beforeInit',
@@ -1893,7 +1951,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const INVISIBLE_SPACE = '\uFEFF';
 const NBSP_SPACE = '\u00A0';
@@ -2032,7 +2090,7 @@ const SOURCE_CONSUMER = 'source-consumer';
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function component(constructorFunction) {
     class newConstructorFunction extends constructorFunction {
@@ -2069,7 +2127,7 @@ function component(constructorFunction) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -2139,7 +2197,7 @@ var helpers = __webpack_require__(40332);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function cache(target, name, descriptor) {
@@ -2172,7 +2230,7 @@ var core_component = __webpack_require__(90549);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -2197,7 +2255,7 @@ var error = __webpack_require__(14582);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -2216,7 +2274,7 @@ function hook(status) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const nonenumerable = (target, propertyKey) => {
     const descriptor = Object.getOwnPropertyDescriptor(target, propertyKey) || {};
@@ -2240,7 +2298,7 @@ var is_view_object = __webpack_require__(96574);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -2265,7 +2323,7 @@ function persistent(target, propertyKey) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -2301,7 +2359,7 @@ var watch = __webpack_require__(46163);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function derive(...traits) {
@@ -2402,7 +2460,7 @@ function autobind() {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -2437,7 +2495,7 @@ function autobind() {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -2551,7 +2609,7 @@ function watch(observeFields, context) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -3091,7 +3149,7 @@ class Dom {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -3113,7 +3171,7 @@ class Dom {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -3222,7 +3280,7 @@ class LazyWalker extends jodit_core_event_emitter_eventify__WEBPACK_IMPORTED_MOD
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class Eventify {
     constructor() {
@@ -3283,7 +3341,7 @@ var to_array = __webpack_require__(1853);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -3365,7 +3423,7 @@ var split_array = __webpack_require__(14556);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -3807,7 +3865,7 @@ var observable = __webpack_require__(88418);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -3831,7 +3889,7 @@ var observable = __webpack_require__(88418);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -3965,7 +4023,7 @@ function observable(obj) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -4063,7 +4121,7 @@ var is_array = __webpack_require__(49781);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const asArray = (a) => ((0,is_array/* isArray */.k)(a) ? a : [a]);
@@ -4076,7 +4134,7 @@ var to_array = __webpack_require__(1853);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -4095,7 +4153,7 @@ var to_array = __webpack_require__(1853);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function splitArray(a) {
     return Array.isArray(a) ? a : a.split(/[,\s]+/);
@@ -4116,7 +4174,7 @@ function splitArray(a) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -4143,7 +4201,7 @@ const toArray = function toArray(...args) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -4161,7 +4219,7 @@ const toArray = function toArray(...args) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function setTimeout(callback, timeout, ...args) {
     if (!timeout) {
@@ -4219,7 +4277,7 @@ __webpack_require__.d(__webpack_exports__, {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function hasBrowserColorPicker() {
     let supportsColor = true;
@@ -4249,7 +4307,7 @@ var is_string = __webpack_require__(24421);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const isHTML = (str) => (0,is_string/* isString */.H)(str) &&
@@ -4259,7 +4317,7 @@ const isHTML = (str) => (0,is_string/* isString */.H)(str) &&
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isHtmlFromWord(data) {
     return (data.search(/<meta.*?Microsoft Excel\s[\d].*?>/) !== -1 ||
@@ -4275,7 +4333,7 @@ var is_void = __webpack_require__(24021);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -4296,7 +4354,7 @@ var is_numeric = __webpack_require__(57649);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -4315,7 +4373,7 @@ var is_view_object = __webpack_require__(96574);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const isLicense = (license) => (0,is_string/* isString */.H)(license) &&
@@ -4336,7 +4394,7 @@ var is_url = __webpack_require__(64350);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isValidName(name) {
     if (!name.length) {
@@ -4353,7 +4411,7 @@ var is_marker = __webpack_require__(37204);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -4392,7 +4450,7 @@ var is_marker = __webpack_require__(37204);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isArray(elm) {
     return Array.isArray(elm);
@@ -4411,7 +4469,7 @@ function isArray(elm) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isBoolean(elm) {
     return typeof elm === 'boolean';
@@ -4432,7 +4490,7 @@ function isBoolean(elm) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function isEqual(a, b) {
@@ -4455,7 +4513,7 @@ function isFastEqual(a, b) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isFunction(value) {
     return typeof value === 'function';
@@ -4475,7 +4533,7 @@ function isFunction(value) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function isJoditObject(jodit) {
@@ -4501,7 +4559,7 @@ function isJoditObject(jodit) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -4524,7 +4582,7 @@ function isMarker(elm) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isNativeFunction(f) {
     return (Boolean(f) &&
@@ -4546,7 +4604,7 @@ function isNativeFunction(f) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isNumber(value) {
     return typeof value === 'number' && !isNaN(value) && isFinite(value);
@@ -4566,7 +4624,7 @@ function isNumber(value) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function isNumeric(value) {
@@ -4593,7 +4651,7 @@ function isNumeric(value) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function isPlainObject(obj) {
@@ -4617,7 +4675,7 @@ function isPlainObject(obj) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isPromise(val) {
     return val && typeof val.then === 'function';
@@ -4638,7 +4696,7 @@ function isPromise(val) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function isString(value) {
@@ -4661,7 +4719,7 @@ function isStringArray(value) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isURL(str) {
     if (str.includes(' ')) {
@@ -4695,7 +4753,7 @@ function isURL(str) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function isViewObject(jodit) {
@@ -4718,7 +4776,7 @@ function isViewObject(jodit) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isVoid(value) {
     return value === undefined || value === null;
@@ -4737,7 +4795,7 @@ function isVoid(value) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function isWindow(obj) {
     return obj != null && obj === obj.window;
@@ -4756,7 +4814,7 @@ function isWindow(obj) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const colorToHex = (color) => {
     if (color === 'rgba(0, 0, 0, 0)' || color === '') {
@@ -4795,7 +4853,7 @@ const colorToHex = (color) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -4828,7 +4886,7 @@ var trim = __webpack_require__(33941);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -4921,7 +4979,7 @@ var to_array = __webpack_require__(1853);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -4991,7 +5049,7 @@ function cleanFromWord(html) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function htmlspecialchars(html) {
     const tmp = document.createElement('div');
@@ -5005,7 +5063,7 @@ var is_string = __webpack_require__(24421);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5041,7 +5099,7 @@ var safe_html = __webpack_require__(67128);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function nl2br(html) {
     return html.replace(/\r\n|\r|\n/g, '<br/>');
@@ -5051,7 +5109,7 @@ function nl2br(html) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5076,7 +5134,7 @@ function nl2br(html) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5205,7 +5263,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5248,7 +5306,7 @@ var constants = __webpack_require__(86893);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5286,7 +5344,7 @@ function normalizeKeyAliases(keys) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const normalizeLicense = (license, count = 8) => {
     const parts = [];
@@ -5307,7 +5365,7 @@ var string = __webpack_require__(89170);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const normalizePath = (...path) => {
@@ -5330,7 +5388,7 @@ const normalizePath = (...path) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const normalizeRelativePath = (path) => {
     const sections = path.split('/'), builder = sections.reduce((builder, section) => {
@@ -5359,7 +5417,7 @@ const normalizeRelativePath = (path) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const normalizeSize = (value) => {
     if (/^[0-9]+$/.test(value.toString())) {
@@ -5372,7 +5430,7 @@ const normalizeSize = (value) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const normalizeUrl = (...urls) => {
     return urls
@@ -5390,7 +5448,7 @@ var color_to_hex = __webpack_require__(13203);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5419,7 +5477,7 @@ const normalizeColor = (colorInput) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5450,7 +5508,7 @@ const normalizeColor = (colorInput) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5502,7 +5560,7 @@ function normalizeCssValue(key, value) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5547,7 +5605,7 @@ __webpack_require__.d(__webpack_exports__, {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const getContentWidth = (element, win) => {
     const pi = (value) => parseInt(value, 10), style = win.getComputedStyle(element), width = element.offsetWidth, paddingLeft = pi(style.getPropertyValue('padding-left') || '0'), paddingRight = pi(style.getPropertyValue('padding-right') || '0');
@@ -5562,7 +5620,7 @@ var dom = __webpack_require__(24263);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5585,7 +5643,7 @@ function getScrollParent(node) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const inner_width_innerWidth = (element, win) => {
     const computedStyle = win.getComputedStyle(element);
@@ -5600,7 +5658,7 @@ const inner_width_innerWidth = (element, win) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const offset = (elm, jodit, doc, recurse = false) => {
     let rect;
@@ -5648,7 +5706,7 @@ var is_jodit_object = __webpack_require__(77892);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function position(elm, jodit, recurse = false) {
@@ -5676,7 +5734,7 @@ var object_size = __webpack_require__(16492);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5699,7 +5757,7 @@ var object_size = __webpack_require__(16492);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function size(subject) {
@@ -5725,7 +5783,7 @@ function size(subject) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const camelCase = (key) => {
     return key.replace(/([-_])(.)/g, (m, code, letter) => {
@@ -5747,7 +5805,7 @@ const camelCase = (key) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function fuzzySearchIndex(needle, haystack, offset = 0, maxDistance = 1) {
@@ -5816,7 +5874,7 @@ var is_string = __webpack_require__(24421);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function ucfirst(value) {
     if (!value.length) {
@@ -5831,7 +5889,7 @@ var constants = __webpack_require__(86893);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5920,7 +5978,7 @@ var trim = __webpack_require__(33941);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -5944,7 +6002,7 @@ var trim = __webpack_require__(33941);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const kebabCase = (key) => {
     return key
@@ -5973,7 +6031,7 @@ const CamelCaseToKebabCase = (key) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function stringify(value, options = {}) {
     if (typeof value !== 'object') {
@@ -6011,7 +6069,7 @@ function stringify(value, options = {}) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function trim(value) {
@@ -6042,7 +6100,7 @@ function trimInv(value) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -6121,7 +6179,7 @@ function alignElement(command, box) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -6201,7 +6259,7 @@ const loadNextStyle = (jodit, urls, i = 0) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class AssertionError extends Error {
     constructor(message) {
@@ -6229,7 +6287,7 @@ function assert(condition, message) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const browser = (browser) => {
     const ua = navigator.userAgent.toLowerCase(), match = /(firefox)[\s/]([\w.]+)/.exec(ua) ||
@@ -6269,7 +6327,7 @@ const browser = (browser) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const buildQuery = (data, prefix) => {
@@ -6298,7 +6356,7 @@ const buildQuery = (data, prefix) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const completeUrl = (url) => {
     if (window.location.protocol === 'file:' && /^\/\//.test(url)) {
@@ -6328,7 +6386,7 @@ const completeUrl = (url) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -6391,7 +6449,7 @@ function ConfigFlatten(obj) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -6462,7 +6520,7 @@ const convertMediaUrlToVideoEmbed = (url, width = 400, height = 345) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -6533,7 +6591,7 @@ const clearCenterAlign = (image) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const ctrlKey = (e) => {
     if (typeof navigator !== 'undefined' &&
@@ -6562,7 +6620,7 @@ const ctrlKey = (e) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const store = new WeakMap();
@@ -6604,7 +6662,7 @@ const dataBind = (elm, key, value) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const defaultLanguage = (language, defaultLanguage = 'en') => {
@@ -6644,7 +6702,7 @@ __webpack_require__.d(__webpack_exports__, {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class AbortError extends Error {
     constructor(m) {
@@ -6657,7 +6715,7 @@ class AbortError extends Error {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class ConnectionError extends Error {
     constructor(m) {
@@ -6670,7 +6728,7 @@ class ConnectionError extends Error {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class OptionsError extends TypeError {
     constructor(m) {
@@ -6683,7 +6741,7 @@ class OptionsError extends TypeError {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -6693,7 +6751,7 @@ class OptionsError extends TypeError {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function error(message) {
@@ -6716,7 +6774,7 @@ function isAbort(error) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -6737,7 +6795,7 @@ function isAbort(error) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function isAtom(obj) {
@@ -6770,7 +6828,7 @@ function fastClone(object) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const keepNames = new Map();
@@ -6806,7 +6864,7 @@ const getClassName = (obj) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -6846,7 +6904,7 @@ function get(chain, obj) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const humanSizeToBytes = (human) => {
     if (/^[0-9.]+$/.test(human.toString())) {
@@ -6959,7 +7017,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -7003,7 +7061,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const cns = console;
 function markDeprecated(method, names = [''], ctx = null) {
@@ -7027,7 +7085,7 @@ function markDeprecated(method, names = [''], ctx = null) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const parseQuery = (queryString) => {
     const query = {}, a = queryString.substring(1).split('&');
@@ -7056,7 +7114,7 @@ const parseQuery = (queryString) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -7212,7 +7270,7 @@ function previewBox(editor, defaultValue, points = 'px', container = null) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -7257,7 +7315,7 @@ const reset = function (key) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const inView = (elm, root, doc) => {
@@ -7313,7 +7371,7 @@ function scrollIntoViewIfNeeded(elm, root, doc) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -7431,7 +7489,7 @@ function resolveElement(element, od) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -7468,7 +7526,7 @@ function set(chain, value, obj) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class LimitedStack {
     constructor(limit) {
@@ -7518,7 +7576,7 @@ class LimitedStack {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -7647,7 +7705,7 @@ const getDataTransfer = (event) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const val = (elm, selector, value) => {
     const child = elm.querySelector(selector);
@@ -7675,7 +7733,7 @@ const val = (elm, selector, value) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -7699,7 +7757,7 @@ const val = (elm, selector, value) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -7911,7 +7969,7 @@ PluginSystem.styles = new Set();
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -7989,7 +8047,7 @@ var error = __webpack_require__(14582);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class Response {
     get url() {
@@ -8020,7 +8078,7 @@ var decorators = __webpack_require__(67493);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.defaultAjaxOptions */.D.prototype.defaultAjaxOptions = {
@@ -8042,7 +8100,7 @@ config/* Config.prototype.defaultAjaxOptions */.D.prototype.defaultAjaxOptions =
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -8205,7 +8263,7 @@ Ajax.log = [];
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -8232,7 +8290,7 @@ var constants = __webpack_require__(86893);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -8257,7 +8315,7 @@ function moveNodeInsideStart(j, node, start) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function moveTheNodeAlongTheEdgeOutward(node, start, root) {
@@ -8279,7 +8337,7 @@ function moveTheNodeAlongTheEdgeOutward(node, start, root) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -8303,7 +8361,7 @@ __webpack_require__.d(__webpack_exports__, {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const canUsePersistentStorage = (() => {
     const canUse = () => {
@@ -8372,7 +8430,7 @@ var helpers = __webpack_require__(40332);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class MemoryStorageProvider {
     constructor() {
@@ -8402,7 +8460,7 @@ class MemoryStorageProvider {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -8450,7 +8508,7 @@ class Storage {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -8477,7 +8535,7 @@ var to_array = __webpack_require__(1853);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 class Elms {
@@ -8495,7 +8553,7 @@ var is_void = __webpack_require__(24021);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -8533,7 +8591,7 @@ var helpers = __webpack_require__(40332);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -8582,7 +8640,7 @@ class Dlgs {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -8613,7 +8671,7 @@ class Dlgs {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -8849,7 +8907,7 @@ var external_assert_ = __webpack_require__(52378);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -8927,7 +8985,7 @@ var ui_element = __webpack_require__(53929);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -9021,7 +9079,7 @@ class UITooltip extends ui_element/* UIElement */.u {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -9047,7 +9105,7 @@ class UITooltip extends ui_element/* UIElement */.u {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var UIElement_1;
 
@@ -9197,7 +9255,7 @@ var validators = __webpack_require__(49587);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var UISelect_1;
 
@@ -9270,7 +9328,7 @@ var component_component = __webpack_require__(45113);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -9337,7 +9395,7 @@ UIForm = (0,tslib_es6/* __decorate */.gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var UITextArea_1;
 
@@ -9379,7 +9437,7 @@ var dom = __webpack_require__(24263);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var UICheckbox_1;
 
@@ -9450,7 +9508,7 @@ var file = __webpack_require__(41374);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -9462,7 +9520,7 @@ var file = __webpack_require__(41374);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -9496,7 +9554,7 @@ UIBlock = (0,tslib_es6/* __decorate */.gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -9519,7 +9577,7 @@ UIBlock = (0,tslib_es6/* __decorate */.gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -9593,7 +9651,7 @@ UIFileInput = (0,tslib__WEBPACK_IMPORTED_MODULE_2__/* .__decorate */ .gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var UIInput_1;
 
@@ -9835,7 +9893,7 @@ var trim = __webpack_require__(33941);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -9858,7 +9916,7 @@ const url = function (input) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const select_required = function (select) {
@@ -9873,7 +9931,7 @@ const select_required = function (select) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -9901,7 +9959,7 @@ const select_required = function (select) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var UIGroup_1;
 
@@ -10033,7 +10091,7 @@ var utils = __webpack_require__(76502);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -10069,7 +10127,7 @@ var component = __webpack_require__(45113);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -10209,7 +10267,7 @@ UIList = (0,tslib_es6/* __decorate */.gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -10240,7 +10298,7 @@ UISeparator = (0,tslib__WEBPACK_IMPORTED_MODULE_1__/* .__decorate */ .gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -10270,7 +10328,7 @@ UISpacer = (0,tslib__WEBPACK_IMPORTED_MODULE_1__/* .__decorate */ .gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const isButtonGroup = (item) => {
@@ -10309,7 +10367,7 @@ function flatButtonsSet(buttons, jodit) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -10370,7 +10428,7 @@ function findControlType(path, controls) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -10477,7 +10535,7 @@ var spacer = __webpack_require__(58495);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -10494,7 +10552,7 @@ var dom = __webpack_require__(24263);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -10529,7 +10587,7 @@ class ProgressBar extends ui_element/* UIElement */.u {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -10553,7 +10611,7 @@ class ProgressBar extends ui_element/* UIElement */.u {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -10579,7 +10637,7 @@ class ProgressBar extends ui_element/* UIElement */.u {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -10889,7 +10947,7 @@ class Popup extends jodit_core_ui_element__WEBPACK_IMPORTED_MODULE_3__/* .UIElem
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -11024,7 +11082,7 @@ class ViewWithToolbar extends _view__WEBPACK_IMPORTED_MODULE_0__/* .View */ .G {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var View_1;
 
@@ -11102,10 +11160,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.24.2";
+        return "3.24.3";
     }
     static getVersion() {
-        return "3.24.2";
+        return "3.24.3";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -11128,7 +11186,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.24.2";
+        this.version = "3.24.3";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -11236,7 +11294,7 @@ View.defaultOptions = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -11310,7 +11368,7 @@ var decorators = __webpack_require__(67493);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 class FileBrowserItem {
@@ -11376,7 +11434,7 @@ class FileBrowserItem {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -11692,7 +11750,7 @@ var context_menu = __webpack_require__(60403);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -11711,7 +11769,7 @@ var ui = __webpack_require__(93801);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const map = new WeakMap();
 const elementsMap = (view) => {
@@ -11727,7 +11785,7 @@ const elementsMap = (view) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function loadItems(fb) {
     fb.files.setMod('active', true);
@@ -11752,7 +11810,7 @@ function loadItems(fb) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -11779,7 +11837,7 @@ async function loadTree(fb) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -11925,7 +11983,7 @@ var image_editor = __webpack_require__(99583);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function deleteFile(fb, name, source) {
     return fb.dataProvider
@@ -11940,7 +11998,7 @@ function deleteFile(fb, name, source) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -12101,7 +12159,7 @@ const CLASS_PREVIEW = 'jodit-filebrowser-preview', preview_tpl_next = (next = 'n
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -12196,7 +12254,7 @@ var checker = __webpack_require__(78411);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -12323,7 +12381,7 @@ function selfListeners() {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -12337,7 +12395,7 @@ class FileBrowserFiles extends ui/* UIGroup */.qe {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -12351,7 +12409,7 @@ class FileBrowserTree extends ui/* UIGroup */.qe {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -12372,7 +12430,7 @@ var human_size_to_bytes = __webpack_require__(6102);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -12678,7 +12736,7 @@ config/* Config.prototype.controls.filebrowser */.D.prototype.controls.filebrows
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -12935,7 +12993,7 @@ function isFileBrowserFilesItem(target) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -12971,7 +13029,7 @@ var ui = __webpack_require__(93801);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const jie = 'jodit-image-editor';
@@ -13057,7 +13115,7 @@ var icon = __webpack_require__(77904);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -13082,7 +13140,7 @@ icon/* Icon.set */.J.set('crop', __webpack_require__(3610)).set('resize', __webp
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var ImageEditor_1;
 
@@ -13717,7 +13775,7 @@ var messages = __webpack_require__(17832);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -14160,7 +14218,7 @@ Dialog = (0,tslib_es6/* __decorate */.gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -14190,7 +14248,7 @@ function Alert(msg, title, callback, className = 'jodit-dialog_alert') {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -14243,7 +14301,7 @@ var button_button = __webpack_require__(96031);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -14279,7 +14337,7 @@ function Confirm(msg, title, callback) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -14292,7 +14350,7 @@ var core_plugin = __webpack_require__(57549);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -14404,7 +14462,7 @@ class Create {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -14416,7 +14474,7 @@ var image_editor = __webpack_require__(99583);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -14580,7 +14638,7 @@ class Snapshot extends component/* ViewComponent */.Hr {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class Stack {
     constructor(size) {
@@ -14645,7 +14703,7 @@ class Stack {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class Command {
     undo() {
@@ -14666,7 +14724,7 @@ class Command {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -14824,7 +14882,7 @@ var checker = __webpack_require__(78411);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -14975,7 +15033,7 @@ var is_marker = __webpack_require__(37204);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15009,7 +15067,7 @@ function extractAndMove(wrapper, range, left) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15061,7 +15119,7 @@ function unwrapList(mode, list, li, jodit, cs) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15100,7 +15158,7 @@ var is_void = __webpack_require__(24021);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15146,7 +15204,7 @@ var assert = __webpack_require__(603);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15187,7 +15245,7 @@ class FiniteStateMachine {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15237,7 +15295,7 @@ function isSameStyleChild(commitStyle, elm) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15262,7 +15320,7 @@ function getSuitChild(style, font) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15294,7 +15352,7 @@ function getSuitParent(style, node, root) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function isInsideInvisibleElement(font, root) {
@@ -15305,7 +15363,7 @@ function isInsideInvisibleElement(font, root) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15339,7 +15397,7 @@ function elementsEqualAttributes(elm1, elm2) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15398,7 +15456,7 @@ function unwrapChildren(style, font) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15448,7 +15506,7 @@ function wrapUnwrappedText(style, elm, jodit) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15486,7 +15544,7 @@ function findOrCreateWrapper(commitStyle, font, jodit) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15508,7 +15566,7 @@ function findOrCreateWrapper(commitStyle, font, jodit) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15679,7 +15737,7 @@ const transactions = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15713,7 +15771,7 @@ function ApplyStyle(jodit, cs) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -15813,7 +15871,7 @@ var selection_helpers = __webpack_require__(80805);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -16724,7 +16782,7 @@ class Select {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -16735,7 +16793,7 @@ var traits = __webpack_require__(72452);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -16820,7 +16878,7 @@ var content = __webpack_require__(34375);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -16829,7 +16887,7 @@ var content = __webpack_require__(34375);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -16863,7 +16921,7 @@ function processOldBrowserDrag(self, cData, handlerSuccess, handlerError, onFina
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function buildData(uploader, data) {
@@ -16891,7 +16949,7 @@ function buildData(uploader, data) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -16965,7 +17023,7 @@ function send(uploader, data) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -17072,7 +17130,7 @@ function send_files_sendFiles(uploader, files, handlerSuccess, handlerError, pro
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -17094,7 +17152,7 @@ var is_jodit_object = __webpack_require__(77892);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -17175,7 +17233,7 @@ config/* Config.prototype.uploader */.D.prototype.uploader = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -17338,7 +17396,7 @@ var plugin_system = __webpack_require__(44540);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -17397,7 +17455,7 @@ var ui = __webpack_require__(93801);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -17422,7 +17480,7 @@ UIMessage = (0,tslib_es6/* __decorate */.gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -17528,7 +17586,7 @@ UIMessages = (0,tslib_es6/* __decorate */.gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -18129,7 +18187,7 @@ const instance = (j) => j.getInstance('Table', j.o);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -18513,7 +18571,7 @@ ToolbarButton = (0,tslib__WEBPACK_IMPORTED_MODULE_10__/* .__decorate */ .gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -18567,7 +18625,7 @@ ToolbarContent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -18676,7 +18734,7 @@ ToolbarCollection = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)(
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -18803,7 +18861,7 @@ ToolbarEditorCollection = (0,tslib__WEBPACK_IMPORTED_MODULE_5__/* .__decorate */
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -18859,7 +18917,7 @@ var dom = __webpack_require__(64968);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -18939,7 +18997,7 @@ var dom_dom = __webpack_require__(24263);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -19030,7 +19088,7 @@ const TabsWidget = (jodit, tabs, state) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -19130,7 +19188,7 @@ const FileSelectorWidget = (editor, callbacks, elm, close, isImage = true) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -19168,7 +19226,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const ar = __webpack_require__(80078);
 const cs_cz = __webpack_require__(16986);
@@ -19202,7 +19260,7 @@ const zh_tw = __webpack_require__(28765);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /* harmony default export */ __webpack_exports__["Z"] = ([
@@ -19239,7 +19297,7 @@ const zh_tw = __webpack_require__(28765);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -19373,7 +19431,7 @@ const cmd = (control) => control.args && (0,jodit_core_helpers_checker__WEBPACK_
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /* harmony default export */ __webpack_exports__["Z"] = ([
@@ -19404,7 +19462,7 @@ const cmd = (control) => control.args && (0,jodit_core_helpers_checker__WEBPACK_
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -19483,7 +19541,7 @@ const align = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 /* harmony default export */ __webpack_exports__["Z"] = ([
     'bold',
@@ -19545,7 +19603,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const ar = __webpack_require__(47762);
 const cs_cz = __webpack_require__(97495);
@@ -19600,7 +19658,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const ar = __webpack_require__(5586);
 const cs_cz = __webpack_require__(66023);
@@ -19655,7 +19713,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 const ar = __webpack_require__(54261);
 const cs_cz = __webpack_require__(60425);
@@ -19687,7 +19745,7 @@ const zh_tw = __webpack_require__(32210);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19703,7 +19761,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19719,7 +19777,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19735,7 +19793,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19751,7 +19809,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19767,7 +19825,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19783,7 +19841,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19799,7 +19857,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19815,7 +19873,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19831,7 +19889,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19847,7 +19905,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19863,7 +19921,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19879,7 +19937,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19895,7 +19953,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19911,7 +19969,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19927,7 +19985,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19943,7 +20001,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19959,7 +20017,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19975,7 +20033,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -19991,7 +20049,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20007,7 +20065,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20023,7 +20081,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20039,7 +20097,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20055,7 +20113,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20071,7 +20129,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20087,7 +20145,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20103,7 +20161,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20119,7 +20177,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20135,7 +20193,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20151,7 +20209,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20167,7 +20225,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20183,7 +20241,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20199,7 +20257,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20215,7 +20273,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20231,7 +20289,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20247,7 +20305,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20263,7 +20321,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20279,7 +20337,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20295,7 +20353,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20311,7 +20369,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20327,7 +20385,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20343,7 +20401,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20359,7 +20417,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20375,7 +20433,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20391,7 +20449,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20407,7 +20465,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20423,7 +20481,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20439,7 +20497,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20455,7 +20513,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20471,7 +20529,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20487,7 +20545,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20503,7 +20561,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20519,7 +20577,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20535,7 +20593,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20551,7 +20609,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20567,7 +20625,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20583,7 +20641,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20599,7 +20657,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20615,7 +20673,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20631,7 +20689,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20647,7 +20705,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20663,7 +20721,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20679,7 +20737,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20695,7 +20753,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20711,7 +20769,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20727,7 +20785,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20743,7 +20801,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20759,7 +20817,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20775,7 +20833,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20791,7 +20849,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20807,7 +20865,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20823,7 +20881,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20839,7 +20897,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20855,7 +20913,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20871,7 +20929,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -20887,7 +20945,7 @@ module.exports = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 module.exports = {
@@ -21162,7 +21220,7 @@ var request = __webpack_require__(12709);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 var Jodit_1;
 
@@ -22097,7 +22155,7 @@ var checker = __webpack_require__(78411);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 let exp = {};
@@ -22222,7 +22280,7 @@ var valign = __webpack_require__(2304);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22259,7 +22317,7 @@ var icon = __webpack_require__(77904);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22311,7 +22369,7 @@ var ui = __webpack_require__(93801);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22332,7 +22390,7 @@ ui/* Icon.set */.JO.set('enter', __webpack_require__(11257));
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22555,7 +22613,7 @@ var utils = __webpack_require__(67309);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function findMostNestedNeighbor(node, right, root, onlyInlide = false) {
@@ -22584,7 +22642,7 @@ function getMoveFilter(jodit) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22612,7 +22670,7 @@ function checkJoinTwoLists(jodit, fakeNode, backspace) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22655,7 +22713,7 @@ function checkRemoveEmptyParent(jodit, fakeNode, backspace) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22682,7 +22740,7 @@ function checkRemoveUnbreakableElement(jodit, fakeNode, backspace) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22709,7 +22767,7 @@ function checkRemoveContentNotEditable(jodit, fakeNode, backspace) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22835,7 +22893,7 @@ function addBRInsideEmptyBlock(jodit, node) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function checkTableCell(jodit, fakeNode) {
@@ -22850,7 +22908,7 @@ function checkTableCell(jodit, fakeNode) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function checkRemoveEmptyNeighbor(jodit, fakeNode, backspace) {
@@ -22871,7 +22929,7 @@ function checkRemoveEmptyNeighbor(jodit, fakeNode, backspace) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22929,7 +22987,7 @@ var helpers_utils = __webpack_require__(76502);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22958,7 +23016,7 @@ function checkUnwrapFirstListItem(jodit, fakeNode, backspace) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -22985,7 +23043,7 @@ const cases = [
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 function checkNotCollapsed(jodit) {
     if (!jodit.s.isCollapsed()) {
@@ -22999,7 +23057,7 @@ function checkNotCollapsed(jodit) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.delete */.D.prototype["delete"] = {
@@ -23017,7 +23075,7 @@ config/* Config.prototype.delete */.D.prototype["delete"] = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23158,7 +23216,7 @@ global/* pluginSystem.add */.pw.add('backspace', backspace);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.controls.subscript */.D.prototype.controls.subscript = {
@@ -23206,7 +23264,7 @@ config/* Config.prototype.controls.strikethrough */.D.prototype.controls.striket
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23281,7 +23339,7 @@ icon/* Icon.set */.J.set('bold', __webpack_require__(25141))
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23369,7 +23427,7 @@ var is_string = __webpack_require__(24421);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23416,7 +23474,7 @@ function getHash(tags) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23455,7 +23513,7 @@ function isInlineBlock(node) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23506,7 +23564,7 @@ function removeFormatForSelection(jodit) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function replaceOldTags(jodit, nodeElm, hadEffect) {
@@ -23532,7 +23590,7 @@ function replaceIfMatched(jodit, oldParent, list) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function allowAttributes(jodit, nodeElm, hadEffect, allow) {
@@ -23561,7 +23619,7 @@ function allowAttributes(jodit, nodeElm, hadEffect, allow) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23580,7 +23638,7 @@ function fillEmptyParagraph(jodit, nodeElm, hadEffect) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23609,7 +23667,7 @@ function isRemovableNode(jodit, node, current, allow, deny) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function removeEmptyTextNode(jodit, node, hadEffect, arg, argi, currentNode) {
@@ -23627,7 +23685,7 @@ function removeEmptyTextNode(jodit, node, hadEffect, arg, argi, currentNode) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23652,7 +23710,7 @@ function removeInvTextNodes(jodit, node, hadEffect, arg, argi, currentNode) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23671,7 +23729,7 @@ function sanitizeAttributes(jodit, nodeElm, hadEffect) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23685,7 +23743,7 @@ function sanitizeAttributes(jodit, nodeElm, hadEffect) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const visit_node_walker_keys = Object.keys(filters_namespaceObject);
@@ -23711,7 +23769,7 @@ function visitNodeWalker(jodit, nodeElm, allowTags, denyTags, currentSelectionNo
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23722,7 +23780,7 @@ function visitNodeWalker(jodit, nodeElm, allowTags, denyTags, currentSelectionNo
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23752,7 +23810,7 @@ icon/* Icon.set */.J.set('eraser', __webpack_require__(66911));
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23853,7 +23911,7 @@ global/* pluginSystem.add */.pw.add('cleanHtml', cleanHtml);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23881,7 +23939,7 @@ icon/* Icon.set */.J.set('copy', __webpack_require__(50018))
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -23951,7 +24009,7 @@ var widget = __webpack_require__(74331);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24070,7 +24128,7 @@ config/* Config.prototype.controls.brush */.D.prototype.controls.brush = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24109,7 +24167,7 @@ var css = __webpack_require__(26911);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24215,7 +24273,7 @@ var file_browser = __webpack_require__(8649);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24380,7 +24438,7 @@ global/* pluginSystem.add */.pw.add('dragAndDrop', dragAndDrop);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.draggableTags */.D.prototype.draggableTags = ['img', 'jodit-media', 'jodit'];
@@ -24389,7 +24447,7 @@ config/* Config.prototype.draggableTags */.D.prototype.draggableTags = ['img', '
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24567,7 +24625,7 @@ var scroll_into_view = __webpack_require__(9005);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24597,7 +24655,7 @@ function checkBR(jodit, current, shiftKeyPressed) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function checkUnsplittableBox(jodit, currentBox) {
@@ -24617,7 +24675,7 @@ var selector = __webpack_require__(54188);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24648,7 +24706,7 @@ function insertParagraph(editor, fake, wrapperTag, style) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24686,7 +24744,7 @@ function processEmptyLILeaf(jodit, li) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24713,7 +24771,7 @@ function getBlockWrapper(jodit, current, tagReg = constants.IS_BLOCK) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function hasPreviousBlock(jodit, current) {
@@ -24724,7 +24782,7 @@ function hasPreviousBlock(jodit, current) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24758,7 +24816,7 @@ function splitFragment(jodit, currentBox) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function wrapText(jodit, current) {
@@ -24781,7 +24839,7 @@ function wrapText(jodit, current) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function moveCursorOutFromSpecialTags(jodit, current, tags) {
@@ -24801,7 +24859,7 @@ function moveCursorOutFromSpecialTags(jodit, current, tags) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24817,7 +24875,7 @@ function moveCursorOutFromSpecialTags(jodit, current, tags) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24909,7 +24967,7 @@ global/* pluginSystem.add */.pw.add('enter', enter);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -24962,7 +25020,7 @@ global/* pluginSystem.add */.pw.add('file', file_file);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -25025,7 +25083,7 @@ global/* pluginSystem.add */.pw.add('focus', focus_focus);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -25126,7 +25184,7 @@ config/* Config.prototype.controls.font */.D.prototype.controls.font = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -25167,7 +25225,7 @@ global/* pluginSystem.add */.pw.add('font', font);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -25258,7 +25316,7 @@ var is_jodit_object = __webpack_require__(77892);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -25289,7 +25347,7 @@ config/* Config.prototype.controls.fullsize */.D.prototype.controls.fullsize = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -25378,7 +25436,7 @@ global/* pluginSystem.add */.pw.add('fullsize', fullsize);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.commandToHotkeys */.D.prototype.commandToHotkeys = {
@@ -25392,7 +25450,7 @@ config/* Config.prototype.commandToHotkeys */.D.prototype.commandToHotkeys = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -25531,7 +25589,7 @@ global/* pluginSystem.add */.pw.add('hotkeys', hotkeys);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -25571,7 +25629,7 @@ global/* pluginSystem.add */.pw.add('hr', hr);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.iframeBaseUrl */.D.prototype.iframeBaseUrl = '';
@@ -25650,7 +25708,7 @@ config/* Config.prototype.iframeCSSLinks */.D.prototype.iframeCSSLinks = [];
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -25824,7 +25882,7 @@ global/* pluginSystem.add */.pw.add('iframe', iframe);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -25883,7 +25941,7 @@ global/* pluginSystem.add */.pw.add('image', image_image);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.imageProcessor */.D.prototype.imageProcessor = {
@@ -25894,7 +25952,7 @@ config/* Config.prototype.imageProcessor */.D.prototype.imageProcessor = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -26007,7 +26065,7 @@ var image_editor = __webpack_require__(99583);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function form_form(editor) {
@@ -26035,7 +26093,7 @@ function form_form(editor) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function mainTab(editor) {
@@ -26084,7 +26142,7 @@ function mainTab(editor) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function positionTab(editor) {
@@ -26152,7 +26210,7 @@ function positionTab(editor) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.image */.D.prototype.image = {
@@ -26179,7 +26237,7 @@ config/* Config.prototype.image */.D.prototype.image = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -26633,7 +26691,7 @@ global/* pluginSystem.add */.pw.add('imageProperties', imageProperties);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 const getKey = (direction, box) => `${dom_dom/* Dom.isCell */.i.isCell(box) ? 'padding' : 'margin'}${direction === 'rtl' ? 'Right' : 'Left'}`;
@@ -26642,7 +26700,7 @@ const getKey = (direction, box) => `${dom_dom/* Dom.isCell */.i.isCell(box) ? 'p
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -26673,7 +26731,7 @@ config/* Config.prototype.indentMargin */.D.prototype.indentMargin = 10;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -26744,7 +26802,7 @@ var popup = __webpack_require__(35799);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -26791,7 +26849,7 @@ config/* Config.prototype.popup */.D.prototype.popup = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27012,7 +27070,7 @@ var align = __webpack_require__(60303);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27120,7 +27178,7 @@ global/* pluginSystem.add */.pw.add('justify', justify);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27158,7 +27216,7 @@ global/* pluginSystem.add */.pw.add('keyArrowOutside', keyArrowOutside);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.limitWords */.D.prototype.limitWords = false;
@@ -27169,7 +27227,7 @@ config/* Config.prototype.limitHTML */.D.prototype.limitHTML = false;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27256,7 +27314,7 @@ global/* pluginSystem.add */.pw.add('limit', limit);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27275,7 +27333,7 @@ config/* Config.prototype.controls.lineHeight */.D.prototype.controls.lineHeight
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27351,7 +27409,7 @@ var ui_form = __webpack_require__(80567);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27437,7 +27495,7 @@ const formTemplate = (editor) => {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27484,7 +27542,7 @@ config/* Config.prototype.controls.link */.D.prototype.controls.link = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27782,7 +27840,7 @@ global/* pluginSystem.add */.pw.add('link', link_link);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.mediaFakeTag */.D.prototype.mediaFakeTag = 'jodit-media';
@@ -27793,7 +27851,7 @@ config/* Config.prototype.mediaBlocks */.D.prototype.mediaBlocks = ['video', 'au
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27864,7 +27922,7 @@ var collection = __webpack_require__(72719);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27905,7 +27963,7 @@ config/* Config.prototype.controls.dots */.D.prototype.controls.dots = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -27976,7 +28034,7 @@ var data_bind = __webpack_require__(63122);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -28020,7 +28078,7 @@ config/* Config.prototype.controls.ol */.D.prototype.controls.ol = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -28068,7 +28126,7 @@ var button_button = __webpack_require__(96031);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -28155,7 +28213,7 @@ function askInsertTypeDialog(jodit, msg, title, callback, buttonList) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -28233,7 +28291,7 @@ config/* Config.prototype.controls.paste */.D.prototype.controls.paste = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -28374,7 +28432,7 @@ global/* pluginSystem.add */.pw.add('paste', paste);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -28391,7 +28449,7 @@ config/* Config.prototype.pasteFromWordActionList */.D.prototype.pasteFromWordAc
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -28456,7 +28514,7 @@ global/* pluginSystem.add */.pw.add('pasteFromWord', pasteFromWord);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -28622,7 +28680,7 @@ var is_marker = __webpack_require__(37204);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.showPlaceholder */.D.prototype.showPlaceholder = true;
@@ -28633,7 +28691,7 @@ config/* Config.prototype.useInputsPlaceholder */.D.prototype.useInputsPlacehold
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -28782,7 +28840,7 @@ global/* pluginSystem.add */.pw.add('placeholder', placeholder);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function poweredByJodit(jodit) {
@@ -28812,7 +28870,7 @@ var print = __webpack_require__(21498);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -28848,7 +28906,7 @@ var to_array = __webpack_require__(1853);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function generateCriticalCSS(jodit) {
@@ -28948,7 +29006,7 @@ function generateCriticalCSS(jodit) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -29019,7 +29077,7 @@ global/* pluginSystem.add */.pw.add('print', print_print);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -29074,7 +29132,7 @@ global/* pluginSystem.add */.pw.add('redoUndo', redoUndo);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.tableAllowCellResize */.D.prototype.tableAllowCellResize = true;
@@ -29083,7 +29141,7 @@ config/* Config.prototype.tableAllowCellResize */.D.prototype.tableAllowCellResi
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -29345,7 +29403,7 @@ global/* pluginSystem.add */.pw.add('resizeCells', resizeCells);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.allowResizeX */.D.prototype.allowResizeX = false;
@@ -29355,7 +29413,7 @@ config/* Config.prototype.allowResizeY */.D.prototype.allowResizeY = true;
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -29441,7 +29499,7 @@ global/* pluginSystem.add */.pw.add('resizeHandler', resizeHandler);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.allowResizeTags */.D.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
@@ -29458,7 +29516,7 @@ config/* Config.prototype.resizer */.D.prototype.resizer = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -29885,7 +29943,7 @@ global/* pluginSystem.add */.pw.add('resizer', resizer);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -30087,7 +30145,7 @@ var fuzzy_search_index = __webpack_require__(93163);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 class SentenceFinder {
@@ -30149,7 +30207,7 @@ class SentenceFinder {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -30233,7 +30291,7 @@ function isSelectionWrapper(node) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -30242,7 +30300,7 @@ function isSelectionWrapper(node) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -30284,7 +30342,7 @@ config/* Config.prototype.controls.find */.D.prototype.controls.find = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -30614,7 +30672,7 @@ var camel_case = __webpack_require__(26596);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.select */.D.prototype.select = {
@@ -30625,7 +30683,7 @@ config/* Config.prototype.select */.D.prototype.select = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -30718,7 +30776,7 @@ global/* pluginSystem.add */.pw.add('select', select_select);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.tableAllowCellSelection */.D.prototype.tableAllowCellSelection = true;
@@ -30727,7 +30785,7 @@ config/* Config.prototype.tableAllowCellSelection */.D.prototype.tableAllowCellS
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -31016,7 +31074,7 @@ global/* pluginSystem.add */.pw.add('selectCells', selectCells);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.minWidth */.D.prototype.minWidth = 200;
@@ -31029,7 +31087,7 @@ config/* Config.prototype.saveHeightInStorage */.D.prototype.saveHeightInStorage
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -31160,7 +31218,7 @@ global/* pluginSystem.add */.pw.add('size', size);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 class SourceEditor {
     constructor(jodit, container, toWYSIWYG, fromWYSIWYG) {
@@ -31194,7 +31252,7 @@ class SourceEditor {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -31299,7 +31357,7 @@ class TextAreaEditor extends SourceEditor {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -31505,7 +31563,7 @@ class AceEditor extends SourceEditor {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -31514,7 +31572,7 @@ class AceEditor extends SourceEditor {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -31545,7 +31603,7 @@ function createSourceEditor(type, editor, container, toWYSIWYG, fromWYSIWYG) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -31582,7 +31640,7 @@ config/* Config.prototype.controls.source */.D.prototype.controls.source = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -31887,7 +31945,7 @@ global/* pluginSystem.add */.pw.add('source', source);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -31907,7 +31965,7 @@ config/* Config.prototype.controls.spellcheck */.D.prototype.controls.spellcheck
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -31949,7 +32007,7 @@ global/* pluginSystem.add */.pw.add('spellcheck', spellcheck);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.showCharsCounter */.D.prototype.showCharsCounter = true;
@@ -31960,7 +32018,7 @@ config/* Config.prototype.showWordsCounter */.D.prototype.showWordsCounter = tru
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -32018,7 +32076,7 @@ global/* pluginSystem.add */.pw.add('stat', stat);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.toolbarSticky */.D.prototype.toolbarSticky = true;
@@ -32029,7 +32087,7 @@ config/* Config.prototype.toolbarStickyOffset */.D.prototype.toolbarStickyOffset
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -32120,7 +32178,7 @@ global/* pluginSystem.add */.pw.add('sticky', sticky);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -32366,7 +32424,7 @@ config/* Config.prototype.controls.symbols */.D.prototype.controls.symbols = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -32492,7 +32550,7 @@ var assert = __webpack_require__(603);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -32594,7 +32652,7 @@ function removeNestedList(jodit, list, li) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -32602,7 +32660,7 @@ function removeNestedList(jodit, list, li) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.tab */.D.prototype.tab = {
@@ -32613,7 +32671,7 @@ config/* Config.prototype.tab */.D.prototype.tab = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -32656,7 +32714,7 @@ global/* pluginSystem.add */.pw.add('tab', tab);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -32801,7 +32859,7 @@ config/* Config.prototype.controls.table */.D.prototype.controls.table = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -32820,7 +32878,7 @@ var table_table = __webpack_require__(25120);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -32936,7 +32994,7 @@ global/* pluginSystem.add */.pw.add('tableKeyboardNavigation', tableKeyboardNavi
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -33002,7 +33060,7 @@ config/* Config.prototype.controls.video */.D.prototype.controls.video = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -33018,7 +33076,7 @@ global/* pluginSystem.add */.pw.add('video', video);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.wrapNodes */.D.prototype.wrapNodes = {
@@ -33030,7 +33088,7 @@ config/* Config.prototype.wrapNodes */.D.prototype.wrapNodes = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -33144,7 +33202,7 @@ var watch = __webpack_require__(46163);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.dtd */.D.prototype.dtd = {
@@ -33185,7 +33243,7 @@ config/* Config.prototype.dtd */.D.prototype.dtd = {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function checkBlockNesting(jodit, node) {
@@ -33207,7 +33265,7 @@ function checkBlockNesting(jodit, node) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -33215,7 +33273,7 @@ function checkBlockNesting(jodit, node) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 function removeExtraBr(jodit, node) {
@@ -33239,7 +33297,7 @@ function removeExtraBr(jodit, node) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -33247,7 +33305,7 @@ function removeExtraBr(jodit, node) {
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -33286,7 +33344,7 @@ var context_menu = __webpack_require__(60403);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 config/* Config.prototype.showXPathInStatusbar */.D.prototype.showXPathInStatusbar = true;
@@ -33295,7 +33353,7 @@ config/* Config.prototype.showXPathInStatusbar */.D.prototype.showXPathInStatusb
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -33446,7 +33504,7 @@ global/* pluginSystem.add */.pw.add('xpath', xpath);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 
@@ -33513,7 +33571,7 @@ global/* pluginSystem.add */.pw.add('xpath', xpath);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2022 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 if (false) {}
