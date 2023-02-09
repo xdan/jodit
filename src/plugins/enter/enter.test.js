@@ -527,14 +527,12 @@ describe('Enter behavior Tests', function () {
 				describe('In the start', function () {
 					it('should add new P element before blockquote', function () {
 						const editor = getJodit({
-							disablePlugins: ['paste-code']
+							disablePlugins: ['paste-code'] // For PRO version
 						});
 
-						editor.value = '<blockquote>test</blockquote>';
+						editor.value = '<blockquote>|test</blockquote>';
 
-						editor.s
-							.createRange(true)
-							.setStart(editor.editor.firstChild.firstChild, 0);
+						setCursorToChar(editor);
 
 						simulateEvent(
 							'keydown',
@@ -547,8 +545,10 @@ describe('Enter behavior Tests', function () {
 
 						editor.s.insertNode(editor.createInside.text('split '));
 
+						replaceCursorToChar(editor);
+
 						expect(editor.value).equals(
-							'<p><br></p><blockquote>split test</blockquote>'
+							'<p><br></p><blockquote>split |test</blockquote>'
 						);
 					});
 				});
@@ -935,8 +935,8 @@ describe('Enter behavior Tests', function () {
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 					editor.s.insertNode(editor.createInside.text(' a '));
-
-					expect(editor.value).equals('Some text<br><br><br> a <br>');
+					replaceCursorToChar(editor);
+					expect(editor.value).equals('Some text<br><br><br> a |<br>');
 				});
 			});
 		});
@@ -980,9 +980,49 @@ describe('Enter behavior Tests', function () {
 			});
 		});
 
+		describe('After table', function () {
+			it('Should add P directly after table', function () {
+				const editor = getJodit();
+
+				editor.value =
+					'<p>test</p><table><tbody><tr><td>table</td></tr></tbody></table><p>pop</p><p>tost</p>';
+
+				const range = editor.s.range;
+				range.setStartAfter(editor.editor.querySelector('table'));
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+				replaceCursorToChar(editor);
+
+				expect(sortAttributes(editor.value)).equals(
+					'<p>test</p>' +
+						'<table><tbody><tr><td>table</td></tr></tbody></table>' +
+						'<p>|<br></p>' +
+						'<p>pop</p>' +
+						'<p>tost</p>'
+				);
+			});
+		});
+
 		describe('Cases', () => {
 			[
+				['<pre>|test</pre>', '<pre><br>|test</pre>'],
+				[
+					'<pre>|test</pre>',
+					'<p><br></p><pre>|test</pre>',
+					undefined,
+					opt => {
+						opt.shiftKey = true;
+					}
+				],
+				['<pre>test<br><br>|</pre>', '<pre>test</pre><p>|<br></p>'],
 				['test|', 'test<br>|<br>', { enter: 'br' }],
+				[
+					'<p>test</p><table><tbody><tr><td>table</td></tr></tbody></table>|<p>pop</p><p>tost</p>',
+					'<p>test</p><table><tbody><tr><td>table</td></tr></tbody></table><p>|<br></p><p>pop</p><p>tost</p>',
+					{ disablePlugins: ['WrapNodes'] }
+				],
 				['<p>test|</p>', '<p>test</p><p>|<br></p>'],
 				[
 					'<p><a href="#index">test|</a></p>',
@@ -1033,7 +1073,7 @@ describe('Enter behavior Tests', function () {
 					'<ul><li>1</li><li><ul><li>2</li></ul></li><li>|<br></li></ul>',
 					'<ul><li>1</li><li><ul><li>2</li></ul></li></ul><p>|<br></p>'
 				]
-			].forEach(([source, result, options]) => {
+			].forEach(([source, result, options, mod]) => {
 				describe('For source: ' + source, () => {
 					it('Should be result: ' + result, () => {
 						const editor = getJodit(options);
@@ -1042,7 +1082,8 @@ describe('Enter behavior Tests', function () {
 						simulateEvent(
 							'keydown',
 							Jodit.KEY_ENTER,
-							editor.editor
+							editor.editor,
+							mod
 						);
 						replaceCursorToChar(editor);
 						expect(editor.value).eq(result);

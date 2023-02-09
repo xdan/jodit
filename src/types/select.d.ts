@@ -59,10 +59,17 @@ export interface ISelect {
 	isCollapsed(): boolean;
 	cursorInTheEdge(
 		start: boolean,
-		parentBlock: HTMLElement
+		parentBlock: HTMLElement,
+		fake?: Node | null
 	): Nullable<boolean>;
-	cursorOnTheLeft(parentBlock: HTMLElement): Nullable<boolean>;
-	cursorOnTheRight(parentBlock: HTMLElement): Nullable<boolean>;
+	cursorOnTheLeft(
+		parentBlock: HTMLElement,
+		fake?: Node | null
+	): Nullable<boolean>;
+	cursorOnTheRight(
+		parentBlock: HTMLElement,
+		fake?: Node | null
+	): Nullable<boolean>;
 
 	expandSelection(): ISelect;
 	insertCursorAtPoint(x: number, y: number): boolean;
@@ -95,5 +102,5 @@ export interface ISelect {
 	commitStyle(options: IStyleOptions): void;
 
 	eachSelection(callback: (current: Node) => void): void;
-	splitSelection(currentBox: HTMLElement): Nullable<Element>;
+	splitSelection(currentBox: HTMLElement, edge?: Node): Nullable<Element>;
 }

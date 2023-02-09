@@ -261,11 +261,15 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 			}
 
 			switch (btn) {
+				case 'filebrowser.upload':
+					return this.dataProvider.canI('FileUpload');
+
 				case 'filebrowser.edit':
 					return (
 						this.dataProvider.canI('ImageResize') ||
 						this.dataProvider.canI('ImageCrop')
 					);
+
 				case 'filebrowser.remove':
 					return this.dataProvider.canI('FileRemove');
 			}

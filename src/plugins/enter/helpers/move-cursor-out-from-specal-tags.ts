@@ -8,7 +8,7 @@
  * @module plugins/enter
  */
 
-import type { IJodit, Nullable, HTMLTagNames } from 'jodit/types';
+import type { IJodit, HTMLTagNames } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 
 /**
@@ -16,17 +16,18 @@ import { Dom } from 'jodit/core/dom/dom';
  */
 export function moveCursorOutFromSpecialTags(
 	jodit: IJodit,
-	current: Nullable<Node>,
+	fake: Text,
 	tags: HTMLTagNames[]
 ): void {
 	const { s } = jodit;
 
-	const link = Dom.closest(current, tags, jodit.editor);
+	const link = Dom.closest(fake, tags, jodit.editor);
+
 	if (link) {
-		if (s.cursorOnTheRight(link)) {
-			s.setCursorAfter(link);
-		} else if (s.cursorOnTheLeft(link)) {
-			s.setCursorBefore(link);
+		if (s.cursorOnTheRight(link, fake)) {
+			Dom.after(link, fake);
+		} else if (s.cursorOnTheLeft(link, fake)) {
+			Dom.before(link, fake);
 		}
 	}
 }

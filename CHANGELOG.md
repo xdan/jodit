@@ -9,6 +9,12 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 3.24.5
+
+#### :bug: Bug Fix
+
+-   [Wrong new empty paragraph location when cursor is set after a table and <Enter> key is pressed #953](https://github.com/xdan/jodit/issues/953)
+
 ## 3.24.4
 
 #### :boom: Breaking Change
@@ -21,43 +27,44 @@ Before:
 
 ```js
 Jodit.make('#editor', {
-  filebrowser: {
-    createNewFolder: false,
-    deleteFolder: false,
-    renameFolder: false,
-    moveFolder: false,
-    moveFile: false,
-    editImage: false,
-    ajax: {
-      url: 'https://xdsoft.net/jodit/finder/'
-    }
-  },
+	filebrowser: {
+		createNewFolder: false,
+		deleteFolder: false,
+		renameFolder: false,
+		moveFolder: false,
+		moveFile: false,
+		editImage: false,
+		ajax: {
+			url: 'https://xdsoft.net/jodit/finder/'
+		}
+	}
 });
 ```
 
 Now
+
 ```js
 Jodit.make('#editor', {
-  filebrowser: {
-    permissionsPresets: {
-      allowFiles: false,
-      allowFileMove: false,
-      allowFileUpload: false,
-      allowFileUploadRemote: false,
-      allowFileRemove: false,
-      allowFileRename: false,
-      allowFolders: false,
-      allowFolderCreate: false,
-      allowFolderMove: false,
-      allowFolderRemove: false,
-      allowFolderRename: false,
-      allowImageResize: false,
-      allowImageCrop: false,
-    },
-    ajax: {
-      url: 'https://xdsoft.net/jodit/finder/'
-    }
-  },
+	filebrowser: {
+		permissionsPresets: {
+			allowFiles: false,
+			allowFileMove: false,
+			allowFileUpload: false,
+			allowFileUploadRemote: false,
+			allowFileRemove: false,
+			allowFileRename: false,
+			allowFolders: false,
+			allowFolderCreate: false,
+			allowFolderMove: false,
+			allowFolderRemove: false,
+			allowFolderRename: false,
+			allowImageResize: false,
+			allowImageCrop: false
+		},
+		ajax: {
+			url: 'https://xdsoft.net/jodit/finder/'
+		}
+	}
 });
 ```
 
@@ -1976,11 +1983,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ]
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

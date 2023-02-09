@@ -18,14 +18,12 @@ import { BR } from 'jodit/core/constants';
  * @private
  */
 export function checkBR(
+	fake: Text,
 	jodit: IJodit,
-	current: Node,
 	shiftKeyPressed?: boolean
 ): boolean {
-	const isMultiLineBlock = Dom.closest(
-		current,
-		['pre', 'blockquote'],
-		jodit.editor
+	const isMultiLineBlock = Boolean(
+		Dom.closest(fake, ['pre', 'blockquote'], jodit.editor)
 	);
 
 	const isBRMode = jodit.o.enter.toLowerCase() === BR.toLowerCase();
@@ -36,22 +34,49 @@ export function checkBR(
 		(shiftKeyPressed && !isMultiLineBlock) ||
 		(!shiftKeyPressed && isMultiLineBlock)
 	) {
-		const br = jodit.createInside.element('br');
-
-		jodit.s.insertNode(br, false, false);
-
-		if (!Dom.findNotEmptySibling(br, false)) {
-			Dom.after(br, br.cloneNode());
+		// 2 BR before
+		if (isMultiLineBlock && checkSeveralBR(fake)) {
+			return false;
 		}
 
-		const range = jodit.s.range;
-		range.setStartAfter(br);
-		range.collapse(true);
-		jodit.s.selectRange(range);
+		const br = jodit.createInside.element('br');
+		Dom.before(fake, br);
+
+		if (!Dom.findNotEmptySibling(br, false)) {
+			const clone = br.cloneNode();
+			Dom.after(br, clone);
+			Dom.before(clone, fake);
+		}
+
 		scrollIntoViewIfNeeded(br, jodit.editor, jodit.ed);
 
+		return true;
+	}
+
+	return false;
+}
+
+function checkSeveralBR(fake: Text): boolean {
+	// 2 BR before
+	const preBr = brBefore(brBefore(fake));
+	if (preBr) {
+		Dom.safeRemove(brBefore(fake));
+		Dom.safeRemove(preBr);
+		return true;
+	}
+
+	return false;
+}
+
+function brBefore(start: Node | false): Node | false {
+	if (!start) {
 		return false;
 	}
 
-	return true;
+	const prev = Dom.findSibling(start, true);
+	if (!prev || !Dom.isTag(prev, 'br')) {
+		return false;
+	}
+
+	return prev;
 }

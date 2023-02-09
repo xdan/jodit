@@ -897,22 +897,21 @@ export class Select implements ISelect {
 	 *
 	 * @param  start - true - check whether the cursor is at the start block
 	 * @param parentBlock - Find in this
+	 * @param fake - Node for cursor position
 	 *
 	 * @returns true - the cursor is at the end(start) block, null - cursor somewhere outside
 	 */
 	cursorInTheEdge(
 		start: boolean,
-		parentBlock: HTMLElement
+		parentBlock: HTMLElement,
+		fake: Node | null = null
 	): Nullable<boolean> {
 		const end = !start,
-			range = this.sel?.getRangeAt(0),
-			current = this.current(false);
+			range = this.sel?.getRangeAt(0);
 
-		if (
-			!range ||
-			!current ||
-			!Dom.isOrContains(parentBlock, current, true)
-		) {
+		fake ??= this.current(false);
+
+		if (!range || !fake || !Dom.isOrContains(parentBlock, fake, true)) {
 			return null;
 		}
 
@@ -961,7 +960,7 @@ export class Select implements ISelect {
 			}
 		}
 
-		let next: Nullable<Node> = current;
+		let next: Nullable<Node> = fake;
 
 		while (next && next !== parentBlock) {
 			const nextOne = Dom.sibling(next, start);
@@ -982,15 +981,21 @@ export class Select implements ISelect {
 	/**
 	 * Wrapper for cursorInTheEdge
 	 */
-	cursorOnTheLeft(parentBlock: HTMLElement): Nullable<boolean> {
-		return this.cursorInTheEdge(true, parentBlock);
+	cursorOnTheLeft(
+		parentBlock: HTMLElement,
+		fake?: Node | null
+	): Nullable<boolean> {
+		return this.cursorInTheEdge(true, parentBlock, fake);
 	}
 
 	/**
 	 * Wrapper for cursorInTheEdge
 	 */
-	cursorOnTheRight(parentBlock: HTMLElement): Nullable<boolean> {
-		return this.cursorInTheEdge(false, parentBlock);
+	cursorOnTheRight(
+		parentBlock: HTMLElement,
+		fake?: Node | null
+	): Nullable<boolean> {
+		return this.cursorInTheEdge(false, parentBlock, fake);
 	}
 
 	/**
@@ -1360,7 +1365,7 @@ export class Select implements ISelect {
 	/**
 	 * Split selection on two parts: left and right
 	 */
-	splitSelection(currentBox: HTMLElement): Nullable<Element> {
+	splitSelection(currentBox: HTMLElement, edge?: Node): Nullable<Element> {
 		if (!this.isCollapsed()) {
 			return null;
 		}
@@ -1370,16 +1375,20 @@ export class Select implements ISelect {
 
 		leftRange.setStartBefore(currentBox);
 
-		const cursorOnTheRight = this.cursorOnTheRight(currentBox);
-		const cursorOnTheLeft = this.cursorOnTheLeft(currentBox);
+		const cursorOnTheRight = this.cursorOnTheRight(currentBox, edge);
+		const cursorOnTheLeft = this.cursorOnTheLeft(currentBox, edge);
 
 		const br = this.j.createInside.element('br'),
-			prevFake = this.j.createInside.text(INVISIBLE_SPACE),
+			prevFake = this.j.createInside.fake(),
 			nextFake = prevFake.cloneNode();
 
 		try {
 			if (cursorOnTheRight || cursorOnTheLeft) {
-				Dom.safeInsertNode(range, br);
+				if (edge) {
+					Dom.before(edge, br);
+				} else {
+					Dom.safeInsertNode(range, br);
+				}
 
 				const clearBR = (
 					start: Node,
@@ -1428,21 +1437,21 @@ export class Select implements ISelect {
 					node => Dom.isEmptyTextNode(node) && Dom.safeRemove(node)
 				);
 
-			if (currentBox.parentNode) {
-				try {
-					clearEmpties(fragment);
-					clearEmpties(currentBox);
-					currentBox.parentNode.insertBefore(fragment, currentBox);
+			assert(currentBox.parentNode, 'Splitting fails');
 
-					if (cursorOnTheRight && br?.parentNode) {
-						const range = this.createRange();
-						range.setStartBefore(br);
-						this.selectRange(range);
-					}
-				} catch (e) {
-					if (!isProd) {
-						throw e;
-					}
+			try {
+				clearEmpties(fragment);
+				clearEmpties(currentBox);
+				currentBox.parentNode.insertBefore(fragment, currentBox);
+
+				if (!edge && cursorOnTheRight && br?.parentNode) {
+					const range = this.createRange();
+					range.setStartBefore(br);
+					this.selectRange(range);
+				}
+			} catch (e) {
+				if (!isProd) {
+					throw e;
 				}
 			}
 

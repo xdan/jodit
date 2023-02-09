@@ -16,17 +16,12 @@ import { Dom } from 'jodit/core/dom/dom';
  * @private
  */
 export function checkUnsplittableBox(
+	fake: Text,
 	jodit: IJodit,
 	currentBox: HTMLElement
 ): boolean {
-	const sel = jodit.s;
-
 	if (!Dom.canSplitBlock(currentBox)) {
-		const br = jodit.createInside.element('br');
-
-		sel.insertNode(br, false, false);
-		sel.setCursorAfter(br);
-
+		Dom.before(fake, jodit.createInside.element('br'));
 		return false;
 	}
 

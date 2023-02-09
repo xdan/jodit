@@ -16,8 +16,8 @@ import { Dom } from 'jodit/core/dom/dom';
  * then we wrap all the nearest inline nodes in a container
  * @private
  */
-export function wrapText(jodit: IJodit, current: Node): HTMLElement {
-	let needWrap = current;
+export function wrapText(fake: Text, jodit: IJodit): HTMLElement {
+	let needWrap: Node = fake;
 
 	Dom.up(
 		needWrap,
@@ -32,10 +32,9 @@ export function wrapText(jodit: IJodit, current: Node): HTMLElement {
 	const currentBox = Dom.wrapInline(needWrap, jodit.o.enter, jodit);
 
 	if (Dom.isEmpty(currentBox)) {
-		const helper_node = jodit.createInside.element('br');
-
-		currentBox.appendChild(helper_node);
-		jodit.s.setCursorBefore(helper_node);
+		const br = jodit.createInside.element('br');
+		currentBox.appendChild(br);
+		Dom.before(br, fake);
 	}
 
 	return currentBox;
