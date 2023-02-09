@@ -980,9 +980,39 @@ describe('Enter behavior Tests', function () {
 			});
 		});
 
+		describe.only('After table', function () {
+			it('Should add P directly after table', function () {
+				const editor = getJodit();
+
+				editor.value =
+					'<p>test</p><table><tbody><tr><td>table</td></tr></tbody></table><p>pop</p><p>tost</p>';
+
+				const range = editor.s.range;
+				range.setStartAfter(editor.editor.querySelector('table'));
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+				replaceCursorToChar(editor);
+
+				expect(sortAttributes(editor.value)).equals(
+					'<p>test</p>' +
+						'<table><tbody><tr><td>table</td></tr></tbody></table>' +
+						'<p>|<br></p>' +
+						'<p>pop</p>' +
+						'<p>tost</p>'
+				);
+			});
+		});
+
 		describe('Cases', () => {
 			[
 				['test|', 'test<br>|<br>', { enter: 'br' }],
+				[
+					'<p>test</p><table><tbody><tr><td>table</td></tr></tbody></table>|<p>pop</p><p>tost</p>',
+					'<p>test</p><table><tbody><tr><td>table</td></tr></tbody></table><p>|<br></p><p>pop</p><p>tost</p>',
+					{ disablePlugins: ['WrapNodes'] }
+				],
 				['<p>test|</p>', '<p>test</p><p>|<br></p>'],
 				[
 					'<p><a href="#index">test|</a></p>',
