@@ -41,8 +41,8 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		return 'ToolbarCollection';
 	}
 
-	readonly listenEvents =
-		'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
+	private readonly __listenEvents =
+		'updatePlugins updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
 		'selectionchange changeSelection focus afterSetMode touchstart focus blur';
 
 	/**
@@ -82,7 +82,7 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 	}
 
 	@autobind
-	immediateUpdate(): void {
+	private __immediateUpdate(): void {
 		if (this.isDestructed || this.j.isLocked) {
 			return;
 		}
@@ -93,7 +93,7 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 	}
 
 	override update = this.j.async.debounce(
-		this.immediateUpdate,
+		this.__immediateUpdate,
 		() => this.j.defaultTimeout
 	);
 
@@ -109,14 +109,14 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 
 	constructor(jodit: IViewBased) {
 		super(jodit as T);
-		this.initEvents();
+		this.__initEvents();
 		this.__tooltip = UITooltip.make(jodit);
 	}
 
-	private initEvents(): void {
+	private __initEvents(): void {
 		this.j.e
-			.on(this.listenEvents, this.update)
-			.on('afterSetMode focus', this.immediateUpdate);
+			.on(this.__listenEvents, this.update)
+			.on('afterSetMode focus', this.__immediateUpdate);
 	}
 
 	hide(): void {
@@ -158,8 +158,8 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		this.__tooltip?.destruct();
 
 		this.j.e
-			.off(this.listenEvents, this.update)
-			.off('afterSetMode focus', this.immediateUpdate);
+			.off(this.__listenEvents, this.update)
+			.off('afterSetMode focus', this.__immediateUpdate);
 
 		super.destruct();
 	}

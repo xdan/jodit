@@ -13,12 +13,7 @@
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { Plugin } from 'jodit/core/plugin/plugin';
-import {
-	INVISIBLE_SPACE,
-	BR,
-	PARAGRAPH,
-	KEY_ENTER
-} from 'jodit/core/constants';
+import { BR, PARAGRAPH, KEY_ENTER } from 'jodit/core/constants';
 import { watch } from 'jodit/core/decorators';
 import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
 
@@ -86,62 +81,56 @@ export class enter extends Plugin {
 	}
 
 	private onEnter(event?: KeyboardEvent): false | void {
-		const jodit = this.j;
+		const { jodit } = this;
 
-		const current = this.getCurrentOrFillEmpty(jodit);
+		const fake = jodit.createInside.fake();
 
-		moveCursorOutFromSpecialTags(jodit, current, ['a']);
+		try {
+			Dom.safeInsertNode(jodit.s.range, fake);
 
-		let currentBox = getBlockWrapper(jodit, current);
+			moveCursorOutFromSpecialTags(jodit, fake, ['a']);
 
-		const isLi = Dom.isTag(currentBox, 'li');
+			let block = getBlockWrapper(fake, jodit);
 
-		// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
-		if (
-			(!isLi || event?.shiftKey) &&
-			!checkBR(jodit, current, event?.shiftKey)
-		) {
-			return false;
+			const isLi = Dom.isTag(block, 'li');
+
+			// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
+			if (
+				(!isLi || event?.shiftKey) &&
+				checkBR(fake, jodit, event?.shiftKey)
+			) {
+				return false;
+			}
+
+			// wrap no wrapped element
+			if (!block && !hasPreviousBlock(fake, jodit)) {
+				block = wrapText(fake, jodit);
+			}
+
+			if (!block) {
+				insertParagraph(fake, jodit, isLi ? 'li' : jodit.o.enter);
+				return false;
+			}
+
+			if (!checkUnsplittableBox(fake, jodit, block)) {
+				return false;
+			}
+
+			if (isLi && this.__isEmptyListLeaf(block)) {
+				processEmptyLILeaf(fake, jodit, block);
+				return false;
+			}
+
+			splitFragment(fake, jodit, block);
+		} finally {
+			fake.isConnected && jodit.s.setCursorBefore(fake);
+			Dom.safeRemove(fake);
 		}
-
-		// wrap no wrapped element
-		if (!currentBox && !hasPreviousBlock(jodit, current)) {
-			currentBox = wrapText(jodit, current);
-		}
-
-		if (!currentBox || currentBox === current) {
-			insertParagraph(jodit, null, isLi ? 'li' : jodit.o.enter);
-			return false;
-		}
-
-		if (!checkUnsplittableBox(jodit, currentBox)) {
-			return false;
-		}
-
-		if (isLi && this.__isEmptyListLeaf(currentBox)) {
-			processEmptyLILeaf(jodit, currentBox);
-			return false;
-		}
-
-		splitFragment(jodit, currentBox);
 	}
 
 	private __isEmptyListLeaf(li: HTMLElement): boolean {
 		const result = this.j.e.fire('enterIsEmptyListLeaf', li);
 		return isBoolean(result) ? result : Dom.isEmpty(li);
-	}
-
-	private getCurrentOrFillEmpty(editor: IJodit): Node {
-		const { s } = editor;
-		let current = s.current(false);
-
-		if (!current || current === editor.editor) {
-			current = editor.createInside.text(INVISIBLE_SPACE);
-			s.insertNode(current, false, false);
-			s.select(current);
-		}
-
-		return current;
 	}
 
 	/** @override */

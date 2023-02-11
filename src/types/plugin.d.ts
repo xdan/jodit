@@ -57,5 +57,4 @@ export interface IPluginSystem {
 	wait(name: string): Promise<void>;
 	get(name: string): PluginType | void;
 	remove(name: string): void;
-	init(jodit: IJodit): CanPromise<void>;
 }

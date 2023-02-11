@@ -17,11 +17,11 @@ import { Dom } from 'jodit/core/dom/dom';
  * @private
  */
 export function getBlockWrapper(
+	fake: Node | null,
 	jodit: IJodit,
-	current: Node | null,
 	tagReg = consts.IS_BLOCK
 ): Nullable<HTMLElement> {
-	let node = current;
+	let node: Node | null = fake;
 	const root = jodit.editor;
 
 	do {
@@ -35,7 +35,7 @@ export function getBlockWrapper(
 			}
 
 			return (
-				getBlockWrapper(jodit, node.parentNode, /^li$/i) ||
+				getBlockWrapper(node.parentNode, jodit, /^li$/i) ||
 				(node as HTMLElement)
 			);
 		}

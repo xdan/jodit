@@ -1006,6 +1006,8 @@ export class Dom {
 	static safeInsertNode(range: Range, node: Node): void {
 		range.collapsed || range.deleteContents();
 		range.insertNode(node);
+		range.setStartBefore(node);
+		range.collapse(true);
 
 		// https://developer.mozilla.org/en-US/docs/Web/API/Range/insertNode
 		// if the new node is to be added to a text Node, that Node is split at the

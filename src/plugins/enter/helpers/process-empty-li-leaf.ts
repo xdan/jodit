@@ -18,7 +18,11 @@ import { insertParagraph } from './insert-paragraph';
  * Handles pressing the Enter key inside an empty LI inside a list
  * @private
  */
-export function processEmptyLILeaf(jodit: IJodit, li: HTMLElement): void {
+export function processEmptyLILeaf(
+	fake: Text,
+	jodit: IJodit,
+	li: HTMLElement
+): void {
 	const list: Nullable<HTMLElement> = Dom.closest(
 		li,
 		['ol', 'ul'],
@@ -40,8 +44,7 @@ export function processEmptyLILeaf(jodit: IJodit, li: HTMLElement): void {
 	leftRange.setEndAfter(list);
 	const rightPart = leftRange.extractContents();
 
-	const fakeTextNode = jodit.createInside.fake();
-	Dom.after(container, fakeTextNode);
+	Dom.after(container, fake);
 
 	Dom.safeRemove(li);
 
@@ -50,8 +53,8 @@ export function processEmptyLILeaf(jodit: IJodit, li: HTMLElement): void {
 	}
 
 	const newLi = insertParagraph(
+		fake,
 		jodit,
-		fakeTextNode,
 		listInsideLeaf ? 'li' : jodit.o.enter
 	);
 

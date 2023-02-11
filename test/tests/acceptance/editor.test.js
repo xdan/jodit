@@ -177,6 +177,23 @@ describe('Jodit Editor Tests', function () {
 			});
 		});
 
+		describe('For async plugins all plugins ready', () => {
+			it('should allow set and get value', () => {
+				const jodit = getJodit({
+					extraPlugins: ['ddd']
+				});
+				jodit.value = '<p>test</p>';
+				expect(jodit.value).eq('<p>test</p>');
+			});
+
+			it('should allow use editor field', () => {
+				const jodit = getJodit({
+					extraPlugins: ['ddd']
+				});
+				expect(jodit.editor).is.not.null;
+			});
+		});
+
 		describe('Options', function () {
 			it('Options should be inherited from the default values', function () {
 				const editor = getJodit({

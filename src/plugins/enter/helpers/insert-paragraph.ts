@@ -8,7 +8,7 @@
  * @module plugins/enter
  */
 
-import type { HTMLTagNames, IJodit, Nullable } from 'jodit/types';
+import type { HTMLTagNames, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { scrollIntoViewIfNeeded } from 'jodit/core/helpers/utils/scroll-into-view';
 
@@ -17,33 +17,26 @@ import { scrollIntoViewIfNeeded } from 'jodit/core/helpers/utils/scroll-into-vie
  * @private
  */
 export function insertParagraph(
+	fake: Text,
 	editor: IJodit,
-	fake: Nullable<Text>,
 	wrapperTag: HTMLTagNames,
 	style?: CSSStyleDeclaration
 ): HTMLElement {
-	const { s, createInside } = editor,
+	const isBR = wrapperTag.toLowerCase() === 'br',
+		{ createInside } = editor,
 		p = createInside.element(wrapperTag),
-		helper_node = createInside.element('br');
+		br = createInside.element('br');
 
-	p.appendChild(helper_node);
+	if (!isBR) {
+		p.appendChild(br);
+	}
 
 	if (style && style.cssText) {
 		p.setAttribute('style', style.cssText);
 	}
 
-	if (fake && fake.isConnected) {
-		Dom.before(fake, p);
-		Dom.safeRemove(fake);
-	} else {
-		s.insertNode(p, false, false);
-	}
-
-	const range = s.createRange();
-	range.setStartBefore(wrapperTag.toLowerCase() !== 'br' ? helper_node : p);
-	range.collapse(true);
-	s.sel?.removeAllRanges();
-	s.sel?.addRange(range);
+	Dom.after(fake, p);
+	Dom.before(isBR ? p : br, fake);
 
 	scrollIntoViewIfNeeded(p, editor.editor, editor.ed);
 

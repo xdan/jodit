@@ -8,7 +8,7 @@
  * @module plugins/enter
  */
 
-import type { IJodit, Nullable } from 'jodit/types';
+import type { IJodit } from 'jodit/types';
 import { scrollIntoViewIfNeeded } from 'jodit/core/helpers/utils/scroll-into-view';
 import { Dom } from 'jodit/core/dom/dom';
 
@@ -19,36 +19,38 @@ import { insertParagraph } from './insert-paragraph';
  * and adds a new default block in the middle/start/end
  * @private
  */
-export function splitFragment(jodit: IJodit, currentBox: HTMLElement): void {
+export function splitFragment(
+	fake: Text,
+	jodit: IJodit,
+	block: HTMLElement
+): void {
 	const sel = jodit.s,
 		{ enter } = jodit.o;
 
 	const defaultTag = enter.toLowerCase() as typeof enter;
-	const isLi = Dom.isTag(currentBox, 'li');
-	const canSplit = currentBox.tagName.toLowerCase() === defaultTag || isLi;
+	const isLi = Dom.isTag(block, 'li');
+	const canSplit = block.tagName.toLowerCase() === defaultTag || isLi;
 
-	const cursorOnTheRight = sel.cursorOnTheRight(currentBox);
-	const cursorOnTheLeft = sel.cursorOnTheLeft(currentBox);
+	const cursorOnTheRight = sel.cursorOnTheRight(block, fake);
+	const cursorOnTheLeft = sel.cursorOnTheLeft(block, fake);
 
 	if (!canSplit && (cursorOnTheRight || cursorOnTheLeft)) {
-		let fake: Nullable<Text> = null;
-
 		if (cursorOnTheRight) {
-			fake = sel.setCursorAfter(currentBox);
+			Dom.after(block, fake);
 		} else {
-			fake = sel.setCursorBefore(currentBox);
+			Dom.before(block, fake);
 		}
 
-		insertParagraph(jodit, fake, defaultTag);
+		insertParagraph(fake, jodit, defaultTag);
 
 		if (cursorOnTheLeft && !cursorOnTheRight) {
-			sel.setCursorIn(currentBox, true);
+			Dom.prepend(block, fake);
 		}
 
 		return;
 	}
 
-	const newP = sel.splitSelection(currentBox);
+	const newP = sel.splitSelection(block, fake);
 
 	scrollIntoViewIfNeeded(newP, jodit.editor, jodit.ed);
 }

@@ -1232,35 +1232,33 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		callPromise(beforeInitHookResult, (): void => {
 			this.e.fire('beforeInit', this);
 
-			const initPluginsResult = pluginSystem.init(this);
+			pluginSystem.__init(this);
 
-			callPromise(initPluginsResult, () => {
-				this.e.fire('afterPluginSystemInit', this);
+			this.e.fire('afterPluginSystemInit', this);
 
-				this.e.on('changePlace', () => {
-					this.setReadOnly(this.o.readonly);
-					this.setDisabled(this.o.disabled);
-				});
-
-				this.places.length = 0;
-				const addPlaceResult = this.addPlace(element, options);
-
-				instances[this.id] = this;
-
-				const init = (): void => {
-					if (this.e) {
-						this.e.fire('afterInit', this);
-					}
-
-					this.afterInitHook();
-
-					this.setStatus(STATUSES.ready);
-
-					this.e.fire('afterConstructor', this);
-				};
-
-				callPromise(addPlaceResult, init);
+			this.e.on('changePlace', () => {
+				this.setReadOnly(this.o.readonly);
+				this.setDisabled(this.o.disabled);
 			});
+
+			this.places.length = 0;
+			const addPlaceResult = this.addPlace(element, options);
+
+			instances[this.id] = this;
+
+			const init = (): void => {
+				if (this.e) {
+					this.e.fire('afterInit', this);
+				}
+
+				this.afterInitHook();
+
+				this.setStatus(STATUSES.ready);
+
+				this.e.fire('afterConstructor', this);
+			};
+
+			callPromise(addPlaceResult, init);
 		});
 	}
 
