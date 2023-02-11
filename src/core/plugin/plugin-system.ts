@@ -12,32 +12,23 @@ import type {
 	IExtraPlugin,
 	IDictionary,
 	IJodit,
-	IPlugin,
 	IPluginSystem,
 	PluginInstance,
 	PluginType,
-	CanPromise,
 	CanUndef,
 	Nullable
 } from 'jodit/types';
 
-import {
-	isInitable,
-	isDestructable,
-	isFunction,
-	isString,
-	isArray
-} from 'jodit/core/helpers/checker';
+import './interface';
 
-import {
-	appendScriptAsync,
-	appendStyleAsync
-} from 'jodit/core/helpers/utils/append-script';
+import { isDestructable, isString, isArray } from 'jodit/core/helpers/checker';
 
 import { splitArray } from 'jodit/core/helpers/array';
-import { kebabCase } from 'jodit/core/helpers/string';
-import { callPromise } from 'jodit/core/helpers/utils/utils';
 import { eventEmitter } from 'jodit/core/global';
+import { loadExtras } from 'jodit/core/plugin/helpers/load';
+import { normalizeName } from 'jodit/core/plugin/helpers/utils';
+import { makeInstance } from 'jodit/core/plugin/helpers/make-instance';
+import { initInstance } from 'jodit/core/plugin/helpers/init-instance';
 
 /**
  * Jodit plugin system
@@ -52,27 +43,11 @@ import { eventEmitter } from 'jodit/core/global';
  * ```
  */
 export class PluginSystem implements IPluginSystem {
-	private normalizeName(name: string): string {
-		return kebabCase(name).toLowerCase();
-	}
-
-	private _items = new Map<string, PluginType>();
-
-	private items(filter: Nullable<string[]>): Array<[string, PluginType]> {
-		const results: Array<[string, PluginType]> = [];
-
-		this._items.forEach((plugin, name) => {
-			results.push([name, plugin]);
-		});
-
-		return results.filter(([name]) => !filter || filter.includes(name));
-	}
-
 	/**
 	 * Add plugin in store
 	 */
 	add(name: string, plugin: PluginType): void {
-		this._items.set(this.normalizeName(name), plugin);
+		this.__items.set(normalizeName(name), plugin);
 		eventEmitter.fire(`plugin:${name}:ready`);
 	}
 
@@ -80,42 +55,53 @@ export class PluginSystem implements IPluginSystem {
 	 * Get plugin from store
 	 */
 	get(name: string): PluginType | void {
-		return this._items.get(this.normalizeName(name));
+		return this.__items.get(normalizeName(name));
 	}
 
 	/**
 	 * Remove plugin from store
 	 */
 	remove(name: string): void {
-		this._items.delete(this.normalizeName(name));
+		this.__items.delete(normalizeName(name));
+	}
+
+	private __items = new Map<string, PluginType>();
+
+	private __filter(
+		filter: Nullable<Set<string>>
+	): Array<[string, PluginType]> {
+		const results: Array<[string, PluginType]> = [];
+
+		this.__items.forEach((plugin, name) => {
+			results.push([name, plugin]);
+		});
+
+		return results.filter(([name]) => !filter || filter.has(name));
 	}
 
 	/**
 	 * Public method for async init all plugins
 	 */
-	init(jodit: IJodit): CanPromise<void> {
-		const extrasList: IExtraPlugin[] = jodit.o.extraPlugins.map(s =>
-				isString(s) ? { name: s } : s
-			),
-			disableList = splitArray(jodit.o.disablePlugins).map(s => {
-				const name = this.normalizeName(s);
+	__init(jodit: IJodit): void {
+		const { extrasList, disableList, filter } = getSpecialLists(jodit);
 
-				// @ts-ignore
-				if (!isProd && !this._items.has(name)) {
-					console.error(TypeError(`Unknown plugin disabled:${name}`));
-				}
+		const doneList: Set<string> = new Set();
+		const waitingList: IDictionary<PluginInstance> = {};
+		const pluginsMap: IDictionary<PluginInstance> = {};
 
-				return name;
-			}),
-			doneList: string[] = [],
-			promiseList: IDictionary<PluginInstance | undefined> = {},
-			plugins: PluginInstance[] = [],
-			pluginsMap: IDictionary<PluginInstance> = {},
-			makeAndInit = ([name, plugin]: [string, PluginType]): void => {
+		(jodit as any).__plugins = pluginsMap;
+
+		const initPlugins = (): void => {
+			if (jodit.isInDestruct) {
+				return;
+			}
+
+			let commit: boolean = false;
+			this.__filter(filter).forEach(([name, plugin]) => {
 				if (
-					disableList.includes(name) ||
-					doneList.includes(name) ||
-					promiseList[name]
+					disableList.has(name) ||
+					doneList.has(name) ||
+					waitingList[name]
 				) {
 					return;
 				}
@@ -127,53 +113,41 @@ export class PluginSystem implements IPluginSystem {
 				if (
 					requires &&
 					isArray(requires) &&
-					this.hasDisabledRequires(disableList, requires)
+					Boolean(requires.some(req => disableList.has(req)))
 				) {
 					return;
 				}
 
-				const instance = PluginSystem.makePluginInstance(jodit, plugin);
+				commit = true;
+				const instance = makeInstance(jodit, plugin);
 
-				if (instance) {
-					this.initOrWait(
-						jodit,
-						name,
-						instance,
-						doneList,
-						promiseList
-					);
-
-					plugins.push(instance);
-					pluginsMap[name] = instance;
+				if (!instance) {
+					doneList.add(name);
+					delete waitingList[name];
+					return;
 				}
-			};
 
-		const resultLoadExtras = this.loadExtras(jodit, extrasList);
+				initInstance(jodit, name, instance, doneList, waitingList);
 
-		return callPromise(resultLoadExtras, () => {
-			if (jodit.isInDestruct) {
-				return;
-			}
+				pluginsMap[name] = instance;
+			});
 
-			this.items(
-				jodit.o.safeMode
-					? jodit.o.safePluginsList.concat(
-							extrasList.map(s => s.name)
-					  )
-					: null
-			).forEach(makeAndInit);
+			commit && jodit.e.fire('updatePlugins');
+		};
 
-			this.addListenerOnBeforeDestruct(jodit, plugins);
+		if (!extrasList || !extrasList.length) {
+			loadExtras(this.__items, jodit, extrasList, initPlugins);
+		}
 
-			(jodit as any).__plugins = pluginsMap;
-		});
+		initPlugins();
+		bindOnBeforeDestruct(jodit, pluginsMap);
 	}
 
 	/**
 	 * Returns the promise to wait for the plugin to load.
 	 */
 	wait(name: string): Promise<void> {
-		return new Promise<void>(resolve => {
+		return new Promise<void>((resolve): void => {
 			if (this.get(name)) {
 				return resolve();
 			}
@@ -186,211 +160,46 @@ export class PluginSystem implements IPluginSystem {
 			eventEmitter.on(`plugin:${name}:ready`, onReady);
 		});
 	}
+}
 
-	/**
-	 * Plugin type has disabled requires
-	 */
-	private hasDisabledRequires(
-		disableList: string[],
-		requires: string[]
-	): boolean {
-		return Boolean(
-			requires?.length &&
-				disableList.some(disabled => requires.includes(disabled))
-		);
-	}
+/**
+ * Destroy all plugins before - Jodit will be destroyed
+ */
+function bindOnBeforeDestruct(
+	jodit: IJodit,
+	plugins: IDictionary<PluginInstance>
+): void {
+	jodit.e.on('beforeDestruct', () => {
+		Object.keys(plugins).forEach(name => {
+			const instance = plugins[name];
 
-	/**
-	 * Create instance of plugin
-	 */
-	static makePluginInstance(
-		jodit: IJodit,
-		plugin: PluginType
-	): Nullable<PluginInstance> {
-		try {
-			try {
-				// @ts-ignore
-				return isFunction(plugin) ? new plugin(jodit) : plugin;
-			} catch (e) {
-				if (isFunction(plugin) && !plugin.prototype) {
-					return (plugin as Function)(jodit);
-				}
-			}
-		} catch (e) {
-			console.error(e);
-			// @ts-ignore
-			if (!isProd) {
-				throw e;
-			}
-		}
-
-		return null;
-	}
-
-	/**
-	 * Init plugin if it has not dependencies in another case wait requires plugins will be init
-	 */
-	private initOrWait(
-		jodit: IJodit,
-		pluginName: string,
-		instance: PluginInstance,
-		doneList: string[],
-		promiseList: IDictionary<PluginInstance | undefined>
-	): void {
-		const initPlugin = (name: string, plugin: PluginInstance): boolean => {
-			if (isInitable(plugin)) {
-				const req = (plugin as IPlugin).requires;
-
-				if (
-					!req?.length ||
-					req.every(name => doneList.includes(name))
-				) {
-					try {
-						plugin.init(jodit);
-					} catch (e) {
-						console.error(e);
-
-						// @ts-ignore
-						if (!isProd) {
-							throw e;
-						}
-					}
-
-					doneList.push(name);
-				} else {
-					// @ts-ignore
-					if (!isProd && !isTest && !promiseList[name]) {
-						console.log('Await plugin: ', name);
-					}
-
-					promiseList[name] = plugin;
-					return false;
-				}
-			} else {
-				doneList.push(name);
+			if (isDestructable(instance)) {
+				instance.destruct(jodit);
 			}
 
-			if ((plugin as IPlugin).hasStyle) {
-				PluginSystem.loadStyle(jodit, name);
-			}
-
-			return true;
-		};
-
-		initPlugin(pluginName, instance);
-
-		Object.keys(promiseList).forEach(name => {
-			const plugin = promiseList[name];
-
-			if (!plugin) {
-				return;
-			}
-
-			if (initPlugin(name, plugin)) {
-				promiseList[name] = undefined;
-				delete promiseList[name];
-			}
+			delete plugins[name];
 		});
-	}
 
-	/**
-	 * Destroy all plugins before - Jodit will be destroyed
-	 */
-	private addListenerOnBeforeDestruct(
-		jodit: IJodit,
-		plugins: PluginInstance[]
-	): void {
-		jodit.e.on('beforeDestruct', () => {
-			plugins.forEach(instance => {
-				if (isDestructable(instance)) {
-					instance.destruct(jodit);
-				}
-			});
+		delete (jodit as any).__plugins;
+	});
+}
 
-			plugins.length = 0;
+function getSpecialLists(jodit: IJodit): {
+	extrasList: IExtraPlugin[];
+	disableList: Set<string>;
+	filter: Set<string> | null;
+} {
+	const extrasList: IExtraPlugin[] = jodit.o.extraPlugins.map(s =>
+		isString(s) ? { name: s } : s
+	);
 
-			delete (jodit as any).__plugins;
-		});
-	}
+	const disableList = new Set(
+		splitArray(jodit.o.disablePlugins).map(normalizeName)
+	);
 
-	/**
-	 * Download plugins
-	 */
-	private load(jodit: IJodit, pluginList: IExtraPlugin[]): Promise<any> {
-		const reflect = (p: Promise<any>): Promise<any> =>
-			p.then(
-				(v: any) => ({ v, status: 'fulfilled' }),
-				(e: any) => ({ e, status: 'rejected' })
-			);
+	const filter = jodit.o.safeMode
+		? new Set(jodit.o.safePluginsList.concat(extrasList.map(s => s.name)))
+		: null;
 
-		return Promise.all(
-			pluginList.map(extra => {
-				const url =
-					extra.url ||
-					PluginSystem.getFullUrl(jodit, extra.name, true);
-
-				return reflect(appendScriptAsync(jodit, url));
-			})
-		);
-	}
-
-	private static async loadStyle(
-		jodit: IJodit,
-		pluginName: string
-	): Promise<void> {
-		const url = PluginSystem.getFullUrl(jodit, pluginName, false);
-
-		if (this.styles.has(url)) {
-			return;
-		}
-
-		this.styles.add(url);
-
-		return appendStyleAsync(jodit, url);
-	}
-
-	private static styles: Set<string> = new Set();
-
-	/**
-	 * Call full url to the script or style file
-	 */
-	private static getFullUrl(
-		jodit: IJodit,
-		name: string,
-		js: boolean
-	): string {
-		name = kebabCase(name);
-
-		return (
-			jodit.basePath +
-			'plugins/' +
-			name +
-			'/' +
-			name +
-			'.' +
-			(js ? 'js' : 'css')
-		);
-	}
-
-	private loadExtras(
-		jodit: IJodit,
-		extrasList: IExtraPlugin[]
-	): CanPromise<void> {
-		if (extrasList && extrasList.length) {
-			try {
-				const needLoadExtras = extrasList.filter(
-					extra => !this._items.has(this.normalizeName(extra.name))
-				);
-
-				if (needLoadExtras.length) {
-					return this.load(jodit, needLoadExtras);
-				}
-			} catch (e) {
-				// @ts-ignore
-				if (!isProd) {
-					throw e;
-				}
-			}
-		}
-	}
+	return { extrasList, disableList, filter };
 }
