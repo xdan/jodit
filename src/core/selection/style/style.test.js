@@ -6,7 +6,7 @@
 
 const { Dom } = Jodit.modules;
 
-describe.only('Apply style', () => {
+describe('Apply style', () => {
 	describe('Test Style module', function () {
 		let editor;
 

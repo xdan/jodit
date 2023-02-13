@@ -27,22 +27,29 @@ export function stripTags(
 		tmp.appendChild(html);
 	}
 
-	$$('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR', tmp).forEach(p => {
-		const pr = p.parentNode;
-		if (!pr) {
-			return;
-		}
+	$$('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR, STYLE, SCRIPT', tmp).forEach(
+		p => {
+			const pr = p.parentNode;
+			if (!pr) {
+				return;
+			}
 
-		const nx = p.nextSibling;
+			if (Dom.isTag(p, ['script', 'style'])) {
+				Dom.safeRemove(p);
+				return;
+			}
 
-		if (Dom.isText(nx) && /^\s/.test(nx.nodeValue || '')) {
-			return;
-		}
+			const nx = p.nextSibling;
 
-		if (nx) {
-			pr.insertBefore(doc.createTextNode(' '), nx);
+			if (Dom.isText(nx) && /^\s/.test(nx.nodeValue || '')) {
+				return;
+			}
+
+			if (nx) {
+				pr.insertBefore(doc.createTextNode(' '), nx);
+			}
 		}
-	});
+	);
 
 	return trim(tmp.innerText) || '';
 }

@@ -317,7 +317,7 @@ describe('Test helpers', function () {
 	describe('HTML', function () {
 		describe('stripTags', function () {
 			describe('Put HTML text', function () {
-				it('Should return only text', function () {
+				it.only('Should return only text', function () {
 					const values = [
 						['<p>Type something<p>', 'Type something'],
 						[
@@ -331,6 +331,10 @@ describe('Test helpers', function () {
 						[
 							'<p>Type <strong>something</strong></p><p>Type <strong>something</strong></p>',
 							'Type something Type something'
+						],
+						[
+							'<p>Type <strong>something</strong></p><p>Type <strong>something</strong><style>* {color: red}</style><script>alert(1)</script> test</p>',
+							'Type something Type something test'
 						]
 					];
 
