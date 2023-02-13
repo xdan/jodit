@@ -13,6 +13,67 @@ describe('Backspace/Delete key', function () {
 		range = editor.s.createRange(true);
 	});
 
+	describe('More cases', function () {
+		[
+			'<p><em>p</em></p><p><em>a|</em></p> => <p><em>p</em></p><p><em>|</em></p>',
+			'<p><em>ab</em><em>|cd</em></p> => <p><em>a|</em><em>cd</em></p>',
+			'<table><tbody><tr><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>|ab</td></tr></tbody></table>',
+			'<table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table>',
+			'<p>ab|cd</p> => <p>a|cd</p>',
+			'<p>ab<strong>cd</strong>|ef</p> => <p>ab<strong>c|</strong>ef</p>',
+			'<p>ab<img src="tests/artio.jpg">|cd</p> => <p>ab|cd</p>',
+			'<p>ab<span contenteditable="false">test</span>|cd</p> => <p>ab|cd</p>',
+			'<p>ab<span contenteditable="false">test</span><strong>|cd</strong></p> => <p>ab|<strong>cd</strong></p>',
+			'<p>ab</p><div contenteditable="false">test</div><p>|cd</p> => <p>ab|</p><p>cd</p>',
+			'<p>ab</p>\n <p>|<br></p> => <p>ab|</p>\n ',
+			'<p>ab</p><p>|cd</p> => <p>ab|cd</p>',
+			'<p>ab</p>\n<blockquote>|cd</blockquote> => <p>ab|cd</p>\n',
+			'<p>ab</p>\n<h1>|cd</h1> => <p>ab|cd</p>\n',
+			'<h1>cd</h1><p>|ab</p> => <h1>cd|ab</h1>',
+			'<p>ab</p>\n\n\n<p><strong>|cd</strong></p> => <p>ab<strong>|cd</strong></p>\n\n\n',
+			'<p>ab</p><p><strong>|cd</strong><em>ef</em></p> => <p>ab<strong>|cd</strong><em>ef</em></p>',
+			'<p><strong>ab</strong></p><p><strong>|cd</strong></p> => <p><strong>ab</strong><strong>|cd</strong></p>',
+			'<p><strong>ab</strong></p><p><strong><em>|cd</em></strong></p> => <p><strong>ab</strong><strong><em>|cd</em></strong></p>',
+			'<p><strong>ab</strong></p><p><strong>|cd</strong><em>e</em></p> => <p><strong>ab</strong><strong>|cd</strong><em>e</em></p>',
+			'<p><a>ab</a></p><p><strong>|cd</strong><em>e</em></p> => <p><a>ab</a><strong>|cd</strong><em>e</em></p>',
+			'<ol><li>|ab</li><li>cd</li></ol> => <p>|ab</p><ol><li>cd</li></ol>',
+			'<ol><li>ab</li><li>cd|</li></ol> => <ol><li>ab</li></ol><p>cd|</p> => Delete',
+			'<ol><li>ab</li></ol><p>|cd</p> => <ol><li>ab|cd</li></ol>',
+			'<p>ab</p><ol><li>|cd</li></ol> => <p>ab</p><p>|cd</p>',
+			'<ol><li>ab</li><li>|cd</li></ol> => <ol><li>ab|cd</li></ol>',
+			'test<br>|plot => test|plot =>  => {"enter": "br"}',
+			'test<br>|plot => testtext|plot =>  => {"enter": "br"}  => text',
+			'test<br>p|lot => test<br>|lot =>  => {"enter": "br"}',
+			'test<br>p| => test<br>|<br> =>  => {"enter": "br"}',
+			'<ol><li>ab</li></ol><ul><li>|cd</li><li>e</li></ul> => <ol><li>ab</li></ol><p>|cd</p><ul><li>e</li></ul>'
+		].forEach(function (pars) {
+			const [key, value, button, options, insert] = pars.split(' => ');
+
+			describe(`For key "${key}"`, function () {
+				it(`Should be ${value}`, async () => {
+					const editor = getJodit(
+						(options && JSON.parse(options)) || {}
+					);
+					editor.value = key;
+					setCursorToChar(editor);
+					simulateEvent(
+						'keydown',
+						button || Jodit.KEY_BACKSPACE,
+						editor.editor
+					);
+
+					if (insert) {
+						await editor.async.requestIdlePromise();
+						editor.s.insertNode(editor.createInside.text(insert));
+					}
+
+					replaceCursorToChar(editor);
+					expect(sortAttributes(editor.value)).equals(value);
+				});
+			});
+		});
+	});
+
 	describe('For non collapsed range', function () {
 		describe('Select part of text inside P element', function () {
 			it('Should remove only selected range', function () {
@@ -763,12 +824,8 @@ describe('Backspace/Delete key', function () {
 	describe('after last char inside tag', function () {
 		describe('inside A', function () {
 			it('Should remove empty tag and set cursor in previous element', function () {
-				editor.value = '<p><a href="#test">t</a></p>';
-
-				editor.s.setCursorIn(
-					editor.editor.firstChild.firstChild,
-					false
-				);
+				editor.value = '<p><a href="#test">t|</a></p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
@@ -846,66 +903,6 @@ describe('Backspace/Delete key', function () {
 
 				editor.s.insertNode(editor.createInside.text(' a '));
 				expect('<p>test a </p>').equals(editor.value);
-			});
-		});
-	});
-
-	describe('More cases', function () {
-		[
-			'<p><em>ab</em><em>|cd</em></p> => <p><em>a|</em><em>cd</em></p>',
-			'<table><tbody><tr><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>|ab</td></tr></tbody></table>',
-			'<table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table>',
-			'<p>ab|cd</p> => <p>a|cd</p>',
-			'<p>ab<strong>cd</strong>|ef</p> => <p>ab<strong>c|</strong>ef</p>',
-			'<p>ab<img src="tests/artio.jpg">|cd</p> => <p>ab|cd</p>',
-			'<p>ab<span contenteditable="false">test</span>|cd</p> => <p>ab|cd</p>',
-			'<p>ab<span contenteditable="false">test</span><strong>|cd</strong></p> => <p>ab|<strong>cd</strong></p>',
-			'<p>ab</p><div contenteditable="false">test</div><p>|cd</p> => <p>ab|</p><p>cd</p>',
-			'<p>ab</p>\n <p>|<br></p> => <p>ab|</p>\n ',
-			'<p>ab</p><p>|cd</p> => <p>ab|cd</p>',
-			'<p>ab</p>\n<blockquote>|cd</blockquote> => <p>ab|cd</p>\n',
-			'<p>ab</p>\n<h1>|cd</h1> => <p>ab|cd</p>\n',
-			'<h1>cd</h1><p>|ab</p> => <h1>cd|ab</h1>',
-			'<p>ab</p>\n\n\n<p><strong>|cd</strong></p> => <p>ab<strong>|cd</strong></p>\n\n\n',
-			'<p>ab</p><p><strong>|cd</strong><em>ef</em></p> => <p>ab<strong>|cd</strong><em>ef</em></p>',
-			'<p><strong>ab</strong></p><p><strong>|cd</strong></p> => <p><strong>ab</strong><strong>|cd</strong></p>',
-			'<p><strong>ab</strong></p><p><strong><em>|cd</em></strong></p> => <p><strong>ab</strong><strong><em>|cd</em></strong></p>',
-			'<p><strong>ab</strong></p><p><strong>|cd</strong><em>e</em></p> => <p><strong>ab</strong><strong>|cd</strong><em>e</em></p>',
-			'<p><a>ab</a></p><p><strong>|cd</strong><em>e</em></p> => <p><a>ab</a><strong>|cd</strong><em>e</em></p>',
-			'<ol><li>|ab</li><li>cd</li></ol> => <p>|ab</p><ol><li>cd</li></ol>',
-			'<ol><li>ab</li><li>cd|</li></ol> => <ol><li>ab</li></ol><p>cd|</p> => Delete',
-			'<ol><li>ab</li></ol><p>|cd</p> => <ol><li>ab|cd</li></ol>',
-			'<p>ab</p><ol><li>|cd</li></ol> => <p>ab</p><p>|cd</p>',
-			'<ol><li>ab</li><li>|cd</li></ol> => <ol><li>ab|cd</li></ol>',
-			'test<br>|plot => test|plot =>  => {"enter": "br"}',
-			'test<br>|plot => testtext|plot =>  => {"enter": "br"}  => text',
-			'test<br>p|lot => test<br>|lot =>  => {"enter": "br"}',
-			'test<br>p| => test<br>|<br> =>  => {"enter": "br"}',
-			'<ol><li>ab</li></ol><ul><li>|cd</li><li>e</li></ul> => <ol><li>ab</li></ol><p>|cd</p><ul><li>e</li></ul>'
-		].forEach(function (pars) {
-			const [key, value, button, options, insert] = pars.split(' => ');
-
-			describe(`For key "${key}"`, function () {
-				it(`Should be ${value}`, async () => {
-					const editor = getJodit(
-						(options && JSON.parse(options)) || {}
-					);
-					editor.value = key;
-					setCursorToChar(editor);
-					simulateEvent(
-						'keydown',
-						button || Jodit.KEY_BACKSPACE,
-						editor.editor
-					);
-
-					if (insert) {
-						await editor.async.requestIdlePromise();
-						editor.s.insertNode(editor.createInside.text(insert));
-					}
-
-					replaceCursorToChar(editor);
-					expect(sortAttributes(editor.value)).equals(value);
-				});
 			});
 		});
 	});

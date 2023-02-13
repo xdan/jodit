@@ -8,7 +8,7 @@
  * @module plugins/backspace
  */
 
-import type { CanUndef, IJodit, Nullable } from 'jodit/types';
+import type { CanUndef, IJodit, Nullable, HTMLTagNames } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { call, isVoid, toArray, trimInv } from 'jodit/core/helpers';
 import { INVISIBLE_SPACE, NBSP_SPACE } from 'jodit/core/constants';
@@ -172,7 +172,7 @@ export function checkRemoveChar(
 	}
 
 	if (charRemoved) {
-		removeEmptyInlineParent(fakeNode);
+		removeEmptyForParent(fakeNode, ['a']);
 		addBRInsideEmptyBlock(jodit, fakeNode);
 		jodit.s.setCursorBefore(fakeNode);
 
@@ -190,10 +190,10 @@ export function checkRemoveChar(
 /**
  * Helper remove all empty inline parents
  */
-function removeEmptyInlineParent(node: Node): void {
+function removeEmptyForParent(node: Node, tags: HTMLTagNames[]): void {
 	let parent = node.parentElement;
 
-	while (parent && Dom.isInlineBlock(parent)) {
+	while (parent && Dom.isInlineBlock(parent) && Dom.isTag(parent, tags)) {
 		const p = parent.parentElement;
 
 		if (Dom.isEmpty(parent)) {

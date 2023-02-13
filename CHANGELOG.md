@@ -17,6 +17,7 @@
 -   The PluginSystem module has been refactored: now asynchronous plugins do not block the initialization of the editor and it is ready to work without them.
 -   [Remove anchor element when set black text color. #936](https://github.com/xdan/jodit/issues/936)
 -   [Insert_only_text makes mistakes when i copy a text html that includes a style tag #934](https://github.com/xdan/jodit/issues/934)
+-   [Selected font styling reverts to default style after removing the added text using the backspace key #925](https://github.com/xdan/jodit/issues/925)
 
 ## 3.24.4
 
