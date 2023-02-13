@@ -10,7 +10,7 @@
 
 import type { IDictionary, IJodit, IPlugin, PluginInstance } from 'jodit/types';
 import { isInitable } from 'jodit/core/helpers/checker';
-import { loadStyle } from './load'
+import { loadStyle } from './load';
 
 /**
  * Init plugin and try init waiting list

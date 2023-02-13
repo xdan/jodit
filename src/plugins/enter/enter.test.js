@@ -936,7 +936,9 @@ describe('Enter behavior Tests', function () {
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 					replaceCursorToChar(editor);
-					expect(editor.value).equals('Some text<br><br><br> a |<br>');
+					expect(editor.value).equals(
+						'Some text<br><br><br> a |<br>'
+					);
 				});
 			});
 		});

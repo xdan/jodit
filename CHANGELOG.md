@@ -24,8 +24,6 @@
 ```
 core-js                             ^3.27.2  →   ^3.28.0
 @types/node                       ^18.11.19  →  ^18.13.0
-@typescript-eslint/eslint-plugin    ^5.50.0  →   ^5.52.0
-@typescript-eslint/parser           ^5.50.0  →   ^5.52.0
 axios                                ^1.3.2  →    ^1.3.3
 eslint                              ^8.33.0  →   ^8.34.0
 karma-sourcemap-loader               ^0.3.8  →    ^0.4.0
