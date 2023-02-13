@@ -19,6 +19,26 @@
 -   [Insert_only_text makes mistakes when i copy a text html that includes a style tag #934](https://github.com/xdan/jodit/issues/934)
 -   [Selected font styling reverts to default style after removing the added text using the backspace key #925](https://github.com/xdan/jodit/issues/925)
 
+#### :house: Internal
+
+```
+core-js                             ^3.27.2  →   ^3.28.0
+@types/node                       ^18.11.19  →  ^18.13.0
+@typescript-eslint/eslint-plugin    ^5.50.0  →   ^5.52.0
+@typescript-eslint/parser           ^5.50.0  →   ^5.52.0
+axios                                ^1.3.2  →    ^1.3.3
+eslint                              ^8.33.0  →   ^8.34.0
+karma-sourcemap-loader               ^0.3.8  →    ^0.4.0
+lint-staged                         ^13.1.0  →   ^13.1.2
+open                                 ^8.4.0  →    ^8.4.1
+prettier                             ^2.8.3  →    ^2.8.4
+puppeteer                           ^19.6.3  →   ^19.7.0
+stylelint                          ^14.16.1  →   ^15.1.0
+stylelint-config-prettier            ^9.0.4  →    ^9.0.5
+stylelint-config-standard           ^29.0.0  →   ^30.0.1
+synchronous-promise                  2.0.15  →    2.0.17
+```
+
 ## 3.24.4
 
 #### :boom: Breaking Change

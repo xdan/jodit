@@ -16,9 +16,9 @@ jobs:
     - uses: actions/setup-node@v1 #Setup Node
     - name: Run screenshot Tests
       run: |
-        npm run docker:screenshots:build
-        npm run docker:screenshots:run
-        npm run docker:screenshots:run:es2018
+        npm run test:screenshots:build
+        npm run test:screenshots
+        npm run test:screenshots:es2018
 
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3

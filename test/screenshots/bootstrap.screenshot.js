@@ -23,12 +23,14 @@ console.info('Debug:', args.debug);
 const fs = require('fs');
 const expect = require('expect');
 const path = require('path');
-const { toMatchImageSnapshot } = require('expect-mocha-image-snapshot');
+const toMatchImageSnapshot = import('expect-mocha-image-snapshot');
 const puppeteer = require('puppeteer');
 const express = require('express');
-const app = new express();
+const app = express();
 
-expect.extend({ toMatchImageSnapshot });
+toMatchImageSnapshot.then(res => {
+	expect.extend(res);
+});
 
 const port = 2003;
 const host = `http://localhost:${port}`;
