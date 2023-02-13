@@ -66,3 +66,5 @@ fetch('index.php').then(resp => {
 	elm.setStatus('ready');
 });
 ```
+
+[Example](https://codesandbox.io/s/decorators-u2h0os?file=/src/index.tsx)
