@@ -9,7 +9,7 @@ You can help us by fixing bugs, reporting them, or translating the editor interf
 git clone git@github.com:xdan/jodit.git
 cd jodit
 nvm use
-npm install
+npm ci
 ```
 
 Change code + add autotest in `test/tests/` folder. Run

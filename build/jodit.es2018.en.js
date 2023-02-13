@@ -2946,6 +2946,8 @@ class Dom {
     static safeInsertNode(range, node) {
         range.collapsed || range.deleteContents();
         range.insertNode(node);
+        range.setStartBefore(node);
+        range.collapse(true);
         [node.nextSibling, node.previousSibling].forEach(n => Dom.isText(n) && !n.nodeValue && Dom.safeRemove(n));
     }
     static hide(node) {
@@ -3879,7 +3881,7 @@ function observable(obj) {
 /* harmony export */   "qz": function() { return /* binding */ modules; },
 /* harmony export */   "xl": function() { return /* binding */ extendLang; }
 /* harmony export */ });
-/* harmony import */ var _plugin_plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44540);
+/* harmony import */ var _plugin_plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(90262);
 /* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(64968);
 /* harmony import */ var _event_emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4567);
 /* harmony import */ var _helpers_checker_is_jodit_object__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(77892);
@@ -4944,9 +4946,13 @@ function stripTags(html, doc = document) {
     else {
         tmp.appendChild(html);
     }
-    (0,utils.$$)('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR', tmp).forEach(p => {
+    (0,utils.$$)('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR, STYLE, SCRIPT', tmp).forEach(p => {
         const pr = p.parentNode;
         if (!pr) {
+            return;
+        }
+        if (dom/* Dom.isTag */.i.isTag(p, ['script', 'style'])) {
+            dom/* Dom.safeRemove */.i.safeRemove(p);
             return;
         }
         const nx = p.nextSibling;
@@ -7595,7 +7601,7 @@ const val = (elm, selector, value) => {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "S": function() { return /* reexport safe */ _plugin__WEBPACK_IMPORTED_MODULE_1__.S; }
 /* harmony export */ });
-/* harmony import */ var _plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44540);
+/* harmony import */ var _plugin_system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(90262);
 /* harmony import */ var _plugin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(85605);
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -7608,19 +7614,153 @@ const val = (elm, selector, value) => {
 
 /***/ }),
 
-/***/ 44540:
+/***/ 90262:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "h": function() { return /* binding */ PluginSystem; }
-/* harmony export */ });
-/* harmony import */ var jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(78411);
-/* harmony import */ var jodit_core_helpers_utils_append_script__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(62462);
-/* harmony import */ var jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(56888);
-/* harmony import */ var jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(89170);
-/* harmony import */ var jodit_core_helpers_utils_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(67309);
-/* harmony import */ var jodit_core_global__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(17332);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "h": function() { return /* binding */ PluginSystem; }
+});
+
+// EXTERNAL MODULE: ./src/core/helpers/checker/index.ts + 7 modules
+var checker = __webpack_require__(78411);
+// EXTERNAL MODULE: ./src/core/helpers/array/index.ts + 1 modules
+var array = __webpack_require__(56888);
+// EXTERNAL MODULE: ./src/core/global.ts
+var global = __webpack_require__(17332);
+// EXTERNAL MODULE: ./src/core/helpers/utils/append-script.ts
+var append_script = __webpack_require__(62462);
+// EXTERNAL MODULE: ./src/core/helpers/string/kebab-case.ts
+var kebab_case = __webpack_require__(11278);
+;// CONCATENATED MODULE: ./src/core/plugin/helpers/utils.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function normalizeName(name) {
+    return (0,kebab_case/* kebabCase */.G)(name).toLowerCase();
+}
+
+;// CONCATENATED MODULE: ./src/core/plugin/helpers/load.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+
+const styles = new Set();
+async function loadStyle(jodit, pluginName) {
+    const url = getFullUrl(jodit, pluginName, false);
+    if (styles.has(url)) {
+        return;
+    }
+    styles.add(url);
+    return (0,append_script/* appendStyleAsync */.Nf)(jodit, url);
+}
+function getFullUrl(jodit, name, js) {
+    name = (0,kebab_case/* kebabCase */.G)(name);
+    return (jodit.basePath +
+        'plugins/' +
+        name +
+        '/' +
+        name +
+        '.' +
+        (js ? 'js' : 'css'));
+}
+function loadExtras(items, jodit, extrasList, callback) {
+    try {
+        const needLoadExtras = extrasList.filter(extra => !items.has(normalizeName(extra.name)));
+        if (needLoadExtras.length) {
+            load(jodit, needLoadExtras, callback);
+        }
+    }
+    catch (e) {
+        if (false) {}
+    }
+}
+function load(jodit, pluginList, callback) {
+    pluginList.map(extra => {
+        const url = extra.url || getFullUrl(jodit, extra.name, true);
+        return (0,append_script/* appendScriptAsync */.JL)(jodit, url)
+            .then(callback)
+            .catch(() => null);
+    });
+}
+
+;// CONCATENATED MODULE: ./src/core/plugin/helpers/make-instance.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+function makeInstance(jodit, plugin) {
+    try {
+        try {
+            return (0,checker/* isFunction */.mf)(plugin) ? new plugin(jodit) : plugin;
+        }
+        catch (e) {
+            if ((0,checker/* isFunction */.mf)(plugin) && !plugin.prototype) {
+                return plugin(jodit);
+            }
+        }
+    }
+    catch (e) {
+        console.error(e);
+        if (false) {}
+    }
+    return null;
+}
+
+;// CONCATENATED MODULE: ./src/core/plugin/helpers/init-instance.ts
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+
+function initInstance(jodit, pluginName, instance, doneList, waitingList) {
+    if (init(jodit, pluginName, instance, doneList, waitingList)) {
+        Object.keys(waitingList).forEach(name => {
+            const plugin = waitingList[name];
+            init(jodit, name, plugin, doneList, waitingList);
+        });
+    }
+}
+function init(jodit, pluginName, instance, doneList, waitingList) {
+    const req = instance.requires;
+    if ((req === null || req === void 0 ? void 0 : req.length) && !req.every(name => doneList.has(name))) {
+        if (false) {}
+        waitingList[pluginName] = instance;
+        return false;
+    }
+    if ((0,checker/* isInitable */.Gu)(instance)) {
+        try {
+            instance.init(jodit);
+        }
+        catch (e) {
+            console.error(e);
+            if (false) {}
+        }
+    }
+    doneList.add(pluginName);
+    delete waitingList[pluginName];
+    if (instance.hasStyle) {
+        loadStyle(jodit, pluginName).catch(e => {
+             false && 0;
+        });
+    }
+    return true;
+}
+
+;// CONCATENATED MODULE: ./src/core/plugin/plugin-system.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
@@ -7632,192 +7772,103 @@ const val = (elm, selector, value) => {
 
 
 
+
+
 class PluginSystem {
     constructor() {
-        this._items = new Map();
-    }
-    normalizeName(name) {
-        return (0,jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__/* .kebabCase */ .GL)(name).toLowerCase();
-    }
-    items(filter) {
-        const results = [];
-        this._items.forEach((plugin, name) => {
-            results.push([name, plugin]);
-        });
-        return results.filter(([name]) => !filter || filter.includes(name));
+        this.__items = new Map();
     }
     add(name, plugin) {
-        this._items.set(this.normalizeName(name), plugin);
-        jodit_core_global__WEBPACK_IMPORTED_MODULE_5__/* .eventEmitter.fire */ .TB.fire(`plugin:${name}:ready`);
+        this.__items.set(normalizeName(name), plugin);
+        global/* eventEmitter.fire */.TB.fire(`plugin:${name}:ready`);
     }
     get(name) {
-        return this._items.get(this.normalizeName(name));
+        return this.__items.get(normalizeName(name));
     }
     remove(name) {
-        this._items.delete(this.normalizeName(name));
+        this.__items.delete(normalizeName(name));
     }
-    init(jodit) {
-        const extrasList = jodit.o.extraPlugins.map(s => (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isString */ .HD)(s) ? { name: s } : s), disableList = (0,jodit_core_helpers_array__WEBPACK_IMPORTED_MODULE_2__/* .splitArray */ .C1)(jodit.o.disablePlugins).map(s => {
-            const name = this.normalizeName(s);
-            if (false) {}
-            return name;
-        }), doneList = [], promiseList = {}, plugins = [], pluginsMap = {}, makeAndInit = ([name, plugin]) => {
-            if (disableList.includes(name) ||
-                doneList.includes(name) ||
-                promiseList[name]) {
-                return;
-            }
-            const requires = plugin === null || plugin === void 0 ? void 0 : plugin.requires;
-            if (requires &&
-                (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isArray */ .kJ)(requires) &&
-                this.hasDisabledRequires(disableList, requires)) {
-                return;
-            }
-            const instance = PluginSystem.makePluginInstance(jodit, plugin);
-            if (instance) {
-                this.initOrWait(jodit, name, instance, doneList, promiseList);
-                plugins.push(instance);
-                pluginsMap[name] = instance;
-            }
-        };
-        const resultLoadExtras = this.loadExtras(jodit, extrasList);
-        return (0,jodit_core_helpers_utils_utils__WEBPACK_IMPORTED_MODULE_4__/* .callPromise */ .C6)(resultLoadExtras, () => {
+    __filter(filter) {
+        const results = [];
+        this.__items.forEach((plugin, name) => {
+            results.push([name, plugin]);
+        });
+        return results.filter(([name]) => !filter || filter.has(name));
+    }
+    __init(jodit) {
+        const { extrasList, disableList, filter } = getSpecialLists(jodit);
+        const doneList = new Set();
+        const waitingList = {};
+        const pluginsMap = {};
+        jodit.__plugins = pluginsMap;
+        const initPlugins = () => {
             if (jodit.isInDestruct) {
                 return;
             }
-            this.items(jodit.o.safeMode
-                ? jodit.o.safePluginsList.concat(extrasList.map(s => s.name))
-                : null).forEach(makeAndInit);
-            this.addListenerOnBeforeDestruct(jodit, plugins);
-            jodit.__plugins = pluginsMap;
-        });
+            let commit = false;
+            this.__filter(filter).forEach(([name, plugin]) => {
+                if (disableList.has(name) ||
+                    doneList.has(name) ||
+                    waitingList[name]) {
+                    return;
+                }
+                const requires = plugin === null || plugin === void 0 ? void 0 : plugin.requires;
+                if (requires &&
+                    (0,checker/* isArray */.kJ)(requires) &&
+                    Boolean(requires.some(req => disableList.has(req)))) {
+                    return;
+                }
+                commit = true;
+                const instance = makeInstance(jodit, plugin);
+                if (!instance) {
+                    doneList.add(name);
+                    delete waitingList[name];
+                    return;
+                }
+                initInstance(jodit, name, instance, doneList, waitingList);
+                pluginsMap[name] = instance;
+            });
+            commit && jodit.e.fire('updatePlugins');
+        };
+        if (!extrasList || !extrasList.length) {
+            loadExtras(this.__items, jodit, extrasList, initPlugins);
+        }
+        initPlugins();
+        bindOnBeforeDestruct(jodit, pluginsMap);
     }
     wait(name) {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             if (this.get(name)) {
                 return resolve();
             }
             const onReady = () => {
                 resolve();
-                jodit_core_global__WEBPACK_IMPORTED_MODULE_5__/* .eventEmitter.off */ .TB.off(`plugin:${name}:ready`, onReady);
+                global/* eventEmitter.off */.TB.off(`plugin:${name}:ready`, onReady);
             };
-            jodit_core_global__WEBPACK_IMPORTED_MODULE_5__/* .eventEmitter.on */ .TB.on(`plugin:${name}:ready`, onReady);
+            global/* eventEmitter.on */.TB.on(`plugin:${name}:ready`, onReady);
         });
-    }
-    hasDisabledRequires(disableList, requires) {
-        return Boolean((requires === null || requires === void 0 ? void 0 : requires.length) &&
-            disableList.some(disabled => requires.includes(disabled)));
-    }
-    static makePluginInstance(jodit, plugin) {
-        try {
-            try {
-                return (0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isFunction */ .mf)(plugin) ? new plugin(jodit) : plugin;
-            }
-            catch (e) {
-                if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isFunction */ .mf)(plugin) && !plugin.prototype) {
-                    return plugin(jodit);
-                }
-            }
-        }
-        catch (e) {
-            console.error(e);
-            if (false) {}
-        }
-        return null;
-    }
-    initOrWait(jodit, pluginName, instance, doneList, promiseList) {
-        const initPlugin = (name, plugin) => {
-            if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isInitable */ .Gu)(plugin)) {
-                const req = plugin.requires;
-                if (!(req === null || req === void 0 ? void 0 : req.length) ||
-                    req.every(name => doneList.includes(name))) {
-                    try {
-                        plugin.init(jodit);
-                    }
-                    catch (e) {
-                        console.error(e);
-                        if (false) {}
-                    }
-                    doneList.push(name);
-                }
-                else {
-                    if (false) {}
-                    promiseList[name] = plugin;
-                    return false;
-                }
-            }
-            else {
-                doneList.push(name);
-            }
-            if (plugin.hasStyle) {
-                PluginSystem.loadStyle(jodit, name);
-            }
-            return true;
-        };
-        initPlugin(pluginName, instance);
-        Object.keys(promiseList).forEach(name => {
-            const plugin = promiseList[name];
-            if (!plugin) {
-                return;
-            }
-            if (initPlugin(name, plugin)) {
-                promiseList[name] = undefined;
-                delete promiseList[name];
-            }
-        });
-    }
-    addListenerOnBeforeDestruct(jodit, plugins) {
-        jodit.e.on('beforeDestruct', () => {
-            plugins.forEach(instance => {
-                if ((0,jodit_core_helpers_checker__WEBPACK_IMPORTED_MODULE_0__/* .isDestructable */ .Z$)(instance)) {
-                    instance.destruct(jodit);
-                }
-            });
-            plugins.length = 0;
-            delete jodit.__plugins;
-        });
-    }
-    load(jodit, pluginList) {
-        const reflect = (p) => p.then((v) => ({ v, status: 'fulfilled' }), (e) => ({ e, status: 'rejected' }));
-        return Promise.all(pluginList.map(extra => {
-            const url = extra.url ||
-                PluginSystem.getFullUrl(jodit, extra.name, true);
-            return reflect((0,jodit_core_helpers_utils_append_script__WEBPACK_IMPORTED_MODULE_1__/* .appendScriptAsync */ .JL)(jodit, url));
-        }));
-    }
-    static async loadStyle(jodit, pluginName) {
-        const url = PluginSystem.getFullUrl(jodit, pluginName, false);
-        if (this.styles.has(url)) {
-            return;
-        }
-        this.styles.add(url);
-        return (0,jodit_core_helpers_utils_append_script__WEBPACK_IMPORTED_MODULE_1__/* .appendStyleAsync */ .Nf)(jodit, url);
-    }
-    static getFullUrl(jodit, name, js) {
-        name = (0,jodit_core_helpers_string__WEBPACK_IMPORTED_MODULE_3__/* .kebabCase */ .GL)(name);
-        return (jodit.basePath +
-            'plugins/' +
-            name +
-            '/' +
-            name +
-            '.' +
-            (js ? 'js' : 'css'));
-    }
-    loadExtras(jodit, extrasList) {
-        if (extrasList && extrasList.length) {
-            try {
-                const needLoadExtras = extrasList.filter(extra => !this._items.has(this.normalizeName(extra.name)));
-                if (needLoadExtras.length) {
-                    return this.load(jodit, needLoadExtras);
-                }
-            }
-            catch (e) {
-                if (false) {}
-            }
-        }
     }
 }
-PluginSystem.styles = new Set();
+function bindOnBeforeDestruct(jodit, plugins) {
+    jodit.e.on('beforeDestruct', () => {
+        Object.keys(plugins).forEach(name => {
+            const instance = plugins[name];
+            if ((0,checker/* isDestructable */.Z$)(instance)) {
+                instance.destruct(jodit);
+            }
+            delete plugins[name];
+        });
+        delete jodit.__plugins;
+    });
+}
+function getSpecialLists(jodit) {
+    const extrasList = jodit.o.extraPlugins.map(s => (0,checker/* isString */.HD)(s) ? { name: s } : s);
+    const disableList = new Set((0,array/* splitArray */.C1)(jodit.o.disablePlugins).map(normalizeName));
+    const filter = jodit.o.safeMode
+        ? new Set(jodit.o.safePluginsList.concat(extrasList.map(s => s.name)))
+        : null;
+    return { extrasList, disableList, filter };
+}
 
 
 /***/ }),
@@ -12728,6 +12779,8 @@ let FileBrowser = class FileBrowser extends view_with_toolbar/* ViewWithToolbar 
                 return true;
             }
             switch (btn) {
+                case 'filebrowser.upload':
+                    return this.dataProvider.canI('FileUpload');
                 case 'filebrowser.edit':
                     return (this.dataProvider.canI('ImageResize') ||
                         this.dataProvider.canI('ImageCrop'));
@@ -15599,6 +15652,9 @@ const transactions = {
                 INITIAL) {
                 return { ...value, next: states.CHANGE };
             }
+            if (!dom/* Dom.isTag */.i.isTag(element, style.element)) {
+                return { ...value, next: states.END };
+            }
             return { ...value, next: states.UNWRAP };
         }
     },
@@ -16293,12 +16349,11 @@ class Select {
             nodes.forEach(forEvery);
         }
     }
-    cursorInTheEdge(start, parentBlock) {
+    cursorInTheEdge(start, parentBlock, fake = null) {
         var _a, _b;
-        const end = !start, range = (_a = this.sel) === null || _a === void 0 ? void 0 : _a.getRangeAt(0), current = this.current(false);
-        if (!range ||
-            !current ||
-            !dom/* Dom.isOrContains */.i.isOrContains(parentBlock, current, true)) {
+        const end = !start, range = (_a = this.sel) === null || _a === void 0 ? void 0 : _a.getRangeAt(0);
+        fake !== null && fake !== void 0 ? fake : (fake = this.current(false));
+        if (!range || !fake || !dom/* Dom.isOrContains */.i.isOrContains(parentBlock, fake, true)) {
             return null;
         }
         const container = start ? range.startContainer : range.endContainer;
@@ -16333,7 +16388,7 @@ class Select {
                 }
             }
         }
-        let next = current;
+        let next = fake;
         while (next && next !== parentBlock) {
             const nextOne = dom/* Dom.sibling */.i.sibling(next, start);
             if (!nextOne) {
@@ -16347,11 +16402,11 @@ class Select {
         }
         return true;
     }
-    cursorOnTheLeft(parentBlock) {
-        return this.cursorInTheEdge(true, parentBlock);
+    cursorOnTheLeft(parentBlock, fake) {
+        return this.cursorInTheEdge(true, parentBlock, fake);
     }
-    cursorOnTheRight(parentBlock) {
-        return this.cursorInTheEdge(false, parentBlock);
+    cursorOnTheRight(parentBlock, fake) {
+        return this.cursorInTheEdge(false, parentBlock, fake);
     }
     setCursorAfter(node) {
         return this.setCursorNearWith(node, false);
@@ -16537,19 +16592,24 @@ class Select {
             ...options
         });
     }
-    splitSelection(currentBox) {
+    splitSelection(currentBox, edge) {
         if (!this.isCollapsed()) {
             return null;
         }
         const leftRange = this.createRange();
         const range = this.range;
         leftRange.setStartBefore(currentBox);
-        const cursorOnTheRight = this.cursorOnTheRight(currentBox);
-        const cursorOnTheLeft = this.cursorOnTheLeft(currentBox);
-        const br = this.j.createInside.element('br'), prevFake = this.j.createInside.text(constants.INVISIBLE_SPACE), nextFake = prevFake.cloneNode();
+        const cursorOnTheRight = this.cursorOnTheRight(currentBox, edge);
+        const cursorOnTheLeft = this.cursorOnTheLeft(currentBox, edge);
+        const br = this.j.createInside.element('br'), prevFake = this.j.createInside.fake(), nextFake = prevFake.cloneNode();
         try {
             if (cursorOnTheRight || cursorOnTheLeft) {
-                dom/* Dom.safeInsertNode */.i.safeInsertNode(range, br);
+                if (edge) {
+                    dom/* Dom.before */.i.before(edge, br);
+                }
+                else {
+                    dom/* Dom.safeInsertNode */.i.safeInsertNode(range, br);
+                }
                 const clearBR = (start, getNext) => {
                     let next = getNext(start);
                     while (next) {
@@ -16582,20 +16642,19 @@ class Select {
             }
             const fragment = leftRange.extractContents();
             const clearEmpties = (node) => dom/* Dom.each */.i.each(node, node => dom/* Dom.isEmptyTextNode */.i.isEmptyTextNode(node) && dom/* Dom.safeRemove */.i.safeRemove(node));
-            if (currentBox.parentNode) {
-                try {
-                    clearEmpties(fragment);
-                    clearEmpties(currentBox);
-                    currentBox.parentNode.insertBefore(fragment, currentBox);
-                    if (cursorOnTheRight && (br === null || br === void 0 ? void 0 : br.parentNode)) {
-                        const range = this.createRange();
-                        range.setStartBefore(br);
-                        this.selectRange(range);
-                    }
+            void 0;
+            try {
+                clearEmpties(fragment);
+                clearEmpties(currentBox);
+                currentBox.parentNode.insertBefore(fragment, currentBox);
+                if (!edge && cursorOnTheRight && (br === null || br === void 0 ? void 0 : br.parentNode)) {
+                    const range = this.createRange();
+                    range.setStartBefore(br);
+                    this.selectRange(range);
                 }
-                catch (e) {
-                    if (false) {}
-                }
+            }
+            catch (e) {
+                if (false) {}
             }
             const fillFakeParent = (fake) => {
                 var _a, _b, _c;
@@ -17295,8 +17354,8 @@ class Uploader extends component/* ViewComponent */.Hr {
     }
 }
 
-// EXTERNAL MODULE: ./src/core/plugin/plugin-system.ts
-var plugin_system = __webpack_require__(44540);
+// EXTERNAL MODULE: ./src/core/plugin/plugin-system.ts + 4 modules
+var plugin_system = __webpack_require__(90262);
 ;// CONCATENATED MODULE: ./src/modules/index.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -18558,7 +18617,7 @@ let ToolbarCollection = class ToolbarCollection extends jodit_core_ui__WEBPACK_I
     getTarget(button) {
         return button.target || null;
     }
-    immediateUpdate() {
+    __immediateUpdate() {
         if (this.isDestructed || this.j.isLocked) {
             return;
         }
@@ -18571,17 +18630,17 @@ let ToolbarCollection = class ToolbarCollection extends jodit_core_ui__WEBPACK_I
     }
     constructor(jodit) {
         super(jodit);
-        this.listenEvents = 'updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
+        this.__listenEvents = 'updatePlugins updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
             'selectionchange changeSelection focus afterSetMode touchstart focus blur';
-        this.update = this.j.async.debounce(this.immediateUpdate, () => this.j.defaultTimeout);
+        this.update = this.j.async.debounce(this.__immediateUpdate, () => this.j.defaultTimeout);
         this.__tooltip = null;
-        this.initEvents();
+        this.__initEvents();
         this.__tooltip = jodit_core_ui__WEBPACK_IMPORTED_MODULE_1__/* .UITooltip.make */ .Ne.make(jodit);
     }
-    initEvents() {
+    __initEvents() {
         this.j.e
-            .on(this.listenEvents, this.update)
-            .on('afterSetMode focus', this.immediateUpdate);
+            .on(this.__listenEvents, this.update)
+            .on('afterSetMode focus', this.__immediateUpdate);
     }
     hide() {
         this.container.remove();
@@ -18607,14 +18666,14 @@ let ToolbarCollection = class ToolbarCollection extends jodit_core_ui__WEBPACK_I
         }
         (_a = this.__tooltip) === null || _a === void 0 ? void 0 : _a.destruct();
         this.j.e
-            .off(this.listenEvents, this.update)
-            .off('afterSetMode focus', this.immediateUpdate);
+            .off(this.__listenEvents, this.update)
+            .off('afterSetMode focus', this.__immediateUpdate);
         super.destruct();
     }
 };
 (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
     jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.autobind
-], ToolbarCollection.prototype, "immediateUpdate", null);
+], ToolbarCollection.prototype, "__immediateUpdate", null);
 ToolbarCollection = (0,tslib__WEBPACK_IMPORTED_MODULE_4__/* .__decorate */ .gn)([
     jodit_core_decorators__WEBPACK_IMPORTED_MODULE_3__.component
 ], ToolbarCollection);
@@ -21680,26 +21739,24 @@ let Jodit = Jodit_1 = class Jodit extends modules.ViewWithToolbar {
         const beforeInitHookResult = this.beforeInitHook();
         (0,helpers.callPromise)(beforeInitHookResult, () => {
             this.e.fire('beforeInit', this);
-            const initPluginsResult = global/* pluginSystem.init */.pw.init(this);
-            (0,helpers.callPromise)(initPluginsResult, () => {
-                this.e.fire('afterPluginSystemInit', this);
-                this.e.on('changePlace', () => {
-                    this.setReadOnly(this.o.readonly);
-                    this.setDisabled(this.o.disabled);
-                });
-                this.places.length = 0;
-                const addPlaceResult = this.addPlace(element, options);
-                global/* instances */.as[this.id] = this;
-                const init = () => {
-                    if (this.e) {
-                        this.e.fire('afterInit', this);
-                    }
-                    this.afterInitHook();
-                    this.setStatus(modules.STATUSES.ready);
-                    this.e.fire('afterConstructor', this);
-                };
-                (0,helpers.callPromise)(addPlaceResult, init);
+            global/* pluginSystem.__init */.pw.__init(this);
+            this.e.fire('afterPluginSystemInit', this);
+            this.e.on('changePlace', () => {
+                this.setReadOnly(this.o.readonly);
+                this.setDisabled(this.o.disabled);
             });
+            this.places.length = 0;
+            const addPlaceResult = this.addPlace(element, options);
+            global/* instances */.as[this.id] = this;
+            const init = () => {
+                if (this.e) {
+                    this.e.fire('afterInit', this);
+                }
+                this.afterInitHook();
+                this.setStatus(modules.STATUSES.ready);
+                this.e.fire('afterConstructor', this);
+            };
+            (0,helpers.callPromise)(addPlaceResult, init);
         });
     }
     addPlace(source, options) {
@@ -22724,7 +22781,7 @@ function checkRemoveChar(jodit, fakeNode, backspace, mode) {
         removeNeighbor = null;
     }
     if (charRemoved) {
-        removeEmptyInlineParent(fakeNode);
+        removeEmptyForParent(fakeNode, ['a']);
         addBRInsideEmptyBlock(jodit, fakeNode);
         jodit.s.setCursorBefore(fakeNode);
         if (dom/* Dom.isTag */.i.isTag(fakeNode.previousSibling, 'br') &&
@@ -22734,9 +22791,9 @@ function checkRemoveChar(jodit, fakeNode, backspace, mode) {
     }
     return charRemoved;
 }
-function removeEmptyInlineParent(node) {
+function removeEmptyForParent(node, tags) {
     let parent = node.parentElement;
-    while (parent && dom/* Dom.isInlineBlock */.i.isInlineBlock(parent)) {
+    while (parent && dom/* Dom.isInlineBlock */.i.isInlineBlock(parent) && dom/* Dom.isTag */.i.isTag(parent, tags)) {
         const p = parent.parentElement;
         if (dom/* Dom.isEmpty */.i.isEmpty(parent)) {
             dom/* Dom.after */.i.after(parent, node);
@@ -24494,25 +24551,45 @@ var scroll_into_view = __webpack_require__(9005);
 
 
 
-function checkBR(jodit, current, shiftKeyPressed) {
-    const isMultiLineBlock = dom_dom/* Dom.closest */.i.closest(current, ['pre', 'blockquote'], jodit.editor);
+function checkBR(fake, jodit, shiftKeyPressed) {
+    const isMultiLineBlock = Boolean(dom_dom/* Dom.closest */.i.closest(fake, ['pre', 'blockquote'], jodit.editor));
     const isBRMode = jodit.o.enter.toLowerCase() === constants.BR.toLowerCase();
     if (isBRMode ||
         (shiftKeyPressed && !isMultiLineBlock) ||
         (!shiftKeyPressed && isMultiLineBlock)) {
-        const br = jodit.createInside.element('br');
-        jodit.s.insertNode(br, false, false);
-        if (!dom_dom/* Dom.findNotEmptySibling */.i.findNotEmptySibling(br, false)) {
-            dom_dom/* Dom.after */.i.after(br, br.cloneNode());
+        if (isMultiLineBlock && checkSeveralBR(fake)) {
+            return false;
         }
-        const range = jodit.s.range;
-        range.setStartAfter(br);
-        range.collapse(true);
-        jodit.s.selectRange(range);
+        const br = jodit.createInside.element('br');
+        dom_dom/* Dom.before */.i.before(fake, br);
+        if (!dom_dom/* Dom.findNotEmptySibling */.i.findNotEmptySibling(br, false)) {
+            const clone = br.cloneNode();
+            dom_dom/* Dom.after */.i.after(br, clone);
+            dom_dom/* Dom.before */.i.before(clone, fake);
+        }
         (0,scroll_into_view/* scrollIntoViewIfNeeded */.n)(br, jodit.editor, jodit.ed);
+        return true;
+    }
+    return false;
+}
+function checkSeveralBR(fake) {
+    const preBr = brBefore(brBefore(fake));
+    if (preBr) {
+        dom_dom/* Dom.safeRemove */.i.safeRemove(brBefore(fake));
+        dom_dom/* Dom.safeRemove */.i.safeRemove(preBr);
+        return true;
+    }
+    return false;
+}
+function brBefore(start) {
+    if (!start) {
         return false;
     }
-    return true;
+    const prev = dom_dom/* Dom.findSibling */.i.findSibling(start, true);
+    if (!prev || !dom_dom/* Dom.isTag */.i.isTag(prev, 'br')) {
+        return false;
+    }
+    return prev;
 }
 
 ;// CONCATENATED MODULE: ./src/plugins/enter/helpers/check-unsplittable-box.ts
@@ -24522,12 +24599,9 @@ function checkBR(jodit, current, shiftKeyPressed) {
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-function checkUnsplittableBox(jodit, currentBox) {
-    const sel = jodit.s;
+function checkUnsplittableBox(fake, jodit, currentBox) {
     if (!dom_dom/* Dom.canSplitBlock */.i.canSplitBlock(currentBox)) {
-        const br = jodit.createInside.element('br');
-        sel.insertNode(br, false, false);
-        sel.setCursorAfter(br);
+        dom_dom/* Dom.before */.i.before(fake, jodit.createInside.element('br'));
         return false;
     }
     return true;
@@ -24543,25 +24617,16 @@ var selector = __webpack_require__(54188);
  */
 
 
-function insertParagraph(editor, fake, wrapperTag, style) {
-    var _a, _b;
-    const { s, createInside } = editor, p = createInside.element(wrapperTag), helper_node = createInside.element('br');
-    p.appendChild(helper_node);
+function insertParagraph(fake, editor, wrapperTag, style) {
+    const isBR = wrapperTag.toLowerCase() === 'br', { createInside } = editor, p = createInside.element(wrapperTag), br = createInside.element('br');
+    if (!isBR) {
+        p.appendChild(br);
+    }
     if (style && style.cssText) {
         p.setAttribute('style', style.cssText);
     }
-    if (fake && fake.isConnected) {
-        dom_dom/* Dom.before */.i.before(fake, p);
-        dom_dom/* Dom.safeRemove */.i.safeRemove(fake);
-    }
-    else {
-        s.insertNode(p, false, false);
-    }
-    const range = s.createRange();
-    range.setStartBefore(wrapperTag.toLowerCase() !== 'br' ? helper_node : p);
-    range.collapse(true);
-    (_a = s.sel) === null || _a === void 0 ? void 0 : _a.removeAllRanges();
-    (_b = s.sel) === null || _b === void 0 ? void 0 : _b.addRange(range);
+    dom_dom/* Dom.after */.i.after(fake, p);
+    dom_dom/* Dom.before */.i.before(isBR ? p : br, fake);
     (0,scroll_into_view/* scrollIntoViewIfNeeded */.n)(p, editor.editor, editor.ed);
     return p;
 }
@@ -24575,7 +24640,7 @@ function insertParagraph(editor, fake, wrapperTag, style) {
 
 
 
-function processEmptyLILeaf(jodit, li) {
+function processEmptyLILeaf(fake, jodit, li) {
     const list = dom_dom/* Dom.closest */.i.closest(li, ['ol', 'ul'], jodit.editor);
     if (!list) {
         return;
@@ -24586,13 +24651,12 @@ function processEmptyLILeaf(jodit, li) {
     leftRange.setStartAfter(li);
     leftRange.setEndAfter(list);
     const rightPart = leftRange.extractContents();
-    const fakeTextNode = jodit.createInside.fake();
-    dom_dom/* Dom.after */.i.after(container, fakeTextNode);
+    dom_dom/* Dom.after */.i.after(container, fake);
     dom_dom/* Dom.safeRemove */.i.safeRemove(li);
     if (!(0,selector.$$)('li', list).length) {
         dom_dom/* Dom.safeRemove */.i.safeRemove(list);
     }
-    const newLi = insertParagraph(jodit, fakeTextNode, listInsideLeaf ? 'li' : jodit.o.enter);
+    const newLi = insertParagraph(fake, jodit, listInsideLeaf ? 'li' : jodit.o.enter);
     if (!rightPart.querySelector('li')) {
         return;
     }
@@ -24612,8 +24676,8 @@ function processEmptyLILeaf(jodit, li) {
  */
 
 
-function getBlockWrapper(jodit, current, tagReg = constants.IS_BLOCK) {
-    let node = current;
+function getBlockWrapper(fake, jodit, tagReg = constants.IS_BLOCK) {
+    let node = fake;
     const root = jodit.editor;
     do {
         if (!node || node === root) {
@@ -24623,7 +24687,7 @@ function getBlockWrapper(jodit, current, tagReg = constants.IS_BLOCK) {
             if (dom_dom/* Dom.isTag */.i.isTag(node, 'li')) {
                 return node;
             }
-            return (getBlockWrapper(jodit, node.parentNode, /^li$/i) ||
+            return (getBlockWrapper(node.parentNode, jodit, /^li$/i) ||
                 node);
         }
         node = node.parentNode;
@@ -24638,8 +24702,8 @@ function getBlockWrapper(jodit, current, tagReg = constants.IS_BLOCK) {
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-function hasPreviousBlock(jodit, current) {
-    return Boolean(dom_dom/* Dom.prev */.i.prev(current, elm => dom_dom/* Dom.isBlock */.i.isBlock(elm) || dom_dom/* Dom.isImage */.i.isImage(elm), jodit.editor));
+function hasPreviousBlock(fake, jodit) {
+    return Boolean(dom_dom/* Dom.prev */.i.prev(fake, elm => dom_dom/* Dom.isBlock */.i.isBlock(elm) || dom_dom/* Dom.isImage */.i.isImage(elm), jodit.editor));
 }
 
 ;// CONCATENATED MODULE: ./src/plugins/enter/helpers/split-fragment.ts
@@ -24651,28 +24715,27 @@ function hasPreviousBlock(jodit, current) {
 
 
 
-function splitFragment(jodit, currentBox) {
+function splitFragment(fake, jodit, block) {
     const sel = jodit.s, { enter } = jodit.o;
     const defaultTag = enter.toLowerCase();
-    const isLi = dom_dom/* Dom.isTag */.i.isTag(currentBox, 'li');
-    const canSplit = currentBox.tagName.toLowerCase() === defaultTag || isLi;
-    const cursorOnTheRight = sel.cursorOnTheRight(currentBox);
-    const cursorOnTheLeft = sel.cursorOnTheLeft(currentBox);
+    const isLi = dom_dom/* Dom.isTag */.i.isTag(block, 'li');
+    const canSplit = block.tagName.toLowerCase() === defaultTag || isLi;
+    const cursorOnTheRight = sel.cursorOnTheRight(block, fake);
+    const cursorOnTheLeft = sel.cursorOnTheLeft(block, fake);
     if (!canSplit && (cursorOnTheRight || cursorOnTheLeft)) {
-        let fake = null;
         if (cursorOnTheRight) {
-            fake = sel.setCursorAfter(currentBox);
+            dom_dom/* Dom.after */.i.after(block, fake);
         }
         else {
-            fake = sel.setCursorBefore(currentBox);
+            dom_dom/* Dom.before */.i.before(block, fake);
         }
-        insertParagraph(jodit, fake, defaultTag);
+        insertParagraph(fake, jodit, defaultTag);
         if (cursorOnTheLeft && !cursorOnTheRight) {
-            sel.setCursorIn(currentBox, true);
+            dom_dom/* Dom.prepend */.i.prepend(block, fake);
         }
         return;
     }
-    const newP = sel.splitSelection(currentBox);
+    const newP = sel.splitSelection(block, fake);
     (0,scroll_into_view/* scrollIntoViewIfNeeded */.n)(newP, jodit.editor, jodit.ed);
 }
 
@@ -24683,8 +24746,8 @@ function splitFragment(jodit, currentBox) {
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-function wrapText(jodit, current) {
-    let needWrap = current;
+function wrapText(fake, jodit) {
+    let needWrap = fake;
     dom_dom/* Dom.up */.i.up(needWrap, node => {
         if (node && node.hasChildNodes() && node !== jodit.editor) {
             needWrap = node;
@@ -24692,9 +24755,9 @@ function wrapText(jodit, current) {
     }, jodit.editor);
     const currentBox = dom_dom/* Dom.wrapInline */.i.wrapInline(needWrap, jodit.o.enter, jodit);
     if (dom_dom/* Dom.isEmpty */.i.isEmpty(currentBox)) {
-        const helper_node = jodit.createInside.element('br');
-        currentBox.appendChild(helper_node);
-        jodit.s.setCursorBefore(helper_node);
+        const br = jodit.createInside.element('br');
+        currentBox.appendChild(br);
+        dom_dom/* Dom.before */.i.before(br, fake);
     }
     return currentBox;
 }
@@ -24706,15 +24769,15 @@ function wrapText(jodit, current) {
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-function moveCursorOutFromSpecialTags(jodit, current, tags) {
+function moveCursorOutFromSpecialTags(jodit, fake, tags) {
     const { s } = jodit;
-    const link = dom_dom/* Dom.closest */.i.closest(current, tags, jodit.editor);
+    const link = dom_dom/* Dom.closest */.i.closest(fake, tags, jodit.editor);
     if (link) {
-        if (s.cursorOnTheRight(link)) {
-            s.setCursorAfter(link);
+        if (s.cursorOnTheRight(link, fake)) {
+            dom_dom/* Dom.after */.i.after(link, fake);
         }
-        else if (s.cursorOnTheLeft(link)) {
-            s.setCursorBefore(link);
+        else if (s.cursorOnTheLeft(link, fake)) {
+            dom_dom/* Dom.before */.i.before(link, fake);
         }
     }
 }
@@ -24779,44 +24842,41 @@ class enter extends plugin_plugin/* Plugin */.S {
         }
     }
     onEnter(event) {
-        const jodit = this.j;
-        const current = this.getCurrentOrFillEmpty(jodit);
-        moveCursorOutFromSpecialTags(jodit, current, ['a']);
-        let currentBox = getBlockWrapper(jodit, current);
-        const isLi = dom_dom/* Dom.isTag */.i.isTag(currentBox, 'li');
-        if ((!isLi || (event === null || event === void 0 ? void 0 : event.shiftKey)) &&
-            !checkBR(jodit, current, event === null || event === void 0 ? void 0 : event.shiftKey)) {
-            return false;
+        const { jodit } = this;
+        const fake = jodit.createInside.fake();
+        try {
+            dom_dom/* Dom.safeInsertNode */.i.safeInsertNode(jodit.s.range, fake);
+            moveCursorOutFromSpecialTags(jodit, fake, ['a']);
+            let block = getBlockWrapper(fake, jodit);
+            const isLi = dom_dom/* Dom.isTag */.i.isTag(block, 'li');
+            if ((!isLi || (event === null || event === void 0 ? void 0 : event.shiftKey)) &&
+                checkBR(fake, jodit, event === null || event === void 0 ? void 0 : event.shiftKey)) {
+                return false;
+            }
+            if (!block && !hasPreviousBlock(fake, jodit)) {
+                block = wrapText(fake, jodit);
+            }
+            if (!block) {
+                insertParagraph(fake, jodit, isLi ? 'li' : jodit.o.enter);
+                return false;
+            }
+            if (!checkUnsplittableBox(fake, jodit, block)) {
+                return false;
+            }
+            if (isLi && this.__isEmptyListLeaf(block)) {
+                processEmptyLILeaf(fake, jodit, block);
+                return false;
+            }
+            splitFragment(fake, jodit, block);
         }
-        if (!currentBox && !hasPreviousBlock(jodit, current)) {
-            currentBox = wrapText(jodit, current);
+        finally {
+            fake.isConnected && jodit.s.setCursorBefore(fake);
+            dom_dom/* Dom.safeRemove */.i.safeRemove(fake);
         }
-        if (!currentBox || currentBox === current) {
-            insertParagraph(jodit, null, isLi ? 'li' : jodit.o.enter);
-            return false;
-        }
-        if (!checkUnsplittableBox(jodit, currentBox)) {
-            return false;
-        }
-        if (isLi && this.__isEmptyListLeaf(currentBox)) {
-            processEmptyLILeaf(jodit, currentBox);
-            return false;
-        }
-        splitFragment(jodit, currentBox);
     }
     __isEmptyListLeaf(li) {
         const result = this.j.e.fire('enterIsEmptyListLeaf', li);
         return (0,is_boolean/* isBoolean */.j)(result) ? result : dom_dom/* Dom.isEmpty */.i.isEmpty(li);
-    }
-    getCurrentOrFillEmpty(editor) {
-        const { s } = editor;
-        let current = s.current(false);
-        if (!current || current === editor.editor) {
-            current = editor.createInside.text(constants.INVISIBLE_SPACE);
-            s.insertNode(current, false, false);
-            s.select(current);
-        }
-        return current;
     }
     beforeDestruct(editor) {
         editor.e.off('keydown.enter');

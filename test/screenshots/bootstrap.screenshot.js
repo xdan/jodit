@@ -8,6 +8,7 @@ const args = {
 	build: '',
 	debug: false
 };
+
 process.argv.forEach(arg => {
 	const res = /--(build|debug)=/.exec(arg);
 	if (res) {
