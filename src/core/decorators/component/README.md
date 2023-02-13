@@ -67,4 +67,9 @@ fetch('index.php').then(resp => {
 });
 ```
 
-[Example](https://codesandbox.io/s/decorators-u2h0os?file=/src/index.tsx)
+<iframe src="https://codesandbox.io/embed/decorators-u2h0os?fontsize=14&hidenavigation=1&theme=dark"
+style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+title="Decorators"
+allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
