@@ -6,7 +6,7 @@
 
 const { Dom } = Jodit.modules;
 
-describe('Apply style', () => {
+describe.only('Apply style', () => {
 	describe('Test Style module', function () {
 		let editor;
 
@@ -20,6 +20,34 @@ describe('Apply style', () => {
 
 		describe('Base apply', () => {
 			[
+				[
+					'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>',
+					{
+						attributes: {
+							style: { color: '#000000' }
+						}
+					},
+					// https://github.com/xdan/jodit/issues/936
+					'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>'
+				],
+				[
+					'<p><a href="https://xdsoft.net/jodit/" style="color:#000001">|https://xdsoft.net/jodit/|</a></p>',
+					{
+						attributes: {
+							style: { color: '#000001' }
+						}
+					},
+					'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>'
+				],
+				[
+					'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>',
+					{
+						attributes: {
+							style: { color: '#000001' }
+						}
+					},
+					'<p><a href="https://xdsoft.net/jodit/" style="color:#000001">|https://xdsoft.net/jodit/|</a></p>'
+				],
 				[
 					'<p><strong>|test</strong> pop <strong>test|</strong></p>',
 					{

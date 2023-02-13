@@ -39,6 +39,7 @@ export function toggleAttributes(
 	mode: CommitMode,
 	dry: boolean = false
 ): CommitMode {
+	debugger
 	if (!dry && commitStyle.isApplied(elm, tak)) {
 		return mode;
 	}

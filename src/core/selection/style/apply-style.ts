@@ -39,13 +39,13 @@ export function ApplyStyle(jodit: IJodit, cs: ICommitStyle): void {
 			IStyleTransactionValue
 		>(states.START, transactions);
 		state.element = font.value;
-		// machine.disableSilent();
+		machine.disableSilent();
 
 		while (machine.getState() !== states.END) {
 			state = machine.dispatch('exec', state);
-			// console.log(machine.getState(), state);
+			console.log(machine.getState(), state);
 		}
-		// console.log('-------------------');
+		console.log('-------------------');
 
 		font = gen.next();
 	}

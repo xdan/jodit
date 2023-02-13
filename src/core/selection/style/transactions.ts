@@ -199,6 +199,11 @@ export const transactions: IStyleTransactions = {
 				return { ...value, next: states.CHANGE };
 			}
 
+			// Apply same color for anchor https://github.com/xdan/jodit/issues/936
+			if (!Dom.isTag(element, style.element)) {
+				return { ...value, next: states.END };
+			}
+
 			return { ...value, next: states.UNWRAP };
 		}
 	},

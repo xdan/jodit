@@ -15,6 +15,7 @@
 
 -   [Wrong new empty paragraph location when cursor is set after a table and <Enter> key is pressed #953](https://github.com/xdan/jodit/issues/953)
 -   The PluginSystem module has been refactored: now asynchronous plugins do not block the initialization of the editor and it is ready to work without them.
+-   [Remove anchor element when set black text color. #936](https://github.com/xdan/jodit/issues/936)
 
 ## 3.24.4
 
