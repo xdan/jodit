@@ -73,10 +73,12 @@ export class PluginSystem implements IPluginSystem {
 		const results: Array<[string, PluginType]> = [];
 
 		this.__items.forEach((plugin, name) => {
-			results.push([name, plugin]);
+			if (!filter || filter.has(name)) {
+				results.push([name, plugin]);
+			}
 		});
 
-		return results.filter(([name]) => !filter || filter.has(name));
+		return results;
 	}
 
 	/**
@@ -187,7 +189,7 @@ function bindOnBeforeDestruct(
 function getSpecialLists(jodit: IJodit): {
 	extrasList: IExtraPlugin[];
 	disableList: Set<string>;
-	filter: Set<string> | null;
+	filter: Nullable<Set<string>>;
 } {
 	const extrasList: IExtraPlugin[] = jodit.o.extraPlugins.map(s =>
 		isString(s) ? { name: s } : s
@@ -197,9 +199,7 @@ function getSpecialLists(jodit: IJodit): {
 		splitArray(jodit.o.disablePlugins).map(normalizeName)
 	);
 
-	const filter = jodit.o.safeMode
-		? new Set(jodit.o.safePluginsList.concat(extrasList.map(s => s.name)))
-		: null;
+	const filter = jodit.o.safeMode ? new Set(jodit.o.safePluginsList) : null;
 
 	return { extrasList, disableList, filter };
 }
