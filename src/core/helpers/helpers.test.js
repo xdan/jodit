@@ -316,37 +316,41 @@ describe('Test helpers', function () {
 
 	describe('HTML', function () {
 		describe('stripTags', function () {
-			describe('Put HTML text', function () {
-				it('Should return only text', function () {
-					const values = [
-						['<p>Type something<p>', 'Type something'],
-						[
-							'<p>Type <strong>something</strong><p>',
-							'Type something'
-						],
-						[
-							'<p>Type <strong>some<br>thing</strong><p>',
-							'Type some thing'
-						],
-						[
-							'<p>Type <strong>something</strong></p><p>Type <strong>something</strong></p>',
-							'Type something Type something'
-						],
-						[
-							'<p>Type <strong>something</strong></p><p>Type <strong>something</strong><style>* {color: red}</style><script>alert(1)</script> test</p>',
-							'Type something Type something test'
-						]
-					];
+			const values = [
+				['<p>Type something<p>', 'Type something'],
+				['<p>Type <strong>something</strong><p>', 'Type something'],
+				[
+					'<p>Type <strong>some<br>thing</strong><p>',
+					'Type some thing'
+				],
+				[
+					'<p>Type <strong>something</strong></p><p>Type <strong>something</strong></p>',
+					'Type something Type something'
+				],
+				[
+					'<p>Type <strong>something</strong></p><p>Type <strong>something</strong><style>* {color: red}</style><script>alert(1)</script> test</p>',
+					'Type something Type something test'
+				],
+				[
+					'<p>test <strong>po<br/>p</strong><br/>stop <em>lop</em><br/></p>',
+					'<p>test po<br>p<br>stop lop<br></p>',
+					new Set(['p', 'br'])
+				]
+			];
 
-					for (let i = 0; i < values.length; i += 1) {
-						expect(values[i][1]).equals(
+			for (const value of values) {
+				describe('Put HTML text input: ' + value[0], function () {
+					it('Should return only output: ' + value[1], function () {
+						expect(value[1]).equals(
 							Jodit.modules.Helpers.stripTags(
-								values[i][0]
+								value[0],
+								document,
+								value[2]
 							).replace(/\n/g, '')
 						);
-					}
+					});
 				});
-			});
+			}
 		});
 	});
 

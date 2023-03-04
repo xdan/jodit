@@ -10,6 +10,7 @@
 
 /**
  * Convert special characters to HTML entities
+ * @deprecated Instead use stripTags
  */
 export function htmlspecialchars(html: string): string {
 	const tmp = document.createElement('div');
