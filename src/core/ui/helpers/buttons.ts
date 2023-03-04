@@ -17,12 +17,18 @@ import type {
 } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 
+/**
+ * @private
+ */
 export const isButtonGroup = (
 	item: ButtonsGroup | string | IControlType
 ): item is ButtonsGroup => {
 	return isArray((<ButtonsGroup>item).buttons);
 };
 
+/**
+ * @private
+ */
 export function flatButtonsSet(
 	buttons: ButtonsGroups,
 	jodit: IJodit

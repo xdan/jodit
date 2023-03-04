@@ -20,6 +20,7 @@ import { Config } from 'jodit/config';
 
 /**
  * Get control for button name
+ * @private
  */
 export function getControlType(
 	button: IControlType | string,
@@ -51,6 +52,9 @@ export function getControlType(
 	return buttonControl;
 }
 
+/**
+ * @private
+ */
 export function findControlType(
 	path: string,
 	controls: Controls

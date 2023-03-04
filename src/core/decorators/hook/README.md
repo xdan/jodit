@@ -6,7 +6,7 @@ Sets a handler for changing the component's status.
 import { component, hook } from 'jodit/src/core/decorators';
 import { UIElement } from 'jodit/src/ui';
 
-@component()
+@component
 class UISomeElement extends UIElement {
 	@hook('ready')
 	protected onReadyHandler(): void {

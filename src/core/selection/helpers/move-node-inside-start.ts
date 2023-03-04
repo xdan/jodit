@@ -15,6 +15,7 @@ import { INSEPARABLE_TAGS } from 'jodit/core/constants';
 /**
  * Moves the fake node inside the adjacent element if it lies next to it but not inside.
  * When the cursor is positioned in its place, it must be inside the element and not outside its border.
+ * @private
  */
 export function moveNodeInsideStart(
 	j: IJodit,

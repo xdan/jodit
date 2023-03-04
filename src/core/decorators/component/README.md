@@ -5,7 +5,7 @@ This decorator calls `setStatus('ready')` after the `new UI()` operation
 All other decorators start their work only when the component is ready to work.
 
 ```typescript
-@component()
+@component
 class UIHeight extends UIElement {
 	public state = {
 		height: 10
@@ -17,7 +17,7 @@ class UIHeight extends UIElement {
 	}
 }
 
-@component()
+@component
 class UIWidth extends UIHeight {
 	public state = {
 		height: 10,

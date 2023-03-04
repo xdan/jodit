@@ -12,6 +12,7 @@ import type { IFileBrowser } from 'jodit/types';
 
 /**
  * Removes a file from the server
+ * @private
  */
 export function deleteFile(
 	fb: IFileBrowser,

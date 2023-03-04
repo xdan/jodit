@@ -13,7 +13,7 @@ import './style.less';
 import { UIElement } from 'jodit/src/core/ui';
 import { component } from 'jodit/src/core/decorators';
 
-@component()
+@component
 export class UISlider extends UIElement {
 	className() {
 		return 'UISlider';

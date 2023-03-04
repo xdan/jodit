@@ -30,6 +30,7 @@ import type { PasteEvent } from './interface';
 
 /**
  * Remove special HTML comments
+ * @private
  */
 function removeExtraFragments(html: string): string {
 	html = html.replace(/<meta[^>]+?>/g, '');
@@ -49,12 +50,16 @@ function removeExtraFragments(html: string): string {
 	return html;
 }
 
+/**
+ * @private
+ */
 function isDragEvent(e: Nullable<PasteEvent>): e is DragEvent {
 	return Boolean(e && e.type === 'drop');
 }
 
 /**
  * One insert point for clipboard plugins
+ * @private
  */
 export function pasteInsertHtml(
 	e: Nullable<PasteEvent>,
@@ -87,6 +92,7 @@ export function pasteInsertHtml(
 
 /**
  * Return all available data types in event
+ * @private
  */
 export function getAllTypes(dt: DataTransfer): string {
 	const types: ReadonlyArray<string> | string = dt.types;
@@ -109,6 +115,7 @@ export function getAllTypes(dt: DataTransfer): string {
 
 /**
  * Make command dialog
+ * @private
  */
 export function askInsertTypeDialog(
 	jodit: IJodit,

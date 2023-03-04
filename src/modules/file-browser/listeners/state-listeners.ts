@@ -19,6 +19,7 @@ const DEFAULT_SOURCE_NAME = 'default';
 
 /**
  * Convert state to view
+ * @private
  */
 export function stateListeners(this: IFileBrowser): void {
 	const elmMap = elementsMap(this);

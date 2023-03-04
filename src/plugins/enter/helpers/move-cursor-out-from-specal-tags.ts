@@ -13,6 +13,7 @@ import { Dom } from 'jodit/core/dom/dom';
 
 /**
  * Checks if the cursor is on the edge of a special tag and exits if so
+ * @private
  */
 export function moveCursorOutFromSpecialTags(
 	jodit: IJodit,

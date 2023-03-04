@@ -435,6 +435,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	}
 }
 
+/**
+ * @private
+ */
 export function isFileBrowserFilesItem(target: unknown): boolean {
 	return (
 		Dom.isElement(target) &&

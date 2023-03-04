@@ -7,7 +7,7 @@ For example:
 import { component, watch, debounce } from 'jodit/src/core/decorators';
 import { Dom } from 'jodit/src/core/dom';
 
-@component()
+@component
 class UIInputSuggestion extends UIElement {
 	override render(): string {
 		return `<div>

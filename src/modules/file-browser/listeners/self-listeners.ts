@@ -17,6 +17,9 @@ import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
 import { loadItems } from 'jodit/modules/file-browser/fetch/load-items';
 import { deleteFile } from 'jodit/modules/file-browser/fetch/delete-file';
 
+/**
+ * @private
+ */
 export function selfListeners(this: IFileBrowser): void {
 	const state = this.state,
 		dp = this.dataProvider,

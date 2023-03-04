@@ -6,7 +6,7 @@ Wrap function in wait wrapper, it will be called after `condition` returns `true
 import { component, wait } from 'jodit/src/core/decorators';
 import { UIElement } from 'jodit/src/ui';
 
-@component()
+@component
 class UISomeElement extends UIElement {
 	@wait(() => typeof jQuery !== 'undefined')
 	protected runOnLoadJQuery(html: string): void {

@@ -27,6 +27,7 @@ import './config';
 
 /**
  * Check if root node is empty
+ * @private
  */
 export function isEditorEmpty(root: HTMLElement): boolean {
 	if (!root.firstChild) {

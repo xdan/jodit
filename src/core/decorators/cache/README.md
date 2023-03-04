@@ -3,7 +3,7 @@
 The decorator allows you to cache the result of executing any method of the UI component.
 
 ```typescript
-@component()
+@component
 class UIComponent extends UIElement {
 	@cache()
 	someHeavyMethod(param1, param2) {

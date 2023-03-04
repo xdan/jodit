@@ -9,7 +9,7 @@ For example, we will make a reactive component that will change its color when i
 import { component, watch, hook } from 'jodit/src/core/decorators';
 import { UIElement } from 'jodit/src/ui';
 
-@component()
+@component
 class UISomeReactElement extends UIElement {
 	state = {
 		color: 'red'
@@ -43,7 +43,7 @@ Then the call signature has its own syntax:
 For example, this is how you can hang a click handler on the component container:
 
 ```ts
-@component()
+@component
 class UIButtonElement extends UIElement {
 	state = {
 		counter: 0
@@ -68,7 +68,7 @@ class UIButtonElement extends UIElement {
 The context can be specified as a path to an object, and even as the name of a BEM interface element
 
 ```ts
-@component()
+@component
 class UICard extends UIElement {
 	state = {
 		counter: 0
@@ -107,7 +107,7 @@ Also, the context can be set differently by setting it as the second parameter,
 or by setting the function as the second parameter that will return the context
 
 ```ts
-@component()
+@component
 class UICardExt extends UICard {
 	@watch(':click', ctx => ctx.getElm('card-button')) // As this.j.e.on(this.getElm('card-button'), 'click', this.onClick.bind(this))
 	onClick(): void {
@@ -119,7 +119,7 @@ class UICardExt extends UICard {
 The first argument can be an array:
 
 ```ts
-@component()
+@component
 class UICardExt extends UICard {
 	@watch([
 		'card-button:click',

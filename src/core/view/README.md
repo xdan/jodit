@@ -18,7 +18,7 @@ Thus, if you need a component that has its own event system, its own [[Async]] m
 import { component } from 'jodit/src/core/decorators';
 import { View } from 'jodit/src/core/view';
 
-@component()
+@component
 class YourComponent extends View {}
 
 const elm = new YourComponent();

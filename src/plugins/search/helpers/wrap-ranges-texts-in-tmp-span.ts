@@ -12,8 +12,14 @@ import type { CanUndef, ICreate, ISelectionRange, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { $$ } from 'jodit/core/helpers/utils/selector';
 
+/**
+ * @private
+ */
 const TMP_ATTR = 'jd-tmp-selection';
 
+/**
+ * @private
+ */
 export function wrapRangesTextsInTmpSpan(
 	rng: ISelectionRange,
 	restRanges: ISelectionRange[],
@@ -102,14 +108,23 @@ export function wrapRangesTextsInTmpSpan(
 	} while (next && next !== root);
 }
 
+/**
+ * @private
+ */
 export function getSelectionWrappers(root: HTMLElement): HTMLElement[] {
 	return $$(`[${TMP_ATTR}]`, root);
 }
 
+/**
+ * @private
+ */
 export function clearSelectionWrappers(root: HTMLElement): void {
 	getSelectionWrappers(root).forEach(span => Dom.unwrap(span));
 }
 
+/**
+ * @private
+ */
 export function clearSelectionWrappersFromHTML(root: string): string {
 	return root.replace(
 		RegExp(`<span[^>]+${TMP_ATTR}[^>]+>(.*?)</span>`, 'g'),
@@ -117,6 +132,9 @@ export function clearSelectionWrappersFromHTML(root: string): string {
 	);
 }
 
+/**
+ * @private
+ */
 export function isSelectionWrapper(node: unknown): boolean {
 	return Dom.isElement(node) && node.hasAttribute(TMP_ATTR);
 }

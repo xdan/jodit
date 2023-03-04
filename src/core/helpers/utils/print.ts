@@ -5,7 +5,7 @@
  */
 
 /**
- * @module plugins/print
+ * @module helpers/utils
  */
 
 import type { IJodit, Nullable } from 'jodit/types';

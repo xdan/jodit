@@ -52,6 +52,7 @@ export function removeFormatForCollapsedSelection(
 
 /**
  * Element has inline display mode
+ * @private
  */
 export function isInlineBlock(node: Nullable<Node>): node is Node {
 	return Dom.isInlineBlock(node) && !Dom.isTag(node, INSEPARABLE_TAGS);

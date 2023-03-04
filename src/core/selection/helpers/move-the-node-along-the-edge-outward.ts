@@ -11,6 +11,9 @@
 import type { Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 
+/**
+ * @private
+ */
 export function moveTheNodeAlongTheEdgeOutward(
 	node: Node,
 	start: boolean,

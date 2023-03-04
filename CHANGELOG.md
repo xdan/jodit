@@ -1851,7 +1851,7 @@ a.options.allowResizeY; // false
 
 ```js
 // Before
-@component()
+@component
 class UIBtn extends UIElement {
 	className() {
 		return 'UIBtn';
@@ -1873,7 +1873,7 @@ class UIBtn extends UIElement {
 }
 
 // Now
-@component()
+@component
 class UIBtn extends UIElement {
 	className() {
 		return 'UIBtn';

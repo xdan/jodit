@@ -94,10 +94,10 @@ import { Component } from 'jodit/src/core/component';
 import { StatusBar } from 'jodit/src/modules';
 import { component } from 'jodit/src/core/decorators';
 
-@component()
+@component
 export class SomeComponent extends Component {}
 
-@component()
+@component
 export class SomeAnotherComponent extends SomeComponent {
 	public status: IStatusBar;
 

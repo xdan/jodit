@@ -14,6 +14,7 @@ import { getMoveFilter } from 'jodit/plugins/backspace/helpers';
 
 /**
  * Check if two separate elements can be connected
+ * @private
  */
 export function checkJoinNeighbors(
 	jodit: IJodit,

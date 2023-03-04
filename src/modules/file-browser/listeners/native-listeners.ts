@@ -21,6 +21,9 @@ import { Dom } from 'jodit/core/dom';
 import { elementsMap } from 'jodit/modules/file-browser/builders/elements-map';
 import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
 
+/**
+ * @private
+ */
 export const getItem = (
 	node: Nullable<EventTarget>,
 	root: HTMLElement,
@@ -28,6 +31,9 @@ export const getItem = (
 ): Nullable<HTMLElement> =>
 	Dom.closest(node as Node, elm => Dom.isTag(elm, tag), root);
 
+/**
+ * @private
+ */
 export const elementToItem = (
 	elm: HTMLElement,
 	elementsMap: IDictionary<{
@@ -41,6 +47,9 @@ export const elementToItem = (
 	return item;
 };
 
+/**
+ * @private
+ */
 export function nativeListeners(this: IFileBrowser): void {
 	let dragElement: false | HTMLElement = false;
 	const elmMap = elementsMap(this);

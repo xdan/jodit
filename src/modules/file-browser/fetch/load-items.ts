@@ -12,6 +12,7 @@ import type { IFileBrowser } from 'jodit/types';
 
 /**
  * Loads a list of files and adds them to the state
+ * @private
  */
 export function loadItems(fb: IFileBrowser): Promise<any> {
 	fb.files.setMod('active', true);

@@ -18,6 +18,9 @@ import { checkJoinTwoLists } from './check-join-two-lists';
 import { checkJoinNeighbors } from './check-join-neighbors';
 import { checkUnwrapFirstListItem } from './check-unwrap-first-list-item';
 
+/**
+ * @private
+ */
 export const cases = [
 	checkRemoveUnbreakableElement,
 	checkRemoveContentNotEditable,

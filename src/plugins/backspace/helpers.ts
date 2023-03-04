@@ -5,7 +5,7 @@
  */
 
 /**
- * @module plugins/keyboard
+ * @module plugins/backspace
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
@@ -14,6 +14,7 @@ import { Dom } from 'jodit/core/dom';
 /**
  * Finds the nearest neighbor that would be in the maximum nesting depth.
  * Ie if neighbor `<DIV><SPAN>Text` then return Text node.
+ * @private
  */
 export function findMostNestedNeighbor(
 	node: Node,

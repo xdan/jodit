@@ -14,6 +14,7 @@ import { loadItems } from 'jodit/modules/file-browser/fetch/load-items';
 
 /**
  * Loads a list of directories
+ * @private
  */
 export async function loadTree(fb: IFileBrowser): Promise<any> {
 	fb.tree.setMod('active', true);

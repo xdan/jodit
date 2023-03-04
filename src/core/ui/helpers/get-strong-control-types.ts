@@ -19,6 +19,9 @@ import { Config } from 'jodit/config';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { ConfigProto, keys } from 'jodit/core/helpers/utils';
 
+/**
+ * @private
+ */
 export function getStrongControlTypes(
 	items: Buttons | IDictionary<string>,
 	controls?: Controls
