@@ -13,7 +13,6 @@
 
 #### :house: Internal
 
--
 -   `Jodit.modules.Helpers.htmlspecialchars` marked as deprecated. Instead use `Jodit.modules.Helpers.stripTags`
 -   `Jodit.modules.Helpers.stripTags` added third argument for excluding tags
 
@@ -27,6 +26,7 @@ Jodit.modules.Helpers.stripTags(
 ```
 
 -   Inside `safeMode` will init only `safePluginsList` plugins. It used to init `extraPlugins` too.
+-   `size` plugin was added in default `safePluginsList`
 
 ```js
 const editor = Jodit.make('#editor', {
@@ -2032,11 +2032,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ]
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

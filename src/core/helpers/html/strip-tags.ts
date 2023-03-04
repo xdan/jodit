@@ -27,6 +27,8 @@ const NEW_LINE_TAGS: Set<HTMLTagNames> = new Set([
 	'hr'
 ]);
 
+const INVISIBLE_TAGS: Set<'script' | 'style'> = new Set(['script', 'style']);
+
 /**
  * Extract plain text from HTML text
  */
@@ -63,7 +65,7 @@ export function stripTags(
 			return;
 		}
 
-		if (Dom.isTag(p, ['script', 'style'])) {
+		if (Dom.isTag(p, INVISIBLE_TAGS)) {
 			Dom.safeRemove(p);
 			return;
 		}
@@ -89,7 +91,6 @@ export function stripTags(
 function restoreTags(content: string): string {
 	return content.replace(
 		/%%%(\/)?jodit(-single)?-([\w\n]+)%%%/g,
-		(_, isClosed, isSingle, tag) =>
-			`<${isClosed ? '/' : ''}${tag}>`
+		(_, isClosed, isSingle, tag) => `<${isClosed ? '/' : ''}${tag}>`
 	);
 }

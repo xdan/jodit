@@ -1052,6 +1052,9 @@ export class Dom {
 		tagName: K
 	): node is HTMLElementTagNameMap[K];
 
+	/**
+	 * @deprecated Use Set instead of Array
+	 */
 	static isTag<K extends HTMLTagNames>(
 		node: Node | null | undefined | false | EventTarget,
 		tagNames: K[]

@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.24.6
+ * Version: v3.24.7
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -1099,7 +1099,7 @@ class Config {
         this.safeMode = false;
         this.width = 'auto';
         this.height = 'auto';
-        this.safePluginsList = ['about', 'enter', 'backspace'];
+        this.safePluginsList = ['about', 'enter', 'backspace', 'size'];
         this.license = '';
         this.preset = 'custom';
         this.presets = {
@@ -5071,7 +5071,20 @@ var is_string = __webpack_require__(24421);
 
 
 
-function stripTags(html, doc = document) {
+const NEW_LINE_TAGS = new Set([
+    'div',
+    'p',
+    'br',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'hr'
+]);
+const INVISIBLE_TAGS = new Set(['script', 'style']);
+function stripTags(html, doc = document, exclude = null) {
     const tmp = doc.createElement('div');
     if ((0,is_string/* isString */.H)(html)) {
         tmp.innerHTML = html;
@@ -5079,13 +5092,25 @@ function stripTags(html, doc = document) {
     else {
         tmp.appendChild(html);
     }
-    (0,utils.$$)('DIV, P, BR, H1, H2, H3, H4, H5, H6, HR, STYLE, SCRIPT', tmp).forEach(p => {
+    (0,utils.$$)('*', tmp).forEach(p => {
         const pr = p.parentNode;
         if (!pr) {
             return;
         }
-        if (dom/* Dom.isTag */.i.isTag(p, ['script', 'style'])) {
+        if (exclude && dom/* Dom.isTag */.i.isTag(p, exclude)) {
+            const tag = p.nodeName.toLowerCase();
+            const text = !dom/* Dom.isTag */.i.isTag(p, ['br', 'hr', 'input'])
+                ? `%%%jodit-${tag}%%%${stripTags(p.innerHTML, doc, exclude)}%%%/jodit-${tag}%%%`
+                : `%%%jodit-single-${tag}%%%`;
+            dom/* Dom.before */.i.before(p, doc.createTextNode(text));
             dom/* Dom.safeRemove */.i.safeRemove(p);
+            return;
+        }
+        if (dom/* Dom.isTag */.i.isTag(p, INVISIBLE_TAGS)) {
+            dom/* Dom.safeRemove */.i.safeRemove(p);
+            return;
+        }
+        if (!dom/* Dom.isTag */.i.isTag(p, NEW_LINE_TAGS)) {
             return;
         }
         const nx = p.nextSibling;
@@ -5096,7 +5121,10 @@ function stripTags(html, doc = document) {
             pr.insertBefore(doc.createTextNode(' '), nx);
         }
     });
-    return (0,trim/* trim */.f)(tmp.innerText) || '';
+    return restoreTags((0,trim/* trim */.f)(tmp.innerText));
+}
+function restoreTags(content) {
+    return content.replace(/%%%(\/)?jodit(-single)?-([\w\n]+)%%%/g, (_, isClosed, isSingle, tag) => `<${isClosed ? '/' : ''}${tag}>`);
 }
 
 // EXTERNAL MODULE: ./src/core/helpers/html/safe-html.ts
@@ -7924,9 +7952,11 @@ class PluginSystem {
     __filter(filter) {
         const results = [];
         this.__items.forEach((plugin, name) => {
-            results.push([name, plugin]);
+            if (!filter || filter.has(name)) {
+                results.push([name, plugin]);
+            }
         });
-        return results.filter(([name]) => !filter || filter.has(name));
+        return results;
     }
     __init(jodit) {
         const { extrasList, disableList, filter } = getSpecialLists(jodit);
@@ -7997,9 +8027,7 @@ function bindOnBeforeDestruct(jodit, plugins) {
 function getSpecialLists(jodit) {
     const extrasList = jodit.o.extraPlugins.map(s => (0,checker/* isString */.HD)(s) ? { name: s } : s);
     const disableList = new Set((0,array/* splitArray */.C1)(jodit.o.disablePlugins).map(normalizeName));
-    const filter = jodit.o.safeMode
-        ? new Set(jodit.o.safePluginsList.concat(extrasList.map(s => s.name)))
-        : null;
+    const filter = jodit.o.safeMode ? new Set(jodit.o.safePluginsList) : null;
     return { extrasList, disableList, filter };
 }
 
@@ -11211,10 +11239,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.24.6";
+        return "3.24.7";
     }
     static getVersion() {
-        return "3.24.6";
+        return "3.24.7";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -11237,7 +11265,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.24.6";
+        this.version = "3.24.7";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
