@@ -119,10 +119,9 @@ export function attr(
 			elm.hasAttribute(key) && elm.removeAttribute(key);
 		} else {
 			let replaceValue = value.toString();
-// 			if (key === 'width' || key === 'height') {
-// 				replaceValue = replaceValue.replace(/\D/g, '');
-// 			}
-			// testing something out
+			if (key === 'width' || key === 'height') {
+				replaceValue = replaceValue.replace(/\D/g, '');
+			}
 			elm.setAttribute(key, replaceValue);
 			return value.toString();
 		}
