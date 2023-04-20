@@ -439,7 +439,7 @@ exports.sound = sound;
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
+exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.mn = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
 var ar = __webpack_require__(5466);
 exports.ar = ar;
 var cs_cz = __webpack_require__(65226);
@@ -464,6 +464,8 @@ var ja = __webpack_require__(25363);
 exports.ja = ja;
 var ko = __webpack_require__(96929);
 exports.ko = ko;
+var mn = __webpack_require__(26781);
+exports.mn = mn;
 var nl = __webpack_require__(58499);
 exports.nl = nl;
 var pl = __webpack_require__(59430);
@@ -847,6 +849,27 @@ module.exports = {
 	'Speech Recognize': '음성 인식',
 	Sound: '소리',
 	'Interim Results': '중간 결과'
+};
+
+
+/***/ }),
+
+/***/ 26781:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	newline: 'Шинэ мөр',
+	delete: 'Устгах',
+	space: 'Зай',
+	'Speech Recognize': 'Дуу хоолой таних',
+	Sound: 'Дуу',
+	'Interim Results': 'Түр зуурын үр дүн'
 };
 
 

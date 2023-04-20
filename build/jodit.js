@@ -110,6 +110,13 @@ module.exports["default"] = ["무엇이든 입력하세요","Jodit에 대하여"
 
 /***/ }),
 
+/***/ 26501:
+/***/ (function(module) {
+
+module.exports["default"] = ["Бичээд үзээрэй","Jodit-ын талаар ","Jodit програм","Jodit гарын авлага","хэрэглээний талаар дэлгэрэнгүй мэдээллийг агуулна","Лицензийн мэдээллийг манай вэб хуудаснаас авна уу:","Бүрэн хувилбар худалдан авах","Зохиогчийн эрх хамгаалагдсан © XDSoft.net - Chupurnov Valeriy. Бүх эрхийг эзэмшинэ.","Холбоо барих","Шинэ табаар нээх","Бүтэн дэлгэцээр нээх","Форматыг арилгах","Өнгөөр будах эсвэл текстийн өнгө сонгох","Дахих","Буцаах","Тод","Налуу","Тэмдэгт жагсаалт нэмэх","Дугаарт жагсаалт нэмэх","Голлож байрлуулах","Тэгшитгэн байрлуулах","Зүүнд байрлуулах","Баруунд байрлуулах","Хэвтээ зураас нэмэх","Зураг нэмэх","Файл нэмэх","Youtube/Vimeo видео нэмэх","Холбоос нэмэх","Фонтын хэмжээ","Фонтын бүл","Блок нэмэх","Хэвийн","Гарчиг 1","Гарчиг 2","Гарчиг 3","Гарчиг 4","Ишлэл","Код","Оруулах","Хүснэгт оруулах","Доголын зай хасах","Доголын зай нэмэх","Тусгай тэмдэгт сонгох","Тусгай тэмдэгт нэмэх","Зургийн формат","Горим өөрчлөх","Цаасны зай","Дээрээс","Баруунаас","Доороос","Зүүнээс","CSS стиль","CSS анги","Байрлуулах","Баруун","Төв","Зүүн","--Тодорхойгүй--","Эх үүсвэр","Гарчиг","Алтернатив текст","Холбоос","Холбоосыг шинэ хавтсанд нээх","Зураг","Файл","Дэвшилтэт","Зургийн үзүүлэлт","Цуцлах","Ok","Файлын цонх","Жагсаалт татах үед алдаа гарлаа","Хавтас татах үед алдаа гарлаа","Итгэлтэй байна уу?","Хавтсын нэр оруулах","Хавтас үүсгэх","Нэр бичих","Зураг буулгах","Файл буулгах","эсвэл товш","Алтернатив текст","Байршуулах","Үзэх","Арын зураг","Текст","Дээр","Дунд","Доор","Урд нь багана нэмэх","Ард нь багана нэмэх","Дээр нь мөр нэмэх","Доор нь мөр нэмэх","Хүснэгт устгах","Мөр устгах","Багана устгах","Нүд цэвэрлэх","Тэмдэгт: %d","Үг: %d","Дээгүүр зураас","Доогуур зураас","Дээд индекс","Доод индекс","Сонголтыг таслах","Бүгдийг сонго","Мөрийг таслах","Хайх","Үүгээр солих","Солих","Буулгах","Буулгах агуулгаа сонгоно уу","Эх үүсвэр","Тод","Налуу","Будах","Холбоос","Буцаах","Дахих","Хүснэгт","Зураг","Баллуур","Параграф","Фонтын хэмжээ","Видео","Фонт","Тухай","Хэвлэх","Доогуур зураас","Дээгүүр зураас","Догол нэмэх","Догол багасгах","Бүтэн дэлгэц","Багасга","Хаалт","Тэмдэгт жагсаалт","Дугаарласан жагсаалт","Таслах","Бүгдийг сонго","Код оруулах","Холбоос нээх","Холбоос засах","Nofollow özelliği","Холбоос салгах","Шинэчлэх","Засах","Нүд","URL","Засах","Хэвтээ эгнүүлэх","Шүүх","Сүүлд өөрчлөгдсөнөөр жагсаах","Нэрээр жагсаах","Хэмжээгээр жагсаах","Хавтас нэмэх","Буцаах","Хадгалах","Өөрөөр хадгалах","Хэмжээг өөрчил","Тайрах","Өргөн","Өндөр","Харьцааг хадгал","Тийм","Үгүй","Арилга","Сонго","Сонго: %s","Босоо эгнүүлэх","Задлах","Нэгтгэх","Багана нэмэх","Мөр нэмэх",null,"Устгах","Баганаар задлах","Мөрөөр задлах","Хүрээ","Таны код HTML кодтой адил байна. HTML форматаар үргэлжлүүлэх үү?","HTML байдлаар буулгах","Хадгалах","Текст байдлаар нэмэх","Зөвхөн текст оруулах","Та зөвхөн өөрийн зургуудаа янзлах боломжтой. Энэ зургийг өөр лүүгээ татмаар байна уу?","Зургийг хост руу амжилттай хадгалсан","Палет","Энд ямар нэг файл алга","Шинээр нэрлэх","Шинэ нэр оруулна уу","Урьдчилан харах","Татах","Самбараас хуулах ","Энэ вэб хөтчөөс самбарт хандах эрх алга.","Сонголтыг хуул","Хуулах","Хүрээний радиус","Бүгдийг харуулах","Хэрэгжүүл","Энэ талбарыг бөглөнө үү","Вэб хаягаа оруулна уу","Үндсэн","Дугуй","Цэг","Дөрвөлжин","Хайх","Өмнөхийг ол","Дараагийнхийг ол","Буулгасан агуулга Microsoft Word/Excel форматтай байна. Энэ форматыг хэвээр хадгалах уу эсвэл арилгах уу?","Word байдлаар буулгасан байна","Цэвэрлэх","Бүлгийн нэрээ оруулна уу","Хэмжээсийг шинээр өөчрлөхийн тулд Alt товчин дээр дарна уу"]
+
+/***/ }),
+
 /***/ 17084:
 /***/ (function(module) {
 
@@ -20044,6 +20051,7 @@ if (true) {
     var it = __webpack_require__(51923);
     var ja = __webpack_require__(21268);
     var ko = __webpack_require__(37289);
+    var mn = __webpack_require__(26501);
     var nl = __webpack_require__(17084);
     var pl = __webpack_require__(96891);
     var pt_br = __webpack_require__(31211);
@@ -20064,13 +20072,14 @@ if (true) {
         it: it,
         ja: ja,
         ko: ko,
+        mn: mn,
         nl: nl,
         pl: pl,
         pt_br: pt_br,
         ru: ru,
         tr: tr,
         zh_cn: zh_cn,
-        zh_tw: zh_tw
+        zh_tw: zh_tw,
     };
 }
 var keys = __webpack_require__(11399);
@@ -28738,7 +28747,7 @@ icon_1.Icon.set('copyformat', __webpack_require__(83301));
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
+exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.mn = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
 var ar = __webpack_require__(80078);
 exports.ar = ar;
 var cs_cz = __webpack_require__(16986);
@@ -28763,6 +28772,8 @@ var ja = __webpack_require__(82066);
 exports.ja = ja;
 var ko = __webpack_require__(71925);
 exports.ko = ko;
+var mn = __webpack_require__(12689);
+exports.mn = mn;
 var nl = __webpack_require__(65274);
 exports.nl = nl;
 var pl = __webpack_require__(58548);
@@ -32898,7 +32909,7 @@ config_1.Config.prototype.controls.lineHeight = {
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
+exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.mn = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
 var ar = __webpack_require__(47762);
 exports.ar = ar;
 var cs_cz = __webpack_require__(97495);
@@ -32923,6 +32934,8 @@ var ja = __webpack_require__(33216);
 exports.ja = ja;
 var ko = __webpack_require__(17282);
 exports.ko = ko;
+var mn = __webpack_require__(52841);
+exports.mn = mn;
 var nl = __webpack_require__(91761);
 exports.nl = nl;
 var pl = __webpack_require__(61675);
@@ -38290,7 +38303,7 @@ config_1.Config.prototype.controls.spellcheck = {
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
+exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.mn = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
 var ar = __webpack_require__(5586);
 exports.ar = ar;
 var cs_cz = __webpack_require__(66023);
@@ -38315,6 +38328,8 @@ var ja = __webpack_require__(69286);
 exports.ja = ja;
 var ko = __webpack_require__(13402);
 exports.ko = ko;
+var mn = __webpack_require__(1242);
+exports.mn = mn;
 var nl = __webpack_require__(89574);
 exports.nl = nl;
 var pl = __webpack_require__(63630);
@@ -38877,7 +38892,7 @@ config_1.Config.prototype.controls.symbols = {
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
+exports.zh_tw = exports.zh_cn = exports.tr = exports.ru = exports.pt_br = exports.pl = exports.nl = exports.mn = exports.ko = exports.ja = exports.it = exports.id = exports.hu = exports.he = exports.fr = exports.fa = exports.es = exports.de = exports.cs_cz = exports.ar = void 0;
 var ar = __webpack_require__(54261);
 exports.ar = ar;
 var cs_cz = __webpack_require__(60425);
@@ -38902,6 +38917,8 @@ var ja = __webpack_require__(99950);
 exports.ja = ja;
 var ko = __webpack_require__(60934);
 exports.ko = ko;
+var mn = __webpack_require__(45913);
+exports.mn = mn;
 var nl = __webpack_require__(21994);
 exports.nl = nl;
 var pl = __webpack_require__(38128);
@@ -40318,6 +40335,22 @@ module.exports = {
 
 /***/ }),
 
+/***/ 12689:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'copy-format': 'Формат хуулах'
+};
+
+
+/***/ }),
+
 /***/ 65274:
 /***/ (function(module) {
 
@@ -40617,6 +40650,22 @@ module.exports = {
 
 module.exports = {
 	'Line height': '선 높이'
+};
+
+
+/***/ }),
+
+/***/ 52841:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Зураасны өндөр'
 };
 
 
@@ -40926,6 +40975,22 @@ module.exports = {
 
 /***/ }),
 
+/***/ 1242:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Дүрмийн алдаа шалгах'
+};
+
+
+/***/ }),
+
 /***/ 89574:
 /***/ (function(module) {
 
@@ -41225,6 +41290,22 @@ module.exports = {
 
 module.exports = {
 	symbols: '기호'
+};
+
+
+/***/ }),
+
+/***/ 45913:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'тэмдэгт'
 };
 
 

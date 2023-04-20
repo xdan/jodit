@@ -19207,6 +19207,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "it": function() { return /* binding */ it; },
 /* harmony export */   "ja": function() { return /* binding */ ja; },
 /* harmony export */   "ko": function() { return /* binding */ ko; },
+/* harmony export */   "mn": function() { return /* binding */ mn; },
 /* harmony export */   "nl": function() { return /* binding */ nl; },
 /* harmony export */   "pl": function() { return /* binding */ pl; },
 /* harmony export */   "pt_br": function() { return /* binding */ pt_br; },
@@ -19232,6 +19233,7 @@ const id = __webpack_require__(50331);
 const it = __webpack_require__(25582);
 const ja = __webpack_require__(82066);
 const ko = __webpack_require__(71925);
+const mn = __webpack_require__(12689);
 const nl = __webpack_require__(65274);
 const pl = __webpack_require__(58548);
 const pt_br = __webpack_require__(82958);
@@ -19584,6 +19586,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "it": function() { return /* binding */ it; },
 /* harmony export */   "ja": function() { return /* binding */ ja; },
 /* harmony export */   "ko": function() { return /* binding */ ko; },
+/* harmony export */   "mn": function() { return /* binding */ mn; },
 /* harmony export */   "nl": function() { return /* binding */ nl; },
 /* harmony export */   "pl": function() { return /* binding */ pl; },
 /* harmony export */   "pt_br": function() { return /* binding */ pt_br; },
@@ -19609,6 +19612,7 @@ const id = __webpack_require__(16106);
 const it = __webpack_require__(89690);
 const ja = __webpack_require__(33216);
 const ko = __webpack_require__(17282);
+const mn = __webpack_require__(52841);
 const nl = __webpack_require__(91761);
 const pl = __webpack_require__(61675);
 const pt_br = __webpack_require__(69709);
@@ -19639,6 +19643,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "it": function() { return /* binding */ it; },
 /* harmony export */   "ja": function() { return /* binding */ ja; },
 /* harmony export */   "ko": function() { return /* binding */ ko; },
+/* harmony export */   "mn": function() { return /* binding */ mn; },
 /* harmony export */   "nl": function() { return /* binding */ nl; },
 /* harmony export */   "pl": function() { return /* binding */ pl; },
 /* harmony export */   "pt_br": function() { return /* binding */ pt_br; },
@@ -19664,6 +19669,7 @@ const id = __webpack_require__(31240);
 const it = __webpack_require__(4101);
 const ja = __webpack_require__(69286);
 const ko = __webpack_require__(13402);
+const mn = __webpack_require__(1242);
 const nl = __webpack_require__(89574);
 const pl = __webpack_require__(63630);
 const pt_br = __webpack_require__(72212);
@@ -19694,6 +19700,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "it": function() { return /* binding */ it; },
 /* harmony export */   "ja": function() { return /* binding */ ja; },
 /* harmony export */   "ko": function() { return /* binding */ ko; },
+/* harmony export */   "mn": function() { return /* binding */ mn; },
 /* harmony export */   "nl": function() { return /* binding */ nl; },
 /* harmony export */   "pl": function() { return /* binding */ pl; },
 /* harmony export */   "pt_br": function() { return /* binding */ pt_br; },
@@ -19719,6 +19726,7 @@ const id = __webpack_require__(75987);
 const it = __webpack_require__(60379);
 const ja = __webpack_require__(99950);
 const ko = __webpack_require__(60934);
+const mn = __webpack_require__(45913);
 const nl = __webpack_require__(21994);
 const pl = __webpack_require__(38128);
 const pt_br = __webpack_require__(71515);
@@ -19918,6 +19926,22 @@ module.exports = {
 
 module.exports = {
 	'copy-format': '복사 형식'
+};
+
+
+/***/ }),
+
+/***/ 12689:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'copy-format': 'Формат хуулах'
 };
 
 
@@ -20227,6 +20251,22 @@ module.exports = {
 
 /***/ }),
 
+/***/ 52841:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Зураасны өндөр'
+};
+
+
+/***/ }),
+
 /***/ 91761:
 /***/ (function(module) {
 
@@ -20531,6 +20571,22 @@ module.exports = {
 
 /***/ }),
 
+/***/ 1242:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Дүрмийн алдаа шалгах'
+};
+
+
+/***/ }),
+
 /***/ 89574:
 /***/ (function(module) {
 
@@ -20830,6 +20886,22 @@ module.exports = {
 
 module.exports = {
 	symbols: '기호'
+};
+
+
+/***/ }),
+
+/***/ 45913:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'тэмдэгт'
 };
 
 
