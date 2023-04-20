@@ -11,7 +11,11 @@
 import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { css, dataBind } from 'jodit/core/helpers/';
-import { ColorPickerWidget, TabOption, TabsWidget } from 'jodit/modules/widget';
+import {
+	type TabOption,
+	ColorPickerWidget,
+	TabsWidget
+} from 'jodit/modules/widget';
 import { Icon } from 'jodit/core/ui/icon';
 import { Dom } from 'jodit/core/dom/dom';
 

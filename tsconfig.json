@@ -1,10 +1,18 @@
 {
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "resolveJsonModule": true
+    }
+  },
 	"compilerOptions": {
 		"declaration": true,
 		"declarationDir": "types",
 		"outDir": "types",
 		"target": "es5",
-		"moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "node",
 
 		"removeComments": true,
 
@@ -17,7 +25,7 @@
 		"strictBindCallApply": true,
 		"strictPropertyInitialization": true,
 		"experimentalDecorators": true,
-		"importsNotUsedAsValues": "error",
+		"verbatimModuleSyntax": true,
 
 		"allowJs": true,
 

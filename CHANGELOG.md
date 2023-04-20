@@ -9,6 +9,46 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+
+## 4.0.1
+
+#### :house: Internal
+
+```plain
+@types/node                       ^18.13.0  →  ^18.15.12
+@typescript-eslint/eslint-plugin   ^5.50.0  →    ^5.59.0
+@typescript-eslint/parser          ^5.50.0  →    ^5.59.0
+autoprefixer                      ^10.4.13  →   ^10.4.14
+axios                               ^1.3.3  →     ^1.3.6
+core-js                            ^3.28.0  →    ^3.30.1
+css-minimizer-webpack-plugin        ^4.2.2  →     ^5.0.0
+cssnano-preset-advanced             ^5.3.9  →     ^6.0.0
+eslint                             ^8.34.0  →    ^8.38.0
+eslint-config-prettier              ^8.6.0  →     ^8.8.0
+expect-mocha-image-snapshot         ^3.0.1  →    ^3.0.13
+glob                                ^8.1.0  →    ^10.2.1
+karma-chrome-launcher               ^3.1.1  →     ^3.2.0
+lint-staged                        ^13.1.2  →    ^13.2.1
+mini-css-extract-plugin             ^2.7.2  →     ^2.7.5
+postcss                           >=8.4.21  →   >=8.4.23
+postcss-css-variables              ^0.18.0  →    ^0.19.0
+postcss-loader                      ^7.0.2  →     ^7.2.4
+prettier                            ^2.8.4  →     ^2.8.7
+puppeteer                          ^19.7.0  →   ^19.10.0
+style-loader                        ^3.3.1  →     ^3.3.2
+stylelint                          ^15.1.0  →    ^15.5.0
+stylelint-config-standard          ^30.0.1  →    ^33.0.0
+stylelint-prettier                  ^2.0.0  →     ^3.0.0
+synchronous-promise                 2.0.15  →     2.0.17
+terser-webpack-plugin               ^5.3.6  →     ^5.3.7
+tsc-alias                           ^1.8.2  →     ^1.8.5
+typescript                          ^4.9.5  →     ^5.0.4
+webpack                             5.76.0  →     5.80.0
+webpack-dev-middleware              ^6.0.1  →     ^6.0.2
+webpack-dev-server                 ^4.11.1  →    ^4.13.3
+yargs                              ^17.6.2  →    ^17.7.1
+```
+
 ## 3.24.6
 
 #### :house: Internal
