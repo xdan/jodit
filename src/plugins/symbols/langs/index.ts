@@ -16,6 +16,7 @@ const id = require('./id.js');
 const it = require('./it.js');
 const ja = require('./ja.js');
 const ko = require('./ko.js');
+const mn = require('./mn.js');
 const nl = require('./nl.js');
 const pl = require('./pl.js');
 const pt_br = require('./pt_br.js');
@@ -37,6 +38,7 @@ export {
 	it,
 	ja,
 	ko,
+	mn,
 	nl,
 	pl,
 	pt_br,

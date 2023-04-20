@@ -28,6 +28,7 @@ if (!process.env.EXCLUDE_LANGS) {
 	const it = require('jodit/langs/it');
 	const ja = require('jodit/langs/ja');
 	const ko = require('jodit/langs/ko');
+	const mn = require('jodit/langs/mn');
 	const nl = require('jodit/langs/nl');
 	const pl = require('jodit/langs/pl');
 	const pt_br = require('jodit/langs/pt_br');
@@ -49,13 +50,14 @@ if (!process.env.EXCLUDE_LANGS) {
 		it,
 		ja,
 		ko,
+		mn,
 		nl,
 		pl,
 		pt_br,
 		ru,
 		tr,
 		zh_cn,
-		zh_tw
+		zh_tw,
 	};
 }
 

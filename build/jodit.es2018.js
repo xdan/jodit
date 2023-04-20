@@ -110,6 +110,13 @@ module.exports["default"] = ["무엇이든 입력하세요","Jodit에 대하여"
 
 /***/ }),
 
+/***/ 26501:
+/***/ (function(module) {
+
+module.exports["default"] = ["Бичээд үзээрэй","Jodit-ын талаар ","Jodit програм","Jodit гарын авлага","хэрэглээний талаар дэлгэрэнгүй мэдээллийг агуулна","Лицензийн мэдээллийг манай вэб хуудаснаас авна уу:","Бүрэн хувилбар худалдан авах","Зохиогчийн эрх хамгаалагдсан © XDSoft.net - Chupurnov Valeriy. Бүх эрхийг эзэмшинэ.","Холбоо барих","Шинэ табаар нээх","Бүтэн дэлгэцээр нээх","Форматыг арилгах","Өнгөөр будах эсвэл текстийн өнгө сонгох","Дахих","Буцаах","Тод","Налуу","Тэмдэгт жагсаалт нэмэх","Дугаарт жагсаалт нэмэх","Голлож байрлуулах","Тэгшитгэн байрлуулах","Зүүнд байрлуулах","Баруунд байрлуулах","Хэвтээ зураас нэмэх","Зураг нэмэх","Файл нэмэх","Youtube/Vimeo видео нэмэх","Холбоос нэмэх","Фонтын хэмжээ","Фонтын бүл","Блок нэмэх","Хэвийн","Гарчиг 1","Гарчиг 2","Гарчиг 3","Гарчиг 4","Ишлэл","Код","Оруулах","Хүснэгт оруулах","Доголын зай хасах","Доголын зай нэмэх","Тусгай тэмдэгт сонгох","Тусгай тэмдэгт нэмэх","Зургийн формат","Горим өөрчлөх","Цаасны зай","Дээрээс","Баруунаас","Доороос","Зүүнээс","CSS стиль","CSS анги","Байрлуулах","Баруун","Төв","Зүүн","--Тодорхойгүй--","Эх үүсвэр","Гарчиг","Алтернатив текст","Холбоос","Холбоосыг шинэ хавтсанд нээх","Зураг","Файл","Дэвшилтэт","Зургийн үзүүлэлт","Цуцлах","Ok","Файлын цонх","Жагсаалт татах үед алдаа гарлаа","Хавтас татах үед алдаа гарлаа","Итгэлтэй байна уу?","Хавтсын нэр оруулах","Хавтас үүсгэх","Нэр бичих","Зураг буулгах","Файл буулгах","эсвэл товш","Алтернатив текст","Байршуулах","Үзэх","Арын зураг","Текст","Дээр","Дунд","Доор","Урд нь багана нэмэх","Ард нь багана нэмэх","Дээр нь мөр нэмэх","Доор нь мөр нэмэх","Хүснэгт устгах","Мөр устгах","Багана устгах","Нүд цэвэрлэх","Тэмдэгт: %d","Үг: %d","Дээгүүр зураас","Доогуур зураас","Дээд индекс","Доод индекс","Сонголтыг таслах","Бүгдийг сонго","Мөрийг таслах","Хайх","Үүгээр солих","Солих","Буулгах","Буулгах агуулгаа сонгоно уу","Эх үүсвэр","Тод","Налуу","Будах","Холбоос","Буцаах","Дахих","Хүснэгт","Зураг","Баллуур","Параграф","Фонтын хэмжээ","Видео","Фонт","Тухай","Хэвлэх","Доогуур зураас","Дээгүүр зураас","Догол нэмэх","Догол багасгах","Бүтэн дэлгэц","Багасга","Хаалт","Тэмдэгт жагсаалт","Дугаарласан жагсаалт","Таслах","Бүгдийг сонго","Код оруулах","Холбоос нээх","Холбоос засах","Nofollow özelliği","Холбоос салгах","Шинэчлэх","Засах","Нүд","URL","Засах","Хэвтээ эгнүүлэх","Шүүх","Сүүлд өөрчлөгдсөнөөр жагсаах","Нэрээр жагсаах","Хэмжээгээр жагсаах","Хавтас нэмэх","Буцаах","Хадгалах","Өөрөөр хадгалах","Хэмжээг өөрчил","Тайрах","Өргөн","Өндөр","Харьцааг хадгал","Тийм","Үгүй","Арилга","Сонго","Сонго: %s","Босоо эгнүүлэх","Задлах","Нэгтгэх","Багана нэмэх","Мөр нэмэх",null,"Устгах","Баганаар задлах","Мөрөөр задлах","Хүрээ","Таны код HTML кодтой адил байна. HTML форматаар үргэлжлүүлэх үү?","HTML байдлаар буулгах","Хадгалах","Текст байдлаар нэмэх","Зөвхөн текст оруулах","Та зөвхөн өөрийн зургуудаа янзлах боломжтой. Энэ зургийг өөр лүүгээ татмаар байна уу?","Зургийг хост руу амжилттай хадгалсан","Палет","Энд ямар нэг файл алга","Шинээр нэрлэх","Шинэ нэр оруулна уу","Урьдчилан харах","Татах","Самбараас хуулах ","Энэ вэб хөтчөөс самбарт хандах эрх алга.","Сонголтыг хуул","Хуулах","Хүрээний радиус","Бүгдийг харуулах","Хэрэгжүүл","Энэ талбарыг бөглөнө үү","Вэб хаягаа оруулна уу","Үндсэн","Дугуй","Цэг","Дөрвөлжин","Хайх","Өмнөхийг ол","Дараагийнхийг ол","Буулгасан агуулга Microsoft Word/Excel форматтай байна. Энэ форматыг хэвээр хадгалах уу эсвэл арилгах уу?","Word байдлаар буулгасан байна","Цэвэрлэх","Бүлгийн нэрээ оруулна уу","Хэмжээсийг шинээр өөчрлөхийн тулд Alt товчин дээр дарна уу"]
+
+/***/ }),
+
 /***/ 17084:
 /***/ (function(module) {
 
@@ -19340,6 +19347,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "it": function() { return /* binding */ it; },
 /* harmony export */   "ja": function() { return /* binding */ ja; },
 /* harmony export */   "ko": function() { return /* binding */ ko; },
+/* harmony export */   "mn": function() { return /* binding */ mn; },
 /* harmony export */   "nl": function() { return /* binding */ nl; },
 /* harmony export */   "pl": function() { return /* binding */ pl; },
 /* harmony export */   "pt_br": function() { return /* binding */ pt_br; },
@@ -19365,6 +19373,7 @@ const id = __webpack_require__(50331);
 const it = __webpack_require__(25582);
 const ja = __webpack_require__(82066);
 const ko = __webpack_require__(71925);
+const mn = __webpack_require__(12689);
 const nl = __webpack_require__(65274);
 const pl = __webpack_require__(58548);
 const pt_br = __webpack_require__(82958);
@@ -19717,6 +19726,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "it": function() { return /* binding */ it; },
 /* harmony export */   "ja": function() { return /* binding */ ja; },
 /* harmony export */   "ko": function() { return /* binding */ ko; },
+/* harmony export */   "mn": function() { return /* binding */ mn; },
 /* harmony export */   "nl": function() { return /* binding */ nl; },
 /* harmony export */   "pl": function() { return /* binding */ pl; },
 /* harmony export */   "pt_br": function() { return /* binding */ pt_br; },
@@ -19742,6 +19752,7 @@ const id = __webpack_require__(16106);
 const it = __webpack_require__(89690);
 const ja = __webpack_require__(33216);
 const ko = __webpack_require__(17282);
+const mn = __webpack_require__(52841);
 const nl = __webpack_require__(91761);
 const pl = __webpack_require__(61675);
 const pt_br = __webpack_require__(69709);
@@ -19772,6 +19783,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "it": function() { return /* binding */ it; },
 /* harmony export */   "ja": function() { return /* binding */ ja; },
 /* harmony export */   "ko": function() { return /* binding */ ko; },
+/* harmony export */   "mn": function() { return /* binding */ mn; },
 /* harmony export */   "nl": function() { return /* binding */ nl; },
 /* harmony export */   "pl": function() { return /* binding */ pl; },
 /* harmony export */   "pt_br": function() { return /* binding */ pt_br; },
@@ -19797,6 +19809,7 @@ const id = __webpack_require__(31240);
 const it = __webpack_require__(4101);
 const ja = __webpack_require__(69286);
 const ko = __webpack_require__(13402);
+const mn = __webpack_require__(1242);
 const nl = __webpack_require__(89574);
 const pl = __webpack_require__(63630);
 const pt_br = __webpack_require__(72212);
@@ -19827,6 +19840,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "it": function() { return /* binding */ it; },
 /* harmony export */   "ja": function() { return /* binding */ ja; },
 /* harmony export */   "ko": function() { return /* binding */ ko; },
+/* harmony export */   "mn": function() { return /* binding */ mn; },
 /* harmony export */   "nl": function() { return /* binding */ nl; },
 /* harmony export */   "pl": function() { return /* binding */ pl; },
 /* harmony export */   "pt_br": function() { return /* binding */ pt_br; },
@@ -19852,6 +19866,7 @@ const id = __webpack_require__(75987);
 const it = __webpack_require__(60379);
 const ja = __webpack_require__(99950);
 const ko = __webpack_require__(60934);
+const mn = __webpack_require__(45913);
 const nl = __webpack_require__(21994);
 const pl = __webpack_require__(38128);
 const pt_br = __webpack_require__(71515);
@@ -20051,6 +20066,22 @@ module.exports = {
 
 module.exports = {
 	'copy-format': '복사 형식'
+};
+
+
+/***/ }),
+
+/***/ 12689:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'copy-format': 'Формат хуулах'
 };
 
 
@@ -20360,6 +20391,22 @@ module.exports = {
 
 /***/ }),
 
+/***/ 52841:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	'Line height': 'Зураасны өндөр'
+};
+
+
+/***/ }),
+
 /***/ 91761:
 /***/ (function(module) {
 
@@ -20664,6 +20711,22 @@ module.exports = {
 
 /***/ }),
 
+/***/ 1242:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	Spellcheck: 'Дүрмийн алдаа шалгах'
+};
+
+
+/***/ }),
+
 /***/ 89574:
 /***/ (function(module) {
 
@@ -20963,6 +21026,22 @@ module.exports = {
 
 module.exports = {
 	symbols: '기호'
+};
+
+
+/***/ }),
+
+/***/ 45913:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	symbols: 'тэмдэгт'
 };
 
 
@@ -22295,6 +22374,7 @@ if (true) {
     const it = __webpack_require__(51923);
     const ja = __webpack_require__(21268);
     const ko = __webpack_require__(37289);
+    const mn = __webpack_require__(26501);
     const nl = __webpack_require__(17084);
     const pl = __webpack_require__(96891);
     const pt_br = __webpack_require__(31211);
@@ -22315,13 +22395,14 @@ if (true) {
         it,
         ja,
         ko,
+        mn,
         nl,
         pl,
         pt_br,
         ru,
         tr,
         zh_cn,
-        zh_tw
+        zh_tw,
     };
 }
 const keys = __webpack_require__(11399);

@@ -43,6 +43,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "it": function() { return /* binding */ it; },
 /* harmony export */   "ja": function() { return /* binding */ ja; },
 /* harmony export */   "ko": function() { return /* binding */ ko; },
+/* harmony export */   "mn": function() { return /* binding */ mn; },
 /* harmony export */   "nl": function() { return /* binding */ nl; },
 /* harmony export */   "pl": function() { return /* binding */ pl; },
 /* harmony export */   "pt_br": function() { return /* binding */ pt_br; },
@@ -68,6 +69,7 @@ const id = __webpack_require__(99549);
 const it = __webpack_require__(28428);
 const ja = __webpack_require__(25363);
 const ko = __webpack_require__(96929);
+const mn = __webpack_require__(26781);
 const nl = __webpack_require__(58499);
 const pl = __webpack_require__(59430);
 const pt_br = __webpack_require__(70297);
@@ -780,6 +782,27 @@ module.exports = {
 	'Speech Recognize': '음성 인식',
 	Sound: '소리',
 	'Interim Results': '중간 결과'
+};
+
+
+/***/ }),
+
+/***/ 26781:
+/***/ (function(module) {
+
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+module.exports = {
+	newline: 'Шинэ мөр',
+	delete: 'Устгах',
+	space: 'Зай',
+	'Speech Recognize': 'Дуу хоолой таних',
+	Sound: 'Дуу',
+	'Interim Results': 'Түр зуурын үр дүн'
 };
 
 
