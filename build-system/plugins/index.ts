@@ -7,12 +7,18 @@
 import { Variables } from '../variables';
 import * as webpack from 'webpack';
 import { WebpackConfiguration } from 'webpack-cli';
+import define from './define';
+import extractCSS from './extract-css';
+import banner from './banner';
+import postBuild from './post-build';
 
 export default (vars: Variables): WebpackConfiguration['plugins'] => {
 	const { isProd, isTest, ESNext, onlyTS, debug, exclude, progressFunction } =
 		vars;
 
-	const plugins = [require('./define')(vars)];
+	const plugins: Array<webpack.ProgressPlugin | webpack.DelegatedPlugin> = [
+		define(vars)
+	];
 
 	plugins.push(
 		new webpack.ProgressPlugin(
@@ -26,13 +32,13 @@ export default (vars: Variables): WebpackConfiguration['plugins'] => {
 
 	if (isProd) {
 		if (!onlyTS) {
-			plugins.push(require('./extract-css')(vars));
+			plugins.push(extractCSS(vars));
 		}
 
-		plugins.push(require('./banner')(vars));
+		plugins.push(banner(vars));
 
 		if (!isTest && !ESNext && !onlyTS) {
-			plugins.push(require('./post-build')(vars));
+			plugins.push(postBuild(vars));
 		}
 	}
 

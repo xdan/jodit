@@ -12,6 +12,10 @@
 
 ## 4.0.1
 
+#### :boom: Breaking Change
+
+ - !!! Build files removed from repository and only available in npm package !!!
+
 #### :house: Internal
 
 ```plain
@@ -39,7 +43,6 @@ style-loader                        ^3.3.1  →     ^3.3.2
 stylelint                          ^15.1.0  →    ^15.5.0
 stylelint-config-standard          ^30.0.1  →    ^33.0.0
 stylelint-prettier                  ^2.0.0  →     ^3.0.0
-synchronous-promise                 2.0.15  →     2.0.17
 terser-webpack-plugin               ^5.3.6  →     ^5.3.7
 tsc-alias                           ^1.8.2  →     ^1.8.5
 typescript                          ^4.9.5  →     ^5.0.4

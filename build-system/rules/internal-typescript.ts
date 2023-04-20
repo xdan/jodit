@@ -9,9 +9,8 @@ import type { RuleSetRule } from 'webpack';
 import { removeAsserts } from '../utils/remove-asserts';
 import * as path from 'path';
 
-module.exports = ({
+export default ({
 	superDirname,
-	uglify,
 	ES,
 	isProd,
 	isTest

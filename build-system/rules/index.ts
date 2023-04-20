@@ -6,13 +6,18 @@
 
 import type { Variables } from '../variables';
 import type { RuleSetRule } from 'webpack';
+import css from './css';
+import extraTypescript from './extra-typescript';
+import langs from './langs';
+import internalTypescript from './internal-typescript';
+import svg from './svg';
 
-module.exports = (variables: Variables): RuleSetRule[] => {
+export default (variables: Variables): RuleSetRule[] => {
 	return [
-		require('./css')(variables),
-		require('./extra-typescript')(variables),
-		require('./langs')(variables),
-		require('./internal-typescript')(variables),
-		require('./svg')(variables)
+		css(variables),
+		extraTypescript(variables),
+		langs(variables),
+		internalTypescript(variables),
+		svg(variables)
 	];
 };

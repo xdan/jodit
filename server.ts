@@ -35,7 +35,7 @@ process.argv
 		}
 	});
 
-const config = require(path.resolve(cwd, './webpack.config'))(
+const config = require(path.resolve(cwd, './webpack.config.js')).default(
 	[],
 	{
 		es: 'es5',

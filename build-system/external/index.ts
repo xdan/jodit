@@ -5,9 +5,12 @@
  */
 
 import type { Variables } from '../variables';
+import excludeUtils from './exclude-utils';
+import excludePlugins from './exclude-plugins';
+import excludeLanguages from './exclude-languages';
 
 export default (vars: Variables): { [key in string]: string } => ({
-	...require('./exclude-utils')(vars),
-	...require('./exclude-plugins')(vars),
-	...require('./exclude-languages')(vars)
+	...excludeUtils(vars),
+	...excludePlugins(vars),
+	...excludeLanguages(vars)
 });

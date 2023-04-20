@@ -9,7 +9,6 @@
  */
 
 import type { CanPromise, IDestructible, IDictionary } from './types';
-import type { IViewBased } from './view';
 
 export type DataVariant =
 	| IDictionary<string>

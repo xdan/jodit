@@ -14,7 +14,7 @@ export default ({ superDirname }: Variables): RuleSetRule => {
 		use: {
 			loader: path.resolve(
 				superDirname,
-				'./build-system/loaders/svg-loader'
+				'./build-system/loaders/svg-loader.ts'
 			)
 		}
 	};

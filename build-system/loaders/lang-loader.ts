@@ -6,8 +6,8 @@
 
 import type { LoaderContext } from 'webpack';
 
-const ts = require('typescript');
-const vm = require('vm');
+import * as ts from 'typescript';
+import * as vm from 'vm';
 
 let keys: string[] = [];
 
@@ -21,8 +21,8 @@ export default function (this: LoaderContext<{}>, source: string): string {
 	try {
 		const transpile = ts.transpileModule(source, {
 			compilerOptions: {
-				module: 'es5',
-				target: 'es5'
+				module: ts.ModuleKind.ES2015,
+				target: ts.ScriptTarget.ES5
 			}
 		});
 

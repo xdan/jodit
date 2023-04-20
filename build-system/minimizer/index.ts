@@ -4,4 +4,7 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-module.exports = [require('./js'), require('./css')];
+import js from './js';
+import css from './css';
+
+export default [js, css];

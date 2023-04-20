@@ -7,6 +7,7 @@
 import * as path from 'path';
 import * as yargs from 'yargs';
 import * as fs from 'fs';
+import { saveJson, readLangs, makeIndexFile } from './helpers';
 
 const { argv } = yargs
 	.option('key', {
@@ -27,8 +28,6 @@ const { argv } = yargs
 		type: 'string',
 		description: 'Target directory'
 	});
-
-const { saveJson, readLangs, makeIndexFile } = require('./helpers');
 
 const key = argv.key;
 const keyTo: string = argv.keyTo || key;

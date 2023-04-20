@@ -10,6 +10,8 @@ import { fileName } from '../utils/filename';
 import * as postcss from 'postcss';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as autoprefixer from 'autoprefixer';
+import * as postcssCssVariables from 'postcss-css-variables';
 
 export default ({
 	argv,
@@ -22,7 +24,7 @@ export default ({
 }: Variables): PostBuild => {
 	return new PostBuild(() => {
 		const processor = postcss([
-			require('autoprefixer')({
+			autoprefixer({
 				overrideBrowserslist: [
 					'>1%',
 					'last 4 versions',
@@ -30,7 +32,7 @@ export default ({
 					'ie >= 11'
 				]
 			}),
-			require('postcss-css-variables')
+			postcssCssVariables
 		]);
 
 		const file = path.resolve(

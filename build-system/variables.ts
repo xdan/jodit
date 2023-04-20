@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const path = require('path');
+import * as path from 'path';
 
 function Bool(str): boolean {
 	return typeof str === 'boolean' ? str : str === 'true';

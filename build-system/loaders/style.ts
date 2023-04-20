@@ -6,15 +6,16 @@
 
 import type { Variables } from '../variables';
 import type { WebpackConfiguration } from 'webpack-cli';
+import type { RuleSetRule } from 'webpack';
 
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const path = require('path');
+import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import * as path from 'path';
 
 export default ({
 	debug,
 	isTest,
 	superDirname
-}: Variables): WebpackConfiguration['module']['rules'] => [
+}: Variables): Array<RuleSetRule | string> => [
 	debug || isTest ? 'style-loader' : MiniCssExtractPlugin.loader,
 	{
 		loader: 'css-loader',

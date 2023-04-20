@@ -10,7 +10,6 @@ export default function (
 	content: string
 ): string {
 	this.cacheable && this.cacheable();
-	this.value = content;
 
 	return (
 		'module.exports = ' +

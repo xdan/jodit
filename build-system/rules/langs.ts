@@ -13,7 +13,7 @@ export default ({ superDirname }: Variables): RuleSetRule => {
 		test: /\.(js)$/,
 		use: [
 			{
-				loader: path.resolve(__dirname, '../loaders/lang-loader.js')
+				loader: path.resolve(__dirname, '../loaders/lang-loader.ts')
 			}
 		],
 		include: path.resolve(superDirname, './src/langs'),

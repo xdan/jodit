@@ -12,6 +12,11 @@ import { type Argv, variables } from './variables';
 import { fileName } from './utils/filename';
 import { includePlugins } from './utils/include-plugins';
 import { WebpackConfiguration } from 'webpack-cli';
+import minimizer from './minimizer';
+import rules from './rules/index';
+import plugins from './plugins/index';
+import externals from './external/index';
+
 /**
  * @param {boolean} onlyTS - build only TypeScript files
  */
@@ -83,17 +88,15 @@ export default (
 			minimize: !debug && uglify,
 			moduleIds: debug ? 'named' : false,
 			mangleExports: true,
-			minimizer: require('./minimizer').map(mnm =>
-				mnm({ isTest, ESNext })
-			)
+			minimizer: minimizer.map(mnm => mnm(vars))
 		},
 
 		module: {
-			rules: require('./rules/index')(vars)
+			rules: rules(vars)
 		},
 
-		plugins: require('./plugins/index')(vars),
+		plugins: plugins(vars),
 
-		externals: require('./external/index')(vars)
+		externals: externals(vars)
 	};
 };

@@ -6,10 +6,11 @@
 
 import type { Variables } from '../variables';
 import type { RuleSetRule } from 'webpack';
+import style from '../loaders/style';
 
 export default (vars: Variables): RuleSetRule => {
 	return {
 		test: /\.(less|css)$/,
-		use: require('../loaders/style')(vars)
+		use: style(vars)
 	};
 };
