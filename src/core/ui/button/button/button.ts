@@ -24,7 +24,7 @@ import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { Icon } from 'jodit/core/ui/icon';
 import { UIList } from 'jodit/core/ui/group/list';
-import { autobind, component, watch } from 'jodit/core/decorators';
+import { autobind, cacheHTML, component, watch } from 'jodit/core/decorators';
 import { STATUSES } from 'jodit/core/component/statuses';
 
 export const UIButtonState = (): IUIButtonState => ({
@@ -190,6 +190,7 @@ export class UIButton extends UIElement implements IUIButton {
 	}
 
 	/** @override */
+	@cacheHTML
 	protected override createContainer(): HTMLElement {
 		const cn = this.componentName;
 
@@ -200,11 +201,11 @@ export class UIButton extends UIElement implements IUIButton {
 			ariaPressed: false
 		});
 
-		this.icon = this.j.c.span(cn + '__icon');
-		this.text = this.j.c.span(cn + '__text');
+		const icon = this.j.c.span(cn + '__icon');
+		const text = this.j.c.span(cn + '__text');
 
-		button.appendChild(this.icon);
-		button.appendChild(this.text);
+		button.appendChild(icon);
+		button.appendChild(text);
 
 		this.j.e.on(button, 'click', this.onActionFire);
 
@@ -213,6 +214,9 @@ export class UIButton extends UIElement implements IUIButton {
 
 	constructor(jodit: IViewBased, state?: IUIButtonStatePartial) {
 		super(jodit);
+
+		this.icon = this.getElm('icon')!;
+		this.text = this.getElm('text')!;
 
 		this.updateSize();
 		this.onChangeSize();

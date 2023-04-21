@@ -62,47 +62,59 @@ export class Icon {
 		return this;
 	}
 
+	private static __cache: Map<string, HTMLElement> = new Map();
+
 	/**
 	 * Make icon html element
 	 */
 	static makeIcon(jodit: IViewBased, icon: IUIIconState): CanUndef<Node> {
+		if (!icon) {
+			return;
+		}
+
 		let iconElement: CanUndef<HTMLElement>;
 
-		if (icon) {
-			const clearName = icon.name.replace(/[^a-zA-Z0-9]/g, '_');
+		const { name, iconURL, fill } = icon;
+		const cacheKey = `${name}${iconURL}${fill}`;
 
-			if (icon.iconURL) {
-				iconElement = jodit.c.span();
+		if (this.__cache.has(cacheKey)) {
+			// return this.__cache.get(cacheKey)!.cloneNode(true);
+		}
 
-				css(
-					iconElement,
-					'backgroundImage',
-					'url(' +
-						icon.iconURL.replace(
-							'{basePath}',
-							jodit?.basePath || ''
-						) +
-						')'
-				);
-			} else {
-				const svg =
-					jodit.e.fire('getIcon', icon.name, icon, clearName) ||
-					Icon.get(icon.name, '') ||
-					jodit.o.extraIcons?.[icon.name];
+		const clearName = name.replace(/[^a-zA-Z0-9]/g, '_');
 
-				if (svg) {
-					iconElement = jodit.c.fromHTML(svg.trim());
+		if (iconURL) {
+			iconElement = jodit.c.span();
 
-					if (!/^<svg/i.test(icon.name)) {
-						iconElement.classList.add('jodit-icon_' + clearName);
-					}
+			css(
+				iconElement,
+				'backgroundImage',
+				'url(' +
+					iconURL.replace('{basePath}', jodit?.basePath || '') +
+					')'
+			);
+		} else {
+			const svg =
+				jodit.e.fire('getIcon', name, icon, clearName) ||
+				Icon.get(name, '') ||
+				jodit.o.extraIcons?.[name];
+
+			if (svg) {
+				iconElement = jodit.c.fromHTML(svg.trim());
+
+				if (!/^<svg/i.test(name)) {
+					iconElement.classList.add('jodit-icon_' + clearName);
 				}
 			}
 		}
 
 		if (iconElement) {
 			iconElement.classList.add('jodit-icon');
-			iconElement.style.fill = icon.fill;
+			iconElement.style.fill = fill;
+			this.__cache.set(
+				cacheKey,
+				iconElement.cloneNode(true) as HTMLElement
+			);
 		}
 
 		return iconElement;

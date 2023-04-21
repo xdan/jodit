@@ -10,8 +10,9 @@
  * @module decorators/cache
  */
 
-import { error } from 'jodit/core/helpers';
+import { error, isFunction } from 'jodit/core/helpers';
 import type { IDictionary } from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
 
 export interface CachePropertyDescriptor<T, R> extends PropertyDescriptor {
 	get?: (this: T) => R;
@@ -43,5 +44,32 @@ export function cache<T, R>(
 		});
 
 		return value;
+	};
+}
+
+export function cacheHTML<T, R>(
+	target: IDictionary,
+	name: string,
+	descriptor: CachePropertyDescriptor<T, R>
+): void {
+	const fn = descriptor.value;
+	if (!isFunction(fn)) {
+		throw error('Handler must be a Function');
+	}
+
+	let cached: Element;
+
+	descriptor.value = function (this: T, ...attrs: unknown[]): R {
+		if (cached) {
+			// return cached.cloneNode(true) as R;
+		}
+
+		const value = fn.apply(this, attrs);
+
+		if (Dom.isElement(value)) {
+			cached = value;
+		}
+
+		return value.cloneNode(true) as R;
 	};
 }

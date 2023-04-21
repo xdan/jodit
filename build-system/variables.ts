@@ -21,10 +21,11 @@ export type Argv = {
 	exclude?: string;
 	excludePlugins?: string;
 	excludeLanguages?: string;
-	es?: 'es5' | 'es2018';
+	es?: 'es5' | 'es2015' | 'es2018';
 	outputFolder?: string;
 	progressFunction?: () => void;
 };
+
 export type Variables = {
 	argv: { filename?: (name: string) => string };
 	exclude: string[];
@@ -46,7 +47,7 @@ export type Variables = {
 		| ((percentage: number, msg: string, ...args: string[]) => void)
 		| false;
 	mode: 'production' | 'development';
-	ES: 'es5' | 'es2018';
+	ES: 'es5' | 'es2015' | 'es2018';
 	ESNext: boolean;
 	port: number;
 };
@@ -79,7 +80,10 @@ export const variables = (argv: Argv, dir: string): Variables => {
 	const excludePlugins = (argv.excludePlugins || '').split(/[,\s;]/);
 	const excludeLanguages = (argv.excludeLanguages || '').split(/[,\s;]/);
 
-	const ES = argv && ['es5', 'es2018'].includes(argv.es) ? argv.es : 'es2018';
+	const ES =
+		argv && ['es5', 'es2018', 'es2015'].includes(argv.es)
+			? argv.es
+			: 'es2018';
 
 	const ESNext = ES === 'es2018';
 	const dirname = dir;

@@ -105,7 +105,6 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		}
 
 		elm.parentElement = this;
-		elm.update();
 
 		return this;
 	}

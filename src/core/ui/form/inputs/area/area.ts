@@ -33,15 +33,11 @@ export class UITextArea extends UIInput implements IUITextArea {
 	/** @override */
 	override state: IUITextArea['state'] = { ...UITextArea.defaultState };
 
-	/** @override */
-	protected override createContainer(options: this['state']): HTMLElement {
-		this.nativeInput = this.j.create.element('textarea');
-
-		return super.createContainer(options);
-	}
-
 	constructor(jodit: IViewBased, state: Partial<IUITextArea['state']>) {
 		super(jodit, state);
+
+		this.nativeInput = this.j.create.element('textarea');
+
 		Object.assign(this.state, state);
 
 		if (this.state.resizable === false) {

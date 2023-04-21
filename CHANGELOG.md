@@ -16,6 +16,9 @@
 
  - !!! Build files removed from repository and only available in npm package !!!
  - !!! bowers.json was removed !!!
+ - server.js was removed
+ - All build js files was rewritten to typescript
+ - Default target for build was changed to es2015
 
 #### :house: Internal
 

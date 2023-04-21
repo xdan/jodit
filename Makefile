@@ -3,7 +3,7 @@ TS_NODE_BASE := TS_NODE_TRANSPILE_ONLY=true node -r ts-node/register
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
 KARMA := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
 
-es ?= es5
+es ?= es2015
 uglify ?= true
 excludeLangs ?= false
 browsers ?= FirefoxHeadless

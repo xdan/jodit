@@ -25,7 +25,7 @@ import type {
 	Nullable
 } from 'jodit/types';
 import { UIButton, UIButtonState } from 'jodit/core/ui/button';
-import { autobind, component, watch } from 'jodit/core/decorators';
+import { autobind, component, watch, cacheHTML } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { Popup } from 'jodit/core/ui/popup/popup';
 import { makeCollection } from 'jodit/modules/toolbar/factory';
@@ -83,6 +83,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 	/** @override **/
 	override update(): void {
+		// @ts-ignore
+		window.__onupdate = (window.__onupdate ?? 0) + 1;
 		const { control, state } = this,
 			tc = this.closest(ToolbarCollection) as ToolbarCollection;
 
@@ -148,6 +150,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 	/** @override */
 	protected override onChangeText(): void {
+		// @ts-ignore
+		window.__onChangeText = (window.__onChangeText ?? 0) + 1;
 		if (isFunction(this.control.template)) {
 			this.text.innerHTML = this.control.template(
 				this.j,
@@ -166,13 +170,15 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		attr(this.button, 'tabindex', this.state.tabIndex);
 	}
 
-	@watch('state.tooltip')
 	protected override onChangeTooltip(): void {
+		// @ts-ignore
+		window.__onChangeTooltip = (window.__onChangeTooltip ?? 0) + 1;
 		attr(this.button, 'aria-label', this.state.tooltip);
 		super.onChangeTooltip();
 	}
 
 	/** @override */
+	@cacheHTML
 	protected override createContainer(): HTMLElement {
 		const cn = this.componentName;
 		const container = this.j.c.span(cn),
@@ -189,11 +195,13 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 		container.appendChild(button);
 
-		this.trigger = this.j.c.fromHTML(
+		const trigger = this.j.c.fromHTML(
 			`<span role="trigger" class="${cn}__trigger">${Icon.get(
 				'chevron'
 			)}</span>`
 		);
+
+		button.appendChild(trigger);
 
 		return container;
 	}
@@ -227,6 +235,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	 * Add tooltip to button
 	 */
 	protected initTooltip(): void {
+		// @ts-ignore
+		window.__initTooltip = (window.__initTooltip ?? 0) + 1;
 		if (
 			!this.j.o.textIcons &&
 			this.j.o.showTooltip &&
@@ -262,6 +272,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	) {
 		super(jodit);
 
+		this.trigger = this.getElm('trigger')!;
+
 		// Prevent lost focus
 		jodit.e.on([this.button, this.trigger], 'mousedown', (e: MouseEvent) =>
 			e.preventDefault()
@@ -270,7 +282,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		this.onAction(this.onClick);
 
 		this.hookStatus(STATUSES.ready, () => {
-			this.initFromControl();
+			this.__initFromControl();
 			this.initTooltip();
 
 			this.update();
@@ -286,7 +298,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	/**
 	 * Init constant data from control
 	 */
-	private initFromControl(): void {
+	private __initFromControl(): void {
+		// @ts-ignore
+		window.__initFromControl = (window.__initFromControl ?? 0) + 1;
 		const { control: ctr, state } = this;
 
 		this.updateSize();
