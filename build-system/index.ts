@@ -3,19 +3,19 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-// @ts-check
-/** eslint-disable tsdoc/syntax */
 
 import * as path from 'path';
 
 import { type Argv, variables } from './variables';
 import { fileName } from './utils/filename';
 import { includePlugins } from './utils/include-plugins';
-import { WebpackConfiguration } from 'webpack-cli';
-import minimizer from './minimizer';
-import rules from './rules/index';
-import plugins from './plugins/index';
-import externals from './external/index';
+import { Configuration } from 'webpack';
+
+import { minimizer } from './minimizer';
+import { rules } from './rules/index';
+import { plugins } from './plugins/index';
+import { externals } from './external/index';
+import { devServer } from './dev-server';
 
 /**
  * @param {boolean} onlyTS - build only TypeScript files
@@ -25,7 +25,7 @@ export default (
 	argv: Argv,
 	dir = process.cwd(),
 	onlyTS = false
-): WebpackConfiguration => {
+): Configuration => {
 	const vars = variables(argv, dir);
 
 	const { ES, mode, isTest, isProd, debug, ESNext, uglify, outputPath } =
@@ -52,12 +52,7 @@ export default (
 		devtool: debug ? 'inline-source-map' : false,
 
 		entry: {
-			...(!isProd || (!uglify && !ESNext)
-				? { vdom: ['./src/core/vdom/index'] }
-				: {}),
-			jodit: debug
-				? ['webpack-hot-middleware/client.js', './src/index']
-				: ['./src/index'],
+			jodit: ['./src/index'],
 			...pluginsEntries
 		},
 
@@ -97,6 +92,8 @@ export default (
 
 		plugins: plugins(vars),
 
-		externals: externals(vars)
+		externals: externals(vars),
+
+		devServer: devServer(vars)
 	};
 };

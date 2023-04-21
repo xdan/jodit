@@ -113,9 +113,9 @@ describe('Test Inline mode', function () {
 
 				editor.destruct();
 
-				expect(editor.ownerWindow.getComputedStyle(div).display).equals(
-					'block'
-				);
+				expect(
+					div.ownerDocument.defaultView.getComputedStyle(div).display
+				).equals('block');
 
 				expect(div.innerHTML).equals(value);
 				expect(div.className.toString()).equals('');

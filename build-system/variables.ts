@@ -48,6 +48,7 @@ export type Variables = {
 	mode: 'production' | 'development';
 	ES: 'es5' | 'es2018';
 	ESNext: boolean;
+	port: number;
 };
 
 export const variables = (argv: Argv, dir: string): Variables => {
@@ -87,6 +88,9 @@ export const variables = (argv: Argv, dir: string): Variables => {
 	const outputPath = path.join(dir, outputFolder);
 
 	return {
+		port: process.env.WEBPACK_DEV_PORT
+			? parseInt(process.env.WEBPACK_DEV_PORT)
+			: 2000,
 		argv,
 		onlyTS: false, // TODO
 		exclude,

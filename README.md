@@ -112,7 +112,7 @@ $('textarea').each(function () {
 ```bash
 git clone https://github.com/xdan/jodit.git
 cd jodit
-npm install
+npm ci
 ```
 
 Run webpack Hot Reload server:
@@ -136,19 +136,19 @@ npm run build
 Build without some plugins:
 
 ```bash
-webpack --progress --mode production --env es=es2018 --env uglify=true --env excludePlugins="about,source,bold,image,xpath,stat,class-span,color,clean-html,file,focus,enter,backspace,media,preview,pint,redo-undo,resize-cells,search,spellcheck,table"
+make build es=es2018 uglify=true excludePlugins="about,source,bold,image,xpath,stat,class-span,color,clean-html,file,focus,enter,backspace,media,preview,pint,redo-undo,resize-cells,search,spellcheck,table"
 ```
 
 Build without some languages:
 
 ```bash
-webpack --progress --mode production --env es=es2018 --env uglify=true --env excludeLanguages="ru,ar,cs_cz,de,es,fa,fr,he,hu,id,it,ja,ko,nl,pl,pt_br,ru,tr,zh_cn,zh_tw"
+make build es=es2018 uglify=true excludeLanguages="ru,ar,cs_cz,de,es,fa,fr,he,hu,id,it,ja,ko,nl,pl,pt_br,ru,tr,zh_cn,zh_tw"
 ```
 
 Run tests:
 
 ```bash
-karma start --browsers ChromeHeadless,IE,Firefox karma.conf.js
+make test browsers ChromeHeadless,IE,Firefox
 ```
 
 or
@@ -184,7 +184,7 @@ php -S localhost:8181 -t ./
 and set options for Jodit:
 
 ```javascript
-var editor = Jodit.make('#editor', {
+const editor = Jodit.make('#editor', {
 	uploader: {
 		url: 'http://localhost:8181/index-test.php?action=fileUpload'
 	},
@@ -209,7 +209,7 @@ Jodit.plugins.yourplugin = function (editor) {
 ### Add custom button
 
 ```javascript
-var editor = Jodit.make('.someselector', {
+const editor = Jodit.make('.someselector', {
 	extraButtons: [
 		{
 			name: 'insertDate',
@@ -225,7 +225,7 @@ var editor = Jodit.make('.someselector', {
 or
 
 ```javascript
-var editor = Jodit.make('.someselector', {
+const editor = Jodit.make('.someselector', {
 	buttons: ['bold', 'insertDate'],
 	controls: {
 		insertDate: {
@@ -281,7 +281,7 @@ Jodit.plugins.add(
 	}
 );
 
-var editor = Jodit.make('.someselector', {
+const editor = Jodit.make('.someselector', {
 	buttons: ['bold', 'insertText'],
 	controls: {
 		insertText: {

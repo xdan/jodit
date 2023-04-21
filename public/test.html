@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		/>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Jodit Dev</title>
+		<link rel="stylesheet" href="./app.css" />
+		<link rel="stylesheet" href="./build/jodit.css" />
+		<script src="./build/jodit.js"></script>
+		<script src="./build/plugins/speech-recognize/speech-recognize.js"></script>
+		<!--		<script src="./build/plugins/debug/debug.js"></script>-->
+		<link rel="icon" href="https://xdsoft.net/jodit/pro/favicon.png" />
+	</head>
+	<body>
+		<style>
+			body {
+				font-variant-ligatures: contextual;
+				text-rendering: optimizespeed;
+				-webkit-font-smoothing: antialiased;
+			}
+
+			#box {
+				position: relative;
+				height: 500px;
+				padding: 100px;
+				margin: 20px;
+			}
+
+			@media (max-width: 480px) {
+				#box {
+					padding: 0;
+				}
+			}
+		</style>
+		<div id="box">
+			<h1>Jodit Test Document</h1>
+			<form action='sss.php'>
+			<textarea id="editorNative"></textarea>
+				<button id=btn type='button'>click</button>
+			</form>
+		</div>
+		<script>
+			const editor = Jodit.make(editorNative, {
+				uploader: {
+					url: 'https://xdsoft.net/jodit/finder/?action=fileUpload',
+				},
+			});
+			btn.onclick = () => {
+				const start = performance.now();
+				for (let i = 0; i < 100; i++) {
+
+					editor.toolbar.build(editor.o.buttons);
+
+				}
+				console.log('Result:', performance.now() - start)
+			}
+			// delete editor;
+			// const box = new UIBox(editor1);
+			// alert(box.container.outerHTML);
+		</script>
+		<style>
+			.class1 {
+				padding: 100px;
+				border: 1px solid#26ae90;
+				border-radius: 10px;
+			}
+		</style>
+	</body>
+</html>

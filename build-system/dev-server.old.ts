@@ -6,8 +6,6 @@
 
 import * as express from 'express';
 import { webpack } from 'webpack';
-import * as webpackDevMiddleware from 'webpack-dev-middleware';
-import * as webpackHotMiddleware from 'webpack-hot-middleware';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as open from 'open';
@@ -52,9 +50,9 @@ const port = args.port || 2000;
 
 const compiler = webpack(config);
 
-app.use(webpackDevMiddleware(compiler));
-
-app.use(webpackHotMiddleware(compiler));
+// app.use(webpackDevMiddleware(compiler));
+//
+// app.use(webpackHotMiddleware(compiler));
 
 const compile = new Promise((resolve, reject) => {
 	compiler.hooks.failed.tap('CompilePlugin', () => {

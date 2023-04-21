@@ -12,7 +12,7 @@ import langs from './langs';
 import internalTypescript from './internal-typescript';
 import svg from './svg';
 
-export default (variables: Variables): RuleSetRule[] => {
+export const rules = (variables: Variables): RuleSetRule[] => {
 	return [
 		css(variables),
 		extraTypescript(variables),

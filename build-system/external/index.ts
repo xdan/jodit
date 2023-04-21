@@ -9,7 +9,7 @@ import excludeUtils from './exclude-utils';
 import excludePlugins from './exclude-plugins';
 import excludeLanguages from './exclude-languages';
 
-export default (vars: Variables): { [key in string]: string } => ({
+export const externals = (vars: Variables): { [key in string]: string } => ({
 	...excludeUtils(vars),
 	...excludePlugins(vars),
 	...excludeLanguages(vars)

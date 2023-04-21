@@ -330,8 +330,9 @@ if (typeof window.chai !== 'undefined') {
 	};
 }
 
-const i18nkeys = [];
-const excludeI18nKeys = [
+const i18nkeys = new Set();
+const excludeI18nKeys = new Set([
+	'File does not exist or is above the root of the connector',
 	'bar',
 	'Classe 1',
 	'Classe 2',
@@ -375,13 +376,13 @@ const excludeI18nKeys = [
 	'Lower Roman',
 	'Upper Alpha',
 	'Upper Roman'
-];
+]);
 
 Jodit.prototype.i18n = function (key) {
-	!excludeI18nKeys.includes(key) &&
-		!i18nkeys.includes(key) &&
+	!excludeI18nKeys.has(key) &&
+		!i18nkeys.has(key) &&
 		!key.includes('<svg') &&
-		i18nkeys.push(key);
+		i18nkeys.add(key);
 
 	return oldI18n.apply(this, arguments);
 };

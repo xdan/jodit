@@ -15,6 +15,7 @@
 #### :boom: Breaking Change
 
  - !!! Build files removed from repository and only available in npm package !!!
+ - !!! bowers.json was removed !!!
 
 #### :house: Internal
 

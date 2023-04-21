@@ -12,7 +12,7 @@ import extractCSS from './extract-css';
 import banner from './banner';
 import postBuild from './post-build';
 
-export default (vars: Variables): WebpackConfiguration['plugins'] => {
+export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 	const { isProd, isTest, ESNext, onlyTS, debug, exclude, progressFunction } =
 		vars;
 
