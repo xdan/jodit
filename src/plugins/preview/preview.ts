@@ -40,7 +40,14 @@ export function preview(editor: IJodit): void {
 				.open('', editor.i18n('Preview'))
 				.setModal(true);
 
-			previewBox(editor, defaultValue, 'px', dialog.getElm('content'));
+			const [, onDestrcut] = previewBox(
+				editor,
+				defaultValue,
+				'px',
+				dialog.getElm('content')
+			);
+
+			dialog.e.on(dialog, 'afterClose', onDestrcut);
 		}
 	);
 }

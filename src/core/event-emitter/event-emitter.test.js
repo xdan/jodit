@@ -26,6 +26,33 @@ describe('Jodit Events system Tests', function () {
 			});
 		});
 
+		describe('On destruct', function () {
+			it('should remove all event listeners were set with on method', function () {
+				const editor = getJodit(),
+					div = document.createElement('button');
+
+				let counter = 0;
+
+				document.body.appendChild(div);
+
+				editor.events.on(div, 'click', () => {
+					counter++;
+				});
+
+				simulateEvent('click', div);
+
+				expect(counter).eq(1);
+
+				editor.destruct();
+
+				simulateEvent('click', div);
+
+				expect(counter).eq(1);
+
+				div.remove();
+			});
+		});
+
 		describe('Create simple event handler on some DOM element on few events', function () {
 			it('Should handle all events on that element', function () {
 				const editor = getJodit(),

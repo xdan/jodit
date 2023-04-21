@@ -68,7 +68,7 @@ Config.prototype.controls.dots = {
 							store.toolbar.build(splitArray(buttons));
 
 							const w =
-								editor.toolbar.firstButton?.container
+								editor.toolbar?.firstButton?.container
 									.offsetWidth || 36;
 
 							store.toolbar.container.style.width =

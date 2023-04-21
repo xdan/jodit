@@ -43,7 +43,8 @@ import {
 } from 'jodit/modules';
 import { modules } from 'jodit/core/global';
 import { hook, derive } from 'jodit/core/decorators';
-import { Elms, Mods } from 'jodit/core/traits';
+import { Mods } from 'jodit/core/traits/mods';
+import { Elms } from 'jodit/core/traits/elms';
 import { EventEmitter } from 'jodit/core/event-emitter';
 import { UIMessages } from 'jodit/modules/messages/messages';
 
@@ -115,7 +116,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		this.__container = container;
 	}
 
-	readonly events!: IEventEmitter;
+	events!: IEventEmitter;
 	get e(): this['events'] {
 		return this.events;
 	}
@@ -123,7 +124,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	/**
 	 * progress_bar Progress bar
 	 */
-	progressbar!: IProgressBar;
+	progressbar: IProgressBar;
 
 	OPTIONS: IViewOptions = View.defaultOptions;
 	private __options!: this['OPTIONS'];
@@ -329,14 +330,16 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		}
 
 		this.progressbar.destruct();
+		// @ts-ignore After desstruct, we are not responsible for anything
+		this.progressbar = undefined;
 		this.message.destruct();
-
-		if (this.async) {
-			this.async.destruct();
-		}
+		// @ts-ignore
+		this.message = undefined;
 
 		if (this.events) {
-			this.e.destruct();
+			this.events.destruct();
+			// @ts-ignore
+			this.events = undefined;
 		}
 
 		if (this.buffer) {

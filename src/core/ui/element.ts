@@ -16,10 +16,11 @@ import type {
 } from 'jodit/types';
 import { Component, ViewComponent } from 'jodit/core/component';
 import { Dom } from 'jodit/core/dom/dom';
-import { Elms, Mods } from 'jodit/core/traits';
+import { Mods } from 'jodit/core/traits/mods';
+import { Elms } from 'jodit/core/traits/elms';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { Icon } from 'jodit/core/ui/icon';
-import { derive } from 'jodit/core/decorators';
+import { derive } from 'jodit/core/decorators/derive/derive';
 
 export interface UIElement extends Mods, Elms {}
 

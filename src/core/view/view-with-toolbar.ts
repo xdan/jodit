@@ -19,17 +19,19 @@ import type {
 	IViewOptions,
 	ButtonsGroups
 } from 'jodit/types';
-import { View } from './view';
-import { isString, resolveElement, splitArray } from 'jodit/core/helpers';
+import { View } from 'jodit/core/view/view';
+import { isString } from 'jodit/core/helpers/checker';
+import { splitArray } from 'jodit/core/helpers/array';
+import { resolveElement } from 'jodit/core/helpers/utils';
 import { Dom } from 'jodit/core/dom';
 import { makeCollection } from 'jodit/modules/toolbar/factory';
-import { STATUSES } from '../component';
-import { isButtonGroup } from '../ui/helpers/buttons';
+import { STATUSES } from 'jodit/core/component';
+import { isButtonGroup } from 'jodit/core/ui/helpers/buttons';
 import { autobind } from 'jodit/core/decorators';
 
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	TOOLBAR!: IToolbarCollection;
-	readonly toolbar: this['TOOLBAR'] = makeCollection(this);
+	toolbar: this['TOOLBAR'] = makeCollection(this);
 
 	private defaultToolbarContainer: HTMLElement =
 		this.c.div('jodit-toolbar__box');
@@ -72,7 +74,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 			: [];
 
 		this.toolbar
-			.setRemoveButtons(this.o.removeButtons)
+			?.setRemoveButtons(this.o.removeButtons)
 			.build(buttons.concat(this.o.extraButtons || []))
 			.appendTo(this.toolbarContainer);
 	}
@@ -175,6 +177,8 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		this.setStatus(STATUSES.beforeDestruct);
 		this.e.off('beforeToolbarBuild', this.beforeToolbarBuild);
 		this.toolbar.destruct();
+		// @ts-ignore After desstruct, we are not responsible for anything
+		this.toolbar = undefined;
 		super.destruct();
 	}
 }

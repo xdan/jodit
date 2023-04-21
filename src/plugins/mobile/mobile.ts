@@ -98,7 +98,7 @@ export function mobile(editor: IJodit): void {
 						editor.e.fire('closeAllPopups');
 
 						editor.toolbar
-							.setRemoveButtons(editor.o.removeButtons)
+							?.setRemoveButtons(editor.o.removeButtons)
 							.build(store.concat(editor.o.extraButtons));
 					}
 				}

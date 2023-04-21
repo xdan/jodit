@@ -53,7 +53,7 @@ import { observable } from 'jodit/core/event-emitter';
 import { loadTree } from './fetch/load-tree';
 import { loadItems } from './fetch/load-items';
 import { STATUSES } from 'jodit/core/component';
-import { Dlgs } from 'jodit/core/traits';
+import { Dlgs } from 'jodit/core/traits/dlgs';
 import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
 
 import './config';
@@ -239,7 +239,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 
 			const header = this.c.div();
 
-			this.toolbar.build(this.__getButtons()).appendTo(header);
+			this.toolbar?.build(this.__getButtons()).appendTo(header);
 
 			this._dialog.open(this.browser, header);
 

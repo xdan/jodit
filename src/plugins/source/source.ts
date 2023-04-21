@@ -334,6 +334,10 @@ export class source extends Plugin {
 
 		if (editor.o.beautifyHTML) {
 			const addEventListener = (): boolean => {
+				if (editor.isInDestruct) {
+					return false;
+				}
+
 				const html_beautify = (editor.ow as any).html_beautify;
 
 				if (html_beautify && !editor.isInDestruct) {

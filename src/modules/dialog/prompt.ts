@@ -9,9 +9,11 @@
  */
 
 import type { IDialog } from 'jodit/types';
-import { Dialog } from 'jodit/modules/dialog';
-import { Button } from 'jodit/core/ui';
-import { attr, isFunction } from 'jodit/core/helpers';
+import { Button } from 'jodit/core/ui/button/button/button';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { attr } from 'jodit/core/helpers/utils/utils';
+
+import { Dialog } from './dialog';
 
 /**
  * Show `Prompt` dialog. Work without Jodit object

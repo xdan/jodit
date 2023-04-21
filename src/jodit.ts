@@ -85,7 +85,7 @@ import {
 	watch,
 	derive
 } from 'jodit/core/decorators';
-import { Dlgs } from 'jodit/core/traits';
+import { Dlgs } from 'jodit/core/traits/dlgs';
 import { Ajax } from 'jodit/core/request';
 
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';

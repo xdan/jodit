@@ -364,8 +364,8 @@ describe('Clean html plugin', function () {
 			});
 		});
 
-		describe('Time checking', function () {
-			it('Should work fast', function (done) {
+		describe('Time checking', () => {
+			it('Should work fast', done => {
 				unmockPromise();
 
 				const editor = getJodit({

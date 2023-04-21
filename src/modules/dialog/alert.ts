@@ -9,10 +9,12 @@
  */
 
 import type { IDialog } from 'jodit/types';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { asArray } from 'jodit/core/helpers/array/as-array';
+import { Dom } from 'jodit/core/dom/dom';
+import { Button } from 'jodit/core/ui/button/button/button';
+
 import { Dialog } from './dialog';
-import { asArray, isFunction } from 'jodit/core/helpers/';
-import { Dom } from 'jodit/core/dom';
-import { Button } from 'jodit/core/ui';
 
 /**
  * Show `alert` dialog. Work without Jodit object

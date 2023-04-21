@@ -71,6 +71,9 @@ export const appendScript = (
 export const appendScriptAsync = cacheLoaders(
 	(jodit: IViewBased, url: string) => {
 		return new Promise((resolve, reject) => {
+			if (jodit.isInDestruct) {
+				return;
+			}
 			const { element } = appendScript(jodit, url, resolve);
 			!jodit.isInDestruct && jodit.e.on(element, 'error', reject);
 		});
@@ -83,6 +86,10 @@ export const appendScriptAsync = cacheLoaders(
 export const appendStyleAsync = cacheLoaders(
 	(jodit: IViewBased, url: string): Promise<HTMLElement> => {
 		return new Promise((resolve, reject) => {
+			if (jodit.isInDestruct) {
+				return;
+			}
+
 			const link = jodit.c.element('link');
 
 			link.rel = 'stylesheet';

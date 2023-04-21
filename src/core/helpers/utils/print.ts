@@ -73,7 +73,9 @@ export function previewBox(
 	defaultValue?: string,
 	points: 'pt' | 'px' | '' = 'px',
 	container: Nullable<HTMLElement> = null
-): HTMLElement {
+): [HTMLElement, () => void] {
+	const onDestruct: Function[] = [];
+
 	const restoreAttributes = fixedAssetsSizeAndAbsoluteLinks(editor, points);
 
 	try {
@@ -121,16 +123,29 @@ export function previewBox(
 				div = myWindow.document.body;
 
 				if (typeof ResizeObserver === 'function') {
-					const resizeObserver = new ResizeObserver(entries => {
-						iframe.style.height =
-							myWindow.document.body.offsetHeight + 20 + 'px';
-					});
+					let destructed: boolean = false;
+					const elm = myWindow.document.body;
 
-					resizeObserver.observe(myWindow.document.body);
+					const resizeObserver = new ResizeObserver(
+						editor.async.debounce((): void => {
+							resizeObserver.unobserve(elm);
+							iframe.style.height = `${elm.offsetHeight + 20}px`;
+							editor.async.requestAnimationFrame(() => {
+								!destructed && resizeObserver.observe(elm);
+							});
+						}, 100)
+					);
 
-					editor.e.on('beforeDestruct', () => {
-						resizeObserver.unobserve(myWindow.document.body);
-					});
+					const beforeDestruct = (): void => {
+						destructed = true;
+						resizeObserver.unobserve(elm);
+						resizeObserver.disconnect();
+						editor.e.off('beforeDestruct', beforeDestruct);
+					};
+
+					onDestruct.push(beforeDestruct);
+
+					editor.e.on('beforeDestruct', beforeDestruct);
 				}
 			}
 		} else {
@@ -195,7 +210,12 @@ export function previewBox(
 
 		editor.e.fire('afterPreviewBox', div);
 
-		return div;
+		return [
+			div,
+			(): void => {
+				onDestruct.forEach(cb => cb());
+			}
+		];
 	} finally {
 		restoreAttributes.forEach(clb => clb());
 	}

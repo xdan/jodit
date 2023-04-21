@@ -9,8 +9,9 @@
  */
 
 import type { IDialog, IDialogOptions, IViewBased, IDlgs } from 'jodit/types';
-import { Alert, Confirm, Dialog, Prompt } from '../../modules';
-import { isString, markOwner } from '../helpers';
+import { Alert, Confirm, Dialog, Prompt } from 'jodit/modules/dialog';
+import { isHTML, isString } from 'jodit/core/helpers/checker';
+import { markOwner } from 'jodit/core/helpers/utils/utils';
 
 export abstract class Dlgs implements IDlgs {
 	dlg(this: IViewBased & IDlgs, options?: IDialogOptions): IDialog {
@@ -34,10 +35,9 @@ export abstract class Dlgs implements IDlgs {
 		title: string | ((yes: boolean) => void) | undefined,
 		callback?: (yes: boolean) => void | false
 	): IDialog {
-		if (isString(title)) {
-			title = this.i18n(title);
-		}
-		return Confirm.call(this.dlg(), this.i18n(msg), title, callback);
+		msg = processTitle(msg, this);
+		title = processTitle(title, this);
+		return Confirm.call(this.dlg(), msg, title, callback);
 	}
 
 	prompt(
@@ -48,17 +48,13 @@ export abstract class Dlgs implements IDlgs {
 		placeholder?: string,
 		defaultValue?: string
 	): IDialog {
-		if (isString(title)) {
-			title = this.i18n(title);
-		}
-
-		if (isString(placeholder)) {
-			placeholder = this.i18n(placeholder);
-		}
+		msg = processTitle(msg, this);
+		title = processTitle(title, this);
+		placeholder = processTitle(placeholder, this);
 
 		return Prompt.call(
 			this.dlg(),
-			this.i18n(msg),
+			msg,
 			title,
 			callback,
 			placeholder,
@@ -73,12 +69,19 @@ export abstract class Dlgs implements IDlgs {
 		callback?: string | ((dialog: IDialog) => void | false),
 		className?: string
 	): IDialog {
-		if (isString(msg)) {
-			msg = this.i18n(msg);
-		}
-		if (isString(title)) {
-			title = this.i18n(title);
-		}
+		msg = processTitle(msg, this);
+		title = processTitle(title, this);
 		return Alert.call(this.dlg(), msg, title, callback, className);
 	}
+}
+
+function processTitle<T extends string | unknown>(
+	title: T,
+	self: IViewBased
+): T {
+	if (isString(title) && !isHTML(title)) {
+		title = self.i18n(title) as T;
+	}
+
+	return title;
 }

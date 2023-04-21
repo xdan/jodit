@@ -42,7 +42,7 @@ export abstract class Component implements IComponent {
 
 	private __componentName!: string;
 
-	readonly async: IAsync = new Async();
+	async: IAsync = new Async();
 
 	get componentName(): string {
 		if (!this.__componentName) {
@@ -188,11 +188,19 @@ export abstract class Component implements IComponent {
 	 */
 	destruct(): void {
 		this.setStatus(STATUSES.destructed);
-		this.async.destruct();
+
+		if (this.async) {
+			this.async.destruct();
+			// @ts-ignore
+			this.async = undefined;
+		}
 
 		if (StatusListHandlers.get(this)) {
 			StatusListHandlers.delete(this);
 		}
+
+		// @ts-ignore
+		this.ownerWindow = undefined;
 	}
 
 	private __componentStatus: ComponentStatus = STATUSES.beforeInit;

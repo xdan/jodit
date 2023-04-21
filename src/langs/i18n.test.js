@@ -177,7 +177,7 @@
 		});
 
 		describe('Test has keys in all functionality', function () {
-			const filter = [
+			const filter = new Set([
 				'customxxx',
 				'customxxx',
 				'lineHeight',
@@ -200,37 +200,32 @@
 				'Image',
 				'spellcheck',
 				'Border'
-			];
+			]);
 
 			Object.keys(Jodit.lang)
 				.filter(function (language) {
 					return language !== 'en';
 				})
 				.forEach(function (language) {
-					it(
-						'Should have value for all key in ' +
-							language +
-							' language',
-						function () {
-							const editor = getJodit({
-								language: language,
-								debugLanguage: true
-							});
+					it(`Should have value for all key in ${language} language`, () => {
+						const editor = getJodit({
+							language: language,
+							debugLanguage: true
+						});
 
-							i18nkeys
-								.filter(function (key) {
-									return (
-										filter.indexOf(key) === -1 &&
-										!/^[0-9]+(\.[0-9]+)?(pt|px)?$/.test(key)
-									);
-								})
-								.forEach(function (key) {
-									expect('{' + key + '}').does.not.equal(
-										editor.i18n(key)
-									);
-								});
-						}
-					);
+						console.log(Array.from(i18nkeys));
+						Array.from(i18nkeys)
+							.filter(
+								key =>
+									!filter.has(key) &&
+									!/^[0-9]+(\.[0-9]+)?(pt|px)?$/.test(key)
+							)
+							.forEach(function (key) {
+								expect('{' + key + '}').does.not.equal(
+									editor.i18n(key)
+								);
+							});
+					});
 				});
 		});
 		describe('Test i18n function', function () {

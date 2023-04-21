@@ -79,7 +79,7 @@ export function fullsize(editor: IViewWithToolbar): void {
 
 			if (editor.toolbar) {
 				isJoditObject(editor) &&
-					editor.toolbarContainer.appendChild(
+					editor.toolbarContainer?.appendChild(
 						editor.toolbar.container
 					);
 

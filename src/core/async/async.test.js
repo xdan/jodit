@@ -180,4 +180,25 @@ describe('Test Async module', () => {
 			});
 		});
 	});
+
+	describe('requestAnimationFrame', () => {
+		it('Should call as usual requestAnimationFrame', done => {
+			asyncM.requestAnimationFrame(callSpy);
+			requestAnimationFrame(() => {
+				expect(callCount).equals(1);
+				done();
+			});
+		});
+
+		describe('Clear', () => {
+			it('Should not be called after destruct', done => {
+				asyncM.requestAnimationFrame(callSpy);
+				asyncM.destruct();
+				requestAnimationFrame(() => {
+					expect(callCount).equals(0);
+					done();
+				});
+			});
+		});
+	});
 });
