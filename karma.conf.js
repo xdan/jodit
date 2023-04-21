@@ -17,7 +17,7 @@ if (argv.grep) {
 const webpackConfFunc = require(path.resolve(
 	process.cwd(),
 	'./webpack.config'
-));
+)).default;
 
 const webpackConfig = (() => {
 	const config = webpackConfFunc(
