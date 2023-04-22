@@ -11,6 +11,7 @@ function Bool(str): boolean {
 }
 
 export type Argv = {
+	WEBPACK_SERVE?: boolean;
 	filename?: (name: string) => string;
 	env: object;
 	mode?: 'production' | 'development';
@@ -35,6 +36,7 @@ export type Variables = {
 	dirname: string;
 	pkg: { version: string; homepage: string };
 	debug: boolean;
+	serve: boolean;
 	isTest: boolean;
 	onlyTS: boolean;
 	isProd: boolean;
@@ -98,6 +100,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 		argv,
 		onlyTS: false, // TODO
 		exclude,
+		serve: Boolean(argv.WEBPACK_SERVE),
 		superDirname,
 		outputPath,
 		banner,

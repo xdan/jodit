@@ -19,6 +19,19 @@
  - server.js was removed
  - All build js files was rewritten to typescript
  - Default target for build was changed to es2015
+ - Event `getIcon` was removed. Use option `getIcon` instead
+
+```js
+Jodit.make('#editor', {
+  getIcon: (name: string) => {
+    if (name === 'bold') {
+      return '<svg>...</svg>';
+    }
+
+    return null;
+  }
+});
+```
 
 #### :house: Internal
 

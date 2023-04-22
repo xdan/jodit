@@ -11,6 +11,7 @@ export const fileName = ({
 	ES,
 	isTest,
 	excludeLangs,
+	serve,
 	uglify
 }: Variables): ((name: string) => string) => {
 	if (typeof argv.filename === 'function') {
@@ -19,7 +20,7 @@ export const fileName = ({
 
 	return (name: string): string =>
 		name +
-		(ES === 'es5' || isTest ? '' : '.' + ES) +
+		(ES === 'es2015' || isTest || serve ? '' : '.' + ES) +
 		(excludeLangs ? '.en' : '') +
 		(uglify ? '.min' : '');
 };
