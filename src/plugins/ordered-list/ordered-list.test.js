@@ -34,29 +34,24 @@ describe('Test orderedList plugin', function () {
 					);
 				});
 
-				it('If press Enter inside <li> inside some text should split that text and created new <li> and cursor must be in it', function () {
-					const editor = getJodit();
-					editor.value = '<ul><li>test</li></ul>';
+				describe('Press Enter inside <li> inside some text', () => {
+					it('should split that text and created new <li> and cursor must be in it', () => {
+						const editor = getJodit();
+						editor.value = '<ul><li>te|st</li></ul>';
+						setCursorToChar(editor);
 
-					const sel = editor.s.sel,
-						range = editor.s.createRange();
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor
+						);
 
-					range.setStart(
-						editor.editor.firstChild.firstChild.firstChild,
-						2
-					);
-					range.collapse(true);
+						editor.s.insertNode(editor.createInside.text(' a '));
 
-					sel.removeAllRanges();
-					sel.addRange(range);
-
-					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
-
-					editor.s.insertNode(editor.createInside.text(' a '));
-
-					expect(editor.value).equals(
-						'<ul><li>te</li><li> a st</li></ul>'
-					);
+						expect(editor.value).equals(
+							'<ul><li>te</li><li> a st</li></ul>'
+						);
+					});
 				});
 			});
 

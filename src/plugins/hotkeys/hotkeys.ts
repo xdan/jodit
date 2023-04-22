@@ -151,6 +151,8 @@ export class hotkeys extends Plugin {
 						stop
 					);
 
+					console.log(shortcut + '.hotkey', event.type, resultOfFire);
+
 					if (resultOfFire === false) {
 						if (stop.shouldStop) {
 							itIsHotkey = true;

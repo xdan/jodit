@@ -65,12 +65,12 @@ export function watch(
 				? component
 				: (component as unknown as { jodit: IViewBased }).jodit;
 
-			let callback = (key: string, ...args: any[]): void => {
+			let callback = (key: string, ...args: any[]): void | unknown => {
 				if (component.isInDestruct) {
 					return;
 				}
 
-				(component as any)[propertyKey](key, ...args);
+				return (component as any)[propertyKey](key, ...args);
 			};
 
 			if (!immediately) {

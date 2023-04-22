@@ -110,28 +110,32 @@
 						).equals('none');
 					});
 
-					it('Should change the icon in toolbar', function () {
-						const editor = getJodit();
-						const button = getButton('fullsize', editor);
-						expect(button).is.not.null;
+					describe('Should icon', () => {
+						it('Should change the icon in toolbar', async () => {
+							const editor = getJodit();
+							const button = getButton('fullsize', editor);
+							expect(button).is.not.null;
 
-						expect(button.querySelector('svg')).is.not.null;
+							expect(button.querySelector('svg')).is.not.null;
 
-						const old_icon = button.querySelector('svg').innerHTML;
+							const old_icon =
+								button.querySelector('svg').innerHTML;
 
-						editor.toggleFullSize(true);
-						expect(
-							button.querySelector('svg').innerHTML
-						).does.not.equal(old_icon);
+							editor.toggleFullSize(true);
+							await editor.async.requestIdlePromise();
+							expect(
+								button.querySelector('svg').innerHTML
+							).does.not.equal(old_icon);
 
-						editor.toggleFullSize(false);
-						expect(button.querySelector('svg').innerHTML).equals(
-							old_icon
-						);
+							editor.toggleFullSize(false);
+							expect(
+								button.querySelector('svg').innerHTML
+							).equals(old_icon);
+						});
 					});
 
-					describe('For text icons', function () {
-						it('Should change the text in toolbar', function () {
+					describe('For text icons', () => {
+						it('Should change the text in toolbar', async () => {
 							const editor = getJodit({
 								textIcons: true
 							});
@@ -144,9 +148,11 @@
 							const old_icon = button.textContent;
 
 							editor.toggleFullSize(true);
+							await editor.async.requestIdlePromise();
 							expect(button.textContent).does.not.equal(old_icon);
 
 							editor.toggleFullSize(false);
+							await editor.async.requestIdlePromise();
 							expect(button.textContent).equals(old_icon);
 						});
 					});
