@@ -9,6 +9,7 @@
  */
 
 export * from './align';
+export * from './attr';
 export * from './append-script';
 export * from './assert';
 export * from './browser';

@@ -11,7 +11,7 @@
 import type { IDialog } from 'jodit/types';
 import { Button } from 'jodit/core/ui/button/button/button';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
-import { attr } from 'jodit/core/helpers/utils/utils';
+import { attr } from 'jodit/core/helpers/utils/attr';
 
 import { Dialog } from './dialog';
 

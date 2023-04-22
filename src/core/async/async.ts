@@ -171,6 +171,44 @@ export class Async implements IAsync {
 			: onFire;
 	}
 
+	private __queueMicrotaskNative =
+		queueMicrotask?.bind(window) ??
+		Promise.resolve().then.bind(Promise.resolve());
+
+	microDebounce<T extends CallbackFunction>(
+		fn: T,
+		firstCallImmediately: boolean = false
+	): T {
+		let scheduled = false;
+		let needCall = true;
+		let savedArgs: unknown[];
+
+		return ((...args: unknown[]): void => {
+			savedArgs = args;
+
+			if (scheduled) {
+				needCall = true;
+				return;
+			}
+
+			needCall = true;
+
+			if (firstCallImmediately) {
+				needCall = false;
+				fn(...savedArgs);
+			}
+
+			scheduled = true;
+			this.__queueMicrotaskNative(() => {
+				scheduled = false;
+				if (this.isDestructed) {
+					return;
+				}
+				needCall && fn(...savedArgs);
+			});
+		}) as T;
+	}
+
 	/**
 	 * Throttling enforces a maximum number of times a function can be called over time.
 	 * As in "execute this function at most once every 100 milliseconds."

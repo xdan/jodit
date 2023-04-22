@@ -7,7 +7,7 @@
 import type { IJodit, ICommitStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { wrapUnwrappedText } from './wrap-unwrapped-text';
-import { attr } from 'jodit/core/helpers/utils/utils';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { wrapList } from './list/wrap-list';
 
 /**

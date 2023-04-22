@@ -36,6 +36,8 @@ declare module 'jodit/config' {
 Config.prototype.filebrowser = {
 	namespace: '',
 
+	cache: true,
+
 	extraButtons: [],
 
 	filter(item: string | ISourceFile, search: string) {

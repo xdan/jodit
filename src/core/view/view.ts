@@ -356,6 +356,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 View.defaultOptions = {
 	extraButtons: [],
+	cache: true,
 	textIcons: false,
 	namespace: '',
 	removeButtons: [],

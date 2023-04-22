@@ -39,7 +39,8 @@ import {
 	call,
 	isArray,
 	keys,
-	isPlainObject
+	isPlainObject,
+	assert
 } from 'jodit/core/helpers';
 import { Icon } from 'jodit/core/ui/icon';
 import { ToolbarCollection } from 'jodit/modules/toolbar/collection/collection';
@@ -70,15 +71,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	 */
 	protected get toolbar(): Nullable<IToolbarCollection> {
 		return this.closest<ToolbarCollection>(ToolbarCollection);
-	}
-
-	/**
-	 * Button element
-	 */
-	get button(): HTMLElement {
-		return this.container.querySelector(
-			`button.${this.componentName}__button`
-		) as HTMLElement;
 	}
 
 	/** @override **/
@@ -150,8 +142,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 	/** @override */
 	protected override onChangeText(): void {
-		// @ts-ignore
-		window.__onChangeText = (window.__onChangeText ?? 0) + 1;
 		if (isFunction(this.control.template)) {
 			this.text.innerHTML = this.control.template(
 				this.j,
@@ -170,14 +160,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		attr(this.button, 'tabindex', this.state.tabIndex);
 	}
 
-	protected override onChangeTooltip(): void {
-		// @ts-ignore
-		window.__onChangeTooltip = (window.__onChangeTooltip ?? 0) + 1;
-		attr(this.button, 'aria-label', this.state.tooltip);
-		super.onChangeTooltip();
-	}
-
-	/** @override */
 	@cacheHTML
 	protected override createContainer(): HTMLElement {
 		const cn = this.componentName;
@@ -201,6 +183,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			)}</span>`
 		);
 
+		// For caching
 		button.appendChild(trigger);
 
 		return container;
@@ -211,7 +194,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		this.container.querySelector('button')?.focus();
 	}
 
-	@watch('state.hasTrigger')
+	@watch('state.hasTrigger', { immediately: false })
 	protected onChangeHasTrigger(): void {
 		if (this.state.hasTrigger) {
 			this.container.appendChild(this.trigger);
@@ -224,45 +207,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 	/** @override */
 	protected override onChangeDisabled(): void {
-		const dsb = this.state.disabled ? 'disabled' : null;
+		const disabled = this.state.disabled ? 'disabled' : null;
 
-		attr(this.trigger, 'disabled', dsb);
-		attr(this.button, 'disabled', dsb);
-		attr(this.container, 'disabled', dsb);
-	}
-
-	/**
-	 * Add tooltip to button
-	 */
-	protected initTooltip(): void {
-		// @ts-ignore
-		window.__initTooltip = (window.__initTooltip ?? 0) + 1;
-		if (
-			!this.j.o.textIcons &&
-			this.j.o.showTooltip &&
-			!this.j.o.useNativeTooltip
-		) {
-			this.j.e
-				.off(this.container, 'mouseenter mouseleave')
-				.on(this.container, 'mousemove', (e: MouseEvent) => {
-					if (!this.state.tooltip) {
-						return;
-					}
-
-					!this.state.disabled &&
-						this.j.e.fire(
-							'delayShowTooltip',
-							() => ({
-								x: e.clientX + 10,
-								y: e.clientY + 10
-							}),
-							this.state.tooltip
-						);
-				})
-				.on(this.container, 'mouseleave', () => {
-					this.j.e.fire('hideTooltip');
-				});
-		}
+		attr(this.trigger, 'disabled', disabled);
+		attr(this.button, 'disabled', disabled);
+		attr(this.container, 'disabled', disabled);
 	}
 
 	constructor(
@@ -272,7 +221,14 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	) {
 		super(jodit);
 
-		this.trigger = this.getElm('trigger')!;
+		const button = this.getElm('button');
+		assert(button, 'Element button should exists');
+		this.button = button;
+
+		const trigger = this.getElm('trigger');
+		assert(trigger, 'Element trigger should exists');
+		this.trigger = trigger;
+		trigger.remove();
 
 		// Prevent lost focus
 		jodit.e.on([this.button, this.trigger], 'mousedown', (e: MouseEvent) =>
@@ -283,8 +239,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 		this.hookStatus(STATUSES.ready, () => {
 			this.__initFromControl();
-			this.initTooltip();
-
 			this.update();
 		});
 
@@ -299,8 +253,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	 * Init constant data from control
 	 */
 	private __initFromControl(): void {
-		// @ts-ignore
-		window.__initFromControl = (window.__initFromControl ?? 0) + 1;
 		const { control: ctr, state } = this;
 
 		this.updateSize();

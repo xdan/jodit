@@ -232,3 +232,12 @@ export const lang: IDictionary<IDictionary<string>> = {};
 
 export const CLIPBOARD_ID = 'clipboard';
 export const SOURCE_CONSUMER = 'source-consumer';
+
+export const PASSIVE_EVENTS = new Set([
+	'touchstart',
+	'touchend',
+	'scroll',
+	'mousewheel',
+	'mousemove',
+	'touchmove'
+]);

@@ -38,26 +38,31 @@
 		</style>
 		<div id="box">
 			<h1>Jodit Test Document</h1>
-			<form action='sss.php'>
-			<textarea id="editorNative"></textarea>
-				<button id=btn type='button'>click</button>
+			<form id="form" action="sss.php">
+				<textarea id="editorNative"></textarea>
+				<button id="btn" type="button">click</button>
 			</form>
 		</div>
 		<script>
 			const editor = Jodit.make(editorNative, {
+				cache: true,
 				uploader: {
-					url: 'https://xdsoft.net/jodit/finder/?action=fileUpload',
-				},
+					url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
+				}
 			});
 			btn.onclick = () => {
 				const start = performance.now();
 				for (let i = 0; i < 100; i++) {
-
 					editor.toolbar.build(editor.o.buttons);
-
 				}
-				console.log('Result:', performance.now() - start)
-			}
+				const res = performance.now() - start;
+				console.log('Result:', res);
+				form.appendChild(
+					editor.create.fromHTML(
+						'<input name="content" value="' + res + '">'
+					)
+				);
+			};
 			// delete editor;
 			// const box = new UIBox(editor1);
 			// alert(box.container.outerHTML);

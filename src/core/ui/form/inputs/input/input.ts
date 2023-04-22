@@ -74,14 +74,17 @@ export class UIInput extends UIElement implements IUIInput {
 			this.container.classList.add(this.state.className);
 	}
 
-	@watch([
-		'state.name',
-		'state.type',
-		'state.label',
-		'state.placeholder',
-		'state.autocomplete',
-		'state.icon'
-	])
+	@watch(
+		[
+			'state.name',
+			'state.type',
+			'state.label',
+			'state.placeholder',
+			'state.autocomplete',
+			'state.icon'
+		],
+		{ immediately: false }
+	)
 	@debounce()
 	protected onChangeState(): void {
 		this.name = this.state.name;

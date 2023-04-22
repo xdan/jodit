@@ -29,6 +29,11 @@ import { INSERT_AS_HTML } from './core/constants';
  */
 export class Config implements IViewOptions {
 	/**
+	 * Use cache for heavy methods
+	 */
+	cache: boolean = true;
+
+	/**
 	 * Timeout of all asynchronous methods
 	 */
 	defaultTimeout: number = 100;
@@ -398,7 +403,7 @@ export class Config implements IViewOptions {
 	/**
 	 * Delay before show tooltip
 	 */
-	showTooltipDelay: number = 1000;
+	showTooltipDelay: number = 200;
 
 	/**
 	 * Instead of create custop tooltip - use native title tooltips

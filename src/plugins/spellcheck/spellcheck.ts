@@ -12,7 +12,7 @@
 
 import type { IJodit } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
-import { attr } from 'jodit/core/helpers/utils/utils';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { autobind } from 'jodit/core/decorators';
 import { extendLang, pluginSystem } from 'jodit/core/global';
 

@@ -142,6 +142,7 @@ export class Popup extends UIElement implements IPopup {
 		this.updatePosition();
 
 		this.j.e.fire(this, 'afterOpen');
+		this.j.e.fire('afterOpenPopup', this);
 
 		return this;
 	}

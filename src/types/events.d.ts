@@ -14,6 +14,7 @@ import type { CallbackFunction, CanArray, IDestructible } from './types';
 
 interface IEventEmitterOnOptions {
 	top?: boolean;
+	capture?: boolean;
 }
 
 interface IEventEmitter extends IDestructible {

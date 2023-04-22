@@ -15,7 +15,6 @@ import type {
 	IComponent,
 	ModType
 } from 'jodit/types';
-import { toArray } from 'jodit/core/helpers/array/to-array';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';
 
 export abstract class Mods implements IMods {
@@ -35,23 +34,22 @@ export abstract class Mods implements IMods {
 		container?: HTMLElement
 	): T {
 		name = name.toLowerCase();
+		const oldValue = this.mods[name];
 
-		if (this.mods[name] === value) {
+		if (oldValue === value) {
 			return this;
 		}
 
-		const mod = `${this.componentName}_${name}`,
+		const mod = `${this.componentName}_${name}_`,
 			cl = (container || this.container).classList;
 
-		toArray(cl).forEach(className => {
-			if (className.indexOf(mod) === 0) {
-				cl.remove(className);
-			}
-		});
+		if (oldValue != null) {
+			cl.remove(`${mod}${oldValue.toString().toLowerCase()}`);
+		}
 
 		!isVoid(value) &&
 			value !== '' &&
-			cl.add(`${mod}_${value.toString().toLowerCase()}`);
+			cl.add(`${mod}${value.toString().toLowerCase()}`);
 
 		this.mods[name] = value;
 

@@ -40,8 +40,8 @@ export class Dom {
 	/**
 	 * Remove all content from element
 	 */
-	static detach(node: Node): void {
-		while (node.firstChild) {
+	static detach(node: Nullable<Node>): void {
+		while (node && node.firstChild) {
 			node.removeChild(node.firstChild);
 		}
 	}

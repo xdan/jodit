@@ -17,7 +17,7 @@ import type {
 	IProgressBar,
 	IToolbarCollection
 } from './toolbar';
-import type { IComponent, IContainer, IDictionary, Nullable } from './types';
+import type { CanUndef, IComponent, IContainer, IDictionary, Nullable } from './types';
 import type { Attributes, ICreate } from './create';
 import type { IStorage } from './storage';
 import type { IUIButtonState } from './ui';
@@ -54,6 +54,13 @@ interface IToolbarOptions {
 type NodeFunction = (elm: HTMLElement) => void;
 
 interface IViewOptions extends ILanguageOptions, IToolbarOptions {
+	/**
+	 * Use cache for heavy methods
+	 */
+	cache?: boolean;
+
+	getIcon?: (name: string, clearName: string) => CanUndef<string>;
+
 	headerButtons?: string | Array<IControlType | string | ButtonsGroup>;
 	basePath?: string;
 	theme?: string;

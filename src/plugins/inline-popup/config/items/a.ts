@@ -9,7 +9,7 @@
  */
 
 import type { IControlType, IJodit } from 'jodit/types';
-import { attr } from 'jodit/core/helpers/utils';
+import { attr } from 'jodit/core/helpers/utils/attr';
 
 export default [
 	{

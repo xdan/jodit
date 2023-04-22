@@ -57,6 +57,11 @@ export interface IAsync extends IDestructible {
 		firstCallImmediately?: boolean
 	): CallbackFunction;
 
+	microDebounce<T extends CallbackFunction>(
+		fn: T,
+		firstCallImmediately?: boolean
+	): T;
+
 	throttle(
 		fn: CallbackFunction,
 		timeout: ITimeout | IAsyncParams,

@@ -75,13 +75,15 @@ export class Icon {
 		let iconElement: CanUndef<HTMLElement>;
 
 		const { name, iconURL, fill } = icon;
-		const cacheKey = `${name}${iconURL}${fill}`;
-
-		if (this.__cache.has(cacheKey)) {
-			// return this.__cache.get(cacheKey)!.cloneNode(true);
-		}
-
 		const clearName = name.replace(/[^a-zA-Z0-9]/g, '_');
+
+		const iconFromEvent = jodit.o.getIcon?.(name, clearName);
+
+		const cacheKey = `${name}${iconURL}${fill}${iconFromEvent ?? ''}`;
+
+		if (jodit.o.cache && this.__cache.has(cacheKey)) {
+			return this.__cache.get(cacheKey)!.cloneNode(true);
+		}
 
 		if (iconURL) {
 			iconElement = jodit.c.span();
@@ -95,7 +97,7 @@ export class Icon {
 			);
 		} else {
 			const svg =
-				jodit.e.fire('getIcon', name, icon, clearName) ||
+				iconFromEvent ||
 				Icon.get(name, '') ||
 				jodit.o.extraIcons?.[name];
 
@@ -111,10 +113,11 @@ export class Icon {
 		if (iconElement) {
 			iconElement.classList.add('jodit-icon');
 			iconElement.style.fill = fill;
-			this.__cache.set(
-				cacheKey,
-				iconElement.cloneNode(true) as HTMLElement
-			);
+			jodit.o.cache &&
+				this.__cache.set(
+					cacheKey,
+					iconElement.cloneNode(true) as HTMLElement
+				);
 		}
 
 		return iconElement;

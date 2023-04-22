@@ -13,7 +13,7 @@ import { isString } from 'jodit/core/helpers/checker/is-string';
 import { Dom } from 'jodit/core/dom/dom';
 
 import { css } from './css';
-import { attr } from './utils';
+import { attr } from './attr';
 import { $$ } from './selector';
 
 /**

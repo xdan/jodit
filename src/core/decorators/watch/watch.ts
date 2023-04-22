@@ -44,7 +44,10 @@ export function getPropertyDescriptor(
  */
 export function watch(
 	observeFields: string[] | string,
-	context?: object | ((c: IDictionary) => object)
+	opts?: {
+		context?: object | ((c: IDictionary) => object);
+		immediately?: boolean;
+	}
 ): DecoratorHandler {
 	return <T extends IComponent & IDictionary>(
 		target: T,
@@ -54,21 +57,30 @@ export function watch(
 			throw error('Handler must be a Function');
 		}
 
+		const immediately = opts?.immediately ?? true;
+		const context = opts?.context;
+
 		const process = (component: IComponent): void => {
-			const callback = (key: string, ...args: any[]): void | any => {
-				if (!component.isInDestruct) {
-					return (component as any)[propertyKey](key, ...args);
+			const view = isViewObject(component)
+				? component
+				: (component as unknown as { jodit: IViewBased }).jodit;
+
+			let callback = (key: string, ...args: any[]): void => {
+				if (component.isInDestruct) {
+					return;
 				}
+
+				(component as any)[propertyKey](key, ...args);
 			};
+
+			if (!immediately) {
+				callback = component.async.microDebounce(callback, true);
+			}
 
 			splitArray(observeFields).forEach(field => {
 				if (/:/.test(field)) {
 					const [objectPath, eventName] = field.split(':');
 					let ctx = context;
-
-					const view = isViewObject(component)
-						? component
-						: (component as unknown as { jodit: IViewBased }).jodit;
 
 					if (objectPath.length) {
 						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion

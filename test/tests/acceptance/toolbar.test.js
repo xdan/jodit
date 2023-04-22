@@ -38,9 +38,9 @@ describe('Toolbar', function () {
 
 			expect(btns.length).equals(2);
 
-			btns.forEach(function (btn) {
+			btns.forEach(btn => {
 				const icon = btn.querySelector('.jodit-icon');
-
+				debugger;
 				expect(icon).is.not.null;
 
 				const style = window.getComputedStyle(icon),
@@ -98,30 +98,28 @@ describe('Toolbar', function () {
 			});
 		});
 
-		describe('Use getIcon event', function () {
+		describe('Use getIcon option', function () {
 			it('should create buttons with custom icons', function () {
 				const editor = getJodit({
 					toolbarAdaptive: false,
 					buttons: ['image', 'redo', 'about'],
-					events: {
-						getIcon: function (name, control, clearName) {
-							var code = clearName;
+					getIcon: function (name, clearName) {
+						var code = clearName;
 
-							switch (clearName) {
-								case 'redo':
-									code = 'rotate-right';
-									break;
-								case 'about':
-									code = 'question';
-									break;
-							}
-
-							return (
-								'<i style="font-size:14px" class="fa fa-' +
-								code +
-								' fa-xs"></i>'
-							);
+						switch (clearName) {
+							case 'redo':
+								code = 'rotate-right';
+								break;
+							case 'about':
+								code = 'question';
+								break;
 						}
+
+						return (
+							'<i style="font-size:14px" class="fa fa-' +
+							code +
+							' fa-xs"></i>'
+						);
 					}
 				});
 
@@ -928,7 +926,7 @@ describe('Toolbar', function () {
 			expect(editor.value).equals('<p>Wed Mar 16 2016</p>');
 		});
 
-		it('When cursor inside STRONG tag, Bold button should be selected', function () {
+		it('When cursor inside STRONG tag, Bold button should be selected', () => {
 			const editor = getJodit({
 					history: {
 						timeout: 0 // disable delay
@@ -938,59 +936,41 @@ describe('Toolbar', function () {
 				italic = getButton('italic', editor);
 
 			editor.value =
-				'<strong>test</strong><em>test2</em><i>test3</i><b>test3</b>';
-			editor.s.focus();
+				'<p><strong>te|st</strong><em>test2</em><i>test3</i><b>test3</b></p>';
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
+			setCursorToChar(editor);
 
-			range.setStart(editor.editor.firstChild.firstChild.firstChild, 2);
-			range.collapse(true);
-			sel.removeAllRanges();
-			sel.addRange(range);
-
-			simulateEvent('mousedown', 0, editor.editor);
+			simulateEvent('mousedown', editor.editor);
 
 			expect(bold.getAttribute('aria-pressed')).equals('true');
 
-			range.setStart(
-				editor.editor.firstChild.firstChild.nextSibling.firstChild,
-				2
-			);
-			range.collapse(true);
-			sel.removeAllRanges();
-			sel.addRange(range);
+			editor.value =
+				'<p><strong>test</strong><em>tes|t2</em><i>test3</i><b>test3</b></p>';
 
-			simulateEvent('mousedown', 0, editor.editor);
+			setCursorToChar(editor);
+
+			simulateEvent('mousedown', editor.editor);
 
 			expect(bold.getAttribute('aria-pressed')).equals('false');
 
 			expect(italic.getAttribute('aria-pressed')).equals('true');
 
-			range.setStart(
-				editor.editor.firstChild.firstChild.nextSibling.nextSibling
-					.firstChild,
-				2
-			);
-			range.collapse(true);
-			sel.removeAllRanges();
-			sel.addRange(range);
+			editor.value =
+				'<p><strong>test</strong><em>test2</em><i>te|st3</i><b>test3</b></p>';
 
-			simulateEvent('mousedown', 0, editor.editor);
+			setCursorToChar(editor);
+
+			simulateEvent('mousedown', editor.editor);
 
 			expect(bold.getAttribute('aria-pressed')).equals('false');
 			expect(italic.getAttribute('aria-pressed')).equals('true');
 
-			range.setStart(
-				editor.editor.firstChild.firstChild.nextSibling.nextSibling
-					.nextSibling.firstChild,
-				2
-			);
-			range.collapse(true);
-			sel.removeAllRanges();
-			sel.addRange(range);
+			editor.value =
+				'<p><strong>test</strong><em>test2</em><i>test3</i><b>te|st3</b></p>';
 
-			simulateEvent('mousedown', 0, editor.editor);
+			setCursorToChar(editor);
+
+			simulateEvent('mousedown', editor.editor);
 
 			expect(bold.getAttribute('aria-pressed')).equals('true');
 			expect(italic.getAttribute('aria-pressed')).equals('false');

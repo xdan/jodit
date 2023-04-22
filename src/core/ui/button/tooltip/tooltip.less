@@ -7,24 +7,40 @@
 @import (reference) '../../../../styles/variables';
 @import (reference) '../../../../styles/mixins';
 
+:root {
+	--tooltip-color: #fff;
+	--tooltip-background-color: rgba(0, 0, 0, 0.7);
+	--tooltip-sfx-shadow: rgba(0, 0, 0, 0.15);
+	--tooltip-border-width: 0;
+	--tooltip-border-color: #e5e5e5;
+}
+
 .jodit-ui-tooltip {
 	position: fixed;
 	z-index: var(--z-index-tooltip);
 	width: auto;
 	max-width: 120px;
 	padding: calc(var(--padding-default) / 4) calc(var(--padding-default) / 2);
+	border-radius: 4px;
 
-	background: #727171;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease-out;
+
 	background-clip: padding-box;
-	border-radius: 2px;
-	color: #fff;
+	background-color: var(--tooltip-background-color);
+	box-shadow: 0 0 0 var(--tooltip-border-width) var(--tooltip-border-color),
+		0 8px 20px var(--tooltip-border-width) var(--tooltip-sfx-shadow);
+	color: var(--tooltip-color);
 
-	.font();
+	font-family: var(--font-default);
+	font-size: var(--font-size-small);
 
-	font-size: 11px;
 	line-height: 1.4;
 	opacity: 0;
+	outline: none;
 	text-rendering: optimizeLegibility;
+
+	transform: translateX(-50%);
 	transition: opacity 0.2s ease 0s;
 	user-select: none;
 	white-space: normal;
@@ -32,6 +48,10 @@
 	@media (max-width: @screen-sm) {
 		display: none;
 	}
+}
+
+.jodit-ui-tooltip__content {
+	padding: 6px 12px;
 }
 
 .jodit-ui-tooltip.jodit-ui-tooltip_visible_true {

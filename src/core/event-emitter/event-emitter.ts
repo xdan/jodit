@@ -24,6 +24,7 @@ import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { error } from 'jodit/core/helpers/utils/error';
 import { splitArray } from 'jodit/core/helpers/array/split-array';
+import { PASSIVE_EVENTS } from 'jodit/core/constants';
 
 /**
  * The module editor's event manager
@@ -334,23 +335,18 @@ export class EventEmitter implements IEventEmitter {
 				store.set(event, namespace, block, options?.top);
 
 				if (isDOMElement(subject)) {
-					const options: AddEventListenerOptions | false = [
-						'touchstart',
-						'touchend',
-						'scroll',
-						'mousewheel',
-						'mousemove',
-						'touchmove'
-					].includes(event)
-						? {
-								passive: true
-						  }
-						: false;
+					const eOpts: AddEventListenerOptions | boolean =
+						PASSIVE_EVENTS.has(event)
+							? {
+									passive: true,
+									capture: options?.capture ?? false
+							  }
+							: options?.capture ?? false;
 
 					subject.addEventListener(
 						event,
 						syntheticCallback as EventListener,
-						options
+						eOpts
 					);
 
 					this.__memoryDOMSubjectToHandler(

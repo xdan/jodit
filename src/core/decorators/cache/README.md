@@ -26,16 +26,23 @@ import { cacheHTML, component } from 'jodit/core/decorators'
 @component
 class UIComponent extends UIElement {
 	@cacheHTML()
-	someHeavyMethod(param1, param2) {
+	someHeavyMethod() {
 		const div = document.createElement('div');
-    div.innerHTML = someHeaveCalculation(param1, param2);
+    div.innerHTML = someHeaveCalculation();
 		return div;
 	}
 }
 
 const elm = new UIComponent(jodit);
-const div1 = elm.someHeavyMethod();
+const div1 = elm.someHeavyMethod(); // call once
 const div2 = elm.someHeavyMethod();
+
+
+const elm2 = new UIComponent(jodit);
+const div3 = elm2.someHeavyMethod();
+
 console.log(div1 === div2); // false
+console.log(div3 === div2); // false
+console.log(div3 === div1); // false
 ```
 ```
