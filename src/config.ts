@@ -104,7 +104,13 @@ export class Config implements IViewOptions {
 	 * });
 	 * ```
 	 */
-	safePluginsList: string[] = ['about', 'enter', 'backspace', 'size'];
+	safePluginsList: string[] = [
+		'about',
+		'enter',
+		'backspace',
+		'size',
+		'hotkeys'
+	];
 
 	commandToHotkeys!: IDictionary<string | string[]>;
 

@@ -42,7 +42,7 @@ import {
 	ViewComponent
 } from 'jodit/modules';
 import { modules } from 'jodit/core/global';
-import { hook, derive, autobind } from 'jodit/core/decorators';
+import { hook, derive, cache } from 'jodit/core/decorators';
 import { Mods } from 'jodit/core/traits/mods';
 import { Elms } from 'jodit/core/traits/elms';
 import { EventEmitter } from 'jodit/core/event-emitter';
@@ -93,16 +93,27 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	 * Some extra data inside editor
 	 * @see copyformat plugin
 	 */
-	readonly buffer: IStorage = Storage.makeStorage();
+	@cache
+	get buffer(): IStorage {
+		return Storage.makeStorage();
+	}
 
-	message: IMessages;
+	@cache
+	get message(): IMessages {
+		return new UIMessages(this, this.container);
+	}
 
 	/**
 	 * Container for persistent set/get value
 	 */
-	readonly storage = Storage.makeStorage(true, this.componentName);
+	@cache
+	get storage(): IStorage {
+		return Storage.makeStorage(true, this.id);
+	}
 
 	readonly create!: ICreate;
+
+	@cache
 	get c(): this['create'] {
 		return this.create;
 	}
@@ -117,6 +128,8 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	}
 
 	events!: IEventEmitter;
+
+	@cache
 	get e(): this['events'] {
 		return this.events;
 	}
@@ -124,7 +137,10 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	/**
 	 * progress_bar Progress bar
 	 */
-	progressbar: IProgressBar;
+	@cache
+	get progressbar(): IProgressBar {
+		return new ProgressBar(this);
+	}
 
 	OPTIONS: IViewOptions = View.defaultOptions;
 	private __options!: this['OPTIONS'];
@@ -146,7 +162,6 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	/**
 	 * Internationalization method. Uses Jodit.lang object
 	 */
-	@autobind
 	i18n(text: string, ...params: Array<string | number>): string {
 		return i18n(text, params, this.options);
 	}
@@ -254,7 +269,6 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		super();
 
 		this.id = new Date().getTime().toString();
-		this.buffer = Storage.makeStorage();
 
 		this.initOptions(options);
 		this.initOwners();
@@ -263,8 +277,6 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		this.create = new Create(this.od);
 
 		this.container = this.c.div(`jodit ${this.componentName}`);
-		this.progressbar = new ProgressBar(this);
-		this.message = new UIMessages(this, this.container);
 	}
 
 	private __modulesInstances: Map<string, IComponent> = new Map();
@@ -331,11 +343,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		}
 
 		this.progressbar.destruct();
-		// @ts-ignore After desstruct, we are not responsible for anything
-		this.progressbar = undefined;
 		this.message.destruct();
-		// @ts-ignore
-		this.message = undefined;
 
 		if (this.events) {
 			this.events.destruct();

@@ -38,19 +38,14 @@ interface IWorkPlace {
 }
 
 interface IJodit extends IViewWithToolbar, IDlgs {
-	isJodit: true;
+	readonly isJodit: true;
 
-	options: Config;
+	readonly options: Config;
 
-	history: IHistory;
-
-	/**
-	 * @deprecated Instead use `Jodit.history`
-	 */
-	observer: IHistory;
+	readonly history: IHistory;
 
 	editor: HTMLElement;
-	element: HTMLElement;
+	readonly element: HTMLElement;
 
 	getNativeEditorValue(): string;
 	getEditorValue(removeSelectionMarkers?: boolean, consumer?: string): string;
@@ -76,38 +71,38 @@ interface IJodit extends IViewWithToolbar, IDlgs {
 	getReadOnly(): boolean;
 	setReadOnly(enable: boolean): void;
 
-	places: IWorkPlace[];
-	currentPlace: IWorkPlace;
+	readonly places: IWorkPlace[];
+	readonly currentPlace: IWorkPlace;
 	addPlace(source: HTMLElement | string, options?: IViewOptions): void;
 	setCurrentPlace(place: IWorkPlace): void;
 
 	value: string;
-	text: string;
+	readonly text: string;
 
-	editorDocument: HTMLDocument;
+	readonly editorDocument: HTMLDocument;
 
 	waitForReady(): Promise<IJodit>;
 
 	/**
 	 * Alias for this.ed
 	 */
-	ed: this['editorDocument'];
+	readonly ed: this['editorDocument'];
 
 	editorWindow: Window;
 
 	/**
 	 * Alias for this.ed
 	 */
-	ew: this['editorWindow'];
+	readonly ew: this['editorWindow'];
 
-	createInside: ICreate;
+	readonly createInside: ICreate;
 
-	selection: ISelect;
+	readonly selection: ISelect;
 
 	/**
 	 * Alias for this.selection
 	 */
-	s: this['selection'];
+	readonly s: this['selection'];
 
 	/**
 	 * Return current real work mode. When editor in MODE_SOURCE or MODE_WYSIWYG it will
@@ -122,11 +117,11 @@ interface IJodit extends IViewWithToolbar, IDlgs {
 	 */
 	getRealMode(): Modes;
 	getMode(): Modes;
-	mode: Modes;
+	readonly mode: Modes;
 	isEditorMode(): boolean;
 	toggleMode(): void;
 
-	editorIsActive: boolean;
+	readonly editorIsActive: boolean;
 
 	focus(): void;
 	readonly isFocused: boolean;
@@ -165,12 +160,12 @@ interface IJodit extends IViewWithToolbar, IDlgs {
 	/**
 	 * workplace It contains source and wysiwyg editors
 	 */
-	workplace: HTMLDivElement;
+	readonly workplace: HTMLDivElement;
 
-	statusbar: IStatusBar;
+	readonly statusbar: IStatusBar;
 
-	uploader: IUploader;
-	filebrowser: IFileBrowser;
+	readonly uploader: IUploader;
+	readonly filebrowser: IFileBrowser;
 
 	iframe?: HTMLIFrameElement | void;
 }

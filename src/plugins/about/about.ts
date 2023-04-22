@@ -22,7 +22,7 @@ import { Icon } from 'jodit/core/ui/icon';
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {
 		const dialog = editor.dlg(),
-			i = editor.i18n;
+			i = editor.i18n.bind(editor);
 
 		dialog
 			.setMod('theme', editor.o.theme)

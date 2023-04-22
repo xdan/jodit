@@ -47,7 +47,7 @@ import { stateListeners } from './listeners/state-listeners';
 import { nativeListeners } from './listeners/native-listeners';
 import { selfListeners } from './listeners/self-listeners';
 import { DEFAULT_SOURCE_NAME } from './data-provider';
-import { autobind, derive } from 'jodit/core/decorators';
+import { autobind, cache, derive } from 'jodit/core/decorators';
 import { FileBrowserFiles, FileBrowserTree } from './ui';
 import { observable } from 'jodit/core/event-emitter';
 import { loadTree } from './fetch/load-tree';
@@ -87,7 +87,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		onlyImages: false
 	} as IFileBrowserState);
 
-	dataProvider!: IFileBrowserDataProvider;
+	@cache
+	get dataProvider(): IFileBrowserDataProvider {
+		return makeDataProvider(this, this.options);
+	}
 
 	// eslint-disable-next-line no-unused-vars
 	private onSelect(
@@ -140,12 +143,35 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 
 	override OPTIONS!: IFileBrowserOptions;
 
-	private _dialog!: IDialog;
+	@cache
+	private get _dialog(): IDialog {
+		const dialog = this.dlg({
+			minWidth: Math.min(700, screen.width),
+			minHeight: 300,
+			buttons: this.o.headerButtons ?? ['fullsize', 'dialog.close']
+		});
+
+		['afterClose', 'beforeOpen'].forEach(proxyEvent => {
+			dialog.events.on(dialog, proxyEvent, () => {
+				this.e.fire(proxyEvent);
+			});
+		});
+
+		dialog.setSize(this.o.width, this.o.height);
+
+		return dialog;
+	}
 
 	/**
 	 * Container for set/get value
 	 */
-	override storage!: IStorage;
+	@cache
+	override get storage(): IStorage {
+		return Storage.makeStorage(
+			Boolean(this.o.saveStateInStorage),
+			this.componentName
+		);
+	}
 
 	uploader!: IUploader;
 
@@ -330,21 +356,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 			Config.defaultOptions.filebrowser
 		) as IFileBrowserOptions;
 
-		self.storage = Storage.makeStorage(
-			Boolean(this.o.saveStateInStorage),
-			this.componentName
-		);
-
-		self.dataProvider = makeDataProvider(self, self.options);
-
-		self._dialog = this.dlg({
-			minWidth: Math.min(700, screen.width),
-			minHeight: 300,
-			buttons: this.o.headerButtons ?? ['fullsize', 'dialog.close']
-		});
-
-		this.proxyDialogEvents(self);
-
 		self.browser.component = this;
 		self.container = self.browser;
 
@@ -358,8 +369,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		selfListeners.call(self);
 		nativeListeners.call(self);
 		stateListeners.call(self);
-
-		self._dialog.setSize(self.o.width, self.o.height);
 
 		const keys: Array<keyof IFileBrowserOptions> = [
 			'getLocalFileByUrl',
@@ -425,14 +434,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 
 		self.initUploader(self);
 		self.setStatus(STATUSES.ready);
-	}
-
-	private proxyDialogEvents(self: FileBrowser): void {
-		['afterClose', 'beforeOpen'].forEach(proxyEvent => {
-			self._dialog.events.on(self.dlg, proxyEvent, () => {
-				this.e.fire(proxyEvent);
-			});
-		});
 	}
 
 	override destruct(): void {

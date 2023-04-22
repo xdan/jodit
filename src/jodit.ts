@@ -25,7 +25,6 @@ import type {
 	IUploader,
 	ICreate,
 	IFileBrowserCallBackData,
-	IStorage,
 	CanPromise,
 	IHistory,
 	AjaxOptions,
@@ -45,7 +44,6 @@ import {
 	Select,
 	StatusBar,
 	STATUSES,
-	UIMessages,
 	ViewWithToolbar
 } from 'jodit/modules/';
 
@@ -68,8 +66,6 @@ import {
 	isJoditObject,
 	isNumber
 } from 'jodit/core/helpers/';
-
-import { Storage } from 'jodit/core/storage/';
 
 import { lang } from 'jodit/core/constants';
 import {
@@ -217,15 +213,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 	private __wasReadOnly = false;
 
-	/**
-	 * Container for set/get value
-	 */
-	override readonly storage!: IStorage;
-
-	readonly createInside: ICreate = new Create(
-		() => this.ed,
-		this.o.createAttributes
-	);
+	@cache
+	get createInside(): ICreate {
+		return new Create(() => this.ed, this.o.createAttributes);
+	}
 
 	/**
 	 * Editor has focus in this time
@@ -300,13 +291,6 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	}
 
 	/**
-	 * @deprecated Instead use `Jodit.history`
-	 */
-	get observer(): IHistory {
-		return this.history;
-	}
-
-	/**
 	 * In iframe mode editor's window can be different by owner
 	 */
 	get editorWindow(): Window {
@@ -354,6 +338,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	/**
 	 * Alias for this.selection
 	 */
+	@cache
 	get s(): this['selection'] {
 		return this.selection;
 	}
@@ -1213,8 +1198,6 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 		instances[this.id] = this;
 
-		this.storage = Storage.makeStorage(true, this.id);
-
 		this.attachEvents(options as IViewOptions);
 
 		this.e.on(this.ow, 'resize', () => {
@@ -1357,9 +1340,6 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		});
 
 		container.appendChild(workplace);
-
-		this.message.destruct();
-		this.message = new UIMessages(this, workplace);
 
 		if (element.parentNode && element !== container) {
 			element.parentNode.insertBefore(container, element);
