@@ -38,7 +38,7 @@ import {
 import { Dom } from 'jodit/core/dom';
 import { UIElement } from 'jodit/core/ui';
 import type { Table } from 'jodit/modules/table/table';
-import { debounce, wait, autobind, watch } from 'jodit/core/decorators';
+import { debounce, wait, autobind, watch, cache } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
 
 import './config/config';
@@ -51,12 +51,15 @@ export class inlinePopup extends Plugin {
 
 	private type: Nullable<string> = null;
 
-	private popup: IPopup = new Popup(this.jodit, false);
+	@cache
+	private get popup(): IPopup {
+		return new Popup(this.jodit, false);
+	}
 
-	private toolbar: IToolbarCollection = makeCollection(
-		this.jodit,
-		this.popup
-	);
+	@cache
+	private get toolbar(): IToolbarCollection {
+		return makeCollection(this.jodit, this.popup);
+	}
 
 	@autobind
 	private onClick(node: Node): void | false {

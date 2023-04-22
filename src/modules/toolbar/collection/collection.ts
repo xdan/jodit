@@ -105,12 +105,11 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		this.container.setAttribute('dir', direction);
 	}
 
-	private __tooltip: Nullable<UITooltip> = null;
+	private __tooltip: Nullable<UITooltip> = new UITooltip(this.jodit);
 
 	constructor(jodit: IViewBased) {
 		super(jodit as T);
 		this.__initEvents();
-		this.__tooltip = UITooltip.make(jodit);
 	}
 
 	private __initEvents(): void {
@@ -156,6 +155,7 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		}
 
 		this.__tooltip?.destruct();
+		this.__tooltip = null;
 
 		this.j.e
 			.off(this.__listenEvents, this.update)

@@ -44,8 +44,13 @@
 			</form>
 		</div>
 		<script>
-			const editor = Jodit.make(editorNative, {
+			var editor = Jodit.make(editorNative, {
 				cache: true,
+				filebrowser: {
+					ajax: {
+						url: 'https://xdsoft.net/jodit/finder/'
+					}
+				},
 				uploader: {
 					url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
 				}

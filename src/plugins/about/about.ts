@@ -22,7 +22,7 @@ import { Icon } from 'jodit/core/ui/icon';
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {
 		const dialog = editor.dlg(),
-			i = editor.i18n.bind(editor);
+			i = editor.i18n;
 
 		dialog
 			.setMod('theme', editor.o.theme)
@@ -56,7 +56,7 @@ Config.prototype.controls.about = {
 			minWidth: 420
 		});
 
-		dialog.open(true);
+		dialog.open(true, true);
 	},
 	tooltip: 'About Jodit',
 	mode: constants.MODE_SOURCE + constants.MODE_WYSIWYG

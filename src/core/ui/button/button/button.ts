@@ -24,7 +24,7 @@ import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { Icon } from 'jodit/core/ui/icon';
 import { UIList } from 'jodit/core/ui/group/list';
-import { cacheHTML, component, watch } from 'jodit/core/decorators';
+import { cache, cacheHTML, component, watch } from 'jodit/core/decorators';
 import { STATUSES } from 'jodit/core/component/statuses';
 
 export const UIButtonState = (): IUIButtonState => ({
@@ -73,12 +73,22 @@ export class UIButton extends UIElement implements IUIButton {
 	/**
 	 * DOM container for text content
 	 */
-	text!: HTMLElement;
+	@cache
+	get text(): HTMLElement {
+		const text = this.getElm('text');
+		assert(text, 'Text element not found');
+		return text;
+	}
 
 	/**
 	 * DOM container for icon
 	 */
-	icon!: HTMLElement;
+	@cache
+	get icon(): HTMLElement {
+		const icon = this.getElm('icon');
+		assert(icon, 'Icon element not found');
+		return icon;
+	}
 
 	/**
 	 * DOM container for button
@@ -218,15 +228,7 @@ export class UIButton extends UIElement implements IUIButton {
 	constructor(jodit: IViewBased, state?: IUIButtonStatePartial) {
 		super(jodit);
 
-		const icon = this.getElm('icon');
-		assert(icon, 'Element icon should exists');
-		const text = this.getElm('text')!;
-		assert(text, 'Element text should exists');
-
 		this.button = this.container;
-
-		this.icon = icon;
-		this.text = text;
 
 		this.updateSize();
 		this.onChangeSize();

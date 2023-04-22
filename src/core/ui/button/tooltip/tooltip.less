@@ -20,7 +20,6 @@
 	z-index: var(--z-index-tooltip);
 	width: auto;
 	max-width: 120px;
-	padding: calc(var(--padding-default) / 4) calc(var(--padding-default) / 2);
 	border-radius: 4px;
 
 	animation-fill-mode: forwards;
@@ -51,7 +50,7 @@
 }
 
 .jodit-ui-tooltip__content {
-	padding: 6px 12px;
+	padding: calc(var(--padding-default) / 2) calc(var(--padding-default) * 1.5);
 }
 
 .jodit-ui-tooltip.jodit-ui-tooltip_visible_true {

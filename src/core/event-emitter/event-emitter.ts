@@ -343,6 +343,8 @@ export class EventEmitter implements IEventEmitter {
 							  }
 							: options?.capture ?? false;
 
+					syntheticCallback.options = eOpts;
+
 					subject.addEventListener(
 						event,
 						syntheticCallback as EventListener,
@@ -362,7 +364,7 @@ export class EventEmitter implements IEventEmitter {
 
 	private __memoryDOMSubjectToHandler(
 		subject: HTMLElement,
-		syntheticCallback: (this: any, ...args: any[]) => any
+		syntheticCallback: CallbackFunction
 	): void {
 		const callbackStore = this.__domEventsMap.get(subject) || new Set();
 		callbackStore.add(syntheticCallback);
@@ -371,7 +373,7 @@ export class EventEmitter implements IEventEmitter {
 
 	private __unmemoryDOMSubjectToHandler(
 		subject: HTMLElement,
-		syntheticCallback: (this: any, ...args: any[]) => any
+		syntheticCallback: CallbackFunction
 	): void {
 		const m = this.__domEventsMap;
 		const callbackStore = m.get(subject) || new Set();
@@ -506,8 +508,9 @@ export class EventEmitter implements IEventEmitter {
 					subject.removeEventListener(
 						block.event,
 						block.syntheticCallback as EventListener,
-						false
+						block.syntheticCallback.options ?? false
 					);
+
 					this.__unmemoryDOMSubjectToHandler(
 						subject,
 						block.syntheticCallback

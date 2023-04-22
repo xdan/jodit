@@ -143,7 +143,14 @@ export interface IPermissions {
 	[key: string]: boolean;
 }
 
-export type CallbackFunction<T = any> = (this: T, ...args: any[]) => any | void;
+export interface CallbackFunction<T = any> {
+	(this: T, ...args: any[]): any | void;
+}
+
+interface CallbackFunction {
+	options?: unknown
+}
+
 export type BooleanFunction<T = any> = (this: T, ...args: any[]) => boolean;
 
 export type ExecCommandCallback<T, C extends string> =

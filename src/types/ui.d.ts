@@ -82,21 +82,21 @@ export type IUIButtonStatePartial = Omit<Partial<IUIButtonState>, 'icon'> & {
 };
 
 export interface IUIButton extends IViewComponent, IUIElement, IFocusable {
-	state: IUIButtonState;
+	readonly state: IUIButtonState;
 
 	setState(state: IUIButtonStatePartial): this;
 
-	text: HTMLElement;
-	icon: HTMLElement;
+	readonly text: HTMLElement;
+	readonly icon: HTMLElement;
 
-	isButton: true;
+	readonly isButton: true;
 
 	onAction(callback: (event: MouseEvent) => void): this;
 }
 
 export interface IUIGroup extends IUIElement {
-	elements: IUIElement[];
-	allChildren: IUIElement[];
+	readonly elements: IUIElement[];
+	readonly allChildren: IUIElement[];
 	append(elm: IUIElement | IUIElement[], distElement?: string): this;
 	remove(elm: IUIElement): this;
 	clear(): this;

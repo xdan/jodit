@@ -42,7 +42,7 @@ import {
 	ViewComponent
 } from 'jodit/modules';
 import { modules } from 'jodit/core/global';
-import { hook, derive } from 'jodit/core/decorators';
+import { hook, derive, autobind } from 'jodit/core/decorators';
 import { Mods } from 'jodit/core/traits/mods';
 import { Elms } from 'jodit/core/traits/elms';
 import { EventEmitter } from 'jodit/core/event-emitter';
@@ -146,6 +146,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	/**
 	 * Internationalization method. Uses Jodit.lang object
 	 */
+	@autobind
 	i18n(text: string, ...params: Array<string | number>): string {
 		return i18n(text, params, this.options);
 	}

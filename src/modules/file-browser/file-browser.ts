@@ -215,38 +215,51 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	): Promise<void> {
 		this.state.onlyImages = onlyImages;
 
-		return this.async.promise((resolve, reject) => {
-			if (!this.o.items || !this.o.items.url) {
-				throw error('Need set options.filebrowser.ajax.url');
-			}
+		return this.async
+			.promise((resolve, reject) => {
+				if (!this.o.items || !this.o.items.url) {
+					throw error('Need set options.filebrowser.ajax.url');
+				}
 
-			let localTimeout: number = 0;
+				let localTimeout: number = 0;
 
-			this.e
-				.off(this.files.container, 'dblclick')
-				.on(this.files.container, 'dblclick', this.onSelect(callback))
-				.on(this.files.container, 'touchstart', () => {
-					const now = new Date().getTime();
+				this.e
+					.off(this.files.container, 'dblclick')
+					.on(
+						this.files.container,
+						'dblclick',
+						this.onSelect(callback)
+					)
+					.on(this.files.container, 'touchstart', () => {
+						const now = new Date().getTime();
 
-					if (now - localTimeout < consts.EMULATE_DBLCLICK_TIMEOUT) {
-						this.onSelect(callback)();
-					}
+						if (
+							now - localTimeout <
+							consts.EMULATE_DBLCLICK_TIMEOUT
+						) {
+							this.onSelect(callback)();
+						}
 
-					localTimeout = now;
-				})
-				.off('select.filebrowser')
-				.on('select.filebrowser', this.onSelect(callback));
+						localTimeout = now;
+					})
+					.off('select.filebrowser')
+					.on('select.filebrowser', this.onSelect(callback));
 
-			const header = this.c.div();
+				const header = this.c.div();
 
-			this.toolbar?.build(this.__getButtons()).appendTo(header);
+				this.toolbar?.build(this.__getButtons()).appendTo(header);
 
-			this._dialog.open(this.browser, header);
+				this._dialog.open(this.browser, header);
 
-			this.e.fire('sort.filebrowser', this.state.sortBy);
+				this.e.fire('sort.filebrowser', this.state.sortBy);
 
-			loadTree(this).then(resolve, reject);
-		});
+				loadTree(this).then(resolve, reject);
+			})
+			.catch((e: Error): void => {
+				if (!isProd) {
+					throw e;
+				}
+			}) as Promise<void>;
 	}
 
 	private __getButtons(): ButtonsOption {

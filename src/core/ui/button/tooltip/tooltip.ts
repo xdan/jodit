@@ -13,13 +13,15 @@
 import './tooltip.less';
 
 import type { IPoint, IViewBased } from 'jodit/types';
-import { attr, css, dataBind } from 'jodit/core/helpers/utils';
+import { attr, css } from 'jodit/core/helpers/utils';
 import { getContainer } from 'jodit/core/global';
-import { autobind } from 'jodit/core/decorators';
+import { autobind, component } from 'jodit/core/decorators';
 import { UIElement } from 'jodit/core/ui/element';
 import { Dom } from 'jodit/core/dom';
 import { position } from 'jodit/core/helpers/size/position';
+import { STATUSES } from 'jodit/core/component';
 
+@component
 export class UITooltip extends UIElement {
 	private __isOpened = false;
 
@@ -31,59 +33,78 @@ export class UITooltip extends UIElement {
 		return '<div><div class="&__content"></div></div>';
 	}
 
-	protected constructor(view: IViewBased) {
+	constructor(view: IViewBased) {
 		super(view);
-		getContainer(view, UITooltip).appendChild(this.container);
-
-		view.e
-			.off('.tooltip')
-			.on(
-				'showTooltip.tooltip',
-				(getPoint: () => IPoint, content: string) => {
-					view.async.clearTimeout(this.__hideTimeout);
-					this.__open(getPoint, content);
-				}
-			)
-
-			.on('delayShowTooltip.tooltip', this.__delayOpen)
-
-			.on('escape.tooltip', this.__close)
-			.on(
-				[
-					'hideTooltip.tooltip',
-					'change.tooltip',
-					'scroll.tooltip',
-					'changePlace.tooltip',
-					'hidePopup.tooltip',
-					'afterOpenPopup.tooltip',
-					'closeAllPopups.tooltip'
-				],
-				this.__hideTooltip
-			);
-
 		if (
-			!this.j.o.textIcons &&
-			this.j.o.showTooltip &&
-			!this.j.o.useNativeTooltip
+			!view.o.textIcons &&
+			view.o.showTooltip &&
+			!view.o.useNativeTooltip
 		) {
-			this.j.e
-				.on(view.od.body, 'mouseenter.tooltip', this.__onMouseEnter, {
-					capture: true
-				})
-				.on(view.od.body, 'mouseleave.tooltip', this.__onMouseLeave, {
-					capture: true
-				});
+			view.hookStatus(STATUSES.ready, () => {
+				getContainer(view, UITooltip).appendChild(this.container);
+
+				view.e.on(
+					view.container,
+					'mouseenter.tooltip',
+					this.__onMouseEnter,
+					{
+						capture: true
+					}
+				);
+			});
 		}
 	}
 
-	@autobind
-	private __hideTooltip(): void {
-		this.j.async.clearTimeout(this.__delayShowTimeout);
+	private __listenClose: boolean = false;
 
-		this.__hideTimeout = this.async.setTimeout(
-			this.__close,
-			this.j.defaultTimeout
-		);
+	private __addListenersOnClose(): void {
+		if (this.__listenClose) {
+			return;
+		}
+
+		this.__listenClose = true;
+		const view = this.j;
+		view.e
+			.on(view.ow, 'scroll.tooltip', this.__hide)
+			.on(view.container, 'mouseleave.tooltip', this.__hide)
+			.on(
+				[
+					'escape.tooltip',
+					'change.tooltip',
+					'changePlace.tooltip',
+					'afterOpenPopup.tooltip',
+					'hidePopup.tooltip',
+					'closeAllPopups.tooltip'
+				],
+				this.__hide
+			)
+			.on(view.container, 'mouseleave', this.__onMouseLeave, {
+				capture: true
+			});
+	}
+
+	private __removeListenersOnClose(): void {
+		if (!this.__listenClose) {
+			return;
+		}
+
+		this.__listenClose = false;
+
+		const view = this.j;
+		view.e
+			.off(view.ow, 'scroll.tooltip', this.__hide)
+			.off(
+				[
+					'escape.tooltip',
+					'change.tooltip',
+					'changePlace.tooltip',
+					'afterOpenPopup.tooltip',
+					'hidePopup.tooltip',
+					'closeAllPopups.tooltip'
+				],
+				this.__hide
+			)
+			.off(view.container, 'mouseleave.tooltip', this.__onMouseLeave);
 	}
 
 	private __currentTarget: HTMLElement | null = null;
@@ -91,7 +112,7 @@ export class UITooltip extends UIElement {
 	@autobind
 	private __onMouseLeave(e: MouseEvent): void {
 		if (this.__currentTarget === e.target) {
-			this.__hideTooltip();
+			this.__hideDelay();
 			this.__currentTarget = null;
 		}
 	}
@@ -124,6 +145,8 @@ export class UITooltip extends UIElement {
 
 		const pos = position(e.target);
 
+		this.__addListenersOnClose();
+
 		this.__delayOpen(
 			() => ({
 				x: pos.left + pos.width / 2,
@@ -131,22 +154,6 @@ export class UITooltip extends UIElement {
 			}),
 			tooltip
 		);
-	}
-
-	private __useCount: number = 1;
-
-	/**
-	 * Creates only one instance of the tooltip for the container
-	 */
-	static make(view: IViewBased): UITooltip {
-		let instance = dataBind<UITooltip>(view, 'ui-tooltip');
-		if (instance) {
-			instance.__useCount += 1;
-			return instance;
-		}
-		instance = new UITooltip(view);
-		dataBind<UITooltip>(view, 'ui-tooltip', instance);
-		return instance;
 	}
 
 	private __delayShowTimeout: number = 0;
@@ -186,8 +193,10 @@ export class UITooltip extends UIElement {
 	}
 
 	@autobind
-	private __close(): void {
+	private __hide(): void {
 		this.j.async.clearTimeout(this.__delayShowTimeout);
+		this.j.async.clearTimeout(this.__hideTimeout);
+		this.__removeListenersOnClose();
 
 		if (this.__isOpened) {
 			this.__isOpened = false;
@@ -199,12 +208,23 @@ export class UITooltip extends UIElement {
 		}
 	}
 
-	override destruct(): void {
-		this.__useCount--;
-		if (!this.__useCount) {
-			this.j?.e.off('.tooltip');
-			this.__close();
-			super.destruct();
+	@autobind
+	private __hideDelay(): void {
+		if (!this.__isOpened) {
+			return;
 		}
+
+		this.j.async.clearTimeout(this.__delayShowTimeout);
+
+		this.__hideTimeout = this.async.setTimeout(
+			this.__hide,
+			this.j.defaultTimeout
+		);
+	}
+
+	override destruct(): void {
+		this.j.e.off(this.j.container, 'mouseenter', this.__onMouseEnter);
+		this.__hide();
+		super.destruct();
 	}
 }
