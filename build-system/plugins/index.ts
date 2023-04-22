@@ -26,10 +26,6 @@ export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 		)
 	);
 
-	if (debug) {
-		plugins.push(new webpack.HotModuleReplacementPlugin());
-	}
-
 	if (isProd) {
 		if (!onlyTS) {
 			plugins.push(extractCSS(vars));
