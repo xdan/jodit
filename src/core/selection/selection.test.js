@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Selection Module Tests', function () {
 	describe('Current method', function () {
 		describe('Cursor outside the editor', function () {
@@ -1136,6 +1137,16 @@ describe('Selection Module Tests', function () {
 					editor.s.setCursorIn(div);
 				}).to.Throw(/in editor/);
 			});
+		});
+	});
+
+	describe('insertHTML', () => {
+		it('Insert fragment', function () {
+			const editor = getJodit();
+			editor.value = '<p>|</p>';
+			setCursorToChar(editor);
+			editor.s.insertHTML('<div>1</div><div>2</div><div>3</div>');
+			expect(editor.value).equals('<div>1</div><div>2</div><div>3</div>');
 		});
 	});
 });

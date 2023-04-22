@@ -1006,7 +1006,10 @@ export class Dom {
 	static safeInsertNode(range: Range, node: Node): void {
 		range.collapsed || range.deleteContents();
 		range.insertNode(node);
-		range.setStartBefore(node);
+
+		const child = Dom.isFragment(node) ? node.lastChild : node;
+		child && range.setStartAfter(node);
+
 		range.collapse(true);
 
 		// https://developer.mozilla.org/en-US/docs/Web/API/Range/insertNode

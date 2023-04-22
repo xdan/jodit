@@ -129,7 +129,9 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		try {
 			changes();
 		} catch (e) {
-			!isProd && console.error(e);
+			if (!isProd) {
+				throw e;
+			}
 		}
 
 		this.__block(false);
