@@ -41,7 +41,7 @@ module.exports = function (cnf: config): void {
 				served: true
 			},
 
-			'app.css',
+			'public/app.css',
 			'node_modules/synchronous-promise/dist/synchronous-promise.js',
 			'build/jodit.js',
 			'test/bootstrap.js',

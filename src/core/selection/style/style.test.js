@@ -4,8 +4,6 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const { Dom } = Jodit.modules;
-
 describe('Apply style', () => {
 	describe('Test Style module', function () {
 		let editor;
@@ -734,7 +732,7 @@ describe('Apply style', () => {
 				describe(`For selection ${input} apply style ${JSON.stringify(
 					opt
 				)}`, () => {
-					it(`Should get ${output}`, function () {
+					it(`Should get ${output}`, () => {
 						if (jSettings) {
 							editor.destruct();
 							editor = getJodit(jSettings);
