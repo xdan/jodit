@@ -42,8 +42,8 @@ const jodit = Jodit.make('#editor', {
 jodit.e.on(
 	'limit.limit',
 	jodit.async.debounce(() => {
-		// Allow 'error' | 'info' | 'success' See error-messages plugin
-		editor.e.fire('errorMessage', 'Limit reached!', 'error');
+		// Allow 'error' | 'info' | 'success' See messages module.
+		editor.message.error('Limit reached!');
 		return false;
 	}, 300)
 );

@@ -42,7 +42,7 @@ describe('Test mobile mode', function () {
 					'eraser',
 					'copyformat',
 					'|',
-					'symbol',
+					'symbols',
 					'fullsize',
 					'print',
 					'about'

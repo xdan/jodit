@@ -6,6 +6,8 @@
 
 /* eslint-disable max-classes-per-file */
 
+const useClasses = ['es2015', 'es2018'].includes(Jodit.es);
+
 describe('Decorators', () => {
 	describe('component', () => {
 		let editor, A, B, DecoratedA, DecoratedB;
@@ -52,7 +54,7 @@ describe('Decorators', () => {
 		});
 
 		beforeEach(() => {
-			if (Jodit.esNext) {
+			if (useClasses) {
 				A = class extends Jodit.modules.UIElement {
 					className() {
 						return 'A';

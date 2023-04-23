@@ -225,6 +225,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		assert(button, 'Element button should exists');
 		this.button = button;
 
+		Object.defineProperty(button, 'component', {
+			value: this,
+			configurable: true
+		});
+
 		const trigger = this.getElm('trigger');
 		assert(trigger, 'Element trigger should exists');
 		this.trigger = trigger;

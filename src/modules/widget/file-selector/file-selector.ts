@@ -102,7 +102,7 @@ export const FileSelectorWidget = (
 				editor.e.fire('closeAllPopups');
 			},
 			error => {
-				editor.e.fire('errorMessage', error.message);
+				editor.message.error(error.message);
 
 				editor.e.fire('closeAllPopups');
 			}

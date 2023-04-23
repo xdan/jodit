@@ -175,7 +175,7 @@ var editor = Jodit.make('#editor', {
 			}
 		},
 		error: function (e) {
-			this.e.fire('errorMessage', [e.getMessage(), 'error', 4000]);
+			this.message.message(e.getMessage(), 'error', 4000);
 		}
 	}
 });

@@ -21,17 +21,24 @@
  - Default target for build was changed to es2015
  - Event `getIcon` was removed. Use option `getIcon` instead
 
-```js
-Jodit.make('#editor', {
-  getIcon: (name: string) => {
-    if (name === 'bold') {
-      return '<svg>...</svg>';
-    }
+  ```js
+  Jodit.make('#editor', {
+    getIcon: (name: string) => {
+      if (name === 'bold') {
+        return '<svg>...</svg>';
+      }
 
-    return null;
-  }
-});
-```
+      return null;
+    }
+  });
+  ```
+
+- Removed  `errorMessage` event. Use `module.messages` instead
+
+  ```js
+  Jodit.make('#editor').message.info('Hello world');
+  ```
+  ```
 
 #### :house: Internal
 

@@ -135,7 +135,7 @@ interface IControlType<
 	 *                 return;
 	 *             }
 	 *             this.s.insertNode(this.c.element(key, ''));
-	 *             this.e.fire('errorMessage', 'Was inserted ' + value);
+	 *             this.message.info('Was inserted ' + value);
 	 *        },
 	 *        template: function (key, value) {
 	 *            return '<div>' + value + '</div>';

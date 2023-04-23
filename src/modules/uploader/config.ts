@@ -85,7 +85,7 @@ Config.prototype.uploader = {
 	},
 
 	error(this: IUploader, e: Error) {
-		this.j.e.fire('errorMessage', e.message, 'error', 4000);
+		this.j.message.error(e.message, 4000);
 	},
 
 	getDisplayName(this: IUploader, baseurl: string, filename: string): string {
@@ -132,7 +132,7 @@ Config.prototype.uploader = {
 	},
 
 	defaultHandlerError(this: IUploader, e: Error) {
-		this.j.e.fire('errorMessage', e.message);
+		this.j.message.error(e.message);
 	},
 
 	contentType(this: IUploader, requestData: any) {

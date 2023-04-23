@@ -1005,10 +1005,9 @@ export class Dom {
 
 	static safeInsertNode(range: Range, node: Node): void {
 		range.collapsed || range.deleteContents();
-		range.insertNode(node);
-
 		const child = Dom.isFragment(node) ? node.lastChild : node;
-		child && range.setStartAfter(node);
+		range.insertNode(node);
+		child && range.setStartBefore(child);
 
 		range.collapse(true);
 

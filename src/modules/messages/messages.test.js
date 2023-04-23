@@ -18,17 +18,12 @@ describe('Test Messages module', () => {
 				.null;
 		});
 
-		it('Can be called with event errorMessage', () => {
+		it('Can not be called with event errorMessage', () => {
 			editor.e.fire('errorMessage', 'Hello world!', 'info');
 
 			expect(
 				editor.container.querySelector('.jodit-ui-message_variant_info')
-			).is.not.null;
-
-			expect(
-				editor.container.querySelector('.jodit-ui-message_variant_info')
-					.textContent
-			).eq('Hello world!');
+			).is.null;
 		});
 	});
 

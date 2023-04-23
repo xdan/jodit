@@ -45,7 +45,6 @@ export class VDomJodit {
 		this.container.appendChild(this.mirror);
 		this.value = elm.value;
 		this.event.on(document, 'selectionchange', () => {
-			console.log(111);
 		});
 
 		document.execCommand('defaultParagraphSeparator', false, 'p');

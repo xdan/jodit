@@ -21,7 +21,6 @@ import type {
 import { css } from 'jodit/core/helpers/utils/css';
 import { UIGroup } from 'jodit/core/ui/group/group';
 import { component } from 'jodit/core/decorators/component/component';
-import { watch } from 'jodit/core/decorators/watch/watch';
 import { UIMessage } from 'jodit/modules/messages/message';
 
 /**
@@ -63,22 +62,6 @@ export class UIMessages extends UIGroup implements IMessages {
 		this.__message(text, variant, timeout);
 	}
 
-	/**
-	 * Show popup error in the bottom of editor
-	 *
-	 * @param text - Text message
-	 * @param variant - Additional class for status. Allow: info, error, success
-	 * @param timeout - How many seconds show error
-	 * options.showMessageErrorTime = 2000
-	 * @example
-	 * ```javascript
-	 * const editor = Jodit.make('#editors');
-	 * editor.e.fire('errorMessage', 'Error 123. File has not been upload');
-	 * editor.e.fire('errorMessage', 'You can upload file', 'info', 4000);
-	 * editor.e.fire('errorMessage', 'File was uploaded', 'success', 4000);
-	 * ```
-	 */
-	@watch(':errorMessage')
 	private __message(
 		text: string,
 		variant: MessageVariant = 'info',

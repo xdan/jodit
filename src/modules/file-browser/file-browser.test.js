@@ -412,7 +412,7 @@ function getFirstItem(fb, index = 0, file = false) {
 			});
 
 			describe('View', function () {
-				it('Should show filebrowser in default view', function (done) {
+				it('Should show filebrowser in default view', async () => {
 					const filebrowser = new Jodit.modules.FileBrowser({
 						view: 'tiles',
 						ajax: {
@@ -420,43 +420,29 @@ function getFirstItem(fb, index = 0, file = false) {
 						}
 					});
 
-					filebrowser
-						.open(function () {})
-						.then(function () {
-							const tiles = getButton(
-								'tiles',
-								filebrowser._dialog
-							);
-							const list = getButton('list', filebrowser._dialog);
+					await filebrowser.open(function () {});
 
-							const files = filebrowser.files.container;
+					const tiles = getButton('tiles', filebrowser._dialog);
+					const list = getButton('list', filebrowser._dialog);
 
-							expect(files).is.not.null;
-							expect(
-								files.classList.contains(
-									filebrowser.files.getFullElName(
-										'',
-										'view',
-										'tiles'
-									)
-								)
-							).is.true;
+					const files = filebrowser.files.container;
 
-							expect(tiles.component.state.activated).is.true;
-							expect(list.component.state.activated).is.false;
+					expect(files).is.not.null;
+					expect(
+						files.classList.contains(
+							filebrowser.files.getFullElName('', 'view', 'tiles')
+						)
+					).is.true;
 
-							filebrowser.close();
-							filebrowser.destruct();
+					expect(tiles.component.state.activated).is.true;
+					expect(list.component.state.activated).is.false;
 
-							done();
-						})
-						.catch(function (e) {
-							throw e;
-						});
+					filebrowser.close();
+					filebrowser.destruct();
 				});
 
-				describe('Change view', function () {
-					it('Should change filebrowser view', function (done) {
+				describe('Change view', () => {
+					it('Should change filebrowser view', async () => {
 						const filebrowser = new Jodit.modules.FileBrowser({
 							view: 'tiles',
 							ajax: {
@@ -464,227 +450,193 @@ function getFirstItem(fb, index = 0, file = false) {
 							}
 						});
 
-						filebrowser
-							.open(function () {})
-							.then(function () {
-								const tiles = getButton(
-									'tiles',
-									filebrowser._dialog
-								);
-								const list = getButton(
-									'list',
-									filebrowser._dialog
-								);
+						await filebrowser.open(function () {});
+						const tiles = getButton('tiles', filebrowser._dialog);
+						const list = getButton('list', filebrowser._dialog);
 
-								const files = filebrowser.files.container;
-								expect(files).is.not.null;
+						const files = filebrowser.files.container;
+						expect(files).is.not.null;
 
-								expect(
-									files.classList.contains(
-										filebrowser.files.getFullElName(
-											'',
-											'view',
-											'tiles'
-										)
-									)
-								).is.true;
+						expect(
+							files.classList.contains(
+								filebrowser.files.getFullElName(
+									'',
+									'view',
+									'tiles'
+								)
+							)
+						).is.true;
 
-								expect(tiles.component.state.activated).is.true;
-								expect(list.component.state.activated).is.false;
+						expect(tiles.component.state.activated).is.true;
+						expect(list.component.state.activated).is.false;
 
-								simulateEvent('click', list);
-								expect(
-									files.classList.contains(
-										filebrowser.files.getFullElName(
-											'',
-											'view',
-											'tiles'
-										)
-									)
-								).is.false;
-								expect(
-									files.classList.contains(
-										filebrowser.files.getFullElName(
-											'',
-											'view',
-											'list'
-										)
-									)
-								).is.true;
-								expect(
-									tiles.component.state.activated
-								).is.false;
-								expect(list.component.state.activated).is.true;
+						simulateEvent('click', list);
+						expect(
+							files.classList.contains(
+								filebrowser.files.getFullElName(
+									'',
+									'view',
+									'tiles'
+								)
+							)
+						).is.false;
+						expect(
+							files.classList.contains(
+								filebrowser.files.getFullElName(
+									'',
+									'view',
+									'list'
+								)
+							)
+						).is.true;
+						expect(tiles.component.state.activated).is.false;
+						expect(list.component.state.activated).is.true;
 
-								filebrowser.close();
-								filebrowser.destruct();
-
-								done();
-							})
-							.catch(function (e) {
-								throw e;
-							});
+						filebrowser.close();
+						filebrowser.destruct();
 					});
 				});
 			});
 
-			describe('Filter', function () {
-				it('Should show only filtered items', function (done) {
+			describe('Filter', () => {
+				it('Should show only filtered items', async () => {
 					const filebrowser = new Jodit.modules.FileBrowser({
 						ajax: {
 							url: 'https://xdsoft.net/jodit/connector/index.php'
 						}
 					});
 
-					filebrowser
-						.open(function () {})
-						.then(async function () {
-							const filter =
-								filebrowser._dialog.dialogbox_header.querySelector(
-									'.jodit-toolbar-content_filter'
-								);
-							const input = filter.querySelector('input');
-							const files = filebrowser.files.container;
+					await filebrowser.open(function () {});
+					const filter =
+						filebrowser._dialog.dialogbox_header.querySelector(
+							'.jodit-toolbar-content_filter'
+						);
+					const input = filter.querySelector('input');
+					const files = filebrowser.files.container;
 
-							expect(files).is.not.null;
-							expect(filter).is.not.null;
-							expect(input).is.not.null;
+					expect(files).is.not.null;
+					expect(filter).is.not.null;
+					expect(input).is.not.null;
 
-							const count = files.querySelectorAll(
-								'.' + filebrowser.files.getFullElName('item')
-							).length;
+					const count = files.querySelectorAll(
+						'.' + filebrowser.files.getFullElName('item')
+					).length;
 
-							input.value = 'i';
-							simulateEvent('keydown', input);
+					input.value = 'i';
+					simulateEvent('keydown', input);
 
-							await filebrowser.async.requestIdlePromise();
+					await filebrowser.async.requestIdlePromise();
 
-							expect(
-								files.querySelectorAll(
-									'.' +
-										filebrowser.files.getFullElName('item')
-								).length
-							).does.not.equal(count);
+					expect(
+						files.querySelectorAll(
+							'.' + filebrowser.files.getFullElName('item')
+						).length
+					).does.not.equal(count);
 
-							input.value = '';
-							simulateEvent('keydown', input);
+					input.value = '';
+					simulateEvent('keydown', input);
 
-							await filebrowser.async.requestIdlePromise();
+					await filebrowser.async.requestIdlePromise();
 
-							expect(
-								files.querySelectorAll(
-									'.' +
-										filebrowser.files.getFullElName('item')
-								).length
-							).equals(count);
+					expect(
+						files.querySelectorAll(
+							'.' + filebrowser.files.getFullElName('item')
+						).length
+					).equals(count);
 
-							filebrowser.close();
-							filebrowser.destruct();
-
-							done();
-						})
-						.catch(function (e) {
-							throw e;
-						});
+					filebrowser.close();
+					filebrowser.destruct();
 				});
 			});
 
-			describe('Sort', function () {
-				it('Should sort elements by filter select', function (done) {
+			describe('Sort', () => {
+				it('Should sort elements by filter select', async () => {
 					const filebrowser = new Jodit.modules.FileBrowser({
 						ajax: {
 							url: 'https://xdsoft.net/jodit/connector/index.php'
 						}
 					});
 
-					filebrowser
-						.open(function () {})
-						.then(async function () {
-							const sort =
-								filebrowser._dialog.dialogbox_header.querySelector(
-									'.jodit-toolbar-content_sort'
-								);
-							const select = sort.querySelector('select');
-							const files = filebrowser.files.container;
+					await filebrowser.open(function () {});
 
-							expect(files).is.not.null;
-							expect(sort).is.not.null;
-							expect(select).is.not.null;
+					const sort =
+						filebrowser._dialog.dialogbox_header.querySelector(
+							'.jodit-toolbar-content_sort'
+						);
+					const select = sort.querySelector('select');
+					const files = filebrowser.files.container;
 
-							const pars = {
-								'changed-asc': [
-									'images.jpg',
-									'1966051_524428741092238_1051008806888563137_o.jpg',
-									'ibanez-s520-443140.jpg',
-									'test.txt'
-								],
-								'changed-desc': [
-									'test.txt',
-									'ibanez-s520-443140.jpg',
-									'1966051_524428741092238_1051008806888563137_o.jpg',
-									'images.jpg'
-								],
-								'name-asc': [
-									'1966051_524428741092238_1051008806888563137_o.jpg',
-									'ibanez-s520-443140.jpg',
-									'images.jpg',
-									'test.txt'
-								],
-								'name-desc': [
-									'test.txt',
-									'images.jpg',
-									'ibanez-s520-443140.jpg',
-									'1966051_524428741092238_1051008806888563137_o.jpg'
-								],
-								'size-asc': [
-									'images.jpg',
-									'test.txt',
-									'ibanez-s520-443140.jpg',
-									'1966051_524428741092238_1051008806888563137_o.jpg'
-								],
-								'size-desc': [
-									'1966051_524428741092238_1051008806888563137_o.jpg',
-									'ibanez-s520-443140.jpg',
-									'test.txt',
-									'images.jpg'
-								]
-							};
+					expect(files).is.not.null;
+					expect(sort).is.not.null;
+					expect(select).is.not.null;
 
-							for (const key in pars) {
-								select.value = key;
+					const pars = {
+						'changed-asc': [
+							'images.jpg',
+							'1966051_524428741092238_1051008806888563137_o.jpg',
+							'ibanez-s520-443140.jpg',
+							'test.txt'
+						],
+						'changed-desc': [
+							'test.txt',
+							'ibanez-s520-443140.jpg',
+							'1966051_524428741092238_1051008806888563137_o.jpg',
+							'images.jpg'
+						],
+						'name-asc': [
+							'1966051_524428741092238_1051008806888563137_o.jpg',
+							'ibanez-s520-443140.jpg',
+							'images.jpg',
+							'test.txt'
+						],
+						'name-desc': [
+							'test.txt',
+							'images.jpg',
+							'ibanez-s520-443140.jpg',
+							'1966051_524428741092238_1051008806888563137_o.jpg'
+						],
+						'size-asc': [
+							'images.jpg',
+							'test.txt',
+							'ibanez-s520-443140.jpg',
+							'1966051_524428741092238_1051008806888563137_o.jpg'
+						],
+						'size-desc': [
+							'1966051_524428741092238_1051008806888563137_o.jpg',
+							'ibanez-s520-443140.jpg',
+							'test.txt',
+							'images.jpg'
+						]
+					};
 
-								simulateEvent('change', select);
+					for (const key in pars) {
+						select.value = key;
 
-								await filebrowser.async.requestIdlePromise();
+						simulateEvent('change', select);
 
-								const items = files.querySelectorAll(
-									'.' +
-										filebrowser.files.getFullElName('item')
-								);
+						await filebrowser.async.requestIdlePromise();
 
-								expect(
-									Array.from(items)
-										.map(function (item) {
-											return item.querySelector(
-												'.' +
-													filebrowser.files.getFullElName(
-														'item'
-													) +
-													'-info-filename'
-											).textContent;
-										})
-										.join(',')
-								).equals(pars[key].join(','));
-							}
+						const items = files.querySelectorAll(
+							'.' + filebrowser.files.getFullElName('item')
+						);
 
-							filebrowser.close();
-							filebrowser.destruct();
+						expect(
+							Array.from(items)
+								.map(function (item) {
+									return item.querySelector(
+										'.' +
+											filebrowser.files.getFullElName(
+												'item'
+											) +
+											'-info-filename'
+									).textContent;
+								})
+								.join(',')
+						).equals(pars[key].join(','));
+					}
 
-							done();
-						})
-						.catch(function (e) {
-							throw e;
-						});
+					filebrowser.close();
+					filebrowser.destruct();
 				});
 			});
 
@@ -741,9 +693,9 @@ function getFirstItem(fb, index = 0, file = false) {
 			});
 		});
 
-		describe('Test drag and drop', function () {
-			describe('Drag and drop image from filebrowser', function () {
-				it('Should create IMG element in editor', function (done) {
+		describe('Test drag and drop', () => {
+			describe('Drag and drop image from filebrowser', () => {
+				it('Should create IMG element in editor', async () => {
 					const editor = getJodit({
 						defaultTimeout: 0,
 						filebrowser: {
@@ -758,66 +710,48 @@ function getFirstItem(fb, index = 0, file = false) {
 
 					const filebrowser = editor.filebrowser;
 
-					filebrowser
-						.open(function () {})
-						.then(function () {
-							const files = filebrowser.files.container;
+					await filebrowser.open(function () {});
 
-							expect(files).is.not.null;
+					const files = filebrowser.files.container;
 
-							simulateEvent(
-								'dragstart',
-								files.querySelector(
-									'.' +
-										filebrowser.files.getFullElName(
-											'item'
-										) +
-										' img[data-src="https://xdsoft.net/jodit/files/images.jpg"]'
-								)
-							);
+					expect(files).is.not.null;
 
-							simulateEvent('dragover', window, function (data) {
-								fillXY(data, editor);
-							});
+					simulateEvent(
+						'dragstart',
+						files.querySelector(
+							'.' +
+								filebrowser.files.getFullElName('item') +
+								' img[data-src="https://xdsoft.net/jodit/files/images.jpg"]'
+						)
+					);
 
-							simulateEvent(
-								'drop',
-								editor.editor,
-								function (data) {
-									fillXY(data, editor);
-									Object.defineProperty(
-										data,
-										'dataTransfer',
-										{
-											value: {
-												files: []
-											}
-										}
-									);
-								}
-							);
+					simulateEvent('dragover', window, function (data) {
+						fillXY(data, editor);
+					});
 
-							simulateEvent('change', window);
-							editor.async.requestIdleCallback(() => {
-								expect(editor.value).equals(
-									'<p>test<img src="https://xdsoft.net/jodit/files/images.jpg"></p>'
-								);
-
-								simulateEvent('drop', window);
-
-								filebrowser.destruct();
-
-								done();
-							});
-						})
-						.catch(function (e) {
-							throw e;
+					simulateEvent('drop', editor.editor, function (data) {
+						fillXY(data, editor);
+						Object.defineProperty(data, 'dataTransfer', {
+							value: {
+								files: []
+							}
 						});
+					});
+
+					simulateEvent('change', window);
+					await editor.async.requestIdlePromise();
+					expect(editor.value).equals(
+						'<p>test<img src="https://xdsoft.net/jodit/files/images.jpg"></p>'
+					);
+
+					simulateEvent('drop', window);
+
+					filebrowser.destruct();
 				});
 			});
 
-			describe('Drag and drop File from filebrowser', function () {
-				it('Should create A element in editor', function (done) {
+			describe('Drag and drop File from filebrowser', () => {
+				it('Should create A element in editor', async () => {
 					const editor = getJodit({
 						filebrowser: {
 							ajax: {
@@ -830,63 +764,47 @@ function getFirstItem(fb, index = 0, file = false) {
 
 					const filebrowser = editor.filebrowser;
 
-					filebrowser
-						.open(function () {})
-						.then(function () {
-							const files = filebrowser.files.container;
+					await filebrowser.open(function () {});
 
-							expect(files).is.not.null;
+					const files = filebrowser.files.container;
 
-							simulateEvent(
-								'dragstart',
-								files.querySelector(
-									'.' +
-										filebrowser.files.getFullElName(
-											'item'
-										) +
-										'[data-is-file="1"] img'
-								)
-							);
+					expect(files).is.not.null;
 
-							simulateEvent('dragover', window, function (data) {
-								fillXY(data, editor);
-							});
+					simulateEvent(
+						'dragstart',
+						files.querySelector(
+							'.' +
+								filebrowser.files.getFullElName('item') +
+								'[data-is-file="1"] img'
+						)
+					);
 
-							simulateEvent(
-								'drop',
-								editor.editor,
-								function (data) {
-									fillXY(data, editor);
-									Object.defineProperty(
-										data,
-										'dataTransfer',
-										{
-											value: {
-												files: []
-											}
-										}
-									);
-								}
-							);
+					simulateEvent('dragover', window, function (data) {
+						fillXY(data, editor);
+					});
 
-							expect(editor.value).equals(
-								'<p>test<a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a></p>'
-							);
-							simulateEvent('drop', window);
-
-							filebrowser.destruct();
-							done();
-						})
-						.catch(function (e) {
-							throw e;
+					simulateEvent('drop', editor.editor, function (data) {
+						fillXY(data, editor);
+						Object.defineProperty(data, 'dataTransfer', {
+							value: {
+								files: []
+							}
 						});
+					});
+
+					expect(editor.value).equals(
+						'<p>test<a href="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a></p>'
+					);
+					simulateEvent('drop', window);
+
+					filebrowser.destruct();
 				});
 			});
 		});
 
-		describe('DblClick', function () {
-			describe('DblClick on image from filebrowser', function () {
-				it('Should insert IMG element in editor in the selected before place', function (done) {
+		describe('DblClick', () => {
+			describe('DblClick on image from filebrowser', () => {
+				it('Should insert IMG element in editor in the selected before place', async () => {
 					const editor = getJodit({
 						resizer: {
 							forImageChangeAttributes: true
@@ -912,36 +830,30 @@ function getFirstItem(fb, index = 0, file = false) {
 
 					const filebrowser = editor.filebrowser;
 
-					filebrowser
-						.open()
-						.then(function () {
-							const files = filebrowser.files.container;
+					await filebrowser.open();
 
-							expect(files).is.not.null;
+					const files = filebrowser.files.container;
 
-							simulateEvent(
-								['click', 'dblclick'],
-								files.querySelector(
-									'a[data-is-file="0"].' +
-										filebrowser.files.getFullElName('item')
-								)
-							);
+					expect(files).is.not.null;
 
-							expect(editor.value).equals(
-								'<p>Some text</p><p>Another<img src="https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg" width="300px"> text</p><p>Another some text</p>'
-							);
+					simulateEvent(
+						['click', 'dblclick'],
+						files.querySelector(
+							'a[data-is-file="0"].' +
+								filebrowser.files.getFullElName('item')
+						)
+					);
 
-							filebrowser.destruct();
-							done();
-						})
-						.catch(function (e) {
-							throw e;
-						});
+					expect(editor.value).equals(
+						'<p>Some text</p><p>Another<img src="https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg" width="300px"> text</p><p>Another some text</p>'
+					);
+
+					filebrowser.destruct();
 				});
 			});
 
-			describe('DblClick on File from filebrowser', function () {
-				it('Should insert A element in editor in the selected before place', function (done) {
+			describe('DblClick on File from filebrowser', () => {
+				it('Should insert A element in editor in the selected before place', async () => {
 					const editor = getJodit({
 						filebrowser: {
 							ajax: {
@@ -962,39 +874,33 @@ function getFirstItem(fb, index = 0, file = false) {
 
 					const filebrowser = editor.filebrowser;
 
-					filebrowser
-						.open()
-						.then(function () {
-							const files = filebrowser.files.container;
+					await filebrowser.open();
 
-							expect(files).is.not.null;
+					const files = filebrowser.files.container;
 
-							simulateEvent(
-								['click', 'dblclick'],
-								files.querySelector(
-									'a[data-is-file="1"].' +
-										filebrowser.files.getFullElName('item')
-								)
-							);
+					expect(files).is.not.null;
 
-							expect(editor.value).equals(
-								'<p>Some text</p><p>Another<a href="https://xdsoft.net/jodit/files/test.txt" title="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a> text</p><p>Another some text</p>'
-							);
+					simulateEvent(
+						['click', 'dblclick'],
+						files.querySelector(
+							'a[data-is-file="1"].' +
+								filebrowser.files.getFullElName('item')
+						)
+					);
 
-							filebrowser.destruct();
-							done();
-						})
-						.catch(function (e) {
-							throw e;
-						});
+					expect(editor.value).equals(
+						'<p>Some text</p><p>Another<a href="https://xdsoft.net/jodit/files/test.txt" title="https://xdsoft.net/jodit/files/test.txt">https://xdsoft.net/jodit/files/test.txt</a> text</p><p>Another some text</p>'
+					);
+
+					filebrowser.destruct();
 				});
 			});
 		});
 
-		describe('Uploader', function () {
-			describe('Drag and drop', function () {
-				describe('Image', function () {
-					it('Should create IMG element', function (done) {
+		describe('Uploader', () => {
+			describe('Drag and drop', () => {
+				describe('Image', () => {
+					it('Should create IMG element', done => {
 						const editor = getJodit({
 							resizer: {
 								forImageChangeAttributes: false
@@ -1074,9 +980,9 @@ function getFirstItem(fb, index = 0, file = false) {
 			});
 		});
 
-		describe('Rename', function () {
-			describe('Folder', function () {
-				it('Should create button inside every folder of list', function (done) {
+		describe('Rename', () => {
+			describe('Folder', () => {
+				it('Should create button inside every folder of list', async () => {
 					const editor = getJodit({
 						filebrowser: {
 							ajax: {
@@ -1087,60 +993,53 @@ function getFirstItem(fb, index = 0, file = false) {
 
 					const filebrowser = editor.filebrowser;
 
-					filebrowser
-						.open(function () {})
-						.then(async function () {
-							const tree = filebrowser.tree.container;
+					await filebrowser.open(function () {});
 
-							expect(tree).is.not.null;
+					const tree = filebrowser.tree.container;
 
-							const item = tree.querySelectorAll(
-								'.' + filebrowser.tree.getFullElName('item')
-							)[1];
+					expect(tree).is.not.null;
 
-							expect(item).is.not.null;
+					const item = tree.querySelectorAll(
+						'.' + filebrowser.tree.getFullElName('item')
+					)[1];
 
-							const trigger = getButton('rename', item);
+					expect(item).is.not.null;
 
-							expect(trigger).is.not.null;
+					const trigger = getButton('rename', item);
 
-							expect(
-								trigger.parentElement.textContent.trim()
-							).equals('ceicom');
-							simulateEvent('click', trigger);
+					expect(trigger).is.not.null;
 
-							const dialog = getOpenedDialog(editor);
-							expect(dialog).is.not.null;
-							expect(dialog).does.not.equal(filebrowser._dialog);
+					expect(trigger.parentElement.textContent.trim()).equals(
+						'ceicom'
+					);
+					simulateEvent('click', trigger);
 
-							expect(dialog.querySelector('input').value).equals(
-								'ceicom'
-							);
+					const dialog = getOpenedDialog(editor);
+					expect(dialog).is.not.null;
+					expect(dialog).does.not.equal(filebrowser._dialog);
 
-							dialog.querySelector('input').value = 'ceicom1';
-							clickButton('ok', dialog);
+					expect(dialog.querySelector('input').value).equals(
+						'ceicom'
+					);
 
-							await filebrowser.async.requestIdlePromise();
+					dialog.querySelector('input').value = 'ceicom1';
+					clickButton('ok', dialog);
 
-							const item2 = tree.querySelectorAll(
-								'.' + filebrowser.tree.getFullElName('item')
-							)[1];
-							expect(item2.textContent.trim()).equals('ceicom1');
+					await filebrowser.async.requestIdlePromise();
 
-							filebrowser.destruct();
+					const item2 = tree.querySelectorAll(
+						'.' + filebrowser.tree.getFullElName('item')
+					)[1];
+					expect(item2.textContent.trim()).equals('ceicom1');
 
-							done();
-						})
-						.catch(function (e) {
-							throw e;
-						});
+					filebrowser.destruct();
 				});
 			});
 		});
 
-		describe('Remove', function () {
-			describe('Folder', function () {
-				it('Should create button inside every folder of list', function (done) {
+		describe('Remove', () => {
+			describe('Folder', () => {
+				it('Should create button inside every folder of list', async () => {
 					const editor = getJodit({
 						filebrowser: {
 							ajax: {
@@ -1151,45 +1050,38 @@ function getFirstItem(fb, index = 0, file = false) {
 
 					const filebrowser = editor.filebrowser;
 
-					filebrowser
-						.open(function () {})
-						.then(function () {
-							const tree = filebrowser.tree.container;
+					await filebrowser.open(function () {});
 
-							expect(tree).is.not.null;
+					const tree = filebrowser.tree.container;
 
-							const item = tree.querySelectorAll(
-								'.' + filebrowser.tree.getFullElName('item')
-							)[1];
+					expect(tree).is.not.null;
 
-							expect(item).is.not.null;
+					const item = tree.querySelectorAll(
+						'.' + filebrowser.tree.getFullElName('item')
+					)[1];
 
-							const trigger = getButton('remove', item);
+					expect(item).is.not.null;
 
-							expect(trigger).is.not.null;
+					const trigger = getButton('remove', item);
 
-							simulateEvent('click', trigger);
+					expect(trigger).is.not.null;
 
-							const dialog = getOpenedDialog(editor);
-							expect(dialog).is.not.null;
-							expect(dialog).does.not.equal(filebrowser._dialog);
+					simulateEvent('click', trigger);
 
-							clickButton('ok', dialog);
+					const dialog = getOpenedDialog(editor);
+					expect(dialog).is.not.null;
+					expect(dialog).does.not.equal(filebrowser._dialog);
 
-							filebrowser.destruct();
+					clickButton('ok', dialog);
 
-							done();
-						})
-						.catch(function (e) {
-							throw e;
-						});
+					filebrowser.destruct();
 				});
 			});
 		});
 
-		describe('Create', function () {
-			describe('Folder', function () {
-				it('Should create button below folders list', function (done) {
+		describe('Create', () => {
+			describe('Folder', () => {
+				it('Should create button below folders list', async () => {
 					const editor = getJodit({
 						filebrowser: {
 							ajax: {
@@ -1200,26 +1092,16 @@ function getFirstItem(fb, index = 0, file = false) {
 
 					const filebrowser = editor.filebrowser;
 
-					filebrowser
-						.open(function () {})
-						.then(function () {
-							const addfolder = getButton(
-								'plus',
-								filebrowser.tree
-							);
+					await filebrowser.open(function () {});
 
-							expect(addfolder).is.not.null;
-							filebrowser.destruct();
+					const addfolder = getButton('plus', filebrowser.tree);
 
-							done();
-						})
-						.catch(function (e) {
-							throw e;
-						});
+					expect(addfolder).is.not.null;
+					filebrowser.destruct();
 				});
 
-				describe('Create new folder', function () {
-					it('Should create new folder', function (done) {
+				describe('Create new folder', () => {
+					it('Should create new folder', async () => {
 						const editor = getJodit({
 							filebrowser: {
 								ajax: {
@@ -1230,47 +1112,37 @@ function getFirstItem(fb, index = 0, file = false) {
 
 						const filebrowser = editor.filebrowser;
 
-						filebrowser
-							.open(function () {})
-							.then(async function () {
-								const addfolder = getButton(
-									'plus',
-									filebrowser.tree
-								);
+						await filebrowser.open(function () {});
 
-								expect(addfolder).is.not.null;
+						const addfolder = getButton('plus', filebrowser.tree);
 
-								simulateEvent('click', addfolder);
+						expect(addfolder).is.not.null;
 
-								const dialog = getOpenedDialog(editor);
+						simulateEvent('click', addfolder);
 
-								expect(dialog).is.not.null;
-								dialog.querySelector('input').value = 'free';
-								clickButton('ok', dialog);
-								await filebrowser.async.requestIdlePromise();
+						const dialog = getOpenedDialog(editor);
 
-								const tree = filebrowser.tree.container;
+						expect(dialog).is.not.null;
+						dialog.querySelector('input').value = 'free';
+						clickButton('ok', dialog);
+						await filebrowser.async.requestIdlePromise();
 
-								const item = tree.querySelectorAll(
-									'.' + filebrowser.tree.getFullElName('item')
-								)[1];
-								expect(item.textContent.trim()).equals('free');
+						const tree = filebrowser.tree.container;
 
-								filebrowser.destruct();
+						const item = tree.querySelectorAll(
+							'.' + filebrowser.tree.getFullElName('item')
+						)[1];
+						expect(item.textContent.trim()).equals('free');
 
-								done();
-							})
-							.catch(function (e) {
-								throw e;
-							});
+						filebrowser.destruct();
 					});
 				});
 			});
 		});
 
-		describe('Context menu', function () {
-			describe('Right click on image', function () {
-				it('Should open context menu', function (done) {
+		describe('Context menu', () => {
+			describe('Right click on image', () => {
+				it('Should open context menu', async () => {
 					const editor = getJodit({
 						filebrowser: {
 							ajax: {
@@ -1281,43 +1153,34 @@ function getFirstItem(fb, index = 0, file = false) {
 
 					const filebrowser = editor.filebrowser;
 
-					filebrowser
-						.open(function () {})
-						.then(function () {
-							const files = filebrowser.files.container;
+					await filebrowser.open(function () {});
 
-							expect(files).is.not.null;
+					const files = filebrowser.files.container;
 
-							const item = files.querySelector(
-									'.' +
-										filebrowser.files.getFullElName(
-											'item'
-										) +
-										'[data-is-file="1"]'
-								),
-								pos = Jodit.modules.Helpers.position(item);
+					expect(files).is.not.null;
 
-							simulateEvent('contextmenu', item, function (o) {
-								Object.assign(o, {
-									clientX: pos.left + 10,
-									clientY: pos.top + 10
-								});
-							});
+					const item = files.querySelector(
+							'.' +
+								filebrowser.files.getFullElName('item') +
+								'[data-is-file="1"]'
+						),
+						pos = Jodit.modules.Helpers.position(item);
 
-							const context = getOpenedPopup(filebrowser);
-
-							expect(context).is.not.null;
-							filebrowser.destruct();
-
-							done();
-						})
-						.catch(function (e) {
-							throw e;
+					simulateEvent('contextmenu', item, function (o) {
+						Object.assign(o, {
+							clientX: pos.left + 10,
+							clientY: pos.top + 10
 						});
+					});
+
+					const context = getOpenedPopup(filebrowser);
+
+					expect(context).is.not.null;
+					filebrowser.destruct();
 				});
 
-				describe('Click on preview', function () {
-					it('Should open preview dialog', function (done) {
+				describe('Click on preview', () => {
+					it('Should open preview dialog', async () => {
 						unmockPromise();
 
 						const editor = getJodit({
@@ -1330,55 +1193,44 @@ function getFirstItem(fb, index = 0, file = false) {
 
 						const filebrowser = editor.filebrowser;
 
-						filebrowser
-							.open()
-							.then(function () {
-								const files = filebrowser.files.container;
+						await filebrowser.open();
+						const files = filebrowser.files.container;
 
-								expect(files).is.not.null;
+						expect(files).is.not.null;
 
-								const item = getFirstItem(filebrowser),
-									pos = Jodit.modules.Helpers.position(item);
+						const item = getFirstItem(filebrowser),
+							pos = Jodit.modules.Helpers.position(item);
 
-								simulateEvent(
-									'contextmenu',
-									item,
-									function (o) {
-										Object.assign(o, {
-											clientX: pos.left + 10,
-											clientY: pos.top + 10
-										});
-									}
-								);
-
-								const context = getOpenedPopup(filebrowser);
-
-								expect(context).is.not.null;
-
-								filebrowser.events.on(
-									'previewOpenedAndLoaded',
-									function () {
-										const dialog =
-											getOpenedDialog(filebrowser);
-
-										expect(dialog).is.not.null;
-										const previewsButtons =
-											dialog.querySelectorAll(
-												'.jodit-filebrowser-preview__navigation'
-											);
-
-										expect(previewsButtons.length).equals(
-											2
-										);
-										done();
-									}
-								);
-
-								clickButton('eye', context);
-							})
-							.catch(function (e) {
-								throw e;
+						simulateEvent('contextmenu', item, function (o) {
+							Object.assign(o, {
+								clientX: pos.left + 10,
+								clientY: pos.top + 10
 							});
+						});
+
+						const context = getOpenedPopup(filebrowser);
+
+						expect(context).is.not.null;
+
+						await new Promise(resolve => {
+							filebrowser.events.on(
+								'previewOpenedAndLoaded',
+								function () {
+									const dialog = getOpenedDialog(filebrowser);
+
+									expect(dialog).is.not.null;
+									const previewsButtons =
+										dialog.querySelectorAll(
+											'.jodit-filebrowser-preview__navigation'
+										);
+
+									expect(previewsButtons.length).equals(2);
+									resolve();
+								}
+							);
+
+							clickButton('eye', context);
+						});
 					});
 				});
 			});

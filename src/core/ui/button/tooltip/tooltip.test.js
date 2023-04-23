@@ -99,7 +99,7 @@
 				button = getButton('indent', editor);
 				expect(button).is.not.null;
 
-				simulateEvent('mousemove', button);
+				simulateEvent('mouseenter', button.parentElement); // toolbar-button
 
 				tooltip =
 					editor.ownerDocument.querySelector('.jodit-ui-tooltip');

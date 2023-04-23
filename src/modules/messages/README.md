@@ -8,12 +8,10 @@ const editor = Jodit.make('#editor');
 editor.message.error('Hellow world!');
 editor.message.info('Hellow world!');
 editor.message.success('Hellow world!', 3000); // Show 3 seconds
-
-// or use `errorMessage` event
-editor.events.fire('errorMessage', 'Hellow world!', 'error'); // or 'danger'
-editor.events.fire('errorMessage', 'Hellow world!', 'info'); // or 'primary'
-editor.events.fire('errorMessage', 'Hellow world!', 'secondary');
-editor.events.fire('errorMessage', 'Hellow world!', 'success', 3000); // Show 3 seconds
+editor.message.message('Hellow world!', 'error'); // or 'danger'
+editor.message.message('Hellow world!', 'info'); // or 'primary'
+editor.message.message('Hellow world!', 'secondary');
+editor.message.message('Hellow world!', 'success', 3000); // Show 3 seconds
 ```
 
 If you want to override the appearance of popup messages, you can use the following css template:

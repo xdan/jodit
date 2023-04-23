@@ -21,6 +21,7 @@ export default ({
 		isProd,
 		isTest,
 		isESNext: ESNext,
+		ES: JSON.stringify(ES),
 		'process.env': {
 			HOMEPAGE: JSON.stringify(pkg.homepage),
 			TARGET_ES: JSON.stringify(ES),

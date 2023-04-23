@@ -49,7 +49,7 @@ prettify:
 test:
 	make test-find
 	make clean
-	make es=$(es) uglify=false isTest=true
+	make build es=$(es) uglify=false isTest=true
 	make test-only-run
 
 .PHONY: test-find
