@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.24.8
+ * Version: v3.24.9
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -11246,10 +11246,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.24.8";
+        return "3.24.9";
     }
     static getVersion() {
-        return "3.24.8";
+        return "3.24.9";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -11272,7 +11272,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.24.8";
+        this.version = "3.24.9";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -22547,7 +22547,7 @@ config/* Config.prototype.controls.about */.D.prototype.controls.about = {
 						<a href="${"https://xdsoft.net/jodit/"}" target="_blank">${"https://xdsoft.net/jodit/"}</a>
 					</div>
 					<div>
-						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i("Jodit User's Guide")}</a>
+						<a href="https://xdsoft.net/jodit/docs/" target="_blank">${i("Jodit User's Guide")}</a>
 						${i('contains detailed help for using')}
 					</div>
 					<div>${i('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.')}</div>
@@ -31280,6 +31280,8 @@ class selectCells extends core_plugin/* Plugin */.S {
 ], selectCells.prototype, "onAfterCommand", null);
 global/* pluginSystem.add */.pw.add('selectCells', selectCells);
 
+// EXTERNAL MODULE: ./src/core/helpers/checker/is-number.ts
+var is_number = __webpack_require__(61817);
 ;// CONCATENATED MODULE: ./src/plugins/size/config.ts
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
@@ -31306,25 +31308,26 @@ config/* Config.prototype.saveHeightInStorage */.D.prototype.saveHeightInStorage
 
 
 
+
 let size = class size extends plugin_plugin/* Plugin */.S {
     constructor() {
         super(...arguments);
-        this.resizeWorkspaces = this.j.async.debounce(this.resizeWorkspaceImd, this.j.defaultTimeout, true);
+        this.__resizeWorkspaces = this.j.async.debounce(this.__resizeWorkspaceImd, this.j.defaultTimeout, true);
     }
     afterInit(editor) {
         editor.e
-            .on('setHeight.size', this.setHeight)
-            .on('setWidth.size', this.setWidth)
-            .on('afterInit.size changePlace.size', this.initialize, {
+            .on('setHeight.size', this.__setHeight)
+            .on('setWidth.size', this.__setWidth)
+            .on('afterInit.size changePlace.size', this.__initialize, {
             top: true
         })
-            .on(editor.ow, 'load.size', this.resizeWorkspaces)
+            .on(editor.ow, 'load.size', this.__resizeWorkspaces)
             .on('afterInit.size resize.size afterUpdateToolbar.size ' +
-            'scroll.size afterResize.size', this.resizeWorkspaces)
-            .on('toggleFullSize.size toggleToolbar.size', this.resizeWorkspaceImd);
-        this.initialize();
+            'scroll.size afterResize.size', this.__resizeWorkspaces)
+            .on('toggleFullSize.size toggleToolbar.size', this.__resizeWorkspaceImd);
+        this.__initialize();
     }
-    initialize() {
+    __initialize() {
         const { j } = this;
         if (j.o.inline) {
             return;
@@ -31336,88 +31339,93 @@ let size = class size extends plugin_plugin/* Plugin */.S {
                 height = localHeight;
             }
         }
-        (0,helpers.css)(j.editor, {
+        (0,css/* css */.i)(j.editor, {
             minHeight: '100%'
         });
-        (0,helpers.css)(j.container, {
+        (0,css/* css */.i)(j.container, {
             minHeight: j.o.minHeight,
             maxHeight: j.o.maxHeight,
             minWidth: j.o.minWidth,
             maxWidth: j.o.maxWidth
         });
-        this.setHeight(height);
-        this.setWidth(j.o.width);
+        this.__setHeight(height);
+        this.__setWidth(j.o.width);
     }
-    setHeight(height) {
-        if ((0,helpers.isNumber)(height)) {
+    __setHeight(height) {
+        if ((0,is_number/* isNumber */.h)(height)) {
             const { minHeight, maxHeight } = this.j.o;
-            if ((0,helpers.isNumber)(minHeight) && minHeight > height) {
+            if ((0,is_number/* isNumber */.h)(minHeight) && minHeight > height) {
                 height = minHeight;
             }
-            if ((0,helpers.isNumber)(maxHeight) && maxHeight < height) {
+            if ((0,is_number/* isNumber */.h)(maxHeight) && maxHeight < height) {
                 height = maxHeight;
             }
         }
-        (0,helpers.css)(this.j.container, 'height', height);
+        (0,css/* css */.i)(this.j.container, 'height', height);
         if (this.j.o.saveHeightInStorage) {
             this.j.storage.set('height', height);
         }
-        this.resizeWorkspaceImd();
+        this.__resizeWorkspaceImd();
     }
-    setWidth(width) {
-        if ((0,helpers.isNumber)(width)) {
+    __setWidth(width) {
+        if ((0,is_number/* isNumber */.h)(width)) {
             const { minWidth, maxWidth } = this.j.o;
-            if ((0,helpers.isNumber)(minWidth) && minWidth > width) {
+            if ((0,is_number/* isNumber */.h)(minWidth) && minWidth > width) {
                 width = minWidth;
             }
-            if ((0,helpers.isNumber)(maxWidth) && maxWidth < width) {
+            if ((0,is_number/* isNumber */.h)(maxWidth) && maxWidth < width) {
                 width = maxWidth;
             }
         }
-        (0,helpers.css)(this.j.container, 'width', width);
-        this.resizeWorkspaceImd();
+        (0,css/* css */.i)(this.j.container, 'width', width);
+        this.__resizeWorkspaceImd();
     }
-    getNotWorkHeight() {
+    __getNotWorkHeight() {
         var _a, _b;
         return ((((_a = this.j.toolbarContainer) === null || _a === void 0 ? void 0 : _a.offsetHeight) || 0) +
             (((_b = this.j.statusbar) === null || _b === void 0 ? void 0 : _b.getHeight()) || 0) +
             2);
     }
-    resizeWorkspaceImd() {
+    __resizeWorkspaceImd() {
         if (!this.j || this.j.isDestructed || !this.j.o || this.j.o.inline) {
             return;
         }
         if (!this.j.container || !this.j.container.parentNode) {
             return;
         }
-        const minHeight = ((0,helpers.css)(this.j.container, 'minHeight') || 0) -
-            this.getNotWorkHeight();
-        if ((0,helpers.isNumber)(minHeight) && minHeight > 0) {
+        const minHeight = ((0,css/* css */.i)(this.j.container, 'minHeight') || 0) -
+            this.__getNotWorkHeight();
+        if ((0,is_number/* isNumber */.h)(minHeight) && minHeight > 0) {
             [this.j.workplace, this.j.iframe, this.j.editor].map(elm => {
-                elm && (0,helpers.css)(elm, 'minHeight', minHeight);
+                elm && (0,css/* css */.i)(elm, 'minHeight', minHeight);
             });
             this.j.e.fire('setMinHeight', minHeight);
         }
-        if ((0,helpers.isNumber)(this.j.o.maxHeight)) {
-            const maxHeight = this.j.o.maxHeight - this.getNotWorkHeight();
+        if ((0,is_number/* isNumber */.h)(this.j.o.maxHeight)) {
+            const maxHeight = this.j.o.maxHeight - this.__getNotWorkHeight();
             [this.j.workplace, this.j.iframe, this.j.editor].map(elm => {
-                elm && (0,helpers.css)(elm, 'maxHeight', maxHeight);
+                elm && (0,css/* css */.i)(elm, 'maxHeight', maxHeight);
             });
             this.j.e.fire('setMaxHeight', maxHeight);
         }
         if (this.j.container) {
-            (0,helpers.css)(this.j.workplace, 'height', this.j.o.height !== 'auto' || this.j.isFullSize
-                ? this.j.container.offsetHeight - this.getNotWorkHeight()
+            (0,css/* css */.i)(this.j.workplace, 'height', this.j.o.height !== 'auto' || this.j.isFullSize
+                ? this.j.container.offsetHeight - this.__getNotWorkHeight()
                 : 'auto');
         }
     }
     beforeDestruct(jodit) {
-        jodit.e.off(jodit.ow, 'load.size', this.resizeWorkspaces).off('.size');
+        jodit.e
+            .off(jodit.ow, 'load.size', this.__resizeWorkspaces)
+            .off('.size');
     }
 };
 (0,tslib_es6/* __decorate */.gn)([
+    (0,decorators.throttle)()
+], size.prototype, "__initialize", null);
+(0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
-], size.prototype, "resizeWorkspaceImd", null);
+], size.prototype, "__resizeWorkspaceImd", null);
 size = (0,tslib_es6/* __decorate */.gn)([
     decorators.autobind
 ], size);

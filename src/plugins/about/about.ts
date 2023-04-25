@@ -40,7 +40,7 @@ Config.prototype.controls.about = {
 						<a href="${process.env.HOMEPAGE}" target="_blank">${process.env.HOMEPAGE}</a>
 					</div>
 					<div>
-						<a href="https://xdsoft.net/jodit/doc/" target="_blank">${i(
+						<a href="https://xdsoft.net/jodit/docs/" target="_blank">${i(
 							"Jodit User's Guide"
 						)}</a>
 						${i('contains detailed help for using')}

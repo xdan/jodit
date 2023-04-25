@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.24.8
+ * Version: v3.24.9
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -18742,7 +18742,7 @@ var View = (function (_super) {
         _this.parent = null;
         _this.mods = {};
         _this.components = new Set();
-        _this.version = "3.24.8";
+        _this.version = "3.24.9";
         _this.buffer = storage_1.Storage.makeStorage();
         _this.storage = storage_1.Storage.makeStorage(true, _this.componentName);
         _this.OPTIONS = View_1.defaultOptions;
@@ -18869,10 +18869,10 @@ var View = (function (_super) {
         configurable: true
     });
     View.prototype.getVersion = function () {
-        return "3.24.8";
+        return "3.24.9";
     };
     View.getVersion = function () {
-        return "3.24.8";
+        return "3.24.9";
     };
     View.prototype.initOptions = function (options) {
         this.options = (0, helpers_1.ConfigProto)(options || {}, (0, helpers_1.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -26399,7 +26399,7 @@ config_1.Config.prototype.controls.about = {
             .setHeader(i('About Jodit'))
             .setContent("<div class=\"jodit-about\">\n\t\t\t\t\t<div>".concat(i('Jodit Editor'), " v.").concat(editor.getVersion(), "</div>\n\t\t\t\t\t<div>").concat(i('License: %s', !(0, helpers_1.isLicense)(editor.o.license)
             ? 'MIT'
-            : (0, helpers_1.normalizeLicense)(editor.o.license)), "</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"").concat("https://xdsoft.net/jodit/", "\" target=\"_blank\">").concat("https://xdsoft.net/jodit/", "</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"https://xdsoft.net/jodit/doc/\" target=\"_blank\">").concat(i("Jodit User's Guide"), "</a>\n\t\t\t\t\t\t").concat(i('contains detailed help for using'), "\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>").concat(i('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.'), "</div>\n\t\t\t\t</div>"));
+            : (0, helpers_1.normalizeLicense)(editor.o.license)), "</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"").concat("https://xdsoft.net/jodit/", "\" target=\"_blank\">").concat("https://xdsoft.net/jodit/", "</a>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<a href=\"https://xdsoft.net/jodit/docs/\" target=\"_blank\">").concat(i("Jodit User's Guide"), "</a>\n\t\t\t\t\t\t").concat(i('contains detailed help for using'), "\n\t\t\t\t\t</div>\n\t\t\t\t\t<div>").concat(i('Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.'), "</div>\n\t\t\t\t</div>"));
         (0, helpers_1.css)(dialog.dialog, {
             minHeight: 200,
             minWidth: 420
@@ -37310,7 +37310,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.size = void 0;
 var tslib_1 = __webpack_require__(20255);
 __webpack_require__(30962);
-var helpers_1 = __webpack_require__(40332);
+var is_number_1 = __webpack_require__(61817);
+var css_1 = __webpack_require__(26911);
 var plugin_1 = __webpack_require__(85605);
 var decorators_1 = __webpack_require__(43441);
 var global_1 = __webpack_require__(17332);
@@ -37319,23 +37320,23 @@ var size = (function (_super) {
     tslib_1.__extends(size, _super);
     function size() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.resizeWorkspaces = _this.j.async.debounce(_this.resizeWorkspaceImd, _this.j.defaultTimeout, true);
+        _this.__resizeWorkspaces = _this.j.async.debounce(_this.__resizeWorkspaceImd, _this.j.defaultTimeout, true);
         return _this;
     }
     size.prototype.afterInit = function (editor) {
         editor.e
-            .on('setHeight.size', this.setHeight)
-            .on('setWidth.size', this.setWidth)
-            .on('afterInit.size changePlace.size', this.initialize, {
+            .on('setHeight.size', this.__setHeight)
+            .on('setWidth.size', this.__setWidth)
+            .on('afterInit.size changePlace.size', this.__initialize, {
             top: true
         })
-            .on(editor.ow, 'load.size', this.resizeWorkspaces)
+            .on(editor.ow, 'load.size', this.__resizeWorkspaces)
             .on('afterInit.size resize.size afterUpdateToolbar.size ' +
-            'scroll.size afterResize.size', this.resizeWorkspaces)
-            .on('toggleFullSize.size toggleToolbar.size', this.resizeWorkspaceImd);
-        this.initialize();
+            'scroll.size afterResize.size', this.__resizeWorkspaces)
+            .on('toggleFullSize.size toggleToolbar.size', this.__resizeWorkspaceImd);
+        this.__initialize();
     };
-    size.prototype.initialize = function () {
+    size.prototype.__initialize = function () {
         var j = this.j;
         if (j.o.inline) {
             return;
@@ -37347,87 +37348,92 @@ var size = (function (_super) {
                 height = localHeight;
             }
         }
-        (0, helpers_1.css)(j.editor, {
+        (0, css_1.css)(j.editor, {
             minHeight: '100%'
         });
-        (0, helpers_1.css)(j.container, {
+        (0, css_1.css)(j.container, {
             minHeight: j.o.minHeight,
             maxHeight: j.o.maxHeight,
             minWidth: j.o.minWidth,
             maxWidth: j.o.maxWidth
         });
-        this.setHeight(height);
-        this.setWidth(j.o.width);
+        this.__setHeight(height);
+        this.__setWidth(j.o.width);
     };
-    size.prototype.setHeight = function (height) {
-        if ((0, helpers_1.isNumber)(height)) {
+    size.prototype.__setHeight = function (height) {
+        if ((0, is_number_1.isNumber)(height)) {
             var _a = this.j.o, minHeight = _a.minHeight, maxHeight = _a.maxHeight;
-            if ((0, helpers_1.isNumber)(minHeight) && minHeight > height) {
+            if ((0, is_number_1.isNumber)(minHeight) && minHeight > height) {
                 height = minHeight;
             }
-            if ((0, helpers_1.isNumber)(maxHeight) && maxHeight < height) {
+            if ((0, is_number_1.isNumber)(maxHeight) && maxHeight < height) {
                 height = maxHeight;
             }
         }
-        (0, helpers_1.css)(this.j.container, 'height', height);
+        (0, css_1.css)(this.j.container, 'height', height);
         if (this.j.o.saveHeightInStorage) {
             this.j.storage.set('height', height);
         }
-        this.resizeWorkspaceImd();
+        this.__resizeWorkspaceImd();
     };
-    size.prototype.setWidth = function (width) {
-        if ((0, helpers_1.isNumber)(width)) {
+    size.prototype.__setWidth = function (width) {
+        if ((0, is_number_1.isNumber)(width)) {
             var _a = this.j.o, minWidth = _a.minWidth, maxWidth = _a.maxWidth;
-            if ((0, helpers_1.isNumber)(minWidth) && minWidth > width) {
+            if ((0, is_number_1.isNumber)(minWidth) && minWidth > width) {
                 width = minWidth;
             }
-            if ((0, helpers_1.isNumber)(maxWidth) && maxWidth < width) {
+            if ((0, is_number_1.isNumber)(maxWidth) && maxWidth < width) {
                 width = maxWidth;
             }
         }
-        (0, helpers_1.css)(this.j.container, 'width', width);
-        this.resizeWorkspaceImd();
+        (0, css_1.css)(this.j.container, 'width', width);
+        this.__resizeWorkspaceImd();
     };
-    size.prototype.getNotWorkHeight = function () {
+    size.prototype.__getNotWorkHeight = function () {
         var _a, _b;
         return ((((_a = this.j.toolbarContainer) === null || _a === void 0 ? void 0 : _a.offsetHeight) || 0) +
             (((_b = this.j.statusbar) === null || _b === void 0 ? void 0 : _b.getHeight()) || 0) +
             2);
     };
-    size.prototype.resizeWorkspaceImd = function () {
+    size.prototype.__resizeWorkspaceImd = function () {
         if (!this.j || this.j.isDestructed || !this.j.o || this.j.o.inline) {
             return;
         }
         if (!this.j.container || !this.j.container.parentNode) {
             return;
         }
-        var minHeight = ((0, helpers_1.css)(this.j.container, 'minHeight') || 0) -
-            this.getNotWorkHeight();
-        if ((0, helpers_1.isNumber)(minHeight) && minHeight > 0) {
+        var minHeight = ((0, css_1.css)(this.j.container, 'minHeight') || 0) -
+            this.__getNotWorkHeight();
+        if ((0, is_number_1.isNumber)(minHeight) && minHeight > 0) {
             [this.j.workplace, this.j.iframe, this.j.editor].map(function (elm) {
-                elm && (0, helpers_1.css)(elm, 'minHeight', minHeight);
+                elm && (0, css_1.css)(elm, 'minHeight', minHeight);
             });
             this.j.e.fire('setMinHeight', minHeight);
         }
-        if ((0, helpers_1.isNumber)(this.j.o.maxHeight)) {
-            var maxHeight_1 = this.j.o.maxHeight - this.getNotWorkHeight();
+        if ((0, is_number_1.isNumber)(this.j.o.maxHeight)) {
+            var maxHeight_1 = this.j.o.maxHeight - this.__getNotWorkHeight();
             [this.j.workplace, this.j.iframe, this.j.editor].map(function (elm) {
-                elm && (0, helpers_1.css)(elm, 'maxHeight', maxHeight_1);
+                elm && (0, css_1.css)(elm, 'maxHeight', maxHeight_1);
             });
             this.j.e.fire('setMaxHeight', maxHeight_1);
         }
         if (this.j.container) {
-            (0, helpers_1.css)(this.j.workplace, 'height', this.j.o.height !== 'auto' || this.j.isFullSize
-                ? this.j.container.offsetHeight - this.getNotWorkHeight()
+            (0, css_1.css)(this.j.workplace, 'height', this.j.o.height !== 'auto' || this.j.isFullSize
+                ? this.j.container.offsetHeight - this.__getNotWorkHeight()
                 : 'auto');
         }
     };
     size.prototype.beforeDestruct = function (jodit) {
-        jodit.e.off(jodit.ow, 'load.size', this.resizeWorkspaces).off('.size');
+        jodit.e
+            .off(jodit.ow, 'load.size', this.__resizeWorkspaces)
+            .off('.size');
     };
     tslib_1.__decorate([
+        (0, decorators_1.throttle)()
+    ], size.prototype, "__initialize", null);
+    tslib_1.__decorate([
         decorators_1.autobind
-    ], size.prototype, "resizeWorkspaceImd", null);
+    ], size.prototype, "__resizeWorkspaceImd", null);
     size = tslib_1.__decorate([
         decorators_1.autobind
     ], size);
