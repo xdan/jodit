@@ -6,7 +6,8 @@
 
 describe('Apply style', () => {
 	describe('Test Style module', function () {
-		let editor;
+		let editor,
+			Dom = Jodit.modules.Dom;
 
 		const Style = Jodit.ns.CommitStyle;
 
@@ -18,6 +19,13 @@ describe('Apply style', () => {
 
 		describe('Base apply', () => {
 			[
+				[
+					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
+					{
+						element: 'h1'
+					},
+					'<ul><li>|1</li><li>2</li><li>3|</li></ul>'
+				],
 				[
 					'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>',
 					{
@@ -64,14 +72,14 @@ describe('Apply style', () => {
 				[
 					'<p>|test|</p>',
 					{ element: 'strong' },
-					'<p>|<strong>test</strong>|</p>'
+					'<p><strong>|test|</strong></p>'
 				],
 				[
 					'<p>|test|</p>',
 					{
 						element: 'sub'
 					},
-					'<p>|<sub>test</sub>|</p>'
+					'<p><sub>|test|</sub></p>'
 				],
 				[
 					'<p><sub>|test|</sub></p>',
@@ -88,7 +96,7 @@ describe('Apply style', () => {
 							href: 'https://xdsoft.net'
 						}
 					},
-					'<p>|<a href="https://xdsoft.net">test</a>|</p>'
+					'<p><a href="https://xdsoft.net">|test|</a></p>'
 				],
 				[
 					'<p>|test|</p>',
@@ -130,7 +138,7 @@ describe('Apply style', () => {
 							href: 'https://sitename.net'
 						}
 					},
-					'<p><span>|<a href="https://sitename.net" title="book">test</a>|</span></p>'
+					'<p><span><a href="https://sitename.net" title="book">|test|</a></span></p>'
 				],
 				[
 					'<p><a href="https://xdsoft.net">|test|</a></p>',
@@ -200,7 +208,7 @@ describe('Apply style', () => {
 							fontStyle: 'italic'
 						}
 					},
-					'<p><strong>|<em>test</em>|</strong></p>'
+					'<p><strong><em>|test|</em></strong></p>'
 				],
 
 				[
@@ -210,7 +218,17 @@ describe('Apply style', () => {
 							fontSize: 24
 						}
 					},
-					'<p>t|<span style="font-size:24px">es</span>|t</p>'
+					'<p>t<span style="font-size:24px">|es|</span>t</p>'
+				],
+				[
+					'<p><span style="font-weight:700;font-family:Arial,serif">|test|</span></p>',
+					{
+						element: 'strong',
+						style: {
+							fontWeight: 700
+						}
+					},
+					'<p><span style="font-family:Arial,serif">|test|</span></p>'
 				],
 				[
 					'<p><span style="font-weight:700;font-size:24px;">|test|</span></p>',
@@ -257,17 +275,17 @@ describe('Apply style', () => {
 				[
 					'<p>|test <span style="color: red; font-size: 12px;">test</span> test|</p>\n',
 					{ style: { fontSize: '8px' } },
-					'<p>|<span style="font-size:8px">test <span style="color:red">test</span> test</span>|</p>'
+					'<p><span style="font-size:8px">|test <span style="color:red">test</span> test|</span></p>'
 				],
 				[
 					'<p>|test <strong><span style="color: red; font-size: 12px;">test</span></strong> test|</p>\n',
 					{ style: { fontSize: '8px' } },
-					'<p>|<span style="font-size:8px">test <strong><span style="color:red">test</span></strong> test</span>|</p>'
+					'<p><span style="font-size:8px">|test <strong><span style="color:red">test</span></strong> test|</span></p>'
 				],
 				[
 					'<p>|test</p><style>.a {color: red}</style><p>stop|</p>',
 					{ style: { fontFamily: 'Helvetica,sans-serif' } },
-					'<p>|<span style="font-family:Helvetica,sans-serif">test</span></p><style>.a {color: red}</style><p><span style="font-family:Helvetica,sans-serif">stop</span>|</p>'
+					'<p><span style="font-family:Helvetica,sans-serif">|test</span></p><style>.a {color: red}</style><p><span style="font-family:Helvetica,sans-serif">stop|</span></p>'
 				],
 				[
 					'<p>test|<u>test</u>|test</p>',
@@ -287,7 +305,7 @@ describe('Apply style', () => {
 				[
 					'<p><u>|tes|t</u></p>',
 					{ style: { color: '#FFF000' } },
-					'<p><u>|<span style="color:#FFF000">tes</span>|t</u></p>'
+					'<p><u><span style="color:#FFF000">|tes|</span>t</u></p>'
 				],
 				[
 					'<p><strong>|test|</strong></p>',
@@ -316,7 +334,7 @@ describe('Apply style', () => {
 							color: '#fff'
 						}
 					},
-					'<p>te|<span style="color:#FFFFFF">s</span>|t</p>'
+					'<p>te<span style="color:#FFFFFF">|s|</span>t</p>'
 				],
 				[
 					'<p>te|st</p>',
@@ -335,7 +353,7 @@ describe('Apply style', () => {
 							backgroundColor: 'yellow'
 						}
 					},
-					'<p>|<span style="background-color:yellow;color:red">test</span>|</p>'
+					'<p><span style="background-color:yellow;color:red">|test|</span></p>'
 				],
 				[
 					'<p>|test <span style="color:#FFFFFF">test</span> test|</p>',
@@ -344,14 +362,14 @@ describe('Apply style', () => {
 							color: '#00FF00'
 						}
 					},
-					'<p>|<span style="color:#00FF00">test test test</span>|</p>'
+					'<p><span style="color:#00FF00">|test test test|</span></p>'
 				],
 				[
 					'<p>|test <strong>test</strong> test|</p>',
 					{
 						element: 'strong'
 					},
-					'<p>|<strong>test test test</strong>|</p>'
+					'<p><strong>|test test test|</strong></p>'
 				],
 				[
 					'<p>|<strong>test test</strong> test|</p>',
@@ -365,7 +383,7 @@ describe('Apply style', () => {
 					{
 						element: 'strong'
 					},
-					'<p>|<strong>pop test test test</strong>|</p>'
+					'<p><strong>|pop test test test|</strong></p>'
 				],
 				[
 					'<h3><span style="color:#00FF00">|pop test test test|</span></h3>',
@@ -626,7 +644,7 @@ describe('Apply style', () => {
 				[
 					'<ul><li>|1</li><li>2</li><li>3|</li></ul>',
 					{ element: 'h1' },
-					'<ul><li>|<h1>1</h1></li><li><h1>2</h1></li><li><h1>3</h1>|</li></ul>'
+					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>'
 				],
 				[
 					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
@@ -1829,35 +1847,6 @@ describe('Apply style', () => {
 					editor.execCommand('bold');
 
 					expect(editor.value).equals('<p>test</p>');
-				});
-			});
-
-			describe('Exec bold for collapsed range and move cursor in another place', function () {
-				it('Should remove STRONG element', function (done) {
-					const editor = getJodit({
-						cleanHTML: {
-							timeout: 0
-						}
-					});
-
-					editor.value = 'test|test';
-
-					setCursorToChar(editor);
-
-					editor.execCommand('bold');
-					expect(editor.value).equals(
-						'<p>test<strong></strong>test</p>'
-					);
-
-					const range = editor.ed.createRange();
-					range.setStart(editor.editor.firstChild.lastChild, 2);
-					range.collapse(true);
-					editor.s.selectRange(range);
-					simulateEvent('mousedown', editor.editor);
-					editor.async.requestIdleCallback(() => {
-						expect(editor.value).equals('<p>testtest</p>');
-						done();
-					});
 				});
 			});
 

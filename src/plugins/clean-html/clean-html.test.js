@@ -5,6 +5,37 @@
  */
 
 describe('Clean html plugin', function () {
+	describe('Exec bold for collapsed range and move cursor in another place', () => {
+		it('Should remove STRONG element', async () => {
+			const editor = getJodit({
+				cleanHTML: {
+					timeout: 0
+				}
+			});
+
+			editor.value = '<p>test|test</p>';
+
+			setCursorToChar(editor);
+
+			editor.execCommand('bold');
+			await editor.async.requestIdlePromise();
+			replaceCursorToChar(editor);
+			expect(editor.value).equals('<p>test<strong>|</strong>test</p>');
+
+			setCursorToChar(editor);
+
+			const range = editor.ed.createRange();
+			range.setStart(editor.editor.firstChild.lastChild, 2);
+			range.collapse(true);
+			editor.s.selectRange(range);
+
+			simulateEvent('mousedown', editor.editor);
+			await editor.async.requestIdlePromise();
+
+			expect(editor.value).equals('<p>testtest</p>');
+		});
+	});
+
 	describe('Click remove format button', function () {
 		[true, false].forEach(useIframeSandbox => {
 			describe(`State useIframeSandbox: ${useIframeSandbox}`, () => {
@@ -513,7 +544,7 @@ describe('Clean html plugin', function () {
 				expect(cnt(editor.editor)).eq(3);
 
 				editor.e.on('finishedCleanHTMLWorker', () => {
-					expect(cnt(editor.editor)).eq(2);
+					expect(cnt(editor.editor)).eq(3);
 					done();
 				});
 			});

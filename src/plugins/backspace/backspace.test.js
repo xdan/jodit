@@ -16,6 +16,10 @@ describe('Backspace/Delete key', function () {
 	describe('More cases', function () {
 		[
 			'<p><em>p</em></p><p><em>a|</em></p> => <p><em>p</em></p><p><em>|</em></p>',
+			'<p><em>|a|</em></p> => <p>|<br></p>',
+			'<p><span>|a|</span></p> => <p>|<br></p>',
+			'<p><strong>|a|</strong></p> => <p>|<br></p>',
+			'<p><em>italic</em><strong>|a|</strong></p> => <p><em>italic|</em></p>',
 			'<p><em>ab</em><em>|cd</em></p> => <p><em>a|</em><em>cd</em></p>',
 			'<table><tbody><tr><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>|ab</td></tr></tbody></table>',
 			'<table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table>',
@@ -45,7 +49,8 @@ describe('Backspace/Delete key', function () {
 			'test<br>|plot => testtext|plot =>  => {"enter": "br"}  => text',
 			'test<br>p|lot => test<br>|lot =>  => {"enter": "br"}',
 			'test<br>p| => test<br>|<br> =>  => {"enter": "br"}',
-			'<ol><li>ab</li></ol><ul><li>|cd</li><li>e</li></ul> => <ol><li>ab</li></ol><p>|cd</p><ul><li>e</li></ul>'
+			'<ol><li>ab</li></ol><ul><li>|cd</li><li>e</li></ul> => <ol><li>ab</li></ol><p>|cd</p><ul><li>e</li></ul>',
+			'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul> => <p>|<br></p>'
 		].forEach(function (pars) {
 			const [key, value, button, options, insert] = pars.split(' => ');
 

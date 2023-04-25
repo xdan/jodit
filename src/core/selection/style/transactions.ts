@@ -8,7 +8,8 @@ import type {
 	IJodit,
 	IDictionary,
 	CommitMode,
-	ICommitStyle
+	ICommitStyle,
+	HTMLTagNames
 } from 'jodit/types';
 import { REPLACE } from 'jodit/core/selection';
 import {
@@ -46,6 +47,7 @@ export interface IStyleTransactionValue {
 	style: ICommitStyle;
 	jodit: IJodit;
 	mode: CommitMode;
+	collapsed: boolean;
 }
 
 type IStyleTransactions = IDictionary<
@@ -56,11 +58,11 @@ type IStyleTransactions = IDictionary<
 export const transactions: IStyleTransactions = {
 	[states.START]: {
 		exec(value) {
-			const { element, jodit, style, mode } = value;
+			const { element, jodit, style, mode, collapsed } = value;
 
 			if (
 				isInsideInvisibleElement(element, jodit.editor) ||
-				Dom.isEmptyContent(element)
+				(!collapsed && Dom.isEmptyContent(element))
 			) {
 				return { ...value, next: states.END };
 			}
@@ -75,7 +77,10 @@ export const transactions: IStyleTransactions = {
 
 			const suit = findSuitClosest(style, element, jodit.editor);
 
-			if (style.elementIsList && Dom.isTag(suit, ['ul', 'ol'])) {
+			if (
+				style.elementIsList &&
+				Dom.isTag(suit, new Set(['ul', 'ol'] as HTMLTagNames[]))
+			) {
 				return { ...value, next: states.LIST };
 			}
 

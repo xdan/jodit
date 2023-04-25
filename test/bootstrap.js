@@ -1016,9 +1016,9 @@ function setCursorToChar(editor, char = '|') {
  * @return boolean
  */
 function replaceCursorToChar(editor, char = '|') {
-	editor.s.save();
-	editor.s.markers.forEach(m => {
+	editor.s.fakes().forEach(m => {
 		Jodit.modules.Dom.after(m, editor.createInside.text(char));
+		Jodit.modules.Dom.safeRemove(m);
 	});
 
 	return false;

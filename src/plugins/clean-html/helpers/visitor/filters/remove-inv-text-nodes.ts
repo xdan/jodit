@@ -27,22 +27,25 @@ export function removeInvTextNodes(
 		return hadEffect;
 	}
 
-	if (
-		INV_REG().test(node.nodeValue)
-		// node.nodeValue.replace(INV_REG(), '').length !== 0
-	) {
-		node.nodeValue = node.nodeValue.replace(INV_REG(), '');
-
-		if (node === currentNode && jodit.s.isCollapsed()) {
-			jodit.s.setCursorAfter(node);
-		}
-
-		if (!node.nodeValue) {
-			Dom.safeRemove(node);
-		}
-
-		return true;
+	if (!INV_REG().test(node.nodeValue)) {
+		return hadEffect;
 	}
 
-	return hadEffect;
+	const focusBox = Dom.furthest(currentNode, Dom.isBlock, jodit.editor);
+
+	if (!focusBox || Dom.isOrContains(focusBox, node)) {
+		return hadEffect;
+	}
+
+	node.nodeValue = node.nodeValue.replace(INV_REG(), '');
+
+	if (node === currentNode && jodit.s.isCollapsed()) {
+		jodit.s.setCursorAfter(node);
+	}
+
+	if (!node.nodeValue) {
+		Dom.safeRemove(node);
+	}
+
+	return true;
 }

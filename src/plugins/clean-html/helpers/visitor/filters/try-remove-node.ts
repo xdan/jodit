@@ -24,6 +24,17 @@ export function tryRemoveNode(
 	denyTags: IDictionary | false,
 	currentSelectionNode: Nullable<Node>
 ): boolean {
+	console.log(
+		nodeElm,
+		isRemovableNode(
+			jodit,
+			nodeElm,
+			currentSelectionNode,
+			allowTags,
+			denyTags
+		)
+	);
+
 	if (
 		isRemovableNode(
 			jodit,

@@ -330,6 +330,65 @@ export class Select implements ISelect {
 		}
 	}
 
+	fakes(): [] | [Node] | [Node, Node] {
+		const sel = this.sel;
+		if (!sel || !sel.rangeCount) {
+			return [];
+		}
+
+		const range = sel.getRangeAt(0);
+		assert(range, 'Range is null');
+
+		const left = range.cloneRange();
+		left.collapse(true);
+		const fakeLeft = this.j.createInside.fake();
+		left.insertNode(fakeLeft);
+		range.setStartBefore(fakeLeft);
+
+		const result = [fakeLeft];
+
+		if (!range.collapsed) {
+			const right = range.cloneRange();
+			right.collapse(false);
+			const fakeRight = this.j.createInside.fake();
+			right.insertNode(fakeRight);
+			range.setEndAfter(fakeRight);
+			result.push(fakeRight);
+		}
+
+		this.selectRange(range);
+
+		return result as [Node, Node] | [Node] | [];
+	}
+
+	restoreFakes(fakes: [] | [Node] | [Node, Node]): void {
+		const nodes = fakes.filter(n => n.isConnected);
+		if (!nodes.length) {
+			return;
+		}
+
+		const [fakeLeft, fakeRight] = nodes;
+		const range = this.createRange();
+		range.setStartAfter(fakeLeft);
+		if (fakeRight) {
+			range.setEndBefore(fakeRight);
+		}
+		this.selectRange(range);
+
+		if (
+			fakeLeft.parentNode?.firstChild !== fakeLeft.parentNode?.lastChild
+		) {
+			Dom.safeRemove(fakeLeft);
+		}
+
+		if (
+			fakeRight?.parentNode?.firstChild !==
+			fakeRight?.parentNode?.lastChild
+		) {
+			Dom.safeRemove(fakeRight);
+		}
+	}
+
 	/**
 	 * Saves selections using marker invisible elements in the DOM.
 	 * @param silent - Do not change current range
@@ -380,21 +439,23 @@ export class Select implements ISelect {
 			for (let i = length - 1; i >= 0; --i) {
 				const startElm = this.doc.getElementById(info[i].startId);
 
-				if (startElm) {
-					if (info[i].collapsed) {
-						ranges[i].setStartAfter(startElm);
-						ranges[i].collapse(true);
-					} else {
-						ranges[i].setStartBefore(startElm);
+				if (!startElm) {
+					continue;
+				}
 
-						if (info[i].endId) {
-							const endElm = this.doc.getElementById(
-								info[i].endId as string
-							);
+				if (info[i].collapsed) {
+					ranges[i].setStartAfter(startElm);
+					ranges[i].collapse(true);
+				} else {
+					ranges[i].setStartBefore(startElm);
 
-							if (endElm) {
-								ranges[i].setEndAfter(endElm);
-							}
+					if (info[i].endId) {
+						const endElm = this.doc.getElementById(
+							info[i].endId as string
+						);
+
+						if (endElm) {
+							ranges[i].setEndAfter(endElm);
 						}
 					}
 				}
@@ -572,6 +633,8 @@ export class Select implements ISelect {
 	): void {
 		this.errorNode(node);
 
+		const child = Dom.isFragment(node) ? node.lastChild : node;
+
 		this.j.e.fire('safeHTML', node);
 
 		if (!this.isFocused() && this.j.isEditorMode()) {
@@ -613,8 +676,8 @@ export class Select implements ISelect {
 			}
 
 			if (insertCursorAfter) {
-				if (node.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
-					node.lastChild && this.setCursorAfter(node.lastChild);
+				if (Dom.isFragment(node)) {
+					child && this.setCursorAfter(child);
 				} else {
 					this.setCursorAfter(node);
 				}
@@ -626,7 +689,10 @@ export class Select implements ISelect {
 		}
 
 		if (this.j.events) {
-			this.j.e.fire('afterInsertNode', node);
+			this.j.e.fire(
+				'afterInsertNode',
+				Dom.isFragment(node) ? child : node
+			);
 		}
 	}
 
@@ -681,21 +747,7 @@ export class Select implements ISelect {
 			fragment.appendChild(node.firstChild);
 		}
 
-		this.insertNode(
-			fragment.firstChild && fragment.firstChild === fragment.lastChild
-				? fragment.lastChild
-				: fragment,
-			false,
-			false
-		);
-
-		if (insertCursorAfter) {
-			if (lastChild) {
-				this.setCursorAfter(lastChild);
-			} else {
-				this.setCursorIn(fragment);
-			}
-		}
+		this.insertNode(fragment, insertCursorAfter, false);
 
 		// There is no need to use synchronizeValues because you need to apply the changes immediately
 		this.j.__imdSynchronizeValues();
@@ -1037,7 +1089,7 @@ export class Select implements ISelect {
 		let fakeNode: Nullable<Text> = null;
 
 		if (!Dom.isText(node)) {
-			fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
+			fakeNode = this.j.createInside.fake();
 
 			inStart ? range.setStartBefore(node) : range.setEndAfter(node);
 
@@ -1189,7 +1241,7 @@ export class Select implements ISelect {
 	/**
 	 * Wrap all selected fragments inside Tag or apply some callback
 	 */
-	*wrapInTagGen(): Generator<HTMLElement> {
+	*wrapInTagGen(fakes?: Node[]): Generator<HTMLElement, undefined> {
 		if (this.isCollapsed()) {
 			const font = this.jodit.createInside.element(
 				'font',
@@ -1198,13 +1250,8 @@ export class Select implements ISelect {
 
 			this.insertNode(font, false, false);
 
-			const [marker] = this.markers;
-
-			if (marker) {
-				font.appendChild(marker);
-			} else {
-				this.setCursorIn(font);
-				this.save();
+			if (fakes && fakes[0]) {
+				font.appendChild(fakes[0]);
 			}
 
 			yield font;
@@ -1214,17 +1261,12 @@ export class Select implements ISelect {
 		}
 
 		// fix issue https://github.com/xdan/jodit/issues/65
-		$$('*[style*=font-size]', this.area).forEach(elm =>
-			attr(elm, 'data-font-size', elm.style.fontSize.toString())
-		);
+		$$('*[style*=font-size]', this.area).forEach(elm => {
+			attr(elm, 'data-font-size', elm.style.fontSize.toString());
+			elm.style.removeProperty('font-size');
+		});
 
-		if (!this.isCollapsed()) {
-			this.j.nativeExecCommand('fontsize', false, '7');
-		} else {
-			const font = this.j.createInside.element('font');
-			attr(font, 'size', 7);
-			this.insertNode(font, false, false);
-		}
+		this.j.nativeExecCommand('fontsize', false, '7');
 
 		$$('*[data-font-size]', this.area).forEach(elm => {
 			const fontSize = attr(elm, 'data-font-size');
@@ -1260,6 +1302,8 @@ export class Select implements ISelect {
 			yield font;
 			Dom.unwrap(font);
 		}
+
+		return;
 	}
 
 	/**

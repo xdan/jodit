@@ -40,7 +40,6 @@ describe('Toolbar', function () {
 
 			btns.forEach(btn => {
 				const icon = btn.querySelector('.jodit-icon');
-				debugger;
 				expect(icon).is.not.null;
 
 				const style = window.getComputedStyle(icon),
@@ -907,7 +906,7 @@ describe('Toolbar', function () {
 					{
 						name: 'insertDate',
 						iconURL: 'http://xdsoft.net/jodit/images/logo.png',
-						exec: function (editor) {
+						exec: editor => {
 							editor.s.insertHTML(
 								new Date('2016/03/16').toDateString()
 							);
@@ -922,7 +921,7 @@ describe('Toolbar', function () {
 
 			editor.value = '';
 
-			simulateEvent('click', 0, button);
+			simulateEvent('click', button);
 			expect(editor.value).equals('<p>Wed Mar 16 2016</p>');
 		});
 
@@ -1388,23 +1387,29 @@ describe('Toolbar', function () {
 
 		describe('Button Bold', function () {
 			describe('In collapsed selection', function () {
-				it('Should reactivate Bold button after second click and move cursor out of Strong element', function () {
+				it('Should reactivate Bold button after second click and move cursor out of Strong element', async () => {
 					const editor = getJodit({
 						buttons: ['bold']
 					});
 
-					editor.value = '<p>test</p>';
-					editor.s.setCursorAfter(
-						editor.editor.firstChild.firstChild
-					);
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
 
 					clickButton('bold', editor);
-					editor.s.insertHTML('text');
-					clickButton('bold', editor);
-					editor.s.insertHTML('text');
+					editor.s.insertHTML('smart');
 
+					replaceCursorToChar(editor);
 					expect(editor.value).equals(
-						'<p>test<strong>text</strong>text</p>'
+						'<p>test<strong>smart|</strong></p>'
+					);
+					setCursorToChar(editor);
+
+					clickButton('bold', editor);
+					editor.s.insertHTML('pop');
+
+					replaceCursorToChar(editor);
+					expect(editor.value).equals(
+						'<p>test<strong>smart</strong>pop|</p>'
 					);
 				});
 			});

@@ -1077,7 +1077,7 @@ describe('Test paste plugin', () => {
 					});
 
 					expect(editor.value).equals(
-						'<p>test<br>test<br>test<br></p>'
+						'<p>test<br>test<br>test</p>'
 					);
 				});
 			});
@@ -1240,7 +1240,7 @@ describe('Test paste plugin', () => {
 		});
 
 		describe('plain text', function () {
-			it('Should Insert text with <br> instead of \\n', function () {
+			it('`Should Insert text with <br> instead of \\n', function () {
 				const editor = getJodit(),
 					pastedText = 'test\r\ntest\ntest\ntest\ntest\n',
 					emulatePasteEvent = function (data) {

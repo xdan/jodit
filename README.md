@@ -29,6 +29,13 @@ Download the latest [release](https://github.com/xdan/jodit/releases/latest) or
 npm install jodit
 ```
 
+You will get:
+
+- inside /esm: ESM version of the editor (compatible with e.g. webpack)
+- inside /build/*.js: UMD bundled, not minified
+- inside /build/*.min.js: UMD bundled, and minified
+- jodit.d.ts: this specifies the API of the editor (this is what is actually versioned, everything else is considered private and might break with any release).
+
 or
 
 ```bash

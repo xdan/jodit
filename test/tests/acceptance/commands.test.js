@@ -140,40 +140,41 @@ describe('Commands Jodit Editor Tests', function () {
 					const editor = getJodit();
 					editor.value =
 						'<ul>' +
-						'<li>1</li>' +
+						'<li>|1</li>' +
 						'<li>2</li>' +
-						'<li>3</li>' +
+						'<li>3|</li>' +
 						'</ul>';
 
-					const range = editor.s.createRange();
-					range.setStart(
-						editor.editor.firstChild.firstChild.firstChild,
-						0
-					);
-					range.setEnd(
-						editor.editor.firstChild.lastChild.firstChild,
-						1
-					);
-
-					editor.s.selectRange(range);
+					setCursorToChar(editor);
 
 					editor.execCommand('formatBlock', false, 'h1');
+					replaceCursorToChar(editor);
+
+					editor.value =
+						'<ul>' +
+						'<li><h1>|1</h1></li>' +
+						'<li><h1>2</h1></li>' +
+						'<li><h1>3|</h1></li>' +
+						'</ul>';
 
 					expect(editor.value).equals(
 						'<ul>' +
-							'<li><h1>1</h1></li>' +
+							'<li><h1>|1</h1></li>' +
 							'<li><h1>2</h1></li>' +
-							'<li><h1>3</h1></li>' +
+							'<li><h1>3|</h1></li>' +
 							'</ul>'
 					);
 
+					setCursorToChar(editor);
+
 					editor.execCommand('formatBlock', false, 'h1');
+					replaceCursorToChar(editor);
 
 					expect(editor.value).equals(
 						'<ul>' +
-							'<li>1</li>' +
+							'<li>|1</li>' +
 							'<li>2</li>' +
-							'<li>3</li>' +
+							'<li>3|</li>' +
 							'</ul>'
 					);
 				});

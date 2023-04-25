@@ -109,6 +109,7 @@ export class Config implements IViewOptions {
 		'enter',
 		'backspace',
 		'size',
+		'bold',
 		'hotkeys'
 	];
 

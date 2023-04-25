@@ -20,16 +20,59 @@ describe('Bold plugin', () => {
 	describe('Click bold button', () => {
 		it('Should add empty STRONG element', async () => {
 			clickButton('bold', jodit);
-			jodit.async.requestIdlePromise();
+			await jodit.async.requestIdlePromise();
 			replaceCursorToChar(jodit);
 			expect(jodit.value).eq('<p><strong>|</strong></p>');
+		});
+
+		describe('Twice', () => {
+			it('Should work like native bold', async () => {
+				jodit.value = '<p>test|</p>';
+
+				setCursorToChar(jodit);
+				clickButton('bold', jodit);
+				await jodit.async.requestIdlePromise();
+				jodit.s.insertHTML('start');
+				await jodit.async.requestIdlePromise();
+				replaceCursorToChar(jodit);
+				expect(jodit.value).eq('<p>test<strong>start|</strong></p>');
+
+				setCursorToChar(jodit);
+				clickButton('bold', jodit);
+				jodit.async.requestIdlePromise();
+				jodit.s.insertHTML('pop');
+				replaceCursorToChar(jodit);
+				expect(jodit.value).eq('<p>test<strong>start</strong>pop|</p>');
+			});
+		});
+	});
+
+	describe('Apply bold command', () => {
+		describe('Twice', () => {
+			it('Should work like native bold', async () => {
+				jodit.value = '<p>test|</p>';
+
+				setCursorToChar(jodit);
+				jodit.execCommand('bold');
+				await jodit.async.requestIdlePromise();
+				jodit.s.insertHTML('start');
+				replaceCursorToChar(jodit);
+				expect(jodit.value).eq('<p>test<strong>start|</strong></p>');
+
+				setCursorToChar(jodit);
+				jodit.execCommand('bold');
+				await jodit.async.requestIdlePromise();
+				jodit.s.insertHTML('pop');
+				replaceCursorToChar(jodit);
+				expect(jodit.value).eq('<p>test<strong>start</strong>pop|</p>');
+			});
 		});
 	});
 
 	describe('Click subscript button', () => {
 		it('Should add empty SUB element', async () => {
 			clickButton('subscript', jodit);
-			jodit.async.requestIdlePromise();
+			await jodit.async.requestIdlePromise();
 			replaceCursorToChar(jodit);
 			expect(jodit.value).eq('<p><sub>|</sub></p>');
 		});
@@ -39,7 +82,7 @@ describe('Bold plugin', () => {
 				jodit.value = '<p><sup>test|</sup></p>';
 				setCursorToChar(jodit);
 				clickButton('superscript', jodit);
-				jodit.async.requestIdlePromise();
+				await jodit.async.requestIdlePromise();
 				jodit.s.insertHTML('pop');
 				replaceCursorToChar(jodit);
 				expect(jodit.value).eq('<p><sup>test</sup>pop|</p>');
@@ -50,7 +93,7 @@ describe('Bold plugin', () => {
 	describe('Click superscript button', () => {
 		it('Should add empty SUP element', async () => {
 			clickButton('superscript', jodit);
-			jodit.async.requestIdlePromise();
+			await jodit.async.requestIdlePromise();
 			replaceCursorToChar(jodit);
 			expect(jodit.value).eq('<p><sup>|</sup></p>');
 		});
