@@ -1,7 +1,7 @@
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.24.7
+ * Version: v3.24.8
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
@@ -11106,10 +11106,10 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         return this.__isFullSize;
     }
     getVersion() {
-        return "3.24.7";
+        return "3.24.8";
     }
     static getVersion() {
-        return "3.24.7";
+        return "3.24.8";
     }
     initOptions(options) {
         this.options = (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(options || {}, (0,jodit_core_helpers__WEBPACK_IMPORTED_MODULE_1__.ConfigProto)(this.options || {}, View_1.defaultOptions));
@@ -11132,7 +11132,7 @@ let View = View_1 = class View extends jodit_modules__WEBPACK_IMPORTED_MODULE_3_
         this.parent = null;
         this.mods = {};
         this.components = new Set();
-        this.version = "3.24.7";
+        this.version = "3.24.8";
         this.buffer = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage();
         this.storage = _storage__WEBPACK_IMPORTED_MODULE_0__/* .Storage.makeStorage */ .Ke.makeStorage(true, this.componentName);
         this.OPTIONS = View_1.defaultOptions;
@@ -16546,7 +16546,10 @@ class Select {
             dom/* Dom.unwrap */.i.unwrap(font);
             return;
         }
-        (0,helpers.$$)('*[style*=font-size]', this.area).forEach(elm => (0,helpers.attr)(elm, 'data-font-size', elm.style.fontSize.toString()));
+        (0,helpers.$$)('*[style*=font-size]', this.area).forEach(elm => {
+            (0,helpers.attr)(elm, 'data-font-size', elm.style.fontSize.toString());
+            elm.style.removeProperty('font-size');
+        });
         if (!this.isCollapsed()) {
             this.j.nativeExecCommand('fontsize', false, '7');
         }

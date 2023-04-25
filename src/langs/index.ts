@@ -57,7 +57,7 @@ if (!process.env.EXCLUDE_LANGS) {
 		ru,
 		tr,
 		zh_cn,
-		zh_tw,
+		zh_tw
 	};
 }
 

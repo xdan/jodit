@@ -1214,9 +1214,10 @@ export class Select implements ISelect {
 		}
 
 		// fix issue https://github.com/xdan/jodit/issues/65
-		$$('*[style*=font-size]', this.area).forEach(elm =>
-			attr(elm, 'data-font-size', elm.style.fontSize.toString())
-		);
+		$$('*[style*=font-size]', this.area).forEach(elm => {
+			attr(elm, 'data-font-size', elm.style.fontSize.toString());
+			elm.style.removeProperty('font-size');
+		});
 
 		if (!this.isCollapsed()) {
 			this.j.nativeExecCommand('fontsize', false, '7');
