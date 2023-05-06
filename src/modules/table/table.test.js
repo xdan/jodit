@@ -882,26 +882,34 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		it('After press Tab button cursor should be in next cell in table', function () {
-			const editor = getJodit();
+		describe('After press Tab button cursor', function () {
+			it('should move cursor in next cell in table', function () {
+				const editor = getJodit();
 
-			editor.value =
-				'<table>' +
-				'<tr>' +
-				'<td>1</td>' +
-				'<td>2</td>' +
-				'</tr>' +
-				'</table>';
+				editor.value =
+					'<table>' +
+					'<tr>' +
+					'<td>|1</td>' +
+					'<td>2</td>' +
+					'</tr>' +
+					'</table>';
 
-			editor.s.setCursorIn(editor.editor.querySelector('td'));
+				setCursorToChar(editor);
 
-			simulateEvent('keydown', Jodit.KEY_TAB, editor.editor);
+				simulateEvent('keydown', Jodit.KEY_TAB, editor.editor);
 
-			editor.s.insertNode(editor.createInside.text('test'), false);
+				editor.s.insertNode(
+					editor.createInside.text('test'),
+					false,
+					false
+				);
 
-			expect(editor.value.replace('<br>', '')).equals(
-				'<table><tbody><tr><td>1</td><td>test</td></tr></tbody></table>'
-			);
+				replaceCursorToChar(editor);
+
+				expect(editor.value.replace('<br>', '')).equals(
+					'<table><tbody><tr><td>1</td><td>|test</td></tr></tbody></table>'
+				);
+			});
 		});
 
 		it('After press Tab + Shift buttons cursor should be in next cell in table', function () {

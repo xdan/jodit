@@ -681,6 +681,14 @@ describe('Selection Module Tests', function () {
 
 	describe('expandSelection', () => {
 		[
+			[
+				'<table><tbody><tr><td>|test|</td><td>pop</td></tr></tbody></table>',
+				'<table><tbody><tr><td>|test|</td><td>pop</td></tr></tbody></table>'
+			],
+			[
+				'<table><tbody><tr><td>|test|</td></tr></tbody></table>',
+				'<table><tbody><tr><td>|test|</td></tr></tbody></table>'
+			],
 			['<p>|test</p>', '<p>|test</p>'],
 			['<p>test</p><p>|test|</p>', '<p>test</p>|<p>test</p>|'],
 			['<p>|test|</p>', '|<p>test</p>|'],

@@ -15,6 +15,12 @@ describe('Backspace/Delete key', function () {
 
 	describe('More cases', function () {
 		[
+			'<p>t|est</p><ul><li>test2|</li><li>test3</li><li><a>test4</a></li></ul> => <p>t|</p><ul><li>test3</li><li><a>test4</a></li></ul>',
+			'<table><tbody><tr><td>|test|</td><td>1</td></tr></tbody></table> => <table><tbody><tr><td>|<br></td><td>1</td></tr></tbody></table>',
+			'<p>a | bc</p><p>de | fg</p> => <p>a | fg</p>',
+			'<p>a | bc</p><div>de | fg</div> => <p>a | fg</p>',
+			'<p>a | bc</p><div>de fg</div><p>|<br></p> => <p>a |<br></p>',
+			'<p>first | stop</p><p>second | stop</p> => <p>first | stop</p>',
 			'<p><em>p</em></p><p><em>a|</em></p> => <p><em>p</em></p><p><em>|</em></p>',
 			'<p><em>|a|</em></p> => <p>|<br></p>',
 			'<p><span>|a|</span></p> => <p>|<br></p>',
@@ -56,24 +62,30 @@ describe('Backspace/Delete key', function () {
 
 			describe(`For key "${key}"`, function () {
 				it(`Should be ${value}`, async () => {
-					const editor = getJodit(
+					editor.destruct();
+					const jodit = getJodit(
 						(options && JSON.parse(options)) || {}
 					);
-					editor.value = key;
-					setCursorToChar(editor);
+					jodit.value = key;
+					setCursorToChar(jodit);
 					simulateEvent(
 						'keydown',
 						button || Jodit.KEY_BACKSPACE,
-						editor.editor
+						jodit.editor
 					);
 
 					if (insert) {
-						await editor.async.requestIdlePromise();
-						editor.s.insertNode(editor.createInside.text(insert));
+						await jodit.async.requestIdlePromise();
+						jodit.s.insertNode(jodit.createInside.text(insert));
 					}
 
-					replaceCursorToChar(editor);
-					expect(sortAttributes(editor.value)).equals(value);
+					replaceCursorToChar(jodit);
+					expect(
+						sortAttributes(jodit.value).replace(
+							/<span style="background-color:var\(--jd-color-background-default\)">([^<]+?)<\/span>/,
+							'$1'
+						)
+					).equals(value);
 				});
 			});
 		});
@@ -112,10 +124,9 @@ describe('Backspace/Delete key', function () {
 			describe('Inside table cell', function () {
 				it('Should only remove selected range', function () {
 					editor.value =
-						'<table><tbody><tr><td>test</td><td>1</td></tr></tbody></table>';
+						'<table><tbody><tr><td>|test|</td><td>1</td></tr></tbody></table>';
 
-					range.selectNodeContents(editor.editor.querySelector('td'));
-					editor.s.selectRange(range);
+					setCursorToChar(editor);
 
 					simulateEvent(
 						'keydown',
@@ -123,9 +134,10 @@ describe('Backspace/Delete key', function () {
 						editor.editor
 					);
 
-					expect(
-						'<table><tbody><tr><td></td><td>1</td></tr></tbody></table>'
-					).equals(editor.value.replace('<br>', ''));
+					replaceCursorToChar(editor);
+					expect(sortAttributes(editor.value)).equals(
+						'<table><tbody><tr><td>|<br></td><td>1</td></tr></tbody></table>'
+					);
 				});
 			});
 		});

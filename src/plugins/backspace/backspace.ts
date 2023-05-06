@@ -17,6 +17,7 @@ import { INVISIBLE_SPACE } from 'jodit/core/constants';
 import { isFunction, trim } from 'jodit/core/helpers';
 import { moveNodeInsideStart } from 'jodit/core/selection/helpers';
 import { pluginSystem } from 'jodit/core/global';
+import { autobind } from 'jodit/core/decorators';
 
 import type { DeleteMode } from './interface';
 import { cases } from './cases';
@@ -35,6 +36,15 @@ export class backspace extends Plugin {
 		});
 
 		jodit
+			.registerCommand(
+				'delete',
+				{
+					exec: this.__onDeleteCommand
+				},
+				{
+					stopPropagation: false
+				}
+			)
 			.registerCommand(
 				'deleteButton',
 				{
@@ -195,6 +205,62 @@ export class backspace extends Plugin {
 		}
 
 		Dom.safeRemove(fakeNode);
+	}
+
+	@autobind
+	private __onDeleteCommand(): false | void {
+		const { jodit } = this;
+
+		if (jodit.s.isCollapsed()) {
+			return;
+		}
+
+		jodit.s.expandSelection();
+
+		const range = jodit.s.range;
+		range.deleteContents();
+
+		const fake = jodit.createInside.fake();
+		range.insertNode(fake);
+
+		const rightSibling = Dom.findSibling(fake, false);
+		const leftSibling = Dom.findSibling(fake, true);
+
+		if (Dom.isBlock(rightSibling) && Dom.isBlock(leftSibling)) {
+			Dom.append(leftSibling, fake);
+			Dom.moveContent(rightSibling, leftSibling);
+			Dom.safeRemove(rightSibling);
+		}
+
+		range.setStartBefore(fake);
+		range.collapse(true);
+
+		if (!leftSibling || !Dom.isText(leftSibling)) {
+			const leftText = Dom.prev(
+				fake,
+				Dom.isText,
+				Dom.closest(fake, Dom.isBlock, jodit.editor) ?? jodit.editor
+			);
+
+			if (leftText) {
+				range.setStartAfter(leftText);
+				range.collapse(true);
+				Dom.safeRemove(fake);
+			}
+		}
+
+		if (fake.isConnected && !fake.nextSibling && !fake.previousSibling) {
+			const br = jodit.createInside.element('br');
+			Dom.after(fake, br);
+			range.setStartBefore(br);
+			range.collapse(true);
+		}
+
+		Dom.safeRemove(fake);
+
+		jodit.s.selectRange(range);
+
+		return false;
 	}
 }
 

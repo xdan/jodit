@@ -12,6 +12,7 @@ import type { Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 
 /**
+ * Moves the fake node up until it encounters a non-empty sibling on the left(right)
  * @private
  */
 export function moveTheNodeAlongTheEdgeOutward(
@@ -26,6 +27,10 @@ export function moveTheNodeAlongTheEdgeOutward(
 
 		if (sibling) {
 			return;
+		}
+
+		if (Dom.isCell(item.parentElement)) {
+			break;
 		}
 
 		item = item.parentElement;

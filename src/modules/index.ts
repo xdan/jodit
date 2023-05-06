@@ -42,7 +42,7 @@ export { Helpers };
 export { ImageEditor } from './image-editor/image-editor';
 export { History } from './history/history';
 export { Snapshot } from './history/snapshot';
-export { Select, CommitStyle } from '../core/selection';
+export { Selection, CommitStyle } from '../core/selection';
 export { StatusBar } from './status-bar/status-bar';
 export { Table } from './table/table';
 export { ToolbarEditorCollection } from './toolbar/collection/editor-collection';

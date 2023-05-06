@@ -37,21 +37,18 @@ describe('Undo/Redo behaviors', function () {
 			expect(editor.value).equals('<h1>test</h1>');
 		});
 
-		describe('Several operations', function () {
-			it('Should work perfect', function () {
+		describe('Several operations', () => {
+			it('Should work perfect', () => {
 				const editor = getJodit();
 				editor.value =
-					'<p>test</p>' +
+					'<p>t|est</p>' +
 					'<ul>' +
-					'<li>test2</li>' +
+					'<li>test2|</li>' +
 					'<li>test3</li>' +
 					'<li><a>test4</a></li>' +
 					'</ul>';
 
-				const range = editor.s.createRange();
-				range.setStart(editor.editor.firstChild.firstChild, 1);
-				range.setEnd(editor.editor.lastChild.firstChild, 1);
-				editor.s.selectRange(range);
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 

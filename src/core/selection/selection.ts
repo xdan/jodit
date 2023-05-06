@@ -50,7 +50,7 @@ import { isMarker, isFunction, isString } from 'jodit/core/helpers/checker';
 
 import './interface';
 
-export class Select implements ISelect {
+export class Selection implements ISelect {
 	constructor(readonly jodit: IJodit) {
 		jodit.e.on('removeMarkers', () => {
 			this.removeMarkers();

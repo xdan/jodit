@@ -9,4 +9,4 @@
  */
 
 export * from './style/commit-style';
-export * from './select';
+export * from './selection';

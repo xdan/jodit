@@ -41,7 +41,7 @@ import {
 	Dom,
 	History,
 	Plugin,
-	Select,
+	Selection,
 	StatusBar,
 	STATUSES,
 	ViewWithToolbar
@@ -333,7 +333,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		this.__setPlaceField('options', opt);
 	}
 
-	readonly selection!: Select;
+	readonly selection!: Selection;
 
 	/**
 	 * Alias for this.selection
@@ -1208,7 +1208,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 		this.e.on('prepareWYSIWYGEditor', this.__prepareWYSIWYGEditor);
 
-		this.selection = new Select(this);
+		this.selection = new Selection(this);
 
 		const beforeInitHookResult = this.beforeInitHook();
 
