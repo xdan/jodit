@@ -10,7 +10,7 @@ import * as express from 'express';
 import * as path from 'path';
 
 export const devServer = ({ port, dirname }: Variables): Configuration => ({
-	open: '/test.html',
+	open: '/stand.html',
 	allowedHosts: 'all',
 	client: {
 		progress: true,

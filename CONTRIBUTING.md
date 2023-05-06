@@ -21,8 +21,8 @@ npm run lint && npm test
 Fix it and commit your changes:
 
 ```bash
-git commit -m "Fixed issue smt"
 git checkout -b i/GITHUB-ISSUE-NUMBER
+git add . && git commit -m "Fixed issue smt"
 git push
 ````
 
@@ -44,6 +44,8 @@ In order for the code to match the general style, you can simply run prettier:
 npx prettier ./src/%YOUR_PATCHED_FILE_PATH% --write
 ````
 
+More about the style code is written in the [guide](./JODIT-DEVELOPMENT-GUIDE.md)
+
 It is also important that before you create a PR, you run the command without errors:
 
 ```bash
@@ -55,7 +57,7 @@ We follow simple code formatting rules that your IDE or editor will tell you.
 ### Tests
 
 Before doing any functionality or fixing a bug, you need to create a test for it.
-We follow the [TDD](https://en.wikipedia.orgwikiTest-driven_development) methodology, i.e. first we write an autotest, and then a functional.
+We follow the [TDD](https://en.wikipedia.org/wiki/Test-driven_development) methodology, i.e. first we write an autotest, and then a functional.
 It would be absolutely impossible to maintain our editor without autotests. Therefore, this is one of the most important things you need to do in your PR.
 
 ### Creating a pull request
