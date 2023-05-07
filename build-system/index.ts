@@ -61,7 +61,7 @@ export default (
 		output: {
 			path: outputPath,
 			filename: fileName(vars)('[name]') + '.js',
-			publicPath: outputPath,
+			publicPath: '/build/',
 			libraryTarget: 'umd'
 		},
 

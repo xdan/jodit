@@ -208,7 +208,7 @@ describe('Search plugin', function () {
 			expect(query.value).eq('test');
 
 			editor.s.removeMarkers();
-			Jodit.modules.Helpers.normalizeNode(editor.editor.firstChild); // because Select module splits text node
+			editor.editor.firstChild.normalize(); // because Select module splits text node
 
 			await new Promise((resolve, reject) => {
 				editor.events.fire('searchNext').then(() => {
@@ -290,7 +290,7 @@ describe('Search plugin', function () {
 			).is.true;
 
 			editor.s.removeMarkers();
-			Jodit.modules.Helpers.normalizeNode(editor.editor.firstChild); // because Select module splits text node
+			editor.editor.firstChild.normalize(); // because Select module splits text node
 
 			const sel = editor.s.sel;
 
@@ -359,7 +359,7 @@ describe('Search plugin', function () {
 				);
 
 				editor.s.removeMarkers();
-				Jodit.modules.Helpers.normalizeNode(editor.editor.firstChild); // because Select module splits text node
+				editor.editor.firstChild.normalize(); // because Select module splits text node
 
 				editor.events.fire('searchNext').then(() => {
 					simulateEvent(

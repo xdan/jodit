@@ -7,7 +7,6 @@
 import type { Variables } from '../variables';
 import type { RuleSetRule } from 'webpack';
 import { removeAsserts } from '../utils/transformers/remove-asserts';
-import { mangleMembers } from '../utils/transformers/mangle-members';
 import * as path from 'path';
 import * as ts from 'typescript';
 
@@ -33,10 +32,7 @@ export default ({
 						declarationDir: path.resolve(dirname, './build/types')
 					},
 					getCustomTransformers: (program: ts.Program) => ({
-						before:
-							isProd && !isTest
-								? [removeAsserts(), mangleMembers(program)]
-								: []
+						before: isProd && !isTest ? [removeAsserts()] : []
 					})
 				}
 			}

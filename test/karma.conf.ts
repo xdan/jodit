@@ -6,15 +6,49 @@
 
 import * as yargs from 'yargs';
 import type { config } from 'karma';
+import * as fs from 'fs';
 
-const { argv } = yargs.option('grep', {
-	type: 'string',
-	description: 'Grep test glob pattern'
-});
+const { argv } = yargs
+	.option('grep', {
+		type: 'string',
+		description: 'Grep test glob pattern'
+	})
+	.option('build', {
+		type: 'string',
+		demandOption: true,
+		description: 'Build directory(es5, es2018 etc)'
+	})
+	.option('min', {
+		type: 'boolean',
+		demandOption: true,
+		description: 'Use minified version of js files'
+	});
 
 if (argv.grep) {
 	console.info('Grep glob pattern: ', argv.grep);
 }
+
+const buildDir = './build/' + argv.build;
+
+if (
+	!argv.build ||
+	!fs.existsSync(buildDir) ||
+	!fs.statSync(buildDir).isDirectory()
+) {
+	throw new Error('Invalid build directory');
+}
+
+if (!fs.existsSync(buildDir + '/jodit' + (argv.min ? '.min' : '') + '.js')) {
+	throw new Error('Invalid minified build option');
+}
+
+const buildFiles = fs
+	.readdirSync(buildDir)
+	.filter(file => (argv.min ? /\.min/.test(file) : !/\.min/.test(file)))
+	.map(file => buildDir + '/' + file);
+
+console.info('Build directory: ', buildDir);
+console.info('Build files: ', buildFiles);
 
 module.exports = function (cnf: config): void {
 	cnf.set({
@@ -43,7 +77,8 @@ module.exports = function (cnf: config): void {
 
 			'public/app.css',
 			'node_modules/synchronous-promise/dist/synchronous-promise.js',
-			'build/jodit.js',
+
+			...buildFiles,
 			'test/bootstrap.js',
 			{ pattern: argv.grep ?? 'src/**/*.test.js', watched: false },
 			{

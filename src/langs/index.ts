@@ -13,26 +13,27 @@
 import type { IDictionary } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 
-import * as ar from 'jodit/langs/ar';
-import * as cs_cz from 'jodit/langs/cs_cz';
-import * as de from 'jodit/langs/de';
-import * as en from 'jodit/langs/en';
-import * as es from 'jodit/langs/es';
-import * as fr from 'jodit/langs/fr';
-import * as he from 'jodit/langs/he';
-import * as hu from 'jodit/langs/hu';
-import * as id from 'jodit/langs/id';
-import * as it from 'jodit/langs/it';
-import * as ja from 'jodit/langs/ja';
-import * as ko from 'jodit/langs/ko';
-import * as mn from 'jodit/langs/mn';
-import * as nl from 'jodit/langs/nl';
-import * as pl from 'jodit/langs/pl';
-import * as pt_br from 'jodit/langs/pt_br';
-import * as ru from 'jodit/langs/ru';
-import * as tr from 'jodit/langs/tr';
-import * as zh_cn from 'jodit/langs/zh_cn';
-import * as zh_tw from 'jodit/langs/zh_tw';
+import ar from 'jodit/langs/ar';
+import cs_cz from 'jodit/langs/cs_cz';
+import de from 'jodit/langs/de';
+import en from 'jodit/langs/en';
+import es from 'jodit/langs/es';
+import fr from 'jodit/langs/fr';
+import he from 'jodit/langs/he';
+import hu from 'jodit/langs/hu';
+import id from 'jodit/langs/id';
+import it from 'jodit/langs/it';
+import ja from 'jodit/langs/ja';
+import ko from 'jodit/langs/ko';
+import mn from 'jodit/langs/mn';
+import nl from 'jodit/langs/nl';
+import pl from 'jodit/langs/pl';
+import pt_br from 'jodit/langs/pt_br';
+import ru from 'jodit/langs/ru';
+import tr from 'jodit/langs/tr';
+import zh_cn from 'jodit/langs/zh_cn';
+import zh_tw from 'jodit/langs/zh_tw';
+import keys from 'jodit/langs/keys';
 
 let exp: IDictionary<IDictionary<string>> = {};
 
@@ -58,8 +59,6 @@ exp = {
 	zh_cn,
 	zh_tw
 };
-
-import * as keys from 'jodit/langs/keys';
 
 /* Unpack array to hash */
 const get = (value: IDictionary): IDictionary =>

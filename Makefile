@@ -3,6 +3,8 @@ TS_NODE_BASE := TS_NODE_TRANSPILE_ONLY=true node -r ts-node/register
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
 KARMA := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
 
+build ?= build
+devMode ?= development
 generateTypes ?= generateTypes
 es ?= es2015
 uglify ?= true
@@ -16,7 +18,7 @@ version = $(shell cat package.json | jq -r '.version')
 
 .PHONY: start
 start:
-	$(WEBPACK) serve --progress --mode development \
+	$(WEBPACK) serve --progress --mode $(devMode) \
 		--env stat=true \
 		--env es=$(es) \
 		--env uglify=$(uglify) \
@@ -73,12 +75,15 @@ build-all:
 	make build es=es2021 uglify=false generateTypes=true
 	make dts
 	make build es=es2021
+	make test-only-run build=es2021 uglify=true
 
 	make build es=es2015
 	make build es=es2015 uglify=false
+	make test-only-run build=es2015 uglify=true
 
 	make build es=es5
 	make build es=es5 uglify=false
+	make test-only-run build=es5 uglify=true
 
 	make build es=es2021 includeLanguages=en
 	make build es=es2021 includeLanguages=en uglify=false
@@ -103,8 +108,8 @@ prettify:
 test:
 	make test-find
 	make clean
-	make build es=$(es) uglify=false isTest=true
-	make test-only-run es=$(es)
+	make build es=$(es) uglify=$(uglify) isTest=true
+	make test-only-run build=$(es) uglify=$(uglify)
 
 .PHONY: test-find
 test-find:
@@ -112,7 +117,7 @@ test-find:
 
 .PHONY: test-only-run
 test-only-run:
-	$(KARMA) --browsers $(browsers) ./test/karma.conf.ts --single-run $(singleRun)
+	$(KARMA) --browsers $(browsers) ./test/karma.conf.ts --single-run $(singleRun) --build=$(build) --min=$(uglify)
 
 .PHONY: coverage
 coverage:

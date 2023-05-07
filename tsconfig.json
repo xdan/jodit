@@ -27,6 +27,8 @@
 		"experimentalDecorators": true,
 		"verbatimModuleSyntax": true,
 
+		"allowSyntheticDefaultImports": true,
+
 		"allowJs": true,
 
 		"noImplicitAny": true,

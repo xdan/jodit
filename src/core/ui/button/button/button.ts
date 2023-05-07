@@ -47,7 +47,6 @@ export const UIButtonState = (): IUIButtonState => ({
 	text: '',
 	tabIndex: undefined
 });
-
 @component
 export class UIButton extends UIElement implements IUIButton {
 	/** @override */

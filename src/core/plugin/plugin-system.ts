@@ -43,6 +43,8 @@ import './interface';
  * ```
  */
 export class PluginSystem implements IPluginSystem {
+	private __items = new Map<string, PluginType>();
+
 	/**
 	 * Add plugin in store
 	 */
@@ -64,8 +66,6 @@ export class PluginSystem implements IPluginSystem {
 	remove(name: string): void {
 		this.__items.delete(normalizeName(name));
 	}
-
-	private __items = new Map<string, PluginType>();
 
 	private __filter(
 		filter: Nullable<Set<string>>

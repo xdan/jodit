@@ -6,7 +6,6 @@
 
 import type { Variables } from '../variables';
 import type { RuleSetRule } from 'webpack';
-import { removeAsserts } from '../utils/transformers/remove-asserts';
 import * as path from 'path';
 
 export default ({
@@ -23,10 +22,7 @@ export default ({
 			allowTsInNodeModules: true,
 			compilerOptions: {
 				target: ES
-			},
-			getCustomTransformers: () => ({
-				before: isProd && !isTest ? [removeAsserts()] : []
-			})
+			}
 		},
 		include: [path.resolve(superDirname, './node_modules')]
 	};
