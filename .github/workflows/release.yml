@@ -28,6 +28,6 @@ jobs:
 
     - name: Publish
       run: |
-        npm publish ./dist --access public
+        npm publish ./build --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

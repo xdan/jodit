@@ -48,7 +48,7 @@ dts:
 	cp -R ./src/typings.d.ts ./build/types/
 	cp -R ./src/types/* ./build/types/types
 	$(TS_NODE_BASE) ./build-system/utils/resolve-alias-imports.ts ./build/types
-	replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts'
+	$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts'
 
 .PHONY: esm
 esm:
@@ -61,10 +61,10 @@ esm:
 
 	echo Copy langs ...
 	rsync -r --exclude '*.test.js' ./src/langs/*.js ./build/esm/langs
-	replace "module.exports = " "export default " ./build/esm/langs/*.js
+	$(NODE_MODULES_BIN)/replace "module.exports = " "export default " ./build/esm/langs/*.js
 
 	echo Remove style imports ...
-	replace "import .+.(less|css)('|\");" '' ./build/esm -r
+	$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' ./build/esm -r
 
 	echo Copy icons ...
 	$(TS_NODE_BASE) ./build-system/utils/copy-icons-in-esm.ts $(shell pwd)/src/ ./build/esm
@@ -72,6 +72,8 @@ esm:
 .PHONY: build-all
 build-all:
 	make clean
+	$(TS_NODE_BASE) ./build-system/utils/prepare-publish.ts
+
 	make build es=es2021 uglify=false generateTypes=true
 	make dts
 	make build es=es2021
