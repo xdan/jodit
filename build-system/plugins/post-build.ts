@@ -40,15 +40,10 @@ export default ({
 				'.css'
 		);
 
-		fs.readFile(file, (err, css) => {
-			if (err) {
-				console.log(err);
-				return;
-			}
+		const css = fs.readFileSync(file, 'utf-8');
 
-			processor.process(css, { from: file, to: file }).then(result => {
-				fs.writeFile(file, banner + result.css, () => true);
-			});
+		processor.process(css, { from: file, to: file }).then(result => {
+			fs.writeFile(file, banner + result.css, () => true);
 		});
 	});
 };

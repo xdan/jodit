@@ -13,8 +13,16 @@ import banner from './banner';
 import postBuild from './post-build';
 
 export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
-	const { isProd, isTest, ESNext, onlyTS, debug, exclude, progressFunction } =
-		vars;
+	const {
+		isProd,
+		isTest,
+		ESModern,
+		ESNext,
+		onlyTS,
+		debug,
+		exclude,
+		progressFunction
+	} = vars;
 
 	const plugins: Array<webpack.ProgressPlugin | webpack.DelegatedPlugin> = [
 		define(vars)
@@ -33,7 +41,7 @@ export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 
 		plugins.push(banner(vars));
 
-		if (!isTest && !ESNext && !onlyTS) {
+		if (!isTest && !ESModern && !onlyTS) {
 			plugins.push(postBuild(vars));
 		}
 	}

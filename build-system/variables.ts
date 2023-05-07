@@ -59,6 +59,7 @@ export type Variables = {
 	mode: 'production' | 'development';
 	ES: 'es5' | 'es2015' | 'es2021';
 	ESNext: boolean;
+	ESModern: boolean;
 	port: number;
 };
 
@@ -96,6 +97,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 			: 'es2021';
 
 	const ESNext = ES === 'es2021';
+	const ESModern = ['es2021', 'es2015'].includes(ES);
 	const dirname = dir;
 	const superDirname = path.resolve(__dirname, '..');
 	const outputFolder =
@@ -131,6 +133,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 				: false,
 		mode,
 		ES,
+		ESModern,
 		ESNext
 	};
 };
