@@ -21,8 +21,8 @@ import type {
 	InsertMode,
 	Nullable
 } from './types';
-import * as consts from './core/constants';
-import { INSERT_AS_HTML } from './core/constants';
+import * as consts from 'jodit/core/constants';
+import { INSERT_AS_HTML } from 'jodit/core/constants';
 
 /**
  * Default Editor's Configuration

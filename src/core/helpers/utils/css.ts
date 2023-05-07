@@ -9,15 +9,15 @@
  */
 
 import type { IStyle, StyleValue } from 'jodit/types';
-import { isPlainObject } from '../checker/is-plain-object';
-import { isBoolean } from '../checker/is-boolean';
+import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
+import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
 import {
 	normalizeCssValue,
 	normalizeCssNumericValue,
 	NUMBER_FIELDS_REG
-} from '../normalize/normalize-css-value';
-import { camelCase } from '../string/camel-case';
-import { kebabCase } from '../string/kebab-case';
+} from 'jodit/core/helpers/normalize/normalize-css-value';
+import { camelCase } from 'jodit/core/helpers/string/camel-case';
+import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
 
 export function css(
 	element: HTMLElement,

@@ -8,7 +8,7 @@
  * @module helpers/html
  */
 
-import { $$, attr } from '../utils';
+import { $$, attr } from 'jodit/core/helpers/utils';
 import { Dom } from 'jodit/core/dom/dom';
 
 type safeOptions = {

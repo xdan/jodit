@@ -14,7 +14,7 @@ import './progress-bar.less';
 
 import type { IJodit, IProgressBar } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
-import { UIElement } from '../element';
+import { UIElement } from 'jodit/core/ui/element';
 
 export class ProgressBar extends UIElement implements IProgressBar {
 	/** @override */

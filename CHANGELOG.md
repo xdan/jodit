@@ -38,7 +38,12 @@
   ```js
   Jodit.make('#editor').message.info('Hello world');
   ```
-  ```
+
+#### :rocket: New Feature
+
+- Added `Jodit.modules.Dom.isList` method
+- Added `Jodit.modules.Dom.isLeaf` method
+- Added plugin `delete` for correct delete content with command `delete`
 
 #### :house: Internal
 
@@ -1414,7 +1419,7 @@ console.log(editor.events instanceof Jodit.modules.EventsNative); // true, depre
 -   BOOM: Move Ajax class into `request` folder.
 
 ```js
-import { Ajax } from 'jodit/src/core/request';
+import { Ajax } from 'jodit/core/request';
 ```
 
 -   Changed the signature of the send method in the Ajax API and is closer to the fetch () API

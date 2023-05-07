@@ -9,8 +9,8 @@
  */
 
 import type { IDictionary, Nullable } from 'jodit/types';
-import { isString } from '../checker/is-string';
-import { isVoid } from '../checker/is-void';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { isVoid } from 'jodit/core/helpers/checker/is-void';
 
 /**
  * Safe access in tree object

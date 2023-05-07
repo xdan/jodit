@@ -12,6 +12,14 @@ import type { IControlType, IDictionary, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
 
+import * as addcolumn from 'jodit/plugins/inline-popup/icons/addcolumn.svg';
+import * as addrow from 'jodit/plugins/inline-popup/icons/addrow.svg';
+import * as merge from 'jodit/plugins/inline-popup/icons/merge.svg';
+import * as th from 'jodit/plugins/inline-popup/icons/th.svg';
+import * as splitg from 'jodit/plugins/inline-popup/icons/splitg.svg';
+import * as splitv from 'jodit/plugins/inline-popup/icons/splitv.svg';
+import * as thList from 'jodit/plugins/inline-popup/icons/th-list.svg';
+
 declare module 'jodit/config' {
 	interface Config {
 		popup: IDictionary<
@@ -35,13 +43,13 @@ Config.prototype.toolbarInlineForSelection = false;
 Config.prototype.toolbarInlineDisableFor = [];
 Config.prototype.toolbarInlineDisabledButtons = ['source'];
 
-Icon.set('addcolumn', require('../icons/addcolumn.svg'))
-	.set('addrow', require('../icons/addrow.svg'))
-	.set('merge', require('../icons/merge.svg'))
-	.set('th', require('../icons/th.svg'))
-	.set('splitg', require('../icons/splitg.svg'))
-	.set('splitv', require('../icons/splitv.svg'))
-	.set('th-list', require('../icons/th-list.svg'));
+Icon.set('addcolumn', addcolumn.default)
+	.set('addrow', addrow.default)
+	.set('merge', merge.default)
+	.set('th', th.default)
+	.set('splitg', splitg.default)
+	.set('splitv', splitv.default)
+	.set('th-list', thList.default);
 
 Config.prototype.popup = {
 	a: require('./items/a').default,

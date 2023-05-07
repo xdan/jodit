@@ -4,8 +4,8 @@ Decorators are designed to make it easier to work with UI components.
 Adding event handlers, state changes, and component status.
 
 ```ts
-import { component, watch, hook } from 'jodit/src/core/decorators';
-import { UIElement } from 'jodit/src/ui';
+import { component, watch, hook } from 'jodit/core/decorators';
+import { UIElement } from 'jodit/ui';
 
 @component
 class UISomeReactElement extends UIElement {

@@ -28,7 +28,7 @@ export class UITextArea extends UIInput implements IUITextArea {
 		resizable: true
 	};
 
-	override nativeInput!: HTMLTextAreaElement;
+	declare nativeInput: HTMLTextAreaElement;
 
 	/** @override */
 	override state: IUITextArea['state'] = { ...UITextArea.defaultState };

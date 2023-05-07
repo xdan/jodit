@@ -31,10 +31,10 @@ import {
 	ConfigProto
 } from 'jodit/core/helpers';
 import * as error from 'jodit/core/helpers/utils/error';
-import { Response } from './response';
 import { Async } from 'jodit/core/async';
 import { autobind } from 'jodit/core/decorators';
 
+import { Response } from './response';
 import './config';
 
 export class Ajax<T extends object = any> implements IAjax<T> {

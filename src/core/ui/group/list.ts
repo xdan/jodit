@@ -41,7 +41,7 @@ export class UIList<T extends IViewBased = IViewBased>
 		return 'UIList';
 	}
 
-	override jodit!: T;
+	declare jodit: T;
 
 	mode: IUIList['mode'] = 'horizontal';
 

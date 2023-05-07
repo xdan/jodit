@@ -10,7 +10,7 @@
  * @module decorators/derive
  */
 
-import { isFunction } from 'jodit/core/helpers/checker';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
 
 export function derive(...traits: Function[]) {
 	return (target: Function): void => {

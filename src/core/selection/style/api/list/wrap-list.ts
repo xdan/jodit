@@ -43,7 +43,7 @@ export function wrapList(
 	list ??= Dom.isTag(next, commitStyle.element) ? next : null;
 
 	if (
-		!Dom.isTag(list, ['ul', 'ol']) ||
+		!Dom.isList(list) ||
 		!isSameAttributes(list, commitStyle.options.attributes)
 	) {
 		list = jodit.createInside.element(commitStyle.element);

@@ -16,7 +16,7 @@ import { Plugin } from 'jodit/core/plugin/plugin';
 import { watch, hook } from 'jodit/core/decorators';
 import { LazyWalker } from 'jodit/core/dom/lazy-walker';
 import { pluginSystem } from 'jodit/core/global';
-import { Dom } from 'jodit/src/core/dom/dom';
+import { Dom } from 'jodit/core/dom/dom';
 
 import {
 	getHash,

@@ -8,8 +8,8 @@
  * @module helpers/size
  */
 
-import { isArray, isPlainObject, isString } from '../checker';
 import type { CanUndef } from 'jodit/types';
+import { isArray, isPlainObject, isString } from 'jodit/core/helpers/checker';
 
 export function size(
 	subject: CanUndef<object | string | Array<unknown>>

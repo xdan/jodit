@@ -10,7 +10,7 @@
 
 import type { ImageHAlign } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
-import { clearCenterAlign, css } from '../utils/css';
+import { clearCenterAlign, css } from 'jodit/core/helpers/utils/css';
 
 /**
  * Align image

@@ -10,8 +10,8 @@
 
 import type { IViewBased } from 'jodit/types';
 import { completeUrl } from './complete-url';
-import { isFunction } from '../checker/is-function';
-import { isString } from '../checker/is-string';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { isString } from 'jodit/core/helpers/checker/is-string';
 
 export type Loader = (jodit: IViewBased, url: string) => Promise<any>;
 

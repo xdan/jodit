@@ -10,7 +10,7 @@
 
 import type { IDictionary, Nullable } from 'jodit/types';
 import { get } from './get';
-import { isFunction } from '../checker/is-function';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
 
 const map: IDictionary = {};
 

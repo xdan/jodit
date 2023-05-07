@@ -8,21 +8,21 @@
  * @module types
  */
 
-import type {
-	HTMLTagNames,
-	IComponent,
-	IDictionary,
-	Modes,
-	Nullable,
-	IViewBased,
-	IJodit,
-	IMods,
-	IBound,
-	IContainer
-} from './';
 import type { IFileBrowser } from './file-browser';
 
 import type { IUIButton, IUIElement, IUIList } from './ui';
+import type { IViewBased } from './view';
+import type { IJodit } from './jodit';
+import type {
+	Modes,
+	IDictionary,
+	HTMLTagNames,
+	Nullable,
+	IContainer,
+	IComponent,
+	IBound
+} from './types';
+import type { IMods } from './traits';
 
 interface IControlType<
 	T extends IViewBased = IJodit | IViewBased | IFileBrowser,

@@ -14,7 +14,7 @@ import './styles/index.less';
 
 declare function require(moduleName: string): any;
 
-if (process.env.TARGET_ES !== 'es2018' && typeof window !== 'undefined') {
+if (process.env.TARGET_ES === 'es5' && typeof window !== 'undefined') {
 	require('./polyfills');
 }
 

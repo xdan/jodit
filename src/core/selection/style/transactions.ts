@@ -8,8 +8,7 @@ import type {
 	IJodit,
 	IDictionary,
 	CommitMode,
-	ICommitStyle,
-	HTMLTagNames
+	ICommitStyle
 } from 'jodit/types';
 import { REPLACE } from 'jodit/core/selection';
 import {
@@ -23,9 +22,10 @@ import {
 	wrap,
 	toggleOrderedList
 } from 'jodit/core/selection/style/api';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import { INITIAL, UNSET, UNWRAP, WRAP } from 'jodit/core/selection';
 import { assert } from 'jodit/core/helpers/utils/assert';
+import { LIST_TAGS } from 'jodit/core/constants';
 
 export const states = {
 	START: 'START',
@@ -77,10 +77,7 @@ export const transactions: IStyleTransactions = {
 
 			const suit = findSuitClosest(style, element, jodit.editor);
 
-			if (
-				style.elementIsList &&
-				Dom.isTag(suit, new Set(['ul', 'ol'] as HTMLTagNames[]))
-			) {
+			if (style.elementIsList && Dom.isList(suit)) {
 				return { ...value, next: states.LIST };
 			}
 
@@ -112,7 +109,7 @@ export const transactions: IStyleTransactions = {
 				return { ...value, next: states.END };
 			}
 
-			const list = Dom.closest(element, ['ul', 'ol'], jodit.editor);
+			const list = Dom.closest(element, LIST_TAGS, jodit.editor);
 
 			if (list) {
 				return { ...value, element: li, next: states.TOGGLE_LIST };

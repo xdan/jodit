@@ -8,13 +8,9 @@
  * @module types
  */
 
-import type { IDictionary, Nullable } from 'jodit/types';
-import type {
-	IComponent,
-	IContainer,
-	IDialog,
-	IDialogOptions
-} from 'jodit/types';
+import type { IComponent, IContainer, IDictionary, Nullable } from './types';
+import type { IDialog, IDialogOptions } from './dialog';
+
 
 export type ModType = string | boolean | null;
 

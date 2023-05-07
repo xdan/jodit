@@ -12,7 +12,8 @@
 
 import type { DecoratorHandler, IDictionary, IComponent } from 'jodit/types';
 import { Component, STATUSES } from 'jodit/core/component';
-import { error, isFunction } from 'jodit/core/helpers';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { error } from 'jodit/core/helpers/utils/error';
 
 export function idle<V extends IComponent = IComponent>(): DecoratorHandler {
 	return <T extends Component & IDictionary>(

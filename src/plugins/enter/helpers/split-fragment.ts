@@ -28,7 +28,7 @@ export function splitFragment(
 		{ enter } = jodit.o;
 
 	const defaultTag = enter.toLowerCase() as typeof enter;
-	const isLi = Dom.isTag(block, 'li');
+	const isLi = Dom.isLeaf(block);
 	const canSplit = block.tagName.toLowerCase() === defaultTag || isLi;
 
 	const cursorOnTheRight = sel.cursorOnTheRight(block, fake);

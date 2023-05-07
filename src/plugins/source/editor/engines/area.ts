@@ -12,7 +12,7 @@ import type { IJodit, ISourceEditor } from 'jodit/types';
 import { css } from 'jodit/core/helpers/utils/css';
 import { Dom } from 'jodit/core/dom/dom';
 
-import { SourceEditor } from '../sourceEditor';
+import { SourceEditor } from 'jodit/plugins/source/editor/sourceEditor';
 
 export class TextAreaEditor
 	extends SourceEditor<HTMLTextAreaElement>

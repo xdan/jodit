@@ -41,7 +41,7 @@ import {
 import './config';
 
 export class Uploader extends ViewComponent implements IUploader {
-	override readonly jodit!: IViewBased;
+	declare readonly jodit: IViewBased;
 
 	override get j(): IViewBased {
 		return this.jodit;

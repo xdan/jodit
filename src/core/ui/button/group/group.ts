@@ -16,14 +16,14 @@ import type {
 	IUIOption,
 	IViewBased
 } from 'jodit/types';
-import { UIGroup } from '../../group/group';
+import { UIGroup } from 'jodit/core/ui/group/group';
 import { component } from 'jodit/core/decorators/component/component';
-import { UIButton } from '../button/button';
+import { UIButton } from 'jodit/core/ui/button/button/button';
 import { assert } from 'jodit/core/helpers/utils/assert';
 
 @component
 export class UIButtonGroup extends UIGroup {
-	override elements!: IUIButton[];
+	declare elements: IUIButton[];
 
 	/** @override */
 	override className(): string {

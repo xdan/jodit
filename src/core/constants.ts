@@ -25,7 +25,8 @@ export const IS_BLOCK =
 
 export const IS_INLINE = /^(STRONG|SPAN|I|EM|B|SUP|SUB|A|U)$/i;
 
-const __UNSEPARABLE_TAGS: HTMLTagNames[] = [
+export const LIST_TAGS = new Set(['ul', 'ol'] as const);
+const __UNSEPARABLE_TAGS = [
 	'img',
 	'video',
 	'svg',
@@ -36,13 +37,13 @@ const __UNSEPARABLE_TAGS: HTMLTagNames[] = [
 	'link',
 	'jodit',
 	'jodit-media'
-];
+] as const;
 
 export const INSEPARABLE_TAGS: Set<HTMLTagNames> = new Set([
 	...__UNSEPARABLE_TAGS,
 	'br',
 	'hr'
-]);
+] as const);
 
 export const NO_EMPTY_TAGS: Set<HTMLTagNames> = new Set(__UNSEPARABLE_TAGS);
 

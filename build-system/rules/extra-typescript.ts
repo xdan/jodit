@@ -6,7 +6,7 @@
 
 import type { Variables } from '../variables';
 import type { RuleSetRule } from 'webpack';
-import { removeAsserts } from '../utils/remove-asserts';
+import { removeAsserts } from '../utils/transformers/remove-asserts';
 import * as path from 'path';
 
 export default ({

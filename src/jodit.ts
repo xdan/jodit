@@ -31,7 +31,7 @@ import type {
 	IResponse
 } from 'jodit/types';
 
-import type * as Modules from 'jodit/modules/';
+import type * as Modules from 'jodit/modules';
 
 import { Config } from 'jodit/config';
 import * as constants from 'jodit/core/constants';
@@ -45,7 +45,7 @@ import {
 	StatusBar,
 	STATUSES,
 	ViewWithToolbar
-} from 'jodit/modules/';
+} from 'jodit/modules';
 
 import {
 	asArray,
@@ -65,7 +65,7 @@ import {
 	kebabCase,
 	isJoditObject,
 	isNumber
-} from 'jodit/core/helpers/';
+} from 'jodit/core/helpers';
 
 import { lang } from 'jodit/core/constants';
 import {

@@ -15,8 +15,9 @@ import type {
 	IAttributes,
 	ICommitStyle
 } from 'jodit/types';
-import { IS_BLOCK } from 'jodit/core/constants';
+import { IS_BLOCK, LIST_TAGS } from 'jodit/core/constants';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';
+
 import { ApplyStyle } from './apply-style';
 
 export const WRAP = 'wrap';
@@ -48,7 +49,7 @@ export class CommitStyle implements ICommitStyle {
 
 	get elementIsList(): boolean {
 		return Boolean(
-			this.options.element && ['ul', 'ol'].includes(this.options.element)
+			this.options.element && LIST_TAGS.has(this.options.element as 'ol')
 		);
 	}
 

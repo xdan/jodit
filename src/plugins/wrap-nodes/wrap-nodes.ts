@@ -104,8 +104,8 @@ class wrapNodes extends Plugin {
 		do {
 			if (
 				Dom.isElement(next) &&
-				Dom.isTag(next, 'li') &&
-				!Dom.isTag(next.parentElement, ['ul', 'ol'])
+				Dom.isLeaf(next) &&
+				!Dom.isList(next.parentElement)
 			) {
 				const nextChild: Nullable<Node> = Dom.findNotEmptySibling(
 					next,

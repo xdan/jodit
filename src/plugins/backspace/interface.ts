@@ -29,3 +29,37 @@ declare module 'jodit/types/events' {
 		): this;
 	}
 }
+
+declare module 'jodit/types/jodit' {
+	interface IJodit {
+		/**
+		 * Backspace plugin: Remove next character or selected text
+		 */
+		execCommand(command: 'deleteButton'): void;
+
+		/**
+		 * Backspace plugin: Remove previous character or selected text
+		 */
+		execCommand(command: 'backspaceButton'): void;
+
+		/**
+		 * Backspace plugin: Remove next word or selected text
+		 */
+		execCommand(command: 'deleteWordButton'): void;
+
+		/**
+		 * Backspace plugin: Remove previous word or selected text
+		 */
+		execCommand(command: 'backspaceWordButton'): void;
+
+		/**
+		 * Backspace plugin: Remove next sentence or selected text
+		 */
+		execCommand(command: 'deleteSentenceButton'): void;
+
+		/**
+		 * Backspace plugin: Remove previous sentence or selected text
+		 */
+		execCommand(command: 'backspaceSentenceButton'): void;
+	}
+}

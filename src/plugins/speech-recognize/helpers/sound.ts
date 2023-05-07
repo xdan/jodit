@@ -8,7 +8,7 @@
  * @module plugins/speech-recognize
  */
 
-import { PII } from '../constants';
+import { PII } from 'jodit/plugins/speech-recognize/constants';
 
 /**
  * @internal

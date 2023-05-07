@@ -3,6 +3,7 @@ TS_NODE_BASE := TS_NODE_TRANSPILE_ONLY=true node -r ts-node/register
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
 KARMA := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
 
+generateTypes ?= generateTypes
 es ?= es2015
 uglify ?= true
 excludeLangs ?= false
@@ -14,22 +15,46 @@ version = $(shell cat package.json | jq -r '.version')
 
 .PHONY: start
 start:
-	$(WEBPACK) serve --progress --mode development --env stat=true --env es=$(es) --env uglify=$(uglify) --env excludeLangs=${excludeLangs} --env isTest=$(isTest)
+	$(WEBPACK) serve --progress --mode development \
+		--env stat=true \
+		--env es=$(es) \
+		--env uglify=$(uglify) \
+		--env excludeLangs=${excludeLangs} \
+		--env isTest=$(isTest)
 
 .PHONY: build
 build:
-	$(WEBPACK) --progress --mode production --env stat=true --env es=$(es) --env uglify=$(uglify) --env excludeLangs=${excludeLangs} --env isTest=$(isTest)
+	$(WEBPACK) --progress --mode production \
+		--env stat=true \
+		--env es=$(es) \
+		--env uglify=$(uglify) \
+		--env excludeLangs=${excludeLangs} \
+		--env isTest=$(isTest) \
+		--env generateTypes=$(generateTypes)
+
+.PHONY: esm
+esm:
+	rm -rf ./build/esm
+	tsc -p tsconfig.json --module es2020 --target es2020 --removeComments false --sourceMap false --outDir ./build/esm
+	$(TS_NODE_BASE) ./build-system/utils/resolve-alias-imports.ts ./build/esm
 
 .PHONY: build-all
 build-all:
 	make clean
+	make build es=es2018 uglify=false generateTypes=true
 	make dts
-	make build
 	make build es=es2018
+
+	make build es=es2015
+	make build es=es2015 uglify=false
+
+	make build es=es5
+	make build es=es5 uglify=false
+
 	make build es=es2018 excludeLangs=true
-	make build uglify=false
-	make build es=es2018 uglify=false
 	make build es=es2018 excludeLangs=true uglify=false
+
+	make esm
 
 .PHONY: lint
 lint:
@@ -50,7 +75,7 @@ test:
 	make test-find
 	make clean
 	make build es=$(es) uglify=false isTest=true
-	make test-only-run
+	make test-only-run es=$(es)
 
 .PHONY: test-find
 test-find:
@@ -66,12 +91,12 @@ clean:
 
 .PHONY: dts
 dts:
-	rm -rf types
-	mkdir -p ./types
-	cp -r ./src/types ./types
-	tsc --project . --declaration --declarationDir types --outDir types --emitDeclarationOnly --removeComments false
-	tsc-alias -p tsconfig.json ./types
-	replace "import .+.(less|svg)';" '' ./types -r --include='*.d.ts'
+	mkdir -p ./build/types/types
+	cp -R ./tsconfig.json ./build/types/
+	cp -R ./src/typings.d.ts ./build/types/
+	cp -R ./src/types/* ./build/types/types
+	$(TS_NODE_BASE) ./build-system/utils/resolve-alias-imports.ts ./build/types
+	replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts'
 
 .PHONY: coverage
 coverage:

@@ -8,8 +8,8 @@
  * @module helpers/utils
  */
 
-import { Dom } from 'jodit/core/dom/dom';
 import type { Nullable } from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
 
 /**
  * @module helpers/utils

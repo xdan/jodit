@@ -3,7 +3,7 @@
 Component for creating form interfaces.
 
 ```ts
-import { UIForm, UIInput, UIBlock } from 'jodit/src/core/ui';
+import { UIForm, UIInput, UIBlock } from 'jodit/core/ui';
 
 const form = new UIForm(jodit, [
 	new UIInput(editor, {

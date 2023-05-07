@@ -8,8 +8,8 @@
  * @module helpers/array
  */
 
-import { reset } from '../utils/reset';
-import { isNativeFunction } from '../checker/is-native-function';
+import { reset } from 'jodit/core/helpers/utils/reset';
+import { isNativeFunction } from 'jodit/core/helpers/checker/is-native-function';
 
 /**
  * Always return Array. In some cases(Joomla Mootools)

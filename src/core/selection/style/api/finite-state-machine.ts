@@ -6,7 +6,7 @@
 
 import type { IDictionary } from 'jodit/types';
 import { isString } from 'jodit/core/helpers/checker/is-string';
-import { assert } from 'jodit/src/core/helpers/utils/assert';
+import { assert } from 'jodit/core/helpers/utils/assert';
 
 /**
  * A state machine implementation for applying styles.

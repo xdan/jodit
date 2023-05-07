@@ -44,8 +44,6 @@ import type { PastedData, PastedValue, PasteEvent } from './interface';
 
 import './config';
 
-// import { pluginKey as clipboardPluginKey } from '../clipboard';
-
 /**
  * Ask before paste HTML source
  */

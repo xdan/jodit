@@ -15,8 +15,9 @@ import type {
 	IUIElement,
 	IViewBased
 } from 'jodit/types';
+import { ContextMenu } from 'jodit/modules/context-menu/context-menu';
+
 import DataProvider from './data-provider';
-import { ContextMenu } from '../context-menu/context-menu';
 
 export function makeDataProvider(
 	parent: IViewBased,

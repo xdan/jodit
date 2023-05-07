@@ -17,7 +17,7 @@ import type {
 	IViewComponent
 } from 'jodit/types';
 import type { Component } from 'jodit/core/component';
-import { isFunction } from 'jodit/core/helpers/checker';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { error } from 'jodit/core/helpers/utils/error';
 
 /**

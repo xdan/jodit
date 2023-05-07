@@ -8,7 +8,7 @@
  * @module helpers/array
  */
 
-import { isArray } from '../checker/is-array';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
 
 /**
  * Always return Array

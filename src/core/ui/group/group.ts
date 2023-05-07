@@ -20,7 +20,7 @@ import type {
 	ModType
 } from 'jodit/types';
 import type { IDictionary } from 'jodit/types';
-import { UIElement } from '../element';
+import { UIElement } from 'jodit/core/ui/element';
 import { component, watch } from 'jodit/core/decorators';
 import { isArray } from 'jodit/core/helpers';
 import { assert } from 'jodit/core/helpers/utils/assert';

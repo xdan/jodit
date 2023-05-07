@@ -24,7 +24,7 @@ import type { IUIButtonState } from './ui';
 import type { IEventEmitter } from './events';
 import type { IPluginButton } from './plugin';
 import type { IElms, IMods } from './traits';
-import type { IMessages } from 'jodit/types/messages';
+import type { IMessages } from './messages';
 
 interface ILanguageOptions {
 	language?: string;

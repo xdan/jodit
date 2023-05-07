@@ -17,7 +17,7 @@ import { $$ } from 'jodit/core/helpers';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { Button, UIElement } from 'jodit/core/ui';
 import { Component } from 'jodit/core/component';
-import { Dom } from 'jodit/src/core/dom/dom';
+import { Dom } from 'jodit/core/dom/dom';
 
 export interface TabOption {
 	icon?: string;

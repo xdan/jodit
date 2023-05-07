@@ -9,7 +9,7 @@
  */
 
 import type { IJodit, Nullable, PluginInstance, PluginType } from 'jodit/types';
-import { isFunction } from 'jodit/core/helpers/checker';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
 
 /**
  * Create instance of plugin

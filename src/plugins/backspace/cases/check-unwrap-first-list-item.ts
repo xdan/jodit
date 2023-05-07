@@ -36,7 +36,7 @@ export function checkUnwrapFirstListItem(
 	const { s } = jodit;
 
 	if (
-		Dom.isTag(li, 'li') &&
+		Dom.isLeaf(li) &&
 		li?.parentElement?.[
 			backspace ? 'firstElementChild' : 'lastElementChild'
 		] === li &&

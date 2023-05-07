@@ -11,7 +11,8 @@
  */
 
 import type { IStorage, StorageValueType } from 'jodit/types';
-import { camelCase } from '../helpers/';
+import { camelCase } from 'jodit/core/helpers/string/camel-case';
+
 import {
 	canUsePersistentStorage,
 	LocalStorageProvider

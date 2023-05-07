@@ -4,12 +4,11 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-/**
- * [[include:core/vdom/README.md]]
- * @packageDocumentation
- * @module core/vdom
- */
-
-export * from './interface';
-export * from './render';
-export * from './v-dom-jodit';
+declare module 'jodit/types/jodit' {
+	interface IJodit {
+		/**
+		 * Delete plugin: Remove selected text
+		 */
+		execCommand(command: 'delete'): void;
+	}
+}

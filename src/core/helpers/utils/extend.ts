@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import { stringify } from '../string/stringify';
+import { stringify } from 'jodit/core/helpers/string/stringify';
 
 export function isAtom(obj: unknown): boolean {
 	return obj && (obj as any).isAtom;

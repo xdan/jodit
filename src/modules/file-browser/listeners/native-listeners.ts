@@ -16,8 +16,9 @@ import type {
 	IFileBrowser
 } from 'jodit/types';
 import { ctrlKey, attr } from 'jodit/core/helpers';
-import contextMenu from '../builders/context-menu';
 import { Dom } from 'jodit/core/dom';
+
+import contextMenu from 'jodit/modules/file-browser/builders/context-menu';
 import { elementsMap } from 'jodit/modules/file-browser/builders/elements-map';
 import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
 

@@ -8,8 +8,8 @@
  * @module helpers/normalize
  */
 
-import { colorToHex } from '../color/';
-import { trim } from '../string/';
+import { colorToHex } from 'jodit/core/helpers/color/color-to-hex';
+import { trim } from 'jodit/core/helpers/string/trim';
 
 /**
  * Convert rgba and short HEX color to Full text color. #fff to #FFFFFF

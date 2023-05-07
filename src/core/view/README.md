@@ -15,8 +15,8 @@ dialog.open();
 Thus, if you need a component that has its own event system, its own [[Async]] module, then you must inherit from [[View]].
 
 ```js
-import { component } from 'jodit/src/core/decorators';
-import { View } from 'jodit/src/core/view';
+import { component } from 'jodit/core/decorators';
+import { View } from 'jodit/core/view';
 
 @component
 class YourComponent extends View {}

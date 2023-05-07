@@ -6,12 +6,16 @@
 
 import type { Variables } from '../variables';
 import type { RuleSetRule } from 'webpack';
-import { removeAsserts } from '../utils/remove-asserts';
+import { removeAsserts } from '../utils/transformers/remove-asserts';
+import { mangleMembers } from '../utils/transformers/mangle-members';
 import * as path from 'path';
+import * as ts from 'typescript';
 
 export default ({
 	superDirname,
+	dirname,
 	ES,
+	generateTypes,
 	isProd,
 	isTest
 }: Variables): RuleSetRule => {
@@ -21,13 +25,18 @@ export default ({
 			{
 				loader: 'ts-loader',
 				options: {
-					transpileOnly: isProd && !isTest,
+					transpileOnly: isProd && !isTest && !generateTypes,
 					allowTsInNodeModules: true,
 					compilerOptions: {
-						target: ES
+						target: ES,
+						declaration: true,
+						declarationDir: path.resolve(dirname, './build/types')
 					},
-					getCustomTransformers: () => ({
-						before: isProd && !isTest ? [removeAsserts()] : []
+					getCustomTransformers: (program: ts.Program) => ({
+						before:
+							isProd && !isTest
+								? [removeAsserts(), mangleMembers(program)]
+								: []
 					})
 				}
 			}

@@ -8,7 +8,7 @@
  * @module plugins/speech-recognize
  */
 
-import type { ISpeechRecognizeConstructor } from '../interface';
+import type { ISpeechRecognizeConstructor } from 'jodit/plugins/speech-recognize/interface';
 
 export const SpeechRecognition: ISpeechRecognizeConstructor =
 	(window as any).SpeechRecognition ||

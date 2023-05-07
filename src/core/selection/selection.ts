@@ -44,7 +44,7 @@ import {
 } from 'jodit/core/helpers';
 import { CommitStyle } from './style/commit-style';
 import { autobind } from 'jodit/core/decorators';
-import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers';
+import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers/move-the-node-along-the-edge-outward';
 import { assert } from 'jodit/core/helpers/utils/assert';
 import { isMarker, isFunction, isString } from 'jodit/core/helpers/checker';
 

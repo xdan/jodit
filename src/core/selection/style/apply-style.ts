@@ -9,7 +9,7 @@
  */
 
 import type { IJodit, ICommitStyle } from 'jodit/types';
-import { normalizeNode } from 'jodit/core/helpers/normalize/normalize-node';
+
 import { FiniteStateMachine } from './api';
 import {
 	type IStyleTransactionValue,
@@ -23,7 +23,7 @@ export function ApplyStyle(jodit: IJodit, cs: ICommitStyle): void {
 	const { s: sel, editor } = jodit;
 
 	// sel.save();
-	normalizeNode(editor.firstChild); // FF fix for test "commandsTest - Exec command "bold"
+	editor.firstChild?.normalize(); // FF fix for test "commandsTest - Exec command "bold"
 	const fakes = sel.fakes();
 
 	const gen = jodit.s.wrapInTagGen(fakes);
@@ -49,13 +49,13 @@ export function ApplyStyle(jodit: IJodit, cs: ICommitStyle): void {
 			IStyleTransactionValue
 		>(states.START, transactions);
 		state.element = font.value;
-		machine.disableSilent();
+		// machine.disableSilent();
 
 		while (machine.getState() !== states.END) {
-			console.log(machine.getState(), state);
+			// console.log(machine.getState(), state);
 			state = machine.dispatch('exec', state);
 		}
-		console.log('-------------------');
+		// console.log('-------------------');
 
 		font = gen.next();
 	}

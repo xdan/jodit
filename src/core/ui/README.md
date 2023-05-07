@@ -10,8 +10,8 @@ Each UI element must implement the interface [[IIUElement]], and should extend [
 ```ts
 import './style.less';
 
-import { UIElement } from 'jodit/src/core/ui';
-import { component } from 'jodit/src/core/decorators';
+import { UIElement } from 'jodit/core/ui';
+import { component } from 'jodit/core/decorators';
 
 @component
 export class UISlider extends UIElement {

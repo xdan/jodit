@@ -322,7 +322,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			.off(self.ow, 'mouseup pointerup', self.onMouseUp);
 	}
 
-	override OPTIONS!: IDialogOptions;
+	declare OPTIONS: IDialogOptions;
 
 	readonly dialog!: HTMLElement;
 

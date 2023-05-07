@@ -62,6 +62,7 @@ describe('Undo/Redo behaviors', function () {
 					'<p>test</p><ul><li>test2</li><li>test3</li><li><a>test4</a></li></ul>'
 				);
 
+				const range = editor.s.createRange();
 				range.setStart(editor.editor.firstChild.firstChild, 0);
 				range.setEnd(editor.editor.firstChild.firstChild, 3);
 				editor.s.selectRange(range);

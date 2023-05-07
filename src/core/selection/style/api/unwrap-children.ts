@@ -6,8 +6,9 @@
 
 import type { IDictionary, IStyle, ICommitStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
-import { attr, css } from 'jodit/core/helpers';
+import { attr, css } from 'jodit/core/helpers/utils';
 import { hasSameStyleKeys } from 'jodit/core/selection/style/api/has-same-style';
+
 import { isSameStyleChild, isSuitElement } from './is-suit-element';
 
 /**

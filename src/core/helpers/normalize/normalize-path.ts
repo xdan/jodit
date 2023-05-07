@@ -8,7 +8,7 @@
  * @module helpers/normalize
  */
 
-import { trim } from '../string';
+import { trim } from 'jodit/core/helpers/string/trim';
 
 /**
  * Replaces back slashes and correctly concatenates several parts of the path.

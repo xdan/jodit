@@ -19,8 +19,6 @@ import type {
 	Nullable
 } from 'jodit/types';
 
-import './interface';
-
 import { isDestructable, isString, isArray } from 'jodit/core/helpers/checker';
 
 import { splitArray } from 'jodit/core/helpers/array';
@@ -29,6 +27,8 @@ import { loadExtras } from 'jodit/core/plugin/helpers/load';
 import { normalizeName } from 'jodit/core/plugin/helpers/utils';
 import { makeInstance } from 'jodit/core/plugin/helpers/make-instance';
 import { initInstance } from 'jodit/core/plugin/helpers/init-instance';
+
+import './interface';
 
 /**
  * Jodit plugin system

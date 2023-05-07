@@ -8,8 +8,7 @@
  * @module types
  */
 
-import type { IJodit } from './jodit';
-import type { CanPromise, IDestructible, IInitable } from './types';
+import type { IDestructible, IInitable } from './types';
 import type { IViewBased } from './view';
 import type { ButtonGroup, IControlType } from './toolbar';
 

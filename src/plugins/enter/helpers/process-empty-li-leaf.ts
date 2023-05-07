@@ -34,7 +34,7 @@ export function processEmptyLILeaf(
 	}
 
 	const parentLi = list.parentElement,
-		listInsideLeaf = Dom.isTag(parentLi, 'li');
+		listInsideLeaf = Dom.isLeaf(parentLi);
 
 	const container = listInsideLeaf ? parentLi : list;
 

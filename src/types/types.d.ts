@@ -8,12 +8,16 @@
  * @module types
  */
 
-import type { IViewBased } from 'jodit/types/view';
-import type { IAsync } from 'jodit/types/async';
+import type { IViewBased } from './view';
+import type { IAsync } from './async';
 
 export type IDictionary<T = any, K extends string = string> = {
 	[key in K]: T;
 };
+
+export type Prettify<T> = {
+	[P in keyof T]: T[P];
+}
 
 export type CanPromise<T> = T | Promise<T>;
 export type CanUndef<T> = T | undefined;
@@ -289,7 +293,7 @@ declare global {
 	}
 }
 
-export type HTMLTagNames = keyof HTMLElementTagNameMap;
+export type HTMLTagNames = Prettify<keyof HTMLElementTagNameMap>;
 
 export type Modes = 1 | 2 | 3;
 

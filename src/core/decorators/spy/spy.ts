@@ -9,6 +9,8 @@
  * @module decorators/spy
  */
 
+// @ts-nocheck
+
 import {
 	isBoolean,
 	isFunction,

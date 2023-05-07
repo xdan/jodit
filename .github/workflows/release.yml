@@ -1,0 +1,33 @@
+name: Publish Package to npmjs
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+(.beta)?'
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1 #Setup Node
+      with:
+        node-version: '16.15.0'
+    - name: Run Tests
+      run: |
+        npm ci
+        npm test
+
+    - name: Build
+      run: |
+        npm ci
+        make build-all
+
+    - name: Publish
+      run: |
+        npm publish ./dist --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -30,7 +30,7 @@ export function getBlockWrapper(
 		}
 
 		if (tagReg.test(node.nodeName)) {
-			if (Dom.isTag(node, 'li')) {
+			if (Dom.isLeaf(node)) {
 				return node;
 			}
 

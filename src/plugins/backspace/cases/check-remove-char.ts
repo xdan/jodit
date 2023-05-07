@@ -13,8 +13,8 @@ import { Dom } from 'jodit/core/dom';
 import { call, isVoid, toArray, trimInv } from 'jodit/core/helpers';
 import { INVISIBLE_SPACE, NBSP_SPACE } from 'jodit/core/constants';
 
-import type { DeleteMode } from '../interface';
-import { findMostNestedNeighbor } from '../helpers';
+import type { DeleteMode } from 'jodit/plugins/backspace/interface';
+import { findMostNestedNeighbor } from 'jodit/plugins/backspace/helpers';
 
 /**
  * Check possibility the char can be removed

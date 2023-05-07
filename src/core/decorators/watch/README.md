@@ -6,8 +6,8 @@ as well as on any events [[EventEmitter]]
 For example, we will make a reactive component that will change its color when its field changes:
 
 ```ts
-import { component, watch, hook } from 'jodit/src/core/decorators';
-import { UIElement } from 'jodit/src/ui';
+import { component, watch, hook } from 'jodit/core/decorators';
+import { UIElement } from 'jodit/ui';
 
 @component
 class UISomeReactElement extends UIElement {

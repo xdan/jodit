@@ -13,6 +13,7 @@
 import 'jodit/plugins/about/about';
 import 'jodit/plugins/add-new-line/add-new-line';
 import 'jodit/plugins/backspace/backspace';
+import 'jodit/plugins/delete/delete';
 import 'jodit/plugins/bold/bold';
 import 'jodit/plugins/class-span/class-span';
 import 'jodit/plugins/clean-html/clean-html';

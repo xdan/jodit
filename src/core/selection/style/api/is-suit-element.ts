@@ -5,6 +5,7 @@
  */
 import type { IStyle, Nullable, ICommitStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
+
 import { isNormalNode } from './is-normal-node';
 import { hasSameStyle, hasSameStyleKeys } from './has-same-style';
 
@@ -36,7 +37,7 @@ export function isSuitElement(
 
 	const elmIsSame =
 		elm.nodeName.toLowerCase() === element ||
-		(Dom.isTag(elm, ['ul', 'ol']) && commitStyle.elementIsList);
+		(Dom.isList(elm) && commitStyle.elementIsList);
 
 	if (
 		((!elementIsDefault || !strict) && elmIsSame) ||

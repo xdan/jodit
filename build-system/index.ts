@@ -28,12 +28,23 @@ export default (
 ): Configuration => {
 	const vars = variables(argv, dir);
 
-	const { ES, mode, isTest, isProd, debug, ESNext, uglify, outputPath } =
-		vars;
+	const {
+		ES,
+		mode,
+		isTest,
+		isProd,
+		debug,
+		ESNext,
+		uglify,
+		outputPath,
+		excludeLangs
+	} = vars;
 
 	const [pluginsEntries] = includePlugins(dir);
 
-	console.info(`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify}`);
+	console.info(
+		`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify} GenerateTypes:${vars.generateTypes}`
+	);
 
 	return {
 		cache: !isProd || {
@@ -59,7 +70,7 @@ export default (
 		output: {
 			path: outputPath,
 			filename: fileName(vars)('[name]') + '.js',
-			publicPath: '/build/',
+			publicPath: outputPath,
 			libraryTarget: 'umd'
 		},
 
@@ -74,7 +85,6 @@ export default (
 				'.svg'
 			],
 			alias: {
-				'jodit/src': path.resolve(__dirname, '../src/'),
 				jodit: path.resolve(__dirname, '../src/')
 			}
 		},

@@ -27,7 +27,7 @@ export class UISelect extends UIInput implements IUISelect {
 	}
 
 	/** @override */
-	override nativeInput!: IUISelect['nativeInput'];
+	declare nativeInput: IUISelect['nativeInput'];
 
 	/** @override */
 	static override defaultState: IUISelect['state'] = {

@@ -14,10 +14,10 @@ import type {
 	CanUndef,
 	HTMLTagNames,
 	ICreate,
+	IDictionary,
 	IJodit,
 	NodeCondition,
-	Nullable,
-	IDictionary
+	Nullable
 } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import {
@@ -25,13 +25,14 @@ import {
 	isFunction,
 	isHTML,
 	isString,
-	isVoid
+	isVoid,
+	isSet,
+	isMarker
 } from 'jodit/core/helpers/checker';
 import { asArray, toArray } from 'jodit/core/helpers/array';
 import { trim } from 'jodit/core/helpers/string';
 import { $$, attr, call, css, dataBind, error } from 'jodit/core/helpers/utils';
-import { isMarker } from 'jodit/core/helpers/checker/is-marker';
-import { NO_EMPTY_TAGS, TEMP_ATTR } from 'jodit/core/constants';
+import { LIST_TAGS, NO_EMPTY_TAGS, TEMP_ATTR } from 'jodit/core/constants';
 
 /**
  * Module for working with DOM
@@ -353,6 +354,20 @@ export class Dom {
 	 */
 	static isCell(elm: unknown): elm is HTMLTableCellElement {
 		return Dom.isNode(elm) && /^(td|th)$/i.test(elm.nodeName);
+	}
+
+	/**
+	 * Check if element is a list	element UL or OL
+	 */
+	static isList(elm: Nullable<Node>): elm is HTMLOListElement {
+		return Dom.isTag(elm, LIST_TAGS);
+	}
+
+	/**
+	 * Check if element is a part of list	element LI
+	 */
+	static isLeaf(elm: Nullable<Node>): elm is HTMLLIElement {
+		return Dom.isTag(elm, 'li');
 	}
 
 	/**
@@ -808,6 +823,15 @@ export class Dom {
 		K extends keyof HTMLElementTagNameMap
 	>(
 		node: Nullable<Node>,
+		tags: Set<K>,
+		root: HTMLElement
+	): Nullable<HTMLElementTagNameMap[K]>;
+
+	static closest<
+		T extends HTMLElement,
+		K extends keyof HTMLElementTagNameMap
+	>(
+		node: Nullable<Node>,
 		tags: K[],
 		root: HTMLElement
 	): Nullable<HTMLElementTagNameMap[K]>;
@@ -820,7 +844,11 @@ export class Dom {
 
 	static closest<T extends HTMLElement>(
 		node: Nullable<Node>,
-		tagsOrCondition: HTMLTagNames | HTMLTagNames[] | NodeCondition,
+		tagsOrCondition:
+			| HTMLTagNames
+			| HTMLTagNames[]
+			| NodeCondition
+			| Set<HTMLTagNames>,
 		root: HTMLElement
 	): Nullable<T> {
 		let condition: NodeCondition;
@@ -829,8 +857,10 @@ export class Dom {
 
 		if (isFunction(tagsOrCondition)) {
 			condition = tagsOrCondition;
-		} else if (isArray(tagsOrCondition)) {
-			const set = new Set(tagsOrCondition.map(lc));
+		} else if (isArray(tagsOrCondition) || isSet(tagsOrCondition)) {
+			const set = isSet(tagsOrCondition)
+				? tagsOrCondition
+				: new Set(tagsOrCondition.map(lc));
 			condition = (tag: Node | null): boolean =>
 				Boolean(tag && set.has(lc(tag.nodeName) as HTMLTagNames));
 		} else {

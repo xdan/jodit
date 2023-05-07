@@ -10,15 +10,15 @@
  * @module modules
  */
 
-export * from '../core/event-emitter';
-export { Async } from '../core/async';
-export * from '../core/request';
-export { Component, ViewComponent, STATUSES } from '../core/component';
+export * from 'jodit/core/event-emitter';
+export { Async } from 'jodit/core/async';
+export * from 'jodit/core/request';
+export { Component, ViewComponent, STATUSES } from 'jodit/core/component';
 export { ContextMenu } from './context-menu/context-menu';
 export * from './dialog/';
-export { Dom, LazyWalker } from '../core/dom';
-export { Plugin } from '../core/plugin';
-export { Create } from '../core/create';
+export { Dom, LazyWalker } from 'jodit/core/dom';
+export { Plugin } from 'jodit/core/plugin';
+export { Create } from 'jodit/core/create';
 export {
 	UIElement,
 	UIButton,
@@ -33,16 +33,16 @@ export {
 	UIBlock,
 	ProgressBar,
 	Icon
-} from '../core/ui';
-export { View } from '../core/view/view';
-export { ViewWithToolbar } from '../core/view/view-with-toolbar';
+} from 'jodit/core/ui';
+export { View } from 'jodit/core/view/view';
+export { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
 export * from './file-browser';
-import * as Helpers from '../core/helpers/';
+import * as Helpers from 'jodit/core/helpers/';
 export { Helpers };
 export { ImageEditor } from './image-editor/image-editor';
 export { History } from './history/history';
 export { Snapshot } from './history/snapshot';
-export { Selection, CommitStyle } from '../core/selection';
+export { Selection, CommitStyle } from 'jodit/core/selection';
 export { StatusBar } from './status-bar/status-bar';
 export { Table } from './table/table';
 export { ToolbarEditorCollection } from './toolbar/collection/editor-collection';
@@ -50,4 +50,4 @@ export { ToolbarCollection } from './toolbar/collection/collection';
 export * from './toolbar/button';
 export { Uploader } from './uploader/uploader';
 export { UIMessages } from './messages/messages';
-export { PluginSystem } from '../core/plugin/plugin-system';
+export { PluginSystem } from 'jodit/core/plugin/plugin-system';

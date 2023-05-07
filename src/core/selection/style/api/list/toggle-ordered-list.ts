@@ -7,10 +7,17 @@
 import type { IJodit, CommitMode, ICommitStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { assert } from 'jodit/core/helpers/utils/assert';
-import { extractSelectedPart } from '../extract';
-import { _PREFIX, CHANGE, INITIAL, UNWRAP, REPLACE } from '../../commit-style';
-import { toggleAttributes } from '../toggle-attributes';
-import { wrapList } from 'jodit/core/selection/style/api';
+
+import { extractSelectedPart } from 'jodit/core/selection/style/api/extract';
+import {
+	_PREFIX,
+	CHANGE,
+	INITIAL,
+	UNWRAP,
+	REPLACE
+} from 'jodit/core/selection/style/commit-style';
+import { toggleAttributes } from 'jodit/core/selection/style/api/toggle-attributes';
+import { wrapList } from './wrap-list';
 
 /**
  * Replaces `ul->ol` or `ol->ul`, apply styles to the list, or remove a list item from it

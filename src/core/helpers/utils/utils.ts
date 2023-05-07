@@ -16,8 +16,8 @@ import type {
 	RejectablePromise,
 	Nullable
 } from 'jodit/types';
-import { isPromise } from '../checker/is-promise';
-import { isVoid } from '../checker/is-void';
+import { isPromise } from 'jodit/core/helpers/checker/is-promise';
+import { isVoid } from 'jodit/core/helpers/checker/is-void';
 import { dataBind } from './data-bind';
 import { attr } from './attr';
 

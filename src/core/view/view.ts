@@ -22,7 +22,7 @@ import type {
 	IEventEmitter,
 	IMessages
 } from 'jodit/types';
-import { Storage } from '../storage';
+import { Storage } from 'jodit/core/storage';
 import {
 	camelCase,
 	ConfigProto,

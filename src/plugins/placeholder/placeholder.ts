@@ -58,7 +58,7 @@ export function isEditorEmpty(root: HTMLElement): boolean {
 		Dom.each(
 			first,
 			elm =>
-				!Dom.isTag(elm, ['ul', 'li', 'ol']) &&
+				!(Dom.isLeaf(elm) || Dom.isList(elm)) &&
 				(Dom.isEmpty(elm) || Dom.isTag(elm, 'br'))
 		)
 	);

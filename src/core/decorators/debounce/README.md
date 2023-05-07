@@ -4,8 +4,8 @@ Wraps a component method in [[Async.debounce]]. This makes it possible to reduce
 For example:
 
 ```typescript
-import { component, watch, debounce } from 'jodit/src/core/decorators';
-import { Dom } from 'jodit/src/core/dom';
+import { component, watch, debounce } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
 
 @component
 class UIInputSuggestion extends UIElement {

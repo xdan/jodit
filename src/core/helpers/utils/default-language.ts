@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import { isString } from '../checker/is-string';
+import { isString } from 'jodit/core/helpers/checker/is-string';
 
 /**
  * Try define user language

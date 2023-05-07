@@ -10,7 +10,7 @@
 
 import type { HTMLTagNames } from 'jodit/types';
 import { Config } from 'jodit/config';
-import { Icon } from '../../core/ui';
+import { Icon } from 'jodit/core/ui/icon';
 
 declare module 'jodit/config' {
 	interface Config {

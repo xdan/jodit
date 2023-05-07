@@ -9,7 +9,7 @@ import type { config } from 'karma';
 
 const { argv } = yargs.option('grep', {
 	type: 'string',
-	description: 'Grep test gllob pattern'
+	description: 'Grep test glob pattern'
 });
 
 if (argv.grep) {

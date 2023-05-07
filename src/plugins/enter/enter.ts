@@ -92,7 +92,7 @@ export class enter extends Plugin {
 
 			let block = getBlockWrapper(fake, jodit);
 
-			const isLi = Dom.isTag(block, 'li');
+			const isLi = Dom.isLeaf(block);
 
 			// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
 			if (

@@ -15,7 +15,14 @@ describe('Backspace/Delete key', function () {
 
 	describe('More cases', function () {
 		[
+			'<blockquote>t|est</blockquote><ol><li>test2</li><li>te|st3</li><li><a>test4</a></li></ol> => <blockquote>t|</blockquote><ol><li>st3</li><li><a>test4</a></li></ol>',
+			'<blockquote>t|est</blockquote><ol><li>test2</li><li>test3|</li><li><a>test4</a></li></ol> => <blockquote>t|</blockquote><ol><li><a>test4</a></li></ol>',
+			'<ol><li>test2</li><li>test3|</li><li><a>test4</a></li></ol><blockquote>t|est</blockquote> => <ol><li>test2</li><li>test3|est</li></ol>',
+			'<ol><li>test2</li><li>test3|</li><li><a>test4</a></li></ol><p>t|est</p> => <ol><li>test2</li><li>test3|est</li></ol>',
+			'<ul><li>test2</li><li>test3|</li><li><a>test4</a></li></ul><p>t|est</p> => <ul><li>test2</li><li>test3|est</li></ul>',
+			'<p>t|est</p><ul><li>test2</li><li>test3|</li><li><a>test4</a></li></ul> => <p>t|</p><ul><li><a>test4</a></li></ul>',
 			'<p>t|est</p><ul><li>test2|</li><li>test3</li><li><a>test4</a></li></ul> => <p>t|</p><ul><li>test3</li><li><a>test4</a></li></ul>',
+			'<p>t|est</p><table><tbody><tr><td>test2|</td><td>test3</td></tr><tr><td><a>test4</a></td><td><a>test4</a></td></tr></tbody></table> => <p>t|</p><table><tbody><tr><td><br></td><td>test3</td></tr><tr><td><a>test4</a></td><td><a>test4</a></td></tr></tbody></table>',
 			'<table><tbody><tr><td>|test|</td><td>1</td></tr></tbody></table> => <table><tbody><tr><td>|<br></td><td>1</td></tr></tbody></table>',
 			'<p>a | bc</p><p>de | fg</p> => <p>a | fg</p>',
 			'<p>a | bc</p><div>de | fg</div> => <p>a | fg</p>',

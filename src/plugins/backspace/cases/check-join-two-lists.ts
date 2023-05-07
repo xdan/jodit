@@ -36,8 +36,8 @@ export function checkJoinTwoLists(
 
 	if (
 		!Dom.closest(fakeNode, Dom.isElement, jodit.editor) &&
-		Dom.isTag(next, ['ul', 'ol']) &&
-		Dom.isTag(prev, ['ul', 'ol']) &&
+		Dom.isList(next) &&
+		Dom.isList(prev) &&
 		Dom.isTag(next.lastElementChild, 'li') &&
 		Dom.isTag(prev.firstElementChild, 'li')
 	) {

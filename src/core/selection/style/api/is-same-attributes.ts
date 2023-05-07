@@ -8,6 +8,7 @@ import type { IDictionary, IStyle } from 'jodit/types';
 import { attr } from 'jodit/core/helpers/utils';
 import { size } from 'jodit/core/helpers/size/object-size';
 import { assert } from 'jodit/core/helpers/utils/assert';
+
 import { hasSameStyle } from './has-same-style';
 
 /**

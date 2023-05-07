@@ -3,7 +3,7 @@
 Decorator that sets the enumerable property of a class field to false.
 
 ```ts
-import { nonenumerable } from 'jodit/src/core/decorators';
+import { nonenumerable } from 'jodit/core/decorators';
 
 class SomeComponent {
 	@nonenumerable

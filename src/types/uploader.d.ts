@@ -9,7 +9,7 @@
  */
 
 import type { CanPromise, IDictionary, IViewComponent } from './types';
-import type { IViewBased } from 'jodit/types/view';
+import type { IViewBased } from './view';
 import type { IAjax } from './ajax';
 
 interface IUploaderData {

@@ -11,7 +11,7 @@
  */
 
 import type { IDictionary } from 'jodit/types';
-import { isArray } from '../core/helpers/checker';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
 
 let exp: IDictionary<IDictionary<string>> = {};
 

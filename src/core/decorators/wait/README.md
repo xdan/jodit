@@ -3,8 +3,8 @@
 Wrap function in wait wrapper, it will be called after `condition` returns `true`
 
 ```typescript
-import { component, wait } from 'jodit/src/core/decorators';
-import { UIElement } from 'jodit/src/ui';
+import { component, wait } from 'jodit/core/decorators';
+import { UIElement } from 'jodit/ui';
 
 @component
 class UISomeElement extends UIElement {

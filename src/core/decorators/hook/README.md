@@ -3,8 +3,8 @@
 Sets a handler for changing the component's status.
 
 ```ts
-import { component, hook } from 'jodit/src/core/decorators';
-import { UIElement } from 'jodit/src/ui';
+import { component, hook } from 'jodit/core/decorators';
+import { UIElement } from 'jodit/ui';
 
 @component
 class UISomeElement extends UIElement {

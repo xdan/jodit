@@ -10,12 +10,16 @@
 
 import type { ISourceEditor } from 'jodit/types';
 
-import { SourceEditor } from '../sourceEditor';
+import { SourceEditor } from 'jodit/plugins/source/editor/sourceEditor';
 
 export class CustomEditor
 	extends SourceEditor<HTMLTextAreaElement>
 	implements ISourceEditor
 {
+	isFocused = false;
+
+	blur(): void {}
+
 	init(): any {
 		this.onReady();
 	}

@@ -11,14 +11,18 @@
 import type { IDialog, IFileBrowser } from 'jodit/types';
 
 import { Dom } from 'jodit/core/dom';
-import { attr, error } from 'jodit/core/helpers';
+import { attr, error } from 'jodit/core/helpers/utils';
+import { Icon } from 'jodit/core/ui/icon';
+import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
+
 import { makeContextMenu } from 'jodit/modules/file-browser/factories';
-import { Icon } from 'jodit/core/ui';
-import { elementToItem, getItem } from '../listeners/native-listeners';
-import { openImageEditor } from '../../image-editor/image-editor';
 import { elementsMap } from 'jodit/modules/file-browser/builders/elements-map';
 import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
 import { deleteFile } from 'jodit/modules/file-browser/fetch/delete-file';
+import {
+	elementToItem,
+	getItem
+} from 'jodit/modules/file-browser/listeners/native-listeners';
 
 const CLASS_PREVIEW = 'jodit-filebrowser-preview',
 	preview_tpl_next = (next = 'next', right = 'right'): string =>

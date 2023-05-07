@@ -16,6 +16,7 @@ export type Argv = {
 	env: object;
 	mode?: 'production' | 'development';
 	isTest?: boolean;
+	generateTypes?: boolean;
 	uglify?: boolean;
 	excludeLangs?: boolean;
 	stat?: boolean;
@@ -30,15 +31,22 @@ export type Argv = {
 export type Variables = {
 	argv: { filename?: (name: string) => string };
 	exclude: string[];
+	/**
+	 * Path to root Jodit directory
+	 */
 	superDirname: string;
 	outputPath: string;
 	banner: string;
+	/**
+	 * Path to current work directory
+	 */
 	dirname: string;
 	pkg: { version: string; homepage: string };
 	debug: boolean;
 	serve: boolean;
 	isTest: boolean;
 	onlyTS: boolean;
+	generateTypes: boolean;
 	isProd: boolean;
 	uglify: boolean;
 	stat: boolean;
@@ -90,7 +98,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 	const ESNext = ES === 'es2018';
 	const dirname = dir;
 	const superDirname = path.resolve(__dirname, '..');
-	const outputFolder = argv.outputFolder || 'build';
+	const outputFolder = argv.outputFolder || `build/${ES}${!excludeLangs ? '' : '.en'}/`
 	const outputPath = path.join(dir, outputFolder);
 
 	return {
@@ -100,6 +108,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 		argv,
 		onlyTS: false, // TODO
 		exclude,
+		generateTypes: Bool(argv.generateTypes),
 		serve: Boolean(argv.WEBPACK_SERVE),
 		superDirname,
 		outputPath,

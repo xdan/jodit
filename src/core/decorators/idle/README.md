@@ -3,8 +3,8 @@
 Wrap function in [[Async.requestIdleCallback]] wrapper
 
 ```ts
-import { component, idle } from 'jodit/src/core/decorators';
-import { UIElement } from 'jodit/src/ui';
+import { component, idle } from 'jodit/core/decorators';
+import { UIElement } from 'jodit/ui';
 
 @component
 class SomeClass extends UIElement {

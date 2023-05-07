@@ -25,7 +25,7 @@ export class UIForm extends UIGroup implements IUIForm {
 		return 'UIForm';
 	}
 
-	override container!: HTMLFormElement;
+	declare container: HTMLFormElement;
 
 	submit(): void {
 		this.j.e.fire(this.container, 'submit');

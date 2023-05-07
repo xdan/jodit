@@ -213,7 +213,6 @@
 							debugLanguage: true
 						});
 
-						console.log(Array.from(i18nkeys));
 						Array.from(i18nkeys)
 							.filter(
 								key =>

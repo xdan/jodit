@@ -8,10 +8,10 @@
  * @module helpers/normalize
  */
 
-import { isNumeric } from '../checker/is-numeric';
-import { kebabCase } from '../string/kebab-case';
-import { colorToHex } from '../color/color-to-hex';
-import { isVoid } from '../checker/is-void';
+import { isNumeric } from 'jodit/core/helpers/checker/is-numeric';
+import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
+import { colorToHex } from 'jodit/core/helpers/color/color-to-hex';
+import { isVoid } from 'jodit/core/helpers/checker/is-void';
 
 export const NUMBER_FIELDS_REG =
 	/^(left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size)/i;

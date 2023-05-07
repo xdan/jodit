@@ -9,8 +9,8 @@
  */
 
 import { Dom } from 'jodit/core/dom/dom';
-import { $$ } from 'jodit/core/helpers/utils';
-import { trim } from '../string/trim';
+import { $$ } from 'jodit/core/helpers/utils/selector';
+import { trim } from 'jodit/core/helpers/string/trim';
 
 function normalizeCSS(s: string): string {
 	return s
