@@ -9,41 +9,42 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
-
-## 4.0.1
+## 4.0.1.beta
 
 #### :boom: Breaking Change
 
- - !!! Build files removed from repository and only available in npm package !!!
- - !!! bowers.json was removed !!!
- - server.js was removed
- - All build js files was rewritten to typescript
- - Default target for build was changed to es2015
- - Event `getIcon` was removed. Use option `getIcon` instead
+-   !!! Build files removed from repository and only available in npm package !!!
+-   !!! bowers.json was removed !!!
+-   server.js was removed
+-   All build js files was rewritten to typescript
+-   Removed `exludeLangs` build option. Instead use `--includeLanguages=en` option.
+-   Default target for build was changed to es2015
+-   Build in es2018 target was removed, instead es2021 was added
+-   Event `getIcon` was removed. Use option `getIcon` instead
 
-  ```js
-  Jodit.make('#editor', {
-    getIcon: (name: string) => {
-      if (name === 'bold') {
-        return '<svg>...</svg>';
-      }
+```js
+Jodit.make('#editor', {
+	getIcon: (name: string) => {
+		if (name === 'bold') {
+			return '<svg>...</svg>';
+		}
 
-      return null;
-    }
-  });
-  ```
+		return null;
+	}
+});
+```
 
-- Removed  `errorMessage` event. Use `module.messages` instead
+-   Removed `errorMessage` event. Use `module.messages` instead
 
-  ```js
-  Jodit.make('#editor').message.info('Hello world');
-  ```
+    ```js
+    Jodit.make('#editor').message.info('Hello world');
+    ```
 
 #### :rocket: New Feature
 
-- Added `Jodit.modules.Dom.isList` method
-- Added `Jodit.modules.Dom.isLeaf` method
-- Added plugin `delete` for correct delete content with command `delete`
+-   Added `Jodit.modules.Dom.isList` method
+-   Added `Jodit.modules.Dom.isLeaf` method
+-   Added plugin `delete` for correct delete content with command `delete`
 
 #### :house: Internal
 
@@ -598,7 +599,7 @@ Jodit.make('#editor', {
 
 #### :bug: Bug Fix
 
--   Big bugfix in es2018 version, sideEffect cut all styles and configs
+-   Big bugfix in es2021 version, sideEffect cut all styles and configs
 
 ## 3.19.1
 
@@ -606,7 +607,7 @@ Jodit.make('#editor', {
 
 -   Plugin icons moved to their respective plugins
 -   Used plugin `webpack.ids.DeterministicModuleIdsPlugin` for more reliable sharing of exported module names between builds.
-    Now you can include plugins from 'es5' in the assembly for 'es2018.en'.
+    Now you can include plugins from 'es5' in the assembly for 'es2021.en'.
 -   Deps
     ```
      @types/node                       ^17.0.36  →  ^17.0.41
@@ -1215,7 +1216,7 @@ await ajax.send().then(resp => resp.blob());
 #### :bug: Bug Fix
 
 -   Added handling of `contenteditable = false` elements to the plugin` Backspace`.
--   [es2018 build don't works properly starting from jodit 3.9.4 #758](https://github.com/xdan/jodit/issues/758)
+-   [es2021 build don't works properly starting from jodit 3.9.4 #758](https://github.com/xdan/jodit/issues/758)
 -   [shadow dom support only partly fixed #746](https://github.com/xdan/jodit/issues/746)
 
 ## 3.10.2
@@ -2006,7 +2007,7 @@ and styles
 
 #### :bug: Bug Fix
 
--   Fixed ES2018 version https://github.com/xdan/jodit/issues/585
+-   Fixed es2021 version https://github.com/xdan/jodit/issues/585
 
 ## 3.5.2
 
@@ -2104,11 +2105,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ]
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

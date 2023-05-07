@@ -17,7 +17,6 @@ export default ({
 	argv,
 	ES,
 	isTest,
-	excludeLangs,
 	uglify,
 	outputPath,
 	banner
@@ -37,9 +36,8 @@ export default ({
 
 		const file = path.resolve(
 			outputPath,
-			fileName({ argv, ES, isTest, excludeLangs, uglify } as Variables)(
-				'jodit'
-			) + '.css'
+			fileName({ argv, ES, isTest, uglify } as Variables)('jodit') +
+				'.css'
 		);
 
 		fs.readFile(file, (err, css) => {

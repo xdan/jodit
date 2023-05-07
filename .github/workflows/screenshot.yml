@@ -18,7 +18,7 @@ jobs:
       run: |
         npm run test:screenshots:build
         npm run test:screenshots
-        npm run test:screenshots:es2018
+        npm run test:screenshots:es2021
 
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3

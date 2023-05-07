@@ -6,7 +6,7 @@
 
 /* eslint-disable max-classes-per-file */
 
-const useClasses = ['es2015', 'es2018'].includes(Jodit.es);
+const useClasses = ['es2015', 'es2021'].includes(Jodit.es);
 
 describe('Decorators', () => {
 	describe('component', () => {

@@ -18,12 +18,12 @@ export type Argv = {
 	isTest?: boolean;
 	generateTypes?: boolean;
 	uglify?: boolean;
-	excludeLangs?: boolean;
 	stat?: boolean;
 	exclude?: string;
 	excludePlugins?: string;
 	excludeLanguages?: string;
-	es?: 'es5' | 'es2015' | 'es2018';
+	includeLanguages?: string;
+	es?: 'es5' | 'es2015' | 'es2021';
 	outputFolder?: string;
 	progressFunction?: () => void;
 };
@@ -50,14 +50,14 @@ export type Variables = {
 	isProd: boolean;
 	uglify: boolean;
 	stat: boolean;
-	excludeLangs: boolean;
 	excludeLanguages: string[];
+	includeLanguages: string[];
 	excludePlugins: string[];
 	progressFunction:
 		| ((percentage: number, msg: string, ...args: string[]) => void)
 		| false;
 	mode: 'production' | 'development';
-	ES: 'es5' | 'es2015' | 'es2018';
+	ES: 'es5' | 'es2015' | 'es2021';
 	ESNext: boolean;
 	port: number;
 };
@@ -83,22 +83,24 @@ export const variables = (argv: Argv, dir: string): Variables => {
 	const mode = debug ? 'development' : argv.mode;
 	const isProd = mode === 'production';
 	const uglify = Boolean(!debug && argv && Bool(argv.uglify));
-	const excludeLangs = Bool(argv.excludeLangs);
 	const stat = Bool(argv.stat);
 	const exclude = (argv.exclude || '').split(/[,\s;]/);
 
 	const excludePlugins = (argv.excludePlugins || '').split(/[,\s;]/);
 	const excludeLanguages = (argv.excludeLanguages || '').split(/[,\s;]/);
+	const includeLanguages = (argv.includeLanguages || '').split(/[,\s;]/);
 
 	const ES =
-		argv && ['es5', 'es2018', 'es2015'].includes(argv.es)
+		argv && ['es5', 'es2021', 'es2015'].includes(argv.es)
 			? argv.es
-			: 'es2018';
+			: 'es2021';
 
-	const ESNext = ES === 'es2018';
+	const ESNext = ES === 'es2021';
 	const dirname = dir;
 	const superDirname = path.resolve(__dirname, '..');
-	const outputFolder = argv.outputFolder || `build/${ES}${!excludeLangs ? '' : '.en'}/`
+	const outputFolder =
+		argv.outputFolder ||
+		`build/${ES}${includeLanguages.toString() !== 'en' ? '' : '.en'}/`;
 	const outputPath = path.join(dir, outputFolder);
 
 	return {
@@ -120,8 +122,8 @@ export const variables = (argv: Argv, dir: string): Variables => {
 		isProd,
 		uglify,
 		stat,
-		excludeLangs,
 		excludeLanguages,
+		includeLanguages,
 		excludePlugins,
 		progressFunction:
 			typeof argv.progressFunction === 'function'

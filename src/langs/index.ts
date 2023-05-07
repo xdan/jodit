@@ -13,55 +13,53 @@
 import type { IDictionary } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 
+import * as ar from 'jodit/langs/ar';
+import * as cs_cz from 'jodit/langs/cs_cz';
+import * as de from 'jodit/langs/de';
+import * as en from 'jodit/langs/en';
+import * as es from 'jodit/langs/es';
+import * as fr from 'jodit/langs/fr';
+import * as he from 'jodit/langs/he';
+import * as hu from 'jodit/langs/hu';
+import * as id from 'jodit/langs/id';
+import * as it from 'jodit/langs/it';
+import * as ja from 'jodit/langs/ja';
+import * as ko from 'jodit/langs/ko';
+import * as mn from 'jodit/langs/mn';
+import * as nl from 'jodit/langs/nl';
+import * as pl from 'jodit/langs/pl';
+import * as pt_br from 'jodit/langs/pt_br';
+import * as ru from 'jodit/langs/ru';
+import * as tr from 'jodit/langs/tr';
+import * as zh_cn from 'jodit/langs/zh_cn';
+import * as zh_tw from 'jodit/langs/zh_tw';
+
 let exp: IDictionary<IDictionary<string>> = {};
 
-if (!process.env.EXCLUDE_LANGS) {
-	const ar = require('jodit/langs/ar');
-	const cs_cz = require('jodit/langs/cs_cz');
-	const de = require('jodit/langs/de');
-	const en = require('jodit/langs/en');
-	const es = require('jodit/langs/es');
-	const fr = require('jodit/langs/fr');
-	const he = require('jodit/langs/he');
-	const hu = require('jodit/langs/hu');
-	const id = require('jodit/langs/id');
-	const it = require('jodit/langs/it');
-	const ja = require('jodit/langs/ja');
-	const ko = require('jodit/langs/ko');
-	const mn = require('jodit/langs/mn');
-	const nl = require('jodit/langs/nl');
-	const pl = require('jodit/langs/pl');
-	const pt_br = require('jodit/langs/pt_br');
-	const ru = require('jodit/langs/ru');
-	const tr = require('jodit/langs/tr');
-	const zh_cn = require('jodit/langs/zh_cn');
-	const zh_tw = require('jodit/langs/zh_tw');
+exp = {
+	ar,
+	cs_cz,
+	de,
+	en,
+	es,
+	fr,
+	he,
+	hu,
+	id,
+	it,
+	ja,
+	ko,
+	mn,
+	nl,
+	pl,
+	pt_br,
+	ru,
+	tr,
+	zh_cn,
+	zh_tw
+};
 
-	exp = {
-		ar,
-		cs_cz,
-		de,
-		en,
-		es,
-		fr,
-		he,
-		hu,
-		id,
-		it,
-		ja,
-		ko,
-		mn,
-		nl,
-		pl,
-		pt_br,
-		ru,
-		tr,
-		zh_cn,
-		zh_tw
-	};
-}
-
-const keys = require('jodit/langs/keys');
+import * as keys from 'jodit/langs/keys';
 
 /* Unpack array to hash */
 const get = (value: IDictionary): IDictionary =>

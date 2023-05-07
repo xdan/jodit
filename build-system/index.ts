@@ -28,17 +28,8 @@ export default (
 ): Configuration => {
 	const vars = variables(argv, dir);
 
-	const {
-		ES,
-		mode,
-		isTest,
-		isProd,
-		debug,
-		ESNext,
-		uglify,
-		outputPath,
-		excludeLangs
-	} = vars;
+	const { ES, mode, isTest, isProd, debug, ESNext, uglify, outputPath } =
+		vars;
 
 	const [pluginsEntries] = includePlugins(dir);
 

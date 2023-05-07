@@ -13,8 +13,7 @@ export default ({
 	ESNext,
 	isTest,
 	ES,
-	mode,
-	excludeLangs
+	mode
 }: Variables): webpack.DefinePlugin => {
 	return new webpack.DefinePlugin({
 		appVersion: JSON.stringify(pkg.version),
@@ -25,8 +24,7 @@ export default ({
 		'process.env': {
 			HOMEPAGE: JSON.stringify(pkg.homepage),
 			TARGET_ES: JSON.stringify(ES),
-			NODE_ENV: JSON.stringify(mode),
-			EXCLUDE_LANGS: JSON.stringify(excludeLangs)
+			NODE_ENV: JSON.stringify(mode)
 		}
 	});
 };

@@ -78,6 +78,23 @@ function resoleAliasImports(dirPath: string): void {
 						);
 					}
 
+					// console.log();
+					if (
+						ts.isCallExpression(node) &&
+						node.expression.getText() === 'require'
+					) {
+						return ts.factory.updateCallExpression(
+							node,
+							node.expression,
+							node.typeArguments,
+							[
+								ts.factory.createStringLiteral(
+									resolvePath(node.arguments[0].getText())
+								)
+							]
+						);
+					}
+
 					if (ts.isImportDeclaration(node) && node.moduleSpecifier) {
 						const newPath = resolvePath(
 							node.moduleSpecifier.getText()

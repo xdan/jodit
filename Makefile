@@ -6,8 +6,9 @@ KARMA := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
 generateTypes ?= generateTypes
 es ?= es2015
 uglify ?= true
-excludeLangs ?= false
 browsers ?= FirefoxHeadless
+includeLanguages ?= ''
+excludeLanguages ?= ''
 singleRun ?= true
 isTest ?= false
 updateTests ?= false
@@ -19,7 +20,8 @@ start:
 		--env stat=true \
 		--env es=$(es) \
 		--env uglify=$(uglify) \
-		--env excludeLangs=${excludeLangs} \
+		--env includeLanguages=$(includeLanguages) \
+		--env excludeLanguages=$(excludeLanguages) \
 		--env isTest=$(isTest)
 
 .PHONY: build
@@ -28,22 +30,49 @@ build:
 		--env stat=true \
 		--env es=$(es) \
 		--env uglify=$(uglify) \
-		--env excludeLangs=${excludeLangs} \
 		--env isTest=$(isTest) \
+		--env includeLanguages=$(includeLanguages) \
+		--env excludeLanguages=$(excludeLanguages) \
 		--env generateTypes=$(generateTypes)
+
+.PHONY: clean
+clean:
+	rm -rf ./node_modules/.cache && rm -rf build/*
+
+.PHONY: dts
+dts:
+	mkdir -p ./build/types/types
+	cp -R ./tsconfig.json ./build/types/
+	cp -R ./src/typings.d.ts ./build/types/
+	cp -R ./src/types/* ./build/types/types
+	$(TS_NODE_BASE) ./build-system/utils/resolve-alias-imports.ts ./build/types
+	replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts'
 
 .PHONY: esm
 esm:
+	echo Build esm modules ...
 	rm -rf ./build/esm
 	tsc -p tsconfig.json --module es2020 --target es2020 --removeComments false --sourceMap false --outDir ./build/esm
+
+	echo Resolve alias imports ...
 	$(TS_NODE_BASE) ./build-system/utils/resolve-alias-imports.ts ./build/esm
+
+	echo Copy langs ...
+	rsync -r --exclude '*.test.js' ./src/langs/*.js ./build/esm/langs
+	replace "module.exports = " "export default " ./build/esm/langs/*.js
+
+	echo Remove style imports ...
+	replace "import .+.(less|css)('|\");" '' ./build/esm -r
+
+	echo Copy icons ...
+	$(TS_NODE_BASE) ./build-system/utils/copy-icons-in-esm.ts $(shell pwd)/src/ ./build/esm
 
 .PHONY: build-all
 build-all:
 	make clean
-	make build es=es2018 uglify=false generateTypes=true
+	make build es=es2021 uglify=false generateTypes=true
 	make dts
-	make build es=es2018
+	make build es=es2021
 
 	make build es=es2015
 	make build es=es2015 uglify=false
@@ -51,8 +80,8 @@ build-all:
 	make build es=es5
 	make build es=es5 uglify=false
 
-	make build es=es2018 excludeLangs=true
-	make build es=es2018 excludeLangs=true uglify=false
+	make build es=es2021 includeLanguages=en
+	make build es=es2021 includeLanguages=en uglify=false
 
 	make esm
 
@@ -84,19 +113,6 @@ test-find:
 .PHONY: test-only-run
 test-only-run:
 	$(KARMA) --browsers $(browsers) ./test/karma.conf.ts --single-run $(singleRun)
-
-.PHONY: clean
-clean:
-	rm -rf ./node_modules/.cache && rm -rf build/*
-
-.PHONY: dts
-dts:
-	mkdir -p ./build/types/types
-	cp -R ./tsconfig.json ./build/types/
-	cp -R ./src/typings.d.ts ./build/types/
-	cp -R ./src/types/* ./build/types/types
-	$(TS_NODE_BASE) ./build-system/utils/resolve-alias-imports.ts ./build/types
-	replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts'
 
 .PHONY: coverage
 coverage:

@@ -18,9 +18,9 @@ Or via CDN:
 ```html
 <link
 	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/jodit.es2018.min.css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/jodit.es2021.min.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/jodit.es2018.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/jodit.es2021.min.js"></script>
 <link
 	rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/plugins/speech-recognize/speech-recognize.css"

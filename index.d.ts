@@ -13,7 +13,7 @@ declare global {
 	const Jodit: IJodit;
 	const isProd: boolean;
 	const isESNext: boolean;
-	const ES: 'es5' | 'es2015' | 'es2018';
+	const ES: 'es5' | 'es2015' | 'es2021';
 	const appVersion: string;
 
 	interface HTMLElement {

@@ -51,11 +51,11 @@ ES5 Version
 <script type="text/javascript" src="build/jodit.min.js"></script>
 ```
 
-ES2018 Version (if your users use only modern browsers)
+es2021 Version (if your users use only modern browsers)
 
 ```html
-<link type="text/css" rel="stylesheet" href="build/jodit.es2018.min.css" />
-<script type="text/javascript" src="build/jodit.es2018.min.js"></script>
+<link type="text/css" rel="stylesheet" href="build/jodit.es2021.min.css" />
+<script type="text/javascript" src="build/jodit.es2021.min.js"></script>
 ```
 
 ### Use a CDN
@@ -65,9 +65,9 @@ ES2018 Version (if your users use only modern browsers)
 ```html
 <link
 	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.2/jodit.es2018.min.css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.2/jodit.es2021.min.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.2/jodit.es2018.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.2/jodit.es2021.min.js"></script>
 ```
 
 #### unpkg
@@ -76,9 +76,9 @@ ES2018 Version (if your users use only modern browsers)
 ```html
 <link
 	rel="stylesheet"
-	href="https://unpkg.com/jodit@3.24.2/build/jodit.es2018.min.css"
+	href="https://unpkg.com/jodit@3.24.2/build/jodit.es2021.min.css"
 />
-<script src="https://unpkg.com/jodit@3.24.2/build/jodit.es2018.min.js"></script>
+<script src="https://unpkg.com/jodit@3.24.2/build/jodit.es2021.min.js"></script>
 ```
 
 
@@ -143,13 +143,13 @@ npm run build
 Build without some plugins:
 
 ```bash
-make build es=es2018 uglify=true excludePlugins="about,source,bold,image,xpath,stat,class-span,color,clean-html,file,focus,enter,backspace,media,preview,pint,redo-undo,resize-cells,search,spellcheck,table"
+make build es=es2021 uglify=true excludePlugins="about,source,bold,image,xpath,stat,class-span,color,clean-html,file,focus,enter,backspace,media,preview,pint,redo-undo,resize-cells,search,spellcheck,table"
 ```
 
 Build without some languages:
 
 ```bash
-make build es=es2018 uglify=true excludeLanguages="ru,ar,cs_cz,de,es,fa,fr,he,hu,id,it,ja,ko,nl,pl,pt_br,ru,tr,zh_cn,zh_tw"
+make build es=es2021 uglify=true excludeLanguages="ru,ar,cs_cz,de,es,fa,fr,he,hu,id,it,ja,ko,nl,pl,pt_br,ru,tr,zh_cn,zh_tw"
 ```
 
 Run tests:
