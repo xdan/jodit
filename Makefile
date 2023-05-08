@@ -78,7 +78,7 @@ esm:
 .PHONY: build-all
 build-all:
 	make clean
-	$(TS_NODE_BASE) ./tools/utils/prepare-publish.ts
+	$(TS_NODE_BASE) ./tools/utils/prepare-publish.ts $(shell pwd)
 	cd ./build/ && npm i && cd ..
 
 	make build es=es2021 uglify=false generateTypes=true

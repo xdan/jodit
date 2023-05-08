@@ -7,10 +7,15 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-const packageJson = require('../../package.json');
+const cwd = path.resolve(process.argv[2]);
+if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
+	throw new Error('Invalid directory');
+}
+
+const packageJson = require(path.resolve(cwd, 'package.json'));
 
 fs.writeFileSync(
-	'./build/package.json',
+	path.resolve(cwd, './build/package.json'),
 	JSON.stringify(
 		{
 			...packageJson,
@@ -51,5 +56,8 @@ const copyRecursiveSync = (src: string, dest: string): void => {
 	'.nvmrc',
 	'.npmignore'
 ].forEach(file => {
-	copyRecursiveSync(`./${file}`, `./build/${file}`);
+	copyRecursiveSync(
+		path.resolve(cwd, `./${file}`),
+		path.resolve(cwd, `./build/${file}`)
+	);
 });
