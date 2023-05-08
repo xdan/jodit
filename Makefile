@@ -162,6 +162,7 @@ newversion-git:
 	git add --all  && git commit -m "New version $(version) Read more https://github.com/xdan/jodit/blob/main/CHANGELOG.md "
 	git tag $(version)
 	git push --tags origin HEAD:main
+	echo "New version $(version) Actions: https://github.com/xdan/jodit/actions/
 
 .PHONY: jodit
 jodit:
