@@ -16,6 +16,7 @@ jobs:
     - uses: actions/setup-node@v3 #Setup Node
       with:
         node-version-file: '.nvmrc'
+        cache: 'npm'
 
     - name: Run Karma Tests
       run: |

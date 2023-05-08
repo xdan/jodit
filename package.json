@@ -1,6 +1,6 @@
 {
 	"name": "jodit",
-	"version": "4.0.0-beta.38",
+	"version": "4.0.0-beta.39",
 	"description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
 	"main": "build/jodit.min.js",
 	"types": "./types/index.d.ts",
@@ -50,10 +50,10 @@
 		"autobind-decorator": "^2.4.0",
 		"classlist-polyfill": "^1.2.0",
 		"core-js": "^3.30.2",
-		"es6-promise": "^4.2.8",
-		"tslib": "^2.5.0"
+		"es6-promise": "^4.2.8"
 	},
 	"devDependencies": {
+		"tslib": "^2.5.0",
 		"@types/ace": "^0.0.48",
 		"@types/node": "^20.1.0",
 		"@typescript-eslint/eslint-plugin": "^5.59.2",
