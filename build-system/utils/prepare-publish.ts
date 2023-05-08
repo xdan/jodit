@@ -5,6 +5,7 @@
  */
 
 import * as fs from 'fs';
+import * as path from 'path';
 
 const packageJson = require('../../package.json');
 
@@ -23,3 +24,31 @@ fs.writeFileSync(
 		'\t'
 	)
 );
+
+const copyRecursiveSync = (src: string, dest: string): void => {
+	const exists = fs.existsSync(src);
+	const stats = exists && fs.statSync(src);
+	const isDirectory = exists && stats.isDirectory();
+	if (isDirectory) {
+		fs.mkdirSync(dest);
+		fs.readdirSync(src).forEach((childItemName): void => {
+			copyRecursiveSync(
+				path.join(src, childItemName),
+				path.join(dest, childItemName)
+			);
+		});
+	} else {
+		fs.copyFileSync(src, dest);
+	}
+};
+
+[
+	'README.md',
+	'CHANGELOG.md',
+	'LICENSE.txt',
+	'SECURITY.md',
+	'examples',
+	'.nvmrc'
+].forEach(file => {
+	copyRecursiveSync(`./${file}`, `./build/${file}`);
+});
