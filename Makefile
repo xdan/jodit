@@ -54,13 +54,13 @@ dts:
 	cp -R ./src/typings.d.ts ./build/types/
 	cp -R ./src/types/* ./build/types/types
 	@$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts --cwd=./build/types
-	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts'
+	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
 
 .PHONY: esm
 esm:
 	echo Build esm modules ...
 	rm -rf ./build/esm
-	tsc -p tsconfig.json --module es2020 --target es2020 --removeComments false --sourceMap false --outDir ./build/esm
+	tsc -p tsconfig.json --importHelpers false --module es2020 --target es2020 --removeComments false --sourceMap false --outDir ./build/esm
 
 	echo Remove style imports ...
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' ./build/esm -r --silent

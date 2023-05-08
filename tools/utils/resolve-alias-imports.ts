@@ -22,7 +22,6 @@ if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
 
 const alias = /^(jodit)/;
 const allowPackages = new Set([
-	'tslib',
 	'autobind-decorator',
 	'classlist-polyfill',
 	'es6-promise/auto',
