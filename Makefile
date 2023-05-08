@@ -62,15 +62,15 @@ esm:
 	rm -rf ./build/esm
 	tsc -p tsconfig.json --module es2020 --target es2020 --removeComments false --sourceMap false --outDir ./build/esm
 
+	echo Remove style imports ...
+	@$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' ./build/esm -r --silent
+
 	echo Resolve alias imports ...
 	$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts --cwd=./build/esm
 
 	echo Copy langs ...
 	rsync -r --exclude '*.test.js' ./src/langs/*.js ./build/esm/langs
 	@$(NODE_MODULES_BIN)/replace "module.exports = " "export default " ./build/esm/langs/*.js --silent
-
-	echo Remove style imports ...
-	@$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' ./build/esm -r --silent
 
 	echo Copy icons ...
 	@$(TS_NODE_BASE) ./tools/utils/copy-icons-in-esm.ts $(shell pwd)/src/ ./build/esm
