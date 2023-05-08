@@ -15,7 +15,7 @@ singleRun ?= true
 isTest ?= false
 debug ?= false
 updateTests ?= false
-version = $(shell cat package.json | jq -r '.version')
+version = $(shell cat package.json | npx --yes jq -r '.version')
 
 .PHONY: start
 start:
