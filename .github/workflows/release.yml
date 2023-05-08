@@ -17,9 +17,13 @@ jobs:
       with:
         node-version: '16.15.0'
 
-    - name: Build
+    - name: Lint
       run: |
         npm ci
+        make lint
+
+    - name: Build
+      run: |
         make build-all
 
     - name: Test all

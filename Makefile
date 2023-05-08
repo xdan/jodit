@@ -148,14 +148,9 @@ screenshots-build-image:
 
 .PHONY: newversion
 newversion:
-	make lint
-	make clean
-	make test
-	npm version patch --no-git-tag-version
-	make build-all
+	#npm version patch --no-git-tag-version
+	npm version prerelease --preid=beta --no-git-tag-version
 	make newversion-git
-	npm publish ./
-	rm -rf types/
 
 .PHONY: newversion-git
 newversion-git:
