@@ -21,6 +21,7 @@ import { Dom } from 'jodit/core/dom/dom';
 import { debounce } from 'jodit/core/decorators/debounce/debounce';
 
 import { execSpellCommand } from './helpers/exec-spell-command';
+import * as langs from './langs';
 import './config';
 
 export class SpeechRecognizeNative extends Plugin implements IPlugin {
@@ -39,7 +40,7 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 		const { commands } = jodit.o.speechRecognize;
 
 		if (commands) {
-			extendLang(require('./langs'));
+			extendLang(langs);
 
 			keys(commands, false).forEach(words => {
 				const keys = words.split('|');

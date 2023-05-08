@@ -18,6 +18,7 @@ import { autobind } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { extendLang, pluginSystem } from 'jodit/core/global';
 
+import * as langs from './langs';
 import './config';
 
 export class lineHeight extends Plugin {
@@ -30,7 +31,7 @@ export class lineHeight extends Plugin {
 
 	constructor(jodit: IJodit) {
 		super(jodit);
-		extendLang(require('./langs'));
+		extendLang(langs);
 	}
 
 	protected afterInit(jodit: IJodit): void {

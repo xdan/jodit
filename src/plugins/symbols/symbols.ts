@@ -25,6 +25,7 @@ import { Dom } from 'jodit/core/dom/dom';
 import { attr } from 'jodit/core/helpers/utils';
 import { extendLang, pluginSystem } from 'jodit/core/global';
 
+import * as langs from './langs';
 import './config';
 
 /**
@@ -43,7 +44,7 @@ export class symbols extends Plugin {
 
 	constructor(jodit: IJodit) {
 		super(jodit);
-		extendLang(require('./langs'));
+		extendLang(langs);
 	}
 
 	/** @override */

@@ -20,6 +20,14 @@ import * as splitg from 'jodit/plugins/inline-popup/icons/splitg.svg';
 import * as splitv from 'jodit/plugins/inline-popup/icons/splitv.svg';
 import * as thList from 'jodit/plugins/inline-popup/icons/th-list.svg';
 
+import a from './items/a';
+import img from './items/img';
+import cells from './items/cells';
+import toolbar from './items/toolbar';
+import jodit from './items/iframe';
+import iframe from './items/iframe';
+import joditMedia from './items/iframe';
+
 declare module 'jodit/config' {
 	interface Config {
 		popup: IDictionary<
@@ -52,13 +60,13 @@ Icon.set('addcolumn', addcolumn.default)
 	.set('th-list', thList.default);
 
 Config.prototype.popup = {
-	a: require('./items/a').default,
-	img: require('./items/img').default,
-	cells: require('./items/cells').default,
-	toolbar: require('./items/toolbar').default,
-	jodit: require('./items/iframe').default,
-	iframe: require('./items/iframe').default,
-	'jodit-media': require('./items/iframe').default,
+	a,
+	img,
+	cells,
+	toolbar,
+	jodit,
+	iframe,
+	'jodit-media': joditMedia,
 	selection: [
 		'bold',
 		'underline',

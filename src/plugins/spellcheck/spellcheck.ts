@@ -16,6 +16,7 @@ import { attr } from 'jodit/core/helpers/utils/attr';
 import { autobind } from 'jodit/core/decorators';
 import { extendLang, pluginSystem } from 'jodit/core/global';
 
+import * as langs from './langs';
 import './config';
 
 export class spellcheck extends Plugin {
@@ -28,7 +29,7 @@ export class spellcheck extends Plugin {
 
 	constructor(jodit: IJodit) {
 		super(jodit);
-		extendLang(require('./langs'));
+		extendLang(langs);
 	}
 
 	protected afterInit(jodit: IJodit): void {

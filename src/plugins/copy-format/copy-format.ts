@@ -18,7 +18,7 @@ import { extendLang, pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 
 import copyFormatIcon from './copy-format.svg';
-
+import * as langs from './langs';
 
 const pluginKey = 'copy-format';
 
@@ -156,7 +156,7 @@ export function copyFormat(editor: IJodit): void {
 		group: 'clipboard'
 	});
 
-	extendLang(require('./langs'));
+	extendLang(langs);
 }
 
 pluginSystem.add('copyformat', copyFormat);

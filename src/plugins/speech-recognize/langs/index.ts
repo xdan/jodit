@@ -4,26 +4,26 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const ar = require('./ar.js');
-const cs_cz = require('./cs_cz.js');
-const de = require('./de.js');
-const es = require('./es.js');
-const fa = require('./fa.js');
-const fr = require('./fr.js');
-const he = require('./he.js');
-const hu = require('./hu.js');
-const id = require('./id.js');
-const it = require('./it.js');
-const ja = require('./ja.js');
-const ko = require('./ko.js');
-const mn = require('./mn.js');
-const nl = require('./nl.js');
-const pl = require('./pl.js');
-const pt_br = require('./pt_br.js');
-const ru = require('./ru.js');
-const tr = require('./tr.js');
-const zh_cn = require('./zh_cn.js');
-const zh_tw = require('./zh_tw.js');
+import * as ar from './ar.js';
+import * as cs_cz from './cs_cz.js';
+import * as de from './de.js';
+import * as es from './es.js';
+import * as fa from './fa.js';
+import * as fr from './fr.js';
+import * as he from './he.js';
+import * as hu from './hu.js';
+import * as id from './id.js';
+import * as it from './it.js';
+import * as ja from './ja.js';
+import * as ko from './ko.js';
+import * as mn from './mn.js';
+import * as nl from './nl.js';
+import * as pl from './pl.js';
+import * as pt_br from './pt_br.js';
+import * as ru from './ru.js';
+import * as tr from './tr.js';
+import * as zh_cn from './zh_cn.js';
+import * as zh_tw from './zh_tw.js';
 
 export {
 	ar,
