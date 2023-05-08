@@ -277,7 +277,11 @@ export class Async implements IAsync {
 			return executor(resolve, reject);
 		});
 
-		if (!promise.finally && process.env.TARGET_ES !== 'es2021') {
+		if (
+			!promise.finally &&
+			typeof process !== 'undefined' &&
+			process.env.TARGET_ES !== 'es2021'
+		) {
 			promise.finally = (
 				onfinally?: (() => void) | undefined | null
 			): Promise<T> => {
