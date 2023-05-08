@@ -77,7 +77,8 @@ function resoleAliasImports(dirPath: string): void {
 					fs.existsSync(fullPath) &&
 					fs.statSync(fullPath).isDirectory()
 				) {
-					modulePath += '/index.js';
+					modulePath +=
+						(!modulePath.endsWith('/') ? '/' : '') + 'index.js';
 				} else {
 					modulePath += '.js';
 				}
