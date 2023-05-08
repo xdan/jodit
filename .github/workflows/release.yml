@@ -28,9 +28,9 @@ jobs:
       run: |
         make build-all
 
-#    - name: Test all
-#      run: |
-#        make test-all
+    - name: Test all
+      run: |
+        make test-all
 
 #    - name: Screenshot test all
 #      run: |
@@ -39,5 +39,3 @@ jobs:
     - name: Publish
       run: |
         NPM_TOKEN=${{ secrets.NPM_TOKEN }} npm publish ./build --access public
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
