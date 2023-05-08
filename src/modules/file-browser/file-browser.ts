@@ -57,6 +57,7 @@ import { Dlgs } from 'jodit/core/traits/dlgs';
 import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
 
 import './config';
+import { IS_PROD } from 'jodit/core/constants';
 
 export interface FileBrowser extends Dlgs {}
 
@@ -282,7 +283,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 				loadTree(this).then(resolve, reject);
 			})
 			.catch((e: Error): void => {
-				if (!isProd) {
+				if (!IS_PROD) {
 					throw e;
 				}
 			}) as Promise<void>;

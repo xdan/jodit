@@ -11,7 +11,6 @@
 import type { IComponent, IContainer, IDictionary, Nullable } from './types';
 import type { IDialog, IDialogOptions } from './dialog';
 
-
 export type ModType = string | boolean | null;
 
 export interface IMods {

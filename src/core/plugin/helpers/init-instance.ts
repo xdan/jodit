@@ -11,6 +11,7 @@
 import type { IDictionary, IJodit, IPlugin, PluginInstance } from 'jodit/types';
 import { isInitable } from 'jodit/core/helpers/checker';
 import { loadStyle } from './load';
+import { IS_PROD, IS_TEST } from 'jodit/core/constants';
 
 /**
  * Init plugin and try init waiting list
@@ -45,8 +46,7 @@ export function init(
 	const req = (instance as IPlugin).requires;
 
 	if (req?.length && !req.every(name => doneList.has(name))) {
-		// @ts-ignore
-		if (!isProd && !isTest && !waitingList[pluginName]) {
+		if (!IS_PROD && !IS_TEST && !waitingList[pluginName]) {
 			console.log('Await plugin: ', pluginName);
 		}
 
@@ -60,8 +60,7 @@ export function init(
 		} catch (e) {
 			console.error(e);
 
-			// @ts-ignore
-			if (!isProd) {
+			if (!IS_PROD) {
 				throw e;
 			}
 		}
@@ -72,7 +71,7 @@ export function init(
 
 	if ((instance as IPlugin).hasStyle) {
 		loadStyle(jodit, pluginName).catch(e => {
-			!isProd && console.log(e);
+			!IS_PROD && console.log(e);
 		});
 	}
 

@@ -14,6 +14,7 @@ import {
 	INSERT_AS_HTML,
 	INSERT_AS_TEXT,
 	INSERT_ONLY_TEXT,
+	IS_PROD,
 	TEXT_PLAIN
 } from 'jodit/core/constants';
 import { Config } from 'jodit/config';
@@ -90,7 +91,7 @@ Config.prototype.controls.paste = {
 
 				error = false;
 			} catch (e) {
-				if (!isProd) {
+				if (!IS_PROD) {
 					console.log(e);
 				}
 			}
@@ -100,7 +101,7 @@ Config.prototype.controls.paste = {
 					text = await navigator.clipboard.readText();
 					error = false;
 				} catch (e) {
-					if (!isProd) {
+					if (!IS_PROD) {
 						console.log(e);
 					}
 				}

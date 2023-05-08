@@ -11,7 +11,7 @@
 import type { IJodit, ISnapshot, Nullable, SnapshotType } from 'jodit/types';
 import { ViewComponent } from 'jodit/core/component';
 import { Dom } from 'jodit/core/dom';
-import { TEMP_ATTR } from 'jodit/core/constants';
+import { IS_PROD, TEMP_ATTR } from 'jodit/core/constants';
 
 /**
  * Module for creating snapshot of editor which includes html content and the current selection
@@ -129,7 +129,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		try {
 			changes();
 		} catch (e) {
-			if (!isProd) {
+			if (!IS_PROD) {
 				throw e;
 			}
 		}
@@ -254,7 +254,7 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 			this.j.editor.lastChild &&
 				this.j.s.setCursorAfter(this.j.editor.lastChild);
 
-			if (!isProd) {
+			if (!IS_PROD) {
 				// tslint:disable-next-line:no-console
 				console.warn('Broken snapshot', __ignore);
 			}

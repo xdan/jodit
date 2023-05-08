@@ -28,7 +28,8 @@ import {
 	INSEPARABLE_TAGS,
 	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP_END as INV_END,
-	INVISIBLE_SPACE_REG_EXP_START as INV_START
+	INVISIBLE_SPACE_REG_EXP_START as INV_START,
+	IS_PROD
 } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 
@@ -1494,7 +1495,7 @@ export class Selection implements ISelect {
 					this.selectRange(range);
 				}
 			} catch (e) {
-				if (!isProd) {
+				if (!IS_PROD) {
 					throw e;
 				}
 			}

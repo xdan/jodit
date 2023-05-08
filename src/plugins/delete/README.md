@@ -6,7 +6,7 @@ This plugin replaces the default delete command with a custom one that.
 
 ```js
 Jodit.make('#editor', {
-    disablePlugins: 'delete'
+	disablePlugins: 'delete'
 });
 ```
 

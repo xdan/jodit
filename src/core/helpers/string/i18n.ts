@@ -16,12 +16,11 @@ import {
 } from 'jodit/core/helpers/utils';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { ucfirst } from 'jodit/core/helpers/string/ucfirst';
-import { lang } from 'jodit/core/constants';
+import { IS_PROD, lang } from 'jodit/core/constants';
 
 /**
  * Simple variant sprintf function
  */
-// declare const isProd: boolean;
 export const sprintf = (str: string, args?: Array<string | number>): string => {
 	if (!args || !args.length) {
 		return str;
@@ -149,7 +148,7 @@ export function i18n(
 		return '{' + key + '}';
 	}
 
-	if (!isProd && language !== 'en') {
+	if (!IS_PROD && language !== 'en') {
 		console.warn(`i18n need "${key}" in "${language}"`);
 	}
 

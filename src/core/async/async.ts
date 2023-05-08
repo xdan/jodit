@@ -26,6 +26,7 @@ import { isPromise } from 'jodit/core/helpers/checker/is-promise';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isNumber } from 'jodit/core/helpers/checker/is-number';
 import { assert } from 'jodit/core/helpers/utils/assert';
+import { ES } from 'jodit/core/constants';
 
 type Callback = (...args: any[]) => void;
 
@@ -280,7 +281,7 @@ export class Async implements IAsync {
 		if (
 			!promise.finally &&
 			typeof process !== 'undefined' &&
-			process.env.TARGET_ES !== 'es2021'
+			ES !== 'es2021'
 		) {
 			promise.finally = (
 				onfinally?: (() => void) | undefined | null

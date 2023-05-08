@@ -801,7 +801,8 @@ describe('Test paste plugin', () => {
 					' </w:LatentStyles>\n' +
 					'</xml><![endif]-->\n' +
 					'<style>\n' +
-					'<!-' + '-\n \n' +
+					'<!-' +
+					'-\n \n' +
 					' @font-face\n' +
 					'\t{font-family:"Cambria Math";\n' +
 					'\tpanose-1:2 4 5 3 5 4 6 3 2 4;\n' +

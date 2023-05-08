@@ -15,7 +15,7 @@ import './resizer.less';
 import type { HTMLTagNames, IBound, Nullable } from 'jodit/types';
 import type { IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
-import { IS_IE, KEY_ALT } from 'jodit/core/constants';
+import { IS_ES_NEXT, IS_IE, KEY_ALT } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import {
 	$$,
@@ -454,7 +454,7 @@ export class resizer extends Plugin {
 
 		this.j.e.on(element, 'dragstart', this.hide);
 
-		if (!isESNext && IS_IE) {
+		if (!IS_ES_NEXT && IS_IE) {
 			// for IE don't show native resizer
 			this.j.e.on(element, 'mousedown', (event: MouseEvent) => {
 				if (Dom.isTag(element, 'img')) {

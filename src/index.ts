@@ -12,11 +12,13 @@
 
 import './styles/index.less';
 
+import * as constants from './core/constants';
+
 declare function require(moduleName: string): any;
 
 if (
 	typeof process !== 'undefined' &&
-	process.env.TARGET_ES === 'es5' &&
+	constants.ES === 'es5' &&
 	typeof window !== 'undefined'
 ) {
 	require('./polyfills');
@@ -27,7 +29,6 @@ import { Jodit as DefaultJodit } from './jodit';
 import Languages from './langs/';
 
 import * as decorators from './core/decorators';
-import * as constants from './core/constants';
 import * as Modules from './modules/';
 import * as Icons from './styles/icons/';
 

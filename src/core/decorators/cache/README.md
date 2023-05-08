@@ -3,7 +3,7 @@
 The decorator allows you to cache the result of executing any getter of the UI component.
 
 ```typescript
-import { cache, component } from 'jodit/core/decorators'
+import { cache, component } from 'jodit/core/decorators';
 
 @component
 class UIComponent extends UIElement {
@@ -21,14 +21,14 @@ elm.someHeavyGetter;
 Также можно кешировать возвращаеиые HTML элементы. При следующем вызове метода, элемент дулет клоинроваться;
 
 ```typescript
-import { cacheHTML, component } from 'jodit/core/decorators'
+import { cacheHTML, component } from 'jodit/core/decorators';
 
 @component
 class UIComponent extends UIElement {
 	@cacheHTML()
 	someHeavyMethod() {
 		const div = document.createElement('div');
-    div.innerHTML = someHeaveCalculation();
+		div.innerHTML = someHeaveCalculation();
 		return div;
 	}
 }
@@ -37,7 +37,6 @@ const elm = new UIComponent(jodit);
 const div1 = elm.someHeavyMethod(); // call once
 const div2 = elm.someHeavyMethod();
 
-
 const elm2 = new UIComponent(jodit);
 const div3 = elm2.someHeavyMethod();
 
@@ -45,4 +44,7 @@ console.log(div1 === div2); // false
 console.log(div3 === div2); // false
 console.log(div3 === div1); // false
 ```
+
+```
+
 ```

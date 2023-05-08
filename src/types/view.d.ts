@@ -17,7 +17,13 @@ import type {
 	IProgressBar,
 	IToolbarCollection
 } from './toolbar';
-import type { CanUndef, IComponent, IContainer, IDictionary, Nullable } from './types';
+import type {
+	CanUndef,
+	IComponent,
+	IContainer,
+	IDictionary,
+	Nullable
+} from './types';
 import type { Attributes, ICreate } from './create';
 import type { IStorage } from './storage';
 import type { IUIButtonState } from './ui';

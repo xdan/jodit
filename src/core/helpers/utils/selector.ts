@@ -14,7 +14,7 @@ import type {
 	IUIElement,
 	Nullable
 } from 'jodit/types/';
-import { IS_IE } from 'jodit/core/constants';
+import { IS_ES_NEXT, IS_IE } from 'jodit/core/constants';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { attr, error } from 'jodit/core/helpers/utils';
 import { Dom } from 'jodit/core/dom/dom';
@@ -61,7 +61,7 @@ export function $$<T extends Element>(
 	let result: NodeList;
 
 	if (
-		!isESNext &&
+		!IS_ES_NEXT &&
 		/:scope/.test(selector) &&
 		IS_IE &&
 		!(root && root.nodeType === Node.DOCUMENT_NODE)

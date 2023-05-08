@@ -67,7 +67,7 @@ import {
 	isNumber
 } from 'jodit/core/helpers';
 
-import { lang } from 'jodit/core/constants';
+import { IS_PROD, lang } from 'jodit/core/constants';
 import {
 	instances,
 	pluginSystem,
@@ -589,7 +589,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			this.__setElementValue(new_value);
 			this.__callChangeCount += 1;
 
-			if (!isProd && this.__callChangeCount > 4) {
+			if (!IS_PROD && this.__callChangeCount > 4) {
 				console.warn(
 					'Too many recursive changes',
 					new_value,
@@ -824,7 +824,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				try {
 					result = this.nativeExecCommand(command, showUI, value);
 				} catch (e) {
-					if (!isProd) {
+					if (!IS_PROD) {
 						throw e;
 					}
 				}

@@ -16,12 +16,11 @@ export default ({
 	mode
 }: Variables): webpack.DefinePlugin => {
 	return new webpack.DefinePlugin({
-		appVersion: JSON.stringify(pkg.version),
-		isProd,
-		isTest,
-		isESNext: ESNext,
-		ES: JSON.stringify(ES),
 		'process.env': {
+			APP_VERSION: JSON.stringify(pkg.version),
+			IS_PROD: isProd,
+			IS_TEST: isTest,
+			IS_ES_NEXT: ESNext,
 			HOMEPAGE: JSON.stringify(pkg.homepage),
 			TARGET_ES: JSON.stringify(ES),
 			NODE_ENV: JSON.stringify(mode)

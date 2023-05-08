@@ -21,7 +21,7 @@ import type {
 	IViewBased
 } from 'jodit/types';
 import { Config } from 'jodit/config';
-import { IS_IE } from 'jodit/core/constants';
+import { IS_ES_NEXT, IS_IE } from 'jodit/core/constants';
 import {
 	error,
 	isJoditObject,
@@ -111,7 +111,7 @@ export class Uploader extends ViewComponent implements IUploader {
 
 				const cData = e.clipboardData;
 
-				const process = (formdata: FormData): void => {
+				const processData = (formdata: FormData): void => {
 					if (file) {
 						formdata.append('extension', extension);
 						formdata.append('mimetype', file.type);
@@ -129,7 +129,7 @@ export class Uploader extends ViewComponent implements IUploader {
 					return false;
 				}
 
-				if (IS_IE && !isESNext) {
+				if (IS_IE && !IS_ES_NEXT) {
 					return processOldBrowserDrag(
 						self,
 						cData,
@@ -163,7 +163,7 @@ export class Uploader extends ViewComponent implements IUploader {
 									[file],
 									handlerSuccess,
 									handlerError,
-									process
+									processData
 								).finally(onFinally);
 							}
 

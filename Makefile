@@ -66,7 +66,7 @@ esm:
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' ./build/esm -r --silent
 
 	echo Resolve alias imports ...
-	$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts --cwd=./build/esm
+	$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts --cwd=./build/esm --ver=$(version)
 
 	echo Copy langs ...
 	rsync -r --exclude '*.test.js' ./src/langs/*.js ./build/esm/langs

@@ -11,6 +11,7 @@
 import { Dom } from 'jodit/core/dom/dom';
 import { $$ } from 'jodit/core/helpers/utils/selector';
 import { trim } from 'jodit/core/helpers/string/trim';
+import { IS_PROD } from 'jodit/core/constants';
 
 function normalizeCSS(s: string): string {
 	return s
@@ -87,7 +88,7 @@ export function applyStyles(html: string): string {
 					}
 				}
 			} catch (e) {
-				if (!isProd) {
+				if (!IS_PROD) {
 					throw e;
 				}
 			}

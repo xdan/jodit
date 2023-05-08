@@ -13,7 +13,7 @@
 import type { IJodit } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
 import { Dom } from 'jodit/core/dom';
-import { INVISIBLE_SPACE } from 'jodit/core/constants';
+import { INVISIBLE_SPACE, IS_PROD } from 'jodit/core/constants';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { moveNodeInsideStart } from 'jodit/core/selection/helpers';
 import { pluginSystem } from 'jodit/core/global';
@@ -112,7 +112,7 @@ export class backspace extends Plugin {
 						isFunction(func) &&
 						func(jodit, fakeNode, backspace, mode)
 					) {
-						if (!isProd) {
+						if (!IS_PROD) {
 							console.info('Remove case:', func.name);
 						}
 						return true;
@@ -122,7 +122,7 @@ export class backspace extends Plugin {
 				return false;
 			}
 		} catch (e) {
-			if (!isProd) {
+			if (!IS_PROD) {
 				console.error(e);
 			}
 

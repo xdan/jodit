@@ -35,6 +35,7 @@ import {
 } from './helpers';
 
 import './config';
+import { IS_PROD } from 'jodit/core/constants';
 
 /**
  * Search plugin. it is used for custom search in text
@@ -122,7 +123,7 @@ export class search extends Plugin {
 		this[walkerKey] = walker;
 
 		return this.find(walker, query).catch(e => {
-			!isProd && console.error(e);
+			!IS_PROD && console.error(e);
 			return [];
 		});
 	}
@@ -164,7 +165,7 @@ export class search extends Plugin {
 				this.cache = {};
 				this.ui.currentIndex = currentIndex;
 				await this.findAndSelect(query, true).catch(e => {
-					!isProd && console.error(e);
+					!IS_PROD && console.error(e);
 					return null;
 				});
 			} finally {
@@ -225,7 +226,7 @@ export class search extends Plugin {
 				rng.setEnd(bound.endContainer, bound.endOffset);
 				this.j.s.selectRange(rng);
 			} catch (e) {
-				!isProd && console.error(e);
+				!IS_PROD && console.error(e);
 			}
 
 			this.tryScrollToElement(bound.startContainer);
@@ -397,13 +398,13 @@ export class search extends Plugin {
 							editor.e.current === 'searchNext'
 						)
 						.catch(e => {
-							!isProd && console.error('Search error', e);
+							!IS_PROD && console.error('Search error', e);
 						});
 				})
 				.on('search.search', (value: string, next: boolean = true) => {
 					this.ui.currentIndex = 0;
 					return self.findAndSelect(value || '', next).catch(e => {
-						!isProd && console.error('Search error', e);
+						!IS_PROD && console.error('Search error', e);
 					});
 				});
 
@@ -416,7 +417,7 @@ export class search extends Plugin {
 					) => {
 						value &&
 							self.findAndSelect(value, next).catch(e => {
-								!isProd && console.error('Search error', e);
+								!IS_PROD && console.error('Search error', e);
 							});
 
 						return false;

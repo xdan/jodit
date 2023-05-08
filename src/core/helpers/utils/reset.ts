@@ -11,6 +11,7 @@
 import type { IDictionary, Nullable } from 'jodit/types';
 import { get } from './get';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { IS_PROD } from 'jodit/core/constants';
 
 const map: IDictionary = {};
 
@@ -43,7 +44,7 @@ export const reset = function <T extends Function>(key: string): Nullable<T> {
 				map[key] = func.bind(bind);
 			}
 		} catch (e) {
-			if (!isProd) {
+			if (!IS_PROD) {
 				throw e;
 			}
 		} finally {

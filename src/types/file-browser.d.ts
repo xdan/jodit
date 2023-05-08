@@ -127,7 +127,7 @@ export interface IFileBrowserOptions extends IViewOptions {
 	/** @deprecated Instead use permissionsPresets.allowFileMove */
 	moveFile: boolean;
 
-	permissionsPresets: Partial<IPermissions>,
+	permissionsPresets: Partial<IPermissions>;
 
 	showFoldersPanel: boolean;
 

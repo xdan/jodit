@@ -177,5 +177,9 @@ export interface IObservable {
 }
 
 interface IEventEmitter {
-	on(object: Document, event: 'selectionchange', callback: CallbackFunction): this;
+	on(
+		object: Document,
+		event: 'selectionchange',
+		callback: CallbackFunction
+	): this;
 }

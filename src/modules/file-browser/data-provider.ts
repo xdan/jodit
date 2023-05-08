@@ -36,6 +36,7 @@ import {
 import { Ajax } from 'jodit/core/request';
 import { autobind } from 'jodit/core/decorators';
 import { FileBrowserItem } from 'jodit/modules/file-browser/builders/item';
+import { IS_PROD } from 'jodit/core/constants';
 
 export const DEFAULT_SOURCE_NAME = 'default';
 
@@ -177,7 +178,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	canI(action: string): boolean {
 		const rule: keyof IPermissions = 'allow' + action;
 
-		if (!isProd) {
+		if (!IS_PROD) {
 			if (!possibleRules.includes(rule)) {
 				throw error('Wrong action ' + action);
 			}

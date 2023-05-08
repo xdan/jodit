@@ -32,7 +32,7 @@ import {
 	isFunction,
 	isVoid
 } from 'jodit/core/helpers';
-import { BASE_PATH } from 'jodit/core/constants';
+import { APP_VERSION, BASE_PATH, ES, IS_ES_NEXT } from 'jodit/core/constants';
 import {
 	Component,
 	STATUSES,
@@ -52,8 +52,6 @@ export interface View extends Mods, Elms {}
 
 @derive(Mods, Elms)
 export abstract class View extends Component implements IViewBased, Mods, Elms {
-	static readonly ES: string = ES;
-
 	readonly isView = true as const;
 	parent: Nullable<IViewBased> = null;
 
@@ -80,9 +78,10 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		return BASE_PATH;
 	}
 
-	readonly version: string = appVersion; // from webpack.config.js
-	static readonly esNext: boolean = isESNext; // from webpack.config.js
-	static readonly es: 'es5' | 'es2015' | 'es2021' = ES; // from webpack.config.js
+	// from webpack.config.js
+	static readonly ES: 'es5' | 'es2015' | 'es2021' = ES;
+	static readonly version: string = APP_VERSION;
+	static readonly esNext: boolean = IS_ES_NEXT; // from webpack.config.js
 
 	/**
 	 * Return default timeout period in milliseconds for some debounce or throttle functions.
@@ -231,11 +230,11 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	 * Return current version
 	 */
 	getVersion(): string {
-		return appVersion;
+		return View.version;
 	}
 
 	static getVersion(): string {
-		return appVersion;
+		return View.version;
 	}
 
 	/** @override */

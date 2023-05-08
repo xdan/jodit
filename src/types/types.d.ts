@@ -17,7 +17,7 @@ export type IDictionary<T = any, K extends string = string> = {
 
 export type Prettify<T> = {
 	[P in keyof T]: T[P];
-}
+};
 
 export type CanPromise<T> = T | Promise<T>;
 export type CanUndef<T> = T | undefined;
@@ -152,7 +152,7 @@ export interface CallbackFunction<T = any> {
 }
 
 interface CallbackFunction {
-	options?: unknown
+	options?: unknown;
 }
 
 export type BooleanFunction<T = any> = (this: T, ...args: any[]) => boolean;

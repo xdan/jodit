@@ -10,6 +10,7 @@
 
 import type { IJodit, Nullable, PluginInstance, PluginType } from 'jodit/types';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { IS_PROD } from 'jodit/core/constants';
 
 /**
  * Create instance of plugin
@@ -30,8 +31,7 @@ export function makeInstance(
 		}
 	} catch (e) {
 		console.error(e);
-		// @ts-ignore
-		if (!isProd) {
+		if (!IS_PROD) {
 			throw e;
 		}
 	}

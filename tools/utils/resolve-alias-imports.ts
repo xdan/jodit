@@ -9,11 +9,26 @@ import * as fs from 'fs';
 import * as ts from 'typescript';
 import * as yargs from 'yargs';
 
-const { argv } = yargs.option('cwd', {
-	type: 'string',
-	demandOption: true,
-	description: 'Work directory'
-});
+const { argv } = yargs
+	.option('cwd', {
+		type: 'string',
+		demandOption: true,
+		description: 'Work directory'
+	})
+	.option('ver', {
+		type: 'string',
+		demandOption: true,
+		description: 'Version of Jodit'
+	});
+
+const globalMaps = {
+	'process.env.APP_VERSION': argv.ver,
+	'process.env.TARGET_ES': 'es2020',
+	'process.env.IS_ES_NEXT': true,
+	'process.env.IS_PROD': true,
+	'process.env.IS_TEST': false,
+	'process.env.HOMEPAGE': 'https://xdsoft.net/jodit/'
+};
 
 const cwd = path.resolve(argv.cwd);
 if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
@@ -89,6 +104,21 @@ function resoleAliasImports(dirPath: string): void {
 		const transformer = ctx => {
 			return src => {
 				const visit = (node: ts.Node): ts.Node => {
+					if (
+						ts.isPropertyAccessExpression(node) &&
+						/process\.env/.test(node.getFullText())
+					) {
+						const name = node.getFullText().trim();
+						if (globalMaps[name] === undefined) {
+							throw Error(`Unknown variable: ${name}`);
+						}
+						return typeof globalMaps[name] === 'boolean'
+							? globalMaps[name]
+								? ts.factory.createTrue()
+								: ts.factory.createFalse()
+							: ts.factory.createStringLiteral(globalMaps[name]);
+					}
+
 					if (
 						ts.isLiteralTypeNode(node) &&
 						node.parent?.kind === ts.SyntaxKind.LastTypeNode &&

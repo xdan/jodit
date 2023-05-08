@@ -13,7 +13,7 @@
 import './sticky.less';
 
 import type { IBound, IJodit } from 'jodit/types';
-import { IS_IE, MODE_WYSIWYG } from 'jodit/core/constants';
+import { IS_ES_NEXT, IS_IE, MODE_WYSIWYG } from 'jodit/core/constants';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { Dom } from 'jodit/core/dom/dom';
 import { css, offset } from 'jodit/core/helpers';
@@ -27,7 +27,7 @@ export class sticky extends Plugin {
 	private dummyBox?: HTMLElement;
 
 	private createDummy = (toolbar: HTMLElement): void => {
-		if (!isESNext && IS_IE && !this.dummyBox) {
+		if (!IS_ES_NEXT && IS_IE && !this.dummyBox) {
 			this.dummyBox = this.j.c.div();
 			this.dummyBox.classList.add('jodit_sticky-dummy_toolbar');
 			this.j.container.insertBefore(this.dummyBox, toolbar);
@@ -51,7 +51,7 @@ export class sticky extends Plugin {
 			width: this.j.container.offsetWidth - 2
 		});
 
-		if (!isESNext && IS_IE && this.dummyBox) {
+		if (!IS_ES_NEXT && IS_IE && this.dummyBox) {
 			css(this.dummyBox, {
 				height: toolbar.offsetHeight
 			});

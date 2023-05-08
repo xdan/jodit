@@ -15,6 +15,7 @@ import {
 } from 'jodit/core/helpers/utils/append-script';
 import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
 import { normalizeName } from 'jodit/core/plugin/helpers/utils';
+import { IS_PROD } from 'jodit/core/constants';
 
 const styles: Set<string> = new Set();
 
@@ -72,8 +73,7 @@ export function loadExtras(
 			load(jodit, needLoadExtras, callback);
 		}
 	} catch (e) {
-		// @ts-ignore
-		if (!isProd) {
+		if (!IS_PROD) {
 			throw e;
 		}
 	}

@@ -11,6 +11,7 @@
 import type { IJodit, Nullable, IDictionary } from 'jodit/types';
 
 import * as filters from './filters';
+import { IS_PROD } from 'jodit/core/constants';
 
 type Filter = keyof typeof filters;
 const keys = Object.keys(filters) as Filter[];
@@ -45,7 +46,7 @@ export function visitNodeWalker(
 			currentSelectionNode
 		);
 
-		if (!isProd && !tmp && hadEffect) {
+		if (!IS_PROD && !tmp && hadEffect) {
 			console.warn(`CleanHTML: Effect "${key}"`);
 		}
 
