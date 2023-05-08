@@ -54,6 +54,7 @@ const copyRecursiveSync = (src: string, dest: string): void => {
 	'SECURITY.md',
 	'examples',
 	'.nvmrc',
+	'.npmrc',
 	'.npmignore'
 ].forEach(file => {
 	copyRecursiveSync(

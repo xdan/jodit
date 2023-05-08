@@ -15,6 +15,7 @@ jobs:
     - uses: actions/setup-node@v3 #Setup Node
       with:
         node-version-file: '.nvmrc'
+        registry-url: https://registry.npmjs.org/
 
     - name: Install dependencies
       run: |
