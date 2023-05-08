@@ -801,8 +801,7 @@ describe('Test paste plugin', () => {
 					' </w:LatentStyles>\n' +
 					'</xml><![endif]-->\n' +
 					'<style>\n' +
-					'<!--\n' +
-					' /* Font Definitions */\n' +
+					'<!-' + '-\n \n' +
 					' @font-face\n' +
 					'\t{font-family:"Cambria Math";\n' +
 					'\tpanose-1:2 4 5 3 5 4 6 3 2 4;\n' +
@@ -1076,9 +1075,7 @@ describe('Test paste plugin', () => {
 						};
 					});
 
-					expect(editor.value).equals(
-						'<p>test<br>test<br>test</p>'
-					);
+					expect(editor.value).equals('<p>test<br>test<br>test</p>');
 				});
 			});
 

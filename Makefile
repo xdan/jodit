@@ -107,17 +107,17 @@ test-all:
 
 .PHONY: lint
 lint:
-	tsc --noemit --noErrorTruncation
-	eslint ./src/ ./test/
-	stylelint ./src/**/**.less
+	$(NODE_MODULES_BIN)/tsc --noemit --noErrorTruncation
+	$(NODE_MODULES_BIN)/eslint ./src/ ./test/
+	$(NODE_MODULES_BIN)/stylelint ./src/**/**.less
 
 .PHONY: fix
 fix:
-	npx eslint ./src/ ./test/ --fix
+	$(NODE_MODULES_BIN)/eslint ./src/ ./test/ --fix
 	make prettify
 
 prettify:
-	npx prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less} ./src/**/**/**/*.{ts,less} ./src/**/**/**/**/*.{ts,less}
+	$(NODE_MODULES_BIN)/prettier --write ./src/*.{ts,less} ./src/**/*.{ts,less} ./src/**/**/*.{ts,less} ./src/**/**/**/*.{ts,less} ./src/**/**/**/**/*.{ts,less}
 
 .PHONY: test
 test:

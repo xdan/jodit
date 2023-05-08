@@ -9,7 +9,34 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
-## 4.0.1.beta
+## 4.0.0-beta.10
+
+
+```plain
+@types/node                       ^18.15.12  →  ^20.1.0
+@typescript-eslint/eslint-plugin    ^5.59.0  →  ^5.59.2
+@typescript-eslint/parser           ^5.59.0  →  ^5.59.2
+axios                                ^1.3.6  →   ^1.4.0
+core-js                             ^3.30.1  →  ^3.30.2
+cssnano-preset-advanced              ^6.0.0  →   ^6.0.1
+eslint                              ^8.38.0  →  ^8.40.0
+glob                                ^10.2.1  →  ^10.2.2
+karma                                ^6.4.1  →   ^6.4.2
+lint-staged                         ^13.2.1  →  ^13.2.2
+open                                 ^8.4.2  →   ^9.1.0
+postcss-loader                       ^7.2.4  →   ^7.3.0
+prettier                             ^2.8.7  →   ^2.8.8
+puppeteer                          ^19.10.0  →  ^20.1.1
+stylelint                           ^15.5.0  →  ^15.6.1
+terser-webpack-plugin                ^5.3.7  →   ^5.3.8
+webpack                              5.80.0  →   5.82.0
+webpack-cli                          ^5.0.1  →   ^5.1.0
+webpack-dev-middleware               ^6.0.2  →   ^6.1.0
+webpack-dev-server                  ^4.13.3  →  ^4.15.0
+yargs                               ^17.7.1  →  ^17.7.2
+```
+
+## 4.0.0.beta-0
 
 #### :boom: Breaking Change
 

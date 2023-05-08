@@ -5,7 +5,11 @@
  */
 
 import type { IDictionary } from 'jodit/types';
-import { isFunction, isPlainObject, isString } from 'jodit/core/helpers/checker';
+import {
+	isFunction,
+	isPlainObject,
+	isString
+} from 'jodit/core/helpers/checker';
 import { CamelCaseToKebabCase } from 'jodit/core/helpers/string/kebab-case';
 import { css } from './css';
 
