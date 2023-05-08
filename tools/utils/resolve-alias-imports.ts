@@ -84,7 +84,11 @@ function resoleAliasImports(dirPath: string): void {
 			}
 
 			// For esm add extension
-			if (isJs && !allowPackages.has(modulePath)) {
+			if (
+				isJs &&
+				!modulePath.endsWith('.js') &&
+				!allowPackages.has(modulePath)
+			) {
 				const fullPath = path.resolve(dirPath, modulePath);
 
 				if (
