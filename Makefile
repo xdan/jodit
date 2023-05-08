@@ -15,7 +15,11 @@ singleRun ?= true
 isTest ?= false
 debug ?= false
 updateTests ?= false
-version = $(shell cat package.json | $(NODE_MODULES_BIN)/node-jq -r '.version')
+version = $(shell cat package.json | jq -r '.version')
+
+.PHONY: version
+version:
+	@echo $(version)
 
 .PHONY: start
 start:
@@ -44,12 +48,13 @@ clean:
 
 .PHONY: dts
 dts:
+	echo Prepare types ...
 	mkdir -p ./build/types/types
 	cp -R ./tsconfig.json ./build/types/
 	cp -R ./src/typings.d.ts ./build/types/
 	cp -R ./src/types/* ./build/types/types
-	$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts ./build/types
-	$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts'
+	@$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts ./build/types
+	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts'
 
 .PHONY: esm
 esm:
@@ -65,7 +70,7 @@ esm:
 	$(NODE_MODULES_BIN)/replace "module.exports = " "export default " ./build/esm/langs/*.js
 
 	echo Remove style imports ...
-	$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' ./build/esm -r
+	@$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' ./build/esm -r
 
 	echo Copy icons ...
 	$(TS_NODE_BASE) ./tools/utils/copy-icons-in-esm.ts $(shell pwd)/src/ ./build/esm
