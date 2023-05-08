@@ -28,10 +28,9 @@ jobs:
       run: |
         make build-all
 
-    - name: Test all
-      run: |
+#    - name: Test all
+#      run: |
 #        make test-all
-         echo Without test ...
 
 #    - name: Screenshot test all
 #      run: |
