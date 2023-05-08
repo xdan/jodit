@@ -8,7 +8,7 @@
  * @module modules/file-browser
  */
 
-import './styles';
+import './styles/index.less';
 
 import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';

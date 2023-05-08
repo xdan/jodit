@@ -32,8 +32,8 @@ npm install jodit
 You will get:
 
 - inside /esm: ESM version of the editor (compatible with e.g. webpack)
-- inside /build/(es5|es2015|es2021)/*.js: UMD bundled, not minified
-- inside /build/(es5|es2015|es2021)/*.min.js: UMD bundled, and minified
+- inside /(es5|es2015|es2021)/*.js: UMD bundled, not minified
+- inside /(es5|es2015|es2021)/*.min.js: UMD bundled, and minified
 - types/index.d.ts: this specifies the API of the editor (this is what is actually versioned, everything else is considered private and might break with any release).
 
 or
@@ -47,15 +47,15 @@ yarn add jodit
 ES5 Version
 
 ```html
-<link type="text/css" rel="stylesheet" href="build/es2015/jodit.min.css" />
-<script type="text/javascript" src="build/es2015/jodit.min.js"></script>
+<link type="text/css" rel="stylesheet" href="es2015/jodit.min.css" />
+<script type="text/javascript" src="es2015/jodit.min.js"></script>
 ```
 
 es2021 Version (if your users use only modern browsers)
 
 ```html
-<link type="text/css" rel="stylesheet" href="build/es2021/jodit.min.css" />
-<script type="text/javascript" src="build/es2021/jodit.min.js"></script>
+<link type="text/css" rel="stylesheet" href="es2021/jodit.min.css" />
+<script type="text/javascript" src="es2021/jodit.min.js"></script>
 ```
 
 ### Use a CDN
@@ -76,9 +76,9 @@ es2021 Version (if your users use only modern browsers)
 ```html
 <link
 	rel="stylesheet"
-	href="https://unpkg.com/jodit@4.0.0-beta.24/build/es2021/jodit.min.css"
+	href="https://unpkg.com/jodit@4.0.0-beta.24/es2021/jodit.min.css"
 />
-<script src="https://unpkg.com/jodit@4.0.0-beta.24/build/es2021/jodit.min.js"></script>
+<script src="https://unpkg.com/jodit@4.0.0-beta.24/es2021/jodit.min.js"></script>
 ```
 
 
