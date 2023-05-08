@@ -49,7 +49,7 @@ function readAndCopyIcons(dir: string): void {
 			fs.writeFileSync(
 				targetPath,
 				`export default ${JSON.stringify(
-					content.replace(/[\n\t]|\s{4}/g, '')
+					content.replace(/[\n\t\s]+/g, ' ')
 				)};`
 			);
 		}

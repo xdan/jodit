@@ -10,33 +10,33 @@
  * @module icons
  */
 
-import * as angle_down from './angle-down.svg';
-import * as angle_left from './angle-left.svg';
-import * as angle_right from './angle-right.svg';
-import * as angle_up from './angle-up.svg';
-import * as bin from './bin.svg';
-import * as cancel from './cancel.svg';
-import * as center from './center.svg';
-import * as check from './check.svg';
-import * as chevron from './chevron.svg';
-import * as dots from './dots.svg';
-import * as eye from './eye.svg';
-import * as file from './file.svg';
-import * as folder from './folder.svg';
-import * as info_circle from './info-circle.svg';
-import * as left from './left.svg';
-import * as lock from './lock.svg';
-import * as ok from './ok.svg';
-import * as pencil from './pencil.svg';
-import * as plus from './plus.svg';
-import * as resize_handler from './resize-handler.svg';
-import * as right from './right.svg';
-import * as save from './save.svg';
-import * as settings from './settings.svg';
-import * as unlock from './unlock.svg';
-import * as update from './update.svg';
-import * as upload from './upload.svg';
-import * as valign from './valign.svg';
+import angle_down from './angle-down.svg';
+import angle_left from './angle-left.svg';
+import angle_right from './angle-right.svg';
+import angle_up from './angle-up.svg';
+import bin from './bin.svg';
+import cancel from './cancel.svg';
+import center from './center.svg';
+import check from './check.svg';
+import chevron from './chevron.svg';
+import dots from './dots.svg';
+import eye from './eye.svg';
+import file from './file.svg';
+import folder from './folder.svg';
+import info_circle from './info-circle.svg';
+import left from './left.svg';
+import lock from './lock.svg';
+import ok from './ok.svg';
+import pencil from './pencil.svg';
+import plus from './plus.svg';
+import resize_handler from './resize-handler.svg';
+import right from './right.svg';
+import save from './save.svg';
+import settings from './settings.svg';
+import unlock from './unlock.svg';
+import update from './update.svg';
+import upload from './upload.svg';
+import valign from './valign.svg';
 
 export {
 	angle_down,
