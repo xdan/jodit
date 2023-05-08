@@ -18,6 +18,8 @@ import { memorizeExec } from 'jodit/core/helpers/utils/utils';
 import { pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 
+import classSpanIcon from './class-span.svg';
+
 Config.prototype.controls.classSpan = {
 	command: 'applyClassName',
 
@@ -138,4 +140,4 @@ export class classSpan extends Plugin {
 }
 
 pluginSystem.add('classSpan', classSpan);
-Icon.set('class-span', require('./class-span.svg'));
+Icon.set('class-span', classSpanIcon);

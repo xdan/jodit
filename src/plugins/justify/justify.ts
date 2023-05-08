@@ -18,7 +18,9 @@ import { alignElement } from 'jodit/core/helpers/utils/align';
 import { pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 
-Icon.set('justify', require('./justify.svg'));
+import justifyIcon from './justify.svg';
+
+Icon.set('justify', justifyIcon);
 
 Config.prototype.controls.align = {
 	name: 'left',

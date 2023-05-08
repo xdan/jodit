@@ -17,6 +17,9 @@ import { css } from 'jodit/core/helpers/utils/css';
 import { extendLang, pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 
+import copyFormatIcon from './copy-format.svg';
+
+
 const pluginKey = 'copy-format';
 
 /**
@@ -157,4 +160,4 @@ export function copyFormat(editor: IJodit): void {
 }
 
 pluginSystem.add('copyformat', copyFormat);
-Icon.set('copyformat', require('./copy-format.svg'));
+Icon.set('copyformat', copyFormatIcon);

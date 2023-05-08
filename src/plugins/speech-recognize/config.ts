@@ -19,6 +19,8 @@ import type { ISpeechRecognizeConstructor } from './interface';
 import { RecognizeManager } from './helpers/recognize-manager';
 import { SpeechRecognition } from './helpers/api';
 
+import speechRecognizeIcon from './speech-recognize.svg';
+
 declare module 'jodit/config' {
 	interface Config {
 		speechRecognize: {
@@ -95,7 +97,7 @@ Config.prototype.speechRecognize = {
 	}
 };
 
-Icon.set('speech-recognize', require('./speech-recognize.svg'));
+Icon.set('speech-recognize', speechRecognizeIcon);
 
 Config.prototype.controls.speechRecognize = {
 	isActive(jodit, _): boolean {

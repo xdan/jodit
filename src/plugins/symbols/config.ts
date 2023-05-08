@@ -11,6 +11,7 @@
 import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
+import symbolsIcon from './symbols.svg';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -234,7 +235,7 @@ Config.prototype.specialCharacters = [
 	'&asymp;'
 ];
 
-Icon.set('symbols', require('./symbols.svg'));
+Icon.set('symbols', symbolsIcon);
 
 Config.prototype.controls.symbols = {
 	hotkeys: ['ctrl+shift+i', 'cmd+shift+i'],

@@ -18,11 +18,12 @@ import { defaultLanguage } from 'jodit/core/helpers/utils/default-language';
 import * as consts from 'jodit/core/constants';
 import { pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
-
-import { generateCriticalCSS } from './lib/generate-critical-css';
 import { previewBox } from 'jodit/core/helpers/utils/print';
 
-Icon.set('print', require('./print.svg'));
+import { generateCriticalCSS } from './lib/generate-critical-css';
+import printIcon from './print.svg';
+
+Icon.set('print', printIcon);
 
 Config.prototype.controls.print = {
 	exec: (editor: IJodit) => {

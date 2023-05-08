@@ -14,6 +14,9 @@ import { Dom } from 'jodit/core/dom/dom';
 import { css, memorizeExec } from 'jodit/core/helpers/utils';
 import { Icon } from 'jodit/core/ui/icon';
 
+import fontsizeIcon from './icons/fontsize.svg';
+import fontIcon from './icons/font.svg';
+
 declare module 'jodit/config' {
 	interface Config {
 		defaultFontSizePoints: 'px' | 'pt';
@@ -25,10 +28,7 @@ declare module 'jodit/config' {
  */
 Config.prototype.defaultFontSizePoints = 'px';
 
-Icon.set('font', require('./icons/font.svg')).set(
-	'fontsize',
-	require('./icons/fontsize.svg')
-);
+Icon.set('font', fontIcon).set('fontsize', fontsizeIcon);
 
 Config.prototype.controls.fontsize = {
 	command: 'fontsize',

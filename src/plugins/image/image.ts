@@ -22,7 +22,9 @@ import { Config } from 'jodit/config';
 import { pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 
-Icon.set('image', require('./image.svg'));
+import imageIcon from './image.svg';
+
+Icon.set('image', imageIcon);
 
 Config.prototype.controls.image = {
 	popup: (editor: IJodit, current, ignore, close) => {

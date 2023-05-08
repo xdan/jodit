@@ -20,6 +20,8 @@ import { pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 import { HOMEPAGE } from 'jodit/core/constants';
 
+import aboutIcon from './about.svg';
+
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {
 		const dialog = editor.dlg(),
@@ -71,4 +73,4 @@ function about(editor: IJodit): void {
 }
 
 pluginSystem.add('about', about);
-Icon.set('about', require('./about.svg'));
+Icon.set('about', aboutIcon);

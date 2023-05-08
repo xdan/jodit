@@ -13,6 +13,8 @@ import { Config } from 'jodit/config';
 import { memorizeExec } from 'jodit/core/helpers';
 import { Icon } from 'jodit/core/ui/icon';
 
+import lineHeightIcon from './line-height.svg';
+
 declare module 'jodit/config' {
 	interface Config {
 		/**
@@ -30,7 +32,7 @@ declare module 'jodit/config' {
 
 Config.prototype.defaultLineHeight = null;
 
-Icon.set('line-height', require('./line-height.svg'));
+Icon.set('line-height', lineHeightIcon);
 
 Config.prototype.controls.lineHeight = {
 	command: 'applyLineHeight',

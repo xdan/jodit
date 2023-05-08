@@ -17,10 +17,10 @@ import { Plugin } from 'jodit/core/plugin/plugin';
 import { pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 
-Icon.set('redo', require('./icons/redo.svg')).set(
-	'undo',
-	require('./icons/undo.svg')
-);
+import redoIcon from './icons/redo.svg';
+import undoIcon from './icons/undo.svg';
+
+Icon.set('redo', redoIcon).set('undo', undoIcon);
 
 Config.prototype.controls.redo = {
 	mode: consts.MODE_SPLIT,

@@ -16,7 +16,9 @@ import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 
-Icon.set('hr', require('./hr.svg'));
+import hrIcon from './hr.svg';
+
+Icon.set('hr', hrIcon);
 
 Config.prototype.controls.hr = {
 	command: 'insertHorizontalRule',

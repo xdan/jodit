@@ -19,7 +19,9 @@ import {
 import { Icon } from 'jodit/core/ui/icon';
 import { Dom } from 'jodit/core/dom/dom';
 
-Icon.set('brush', require('./brush.svg'));
+import brushIcon from './brush.svg';
+
+Icon.set('brush', brushIcon);
 
 Config.prototype.controls.brush = {
 	update(button, editor: IJodit): void {

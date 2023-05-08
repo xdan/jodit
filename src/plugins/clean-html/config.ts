@@ -12,6 +12,8 @@ import type { HTMLTagNames, IDictionary, Nullable } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
 
+import eraserIcon from './eraser.svg';
+
 declare module 'jodit/config' {
 	interface Config {
 		cleanHTML: {
@@ -129,4 +131,4 @@ Config.prototype.controls.eraser = {
 	tooltip: 'Clear Formatting'
 };
 
-Icon.set('eraser', require('./eraser.svg'));
+Icon.set('eraser', eraserIcon);

@@ -24,8 +24,9 @@ import {
 } from 'jodit/core/helpers/';
 import { Icon } from 'jodit/core/ui';
 import { Dom } from 'jodit/core/dom';
+import paletteIcon from './palette.svg';
 
-Icon.set('palette', require('./palette.svg'));
+Icon.set('palette', paletteIcon);
 
 /**
  * Build color picker

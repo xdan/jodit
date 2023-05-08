@@ -12,6 +12,11 @@ import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
 
+import copyIcon from './icons/copy.svg';
+import cutIcon from './icons/cut.svg';
+import pasteIcon from './icons/paste.svg';
+import selectAllIcon from './icons/select-all.svg';
+
 Config.prototype.controls.cut = {
 	command: 'cut',
 	isDisabled: (editor: IJodit) => editor.s.isCollapsed(),
@@ -30,7 +35,7 @@ Config.prototype.controls.selectall = {
 	tooltip: 'Select all'
 } as IControlType;
 
-Icon.set('copy', require('./icons/copy.svg'))
-	.set('cut', require('./icons/cut.svg'))
-	.set('paste', require('./icons/paste.svg'))
-	.set('select-all', require('./icons/select-all.svg'));
+Icon.set('copy', copyIcon)
+	.set('cut', cutIcon)
+	.set('paste', pasteIcon)
+	.set('select-all', selectAllIcon);

@@ -12,6 +12,8 @@ import type { HTMLTagNames } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
 
+import enterIcon from './enter.svg';
+
 declare module 'jodit/config' {
 	interface Config {
 		/**
@@ -55,4 +57,4 @@ Config.prototype.addNewLineTagsTriggers = [
 ];
 Config.prototype.addNewLineDeltaShow = 20;
 
-Icon.set('enter', require('./enter.svg'));
+Icon.set('enter', enterIcon);

@@ -13,6 +13,8 @@ import { Config } from 'jodit/config';
 import { IS_IE, MODE_SOURCE, MODE_SPLIT } from 'jodit/core/constants';
 import { Icon } from 'jodit/core/ui/icon';
 
+import sourceIcon from './source.svg';
+
 declare module 'jodit/config' {
 	interface Config {
 		sourceEditor: 'area' | 'ace' | ((jodit: IJodit) => ISourceEditor);
@@ -94,7 +96,7 @@ Config.prototype.beautifyHTMLCDNUrlsJS = [
 	'https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.4/beautify-html.min.js'
 ];
 
-Icon.set('source', require('./source.svg'));
+Icon.set('source', sourceIcon);
 
 Config.prototype.controls.source = {
 	mode: MODE_SPLIT,

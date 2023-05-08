@@ -15,10 +15,10 @@ import { Icon } from 'jodit/core/ui/icon';
 
 import { getKey } from './helpers';
 
-Icon.set('indent', require('./icons/indent.svg')).set(
-	'outdent',
-	require('./icons/outdent.svg')
-);
+import indentIcon from './icons/indent.svg';
+import outdentIcon from './icons/outdent.svg';
+
+Icon.set('indent', indentIcon).set('outdent', outdentIcon);
 
 Config.prototype.controls.indent = {
 	tooltip: 'Increase Indent'

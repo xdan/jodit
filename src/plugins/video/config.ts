@@ -15,8 +15,9 @@ import { convertMediaUrlToVideoEmbed } from 'jodit/core/helpers';
 import { UIForm, UIInput, UITextArea, UIBlock } from 'jodit/core/ui/form';
 import { Button } from 'jodit/core/ui/button';
 import { Icon } from 'jodit/core/ui/icon';
+import videoIcon from './video.svg';
 
-Icon.set('video', require('./video.svg'));
+Icon.set('video', videoIcon);
 
 Config.prototype.controls.video = {
 	popup: (editor: IJodit, current, control, close) => {
