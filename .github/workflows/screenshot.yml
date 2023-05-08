@@ -14,6 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3 #Setup Node
+      with:
+        node-version: '16.15.0'
+
     - name: Run screenshot Tests
       run: |
         npm ci

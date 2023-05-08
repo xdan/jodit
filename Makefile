@@ -102,9 +102,6 @@ test-all:
 	make test-only-run build=es2021 uglify=true
 	make test-only-run build=es2015 uglify=true
 	make test-only-run build=es5 uglify=true
-	make screenshots-test build=es5
-	make screenshots-test build=es2015
-	make screenshots-test build=es2021
 
 .PHONY: lint
 lint:
@@ -139,6 +136,13 @@ test-only-run:
 coverage:
 	npx --yes type-coverage ./src --detail --ignore-files 'build/**' --ignore-files 'test/**' --ignore-files 'examples/**'
 
+.PHONY: screenshots-all
+screenshots-all:
+	make screenshots-build-image
+	make screenshots-test build=es5
+	make screenshots-test build=es2015
+	make screenshots-test build=es2021
+
 
 .PHONY: screenshots-test
 screenshots-test:
@@ -163,7 +167,7 @@ newversion-git:
 	git add --all  && git commit -m "New version $(version) Read more https://github.com/xdan/jodit/blob/main/CHANGELOG.md "
 	git tag $(version)
 	git push --tags origin HEAD:main
-	echo "New version $(version) Actions: https://github.com/xdan/jodit/actions/"
+	@echo "New version $(version) Actions: https://github.com/xdan/jodit/actions/"
 
 .PHONY: jodit
 jodit:
