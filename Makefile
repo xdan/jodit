@@ -70,7 +70,7 @@ esm:
 
 	echo Copy langs ...
 	rsync -r --exclude '*.test.js' ./src/langs/*.js ./build/esm/langs
-	@$(NODE_MODULES_BIN)/replace "module.exports = " "export default " ./build/esm/langs/*.js --silent
+	@$(NODE_MODULES_BIN)/replace "module.exports = " "export default " ./build/esm/ -r --silent
 
 	echo Copy icons ...
 	@$(TS_NODE_BASE) ./tools/utils/copy-icons-in-esm.ts $(shell pwd)/src/ ./build/esm
