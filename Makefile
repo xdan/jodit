@@ -53,7 +53,7 @@ dts:
 	cp -R ./tsconfig.json ./build/types/
 	cp -R ./src/typings.d.ts ./build/types/
 	cp -R ./src/types/* ./build/types/types
-	@$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts ./build/types
+	@$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts --cwd=./build/types
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts'
 
 .PHONY: esm
@@ -63,17 +63,17 @@ esm:
 	tsc -p tsconfig.json --module es2020 --target es2020 --removeComments false --sourceMap false --outDir ./build/esm
 
 	echo Resolve alias imports ...
-	$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts ./build/esm
+	$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts --cwd=./build/esm
 
 	echo Copy langs ...
 	rsync -r --exclude '*.test.js' ./src/langs/*.js ./build/esm/langs
-	$(NODE_MODULES_BIN)/replace "module.exports = " "export default " ./build/esm/langs/*.js
+	@$(NODE_MODULES_BIN)/replace "module.exports = " "export default " ./build/esm/langs/*.js --silent
 
 	echo Remove style imports ...
-	@$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' ./build/esm -r
+	@$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' ./build/esm -r --silent
 
 	echo Copy icons ...
-	$(TS_NODE_BASE) ./tools/utils/copy-icons-in-esm.ts $(shell pwd)/src/ ./build/esm
+	@$(TS_NODE_BASE) ./tools/utils/copy-icons-in-esm.ts $(shell pwd)/src/ ./build/esm
 
 .PHONY: build-all
 build-all:

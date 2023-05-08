@@ -7,8 +7,15 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as ts from 'typescript';
+import * as yargs from 'yargs';
 
-const cwd = path.resolve(process.argv[2]);
+const { argv } = yargs.option('cwd', {
+	type: 'string',
+	demandOption: true,
+	description: 'Work directory'
+});
+
+const cwd = path.resolve(argv.cwd);
 if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
 	throw new Error('Invalid types directory');
 }
@@ -38,6 +45,8 @@ function resoleAliasImports(dirPath: string): void {
 			return;
 		}
 
+		const isJs = /.(js)$/.test(file.name);
+
 		const content = fs.readFileSync(filePath, 'utf8');
 
 		const sourceFile = ts.createSourceFile(
@@ -58,6 +67,20 @@ function resoleAliasImports(dirPath: string): void {
 				throw new Error(
 					`Allow only relative paths file:${filePath} import: ${modulePath}`
 				);
+			}
+
+			// For esm add extension
+			if (isJs) {
+				const fullPath = path.resolve(dirPath, modulePath);
+
+				if (
+					fs.existsSync(fullPath) &&
+					fs.statSync(fullPath).isDirectory()
+				) {
+					modulePath += '/index.js';
+				} else {
+					modulePath += '.js';
+				}
 			}
 
 			return modulePath;
@@ -150,10 +173,12 @@ function resoleAliasImports(dirPath: string): void {
 
 function resolveAlias(pathWithAlias: string, dirPath: string): string {
 	const relPath = pathWithAlias.replace(alias, '');
+
 	const subPath = path.join(
 		cwd,
 		relPath.startsWith('/') ? '.' + relPath : relPath
 	);
+
 	const relative = path.relative(dirPath, subPath);
 	return relative.startsWith('.') ? relative : `./${relative}`;
 }
