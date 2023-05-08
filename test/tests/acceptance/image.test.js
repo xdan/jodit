@@ -999,7 +999,7 @@ describe('Test image', function () {
 							clickButton('ok', dialog);
 
 							expect(sortAttributes(editor.value)).equals(
-								'<p><img height="1900px" src="tests/artio.jpg" style="height:1900px;width:200px" width="200px"></p>'
+								'<p><img height="1900px" src="tests/artio.jpg" style="height:1900px;width:200px" width="200"></p>'
 							);
 
 							done();
