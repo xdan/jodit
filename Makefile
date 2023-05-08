@@ -78,6 +78,7 @@ esm:
 .PHONY: build-all
 build-all:
 	make clean
+	@mkdir -p ./build/
 	$(TS_NODE_BASE) ./tools/utils/prepare-publish.ts $(shell pwd)
 	cd ./build/ && npm i && cd ..
 
