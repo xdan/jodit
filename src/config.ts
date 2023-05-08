@@ -289,7 +289,7 @@ export class Config implements IViewOptions {
 
 	/**
 	 * Dictionary of variable values in css, a complete list can be found here
-	 * https://github.com/xdan/jodit/blob/master/src/styles/variables.less#L25
+	 * https://github.com/xdan/jodit/blob/main/src/styles/variables.less#L25
 	 *
 	 * @example
 	 * ```js

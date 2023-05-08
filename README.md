@@ -1,4 +1,4 @@
-![Jodit WYSIWYG editor](https://raw.githubusercontent.com/xdan/jodit/master/examples/assets/logo.png)
+![Jodit WYSIWYG editor](https://raw.githubusercontent.com/xdan/jodit/main/examples/assets/logo.png)
 
 # Jodit Editor 3
 
@@ -14,7 +14,7 @@ An excellent WYSIWYG editor written in pure TypeScript without the use of additi
 -   [Playground - play with options](https://xdsoft.net/jodit/play.html)
 -   [Documentation](https://xdsoft.net/jodit/docs/)
 -   [Download & Changes](https://github.com/xdan/jodit/releases)
--   [Changelog](https://github.com/xdan/jodit/blob/master/CHANGELOG.md)
+-   [Changelog](https://github.com/xdan/jodit/blob/main/CHANGELOG.md)
 -   [Examples](https://xdan.github.io/jodit/examples/)
 
 ## Get Started

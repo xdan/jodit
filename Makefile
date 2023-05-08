@@ -13,6 +13,7 @@ includeLanguages ?= ''
 excludeLanguages ?= ''
 singleRun ?= true
 isTest ?= false
+debug ?= false
 updateTests ?= false
 version = $(shell cat package.json | jq -r '.version')
 
@@ -73,24 +74,31 @@ esm:
 build-all:
 	make clean
 	$(TS_NODE_BASE) ./build-system/utils/prepare-publish.ts
+	cd ./build/ && npm i && cd ..
 
 	make build es=es2021 uglify=false generateTypes=true
 	make dts
 	make build es=es2021
-	make test-only-run build=es2021 uglify=true
 
 	make build es=es2015
 	make build es=es2015 uglify=false
-	make test-only-run build=es2015 uglify=true
 
 	make build es=es5
 	make build es=es5 uglify=false
-	make test-only-run build=es5 uglify=true
 
 	make build es=es2021 includeLanguages=en
 	make build es=es2021 includeLanguages=en uglify=false
 
 	make esm
+
+.PHONY: test-all
+test-all:
+	make test-only-run build=es2021 uglify=true
+	make test-only-run build=es2015 uglify=true
+	make test-only-run build=es5 uglify=true
+	make screenshots-test build=es5
+	make screenshots-test build=es2015
+	make screenshots-test build=es2021
 
 .PHONY: lint
 lint:
@@ -126,11 +134,12 @@ coverage:
 	npx --yes type-coverage ./src --detail --ignore-files 'build/**' --ignore-files 'test/**' --ignore-files 'examples/**'
 
 
-.PHONY: screenshots
-screenshots:
-	docker run -v $(pwd)/build:/app/build/ -v $(pwd)/test:/app/test/ \
+.PHONY: screenshots-test
+screenshots-test:
+	docker run -v $(shell pwd)/build:/app/build/ -v $(shell pwd)/test:/app/test/ \
+		-p 2003:2003 \
 		-e SNAPSHOT_UPDATE=$(updateTests) \
-		-v $(pwd)/src:/app/src/ jodit-screenshots \
+		-v $(shell pwd)/src:/app/src/ jodit-screenshots \
 		node --input-type=module ./node_modules/.bin/mocha ./src/**/**.screenshot.js --build=$(es)
 
 .PHONY: screenshots-build-image

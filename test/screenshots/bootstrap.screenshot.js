@@ -17,7 +17,11 @@ process.argv.forEach(arg => {
 	}
 });
 
-console.info('Build:', args.build || 'es5');
+if (!args.build) {
+	throw new Error('Build type is not defined');
+}
+
+console.info('Build:', args.build);
 console.info('Debug:', args.debug);
 
 const fs = require('fs');
@@ -39,10 +43,7 @@ app.get('/', (req, res) => {
 	res.send(
 		fs
 			.readFileSync(path.resolve(__dirname, './index.html'), 'utf-8')
-			.replace(
-				/\/jodit\./g,
-				`/jodit.${args.build ? args.build + '.' : ''}`
-			)
+			.replace(/es2015/g, args.build)
 	);
 });
 

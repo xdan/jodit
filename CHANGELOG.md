@@ -540,7 +540,7 @@ yargs                              ^17.5.1  →   ^17.6.0
 
 -   Added `cleanHTML.disableCleanFilter:Set<string>` options. Node filtering rules that do not need to be applied to content
     The full list of rules is generated dynamically from the folder
-    https://github.com/xdan/jodit/tree/master/src/plugins/clean-html/helpers/visitor/filters
+    https://github.com/xdan/jodit/tree/main/src/plugins/clean-html/helpers/visitor/filters
 -   Added `allowCommandsInReadOnly:string[]` options. Allow execute commands in readonly mode.
     [activeButtonsInReadOnly: ['source', 'preview'] is not working. #878](https://github.com/xdan/jodit/issues/878)
     ```js
@@ -1603,7 +1603,7 @@ Dom.isNode(editor.ed.body); // true
 
 -   Added `KeyArrowOutside`, allowing to go outside an inline element if there is no other element after that.
 -   Dictionary of variable values in css, a complete list can be found
-    here https://github.com/xdan/jodit/blob/master/src/styles/variables.less#L25
+    here https://github.com/xdan/jodit/blob/main/src/styles/variables.less#L25
     ```js
     const editor = Jodit.make('#editor', {
     	styleValues: {
@@ -1824,7 +1824,7 @@ editor.e.on('getInstanceFileBrowser', options => {
 	win.document.open();
 	// Need append css for Jodit
 	win.document.write(
-		'<html><head><title>File Browser!</title><link rel="stylesheet" type="text/css" href="./build/jodit.min.css"></head><body></body></html>'
+		'<html><head><title>File Browser!</title><link rel="stylesheet" type="text/css" href="./build/es2015/jodit.min.css"></head><body></body></html>'
 	);
 	win.document.close();
 

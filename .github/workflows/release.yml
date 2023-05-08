@@ -16,15 +16,15 @@ jobs:
     - uses: actions/setup-node@v3 #Setup Node
       with:
         node-version: '16.15.0'
-    - name: Run Tests
-      run: |
-        npm ci
-        npm test
 
     - name: Build
       run: |
         npm ci
         make build-all
+
+    - name: Test all
+      run: |
+        make test-all
 
     - name: Publish
       run: |

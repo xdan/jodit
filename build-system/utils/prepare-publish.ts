@@ -48,7 +48,8 @@ const copyRecursiveSync = (src: string, dest: string): void => {
 	'LICENSE.txt',
 	'SECURITY.md',
 	'examples',
-	'.nvmrc'
+	'.nvmrc',
+	'.npmignore'
 ].forEach(file => {
 	copyRecursiveSync(`./${file}`, `./build/${file}`);
 });

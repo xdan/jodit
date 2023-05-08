@@ -1,4 +1,4 @@
-![Jodit WYSIWYG editor](https://raw.githubusercontent.com/xdan/jodit/master/examples/assets/logo.png)
+![Jodit WYSIWYG editor](https://raw.githubusercontent.com/xdan/jodit/main/examples/assets/logo.png)
 
 # Docker environment for Jodit's contributors
 All you need to build and test Jodit with a docker environment.

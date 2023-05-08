@@ -32,7 +32,7 @@ zh_cn,
 zh_tw
 ```
 
-If you do not find your language, then you can create a language file yourself by [copying any of the other languages](https://github.com/xdan/jodit/tree/master/src/langs)
+If you do not find your language, then you can create a language file yourself by [copying any of the other languages](https://github.com/xdan/jodit/tree/main/src/langs)
 After that just add its content like a field [[Jodit.langs]]
 
 ```js
@@ -58,7 +58,7 @@ And include this file after Jodit
 </script>
 ```
 
-If you don't like how `Jodit` has translated one or another part of the app into your native language, you can either [make a Pull Request](https://github.com/xdan/jodit/edit/master/src/langs/ar.js)
+If you don't like how `Jodit` has translated one or another part of the app into your native language, you can either [make a Pull Request](https://github.com/xdan/jodit/edit/main/src/langs/ar.js)
 Or redefine the desired string combinations and translate them in your own way:
 
 ```js

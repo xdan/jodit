@@ -16,9 +16,9 @@ jobs:
     - uses: actions/setup-node@v3 #Setup Node
     - name: Run screenshot Tests
       run: |
-        npm run test:screenshots:build
-        npm run test:screenshots
-        npm run test:screenshots:es2021
+        make screenshots-build-image
+        make screenshots-test
+        make screenshots-test es=es2021
 
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3

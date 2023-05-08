@@ -1281,6 +1281,8 @@ function applyGlobalStyle(styles) {
 	stylesList.push(style);
 }
 
-afterEach(() => {
-	stylesList.forEach(style => style.remove());
-});
+if (typeof afterEach === 'function') {
+	afterEach(() => {
+		stylesList.forEach(style => style.remove());
+	});
+}

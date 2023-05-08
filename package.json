@@ -12,7 +12,7 @@
 		"newversion": "make newversion",
 		"build": "make build-all",
 		"test": "make test",
-		"test:screenshots": "make screenshots",
+		"test:screenshots": "make screenshots-test",
 		"test:debug": "make test browsers=Chrome singleRun=false",
 		"test:chrome": "make test browsers=Chrome",
 		"jodit": "make jodit",

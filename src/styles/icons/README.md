@@ -27,7 +27,7 @@ Jodit.make('#editor', {
 });
 ```
 
-The list of icons from the build can be viewed [here](https://github.com/xdan/jodit/tree/master/src/styles/icons)
+The list of icons from the build can be viewed [here](https://github.com/xdan/jodit/tree/main/src/styles/icons)
 
 In addition to the added icons in the toolbar, you can also use a simple link to the image:
 
