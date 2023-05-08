@@ -27,7 +27,7 @@ export default ({
 	{
 		loader: path.resolve(
 			superDirname,
-			'./build-system/loaders/css-variables-prefixes.ts'
+			'./tools/loaders/css-variables-prefixes.ts'
 		)
 	},
 	{

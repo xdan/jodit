@@ -17,6 +17,7 @@
 -   !!! bowers.json was removed !!!
 -   server.js was removed
 -   All build js files was rewritten to typescript
+-   `build-system` was renamed as `tools`
 -   Removed `exludeLangs` build option. Instead use `--includeLanguages=en` option.
 -   Default target for build was changed to es2015
 -   Build in es2018 target was removed, instead es2021 was added

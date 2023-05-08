@@ -48,7 +48,7 @@ dts:
 	cp -R ./tsconfig.json ./build/types/
 	cp -R ./src/typings.d.ts ./build/types/
 	cp -R ./src/types/* ./build/types/types
-	$(TS_NODE_BASE) ./build-system/utils/resolve-alias-imports.ts ./build/types
+	$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts ./build/types
 	$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts'
 
 .PHONY: esm
@@ -58,7 +58,7 @@ esm:
 	tsc -p tsconfig.json --module es2020 --target es2020 --removeComments false --sourceMap false --outDir ./build/esm
 
 	echo Resolve alias imports ...
-	$(TS_NODE_BASE) ./build-system/utils/resolve-alias-imports.ts ./build/esm
+	$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts ./build/esm
 
 	echo Copy langs ...
 	rsync -r --exclude '*.test.js' ./src/langs/*.js ./build/esm/langs
@@ -68,12 +68,12 @@ esm:
 	$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' ./build/esm -r
 
 	echo Copy icons ...
-	$(TS_NODE_BASE) ./build-system/utils/copy-icons-in-esm.ts $(shell pwd)/src/ ./build/esm
+	$(TS_NODE_BASE) ./tools/utils/copy-icons-in-esm.ts $(shell pwd)/src/ ./build/esm
 
 .PHONY: build-all
 build-all:
 	make clean
-	$(TS_NODE_BASE) ./build-system/utils/prepare-publish.ts
+	$(TS_NODE_BASE) ./tools/utils/prepare-publish.ts
 	cd ./build/ && npm i && cd ..
 
 	make build es=es2021 uglify=false generateTypes=true
@@ -123,7 +123,7 @@ test:
 
 .PHONY: test-find
 test-find:
-	$(TS_NODE_BASE) ./build-system/utils/find-tests.ts
+	$(TS_NODE_BASE) ./tools/utils/find-tests.ts
 
 .PHONY: test-only-run
 test-only-run:
