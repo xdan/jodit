@@ -15,7 +15,7 @@ if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
 const packageJson = require(path.resolve(cwd, 'package.json'));
 
 fs.writeFileSync(
-	path.resolve(cwd, './build/package.json'),
+	path.join(cwd, './build/package.json'),
 	JSON.stringify(
 		{
 			...packageJson,
