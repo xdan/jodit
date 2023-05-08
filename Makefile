@@ -53,7 +53,7 @@ dts:
 	cp -R ./tsconfig.json ./build/types/
 	cp -R ./src/typings.d.ts ./build/types/
 	cp -R ./src/types/* ./build/types/types
-	@$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts --cwd=./build/types
+	@$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts --cwd=./build/types --ver=$(version)
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
 
 .PHONY: esm
