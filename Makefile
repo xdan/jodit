@@ -63,7 +63,7 @@ esm:
 	tsc -p tsconfig.json --importHelpers false --module es2020 --target es2020 --removeComments false --sourceMap false --outDir ./build/esm
 
 	echo Remove style imports ...
-	@$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' ./build/esm -r --silent
+	@$(NODE_MODULES_BIN)/replace "import .+.(less)('|\");" '' ./build/esm -r --silent
 
 	echo Resolve alias imports ...
 	$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts --cwd=./build/esm --ver=$(version)
@@ -83,6 +83,8 @@ build-all:
 	@$(NODE_MODULES_BIN)/replace "4.0.0-beta.24" "$(version)" ./build/README.md --silent
 	cd ./build/ && npm i && cd ..
 
+	make esm
+
 	make build es=es2021 uglify=false generateTypes=true
 	make dts
 	make build es=es2021
@@ -95,8 +97,6 @@ build-all:
 
 	make build es=es2021 includeLanguages=en
 	make build es=es2021 includeLanguages=en uglify=false
-
-	make esm
 
 .PHONY: test-all
 test-all:
