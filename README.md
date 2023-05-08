@@ -32,9 +32,9 @@ npm install jodit
 You will get:
 
 - inside /esm: ESM version of the editor (compatible with e.g. webpack)
-- inside /build/*.js: UMD bundled, not minified
-- inside /build/*.min.js: UMD bundled, and minified
-- jodit.d.ts: this specifies the API of the editor (this is what is actually versioned, everything else is considered private and might break with any release).
+- inside /build/(es5|es2015|es2021)/*.js: UMD bundled, not minified
+- inside /build/(es5|es2015|es2021)/*.min.js: UMD bundled, and minified
+- types/index.d.ts: this specifies the API of the editor (this is what is actually versioned, everything else is considered private and might break with any release).
 
 or
 
@@ -47,15 +47,15 @@ yarn add jodit
 ES5 Version
 
 ```html
-<link type="text/css" rel="stylesheet" href="build/jodit.min.css" />
-<script type="text/javascript" src="build/jodit.min.js"></script>
+<link type="text/css" rel="stylesheet" href="build/es2015/jodit.min.css" />
+<script type="text/javascript" src="build/es2015/jodit.min.js"></script>
 ```
 
 es2021 Version (if your users use only modern browsers)
 
 ```html
-<link type="text/css" rel="stylesheet" href="build/jodit.es2021.min.css" />
-<script type="text/javascript" src="build/jodit.es2021.min.js"></script>
+<link type="text/css" rel="stylesheet" href="build/es2021/jodit.min.css" />
+<script type="text/javascript" src="build/es2021/jodit.min.js"></script>
 ```
 
 ### Use a CDN
@@ -65,9 +65,9 @@ es2021 Version (if your users use only modern browsers)
 ```html
 <link
 	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.2/jodit.es2021.min.css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.0-beta.24/es2021/jodit.min.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.24.2/jodit.es2021.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.0-beta.24/es2021/jodit.min.js"></script>
 ```
 
 #### unpkg
@@ -76,9 +76,9 @@ es2021 Version (if your users use only modern browsers)
 ```html
 <link
 	rel="stylesheet"
-	href="https://unpkg.com/jodit@3.24.2/build/jodit.es2021.min.css"
+	href="https://unpkg.com/jodit@4.0.0-beta.24/build/es2021/jodit.min.css"
 />
-<script src="https://unpkg.com/jodit@3.24.2/build/jodit.es2021.min.js"></script>
+<script src="https://unpkg.com/jodit@4.0.0-beta.24/build/es2021/jodit.min.js"></script>
 ```
 
 
@@ -94,13 +94,6 @@ And some `<textarea>` element
 After this, you can init Jodit plugin
 
 ```javascript
-var editor = Jodit.make('#editor');
-editor.value = '<p>start</p>';
-```
-
-or
-
-```javascript
 const editor = Jodit.make('#editor');
 editor.value = '<p>start</p>';
 ```
@@ -109,7 +102,7 @@ with jQuery
 
 ```javascript
 $('textarea').each(function () {
-	var editor = Jodit.make(this);
+	const editor = Jodit.make(this);
 	editor.value = '<p>start</p>';
 });
 ```
@@ -137,7 +130,7 @@ http://localhost:2000/
 Build min files:
 
 ```bash
-npm run build
+make build
 ```
 
 Build without some plugins:
@@ -161,13 +154,13 @@ make test browsers ChromeHeadless,IE,Firefox
 or
 
 ```bash
-npm test
+make test
 ```
 
 or
 
 ```bash
-yarn test
+npm test
 ```
 
 For checking tests in browser, open URL:

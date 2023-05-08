@@ -80,6 +80,7 @@ build-all:
 	make clean
 	@mkdir -p ./build/
 	$(TS_NODE_BASE) ./tools/utils/prepare-publish.ts $(shell pwd)
+	@$(NODE_MODULES_BIN)/replace "4.0.0-beta.24" "$(version)" ./build/README.md --silent
 	cd ./build/ && npm i && cd ..
 
 	make build es=es2021 uglify=false generateTypes=true
