@@ -12,7 +12,7 @@ export class PostBuild {
 		const handler = (stats): void => {
 			if (typeof this.fn === 'function') {
 				try {
-					this.fn(stats);
+					return this.fn(stats);
 				} catch (e) {
 					console.log(e);
 				}

@@ -21,7 +21,7 @@ export default ({
 	outputPath,
 	banner
 }: Variables): PostBuild => {
-	return new PostBuild(() => {
+	return new PostBuild(async () => {
 		const processor = postcss([
 			autoprefixer({
 				overrideBrowserslist: [
@@ -42,8 +42,8 @@ export default ({
 
 		const css = fs.readFileSync(file, 'utf-8');
 
-		processor.process(css, { from: file, to: file }).then(result => {
-			fs.writeFile(file, banner + result.css, () => true);
-		});
+		const result = await processor.process(css, { from: file, to: file });
+
+		fs.writeFileSync(file, banner + result.css);
 	});
 };

@@ -17,7 +17,7 @@ fs.writeFileSync(
 			module: 'esm/index.js',
 			types: 'types/index.d.ts',
 			scripts: {},
-			devDependencies: {},
+			devDependencies: {}
 		},
 		null,
 		'\t'

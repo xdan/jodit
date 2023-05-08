@@ -52,6 +52,8 @@ export interface View extends Mods, Elms {}
 
 @derive(Mods, Elms)
 export abstract class View extends Component implements IViewBased, Mods, Elms {
+	static readonly ES: string = ES;
+
 	readonly isView = true as const;
 	parent: Nullable<IViewBased> = null;
 

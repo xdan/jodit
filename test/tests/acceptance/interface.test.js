@@ -62,43 +62,52 @@ describe('Test interface', function () {
 		});
 	});
 
-	describe('Style values', function () {
-		describe('Set styleValues dictionary', () => {
-			it('Should apply keys of it ass custom properties in CSS in instance', () => {
-				const getKey = (elm, key) =>
-					window
-						.getComputedStyle(elm)
-						.getPropertyValue('--jd-' + key)
-						.trim();
+	(Jodit.ES === 'es5' ? describe.skip : describe)(
+		'Style values',
+		function () {
+			describe('Set styleValues dictionary', () => {
+				it('Should apply keys of it as custom properties in CSS in instance', () => {
+					const getKey = (elm, key) =>
+						window
+							.getComputedStyle(elm)
+							.getPropertyValue('--jd-' + key)
+							.trim();
 
-				const editor = getJodit({
-					styleValues: {
-						'color-text': '#F9D90F',
-						colorBorder: '#1AB942',
-						'color-Panel': '#E23DAA'
-					}
+					const editor = getJodit({
+						styleValues: {
+							'color-text': '#F9D90F',
+							colorBorder: '#1AB942',
+							'color-Panel': '#E23DAA'
+						}
+					});
+
+					expect(getKey(editor.container, 'color-text')).eq(
+						'#F9D90F'
+					);
+					expect(getKey(editor.container, 'color-border')).eq(
+						'#1AB942'
+					);
+					expect(getKey(editor.container, 'color-panel')).eq(
+						'#E23DAA'
+					);
+
+					expect(
+						Jodit.modules.Helpers.normalizeColor(
+							getKey(document.body, 'color-text')
+						)
+					).eq('#222222'); // only for instance
+
+					expect(
+						Jodit.modules.Helpers.normalizeColor(
+							window.getComputedStyle(
+								editor.toolbar.container.parentNode
+							).backgroundColor
+						)
+					).eq('#E23DAA'); // only for instance
 				});
-
-				expect(getKey(editor.container, 'color-text')).eq('#F9D90F');
-				expect(getKey(editor.container, 'color-border')).eq('#1AB942');
-				expect(getKey(editor.container, 'color-panel')).eq('#E23DAA');
-
-				expect(
-					Jodit.modules.Helpers.normalizeColor(
-						getKey(document.body, 'color-text')
-					)
-				).eq('#222222'); // only for instance
-
-				expect(
-					Jodit.modules.Helpers.normalizeColor(
-						window.getComputedStyle(
-							editor.toolbar.container.parentNode
-						).backgroundColor
-					)
-				).eq('#E23DAA'); // only for instance
 			});
-		});
-	});
+		}
+	);
 
 	describe('About dialog', function () {
 		it('Should contains License element', function () {
