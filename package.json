@@ -1,6 +1,6 @@
 {
 	"name": "jodit",
-	"version": "4.0.0-beta.4",
+	"version": "4.0.0-beta.5",
 	"description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
 	"main": "build/jodit.min.js",
 	"types": "./types/index.d.ts",
@@ -74,7 +74,7 @@
 		"eslint-plugin-tsdoc": "^0.2.17",
 		"expect-mocha-image-snapshot": "^3.0.13",
 		"glob": "^10.2.1",
-		"jq": "^1.7.2",
+		"node-jq": "^2.3.5",
 		"karma": "^6.4.1",
 		"karma-chai": "^0.1.0",
 		"karma-chrome-launcher": "^3.2.0",

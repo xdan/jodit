@@ -15,7 +15,7 @@ singleRun ?= true
 isTest ?= false
 debug ?= false
 updateTests ?= false
-version = $(shell cat package.json | npx --yes jq -r '.version')
+version = $(shell cat package.json | $(NODE_MODULES_BIN)/node-jq -r '.version')
 
 .PHONY: start
 start:
