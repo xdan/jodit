@@ -8,56 +8,64 @@ import type { LoaderContext } from 'webpack';
 
 import * as ts from 'typescript';
 import * as vm from 'vm';
+import * as path from 'path';
+import * as fs from 'fs';
 
 let keys: string[] = [];
+type Lang = { [key in string]: string };
 
 export default function (this: LoaderContext<{}>, source: string): string {
 	this.cacheable && this.cacheable(true);
 	const isEn = this.resourcePath.includes('en.js');
 	const isKeys = this.resourcePath.includes('keys.js');
+	const directory = path.dirname(this.resourcePath);
 
-	let result: string[] = [];
+	let result: string[] | Lang = [];
 
-	try {
-		const transpile = ts.transpileModule(source, {
-			compilerOptions: {
-				module: ts.ModuleKind.ES2015,
-				target: ts.ScriptTarget.ES5
-			}
-		});
+	const lang = loadLangObject(source);
 
-		const content = transpile.outputText;
+	if (!keys.length && lang) {
+		keys = Object.keys(
+			loadLangObject(
+				fs.readFileSync(path.resolve(directory, 'ar.js'), 'utf-8')
+			)
+		);
+	}
 
-		const box: { module: { exports: string | string[] } } = {
-			module: { exports: '' }
-		};
+	keys.forEach((key, index) => {
+		result[index] = lang[key];
+	});
 
-		try {
-			vm.runInNewContext('var module={};' + content, box);
-		} catch {}
+	if (isKeys) {
+		result = keys; // for Special keys file return keys
+	}
 
-		const lang = box.module.exports;
-
-		if (!keys.length && lang) {
-			keys = Object.keys(lang);
-		}
-
-		keys.forEach((key, index) => {
-			result[index] = lang[key];
-		});
-
-		if (isKeys) {
-			result = keys; // for Special keys file return keys
-		}
-
-		if (isEn) {
-			result = lang as string[]; // for Special keys file return keys
-		}
-	} catch (e) {
-		throw new Error('Error in lang-loader: ' + e.message + e.stack);
+	if (isEn) {
+		result = lang;
 	}
 
 	return 'module.exports.default = ' + JSON.stringify(result);
 }
 
 export const seperable = true;
+
+function loadLangObject(source: string): Lang {
+	const transpile = ts.transpileModule(source, {
+		compilerOptions: {
+			module: ts.ModuleKind.ES2015,
+			target: ts.ScriptTarget.ES5
+		}
+	});
+
+	const content = transpile.outputText;
+
+	const box: { module: { exports: Lang } } = {
+		module: { exports: {} }
+	};
+
+	try {
+		vm.runInNewContext('var module={};' + content, box);
+	} catch {}
+
+	return box.module.exports;
+}
