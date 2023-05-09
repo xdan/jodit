@@ -17,6 +17,7 @@ singleRun ?= true
 isTest ?= false
 debug ?= false
 updateTests ?= false
+outputFolder ?= outputFolder
 version = $(shell cat package.json | jq -r '.version')
 
 .PHONY: version
