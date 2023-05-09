@@ -11,6 +11,7 @@ export default ({
 	pkg,
 	isProd,
 	ESNext,
+	ESModern,
 	isTest,
 	ES,
 	mode
@@ -21,6 +22,7 @@ export default ({
 			IS_PROD: isProd,
 			IS_TEST: isTest,
 			IS_ES_NEXT: ESNext,
+			IS_ES_MODERN: ESModern,
 			HOMEPAGE: JSON.stringify(pkg.homepage),
 			TARGET_ES: JSON.stringify(ES),
 			NODE_ENV: JSON.stringify(mode)

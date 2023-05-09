@@ -14,7 +14,7 @@ import './styles/index.less';
 
 import * as constants from './core/constants';
 
-declare function require(moduleName: string): any;
+// JODIT-SECTION-START:POLYFILLS
 
 if (
 	typeof process !== 'undefined' &&
@@ -23,6 +23,8 @@ if (
 ) {
 	require('./polyfills');
 }
+
+// JODIT-SECTION-END:POLYFILLS
 
 import { Jodit as DefaultJodit } from './jodit';
 

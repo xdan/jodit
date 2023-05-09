@@ -3,6 +3,8 @@ TS_NODE_BASE := TS_NODE_TRANSPILE_ONLY=true node -r ts-node/register
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
 KARMA := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
 
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+cwd := $(dir $(mkfile_path))
 build ?= build
 devMode ?= development
 generateTypes ?= generateTypes
@@ -20,6 +22,7 @@ version = $(shell cat package.json | jq -r '.version')
 .PHONY: version
 version:
 	@echo $(version)
+	@echo CWD: $(cwd)
 
 .PHONY: start
 start:
@@ -53,44 +56,47 @@ dts:
 	cp -R ./tsconfig.json ./build/types/
 	cp -R ./src/typings.d.ts ./build/types/
 	cp -R ./src/types/* ./build/types/types
-	@$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts --cwd=./build/types --ver=$(version)
+	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/types --ver=$(version)
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
 
 .PHONY: esm
 esm:
-	echo Build esm modules ...
+	@echo 'Build esm modules ...'
 	rm -rf ./build/esm
 	tsc -p tsconfig.json --importHelpers false --module es2020 --target es2020 --removeComments false --sourceMap false --outDir ./build/esm
 
-	echo Remove style imports ...
+	@echo 'Remove style imports ...'
 	@$(NODE_MODULES_BIN)/replace "import .+.(less)('|\");" '' ./build/esm -r --silent
 
-	echo Resolve alias imports ...
-	$(TS_NODE_BASE) ./tools/utils/resolve-alias-imports.ts --cwd=./build/esm --ver=$(version)
+	@echo 'Resolve alias imports ...'
+	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/esm --ver=$(version)
 
-	echo Copy langs ...
+	@echo 'Copy langs ...'
 	rsync -r --exclude '*.test.js' ./src/langs/*.js ./build/esm/langs
 	@$(NODE_MODULES_BIN)/replace "module.exports = " "export default " ./build/esm/ -r --silent
 
-	echo Copy icons ...
+	@echo 'Copy icons ...'
 	@$(TS_NODE_BASE) ./tools/utils/copy-icons-in-esm.ts $(shell pwd)/src/ ./build/esm
 
 .PHONY: build-all
 build-all:
 	make clean
 	@mkdir -p ./build/
-	$(TS_NODE_BASE) ./tools/utils/prepare-publish.ts $(shell pwd)
-	@$(NODE_MODULES_BIN)/replace "4.0.0-beta.24" "$(version)" ./build/README.md --silent
+	$(TS_NODE_BASE) $(cwd)tools/utils/prepare-publish.ts $(shell pwd)
+	@$(NODE_MODULES_BIN)/replace "4\.0\.0-beta\.\d+" "$(version)" ./build/README.md --silent
 	cd ./build/ && npm i && cd ..
 
 	make esm
 
-	make build es=es2021 uglify=false generateTypes=true
+	make build es=es2018 uglify=false generateTypes=true
 	make dts
-	make build es=es2021
+	make build es=es2018
 
 	make build es=es2015
 	make build es=es2015 uglify=false
+
+	make build es=es2021
+	make build es=es2021 uglify=false
 
 	make build es=es5
 	make build es=es5 uglify=false
@@ -101,6 +107,7 @@ build-all:
 .PHONY: test-all
 test-all:
 	make test-only-run build=es2021 uglify=true
+	make test-only-run build=es2018 uglify=true
 	make test-only-run build=es2015 uglify=true
 	make test-only-run build=es5 uglify=true
 
@@ -142,6 +149,7 @@ screenshots-all:
 	make screenshots-build-image
 	make screenshots-test build=es5
 	make screenshots-test build=es2015
+	make screenshots-test build=es2018
 	make screenshots-test build=es2021
 
 

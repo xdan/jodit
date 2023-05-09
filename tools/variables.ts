@@ -23,7 +23,7 @@ export type Argv = {
 	excludePlugins?: string;
 	excludeLanguages?: string;
 	includeLanguages?: string;
-	es?: 'es5' | 'es2015' | 'es2021';
+	es?: 'es5' | 'es2015' | 'es2018' | 'es2021';
 	outputFolder?: string;
 	progressFunction?: () => void;
 };
@@ -57,7 +57,7 @@ export type Variables = {
 		| ((percentage: number, msg: string, ...args: string[]) => void)
 		| false;
 	mode: 'production' | 'development';
-	ES: 'es5' | 'es2015' | 'es2021';
+	ES: 'es5' | 'es2015' | 'es2018' | 'es2021';
 	ESNext: boolean;
 	ESModern: boolean;
 	port: number;
@@ -91,13 +91,14 @@ export const variables = (argv: Argv, dir: string): Variables => {
 	const excludeLanguages = (argv.excludeLanguages || '').split(/[,\s;]/);
 	const includeLanguages = (argv.includeLanguages || '').split(/[,\s;]/);
 
-	const ES =
-		argv && ['es5', 'es2021', 'es2015'].includes(argv.es)
-			? argv.es
-			: 'es2021';
+	if (!['es5', 'es2018', 'es2021', 'es2015'].includes(argv.es)) {
+		throw Error('Define correct ES target');
+	}
+
+	const ES = argv.es;
 
 	const ESNext = ES === 'es2021';
-	const ESModern = ['es2021', 'es2015'].includes(ES);
+	const ESModern = ['es2021', 'es2018', 'es2015'].includes(ES);
 	const dirname = dir;
 	const superDirname = path.resolve(__dirname, '..');
 	const outputFolder =

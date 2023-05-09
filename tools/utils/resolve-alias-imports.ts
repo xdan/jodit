@@ -8,6 +8,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as ts from 'typescript';
 import * as yargs from 'yargs';
+import { checkSections } from '../loaders/process-sections';
 
 const { argv } = yargs
 	.option('cwd', {
@@ -24,6 +25,7 @@ const { argv } = yargs
 const globalMaps = {
 	'process.env.APP_VERSION': argv.ver,
 	'process.env.TARGET_ES': 'es2020',
+	'process.env.IS_ES_MODERN': true,
 	'process.env.IS_ES_NEXT': true,
 	'process.env.IS_PROD': true,
 	'process.env.IS_TEST': false,
@@ -45,6 +47,34 @@ const allowPackages = new Set([
 	'core-js/es/array/from'
 ]);
 
+const allowPluginsInESM = new Set(
+	[
+		'about',
+		'backspace',
+		'delete',
+		'color',
+		'format-block',
+		'image',
+		'ordered-list',
+		'dtd',
+		'enter',
+		'enter',
+		'link',
+		'iframe',
+		'hotkeys',
+		'powered-by-jodit',
+		'redo-undo',
+		'size',
+		'wrap-nodes',
+		'font'
+	].map(p => `jodit/plugins/${p}/${p}`)
+);
+
+const allowLanguagesInESM = new Set([
+	'jodit/langs/en',
+	'jodit/core/helpers/checker/is-array'
+]);
+
 resoleAliasImports(cwd);
 
 function resoleAliasImports(dirPath: string): void {
@@ -61,7 +91,9 @@ function resoleAliasImports(dirPath: string): void {
 
 		const isJs = /.(js)$/.test(file.name);
 
-		const content = fs.readFileSync(filePath, 'utf8');
+		const content = checkSections(fs.readFileSync(filePath, 'utf8'), {
+			POLYFILLS: false
+		});
 
 		const sourceFile = ts.createSourceFile(
 			filePath,
@@ -116,10 +148,13 @@ function resoleAliasImports(dirPath: string): void {
 						if (globalMaps[name] === undefined) {
 							throw Error(`Unknown variable: ${name}`);
 						}
+
+						const bool = globalMaps[name]
+							? ts.factory.createTrue()
+							: ts.factory.createFalse();
+
 						return typeof globalMaps[name] === 'boolean'
-							? globalMaps[name]
-								? ts.factory.createTrue()
-								: ts.factory.createFalse()
+							? bool
 							: ts.factory.createStringLiteral(globalMaps[name]);
 					}
 
@@ -153,6 +188,17 @@ function resoleAliasImports(dirPath: string): void {
 					}
 
 					if (ts.isImportDeclaration(node) && node.moduleSpecifier) {
+						if (isJs) {
+							node = allowImportsPluginsAndLanguagesInESM(node);
+
+							if (
+								!ts.isImportDeclaration(node) ||
+								!node.moduleSpecifier
+							) {
+								return node;
+							}
+						}
+
 						const newPath = resolvePath(
 							node.moduleSpecifier.getText()
 						);
@@ -215,4 +261,39 @@ function resolveAlias(pathWithAlias: string, dirPath: string): string {
 
 	const relative = path.relative(dirPath, subPath);
 	return relative.startsWith('.') ? relative : `./${relative}`;
+}
+
+function allowImportsPluginsAndLanguagesInESM(
+	node: ts.ImportDeclaration
+): ts.Node {
+	const filePath = node.moduleSpecifier.getText().replace(/['"]/g, '');
+
+	if (node.getSourceFile().fileName.includes('langs/index')) {
+		if (!allowLanguagesInESM.has(filePath)) {
+			if (/jodit\/langs\//.test(filePath)) {
+				return ts.factory.createVariableDeclarationList(
+					[
+						ts.factory.createVariableDeclaration(
+							ts.factory.createIdentifier(
+								node.importClause.getText()
+							),
+							undefined,
+							undefined,
+							ts.factory.createObjectLiteralExpression()
+						)
+					],
+					ts.NodeFlags.Const
+				);
+			}
+			return ts.factory.createIdentifier('');
+		}
+	}
+
+	if (node.getSourceFile().fileName.includes('plugins/index')) {
+		if (!allowPluginsInESM.has(filePath)) {
+			return ts.factory.createIdentifier('');
+		}
+	}
+
+	return node;
 }

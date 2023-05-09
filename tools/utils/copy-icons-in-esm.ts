@@ -31,16 +31,16 @@ function readAndCopyIcons(dir: string): void {
 				'utf8'
 			);
 
+			const targetPath = path.join(esmDir, dir, file.name + '.js');
+
 			console.log(
 				'Copy:',
 				path.join(fullDir, file.name),
 				'->',
-				path.join(esmDir, dir, file.name.replace(/.svg$/, '.js'))
+				targetPath
 			);
 
 			fs.mkdirSync(path.join(esmDir, dir), { recursive: true });
-
-			const targetPath = path.join(esmDir, dir, file.name + '.js');
 
 			if (fs.existsSync(targetPath)) {
 				throw new Error(`File ${targetPath} already exists`);

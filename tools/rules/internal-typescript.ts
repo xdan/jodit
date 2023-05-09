@@ -14,6 +14,7 @@ export default ({
 	superDirname,
 	dirname,
 	ES,
+	ESModern,
 	generateTypes,
 	isProd,
 	isTest
@@ -34,6 +35,15 @@ export default ({
 					getCustomTransformers: (program: ts.Program) => ({
 						before: isProd && !isTest ? [removeAsserts()] : []
 					})
+				}
+			},
+			{
+				loader: path.resolve(
+					superDirname,
+					'./tools/loaders/process-sections.ts'
+				),
+				options: {
+					POLYFILLS: !ESModern
 				}
 			}
 		],

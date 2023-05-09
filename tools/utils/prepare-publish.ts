@@ -19,7 +19,7 @@ fs.writeFileSync(
 	JSON.stringify(
 		{
 			...packageJson,
-			main: 'es2015/jodit.min.js',
+			main: 'esm/index.js',
 			module: 'esm/index.js',
 			types: 'types/index.d.ts',
 			scripts: {},

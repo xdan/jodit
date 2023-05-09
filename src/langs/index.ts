@@ -13,10 +13,10 @@
 import type { IDictionary } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 
+import en from 'jodit/langs/en';
 import ar from 'jodit/langs/ar';
 import cs_cz from 'jodit/langs/cs_cz';
 import de from 'jodit/langs/de';
-import en from 'jodit/langs/en';
 import es from 'jodit/langs/es';
 import fr from 'jodit/langs/fr';
 import he from 'jodit/langs/he';

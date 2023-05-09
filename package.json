@@ -47,12 +47,12 @@
 	},
 	"homepage": "https://xdsoft.net/jodit/",
 	"dependencies": {
-		"autobind-decorator": "^2.4.0",
-		"classlist-polyfill": "^1.2.0",
-		"core-js": "^3.30.2",
-		"es6-promise": "^4.2.8"
+		"autobind-decorator": "^2.4.0"
 	},
 	"devDependencies": {
+		"classlist-polyfill": "^1.2.0",
+		"core-js": "^3.30.2",
+		"es6-promise": "^4.2.8",
 		"tslib": "^2.5.0",
 		"@types/ace": "^0.0.48",
 		"@types/node": "^20.1.0",

@@ -32,7 +32,13 @@ import {
 	isFunction,
 	isVoid
 } from 'jodit/core/helpers';
-import { APP_VERSION, BASE_PATH, ES, IS_ES_NEXT } from 'jodit/core/constants';
+import {
+	APP_VERSION,
+	BASE_PATH,
+	ES,
+	IS_ES_MODERN,
+	IS_ES_NEXT
+} from 'jodit/core/constants';
 import {
 	Component,
 	STATUSES,
@@ -79,9 +85,10 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	}
 
 	// from webpack.config.js
-	static readonly ES: 'es5' | 'es2015' | 'es2021' = ES;
+	static readonly ES: 'es5' | 'es2015' | 'es2018' | 'es2021' = ES;
 	static readonly version: string = APP_VERSION;
 	static readonly esNext: boolean = IS_ES_NEXT; // from webpack.config.js
+	static readonly esModern: boolean = IS_ES_MODERN; // from webpack.config.js
 
 	/**
 	 * Return default timeout period in milliseconds for some debounce or throttle functions.

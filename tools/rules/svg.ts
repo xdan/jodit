@@ -12,10 +12,7 @@ export default ({ superDirname }: Variables): RuleSetRule => {
 	return {
 		test: /\.svg$/i,
 		use: {
-			loader: path.resolve(
-				superDirname,
-				'./tools/loaders/svg-loader.ts'
-			)
+			loader: path.resolve(superDirname, './tools/loaders/svg-loader.ts')
 		}
 	};
 };

@@ -12,7 +12,8 @@ import type { HTMLTagNames, IDictionary } from 'jodit/types';
 
 export const APP_VERSION = process.env.APP_VERSION as string;
 // eslint-disable-next-line prettier/prettier
-export const ES: 'es5' | 'es2015' | 'es2021' = process.env.TARGET_ES as 'es2015';
+export const ES: 'es5' | 'es2015' | 'es2018' |'es2021' = process.env.TARGET_ES as 'es2015';
+export const IS_ES_MODERN = process.env.IS_ES_MODERN as unknown as boolean;
 export const IS_ES_NEXT = process.env.IS_ES_NEXT as unknown as boolean;
 export const IS_PROD = process.env.IS_PROD as unknown as boolean;
 export const IS_TEST = process.env.IS_TEST as unknown as boolean;

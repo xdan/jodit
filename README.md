@@ -32,15 +32,9 @@ npm install jodit
 You will get:
 
 - inside /esm: ESM version of the editor (compatible with e.g. webpack)
-- inside /(es5|es2015|es2021)/*.js: UMD bundled, not minified
-- inside /(es5|es2015|es2021)/*.min.js: UMD bundled, and minified
+- inside /(es5|es2015|es2018|es2021)/*.js: UMD bundled, not minified
+- inside /(es5|es2015|es2018|es2021)/*.min.js: UMD bundled, and minified
 - types/index.d.ts: this specifies the API of the editor (this is what is actually versioned, everything else is considered private and might break with any release).
-
-or
-
-```bash
-yarn add jodit
-```
 
 ### Include just two files
 
@@ -56,6 +50,54 @@ es2021 Version (if your users use only modern browsers)
 ```html
 <link type="text/css" rel="stylesheet" href="es2021/jodit.min.css" />
 <script type="text/javascript" src="es2021/jodit.min.js"></script>
+```
+
+esm modules
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "autobind-decorator": "https://unpkg.com/autobind-decorator@2.4.0/lib/esm/index.js"
+    }
+  }
+</script>
+<link rel="stylesheet" href="./node_modules/jodit/es2021/jodit.min.css"/>
+<script type="module">
+  import {Jodit} from "./node_modules/jodit/esm/index.js"
+  Jodit.make('#editor', {
+    width: 600,
+    height: 400,
+  });
+</script>
+```
+
+ESM automatically connects only the basic set of plugins and only English.
+You can connect the necessary plugins and languages yourself:
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "autobind-decorator": "https://unpkg.com/autobind-decorator@2.4.0/lib/esm/index.js"
+    }
+  }
+</script>
+<link rel="stylesheet" href="./node_modules/jodit/es2021/jodit.min.css"/>
+<script type="module">
+  import {Jodit} from "./node_modules/jodit/esm/index.js"
+  import "./node_modules/jodit/esm/plugins/add-new-line/add-new-line.js"
+  import "./node_modules/jodit/esm/plugins/fullsize/fullsize.js"
+  import de from "./node_modules/jodit/esm/langs/de.js"
+
+  Jodit.langs.de = de;
+
+  Jodit.make('#editor', {
+    width: 600,
+    height: 400,
+    language: 'de'
+  });
+</script>
 ```
 
 ### Use a CDN
