@@ -44,6 +44,7 @@ build:
 		--env isTest=$(isTest) \
 		--env includeLanguages=$(includeLanguages) \
 		--env excludeLanguages=$(excludeLanguages) \
+		--env outputFolder=$(outputFolder) \
 		--env generateTypes=$(generateTypes)
 
 .PHONY: clean
