@@ -1,5 +1,6 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 cwd := $(dir $(mkfile_path))
+pwd := $(shell pwd)
 build ?= es2015
 devMode ?= development
 generateTypes ?= generateTypes
@@ -51,11 +52,12 @@ build:
 
 .PHONY: clean
 clean:
-	rm -rf ./node_modules/.cache && rm -rf build/*
+	@echo Clean cache and build folder ...
+	@rm -rf $(pwd)/node_modules/.cache && rm -rf $(pwd)/build/*
 
 .PHONY: dts
 dts:
-	echo Prepare types ...
+	@echo Prepare types ...
 	mkdir -p ./build/types/types
 	cp -R ./tsconfig.json ./build/types/
 	cp -R ./src/typings.d.ts ./build/types/
@@ -66,29 +68,29 @@ dts:
 .PHONY: esm
 esm:
 	@echo 'Build esm modules ...'
-	rm -rf ./build/esm
-	tsc -p tsconfig.json --importHelpers false --module es2020 --target es2020 --removeComments false --sourceMap false --outDir ./build/esm
+	rm -rf $(pwd)/build/esm
+	tsc -p $(pwd)/tsconfig.json --importHelpers false --module es2020 --target es2020 --removeComments false --sourceMap false --outDir $(pwd)/build/esm
 
 	@echo 'Remove style imports ...'
-	@$(NODE_MODULES_BIN)/replace "import .+.(less)('|\");" '' ./build/esm -r --silent
+	@$(NODE_MODULES_BIN)/replace "import .+.(less)('|\");" '' $(pwd)/build/esm -r --silent
 
 	@echo 'Resolve alias imports ...'
-	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/esm --ver=$(version)
+	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=$(pwd)/build/esm --ver=$(version)
 
 	@echo 'Copy langs ...'
-	rsync -r --exclude '*.test.js' ./src/langs/*.js ./build/esm/langs
-	@$(NODE_MODULES_BIN)/replace "module.exports = " "export default " ./build/esm/ -r --silent
+	rsync -r --exclude '*.test.js' $(pwd)/src/langs/*.js $(pwd)/build/esm/langs
+	@$(NODE_MODULES_BIN)/replace "module.exports = " "export default " $(pwd)/build/esm/ -r --silent
 
 	@echo 'Copy icons ...'
-	@$(TS_NODE_BASE) ./tools/utils/copy-icons-in-esm.ts $(shell pwd)/src/ ./build/esm
+	@$(TS_NODE_BASE) $(cwd)/tools/utils/copy-icons-in-esm.ts $(pwd)/src/ $(pwd)/build/esm
 
 .PHONY: build-all
 build-all:
 	make clean
-	@mkdir -p ./build/
-	$(TS_NODE_BASE) $(cwd)tools/utils/prepare-publish.ts $(shell pwd)
-	@$(NODE_MODULES_BIN)/replace "4\.0\.0-beta\.\d+" "$(version)" ./build/README.md --silent
-	cd ./build/ && npm i && cd ..
+	@mkdir -p $(pwd)/build/
+	@$(TS_NODE_BASE) $(cwd)tools/utils/prepare-publish.ts $(pwd)
+	@$(NODE_MODULES_BIN)/replace "4\.0\.0-beta\.\d+" "$(version)" $(pwd)/build/README.md --silent
+	@cd $(pwd)/build/ && npm i
 
 	make esm
 
@@ -142,7 +144,7 @@ test-find:
 
 .PHONY: test-only-run
 test-only-run:
-	$(KARMA) --browsers $(browsers) $(cwd)tools/karma.conf.ts --single-run $(singleRun) --build=$(build) --min=$(uglify) --cwd=$(cwd)
+	$(KARMA) --browsers $(browsers) $(cwd)tools/karma.conf.ts --single-run $(singleRun) --build=$(build) --min=$(uglify) --cwd=$(pwd)
 
 .PHONY: coverage
 coverage:
