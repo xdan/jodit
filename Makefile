@@ -1,6 +1,6 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 cwd := $(dir $(mkfile_path))
-build ?= build
+build ?= es2015
 devMode ?= development
 generateTypes ?= generateTypes
 es ?= es2015
@@ -19,7 +19,7 @@ WEBPACK_DEV_PORT := 2000
 NODE_MODULES_BIN := ./node_modules/.bin
 TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project $(cwd)tools/tsconfig.json
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
-KARMA := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
+KARMA := @TS_NODE_TRANSPILE_ONLY=true $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
 
 .PHONY: version
 version:
@@ -142,7 +142,7 @@ test-find:
 
 .PHONY: test-only-run
 test-only-run:
-	$(KARMA) --browsers $(browsers) ./test/karma.conf.ts --single-run $(singleRun) --build=$(build) --min=$(uglify)
+	$(KARMA) --browsers $(browsers) $(cwd)tools/karma.conf.ts --single-run $(singleRun) --build=$(build) --min=$(uglify) --cwd=$(cwd)
 
 .PHONY: coverage
 coverage:

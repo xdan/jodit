@@ -7,11 +7,17 @@
 import type { Config } from 'karma';
 import * as yargs from 'yargs';
 import * as fs from 'fs';
+import path from 'path';
 
 const argv = yargs
 	.option('grep', {
 		type: 'string',
 		description: 'Grep test glob pattern'
+	})
+	.option('cwd', {
+		type: 'string',
+		demandOption: true,
+		description: 'Work directory'
 	})
 	.option('build', {
 		type: 'string',
@@ -31,12 +37,13 @@ if (argv.grep) {
 
 const buildDir = './build/' + argv.build;
 
+const workDirectory = path.resolve(argv.cwd, buildDir);
+
 if (
-	!argv.build ||
-	!fs.existsSync(buildDir) ||
-	!fs.statSync(buildDir).isDirectory()
+	!fs.existsSync(workDirectory) ||
+	!fs.statSync(workDirectory).isDirectory()
 ) {
-	throw new Error('Invalid build directory');
+	throw new Error('Invalid build directory:' + workDirectory);
 }
 
 if (!fs.existsSync(buildDir + '/jodit' + (argv.min ? '.min' : '') + '.js')) {
