@@ -179,7 +179,6 @@ function resoleAliasImports(dirPath: string): void {
 						);
 					}
 
-					// console.log();
 					if (
 						ts.isCallExpression(node) &&
 						node.expression.getText() === 'require'

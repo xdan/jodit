@@ -42,5 +42,5 @@
 		}
 	},
 	"exclude": ["tools/**/*"],
-	"include": ["src/**/*", "./index.d.ts"]
+	"include": ["./src/index.ts", "./src/typings.d.ts", "./index.d.ts"]
 }
