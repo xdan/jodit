@@ -27,7 +27,7 @@ import { INSERT_AS_HTML } from 'jodit/core/constants';
 /**
  * Default Editor's Configuration
  */
-export class Config implements IViewOptions {
+class Config implements IViewOptions {
 	/**
 	 * Use cache for heavy methods
 	 */
@@ -997,3 +997,5 @@ export class Config implements IViewOptions {
 }
 
 Config.prototype.controls = {};
+
+export { Config };

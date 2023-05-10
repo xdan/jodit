@@ -18,7 +18,7 @@ const replace = {
 	zh_cn: 'zh',
 	zh_tw: 'th',
 	pt_br: 'pt'
-};
+} as const;
 
 export const readLangs = function readLangs(
 	dir: string
@@ -34,8 +34,8 @@ export const readLangs = function readLangs(
 				return ['', file, realLang];
 			}
 
-			if (replace[lang]) {
-				lang = replace[lang];
+			if (lang in replace) {
+				lang = replace[lang as keyof typeof replace];
 			}
 
 			return [lang, file, realLang] as const;
@@ -43,7 +43,7 @@ export const readLangs = function readLangs(
 		.filter(([lang]) => lang) as Array<[string, string, string]>;
 };
 
-async function prettier(fileName): Promise<void> {
+async function prettier(fileName: string): Promise<void> {
 	return new Promise((resolve, reject) => {
 		exec(`prettier --write ${fileName}`, error => {
 			if (error != null) {
@@ -98,4 +98,6 @@ export const makeIndexFile = function makeIndexFile(
 
 		return prettier(indexFile);
 	}
+
+	return Promise.resolve();
 };

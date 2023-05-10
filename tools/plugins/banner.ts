@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Variables } from '../variables';
+import type { Variables } from '../variables';
 import * as webpack from 'webpack';
 
 export default ({ banner }: Variables): webpack.BannerPlugin => {

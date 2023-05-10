@@ -16,6 +16,7 @@ type Lang = { [key in string]: string };
 
 export default function (this: LoaderContext<{}>, source: string): string {
 	this.cacheable && this.cacheable(true);
+
 	const isEn = this.resourcePath.includes('en.js');
 	const isKeys = this.resourcePath.includes('keys.js');
 	const directory = path.dirname(this.resourcePath);
@@ -32,16 +33,14 @@ export default function (this: LoaderContext<{}>, source: string): string {
 		);
 	}
 
-	keys.forEach((key, index) => {
-		result[index] = lang[key];
-	});
-
 	if (isKeys) {
 		result = keys; // for Special keys file return keys
-	}
-
-	if (isEn) {
+	} else if (isEn) {
 		result = lang;
+	} else {
+		keys.forEach((key, index) => {
+			(result as string[])[index] = lang[key];
+		});
 	}
 
 	return 'module.exports.default = ' + JSON.stringify(result);

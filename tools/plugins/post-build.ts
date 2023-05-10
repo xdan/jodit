@@ -7,11 +7,11 @@
 import type { Variables } from '../variables';
 import { PostBuild } from '../utils/post-build';
 import { fileName } from '../utils/filename';
-import * as postcss from 'postcss';
+import postcss from 'postcss';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as autoprefixer from 'autoprefixer';
-import * as postcssCssVariables from 'postcss-css-variables';
+import autoprefixer from 'autoprefixer';
+import postcssCssVariables from 'postcss-css-variables';
 
 export default ({
 	argv,

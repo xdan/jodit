@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { Variables } from '../variables';
 import * as fs from 'fs';
 import * as path from 'path';
-import { type Variables } from '../variables';
 
 export default ({
 	excludeLanguages,
@@ -45,7 +45,7 @@ export default ({
 			map[`./${name}.js`] = '{}';
 			map[`jodit/langs/${name}`] = '{}';
 			return map;
-		}, {});
+		}, {} as { [key in string]: string });
 	}
 
 	return {};

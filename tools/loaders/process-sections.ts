@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { LoaderContext } from 'webpack';
+import type { LoaderContext } from 'webpack';
 
 type ProcessSectionsPreloaderOptions = {
 	[key in string]: boolean;

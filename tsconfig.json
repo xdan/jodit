@@ -1,15 +1,5 @@
 {
-	"ts-node": {
-		"compilerOptions": {
-			"module": "commonjs",
-			"moduleResolution": "node",
-			"resolveJsonModule": true
-		}
-	},
 	"compilerOptions": {
-		"declaration": true,
-		"declarationDir": "types",
-		"outDir": "types",
 		"target": "es5",
 		"module": "ESNext",
 		"moduleResolution": "node",
@@ -51,14 +41,6 @@
 			"jodit/*": ["./src/*"]
 		}
 	},
-	"include": ["./src/types/"],
-	"files": [
-		"./index.d.ts",
-		"./src/index.ts",
-		"./src/typings.d.ts",
-		"./src/types/index.d.ts",
-		"./src/polyfills.ts",
-		"./src/plugins/speech-recognize/speech-recognize.ts",
-		"./src/plugins/source/editor/engines/custom.ts"
-	]
+	"exclude": ["tools/**/*"],
+	"include": ["src/**/*", "./index.d.ts"]
 }

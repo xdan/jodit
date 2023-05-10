@@ -33,7 +33,8 @@ fs.writeFileSync(
 const copyRecursiveSync = (src: string, dest: string): void => {
 	const exists = fs.existsSync(src);
 	const stats = exists && fs.statSync(src);
-	const isDirectory = exists && stats.isDirectory();
+	const isDirectory = exists && stats && stats.isDirectory();
+
 	if (isDirectory) {
 		fs.mkdirSync(dest);
 		fs.readdirSync(src).forEach((childItemName): void => {

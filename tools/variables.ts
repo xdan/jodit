@@ -6,10 +6,11 @@
 
 import * as path from 'path';
 
-function Bool(str): boolean {
+function Bool(str: string | boolean | undefined): boolean {
 	return typeof str === 'boolean' ? str : str === 'true';
 }
 
+export type ES_TARGET = 'es5' | 'es2015' | 'es2018' | 'es2021';
 export type Argv = {
 	WEBPACK_SERVE?: boolean;
 	filename?: (name: string) => string;
@@ -23,7 +24,7 @@ export type Argv = {
 	excludePlugins?: string;
 	excludeLanguages?: string;
 	includeLanguages?: string;
-	es?: 'es5' | 'es2015' | 'es2018' | 'es2021';
+	es?: ES_TARGET;
 	outputFolder?: string;
 	progressFunction?: () => void;
 };
@@ -57,7 +58,7 @@ export type Variables = {
 		| ((percentage: number, msg: string, ...args: string[]) => void)
 		| false;
 	mode: 'production' | 'development';
-	ES: 'es5' | 'es2015' | 'es2018' | 'es2021';
+	ES: ES_TARGET;
 	ESNext: boolean;
 	ESModern: boolean;
 	port: number;
@@ -81,7 +82,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 
 	const isTest = Bool(argv && argv.isTest);
 
-	const mode = debug ? 'development' : argv.mode;
+	const mode = (debug ? 'development' : argv.mode) ?? 'production';
 	const isProd = mode === 'production';
 	const uglify = Boolean(!debug && argv && Bool(argv.uglify));
 	const stat = Bool(argv.stat);
@@ -91,11 +92,10 @@ export const variables = (argv: Argv, dir: string): Variables => {
 	const excludeLanguages = (argv.excludeLanguages || '').split(/[,\s;]/);
 	const includeLanguages = (argv.includeLanguages || '').split(/[,\s;]/);
 
-	if (!['es5', 'es2018', 'es2021', 'es2015'].includes(argv.es)) {
+	const ES = argv.es as ES_TARGET;
+	if (!['es5', 'es2018', 'es2021', 'es2015'].includes(ES)) {
 		throw Error('Define correct ES target');
 	}
-
-	const ES = argv.es;
 
 	const ESNext = ES === 'es2021';
 	const ESModern = ['es2021', 'es2018', 'es2015'].includes(ES);

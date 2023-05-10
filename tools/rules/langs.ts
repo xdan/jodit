@@ -5,10 +5,10 @@
  */
 
 import type { Variables } from '../variables';
+import type { RuleSetRule } from 'webpack';
 import * as path from 'path';
-import { RuleSetRule } from 'webpack';
 
-export default ({ superDirname }: Variables): RuleSetRule => {
+export default (_: Variables): RuleSetRule => {
 	return {
 		test: /\.(js)$/,
 		use: [
@@ -16,7 +16,6 @@ export default ({ superDirname }: Variables): RuleSetRule => {
 				loader: path.resolve(__dirname, '../loaders/lang-loader.ts')
 			}
 		],
-		include: path.resolve(superDirname, './src/langs'),
-		exclude: path.resolve(superDirname, './src/langs/index.ts')
+		include: [/src\/langs\/.*/]
 	};
 };

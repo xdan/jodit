@@ -5,7 +5,6 @@
  */
 
 import type { Variables } from '../variables';
-import type { WebpackConfiguration } from 'webpack-cli';
 import type { RuleSetRule } from 'webpack';
 
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';

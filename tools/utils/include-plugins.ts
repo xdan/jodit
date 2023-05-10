@@ -39,7 +39,7 @@ export const includePlugins = (dir: string): [Entries, string[]] => {
 		};
 
 		return entries;
-	}, {});
+	}, {} as { [key in string]: { import: string; dependOn: 'jodit' } });
 
 	return [pluginsEntries, entryFiles];
 };

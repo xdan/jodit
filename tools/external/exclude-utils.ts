@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Variables } from '../variables';
+import type { Variables } from '../variables';
 
 export default ({ isProd, isTest }: Variables): { [key in string]: string } => {
 	return isProd && !isTest

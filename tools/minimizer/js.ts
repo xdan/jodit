@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Variables } from '../variables';
-import * as MinimizeJSPlugin from 'terser-webpack-plugin';
+import type { Variables } from '../variables';
+import MinimizeJSPlugin from 'terser-webpack-plugin';
 import * as os from 'os';
 
 export default ({ ESNext, isTest, banner }: Variables): MinimizeJSPlugin =>

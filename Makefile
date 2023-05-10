@@ -1,8 +1,3 @@
-NODE_MODULES_BIN := ./node_modules/.bin
-TS_NODE_BASE := TS_NODE_TRANSPILE_ONLY=true node -r ts-node/register
-WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
-KARMA := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
-
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 cwd := $(dir $(mkfile_path))
 build ?= build
@@ -17,17 +12,25 @@ singleRun ?= true
 isTest ?= false
 debug ?= false
 updateTests ?= false
-outputFolder ?= outputFolder
+outputFolder ?= ''
 version = $(shell cat package.json | jq -r '.version')
+
+WEBPACK_DEV_PORT := 2000
+NODE_MODULES_BIN := ./node_modules/.bin
+TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project $(cwd)tools/tsconfig.json
+WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
+KARMA := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
 
 .PHONY: version
 version:
 	@echo $(version)
-	@echo CWD: $(cwd)
+	@echo super_cwd: $(cwd)
+	@echo cwd: $(shell pwd)
 
 .PHONY: start
 start:
-	$(WEBPACK) serve --progress --mode $(devMode) \
+	@WEBPACK_DEV_PORT=$(WEBPACK_DEV_PORT) $(WEBPACK) serve --progress --mode $(devMode) \
+		--stats verbose
 		--env stat=true \
 		--env es=$(es) \
 		--env uglify=$(uglify) \
@@ -37,7 +40,7 @@ start:
 
 .PHONY: build
 build:
-	$(WEBPACK) --progress --mode production \
+	@TS_NODE_TRANSPILE_ONLY=true $(WEBPACK) --progress --mode production \
 		--env stat=true \
 		--env es=$(es) \
 		--env uglify=$(uglify) \

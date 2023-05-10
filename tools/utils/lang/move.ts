@@ -9,10 +9,10 @@ import * as yargs from 'yargs';
 import * as fs from 'fs';
 import { saveJson, readLangs, makeIndexFile } from './helpers';
 
-const { argv } = yargs
+const argv = yargs
 	.option('key', {
 		type: 'string',
-		required: true,
+		demandOption: true,
 		description: 'Translate key'
 	})
 	.option('keyTo', {
@@ -26,8 +26,10 @@ const { argv } = yargs
 	})
 	.option('dir', {
 		type: 'string',
+		demandOption: true,
 		description: 'Target directory'
-	});
+	})
+	.parseSync();
 
 const key = argv.key;
 const keyTo: string = argv.keyTo || key;

@@ -6,10 +6,10 @@
 
 import * as path from 'path';
 
+import type { Configuration } from 'webpack';
 import { type Argv, variables } from './variables';
 import { fileName } from './utils/filename';
 import { includePlugins } from './utils/include-plugins';
-import { Configuration } from 'webpack';
 
 import { minimizer } from './minimizer';
 import { rules } from './rules/index';
@@ -28,8 +28,16 @@ export default (
 ): Configuration => {
 	const vars = variables(argv, dir);
 
-	const { ES, mode, isTest, isProd, debug, ESNext, uglify, outputPath } =
-		vars;
+	const {
+		ES,
+		superDirname,
+		mode,
+		isTest,
+		isProd,
+		debug,
+		uglify,
+		outputPath
+	} = vars;
 
 	const [pluginsEntries] = includePlugins(dir);
 
@@ -76,7 +84,8 @@ export default (
 				'.svg'
 			],
 			alias: {
-				jodit: path.resolve(__dirname, '../src/')
+				jodit: path.resolve(superDirname, './src/'),
+				super: path.resolve(superDirname, './src/')
 			}
 		},
 

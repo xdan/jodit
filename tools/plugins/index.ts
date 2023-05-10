@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Variables } from '../variables';
+import type { Variables } from '../variables';
+import type { WebpackConfiguration } from 'webpack-cli';
 import * as webpack from 'webpack';
-import { WebpackConfiguration } from 'webpack-cli';
 import define from './define';
 import extractCSS from './extract-css';
 import banner from './banner';
@@ -17,7 +17,6 @@ export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 		isProd,
 		isTest,
 		ESModern,
-		ESNext,
 		onlyTS,
 		debug,
 		exclude,

@@ -20,7 +20,7 @@ export default ({
 	isTest
 }: Variables): RuleSetRule => {
 	return {
-		test: /\.ts$/,
+		test: /\.(js|ts)$/,
 		use: [
 			{
 				loader: 'ts-loader',
@@ -47,7 +47,7 @@ export default ({
 				}
 			}
 		],
-		include: [path.resolve(superDirname, './src/')],
-		exclude: [/langs\/[a-z]{2}\.ts/, /langs\/[a-z]{2}_[a-z]{2}\.ts/]
+		include: [path.resolve(dirname, './src/')],
+		exclude: [/src\/langs\/.*\.js$/]
 	};
 };

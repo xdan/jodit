@@ -7,10 +7,11 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as ts from 'typescript';
-import * as yargs from 'yargs';
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
 import { checkSections } from '../loaders/process-sections';
 
-const { argv } = yargs
+const argv = yargs(hideBin(process.argv))
 	.option('cwd', {
 		type: 'string',
 		demandOption: true,
@@ -20,7 +21,8 @@ const { argv } = yargs
 		type: 'string',
 		demandOption: true,
 		description: 'Version of Jodit'
-	});
+	})
+	.parseSync();
 
 const globalMaps = {
 	'process.env.APP_VERSION': argv.ver,
@@ -30,7 +32,7 @@ const globalMaps = {
 	'process.env.IS_PROD': true,
 	'process.env.IS_TEST': false,
 	'process.env.HOMEPAGE': 'https://xdsoft.net/jodit/'
-};
+} as const;
 
 const cwd = path.resolve(argv.cwd);
 if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
@@ -137,15 +139,20 @@ function resoleAliasImports(dirPath: string): void {
 			return modulePath;
 		};
 
-		const transformer = ctx => {
-			return src => {
+		const transformer = (
+			ctx: ts.TransformationContext
+		): ts.Transformer<any> => {
+			return (src: ts.SourceFile): ts.SourceFile => {
 				const visit = (node: ts.Node): ts.Node => {
 					if (
 						ts.isPropertyAccessExpression(node) &&
 						/process\.env/.test(node.getFullText())
 					) {
-						const name = node.getFullText().trim();
-						if (globalMaps[name] === undefined) {
+						const name = node
+							.getFullText()
+							.trim() as keyof typeof globalMaps;
+
+						if (!(name in globalMaps)) {
 							throw Error(`Unknown variable: ${name}`);
 						}
 
@@ -155,7 +162,9 @@ function resoleAliasImports(dirPath: string): void {
 
 						return typeof globalMaps[name] === 'boolean'
 							? bool
-							: ts.factory.createStringLiteral(globalMaps[name]);
+							: ts.factory.createStringLiteral(
+									globalMaps[name].toString()
+							  );
 					}
 
 					if (
@@ -275,7 +284,7 @@ function allowImportsPluginsAndLanguagesInESM(
 					[
 						ts.factory.createVariableDeclaration(
 							ts.factory.createIdentifier(
-								node.importClause.getText()
+								node.importClause?.getText() ?? ''
 							),
 							undefined,
 							undefined,

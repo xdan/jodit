@@ -8,12 +8,7 @@ import type { Variables } from '../variables';
 import type { RuleSetRule } from 'webpack';
 import * as path from 'path';
 
-export default ({
-	ES,
-	superDirname,
-	isProd,
-	isTest
-}: Variables): RuleSetRule => {
+export default ({ ES }: Variables): RuleSetRule => {
 	return {
 		test: /\.(js|ts)$/,
 		loader: 'ts-loader',
@@ -24,6 +19,7 @@ export default ({
 				target: ES
 			}
 		},
-		include: [path.resolve(superDirname, './node_modules')]
+		include: [/node_modules/],
+		exclude: [/src\/langs\/.*\.js$/]
 	};
 };

@@ -6,7 +6,6 @@
 
 import type { Configuration, Middleware } from 'webpack-dev-server';
 import type { Variables } from '../variables';
-import * as express from 'express';
 import * as path from 'path';
 
 export const devServer = ({ port, dirname }: Variables): Configuration => ({

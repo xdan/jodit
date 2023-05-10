@@ -11,25 +11,27 @@ import * as yargs from 'yargs';
 
 import { saveJson, readLangs, makeIndexFile } from './helpers';
 
-const { argv } = yargs
+const argv = yargs
 	.option('str', {
 		type: 'string',
-		required: true,
+		demandOption: true,
 		description: 'Translate sentence'
 	})
 	.option('ytak', {
 		type: 'string',
-		required: true,
+		demandOption: true,
 		description: 'Yandex Translate Api Key'
 	})
 	.option('folder', {
 		type: 'string',
-		required: true,
+		demandOption: true,
 		description: 'Yandex Translate Api Folder'
 	})
 	.option('dir', {
-		type: 'string'
-	});
+		type: 'string',
+		demandOption: true
+	})
+	.parseSync();
 
 if (!argv.ytak || !argv.folder) {
 	throw new Error(
@@ -50,7 +52,7 @@ async function getToken(): Promise<{ iamToken: string }> {
 	}).then(resp => resp.data);
 }
 
-async function translate(text, lang = 'ru'): Promise<void> {
+async function translate(text: string, lang = 'ru'): Promise<string | void> {
 	try {
 		const { iamToken } = await getToken();
 

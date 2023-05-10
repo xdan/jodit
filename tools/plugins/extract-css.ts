@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Variables } from '../variables';
-import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import type { Variables } from '../variables';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { fileName } from '../utils/filename';
 
 export default (vars: Variables): MiniCssExtractPlugin => {

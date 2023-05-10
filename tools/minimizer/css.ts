@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
 export default (): CssMinimizerPlugin =>
 	new CssMinimizerPlugin({

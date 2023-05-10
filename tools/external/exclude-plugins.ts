@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { Variables } from '../variables';
+import type { Variables } from '../variables';
 
 export default ({ excludePlugins }: Variables): { [key in string]: string } => {
 	if (
@@ -17,7 +17,7 @@ export default ({ excludePlugins }: Variables): { [key in string]: string } => {
 		return excludePlugins.reduce((map, pluginName) => {
 			map[`jodit/plugins/${pluginName}/${pluginName}`] = '{}';
 			return map;
-		}, {});
+		}, {} as { [key in string]: string });
 	}
 
 	return {};

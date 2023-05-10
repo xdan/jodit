@@ -7,11 +7,11 @@
 import * as path from 'path';
 import * as yargs from 'yargs';
 
-const { argv } = yargs
+const argv = yargs
 	.option('command', {
 		alias: 'c',
 		type: 'string',
-		required: true,
+		demandOption: true,
 		description: 'Command: translate, move'
 	})
 	.option('dir', {
@@ -26,7 +26,8 @@ const { argv } = yargs
 		[
 			'npm run translate -- --str="Press Alt for custom resizing" --ytak=<key> --folder=<folder> --dir=./src/plugins/symbols/langs'
 		]
-	]);
+	])
+	.parseSync();
 
 console.info('Work directory:', argv.dir);
 

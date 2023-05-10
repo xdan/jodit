@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { Config } from 'karma';
 import * as yargs from 'yargs';
-import type { config } from 'karma';
 import * as fs from 'fs';
 
-const { argv } = yargs
+const argv = yargs
 	.option('grep', {
 		type: 'string',
 		description: 'Grep test glob pattern'
@@ -22,7 +22,8 @@ const { argv } = yargs
 		type: 'boolean',
 		demandOption: true,
 		description: 'Use minified version of js files'
-	});
+	})
+	.parseSync();
 
 if (argv.grep) {
 	console.info('Grep glob pattern: ', argv.grep);
@@ -50,7 +51,7 @@ const buildFiles = fs
 console.info('Build directory: ', buildDir);
 console.info('Build files: ', buildFiles);
 
-module.exports = function (cnf: config): void {
+module.exports = function (cnf: Config): void {
 	cnf.set({
 		basePath: '../',
 		frameworks: ['mocha', 'chai'],
@@ -101,7 +102,7 @@ module.exports = function (cnf: config): void {
 		customLaunchers: {
 			FirefoxHeadless: {
 				base: 'Firefox',
-				flags: ['-width', 1440, '-height', 900, '-headless']
+				flags: ['-width', '1440', '-height', '900', '-headless']
 			},
 
 			ChromeHeadless: {
@@ -128,10 +129,7 @@ module.exports = function (cnf: config): void {
 		],
 
 		client: {
-			captureConsole: true,
-			mocha: {
-				bail: true
-			}
+			captureConsole: true
 		}
 	});
 };
