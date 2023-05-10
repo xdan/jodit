@@ -30,7 +30,6 @@ version:
 .PHONY: start
 start:
 	@WEBPACK_DEV_PORT=$(WEBPACK_DEV_PORT) $(WEBPACK) serve --progress --mode $(devMode) \
-		--stats verbose
 		--env stat=true \
 		--env es=$(es) \
 		--env uglify=$(uglify) \

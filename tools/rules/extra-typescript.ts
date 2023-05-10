@@ -8,18 +8,37 @@ import type { Variables } from '../variables';
 import type { RuleSetRule } from 'webpack';
 import * as path from 'path';
 
-export default ({ ES }: Variables): RuleSetRule => {
+export default ({
+	ES,
+	superDirname,
+	dirname,
+	ESModern
+}: Variables): RuleSetRule => {
 	return {
 		test: /\.(js|ts)$/,
-		loader: 'ts-loader',
-		options: {
-			transpileOnly: true,
-			allowTsInNodeModules: true,
-			compilerOptions: {
-				target: ES
+		use: [
+			{
+				loader: 'ts-loader',
+				options: {
+					transpileOnly: true,
+					allowTsInNodeModules: true,
+					compilerOptions: {
+						target: ES
+					}
+				}
+			},
+			{
+				loader: path.resolve(
+					superDirname,
+					'./tools/loaders/process-sections.ts'
+				),
+				options: {
+					POLYFILLS: !ESModern
+				}
 			}
-		},
-		include: [/node_modules/],
+		],
+
+		include: [path.resolve(dirname, './node_modules/')],
 		exclude: [/src\/langs\/.*\.js$/]
 	};
 };
