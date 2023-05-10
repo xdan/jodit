@@ -11,8 +11,8 @@ RUN apt-get update --allow-insecure-repositories \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-COPY ./package.json ./package.json
-COPY ./package-lock.json ./package-lock.json
+COPY ./test/screenshots/package.json ./package.json
+COPY ./test/screenshots/package-lock.json ./package-lock.json
 
 RUN npm ci
 

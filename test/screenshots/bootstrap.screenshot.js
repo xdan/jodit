@@ -66,7 +66,7 @@ if (typeof before !== 'undefined') {
 	before(async function () {
 		this.timeout(10000);
 		browser = await puppeteer.launch({
-			headless: !args.debug,
+			headless: args.debug ? false : 'new',
 			args: ['--disable-web-security', '--no-sandbox']
 		});
 
