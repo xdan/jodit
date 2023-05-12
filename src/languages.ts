@@ -10,6 +10,8 @@
  * @module langs
  */
 
+// @ts-nocheck
+
 import type { IDictionary } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 

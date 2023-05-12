@@ -15,9 +15,12 @@ import svg from './svg';
 export const rules = (variables: Variables): RuleSetRule[] => {
 	return [
 		css(variables),
-		extraTypescript(variables),
 		langs(variables),
-		internalTypescript(variables),
+		extraTypescript(variables),
+		internalTypescript(variables, variables.superDirname),
+		variables.superDirname !== variables.dirname
+			? internalTypescript(variables, variables.dirname)
+			: null,
 		svg(variables)
-	];
+	].filter(a => a != null) as RuleSetRule[];
 };

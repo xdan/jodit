@@ -28,7 +28,7 @@ if (
 
 import { Jodit as DefaultJodit } from './jodit';
 
-import Languages from './langs/';
+import Languages from './languages';
 
 import * as decorators from './core/decorators';
 import * as Modules from './modules/';

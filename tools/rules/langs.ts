@@ -8,14 +8,26 @@ import type { Variables } from '../variables';
 import type { RuleSetRule } from 'webpack';
 import * as path from 'path';
 
-export default (_: Variables): RuleSetRule => {
+export default ({ superDirname }: Variables): RuleSetRule => {
 	return {
 		test: /\.(js)$/,
 		use: [
 			{
-				loader: path.resolve(__dirname, '../loaders/lang-loader.ts')
+				loader: path.resolve(
+					superDirname,
+					'./tools/loaders/lang-loader.ts'
+				)
+			},
+			{
+				loader: path.resolve(
+					superDirname,
+					'./tools/loaders/debug-loader.ts'
+				),
+				options: {
+					group: 'langs'
+				}
 			}
 		],
-		include: [/src\/langs\/.*/]
+		include: [path.resolve(superDirname, './src/langs')]
 	};
 };

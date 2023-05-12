@@ -9,10 +9,10 @@ import type { RuleSetRule } from 'webpack';
 import * as path from 'path';
 
 export default ({
+	ESModern,
 	ES,
-	superDirname,
 	dirname,
-	ESModern
+	superDirname
 }: Variables): RuleSetRule => {
 	return {
 		test: /\.(js|ts)$/,
@@ -23,7 +23,9 @@ export default ({
 					transpileOnly: true,
 					allowTsInNodeModules: true,
 					compilerOptions: {
-						target: ES
+						allowJs: true,
+						target: ES,
+						skipLibCheck: true
 					}
 				}
 			},
@@ -35,10 +37,19 @@ export default ({
 				options: {
 					POLYFILLS: !ESModern
 				}
+			},
+			{
+				loader: path.resolve(
+					superDirname,
+					'./tools/loaders/debug-loader.ts'
+				),
+				options: {
+					group: 'extra'
+				}
 			}
 		],
 
 		include: [path.resolve(dirname, './node_modules/')],
-		exclude: [/src\/langs\/.*\.js$/]
+		exclude: [path.resolve(superDirname, './src/langs/')]
 	};
 };

@@ -10,15 +10,18 @@ import { removeAsserts } from '../utils/transformers/remove-asserts';
 import * as path from 'path';
 import * as ts from 'typescript';
 
-export default ({
-	superDirname,
-	dirname,
-	ES,
-	ESModern,
-	generateTypes,
-	isProd,
-	isTest
-}: Variables): RuleSetRule => {
+export default (
+	{
+		dirname,
+		ES,
+		ESModern,
+		generateTypes,
+		isProd,
+		isTest,
+		superDirname
+	}: Variables,
+	cwd: string
+): RuleSetRule => {
 	return {
 		test: /\.(js|ts)$/,
 		use: [
@@ -28,6 +31,7 @@ export default ({
 					transpileOnly: isProd && !isTest && !generateTypes,
 					allowTsInNodeModules: true,
 					compilerOptions: {
+						allowJs: true,
 						target: ES,
 						declaration: true,
 						declarationDir: path.resolve(dirname, './build/types')
@@ -45,9 +49,18 @@ export default ({
 				options: {
 					POLYFILLS: !ESModern
 				}
+			},
+			{
+				loader: path.resolve(
+					superDirname,
+					'./tools/loaders/debug-loader.ts'
+				),
+				options: {
+					group: 'internal'
+				}
 			}
 		],
-		include: [path.resolve(dirname, './src/')],
-		exclude: [/src\/langs\/.*\.js$/]
+		include: [path.resolve(cwd, './src/')],
+		exclude: [path.resolve(superDirname, './src/langs')]
 	};
 };
