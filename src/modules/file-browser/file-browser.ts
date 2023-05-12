@@ -350,7 +350,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 
 		this.attachEvents(options as IViewOptions);
 
-		const self: FileBrowser = this;
+		const self = this;
 
 		self.options = ConfigProto(
 			options || {},

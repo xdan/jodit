@@ -23,7 +23,7 @@
 
 	&.jodit_error {
 		border-color: var(--color-error);
-		box-shadow: inset 0 0 3px 0 rgba(189, 189, 189, 0.3);
+		box-shadow: inset 0 0 3px 0 rgb(189 189 189 / 30%);
 	}
 
 	@media (max-width: @screen-sm) {
@@ -78,19 +78,13 @@
 
 	width: 100%;
 	height: var(--input-height);
-
 	box-sizing: border-box;
 	padding: 0 var(--padding-default);
 	border: 1px solid var(--color-border);
 	border-radius: 0;
-
-	-webkit-appearance: none;
-	-moz-appearance: none;
 	appearance: none;
-
 	background-color: var(--color-white);
 	line-height: var(--input-height);
-
 	outline: none;
 
 	&[disabled] {
@@ -223,16 +217,13 @@
 
 	& &__slider {
 		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
 		border-radius: var(--switche-height);
 		background-color: var(--color-gray);
 		cursor: pointer;
+		inset: 0;
 		transition: 0.4s;
 
-		&:before {
+		&::before {
 			position: absolute;
 			bottom: var(--switche-slider-margin);
 			left: var(--switche-slider-margin);
@@ -248,7 +239,7 @@
 	input:checked + &__slider {
 		background-color: var(--color-background-active);
 
-		&:before {
+		&::before {
 			transform: translateX(
 				calc(
 					var(--switche-width) - var(--switche-slider-margin) * 2 -

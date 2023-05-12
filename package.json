@@ -1,6 +1,6 @@
 {
 	"name": "jodit",
-	"version": "4.0.0-beta.49",
+	"version": "4.0.0-beta.50",
 	"description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
 	"main": "build/jodit.min.js",
 	"types": "./types/index.d.ts",
@@ -100,7 +100,6 @@
 		"style-loader": "^3.3.2",
 		"stylelint": "^15.6.1",
 		"stylelint-config-idiomatic-order": "v9.0.0",
-		"stylelint-config-prettier": "^9.0.5",
 		"stylelint-config-standard": "^33.0.0",
 		"stylelint-prettier": "^3.0.0",
 		"synchronous-promise": "2.0.15",

@@ -32,11 +32,18 @@ fs.writeFileSync(
 
 const copyRecursiveSync = (src: string, dest: string): void => {
 	const exists = fs.existsSync(src);
+	if (!exists) {
+		console.warn(`Path ${src} does not exist'`);
+		return;
+	}
+
 	const stats = exists && fs.statSync(src);
 	const isDirectory = exists && stats && stats.isDirectory();
 
 	if (isDirectory) {
-		fs.mkdirSync(dest);
+		if (!fs.existsSync(dest)) {
+			fs.mkdirSync(dest);
+		}
 		fs.readdirSync(src).forEach((childItemName): void => {
 			copyRecursiveSync(
 				path.join(src, childItemName),
