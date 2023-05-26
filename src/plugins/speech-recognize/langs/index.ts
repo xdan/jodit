@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+// @ts-nocheck
+
 import * as ar from './ar.js';
 import * as cs_cz from './cs_cz.js';
 import * as de from './de.js';

@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "es5",
-		"module": "ESNext",
+		"module": "es2020",
 		"moduleResolution": "node",
 
 		"removeComments": false,
@@ -20,6 +20,7 @@
 		"allowSyntheticDefaultImports": true,
 
 		"allowJs": true,
+		"checkJs": false,
 
 		"noImplicitAny": true,
 		"noImplicitReturns": true,

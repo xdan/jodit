@@ -31,7 +31,7 @@ import {
 	INVISIBLE_SPACE_REG_EXP_START as INV_START,
 	IS_PROD
 } from 'jodit/core/constants';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 
 import {
 	size,
@@ -43,11 +43,12 @@ import {
 	toArray,
 	getScrollParent
 } from 'jodit/core/helpers';
-import { CommitStyle } from './style/commit-style';
 import { autobind } from 'jodit/core/decorators';
 import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers/move-the-node-along-the-edge-outward';
 import { assert } from 'jodit/core/helpers/utils/assert';
 import { isMarker, isFunction, isString } from 'jodit/core/helpers/checker';
+
+import { CommitStyle } from './style/commit-style';
 
 import './interface';
 
@@ -206,6 +207,7 @@ export class Selection implements ISelect {
 
 				if (this.doc.caretRangeFromPoint) {
 					const caret = this.doc.caretRangeFromPoint(x, y);
+					assert(caret, 'Incorrect caretRangeFromPoint behaviour');
 					rng.setStart(caret.startContainer, caret.startOffset);
 				}
 			})();

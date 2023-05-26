@@ -67,7 +67,7 @@ import {
 	isNumber
 } from 'jodit/core/helpers';
 
-import { IS_PROD, lang } from 'jodit/core/constants';
+import { FAT_MODE, IS_PROD, lang } from 'jodit/core/constants';
 import {
 	instances,
 	pluginSystem,
@@ -189,7 +189,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		return Config.defaultOptions;
 	}
 
-	static fatMode: boolean = false;
+	static fatMode: boolean = FAT_MODE;
 
 	static readonly plugins: IPluginSystem = pluginSystem;
 
@@ -1214,7 +1214,6 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 		callPromise(beforeInitHookResult, (): void => {
 			this.e.fire('beforeInit', this);
-
 			pluginSystem.__init(this);
 
 			this.e.fire('afterPluginSystemInit', this);

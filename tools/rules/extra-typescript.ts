@@ -12,6 +12,7 @@ export default ({
 	ESModern,
 	ES,
 	dirname,
+	fat,
 	superDirname
 }: Variables): RuleSetRule => {
 	return {
@@ -35,16 +36,8 @@ export default ({
 					'./tools/loaders/process-sections.ts'
 				),
 				options: {
-					POLYFILLS: !ESModern
-				}
-			},
-			{
-				loader: path.resolve(
-					superDirname,
-					'./tools/loaders/debug-loader.ts'
-				),
-				options: {
-					group: 'extra'
+					POLYFILLS: !ESModern,
+					FAT: fat
 				}
 			}
 		],

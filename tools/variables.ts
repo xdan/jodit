@@ -19,6 +19,7 @@ export type Argv = {
 	isTest?: boolean;
 	generateTypes?: boolean;
 	uglify?: boolean;
+	fat?: boolean;
 	stat?: boolean;
 	exclude?: string;
 	excludePlugins?: string;
@@ -61,6 +62,10 @@ export type Variables = {
 	ES: ES_TARGET;
 	ESNext: boolean;
 	ESModern: boolean;
+	/**
+	 * Compose all plugins in the build
+	 */
+	fat: boolean;
 	port: number;
 };
 
@@ -114,6 +119,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 		onlyTS: false, // TODO
 		exclude,
 		generateTypes: Bool(argv.generateTypes),
+		fat: Bool(argv.fat),
 		serve: Boolean(argv.WEBPACK_SERVE),
 		superDirname,
 		outputPath,

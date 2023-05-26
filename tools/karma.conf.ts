@@ -84,7 +84,10 @@ module.exports = function (cnf: Config): void {
 			},
 
 			'public/app.css',
-			'node_modules/synchronous-promise/dist/synchronous-promise.js',
+			path.resolve(
+				argv.cwd,
+				'node_modules/synchronous-promise/dist/synchronous-promise.js'
+			),
 
 			...buildFiles,
 			'test/bootstrap.js',

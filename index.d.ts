@@ -7,8 +7,6 @@
 import type { IComponent, Nullable } from './src/types';
 import type { IJodit } from './src/types';
 
-export * from './src/types';
-
 declare global {
 	const Jodit: IJodit;
 
@@ -33,7 +31,6 @@ declare global {
 
 	interface Document {
 		caretPositionFromPoint?(x: number, y: number): CaretPosition;
-		caretRangeFromPoint(x: number, y: number): Range;
 	}
 
 	// https://github.com/xdan/jodit/issues/718

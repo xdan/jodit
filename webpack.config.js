@@ -4,4 +4,4 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-module.exports = require('./tools/index');
+module.exports = require('./tools/webpack.config');

@@ -15,7 +15,7 @@ const list = [];
 // options is optional
 const srcFiles = glob.sync(dir + '?(src|test)/**/*.test.js');
 list.push(
-	...srcFiles.map(p =>
+	...srcFiles.map((p: string): string =>
 		p.replace(dir + 'src/', '../src/').replace(dir + 'test/', './')
 	)
 );

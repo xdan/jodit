@@ -13,6 +13,7 @@ singleRun ?= true
 isTest ?= false
 debug ?= false
 updateTests ?= false
+fat ?= false
 outputFolder ?= ''
 version = $(shell cat package.json | jq -r '.version')
 
@@ -36,7 +37,8 @@ start:
 		--env uglify=$(uglify) \
 		--env includeLanguages=$(includeLanguages) \
 		--env excludeLanguages=$(excludeLanguages) \
-		--env isTest=$(isTest)
+		--env isTest=$(isTest) \
+		--env fat=$(fat)
 
 .PHONY: build
 build:
@@ -48,6 +50,7 @@ build:
 		--env includeLanguages=$(includeLanguages) \
 		--env excludeLanguages=$(excludeLanguages) \
 		--env outputFolder=$(outputFolder) \
+		--env fat=$(fat) \
 		--env generateTypes=$(generateTypes)
 
 .PHONY: clean
@@ -69,7 +72,7 @@ dts:
 esm:
 	@echo 'Build esm modules ...'
 	rm -rf $(pwd)/build/esm
-	tsc -p $(pwd)/tsconfig.json --importHelpers false --module es2020 --target es2020 --removeComments false --sourceMap false --outDir $(pwd)/build/esm
+	tsc -p $(pwd)/tsconfig.json --importHelpers false --allowJs true --checkJs false --excludeDirectories ./node_modules --module es2020 --target es2020 --removeComments false --sourceMap false --outDir $(pwd)/build/esm
 
 	@echo 'Remove style imports ...'
 	@$(NODE_MODULES_BIN)/replace "import .+.(less)('|\");" '' $(pwd)/build/esm -r --silent
@@ -138,9 +141,10 @@ test:
 	make build es=$(es) uglify=$(uglify) isTest=true
 	make test-only-run build=$(es) uglify=$(uglify)
 
+
 .PHONY: test-find
 test-find:
-	$(TS_NODE_BASE) ./tools/utils/find-tests.ts
+	$(TS_NODE_BASE) $(cwd)tools/utils/find-tests.ts
 
 .PHONY: test-only-run
 test-only-run:
@@ -193,3 +197,7 @@ jodit:
 	npm run newversion
 	cd ../jodit-joomla
 	npm run newversion
+
+.PHONY: sync
+sync:
+	$(TS_NODE_BASE) $(cwd)tools/utils/sync.ts --source $(cwd) --target ../jodit-pro/node_modules/jodit

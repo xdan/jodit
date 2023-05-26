@@ -35,6 +35,7 @@ export default (
 		isTest,
 		isProd,
 		debug,
+		fat,
 		uglify,
 		outputPath
 	} = vars;
@@ -42,14 +43,14 @@ export default (
 	const [pluginsEntries] = includePlugins(dir);
 
 	console.info(
-		`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify} GenerateTypes:${vars.generateTypes}`
+		`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify} Fat:${fat} GenerateTypes:${vars.generateTypes}`
 	);
 
 	return {
 		cache: !isProd || {
 			type: 'filesystem',
 			idleTimeoutForInitialStore: 0,
-			name: `jodit${ES}${mode}${uglify}`
+			name: `jodit${ES}${mode}${uglify}${fat}`
 		},
 		mode,
 		target: ['web', 'es5'],
@@ -63,7 +64,7 @@ export default (
 
 		entry: {
 			jodit: ['./src/index'],
-			...pluginsEntries
+			...(!fat ? pluginsEntries : {})
 		},
 
 		output: {

@@ -18,6 +18,7 @@ export default (
 		generateTypes,
 		isProd,
 		isTest,
+		fat,
 		superDirname
 	}: Variables,
 	cwd: string
@@ -47,16 +48,8 @@ export default (
 					'./tools/loaders/process-sections.ts'
 				),
 				options: {
-					POLYFILLS: !ESModern
-				}
-			},
-			{
-				loader: path.resolve(
-					superDirname,
-					'./tools/loaders/debug-loader.ts'
-				),
-				options: {
-					group: 'internal'
+					POLYFILLS: !ESModern,
+					FAT: fat
 				}
 			}
 		],

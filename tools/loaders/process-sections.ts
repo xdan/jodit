@@ -19,6 +19,7 @@ export function checkSections(
 ): string {
 	const reg = SECTION_REG();
 	let res = reg.exec(content);
+
 	while (res) {
 		const name = res[1] as string;
 		if (!opt[name]) {

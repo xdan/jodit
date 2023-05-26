@@ -17,15 +17,6 @@ export default ({ superDirname }: Variables): RuleSetRule => {
 					superDirname,
 					'./tools/loaders/lang-loader.ts'
 				)
-			},
-			{
-				loader: path.resolve(
-					superDirname,
-					'./tools/loaders/debug-loader.ts'
-				),
-				options: {
-					group: 'langs'
-				}
 			}
 		],
 		include: [path.resolve(superDirname, './src/langs')]

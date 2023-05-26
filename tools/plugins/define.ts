@@ -13,12 +13,14 @@ export default ({
 	ESNext,
 	ESModern,
 	isTest,
+	fat,
 	ES,
 	mode
 }: Variables): webpack.DefinePlugin => {
 	return new webpack.DefinePlugin({
 		'process.env': {
 			APP_VERSION: JSON.stringify(pkg.version),
+			FAT_MODE: fat,
 			IS_PROD: isProd,
 			IS_TEST: isTest,
 			IS_ES_NEXT: ESNext,

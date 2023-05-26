@@ -17,6 +17,7 @@ export const IS_ES_MODERN = process.env.IS_ES_MODERN as unknown as boolean;
 export const IS_ES_NEXT = process.env.IS_ES_NEXT as unknown as boolean;
 export const IS_PROD = process.env.IS_PROD as unknown as boolean;
 export const IS_TEST = process.env.IS_TEST as unknown as boolean;
+export const FAT_MODE = process.env.FAT_MODE as unknown as boolean;
 export const HOMEPAGE = process.env.HOMEPAGE as string;
 
 export const INVISIBLE_SPACE = '\uFEFF';
