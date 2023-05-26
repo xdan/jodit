@@ -16,7 +16,8 @@ export function positionTab(editor: IJodit): HTMLElement {
 		i18n = editor.i18n.bind(editor),
 		gi = Icon.get.bind(Icon);
 
-	const classInput = [];
+	const classInput: string[] = [];
+
 	if (opt.image.availableClasses.length > 0) {
 		classInput.push(
 			'<select data-ref="classes" class="jodit-input jodit-select">'

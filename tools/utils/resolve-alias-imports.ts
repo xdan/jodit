@@ -25,6 +25,7 @@ const argv = yargs(hideBin(process.argv))
 	.parseSync();
 
 const globalMaps = {
+	'process.env.FAT_MODE': false,
 	'process.env.APP_VERSION': argv.ver,
 	'process.env.TARGET_ES': 'es2020',
 	'process.env.IS_ES_MODERN': true,
@@ -41,6 +42,7 @@ if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
 
 const alias = /^(jodit)/;
 const allowPackages = new Set([
+	'a-color-picker',
 	'autobind-decorator',
 	'classlist-polyfill',
 	'es6-promise/auto',
