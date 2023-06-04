@@ -100,7 +100,7 @@ export class Create implements ICreate {
 		return div;
 	}
 
-	sandbox(): HTMLElement {
+	sandbox(): [HTMLElement, HTMLIFrameElement] {
 		const iframe = this.element('iframe', { sandbox: 'allow-same-origin' });
 		this.doc.body.appendChild(iframe);
 		const doc = iframe.contentWindow?.document;
@@ -113,7 +113,7 @@ export class Create implements ICreate {
 		doc.open();
 		doc.write('<!DOCTYPE html><html><head></head><body></body></html>');
 		doc.close();
-		return doc.body;
+		return [doc.body, iframe];
 	}
 
 	span(className?: string, childrenOrAttributes?: Children): HTMLSpanElement;
