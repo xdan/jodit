@@ -17,5 +17,5 @@ export const fileName = ({
 	}
 
 	return (name: string): string =>
-		name + (fat ? '.fat' : '') + (uglify && !serve ? '.min' : '');
+		name + (fat && !serve ? '.fat' : '') + (uglify && !serve ? '.min' : '');
 };

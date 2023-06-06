@@ -30,7 +30,7 @@ jobs:
 
     - name: Test all
       run: |
-        make test-all uglify=true fate=true
+        make test-all uglify=true fat=true
 
 #    - name: Screenshot test all
 #      run: |

@@ -11,4 +11,4 @@ yarn-error.log
 /JODIT-DEVELOPMENT-GUIDE.md
 .npmrc
 
-build
+build/*
