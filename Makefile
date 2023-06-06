@@ -18,6 +18,9 @@ outputFolder ?= ''
 version = $(shell cat package.json | jq -r '.version')
 
 WEBPACK_DEV_PORT := 2000
+ACTIONS_URL := https://github.com/xdan/jodit/actions/
+BUILD_DTS := true
+CHANGELOG_URL := https://github.com/xdan/jodit/blob/main/CHANGELOG.md
 NODE_MODULES_BIN := ./node_modules/.bin
 TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project $(cwd)tools/tsconfig.json
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
@@ -98,33 +101,33 @@ build-all:
 	@cd $(pwd)/build/ && npm i
 	make esm
 
-	make build es=es2018 uglify=false generateTypes=true
+	make build es=es2018 uglify=false generateTypes=$(BUILD_DTS)
 	make dts
 	make build es=es2018
 	make build es=es2018 fat=true
 
 	make build es=es2015
 	make build es=es2015 uglify=false
-	make build es=es2015 uglify=false fat=true
+	make build es=es2015 uglify=true fat=true
 
 	make build es=es2021
 	make build es=es2021 uglify=false
-	make build es=es2021 uglify=false fat=true
+	make build es=es2021 uglify=true fat=true
 
 	make build es=es5
 	make build es=es5 uglify=false
-	make build es=es5 uglify=false fat=true
+	make build es=es5 uglify=true fat=true
 
 	make build es=es2021 includeLanguages=en
 	make build es=es2021 includeLanguages=en uglify=false
-	make build es=es2021 includeLanguages=en uglify=false fat=true
+	make build es=es2021 includeLanguages=en uglify=true fat=true
 
 .PHONY: test-all
 test-all:
-	make test-only-run build=es2021 uglify=true
-	make test-only-run build=es2018 uglify=true
-	make test-only-run build=es2015 uglify=true
-	make test-only-run build=es5 uglify=true
+	make test-only-run build=es2021 uglify=$(uglify) fat=$(fat)
+	make test-only-run build=es2018 uglify=$(uglify) fat=$(fat)
+	make test-only-run build=es2015 uglify=$(uglify) fat=$(fat)
+	make test-only-run build=es5 uglify=$(uglify) fat=$(fat)
 
 .PHONY: lint
 lint:
@@ -189,10 +192,10 @@ newversion:
 
 .PHONY: newversion-git
 newversion-git:
-	git add --all  && git commit -m "New version $(version) Read more https://github.com/xdan/jodit/blob/main/CHANGELOG.md "
+	git add --all  && git commit -m "New version $(version) Read more $(CHANGELOG_URL)"
 	git tag $(version)
 	git push --tags origin HEAD:main
-	@echo "New version $(version) Actions: https://github.com/xdan/jodit/actions/"
+	@echo "New version $(version) Actions: $(ACTIONS_URL)"
 
 .PHONY: jodit
 jodit:
