@@ -13,6 +13,7 @@
 
 #### :boom: Breaking Change
 
+-   Removed deprecated selection.applyStyle method
 -   Changed Create.sandbox signature to return body,iframe tuple
 -   In the plugin system, the requires field has been removed from instances,
     only the field in the constructor has been left

@@ -11,12 +11,10 @@
  */
 
 import type {
-	CanUndef,
 	HTMLTagNames,
 	IDictionary,
 	IJodit,
 	ISelect,
-	IStyle,
 	IStyleOptions,
 	MarkerInfo,
 	Nullable
@@ -1372,41 +1370,6 @@ export class Selection implements ISelect {
 		const styleElm = new CommitStyle(options);
 
 		styleElm.apply(this.j);
-	}
-
-	/**
-	 * Apply some css rules for all selections. It method wraps selections in nodeName tag.
-	 * @example
-	 * ```js
-	 * const editor = Jodit.make('#editor');
-	 * editor.value = 'test';
-	 * editor.execCommand('selectall');
-	 *
-	 * editor.s.applyStyle({color: 'red'}) // will wrap `text` in `span` and add style `color:red`
-	 * editor.s.applyStyle({color: 'red'}) // will remove `color:red` from `span`
-	 * ```
-	 * @deprecated
-	 */
-	applyStyle(
-		style: CanUndef<IStyle>,
-		options: {
-			/**
-			 * equal CSSRule (e.g. strong === font-weight: 700)
-			 */
-			element?: HTMLTagNames;
-			/** @deprecated Instead use attributes.class*/
-			className?: string;
-			attributes?: IDictionary<string | number>;
-			/**
-			 * tag for wrapping and apply styles
-			 */
-			defaultTag?: HTMLTagNames;
-		} = {}
-	): void {
-		this.commitStyle({
-			style,
-			...options
-		});
 	}
 
 	/**

@@ -89,18 +89,6 @@ export interface ISelect {
 		tagOrCallback: HTMLTagNames | ((font: HTMLElement) => any)
 	): HTMLElement[];
 
-	/** @deprecated Instead use commitStyle */
-	applyStyle(
-		style: CanUndef<IStyle>,
-		options?: {
-			element?: HTMLTagNames;
-			/** @deprecated Instead use attributes.class*/
-			className?: string;
-			attributes?: IDictionary<string | number>;
-			defaultTag?: HTMLTagNames;
-		}
-	): void;
-
 	commitStyle(options: IStyleOptions): void;
 
 	eachSelection(callback: (current: Node) => void): void;
