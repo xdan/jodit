@@ -20,6 +20,11 @@ const argv = yargs
 		demandOption: true,
 		description: 'Build directory(es5, es2018 etc)'
 	})
+	.option('fat', {
+		type: 'boolean',
+		demandOption: true,
+		description: 'Use fat version of js files'
+	})
 	.option('min', {
 		type: 'boolean',
 		demandOption: true,
@@ -42,12 +47,21 @@ if (
 	throw new Error('Invalid build directory:' + workDirectory);
 }
 
-if (!fs.existsSync(buildDir + '/jodit' + (argv.min ? '.min' : '') + '.js')) {
+if (
+	!fs.existsSync(
+		buildDir +
+			'/jodit' +
+			(argv.fat ? '.fat' : '') +
+			(argv.min ? '.min' : '') +
+			'.js'
+	)
+) {
 	throw new Error('Invalid minified build option');
 }
 
 const buildFiles = fs
 	.readdirSync(buildDir)
+	.filter(file => (argv.fat ? /\.fat/.test(file) : !/\.fat/.test(file)))
 	.filter(file => (argv.min ? /\.min/.test(file) : !/\.min/.test(file)))
 	.map(file => buildDir + '/' + file);
 
@@ -69,14 +83,12 @@ module.exports = function (cnf: Config): void {
 			{
 				pattern: './test/tests/artio.jpg',
 				watched: false,
-				included: false,
-				served: true
+				included: false
 			},
 			{
 				pattern: './test/test.index.html',
 				watched: false,
-				included: false,
-				served: true
+				included: false
 			},
 
 			'./public/app.css',

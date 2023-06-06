@@ -144,8 +144,8 @@ prettify:
 test:
 	make test-find
 	make clean
-	make build es=$(es) uglify=$(uglify) isTest=true fat=true
-	make test-only-run build=$(es) uglify=$(uglify)
+	make build es=$(es) uglify=$(uglify) isTest=true fat=$(fat)
+	make test-only-run build=$(es) uglify=$(uglify) fat=$(fat)
 
 
 .PHONY: test-find
@@ -154,7 +154,7 @@ test-find:
 
 .PHONY: test-only-run
 test-only-run:
-	$(KARMA) --browsers $(browsers) $(cwd)tools/karma.conf.ts --single-run $(singleRun) --build=$(build) --min=$(uglify) --cwd=$(pwd)
+	$(KARMA) --browsers $(browsers) $(cwd)tools/karma.conf.ts --single-run $(singleRun) --build=$(build) --min=$(uglify) --fat=$(fat) --cwd=$(pwd)
 
 .PHONY: coverage
 coverage:
