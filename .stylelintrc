@@ -4,6 +4,7 @@
 	"rules": {
 		"prettier/prettier": true,
 		"selector-type-no-unknown": null,
+		"selector-not-notation": null,
 		"selector-class-pattern": null,
 		"no-descending-specificity": null,
 		"property-no-unknown": [

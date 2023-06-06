@@ -11,23 +11,18 @@
 	display: flex;
 	overflow: hidden;
 	height: 20px;
-
 	align-items: center;
 	justify-content: flex-start;
-
 	padding: 0 calc(var(--padding-default) / 2);
+	border-radius: 0 0 var(--border-radius-default) var(--border-radius-default);
+	background-color: var(--color-panel);
+	color: var(--color-text-icons);
+	font-size: var(--font-size-small);
+	text-transform: uppercase;
 
 	&_resize-handle_true {
 		padding-right: 14px;
 	}
-
-	background-color: var(--color-panel);
-	border-radius: 0 0 var(--border-radius-default) var(--border-radius-default);
-
-	color: var(--color-text-icons);
-
-	font-size: var(--font-size-small);
-	text-transform: uppercase;
 
 	&::before {
 		flex: auto;
@@ -46,7 +41,7 @@
 		order: 0;
 		padding: 0;
 		margin: 0 var(--padding-default) 0 0;
-		line-height: 1.57142857em;
+		line-height: 1.5714em;
 
 		&.jodit-status-bar__item-right {
 			order: 2;

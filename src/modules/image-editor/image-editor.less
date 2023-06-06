@@ -7,15 +7,14 @@
 @import (reference) '../../styles/variables';
 
 :root {
-	--image_editor_resizer_border_color: #05ff00;
-	--image_editor_resizer_target_size: padding-default;
-	--image_editor_resizer_target_border_color: #383838;
-	--image_editor_resizer_target_bg_color: #8c7878;
+	--image-editor-resizer-border-color: #05ff00;
+	--image-editor-resizer-target-size: padding-default;
+	--image-editor-resizer-target-border-color: #383838;
+	--image-editor-resizer-target-bg-color: #8c7878;
 }
 
 .jodit-image-editor {
 	overflow: hidden;
-
 	width: 100%;
 	height: 100%;
 
@@ -42,14 +41,14 @@
 	.jodit-image-editor__slider {
 		&-title {
 			padding: 0.8em 1em;
-			border-bottom: 1px solid rgba(158, 158, 158, 0.31);
+			border-bottom: 1px solid rgb(158 158 158 / 31%);
 			background-color: #f9f9f9;
-			color: rgb(51, 51, 51);
+			color: rgb(51 51 51);
 			cursor: pointer;
 			font-weight: bold;
 			line-height: 1em;
 			text-overflow: ellipsis;
-			text-shadow: rgb(243, 243, 243) 0 1px 0;
+			text-shadow: rgb(243 243 243) 0 1px 0;
 			user-select: none;
 			white-space: nowrap;
 
@@ -66,7 +65,7 @@
 		}
 
 		&.jodit-image-editor_active .jodit-image-editor__slider-title {
-			background-color: rgb(93, 93, 93);
+			background-color: rgb(93 93 93);
 			color: #fff;
 			text-shadow: #000 0 1px 0;
 
@@ -84,10 +83,8 @@
 		position: relative;
 		display: none;
 		overflow: hidden;
-
 		width: 100%;
 		height: 100%;
-
 		background-color: #eee;
 		background-image: linear-gradient(
 				45deg,
@@ -145,15 +142,13 @@
 				z-index: 4;
 				right: calc(var(--padding-default) * -1);
 				bottom: calc(var(--padding-default) * -1);
-
 				display: inline-block;
 				width: 20px;
 				height: 20px;
-
 				border: 1px solid
-					var(--image_editor_resizer_target_border_color);
-				background-color: var(--image_editor_resizer_target_bg_color);
+					var(--image-editor-resizer-target-border-color);
 				border-radius: 50%;
+				background-color: var(--image-editor-resizer-target-bg-color);
 				box-shadow: 0 0 11px #000;
 				cursor: se-resize;
 				pointer-events: all;
@@ -190,13 +185,10 @@
 			&::after {
 				position: absolute;
 				z-index: 1;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
 				margin: auto;
-				background: rgba(255, 255, 255, 0.3);
+				background: rgb(255 255 255 / 30%);
 				content: '';
+				inset: 0;
 			}
 
 			.jodit-image-editor__croper {
@@ -209,9 +201,9 @@
 					left: 100%;
 					display: block;
 					padding: 9px 6px;
-					background: rgba(0, 0, 0, 0.2);
 					border-radius: 0.4em;
-					color: rgb(255, 255, 255);
+					background: rgb(0 0 0 / 20%);
+					color: rgb(255 255 255);
 					font-size: 12px;
 					text-align: center;
 					text-shadow: none;

@@ -8,8 +8,8 @@
 @import (reference) '../../../styles/mixins';
 
 :root {
-	--popup-box-shadow: 0 4px 1px -2px rgba(76, 76, 76, 0.2),
-		0 3px 3px 0 rgba(76, 76, 76, 0.15), 0 1px 4px 0 rgba(76, 76, 76, 0.13);
+	--popup-box-shadow: 0 4px 1px -2px rgb(76 76 76 / 20%),
+		0 3px 3px 0 rgb(76 76 76 / 15%), 0 1px 4px 0 rgb(76 76 76 / 13%);
 }
 
 .jodit-popup {
@@ -23,6 +23,7 @@
 
 	&__content {
 		.font();
+
 		overflow: auto;
 		max-height: 300px;
 		padding: var(--padding-default);

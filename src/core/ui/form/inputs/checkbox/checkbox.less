@@ -27,23 +27,20 @@
 
 	&_switch_true &__switch-slider {
 		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		background-color: #ccc;
 		border-radius: 34px;
+		background-color: #ccc;
 		cursor: pointer;
+		inset: 0;
 		transition: 0.4s;
 
-		&:before {
+		&::before {
 			position: absolute;
 			bottom: 4px;
 			left: 4px;
 			width: 26px;
 			height: 26px;
-			background-color: white;
 			border-radius: 50%;
+			background-color: white;
 			content: '';
 			transition: 0.4s;
 		}
@@ -52,7 +49,7 @@
 	&_switch_true&_checked_true &__switch-slider {
 		background-color: #2196f3;
 
-		&:before {
+		&::before {
 			transform: translateX(26px);
 		}
 	}

@@ -25,14 +25,13 @@
 .jodit-toolbar-editor-collection {
 	&_mode_horizontal {
 		position: relative;
-
 		background-image: repeating-linear-gradient(
 			transparent 0,
 			transparent calc(var(--button-size) - 1px),
 			var(--color-border) var(--button-size)
 		);
 
-		&:after {
+		&::after {
 			position: absolute;
 			bottom: 0;
 			left: 0;

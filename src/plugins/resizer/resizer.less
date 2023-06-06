@@ -5,11 +5,11 @@
  */
 
 @import (reference) '../../styles/variables';
-@import './resizer.common';
+@import url('./resizer.common');
 
 :root {
-	--viewer_width: 70px;
-	--viewer_height: 24px;
+	--viewer-width: 70px;
+	--viewer-height: 24px;
 	--resizer-handle-size: 10px;
 	--resizer-border-color: #98c1f1;
 	--resizer-handle-color: #5ba4f3;
@@ -35,20 +35,16 @@
 		position: absolute;
 		top: 50%;
 		left: 50%;
-
 		display: inline-block;
 		overflow: visible;
-		width: var(--viewer_width);
-		height: var(--viewer_height);
-		margin-top: calc(var(--viewer_height) / -2);
-		margin-left: calc(var(--viewer_width) / -2);
-
+		width: var(--viewer-width);
+		height: var(--viewer-height);
+		margin-top: calc(var(--viewer-height) / -2);
+		margin-left: calc(var(--viewer-width) / -2);
 		background-color: var(--color-placeholder);
 		color: var(--color-white);
-
 		font-size: 12px;
-		line-height: var(--viewer_height);
-
+		line-height: var(--viewer-height);
 		opacity: 0;
 		text-align: center;
 		transition: opacity 0.2s linear;
@@ -58,10 +54,8 @@
 		position: absolute;
 		z-index: 4;
 		display: inline-block;
-
 		width: var(--resizer-handle-size);
 		height: var(--resizer-handle-size);
-
 		background-color: var(--resizer-handle-color);
 		pointer-events: all;
 

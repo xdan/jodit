@@ -65,7 +65,7 @@ export function cacheHTML<T extends Function, R>(
 
 	descriptor.value = function (this: T, ...attrs: unknown[]): R {
 		if (useCache && cached.has(this.constructor)) {
-			return cached.get(this.constructor)!.cloneNode(true) as R;
+			return cached.get(this.constructor)?.cloneNode(true) as R;
 		}
 
 		const value = fn.apply(this, attrs);

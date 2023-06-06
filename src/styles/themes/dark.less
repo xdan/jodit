@@ -19,7 +19,7 @@
 				var(--color-border) var(--button-size)
 			);
 
-			&:after {
+			&::after {
 				background-color: var(--color-border);
 			}
 		}
@@ -30,16 +30,17 @@
 			&:not(:empty) {
 				border-color: var(--color-border);
 
-				.jodit-toolbar-editor-collection:after {
+				.jodit-toolbar-editor-collection::after {
 					background-color: var(--color-border);
 				}
 			}
 		}
 	}
 
-	.jodit-ui-group_separated_true:not(:last-child):not(
+	.jodit-ui-group_separated_true:not(
+			:last-child,
 			.jodit-ui-group_before-spacer_true
-		):after {
+		)::after {
 		border-right-color: var(--color-border);
 	}
 
@@ -100,6 +101,7 @@
 		}
 	}
 
+	// stylelint-disable-next-line
 	.jodit-toolbar__box:not(:empty) {
 		background: var(--dark-toolbar-color);
 	}

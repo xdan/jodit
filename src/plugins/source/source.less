@@ -7,8 +7,8 @@
 @import (reference) '../../styles/variables';
 
 .fontSource() {
-	font: 12px / normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas',
-		'source-code-pro', monospace;
+	font: 12px / normal Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro,
+		monospace;
 }
 
 .jodit-source {
@@ -41,8 +41,7 @@
 
 .jodit-container.jodit_split_mode {
 	.jodit-workplace {
-		flex-direction: row;
-		flex-wrap: nowrap;
+		flex-flow: row nowrap;
 	}
 
 	.jodit-wysiwyg,

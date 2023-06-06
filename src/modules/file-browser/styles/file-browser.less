@@ -9,11 +9,11 @@
 @import (reference) '../../../styles/modules/icon';
 
 :root {
-	--first_column: 31%;
+	--first-column: 31%;
 	--cols: 4;
-	--info-background: rgb(233, 233, 233);
+	--info-background: rgb(233 233 233);
 	--icon-size: @icon-small-size;
-	--col_size: 150px;
+	--col-size: 150px;
 }
 
 .jodit-filebrowser {
@@ -39,7 +39,7 @@
 }
 
 .file-browser-loader() {
-	&:before {
+	&::before {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -48,7 +48,7 @@
 		content: '';
 	}
 
-	&:after {
+	&::after {
 		position: absolute;
 		top: 50%;
 		left: 50%;

@@ -6,7 +6,7 @@
 
 @import (reference) '../../styles/mixins';
 @import (reference) '../../styles/variables';
-@import './table.common';
+@import url('./table.common');
 
 .jodit-form__inserter {
 	.jodit-form__table-creator-box {
@@ -25,10 +25,8 @@
 			& > div {
 				& > span {
 					display: inline-block;
-
 					width: var(--width-element-default);
 					height: var(--height-element-default);
-
 					box-sizing: border-box;
 					border: 1px solid var(--color-border);
 					margin-bottom: 2px;

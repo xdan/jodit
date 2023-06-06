@@ -83,7 +83,7 @@ export class Icon {
 		const cacheKey = `${name}${iconURL}${fill}${iconFromEvent ?? ''}`;
 
 		if (jodit.o.cache && this.__cache.has(cacheKey)) {
-			return this.__cache.get(cacheKey)!.cloneNode(true);
+			return this.__cache.get(cacheKey)?.cloneNode(true);
 		}
 
 		if (iconURL) {

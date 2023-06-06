@@ -30,6 +30,10 @@ const source = path.resolve(argv.source);
 const target = path.resolve(argv.target);
 
 fs.watch(source, { recursive: true }, (event, filename) => {
+	if (!filename) {
+		return;
+	}
+
 	if (event === 'change') {
 		console.log(
 			'Copy:',

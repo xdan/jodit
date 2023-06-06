@@ -9,8 +9,8 @@
 
 :root {
 	--tooltip-color: #fff;
-	--tooltip-background-color: rgba(0, 0, 0, 0.7);
-	--tooltip-sfx-shadow: rgba(0, 0, 0, 0.15);
+	--tooltip-background-color: rgb(0 0 0 / 70%);
+	--tooltip-sfx-shadow: rgb(0 0 0 / 15%);
 	--tooltip-border-width: 0;
 	--tooltip-border-color: #e5e5e5;
 }
@@ -21,24 +21,19 @@
 	width: auto;
 	max-width: 120px;
 	border-radius: 4px;
-
 	animation-fill-mode: forwards;
 	animation-timing-function: ease-out;
-
 	background-clip: padding-box;
 	background-color: var(--tooltip-background-color);
 	box-shadow: 0 0 0 var(--tooltip-border-width) var(--tooltip-border-color),
 		0 8px 20px var(--tooltip-border-width) var(--tooltip-sfx-shadow);
 	color: var(--tooltip-color);
-
 	font-family: var(--font-default);
 	font-size: var(--font-size-small);
-
 	line-height: 1.4;
 	opacity: 0;
 	outline: none;
-	text-rendering: optimizeLegibility;
-
+	text-rendering: optimizelegibility;
 	transform: translateX(-50%);
 	transition: opacity 0.2s ease 0s;
 	user-select: none;
