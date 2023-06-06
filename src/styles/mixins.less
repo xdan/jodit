@@ -18,8 +18,7 @@
 
 .active() {
 	background-image: none;
-	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3),
-		0 1px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 2px 4px rgb(0 0 0 / 30%), 0 1px 2px rgb(0 0 0 / 5%);
 }
 
 .jodit_status(
@@ -86,7 +85,7 @@
 	}
 
 	&::-webkit-scrollbar-track {
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		box-shadow: inset 0 0 6px rgb(0 0 0 / 30%);
 	}
 
 	&::-webkit-scrollbar-thumb {
@@ -105,14 +104,10 @@
 		right: 0;
 		bottom: 0;
 		overflow: hidden;
-
 		width: 12px;
 		height: 12px;
-
 		cursor: nwse-resize;
-
 		fill: var(--color-gray-dark);
-
 		user-select: none;
 	}
 }
@@ -120,10 +115,8 @@
 .jodit-tablet-style() {
 	max-width: 100%;
 	border: none;
-
 	margin-top: 1em;
 	margin-bottom: 1em;
-
 	border-collapse: collapse;
 	empty-cells: show;
 

@@ -28,58 +28,49 @@
 	--color-gray-dark: #a5a5a5;
 	--color-dark: @color-dark;
 	--color-blue: @color-blue;
+	// stylelint-disable-next-line function-no-unknown
 	--color-light-blue: fadeout(@color-blue, 50%);
 	--color-red: @color-red;
+	// stylelint-disable-next-line function-no-unknown
 	--color-light-red: fadeout(@color-red, 60%);
-
 	--color-default: var(--color-dark);
-	--color-text: #222222;
+	--color-text: #222;
 	--color-label: var(--color-gray-dark);
 	--color-error: var(--color-red);
-
 	--color-border: var(--color-gray);
 	--color-border-dark: var(--color-dark);
-
 	--color-border-selected: #1e88e5;
 	--color-border-active: #b5b5b5;
-
 	--color-selection: var(--color-dark);
 	--color-selection-area: #bdbdbd;
-
 	--color-separator: var(--color-border);
 	--color-placeholder: var(--color-gray-dark);
 	--color-panel: #f9f9f9;
 	--color-resizer: #c8c8c8;
-
 	--color-background-default: var(--color-white);
 	--color-background-light-gray: #f5f5f6;
 	--color-background-gray: var(--color-gray);
 	--color-background-gray-hover: #f8f8f8;
 	--color-background-hover: #7a450f;
 	--color-background-button-hover: #ecebe9;
-	--color-background-button-hover-opacity30: rgba(236, 235, 233, 0.3);
+	--color-background-button-hover-opacity30: rgb(236 235 233 / 30%);
 	--color-background-progress: #b91f1f;
 	--color-background-filebrowser-folders: #3f3f3f;
 	--color-background-active: #2196f3;
 	--color-background-selection: @color-blue;
-	--color-background-selection_opacity50: fadeout(@color-blue, 0.5);
-
+	// stylelint-disable-next-line function-no-unknown
+	--color-background-selection-opacity50: fadeout(@color-blue, 0.5);
 	--color-source-area: #323232;
-
 	--color-button-background-hover: #dcdcdc;
-	--color-button-background-hover_opacity40: rgba(220, 220, 220, 0.4);
-	--color-button-background-hover_opacity60: rgba(220, 220, 220, 0.6);
-
-	--font-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-		Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+	--color-button-background-hover-opacity40: rgb(220 220 220 / 40%);
+	--color-button-background-hover-opacity60: rgb(220 220 220 / 60%);
+	--font-default: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto,
+		oxygen-sans, ubuntu, cantarell, 'Helvetica Neue', sans-serif;
 	--font-size-default: 14px;
 	--font-size-small: 11px;
-
-	--color-text-icons: rgba(0, 0, 0, 0.75);
+	--color-text-icons: rgb(0 0 0 / 75%);
 	--color-icon: var(--color-dark);
-
 	--padding-default: 8px;
-
 	--border-radius-default: 3px;
 
 	//z-index
@@ -89,39 +80,33 @@
 	--z-index-dialog: 20000004;
 	--z-index-context-menu: 30000005;
 	--z-index-tooltip: 30000006;
-
 	--icon-loader-size: 48px;
-
-	--width_element_default: 18px;
-	--height_element_default: 18px;
+	--width-element-default: 18px;
+	--height-element-default: 18px;
 
 	// dark theme
-	--dark_background_color: #575757;
-	--dark-text-color: var(--color-white);
-	--dark_background_ligher: #787878;
-	--dark_background_darknes: #353535;
-	--dark_border_color: #444;
-	--dark_text_color: #d1cccc;
-	--dark_text_color_opacity80: rgba(209, 204, 204, 0.8);
-	--dark_text_color_opacity50: rgba(209, 204, 204, 0.5);
-	--dark_icon_color: #c0c0c0;
-	--dark_toolbar_color: #5f5c5c;
-	--dark_toolbar_seperator_color1: rgba(81, 81, 81, 0.41);
-	--dark_toolbar_seperator_color2: #686767;
-	--dark_toolbar_seperator_color_opacity80: rgba(104, 103, 103, 0.8);
-	--dark_toolbar_seperator_color3: rgba(104, 103, 103, 0.75);
-	--dark_color-border-selected: #152f5f;
-
+	--dark-background-color: #575757;
+	--dark-background-ligher: #787878;
+	--dark-background-darknes: #353535;
+	--dark-border-color: #444;
+	--dark-text-color: #d1cccc;
+	--dark-text-color-opacity80: rgb(209 204 204 / 80%);
+	--dark-text-color-opacity50: rgb(209 204 204 / 50%);
+	--dark-icon-color: #c0c0c0;
+	--dark-toolbar-color: #5f5c5c;
+	--dark-toolbar-seperator-color1: rgb(81 81 81 / 41%);
+	--dark-toolbar-seperator-color2: #686767;
+	--dark-toolbar-seperator-color-opacity80: rgb(104 103 103 / 80%);
+	--dark-toolbar-seperator-color3: rgb(104 103 103 / 75%);
+	--dark-color-border-selected: #152f5f;
 	--width-default: 180px;
 	--width-input-min: var(--width-default);
 	--input-height: 32px;
-
 	--button-icon-size: @icon-middle-size;
 	--margin-v: 2px;
 	--button-df-size: calc((var(--button-icon-size) - 4px) * 2);
 	--button-size: calc(
 		var(--button-icon-size) + var(--button-df-size) + var(--margin-v) * 2
 	);
-
-	--focus-input-box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
+	--focus-input-box-shadow: 0 0 0 0.05rem rgb(0 123 255 / 25%);
 }
