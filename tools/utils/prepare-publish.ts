@@ -5,6 +5,8 @@
  */
 
 import * as fs from 'fs';
+// @ts-ignore
+import replace from 'replace';
 import * as path from 'path';
 
 const cwd = path.resolve(process.argv[2]);
@@ -69,4 +71,12 @@ const copyRecursiveSync = (src: string, dest: string): void => {
 		path.resolve(cwd, `./${file}`),
 		path.resolve(cwd, `./build/${file}`)
 	);
+});
+
+replace({
+	regex: '../build/',
+	replacement: './',
+	paths: [path.resolve(cwd, './build/examples')],
+	recursive: true,
+	silent: false
 });

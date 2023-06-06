@@ -74,6 +74,14 @@ export default (
 			libraryTarget: 'umd'
 		},
 
+		snapshot: {
+			managedPaths: []
+		},
+
+		watchOptions: {
+			followSymlinks: true
+		},
+
 		resolve: {
 			extensions: [
 				'.js',
@@ -87,7 +95,8 @@ export default (
 			alias: {
 				jodit: path.resolve(superDirname, './src/'),
 				super: path.resolve(superDirname, './src/')
-			}
+			},
+			symlinks: false
 		},
 
 		optimization: {

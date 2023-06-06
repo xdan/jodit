@@ -96,7 +96,6 @@ build-all:
 	@$(TS_NODE_BASE) $(cwd)tools/utils/prepare-publish.ts $(pwd)
 	@$(NODE_MODULES_BIN)/replace "4\.0\.0-beta\.\d+" "$(version)" $(pwd)/build/README.md --silent
 	@cd $(pwd)/build/ && npm i
-
 	make esm
 
 	make build es=es2018 uglify=false generateTypes=true
@@ -140,7 +139,7 @@ prettify:
 test:
 	make test-find
 	make clean
-	make build es=$(es) uglify=$(uglify) isTest=true
+	make build es=$(es) uglify=$(uglify) isTest=true fat=true
 	make test-only-run build=$(es) uglify=$(uglify)
 
 

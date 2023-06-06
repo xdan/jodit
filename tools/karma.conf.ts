@@ -10,10 +10,6 @@ import * as fs from 'fs';
 import path from 'path';
 
 const argv = yargs
-	.option('grep', {
-		type: 'string',
-		description: 'Grep test glob pattern'
-	})
 	.option('cwd', {
 		type: 'string',
 		demandOption: true,
@@ -60,7 +56,7 @@ console.info('Build files: ', buildFiles);
 
 module.exports = function (cnf: Config): void {
 	cnf.set({
-		basePath: '../',
+		basePath: argv.cwd,
 		frameworks: ['mocha', 'chai'],
 
 		mime: {
@@ -83,19 +79,21 @@ module.exports = function (cnf: Config): void {
 				served: true
 			},
 
-			'public/app.css',
-			path.resolve(
-				argv.cwd,
-				'node_modules/synchronous-promise/dist/synchronous-promise.js'
-			),
+			'./public/app.css',
+			'./node_modules/synchronous-promise/dist/synchronous-promise.js',
 
 			...buildFiles,
-			'test/bootstrap.js',
-			{ pattern: argv.grep ?? 'src/**/*.test.js', watched: false },
-			{
-				pattern: argv.grep ?? 'test/tests/**/*.test.js',
-				watched: false
-			}
+
+			...Array.from(
+				new Set([
+					path.resolve(__dirname, '../test/bootstrap.js'),
+					path.resolve(argv.cwd, 'test/bootstrap.js'),
+					path.resolve(__dirname, '../src/**/*.test.js'),
+					path.resolve(argv.cwd, './src/**/*.test.js'),
+					path.resolve(__dirname, '../test/tests/**/*.test.js'),
+					path.resolve(argv.cwd, 'test/tests/**/*.test.js')
+				])
+			)
 		],
 
 		proxies: {
