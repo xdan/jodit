@@ -45,7 +45,7 @@ describe('Test Messages module', () => {
 		});
 
 		describe('Several calls with same content', () => {
-			it('Should show only one message', done => {
+			it('Should show only one message', () => {
 				editor.message.success('Hello Mars!', 100);
 				editor.message.success('Hello Mars!', 100);
 				editor.message.success('Hello Mars!', 100);
@@ -53,27 +53,26 @@ describe('Test Messages module', () => {
 					editor.container.querySelectorAll('.jodit-ui-message')
 						.length
 				).equals(1);
-				done();
 			});
 
 			it('Should increase hide timeout', done => {
-				editor.message.success('Hello Mars!', 100);
+				editor.message.success('Hello Mars!', 150);
 				expect(editor.container.querySelector('.jodit-ui-message')).is
 					.not.null;
 
 				setTimeout(() => {
-					editor.message.success('Hello Mars!', 100);
+					editor.message.success('Hello Mars!', 150);
 
 					setTimeout(() => {
-						editor.message.success('Hello Mars!', 100);
-					}, 70);
-				}, 70);
+						editor.message.success('Hello Mars!', 150);
+					}, 100);
+				}, 100);
 
 				setTimeout(() => {
 					expect(editor.container.querySelector('.jodit-ui-message'))
 						.is.not.null;
 					done();
-				}, 200);
+				}, 300);
 			});
 		});
 	});

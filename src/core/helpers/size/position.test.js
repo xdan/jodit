@@ -126,7 +126,7 @@
 		}
 
 		describe('Test position helper', function () {
-			it('Should calculate correct screen position of element', function () {
+			it('Should calculate correct screen position of element',  () => {
 				const span = makeBox();
 
 				const pos = Jodit.modules.Helpers.position(span);

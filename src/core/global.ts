@@ -27,6 +27,7 @@ import { isViewObject } from './helpers/checker/is-view-object';
 import { getClassName } from './helpers/utils/get-class-name';
 import { kebabCase } from './helpers/string/kebab-case';
 import { lang } from './constants';
+import { isString } from 'jodit/core/helpers/checker/is-string';
 
 export const instances: IDictionary<IJodit> = {};
 
@@ -72,11 +73,15 @@ const boxes = new WeakMap<IComponent, IDictionary<HTMLElement>>();
  */
 export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 	jodit: IViewBased | IViewComponent,
-	classFunc?: Function,
+	classFunc?: Function | string,
 	tag: T = 'div' as T,
 	createInsideEditor: boolean = false
 ): HTMLElementTagNameMap[T] {
-	const name = classFunc ? getClassName(classFunc.prototype) : 'jodit-utils';
+	const name = isString(classFunc)
+		? classFunc
+		: classFunc
+		? getClassName(classFunc.prototype)
+		: 'jodit-utils';
 
 	const data = boxes.get(jodit) || {},
 		key = name + tag;

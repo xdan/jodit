@@ -1219,15 +1219,15 @@ Object.defineProperty(navigator, 'userAgent', {
 
 /**
  *
- * @param {string} str1
- * @param {string} str2
- * @return {string[]}
+ * @param {string} result
+ * @param {string} real
+ * @return {boolean}
  */
-function strCompare(str1, str2, len = 30) {
-	for (let i = 0; i < Math.max(str1.length, str2.length); i += 1) {
-		if (str1[i] !== str2[i]) {
-			console.log(str1.substring(i - len, i + len));
-			console.log(str2.substring(i - len, i + len));
+function strCompare(result, real, len = 30) {
+	for (let i = 0; i < Math.max(result.length, real.length); i += 1) {
+		if (result[i] !== real[i]) {
+			console.log('result', result.substring(i - len, i + len));
+			console.log('real', real.substring(i - len, i + len));
 
 			return false;
 		}
