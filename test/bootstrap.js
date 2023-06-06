@@ -23,7 +23,7 @@ typeof window.chai !== 'undefined' &&
 	})();
 
 typeof window.mocha !== 'undefined' && mocha.timeout(15000);
-
+Jodit.constants.SET_TEST();
 const oldI18n = Jodit.prototype.i18n,
 	oldAjaxSender = Jodit.modules.Ajax.prototype.send,
 	naturalPromise = window.Promise;

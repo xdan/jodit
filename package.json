@@ -1,6 +1,6 @@
 {
 	"name": "jodit",
-	"version": "4.0.0-beta.58",
+	"version": "4.0.0-beta.59",
 	"description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
 	"main": "build/jodit.min.js",
 	"types": "./types/index.d.ts",
@@ -13,7 +13,7 @@
 		"build": "make build-all",
 		"test": "make test",
 		"test:screenshots": "make screenshots-test",
-		"test:debug": "make test browsers=Chrome singleRun=false",
+		"test:debug": "make test-only-run browsers=Chrome singleRun=false",
 		"test:chrome": "make test browsers=Chrome",
 		"jodit": "make jodit",
 		"pretty": "make prettify",

@@ -104,7 +104,7 @@ build-all:
 	make build es=es2018 uglify=false generateTypes=$(BUILD_DTS)
 	make dts
 	make build es=es2018
-	make build es=es2018 fat=true
+	make build es=es2018 uglify=true fat=true
 
 	make build es=es2015
 	make build es=es2015 uglify=false

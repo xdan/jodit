@@ -12,13 +12,15 @@ import type { HTMLTagNames, IDictionary } from 'jodit/types';
 
 export const APP_VERSION = process.env.APP_VERSION as string;
 // eslint-disable-next-line prettier/prettier
-export const ES: 'es5' | 'es2015' | 'es2018' |'es2021' = process.env.TARGET_ES as 'es2015';
+export const ES: 'es5' | 'es2015' | 'es2018' | 'es2021' = process.env
+	.TARGET_ES as 'es2015';
 export const IS_ES_MODERN = process.env.IS_ES_MODERN as unknown as boolean;
 export const IS_ES_NEXT = process.env.IS_ES_NEXT as unknown as boolean;
 export const IS_PROD = process.env.IS_PROD as unknown as boolean;
-export const IS_TEST = process.env.IS_TEST as unknown as boolean;
+export let IS_TEST = process.env.IS_TEST as unknown as boolean;
 export const FAT_MODE = process.env.FAT_MODE as unknown as boolean;
 export const HOMEPAGE = process.env.HOMEPAGE as string;
+export const SET_TEST = (): boolean => (IS_TEST = true);
 
 export const INVISIBLE_SPACE = '\uFEFF';
 export const NBSP_SPACE = '\u00A0';
