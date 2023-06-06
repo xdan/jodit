@@ -28,6 +28,7 @@ const NEW_LINE_TAGS: Set<HTMLTagNames> = new Set([
 ]);
 
 const INVISIBLE_TAGS: Set<'script' | 'style'> = new Set(['script', 'style']);
+const ALONE_TAGS: Set<'br' | 'hr' | 'input'> = new Set(['br', 'hr', 'input']);
 
 /**
  * Extract plain text from HTML text
@@ -53,7 +54,7 @@ export function stripTags(
 
 		if (exclude && Dom.isTag(p, exclude)) {
 			const tag = p.nodeName.toLowerCase();
-			const text = !Dom.isTag(p, ['br', 'hr', 'input'])
+			const text = !Dom.isTag(p, ALONE_TAGS)
 				? `%%%jodit-${tag}%%%${stripTags(
 						p.innerHTML,
 						doc,

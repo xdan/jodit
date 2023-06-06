@@ -26,7 +26,7 @@ import { isPromise } from 'jodit/core/helpers/checker/is-promise';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isNumber } from 'jodit/core/helpers/checker/is-number';
 import { assert } from 'jodit/core/helpers/utils/assert';
-import { ES } from 'jodit/core/constants';
+import { IS_ES_NEXT } from 'jodit/core/constants';
 
 type Callback = (...args: any[]) => void;
 
@@ -274,15 +274,11 @@ export class Async implements IAsync {
 
 		const promise = new Promise<T>((resolve, reject) => {
 			this.promisesRejections.add(reject);
-			rejectCallback = reject;
+			rejectCallback = (): void => reject(Error('Reject promise'));
 			return executor(resolve, reject);
 		});
 
-		if (
-			!promise.finally &&
-			typeof process !== 'undefined' &&
-			ES !== 'es2021'
-		) {
+		if (!promise.finally && typeof process !== 'undefined' && !IS_ES_NEXT) {
 			promise.finally = (
 				onfinally?: (() => void) | undefined | null
 			): Promise<T> => {

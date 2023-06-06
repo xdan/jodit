@@ -229,11 +229,14 @@ describe('Test Dom module', function () {
 				const div = document.createElement(tag);
 				expect(Dom.isTag(div, new Set([tag]))).is.true;
 				expect(Dom.isTag(div, new Set([tag.toUpperCase()]))).is.true;
-				expect(Dom.isTag(div, [tag])).is.true;
+				expect(Dom.isTag(div, new Set([tag]))).is.true;
 				expect(Dom.isTag(div, tag)).is.true;
 				expect(Dom.isTag(div, tag.toUpperCase())).is.true;
 				expect(Dom.isTag(div, 'br')).is.false;
-				expect(Dom.isTag(div, ['br'])).is.false;
+				expect(Dom.isTag(div, new Set(['br']))).is.false;
+				expect(() => {
+					Dom.isTag(div, ['br']);
+				}).to.throw();
 			}
 		});
 	});

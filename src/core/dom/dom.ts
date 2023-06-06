@@ -29,7 +29,7 @@ import {
 	isSet,
 	isMarker
 } from 'jodit/core/helpers/checker';
-import { asArray, toArray } from 'jodit/core/helpers/array';
+import { toArray } from 'jodit/core/helpers/array';
 import { trim } from 'jodit/core/helpers/string';
 import { $$, attr, call, css, dataBind, error } from 'jodit/core/helpers/utils';
 import { LIST_TAGS, NO_EMPTY_TAGS, TEMP_ATTR } from 'jodit/core/constants';
@@ -353,7 +353,9 @@ export class Dom {
 	 *  Check if element is table cell
 	 */
 	static isCell(elm: unknown): elm is HTMLTableCellElement {
-		return Dom.isNode(elm) && /^(td|th)$/i.test(elm.nodeName);
+		return (
+			Dom.isNode(elm) && (elm.nodeName === 'TD' || elm.nodeName === 'TH')
+		);
 	}
 
 	/**
@@ -1084,14 +1086,6 @@ export class Dom {
 		tagName: K
 	): node is HTMLElementTagNameMap[K];
 
-	/**
-	 * @deprecated Use Set instead of Array
-	 */
-	static isTag<K extends HTMLTagNames>(
-		node: Node | null | undefined | false | EventTarget,
-		tagNames: K[]
-	): node is HTMLElementTagNameMap[K];
-
 	static isTag<K extends HTMLTagNames>(
 		node: Node | null | undefined | false | EventTarget,
 		tagNames: Set<K>
@@ -1099,7 +1093,7 @@ export class Dom {
 
 	static isTag<K extends HTMLTagNames>(
 		node: Node | null | undefined | false | EventTarget,
-		tagNames: K[] | K | Set<K>
+		tagNames: K | Set<K>
 	): node is HTMLElementTagNameMap[K] {
 		if (!this.isElement(node)) {
 			return false;
@@ -1112,12 +1106,14 @@ export class Dom {
 			return tagNames.has(nameL) || tagNames.has(nameU);
 		}
 
-		const tags = asArray(tagNames).map(s => String(s).toLowerCase());
+		if (Array.isArray(tagNames)) {
+			throw new TypeError('Dom.isTag does not support array');
+		}
 
-		for (let i = 0; i < tags.length; i += 1) {
-			if (nameL === tags[i] || nameU === tags[i]) {
-				return true;
-			}
+		const tags = tagNames;
+
+		if (nameL === tags || nameU === tags) {
+			return true;
 		}
 
 		return false;

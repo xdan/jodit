@@ -242,8 +242,7 @@ export class resizer extends Plugin {
 
 			if (
 				!this.isAltMode &&
-				(uar === true ||
-					(Array.isArray(uar) && Dom.isTag(this.element, uar)))
+				(uar === true || (uar && Dom.isTag(this.element, uar)))
 			) {
 				if (diff_x) {
 					new_w =
@@ -390,7 +389,7 @@ export class resizer extends Plugin {
 	private bind(element: HTMLElement): void {
 		if (
 			!Dom.isHTMLElement(element) ||
-			!this.j.o.allowResizeTags.includes(
+			!this.j.o.allowResizeTags.has(
 				element.tagName.toLowerCase() as HTMLTagNames
 			) ||
 			dataBind(element, keyBInd)

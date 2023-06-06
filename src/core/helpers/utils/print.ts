@@ -177,7 +177,7 @@ export function previewBox(
 						);
 					}
 
-					if (c.childNodes.length === 0 || Dom.isTag(c, ['table'])) {
+					if (c.childNodes.length === 0 || Dom.isTag(c, 'table')) {
 						switch (c.nodeName) {
 							case 'SCRIPT':
 								if (c.textContent) {

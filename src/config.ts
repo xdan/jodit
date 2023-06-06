@@ -218,7 +218,7 @@ class Config implements IViewOptions {
 	 * @example
 	 * ```javascript
 	 * Jodit.make('#editor', {
-	 *    editorCssClass: 'some_my_class'
+	 *    editorClassName: 'some_my_class'
 	 * });
 	 * ```
 	 * ```html
@@ -230,12 +230,6 @@ class Config implements IViewOptions {
 	 * ```
 	 */
 	editorClassName: false | string = false;
-
-	/**
-	 * Alias for editorClassName
-	 * @deprecated
-	 */
-	editorCssClass: false | string = false;
 
 	/**
 	 * Class name that can be appended to the main editor container
@@ -450,7 +444,7 @@ class Config implements IViewOptions {
 
 	/**
 	 * Allow editing the entire HTML document(html, head)
-	 * > Works together with the iframe option.
+	 * \> Works together with the iframe option.
 	 * @example
 	 * ```js
 	 * const editor = Jodit.make('#editor', {

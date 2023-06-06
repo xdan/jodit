@@ -12,7 +12,6 @@ import type {
 	HTMLTagNames,
 	IJodit,
 	IStyleOptions,
-	IAttributes,
 	ICommitStyle
 } from 'jodit/types';
 import { IS_BLOCK, LIST_TAGS } from 'jodit/core/constants';
@@ -88,9 +87,7 @@ export class CommitStyle implements ICommitStyle {
 		return this.element === this.defaultTag;
 	}
 
-	constructor(readonly options: IStyleOptions) {
-		options.attributes = deprecatedUsing(this, options.attributes);
-	}
+	constructor(readonly options: IStyleOptions) {}
 
 	apply(jodit: IJodit): void {
 		const { hooks } = this.options;
@@ -113,33 +110,4 @@ export class CommitStyle implements ICommitStyle {
 			this.__applyMap = new WeakMap();
 		}
 	}
-}
-
-function deprecatedUsing(
-	commitStyle: ICommitStyle,
-	attributes?: IAttributes | undefined
-): IAttributes | undefined {
-	const { style, className } = commitStyle.options;
-
-	// For compatibility with older versions
-	if (style) {
-		if (attributes) {
-			attributes.style = style;
-		} else {
-			attributes = { style };
-		}
-		delete commitStyle.options.style;
-	}
-
-	// For compatibility with older versions
-	if (className) {
-		if (attributes) {
-			attributes['class'] = className;
-		} else {
-			attributes = { class: className };
-		}
-		delete commitStyle.options.className;
-	}
-
-	return attributes;
 }

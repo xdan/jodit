@@ -132,7 +132,7 @@ export function formatBlock(editor: IJodit): void {
 	editor.registerCommand(
 		'formatblock',
 		(command: string, second: string, third: string): false | void => {
-			editor.s.applyStyle(undefined, {
+			editor.s.commitStyle({
 				element: third as HTMLTagNames
 			});
 

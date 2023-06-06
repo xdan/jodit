@@ -16,7 +16,7 @@ declare module 'jodit/config' {
 		/**
 		 * Use true frame for editing iframe size
 		 */
-		allowResizeTags: HTMLTagNames[];
+		allowResizeTags: Set<HTMLTagNames>;
 
 		resizer: {
 			/**
@@ -38,7 +38,7 @@ declare module 'jodit/config' {
 			 * });
 			 * ```
 			 */
-			useAspectRatio: boolean | HTMLTagNames[];
+			useAspectRatio: boolean | Set<HTMLTagNames>;
 
 			/**
 			 * When resizing images, change not the styles but the width and height attributes
@@ -58,7 +58,7 @@ declare module 'jodit/config' {
 	}
 }
 
-Config.prototype.allowResizeTags = ['img', 'iframe', 'table', 'jodit'];
+Config.prototype.allowResizeTags = new Set(['img', 'iframe', 'table', 'jodit']);
 
 Config.prototype.resizer = {
 	showSize: true,
@@ -66,5 +66,5 @@ Config.prototype.resizer = {
 	forImageChangeAttributes: true,
 	min_width: 10,
 	min_height: 10,
-	useAspectRatio: ['img']
+	useAspectRatio: new Set(['img'])
 };

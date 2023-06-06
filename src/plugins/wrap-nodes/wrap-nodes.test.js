@@ -172,7 +172,7 @@ describe('WrapNodes plugin test', function () {
 		it('Should not wrap this tags', function () {
 			const editor = getJodit({
 				wrapNodes: {
-					exclude: ['img']
+					exclude: new Set(['img'])
 				}
 			});
 			editor.value = 'test <img>';

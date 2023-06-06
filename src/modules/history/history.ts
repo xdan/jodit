@@ -40,11 +40,6 @@ declare module 'jodit/config' {
 			 */
 			timeout: number;
 		};
-
-		/**
-		 * @deprecated Instead use `history`
-		 */
-		observer: this['history'];
 	}
 }
 
@@ -53,8 +48,6 @@ Config.prototype.history = {
 	maxHistoryLength: Infinity,
 	timeout: 1000
 };
-
-Config.prototype.observer = Config.prototype.history;
 
 /**
  * The module monitors the status of the editor and creates / deletes the required number of Undo / Redo shots .

@@ -513,7 +513,7 @@ describe('Jodit Editor Tests', function () {
 			it('Set element value', function () {
 				const area = appendTestArea();
 				const editor = getJodit(undefined, area);
-				editor.setElementValue('<p>Test</p>');
+				editor.value = '<p>Test</p>';
 				expect(area.value).equals('<p>Test</p>');
 			});
 
@@ -525,15 +525,6 @@ describe('Jodit Editor Tests', function () {
 				expect(area.value).equals('<p>Test</p>');
 				expect(editor.value).equals('<p>Test</p>');
 			});
-		});
-
-		it('Set wrong element value', function () {
-			const area = appendTestArea(),
-				editor = getJodit(undefined, area);
-
-			expect(function () {
-				editor.setElementValue(document.createTextNode('Test'));
-			}).to.throw(/value must be/);
 		});
 
 		it('Set editor value', function () {
@@ -575,23 +566,15 @@ describe('Jodit Editor Tests', function () {
 				);
 			});
 
-			it('Check synchronization between editor and element', function () {
-				const area = appendTestArea();
-				const editor = getJodit(undefined, area);
-				area.value = '<div>Test</div>';
-				editor.setElementValue();
-				expect(editor.value).equals('<div>Test</div>');
-			});
-
 			it('Check synchronization between editor and element with wrong html', function () {
 				const editor = getJodit();
-				editor.setElementValue('<div>Test</div>');
+				editor.value = '<div>Test</div>';
 				expect(editor.value).equals(editor.getElementValue());
 			});
 
 			it('Check synchronization between editor and element when was pressed button', function () {
 				const editor = getJodit();
-				editor.setElementValue('<div>Test</div>');
+				editor.value = '<div>Test</div>';
 				expect(editor.value).equals(editor.getElementValue());
 
 				const range = editor.s.createRange(true);

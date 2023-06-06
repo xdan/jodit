@@ -305,7 +305,7 @@ describe('Resize plugin', function () {
 						it("should don't save it for images", done => {
 							const editor = getJodit({
 								resizer: {
-									useAspectRatio: Jodit.atom(['table'])
+									useAspectRatio: new Set(['table'])
 								}
 							});
 

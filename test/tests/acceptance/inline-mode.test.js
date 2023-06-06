@@ -130,7 +130,7 @@ describe('Test Inline mode', function () {
 
 				editor.value = '<p>test <img/> test</p>';
 				const img = editor.editor.querySelector('img');
-				simulateEvent('click', 0, img);
+				simulateEvent('click', img);
 
 				const popup = getOpenedPopup(editor);
 				expect(popup).is.not.null;
@@ -163,11 +163,7 @@ describe('Test Inline mode', function () {
 						'<p>test <img style="width: 30px; float: right"/> test</p>';
 					editor.s.focus();
 
-					simulateEvent(
-						'click',
-						0,
-						editor.editor.querySelector('img')
-					);
+					simulateEvent('click', editor.editor.querySelector('img'));
 
 					const popup = getOpenedPopup(editor);
 
@@ -207,7 +203,6 @@ describe('Test Inline mode', function () {
 
 						simulateEvent(
 							'click',
-							0,
 							editor.editor.querySelector('img')
 						);
 

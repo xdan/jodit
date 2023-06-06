@@ -79,8 +79,10 @@ export class size extends Plugin {
 			maxWidth: j.o.maxWidth
 		});
 
-		this.__setHeight(height);
-		this.__setWidth(j.o.width);
+		if (!j.isFullSize) {
+			this.__setHeight(height);
+			this.__setWidth(j.o.width);
+		}
 	}
 
 	/**

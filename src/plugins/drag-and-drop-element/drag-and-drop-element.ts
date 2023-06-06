@@ -212,7 +212,7 @@ export class dragAndDropElement extends Plugin {
 		if (
 			parentElement &&
 			Dom.isEmpty(parentElement) &&
-			!Dom.isTag(parentElement, ['td', 'th'])
+			!Dom.isCell(parentElement)
 		) {
 			Dom.safeRemove(parentElement);
 		}

@@ -34,13 +34,23 @@ export function color(editor: IJodit): void {
 
 		switch (command) {
 			case 'background':
-				editor.s.applyStyle({
-					backgroundColor: !colorHEX ? '' : (colorHEX as string)
+				editor.s.commitStyle({
+					attributes: {
+						style: {
+							backgroundColor: !colorHEX
+								? ''
+								: (colorHEX as string)
+						}
+					}
 				});
 				break;
 			case 'forecolor':
-				editor.s.applyStyle({
-					color: !colorHEX ? '' : (colorHEX as string)
+				editor.s.commitStyle({
+					attributes: {
+						style: {
+							color: !colorHEX ? '' : (colorHEX as string)
+						}
+					}
 				});
 				break;
 		}

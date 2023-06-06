@@ -20,7 +20,10 @@ describe('Test Async module', () => {
 	describe('All async tasks', () => {
 		it('Should be called', done => {
 			asyncM.setTimeout(callSpy, 100);
-			asyncM.promise(r => Promise.resolve().then(r)).then(callSpy);
+			asyncM
+				.promise(r => Promise.resolve().then(r))
+				.then(callSpy)
+				.catch(e => null);
 			asyncM.requestIdleCallback(callSpy);
 
 			setTimeout(() => {
@@ -32,7 +35,10 @@ describe('Test Async module', () => {
 		describe('After View was destroyed', () => {
 			it('Should not be called', done => {
 				asyncM.setTimeout(callSpy, 100);
-				asyncM.promise(r => Promise.resolve().then(r)).then(callSpy);
+				asyncM
+					.promise(r => Promise.resolve().then(r))
+					.then(callSpy)
+					.catch(e => null);
 				asyncM.requestIdleCallback(callSpy);
 				asyncM.destruct();
 
@@ -48,7 +54,8 @@ describe('Test Async module', () => {
 					editor.async.setTimeout(callSpy, 100);
 					editor.async
 						.promise(r => Promise.resolve().then(r))
-						.then(callSpy);
+						.then(callSpy)
+						.catch(e => null);
 					editor.async.requestIdleCallback(callSpy);
 					editor.destruct();
 
@@ -65,7 +72,7 @@ describe('Test Async module', () => {
 		it('Should has method for rejection in the outside', done => {
 			const promise = asyncM.promise(r => Promise.resolve().then(r));
 
-			promise.then(callSpy);
+			promise.then(callSpy).catch(e => null);
 			promise.rejectCallback();
 
 			setTimeout(() => {

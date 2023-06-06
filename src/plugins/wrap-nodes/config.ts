@@ -14,7 +14,7 @@ import { Config } from 'jodit/config';
 declare module 'jodit/config' {
 	interface Config {
 		wrapNodes: {
-			exclude: HTMLTagNames[];
+			exclude: Set<HTMLTagNames>;
 
 			/**
 			 * If the editor is empty then insert an empty paragraph into it
@@ -25,6 +25,7 @@ declare module 'jodit/config' {
 			 * 		emptyBlockAfterInit: true
 			 * 	}
 			 * });
+			 * ```
 			 */
 			emptyBlockAfterInit: boolean;
 		};
@@ -32,6 +33,6 @@ declare module 'jodit/config' {
 }
 
 Config.prototype.wrapNodes = {
-	exclude: ['hr', 'style', 'br'],
+	exclude: new Set(['hr', 'style', 'br']),
 	emptyBlockAfterInit: true
 };

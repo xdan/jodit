@@ -420,18 +420,6 @@ td,th {\
   vertical-align: top;\
 }';
 
-if (String.prototype.repeat === undefined) {
-	String.prototype.repeat = function (count) {
-		const result = [];
-
-		for (let i = 0; i < count; i++) {
-			result.push(this);
-		}
-
-		return result.join('');
-	};
-}
-
 function flatten(obj) {
 	var result = Object.create(obj);
 	for (var key in result) {

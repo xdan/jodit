@@ -725,11 +725,11 @@ function getFirstItem(fb, index = 0, file = false) {
 						)
 					);
 
-					simulateEvent('dragover', window, function (data) {
+					simulateEvent('dragover', window, data => {
 						fillXY(data, editor);
 					});
 
-					simulateEvent('drop', editor.editor, function (data) {
+					simulateEvent('drop', editor.editor, data => {
 						fillXY(data, editor);
 						Object.defineProperty(data, 'dataTransfer', {
 							value: {

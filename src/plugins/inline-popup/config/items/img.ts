@@ -8,7 +8,12 @@
  * @module plugins/inline-popup
  */
 
-import type { IControlType, IJodit, ImageHAlign } from 'jodit/types';
+import type {
+	HTMLTagNames,
+	IControlType,
+	IJodit,
+	ImageHAlign
+} from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { css } from 'jodit/core/helpers/utils/css';
@@ -19,7 +24,12 @@ export const align: IControlType<IJodit> = {
 	childTemplate: (_, __, value: string) => value,
 	list: ['Left', 'Right', 'Center', 'Normal'],
 	exec: (editor: IJodit, elm, { control }): void | false => {
-		if (!Dom.isTag(elm, ['img', 'jodit', 'jodit-media'])) {
+		if (
+			!Dom.isTag(
+				elm,
+				new Set(['img', 'jodit', 'jodit-media'] as HTMLTagNames[])
+			)
+		) {
 			return;
 		}
 
@@ -34,7 +44,13 @@ export const align: IControlType<IJodit> = {
 
 		hAlignElement(elm, command as ImageHAlign);
 
-		if (Dom.isTag(elm, ['jodit', 'jodit-media']) && elm.firstElementChild) {
+		if (
+			Dom.isTag(
+				elm,
+				new Set(['jodit', 'jodit-media'] as HTMLTagNames[])
+			) &&
+			elm.firstElementChild
+		) {
 			hAlignElement(
 				elm.firstElementChild as HTMLElement,
 				command as ImageHAlign

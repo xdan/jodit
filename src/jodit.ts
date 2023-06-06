@@ -625,23 +625,6 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			: this.element.innerHTML;
 	}
 
-	/**
-	 * @deprecated Use `Jodit.value` instead
-	 */
-	protected setElementValue(value?: string): CanPromise<void> {
-		const oldValue = this.getElementValue();
-
-		if (value === undefined || (isString(value) && value !== oldValue)) {
-			value ??= oldValue;
-
-			if (value !== this.getEditorValue()) {
-				this.setEditorValue(value);
-			}
-		}
-
-		return this.__setElementValue(value);
-	}
-
 	private __setElementValue(value: string): CanPromise<void> {
 		if (!isString(value)) {
 			throw error('value must be string');
@@ -1169,10 +1152,8 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	 *
 	 * @param element - Selector or HTMLElement
 	 * @param options - Editor's options
-	 *
-	 * @deprecated - Instead use `Jodit.make`
 	 */
-	constructor(element: HTMLElement | string, options?: object) {
+	protected constructor(element: HTMLElement | string, options?: object) {
 		super(options as IViewOptions, true);
 
 		try {
@@ -1510,14 +1491,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				Dom.safeRemove(defaultEditorArea);
 			}
 
-			addClassNames(
-				this.o.editorClassName || this.o.editorCssClass,
-				this.editor
-			);
-
-			if (this.o.editorCssClass) {
-				this.editor.classList.add(this.o.editorCssClass);
-			}
+			addClassNames(this.o.editorClassName, this.editor);
 
 			if (this.o.style) {
 				css(this.editor, this.o.style);

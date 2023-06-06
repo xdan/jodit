@@ -205,7 +205,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		const opt = this.options;
 
 		if (!opt.items) {
-			return Promise.reject('Set Items api options');
+			return Promise.reject(Error('Set Items api options'));
 		}
 
 		opt.items.data.path = path;
@@ -303,7 +303,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		path = normalizeRelativePath(path);
 
 		if (!this.o.folder) {
-			return Promise.reject('Set Folder Api options');
+			return Promise.reject(Error('Set Folder Api options'));
 		}
 
 		await this.permissions(path, source);

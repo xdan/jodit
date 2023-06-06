@@ -8,7 +8,7 @@
  * @module plugins/color
  */
 
-import type { IControlType, IJodit } from 'jodit/types';
+import type { HTMLTagNames, IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { css, dataBind } from 'jodit/core/helpers/';
 import {
@@ -77,7 +77,7 @@ Config.prototype.controls.brush = {
 			if (
 				Dom.isElement(current) &&
 				editor.s.isCollapsed() &&
-				!Dom.isTag(current, ['br', 'hr'])
+				!Dom.isTag(current, new Set(['br', 'hr'] as HTMLTagNames[]))
 			) {
 				currentElement = current as HTMLElement;
 			}

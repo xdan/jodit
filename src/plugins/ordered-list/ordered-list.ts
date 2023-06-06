@@ -40,14 +40,14 @@ export class orderedList extends Plugin {
 
 	@autobind
 	private onCommand(command: string, _: unknown, type: string): false {
-		this.jodit.s.applyStyle(
-			{
-				listStyleType: type ?? null
-			},
-			{
-				element: command === 'insertunorderedlist' ? 'ul' : 'ol'
+		this.jodit.s.commitStyle({
+			element: command === 'insertunorderedlist' ? 'ul' : 'ol',
+			attributes: {
+				style: {
+					listStyleType: type ?? null
+				}
 			}
-		);
+		});
 
 		this.jodit.synchronizeValues();
 

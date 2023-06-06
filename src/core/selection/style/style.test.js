@@ -160,7 +160,9 @@ describe('Apply style', () => {
 				[
 					'<p><strong>|test|</strong></p>',
 					{
-						className: 'class1'
+						attributes: {
+							className: 'class1'
+						}
 					},
 					'<p><strong class="class1">|test|</strong></p>'
 				],
@@ -204,8 +206,10 @@ describe('Apply style', () => {
 					'<p><strong>|test|</strong></p>',
 					{
 						element: 'em',
-						style: {
-							fontStyle: 'italic'
+						attributes: {
+							style: {
+								fontStyle: 'italic'
+							}
 						}
 					},
 					'<p><strong><em>|test|</em></strong></p>'
@@ -214,8 +218,10 @@ describe('Apply style', () => {
 				[
 					'<p>t|es|t</p>',
 					{
-						style: {
-							fontSize: 24
+						attributes: {
+							style: {
+								fontSize: 24
+							}
 						}
 					},
 					'<p>t<span style="font-size:24px">|es|</span>t</p>'
@@ -224,8 +230,10 @@ describe('Apply style', () => {
 					'<p><span style="font-weight:700;font-family:Arial,serif">|test|</span></p>',
 					{
 						element: 'strong',
-						style: {
-							fontWeight: 700
+						attributes: {
+							style: {
+								fontWeight: 700
+							}
 						}
 					},
 					'<p><span style="font-family:Arial,serif">|test|</span></p>'
@@ -234,8 +242,10 @@ describe('Apply style', () => {
 					'<p><span style="font-weight:700;font-size:24px;">|test|</span></p>',
 					{
 						element: 'strong',
-						style: {
-							fontWeight: 700
+						attributes: {
+							style: {
+								fontWeight: 700
+							}
 						}
 					},
 					'<p><span style="font-size:24px">|test|</span></p>'
@@ -244,8 +254,10 @@ describe('Apply style', () => {
 					'<p><span style="font-weight:700">|test|</span></p>',
 					{
 						element: 'strong',
-						style: {
-							fontWeight: 700
+						attributes: {
+							style: {
+								fontWeight: 700
+							}
 						}
 					},
 					'<p>|test|</p>'
@@ -256,60 +268,88 @@ describe('Apply style', () => {
 					'<p><strong>te|st</strong> so|me</p>',
 					{
 						element: 'strong',
-						style: {
-							fontWeight: 700
+						attributes: {
+							style: {
+								fontWeight: 700
+							}
 						}
 					},
 					'<p><strong>te</strong>|st so|me</p>'
 				],
 				[
 					'<p><span style="color:#FF0000">|test|</span></p>',
-					{ style: { color: '#FF0000' } },
+					{
+						attributes: {
+							style: { color: '#FF0000' }
+						}
+					},
 					'<p>|test|</p>'
 				],
 				[
 					'<p>test<span style="background-color:yellow">|stop|</span></p>',
-					{ style: { color: 'yellow' } },
+					{
+						attributes: {
+							style: { color: 'yellow' }
+						}
+					},
 					'<p>test<span style="background-color:yellow;color:yellow">|stop|</span></p>'
 				],
 				[
 					'<p>|test <span style="color: red; font-size: 12px;">test</span> test|</p>\n',
-					{ style: { fontSize: '8px' } },
+					{
+						attributes: {
+							style: { fontSize: '8px' }
+						}
+					},
 					'<p><span style="font-size:8px">|test <span style="color:red">test</span> test|</span></p>'
 				],
 				[
 					'<p>|test <strong><span style="color: red; font-size: 12px;">test</span></strong> test|</p>\n',
-					{ style: { fontSize: '8px' } },
+					{
+						attributes: {
+							style: { fontSize: '8px' }
+						}
+					},
 					'<p><span style="font-size:8px">|test <strong><span style="color:red">test</span></strong> test|</span></p>'
 				],
 				[
 					'<p>|test</p><style>.a {color: red}</style><p>stop|</p>',
-					{ style: { fontFamily: 'Helvetica,sans-serif' } },
+					{
+						attributes: {
+							style: { fontFamily: 'Helvetica,sans-serif' }
+						}
+					},
 					'<p><span style="font-family:Helvetica,sans-serif">|test</span></p><style>.a {color: red}</style><p><span style="font-family:Helvetica,sans-serif">stop|</span></p>'
 				],
 				[
 					'<p>test|<u>test</u>|test</p>',
-					{ style: { color: '#FFF000' } },
+					{
+						attributes: {
+							style: { color: '#FFF000' }
+						}
+					},
 					'<p>test|<u style="color:#FFF000">test</u>|test</p>'
 				],
 				[
 					'<p><u>|test|</u></p>',
-					{ style: { color: '#FFF000' } },
+					{
+						attributes: { style: { color: '#FFF000' } }
+					},
 					'<p><u style="color:#FFF000">|test|</u></p>'
 				],
 				[
 					'<p>|<u>test</u>|</p>',
-					{ style: { color: '#FFF000' } },
+					{ attributes: { style: { color: '#FFF000' } } },
 					'<p>|<u style="color:#FFF000">test</u>|</p>'
 				],
 				[
 					'<p><u>|tes|t</u></p>',
-					{ style: { color: '#FFF000' } },
+					{ attributes: { style: { color: '#FFF000' } } },
 					'<p><u><span style="color:#FFF000">|tes|</span>t</u></p>'
 				],
 				[
 					'<p><strong>|test|</strong></p>',
-					{ style: { color: '#FFF000' } },
+					{ attributes: { style: { color: '#FFF000' } } },
 					'<p><strong style="color:#FFF000">|test|</strong></p>'
 				],
 				[
@@ -330,8 +370,10 @@ describe('Apply style', () => {
 				[
 					'<p>te|s|t</p>',
 					{
-						style: {
-							color: '#fff'
+						attributes: {
+							style: {
+								color: '#fff'
+							}
 						}
 					},
 					'<p>te<span style="color:#FFFFFF">|s|</span>t</p>'
@@ -339,8 +381,10 @@ describe('Apply style', () => {
 				[
 					'<p>te|st</p>',
 					{
-						style: {
-							color: '#fff'
+						attributes: {
+							style: {
+								color: '#fff'
+							}
 						}
 					},
 					'<p>te<span style="color:#FFFFFF">|</span>st</p>'
@@ -348,9 +392,11 @@ describe('Apply style', () => {
 				[
 					'<p>|test|</p>',
 					{
-						style: {
-							color: 'red',
-							backgroundColor: 'yellow'
+						attributes: {
+							style: {
+								color: 'red',
+								backgroundColor: 'yellow'
+							}
 						}
 					},
 					'<p><span style="background-color:yellow;color:red">|test|</span></p>'
@@ -358,8 +404,10 @@ describe('Apply style', () => {
 				[
 					'<p>|test <span style="color:#FFFFFF">test</span> test|</p>',
 					{
-						style: {
-							color: '#00FF00'
+						attributes: {
+							style: {
+								color: '#00FF00'
+							}
 						}
 					},
 					'<p><span style="color:#00FF00">|test test test|</span></p>'
@@ -453,8 +501,10 @@ describe('Apply style', () => {
 					'<p>|Hello world|</p>',
 					{
 						element: 'ul',
-						style: {
-							listStyleType: 'circle'
+						attributes: {
+							style: {
+								listStyleType: 'circle'
+							}
 						}
 					},
 					'<ul style="list-style-type:circle"><li>|Hello world|</li></ul>'
@@ -491,7 +541,10 @@ describe('Apply style', () => {
 				],
 				[
 					'<p>|test</p><p>ordered</p><p>list|</p>',
-					{ element: 'ol', style: { listStyleType: null } },
+					{
+						element: 'ol',
+						attributes: { style: { listStyleType: null } }
+					},
 					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
 				],
 				[
@@ -588,7 +641,9 @@ describe('Apply style', () => {
 					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
 					{
 						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
+						attributes: {
+							style: { 'list-style-type': 'lower-roman' }
+						}
 					},
 					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
 				],
@@ -596,7 +651,9 @@ describe('Apply style', () => {
 					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>',
 					{
 						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
+						attributes: {
+							style: { 'list-style-type': 'lower-roman' }
+						}
 					},
 					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
 				],
@@ -604,7 +661,9 @@ describe('Apply style', () => {
 					'<ol style="list-style-type:lower-roman"><li>|test</li><li>ordered</li><li>list|</li></ol>',
 					{
 						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
+						attributes: {
+							style: { 'list-style-type': 'lower-roman' }
+						}
 					},
 					'<p>|test</p><p>ordered</p><p>list|</p>'
 				],
@@ -612,7 +671,9 @@ describe('Apply style', () => {
 					'<ol style="list-style-type:lower-alpha"><li>|test</li><li>unordered</li><li>list|</li></ol>',
 					{
 						element: 'ol',
-						style: { 'list-style-type': 'lower-roman' }
+						attributes: {
+							style: { 'list-style-type': 'lower-roman' }
+						}
 					},
 					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
 				],
@@ -780,8 +841,10 @@ describe('Apply style', () => {
 					editor.execCommand('selectall');
 
 					const style = new Style({
-						style: {
-							fontFamily: 'Helvetica,sans-serif'
+						attributes: {
+							style: {
+								fontFamily: 'Helvetica,sans-serif'
+							}
 						}
 					});
 
@@ -801,8 +864,10 @@ describe('Apply style', () => {
 					editor.execCommand('selectall');
 
 					const style = new Style({
-						style: {
-							color: 'yellow'
+						attributes: {
+							style: {
+								color: 'yellow'
+							}
 						}
 					});
 
@@ -824,8 +889,10 @@ describe('Apply style', () => {
 						editor.s.selectRange(range);
 
 						const style = new Style({
-							style: {
-								color: 'yellow'
+							attributes: {
+								style: {
+									color: 'yellow'
+								}
 							}
 						});
 
@@ -843,8 +910,10 @@ describe('Apply style', () => {
 				it('Should do nothing', function () {
 					const style = function () {
 						return new Style({
-							style: {
-								color: '#FF0000'
+							attributes: {
+								style: {
+									color: '#FF0000'
+								}
 							}
 						});
 					};
@@ -868,8 +937,10 @@ describe('Apply style', () => {
 					);
 
 					const style = new Style({
-						style: {
-							fontSize: 12
+						attributes: {
+							style: {
+								fontSize: 12
+							}
 						}
 					});
 
@@ -889,8 +960,10 @@ describe('Apply style', () => {
 						);
 
 						const style = new Style({
-							style: {
-								fontSize: 12
+							attributes: {
+								style: {
+									fontSize: 12
+								}
 							}
 						});
 
@@ -899,8 +972,10 @@ describe('Apply style', () => {
 						editor.s.insertHTML('stop');
 
 						const style2 = new Style({
-							style: {
-								color: '#ff00ff'
+							attributes: {
+								style: {
+									color: '#ff00ff'
+								}
 							}
 						});
 
@@ -919,8 +994,10 @@ describe('Apply style', () => {
 							setCursorToChar(editor);
 
 							const style = new Style({
-								style: {
-									fontSize: 12
+								attributes: {
+									style: {
+										fontSize: 12
+									}
 								}
 							});
 
@@ -933,8 +1010,10 @@ describe('Apply style', () => {
 							);
 
 							const style2 = new Style({
-								style: {
-									fontSize: 12
+								attributes: {
+									style: {
+										fontSize: 12
+									}
 								}
 							});
 							style2.apply(editor);
@@ -954,16 +1033,20 @@ describe('Apply style', () => {
 								setCursorToChar(editor);
 
 								const style = new Style({
-									style: {
-										fontSize: 12
+									attributes: {
+										style: {
+											fontSize: 12
+										}
 									}
 								});
 
 								style.apply(editor);
 
 								const style2 = new Style({
-									style: {
-										fontSize: 12
+									attributes: {
+										style: {
+											fontSize: 12
+										}
 									}
 								});
 								style2.apply(editor);
@@ -983,16 +1066,20 @@ describe('Apply style', () => {
 							setCursorToChar(editor);
 
 							const style = new Style({
-								style: {
-									backgroundColor: 'yellow'
+								attributes: {
+									style: {
+										backgroundColor: 'yellow'
+									}
 								}
 							});
 
 							style.apply(editor);
 
 							const style2 = new Style({
-								style: {
-									fontSize: '12px'
+								attributes: {
+									style: {
+										fontSize: '12px'
+									}
 								}
 							});
 
@@ -1011,16 +1098,20 @@ describe('Apply style', () => {
 			describe('Apply different styles', function () {
 				it('Should combine all of it', function () {
 					const style = new Style({
-						style: {
-							backgroundColor: 'yellow'
+						attributes: {
+							style: {
+								backgroundColor: 'yellow'
+							}
 						}
 					});
 
 					style.apply(editor);
 
 					const style2 = new Style({
-						style: {
-							fontSize: '12px'
+						attributes: {
+							style: {
+								fontSize: '12px'
+							}
 						}
 					});
 
@@ -1039,8 +1130,10 @@ describe('Apply style', () => {
 						editor.s.select(editor.editor.firstChild.firstChild);
 
 						const style = new Style({
-							style: {
-								fontSize: 11
+							attributes: {
+								style: {
+									fontSize: 11
+								}
 							}
 						});
 
@@ -1058,8 +1151,10 @@ describe('Apply style', () => {
 						editor.s.select(editor.editor.firstChild.firstChild);
 
 						const style = new Style({
-							style: {
-								fontSize: 11
+							attributes: {
+								style: {
+									fontSize: 11
+								}
 							}
 						});
 
@@ -1255,8 +1350,10 @@ describe('Apply style', () => {
 
 						const style = new Style({
 							element: 'em',
-							style: {
-								fontStyle: 'italic'
+							attributes: {
+								style: {
+									fontStyle: 'italic'
+								}
 							}
 						});
 
@@ -1275,8 +1372,10 @@ describe('Apply style', () => {
 
 							const strong = new Style({
 								element: 'strong',
-								style: {
-									fontWeight: 700
+								attributes: {
+									style: {
+										fontWeight: 700
+									}
 								}
 							});
 
@@ -1290,8 +1389,10 @@ describe('Apply style', () => {
 
 							const em = new Style({
 								element: 'em',
-								style: {
-									fontStyle: 'italic'
+								attributes: {
+									style: {
+										fontStyle: 'italic'
+									}
 								}
 							});
 
@@ -1310,8 +1411,10 @@ describe('Apply style', () => {
 								setCursorToChar(editor);
 
 								const style = new Style({
-									style: {
-										fontSize: 12
+									attributes: {
+										style: {
+											fontSize: 12
+										}
 									}
 								});
 
@@ -1320,8 +1423,10 @@ describe('Apply style', () => {
 								editor.s.insertHTML('stop');
 
 								const style2 = new Style({
-									style: {
-										color: '#ff00ff'
+									attributes: {
+										style: {
+											color: '#ff00ff'
+										}
 									}
 								});
 
@@ -1340,8 +1445,10 @@ describe('Apply style', () => {
 									setCursorToChar(editor);
 
 									const style = new Style({
-										style: {
-											fontSize: 12
+										attributes: {
+											style: {
+												fontSize: 12
+											}
 										}
 									});
 
@@ -1413,8 +1520,10 @@ describe('Apply style', () => {
 
 					const style = new Style({
 						element: 'strong',
-						style: {
-							fontWeight: 700
+						attributes: {
+							style: {
+								fontWeight: 700
+							}
 						}
 					});
 
@@ -1561,8 +1670,10 @@ describe('Apply style', () => {
 
 						const style = new Style({
 							element: 'strong',
-							style: {
-								fontWeight: 700
+							attributes: {
+								style: {
+									fontWeight: 700
+								}
 							}
 						});
 
@@ -1584,8 +1695,10 @@ describe('Apply style', () => {
 
 						const style = new Style({
 							element: 'strong',
-							style: {
-								fontWeight: 700
+							attributes: {
+								style: {
+									fontWeight: 700
+								}
 							}
 						});
 

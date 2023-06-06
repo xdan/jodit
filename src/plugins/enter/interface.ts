@@ -32,6 +32,7 @@ declare module 'jodit/types/events' {
 		 * 		}
 		 * 	}
 		 * });
+		 * ```
 		 */
 		on(
 			event: 'enterIsEmptyListLeaf',

@@ -11,6 +11,7 @@
 import type { IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { getMoveFilter } from 'jodit/plugins/backspace/helpers';
+import { LIST_TAGS } from 'jodit/core/constants';
 
 /**
  * Check if two separate elements can be connected
@@ -68,8 +69,8 @@ function checkMoveListContent(
 	backspace: boolean
 ): boolean {
 	// Process UL/LI/OL cases
-	const siblingIsList = Dom.isTag(sibling, ['ol', 'ul']);
-	const boxIsList = Dom.isTag(mainClosestBox, ['ol', 'ul']);
+	const siblingIsList = Dom.isTag(sibling, LIST_TAGS);
+	const boxIsList = Dom.isTag(mainClosestBox, LIST_TAGS);
 	const elementChild = (elm: Element, side: boolean): Nullable<Node> =>
 		side ? elm.firstElementChild : elm.lastElementChild;
 

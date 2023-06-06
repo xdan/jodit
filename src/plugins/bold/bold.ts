@@ -10,7 +10,13 @@
  * @module plugins/bold
  */
 
-import type { IDictionary, IJodit, IControlType, CanUndef } from 'jodit/types';
+import type {
+	IDictionary,
+	IJodit,
+	IControlType,
+	CanUndef,
+	IStyle
+} from 'jodit/types';
 import { Config } from 'jodit/config';
 import { isArray } from 'jodit/core/helpers';
 import { pluginSystem } from 'jodit/core/global';
@@ -40,7 +46,7 @@ export function bold(editor: IJodit): void {
 				...control.css
 			};
 
-		let cssRules: CanUndef<IDictionary<string>>;
+		let cssRules: CanUndef<IStyle>;
 
 		Object.keys(cssOptions).forEach((key: string) => {
 			if (!cssRules) {
@@ -52,8 +58,13 @@ export function bold(editor: IJodit): void {
 				: cssOptions[key];
 		});
 
-		editor.s.applyStyle(cssRules, {
-			element: control.tags ? control.tags[0] : undefined
+		editor.s.commitStyle({
+			element: control.tags ? control.tags[0] : undefined,
+			attributes: cssRules
+				? {
+						style: cssRules
+				  }
+				: {}
 		});
 
 		editor.synchronizeValues();

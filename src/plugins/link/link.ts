@@ -119,7 +119,7 @@ export class link extends Plugin {
 			return a;
 		}
 
-		jodit.s.applyStyle(undefined, {
+		jodit.s.commitStyle({
 			element: 'a',
 			attributes: {
 				href: html
@@ -304,7 +304,7 @@ export class link extends Plugin {
 				if (!jodit.s.isCollapsed()) {
 					const node = jodit.s.current();
 
-					if (Dom.isTag(node, ['img'])) {
+					if (Dom.isTag(node, 'img')) {
 						links = [Dom.wrap(node, 'a', ci) as HTMLAnchorElement];
 					} else {
 						links = jodit.s.wrapInTag('a') as HTMLAnchorElement[];

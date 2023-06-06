@@ -126,8 +126,10 @@ export class classSpan extends Plugin {
 		jodit.registerCommand(
 			'applyClassName',
 			(command: string, second: string, third: string): false => {
-				jodit.s.applyStyle(undefined, {
-					className: third
+				jodit.s.commitStyle({
+					attributes: {
+						['class']: third
+					}
 				});
 
 				return false;

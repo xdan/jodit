@@ -172,7 +172,7 @@ export function checkRemoveChar(
 	}
 
 	if (charRemoved) {
-		removeEmptyForParent(fakeNode, ['a']);
+		removeEmptyForParent(fakeNode, 'a');
 		addBRInsideEmptyBlock(jodit, fakeNode);
 		jodit.s.setCursorBefore(fakeNode);
 
@@ -190,7 +190,7 @@ export function checkRemoveChar(
 /**
  * Helper remove all empty inline parents
  */
-function removeEmptyForParent(node: Node, tags: HTMLTagNames[]): void {
+function removeEmptyForParent(node: Node, tags: HTMLTagNames): void {
 	let parent = node.parentElement;
 
 	while (parent && Dom.isInlineBlock(parent) && Dom.isTag(parent, tags)) {

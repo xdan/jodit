@@ -17,12 +17,23 @@
 -   Changed Create.sandbox signature to return body,iframe tuple
 -   In the plugin system, the requires field has been removed from instances,
     only the field in the constructor has been left
-```js
-class somePlugin extends Jodit.modulules.Plugin {
-  static requires = ['hotkeys']; // It still works
-  requires = ['hotkeys']; // Now it does not work
-}
-```
+    ```js
+    class somePlugin extends Jodit.modulules.Plugin {
+      static requires = ['hotkeys']; // It still works
+      requires = ['hotkeys']; // Now it does not work
+    }
+    ```
+-   Deprecated were removed
+    - `Dom.isTag` does not support array
+    - `Select.applyStyle` method was removed
+    - `history.observer` was removed
+    - `editorCssClass` removed
+
+- `wrapNodes.exclude` changed from array to set
+- `allowResizeTags` changed from array to set
+- `resizer.useAspectRatio` changed from array to set
+
+-   All css variables renamed to kebab-case
 
 ## 4.0.0-beta.42
 

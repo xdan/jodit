@@ -30,7 +30,7 @@ export function isSameAttributes(
 	assert(attrs, 'Attrs must be a non-empty object');
 
 	return Object.keys(attrs).every(key => {
-		if (key === 'class') {
+		if (key === 'class' || key === 'className') {
 			return elm.classList.contains(attrs[key]);
 		}
 

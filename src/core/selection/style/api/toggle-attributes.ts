@@ -65,6 +65,7 @@ export function toggleAttributes(
 					break;
 				}
 
+				case 'className':
 				case 'class':
 					mode = toggleClass(jodit, value, elm, mode, dry);
 					break;

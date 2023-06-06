@@ -302,7 +302,7 @@ export class inlinePopup extends Plugin {
 			sc === r.endContainer &&
 			Dom.isTag(
 				sc.childNodes[r.startOffset],
-				keys(this.j.o.popup, false) as any
+				new Set(keys(this.j.o.popup, false) as HTMLTagNames[])
 			) &&
 			r.startOffset === r.endOffset - 1
 		);

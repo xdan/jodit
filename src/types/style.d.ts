@@ -55,10 +55,6 @@ export interface IStyleOptions {
 			value?: string | number | null | boolean
 		): void;
 	};
-	/** @deprecated */
-	style?: IStyle;
-	/** @deprecated */
-	className?: string;
 }
 
 export interface ICommitStyle {
