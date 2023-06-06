@@ -101,18 +101,23 @@ build-all:
 	make build es=es2018 uglify=false generateTypes=true
 	make dts
 	make build es=es2018
+	make build es=es2018 fat=true
 
 	make build es=es2015
 	make build es=es2015 uglify=false
+	make build es=es2015 uglify=false fat=true
 
 	make build es=es2021
 	make build es=es2021 uglify=false
+	make build es=es2021 uglify=false fat=true
 
 	make build es=es5
 	make build es=es5 uglify=false
+	make build es=es5 uglify=false fat=true
 
 	make build es=es2021 includeLanguages=en
 	make build es=es2021 includeLanguages=en uglify=false
+	make build es=es2021 includeLanguages=en uglify=false fat=true
 
 .PHONY: test-all
 test-all:

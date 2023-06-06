@@ -9,11 +9,13 @@ import { type Variables } from '../variables';
 export const fileName = ({
 	argv,
 	uglify,
+	fat,
 	serve
 }: Variables): ((name: string) => string) => {
 	if (typeof argv.filename === 'function') {
 		return argv.filename;
 	}
 
-	return (name: string): string => name + (uglify && !serve ? '.min' : '');
+	return (name: string): string =>
+		name + (fat ? '.fat' : '') + (uglify && !serve ? '.min' : '');
 };
