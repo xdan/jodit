@@ -22,7 +22,7 @@ import './config';
 @autobind
 export class resizeHandler extends Plugin {
 	/** @override **/
-	static requires: string[] = ['size'];
+	static override requires: string[] = ['size'];
 
 	/** @override **/
 	protected afterInit(editor: IJodit): void {

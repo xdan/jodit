@@ -8,29 +8,17 @@
  * @module plugin
  */
 
-import type { IDictionary, IJodit, IPlugin, PluginInstance } from 'jodit/types';
+import type {
+	IJodit,
+	IPlugin,
+	Nullable,
+	PluginInstance,
+	PluginType
+} from 'jodit/types';
 import { isInitable } from 'jodit/core/helpers/checker';
 import { loadStyle } from './load';
-import { IS_PROD, IS_TEST } from 'jodit/core/constants';
-
-/**
- * Init plugin and try init waiting list
- * @private
- */
-export function initInstance(
-	jodit: IJodit,
-	pluginName: string,
-	instance: PluginInstance,
-	doneList: Set<string>,
-	waitingList: IDictionary<PluginInstance>
-): void {
-	if (init(jodit, pluginName, instance, doneList, waitingList)) {
-		Object.keys(waitingList).forEach(name => {
-			const plugin = waitingList[name];
-			init(jodit, name, plugin, doneList, waitingList);
-		});
-	}
-}
+import { IS_PROD } from 'jodit/core/constants';
+import { getContainer } from 'jodit/core/global';
 
 /**
  * Init plugin if it has not dependencies in another case wait requires plugins will be init
@@ -39,21 +27,11 @@ export function initInstance(
 export function init(
 	jodit: IJodit,
 	pluginName: string,
+	plugin: PluginType,
 	instance: PluginInstance,
-	doneList: Set<string>,
-	waitingList: IDictionary<PluginInstance>
-): boolean {
-	const req = (instance as IPlugin).requires;
-
-	if (req?.length && !req.every(name => doneList.has(name))) {
-		if (!IS_PROD && !IS_TEST && !waitingList[pluginName]) {
-			console.log('Await plugin: ', pluginName);
-		}
-
-		waitingList[pluginName] = instance;
-		return false;
-	}
-
+	doneList: Map<string, Nullable<PluginInstance>>,
+	waitingList: Set<string>
+): void {
 	if (isInitable(instance)) {
 		try {
 			instance.init(jodit);
@@ -66,14 +44,17 @@ export function init(
 		}
 	}
 
-	doneList.add(pluginName);
-	delete waitingList[pluginName];
+	doneList.set(pluginName, instance);
+	waitingList.delete(pluginName);
 
 	if ((instance as IPlugin).hasStyle) {
 		loadStyle(jodit, pluginName).catch(e => {
-			!IS_PROD && console.log(e);
+			!IS_PROD && console.error(e);
 		});
 	}
 
-	return true;
+	if ((instance as IPlugin).styles) {
+		const style = getContainer(jodit, pluginName, 'style');
+		style.innerHTML = (instance as IPlugin).styles as string;
+	}
 }

@@ -23,9 +23,19 @@ export class IPlugin<T extends IViewBased = IViewBased>
 	implements IDestructible, IInitable
 {
 	static requires?: string[];
-	requires?: string[];
 
 	hasStyle?: boolean;
+
+	/**
+	 * Additional plugin styles can be written simply as inline styles
+	 * ```js
+	 * class A extends Jodit.modules.Plugin {
+	 *   styles = 'h1{color: red}';
+	 * }
+	 * ```
+	 * Will only be applied if the plugin is activated
+	 */
+	styles?: string;
 
 	/**
 	 * Plugin buttons

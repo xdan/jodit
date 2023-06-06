@@ -26,7 +26,8 @@ import { eventEmitter } from 'jodit/core/global';
 import { loadExtras } from 'jodit/core/plugin/helpers/load';
 import { normalizeName } from 'jodit/core/plugin/helpers/utils';
 import { makeInstance } from 'jodit/core/plugin/helpers/make-instance';
-import { initInstance } from 'jodit/core/plugin/helpers/init-instance';
+import { init } from 'jodit/core/plugin/helpers/init-instance';
+import { IS_PROD } from 'jodit/core/constants';
 
 import './interface';
 
@@ -67,7 +68,7 @@ export class PluginSystem implements IPluginSystem {
 		this.__items.delete(normalizeName(name));
 	}
 
-	private __filter(
+	private __getFullPluginsList(
 		filter: Nullable<Set<string>>
 	): Array<[string, PluginType]> {
 		const results: Array<[string, PluginType]> = [];
@@ -87,9 +88,9 @@ export class PluginSystem implements IPluginSystem {
 	__init(jodit: IJodit): void {
 		const { extrasList, disableList, filter } = getSpecialLists(jodit);
 
-		const doneList: Set<string> = new Set();
-		const waitingList: IDictionary<PluginInstance> = {};
+		const doneList: Map<string, Nullable<PluginInstance>> = new Map();
 		const pluginsMap: IDictionary<PluginInstance> = {};
+		const waitingList: Set<string> = new Set();
 
 		(jodit as any).__plugins = pluginsMap;
 
@@ -99,12 +100,8 @@ export class PluginSystem implements IPluginSystem {
 			}
 
 			let commit: boolean = false;
-			this.__filter(filter).forEach(([name, plugin]) => {
-				if (
-					disableList.has(name) ||
-					doneList.has(name) ||
-					waitingList[name]
-				) {
+			this.__getFullPluginsList(filter).forEach(([name, plugin]) => {
+				if (disableList.has(name) || doneList.has(name)) {
 					return;
 				}
 
@@ -112,29 +109,35 @@ export class PluginSystem implements IPluginSystem {
 					string[]
 				>;
 
-				if (
-					requires &&
-					isArray(requires) &&
-					Boolean(requires.some(req => disableList.has(req)))
-				) {
-					return;
+				if (requires && isArray(requires) && requires.length) {
+					if (requires.some(req => disableList.has(req))) {
+						return;
+					}
+
+					if (!requires.every(name => doneList.has(name))) {
+						waitingList.add(name);
+						return;
+					}
 				}
 
 				commit = true;
 				const instance = makeInstance(jodit, plugin);
 
 				if (!instance) {
-					doneList.add(name);
-					delete waitingList[name];
+					doneList.set(name, null);
+					waitingList.delete(name);
 					return;
 				}
 
-				initInstance(jodit, name, instance, doneList, waitingList);
+				init(jodit, name, plugin, instance, doneList, waitingList);
 
 				pluginsMap[name] = instance;
 			});
 
-			commit && jodit.e.fire('updatePlugins');
+			if (commit) {
+				jodit.e.fire('updatePlugins');
+				initPlugins();
+			}
 		};
 
 		if (!extrasList || !extrasList.length) {
@@ -143,6 +146,12 @@ export class PluginSystem implements IPluginSystem {
 
 		initPlugins();
 		bindOnBeforeDestruct(jodit, pluginsMap);
+		if (!IS_PROD && waitingList.size) {
+			console.warn(
+				'After init plugin waiting list is not clean:',
+				waitingList
+			);
+		}
 	}
 
 	/**

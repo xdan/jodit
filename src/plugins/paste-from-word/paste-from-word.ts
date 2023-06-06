@@ -36,7 +36,7 @@ import { pluginSystem } from 'jodit/core/global';
 import './config';
 
 export class pasteFromWord extends Plugin {
-	override requires = ['paste'];
+	static override requires = ['paste'];
 
 	protected override afterInit(jodit: IJodit): void {}
 	protected override beforeDestruct(jodit: IJodit): void {}

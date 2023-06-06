@@ -10,7 +10,7 @@
  * @module plugin
  */
 
-import type { IJodit, IPlugin, IViewBased } from 'jodit/types';
+import type { CanUndef, IJodit, IPlugin, IViewBased } from 'jodit/types';
 import { ViewComponent, STATUSES } from 'jodit/core/component';
 import { autobind } from 'jodit/core/decorators';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
@@ -19,7 +19,7 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 	extends ViewComponent<T>
 	implements IPlugin<T>
 {
-	requires: string[] = [];
+	static requires: string[] = [];
 
 	/** @override */
 	buttons: IPlugin['buttons'] = [];
@@ -28,6 +28,17 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 	 * Plugin have CSS style and it should be loaded
 	 */
 	hasStyle: boolean = false;
+
+	/**
+	 * Additional plugin styles can be written simply as inline styles
+	 * ```js
+	 * class A extends Jodit.modules.Plugin {
+	 *   styles = 'h1{color: red}';
+	 * }
+	 * ```
+	 * Will only be applied if the plugin is activated
+	 */
+	styles: CanUndef<string>;
 
 	/** @override */
 	className(): string {

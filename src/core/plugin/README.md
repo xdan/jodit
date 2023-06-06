@@ -44,7 +44,7 @@ class resizeEditor {
 		}
 	];
 
-	requires = ['enter', 'drag-and-drop'];
+	static requires = ['enter', 'drag-and-drop'];
 
 	init(jodit: IJodit): void {
 		jodit.events.on('afterInit', () => {
@@ -127,7 +127,7 @@ class insertTimePlugin {
 Jodit.plugins.add('insertTimePlugin', insertTimePlugin);
 ```
 
-### requires
+### static requires
 
 -   Type: Array<string>
 -   Default: []

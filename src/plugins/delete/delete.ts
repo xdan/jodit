@@ -20,7 +20,7 @@ import { $$ } from 'jodit/core/helpers';
 import './interface';
 
 export class deleteCommand extends Plugin {
-	override requires = ['backspace'];
+	static override requires = ['backspace'];
 
 	protected override afterInit(jodit: IJodit): void {
 		jodit.e.on('afterCommand.delete', (command: 'delete' | string) => {

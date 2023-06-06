@@ -25,7 +25,7 @@ import { checkNotCollapsed } from './cases/check-not-collapsed';
 import './config';
 
 export class backspace extends Plugin {
-	override requires = ['hotkeys'];
+	static override requires = ['hotkeys'];
 
 	protected override afterInit(jodit: IJodit): void {
 		jodit

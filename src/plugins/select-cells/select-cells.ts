@@ -23,7 +23,7 @@ const key = 'table_processor_observer';
 const MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
 
 export class selectCells extends Plugin {
-	override requires = ['select'];
+	static override requires = ['select'];
 
 	/**
 	 * Shortcut for Table module

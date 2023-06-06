@@ -47,7 +47,7 @@ import './config/config';
  * Plugin for show inline popup dialog
  */
 export class inlinePopup extends Plugin {
-	override requires = ['select'];
+	static override requires = ['select'];
 
 	private type: Nullable<string> = null;
 
