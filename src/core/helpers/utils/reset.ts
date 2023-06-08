@@ -16,13 +16,13 @@ import { IS_PROD } from 'jodit/core/constants';
 const map: IDictionary = {};
 
 /**
- * Reset Vanila JS native function
+ * Reset Vanilla JS native function
  * @example
  * ```js
  * reset('Array.from')(Set([1,2,3])) // [1, 2, 3]
  * ```
  */
-export const reset = function <T extends Function>(key: string): Nullable<T> {
+export function reset<T extends Function>(key: string): Nullable<T> {
 	if (!(key in map)) {
 		const iframe = document.createElement('iframe');
 
@@ -53,4 +53,4 @@ export const reset = function <T extends Function>(key: string): Nullable<T> {
 	}
 
 	return map[key] ?? null;
-};
+}
