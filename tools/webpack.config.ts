@@ -102,6 +102,7 @@ export default (
 		optimization: {
 			minimize: !debug && uglify,
 			moduleIds: debug ? 'named' : false,
+			concatenateModules: false,
 			mangleExports: true,
 			minimizer: minimizer.map(mnm => mnm(vars))
 		},

@@ -21,6 +21,7 @@ const map: IDictionary = {};
  * ```js
  * reset('Array.from')(Set([1,2,3])) // [1, 2, 3]
  * ```
+ * You must use the function derived from the method immediately as its iframe is being removed
  */
 export function reset<T extends Function>(key: string): Nullable<T> {
 	if (!(key in map)) {

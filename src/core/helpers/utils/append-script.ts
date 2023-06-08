@@ -126,11 +126,11 @@ export const loadNext = (
 	);
 };
 
-export const loadNextStyle = (
+export function loadNextStyle(
 	jodit: IViewBased,
 	urls: string[],
 	i: number = 0
-): Promise<void> => {
+): Promise<void> {
 	if (!isString(urls[i])) {
 		return Promise.resolve();
 	}
@@ -138,4 +138,4 @@ export const loadNextStyle = (
 	return appendStyleAsync(jodit, urls[i]).then(() =>
 		loadNextStyle(jodit, urls, i + 1)
 	);
-};
+}

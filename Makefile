@@ -20,6 +20,7 @@ version = $(shell cat package.json | jq -r '.version')
 WEBPACK_DEV_PORT := 2000
 ACTIONS_URL := https://github.com/xdan/jodit/actions/
 BUILD_DTS := true
+BUILD_ESM := true
 CHANGELOG_URL := https://github.com/xdan/jodit/blob/main/CHANGELOG.md
 NODE_MODULES_BIN := ./node_modules/.bin
 TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project $(cwd)tools/tsconfig.json
@@ -62,6 +63,8 @@ clean:
 	@rm -rf $(pwd)/node_modules/.cache && rm -rf $(pwd)/build/*
 
 .PHONY: dts
+
+ifeq ($(BUILD_DTS), true)
 dts:
 	@echo Prepare types ...
 	mkdir -p ./build/types/types
@@ -70,10 +73,16 @@ dts:
 	@cp -R ./src/types/* ./build/types/types
 	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/types --ver=$(version)
 	$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
+else
+dts:
+	@echo "Types not yet available"
+endif
 
 .PHONY: esm
+
+ifeq ($(BUILD_ESM), true)
 esm:
-	@echo 'Build esm modules ...'
+	@echo 'Build esm modules ...' $(BUILD_ESM)
 	rm -rf $(pwd)/build/esm
 	tsc -p $(pwd)/tsconfig.json --importHelpers false --allowJs true --checkJs false --excludeDirectories ./node_modules --module es2020 --target es2020 --removeComments false --sourceMap false --outDir $(pwd)/build/esm
 
@@ -91,6 +100,11 @@ esm:
 
 	@echo 'Copy icons ...'
 	@$(TS_NODE_BASE) $(cwd)/tools/utils/copy-icons-in-esm.ts $(pwd)/src/ $(pwd)/build/esm
+else
+esm:
+	@echo "ESM build not yet available"
+endif
+
 
 .PHONY: build-all
 build-all:
