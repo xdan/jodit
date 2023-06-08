@@ -109,6 +109,7 @@ module.exports = function (cnf: Config): void {
 		],
 
 		proxies: {
+			'/app.css': '/public/app.css',
 			'/tests/artio.jpg': '/base/test/tests/artio.jpg',
 			'/test.index.html': '/base/test/test.index.html'
 		},

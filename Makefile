@@ -27,6 +27,10 @@ TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project $(cwd)tools/tsconfig.json
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
 KARMA := @TS_NODE_TRANSPILE_ONLY=true $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
 
+.PHONY: update
+update:
+	@npm update
+
 .PHONY: version
 version:
 	@echo $(version)
