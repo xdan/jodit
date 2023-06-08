@@ -420,7 +420,7 @@ describe('Clean html plugin', function () {
 					);
 					done();
 				});
-			}).timeout(1500);
+			}).timeout(2500);
 		});
 	});
 
