@@ -9,6 +9,8 @@ uglify ?= true
 browsers ?= FirefoxHeadless
 includeLanguages ?= ''
 excludeLanguages ?= ''
+includePlugins ?= ''
+excludePlugins ?= ''
 singleRun ?= true
 isTest ?= false
 debug ?= false
@@ -45,6 +47,8 @@ start:
 		--env uglify=$(uglify) \
 		--env includeLanguages=$(includeLanguages) \
 		--env excludeLanguages=$(excludeLanguages) \
+		--env includePlugins=$(includePlugins) \
+		--env excludePlugins=$(excludePlugins) \
 		--env isTest=$(isTest) \
 		--env fat=$(fat)
 
@@ -57,6 +61,8 @@ build:
 		--env isTest=$(isTest) \
 		--env includeLanguages=$(includeLanguages) \
 		--env excludeLanguages=$(excludeLanguages) \
+		--env includePlugins=$(includePlugins) \
+		--env excludePlugins=$(excludePlugins) \
 		--env outputFolder=$(outputFolder) \
 		--env fat=$(fat) \
 		--env generateTypes=$(generateTypes)

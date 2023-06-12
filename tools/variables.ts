@@ -23,6 +23,7 @@ export type Argv = {
 	stat?: boolean;
 	exclude?: string;
 	excludePlugins?: string;
+	includePlugins?: string;
 	excludeLanguages?: string;
 	includeLanguages?: string;
 	es?: ES_TARGET;
@@ -55,6 +56,7 @@ export type Variables = {
 	excludeLanguages: string[];
 	includeLanguages: string[];
 	excludePlugins: string[];
+	includePlugins: string[];
 	progressFunction:
 		| ((percentage: number, msg: string, ...args: string[]) => void)
 		| false;
@@ -94,6 +96,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 	const exclude = (argv.exclude || '').split(/[,\s;]/);
 
 	const excludePlugins = (argv.excludePlugins || '').split(/[,\s;]/);
+	const includePlugins = (argv.includePlugins || '').split(/[,\s;]/);
 	const excludeLanguages = (argv.excludeLanguages || '').split(/[,\s;]/);
 	const includeLanguages = (argv.includeLanguages || '').split(/[,\s;]/);
 
@@ -134,6 +137,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 		excludeLanguages,
 		includeLanguages,
 		excludePlugins,
+		includePlugins,
 		progressFunction:
 			typeof argv.progressFunction === 'function'
 				? argv.progressFunction

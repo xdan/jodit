@@ -5,8 +5,29 @@
  */
 
 import type { Variables } from '../variables';
+import * as fs from 'fs';
+import * as path from 'path';
 
-export default ({ excludePlugins }: Variables): { [key in string]: string } => {
+export default ({
+	excludePlugins,
+	includePlugins,
+	superDirname
+}: Variables): { [key in string]: string } => {
+	if (
+		includePlugins &&
+		Array.isArray(includePlugins) &&
+		includePlugins.filter(Boolean).length
+	) {
+		console.info('Include plugins:', includePlugins);
+
+		excludePlugins = fs
+			.readdirSync(path.resolve(superDirname, './src/plugins'))
+			.filter(
+				(file: string) =>
+					!file.match(/\.\w+$/) && !includePlugins.includes(file)
+			);
+	}
+
 	if (
 		excludePlugins &&
 		Array.isArray(excludePlugins) &&
