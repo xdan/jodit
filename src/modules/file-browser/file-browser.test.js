@@ -845,7 +845,7 @@ function getFirstItem(fb, index = 0, file = false) {
 					);
 
 					expect(editor.value).equals(
-						'<p>Some text</p><p>Another<img src="https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg" width="300px"> text</p><p>Another some text</p>'
+						'<p>Some text</p><p>Another<img src="https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg" width="300"> text</p><p>Another some text</p>'
 					);
 
 					filebrowser.destruct();

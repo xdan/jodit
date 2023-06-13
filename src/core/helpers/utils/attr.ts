@@ -88,8 +88,15 @@ export function attr(
 		if (value == null) {
 			elm.hasAttribute(key) && elm.removeAttribute(key);
 		} else {
-			elm.setAttribute(key, value.toString());
-			return value.toString();
+			let replaceValue = value.toString();
+			if (
+				elm.nodeName === 'IMG' &&
+				(key === 'width' || key === 'height')
+			) {
+				replaceValue = replaceValue.replace('px', '');
+			}
+			elm.setAttribute(key, replaceValue);
+			return replaceValue;
 		}
 	}
 

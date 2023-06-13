@@ -25,7 +25,7 @@ describe('Test uploader module', function () {
 								expect(sortAttributes(editor.value)).equals(
 									'<p>test<img src="' +
 										file.dataURI +
-										'" width="300px"></p>'
+										'" width="300"></p>'
 								);
 								done();
 							}
