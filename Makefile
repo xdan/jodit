@@ -97,7 +97,7 @@ esm:
 	tsc -p $(pwd)/tsconfig.json --importHelpers false --allowJs true --checkJs false --excludeDirectories ./node_modules --module es2020 --target es2020 --removeComments false --sourceMap false --outDir $(pwd)/build/esm
 
 	@echo 'Remove style imports ...'
-	@$(NODE_MODULES_BIN)/replace "import .+.(less|css)('|\");" '' $(pwd)/build/esm -r --silent
+	@$(NODE_MODULES_BIN)/replace "import .+\.(less|css)('|\");" '' $(pwd)/build/esm -r --silent
 
 	@echo 'Resolve alias imports ...'
 	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=$(pwd)/build/esm --ver=$(version)
