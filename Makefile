@@ -202,7 +202,7 @@ screenshots-test:
 		-p 2003:2003 \
 		-e SNAPSHOT_UPDATE=$(updateTests) \
 		-v $(shell pwd)/src:/app/src/ jodit-screenshots \
-		node --input-type=module ./node_modules/.bin/mocha ./src/**/**.screenshot.js --build=$(es)
+		node --input-type=module ./node_modules/.bin/mocha ./src/**/**.screenshot.js --build=$(es) --min=$(uglify) --fat=$(fat)
 
 .PHONY: screenshots-build-image
 screenshots-build-image:

@@ -4,18 +4,30 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const args = {
-	build: '',
-	debug: false
-};
+const yargs = require('yargs');
 
-process.argv.forEach(arg => {
-	const res = /--(build|debug)=/.exec(arg);
-	if (res) {
-		const value = arg.split('=')[1];
-		args[res[1]] = /(true|false)/.test(value) ? value === 'true' : value;
-	}
-});
+const args = yargs
+	.option('build', {
+		type: 'string',
+		demandOption: true,
+		description: 'ES build'
+	})
+	.option('debug', {
+		type: 'boolean',
+		default: false,
+		description: 'Debug mode'
+	})
+	.option('min', {
+		type: 'boolean',
+		default: true,
+		description: 'Minify file'
+	})
+	.option('fat', {
+		type: 'boolean',
+		default: false,
+		description: 'Fat file'
+	})
+	.parseSync();
 
 if (!args.build) {
 	throw new Error('Build type is not defined');
@@ -23,6 +35,8 @@ if (!args.build) {
 
 console.info('Build:', args.build);
 console.info('Debug:', args.debug);
+console.info('Fat:', args.fat);
+console.info('Min:', args.min);
 
 const fs = require('fs');
 const expect = require('expect');
@@ -44,6 +58,10 @@ app.get('/', (req, res) => {
 		fs
 			.readFileSync(path.resolve(__dirname, './index.html'), 'utf-8')
 			.replace(/es2015/g, args.build)
+			.replace(
+				/jodit\.min/g,
+				`jodit${args.fat ? '.fat' : ''}${args.min ? '.min' : ''}`
+			)
 	);
 });
 

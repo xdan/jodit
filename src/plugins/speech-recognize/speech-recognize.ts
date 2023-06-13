@@ -19,6 +19,7 @@ import { keys } from 'jodit/core/helpers/utils/utils';
 import { extendLang } from 'jodit/core/global';
 import { Dom } from 'jodit/core/dom/dom';
 import { debounce } from 'jodit/core/decorators/debounce/debounce';
+import { Jodit } from '../../jodit';
 
 import { execSpellCommand } from './helpers/exec-spell-command';
 import * as langs from './langs';
@@ -137,10 +138,4 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 	private _commandToWord: IDictionary<string> = {};
 }
 
-declare const Jodit: {
-	plugins: any;
-};
-
-if (typeof Jodit !== 'undefined') {
-	Jodit.plugins.add('speech-recognize', SpeechRecognizeNative);
-}
+Jodit.plugins.add('speech-recognize', SpeechRecognizeNative);
