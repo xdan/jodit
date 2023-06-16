@@ -73,7 +73,6 @@ clean:
 	@rm -rf $(pwd)/node_modules/.cache && rm -rf $(pwd)/build/*
 
 .PHONY: dts
-
 ifeq ($(BUILD_DTS), true)
 dts:
 	@echo Prepare types ...
@@ -99,8 +98,8 @@ esm:
 	@echo 'Remove style imports ...'
 	@$(NODE_MODULES_BIN)/replace "import .+\.(less|css)('|\");" '' $(pwd)/build/esm -r --silent
 
-	#echo 'Resolve alias imports ...'
-	#$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=$(pwd)/build/esm --ver=$(version)
+	echo 'Resolve alias imports ...'
+	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=$(pwd)/build/esm --ver=$(version)
 
 	@if [ -d "$(pwd)/src/langs" ]; then\
 			echo 'Copy langs ...'; \
