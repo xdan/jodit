@@ -332,6 +332,20 @@ if (typeof window.chai !== 'undefined') {
 
 const i18nkeys = new Set();
 const excludeI18nKeys = new Set([
+	'quote',
+	'quotes',
+	'open quote',
+	'header',
+	'header h1',
+	'select all',
+	'dot',
+	'question',
+	'space',
+	'hyphen',
+	'underline',
+	'comma',
+	'remove word',
+	'delete word',
 	'enter',
 	'File does not exist or is above the root of the connector',
 	'bar',
