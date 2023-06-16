@@ -332,6 +332,7 @@ if (typeof window.chai !== 'undefined') {
 
 const i18nkeys = new Set();
 const excludeI18nKeys = new Set([
+	'enter',
 	'File does not exist or is above the root of the connector',
 	'bar',
 	'Classe 1',
