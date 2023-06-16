@@ -122,10 +122,15 @@ build-all:
 	@$(TS_NODE_BASE) $(cwd)tools/utils/prepare-publish.ts $(pwd)
 	@$(NODE_MODULES_BIN)/replace "4\.0\.0-beta\.\d+" "$(version)" $(pwd)/build/README.md --silent
 	@cd $(pwd)/build/ && npm i
+
+	@echo 'Build esm ...'
 	make esm
 
+	@echo 'Build types ...'
 	make build es=es2018 uglify=false generateTypes=$(BUILD_DTS)
-	make dts
+	make dts && cp -R ./build/types/* ./build/esm
+
+	@echo 'Builds ...'
 	make build es=es2018
 	make build es=es2018 uglify=true fat=true
 
@@ -189,10 +194,10 @@ coverage:
 .PHONY: screenshots-all
 screenshots-all:
 	make screenshots-build-image
-	make screenshots-test build=es5
-	make screenshots-test build=es2015
-	make screenshots-test build=es2018
-	make screenshots-test build=es2021
+	make screenshots-test build=es5 fat=true min=true
+	make screenshots-test build=es2015 fat=true min=true
+	make screenshots-test build=es2018 fat=true min=true
+	make screenshots-test build=es2021 fat=true min=true
 
 
 .PHONY: screenshots-test
