@@ -23,6 +23,7 @@ WEBPACK_DEV_PORT := 2000
 ACTIONS_URL := https://github.com/xdan/jodit/actions/
 BUILD_DTS := true
 BUILD_ESM := true
+UGLIFY_ESM := false
 CHANGELOG_URL := https://github.com/xdan/jodit/blob/main/CHANGELOG.md
 NODE_MODULES_BIN := ./node_modules/.bin
 TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project $(cwd)tools/tsconfig.json
@@ -113,6 +114,13 @@ esm:
 
 	@echo 'Copy icons ...'
 	@$(TS_NODE_BASE) $(cwd)/tools/utils/copy-icons-in-esm.ts $(pwd)/src/ $(pwd)/build/esm
+
+	@if [ "$(UGLIFY_ESM)" = "true" ]; then \
+		echo 'Uglify esm modules ...'; \
+		find "$(pwd)/build/esm" -name "*.js" | while read fname; do \
+			terser "$$fname" -o "$$fname" --compress passes=5,ecma=2020 --mangle --keep-classnames --keep-fnames  --module; \
+		done \
+	fi;
 else
 esm:
 	@echo "ESM build not yet available"
