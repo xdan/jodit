@@ -76,12 +76,16 @@ clean:
 ifeq ($(BUILD_DTS), true)
 dts:
 	@echo Prepare types ...
-	mkdir -p ./build/types/types
+	@mkdir -p ./build/types/types
 	@cp -R ./tsconfig.json ./build/types/
 	@cp -R ./src/typings.d.ts ./build/types/
 	@cp -R ./src/types/* ./build/types/types
-	#$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/types --ver=$(version)
-	$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
+	@#$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/types --ver=$(version)
+	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
+	@if [ "$(BUILD_ESM)" = "true" ]; then \
+		echo "Copy types to esm folder ..."; \
+		cp -R ./build/types/* ./build/esm; \
+	fi
 else
 dts:
 	@echo "Types not yet available"
@@ -128,7 +132,7 @@ build-all:
 
 	@echo 'Build types ...'
 	make build es=es2018 uglify=false generateTypes=$(BUILD_DTS)
-	make dts && cp -R ./build/types/* ./build/esm
+	make dts
 
 	@echo 'Builds ...'
 	make build es=es2018
