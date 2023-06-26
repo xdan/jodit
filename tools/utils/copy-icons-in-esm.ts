@@ -25,11 +25,13 @@ function readAndCopyIcons(dir: string): void {
 			return readAndCopyIcons(path.join(dir, file.name));
 		}
 
-		if (/\.(svg)$/.test(file.name)) {
-			const content = fs.readFileSync(
-				path.join(fullDir, file.name),
-				'utf8'
-			);
+		if (/\.(svg|json)$/.test(file.name)) {
+			const isJSON = /\.(json)$/.test(file.name);
+			const content = isJSON
+				? require(path.join(fullDir, file.name))
+				: fs
+						.readFileSync(path.join(fullDir, file.name), 'utf8')
+						.replace(/[\n\t\s]+/g, ' ');
 
 			const targetPath = path.join(esmDir, dir, file.name + '.js');
 
@@ -48,9 +50,7 @@ function readAndCopyIcons(dir: string): void {
 
 			fs.writeFileSync(
 				targetPath,
-				`export default ${JSON.stringify(
-					content.replace(/[\n\t\s]+/g, ' ')
-				)};`
+				`export default ${JSON.stringify(content)};`
 			);
 		}
 	});

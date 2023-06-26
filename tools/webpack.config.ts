@@ -31,6 +31,7 @@ export default (
 	const {
 		ES,
 		superDirname,
+		dirname,
 		mode,
 		isTest,
 		isProd,
@@ -94,6 +95,7 @@ export default (
 			],
 			alias: {
 				jodit: path.resolve(superDirname, './src/'),
+				'jodit-pro': path.resolve(dirname, './src/'),
 				super: path.resolve(superDirname, './src/')
 			},
 			symlinks: false

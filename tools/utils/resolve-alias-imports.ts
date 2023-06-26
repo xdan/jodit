@@ -45,7 +45,7 @@ if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
 	throw new Error('Invalid types directory');
 }
 
-const alias = /^(jodit)/;
+const alias = /^(jodit|jodit-pro)\//;
 const allowPackages = new Set([
 	'a-color-picker',
 	'autobind-decorator',
@@ -70,13 +70,20 @@ const allowPluginsInESM = new Set(
 		'enter',
 		'link',
 		'iframe',
+		'inline-popup',
 		'hotkeys',
 		'powered-by-jodit',
 		'redo-undo',
 		'size',
 		'wrap-nodes',
 		'font'
-	].map(p => `jodit/plugins/${p}/${p}`)
+	]
+		.map(p => `jodit/plugins/${p}/${p}`)
+		.concat(
+			['autocomplete', 'paste-from-word', 'license'].map(
+				p => `jodit-pro/plugins/${p}/${p}`
+			)
+		)
 );
 
 const allowLanguagesInESM = new Set(['jodit/langs/en']);
@@ -115,7 +122,7 @@ function resoleAliasImports(dirPath: string): void {
 
 			if (
 				!modulePath.startsWith('.') &&
-				!/^jodit\/esm/.test(modulePath) &&
+				!/^(jodit|jodit-pro)\/esm/.test(modulePath) &&
 				!allowPackages.has(modulePath)
 			) {
 				throw new Error(
@@ -247,7 +254,7 @@ function resoleAliasImports(dirPath: string): void {
 }
 
 function resolveAlias(pathWithAlias: string, dirPath: string): string {
-	const filePathWithoutAlias = pathWithAlias.replace(alias, '');
+	const filePathWithoutAlias = pathWithAlias.replace(alias, '/');
 
 	const subPath = path.join(
 		cwd,
@@ -266,8 +273,25 @@ function resolveAlias(pathWithAlias: string, dirPath: string): string {
 		!allowPackages.has(pathWithAlias)
 	) {
 		const fullPath = path.resolve(dirPath, relPath);
+		let isDir =
+			fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory();
 
-		if (fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
+		if (!fs.existsSync(fullPath)) {
+			const superDirectory = path.resolve(
+				cwd,
+				'../../node_modules',
+				pathWithAlias.replace(alias, '$1/src/')
+			);
+
+			if (
+				fs.existsSync(superDirectory) &&
+				fs.statSync(superDirectory).isDirectory()
+			) {
+				isDir = true;
+			}
+		}
+
+		if (isDir) {
 			pathWithAlias +=
 				(!pathWithAlias.endsWith('/') ? '/' : '') + 'index.js';
 		} else {
@@ -275,7 +299,7 @@ function resolveAlias(pathWithAlias: string, dirPath: string): string {
 		}
 	}
 
-	return pathWithAlias.replace(alias, 'jodit/esm');
+	return pathWithAlias.replace(alias, '$1/esm/');
 }
 
 function allowImportsPluginsAndLanguagesInESM(

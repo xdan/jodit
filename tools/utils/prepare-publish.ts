@@ -25,6 +25,14 @@ fs.writeFileSync(
 			module: 'esm/index.js',
 			types: 'types/index.d.ts',
 			scripts: {},
+			dependencies: {
+				...packageJson.dependencies,
+				...(packageJson.name !== 'jodit'
+					? {
+							jodit: '^4.0.0-beta.76'
+					  }
+					: {})
+			},
 			devDependencies: {}
 		},
 		null,
