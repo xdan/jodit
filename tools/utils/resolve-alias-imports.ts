@@ -74,10 +74,7 @@ const allowPluginsInESM = new Set(
 	].map(p => `jodit/plugins/${p}/${p}`)
 );
 
-const allowLanguagesInESM = new Set([
-	'jodit/langs/en',
-	'jodit/core/helpers/checker/is-array'
-]);
+const allowLanguagesInESM = new Set(['jodit/langs/en']);
 
 resoleAliasImports(cwd);
 
@@ -113,7 +110,11 @@ function resoleAliasImports(dirPath: string): void {
 				modulePath = resolveAlias(modulePath, dirPath);
 			}
 
-			if (!modulePath.startsWith('.') && !allowPackages.has(modulePath)) {
+			if (
+				!modulePath.startsWith('.') &&
+				!/^jodit\/esm/.test(modulePath) &&
+				!allowPackages.has(modulePath)
+			) {
 				throw new Error(
 					`Allow only relative paths file:${filePath} import: ${modulePath}`
 				);
@@ -262,15 +263,16 @@ function resoleAliasImports(dirPath: string): void {
 }
 
 function resolveAlias(pathWithAlias: string, dirPath: string): string {
-	const relPath = pathWithAlias.replace(alias, '');
-
-	const subPath = path.join(
-		cwd,
-		relPath.startsWith('/') ? '.' + relPath : relPath
-	);
-
-	const relative = path.relative(dirPath, subPath);
-	return relative.startsWith('.') ? relative : `./${relative}`;
+	return pathWithAlias.replace(alias, 'jodit/esm');
+	// const relPath = pathWithAlias.replace(alias, '');
+	//
+	// const subPath = path.join(
+	// 	cwd,
+	// 	relPath.startsWith('/') ? '.' + relPath : relPath
+	// );
+	//
+	// const relative = path.relative(dirPath, subPath);
+	// return relative.startsWith('.') ? relative : `./${relative}`;
 }
 
 function allowImportsPluginsAndLanguagesInESM(

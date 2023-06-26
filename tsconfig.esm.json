@@ -1,0 +1,48 @@
+{
+	"compilerOptions": {
+		"target": "es2020",
+		"module": "es2020",
+		"moduleResolution": "node",
+
+		"removeComments": false,
+
+		"strict": true,
+		"alwaysStrict": true,
+
+		"downlevelIteration": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictBindCallApply": true,
+		"strictPropertyInitialization": true,
+		"experimentalDecorators": true,
+		"verbatimModuleSyntax": true,
+
+		"allowSyntheticDefaultImports": true,
+
+		"allowJs": true,
+		"checkJs": false,
+
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noImplicitOverride": true,
+		"noImplicitThis": true,
+		"resolveJsonModule": true,
+
+		"forceConsistentCasingInFileNames": true,
+
+		"sourceMap": false,
+
+		"importHelpers": true,
+
+		"lib": ["es5", "esnext", "dom", "scripthost", "es2015.iterable"],
+
+		"baseUrl": ".",
+		"paths": {
+			"jodit/*": ["./src/*"]
+		},
+		"types": ["./src/typings.d.ts", "./index.d.ts", "./node_modules/@types/ace", "./node_modules/@types/node/index.d.ts"]
+	},
+	"files": ["./src/index.ts"],
+	"exclude": ["./node_modules", "./build", "./tools"]
+}

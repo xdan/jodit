@@ -81,7 +81,7 @@ dts:
 	@cp -R ./tsconfig.json ./build/types/
 	@cp -R ./src/typings.d.ts ./build/types/
 	@cp -R ./src/types/* ./build/types/types
-	@#$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/types --ver=$(version)
+	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/types --ver=$(version)
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
 	@if [ "$(BUILD_ESM)" = "true" ]; then \
 		echo "Copy types to esm folder ..."; \
@@ -98,7 +98,7 @@ ifeq ($(BUILD_ESM), true)
 esm:
 	@echo 'Build esm modules ...' $(BUILD_ESM)
 	rm -rf $(pwd)/build/esm
-	tsc -p $(pwd)/tsconfig.json --importHelpers false --allowJs true --checkJs false --excludeDirectories ./node_modules --module es2020 --target es2020 --removeComments false --sourceMap false --outDir $(pwd)/build/esm
+	tsc -p $(pwd)/tsconfig.esm.json --rootDir $(pwd)/src --importHelpers false --allowJs true --checkJs false --excludeDirectories $(pwd)/node_modules --module es2020 --target es2020 --removeComments false --sourceMap false --outDir $(pwd)/build/esm
 
 	@echo 'Remove style imports ...'
 	@$(NODE_MODULES_BIN)/replace "import .+\.(less|css)('|\");" '' $(pwd)/build/esm -r --silent
