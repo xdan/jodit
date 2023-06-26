@@ -17,7 +17,7 @@ debug ?= false
 updateTests ?= false
 fat ?= false
 outputFolder ?= ''
-version = $(shell cat package.json | jq -r '.version')
+version = $(shell cat package.json | ./node_modules/node-jq/bin/jq -r '.version')
 
 WEBPACK_DEV_PORT := 2000
 ACTIONS_URL := https://github.com/xdan/jodit/actions/
