@@ -17,6 +17,11 @@ const argv = yargs(hideBin(process.argv))
 		demandOption: true,
 		description: 'Work directory'
 	})
+	.option('mode', {
+		demandOption: true,
+		choices: ['esm', 'dts'],
+		description: 'ESM or DTS'
+	})
 	.option('ver', {
 		type: 'string',
 		demandOption: true,
@@ -90,8 +95,6 @@ function resoleAliasImports(dirPath: string): void {
 			return;
 		}
 
-		const isJs = /.(js)$/.test(file.name);
-
 		const content = checkSections(fs.readFileSync(filePath, 'utf8'), {
 			POLYFILLS: false
 		});
@@ -118,25 +121,6 @@ function resoleAliasImports(dirPath: string): void {
 				throw new Error(
 					`Allow only relative paths file:${filePath} import: ${modulePath}`
 				);
-			}
-
-			// For esm add extension
-			if (
-				isJs &&
-				!modulePath.endsWith('.js') &&
-				!allowPackages.has(modulePath)
-			) {
-				const fullPath = path.resolve(dirPath, modulePath);
-
-				if (
-					fs.existsSync(fullPath) &&
-					fs.statSync(fullPath).isDirectory()
-				) {
-					modulePath +=
-						(!modulePath.endsWith('/') ? '/' : '') + 'index.js';
-				} else {
-					modulePath += '.js';
-				}
 			}
 
 			return modulePath;
@@ -199,7 +183,7 @@ function resoleAliasImports(dirPath: string): void {
 					}
 
 					if (ts.isImportDeclaration(node) && node.moduleSpecifier) {
-						if (isJs) {
+						if (argv.mode === 'esm') {
 							node = allowImportsPluginsAndLanguagesInESM(node);
 
 							if (
@@ -263,16 +247,35 @@ function resoleAliasImports(dirPath: string): void {
 }
 
 function resolveAlias(pathWithAlias: string, dirPath: string): string {
+	const filePathWithoutAlias = pathWithAlias.replace(alias, '');
+
+	const subPath = path.join(
+		cwd,
+		filePathWithoutAlias.startsWith('/')
+			? '.' + filePathWithoutAlias
+			: filePathWithoutAlias
+	);
+
+	const relative = path.relative(dirPath, subPath);
+	const relPath = relative.startsWith('.') ? relative : `./${relative}`;
+
+	// For esm add extension
+	if (
+		argv.mode === 'esm' &&
+		!pathWithAlias.endsWith('.js') &&
+		!allowPackages.has(pathWithAlias)
+	) {
+		const fullPath = path.resolve(dirPath, relPath);
+
+		if (fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
+			pathWithAlias +=
+				(!pathWithAlias.endsWith('/') ? '/' : '') + 'index.js';
+		} else {
+			pathWithAlias += '.js';
+		}
+	}
+
 	return pathWithAlias.replace(alias, 'jodit/esm');
-	// const relPath = pathWithAlias.replace(alias, '');
-	//
-	// const subPath = path.join(
-	// 	cwd,
-	// 	relPath.startsWith('/') ? '.' + relPath : relPath
-	// );
-	//
-	// const relative = path.relative(dirPath, subPath);
-	// return relative.startsWith('.') ? relative : `./${relative}`;
 }
 
 function allowImportsPluginsAndLanguagesInESM(

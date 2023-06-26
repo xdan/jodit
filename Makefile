@@ -81,7 +81,7 @@ dts:
 	@cp -R ./tsconfig.json ./build/types/
 	@cp -R ./src/typings.d.ts ./build/types/
 	@cp -R ./src/types/* ./build/types/types
-	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/types --ver=$(version)
+	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/types --mode=dts --ver=$(version)
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
 	@if [ "$(BUILD_ESM)" = "true" ]; then \
 		echo "Copy types to esm folder ..."; \
@@ -104,7 +104,7 @@ esm:
 	@$(NODE_MODULES_BIN)/replace "import .+\.(less|css)('|\");" '' $(pwd)/build/esm -r --silent
 
 	echo 'Resolve alias imports ...'
-	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=$(pwd)/build/esm --ver=$(version)
+	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=$(pwd)/build/esm --mode=esm --ver=$(version)
 
 	@if [ -d "$(pwd)/src/langs" ]; then\
 			echo 'Copy langs ...'; \
