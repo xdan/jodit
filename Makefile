@@ -81,9 +81,18 @@ dts:
 	@cp -R ./tsconfig.json ./build/types/
 	@cp -R ./src/typings.d.ts ./build/types/
 	@cp -R ./src/types/* ./build/types/types
+	@if [ -d ./build/types/node_modules/jodit ]; then \
+		echo "Remove super types ..."; \
+		rm -rf ./build/types/node_modules/; \
+	fi;
+	@if [ -d ./build/types/src ]; then \
+		echo "Normalize self types ..."; \
+		cp -R ./build/types/src/* ./build/types/; \
+		rm -rf ./build/types/src/; \
+	fi;
 	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/types --mode=dts --ver=$(version)
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
-	@if [ "$(BUILD_ESM)" = "true" ]; then \
+	@if [ -d ./build/esm ]; then \
 		echo "Copy types to esm folder ..."; \
 		cp -R ./build/types/* ./build/esm; \
 	fi
@@ -133,7 +142,6 @@ build-all:
 	@mkdir -p $(pwd)/build/
 	@$(TS_NODE_BASE) $(cwd)tools/utils/prepare-publish.ts $(pwd)
 	@$(NODE_MODULES_BIN)/replace "4\.0\.0-beta\.\d+" "$(version)" $(pwd)/build/README.md --silent
-	@cd $(pwd)/build/ && npm i
 
 	@echo 'Build esm ...'
 	make esm
