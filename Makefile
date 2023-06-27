@@ -127,7 +127,7 @@ esm:
 	@if [ "$(UGLIFY_ESM)" = "true" ]; then \
 		echo 'Uglify esm modules ...'; \
 		find "$(pwd)/build/esm" -name "*.js" | while read fname; do \
-			terser "$$fname" -o "$$fname" --compress passes=5,ecma=2020 --mangle --keep-classnames --keep-fnames  --module; \
+			$(NODE_MODULES_BIN)/terser "$$fname" -o "$$fname" --compress passes=5,ecma=2020 --mangle --keep-classnames --keep-fnames  --module; \
 		done \
 	fi;
 else
