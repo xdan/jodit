@@ -1,4 +1,4 @@
-name: Generate documentation
+name: Publish React package
 
 on:
   workflow_dispatch:
