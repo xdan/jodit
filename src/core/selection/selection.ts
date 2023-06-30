@@ -23,7 +23,6 @@ import type {
 import * as consts from 'jodit/core/constants';
 
 import {
-	INSEPARABLE_TAGS,
 	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP_END as INV_END,
 	INVISIBLE_SPACE_REG_EXP_START as INV_START,
@@ -39,7 +38,8 @@ import {
 	css,
 	call,
 	toArray,
-	getScrollParent
+	getScrollParent,
+	scrollIntoViewIfNeeded
 } from 'jodit/core/helpers';
 import { autobind } from 'jodit/core/decorators';
 import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers/move-the-node-along-the-edge-outward';
@@ -343,7 +343,7 @@ export class Selection implements ISelect {
 		const left = range.cloneRange();
 		left.collapse(true);
 		const fakeLeft = this.j.createInside.fake();
-		left.insertNode(fakeLeft);
+		Dom.safeInsertNode(left, fakeLeft);
 		range.setStartBefore(fakeLeft);
 
 		const result = [fakeLeft];
@@ -352,7 +352,7 @@ export class Selection implements ISelect {
 			const right = range.cloneRange();
 			right.collapse(false);
 			const fakeRight = this.j.createInside.fake();
-			right.insertNode(fakeRight);
+			Dom.safeInsertNode(right, fakeRight);
 			range.setEndAfter(fakeRight);
 			result.push(fakeRight);
 		}
@@ -658,17 +658,7 @@ export class Selection implements ISelect {
 				if (
 					Dom.isOrContains(this.area, range.commonAncestorContainer)
 				) {
-					if (
-						Dom.isTag(range.startContainer, INSEPARABLE_TAGS) &&
-						range.collapsed
-					) {
-						range.startContainer.parentNode?.insertBefore(
-							node,
-							range.startContainer
-						);
-					} else {
-						Dom.safeInsertNode(range, node);
-					}
+					Dom.safeInsertNode(range, node);
 				} else {
 					this.area.appendChild(node);
 				}
@@ -682,6 +672,10 @@ export class Selection implements ISelect {
 				} else {
 					this.setCursorAfter(node);
 				}
+			}
+
+			if (this.j.o.scrollToPasted) {
+				scrollIntoViewIfNeeded(child ?? node, this.j.editor, this.doc);
 			}
 		});
 

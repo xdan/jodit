@@ -32,7 +32,12 @@ import {
 import { toArray } from 'jodit/core/helpers/array';
 import { trim } from 'jodit/core/helpers/string';
 import { $$, attr, call, css, dataBind, error } from 'jodit/core/helpers/utils';
-import { LIST_TAGS, NO_EMPTY_TAGS, TEMP_ATTR } from 'jodit/core/constants';
+import {
+	INSEPARABLE_TAGS,
+	LIST_TAGS,
+	NO_EMPTY_TAGS,
+	TEMP_ATTR
+} from 'jodit/core/constants';
 
 /**
  * Module for working with DOM
@@ -1038,8 +1043,17 @@ export class Dom {
 	static safeInsertNode(range: Range, node: Node): void {
 		range.collapsed || range.deleteContents();
 		const child = Dom.isFragment(node) ? node.lastChild : node;
-		range.insertNode(node);
-		child && range.setStartBefore(child);
+
+		if (
+			range.startContainer === range.endContainer &&
+			range.collapsed &&
+			Dom.isTag(range.startContainer, INSEPARABLE_TAGS)
+		) {
+			Dom.after(range.startContainer, node);
+		} else {
+			range.insertNode(node);
+			child && range.setStartBefore(child);
+		}
 
 		range.collapse(true);
 
