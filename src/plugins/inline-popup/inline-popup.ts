@@ -129,10 +129,10 @@ export class inlinePopup extends Plugin {
 	/**
 	 * Hide opened popup
 	 */
-	@watch(':clickEditor')
+	@watch([':clickEditor', ':beforeCommandDelete', ':backSpaceAfterDelete'])
 	@autobind
 	private hidePopup(type?: string): void {
-		if (!isString(type) || type === this.type) {
+		if (this.popup.isOpened && (!isString(type) || type === this.type)) {
 			this.popup.close();
 		}
 	}

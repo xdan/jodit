@@ -41,6 +41,14 @@ import { eventEmitter, getContainer } from 'jodit/core/global';
 
 type getBoundFunc = () => IBound;
 
+const EVENTS_FOR_AUTOCLOSE = [
+	'escape',
+	'cut',
+	'delete',
+	'backSpaceAfterDelete',
+	'beforeCommandDelete'
+];
+
 export class Popup extends UIElement implements IPopup {
 	/** @override */
 	className(): string {
@@ -400,7 +408,7 @@ export class Popup extends UIElement implements IPopup {
 
 		if (this.smart) {
 			this.j.e
-				.on('escape', this.close)
+				.on(EVENTS_FOR_AUTOCLOSE, this.close)
 				.on('mousedown touchstart', this.closeOnOutsideClick)
 				.on(ow, 'mousedown touchstart', this.closeOnOutsideClick);
 		}
@@ -425,7 +433,7 @@ export class Popup extends UIElement implements IPopup {
 
 		if (this.smart) {
 			this.j.e
-				.off('escape', this.close)
+				.off(EVENTS_FOR_AUTOCLOSE, this.close)
 				.off('mousedown touchstart', this.closeOnOutsideClick)
 				.off(ow, 'mousedown touchstart', this.closeOnOutsideClick);
 		}

@@ -64,7 +64,8 @@ import {
 	ConfigProto,
 	kebabCase,
 	isJoditObject,
-	isNumber
+	isNumber,
+	ucfirst
 } from 'jodit/core/helpers';
 
 import { FAT_MODE, IS_PROD, lang } from 'jodit/core/constants';
@@ -791,7 +792,23 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		 * })
 		 * ```
 		 */
-		result = this.e.fire('beforeCommand', command, showUI, value, ...args);
+
+		result = this.e.fire(
+			`beforeCommand${ucfirst(command)}`,
+			showUI,
+			value,
+			...args
+		);
+
+		if (result !== false) {
+			result = this.e.fire(
+				'beforeCommand',
+				command,
+				showUI,
+				value,
+				...args
+			);
+		}
 
 		if (result !== false) {
 			result = this.__execCustomCommands(command, showUI, value, ...args);

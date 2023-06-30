@@ -299,6 +299,7 @@ describe('Enter behavior Tests', function () {
 						'<p>Split </p><p>a paragraph</p>'
 					);
 				});
+
 				it('Should create new paragraph with same styles like as original', function () {
 					const editor = getJodit();
 
@@ -1074,6 +1075,54 @@ describe('Enter behavior Tests', function () {
 						replaceCursorToChar(editor);
 						expect(editor.value).eq(result);
 					});
+				});
+			});
+		});
+
+		describe('Enter + BackSpace', () => {
+			describe('Press Enter after backspace', () => {
+				it('should work correct', () => {
+					const jodit = getJodit();
+					jodit.value = '<p>test|</p>';
+					setCursorToChar(jodit);
+
+					simulateEvent('keydown', Jodit.KEY_ENTER, jodit.editor);
+					jodit.s.insertImage(
+						'https://xdsoft.net/jodit/files/artio.jpg',
+						{
+							width: 300,
+							height: 300
+						}
+					);
+
+					simulateEvent('keydown', Jodit.KEY_ENTER, jodit.editor);
+
+					replaceCursorToChar(jodit);
+					expect(sortAttributes(jodit.value)).eq(
+						'<p>test</p>' +
+							'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:300px;width:300px"></p>' +
+							'<p>|<br></p>'
+					);
+					setCursorToChar(jodit);
+
+					simulateEvent('keydown', Jodit.KEY_BACKSPACE, jodit.editor);
+
+					replaceCursorToChar(jodit);
+					expect(sortAttributes(jodit.value)).eq(
+						'<p>test</p>' +
+							'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:300px;width:300px">|</p>'
+					);
+					setCursorToChar(jodit);
+
+					simulateEvent('keydown', Jodit.KEY_ENTER, jodit.editor);
+					simulateEvent('keydown', Jodit.KEY_ENTER, jodit.editor);
+
+					replaceCursorToChar(jodit);
+					expect(sortAttributes(jodit.value)).eq(
+						'<p>test</p>' +
+							'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:300px;width:300px"></p>' +
+							'<p><br></p><p>|<br></p>'
+					);
 				});
 			});
 		});
