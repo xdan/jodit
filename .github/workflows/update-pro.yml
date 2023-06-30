@@ -1,0 +1,15 @@
+name: Update PRO version
+
+on:
+  push:
+    branches: [ main ]
+    tags: ["*"]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger update PRO version
+        run: |
+          curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/jodit/jodit-pro/dispatches --data '{"event_type": "newversion" }'
