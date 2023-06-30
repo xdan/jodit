@@ -16,6 +16,7 @@ isTest ?= false
 debug ?= false
 updateTests ?= false
 fat ?= false
+push ?= true
 outputFolder ?= ''
 version = $(shell cat package.json | ./node_modules/node-jq/bin/jq -r '.version')
 
@@ -242,7 +243,9 @@ newversion:
 newversion-git:
 	git add --all  && git commit -m "New version $(version) Read more $(CHANGELOG_URL)"
 	git tag $(version)
-	git push --tags origin HEAD:main
+	@if [ "$(push)" = "true" ]; then \
+		git push --tags origin HEAD:main;\
+	fi
 	@echo "New version $(version) Actions: $(ACTIONS_URL)"
 
 .PHONY: jodit
