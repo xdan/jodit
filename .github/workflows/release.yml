@@ -32,10 +32,11 @@ jobs:
       run: |
         make test-all uglify=true fat=true
 
-#    - name: Screenshot test all
-#      run: |
-#        make screenshots-all
-
     - name: Publish
       run: |
         NPM_TOKEN=${{ secrets.NPM_TOKEN }} npm publish ./build --access public --tag beta
+
+    - name: Trigger generate site hook
+      run: |
+        curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/xdan/jodit-pro-home/dispatches --data '{"event_type": "opened" }'
+
