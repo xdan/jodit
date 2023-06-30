@@ -666,11 +666,22 @@ export class Selection implements ISelect {
 				this.area.appendChild(node);
 			}
 
+			const setCursor = (node: Node): void => {
+				if (Dom.isBlock(node)) {
+					const child = node.lastChild;
+					if (child) {
+						return setCursor(child);
+					}
+				}
+
+				this.setCursorAfter(node);
+			};
+
 			if (insertCursorAfter) {
 				if (Dom.isFragment(node)) {
-					child && this.setCursorAfter(child);
+					child && setCursor(child);
 				} else {
-					this.setCursorAfter(node);
+					setCursor(node);
 				}
 			}
 

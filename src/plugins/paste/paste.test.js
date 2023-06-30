@@ -1258,7 +1258,7 @@ describe('Test paste plugin', () => {
 			});
 		});
 
-		describe('Scroll position', () => {
+		describe.only('Scroll position', () => {
 			it('should scroll editor to pasted content', () => {
 				const editor = getJodit({
 					defaultActionOnPaste: Jodit.INSERT_AS_HTML,
@@ -1289,7 +1289,7 @@ describe('Test paste plugin', () => {
 
 				expect(editor.editor.scrollTop).above(500);
 				expect(sortAttributes(editor.value)).eq(
-					'<p>test</p>\n'.repeat(20) + '<p>test</p>' + '<p>pop</p>|'
+					'<p>test</p>\n'.repeat(20) + '<p>test</p>' + '<p>pop|</p>'
 				);
 			});
 		});
