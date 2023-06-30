@@ -48,11 +48,17 @@ declare module 'jodit/config' {
 		 * Options when inserting HTML string
 		 */
 		pasteHTMLActionList: IUIOption[];
+
+		/**
+		 * Scroll the editor to the pasted fragment
+		 */
+		scrollToPastedContent: boolean;
 	}
 }
 
 Config.prototype.askBeforePasteHTML = true;
 Config.prototype.processPasteHTML = true;
+Config.prototype.scrollToPastedContent = true;
 
 Config.prototype.pasteHTMLActionList = [
 	{ value: INSERT_AS_HTML, text: 'Keep' },

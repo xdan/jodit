@@ -1257,5 +1257,41 @@ describe('Test paste plugin', () => {
 				);
 			});
 		});
+
+		describe('Scroll position', () => {
+			it('should scroll editor to pasted content', () => {
+				const editor = getJodit({
+					defaultActionOnPaste: Jodit.INSERT_AS_HTML,
+					height: 300
+				});
+
+				editor.value = '<p>test</p>\n'.repeat(20) + '<p>test|</p>';
+				setCursorToChar(editor);
+
+				const pastedText = '<p>pop</p>';
+
+				const emulatePasteEvent = function (data) {
+					data.clipboardData = {
+						types: ['text/html'],
+						getData: function () {
+							return pastedText;
+						}
+					};
+				};
+
+				expect(editor.editor.scrollTop).eq(0);
+
+				simulateEvent('paste', editor.editor, emulatePasteEvent);
+				const dialog = getOpenedDialog(editor);
+				clickButton('keep', dialog);
+
+				replaceCursorToChar(editor);
+
+				expect(editor.editor.scrollTop).above(500);
+				expect(sortAttributes(editor.value)).eq(
+					'<p>test</p>\n'.repeat(20) + '<p>test</p>' + '<p>pop</p>|'
+				);
+			});
+		});
 	});
 });

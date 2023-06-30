@@ -674,7 +674,7 @@ export class Selection implements ISelect {
 				}
 			}
 
-			if (this.j.o.scrollToPasted) {
+			if (this.j.o.scrollToPastedContent) {
 				scrollIntoViewIfNeeded(child ?? node, this.j.editor, this.doc);
 			}
 		});

@@ -141,7 +141,7 @@ export class paste extends Plugin {
 			}
 
 			if (isString(text) || Dom.isNode(text)) {
-				this.insertByType(e, text, this.j.o.defaultActionOnPaste);
+				this.__insertByType(e, text, this.j.o.defaultActionOnPaste);
 			}
 
 			e.preventDefault();
@@ -158,55 +158,59 @@ export class paste extends Plugin {
 	 * Process usual HTML text fragment
 	 */
 	private processHTML(e: PasteEvent, html: string): boolean {
-		if (this.j.o.askBeforePasteHTML) {
-			if (this.j.o.memorizeChoiceWhenPasteFragment) {
-				const cached = this.pasteStack.find(
-					cachedItem => cachedItem.html === html
-				);
+		if (!this.j.o.askBeforePasteHTML) {
+			return false;
+		}
 
-				if (cached) {
-					this.insertByType(
-						e,
-						html,
-						cached.action || this.j.o.defaultActionOnPaste
-					);
-
-					return true;
-				}
-			}
-
-			if (this._isDialogOpened) {
-				return true;
-			}
-
-			const dialog = askInsertTypeDialog(
-				this.j,
-				'Your code is similar to HTML. Keep as HTML?',
-				'Paste as HTML',
-				insertType => {
-					this._isDialogOpened = false;
-					this.insertByType(e, html, insertType);
-				},
-				this.j.o.pasteHTMLActionList
+		if (this.j.o.memorizeChoiceWhenPasteFragment) {
+			const cached = this.pasteStack.find(
+				cachedItem => cachedItem.html === html
 			);
 
-			if (dialog) {
-				this._isDialogOpened = true;
-				dialog.e.on('beforeClose', () => {
-					this._isDialogOpened = false;
-				});
-			}
+			if (cached) {
+				this.__insertByType(
+					e,
+					html,
+					cached.action || this.j.o.defaultActionOnPaste
+				);
 
+				return true;
+			}
+		}
+
+		if (this._isDialogOpened) {
 			return true;
 		}
 
-		return false;
+		const dialog = askInsertTypeDialog(
+			this.j,
+			'Your code is similar to HTML. Keep as HTML?',
+			'Paste as HTML',
+			insertType => {
+				this._isDialogOpened = false;
+				this.__insertByType(e, html, insertType);
+			},
+			this.j.o.pasteHTMLActionList
+		);
+
+		if (dialog) {
+			this._isDialogOpened = true;
+			dialog.e.on('beforeClose', () => {
+				this._isDialogOpened = false;
+			});
+		}
+
+		return true;
 	}
 
 	/**
 	 * Insert HTML by option type
 	 */
-	insertByType(e: PasteEvent, html: string | Node, action: InsertMode): void {
+	private __insertByType(
+		e: PasteEvent,
+		html: string | Node,
+		action: InsertMode
+	): void {
 		this.pasteStack.push({ html, action });
 
 		if (isString(html)) {
