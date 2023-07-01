@@ -1,6 +1,7 @@
 name: Update PRO version
 
 on:
+  workflow_dispatch:
   push:
     tags: ["*"]
 
