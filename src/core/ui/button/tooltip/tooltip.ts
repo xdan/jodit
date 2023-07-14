@@ -5,9 +5,9 @@
  */
 
 /**
- * [[include:plugins/tooltip/README.md]]
+ * [[include:core/ui/button/tooltip/README.md]]
  * @packageDocumentation
- * @module plugins/tooltip
+ * @module ui/button
  */
 
 import './tooltip.less';
