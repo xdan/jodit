@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module helpers/checker
+ */
+
 import type { Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { MARKER_CLASS } from 'jodit/core/constants';
