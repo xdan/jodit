@@ -5,6 +5,8 @@
  */
 
 /**
+ * [[include:plugins/select-cells/README.md]]
+ * @packageDocumentation
  * @module plugins/select-cells
  */
 

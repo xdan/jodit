@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module modules/image-editor
+ */
+
 import type { ImageEditorOptions } from 'jodit/types';
 import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
