@@ -18,7 +18,7 @@ elm.someHeavyGetter; // someHeaveCalculation will execute only once
 elm.someHeavyGetter;
 ```
 
-Также можно кешировать возвращаеиые HTML элементы. При следующем вызове метода, элемент дулет клоинроваться;
+It is also possible to cache returned HTML elements. The next time the method is called, the element will be cloned;
 
 ```typescript
 import { cacheHTML, component } from 'jodit/core/decorators';
