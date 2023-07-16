@@ -5,7 +5,7 @@
  */
 
 /**
- * @module storage/memory
+ * @module storage
  */
 
 import type { IStorage, StorageValueType } from 'jodit/types';

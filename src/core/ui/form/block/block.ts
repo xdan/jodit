@@ -5,7 +5,7 @@
  */
 
 /**
- * @module ui/form/block
+ * @module ui/form
  */
 
 import './block.less';

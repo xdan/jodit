@@ -5,7 +5,7 @@
  */
 
 /**
- * @module storage/local
+ * @module storage
  */
 
 import type { BooleanFunction, IStorage, StorageValueType } from 'jodit/types';

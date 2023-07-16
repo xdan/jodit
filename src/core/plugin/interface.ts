@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugin
+ */
+
 declare module 'jodit/types/events' {
 	interface IEventEmitter {
 		/**
