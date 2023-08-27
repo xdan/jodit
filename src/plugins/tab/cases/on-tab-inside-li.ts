@@ -121,10 +121,13 @@ function appendNestedList(
 		? lastElm
 		: jodit.createInside.element(
 				list.tagName,
-				Array.from(list.attributes).reduce((acc, attr) => {
-					acc[attr.name] = attr.value;
-					return acc;
-				}, {} as Record<string, string>)
+				Array.from(list.attributes).reduce(
+					(acc, attr) => {
+						acc[attr.name] = attr.value;
+						return acc;
+					},
+					{} as Record<string, string>
+				)
 		  );
 
 	newList.appendChild(li);

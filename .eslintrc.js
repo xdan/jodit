@@ -7,12 +7,13 @@
 // eslint-disable-next-line strict
 module.exports = {
 	// TODO https://stackoverflow.com/questions/33916827/eslint-maximum-call-stack-size-exceeded
-	ignorePatterns: ['src/plugins/paste/paste.test.js'],
+	ignorePatterns: ['src/plugins/paste/paste.word.test.js'],
 	root: true,
 	parser: '@typescript-eslint/parser',
 	plugins: [
 		'@typescript-eslint',
 		'header',
+		'mocha',
 		'eslint-plugin-tsdoc',
 		'eslint-plugin-import'
 	],
@@ -27,6 +28,10 @@ module.exports = {
 		node: true
 	},
 	rules: {
+		'no-octal-escape': 0,
+		'@typescript-eslint/no-unsafe-declaration-merging': 'off',
+		'mocha/no-skipped-tests': 'error',
+		'mocha/no-exclusive-tests': 'error',
 		'tsdoc/syntax': 'warn',
 		strict: ['error', 'never'],
 		'import/no-cycle': ['error', { maxDepth: 3 }],

@@ -29,9 +29,8 @@ describe('Fullsize plugin', function () {
 			editor.toggleFullSize(false);
 
 			checkSizes.map(function (key, index) {
-				expect(
-					equal(editor[key].offsetHeight, initialSizes[index])
-				).is.true;
+				expect(equal(editor[key].offsetHeight, initialSizes[index])).is
+					.true;
 			});
 		});
 

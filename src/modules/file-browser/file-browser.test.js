@@ -339,18 +339,16 @@ function getFirstItem(fb, index = 0, file = false) {
 											filebrowser._dialog
 										);
 										expect(remove).is.not.null;
-										expect(
-											remove.hasAttribute('disabled')
-										).is.true;
+										expect(remove.hasAttribute('disabled'))
+											.is.true;
 
 										simulateEvent(
 											'click',
 											getFirstItem(filebrowser)
 										);
 
-										expect(
-											remove.hasAttribute('disabled')
-										).is.true;
+										expect(remove.hasAttribute('disabled'))
+											.is.true;
 
 										filebrowser.close();
 										filebrowser.destruct();
@@ -384,18 +382,16 @@ function getFirstItem(fb, index = 0, file = false) {
 										);
 										expect(remove).is.not.null;
 
-										expect(
-											remove.hasAttribute('disabled')
-										).is.true;
+										expect(remove.hasAttribute('disabled'))
+											.is.true;
 
 										simulateEvent(
 											'click',
 											getFirstItem(filebrowser)
 										);
 
-										expect(
-											remove.hasAttribute('disabled')
-										).is.false;
+										expect(remove.hasAttribute('disabled'))
+											.is.false;
 
 										filebrowser.close();
 										filebrowser.destruct();

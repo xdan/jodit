@@ -24,27 +24,27 @@
 
 			const lines = [];
 
-			Jodit.modules.Helpers.$$('style, link', document).forEach(function (
-				elm
-			) {
-				const t = elm.tagName.toLowerCase();
+			Jodit.modules.Helpers.$$('style, link', document).forEach(
+				function (elm) {
+					const t = elm.tagName.toLowerCase();
 
-				let content;
+					let content;
 
-				try {
-					if (t === 'link' && elm.sheet) {
-						content = Array.from(elm.sheet.cssRules)
-							.map(function (f) {
-								return f.cssText;
-							})
-							.join('\n');
-					} else {
-						content = elm.innerHTML;
-					}
+					try {
+						if (t === 'link' && elm.sheet) {
+							content = Array.from(elm.sheet.cssRules)
+								.map(function (f) {
+									return f.cssText;
+								})
+								.join('\n');
+						} else {
+							content = elm.innerHTML;
+						}
 
-					lines.push('<style>' + content + '</style>');
-				} catch (e) {}
-			});
+						lines.push('<style>' + content + '</style>');
+					} catch (e) {}
+				}
+			);
 
 			mainDoc.open();
 			mainDoc.write(

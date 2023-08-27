@@ -379,14 +379,17 @@ export class selectCells extends Plugin {
 					case 'bincolumn':
 						{
 							const columnsSet = new Set<number>(),
-								columns = cells.reduce((acc, td) => {
-									if (!columnsSet.has(td.cellIndex)) {
-										acc.push(td);
-										columnsSet.add(td.cellIndex);
-									}
+								columns = cells.reduce(
+									(acc, td) => {
+										if (!columnsSet.has(td.cellIndex)) {
+											acc.push(td);
+											columnsSet.add(td.cellIndex);
+										}
 
-									return acc;
-								}, <HTMLTableCellElement[]>[]);
+										return acc;
+									},
+									<HTMLTableCellElement[]>[]
+								);
 
 							columns.forEach(td => {
 								Table.removeColumn(table, td.cellIndex);

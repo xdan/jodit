@@ -9,6 +9,47 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.0.0-beta.78
+
+- Update
+```
+ @types/karma                        ^6.3.3  →    ^6.3.4
+ @types/node                        ^20.1.0  →   ^20.5.0
+ @typescript-eslint/eslint-plugin   ^5.59.2  →    ^6.4.0
+ @typescript-eslint/parser          ^5.59.2  →    ^6.4.0
+ autoprefixer                      ^10.4.14  →  ^10.4.15
+ core-js                            ^3.30.2  →   ^3.32.0
+ css-loader                          ^6.7.3  →    ^6.8.1
+ css-minimizer-webpack-plugin        ^5.0.0  →    ^5.0.1
+ eslint                             ^8.40.0  →   ^8.47.0
+ eslint-config-prettier              ^8.8.0  →    ^9.0.0
+ eslint-plugin-import               ^2.27.5  →   ^2.28.0
+ eslint-plugin-prettier              ^4.2.1  →    ^5.0.0
+ glob                               ^10.2.2  →   ^10.3.3
+ less                                ^4.1.3  →    ^4.2.0
+ less-loader                        ^11.1.0  →   ^11.1.3
+ lint-staged                        ^13.2.2  →   ^14.0.0
+ mini-css-extract-plugin             ^2.7.5  →    ^2.7.6
+ node-jq                             ^2.3.5  →    ^4.0.1
+ postcss                           >=8.4.23  →  >=8.4.27
+ postcss-loader                      ^7.3.0  →    ^7.3.3
+ prettier                            ^2.8.8  →    ^3.0.1
+ style-loader                        ^3.3.2  →    ^3.3.3
+ stylelint                          ^15.6.1  →  ^15.10.2
+ stylelint-config-standard          ^33.0.0  →   ^34.0.0
+ stylelint-prettier                  ^3.0.0  →    ^4.0.2
+ synchronous-promise                 2.0.15  →    2.0.17
+ terser-webpack-plugin               ^5.3.8  →    ^5.3.9
+ ts-loader                           ^9.4.2  →    ^9.4.4
+ tslib                               ^2.5.0  →    ^2.6.1
+ typescript                          ^5.0.4  →    ^5.1.6
+ webpack                             5.82.0  →    5.88.2
+ webpack-cli                         ^5.1.0  →    ^5.1.4
+ webpack-dev-middleware              ^6.1.0  →    ^6.1.1
+ webpack-dev-server                 ^4.15.0  →   ^4.15.1
+ webpack-hot-middleware             ^2.25.3  →   ^2.25.4
+```
+
 ## 4.0.0-beta.77
 
 ### :bug: Bug Fix

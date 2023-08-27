@@ -47,7 +47,10 @@ export class Storage<T = StorageValueType> implements IStorage<T> {
 		return this;
 	}
 
-	protected constructor(readonly provider: IStorage<T>, suffix?: string) {
+	protected constructor(
+		readonly provider: IStorage<T>,
+		suffix?: string
+	) {
 		if (suffix) {
 			this.prefix += suffix;
 		}

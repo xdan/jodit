@@ -101,7 +101,10 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 		this.j.e.fire('resize');
 	}
 
-	constructor(jodit: IJodit, readonly target: HTMLElement) {
+	constructor(
+		jodit: IJodit,
+		readonly target: HTMLElement
+	) {
 		super(jodit);
 
 		this.container = jodit.c.div('jodit-status-bar');

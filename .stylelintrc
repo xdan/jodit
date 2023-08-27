@@ -3,6 +3,7 @@
 	"customSyntax": "postcss-less",
 	"rules": {
 		"prettier/prettier": true,
+		"media-query-no-invalid": null,
 		"selector-type-no-unknown": null,
 		"selector-not-notation": null,
 		"selector-class-pattern": null,

@@ -60,7 +60,10 @@ export class RecognizeManager
 
 	sound: boolean = true;
 
-	constructor(private async: IAsync, api: ISpeechRecognize) {
+	constructor(
+		private async: IAsync,
+		api: ISpeechRecognize
+	) {
 		super();
 		this._api = api;
 		RecognizeManager._instances.add(this);
