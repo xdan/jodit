@@ -237,11 +237,6 @@ export function iframe(editor: IJodit): void {
 						(doc.documentElement.style.overflowY = 'hidden');
 
 					const resizeIframe = editor.async.throttle((...args) => {
-						if (editor.isDestructed) {
-							console.log(...args);
-							throw 'Async module does not work correct';
-						}
-
 						editor.async.requestAnimationFrame(() => {
 							if (
 								editor.editor &&
