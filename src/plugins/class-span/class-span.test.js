@@ -3,9 +3,9 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('classSpan test', function () {
-	describe('Open className list and select some element', function () {
-		it('Should apply this className to current selection elements', function () {
+describe('classSpan test', () => {
+	describe('Open className list and select some element', () => {
+		it('Should apply this className to current selection elements', () => {
 			const editor = getJodit({
 				toolbarAdaptive: false,
 				controls: {
@@ -22,6 +22,7 @@ describe('classSpan test', function () {
 			});
 
 			const openClassNameList = function () {
+				simulateEvent('mousedown', editor.editor); // Close previous
 				clickTrigger('classSpan', editor);
 
 				const list = getOpenedPopup(editor);
@@ -33,11 +34,12 @@ describe('classSpan test', function () {
 
 			simulateEvent('mousedown', editor.editor); // Close previous
 
-			Array.from(openClassNameList()).map(function (classNames) {
+			Array.from(openClassNameList()).map((_, i) => {
+				const classNames = openClassNameList()[i];
 				editor.value = '<p>test</p>';
 				editor.s.select(editor.editor.firstChild.firstChild);
 
-				simulateEvent('click', 0, classNames);
+				simulateEvent('click', classNames);
 
 				const className = classNames
 					.querySelector('span[class=jodit-toolbar-button__text]')

@@ -2,3 +2,4 @@ node_modules
 test/loader.js
 build
 types
+examples/assets/prism.js

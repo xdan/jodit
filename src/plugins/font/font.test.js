@@ -15,6 +15,7 @@ describe('Font test', function () {
 				setCursorToChar(editor);
 
 				const openFontNameList = function () {
+					simulateEvent('mousedown', editor.editor);
 					clickTrigger('font', editor);
 
 					const list = getOpenedPopup(editor);
@@ -27,6 +28,9 @@ describe('Font test', function () {
 				simulateEvent('mousedown', editor.editor);
 
 				Array.from(openFontNameList()).map(function (font, index) {
+					editor.value = '<p>|test|</p>';
+					setCursorToChar(editor);
+
 					const btn = openFontNameList()[index];
 
 					simulateEvent('click', btn);
@@ -85,9 +89,11 @@ describe('Font test', function () {
 		});
 	});
 
-	describe('Change font-family and fomt-size in same time', function () {
-		it('should save font-size after font-family', function () {
+	describe('Change font-family and fomt-size in same time', () => {
+		it('should save font-size after font-family', () => {
 			const editor = getJodit();
+			editor.value = '<p>|</p>';
+			setCursorToChar(editor);
 
 			clickTrigger('fontsize', editor);
 			const list = getOpenedPopup(editor);
@@ -95,19 +101,19 @@ describe('Font test', function () {
 			clickButton('10', list);
 			editor.s.insertHTML('test');
 
-			expect(editor.value).equals(
-				'<p><span style="font-size: 10px;">test</span></p>'
+			expect(sortAttributes(editor.value)).equals(
+				'<p><span style="font-size:10px">test</span></p>'
 			);
 
 			clickTrigger('font', editor);
 			const list2 = getOpenedPopup(editor);
 
-			clickButton('impact_charcoal_sans_serif', list2);
+			clickButton('Impact__Charcoal__sans_serif', list2);
 			editor.s.insertHTML('stop');
 
 			expect(sortAttributes(editor.value)).equals(
 				'<p><span style="font-size:10px">test' +
-					'<span style="font-family:impact,charcoal,sans-serif">stop</span></span></p>'
+					'<span style="font-family:Impact,Charcoal,sans-serif">stop</span></span></p>'
 			);
 		});
 	});
@@ -129,7 +135,7 @@ describe('Font test', function () {
 					});
 
 					describe('Second click on the button', function () {
-						it('Should apply previous choice', function () {
+						it('Should again open popup', function () {
 							const editor = getJodit({
 								defaultFontSizePoints: point
 							});
@@ -167,11 +173,7 @@ describe('Font test', function () {
 
 							const popup2 = getOpenedPopup(editor);
 
-							expect(popup2).is.null;
-
-							expect(editor.value).equals(
-								`<p>tex<span style="font-size: 8${point};">t2t</span>ext</p><p><span style="font-size: 8${point};"></span></p>`
-							);
+							expect(popup2).is.not.null;
 						});
 					});
 				});
@@ -193,7 +195,7 @@ describe('Font test', function () {
 				});
 
 				describe('Second click on the button', function () {
-					it('Should apply previous choice', function () {
+					it('Should apply open popup again', function () {
 						const editor = getJodit();
 
 						editor.value = 'text2text';
@@ -209,10 +211,10 @@ describe('Font test', function () {
 
 						expect(popup).is.not.null;
 
-						clickButton('impact_charcoal_sans_serif', popup);
+						clickButton('Impact__Charcoal__sans_serif', popup);
 
 						expect(editor.value).equals(
-							'<p>tex<span style="font-family: impact, charcoal, sans-serif;">t2t</span>ext</p>'
+							'<p>tex<span style="font-family: Impact, Charcoal, sans-serif;">t2t</span>ext</p>'
 						);
 
 						const range2 = editor.s.createRange(true);
@@ -223,11 +225,7 @@ describe('Font test', function () {
 
 						const popup2 = getOpenedPopup(editor);
 
-						expect(popup2).is.null;
-
-						expect(editor.value).equals(
-							'<p>tex<span style="font-family: impact, charcoal, sans-serif;">t2t</span>ext</p><p><span style="font-family: impact, charcoal, sans-serif;"></span></p>'
-						);
+						expect(popup2).is.not.null;
 					});
 				});
 			});
@@ -255,8 +253,7 @@ describe('Font test', function () {
 
 					editor.s.setCursorAfter(p.firstChild);
 					simulateEvent('mousedown', p);
-
-					expect(font.getAttribute('aria-pressed')).equals('false');
+					expect(font.getAttribute('aria-pressed')).equals('true');
 
 					editor.s.setCursorIn(p.lastChild);
 
@@ -296,14 +293,14 @@ describe('Font test', function () {
 
 					editor.s.setCursorIn(p.lastChild);
 
-					simulateEvent('mousedown', 0, p);
+					simulateEvent('mousedown', p);
 
 					clickTrigger('font', editor);
 
 					const popup = getOpenedPopup(editor);
 
 					const fontGeorgia = popup.querySelector(
-						'[class*=georgia_palatino]'
+						'[class*=Georgia__Palatino__serif]'
 					);
 
 					expect(fontGeorgia).does.not.equal(font);

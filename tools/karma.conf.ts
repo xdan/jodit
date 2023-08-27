@@ -92,7 +92,8 @@ module.exports = function (cnf: Config): void {
 			},
 
 			'./public/app.css',
-			'./node_modules/synchronous-promise/dist/synchronous-promise.js',
+			'./test/tests/browser-module.js',
+			'./node_modules/synchronous-promise/index.js',
 
 			...buildFiles,
 

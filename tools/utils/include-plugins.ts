@@ -15,31 +15,34 @@ export const includePlugins = (dir: string): [Entries, string[]] => {
 	const entryFiles: string[] = [];
 	const make: { paths: string[] } = require(path.resolve(dir, './make.js'));
 
-	const pluginsEntries: Entries = make.paths.reduce((entries, entry) => {
-		const fullPath = path.resolve(process.cwd(), entry);
-		const name = path.basename(fullPath);
-		const rootPath = path.resolve(process.cwd(), './src');
-		const entryPath = fullPath.replace(rootPath, '.') + '/' + name;
+	const pluginsEntries: Entries = make.paths.reduce(
+		(entries, entry) => {
+			const fullPath = path.resolve(process.cwd(), entry);
+			const name = path.basename(fullPath);
+			const rootPath = path.resolve(process.cwd(), './src');
+			const entryPath = fullPath.replace(rootPath, '.') + '/' + name;
 
-		let importFile = path.resolve(fullPath, `./${name}.ts`);
-
-		if (!fs.pathExistsSync(importFile)) {
-			importFile = path.resolve(fullPath, './index.ts');
+			let importFile = path.resolve(fullPath, `./${name}.ts`);
 
 			if (!fs.pathExistsSync(importFile)) {
-				return entries;
+				importFile = path.resolve(fullPath, './index.ts');
+
+				if (!fs.pathExistsSync(importFile)) {
+					return entries;
+				}
 			}
-		}
 
-		entryFiles.push(importFile.replace(rootPath, './src'));
+			entryFiles.push(importFile.replace(rootPath, './src'));
 
-		entries[entryPath] = {
-			import: importFile.replace(rootPath, './src'),
-			dependOn: 'jodit'
-		};
+			entries[entryPath] = {
+				import: importFile.replace(rootPath, './src'),
+				dependOn: 'jodit'
+			};
 
-		return entries;
-	}, {} as { [key in string]: { import: string; dependOn: 'jodit' } });
+			return entries;
+		},
+		{} as { [key in string]: { import: string; dependOn: 'jodit' } }
+	);
 
 	return [pluginsEntries, entryFiles];
 };

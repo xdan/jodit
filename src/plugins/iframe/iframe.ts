@@ -236,9 +236,13 @@ export function iframe(editor: IJodit): void {
 					doc.documentElement &&
 						(doc.documentElement.style.overflowY = 'hidden');
 
-					const resizeIframe = editor.async.throttle(() => {
+					const resizeIframe = editor.async.throttle((...args) => {
+						if (editor.isDestructed) {
+							console.log(...args);
+							throw 'Async module does not work correct';
+						}
+
 						editor.async.requestAnimationFrame(() => {
-							console.log('resize');
 							if (
 								editor.editor &&
 								editor.iframe &&
@@ -280,7 +284,7 @@ export function iframe(editor: IJodit): void {
 						const resizeObserver = new ResizeObserver(resizeIframe);
 						resizeObserver.observe(doc.body);
 						editor.e.on('beforeDestruct', () => {
-							resizeObserver.unobserve(doc.body);
+							resizeObserver.disconnect();
 						});
 					}
 				}

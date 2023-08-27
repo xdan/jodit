@@ -18,7 +18,6 @@ import type { LoaderContext } from 'webpack';
  * 			}
  * 	}
  * ```
- * @param source
  */
 export default function (
 	this: LoaderContext<{ group: string }>,

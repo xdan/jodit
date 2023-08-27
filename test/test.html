@@ -1,63 +1,84 @@
 <!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8"/>
-	<meta name="viewport"
-				content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-	<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-	<link rel="icon" href="https://xdsoft.net/jodit/pro/favicon.png"/>
-	<title>Jodit Tests </title>
-	<script>
-		module = {};
-		if (!/localhost/.test(location.host)) {
-			document.write(
-				'<' + 'link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.0.0/mocha.min.css" />' +
-				'<' + 'script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.0.0/mocha.min.js"><' + '/script>' +
-				'<' + 'script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.3.6/chai.min.js"><' + '/script>' +
-				'<' + 'script src="https://cdn.jsdelivr.net/npm/synchronous-promise@2.0.15/index.js"><' + '/script>'
-			);
-		} else {
-			document.write(
-				'<' + 'link rel="stylesheet" href="../node_modules/mocha/mocha.css" />' +
-				'<' + 'script src="../node_modules/mocha/mocha.js"><' + '/script>' +
-				'<' + 'script src="../node_modules/chai/chai.js"><' + '/script>' +
-				'<' + 'script src="../node_modules/synchronous-promise/index.js"><' + '/script>'
-			);
-		}
-	</script>
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		/>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="icon" href="https://xdsoft.net/jodit/pro/favicon.png" />
+		<title>Jodit Tests</title>
+		<script src="./tests/browser-module.js"></script>
+		<script>
+			if (!/localhost/.test(location.host)) {
+				document.write(
+					'<' +
+						'link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.0.0/mocha.min.css" />' +
+						'<' +
+						'script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.0.0/mocha.min.js"><' +
+						'/script>' +
+						'<' +
+						'script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.3.6/chai.min.js"><' +
+						'/script>' +
+						'<' +
+						'script src="https://cdn.jsdelivr.net/npm/synchronous-promise@2.0.17/index.js"><' +
+						'/script>'
+				);
+			} else {
+				document.write(
+					'<' +
+						'link rel="stylesheet" href="../node_modules/mocha/mocha.css" />' +
+						'<' +
+						'script src="../node_modules/mocha/mocha.js"><' +
+						'/script>' +
+						'<' +
+						'script src="../node_modules/chai/chai.js"><' +
+						'/script>' +
+						'<' +
+						'script src="../node_modules/synchronous-promise/index.js"><' +
+						'/script>'
+				);
+			}
+		</script>
+	</head>
+	<body>
+		<div id="mocha"></div>
 
-</head>
-<body>
-<div id="mocha"></div>
+		<script>
+			mocha.setup({
+				ui: 'bdd',
+				bail: true,
+				fullTrace: true,
+				inlineDiffs: true
+			});
 
-<script>
-	mocha.setup({
-		ui: 'bdd',
-		bail: true,
-		fullTrace: true,
-		inlineDiffs: true
-	});
+			mocha.reporter('html');
+		</script>
 
-	mocha.reporter('html');
-</script>
+		<link rel="stylesheet" href="../app.css" />
+		<script src="../build/jodit.js"></script>
+		<!--<script src="../build/plugins/debug/debug.js"></script>-->
+		<script src="bootstrap.js"></script>
+		<script src="loader.js"></script>
+		<script>
+			const list = [...fileCasesJodit];
+			function loadNext() {
+				const src = list.shift();
+				if (!src) return;
+				const script = document.createElement('script');
+				script.src = src;
+				script.onload = loadNext;
+				document.body.appendChild(script);
+			}
 
-<link rel="stylesheet" href="../app.css"/>
-<script src="../build/jodit.js"></script>
-<!--<script src="../build/plugins/debug/debug.js"></script>-->
-<script src="bootstrap.js"></script>
-<script src="loader.js"></script>
-<script>
-	fileCasesJodit.forEach((src) => {
-		const script = document.createElement('script');
-		script.src = src;
-		document.body.appendChild(script);
-	})
-</script>
+			loadNext();
+		</script>
 
-<script>
-	window.onload = function() {
-			mocha.run();
-	};
-</script>
-</body>
+		<script>
+			window.onload = function () {
+				mocha.run();
+			};
+		</script>
+	</body>
 </html>

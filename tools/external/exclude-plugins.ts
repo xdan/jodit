@@ -35,10 +35,13 @@ export default ({
 	) {
 		console.info('Exclude plugins:', excludePlugins);
 
-		return excludePlugins.reduce((map, pluginName) => {
-			map[`jodit/plugins/${pluginName}/${pluginName}`] = '{}';
-			return map;
-		}, {} as { [key in string]: string });
+		return excludePlugins.reduce(
+			(map, pluginName) => {
+				map[`jodit/plugins/${pluginName}/${pluginName}`] = '{}';
+				return map;
+			},
+			{} as { [key in string]: string }
+		);
 	}
 
 	return {};

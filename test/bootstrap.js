@@ -368,6 +368,9 @@ const excludeI18nKeys = new Set([
 	'Custom',
 	'list_test',
 	'OS System Font',
+	'Courier New',
+	'Trebuchet MS',
+	'Lucida Sans Unicode',
 	'insert Header 1',
 	'insert Header 2',
 	'Empty editor',
@@ -1287,5 +1290,23 @@ function applyGlobalStyle(styles) {
 if (typeof afterEach === 'function') {
 	afterEach(() => {
 		stylesList.forEach(style => style.remove());
+	});
+}
+
+if (typeof before === 'function') {
+	// ignore ResizeObserver loop limit exceeded
+	// this is ok in several scenarios according to
+	// https://github.com/WICG/resize-observer/issues/38
+	before(() => {
+		// called before any tests are run
+		const e = window.onerror;
+		window.onerror = function (err, ...args) {
+			if (err === 'ResizeObserver loop limit exceeded') {
+				console.warn('Ignored: ResizeObserver loop limit exceeded');
+				return true;
+			} else {
+				return e.call(window, err, ...args);
+			}
+		};
 	});
 }

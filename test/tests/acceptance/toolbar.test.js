@@ -60,15 +60,16 @@ describe('Toolbar', function () {
 							name: 'alert_some',
 							iconURL:
 								'https://xdsoft.net/jodit/build/images/icons/045-copy.png',
-							exec: function () {
-								editor.s.insertHTML(
-									'<p><span>indigo</span></p>'
-								);
+							exec: () => {
+								editor.s.insertHTML('<span>indigo</span>');
 							}
 						}
 					},
 					buttons: ['image', 'alert_some']
 				});
+
+				editor.value = '<p>|</p>';
+				setCursorToChar(editor);
 
 				expect(editor.toolbar.getButtonsNames().toString()).equals(
 					'image,alert_some'
@@ -586,7 +587,7 @@ describe('Toolbar', function () {
 
 		it('Open video dialog and insert video by url from youtube.', function () {
 			const editor = getJodit({
-				disablePlugins: 'mobile'
+				disablePlugins: ['mobile', 'WrapNodes']
 			});
 
 			editor.value = '';

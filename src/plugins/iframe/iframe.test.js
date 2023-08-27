@@ -9,7 +9,8 @@
 		describe('Create editor with iframe mode', function () {
 			it('Should create editable area in another document', function (done) {
 				unmockPromise();
-				Jodit.make(appendTestArea(), {
+
+				getJodit({
 					iframe: true,
 					events: {
 						afterConstructor: function (editor) {
@@ -28,7 +29,7 @@
 			describe('And exec command', function () {
 				it('Should use body like editor area', function (done) {
 					unmockPromise();
-					Jodit.make(appendTestArea(), {
+					getJodit({
 						iframe: true,
 						events: {
 							afterConstructor: function (editor) {
@@ -239,6 +240,7 @@
 		describe('Define document for iframe from some site', function () {
 			it('Should work perfect', function (done) {
 				unmockPromise();
+
 				const area = appendTestArea();
 
 				area.value = '<p>start value</p>';
@@ -253,6 +255,7 @@
 							expect(Jodit.ns.Helpers.trim(jodit.value)).equals(
 								'<p>test 435</p>'
 							); // loaded from index.html
+
 							done();
 						},
 						beforeSetValueToEditor: function () {
@@ -265,6 +268,7 @@
 							jodit.events.stopPropagation(
 								'generateDocumentStructure.iframe'
 							);
+
 							return new Promise(resolve => {
 								jodit.iframe.onload = function () {
 									resolve();

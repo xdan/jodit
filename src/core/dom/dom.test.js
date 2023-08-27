@@ -383,51 +383,47 @@ describe('Test Dom module', function () {
 	});
 
 	describe('last', () => {
-		it('should return last matched element', () => {
-			const editor = getJodit();
-
-			const variants = {
-					'<p>test <em><i>t</i></em>one <span><strong>strong</strong></span></p>':
-						[
-							node => node && node.nodeValue === 't',
-							elm =>
-								elm.firstChild.nextSibling.firstChild.firstChild
-						],
-					'<p><em><i>t</i></em>one <span><strong>strong</strong></span></p>':
-						[
-							node => node && node.nodeValue === 't',
-							elm => elm.firstChild.firstChild.firstChild
-						],
-					'<p>test<span><strong>strong</strong></span></p>': [
-						node => node && node.nodeType === Node.TEXT_NODE,
-						elm => elm.lastChild.lastChild.firstChild
+		const variants = {
+				'<p>test <em><i>t</i></em>one <span><strong>strong</strong></span></p>':
+					[
+						node => node && node.nodeValue === 't',
+						elm => elm.firstChild.nextSibling.firstChild.firstChild
 					],
-					'<p>1test<span><strong>strong</strong></span></p>': [
-						node => node && node.nodeName === 'STRONG',
-						elm => elm.lastChild.lastChild
+				'<p><em><i>t</i></em>one <span><strong>strong</strong></span></p>':
+					[
+						node => node && node.nodeValue === 't',
+						elm => elm.firstChild.firstChild.firstChild
 					],
-					'<p>one <span><strong>strong</strong></span></p>': [
-						node => node && node.nodeValue === 'one ',
-						elm => elm.firstChild
-					],
-					'<p><em>t</em>one <span><strong>strong</strong></span></p>':
-						[
-							node => node && node.nodeValue === 't',
-							elm => elm.firstChild.firstChild
-						],
-					'<p>two <span><strong>strong</strong></span></p>': [
-						node => node && node.nodeValue === 'one ',
-						() => null
-					]
-				},
-				keys = Object.keys(variants);
+				'<p>test<span><strong>strong</strong></span></p>': [
+					node => node && node.nodeType === Node.TEXT_NODE,
+					elm => elm.lastChild.lastChild.firstChild
+				],
+				'<p>1test<span><strong>strong</strong></span></p>': [
+					node => node && node.nodeName === 'STRONG',
+					elm => elm.lastChild.lastChild
+				],
+				'<p>one <span><strong>strong</strong></span></p>': [
+					node => node && node.nodeValue === 'one ',
+					elm => elm.firstChild
+				],
+				'<p><em>t</em>one <span><strong>strong</strong></span></p>': [
+					node => node && node.nodeValue === 't',
+					elm => elm.firstChild.firstChild
+				],
+				'<p>two <span><strong>strong</strong></span></p>': [
+					node => node && node.nodeValue === 'one ',
+					() => null
+				]
+			},
+			keys = Object.keys(variants);
 
-			keys.forEach(str => {
-				const html = editor.createInside.fromHTML(str);
-				editor.s.insertNode(html);
+		keys.forEach(str => {
+			it(`should return last matched element for str: ${str}`, () => {
+				const editor = getJodit();
+				editor.value = str;
 
-				expect(Dom.last(html, variants[str][0])).eq(
-					variants[str][1](html)
+				expect(Dom.last(editor.editor.firstChild, variants[str][0])).eq(
+					variants[str][1](editor.editor.firstChild)
 				);
 			});
 		});

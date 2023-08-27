@@ -40,7 +40,10 @@ export function font(editor: IJodit): void {
 				editor.s.commitStyle({
 					attributes: {
 						style: {
-							fontSize: normalizeSize(third)
+							fontSize: normalizeSize(
+								third,
+								editor.o.defaultFontSizePoints
+							)
 						}
 					}
 				});

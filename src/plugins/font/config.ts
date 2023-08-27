@@ -125,7 +125,7 @@ Config.prototype.controls.font = {
 			'Lucida Sans Unicode',
 		'Tahoma, Geneva, sans-serif': 'Tahoma',
 		"'Times New Roman', Times, serif": 'Times New Roman',
-		"'Trebuchet MS', Helvetica, sans-serif;": 'Trebuchet MS',
+		"'Trebuchet MS', Helvetica, sans-serif": 'Trebuchet MS',
 		'Helvetica, sans-serif': 'Helvetica',
 		'Impact, Charcoal, sans-serif': 'Impact',
 		'Verdana, Geneva, sans-serif': 'Verdana'

@@ -758,8 +758,10 @@ describe('Selection Module Tests', function () {
 			div.parentNode.removeChild(div);
 		});
 
-		it('Current selection element', function () {
-			const editor = getJodit(),
+		it('Current selection element', () => {
+			const editor = getJodit({
+					disablePlugins: 'WrapNodes'
+				}),
 				div = editor.ed.createElement('div'),
 				text = editor.createInside.text('jingl');
 
@@ -771,30 +773,35 @@ describe('Selection Module Tests', function () {
 			expect(editor.s.current()).equals(text);
 		});
 
-		it('Insert simple text node in editor', function () {
-			const area = appendTestArea();
-			const editor = new Jodit(area);
+		it('Insert simple text node in editor', () => {
+			const editor = getJodit();
+			editor.value = '<p>|</p>';
+			setCursorToChar(editor);
 			editor.s.insertNode(editor.createInside.text('Test'));
 			expect(editor.value).equals('<p>Test</p>');
 			editor.destruct();
 		});
 
-		it('Insert 3 divs', function () {
-			const editor = getJodit();
+		it('Insert 3 divs', () => {
+			const editor = getJodit({
+				disablePlugins: 'WrapNodes'
+			});
+
+			editor.value = '|';
+			setCursorToChar(editor);
 
 			function insert(digit) {
 				const div = editor.ed.createElement('div');
 
 				div.innerHTML = digit;
-				editor.s.insertNode(div);
+				editor.s.insertNode(div, true, false);
 			}
 
 			insert(1);
 			insert(2);
 			insert(3);
 
-			expect(editor.value).equals('<div>1</div><div>2</div><div>3</div>');
-			editor.destruct();
+			expect(editor.value).equals('<div>1<div>2<div>3</div></div></div>');
 		});
 
 		it('Insert wrong data', function () {
@@ -811,8 +818,6 @@ describe('Selection Module Tests', function () {
 			expect(function () {
 				editor.s.insertNode(null);
 			}).to.throw(/node must be/);
-
-			editor.destruct();
 		});
 
 		it('Select all and delete. Check plugin "backspace"', function () {
@@ -821,7 +826,6 @@ describe('Selection Module Tests', function () {
 			editor.execCommand('selectall');
 			editor.execCommand('delete');
 			expect(editor.value).equals('');
-			editor.destruct();
 		});
 
 		describe('Editor after focus and after blur', function () {

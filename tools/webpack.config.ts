@@ -17,9 +17,6 @@ import { plugins } from './plugins/index';
 import { externals } from './external/index';
 import { devServer } from './dev-server';
 
-/**
- * @param {boolean} onlyTS - build only TypeScript files
- */
 export default (
 	env: object,
 	argv: Argv,
