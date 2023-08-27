@@ -76,7 +76,7 @@ Config.prototype.controls.fontsize = {
 
 	isChildActive: (editor, button): boolean => {
 		const value = button.state.value;
-		const normalize = button.control.data?.normalize ?? ((v: unknown) => v);
+		const normalize = button.control.data?.normalize ?? (<T>(v: T): T => v);
 		return Boolean(
 			value &&
 				button.control.args &&

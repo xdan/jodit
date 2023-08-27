@@ -192,7 +192,7 @@
 					});
 				});
 
-				it('Should set editor height by content in iframe mode',  async () =>{
+				it('Should set editor height by content in iframe mode', async () => {
 					const editor = getJodit({
 						iframe: true
 					});

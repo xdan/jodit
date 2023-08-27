@@ -912,9 +912,6 @@ describe('Apply style', () => {
 					{ enter: 'BR' }
 				]
 			].forEach(function runTest(args) {
-				if (!Array.isArray(args)) {
-					debugger;
-				}
 				const [input, opt, output, jSettings] = args;
 
 				if (Array.isArray(opt)) {
