@@ -6,8 +6,6 @@
 
 // eslint-disable-next-line strict
 module.exports = {
-	// TODO https://stackoverflow.com/questions/33916827/eslint-maximum-call-stack-size-exceeded
-	// ignorePatterns: ['src/plugins/paste/paste.word.test.js'],
 	root: true,
 	parser: '@typescript-eslint/parser',
 	plugins: [

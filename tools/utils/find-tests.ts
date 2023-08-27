@@ -22,7 +22,7 @@ list.push(
 
 fs.writeFileSync(
 	dir + 'test/loader.js',
-	`window.fileCasesJodit = ${JSON.stringify(list)};`
+	`// prettier-ignore\nwindow.fileCasesJodit = ${JSON.stringify(list)};`
 );
 
 console.log(`Found: ${list.length} files`);
