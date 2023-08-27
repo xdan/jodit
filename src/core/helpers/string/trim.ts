@@ -25,6 +25,12 @@ export function trim(value: string): string {
 		.replace(SPACE_REG_EXP_START(), '');
 }
 
+export function trimChars(value: string, chars: string): string {
+	return value
+		.replace(RegExp(`[${chars}]+$`), '')
+		.replace(RegExp(`^[${chars}]+`), '');
+}
+
 /**
  * Trim only invisible chars
  */

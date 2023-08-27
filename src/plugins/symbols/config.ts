@@ -240,7 +240,7 @@ Icon.set('symbols', symbolsIcon);
 Config.prototype.controls.symbols = {
 	hotkeys: ['ctrl+shift+i', 'cmd+shift+i'],
 	tooltip: 'Insert Special Character',
-	popup: (editor: IJodit, current, control, close): any => {
+	popup: (editor: IJodit, current, close): any => {
 		const container: HTMLElement | undefined = editor.e.fire(
 			'generateSpecialCharactersTable.symbols'
 		);

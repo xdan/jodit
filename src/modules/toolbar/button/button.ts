@@ -70,38 +70,38 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	 * Get parent toolbar
 	 */
 	protected get toolbar(): Nullable<IToolbarCollection> {
-		return this.closest<ToolbarCollection>(ToolbarCollection);
+		return this.closest(ToolbarCollection) as Nullable<IToolbarCollection>;
 	}
 
 	/** @override **/
 	override update(): void {
-		// @ts-ignore
-		window.__onupdate = (window.__onupdate ?? 0) + 1;
 		const { control, state } = this,
-			tc = this.closest(ToolbarCollection) as ToolbarCollection;
+			tc = this.closest<ToolbarCollection>(ToolbarCollection);
 
-		state.disabled = this.calculateDisabledStatus(tc);
-		state.activated = this.calculateActivatedStatus(tc);
-
-		if (isFunction(control.update) && tc) {
-			control.update(this, tc.jodit);
+		if (!tc) {
+			return;
 		}
 
-		super.update();
+		const value = control.value?.(tc.jodit, this);
+		if (value !== undefined) {
+			state.value = value;
+		}
+
+		state.disabled = this.__calculateDisabledStatus(tc);
+		state.activated = this.__calculateActivatedStatus(tc);
+
+		control.update?.(tc.jodit, this);
 	}
 
 	/**
 	 * Calculates whether the button is active
 	 */
-	private calculateActivatedStatus(tc?: ToolbarCollection): boolean {
+	private __calculateActivatedStatus(tc?: ToolbarCollection): boolean {
 		if (isJoditObject(this.j) && !this.j.editorIsActive) {
 			return false;
 		}
 
-		if (
-			isFunction(this.control.isActive) &&
-			this.control.isActive(this.j, this.control, this)
-		) {
+		if (this.control.isActive?.(this.j, this)) {
 			return true;
 		}
 
@@ -111,7 +111,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	/**
 	 * Calculates whether an element is blocked for the user
 	 */
-	private calculateDisabledStatus(tc?: ToolbarCollection): boolean {
+	private __calculateDisabledStatus(tc?: ToolbarCollection): boolean {
 		if (this.j.o.disabled) {
 			return true;
 		}
@@ -124,10 +124,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			return true;
 		}
 
-		if (
-			isFunction(this.control.isDisabled) &&
-			this.control.isDisabled(this.j, this.control, this)
-		) {
+		if (this.control.isDisabled?.(this.j, this)) {
 			return true;
 		}
 
@@ -257,7 +254,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	/**
 	 * Init constant data from control
 	 */
-	private __initFromControl(): void {
+	protected __initFromControl(): void {
 		const { control: ctr, state } = this;
 
 		this.updateSize();
@@ -306,7 +303,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	@watch('trigger:click')
 	protected onTriggerClick(e: MouseEvent): void {
 		if (this.openedPopup) {
-			this.closePopup();
+			this.__closePopup();
 			return;
 		}
 		const { control: ctr } = this;
@@ -316,7 +313,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		};
 
 		if (ctr.list) {
-			return this.openControlList(ctr as IControlTypeStrongList);
+			return this.__openControlList(ctr as IControlTypeStrongList);
 		}
 
 		if (isFunction(ctr.popup)) {
@@ -334,13 +331,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				const target =
 					this.toolbar?.getTarget(this) ?? this.target ?? null;
 
-				const elm = ctr.popup(
-					this.j,
-					target,
-					ctr,
-					this.closePopup,
-					this
-				);
+				const elm = ctr.popup(this.j, target, this.__closePopup, this);
 
 				if (elm) {
 					popup
@@ -376,9 +367,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	/**
 	 * Create and open popup list
 	 */
-	private openControlList(control: IControlTypeStrongList): void {
+	private __openControlList(control: IControlTypeStrongList): void {
 		const controls: Controls = this.jodit.options.controls ?? {},
-			getControl = (key: string): IControlType | void =>
+			getControl = (key: string): IControlTypeStrong | void =>
 				findControlType(key, controls);
 
 		const list = control.list,
@@ -435,6 +426,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				data: control.data,
 				command: control.command,
 				isActive: control.isChildActive,
+				value: control.value,
 				isDisabled: control.isChildDisabled,
 				mode: control.mode,
 				args: [...(control.args ? control.args : []), key, value]
@@ -454,7 +446,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			this.target
 		);
 
-		menu.setContent(toolbar.container).open(
+		menu.setContent(toolbar).open(
 			() => position(this.container),
 			false,
 			this.j.o.allowTabNavigation ? this.container : undefined
@@ -475,12 +467,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			(!Dom.isOrContains(this.container, e.target) &&
 				!this.openedPopup.isOwnClick(e))
 		) {
-			this.closePopup();
+			this.__closePopup();
 		}
 	}
 
 	private openPopup(): IPopup {
-		this.closePopup();
+		this.__closePopup();
 		this.openedPopup = new Popup(this.j, false);
 		this.j.e
 			.on(this.ow, 'mousedown touchstart', this.onOutsideClick)
@@ -489,11 +481,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	}
 
 	@autobind
-	private closePopup(): void {
+	private __closePopup(): void {
 		if (this.openedPopup) {
 			this.j.e
 				.off(this.ow, 'mousedown touchstart', this.onOutsideClick)
 				.off('escape closeAllPopups', this.onOutsideClick);
+
 			this.state.activated = false;
 			this.openedPopup.close();
 			this.openedPopup.destruct();
@@ -536,7 +529,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		}
 
 		if (ctr.list) {
-			return this.openControlList(ctr as IControlTypeStrongList);
+			return this.__openControlList(ctr as IControlTypeStrongList);
 		}
 
 		if (isFunction(ctr.popup)) {
@@ -558,7 +551,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	}
 
 	override destruct(): any {
-		this.closePopup();
+		this.__closePopup();
 		return super.destruct();
 	}
 }

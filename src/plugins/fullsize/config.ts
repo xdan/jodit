@@ -55,7 +55,7 @@ Config.prototype.controls.fullsize = {
 		editor.toggleFullSize();
 	},
 
-	update(button, editor) {
+	update(editor, button) {
 		const mode = editor.isFullSize ? 'shrink' : 'fullsize';
 
 		button.state.activated = editor.isFullSize;

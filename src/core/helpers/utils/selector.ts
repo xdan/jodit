@@ -127,7 +127,7 @@ export const getXPathByElement = (
 export const refs = <T extends HTMLElement>(
 	root: HTMLElement | IUIElement
 ): IDictionary<T> => {
-	if (Component.isInstanceOf(root, UIElement)) {
+	if (Component.isInstanceOf<UIElement>(root, UIElement)) {
 		root = root.container;
 	}
 

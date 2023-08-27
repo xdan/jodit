@@ -116,7 +116,7 @@ Config.prototype.controls.link = {
 		return Boolean(current && Dom.closest(current, 'a', editor.editor));
 	},
 
-	popup: (editor: IJodit, current, self: IControlType, close: () => void) => {
+	popup: (editor: IJodit, current, close: () => void) => {
 		return editor.e.fire('generateLinkForm.link', current, close);
 	},
 	tags: ['a'],

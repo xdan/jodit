@@ -33,7 +33,7 @@ export class ToolbarContent<T extends IViewBased = IViewBased>
 
 	/** @override */
 	override update(): void {
-		const content = this.control.getContent(this.j, this.control, this);
+		const content = this.control.getContent(this.j, this);
 
 		if (isString(content) || content.parentNode !== this.container) {
 			Dom.detach(this.container);

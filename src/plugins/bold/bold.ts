@@ -59,12 +59,12 @@ export function bold(editor: IJodit): void {
 		});
 
 		editor.s.commitStyle({
-			element: control.tags ? control.tags[0] : undefined,
-			attributes: cssRules
-				? {
-						style: cssRules
-				  }
-				: {}
+			element: control.tags ? control.tags[0] : undefined
+			// attributes: cssRules
+			// 	? {
+			// 			style: cssRules
+			// 	  }
+			// 	: {}
 		});
 
 		editor.synchronizeValues();

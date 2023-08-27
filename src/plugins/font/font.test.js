@@ -11,8 +11,8 @@ describe('Font test', function () {
 					toolbarAdaptive: false
 				});
 
-				editor.value = '<p>test</p>';
-				editor.s.select(editor.editor.firstChild.firstChild);
+				editor.value = '<p>|test|</p>';
+				setCursorToChar(editor);
 
 				const openFontNameList = function () {
 					clickTrigger('font', editor);
@@ -26,10 +26,12 @@ describe('Font test', function () {
 
 				simulateEvent('mousedown', editor.editor);
 
-				Array.from(openFontNameList()).map(function (font) {
-					simulateEvent('click', font);
+				Array.from(openFontNameList()).map(function (font, index) {
+					const btn = openFontNameList()[index];
 
-					const fontFamily = font
+					simulateEvent('click', btn);
+
+					const fontFamily = btn
 						.querySelector('span[style]')
 						.getAttribute('data-style')
 						.replace(/"/g, "'");

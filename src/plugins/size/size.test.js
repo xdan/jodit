@@ -192,11 +192,12 @@
 					});
 				});
 
-				it('Should set editor height by content in iframe mode', function () {
+				it('Should set editor height by content in iframe mode',  async () =>{
 					const editor = getJodit({
 						iframe: true
 					});
 					editor.value = '<p>test</p>'.repeat(100);
+					await editor.async.requestIdlePromise();
 					expect(editor.container.offsetHeight).to.be.above(1000);
 				});
 			});

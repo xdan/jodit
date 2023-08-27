@@ -1474,11 +1474,7 @@ describe('Toolbar', function () {
 			describe('In list', function () {
 				describe('Format block button', function () {
 					it('Should be activated then element has some tagname', function () {
-						const editor = getJodit({
-							history: {
-								timeout: 0
-							}
-						});
+						const editor = getJodit();
 
 						editor.value =
 							'<p>test</p><h1>test</h1><code>test</code>';
@@ -1490,14 +1486,14 @@ describe('Toolbar', function () {
 						expect(paragraph).is.not.null;
 
 						editor.s.setCursorAfter(p.firstChild);
-						simulateEvent('mousedown', 0, p);
+						simulateEvent('mousedown', p);
 						expect(paragraph.getAttribute('aria-pressed')).equals(
 							'false'
 						);
 
 						editor.s.setCursorIn(editor.editor.childNodes[1]);
 
-						simulateEvent('mousedown', 0, p);
+						simulateEvent('mousedown', p);
 						expect(paragraph.getAttribute('aria-pressed')).equals(
 							'true'
 						);

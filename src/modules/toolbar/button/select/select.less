@@ -1,0 +1,23 @@
+@import (reference) 'jodit/styles/variables';
+@import (reference) 'jodit/styles/mixins';
+@import (reference) 'jodit/modules/toolbar/button/button';
+
+.jodit-toolbar-select {
+	--color-button-background-hover-opacity40: rgba(220, 220, 220, 0.2);
+	--color-button-background-hover-opacity60: rgba(220, 220, 220, 0.1);
+
+	.jodit-toolbar-button();
+	justify-content: space-between;
+
+	.jodit-ui-button-interaction();
+
+	&__text:not(:empty) {
+		justify-content: left;
+	}
+
+	&__button {
+		flex: 1;
+	}
+
+	min-width: 100px;
+}

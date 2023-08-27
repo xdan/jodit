@@ -27,7 +27,7 @@ import imageIcon from './image.svg';
 Icon.set('image', imageIcon);
 
 Config.prototype.controls.image = {
-	popup: (editor: IJodit, current, ignore, close) => {
+	popup: (editor: IJodit, current, close) => {
 		let sourceImage: HTMLImageElement | null = null;
 
 		if (

@@ -8,11 +8,15 @@
 @import (reference) '../../../styles/mixins';
 @import (reference) 'jodit/core/ui/button/button/button';
 
+:root {
+	--button-trigger-size: @icon-middle-size;
+}
+
 .trigger-size(@size) {
-	width: @size;
+	width: calc(var(--button-trigger-size, @size) + 2px);
 
 	svg {
-		width: @size - 4px;
+		width: calc(var(--button-trigger-size, @size) - 4px);
 	}
 }
 
@@ -48,22 +52,28 @@
 		opacity: 0.4;
 
 		.jodit-ui-button-interaction();
+
+		--button-trigger-size: @icon-middle-size;
 		.trigger-size(@icon-middle-size);
 	}
 
 	&_size_tiny &__trigger {
+		--button-trigger-size: @icon-tiny-size;
 		.trigger-size(@icon-tiny-size);
 	}
 
 	&_size_xsmall &__trigger {
+		--button-trigger-size: @icon-xsmall-size;
 		.trigger-size(@icon-xsmall-size);
 	}
 
 	&_size_small &__trigger {
+		--button-trigger-size: @icon-small-size;
 		.trigger-size(@icon-small-size);
 	}
 
 	&_size_large &__trigger {
+		--button-trigger-size: @icon-large-size;
 		.trigger-size(@icon-large-size);
 	}
 

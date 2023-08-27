@@ -30,13 +30,15 @@ interface IControlType<
 > {
 	name?: string;
 	text?: string;
+	textTemplate?: (jodit: T, value: string) => string;
 
 	mode?: Modes;
 	hotkeys?: string | string[];
 	data?: IDictionary;
 
-	update?: (button: B, editor: T) => void;
 	isInput?: boolean;
+
+	component?: 'button' | 'select';
 
 	/**
 	 * You can use it function for control - active/not active button
@@ -62,19 +64,13 @@ interface IControlType<
 	 * })
 	 * ```
 	 */
-	isActive?: (editor: T, control: IControlType<T, B>, button?: B) => boolean;
+	isActive?: (editor: T, button: B) => boolean;
 
-	isChildActive?: (
-		editor: T,
-		control: IControlType<T, B>,
-		button?: B
-	) => boolean; // for list
+	update?: (editor: T, button: B) => void;
 
-	getContent?: (
-		editor: T,
-		control: IControlType<T, B>,
-		button: B
-	) => string | HTMLElement;
+	isChildActive?: (editor: T, button: B) => boolean; // for list
+
+	getContent?: (editor: T, button: B) => string | HTMLElement;
 
 	/**
 	 * You can use it function for control - disable/enable button
@@ -100,17 +96,9 @@ interface IControlType<
 	 * })
 	 * ```
 	 */
-	isDisabled?: (
-		editor: T,
-		control: IControlType<T, B>,
-		button?: B
-	) => boolean;
+	isDisabled?: (editor: T, button: B) => boolean;
 
-	isChildDisabled?: (
-		editor: T,
-		control: IControlType<T, B>,
-		button?: B
-	) => boolean;
+	isChildDisabled?: (editor: T, button: B) => boolean;
 
 	/**
 	 * Drop-down list. A hash or array. You must specify the command which will be submitted for the hash key
@@ -143,12 +131,7 @@ interface IControlType<
 	 *  });
 	 * ```
 	 */
-	list?:
-		| IDictionary<string | number>
-		| string[]
-		| number[]
-		| IControlType[]
-		| IControlListItem[];
+	list?: IDictionary<string | number> | string[] | number[];
 
 	/**
 	 * The command executes when the button is pressed. Allowed all
@@ -251,6 +234,7 @@ interface IControlType<
 	 * The method which will be called for each element of button.list
 	 */
 	template?: (jodit: T, key: string, value: string) => string;
+
 	childTemplate?: (
 		jodit: T,
 		key: string,
@@ -287,13 +271,13 @@ interface IControlType<
 	popup?: (
 		jodit: T,
 		current: Nullable<Node>,
-		control: IControlType<T, B>,
 		close: () => void,
 		button: B
 	) => string | HTMLElement | IUIElement | false;
 
 	defaultValue?: string | string[];
 
+	value?: (jodit: T, button: B) => string | undefined;
 	mods?: IMods['mods'];
 }
 
@@ -304,6 +288,7 @@ interface IControlListItem {
 
 interface IControlTypeStrong extends IControlType {
 	name: NonNullable<IControlType['name']>;
+	list?: IDictionary<string | number>;
 }
 
 interface IControlTypeContent extends IControlTypeStrong {

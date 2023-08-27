@@ -22,7 +22,7 @@ const cmd = (control: IControlType): string =>
 export default [
 	{
 		name: 'brush',
-		popup: (editor, _, _1, close): void | false | HTMLElement => {
+		popup: (editor, _, close): void | false | HTMLElement => {
 			if (!isJoditObject(editor)) {
 				return;
 			}

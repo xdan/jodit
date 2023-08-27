@@ -71,7 +71,7 @@ describe('Sticky plugin', function () {
 			});
 
 			describe('In iframe mode', function () {
-				it('Should work some way', function () {
+				it('Should work some way', async () => {
 					const editor = getJodit({
 						iframe: true
 					});
@@ -82,9 +82,11 @@ describe('Sticky plugin', function () {
 						editor,
 						editor.ownerDocument
 					);
+					await editor.async.requestIdlePromise();
 
 					window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
-					simulateEvent('scroll', 0, window);
+					simulateEvent('scroll', window);
+					await editor.async.requestIdlePromise();
 
 					expect(true).equals(
 						editor.container.classList.contains('jodit_sticky')

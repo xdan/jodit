@@ -21,12 +21,7 @@ import { FileSelectorWidget } from 'jodit/modules/widget';
 import { pluginSystem } from 'jodit/core/global';
 
 Config.prototype.controls.file = {
-	popup: (
-		editor: IJodit,
-		current: Node | false,
-		self: IControlType,
-		close
-	) => {
+	popup: (editor: IJodit, current: Node | false, close) => {
 		const insert = (url: string, title: string = ''): void => {
 			editor.s.insertNode(
 				editor.createInside.fromHTML(

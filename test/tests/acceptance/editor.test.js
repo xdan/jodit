@@ -670,9 +670,8 @@ describe('Jodit Editor Tests', function () {
 							const editor = getJodit();
 
 							editor.components.forEach(function (cmp) {
-								expect(
-									cmp instanceof Jodit.modules.FileBrowser
-								).is.false;
+								expect(cmp instanceof Jodit.modules.FileBrowser)
+									.is.false;
 							});
 
 							const filebrowser = editor.filebrowser;
@@ -709,9 +708,8 @@ describe('Jodit Editor Tests', function () {
 					it('should create instance of Uploader  only one time and in lazy mode', function () {
 						const editor = getJodit();
 						editor.components.forEach(function (cmp) {
-							expect(
-								cmp instanceof Jodit.modules.Uploader
-							).is.false;
+							expect(cmp instanceof Jodit.modules.Uploader).is
+								.false;
 						});
 
 						const uploader = editor.uploader;

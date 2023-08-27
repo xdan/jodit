@@ -179,7 +179,7 @@ export abstract class Component implements IComponent {
 
 	abstract className(): string;
 
-	protected constructor() {
+	constructor() {
 		this.uid = 'jodit-uid-' + uniqueUid();
 	}
 
@@ -281,8 +281,8 @@ export abstract class Component implements IComponent {
 		list[status].push(callback);
 	}
 
-	static isInstanceOf<T extends IComponent>(
-		c: unknown | IComponent,
+	static isInstanceOf<T extends Component>(
+		c: unknown | Component,
 		constructorFunc: Function
 	): c is T {
 		return c instanceof constructorFunc;

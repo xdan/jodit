@@ -18,10 +18,10 @@ export type PopupStrategy =
 	| 'rightTop';
 
 export interface IPopup extends IUIElement, IDestructible {
-	container: HTMLElement;
+	readonly container: HTMLElement;
 
-	isOpened: boolean;
-	strategy: PopupStrategy;
+	readonly isOpened: boolean;
+	readonly strategy: PopupStrategy;
 	viewBound: () => IBound;
 
 	open(

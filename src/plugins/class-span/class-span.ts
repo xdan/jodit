@@ -36,7 +36,7 @@ Config.prototype.controls.classSpan = {
 		'error'
 	],
 
-	isChildActive: (editor: IJodit, control: IControlType): boolean => {
+	isChildActive: (editor: IJodit, button): boolean => {
 		const current = editor.s.current();
 
 		if (current) {
@@ -48,15 +48,17 @@ Config.prototype.controls.classSpan = {
 				) as HTMLElement) || editor.editor;
 
 			return Boolean(
-				control.args &&
-					currentBpx.classList.contains(control.args[0].toString())
+				button.control.args &&
+					currentBpx.classList.contains(
+						button.control.args[0].toString()
+					)
 			);
 		}
 
 		return false;
 	},
 
-	isActive: (editor: IJodit, control: IControlType): boolean => {
+	isActive: (editor: IJodit, btn): boolean => {
 		const current = editor.s.current();
 
 		if (current) {
@@ -69,8 +71,8 @@ Config.prototype.controls.classSpan = {
 
 			let present: boolean = false;
 
-			control.list &&
-				Object.keys(control.list).forEach((className: string) => {
+			btn.control.list &&
+				Object.keys(btn.control.list).forEach((className: string) => {
 					if (currentBpx.classList.contains(className)) {
 						present = true;
 					}
@@ -79,7 +81,7 @@ Config.prototype.controls.classSpan = {
 			return Boolean(
 				currentBpx &&
 					currentBpx !== editor.editor &&
-					control.list !== undefined &&
+					btn.control.list !== undefined &&
 					present
 			);
 		}

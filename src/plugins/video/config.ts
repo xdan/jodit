@@ -20,7 +20,7 @@ import videoIcon from './video.svg';
 Icon.set('video', videoIcon);
 
 Config.prototype.controls.video = {
-	popup: (editor: IJodit, current, control, close) => {
+	popup: (editor: IJodit, current, close) => {
 		const formLink: IUIForm = new UIForm(editor, [
 				new UIBlock(editor, [
 					new UIInput(editor, {

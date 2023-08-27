@@ -304,8 +304,10 @@ declare global {
 }
 
 export interface FuzzySearch {
-	(needle: string, haystack: string, offset?: number, maxDistance?: number): [
-		number,
-		number
-	];
+	(
+		needle: string,
+		haystack: string,
+		offset?: number,
+		maxDistance?: number
+	): [number, number];
 }

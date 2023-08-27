@@ -10,12 +10,13 @@
 
 import type { IControlType, IJodit } from 'jodit/types';
 import { Config } from 'jodit/config';
-import { Dom } from 'jodit/core/dom/dom';
-import { css, memorizeExec } from 'jodit/core/helpers/utils';
+import { css } from 'jodit/core/helpers/utils/css';
 import { Icon } from 'jodit/core/ui/icon';
 
 import fontsizeIcon from './icons/fontsize.svg';
 import fontIcon from './icons/font.svg';
+import { Dom } from 'jodit/core/dom';
+import { trimChars } from 'jodit/core/helpers/string/trim';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -34,35 +35,21 @@ Config.prototype.controls.fontsize = {
 	command: 'fontsize',
 
 	data: {
-		cssRule: 'font-size'
-	},
-
-	list: [
-		'8',
-		'9',
-		'10',
-		'11',
-		'12',
-		'14',
-		'16',
-		'18',
-		'24',
-		'30',
-		'36',
-		'48',
-		'60',
-		'72',
-		'96'
-	],
-
-	exec: (editor, event, { control }): void | false =>
-		memorizeExec(editor, event, { control }, (value: string) => {
-			if (control.command?.toLowerCase() === 'fontsize') {
-				return `${value}${editor.o.defaultFontSizePoints}`;
+		cssRule: 'font-size',
+		normalise: (v: string, editor: IJodit): string => {
+			if (/pt$/i.test(v) && editor.o.defaultFontSizePoints === 'pt') {
+				return v.replace(/pt$/i, '');
 			}
 
-			return value;
-		}),
+			return v;
+		}
+	},
+
+	list: [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 32, 34, 36, 48, 60, 72, 96],
+
+	textTemplate: (editor, value: string): string => {
+		return value + editor.o.defaultFontSizePoints;
+	},
 
 	childTemplate: (editor, key: string, value: string) => {
 		return `${value}${editor.o.defaultFontSizePoints}`;
@@ -70,41 +57,53 @@ Config.prototype.controls.fontsize = {
 
 	tooltip: 'Font size',
 
-	isChildActive: (editor, control: IControlType): boolean => {
-		const current = editor.s.current(),
-			cssKey = control.data?.cssRule || 'font-size',
-			normalize =
-				control.data?.normalize ||
-				((v: string): string => {
-					if (
-						/pt$/i.test(v) &&
-						editor.o.defaultFontSizePoints === 'pt'
-					) {
-						return v.replace(/pt$/i, '');
-					}
-
-					return v;
-				});
-
-		if (current) {
-			const currentBpx: HTMLElement =
-				(Dom.closest(
-					current,
-					Dom.isElement,
-					editor.editor
-				) as HTMLElement) || editor.editor;
-
-			const value = css(currentBpx, cssKey) as number;
-
-			return Boolean(
-				value &&
-					control.args &&
-					normalize(control.args[0].toString()) ===
-						normalize(value.toString())
-			);
+	value: (editor, button): string | undefined => {
+		const current = editor.s.current();
+		if (!current) {
+			return;
+		}
+		const box = Dom.closest(current, Dom.isElement, editor.editor);
+		if (!box) {
+			return;
 		}
 
-		return false;
+		const control = button.control;
+		const cssKey = control.data?.cssRule || 'font-size';
+		const value = css(box, cssKey);
+
+		return value.toString();
+	},
+
+	isChildActive: (editor, button): boolean => {
+		const value = button.state.value;
+		const normalize = button.control.data?.normalize ?? ((v: unknown) => v);
+		return Boolean(
+			value &&
+				button.control.args &&
+				normalize(button.control.args[0].toString()) ===
+					normalize(value.toString())
+		);
+	},
+
+	isActive: (editor: IJodit, button): boolean => {
+		const value = button.state.value;
+		if (!value) {
+			return false;
+		}
+
+		const normalize: (v: string) => string =
+			button.control.data?.normalize ?? ((v: string): string => v);
+
+		let keySet: Set<string> = button.control.data!.cacheListSet;
+		if (!keySet) {
+			const keys: string[] = Object.keys(button.control.list!).map(
+				normalize
+			);
+			keySet = new Set(keys);
+			button.control.data!.cacheListSet = keySet;
+		}
+
+		return keySet.has(normalize(value.toString()));
 	}
 } as IControlType<IJodit> as IControlType;
 
@@ -112,15 +111,24 @@ Config.prototype.controls.font = {
 	...Config.prototype.controls.fontsize,
 	command: 'fontname',
 
+	textTemplate: (j: IJodit, value: string) => {
+		const [first] = value.split(',');
+		return trimChars(first, '"\'');
+	},
+
 	list: {
 		'': 'Default',
-		'helvetica,sans-serif': 'Helvetica',
-		'arial,helvetica,sans-serif': 'Arial',
-		'georgia,palatino,serif': 'Georgia',
-		'impact,charcoal,sans-serif': 'Impact',
-		'tahoma,geneva,sans-serif': 'Tahoma',
-		'times new roman,times,serif': 'Times New Roman',
-		'verdana,geneva,sans-serif': 'Verdana'
+		'Arial, Helvetica, sans-serif': 'Arial',
+		"'Courier New', Courier, monospace": 'Courier New',
+		'Georgia, Palatino, serif': 'Georgia',
+		"'Lucida Sans Unicode', 'Lucida Grande', sans-serif":
+			'Lucida Sans Unicode',
+		'Tahoma, Geneva, sans-serif': 'Tahoma',
+		"'Times New Roman', Times, serif": 'Times New Roman',
+		"'Trebuchet MS', Helvetica, sans-serif;": 'Trebuchet MS',
+		'Helvetica, sans-serif': 'Helvetica',
+		'Impact, Charcoal, sans-serif': 'Impact',
+		'Verdana, Geneva, sans-serif': 'Verdana'
 	},
 
 	childTemplate: (editor, key: string, value: string) => {
@@ -143,7 +151,7 @@ Config.prototype.controls.font = {
 			return v
 				.toLowerCase()
 				.replace(/['"]+/g, '')
-				.replace(/[^a-z0-9]+/g, ',');
+				.replace(/[^a-z0-9-]+/g, ',');
 		}
 	},
 

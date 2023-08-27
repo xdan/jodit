@@ -72,7 +72,9 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	/**
 	 * Find match parent
 	 */
-	closest<T extends IUIElement>(type: Function | T): Nullable<T> {
+	closest<T extends UIElement | typeof UIElement>(
+		type: UIElement | Function
+	): Nullable<T extends typeof UIElement ? InstanceType<T> : T> {
 		const c =
 			typeof type === 'object'
 				? (pe: IUIElement): boolean => pe === type
@@ -82,7 +84,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 
 		while (pe) {
 			if (c(pe)) {
-				return pe as T;
+				return pe as T extends typeof UIElement ? InstanceType<T> : T;
 			}
 
 			if (!pe.parentElement && pe.container.parentElement) {

@@ -237,24 +237,27 @@ export function iframe(editor: IJodit): void {
 						(doc.documentElement.style.overflowY = 'hidden');
 
 					const resizeIframe = editor.async.throttle(() => {
-						if (
-							editor.editor &&
-							editor.iframe &&
-							opt.height === 'auto'
-						) {
-							const style = editor.ew.getComputedStyle(
-									editor.editor
-								),
-								marginOffset =
-									parseInt(style.marginTop || '0', 10) +
-									parseInt(style.marginBottom || '0', 10);
+						editor.async.requestAnimationFrame(() => {
+							console.log('resize');
+							if (
+								editor.editor &&
+								editor.iframe &&
+								opt.height === 'auto'
+							) {
+								const style = editor.ew.getComputedStyle(
+										editor.editor
+									),
+									marginOffset =
+										parseInt(style.marginTop || '0', 10) +
+										parseInt(style.marginBottom || '0', 10);
 
-							css(
-								editor.iframe,
-								'height',
-								editor.editor.offsetHeight + marginOffset
-							);
-						}
+								css(
+									editor.iframe,
+									'height',
+									editor.editor.offsetHeight + marginOffset
+								);
+							}
+						});
 					}, editor.defaultTimeout / 2);
 
 					editor.e

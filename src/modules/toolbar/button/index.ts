@@ -10,3 +10,4 @@
 
 export * from './button';
 export * from './content';
+export * from './select/select';

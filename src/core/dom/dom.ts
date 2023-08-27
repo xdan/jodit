@@ -29,8 +29,8 @@ import {
 	isSet,
 	isMarker
 } from 'jodit/core/helpers/checker';
-import { toArray } from 'jodit/core/helpers/array';
-import { trim } from 'jodit/core/helpers/string';
+import { toArray } from 'jodit/core/helpers/array/to-array';
+import { trim } from 'jodit/core/helpers/string/trim';
 import { $$, attr, call, css, dataBind, error } from 'jodit/core/helpers/utils';
 import {
 	INSEPARABLE_TAGS,

@@ -46,9 +46,25 @@
 		<script>
 			var editor = Jodit.make(editorNative, {
 				// safeMode: true,
-				fullsize: true,
+				iframe: true,
+				// buttons: ['paragraph', 'align'],
+				controls: {
+					paragraph: {
+						component: 'select',
+					},
+					// align: {
+					// 	component: 'select',
+					// },
+					font: {
+						component: 'select',
+					},
+					fontsize: {
+						component: 'select',
+					}
+				},
+				// fullsize: true,
 				cache: true,
-				language: 'ru',
+				// language: 'ru',
 				filebrowser: {
 					ajax: {
 						url: 'https://xdsoft.net/jodit/finder/'

@@ -30,7 +30,7 @@ import { error } from 'jodit/core/helpers/utils/error/error';
 import { UIList, UITooltip } from 'jodit/core/ui';
 import { component, autobind } from 'jodit/core/decorators';
 
-import { makeButton } from 'jodit/modules/toolbar/factory';
+import { makeButton, makeSelect } from 'jodit/modules/toolbar/factory';
 
 @component
 export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
@@ -59,6 +59,13 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		target: Nullable<HTMLElement> = null
 	): IUIButton {
 		return makeButton(this.j, control, target);
+	}
+
+	protected override makeSelect(
+		control: IControlTypeStrong,
+		target: Nullable<HTMLElement> = null
+	): IUIButton {
+		return makeSelect(this.j, control, target);
 	}
 
 	/**

@@ -26,7 +26,7 @@ Config.prototype.controls.align = {
 	name: 'left',
 	tooltip: 'Align',
 
-	update(button, editor: IJodit): void {
+	update(editor: IJodit, button): void {
 		const control = button.control,
 			current = editor.s.current();
 
@@ -48,9 +48,9 @@ Config.prototype.controls.align = {
 				control.data &&
 				control.data.currentValue !== currentValue &&
 				control.list &&
-				(control.list as string[]).indexOf(currentValue) !== -1
+				control.list[currentValue]
 			) {
-				if (editor.o.textIcons) {
+				if (editor.o.textIcons || control.component === 'select') {
 					button.state.text = currentValue;
 				} else {
 					button.state.icon.name = currentValue;
@@ -64,22 +64,19 @@ Config.prototype.controls.align = {
 	isActive: (editor: IJodit, btn): boolean => {
 		const current = editor.s.current();
 
-		if (current && btn.defaultValue) {
-			const currentBox: HTMLElement =
-				(Dom.closest(
-					current,
-					Dom.isBlock,
-					editor.editor
-				) as HTMLElement) || editor.editor;
-
-			return (
-				btn.defaultValue.indexOf(
-					css(currentBox, 'text-align').toString()
-				) === -1
-			);
+		if (!current || !btn.control.defaultValue) {
+			return false;
 		}
 
-		return false;
+		const currentBox: HTMLElement =
+			(Dom.closest(current, Dom.isBlock, editor.editor) as HTMLElement) ||
+			editor.editor;
+
+		return (
+			btn.control.defaultValue.indexOf(
+				css(currentBox, 'text-align').toString()
+			) === -1
+		);
 	},
 
 	defaultValue: ['left', 'start', 'inherit'],

@@ -24,7 +24,7 @@ import brushIcon from './brush.svg';
 Icon.set('brush', brushIcon);
 
 Config.prototype.controls.brush = {
-	update(button, editor: IJodit): void {
+	update(editor: IJodit, button): void {
 		const color = dataBind(button, 'color');
 
 		const update = (key: string, value: string): void => {
@@ -64,7 +64,6 @@ Config.prototype.controls.brush = {
 	popup: (
 		editor: IJodit,
 		current: Node | false,
-		self: IControlType,
 		close: () => void,
 		button
 	) => {

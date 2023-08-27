@@ -134,7 +134,15 @@ export class UIList<T extends IViewBased = IViewBased>
 
 				default:
 					lastBtnSeparator = false;
-					elm = this.makeButton(control, target);
+					switch (control.component) {
+						case 'select':
+							elm = this.makeSelect(control, target);
+							break;
+
+						case 'button':
+						default:
+							elm = this.makeButton(control, target);
+					}
 			}
 
 			if (elm) {
@@ -180,6 +188,13 @@ export class UIList<T extends IViewBased = IViewBased>
 		return this;
 	}
 
+	protected makeSelect(
+		control: IControlTypeStrong,
+		target: Nullable<HTMLElement>
+	): IUIButton {
+		throw new Error('Not implemented behaviour');
+	}
+
 	/**
 	 * Create button instance
 	 */
@@ -187,6 +202,8 @@ export class UIList<T extends IViewBased = IViewBased>
 		control: IControlTypeStrong,
 		target: Nullable<HTMLElement>
 	): IUIButton {
-		return new UIButton(this.j);
+		return new UIButton(this.j, {
+			name: control.name
+		});
 	}
 }

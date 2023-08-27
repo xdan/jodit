@@ -24,6 +24,7 @@ import { ToolbarCollection } from './collection/collection';
 import { ToolbarEditorCollection } from './collection/editor-collection';
 import { ToolbarButton } from './button/button';
 import { ToolbarContent } from './button/content';
+import { ToolbarSelect } from './button/select/select';
 
 /**
  * Collection factory
@@ -72,4 +73,12 @@ export function makeButton(
 	button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
 
 	return button;
+}
+
+export function makeSelect(
+	view: IViewBased,
+	control: IControlTypeStrong,
+	target: Nullable<HTMLElement> = null
+): IToolbarButton {
+	return new ToolbarSelect(view, control, target);
 }

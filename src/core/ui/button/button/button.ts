@@ -109,7 +109,7 @@ export class UIButton extends UIElement implements IUIButton {
 	 */
 	@watch('parentElement')
 	protected updateSize(): void {
-		const pe = this.closest(UIList) as UIList;
+		const pe = this.closest<UIList>(UIList);
 
 		if (pe) {
 			this.state.size = pe.buttonSize;
