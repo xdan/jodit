@@ -15,7 +15,7 @@ npm ci
 Change code + add autotest in `test/tests/` folder. Run
 
 ```bash
-npm run lint && npm test
+make lint && make test
 ```
 
 Fix it and commit your changes:
@@ -27,6 +27,10 @@ git push
 ````
 
 In your repository in the GitHub interface, create a pull request.
+
+## Requirement
+
+To work, you need the [make](https://www.gnu.org/software/make/) utility.
 
 ## Fixing issues and adding features
 
@@ -49,7 +53,7 @@ More about the style code is written in the [guide](./JODIT-DEVELOPMENT-GUIDE.md
 It is also important that before you create a PR, you run the command without errors:
 
 ```bash
-npm run lint
+make lint
 ```
 
 We follow simple code formatting rules that your IDE or editor will tell you.
