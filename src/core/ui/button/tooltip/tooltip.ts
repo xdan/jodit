@@ -35,6 +35,7 @@ export class UITooltip extends UIElement {
 
 	constructor(view: IViewBased) {
 		super(view);
+
 		if (
 			!view.o.textIcons &&
 			view.o.showTooltip &&
