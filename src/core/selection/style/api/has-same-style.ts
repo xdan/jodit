@@ -48,7 +48,7 @@ assert(hasSameStyle(elm, { fontSize: null }), 'Style test');
 assert(hasSameStyle(elm, { fontSize: '' }), 'Style test');
 
 /**
- * Element has the similar styles
+ * Element has the similar styles keys
  */
 export function hasSameStyleKeys(elm: Node, rules: IStyle): boolean {
 	return Boolean(
@@ -57,10 +57,13 @@ export function hasSameStyleKeys(elm: Node, rules: IStyle): boolean {
 			Object.keys(rules).every(property => {
 				const value = css(elm, property, true);
 
-				return !isVoid(value);
+				return value !== '';
 			})
 	);
 }
 
-assert(hasSameStyleKeys(elm, { color: 'red' }), 'Style test');
-assert(hasSameStyleKeys(elm, { font: 'Arial', color: 'red' }), 'Style test');
+const elm2 = document.createElement('div');
+elm2.style.color = 'red';
+assert(hasSameStyleKeys(elm2, { color: 'red' }), 'Style test');
+assert(!hasSameStyleKeys(elm2, { font: 'Arial', color: 'red' }), 'Style test');
+assert(!hasSameStyleKeys(elm2, { border: '1px solid #ccc' }), 'Style test');

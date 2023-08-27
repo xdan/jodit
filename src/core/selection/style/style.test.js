@@ -20,306 +20,771 @@ describe('Apply style', () => {
 		describe('Base apply', () => {
 			[
 				[
-					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
-					{
-						element: 'h1'
-					},
-					'<ul><li>|1</li><li>2</li><li>3|</li></ul>'
-				],
-				[
-					'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>',
-					{
-						attributes: {
-							style: { color: '#000000' }
-						}
-					},
-					// https://github.com/xdan/jodit/issues/936
-					'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>'
-				],
-				[
-					'<p><a href="https://xdsoft.net/jodit/" style="color:#000001">|https://xdsoft.net/jodit/|</a></p>',
-					{
-						attributes: {
-							style: { color: '#000001' }
-						}
-					},
-					'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>'
-				],
-				[
-					'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>',
-					{
-						attributes: {
-							style: { color: '#000001' }
-						}
-					},
-					'<p><a href="https://xdsoft.net/jodit/" style="color:#000001">|https://xdsoft.net/jodit/|</a></p>'
-				],
-				[
-					'<p><strong>|test</strong> pop <strong>test|</strong></p>',
-					{
-						element: 'strong'
-					},
-					'<p>|test pop test|</p>'
-				],
-				[
-					'<p><strong>|test</strong> pop <strong>test|</strong></p>',
-					{
-						element: 'strong',
-						attributes: { style: { fontWeight: 700 } }
-					},
-					'<p>|test pop test|</p>'
-				],
-				[
-					'<p>|test|</p>',
-					{ element: 'strong' },
-					'<p><strong>|test|</strong></p>'
-				],
-				[
-					'<p>|test|</p>',
-					{
-						element: 'sub'
-					},
-					'<p><sub>|test|</sub></p>'
-				],
-				[
-					'<p><sub>|test|</sub></p>',
-					{
-						element: 'sub'
-					},
-					'<p>|test|</p>'
-				],
-				[
-					'<p>|test|</p>',
-					{
-						element: 'a',
-						attributes: {
-							href: 'https://xdsoft.net'
-						}
-					},
-					'<p><a href="https://xdsoft.net">|test|</a></p>'
-				],
-				[
-					'<p>|test|</p>',
-					{
-						element: 'h1',
-						attributes: {
-							class: 'header'
-						}
-					},
-					'<h1 class="header">|test|</h1>'
-				],
-				[
-					'<p><a href="https://xdsoft.net">|test|</a></p>',
-					{
-						element: 'a',
-						attributes: {
-							href: 'https://xdsoft.net'
-						}
-					},
-					'<p>|test|</p>'
-				],
-				[
-					'<p><a href="https://xdsoft.net">|test|</a></p>',
-					{
-						element: 'a',
-						attributes: {
-							title: 'book',
-							href: 'https://sitename.net'
-						}
-					},
-					'<p><a href="https://sitename.net" title="book">|test|</a></p>'
-				],
-				[
-					'<p><span>|test|</span></p>',
-					{
-						element: 'a',
-						attributes: {
-							title: 'book',
-							href: 'https://sitename.net'
-						}
-					},
-					'<p><span><a href="https://sitename.net" title="book">|test|</a></span></p>'
-				],
-				[
-					'<p><a href="https://xdsoft.net">|test|</a></p>',
-					{
-						element: 'a',
-						attributes: {
-							href: 'https://sitename.net'
-						}
-					},
-					'<p><a href="https://sitename.net">|test|</a></p>'
-				],
-				[
-					'<p><strong style="font-family: Impact, Charcoal, sans-serif;"><em>|test|</em></strong></p>',
-					{
-						element: 'strong'
-					},
-					'<p><span style="font-family:Impact,Charcoal,sans-serif"><em>|test|</em></span></p>'
-				],
-				[
-					'<p><strong>|test|</strong></p>',
-					{
-						attributes: {
-							className: 'class1'
-						}
-					},
-					'<p><strong class="class1">|test|</strong></p>'
-				],
-				[
-					'<p><strong>|test|</strong></p>',
-					{
-						attributes: {
-							class: 'class1'
-						}
-					},
-					'<p><strong class="class1">|test|</strong></p>'
-				],
-				[
-					'<p><strong class="class2">|test|</strong></p>',
-					{
-						attributes: {
-							class: 'class1'
-						}
-					},
-					'<p><strong class="class2 class1">|test|</strong></p>'
-				],
-				[
-					'<p><strong class="class1">|test|</strong></p>',
-					{
-						attributes: {
-							class: 'class1'
-						}
-					},
-					'<p><strong>|test|</strong></p>'
-				],
-				[
-					'<p><strong class="class1 class2">|test|</strong></p>',
-					{
-						attributes: {
-							class: 'class1'
-						}
-					},
-					'<p><strong class="class2">|test|</strong></p>'
-				],
-				[
-					'<p><strong>|test|</strong></p>',
-					{
-						element: 'em',
-						attributes: {
-							style: {
-								fontStyle: 'italic'
+					'List',
+					[
+						[
+							'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
+							{
+								element: 'h1'
+							},
+							'<ul><li>|1</li><li>2</li><li>3|</li></ul>'
+						],
+						// Lists
+						[
+							'<ol><li>ordered</li><li>|list</li><li>pop</li></ol>',
+							{ element: 'ul' },
+							'<ol><li>ordered</li></ol><ul><li>|list</li></ul><ol><li>pop</li></ol>'
+						],
+						[
+							'<ol><li>|ordered</li><li>list</li></ol><p>test|</p>',
+							{ element: 'ol' },
+							'<p>|ordered</p><p>list</p><p>test|</p>'
+						],
+						[
+							'<p>|test</p><ol><li>ordered</li><li>list|</li></ol>',
+							{ element: 'ol' },
+							'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+						],
+						[
+							'<ol><li>ordered</li></ol><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+							{ element: 'ol' },
+							'<ol><li>ordered</li><li>|test</li><li>list</li><li>pop</li></ol>'
+						],
+						[
+							'<ul><li>ordered</li></ul><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+							{ element: 'ol' },
+							'<ul><li>ordered</li></ul><ol><li>|test</li><li>list</li><li>pop</li></ol>'
+						],
+						[
+							'<ul><li>ordered</li></ul><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+							{ element: 'ul' },
+							'<ul><li>ordered</li><li>|test</li></ul><ol><li>list</li><li>pop</li></ol>'
+						],
+						[
+							'<ol class="p"><li>ordered</li></ol><p>|test</p><ol><li>list</li><li>pop</li></ol>',
+							{ element: 'ol' },
+							'<ol class="p"><li>ordered</li><li>|test</li></ol><ol><li>list</li><li>pop</li></ol>'
+						],
+						[
+							'<ol><li>ordered</li><li>list</li></ol><p>|test</p><p>pop|</p>',
+							{ element: 'ol' },
+							'<ol><li>ordered</li><li>list</li><li>|test</li><li>pop|</li></ol>'
+						],
+						[
+							'<p>|test</p><p>pop|</p><ol><li>ordered</li><li>list</li></ol>',
+							{ element: 'ol' },
+							'<ol><li>|test</li><li>pop|</li><li>ordered</li><li>list</li></ol>'
+						],
+						[
+							'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
+							{ element: 'ol' },
+							'<ol><li>|test</li><li>ordered</li><li>list</li></ol>'
+						],
+						[
+							'<p>|Hello world|</p>',
+							{
+								element: 'ul',
+								attributes: {
+									style: {
+										listStyleType: 'circle'
+									}
+								}
+							},
+							'<ul style="list-style-type:circle"><li>|Hello world|</li></ul>'
+						],
+						[
+							'<p>|test</p><p>ordered</p><p>list|</p>',
+							{ element: 'ol' },
+							'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+						],
+						[
+							'<p>|test</p><p>ordered</p><p>list|</p>',
+							{ element: 'ol', attributes: { class: 'test' } },
+							'<ol class="test"><li>|test</li><li>ordered</li><li>list|</li></ol>'
+						],
+						[
+							'<p>|test</p><p>ordered</p><p>list</p><p>a few</p><p>leafs|</p>',
+							{ element: 'ol', attributes: { class: 'test' } },
+							'<ol class="test"><li>|test</li><li>ordered</li><li>list</li><li>a few</li><li>leafs|</li></ol>'
+						],
+						[
+							'<p>|text</p><p>pop</p><p>oup</p><p>test|</p>',
+							{
+								element: 'ul',
+								attributes: {
+									class: 'todo-list2'
+								}
+							},
+							'<ul class="todo-list2"><li>|text</li><li>pop</li><li>oup</li><li>test|</li></ul>'
+						],
+						[
+							'<p>|test</p><p>ordered</p><p>list</p><p>a few</p><p>leafs|</p>',
+							{ element: 'ul', attributes: { class: 'test' } },
+							'<ul class="test"><li>|test</li><li>ordered</li><li>list</li><li>a few</li><li>leafs|</li></ul>'
+						],
+						[
+							'<p>|test</p><p>ordered</p><p>list|</p>',
+							{
+								element: 'ol',
+								attributes: { style: { listStyleType: null } }
+							},
+							'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+						],
+						[
+							'<p>|test1</p>\n\n<p>ordered</p>\n\n<p>list1|</p>',
+							{ element: 'ol' },
+							'<ol><li>|test1</li><li>ordered</li><li>list1|</li></ol>'
+						],
+						[
+							'<h1>|test</h1><p>ordered</p><p>list|</p>',
+							{ element: 'ol' },
+							'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+						],
+						[
+							'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
+							{ element: 'ol' },
+							'<ol><li>|test</li><li>ordered</li><li>list</li></ol>'
+						],
+						[
+							'<ol><li>|test</li><li>ordered</li><li>list</li></ol>',
+							{ element: 'ol' },
+							'<p>|test</p><ol><li>ordered</li><li>list</li></ol>'
+						],
+						[
+							'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li><li>6|</li></ul>',
+							{ element: 'ol' },
+							'<p>|1</p><p>2</p><p>3</p><p>4</p><p>5</p><p>6|</p>'
+						],
+						[
+							'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li><li>6|</li></ul>',
+							{ element: 'ul' },
+							'<ul><li>|1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6|</li></ul>'
+						],
+						[
+							'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li></ul><p>6|</p>',
+							{ element: 'ul' },
+							'<ul><li>|1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6|</li></ul>'
+						],
+						[
+							'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>3.5</li></ul><ul><li>4</li><li>5</li></ul><p>6|</p>',
+							{ element: 'ul' },
+							'<ul><li>|1</li><li>2</li><li>3</li><li>3.5</li><li>4</li><li>5</li><li>6|</li></ul>'
+						],
+						[
+							'<ol><li>|1</li><li>2</li><li>3</li></ol><ol><li>3.5</li></ol><ul><li>4</li><li>5</li></ul><p>6|</p>',
+							{ element: 'ul' },
+							'<ul><li>|1</li><li>2</li><li>3</li><li>3.5</li><li>4</li><li>5</li><li>6|</li></ul>'
+						],
+						[
+							'<ol><li>test</li><li>ord|ered</li><li>list</li></ol>',
+							{ element: 'ol' },
+							'<ol><li>test</li></ol><p>ord|ered</p><ol><li>list</li></ol>'
+						],
+						[
+							'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>',
+							{ element: 'ol' },
+							'<p>|test</p><p>ordered</p><p>list|</p>'
+						],
+						[
+							'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+							{ element: 'ul' },
+							'<p>|test</p><p>unordered</p><p>list|</p>'
+						],
+						[
+							'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+							{ element: 'ol' },
+							'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>'
+						],
+						[
+							'<ul><li>test</li><li>unordered|</li><li>list</li></ul>',
+							{ element: 'ul' },
+							'<ul><li>test</li></ul><p>unordered|</p><ul><li>list</li></ul>'
+						],
+						[
+							'<ul><li>test</li></ul><p>unordered|</p><ul><li>list</li></ul>',
+							{ element: 'ul' },
+							'<ul><li>test</li><li>unordered|</li><li>list</li></ul>'
+						],
+						[
+							'<ul class="test"><li>test</li></ul><p>unordered|</p><ul class="test"><li>list</li></ul>',
+							{ element: 'ul', attributes: { class: 'test' } },
+							'<ul class="test"><li>test</li><li>unordered|</li><li>list</li></ul>'
+						],
+						[
+							'<ul><li>test</li><li>unor|der|ed</li><li>list</li></ul>',
+							{ element: 'ul' },
+							'<ul><li>test</li></ul><p>unor|der|ed</p><ul><li>list</li></ul>'
+						],
+						[
+							'<ul><li>test</li><li>unor|der|ed</li><li>list</li></ul>',
+							{ element: 'ul', attributes: { class: 'test' } },
+							'<ul><li>test</li></ul><ul class="test"><li>unor|der|ed</li></ul><ul><li>list</li></ul>'
+						],
+						[
+							'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
+							{
+								element: 'ol',
+								attributes: {
+									style: { 'list-style-type': 'lower-roman' }
+								}
+							},
+							'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
+						],
+						[
+							'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>',
+							{
+								element: 'ol',
+								attributes: {
+									style: { 'list-style-type': 'lower-roman' }
+								}
+							},
+							'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
+						],
+						[
+							'<ol style="list-style-type:lower-roman"><li>|test</li><li>ordered</li><li>list|</li></ol>',
+							{
+								element: 'ol',
+								attributes: {
+									style: { 'list-style-type': 'lower-roman' }
+								}
+							},
+							'<p>|test</p><p>ordered</p><p>list|</p>'
+						],
+						[
+							'<ol style="list-style-type:lower-alpha"><li>|test</li><li>unordered</li><li>list|</li></ol>',
+							{
+								element: 'ol',
+								attributes: {
+									style: { 'list-style-type': 'lower-roman' }
+								}
+							},
+							'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
+						],
+						[
+							'<p>|test</p><p>ordered</p><p>list|</p>',
+							{ element: 'ol' },
+							'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+						],
+						[
+							'<p>|test</p><p>ordered</p><p>list</p>',
+							{ element: 'ol' },
+							'<ol><li>|test</li></ol><p>ordered</p><p>list</p>'
+						],
+						[
+							'<h1>|test</h1><p>ordered</p><p>list|</p>',
+							{ element: 'ol' },
+							'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
+						],
+						[
+							'<p>te|st</p><p>ordered</p><p>li|st</p>',
+							{ element: 'ol' },
+							'<ol><li>te|st</li><li>ordered</li><li>li|st</li></ol>'
+						],
+						[
+							'<p>|test</p><p>unordered</p><p>list|</p>',
+							{ element: 'ul' },
+							'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>'
+						],
+						[
+							'<ul><li>|1</li><li>2</li><li>3|</li></ul>',
+							{ element: 'h1' },
+							'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>'
+						],
+						[
+							'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
+							{ element: 'h1' },
+							'<ul><li>|1</li><li>2</li><li>3|</li></ul>'
+						],
+						[
+							'<ul class="todo-list"><li>test|</li></ul>',
+							{
+								element: 'ul',
+								hooks: {
+									beforeToggleList(mode, style, list) {
+										Dom.replace(
+											list,
+											style.element,
+											editor.createInside
+										);
+										return 'replace';
+									}
+								}
+							},
+							'<ul><li>test|</li></ul>'
+						],
+						[
+							'<ul class="todo-list"><li>test|</li></ul>',
+							{
+								element: 'ul',
+								hooks: {
+									afterToggleList(mode, li) {
+										if (mode === 'unwrap') {
+											li.setAttribute('replaced', true);
+										}
+									}
+								}
+							},
+							'<p replaced="true">test|</p>',
+							{
+								disablePlugins: ['todo-list']
 							}
-						}
-					},
-					'<p><strong><em>|test|</em></strong></p>'
+						],
+						[
+							'<ul class="todo-list"><li>test|</li></ul>',
+							{
+								element: 'ol'
+							},
+							'<ol><li>test|</li></ol>'
+						],
+						[
+							'<p>|test|</p>',
+							{
+								element: 'ul',
+								hooks: {
+									beforeWrapList(_, wrapper) {
+										const li = Dom.replace(
+											wrapper,
+											'li',
+											editor.createInside
+										);
+
+										const label =
+											editor.createInside.element(
+												'label',
+												{ class: 'jodit_todo_label' }
+											);
+
+										const input =
+											editor.createInside.element(
+												'input',
+												{
+													type: 'checkbox'
+												}
+											);
+										label.appendChild(input);
+										Dom.prepend(li, label);
+
+										return li;
+									}
+								},
+								attributes: {
+									class: 'todo-list'
+								}
+							},
+							'<ul class="todo-list"><li><label class="jodit_todo_label"><input type="checkbox"></label>|test|</li></ul>'
+						],
+						[
+							'<p>|pop|</p>',
+							{
+								element: 'ul',
+								hooks: {
+									afterWrapList(_, wrapper, style) {
+										wrapper
+											.querySelectorAll('li')
+											.forEach(li => {
+												li.className =
+													'test ' +
+													style.options.attributes
+														.class;
+											});
+									}
+								},
+								attributes: {
+									class: 'todo-list'
+								}
+							},
+							'<ul class="todo-list"><li class="test todo-list">|pop|</li></ul>'
+						]
+					]
+				],
+				[
+					'Links',
+					[
+						[
+							'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>',
+							{
+								attributes: {
+									style: { color: '#000000' }
+								}
+							},
+							// https://github.com/xdan/jodit/issues/936
+							'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>'
+						],
+						[
+							'<p><a href="https://xdsoft.net/jodit/" style="color:#000001">|https://xdsoft.net/jodit/|</a></p>',
+							{
+								attributes: {
+									style: { color: '#000001' }
+								}
+							},
+							'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>'
+						],
+						[
+							'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>',
+							{
+								attributes: {
+									style: { color: '#000001' }
+								}
+							},
+							'<p><a href="https://xdsoft.net/jodit/" style="color:#000001">|https://xdsoft.net/jodit/|</a></p>'
+						],
+						[
+							'<p>|test|</p>',
+							{
+								element: 'a',
+								attributes: {
+									href: 'https://xdsoft.net'
+								}
+							},
+							'<p><a href="https://xdsoft.net">|test|</a></p>'
+						],
+						[
+							'<p><a href="https://xdsoft.net">|test|</a></p>',
+							{
+								element: 'a',
+								attributes: {
+									href: 'https://xdsoft.net'
+								}
+							},
+							'<p>|test|</p>'
+						],
+						[
+							'<p><a href="https://xdsoft.net">|test|</a></p>',
+							{
+								element: 'a',
+								attributes: {
+									title: 'book',
+									href: 'https://sitename.net'
+								}
+							},
+							'<p><a href="https://sitename.net" title="book">|test|</a></p>'
+						],
+						[
+							'<p><span>|test|</span></p>',
+							{
+								element: 'a',
+								attributes: {
+									title: 'book',
+									href: 'https://sitename.net'
+								}
+							},
+							'<p><span><a href="https://sitename.net" title="book">|test|</a></span></p>'
+						],
+						[
+							'<p><a href="https://xdsoft.net">|test|</a></p>',
+							{
+								element: 'a',
+								attributes: {
+									href: 'https://sitename.net'
+								}
+							},
+							'<p><a href="https://sitename.net">|test|</a></p>'
+						]
+					]
 				],
 
 				[
-					'<p>t|es|t</p>',
-					{
-						attributes: {
-							style: {
-								fontSize: 24
-							}
-						}
-					},
-					'<p>t<span style="font-size:24px">|es|</span>t</p>'
+					'Tags',
+					[
+						[
+							'<p><strong>|test</strong> pop <strong>test|</strong></p>',
+							{
+								element: 'strong'
+							},
+							'<p>|test pop test|</p>'
+						],
+						[
+							'<p><strong>|test</strong> pop <strong>test|</strong></p>',
+							{
+								element: 'strong'
+								// attributes: { style: { fontWeight: 700 } }
+							},
+							'<p>|test pop test|</p>'
+						],
+						[
+							'<p>|test|</p>',
+							{ element: 'strong' },
+							'<p><strong>|test|</strong></p>'
+						],
+						[
+							'<p>|test|</p>',
+							{
+								element: 'sub'
+							},
+							'<p><sub>|test|</sub></p>'
+						],
+						[
+							'<p><sub>|test|</sub></p>',
+							{
+								element: 'sub'
+							},
+							'<p>|test|</p>'
+						],
+						[
+							'<p>|test|</p>',
+							{
+								element: 'h1',
+								attributes: {
+									class: 'header'
+								}
+							},
+							'<h1 class="header">|test|</h1>'
+						],
+						[
+							'<p><strong style="font-family: Impact, Charcoal, sans-serif;"><em>|test|</em></strong></p>',
+							{
+								element: 'strong'
+							},
+							'<p><span style="font-family:Impact,Charcoal,sans-serif"><em>|test|</em></span></p>'
+						]
+					]
 				],
 				[
-					'<p><span style="font-weight:700;font-family:Arial,serif">|test|</span></p>',
-					{
-						element: 'strong',
-						attributes: {
-							style: {
-								fontWeight: 700
-							}
-						}
-					},
-					'<p><span style="font-family:Arial,serif">|test|</span></p>'
+					'Classname',
+					[
+						[
+							'<p><strong>|test|</strong></p>',
+							{
+								attributes: {
+									className: 'class1'
+								}
+							},
+							'<p><strong class="class1">|test|</strong></p>'
+						],
+						[
+							'<p><strong>|test|</strong></p>',
+							{
+								attributes: {
+									class: 'class1'
+								}
+							},
+							'<p><strong class="class1">|test|</strong></p>'
+						],
+						[
+							'<p><strong class="class2">|test|</strong></p>',
+							{
+								attributes: {
+									class: 'class1'
+								}
+							},
+							'<p><strong class="class2 class1">|test|</strong></p>'
+						],
+						[
+							'<p><strong class="class1">|test|</strong></p>',
+							{
+								attributes: {
+									class: 'class1'
+								}
+							},
+							'<p><strong>|test|</strong></p>'
+						],
+						[
+							'<p><strong class="class1 class2">|test|</strong></p>',
+							{
+								attributes: {
+									class: 'class1'
+								}
+							},
+							'<p><strong class="class2">|test|</strong></p>'
+						]
+					]
 				],
+
 				[
-					'<p><span style="font-weight:700;font-size:24px;">|test|</span></p>',
-					{
-						element: 'strong',
-						attributes: {
-							style: {
-								fontWeight: 700
-							}
-						}
-					},
-					'<p><span style="font-size:24px">|test|</span></p>'
+					'Style&Tag',
+					[
+						[
+							'<p><strong>|test|</strong></p>',
+							{
+								element: 'em',
+								attributes: {
+									style: {
+										fontStyle: 'italic'
+									}
+								}
+							},
+							'<p><strong><em>|test|</em></strong></p>'
+						],
+
+						[
+							'<p>t|es|t</p>',
+							{
+								attributes: {
+									style: {
+										fontSize: 24
+									}
+								}
+							},
+							'<p>t<span style="font-size:24px">|es|</span>t</p>'
+						],
+						[
+							'<p><span style="font-weight:700;font-family:Arial,serif">|test|</span></p>',
+							{
+								element: 'strong',
+								attributes: {
+									style: {
+										fontWeight: 700
+									}
+								}
+							},
+							'<p><span style="font-family:Arial,serif">|test|</span></p>'
+						],
+						[
+							'<p><span style="font-weight:700;font-size:24px;">|test|</span></p>',
+							{
+								element: 'strong',
+								attributes: {
+									style: {
+										fontWeight: 700
+									}
+								}
+							},
+							'<p><span style="font-size:24px">|test|</span></p>'
+						],
+						[
+							'<p><span style="font-weight:700">|test|</span></p>',
+							{
+								element: 'strong',
+								attributes: {
+									style: {
+										fontWeight: 700
+									}
+								}
+							},
+							'<p>|test|</p>'
+						],
+						[
+							// (st) => getClosestWrapper -> extractSelectedPart -> toggleICommitStyles -> unwrap -> toggleCSS
+							// (so) => ----
+							'<p><strong>te|st</strong> so|me</p>',
+							{
+								element: 'strong',
+								attributes: {
+									style: {
+										fontWeight: 700
+									}
+								}
+							},
+							'<p><strong>te</strong>|st so|me</p>'
+						],
+						[
+							'<p><span style="color:#FF0000">|test|</span></p>',
+							{
+								attributes: {
+									style: { color: '#FF0000' }
+								}
+							},
+							'<p>|test|</p>'
+						],
+						[
+							'<p>test<span style="background-color:yellow">|stop|</span></p>',
+							{
+								attributes: {
+									style: { color: 'yellow' }
+								}
+							},
+							'<p>test<span style="background-color:yellow;color:yellow">|stop|</span></p>'
+						],
+						[
+							'<p>|test <span style="color: red; font-size: 12px;">test</span> test|</p>\n',
+							{
+								attributes: {
+									style: { fontSize: '8px' }
+								}
+							},
+							'<p><span style="font-size:8px">|test <span style="color:red">test</span> test|</span></p>'
+						],
+						[
+							'<p>|test <strong><span style="color: red; font-size: 12px;">test</span></strong> test|</p>\n',
+							{
+								attributes: {
+									style: { fontSize: '8px' }
+								}
+							},
+							'<p><span style="font-size:8px">|test <strong><span style="color:red">test</span></strong> test|</span></p>'
+						]
+					]
 				],
+
+				// font-family
 				[
-					'<p><span style="font-weight:700">|test|</span></p>',
-					{
-						element: 'strong',
-						attributes: {
-							style: {
-								fontWeight: 700
-							}
-						}
-					},
-					'<p>|test|</p>'
-				],
-				[
-					// (st) => getClosestWrapper -> extractSelectedPart -> toggleICommitStyles -> unwrap -> toggleCSS
-					// (so) => ----
-					'<p><strong>te|st</strong> so|me</p>',
-					{
-						element: 'strong',
-						attributes: {
-							style: {
-								fontWeight: 700
-							}
-						}
-					},
-					'<p><strong>te</strong>|st so|me</p>'
-				],
-				[
-					'<p><span style="color:#FF0000">|test|</span></p>',
-					{
-						attributes: {
-							style: { color: '#FF0000' }
-						}
-					},
-					'<p>|test|</p>'
-				],
-				[
-					'<p>test<span style="background-color:yellow">|stop|</span></p>',
-					{
-						attributes: {
-							style: { color: 'yellow' }
-						}
-					},
-					'<p>test<span style="background-color:yellow;color:yellow">|stop|</span></p>'
-				],
-				[
-					'<p>|test <span style="color: red; font-size: 12px;">test</span> test|</p>\n',
-					{
-						attributes: {
-							style: { fontSize: '8px' }
-						}
-					},
-					'<p><span style="font-size:8px">|test <span style="color:red">test</span> test|</span></p>'
-				],
-				[
-					'<p>|test <strong><span style="color: red; font-size: 12px;">test</span></strong> test|</p>\n',
-					{
-						attributes: {
-							style: { fontSize: '8px' }
-						}
-					},
-					'<p><span style="font-size:8px">|test <strong><span style="color:red">test</span></strong> test|</span></p>'
-				],
-				[
-					'<p>|test</p><style>.a {color: red}</style><p>stop|</p>',
-					{
-						attributes: {
-							style: { fontFamily: 'Helvetica,sans-serif' }
-						}
-					},
-					'<p><span style="font-family:Helvetica,sans-serif">|test</span></p><style>.a {color: red}</style><p><span style="font-family:Helvetica,sans-serif">stop|</span></p>'
+					'font-family',
+					[
+						[
+							'<p><span style="font-family:Helvetica,sans-serif">test |stop</span></p>',
+							{
+								attributes: {
+									style: { fontFamily: '' }
+								}
+							},
+							'<p><span style="font-family:Helvetica,sans-serif">test </span>|<span style="font-family:Helvetica,sans-serif">stop</span></p>'
+						],
+						[
+							'<p>test<span style="font-size:18px;">|pop|</span>stop</p>',
+							{
+								attributes: {
+									style: {
+										fontFamily: 'Helvetica,sans-serif'
+									}
+								}
+							},
+							'<p>test<span style="font-family:Helvetica,sans-serif;font-size:18px">|pop|</span>stop</p>'
+						],
+						[
+							'<p>test<span style="font-size:18px;">p|op</span>stop</p>',
+							{
+								attributes: {
+									style: {
+										fontFamily: 'Helvetica,sans-serif'
+									}
+								}
+							},
+							'<p>test<span style="font-size:18px">p<span style="font-family:Helvetica,sans-serif">|</span>op</span>stop</p>'
+						],
+
+						[
+							'<p>|test</p><style>.a {color: red}</style><p>stop|</p>',
+							{
+								attributes: {
+									style: {
+										fontFamily: 'Helvetica,sans-serif'
+									}
+								}
+							},
+							'<p><span style="font-family:Helvetica,sans-serif">|test</span></p><style>.a {color: red}</style><p><span style="font-family:Helvetica,sans-serif">stop|</span></p>'
+						],
+						[
+							'<p><span style="font-family:Helvetica,sans-serif">test |stop</span></p>',
+							{
+								attributes: {
+									style: { fontFamily: 'Arial' }
+								}
+							},
+							'<p><span style="font-family:Helvetica,sans-serif">test </span><span style="font-family:Arial">|</span><span style="font-family:Helvetica,sans-serif">stop</span></p>'
+						],
+						[
+							'<p><span style="font-family:Helvetica,sans-serif">|test stop|</span></p>',
+							{
+								attributes: {
+									style: {
+										fontFamily: 'Helvetica,sans-serif'
+									}
+								}
+							},
+							'<p><span style="font-family:Helvetica,sans-serif">|test stop|</span></p>'
+						],
+						[
+							'<p><span style="font-family:Helvetica,sans-serif">test |stop</span></p>',
+							{
+								attributes: {
+									style: {
+										fontFamily: 'Helvetica,sans-serif'
+									}
+								}
+							},
+							'<p><span style="font-family:Helvetica,sans-serif">test </span><span style="font-family:Helvetica,sans-serif">|</span><span style="font-family:Helvetica,sans-serif">stop</span></p>'
+						]
+					]
 				],
 				[
 					'<p>test|<u>test</u>|test</p>',
@@ -445,391 +910,41 @@ describe('Apply style', () => {
 					{ element: 'h1' },
 					'<h1>test|</h1><br>test<br>test<br>test',
 					{ enter: 'BR' }
-				],
-				// Lists
-				[
-					'<ol><li>ordered</li><li>|list</li><li>pop</li></ol>',
-					{ element: 'ul' },
-					'<ol><li>ordered</li></ol><ul><li>|list</li></ul><ol><li>pop</li></ol>'
-				],
-				[
-					'<ol><li>|ordered</li><li>list</li></ol><p>test|</p>',
-					{ element: 'ol' },
-					'<p>|ordered</p><p>list</p><p>test|</p>'
-				],
-				[
-					'<p>|test</p><ol><li>ordered</li><li>list|</li></ol>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-				[
-					'<ol><li>ordered</li></ol><p>|test</p><ol><li>list</li><li>pop</li></ol>',
-					{ element: 'ol' },
-					'<ol><li>ordered</li><li>|test</li><li>list</li><li>pop</li></ol>'
-				],
-				[
-					'<ul><li>ordered</li></ul><p>|test</p><ol><li>list</li><li>pop</li></ol>',
-					{ element: 'ol' },
-					'<ul><li>ordered</li></ul><ol><li>|test</li><li>list</li><li>pop</li></ol>'
-				],
-				[
-					'<ul><li>ordered</li></ul><p>|test</p><ol><li>list</li><li>pop</li></ol>',
-					{ element: 'ul' },
-					'<ul><li>ordered</li><li>|test</li></ul><ol><li>list</li><li>pop</li></ol>'
-				],
-				[
-					'<ol class="p"><li>ordered</li></ol><p>|test</p><ol><li>list</li><li>pop</li></ol>',
-					{ element: 'ol' },
-					'<ol class="p"><li>ordered</li><li>|test</li></ol><ol><li>list</li><li>pop</li></ol>'
-				],
-				[
-					'<ol><li>ordered</li><li>list</li></ol><p>|test</p><p>pop|</p>',
-					{ element: 'ol' },
-					'<ol><li>ordered</li><li>list</li><li>|test</li><li>pop|</li></ol>'
-				],
-				[
-					'<p>|test</p><p>pop|</p><ol><li>ordered</li><li>list</li></ol>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>pop|</li><li>ordered</li><li>list</li></ol>'
-				],
-				[
-					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>'
-				],
-				[
-					'<p>|Hello world|</p>',
-					{
-						element: 'ul',
-						attributes: {
-							style: {
-								listStyleType: 'circle'
-							}
-						}
-					},
-					'<ul style="list-style-type:circle"><li>|Hello world|</li></ul>'
-				],
-				[
-					'<p>|test</p><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-				[
-					'<p>|test</p><p>ordered</p><p>list|</p>',
-					{ element: 'ol', attributes: { class: 'test' } },
-					'<ol class="test"><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-				[
-					'<p>|test</p><p>ordered</p><p>list</p><p>a few</p><p>leafs|</p>',
-					{ element: 'ol', attributes: { class: 'test' } },
-					'<ol class="test"><li>|test</li><li>ordered</li><li>list</li><li>a few</li><li>leafs|</li></ol>'
-				],
-				[
-					'<p>|text</p><p>pop</p><p>oup</p><p>test|</p>',
-					{
-						element: 'ul',
-						attributes: {
-							class: 'todo-list2'
-						}
-					},
-					'<ul class="todo-list2"><li>|text</li><li>pop</li><li>oup</li><li>test|</li></ul>'
-				],
-				[
-					'<p>|test</p><p>ordered</p><p>list</p><p>a few</p><p>leafs|</p>',
-					{ element: 'ul', attributes: { class: 'test' } },
-					'<ul class="test"><li>|test</li><li>ordered</li><li>list</li><li>a few</li><li>leafs|</li></ul>'
-				],
-				[
-					'<p>|test</p><p>ordered</p><p>list|</p>',
-					{
-						element: 'ol',
-						attributes: { style: { listStyleType: null } }
-					},
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-				[
-					'<p>|test1</p>\n\n<p>ordered</p>\n\n<p>list1|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test1</li><li>ordered</li><li>list1|</li></ol>'
-				],
-				[
-					'<h1>|test</h1><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-				[
-					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>'
-				],
-				[
-					'<ol><li>|test</li><li>ordered</li><li>list</li></ol>',
-					{ element: 'ol' },
-					'<p>|test</p><ol><li>ordered</li><li>list</li></ol>'
-				],
-				[
-					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li><li>6|</li></ul>',
-					{ element: 'ol' },
-					'<p>|1</p><p>2</p><p>3</p><p>4</p><p>5</p><p>6|</p>'
-				],
-				[
-					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li><li>6|</li></ul>',
-					{ element: 'ul' },
-					'<ul><li>|1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6|</li></ul>'
-				],
-				[
-					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>4</li><li>5</li></ul><p>6|</p>',
-					{ element: 'ul' },
-					'<ul><li>|1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6|</li></ul>'
-				],
-				[
-					'<ol><li>|1</li><li>2</li><li>3</li></ol><ul><li>3.5</li></ul><ul><li>4</li><li>5</li></ul><p>6|</p>',
-					{ element: 'ul' },
-					'<ul><li>|1</li><li>2</li><li>3</li><li>3.5</li><li>4</li><li>5</li><li>6|</li></ul>'
-				],
-				[
-					'<ol><li>|1</li><li>2</li><li>3</li></ol><ol><li>3.5</li></ol><ul><li>4</li><li>5</li></ul><p>6|</p>',
-					{ element: 'ul' },
-					'<ul><li>|1</li><li>2</li><li>3</li><li>3.5</li><li>4</li><li>5</li><li>6|</li></ul>'
-				],
-				[
-					'<ol><li>test</li><li>ord|ered</li><li>list</li></ol>',
-					{ element: 'ol' },
-					'<ol><li>test</li></ol><p>ord|ered</p><ol><li>list</li></ol>'
-				],
-				[
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>',
-					{ element: 'ol' },
-					'<p>|test</p><p>ordered</p><p>list|</p>'
-				],
-				[
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
-					{ element: 'ul' },
-					'<p>|test</p><p>unordered</p><p>list|</p>'
-				],
-				[
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-				[
-					'<ul><li>test</li><li>unordered|</li><li>list</li></ul>',
-					{ element: 'ul' },
-					'<ul><li>test</li></ul><p>unordered|</p><ul><li>list</li></ul>'
-				],
-				[
-					'<ul><li>test</li></ul><p>unordered|</p><ul><li>list</li></ul>',
-					{ element: 'ul' },
-					'<ul><li>test</li><li>unordered|</li><li>list</li></ul>'
-				],
-				[
-					'<ul class="test"><li>test</li></ul><p>unordered|</p><ul class="test"><li>list</li></ul>',
-					{ element: 'ul', attributes: { class: 'test' } },
-					'<ul class="test"><li>test</li><li>unordered|</li><li>list</li></ul>'
-				],
-				[
-					'<ul><li>test</li><li>unor|der|ed</li><li>list</li></ul>',
-					{ element: 'ul' },
-					'<ul><li>test</li></ul><p>unor|der|ed</p><ul><li>list</li></ul>'
-				],
-				[
-					'<ul><li>test</li><li>unor|der|ed</li><li>list</li></ul>',
-					{ element: 'ul', attributes: { class: 'test' } },
-					'<ul><li>test</li></ul><ul class="test"><li>unor|der|ed</li></ul><ul><li>list</li></ul>'
-				],
-				[
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
-					{
-						element: 'ol',
-						attributes: {
-							style: { 'list-style-type': 'lower-roman' }
-						}
-					},
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-				[
-					'<ol><li>|test</li><li>unordered</li><li>list|</li></ol>',
-					{
-						element: 'ol',
-						attributes: {
-							style: { 'list-style-type': 'lower-roman' }
-						}
-					},
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-				[
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>ordered</li><li>list|</li></ol>',
-					{
-						element: 'ol',
-						attributes: {
-							style: { 'list-style-type': 'lower-roman' }
-						}
-					},
-					'<p>|test</p><p>ordered</p><p>list|</p>'
-				],
-				[
-					'<ol style="list-style-type:lower-alpha"><li>|test</li><li>unordered</li><li>list|</li></ol>',
-					{
-						element: 'ol',
-						attributes: {
-							style: { 'list-style-type': 'lower-roman' }
-						}
-					},
-					'<ol style="list-style-type:lower-roman"><li>|test</li><li>unordered</li><li>list|</li></ol>'
-				],
-				[
-					'<p>|test</p><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-				[
-					'<p>|test</p><p>ordered</p><p>list</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li></ol><p>ordered</p><p>list</p>'
-				],
-				[
-					'<h1>|test</h1><p>ordered</p><p>list|</p>',
-					{ element: 'ol' },
-					'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>'
-				],
-				[
-					'<p>te|st</p><p>ordered</p><p>li|st</p>',
-					{ element: 'ol' },
-					'<ol><li>te|st</li><li>ordered</li><li>li|st</li></ol>'
-				],
-				[
-					'<p>|test</p><p>unordered</p><p>list|</p>',
-					{ element: 'ul' },
-					'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>'
-				],
-				[
-					'<ul><li>|1</li><li>2</li><li>3|</li></ul>',
-					{ element: 'h1' },
-					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>'
-				],
-				[
-					'<ul><li><h1>|1</h1></li><li><h1>2</h1></li><li><h1>3|</h1></li></ul>',
-					{ element: 'h1' },
-					'<ul><li>|1</li><li>2</li><li>3|</li></ul>'
-				],
-				[
-					'<ul class="todo-list"><li>test|</li></ul>',
-					{
-						element: 'ul',
-						hooks: {
-							beforeToggleList(mode, style, list) {
-								Dom.replace(
-									list,
-									style.element,
-									editor.createInside
-								);
-								return 'replace';
-							}
-						}
-					},
-					'<ul><li>test|</li></ul>'
-				],
-				[
-					'<ul class="todo-list"><li>test|</li></ul>',
-					{
-						element: 'ul',
-						hooks: {
-							afterToggleList(mode, li) {
-								if (mode === 'unwrap') {
-									li.setAttribute('replaced', true);
-								}
-							}
-						}
-					},
-					'<p replaced="true">test|</p>',
-					{
-						disablePlugins: ['todo-list']
-					}
-				],
-				[
-					'<ul class="todo-list"><li>test|</li></ul>',
-					{
-						element: 'ol'
-					},
-					'<ol><li>test|</li></ol>'
-				],
-				[
-					'<p>|test|</p>',
-					{
-						element: 'ul',
-						hooks: {
-							beforeWrapList(_, wrapper) {
-								const li = Dom.replace(
-									wrapper,
-									'li',
-									editor.createInside
-								);
-
-								const label = editor.createInside.element(
-									'label',
-									{ class: 'jodit_todo_label' }
-								);
-
-								const input = editor.createInside.element(
-									'input',
-									{
-										type: 'checkbox'
-									}
-								);
-								label.appendChild(input);
-								Dom.prepend(li, label);
-
-								return li;
-							}
-						},
-						attributes: {
-							class: 'todo-list'
-						}
-					},
-					'<ul class="todo-list"><li><label class="jodit_todo_label"><input type="checkbox"></label>|test|</li></ul>'
-				],
-				[
-					'<p>|pop|</p>',
-					{
-						element: 'ul',
-						hooks: {
-							afterWrapList(_, wrapper, style) {
-								wrapper.querySelectorAll('li').forEach(li => {
-									li.className =
-										'test ' +
-										style.options.attributes.class;
-								});
-							}
-						},
-						attributes: {
-							class: 'todo-list'
-						}
-					},
-					'<ul class="todo-list"><li class="test todo-list">|pop|</li></ul>'
 				]
-			].forEach(([input, opt, output, jSettings]) => {
-				describe(`For selection ${input} apply style ${JSON.stringify(
-					opt
-				)}`, () => {
-					it(`Should get ${output}`, () => {
-						if (jSettings) {
-							editor.destruct();
-							editor = getJodit(jSettings);
-						}
+			].forEach(function runTest(args) {
+				if (!Array.isArray(args)) {
+					debugger;
+				}
+				const [input, opt, output, jSettings] = args;
 
-						editor.value = input;
-						setCursorToChar(editor);
-
-						const style = new Style(opt);
-
-						style.apply(editor);
-						replaceCursorToChar(editor);
-
-						expect(sortAttributes(editor.value).trim()).equals(
-							output
-						);
+				if (Array.isArray(opt)) {
+					describe(input, () => {
+						opt.forEach(runTest);
 					});
-				});
+				} else {
+					describe(`For selection ${input} apply style ${JSON.stringify(
+						opt
+					)}`, () => {
+						it(`Should get ${output}`, () => {
+							if (jSettings) {
+								editor.destruct();
+								editor = getJodit(jSettings);
+							}
+
+							editor.value = input;
+							setCursorToChar(editor);
+
+							const style = new Style(opt);
+
+							style.apply(editor);
+							replaceCursorToChar(editor);
+
+							expect(sortAttributes(editor.value).trim()).equals(
+								output
+							);
+						});
+					});
+				}
 			});
 		});
 
@@ -1948,18 +2063,17 @@ describe('Apply style', () => {
 			});
 
 			describe('Try exec the command "bold" for font-weight: 700 Element', function () {
-				it('should ubnwrap selected srtong element', function () {
+				it('should not unwrap selected srtong element', function () {
 					const editor = getJodit();
-					editor.value = '<span style="font-weight: 700">test</span>';
-
-					const range = editor.s.createRange();
-
-					range.selectNodeContents(editor.editor.firstChild);
-					editor.s.selectRange(range);
+					editor.value =
+						'<p><span style="font-weight: 700">|test|</span></p>';
+					setCursorToChar(editor);
 
 					editor.execCommand('bold');
 
-					expect(editor.value).equals('<p>test</p>');
+					expect(editor.value).equals(
+						'<p><span style="font-weight: 700"><strong>test</strong></span></p>'
+					);
 				});
 			});
 

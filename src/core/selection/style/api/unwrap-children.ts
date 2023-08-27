@@ -51,10 +51,13 @@ export function unwrapChildren(
 				needChangeStyle.push(() => {
 					css(
 						elm,
-						Object.keys(cssStyle).reduce((acc, key) => {
-							acc[key] = null;
-							return acc;
-						}, <IDictionary>{})
+						Object.keys(cssStyle).reduce(
+							(acc, key) => {
+								acc[key] = null;
+								return acc;
+							},
+							<IDictionary>{}
+						)
 					);
 
 					if (!attr(elm, 'style')) {

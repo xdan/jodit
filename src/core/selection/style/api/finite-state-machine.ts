@@ -39,7 +39,10 @@ export class FiniteStateMachine<
 	}
 
 	private __previewsStates: Set<K> = new Set();
-	constructor(state: K, private readonly transitions: T) {
+	constructor(
+		state: K,
+		private readonly transitions: T
+	) {
 		this.setState(state);
 	}
 

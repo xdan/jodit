@@ -19,7 +19,7 @@ import {
 	extractSelectedPart,
 	getSuitChild,
 	getSuitParent,
-	findSuitClosest,
+	suitableClosest,
 	toggleAttributes,
 	unwrapChildren,
 	isInsideInvisibleElement,
@@ -79,7 +79,7 @@ export const transactions: IStyleTransactions = {
 				return { ...value, next: states.ELEMENT, element: elm };
 			}
 
-			const suit = findSuitClosest(style, element, jodit.editor);
+			const suit = suitableClosest(style, element, jodit.editor);
 
 			if (style.elementIsList && Dom.isList(suit)) {
 				return { ...value, next: states.LIST };
@@ -145,7 +145,7 @@ export const transactions: IStyleTransactions = {
 		exec(value) {
 			const { element, jodit, style } = value;
 
-			const suit = findSuitClosest(style, element, jodit.editor);
+			const suit = suitableClosest(style, element, jodit.editor);
 			assert(suit, 'This place should have an element');
 
 			if (!style.elementIsBlock) {
