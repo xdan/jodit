@@ -1,8 +1,8 @@
 # UI Component decorator
 
-Any UI component inherited from [[UIElement]] must have a component decorator
-This decorator calls `setStatus('ready')` after the `new UI()` operation
-All other decorators start their work only when the component is ready to work.
+Every UI component that inherits from the `UIElement` class must have a component decorator.
+This decorator is responsible for calling `setStatus('ready')` after the `new UI()` operation.
+Other decorators will only start their work when the component is ready to function.
 
 ```typescript
 @component
@@ -40,7 +40,11 @@ console.log(elm.componentStatus); // ready
 elm.state.width = 100;
 ```
 
-You can choose not to use a decorator when you need to independently manage the readiness of a component to work.
+By using the decorator, the component's status will be set to `ready` automatically after instantiation.
+You can access the component's status using the `componentStatus` property.
+However, if you prefer to manage the readiness of a component independently,
+you can choose not to use the decorator.
+In such cases, you can manually set the component's status using `setStatus('ready').`
 
 ```ts
 class UIData extends UIElement {
@@ -66,6 +70,10 @@ fetch('index.php').then(resp => {
 	elm.setStatus('ready');
 });
 ```
+
+In the above example, the `UIData` component sets its status to `ready` manually after fetching data from `index.php`.
+The `onReady` hook is then triggered, displaying an alert message.
+You can interact with and explore the code examples in this [CodeSandbox](https://codesandbox.io/s/decorators-u2h0os?fontsize=14&hidenavigation=1&theme=dark)
 
 <iframe src="https://codesandbox.io/embed/decorators-u2h0os?fontsize=14&hidenavigation=1&theme=dark"
 style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"

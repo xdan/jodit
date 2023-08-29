@@ -1,3 +1,4 @@
 # About Jodit
 
-Plugin adds button with question icon and show dialog with Jodit's version and some information.
+This plugin adds a button with the question icon,
+which when clicked opens a dialog box with information about the Jodit version and other details.

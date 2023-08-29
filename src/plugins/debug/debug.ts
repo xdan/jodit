@@ -11,10 +11,11 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
+import { Plugin } from 'jodit/core/plugin/plugin';
+// @ts-ignore
 import { pluginSystem } from 'jodit/core/global';
 import { Dom } from 'jodit/core/dom/dom';
-import { stripTags } from 'jodit/core/helpers';
+import { stripTags } from 'jodit/core/helpers/html/strip-tags';
 import { INVISIBLE_SPACE_REG_EXP } from 'jodit/core/constants';
 
 export class Debug extends Plugin {
@@ -65,4 +66,4 @@ function render(elm: Node, level: number = 0): string {
 </div>`;
 }
 
-pluginSystem.add('debug', Debug);
+// pluginSystem.add('debug', Debug);

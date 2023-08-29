@@ -1,8 +1,8 @@
 # Clean HTML
 
-The plugin allows you to ensure that the document does not contain unwanted tags, xxs scripts and the like.
+The plugin provides a way to ensure that the document does not contain unwanted tags, XSS scripts, and similar elements.
 
-For example, you can explicitly specify which tags or attributes are allowed and which are not:
+For instance, you can explicitly define which tags or attributes are allowed or disallowed:
 
 ```javascript
 Jodit.make('#editor', {
@@ -25,7 +25,8 @@ Jodit.make('#editor', {
 });
 ```
 
-You can also simply disable a tag. For example, let's disable `script` tags and pictures.
+You can also disable specific tags. For example, let's disable script tags and images:
+
 
 ```javascript
 Jodit.make('#editor', {
@@ -35,7 +36,7 @@ Jodit.make('#editor', {
 });
 ```
 
-Or us object
+Alternatively, you can use an object to specify the denied tags:
 
 ```javascript
 Jodit.make('#editor', {
@@ -48,4 +49,4 @@ Jodit.make('#editor', {
 });
 ```
 
-Plugin settings are under the namespace [[Config.cleanHTML]]
+The plugin settings can be accessed under the namespace [[Config.cleanHTML]].

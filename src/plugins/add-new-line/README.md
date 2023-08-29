@@ -1,6 +1,6 @@
-# Plugin allow to append new block before/after text
+# Plugin for Appending New Blocks Before and After Text
 
-Adds an interface element - a floating button that appears at the edges of images
-or tables and allows you to add a paragraph before or after them.
+The plugin adds an interface element called a floating button which appears at the edge of images or tables.
 
-This is convenient when there is no free space in front of the image to place the cursor.
+This button allows you to insert a new paragraph before or after the selected text,
+making it easier to fit your text into the available space.

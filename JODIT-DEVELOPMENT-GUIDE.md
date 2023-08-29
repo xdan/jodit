@@ -1,10 +1,10 @@
-# Jodit development guide
+# Jodit Development Guide
 
-## We do not use default export
+## Avoid Default Export
 
-This allows you to effectively track module usage.
+To effectively track module usage, it is recommended not to use default exports.
 
-wrong:
+Wrong:
 
 ```typescript
 export default class Some {}
@@ -20,9 +20,11 @@ export class Some {}
 import { Some } from './some';
 ```
 
-## Prefer full file paths over shortcuts. Also use jodit namespace instead of relative path
+## Prefer Full File Paths and Use the Jodit Namespace
 
-For better tree-shaking and less code cohesion. It also avoids circular dependencies.
+For better tree-shaking, reduced code cohesion, and to avoid circular dependencies,
+it is preferable to use full file paths instead of shortcuts.
+Additionally, use the `jodit` namespace instead of relative paths.
 
 Wrong:
 
@@ -38,7 +40,7 @@ import { isString } from 'jodit/core/helpers/checkers/is-string';
 import { htmlspecialchars } from 'jodit/core/helpers/html/htmlspecialchars';
 ```
 
-If several modules are imported from one place, then you can use the most extreme shortcut
+If multiple modules are imported from the same place, you can use the most extreme shortcut.
 
 Wrong:
 
@@ -55,7 +57,7 @@ import { isString, isUrl } from 'jodit/core/helpers/checkers';
 
 ## Import order
 
-Imports should be in the following order
+Imports should follow the following order:
 
 -   Styles
 -
@@ -65,7 +67,7 @@ Imports should be in the following order
 -   Local types
 -   Local modules
 
-> Don't forget the `type` keyword if you only need the type:
+> Don't forget to use the `type` keyword if you only need the type
 
 Wrong:
 
@@ -89,7 +91,10 @@ import type { LocalType } from './interface';
 import './config';
 ```
 
-## Several modules in a folder should be re-exported to that folder's index.ts
+## Re-export Multiple Modules in a Folder's Index.ts
+
+If a folder contains multiple modules,
+it is recommended to re-export them in the folder's `index.ts` file.
 
 folder/subfolder/some.ts
 
@@ -117,3 +122,5 @@ folder/index.ts
 ```
 export * from "./subfolder"
 ```
+
+By following this structure, you can easily import the modules from their respective folders.
