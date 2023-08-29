@@ -59,11 +59,20 @@ if (
 	throw new Error('Invalid minified build option');
 }
 
-const buildFiles = fs
-	.readdirSync(buildDir)
-	.filter(file => (argv.fat ? /\.fat/.test(file) : !/\.fat/.test(file)))
-	.filter(file => (argv.min ? /\.min/.test(file) : !/\.min/.test(file)))
-	.map(file => buildDir + '/' + file);
+function findFiles(dir: string): string[] {
+	return fs
+		.readdirSync(dir, { withFileTypes: true })
+		.map(f =>
+			f.isDirectory()
+				? findFiles(path.resolve(dir, f.name))
+				: path.resolve(dir, f.name)
+		)
+		.flat()
+		.filter(file => (argv.fat ? /\.fat/.test(file) : !/\.fat/.test(file)))
+		.filter(file => (argv.min ? /\.min/.test(file) : !/\.min/.test(file)));
+}
+
+const buildFiles = findFiles(buildDir);
 
 console.info('Build directory: ', buildDir);
 console.info('Build files: ', buildFiles);
