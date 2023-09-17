@@ -24,7 +24,7 @@ jobs:
 
       - run: npm ci
       - run: make build
-      - run: make prepare-examples
+      - run: make examples
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
