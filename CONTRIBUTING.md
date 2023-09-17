@@ -65,7 +65,7 @@ Before you start, here are some important points to keep in mind:
     However, pull requests make it easy for you to keep your changes for personal use or for others who may find them useful.
 -   If you need help creating a patch or implementing a feature, please submit a ticket to us on the issue tracker.
 
-### Code style
+## Code style
 
 To ensure that your code matches the project's general style, you can use Prettier:
 
@@ -102,7 +102,7 @@ Build without some languages:
 make build es=es2021 uglify=true excludeLanguages="ru,ar,cs_cz,de,es,fa,fr,he,hu,id,it,ja,ko,nl,pl,pt_br,ru,tr,zh_cn,zh_tw"
 ```
 
-### Tests
+## Tests
 
 Before making any functional changes or fixing a bug, you need to create tests for them.
 We follow the [TDD (Test-Driven Development)](<(https://en.wikipedia.org/wiki/Test-driven_development)>) methodology,

@@ -5,112 +5,212 @@
  * Copyright 2013-2020 Valeriy Chupurnov https://xdsoft.net
 -->
 <html>
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Inline edit Jodit Example</title>
-    <link rel="icon" type="image/png" href="assets/icon.png" />
-</head>
-<body>
-<header>
-    <nav>
-        <ul class="container">
-            <li><a href="https://xdsoft.net/jodit/">Jodit homepage</a></li>
-            <li><a href="https://xdsoft.net/jodit/play.html">Playground</a></li>
-            <li><a href="https://xdsoft.net/jodit/docs/">Documentation</a></li>
-            <li><a href="https://github.com/xdan/jodit/">Github</a></li>
-            <li><a href="https://github.com/xdan/jodit/blob/main/CHANGELOG.md">Changelog</a></li>
-            <li>
-                <a href="#examples">Examples</a>
-                <ul id="examples"><!-- see app.js--></ul>
-            </li>
-            <li style="float:right"><a href="https://github.com/xdan/jodit/releases/latest">Download</a></li>
-        </ul>
-    </nav>
-</header>
-<div id="main_container" class="container">
-    <div id="introduction">
-        <h3>HTML</h3>
-        <pre><code class="language-markup">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		/>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Inline edit Jodit Example</title>
+		<link rel="icon" type="image/png" href="assets/icon.png" />
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul class="container">
+					<li>
+						<a href="https://xdsoft.net/jodit/">Jodit homepage</a>
+					</li>
+					<li>
+						<a href="https://xdsoft.net/jodit/play.html"
+							>Playground</a
+						>
+					</li>
+					<li>
+						<a href="https://xdsoft.net/jodit/docs/"
+							>Documentation</a
+						>
+					</li>
+					<li><a href="https://github.com/xdan/jodit/">Github</a></li>
+					<li>
+						<a
+							href="https://github.com/xdan/jodit/blob/main/CHANGELOG.md"
+							>Changelog</a
+						>
+					</li>
+					<li>
+						<a href="#examples">Examples</a>
+						<ul id="examples">
+							<!-- see app.js-->
+						</ul>
+					</li>
+					<li style="float: right">
+						<a href="https://github.com/xdan/jodit/releases/latest"
+							>Download</a
+						>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<div id="main_container" class="container">
+			<div id="introduction">
+				<h3>HTML</h3>
+				<pre><code class="language-markup">
             &lt;div id="area">Some text&lt;/div>
         </code></pre>
-        <h3>JavaScript</h3>
-        <pre><code class="language-javascript">
+				<h3>JavaScript</h3>
+				<pre><code class="language-javascript">
             const editor = Jodit.make('#area', {
                 preset: 'inline'
             })
         </code></pre>
-    </div>
-    <div class="result">
-        <div id="area">
-            <p><img style="float:right; margin: 10px;" src="./assets/download.jpg" alt="Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus."></p>
-            <h1>Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus.</h1>
+			</div>
+			<div class="result">
+				<div id="area">
+					<p>
+						<img
+							style="float: right; margin: 10px"
+							src="./assets/download.jpg"
+							alt="Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus."
+						/>
+					</p>
+					<h1>
+						Itaque nostrum est-quod nostrum dico, artis est-ad ea
+						principia, quae accepimus.
+					</h1>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <i>Quonam, inquit, modo?</i> <mark>Illum mallem levares, quo optimum atque humanissimum virum, Cn.</mark> Quae quidem vel cum periculo est quaerenda vobis; Amicitiam autem adhibendam esse censent, quia sit ex eo genere, quae prosunt. <a href="http://loripsum.net/" target="_blank">Duo Reges: constructio interrete.</a> Illud quaero, quid ei, qui in voluptate summum bonum ponat, consentaneum sit dicere. At vero illa, quae Peripatetici, quae Stoici dicunt, semper tibi in ore sunt in iudiciis, in senatu. Dic in quovis conventu te omnia facere, ne doleas. Nummus in Croesi divitiis obscuratur, pars est tamen divitiarum. Isto modo ne improbos quidem, si essent boni viri. Luxuriam non reprehendit, modo sit vacua infinita cupiditate et timore. Sit ista in Graecorum levitate perversitas, qui maledictis insectantur eos, a quibus de veritate dissentiunt. </p>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+						<i>Quonam, inquit, modo?</i>
+						<mark
+							>Illum mallem levares, quo optimum atque
+							humanissimum virum, Cn.</mark
+						>
+						Quae quidem vel cum periculo est quaerenda vobis;
+						Amicitiam autem adhibendam esse censent, quia sit ex eo
+						genere, quae prosunt.
+						<a href="http://loripsum.net/" target="_blank"
+							>Duo Reges: constructio interrete.</a
+						>
+						Illud quaero, quid ei, qui in voluptate summum bonum
+						ponat, consentaneum sit dicere. At vero illa, quae
+						Peripatetici, quae Stoici dicunt, semper tibi in ore
+						sunt in iudiciis, in senatu. Dic in quovis conventu te
+						omnia facere, ne doleas. Nummus in Croesi divitiis
+						obscuratur, pars est tamen divitiarum. Isto modo ne
+						improbos quidem, si essent boni viri. Luxuriam non
+						reprehendit, modo sit vacua infinita cupiditate et
+						timore. Sit ista in Graecorum levitate perversitas, qui
+						maledictis insectantur eos, a quibus de veritate
+						dissentiunt.
+					</p>
 
-            <blockquote cite="http://loripsum.net">
-                Nec enim absolvi beata vita sapientis neque ad exitum perduci poterit, si prima quaeque bene ab eo consulta atque facta ipsius oblivione obruentur.
-            </blockquote>
+					<blockquote cite="http://loripsum.net">
+						Nec enim absolvi beata vita sapientis neque ad exitum
+						perduci poterit, si prima quaeque bene ab eo consulta
+						atque facta ipsius oblivione obruentur.
+					</blockquote>
 
-
-            <pre>Tum ille: Tu autem cum ipse tantum librorum habeas, quos hic
+					<pre>
+Tum ille: Tu autem cum ipse tantum librorum habeas, quos hic
 tandem requiris?
 
 Possumusne ergo in vita summum bonum dicere, cum id ne in
 cena quidem posse videamur?
-</pre>
+</pre
+					>
 
+					<ul>
+						<li>
+							Possumusne ergo in vita summum bonum dicere, cum id
+							ne in cena quidem posse videamur?
+						</li>
+						<li>
+							Quodsi vultum tibi, si incessum fingeres, quo
+							gravior viderere, non esses tui similis;
+						</li>
+					</ul>
 
-            <ul>
-                <li>Possumusne ergo in vita summum bonum dicere, cum id ne in cena quidem posse videamur?</li>
-                <li>Quodsi vultum tibi, si incessum fingeres, quo gravior viderere, non esses tui similis;</li>
-            </ul>
+					<ol>
+						<li>
+							Qui autem diffidet perpetuitati bonorum suorum,
+							timeat necesse est, ne aliquando amissis illis sit
+							miser.
+						</li>
+						<li>
+							Nulla profecto est, quin suam vim retineat a primo
+							ad extremum.
+						</li>
+					</ol>
 
+					<dl>
+						<dt><dfn>Falli igitur possumus.</dfn></dt>
+						<dd>
+							Quid enim ab antiquis ex eo genere, quod ad
+							disserendum valet, praetermissum est?
+						</dd>
+						<dt><dfn>Scrupulum, inquam, abeunti;</dfn></dt>
+						<dd>
+							Scio enim esse quosdam, qui quavis lingua
+							philosophari possint;
+						</dd>
+						<dt><dfn>Poterat autem inpune;</dfn></dt>
+						<dd>
+							Tum ille: Tu autem cum ipse tantum librorum habeas,
+							quos hic tandem requiris?
+						</dd>
+						<dt><dfn>Beatum, inquit.</dfn></dt>
+						<dd>Respondeat totidem verbis.</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<footer>
+			<nav>
+				<ul class="container">
+					<li>
+						<a href="https://xdsoft.net/jodit/">Jodit homepage</a>
+					</li>
+					<li>
+						<a href="https://xdsoft.net/jodit/play.html"
+							>Playground</a
+						>
+					</li>
+					<li>
+						<a href="https://xdsoft.net/jodit/docs/"
+							>Documentation</a
+						>
+					</li>
+					<li><a href="https://github.com/xdan/jodit/">Github</a></li>
+					<li>
+						<a
+							href="https://github.com/xdan/jodit/blob/main/CHANGELOG.md"
+							>Changelog</a
+						>
+					</li>
+					<li style="float: right">
+						<a href="https://github.com/xdan/jodit/releases/latest"
+							>Download</a
+						>
+					</li>
+				</ul>
+			</nav>
+		</footer>
+	</body>
+	<link rel="stylesheet" href="../build/es2015/jodit.min.css" />
+	<link rel="stylesheet" href="assets/app.css" />
+	<link
+		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i"
+		rel="stylesheet"
+	/>
 
-            <ol>
-                <li>Qui autem diffidet perpetuitati bonorum suorum, timeat necesse est, ne aliquando amissis illis sit miser.</li>
-                <li>Nulla profecto est, quin suam vim retineat a primo ad extremum.</li>
-            </ol>
-
-
-            <dl>
-                <dt><dfn>Falli igitur possumus.</dfn></dt>
-                <dd>Quid enim ab antiquis ex eo genere, quod ad disserendum valet, praetermissum est?</dd>
-                <dt><dfn>Scrupulum, inquam, abeunti;</dfn></dt>
-                <dd>Scio enim esse quosdam, qui quavis lingua philosophari possint;</dd>
-                <dt><dfn>Poterat autem inpune;</dfn></dt>
-                <dd>Tum ille: Tu autem cum ipse tantum librorum habeas, quos hic tandem requiris?</dd>
-                <dt><dfn>Beatum, inquit.</dfn></dt>
-                <dd>Respondeat totidem verbis.</dd>
-            </dl>
-
-        </div>
-    </div>
-</div>
-<footer>
-    <nav>
-        <ul class="container">
-            <li><a href="https://xdsoft.net/jodit/">Jodit homepage</a></li>
-            <li><a href="https://xdsoft.net/jodit/play.html">Playground</a></li>
-            <li><a href="https://xdsoft.net/jodit/docs/">Documentation</a></li>
-            <li><a href="https://github.com/xdan/jodit/">Github</a></li>
-            <li><a href="https://github.com/xdan/jodit/blob/main/CHANGELOG.md">Changelog</a></li>
-            <li style="float:right"><a href="https://github.com/xdan/jodit/releases/latest">Download</a></li>
-        </ul>
-    </nav>
-</footer>
-</body>
-<link rel="stylesheet" href="../build/es2015/jodit.min.css"/>
-<link rel="stylesheet" href="assets/app.css"/>
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i" rel="stylesheet">
-
-<script src="../build/es2015/jodit.min.js"></script>
-<script src="assets/prism.js"></script>
-<script src="assets/app.js"></script>
-<script>
-    const editor = Jodit.make('#area', {
-       preset: 'inline'
-    });
-</script>
+	<script src="../build/es2015/jodit.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/prism.min.js"></script>
+	<script src="assets/app.js"></script>
+	<script>
+		const editor = Jodit.make('#area', {
+			preset: 'inline'
+		});
+	</script>
 </html>

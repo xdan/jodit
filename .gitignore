@@ -12,3 +12,4 @@ yarn-error.log
 .npmrc
 
 build/*
+examples/build/

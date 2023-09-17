@@ -3,3 +3,4 @@ test/loader.js
 build
 types
 examples/assets/prism.js
+examples/build/

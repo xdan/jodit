@@ -137,9 +137,9 @@ yargs                               ^17.7.1  →  ^17.7.2
 -   Build in es2018 target was removed, instead es2021 was added
 -   Event `getIcon` was removed. Use option `getIcon` instead
 
-```js
+```ts
 Jodit.make('#editor', {
-	getIcon: (name: string) => {
+	getIcon: (name: string, clearName: string) => {
 		if (name === 'bold') {
 			return '<svg>...</svg>';
 		}

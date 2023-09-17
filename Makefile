@@ -261,3 +261,11 @@ jodit:
 .PHONY: sync
 sync:
 	$(TS_NODE_BASE) $(cwd)tools/utils/sync.ts --source $(cwd) --target ../jodit-pro/node_modules/jodit
+
+.PHONY: examples
+examples:
+	@echo "Copy build to examples"
+	@if [ -d ./examples/build ]; then rm -rf ./examples/build; fi;
+	@mkdir -p ./examples/build
+	@cp -R ./build/* ./examples/build
+	@$(NODE_MODULES_BIN)/replace '../build' './build' ./examples -r --include='*.html'

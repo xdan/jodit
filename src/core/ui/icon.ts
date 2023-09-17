@@ -78,7 +78,10 @@ export class Icon {
 		const { name, iconURL, fill } = icon;
 		const clearName = name.replace(/[^a-zA-Z0-9]/g, '_');
 
-		const iconFromEvent = jodit.o.getIcon?.(name, clearName);
+		let iconFromEvent: CanUndef<string>;
+		if (!/<svg/.test(name)) {
+			iconFromEvent = jodit.o.getIcon?.(name, clearName);
+		}
 
 		const cacheKey = `${name}${iconURL}${fill}${iconFromEvent ?? ''}`;
 

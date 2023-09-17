@@ -1,4 +1,4 @@
-@import 'prism.css';
+@import 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css';
 
 html {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -101,7 +101,7 @@ nav > ul > li + li {
 }
 
 nav ul li a {
-	color: #ddd;
+	color: #fff;
 	font-size: 0.625rem;
 	line-height: 30px;
 	text-decoration: none;
