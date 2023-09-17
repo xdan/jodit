@@ -16,7 +16,7 @@ without the use of additional libraries. It includes a file editor and image edi
 -   [Documentation](https://xdsoft.net/jodit/docs/)
 -   [Download & Changes](https://github.com/xdan/jodit/releases)
 -   [Changelog](https://github.com/xdan/jodit/blob/main/CHANGELOG.md)
--   [Examples](https://xdan.github.io/jodit/examples/)
+-   [Examples](https://xdan.github.io/jodit)
 -   [TypeScript Starter](https://codesandbox.io/s/ggc6km)
 
 ## Get Started
