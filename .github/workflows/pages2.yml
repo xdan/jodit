@@ -1,4 +1,4 @@
-name: GitHub Pages
+name: GitHub Pages2
 
 on:
   push:
@@ -20,6 +20,8 @@ jobs:
       - run: make examples
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./examples
 
   deploy:
     needs: build
