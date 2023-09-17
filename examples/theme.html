@@ -4,7 +4,7 @@
  * License GNU General Public License version 2 or later;
  * Copyright 2013-2020 Valeriy Chupurnov https://xdsoft.net
 -->
-<html>
+<html lang="en-US">
 	<head>
 		<meta charset="UTF-8" />
 		<meta
@@ -61,7 +61,7 @@
         </code></pre>
 				<h3>JavaScript</h3>
 				<pre><code class="language-javascript">
-            var editor = Jodit.make('#editor', {
+            const editor = Jodit.make('#editor', {
               theme: 'dark'
             });
             editor.value = '&lt;p>start&lt;/p>'
@@ -111,11 +111,12 @@
 	/>
 
 	<script src="../build/es2015/jodit.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/prism.min.js"></script>
 	<script src="assets/app.js"></script>
 	<script>
-		var editor = Jodit.make('#area_editor', {
+		const editor = Jodit.make('#area_editor', {
 			theme: 'dark'
 		});
 	</script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/prism.min.js"></script>
 </html>
