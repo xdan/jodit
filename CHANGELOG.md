@@ -12,6 +12,33 @@
 ## 4.0.0-beta.78
 
 - Update
+
+```
+ @types/ace                         ^0.0.48  →   ^0.0.49
+ @types/fs-extra                    ^11.0.1  →   ^11.0.2
+ @types/karma                        ^6.3.4  →    ^6.3.5
+ @types/node                        ^20.5.7  →   ^20.8.3
+ @types/postcss-css-variables       ^0.18.0  →   ^0.18.1
+ @types/yargs                      ^17.0.24  →  ^17.0.28
+ @typescript-eslint/eslint-plugin    ^6.5.0  →    ^6.7.4
+ @typescript-eslint/parser           ^6.5.0  →    ^6.7.4
+ autoprefixer                      ^10.4.15  →  ^10.4.16
+ axios                               ^1.5.0  →    ^1.5.1
+ chai                                ^4.3.8  →   ^4.3.10
+ core-js                            ^3.32.1  →   ^3.33.0
+ eslint                             ^8.48.0  →   ^8.51.0
+ eslint-plugin-mocha                ^10.1.0  →   ^10.2.0
+ glob                               ^10.3.3  →  ^10.3.10
+ postcss                           >=8.4.28  →  >=8.4.31
+ prettier                            ^3.0.2  →    ^3.0.3
+ ts-loader                           ^9.4.4  →    ^9.5.0
+
+```
+
+
+## 4.0.0-beta.78
+
+- Update
 ```
  @types/karma                        ^6.3.3  →    ^6.3.4
  @types/node                        ^20.1.0  →   ^20.5.0
