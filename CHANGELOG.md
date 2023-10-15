@@ -11,7 +11,10 @@
 
 ## 4.0.0-beta.88
 
+### :bug: Bug Fix
+
 -   Fixed a bug where the cursor, when positioned at the start of the h1 tag and a style was applied to the h1 tag, would move up one tag level.
+-   [Firefox specific execCommands no longer needed #1028](https://github.com/xdan/jodit/issues/1028)
 
 ## 4.0.0-beta.78
 
