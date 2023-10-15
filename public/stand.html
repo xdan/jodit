@@ -44,9 +44,9 @@
 			</form>
 		</div>
 		<script>
-			var editor = Jodit.make(editorNative, {
+			const editor = Jodit.make(editorNative, {
 				// safeMode: true,
-				iframe: true,
+				// iframe: true,
 				// buttons: ['paragraph', 'align'],
 				controls: {
 					paragraph: {
@@ -74,6 +74,9 @@
 					url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
 				},
 			});
+
+			editor.value = '<h1>Header 1</h1><p>test</p>';
+
 			btn.onclick = () => {
 				const start = performance.now();
 				for (let i = 0; i < 100; i++) {

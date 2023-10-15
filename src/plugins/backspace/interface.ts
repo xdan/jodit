@@ -13,7 +13,8 @@ export type DeleteMode = 'char' | 'word' | 'sentence';
 declare module 'jodit/types/events' {
 	interface IEventEmitter {
 		/**
-		 * Allows you to prepare the content before deletion or completely override the deletion logic if you return true
+		 * Enables content preparation prior to deletion, or allows for a complete
+		 * override of the deletion logic if true is returned.
 		 */
 		on(
 			event: 'backSpaceBeforeCases',
@@ -21,7 +22,7 @@ declare module 'jodit/types/events' {
 		): this;
 
 		/**
-		 * Emits after backspace or delete key pressed and were processed
+		 * Triggers after the Backspace or Delete key has been pressed and processed.
 		 */
 		on(
 			event: 'backSpaceAfterDelete',
@@ -33,32 +34,32 @@ declare module 'jodit/types/events' {
 declare module 'jodit/types/jodit' {
 	interface IJodit {
 		/**
-		 * Backspace plugin: Remove next character or selected text
+		 * Backspace plugin: Deletes the next character or selected text.
 		 */
 		execCommand(command: 'deleteButton'): void;
 
 		/**
-		 * Backspace plugin: Remove previous character or selected text
+		 * Backspace plugin: Deletes the previous character or selected text.
 		 */
 		execCommand(command: 'backspaceButton'): void;
 
 		/**
-		 * Backspace plugin: Remove next word or selected text
+		 * Backspace plugin: Deletes the next word or selected text.
 		 */
 		execCommand(command: 'deleteWordButton'): void;
 
 		/**
-		 * Backspace plugin: Remove previous word or selected text
+		 * Backspace plugin: Deletes the previous word or selected text.
 		 */
 		execCommand(command: 'backspaceWordButton'): void;
 
 		/**
-		 * Backspace plugin: Remove next sentence or selected text
+		 * Backspace plugin: Deletes the next sentence or selected text.
 		 */
 		execCommand(command: 'deleteSentenceButton'): void;
 
 		/**
-		 * Backspace plugin: Remove previous sentence or selected text
+		 * Backspace plugin: Deletes the previous sentence or selected text.
 		 */
 		execCommand(command: 'backspaceSentenceButton'): void;
 	}

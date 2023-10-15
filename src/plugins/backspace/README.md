@@ -1,3 +1,3 @@
-# Backspace/Delete correct behavior
+# Proper Backspace/Delete Key Functionality
 
-Correctly handles the behavior of the Backspace and Delete keys
+Ensures the appropriate behavior of the Backspace and Delete keys.

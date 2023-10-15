@@ -1,4 +1,4 @@
-# About Jodit
+# Jodit Overview
 
-This plugin adds a button with the question icon,
-which when clicked opens a dialog box with information about the Jodit version and other details.
+This plugin introduces a button adorned with a question mark icon.
+Upon clicking this button, a dialog box is displayed, providing information about the Jodit version along with other pertinent details.
