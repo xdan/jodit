@@ -18,6 +18,7 @@ import { Dialog } from './dialog';
 /**
  * Show `Prompt` dialog. Work without Jodit object
  *
+ * @param msg - Dialog content
  * @param title - Title or callback
  * @param callback - callback. The first argument is the value entered
  * @param placeholder - Placeholder for input
@@ -40,7 +41,10 @@ export function Prompt(
 	placeholder?: string,
 	defaultValue?: string
 ): IDialog {
-	const dialog = this instanceof Dialog ? this : new Dialog(),
+	const dialog =
+			this instanceof Dialog
+				? this
+				: new Dialog({ closeOnClickOverlay: true }),
 		cancelButton = Button(dialog, 'cancel', 'Cancel'),
 		okButton = Button(dialog, 'ok', 'Ok'),
 		form = dialog.c.element('form', {

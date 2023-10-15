@@ -33,7 +33,10 @@ export function Confirm(
 	title: string | ((yes: boolean) => void) | undefined,
 	callback?: (yes: boolean) => void | false
 ): IDialog {
-	const dialog = this instanceof Dialog ? this : new Dialog(),
+	const dialog =
+			this instanceof Dialog
+				? this
+				: new Dialog({ closeOnClickOverlay: true }),
 		$div: HTMLDivElement = dialog.c.fromHTML(
 			'<form class="jodit-dialog_prompt"></form>'
 		) as HTMLDivElement,

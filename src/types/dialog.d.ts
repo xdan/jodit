@@ -18,6 +18,8 @@ export interface IDialogOptions extends IViewOptions {
 	maxWidth?: string | number;
 	minWidth?: string | number;
 	minHeight?: string | number;
+	closeOnClickOverlay?: boolean;
+	closeOnEsc?: boolean;
 }
 
 export type ContentItem = string | HTMLElement | IContainer;

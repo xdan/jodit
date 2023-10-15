@@ -9,6 +9,29 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.0.0-beta.89
+
+### :rocket: New Feature
+
+-   Improved UX of dialog boxes. Added two options `closeOnEsc` defaulting to `true` and `closeOnClickOverlay` defaulting to `false`.
+    ```js
+    Jodit.make('#editor', {
+    	dialog: {
+    		closeOnEsc: true,
+    		closeOnClickOverlay: false
+    	}
+    });
+    // or
+    const editor = Jodit.make('#editor');
+    editor.alert('Hello world'); // closeOnEsc = true, closeOnClickOverlay = true
+    editor
+    	.dlg({
+    		closeOnEsc: false,
+    		closeOnClickOverlay: true
+    	})
+    	.open();
+    ```
+
 ## 4.0.0-beta.88
 
 ### :bug: Bug Fix
@@ -2254,11 +2277,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ]
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

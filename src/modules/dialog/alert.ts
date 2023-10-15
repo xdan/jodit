@@ -41,7 +41,10 @@ export function Alert(
 		callback = title;
 		title = undefined;
 	}
-	const dialog = this instanceof Dialog ? this : new Dialog(),
+	const dialog =
+			this instanceof Dialog
+				? this
+				: new Dialog({ closeOnClickOverlay: true }),
 		container = dialog.c.div(className),
 		okButton = Button(dialog, 'ok', 'Ok');
 

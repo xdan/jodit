@@ -24,7 +24,7 @@ import aboutIcon from './about.svg';
 
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {
-		const dialog = editor.dlg(),
+		const dialog = editor.dlg({ closeOnClickOverlay: true }),
 			i = editor.i18n.bind(editor);
 
 		dialog

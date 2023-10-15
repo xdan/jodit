@@ -37,7 +37,12 @@ export abstract class Dlgs implements IDlgs {
 	): IDialog {
 		msg = processTitle(msg, this);
 		title = processTitle(title, this);
-		return Confirm.call(this.dlg(), msg, title, callback);
+		return Confirm.call(
+			this.dlg({ closeOnClickOverlay: true }),
+			msg,
+			title,
+			callback
+		);
 	}
 
 	prompt(
@@ -53,7 +58,7 @@ export abstract class Dlgs implements IDlgs {
 		placeholder = processTitle(placeholder, this);
 
 		return Prompt.call(
-			this.dlg(),
+			this.dlg({ closeOnClickOverlay: true }),
 			msg,
 			title,
 			callback,
@@ -71,7 +76,13 @@ export abstract class Dlgs implements IDlgs {
 	): IDialog {
 		msg = processTitle(msg, this);
 		title = processTitle(title, this);
-		return Alert.call(this.dlg(), msg, title, callback, className);
+		return Alert.call(
+			this.dlg({ closeOnClickOverlay: true }),
+			msg,
+			title,
+			callback,
+			className
+		);
 	}
 }
 

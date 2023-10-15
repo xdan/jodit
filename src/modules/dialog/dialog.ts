@@ -255,6 +255,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 	@autobind
 	private onEsc(e: KeyboardEvent): void {
+		if (!this.o.closeOnEsc) {
+			return;
+		}
+
 		if (
 			this.isOpened &&
 			e.key === KEY_ESC &&
@@ -688,7 +692,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		self.options = ConfigProto(
 			options,
-			ConfigProto(Config.prototype.dialog, View.defaultOptions)
+			ConfigProto(Config.prototype.dialog, Dialog.defaultOptions)
 		) as IDialogOptions;
 
 		Dom.safeRemove(self.container);
@@ -781,6 +785,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			.on(self.container, 'close_dialog', self.close)
 			.on(this.ow, 'keydown', this.onEsc)
 			.on(this.ow, 'resize', this.onResize);
+
+		if (this.o.closeOnClickOverlay) {
+			const overlay = self.getElm('overlay');
+			assert(overlay != null, 'Overlay element does not exist');
+			this.e.on(overlay, 'click', self.close);
+		}
 	}
 
 	/**
@@ -820,4 +830,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		super.destruct();
 	}
+
+	static override defaultOptions: IDialogOptions;
 }
+
+Dialog.defaultOptions = {
+	...View.defaultOptions,
+	closeOnClickOverlay: false,
+	closeOnEsc: true
+};

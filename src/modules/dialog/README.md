@@ -1,9 +1,9 @@
 # Jodit dialog system
 
-The Jodit dialog system allows you to create modals with title, footer, and content.
-Each dialog is created as a separate inheritor component [[View]].
+The Jodit dialog system enables the creation of modals with a title, footer, and content.
+Each dialog is created as a distinct component that inherits from [[View]].
 
-Several basic wrappers are available out of the box to quickly create basic windows: [[Alert]]/[[Confirm]]/[[Prompt]]
+Several basic wrappers are readily available to swiftly create fundamental windows: [[Alert]]/[[Confirm]]/[[Prompt]]
 
 ```js
 Jodit.Alert('Hello world!', () => {
@@ -48,8 +48,8 @@ dialog.setFooter([
 dialog.open();
 ```
 
-In all of these examples, the dialog opens regardless of Jodit's settings, specifically the selected language and theme.
-To make the dialog open in the same theme as the editor, you can set the theme in its settings, or you can use the [[IDlg]] trait.
+In all these examples, the dialog opens irrespective of Jodit's configurations, including the selected language and theme.
+To ensure the dialog opens in the same theme as the editor, you can specify the theme in its settings, or utilize the [[IDlg]] trait.
 
 ```js
 const dialog = new Jodit.modules.Dialog({
@@ -68,6 +68,15 @@ editor.confirm('Hello world?', yes => {
 });
 ```
 
-```
+Thanks to the trait mechanism, there's no need to create utility dialogs like Alert/Confirm/Prompt as previously described.
+Simply calling the appropriate methods on the [[Jodit]] instance is sufficient. The dialog will automatically adopt the editor's theme and language settings.
 
+```js
+const editor = new Jodit('#editor', {
+  theme: 'dark'
+});
+editor.alert('Hello world!');
+editor.confirm('Hello world?', yes => {
+  console.log('Ok?', yes);
+});
 ```
