@@ -1468,22 +1468,13 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				this.setDisabled(true);
 			}
 
-			// if enter plugin not installed
+			// if enter plugin isn't installed
 			try {
 				this.ed.execCommand(
 					'defaultParagraphSeparator',
 					false,
 					this.o.enter.toLowerCase()
 				);
-			} catch {}
-
-			// fix for native resizing
-			try {
-				this.ed.execCommand('enableObjectResizing', false, 'false');
-			} catch {}
-
-			try {
-				this.ed.execCommand('enableInlineTableEditing', false, 'false');
 			} catch {}
 		});
 	}

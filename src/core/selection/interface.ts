@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { ICommitStyle } from 'jodit/types';
+
 /**
  * @module selection
  */
@@ -20,5 +22,10 @@ declare module 'jodit/types/events' {
 			event: 'isInvisibleForCursor',
 			callback: (elm: HTMLElement) => void | true
 		): this;
+
+		/**
+		 * Triggered after the style is applied to the element
+		 */
+		on(event: 'afterCommitStyle', style: ICommitStyle): this;
 	}
 }

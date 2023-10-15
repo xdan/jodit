@@ -531,6 +531,13 @@ describe('Apply style', () => {
 							'<h1 class="header">|test|</h1>'
 						],
 						[
+							'<h1>|test</h1>',
+							{
+								element: 'h1'
+							},
+							'<p>|test</p>'
+						],
+						[
 							'<p><strong style="font-family: Impact, Charcoal, sans-serif;"><em>|test|</em></strong></p>',
 							{
 								element: 'strong'
@@ -922,7 +929,7 @@ describe('Apply style', () => {
 					describe(`For selection ${input} apply style ${JSON.stringify(
 						opt
 					)}`, () => {
-						it(`Should get ${output}`, () => {
+						it(`Should get ${output}`, async () => {
 							if (jSettings) {
 								editor.destruct();
 								editor = getJodit(jSettings);
@@ -934,6 +941,7 @@ describe('Apply style', () => {
 							const style = new Style(opt);
 
 							style.apply(editor);
+							await editor.async.requestIdlePromise();
 							replaceCursorToChar(editor);
 
 							expect(sortAttributes(editor.value).trim()).equals(
@@ -1399,21 +1407,21 @@ describe('Apply style', () => {
 						);
 					});
 
-					describe('Double time', function () {
-						it('Should unwrap element', function () {
-							editor.value = '<h1>test</h1>';
-
-							editor.s.setCursorAfter(
-								editor.editor.firstChild.firstChild
-							);
+					describe('Double time', () => {
+						it('Should unwrap element', () => {
+							editor.value = '<h1>|test</h1>';
+							setCursorToChar(editor);
 
 							const style = new Style({
 								element: 'h1'
 							});
 
 							style.apply(editor);
+							replaceCursorToChar(editor);
 
-							expect(sortAttributes(editor.value)).equals('test');
+							expect(sortAttributes(editor.value)).equals(
+								'<p>|test</p>'
+							);
 						});
 					});
 
@@ -1614,7 +1622,7 @@ describe('Apply style', () => {
 
 					style.apply(editor);
 
-					expect(sortAttributes(editor.value)).equals('test');
+					expect(sortAttributes(editor.value)).equals('<p>test</p>');
 				});
 			});
 

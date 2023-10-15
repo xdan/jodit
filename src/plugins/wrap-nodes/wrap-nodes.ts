@@ -38,7 +38,7 @@ class wrapNodes extends Plugin {
 				}
 			)
 			.on(
-				'afterInit.wtn postProcessSetEditorValue.wtn',
+				'afterInit.wtn postProcessSetEditorValue.wtn afterCommitStyle.wtn',
 				this.postProcessSetEditorValue
 			);
 	}
@@ -63,7 +63,7 @@ class wrapNodes extends Plugin {
 			isChanged: boolean = false;
 
 		while (child) {
-			child = this.checkAloneListLeaf(child, jodit);
+			child = checkAloneListLeaf(child, jodit);
 
 			if (this.isSuitableStart(child)) {
 				if (!isChanged) {
@@ -97,51 +97,27 @@ class wrapNodes extends Plugin {
 		}
 	}
 
-	private checkAloneListLeaf(child: Node, jodit: IJodit): Node {
-		let result = child;
-		let next: Nullable<Node> = child;
-
-		do {
-			if (
-				Dom.isElement(next) &&
-				Dom.isLeaf(next) &&
-				!Dom.isList(next.parentElement)
-			) {
-				const nextChild: Nullable<Node> = Dom.findNotEmptySibling(
-					next,
-					false
-				);
-				if (Dom.isTag(result, 'ul')) {
-					result.appendChild(next);
-				} else {
-					result = Dom.wrap(next, 'ul', jodit.createInside);
-				}
-				next = nextChild;
-			} else {
-				break;
-			}
-		} while (next);
-
-		return result;
-	}
-
 	/**
 	 * Found Node which should be wrapped
 	 */
 	private isSuitableStart = (n: Nullable<Node>): boolean =>
-		(Dom.isText(n) && isString(n.nodeValue) && /[^\s]/.test(n.nodeValue)) ||
-		(this.isNotClosed(n) && !Dom.isTemporary(n));
+		(Dom.isText(n) &&
+			isString(n.nodeValue) &&
+			(/[^\s]/.test(n.nodeValue) ||
+				(n.parentNode?.firstChild === n &&
+					this.isSuitable(n.nextSibling)))) ||
+		(this.isNotWrapped(n) && !Dom.isTemporary(n));
 
 	/**
-	 * Node should add in block element
+	 * Node should add in a block element
 	 */
 	private isSuitable = (n: Nullable<Node>): boolean =>
-		Dom.isText(n) || this.isNotClosed(n);
+		Dom.isText(n) || this.isNotWrapped(n);
 
 	/**
-	 * Some element which need append in block
+	 * Some element which needs to append in block
 	 */
-	private isNotClosed = (n: Nullable<Node>): n is Element =>
+	private isNotWrapped = (n: Nullable<Node>): n is Element =>
 		Dom.isElement(n) &&
 		!(Dom.isBlock(n) || Dom.isTag(n, this.j.o.wrapNodes.exclude));
 
@@ -169,6 +145,34 @@ class wrapNodes extends Plugin {
 		jodit.s.isFocused() && jodit.s.setCursorBefore(br);
 		jodit.e.fire('internalChange');
 	}
+}
+
+function checkAloneListLeaf(child: Node, jodit: IJodit): Node {
+	let result = child;
+	let next: Nullable<Node> = child;
+
+	do {
+		if (
+			Dom.isElement(next) &&
+			Dom.isLeaf(next) &&
+			!Dom.isList(next.parentElement)
+		) {
+			const nextChild: Nullable<Node> = Dom.findNotEmptySibling(
+				next,
+				false
+			);
+			if (Dom.isTag(result, 'ul')) {
+				result.appendChild(next);
+			} else {
+				result = Dom.wrap(next, 'ul', jodit.createInside);
+			}
+			next = nextChild;
+		} else {
+			break;
+		}
+	} while (next);
+
+	return result;
 }
 
 pluginSystem.add('wrapNodes', wrapNodes);

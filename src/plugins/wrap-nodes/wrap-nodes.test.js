@@ -3,13 +3,20 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-
 describe('WrapNodes plugin test', function () {
 	describe('Simple text', function () {
 		it('Should wrap inside default block element', function () {
 			const editor = getJodit();
 			editor.value = 'test';
 			expect(editor.value).equals('<p>test</p>');
+		});
+
+		describe('Leading spaces', function () {
+			it('Should wrap inside default block element', function () {
+				const editor = getJodit();
+				editor.value = Jodit.constants.INVISIBLE_SPACE + 'test';
+				expect(editor.value).equals('<p>test</p>');
+			});
 		});
 
 		describe('Use Japanese keyboard', function () {

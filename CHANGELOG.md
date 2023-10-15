@@ -9,9 +9,13 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.0.0-beta.88
+
+-   Fixed a bug where the cursor, when positioned at the start of the h1 tag and a style was applied to the h1 tag, would move up one tag level.
+
 ## 4.0.0-beta.78
 
-- Update
+-   Update
 
 ```
  @types/ace                         ^0.0.48  →   ^0.0.49
@@ -35,10 +39,10 @@
 
 ```
 
-
 ## 4.0.0-beta.78
 
-- Update
+-   Update
+
 ```
  @types/karma                        ^6.3.3  →    ^6.3.4
  @types/node                        ^20.1.0  →   ^20.5.0
@@ -2247,11 +2251,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ]
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
