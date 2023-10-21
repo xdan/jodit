@@ -1161,13 +1161,15 @@ export class Selection implements ISelect {
 			}
 		}
 
-		if (!Dom.isTag(start || last, INSEPARABLE_TAGS)) {
-			range.selectNodeContents(start || last);
+		const workElm = start || last;
+
+		if (!Dom.isTag(workElm, INSEPARABLE_TAGS)) {
+			range.selectNodeContents(workElm);
 			range.collapse(inStart);
 		} else {
-			inStart || Dom.isTag(start || last, 'br')
-				? range.setStartBefore(start || last)
-				: range.setEndAfter(last);
+			inStart || Dom.isTag(workElm, 'br')
+				? range.setStartBefore(workElm)
+				: range.setEndAfter(workElm);
 			range.collapse(inStart);
 		}
 

@@ -113,9 +113,10 @@ describe('Backspace/Delete key', function () {
 		});
 
 		describe('Position after backspace', () => {
-			it.only('Should be correct', async () => {
+			it('Should be correct', async () => {
 				editor.focus();
-				editor.value = '<p><strong><span>&nbsp;</span></strong><br></p><p><strong><span>|&nbsp;</span></strong><br></p>';
+				editor.value =
+					'<p><strong><span>&nbsp;</span></strong><br></p><p><strong><span>|&nbsp;</span></strong><br></p>';
 				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
@@ -646,14 +647,18 @@ describe('Backspace/Delete key', function () {
 						);
 
 						editor.s.insertHTML('b');
-						expect(editor.value).equals('<p><br></p><p>b</p>');
+						replaceCursorToChar(editor);
+						expect(editor.value).equals('<p><br></p><p>b|</p>');
+						setCursorToChar(editor);
 
 						simulateEvent(
 							'keydown',
 							Jodit.KEY_BACKSPACE,
 							editor.editor
 						);
-						expect(editor.value).equals('<p><br></p><p><br></p>');
+						replaceCursorToChar(editor);
+						expect(editor.value).equals('<p><br></p><p>|<br></p>');
+						setCursorToChar(editor);
 
 						simulateEvent(
 							'keydown',
