@@ -23,6 +23,7 @@ import type {
 import * as consts from 'jodit/core/constants';
 
 import {
+	INSEPARABLE_TAGS,
 	INVISIBLE_SPACE,
 	INVISIBLE_SPACE_REG_EXP_END as INV_END,
 	INVISIBLE_SPACE_REG_EXP_START as INV_START,
@@ -1142,7 +1143,7 @@ export class Selection implements ISelect {
 			last: Node = node;
 
 		do {
-			if (Dom.isText(start)) {
+			if (Dom.isText(start) || Dom.isTag(start, INSEPARABLE_TAGS)) {
 				break;
 			}
 			last = start;
@@ -1152,7 +1153,7 @@ export class Selection implements ISelect {
 		if (!start) {
 			const fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
 
-			if (!/^(img|br|input)$/i.test(last.nodeName)) {
+			if (!Dom.isTag(last, INSEPARABLE_TAGS)) {
 				last.appendChild(fakeNode);
 				last = fakeNode;
 			} else {
@@ -1160,8 +1161,15 @@ export class Selection implements ISelect {
 			}
 		}
 
-		range.selectNodeContents(start || last);
-		range.collapse(inStart);
+		if (!Dom.isTag(start || last, INSEPARABLE_TAGS)) {
+			range.selectNodeContents(start || last);
+			range.collapse(inStart);
+		} else {
+			inStart || Dom.isTag(start || last, 'br')
+				? range.setStartBefore(start || last)
+				: range.setEndAfter(last);
+			range.collapse(inStart);
+		}
 
 		this.selectRange(range);
 

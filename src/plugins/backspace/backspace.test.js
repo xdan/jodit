@@ -112,6 +112,27 @@ describe('Backspace/Delete key', function () {
 			});
 		});
 
+		describe('Position after backspace', () => {
+			it.only('Should be correct', async () => {
+				editor.focus();
+				editor.value = '<p><strong><span>&nbsp;</span></strong><br></p><p><strong><span>|&nbsp;</span></strong><br></p>';
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+				await editor.async.requestIdlePromise();
+
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+				await editor.async.requestIdlePromise();
+
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+				await editor.async.requestIdlePromise();
+				replaceCursorToChar(editor);
+				expect('<p>|<br></p>').equals(editor.value);
+			});
+		});
+
 		describe('Select whole text inside element', function () {
 			describe('Inside P', function () {
 				it('Should remove selected range and remove this P', function () {

@@ -31,14 +31,14 @@ class wrapNodes extends Plugin {
 
 		jodit.e
 			.on(
-				'drop.wtn focus.wtn keydown.wtn mousedown.wtn afterInit.wtn',
+				'drop.wtn focus.wtn keydown.wtn mousedown.wtn afterInit.wtn backSpaceAfterDelete.wtn',
 				this.preprocessInput,
 				{
 					top: true
 				}
 			)
 			.on(
-				'afterInit.wtn postProcessSetEditorValue.wtn afterCommitStyle.wtn',
+				'afterInit.wtn postProcessSetEditorValue.wtn afterCommitStyle.wtn backSpaceAfterDelete.wtn',
 				this.postProcessSetEditorValue
 			);
 	}
