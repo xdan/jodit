@@ -32,8 +32,9 @@ export function buildData(
 
 		const newData = new FD();
 
-		Object.keys(data).forEach(key => {
-			newData.append(key, data[key]);
+		const dict = data as IDictionary<string>;
+		Object.keys(dict).forEach(key => {
+			newData.append(key, dict[key]);
 		});
 
 		return newData;

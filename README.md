@@ -40,7 +40,7 @@ You will get the following files:
 
 Include the following two files:
 
-ES5 Version:
+#### ES5 Version:
 
 ```html
 <link type="text/css" rel="stylesheet" href="es2015/jodit.min.css" />
@@ -54,7 +54,7 @@ ES2021 Version (for modern browsers only):
 <script type="text/javascript" src="es2021/jodit.min.js"></script>
 ```
 
-ESM Modules:
+#### ESM Modules:
 
 ```html
 <script type="importmap">
@@ -74,7 +74,7 @@ ESM Modules:
 </script>
 ```
 
-The ESM modules automatically include only the basic set of plugins and the English language.
+The ESM modules automatically include only the [basic set of plugins](https://github.com/xdan/jodit/blob/main/tools/utils/resolve-alias-imports.ts#L59) and the English language.
 You can manually include additional plugins and languages as needed.
 
 ```html
