@@ -60,23 +60,26 @@ const allowPluginsInESM = new Set(
 	[
 		'about',
 		'backspace',
-		'delete',
 		'color',
-		'format-block',
-		'image',
-		'ordered-list',
+		'delete',
 		'dtd',
 		'enter',
 		'enter',
-		'link',
-		'iframe',
-		'inline-popup',
+		'font',
+		'format-block',
 		'hotkeys',
+		'iframe',
+		'image',
+		'inline-popup',
+		'link',
+		'ordered-list',
+		'placeholder',
 		'powered-by-jodit',
 		'redo-undo',
 		'size',
-		'wrap-nodes',
-		'font'
+		'stat',
+		'table',
+		'wrap-nodes'
 	]
 		.map(p => `jodit/plugins/${p}/${p}`)
 		.concat(
@@ -115,6 +118,10 @@ function resoleAliasImports(dirPath: string): void {
 
 		const resolvePath = (str: string): string => {
 			let modulePath = str.replace(/['"]/g, '');
+
+			if (/^\..+\.svg$/.test(modulePath)) {
+				return modulePath + '.js';
+			}
 
 			if (alias.test(modulePath)) {
 				modulePath = resolveAlias(modulePath, dirPath);
