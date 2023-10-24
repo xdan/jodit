@@ -126,7 +126,7 @@ You can manually include additional plugins and languages as needed.
 
 ### Usage
 
-Add a <textarea> element to your HTML:
+Add a `textarea` element to your HTML:
 
 ```html
 <textarea id="editor" name="editor"></textarea>
