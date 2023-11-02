@@ -1,4 +1,4 @@
-# Context menu.
+# Context menu
 
 It's pretty easy to use:
 

@@ -35,4 +35,3 @@ export * from './selector';
 export * from './set';
 export * from './stack';
 export * from './utils';
-export * from './val';

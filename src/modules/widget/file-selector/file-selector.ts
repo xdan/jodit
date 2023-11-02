@@ -11,7 +11,7 @@
  */
 
 import type { IFileBrowserCallBackData, IJodit } from 'jodit/types';
-import { isFunction, $$, attr, val } from 'jodit/core/helpers';
+import { isFunction, $$, attr } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom/dom';
 import { UIBlock, UIForm, UIInput, UIButton } from 'jodit/core/ui';
 
@@ -170,3 +170,21 @@ export const FileSelectorWidget = (
 
 	return TabsWidget(editor, tabs);
 };
+
+function val(
+	elm: HTMLElement,
+	selector: string,
+	value?: string | null
+): string {
+	const child = elm.querySelector<HTMLInputElement>(selector);
+
+	if (!child) {
+		return '';
+	}
+
+	if (value) {
+		child.value = value;
+	}
+
+	return child.value;
+}

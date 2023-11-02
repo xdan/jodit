@@ -85,7 +85,14 @@ if (typeof before !== 'undefined') {
 		this.timeout(10000);
 		browser = await puppeteer.launch({
 			headless: args.debug ? false : 'new',
-			args: ['--disable-web-security', '--no-sandbox']
+			executablePath: '/usr/bin/google-chrome-stable',
+			args: [
+				'--disable-dev-shm-usage',
+				'--disable-gpu',
+				'--disable-web-security',
+				'--no-sandbox',
+				'--disable-setuid-sandbo'
+			]
 		});
 
 		global.page = await browser.newPage();
@@ -94,6 +101,7 @@ if (typeof before !== 'undefined') {
 	});
 
 	beforeEach(async function () {
+		this.timeout(10000);
 		await global.page.reload({ waitUntil: 'networkidle2' });
 		await page.evaluate(() => {
 			window.editor?.destruct();

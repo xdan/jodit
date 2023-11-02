@@ -9,6 +9,10 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.0.0-beta.96
+
+- Removed `Jodit.modules.Helpers.val` method
+
 ## 4.0.0-beta.95
 
 -   Fixed the logic of the file upload module. When HTTP errors were simply ignored.
