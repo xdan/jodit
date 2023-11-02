@@ -70,18 +70,21 @@ describe('Sticky plugin', function () {
 				});
 			});
 
-			describe('In iframe mode', function () {
+			describe.only('In iframe mode', function () {
 				it('Should work some way', async () => {
 					const editor = getJodit({
 						iframe: true
 					});
 
-					editor.value = '<p>stop</p>'.repeat(100);
+					editor.value = '<p>stop</p>'.repeat(300);
+					await editor.async.requestIdlePromise();
+
 					const offset = Jodit.modules.Helpers.offset(
 						editor.container,
 						editor,
 						editor.ownerDocument
 					);
+
 					await editor.async.requestIdlePromise();
 
 					window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom

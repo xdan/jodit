@@ -16,5 +16,5 @@ export function ucfirst(value: string): string {
 		return '';
 	}
 
-	return value[0].toUpperCase() + value.substr(1);
+	return value[0].toUpperCase() + value.substring(1);
 }
