@@ -1,4 +1,4 @@
-# Jodit helpers functions
+# Helpers
 
 Assistant functions are intended for small basic operations and are divided into subgroups.
 
