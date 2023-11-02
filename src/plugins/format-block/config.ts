@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/format-block
+ */
+
 import type { IControlType, IJodit } from 'jodit/types';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';

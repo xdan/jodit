@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { ICommitStyle } from 'jodit/types';
-
 /**
  * @module selection
  */
+
+import type { ICommitStyle } from 'jodit/types';
 
 declare module 'jodit/types/events' {
 	interface IEventEmitter {

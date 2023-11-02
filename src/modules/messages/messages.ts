@@ -46,18 +46,46 @@ export class UIMessages extends UIGroup implements IMessages {
 		super(jodit);
 	}
 
+	/**
+	 * Show popup info message in the lower right corner of the container
+	 * ```js
+	 * const jodit = Jodit.make('#editor');
+	 * jodit.info('Hello world', 3000);
+	 * ```
+	 */
 	info(text: string, timeout?: number): void {
 		this.__message(text, 'info', timeout);
 	}
 
+	/**
+	 * Show popup success message in the lower right corner of the container
+	 * ```js
+	 * const jodit = Jodit.make('#editor');
+	 * jodit.success('Hello world', 3000);
+	 * ```
+	 */
 	success(text: string, timeout?: number): void {
 		this.__message(text, 'success', timeout);
 	}
 
+	/**
+	 * Show popup error message in the lower right corner of the container
+	 * ```js
+	 * const jodit = Jodit.make('#editor');
+	 * jodit.error('Hello world', 3000);
+	 * ```
+	 */
 	error(text: string, timeout?: number): void {
 		this.__message(text, 'error', timeout);
 	}
 
+	/**
+	 * Show popup message in the lower right corner of the container
+	 * ```js
+	 * const jodit = Jodit.make('#editor');
+	 * jodit.message('Hello world', 'info', 3000);
+	 * ```
+	 */
 	message(text: string, variant?: MessageVariant, timeout?: number): void {
 		this.__message(text, variant, timeout);
 	}

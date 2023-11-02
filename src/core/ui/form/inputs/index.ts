@@ -5,7 +5,7 @@
  */
 
 /**
- * @module ui/form/inputs
+ * @module ui/form
  */
 
 export * from './input/input';

@@ -39,27 +39,10 @@ interface ImageSelectorCallbacks {
  * Generate 3 tabs
  * upload - Use Drag and Drop
  * url - By specifying the image url
- * filebrowser - After opening the file browser . In the absence of one of the parameters will be less tabs
+ * filebrowser - After opening the file browser. In the absence of one of the parameters will be less tabs
  *
  * @param callbacks - Object with keys `url`, `upload` and `filebrowser`, values which are callback
  * functions with different parameters
- *
- * @example
- * ```javascript
- * let widget = new Jodit.modules.Widget(editor);
- *
- * return widget.c('ImageSelector', {
- *      url: function (url, alt) {
- *          editor.selections.insertImage(url);
- *      },
- *      upload: function (images) {
- *          editor.selections.insertImage(images[0]);
- *      },
- *      filebrowser: function (images) {
- *          editor.selections.insertImage(images[0]);
- *      }
- * }, image);
- * ```
  */
 export const FileSelectorWidget = (
 	editor: IJodit,

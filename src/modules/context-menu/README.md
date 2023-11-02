@@ -1,4 +1,4 @@
-# Module for displaying the context menu.
+# Context menu.
 
 It's pretty easy to use:
 

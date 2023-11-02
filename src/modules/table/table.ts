@@ -10,7 +10,7 @@
  * @module modules/table
  */
 
-import type { ICreate, IDictionary, IJodit } from 'jodit/types';
+import type { ICreate, IDictionary, IJodit, Prettify } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import {
@@ -248,15 +248,17 @@ export class Table extends ViewComponent<IJodit> {
 	/**
 	 * Inserts a new line after row what contains the selected cell
 	 *
+	 * @param table - Working table
 	 * @param line - Insert a new line after/before this
 	 * line contains the selected cell
 	 * @param after - Insert a new line after line contains the selected cell
+	 * @param create - Instance of Create class
 	 */
 	static appendRow(
 		table: HTMLTableElement,
 		line: false | HTMLTableRowElement,
 		after: boolean,
-		create: ICreate
+		create: Prettify<Pick<ICreate, 'element'>>
 	): void {
 		let row: HTMLTableRowElement;
 

@@ -1,6 +1,6 @@
 # Show info messages
 
-Allow show information messages inside editor:
+Allow showing information messages inside the editor:
 
 ```js
 const editor = Jodit.make('#editor');

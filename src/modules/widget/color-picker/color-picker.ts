@@ -35,7 +35,7 @@ Icon.set('palette', paletteIcon);
  * @param coldColor - Color value ex. #fff or rgb(123, 123, 123) or rgba(123, 123, 123, 1)
  * @example
  * ```javascript
- * $tabs = TabsWidget(editor, {
+ * const tabs = TabsWidget(editor, {
  *    'Text' : ColorPickerWidget(editor, function (color) {
  *         box.style.color = color;
  *     }, box.style.color),
