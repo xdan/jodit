@@ -1,7 +1,7 @@
 # View UI component
 
-Jodit components {@link Component} require the parent component [[IJodit]], or [[IViewBased]] to work.
-But Jodit itself is also a component. And for its initialization it only needs options.
+Jodit components [Component] require the parent component [[IJodit]], or [[IViewBased]] to work.
+But Jodit itself is also a component. And for its initialization, it only needs options.
 
 Also [[Dialog]], it does not need a Jodit instance to run.
 You can display the dialog independently of the editor.
