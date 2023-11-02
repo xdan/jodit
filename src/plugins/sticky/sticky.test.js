@@ -70,7 +70,7 @@ describe('Sticky plugin', function () {
 				});
 			});
 
-			describe.only('In iframe mode', function () {
+			describe('In iframe mode', function () {
 				it('Should work some way', async () => {
 					const editor = getJodit({
 						iframe: true
