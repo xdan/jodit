@@ -1,4 +1,4 @@
-# Jodit UI System
+# UI System
 
 For interface design, Jodit provides a set of components that allow you to build complex interfaces.
 Their advantage is the uniformity of the insert/drop interfaces. Reactivity created by observing the fields of the component.

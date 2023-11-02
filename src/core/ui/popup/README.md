@@ -1,4 +1,4 @@
-# Jodit UI Popup
+# Popup
 
 The module is used to create pop-up windows next to interface elements.
 

@@ -1,4 +1,4 @@
-# Jodit UI component system
+# UI component system
 
 Every Jodit element inherits from [[Component]], and implements the [[IComponent]] interface accordingly.
 
