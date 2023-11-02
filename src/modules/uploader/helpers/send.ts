@@ -87,7 +87,12 @@ export function send(
 			.send()
 			.then(resp => resp.json())
 			.catch(error => {
-				uploader.o.error.call(uploader, error);
+				return {
+					success: false,
+					data: {
+						messages: [error]
+					}
+				};
 			})
 			.finally(() => {
 				ajax.destruct();

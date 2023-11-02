@@ -109,7 +109,11 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	@cache
 	get message(): IMessages {
-		return new UIMessages(this, this.container);
+		return this.getMessageModule(this.container);
+	}
+
+	protected getMessageModule(container: HTMLElement): IMessages {
+		return new UIMessages(this, container);
 	}
 
 	/**

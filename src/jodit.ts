@@ -28,7 +28,8 @@ import type {
 	CanPromise,
 	IHistory,
 	AjaxOptions,
-	IResponse
+	IResponse,
+	IMessages
 } from 'jodit/types';
 
 import type * as Modules from 'jodit/modules';
@@ -84,7 +85,6 @@ import {
 } from 'jodit/core/decorators';
 import { Dlgs } from 'jodit/core/traits/dlgs';
 import { Ajax } from 'jodit/core/request';
-
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 const __defaultClassesKey = 'data-jodit-default-classes';
 
@@ -267,6 +267,11 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	 */
 	get workplace(): HTMLDivElement {
 		return this.currentPlace.workplace;
+	}
+
+	@cache
+	override get message(): IMessages {
+		return this.getMessageModule(this.workplace);
 	}
 
 	/**
