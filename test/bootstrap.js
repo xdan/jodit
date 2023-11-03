@@ -51,7 +51,7 @@ if (typeof window.toolbarButtonsCount !== 'number') {
  */
 function delay(timeout) {
 	return new naturalPromise(resolve => {
-		setTimeout(resolve, timeout);
+		/*ok*/ setTimeout(resolve, timeout);
 	});
 }
 
@@ -937,12 +937,18 @@ function one(event, element, callback) {
  * @param {HTMLImageElement} image
  * @param {Function} callback
  */
-function onLoadImage(image, callback) {
-	if (!image.complete) {
-		one('load', image, callback);
-	} else {
-		callback.apply(image);
-	}
+function onLoadImage(image, callback = () => {}) {
+	return new naturalPromise(resolve => {
+		if (!image.complete) {
+			one('load', image, () => {
+				callback.call(image);
+				resolve();
+			});
+		} else {
+			callback.call(image);
+			resolve();
+		}
+	});
 }
 
 /**

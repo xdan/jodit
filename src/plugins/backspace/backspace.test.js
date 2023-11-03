@@ -5,12 +5,21 @@
  */
 
 describe('Backspace/Delete key', function () {
-	let editor, range;
+	let editor, range, area;
 
-	beforeEach(function () {
-		editor = getJodit();
+	beforeEach(() => {
+		area = appendTestArea(undefined, false);
+		unmockPromise();
+		editor = getJodit({}, area);
 		editor.value = '<p>test</p>';
 		range = editor.s.createRange(true);
+	});
+
+	afterEach(() => {
+		editor.destruct();
+		area.remove();
+		editor = null;
+		range = null;
 	});
 
 	describe('More cases', function () {
@@ -69,10 +78,17 @@ describe('Backspace/Delete key', function () {
 
 			describe(`For key "${key}"`, function () {
 				it(`Should be ${value}`, async () => {
-					editor.destruct();
-					const jodit = getJodit(
-						(options && JSON.parse(options)) || {}
-					);
+					let jodit = editor;
+
+					if (options) {
+						editor.destruct();
+
+						jodit = getJodit(
+							(options && JSON.parse(options)) || {},
+							area
+						);
+					}
+
 					jodit.value = key;
 					setCursorToChar(jodit);
 					simulateEvent(
@@ -753,31 +769,31 @@ describe('Backspace/Delete key', function () {
 
 			describe('HR has different display style', function () {
 				it('Should also remove HR but cursor should leave inside P', function () {
-					const editor = getJodit({
-						iframe: true,
-						iframeStyle:
-							Jodit.defaultOptions.iframeStyle +
-							'hr {display: inline-block;}'
-					});
+					editor.destruct();
+					const jodit = getJodit(
+						{
+							iframe: true,
+							iframeStyle:
+								Jodit.defaultOptions.iframeStyle +
+								'hr {display: inline-block;}'
+						},
+						area
+					);
 
-					editor.value = '<p>lets</p><hr><p>test</p>';
+					jodit.value = '<p>lets</p><hr><p>test</p>';
 
-					const range = editor.s.createRange();
+					const range = jodit.s.createRange();
 
 					// set cursor in start of element
 
-					range.selectNodeContents(editor.editor.lastChild);
+					range.selectNodeContents(jodit.editor.lastChild);
 					range.collapse(true);
-					editor.s.selectRange(range);
+					jodit.s.selectRange(range);
 
-					simulateEvent(
-						'keydown',
-						Jodit.KEY_BACKSPACE,
-						editor.editor
-					);
+					simulateEvent('keydown', Jodit.KEY_BACKSPACE, jodit.editor);
 
-					editor.s.insertNode(editor.createInside.text(' 2 '));
-					expect(editor.value).equals('<p>lets</p><p> 2 test</p>');
+					jodit.s.insertNode(jodit.createInside.text(' 2 '));
+					expect(jodit.value).equals('<p>lets</p><p> 2 test</p>');
 				});
 			});
 		});
@@ -801,8 +817,6 @@ describe('Backspace/Delete key', function () {
 
 				describe('H1 with BR', function () {
 					it('Should simple remove this H1', function () {
-						const editor = getJodit();
-
 						editor.value = '<h1><br></h1><p>|test</p>';
 						setCursorToChar(editor);
 
@@ -819,8 +833,6 @@ describe('Backspace/Delete key', function () {
 
 			describe('Delete', function () {
 				it('Should simple remove this H1', function () {
-					const editor = getJodit();
-
 					editor.value = '<p>test|</p><h1></h1>';
 					setCursorToChar(editor);
 
@@ -831,8 +843,6 @@ describe('Backspace/Delete key', function () {
 
 				describe('H1 with BR', function () {
 					it('Should simple remove this H1', function () {
-						const editor = getJodit();
-
 						editor.value = '<p>test|</p><h1><br></h1>';
 						setCursorToChar(editor);
 						simulateEvent(
@@ -850,8 +860,6 @@ describe('Backspace/Delete key', function () {
 
 	describe('inside empty TD', function () {
 		it('Should doing nothing', function () {
-			const editor = getJodit();
-
 			editor.value =
 				'<table><tbody>' + '<tr><td></td></tr>' + '</tbody></table>';
 
@@ -899,7 +907,6 @@ describe('Backspace/Delete key', function () {
 	describe('Cursor after/before element', function () {
 		describe('Backspace key', function () {
 			it('Should remove that element', function () {
-				const editor = getJodit();
 				editor.value = '<p><img src="tests/artio.jpg"/>|test</p>';
 				setCursorToChar(editor);
 
@@ -913,7 +920,6 @@ describe('Backspace/Delete key', function () {
 
 			describe('After P before Table', function () {
 				it('Should remove P', function () {
-					const editor = getJodit();
 					editor.value =
 						'<p><br></p><table><tbody><tr><td>1</td></tr></tbody></table>';
 
@@ -943,7 +949,6 @@ describe('Backspace/Delete key', function () {
 
 		describe('Delete key', function () {
 			it('Should remove that element', function () {
-				const editor = getJodit();
 				editor.value = '<p>test|<img src="tests/artio.jpg"/></p>';
 				setCursorToChar(editor);
 
@@ -959,7 +964,6 @@ describe('Backspace/Delete key', function () {
 
 	describe('After contenteditable false', () => {
 		it('Should remove this element', () => {
-			const editor = getJodit();
 			editor.value =
 				'<div data-jodit-page-break="true" contenteditable="false">Page break</div><p>|<br></p>';
 			setCursorToChar(editor);

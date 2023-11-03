@@ -567,7 +567,7 @@ describe('Test Inline mode', function () {
 
 					simulateEvent('mouseup', input);
 
-					setTimeout(function () {
+					editor.async.setTimeout(function () {
 						expect(getOpenedPopup(editor)).eq(linkPopup);
 
 						input.value = 'https://xdsoft.net/jodit/';
@@ -611,6 +611,7 @@ describe('Test Inline mode', function () {
 				describe('Disable toolbarInline = false', function () {
 					it('Should show inline popup', function (done) {
 						unmockPromise();
+
 						Jodit.make(appendTestDiv(), {
 							toolbarInline: false,
 							iframe: true,
@@ -622,6 +623,7 @@ describe('Test Inline mode', function () {
 									simulateEvent('click', 0, img);
 									const popup = getOpenedPopup(editor);
 									expect(popup).is.null;
+
 									done();
 								}
 							}
@@ -641,7 +643,7 @@ describe('Test Inline mode', function () {
 									editor.value = '<p>test <img/> test</p>';
 									const img =
 										editor.editor.querySelector('img');
-									simulateEvent('click', 0, img);
+									simulateEvent('click', img);
 									const popup = getOpenedPopup(editor);
 									expect(popup).is.not.null;
 									done();
@@ -662,7 +664,7 @@ describe('Test Inline mode', function () {
 								editor.value =
 									'<p>test <a href="#test">test</a> test</p>';
 								const a = editor.editor.querySelector('a');
-								simulateEvent('click', 0, a);
+								simulateEvent('click', a);
 								const popup = getOpenedPopup(editor);
 								expect(popup).is.not.null;
 								done();

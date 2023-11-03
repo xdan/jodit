@@ -18,7 +18,7 @@ describe('Test Async module', () => {
 	});
 
 	describe('All async tasks', () => {
-		it('Should be called', done => {
+		it('Should be called', async () => {
 			asyncM.setTimeout(callSpy, 100);
 			asyncM
 				.promise(r => Promise.resolve().then(r))
@@ -26,14 +26,12 @@ describe('Test Async module', () => {
 				.catch(e => null);
 			asyncM.requestIdleCallback(callSpy);
 
-			setTimeout(() => {
-				expect(callCount).equals(3);
-				done();
-			}, 200);
+			await delay(200);
+			expect(callCount).equals(3);
 		});
 
 		describe('After View was destroyed', () => {
-			it('Should not be called', done => {
+			it('Should not be called', async () => {
 				asyncM.setTimeout(callSpy, 100);
 				asyncM
 					.promise(r => Promise.resolve().then(r))
@@ -41,15 +39,12 @@ describe('Test Async module', () => {
 					.catch(e => null);
 				asyncM.requestIdleCallback(callSpy);
 				asyncM.destruct();
-
-				setTimeout(() => {
-					expect(callCount).equals(0);
-					done();
-				}, 200);
+				await delay(200);
+				expect(callCount).equals(0);
 			});
 
 			describe('Jodit instance', () => {
-				it('Should work same way', done => {
+				it('Should work same way', async () => {
 					const editor = getJodit();
 					editor.async.setTimeout(callSpy, 100);
 					editor.async
@@ -58,78 +53,63 @@ describe('Test Async module', () => {
 						.catch(e => null);
 					editor.async.requestIdleCallback(callSpy);
 					editor.destruct();
-
-					setTimeout(() => {
-						expect(callCount).equals(0);
-						done();
-					}, 200);
+					await delay(200);
+					expect(callCount).equals(0);
 				});
 			});
 		});
 	});
 
 	describe('Promise', () => {
-		it('Should has method for rejection in the outside', done => {
+		it('Should has method for rejection in the outside', async () => {
 			const promise = asyncM.promise(r => Promise.resolve().then(r));
 
 			promise.then(callSpy).catch(e => null);
 			promise.rejectCallback();
 
-			setTimeout(() => {
-				expect(callCount).equals(0);
-				done();
-			}, 200);
+			await delay(200);
+			expect(callCount).equals(0);
 		});
 	});
 
 	describe('setTimeout', () => {
-		it('Should can be called with number timeout', done => {
+		it('Should can be called with number timeout', async () => {
 			asyncM.setTimeout(callSpy, 100);
-			setTimeout(() => {
-				expect(callCount).equals(1);
-				done();
-			}, 200);
+			await delay(200);
+			expect(callCount).equals(1);
 		});
 
-		it('Should can be called with options', done => {
+		it('Should can be called with options', async () => {
 			asyncM.setTimeout(callSpy, { timeout: 100 });
-			setTimeout(() => {
-				expect(callCount).equals(1);
-				done();
-			}, 200);
+			await delay(200);
+			expect(callCount).equals(1);
 		});
 
 		describe('Clear', () => {
-			it('Should can be cleared with timeout id', done => {
+			it('Should can be cleared with timeout id', async () => {
 				const id = asyncM.setTimeout(callSpy, { timeout: 100 });
 				asyncM.clearTimeout(id);
-				setTimeout(() => {
-					expect(callCount).equals(0);
-					done();
-				}, 200);
+				await delay(200);
+				expect(callCount).equals(0);
 			});
 
-			it('Should can be cleared with timeout id', done => {
+			it('Should can be cleared with timeout id', async () => {
 				const id = asyncM.setTimeout(callSpy, { timeout: 100 });
 				asyncM.clearTimeout(id);
-				setTimeout(() => {
-					expect(callCount).equals(0);
-					done();
-				}, 200);
+				await delay(200);
+				expect(callCount).equals(0);
 			});
 
 			describe('With label', () => {
-				it('Should can be cleared with label', done => {
+				it('Should can be cleared with label', async () => {
 					asyncM.setTimeout(callSpy, { timeout: 100, label: 'test' });
 					asyncM.clearTimeout('test');
-					setTimeout(() => {
-						expect(callCount).equals(0);
-						done();
-					}, 200);
+					await delay(200);
+					expect(callCount).equals(0);
 				});
 
 				describe('Several call with one label', () => {
-					it('Should clear previous call', done => {
+					it('Should clear previous call', async () => {
 						asyncM.setTimeout(callSpy, {
 							timeout: 100,
 							label: 'test'
@@ -150,17 +130,16 @@ describe('Test Async module', () => {
 							timeout: 100
 						});
 
-						setTimeout(() => {
-							expect(callCount).equals(2);
-							done();
-						}, 200);
+						await delay(200);
+
+						expect(callCount).equals(2);
 					});
 				});
 			});
 		});
 
 		describe('Update', () => {
-			it('Can be updated', done => {
+			it('Can be updated', async () => {
 				const time = new Date().getTime();
 				let callTime;
 
@@ -174,16 +153,15 @@ describe('Test Async module', () => {
 					}
 				);
 
-				setTimeout(() => {
-					asyncM.updateTimeout('test', 100);
-					setTimeout(() => {
-						asyncM.updateTimeout('test', 100);
-						setTimeout(() => {
-							expect(callTime - time).is.above(200);
-							done();
-						}, 200);
-					}, 70);
-				}, 70);
+				await delay(70);
+
+				asyncM.updateTimeout('test', 100);
+
+				await delay(70);
+				asyncM.updateTimeout('test', 100);
+
+				await delay(200);
+				expect(callTime - time).is.above(200);
 			});
 		});
 	});
@@ -191,7 +169,7 @@ describe('Test Async module', () => {
 	describe('requestAnimationFrame', () => {
 		it('Should call as usual requestAnimationFrame', done => {
 			asyncM.requestAnimationFrame(callSpy);
-			requestAnimationFrame(() => {
+			/*ok*/ requestAnimationFrame(() => {
 				expect(callCount).equals(1);
 				done();
 			});
@@ -201,7 +179,7 @@ describe('Test Async module', () => {
 			it('Should not be called after destruct', done => {
 				asyncM.requestAnimationFrame(callSpy);
 				asyncM.destruct();
-				requestAnimationFrame(() => {
+				/*ok*/ requestAnimationFrame(() => {
 					expect(callCount).equals(0);
 					done();
 				});

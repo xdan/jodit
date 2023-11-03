@@ -217,7 +217,7 @@ describe('Clean html plugin', function () {
 	});
 
 	describe('History', function () {
-		it('Should not change history stack length', function (done) {
+		it('Should not change history stack length', async () => {
 			const editor = getJodit({
 				cleanHTML: {
 					timeout: 0
@@ -227,14 +227,15 @@ describe('Clean html plugin', function () {
 			editor.value = '<p>test <b>old</b> test</p>';
 			expect(editor.history.length).eq(1);
 
-			editor.e.on('finishedCleanHTMLWorker', () => {
-				expect(editor.value).equals(
-					'<p>test <strong>old</strong> test</p>'
-				);
+			await editor.async.promise(resolve =>
+				editor.e.on('finishedCleanHTMLWorker', resolve)
+			);
 
-				expect(editor.history.length).eq(1);
-				done();
-			});
+			expect(editor.value).equals(
+				'<p>test <strong>old</strong> test</p>'
+			);
+
+			expect(editor.history.length).eq(1);
 		});
 
 		describe('Replace old tags', function () {

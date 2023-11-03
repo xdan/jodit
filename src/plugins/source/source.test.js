@@ -20,7 +20,7 @@ describe('Source code test', function () {
 
 			let editor;
 
-			timeout = setTimeout(function () {
+			timeout = /*ok*/ setTimeout(function () {
 				expect(false).is.true;
 				__done.call(editor);
 			}, 5000);
@@ -63,7 +63,7 @@ describe('Source code test', function () {
 
 				let editor;
 
-				timeout = setTimeout(function () {
+				timeout = /*ok*/ setTimeout(function () {
 					expect(false).is.true;
 					__done.call(editor);
 				}, 5000);
@@ -77,7 +77,7 @@ describe('Source code test', function () {
 								return false;
 							},
 							sourceEditorReady: function (editor) {
-								setTimeout(() => {
+								editor.async.setTimeout(() => {
 									expect(
 										editor.__plugins.source.sourceEditor.getValue()
 									).equals('<p>pop</p>');
@@ -145,7 +145,7 @@ describe('Source code test', function () {
 					done();
 				};
 
-				timeout = setTimeout(function () {
+				timeout = /*ok*/ setTimeout(function () {
 					expect(false).is.true;
 					__done();
 				}, 140100);

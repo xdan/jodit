@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Test object observer', function () {
-	const getTestObject = function () {
+describe('Test object observer', () => {
+	const getTestObject = () => {
 		return {
 			editable: true,
 			disabled: false,
@@ -56,8 +56,8 @@ describe('Test object observer', function () {
 			const that = this;
 			this.countCall++;
 
-			return new Promise(function (res) {
-				setTimeout(function () {
+			return this.async.promise(res => {
+				this.async.setTimeout(() => {
 					that.countPromiseCall++;
 					res();
 				}, 100);
@@ -73,8 +73,8 @@ describe('Test object observer', function () {
 		return A;
 	};
 
-	describe('Test debounce decorator', function () {
-		it('Should call method only once in time', function (done) {
+	describe('Test debounce decorator', () => {
+		it('Should call method only once in time', async () => {
 			const result = [],
 				AClass = A(result, 'state.editable');
 
@@ -93,14 +93,12 @@ describe('Test object observer', function () {
 			a.callTime();
 			expect(a.countCall).eq(0);
 
-			setTimeout(() => {
-				expect(a.countCall).eq(1);
-				done();
-			}, 500);
+			await delay(120);
+			expect(a.countCall).eq(1);
 		});
 
 		describe('Compose with `wait`', () => {
-			it('Should work correct', function (done) {
+			it('Should work correct', async () => {
 				const result = [],
 					AClass = A(result, 'state.editable');
 
@@ -122,27 +120,24 @@ describe('Test object observer', function () {
 				a.callTime();
 				expect(a.countCall).eq(0);
 
-				setTimeout(() => {
-					expect(a.countCall).eq(0);
-					a.someFlag = 4;
+				await delay(120);
+				expect(a.countCall).eq(0);
+				a.someFlag = 4;
 
-					a.callTime();
-					expect(a.countCall).eq(0);
-					a.callTime();
-					expect(a.countCall).eq(0);
-					a.callTime();
-					expect(a.countCall).eq(0);
+				a.callTime();
+				expect(a.countCall).eq(0);
+				a.callTime();
+				expect(a.countCall).eq(0);
+				a.callTime();
+				expect(a.countCall).eq(0);
 
-					setTimeout(() => {
-						expect(a.countCall).eq(2);
-						done();
-					}, 500);
-				}, 500);
+				await delay(120);
+				expect(a.countCall).eq(2);
 			});
 		});
 
-		describe('Options', function () {
-			it('Should call method only once in time', function (done) {
+		describe('Options', () => {
+			it('Should call method only once in time', async () => {
 				const result = [],
 					AClass = A(result, 'state.editable');
 
@@ -165,15 +160,13 @@ describe('Test object observer', function () {
 				a.callTime();
 				expect(a.countCall).eq(0);
 
-				setTimeout(() => {
-					expect(a.countCall).eq(1);
-					done();
-				}, 500);
+				await delay(120);
+				expect(a.countCall).eq(1);
 			});
 		});
 
-		describe('Promisify debounce decorator', function () {
-			it('Should call method only once in time', function (done) {
+		describe('Promisify debounce decorator', () => {
+			it('Should call method only once in time', async () => {
 				unmockPromise();
 
 				const result = [],
@@ -194,33 +187,32 @@ describe('Test object observer', function () {
 
 				let counter = 0;
 
-				a.callPromiseTime().then(function () {
-					counter++;
-					expect(a.countPromiseCall).eq(1);
-				});
+				await Promise.all([
+					a.callPromiseTime().then(() => {
+						counter++;
+						expect(a.countPromiseCall).eq(1);
+					}),
 
-				a.callPromiseTime().then(function () {
-					counter++;
-					expect(a.countPromiseCall).eq(1);
-				});
+					a.callPromiseTime().then(() => {
+						counter++;
+						expect(a.countPromiseCall).eq(1);
+					}),
 
-				a.callPromiseTime().then(function () {
-					counter++;
-					expect(a.countPromiseCall).eq(1);
-				});
+					a.callPromiseTime().then(() => {
+						counter++;
+						expect(a.countPromiseCall).eq(1);
+					})
+				]);
 
-				setTimeout(() => {
-					expect(counter).eq(3);
-					expect(a.countCall).eq(1);
-					expect(a.countPromiseCall).eq(1);
-					done();
-				}, 500);
+				expect(counter).eq(3);
+				expect(a.countCall).eq(1);
+				expect(a.countPromiseCall).eq(1);
 			});
 		});
 	});
 
-	describe('Test watch decorator', function () {
-		it('Should add watcher to whole field object', function () {
+	describe('Test watch decorator', () => {
+		it('Should add watcher to whole field object', () => {
 			const result = [],
 				AClass = A(result, 'state.editable');
 
@@ -246,7 +238,7 @@ describe('Test object observer', function () {
 			]);
 		});
 
-		it('Should add watcher to some field in Component', function () {
+		it('Should add watcher to some field in Component', () => {
 			const result = [],
 				AClass = A(result, 'state.some.element.enable');
 
@@ -267,9 +259,9 @@ describe('Test object observer', function () {
 			]);
 		});
 
-		describe('Add several watchers', function () {
-			describe('on same fields', function () {
-				it('Should call all handlers', function () {
+		describe('Add several watchers', () => {
+			describe('on same fields', () => {
+				it('Should call all handlers', () => {
 					const result = [],
 						AClass = A(result, 'state.some.element.enable');
 
@@ -298,8 +290,8 @@ describe('Test object observer', function () {
 				});
 			});
 
-			describe('on different fields', function () {
-				it('Should call only matched handlers', function () {
+			describe('on different fields', () => {
+				it('Should call only matched handlers', () => {
 					const result = [],
 						AClass = A(
 							result,
@@ -334,8 +326,8 @@ describe('Test object observer', function () {
 			});
 		});
 
-		describe('On change field', function () {
-			it('Should fire change all parent field', function () {
+		describe('On change field', () => {
+			it('Should fire change all parent field', () => {
 				const result = [],
 					AClass = A(result, 'state.some.element.one');
 
@@ -356,7 +348,7 @@ describe('Test object observer', function () {
 					['A', 15]
 				]);
 			});
-			it('Should add in handler - old value as first argument', function () {
+			it('Should add in handler - old value as first argument', () => {
 				const result = [],
 					AClass = A(result, 'state.some.element.one');
 
@@ -379,8 +371,8 @@ describe('Test object observer', function () {
 		});
 	});
 
-	describe('Test safe stringify', function () {
-		it('Should safe stringify any circular object to string', function () {
+	describe('Test safe stringify', () => {
+		it('Should safe stringify any circular object to string', () => {
 			const a = {},
 				b = getTestObject();
 
@@ -397,9 +389,9 @@ describe('Test object observer', function () {
 		});
 	});
 
-	describe('Test object properties', function () {
-		describe('Observed object', function () {
-			it('Should has only own object properties', function () {
+	describe('Test object properties', () => {
+		describe('Observed object', () => {
+			it('Should has only own object properties', () => {
 				const a = { a: 1, b: 2 };
 				const observed = Jodit.modules.observable(a);
 				expect(Object.keys(observed)).deep.equals(Object.keys(a));
@@ -407,10 +399,10 @@ describe('Test object observer', function () {
 		});
 	});
 
-	describe('Test equal checker', function () {
-		describe('Two object', function () {
-			describe('Check one object', function () {
-				it('Should check that is one object', function () {
+	describe('Test equal checker', () => {
+		describe('Two object', () => {
+			describe('Check one object', () => {
+				it('Should check that is one object', () => {
 					const a = {},
 						b = [];
 
@@ -420,21 +412,21 @@ describe('Test object observer', function () {
 				});
 			});
 
-			describe('Check scalar value', function () {
-				it('Should check normal', function () {
+			describe('Check scalar value', () => {
+				it('Should check normal', () => {
 					expect(
 						isEqual(
-							function () {},
-							function () {}
+							() => {},
+							() => {}
 						)
 					).is.true;
 
 					expect(
 						isEqual(
-							function () {
+							() => {
 								return 1;
 							},
-							function () {}
+							() => {}
 						)
 					).is.false;
 
@@ -446,8 +438,8 @@ describe('Test object observer', function () {
 				});
 			});
 
-			describe('Check array', function () {
-				it('Should deep check', function () {
+			describe('Check array', () => {
+				it('Should deep check', () => {
 					expect(isEqual([1], [1])).is.true;
 					expect(isEqual([1], [2])).is.false;
 					expect(isEqual(['test'], ['test'])).is.true;
@@ -455,8 +447,8 @@ describe('Test object observer', function () {
 				});
 			});
 
-			describe('Check ref object', function () {
-				it('Should deep check and add instead ref some const', function () {
+			describe('Check ref object', () => {
+				it('Should deep check and add instead ref some const', () => {
 					const a = getTestObject(),
 						b = getTestObject();
 
@@ -478,8 +470,8 @@ describe('Test object observer', function () {
 		});
 	});
 
-	describe('Event on change', function () {
-		it('Should fire event when field value was changed', function () {
+	describe('Event on change', () => {
+		it('Should fire event when field value was changed', () => {
 			const counter = [];
 
 			const data = Jodit.modules.observable(getTestObject());
@@ -497,8 +489,8 @@ describe('Test object observer', function () {
 			expect(counter).to.deep.equal(['editable', 'some.element.one']);
 		});
 
-		describe('Key change event', function () {
-			it('Should fire event.key when field value was changed', function () {
+		describe('Key change event', () => {
+			it('Should fire event.key when field value was changed', () => {
 				const counter = [];
 
 				const data = Jodit.modules.observable(getTestObject());
@@ -516,7 +508,7 @@ describe('Test object observer', function () {
 				expect(counter).to.deep.equal(['some.element.one']);
 			});
 
-			it('Should fire event with old and new Value', function () {
+			it('Should fire event with old and new Value', () => {
 				const counter = [];
 
 				const data = Jodit.modules.observable(getTestObject());
@@ -542,12 +534,12 @@ describe('Test object observer', function () {
 			});
 		});
 
-		describe('Change watched property', function () {
-			it('Should fire handler', function () {
+		describe('Change watched property', () => {
+			it('Should fire handler', () => {
 				const counter = [],
 					obj = {
 						mode: 'top',
-						methodA: function () {
+						methodA: () => {
 							counter.push(obj.mode);
 						}
 					};
@@ -565,8 +557,8 @@ describe('Test object observer', function () {
 			});
 		});
 
-		describe('Change whole branch', function () {
-			it('Should fire event.key when field value was changed', function () {
+		describe('Change whole branch', () => {
+			it('Should fire event.key when field value was changed', () => {
 				const counter = [];
 
 				const data = Jodit.modules.observable(getTestObject());
