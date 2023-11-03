@@ -274,7 +274,7 @@
 									resolve();
 								};
 
-								setTimeout(function () {
+								jodit.async.setTimeout(function () {
 									resolve();
 								}, 4000);
 

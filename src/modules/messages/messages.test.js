@@ -34,12 +34,13 @@ describe('Test Messages module', () => {
 				editor.container.querySelector('.jodit-ui-message_active_true')
 			).is.not.null;
 
-			setTimeout(() => {
+			editor.async.setTimeout(() => {
 				expect(
 					editor.container.querySelector(
 						'.jodit-ui-message_active_true'
 					)
 				).is.null;
+
 				done();
 			}, 200);
 		});
@@ -60,19 +61,19 @@ describe('Test Messages module', () => {
 				expect(editor.container.querySelector('.jodit-ui-message')).is
 					.not.null;
 
-				setTimeout(() => {
+				editor.async.setTimeout(() => {
 					editor.message.success('Hello Mars!', 150);
 
-					setTimeout(() => {
+					editor.async.setTimeout(() => {
 						editor.message.success('Hello Mars!', 150);
 					}, 100);
 				}, 100);
 
-				setTimeout(() => {
+				editor.async.setTimeout(() => {
 					expect(editor.container.querySelector('.jodit-ui-message'))
 						.is.not.null;
 					done();
-				}, 300);
+				}, 400);
 			});
 		});
 	});

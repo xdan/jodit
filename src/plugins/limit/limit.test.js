@@ -18,7 +18,7 @@ describe('Limit plugin', function () {
 				editor.value = '11111';
 				editor.s.insertHTML('a');
 
-				setTimeout(() => {
+				editor.async.setTimeout(() => {
 					expect(editor.value).equals('<p>11111</p>');
 					done();
 				}, 200);
@@ -64,11 +64,11 @@ describe('Limit plugin', function () {
 						limitChars: 5
 					});
 
-					editor.value = '<p>11111</p>';
+					editor.value = '<p>|11111|</p>';
 					setCursorToChar(editor);
 
 					editor.e.on('keyup.limit', e => {
-						setTimeout(() => {
+						editor.async.setTimeout(() => {
 							try {
 								expect(e.ctrlKey).is.true;
 								expect(e.defaultPrevented).is.false;
@@ -99,7 +99,7 @@ describe('Limit plugin', function () {
 					editor.s.insertHTML('a');
 					editor.s.insertHTML('a');
 
-					setTimeout(() => {
+					editor.async.setTimeout(() => {
 						expect(editor.value).equals('<p>a1111</p>');
 						const chars = editor.statusbar.container.querySelector(
 							'.jodit-status-bar__item'
@@ -132,7 +132,7 @@ describe('Limit plugin', function () {
 						expect(simulateEvent('keydown', 'v', editor.editor)).is
 							.false;
 
-						setTimeout(() => {
+						editor.async.setTimeout(() => {
 							expect(editor.value).equals('<p>11111</p>');
 							const chars =
 								editor.statusbar.container.querySelector(
@@ -168,7 +168,7 @@ describe('Limit plugin', function () {
 					};
 				});
 
-				setTimeout(() => {
+				editor.async.setTimeout(() => {
 					expect(editor.value).equals('<p>11111</p>');
 					done();
 				}, 200);
@@ -194,7 +194,7 @@ describe('Limit plugin', function () {
 					}
 				}));
 
-				setTimeout(() => {
+				editor.async.setTimeout(() => {
 					expect(editor.value).equals('<p>11111</p>');
 					done();
 				}, 200);
@@ -230,7 +230,7 @@ describe('Limit plugin', function () {
 					};
 
 					const timeout = () => {
-						setTimeout(() => {
+						editor.async.setTimeout(() => {
 							expect(editor.value).equals('<p>11111 aaa aaa</p>');
 							done();
 						}, 200);

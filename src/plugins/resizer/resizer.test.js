@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Resize plugin', function () {
-	describe('Resize box', function () {
-		describe('In relative object', function () {
-			it('should be in front of image', function () {
+describe('Resize plugin', () => {
+	describe('Resize box', () => {
+		describe('In relative object', () => {
+			it('should be in front of image', () => {
 				const div = document.createElement('div');
 				div.innerHTML =
 					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
@@ -40,8 +40,8 @@ describe('Resize plugin', function () {
 			});
 		});
 
-		describe('After resize - popup', function () {
-			it('should be hidden and after this should be shown', function () {
+		describe('After resize - popup', () => {
+			it('should be hidden and after this should be shown', () => {
 				const div = document.createElement('div');
 				div.innerHTML =
 					'<div style="width:800px; margin:auto; border:1px solid red;">\n' +
@@ -95,7 +95,7 @@ describe('Resize plugin', function () {
 			});
 		});
 
-		describe('Resize image', function () {
+		describe('Resize image', () => {
 			const resizeImage = function (editor) {
 				const img = editor.editor.querySelector('img');
 
@@ -124,7 +124,7 @@ describe('Resize plugin', function () {
 				});
 			};
 
-			describe('Size box', function () {
+			describe('Size box', () => {
 				it('Should show size for image', function (done) {
 					const editor = getJodit({
 						history: {
@@ -182,14 +182,14 @@ describe('Resize plugin', function () {
 
 					expect(sizer.style.opacity).equals('1');
 
-					setTimeout(function () {
+					editor.async.setTimeout(() => {
 						expect(sizer.style.opacity).equals('0');
 						done();
 					}, 500);
 				});
 
-				describe('For small state', function () {
-					it('Should hide size', function () {
+				describe('For small state', () => {
+					it('Should hide size', () => {
 						const editor = getJodit({
 							history: {
 								timeout: 0
@@ -251,7 +251,7 @@ describe('Resize plugin', function () {
 
 				describe('Save aspect ratio', () => {
 					describe('Disable useAspectRatio option', () => {
-						it("should don't save it", done => {
+						it("should don't save it", async () => {
 							const editor = getJodit({
 								resizer: {
 									useAspectRatio: false
@@ -261,48 +261,39 @@ describe('Resize plugin', function () {
 							editor.value =
 								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width: 301px;"/></p>';
 
-							onLoadImage(
-								editor.editor.querySelector('img'),
-								() => {
-									resizeImage(editor);
+							await onLoadImage(
+								editor.editor.querySelector('img')
+							);
+							resizeImage(editor);
 
-									expect(sortAttributes(editor.value)).eq(
-										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:159px;width:311px"></p>'
-									);
-									done();
-								}
+							expect(sortAttributes(editor.value)).eq(
+								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:159px;width:311px"></p>'
 							);
 						});
 
 						describe('With Alt button', () => {
-							it("should don't save it", done => {
+							it("should don't save it", async () => {
 								const editor = getJodit();
 
 								editor.value =
 									'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width: 301px;"/></p>';
 
-								onLoadImage(
-									editor.editor.querySelector('img'),
-									() => {
-										simulateEvent(
-											'keydown',
-											'Alt',
-											editor.ew
-										);
-										resizeImage(editor);
+								await onLoadImage(
+									editor.editor.querySelector('img')
+								);
 
-										expect(sortAttributes(editor.value)).eq(
-											'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:159px;width:311px"></p>'
-										);
-										done();
-									}
+								simulateEvent('keydown', 'Alt', editor.ew);
+								resizeImage(editor);
+
+								expect(sortAttributes(editor.value)).eq(
+									'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:159px;width:311px"></p>'
 								);
 							});
 						});
 					});
 
 					describe('Enable useAspectRatio only for table', () => {
-						it("should don't save it for images", done => {
+						it("should don't save it for images", async () => {
 							const editor = getJodit({
 								resizer: {
 									useAspectRatio: new Set(['table'])
@@ -312,22 +303,20 @@ describe('Resize plugin', function () {
 							editor.value =
 								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width: 301px;"/></p>';
 
-							onLoadImage(
-								editor.editor.querySelector('img'),
-								() => {
-									resizeImage(editor);
+							await onLoadImage(
+								editor.editor.querySelector('img')
+							);
 
-									expect(sortAttributes(editor.value)).eq(
-										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:159px;width:311px"></p>'
-									);
-									done();
-								}
+							resizeImage(editor);
+
+							expect(sortAttributes(editor.value)).eq(
+								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:159px;width:311px"></p>'
 							);
 						});
 					});
 
 					describe('Enable useAspectRatio for all', () => {
-						it('should save it for all', done => {
+						it('should save it for all', async () => {
 							const editor = getJodit({
 								resizer: {
 									useAspectRatio: true
@@ -337,16 +326,14 @@ describe('Resize plugin', function () {
 							editor.value =
 								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width: 301px;"/></p>';
 
-							onLoadImage(
-								editor.editor.querySelector('img'),
-								() => {
-									resizeImage(editor);
+							await onLoadImage(
+								editor.editor.querySelector('img')
+							);
 
-									expect(sortAttributes(editor.value)).eq(
-										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:175px;width:311px"></p>'
-									);
-									done();
-								}
+							resizeImage(editor);
+
+							expect(sortAttributes(editor.value)).eq(
+								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:175px;width:311px"></p>'
 							);
 						});
 					});
@@ -354,7 +341,7 @@ describe('Resize plugin', function () {
 
 				describe('For styled image', () => {
 					describe('Disable forImageChangeAttributes', () => {
-						it('Should change only styles width and height', done => {
+						it('Should change only styles width and height', async () => {
 							const editor = getJodit({
 								history: {
 									timeout: 0
@@ -364,23 +351,20 @@ describe('Resize plugin', function () {
 							editor.value =
 								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width: 301px;"/></p>';
 
-							onLoadImage(
-								editor.editor.querySelector('img'),
-								() => {
-									resizeImage(editor);
+							await onLoadImage(
+								editor.editor.querySelector('img')
+							);
+							resizeImage(editor);
 
-									expect(sortAttributes(editor.value)).eq(
-										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:175px;width:311px"></p>'
-									);
-									done();
-								}
+							expect(sortAttributes(editor.value)).eq(
+								'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:175px;width:311px"></p>'
 							);
 						});
 					});
 
 					describe('Enable forImageChangeAttributes', () => {
 						describe('Does not has width or height styles', () => {
-							it('Should change only attributes width and height', done => {
+							it('Should change only attributes width and height', async () => {
 								const editor = getJodit({
 									resizer: {
 										forImageChangeAttributes: true
@@ -393,23 +377,20 @@ describe('Resize plugin', function () {
 								editor.value =
 									'<p><img src="https://xdsoft.net/jodit/files/artio.jpg"/></p>';
 
-								onLoadImage(
-									editor.editor.querySelector('img'),
-									() => {
-										resizeImage(editor);
+								await onLoadImage(
+									editor.editor.querySelector('img')
+								);
+								resizeImage(editor);
 
-										expect(sortAttributes(editor.value)).eq(
-											'<p><img height="287" src="https://xdsoft.net/jodit/files/artio.jpg" width="510"></p>'
-										);
-										done();
-									}
+								expect(sortAttributes(editor.value)).eq(
+									'<p><img height="287" src="https://xdsoft.net/jodit/files/artio.jpg" width="510"></p>'
 								);
 							});
 						});
 
 						describe('Has width or height styles', () => {
 							describe('Has width style', () => {
-								it('Should change attributes width and height and width styles', done => {
+								it('Should change attributes width and height and width styles', async () => {
 									const editor = getJodit({
 										resizer: {
 											forImageChangeAttributes: true
@@ -422,24 +403,20 @@ describe('Resize plugin', function () {
 									editor.value =
 										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width:300px"/></p>';
 
-									onLoadImage(
-										editor.editor.querySelector('img'),
-										() => {
-											resizeImage(editor);
+									await onLoadImage(
+										editor.editor.querySelector('img')
+									);
 
-											expect(
-												sortAttributes(editor.value)
-											).eq(
-												'<p><img height="175" src="https://xdsoft.net/jodit/files/artio.jpg" style="width:310px" width="310"></p>'
-											);
-											done();
-										}
+									resizeImage(editor);
+
+									expect(sortAttributes(editor.value)).eq(
+										'<p><img height="175" src="https://xdsoft.net/jodit/files/artio.jpg" style="width:310px" width="310"></p>'
 									);
 								});
 							});
 
 							describe('Has height style', () => {
-								it('Should change attributes width and height and height styles', done => {
+								it('Should change attributes width and height and height styles', async () => {
 									const editor = getJodit({
 										resizer: {
 											forImageChangeAttributes: true
@@ -452,24 +429,20 @@ describe('Resize plugin', function () {
 									editor.value =
 										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="height:300px"/></p>';
 
-									onLoadImage(
-										editor.editor.querySelector('img'),
-										() => {
-											resizeImage(editor);
+									await onLoadImage(
+										editor.editor.querySelector('img')
+									);
 
-											expect(
-												sortAttributes(editor.value)
-											).eq(
-												'<p><img height="306" src="https://xdsoft.net/jodit/files/artio.jpg" style="height:306px" width="544"></p>'
-											);
-											done();
-										}
+									resizeImage(editor);
+
+									expect(sortAttributes(editor.value)).eq(
+										'<p><img height="306" src="https://xdsoft.net/jodit/files/artio.jpg" style="height:306px" width="544"></p>'
 									);
 								});
 							});
 
 							describe('Has both height and width style', () => {
-								it('Should change attributes width and height and width and height styles', done => {
+								it('Should change attributes width and height and width and height styles', async () => {
 									const editor = getJodit({
 										resizer: {
 											forImageChangeAttributes: true
@@ -482,18 +455,14 @@ describe('Resize plugin', function () {
 									editor.value =
 										'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width:300px;height:300px"/></p>';
 
-									onLoadImage(
-										editor.editor.querySelector('img'),
-										() => {
-											resizeImage(editor);
+									await onLoadImage(
+										editor.editor.querySelector('img')
+									);
 
-											expect(
-												sortAttributes(editor.value)
-											).eq(
-												'<p><img height="310" src="https://xdsoft.net/jodit/files/artio.jpg" style="height:310px;width:310px" width="310"></p>'
-											);
-											done();
-										}
+									resizeImage(editor);
+
+									expect(sortAttributes(editor.value)).eq(
+										'<p><img height="310" src="https://xdsoft.net/jodit/files/artio.jpg" style="height:310px;width:310px" width="310"></p>'
 									);
 								});
 							});
@@ -502,66 +471,56 @@ describe('Resize plugin', function () {
 				});
 			});
 
-			it('Should not allow to resize image more then width of editor', function (done) {
+			it('Should not allow to resize image more then width of editor', async () => {
 				getBox().style.width = '600px';
 				const editor = getJodit();
 				const image = new Image();
-				image.src = 'tests/artio.jpg';
+				image.src = 'https://xdsoft.net/jodit/files/artio.jpg';
 
-				const callback = function () {
-					const ratio = image.naturalWidth / image.naturalHeight;
+				await onLoadImage(image);
 
-					editor.value =
-						'<img src="tests/artio.jpg" style="width:500px;height: 281px;"/>';
-					const img = editor.editor.querySelector('img');
-					simulateEvent(['mousedown', 'mouseup', 'click'], 0, img);
-					const resizer = document.querySelector(
-						'.jodit-resizer[data-editor_id=' + editor.id + ']'
-					);
-					expect(resizer).is.not.null;
+				const ratio = image.naturalWidth / image.naturalHeight;
 
-					const positionResizer = offset(resizer);
-					//
+				editor.value =
+					'<p><img src="https://xdsoft.net/jodit/files/artio.jpg" style="width:500px;height: 281px;"/></p>';
+				const img = editor.editor.querySelector('img');
+				await onLoadImage(img);
 
-					simulateEvent(
-						'mousedown',
-						resizer.getElementsByTagName('div')[1]
-					);
+				simulateEvent(['mousedown', 'mouseup', 'click'], 0, img);
+				const resizer = document.querySelector(
+					'.jodit-resizer[data-editor_id=' + editor.id + ']'
+				);
+				expect(resizer).is.not.null;
 
-					simulateEvent(
-						'mousemove',
-						editor.ownerWindow,
-						function (data) {
-							data.clientX = positionResizer.left + 1000;
-							data.clientY = positionResizer.top + 1000;
-						}
-					);
+				const positionResizer = offset(resizer);
+				//
 
-					simulateEvent(
-						'mouseup',
-						editor.ownerWindow,
-						function (data) {
-							data.clientX = positionResizer.left + 1000;
-							data.clientY = positionResizer.top + 1000;
-						}
-					);
-					const newratio = img.offsetWidth / img.offsetHeight;
+				simulateEvent(
+					'mousedown',
+					resizer.getElementsByTagName('div')[1]
+				);
 
-					expect(img.offsetWidth).equals(
-						editor.editor.offsetWidth - 16
-					);
+				simulateEvent('mousemove', editor.ownerWindow, function (data) {
+					data.clientX = positionResizer.left + 1000;
+					data.clientY = positionResizer.top + 1000;
+				});
 
-					expect(Math.abs(newratio - ratio) < 0.003).is.true;
-					done();
-				};
+				simulateEvent('mouseup', editor.ownerWindow, function (data) {
+					data.clientX = positionResizer.left + 1000;
+					data.clientY = positionResizer.top + 1000;
+				});
+				const newRatio = img.offsetWidth / img.offsetHeight;
 
-				onLoadImage(image, callback);
+				expect(img.offsetWidth).equals(editor.editor.offsetWidth - 16);
+
+				console.log(newRatio, ratio);
+				expect(Math.abs(newRatio - ratio) < 0.003).is.true;
 			});
 		});
 	});
 
-	describe('For iframes', function () {
-		it('should wrap these iframes inside JODIT tag', function () {
+	describe('For iframes', () => {
+		it('should wrap these iframes inside JODIT tag', () => {
 			const editor = getJodit();
 			editor.value =
 				'<iframe style="border: 0px currentColor; border-image: none;" src="https://www.google.com/maps/embed" frameborder="0" width="100%" height="500"></iframe>' +
@@ -573,8 +532,8 @@ describe('Resize plugin', function () {
 			).equals('IFRAME');
 		});
 
-		describe('Output HTML', function () {
-			it('should not contains JODIT tag', function () {
+		describe('Output HTML', () => {
+			it('should not contains JODIT tag', () => {
 				const editor = getJodit();
 				editor.value =
 					'<iframe style="border: 0px currentColor; border-image: none;" src="https://www.google.com/maps/embed" frameborder="0" width="100%" height="500"></iframe>' +

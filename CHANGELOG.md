@@ -9,15 +9,27 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.0.0-beta.97
+
+#### :house: Internal
+
+- Calls to setTimout without the async module have been removed from autotests, and most of the asynchronous tests have been rewritten from done to async/await
+
 ## 4.0.0-beta.96
+
+#### :boom: Breaking Change
 
 - Removed `Jodit.modules.Helpers.val` method
 
 ## 4.0.0-beta.95
 
+### :bug: Bug Fix
+
 -   Fixed the logic of the file upload module. When HTTP errors were simply ignored.
 
 ## 4.0.0-beta.93
+
+### :bug: Bug Fix
 
 -   Fixed a bug with the `editor.selection.setCursorIn(box)` method, which could set the cursor inside a <br>.
 

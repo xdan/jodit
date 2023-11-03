@@ -26,6 +26,7 @@ import { isPromise } from 'jodit/core/helpers/checker/is-promise';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isNumber } from 'jodit/core/helpers/checker/is-number';
 import { assert } from 'jodit/core/helpers/utils/assert';
+import { isVoid } from 'jodit/core/helpers/checker/is-void';
 import { IS_ES_NEXT } from 'jodit/core/constants';
 
 type Callback = (...args: any[]) => void;
@@ -40,7 +41,7 @@ export class Async implements IAsync {
 
 	setTimeout(
 		callback: Callback,
-		timeout: number | IAsyncParams,
+		timeout: number | IAsyncParams | undefined,
 		...args: any[]
 	): number {
 		if (this.isDestructed) {
@@ -48,6 +49,10 @@ export class Async implements IAsync {
 		}
 
 		let options: IAsyncParams = {};
+
+		if (isVoid(timeout)) {
+			timeout = 0;
+		}
 
 		if (!isNumber(timeout)) {
 			options = timeout;

@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Commands Jodit Editor Tests', function () {
 	describe('Command "formatBlock"', function () {
 		it('Try exec the command "formatBlock" for several elements', function () {

@@ -133,8 +133,13 @@ describe('Test uploader module', function () {
 
 			describe('For iframe mode', function () {
 				it('Should upload file and insert image with SRC from server', function (done) {
-					const timer = setTimeout(function () {
-						done('Timeout error');
+					let isFinished = false;
+
+					const timer = /*ok*/ setTimeout(function () {
+						if (!isFinished) {
+							isFinished = true;
+							done('Timeout error');
+						}
 					}, 4000);
 
 					const file = new FileImage(),
@@ -148,7 +153,13 @@ describe('Test uploader module', function () {
 							},
 							events: {
 								afterInsertImage: function (img) {
+									if (isFinished) {
+										return;
+									}
+
 									try {
+										isFinished = true;
+
 										clearTimeout(timer);
 
 										expect(img.src).equals(
@@ -170,7 +181,7 @@ describe('Test uploader module', function () {
 					editor.value = '<p>test|</p>';
 					setCursorToChar(editor);
 
-					setTimeout(function () {
+					editor.async.setTimeout(function () {
 						simulateEvent(
 							'drop',
 
