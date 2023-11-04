@@ -12,7 +12,7 @@
 
 import './sticky.less';
 
-import type { IBound, IJodit } from 'jodit/types';
+import type { IJodit } from 'jodit/types';
 import { IS_ES_NEXT, IS_IE, MODE_WYSIWYG } from 'jodit/core/constants';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { Dom } from 'jodit/core/dom/dom';
@@ -22,16 +22,16 @@ import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 
+const NEED_DUMMY_BOX = !IS_ES_NEXT && IS_IE;
+
 export class sticky extends Plugin {
 	private __isToolbarStuck: boolean = false;
 	private __dummyBox?: HTMLElement;
 
-	private createDummy = (toolbar: HTMLElement): void => {
-		if (!IS_ES_NEXT && IS_IE && !this.__dummyBox) {
-			this.__dummyBox = this.j.c.div();
-			this.__dummyBox.classList.add('jodit_sticky-dummy_toolbar');
-			this.j.container.insertBefore(this.__dummyBox, toolbar);
-		}
+	private __createDummy = (toolbar: HTMLElement): void => {
+		this.__dummyBox = this.j.c.div();
+		this.__dummyBox.classList.add('jodit_sticky-dummy_toolbar');
+		this.j.container.insertBefore(this.__dummyBox, toolbar);
 	};
 
 	/**
@@ -39,38 +39,41 @@ export class sticky extends Plugin {
 	 */
 	addSticky = (toolbar: HTMLElement): void => {
 		if (!this.__isToolbarStuck) {
-			this.createDummy(toolbar);
-			this.j.container.classList.add('jodit_sticky');
+			if (NEED_DUMMY_BOX && !this.__dummyBox) {
+				this.__createDummy(toolbar);
+			}
 
+			this.j.container.classList.add('jodit_sticky');
 			this.__isToolbarStuck = true;
 		}
 
-		// on resize it should work always
+		// on resize, it should work always
 		css(toolbar, {
 			top: this.j.o.toolbarStickyOffset || null,
 			width: this.j.container.offsetWidth - 2
 		});
 
-		if (!IS_ES_NEXT && IS_IE && this.__dummyBox) {
+		this.__dummyBox &&
 			css(this.__dummyBox, {
 				height: toolbar.offsetHeight
 			});
-		}
 	};
 
 	/**
 	 * Remove sticky behaviour
 	 */
 	removeSticky = (toolbar: HTMLElement): void => {
-		if (this.__isToolbarStuck) {
-			css(toolbar, {
-				width: '',
-				top: ''
-			});
-
-			this.j.container.classList.remove('jodit_sticky');
-			this.__isToolbarStuck = false;
+		if (!this.__isToolbarStuck) {
+			return;
 		}
+
+		css(toolbar, {
+			width: '',
+			top: ''
+		});
+
+		this.j.container.classList.remove('jodit_sticky');
+		this.__isToolbarStuck = false;
 	};
 
 	afterInit(jodit: IJodit): void {
@@ -78,7 +81,7 @@ export class sticky extends Plugin {
 			.on(
 				jodit.ow,
 				'scroll.sticky wheel.sticky mousewheel.sticky resize.sticky',
-				this.onScroll
+				this.__onScroll
 			)
 			.on('getStickyState.sticky', () => this.__isToolbarStuck);
 	}
@@ -87,65 +90,61 @@ export class sticky extends Plugin {
 	 * Scroll handler
 	 */
 	@throttle()
-	private onScroll(): void {
+	private __onScroll(): void {
 		const { jodit } = this;
 
-		const scrollWindowTop: number =
-				jodit.ow.pageYOffset ||
-				(jodit.od.documentElement &&
-					jodit.od.documentElement.scrollTop) ||
-				0,
-			offsetEditor: IBound = offset(
-				jodit.container,
-				jodit,
-				jodit.od,
-				true
-			),
-			doSticky: boolean =
-				jodit.getMode() === MODE_WYSIWYG &&
-				scrollWindowTop + jodit.o.toolbarStickyOffset >
-					offsetEditor.top &&
-				scrollWindowTop + jodit.o.toolbarStickyOffset <
-					offsetEditor.top + offsetEditor.height &&
-				!(jodit.o.toolbarDisableStickyForMobile && this.isMobile());
-
-		if (
-			jodit.o.toolbarSticky &&
-			jodit.o.toolbar === true &&
-			this.__isToolbarStuck !== doSticky
-		) {
-			const container = jodit.toolbarContainer;
-
-			if (container) {
-				doSticky
-					? this.addSticky(container)
-					: this.removeSticky(container);
-			}
-
-			jodit.e.fire('toggleSticky', doSticky);
+		if (!jodit.o.toolbarSticky || !jodit.o.toolbar) {
+			return;
 		}
+
+		const scrollWindowTop: number =
+			jodit.ow.pageYOffset ||
+			(jodit.od.documentElement && jodit.od.documentElement.scrollTop) ||
+			0;
+
+		const offsetEditor = offset(jodit.container, jodit, jodit.od, true);
+
+		const doSticky =
+			jodit.getMode() === MODE_WYSIWYG &&
+			scrollWindowTop + jodit.o.toolbarStickyOffset > offsetEditor.top &&
+			scrollWindowTop + jodit.o.toolbarStickyOffset <
+				offsetEditor.top + offsetEditor.height &&
+			!(jodit.o.toolbarDisableStickyForMobile && this.__isMobile());
+
+		if (this.__isToolbarStuck === doSticky) {
+			return;
+		}
+
+		const container = jodit.toolbarContainer;
+
+		if (container) {
+			doSticky ? this.addSticky(container) : this.removeSticky(container);
+		}
+
+		jodit.e.fire('toggleSticky', doSticky);
 	}
 
 	/**
 	 * Is mobile device
 	 */
-	private isMobile(): boolean {
+	private __isMobile(): boolean {
+		const { j } = this;
 		return (
-			this.j &&
-			this.j.options &&
-			this.j.container &&
-			this.j.o.sizeSM >= this.j.container.offsetWidth
+			j &&
+			j.options &&
+			j.container &&
+			j.options.sizeSM >= j.container.offsetWidth
 		);
 	}
 
-	/** @override */
-	beforeDestruct(jodit: IJodit): void {
-		this.__dummyBox && Dom.safeRemove(this.__dummyBox);
+	override beforeDestruct(jodit: IJodit): void {
+		Dom.safeRemove(this.__dummyBox);
+
 		jodit.e
 			.off(
 				jodit.ow,
 				'scroll.sticky wheel.sticky mousewheel.sticky resize.sticky',
-				this.onScroll
+				this.__onScroll
 			)
 			.off('.sticky');
 	}
