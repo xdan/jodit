@@ -79,6 +79,9 @@ describe('Sticky plugin', function () {
 					await editor.waitForReady();
 
 					editor.value = '<p>stop</p>'.repeat(300);
+					await editor.async.promise(resolve =>
+						editor.async.requestAnimationFrame(resolve)
+					);
 					await editor.async.requestIdlePromise();
 
 					const offset = Jodit.modules.Helpers.offset(
@@ -87,14 +90,10 @@ describe('Sticky plugin', function () {
 						editor.ownerDocument
 					);
 
-					await editor.async.requestIdlePromise();
-
 					console.log(offset);
 					window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
 					simulateEvent('scroll', window);
 					console.log(window.scrollY);
-					await editor.async.requestIdlePromise();
-					await delay(100);
 
 					expect(true).equals(
 						editor.container.classList.contains('jodit_sticky')
