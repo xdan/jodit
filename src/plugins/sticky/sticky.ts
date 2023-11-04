@@ -23,14 +23,14 @@ import { pluginSystem } from 'jodit/core/global';
 import './config';
 
 export class sticky extends Plugin {
-	private isToolbarSticked: boolean = false;
-	private dummyBox?: HTMLElement;
+	private __isToolbarStuck: boolean = false;
+	private __dummyBox?: HTMLElement;
 
 	private createDummy = (toolbar: HTMLElement): void => {
-		if (!IS_ES_NEXT && IS_IE && !this.dummyBox) {
-			this.dummyBox = this.j.c.div();
-			this.dummyBox.classList.add('jodit_sticky-dummy_toolbar');
-			this.j.container.insertBefore(this.dummyBox, toolbar);
+		if (!IS_ES_NEXT && IS_IE && !this.__dummyBox) {
+			this.__dummyBox = this.j.c.div();
+			this.__dummyBox.classList.add('jodit_sticky-dummy_toolbar');
+			this.j.container.insertBefore(this.__dummyBox, toolbar);
 		}
 	};
 
@@ -38,11 +38,11 @@ export class sticky extends Plugin {
 	 * Add sticky
 	 */
 	addSticky = (toolbar: HTMLElement): void => {
-		if (!this.isToolbarSticked) {
+		if (!this.__isToolbarStuck) {
 			this.createDummy(toolbar);
 			this.j.container.classList.add('jodit_sticky');
 
-			this.isToolbarSticked = true;
+			this.__isToolbarStuck = true;
 		}
 
 		// on resize it should work always
@@ -51,8 +51,8 @@ export class sticky extends Plugin {
 			width: this.j.container.offsetWidth - 2
 		});
 
-		if (!IS_ES_NEXT && IS_IE && this.dummyBox) {
-			css(this.dummyBox, {
+		if (!IS_ES_NEXT && IS_IE && this.__dummyBox) {
+			css(this.__dummyBox, {
 				height: toolbar.offsetHeight
 			});
 		}
@@ -62,14 +62,14 @@ export class sticky extends Plugin {
 	 * Remove sticky behaviour
 	 */
 	removeSticky = (toolbar: HTMLElement): void => {
-		if (this.isToolbarSticked) {
+		if (this.__isToolbarStuck) {
 			css(toolbar, {
 				width: '',
 				top: ''
 			});
 
 			this.j.container.classList.remove('jodit_sticky');
-			this.isToolbarSticked = false;
+			this.__isToolbarStuck = false;
 		}
 	};
 
@@ -80,7 +80,7 @@ export class sticky extends Plugin {
 				'scroll.sticky wheel.sticky mousewheel.sticky resize.sticky',
 				this.onScroll
 			)
-			.on('getStickyState.sticky', () => this.isToolbarSticked);
+			.on('getStickyState.sticky', () => this.__isToolbarStuck);
 	}
 
 	/**
@@ -112,7 +112,7 @@ export class sticky extends Plugin {
 		if (
 			jodit.o.toolbarSticky &&
 			jodit.o.toolbar === true &&
-			this.isToolbarSticked !== doSticky
+			this.__isToolbarStuck !== doSticky
 		) {
 			const container = jodit.toolbarContainer;
 
@@ -140,7 +140,7 @@ export class sticky extends Plugin {
 
 	/** @override */
 	beforeDestruct(jodit: IJodit): void {
-		this.dummyBox && Dom.safeRemove(this.dummyBox);
+		this.__dummyBox && Dom.safeRemove(this.__dummyBox);
 		jodit.e
 			.off(
 				jodit.ow,

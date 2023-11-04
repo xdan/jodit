@@ -89,9 +89,12 @@ describe('Sticky plugin', function () {
 
 					await editor.async.requestIdlePromise();
 
+					console.log(offset);
 					window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
 					simulateEvent('scroll', window);
+					console.log(window.scrollY);
 					await editor.async.requestIdlePromise();
+					await delay(100);
 
 					expect(true).equals(
 						editor.container.classList.contains('jodit_sticky')
