@@ -60,14 +60,14 @@ describe('WrapNodes plugin test', function () {
 				editor.value =
 					'test' +
 					'<style>.a{color: red;}</style>' +
-					'<script>console.log(111);</script>' +
+					'<script>window._runActive(111);</script>' +
 					'sdsdsd';
 
 				editor.selection.setCursorAfter(editor.editor.firstChild);
 				editor.setEditorValue();
 
 				expect(editor.value).equals(
-					'<p>test</p><style>.a{color: red;}</style><script>console.log(111);</script><p>sdsdsd</p>'
+					'<p>test</p><style>.a{color: red;}</style><script>window._runActive(111);</script><p>sdsdsd</p>'
 				);
 			});
 		});

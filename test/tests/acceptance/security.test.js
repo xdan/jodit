@@ -117,18 +117,22 @@ describe('Security test', () => {
 
 		describe('Disable', () => {
 			describe('Set HTML with onerror JS', () => {
-				it('Should not remove this unsafe attribute', () => {
+				it('Should not remove this unsafe attribute', async () => {
+					window._stealCookie = cookie => {};
 					const editor = getJodit({
 						cleanHTML: {
 							removeOnError: false
 						}
 					});
+					await editor.waitForReady();
 					editor.value =
-						'<math><iframe></iframe></math><img src onerror="console.log(document.cookie);"/>';
+						'<math><iframe></iframe></math><img src onerror="window._stealCookie(document.cookie);"/>';
 
 					expect(sortAttributes(editor.value)).eq(
-						'<p><math><iframe></iframe></math><img onerror="console.log(document.cookie);" src=""></p>'
+						'<p><math><iframe></iframe></math><img onerror="window._stealCookie(document.cookie);" src=""></p>'
 					);
+					await editor.async.requestIdlePromise();
+					delete window._stealCookie;
 				});
 			});
 

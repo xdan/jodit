@@ -299,9 +299,7 @@ describe('Editor inside iframe', function () {
 			const doc = win.document;
 			doc.open();
 			doc.write(
-				'<html lang="en"><body><textarea id="editor"></textarea><' +
-					'script src="./build/jodit.js"><' +
-					'/script></body></html>'
+				'<html lang="en"><body><textarea id="editor"></textarea></body></html>'
 			);
 			doc.close();
 

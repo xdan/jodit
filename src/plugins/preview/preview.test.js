@@ -15,10 +15,6 @@ describe('Preview plugin', () => {
 			'<p>sdasdas <span style="font-size: 36px;">dasd</span> asd asd</p>'
 		],
 		[
-			'<script>console.log(111);</script><p>111</p>',
-			'<script>console.log(111);</script><p>111</p>'
-		],
-		[
 			'<table><tbody><tr><th>1</th><td>2</td></tr></tbody></table><p>111</p>',
 			'<table><tbody><tr><th>1</th><td>2</td></tr></tbody></table><p>111</p>'
 		]
@@ -32,6 +28,31 @@ describe('Preview plugin', () => {
 				expect(
 					dialog.querySelector('.jodit__preview-box').innerHTML
 				).eq(result);
+			});
+		});
+	});
+
+	[
+		[
+			'<script>window._runActive(111);</script><p>111</p>',
+			'<script>window._runActive(111);</script><p>111</p>'
+		]
+	].forEach(([source, result]) => {
+		describe('For active source ' + source, () => {
+			it('should show the same content and run active content', () => {
+				let called = false;
+				window._runActive = args => {
+					called = args;
+				};
+				const jodit = getJodit();
+				jodit.value = source;
+				clickButton('preview', jodit);
+				const dialog = getOpenedDialog(jodit);
+				expect(
+					dialog.querySelector('.jodit__preview-box').innerHTML
+				).eq(result);
+				expect(called).eq(111);
+				delete window._runActive;
 			});
 		});
 	});

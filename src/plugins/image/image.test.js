@@ -34,12 +34,12 @@ describe('Process Images plugins', function () {
 				).equals(1);
 
 				list.querySelector('input[name=url]').value =
-					'http://xdsoft.net/jodit/images/artio.jpg';
+					'https://xdsoft.net/jodit/files/artio.jpg';
 
 				simulateEvent('submit', 0, list.querySelector('form'));
 
 				expect(sortAttributes(editor.value)).equals(
-					'<p><img alt="123" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px"></p>'
+					'<p><img alt="123" src="https://xdsoft.net/jodit/files/artio.jpg" style="width:300px"></p>'
 				);
 
 				simulateEvent('mousedown', 0, editor.editor);
@@ -57,12 +57,12 @@ describe('Process Images plugins', function () {
 					const list = getOpenedPopup(editor);
 
 					list.querySelector('input[name=url]').value =
-						'xdsoft.net/jodit/images/artio.jpg';
+						'xdsoft.net/jodit/files/artio.jpg';
 
 					simulateEvent('submit', list.querySelector('form'));
 
 					expect(sortAttributes(editor.value)).equals(
-						'<p>test<img alt="" src="//xdsoft.net/jodit/images/artio.jpg" style="width:300px"></p>'
+						'<p>test<img alt="" src="//xdsoft.net/jodit/files/artio.jpg" style="width:300px"></p>'
 					);
 				});
 			});
@@ -85,12 +85,12 @@ describe('Process Images plugins', function () {
 						input = list.querySelector('input[name=url]');
 
 					input.focus();
-					input.value = 'http://xdsoft.net/jodit/images/artio.jpg';
+					input.value = 'https://xdsoft.net/jodit/files/artio.jpg';
 
 					simulateEvent('submit', 0, list.querySelector('form'));
 
 					expect(sortAttributes(editor.value)).equals(
-						'<p>hello<img alt="" src="http://xdsoft.net/jodit/images/artio.jpg" style="width:300px"> world!</p>'
+						'<p>hello<img alt="" src="https://xdsoft.net/jodit/files/artio.jpg" style="width:300px"> world!</p>'
 					);
 				});
 			});

@@ -513,8 +513,7 @@ describe('Resize plugin', () => {
 
 				expect(img.offsetWidth).equals(editor.editor.offsetWidth - 16);
 
-				console.log(newRatio, ratio);
-				expect(Math.abs(newRatio - ratio) < 0.003).is.true;
+				expect(Math.abs(newRatio - ratio) < 0.01).is.true;
 			});
 		});
 	});

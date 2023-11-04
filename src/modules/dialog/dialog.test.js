@@ -63,7 +63,7 @@ describe('Dialog system tests', function () {
 					}
 				}
 			});
-			editor.value = '<img alt="" src="../artio.jpg"/>';
+			editor.value = '<img alt="" src="tests/artio.jpg"/>';
 			editor.s.focus();
 
 			simulateEvent('click', editor.editor.querySelector('img'));

@@ -748,8 +748,8 @@ const keyCode = Object.keys(codeKey).reduce((res, code) => {
 /**
  *
  * @param {string|string[]} type
- * @param {string|number|HTMLElement|Jodit} keyCodeOrElement
- * @param {HTMLElement|Jodit} [element]
+ * @param {string|number|HTMLElement|Jodit|Window} keyCodeOrElement
+ * @param {HTMLElement|Jodit|undefined} [elementOrApplyOpt]
  * @param {Function} [applyOpt]
  *
  * @returns boolean
@@ -1311,6 +1311,7 @@ if (typeof before === 'function') {
 				console.warn('Ignored: ResizeObserver loop limit exceeded');
 				return true;
 			} else {
+				console.warn(new Error(err).stack);
 				return e.call(window, err, ...args);
 			}
 		};

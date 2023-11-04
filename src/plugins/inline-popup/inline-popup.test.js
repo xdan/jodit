@@ -10,7 +10,7 @@ describe('Text Inline Popup plugin', function () {
 			it('Should Open inline popup', function () {
 				const editor = getJodit();
 
-				editor.value = '<img alt="" src="../artio.jpg"/>';
+				editor.value = '<img alt="" src="tests/artio.jpg"/>';
 				editor.s.focus();
 
 				simulateEvent('click', editor.editor.querySelector('img'));
@@ -26,7 +26,7 @@ describe('Text Inline Popup plugin', function () {
 				it('Should Open edit image dialog', function () {
 					const editor = getJodit();
 
-					editor.value = '<img alt="" src="../artio.jpg"/>';
+					editor.value = '<img alt="" src="tests/artio.jpg"/>';
 					editor.s.focus();
 
 					simulateEvent('click', editor.editor.querySelector('img'));

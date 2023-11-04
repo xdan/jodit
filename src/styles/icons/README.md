@@ -35,7 +35,7 @@ In addition to the added icons in the toolbar, you can also use a simple link to
 Jodit.make('#editor', {
 	buttons: [
 		{
-			iconURL: 'https://xdsoft.net/jodit/build/images/logo.png',
+			iconURL: 'https://xdsoft.net/jodit/files/artio.jpg',
 			name: 'someButton',
 			exec: e => alert(e.selection.html)
 		}

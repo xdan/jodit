@@ -23,8 +23,7 @@ describe('Toolbar', function () {
 					'image',
 					{
 						name: 'alert_some',
-						iconURL:
-							'https://xdsoft.net/jodit/build/images/icons/045-copy.png',
+						iconURL: 'https://xdsoft.net/jodit/files/artio.jpg',
 						exec: function () {
 							alert('test');
 						}
@@ -58,8 +57,7 @@ describe('Toolbar', function () {
 					controls: {
 						alert_some: {
 							name: 'alert_some',
-							iconURL:
-								'https://xdsoft.net/jodit/build/images/icons/045-copy.png',
+							iconURL: 'https://xdsoft.net/jodit/files/artio.jpg',
 							exec: () => {
 								editor.s.insertHTML('<span>indigo</span>');
 							}
@@ -906,7 +904,7 @@ describe('Toolbar', function () {
 				buttons: Jodit.defaultOptions.buttons.concat([
 					{
 						name: 'insertDate',
-						iconURL: 'http://xdsoft.net/jodit/images/logo.png',
+						iconURL: 'https://xdsoft.net/jodit/files/artio.jpg',
 						exec: editor => {
 							editor.s.insertHTML(
 								new Date('2016/03/16').toDateString()

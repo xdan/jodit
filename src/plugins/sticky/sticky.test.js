@@ -71,10 +71,12 @@ describe('Sticky plugin', function () {
 			});
 
 			describe('In iframe mode', function () {
-				it('Should work some way', async () => {
+				it('Should work same way', async () => {
 					const editor = getJodit({
 						iframe: true
 					});
+
+					await editor.waitForReady();
 
 					editor.value = '<p>stop</p>'.repeat(300);
 					await editor.async.requestIdlePromise();
