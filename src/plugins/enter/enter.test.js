@@ -1064,6 +1064,7 @@ describe('Enter behavior Tests', function () {
 				describe('For source: ' + source, () => {
 					it('Should be result: ' + result, () => {
 						const editor = getJodit(options);
+						editor.focus();
 						editor.value = source;
 						setCursorToChar(editor);
 						simulateEvent(
