@@ -999,6 +999,7 @@ describe('Enter behavior Tests', function () {
 
 		describe('Cases', () => {
 			[
+				['<pre>test<br><br>|</pre>', '<pre>test</pre><p>|<br></p>'],
 				['<pre>|test</pre>', '<pre><br>|test</pre>'],
 				[
 					'<pre>|test</pre>',
@@ -1008,7 +1009,6 @@ describe('Enter behavior Tests', function () {
 						opt.shiftKey = true;
 					}
 				],
-				['<pre>test<br><br>|</pre>', '<pre>test</pre><p>|<br></p>'],
 				['test|', 'test<br>|<br>', { enter: 'br' }],
 				['<p>test|</p>', '<p>test</p><p>|<br></p>'],
 				[
