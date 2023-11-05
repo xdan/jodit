@@ -1062,8 +1062,9 @@ describe('Enter behavior Tests', function () {
 				]
 			].forEach(([source, result, options, mod]) => {
 				describe('For source: ' + source, () => {
-					it('Should be result: ' + result, () => {
+					it('Should be result: ' + result, async () => {
 						const editor = getJodit(options);
+						await editor.waitForReady();
 						editor.focus();
 						editor.value = source;
 						setCursorToChar(editor);
