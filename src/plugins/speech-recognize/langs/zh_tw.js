@@ -5,10 +5,10 @@
  */
 
 module.exports = {
-	newline: 'นิวไลน์',
-	delete: 'ลบ',
-	space: 'พื้นที่',
-	'Speech Recognize': 'การรับรู้คำพูด',
-	Sound: 'เสียง',
-	'Interim Results': 'ผลระหว่างกาล'
+	newline: '換行',
+	delete: '刪除',
+	space: '空白',
+	'Speech Recognize': '語音辨識',
+	Sound: '聲音',
+	'Interim Results': '階段性辨識結果'
 };
