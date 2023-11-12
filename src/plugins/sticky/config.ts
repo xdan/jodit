@@ -26,7 +26,7 @@ declare module 'jodit/config' {
 
 		/**
 		 * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to
-		 * move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/doc/#2.5.57)
+		 * move the toolbar Jodit by this amount [more](http://xdsoft.net/jodit/docs/#2.5.57)
 		 *
 		 * @example
 		 * ```javascript

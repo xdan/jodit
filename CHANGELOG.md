@@ -3160,7 +3160,7 @@ replace the image in the editor. In 2.5.54 it can be done in 3 clicks
 
 ### 2.5.53
 
-Added [Jodit.focus](http://xdsoft.net/jodit/doc/module-Jodit.html#.focus) method
+Added [Jodit.focus](https://xdsoft.net/jodit/docs/modules/jodit.html#.focus) method
 
 ```javascript
 var editor = new Jodit('.redactor');
@@ -3221,7 +3221,7 @@ Jodit.Confirm('Are you sure?', function (yes) {
 
 ### 2.5.49
 
-First step for Mobile-friendly [sizeLG,sizeMD,sizeSM](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#sizeLG) and
+First step for Mobile-friendly [sizeLG,sizeMD,sizeSM](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#sizeLG) and
 sets of buttons for different sizes editors.
 
 > `Note`. this is not the width of the device, the width of the editor
@@ -3348,8 +3348,8 @@ var editor = new Jodit('#some-editor', {
 
 ![More comfortable colorpicker](http://xdsoft.net/jodit/stuf/colorpicker.jpg)
 
--   Added [Helper.normalizeColor](http://xdsoft.net/jodit/doc/module-Helper.html#~normalizeColor)
--   Fixed [Helper.colorToHex](http://xdsoft.net/jodit/doc/module-Helper.html#~colorToHex) now for transparent color it
+-   Added [Helper.normalizeColor](https://xdsoft.net/jodit/docs/modules/helpers_normalize.html#normalizecolor)
+-   Fixed [Helper.colorToHex](https://xdsoft.net/jodit/docs/modules/helpers_color.html#colortohex) now for transparent color it
     will return NaN
 
 ### 2.5.45
@@ -3364,7 +3364,7 @@ Fix a few bugs in [JJE](http://xdsoft.net/jodit/#extesions)
 
 ### 2.5.40
 
--   In [Helper](http://xdsoft.net/jodit/doc/module-Helper.html) module added [isHTML] method. Used plugin `insertHTML`
+-   In [Helper](https://xdsoft.net/jodit/docs/modules/helpers.html) module added [isHTML] method. Used plugin `insertHTML`
 -   Added simple plugin `insertHTML` and him option `askBeforePasteHTML` - Ask before paste HTML in WYSIWYG mode. Try
     insert in WYSIWYG mode some HTML source
 
@@ -3426,7 +3426,7 @@ Fix [#issue 11](https://github.com/xdan/jodit/issues/11) in `file:` mode CDN Cod
 
 ### 2.5.37
 
--   Fixed bug in [`Beautifier`](http://xdsoft.net/jodit/doc/module-Beautifier.html) plugin. When in `source` mode, start
+-   Fixed bug in [`Beautifier`](https://xdsoft.net/jodit/docs/classes/config.Config.html#beautifyhtmlcdnurlsjs) plugin. When in `source` mode, start
     comment enter `<!--` Browser stops responding.
 -   Added `tiles` and `list` switcher in filebrowser
 
@@ -3456,8 +3456,8 @@ Jodit.Confirm('Are you sure?', 'Confirm', function (success) {
 ### 2.5.27
 
 -   Fixed IE11's
-    bug [http://xdsoft.net/jodit/doc/module-Jodit.html#comment-2866837441](http://xdsoft.net/jodit/doc/module-Jodit.html#comment-2866837441)
--   Added [textIcons](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#texticons) options - Use text instead of
+    bug [https://xdsoft.net/jodit/docs/classes/jodit.Jodit.html#comment-2866837441](https://xdsoft.net/jodit/docs/classes/jodit.Jodit.html#comment-2866837441)
+-   Added [textIcons](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#texticons) options - Use text instead of
     icons. In IE9 it is default - true [Example](http://xdsoft.net/jodit/#example-text-icons)
 
 ```javascript
@@ -3494,20 +3494,20 @@ But you must remember that Jodit.modules.Dom! = JQuery
 ### 2.5.23
 
 -   Added `expand button` In filebrowser
--   Added [fullsize](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#dialog)
-    and [fullsizeButton](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#dialog) options
+-   Added [fullsize](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#dialog)
+    and [fullsizeButton](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#dialog) options
 
 ### 2.5.20
 
--   Fix [Dom.prev](http://xdsoft.net/jodit/doc/module-Dom.html#prev) method
+-   Fix [Dom.prev](https://xdsoft.net/jodit/docs/modules/dom.html#prev) method
 -   Added navigation and select in preview
     ![Navigation and select buttons](http://xdsoft.net/jodit/stuf/preview_navigation.jpg)
--   Added [showSelectButtonInPreview](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#filebrowser)
-    and [showPreviewNavigation](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#filebrowser)
+-   Added [showSelectButtonInPreview](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#filebrowser)
+    and [showPreviewNavigation](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#filebrowser)
 
 ### 2.5.19
 
-Added [cleanHTML.allowTags](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#cleanhtml) option.
+Added [cleanHTML.allowTags](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#cleanhtml) option.
 
 ```javascript
 var editor = Jodit('#editor', {
@@ -3556,7 +3556,7 @@ Fixed bug in JJE
 
 ### 2.5.13
 
--   Added in FileBrowser [sort](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#filebrowser) options
+-   Added in FileBrowser [sort](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#filebrowser) options
 -   Jodit.Promt and Jodit.Alert by default set focus to OK button
 
 ```javascript
@@ -3581,13 +3581,13 @@ Added edit button in Image Properties Dialog
 
 -   Added file info in filebrowser
     ![Filebrowser file info](http://xdsoft.net/jodit/stuf/filebrowsernames.jpg)
--   Added [showFileName,showFileSize,showFileChangeTime](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#filebrowser)
+-   Added [showFileName,showFileSize,showFileChangeTime](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#filebrowser)
 
 ### 2.5.1
 
 -   Dom module was rewritten and was fixed afew bugs
 -   In [OEM and Pro](http://xdsoft.net/jodit/#download)
-    added [Image Editor module](http://xdsoft.net/jodit/doc/module-ImageEditor.html) resize and crop image. You can
+    added [Image Editor module](https://xdsoft.net/jodit/docs/modules/modules_image_editor.html) resize and crop image. You can
     try [here](http://xdsoft.net/jodit/)
     ![Crop Image](http://xdsoft.net/jodit/stuf/crop.jpg)
     ![Resize Image](http://xdsoft.net/jodit/stuf/resize.jpg)
@@ -3621,7 +3621,7 @@ Fixed bug with insert `OL` tag and Fixed Dom module work with Text node
 
 ### 2.4.12
 
-Added [toolbarButtonSize](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#toolbarbuttonsize) Size of icons in the
+Added [toolbarButtonSize](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#toolbarbuttonsize) Size of icons in the
 toolbar (can be "small", "middle", "large")
 
 ```javascript
@@ -3632,7 +3632,7 @@ var editor = new Jodit('#editor', {
 
 ### 2.4.10
 
--   Added [node.create](http://xdsoft.net/jodit/doc/module-Node.html#create) method
+-   Added node.create method
 
 ```javascript
 var editor = new Jodit('.jodit'),
@@ -3640,11 +3640,11 @@ var editor = new Jodit('.jodit'),
 editor.s.insertNode(node);
 ```
 
--   Added [link](http://xdsoft.net/jodit/doc/module-link.html) plugin. And its options
-    -   [processPastedLink](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#link) Wrap inserted link
+-   Added [link](https://xdsoft.net/jodit/docs/modules/plugins_link.html) plugin. And its options
+    -   [processPastedLink](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#link) Wrap inserted link
         in `<a href="link">link</a>`
-    -   [openLinkDialogAfterPost](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#link) Open Link dialog after post
-    -   [removeLinkAfterFormat](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#link) When the button is pressed to
+    -   [openLinkDialogAfterPost](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#link) Open Link dialog after post
+    -   [removeLinkAfterFormat](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#link) When the button is pressed to
         clean format, if it was done on the link is removed like command `unlink`
 -   Replace format icon
 
@@ -3668,38 +3668,38 @@ Fast Fixed in JJE Fixed a lot of bugs in Jodit
 
 ### 2.3.59
 
--   Added [Cookie](http://xdsoft.net/jodit/doc/module-Cookie.html) module
--   Added [saveModeInCookie](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#savemodeincookie) if it is true that
+-   Added Cookie module
+-   Added [saveModeInCookie](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#savemodeincookie) if it is true that
     the current mode is saved in a cookie , and is restored after a reload of the page
 -   In Joomla Jodit Editor(JJE) added corresponding option
     saveModeInCookie [Download Jodit Joomla editor](http://xdsoft.net/jodit/release/joomla.zip)
 
 ### 2.3.57
 
--   Fixed issue with `input[type=checkbox]` and [Dom.attr](http://xdsoft.net/jodit/doc/module-Dom.html#attr) method
+-   Fixed issue with `input[type=checkbox]` and [Dom.attr](https://xdsoft.net/jodit/docs/modules/dom.html#attr) method
 -   Release Joomla Jodit Editor (JJE) [Download JJE](http://xdsoft.net/jodit/release/joomla.zip)
 
 ### 2.3.53
 
--   Added option [cleanHTML.cleanOnPaste](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#cleanhtml) The
-    plugin [cleanHTML](http://xdsoft.net/jodit/doc/module-cleanHTML.html) automatically cleans up content from Microsoft
+-   Added option [cleanHTML.cleanOnPaste](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#cleanhtml) The
+    plugin [cleanHTML](https://xdsoft.net/jodit/docs/modules/plugins_clean_html.html) automatically cleans up content from Microsoft
     Word and other HTML sources to ensure clean, compliant content that matches the look and feel of the site.
--   Added [beforePaste](http://xdsoft.net/jodit/doc/module-Jodit.html#~event:beforePaste),[processPaste](http://xdsoft.net/jodit/doc/module-Jodit.html#~event:processPaste),[afterPaste](http://xdsoft.net/jodit/doc/module-Jodit.html#~event:afterPaste)
+-   Added [beforePaste](https://xdsoft.net/jodit/docs/classes/jodit.Jodit.html#~event:beforePaste),[processPaste](https://xdsoft.net/jodit/docs/classes/jodit.Jodit.html#~event:processPaste),[afterPaste](https://xdsoft.net/jodit/docs/classes/jodit.Jodit.html#~event:afterPaste)
     events
 
 ### 2.3.49
 
-Added [iframeBaseUrl](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#iframebaseurl) option - Base URL where the
-root directory for [iframe](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#iframe) mode
+Added [iframeBaseUrl](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#iframebaseurl) option - Base URL where the
+root directory for [iframe](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#iframe) mode
 
 ### 2.3.48
 
-Added [spellcheck](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#spellcheck) option specifies whether the editor
+Added [spellcheck](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#spellcheck) option specifies whether the editor
 is to have its spelling and grammar checked or not
 
 ### 2.3.47
 
-Added [removeEmptyBlocks](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#removeemptyblocks) option - Remove empty
+Added [removeEmptyBlocks](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#removeemptyblocks) option - Remove empty
 blocks
 
 ```javascript
@@ -3721,7 +3721,7 @@ console.log(editor.val()); //''
 
 ### 2.3.44
 
-Added [direction](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#direction) option. The writing direction of the
+Added [direction](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#direction) option. The writing direction of the
 language which is used to create editor content. Allowed values are:
 
 -   '' (an empty string) – Indicates that content direction will be the same as either the editor UI direction or the page
@@ -3735,22 +3735,22 @@ Fixed styles bugs
 
 ### 2.3.41
 
-When [filebrowser.showFoldersPanel](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#filebrowser) === false show 4
+When [filebrowser.showFoldersPanel](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#filebrowser) === false show 4
 colums in filelist
 
 ### 2.3.40
 
--   Added [filebrowser.moveFolder](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#filebrowser) option. Allow/deny
+-   Added [filebrowser.moveFolder](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#filebrowser) option. Allow/deny
     move folder
--   Added [filebrowser.moveFile](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#filebrowser) option. Allow/deny
+-   Added [filebrowser.moveFile](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#filebrowser) option. Allow/deny
     move file
--   Added [filebrowser.showFoldersPanel](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#filebrowser) option.
+-   Added [filebrowser.showFoldersPanel](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#filebrowser) option.
     Hide/show folders panel in filebrowser
 
 ### 2.3.39
 
-Fixed [Filebrowser](http://xdsoft.net/jodit/doc/module-Filebrowser.html) uploader's options bug. Previously , you had to
-either use a general [Uploader](http://xdsoft.net/jodit/doc/module-Uploader.html) module settings , or override them
+Fixed [Filebrowser](https://xdsoft.net/jodit/docs/modules/modules_file_browser.html) uploader's options bug. Previously , you had to
+either use a general [Uploader](https://xdsoft.net/jodit/docs/modules/modules_uploader.html) module settings , or override them
 completely
 
 ```javascript
@@ -3771,7 +3771,7 @@ var editor = new Jodit('.redactor', {
 			url: 'uploader.php',
 			format: 'json',
 			filesVariableName: 'fils'
-			//... all options from [uploader](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#uploader)
+			//... all options from [uploader](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#uploader)
 		}
 	}
 });
@@ -3795,7 +3795,7 @@ var editor = new Jodit('.redactor', {
 ### 2.3.38
 
 -   Fixed i18n bug
--   [useSplitMode](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#usesplitmode) set default false
+-   [useSplitMode](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#usesplitmode) set default false
 -   Fixed toolbar width after fullsize mode
 -   Fixed [#issue5](https://github.com/xdan/jodit/issues/5)
 
@@ -3814,14 +3814,14 @@ editor.events.fire('toggleFullsize', [true]); // fullsize
 editor.events.fire('toggleFullsize', [false]); // usual mode
 ```
 
--   Added [globalFullsize](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#globalFullsize) (default `true`) if true,
+-   Added [globalFullsize](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#globalFullsize) (default `true`) if true,
     after `fullsize` - all parents element get `jodit_fullsize_box` class (z-index: 100000 !important;)
 -   Fixed focus bug
 
 ### 2.3.35
 
 -   Fixed placeholder style
--   Fixed [Dom.css](http://xdsoft.net/jodit/doc/module-Dom.html#~css) then
+-   Fixed [Dom.css](https://xdsoft.net/jodit/docs/modules/dom.html#~css) then
 
 ```html
 <div class="idclass" style="margin-top:20px;"></div>
@@ -3835,29 +3835,29 @@ Jodit.modules.Dom('.idclass').css('margin-top'); //now it returns int `20`
 ### 2.3.33
 
 -   Fixed placeholder style. Placeholder placed in a separate
-    module [Placeholder](http://xdsoft.net/jodit/doc/module-Placeholder.html)
--   Added [showPlaceholder](http://xdsoft.net/jodit/doc/module-Placeholder.html#showplaceholder) option
--   Added [useInputsPlaceholder](http://xdsoft.net/jodit/doc/module-Placeholder.html#useinputsplaceholder) option
--   Added [placeholder](http://xdsoft.net/jodit/doc/module-Placeholder.html#placeholder) option
+    module [Placeholder](https://xdsoft.net/jodit/docs/modules/plugins_placeholder.html#root)
+-   Added [showPlaceholder](https://xdsoft.net/jodit/docs/modules/plugins_placeholder.html#root#showplaceholder) option
+-   Added [useInputsPlaceholder](https://xdsoft.net/jodit/docs/modules/plugins_placeholder.html#root#useinputsplaceholder) option
+-   Added [placeholder](https://xdsoft.net/jodit/docs/modules/plugins_placeholder.html#root#placeholder) option
 
 ### 2.3.32
 
-Added [uploader.data](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#uploader) option. Data to be sent to the
+Added [uploader.data](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#uploader) option. Data to be sent to the
 server like POST parameters
 
 ### 2.3.31
 
-Added [editorCssClass](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#editorcssclass) option - Class name that
+Added [editorCssClass](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#editorcssclass) option - Class name that
 can be appended to the editor Fixed internacionalization
 
 ### 2.3.30
 
-Added [triggerChangeEvent](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#triggerchangeevent) option Fixed
+Added [triggerChangeEvent](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#triggerchangeevent) option Fixed
 uploader's options - When the uploader is not configured, the editor still displays images upload button
 
 ### 2.3.29
 
-Add [Dom.defaultAjaxOptions.async](http://xdsoft.net/jodit/doc/module-Dom.html#.__.defaultAjaxOptions) By default, all
+Add [Dom.defaultAjaxOptions.async](https://xdsoft.net/jodit/docs/modules/dom.html#.__.defaultAjaxOptions) By default, all
 requests are sent asynchronously (i.e. this is set to true by default). If you need synchronous requests, set this
 option to false
 
@@ -3912,7 +3912,7 @@ Fixed [#issues1](https://github.com/xdan/jodit/issues/1)
 ### 2.3.24
 
 Fixed dialog's module when was opened Promt window, after Enter submit the form and the page reloaded. Fixed connector's
-bugs Update [Jodit.i18n](http://xdsoft.net/jodit/doc/module-Jodit.html#.i18n) method. Now it can be used staticly
+bugs Update [Jodit.i18n](https://xdsoft.net/jodit/docs/classes/jodit.Jodit.html#.i18n) method. Now it can be used staticly
 
 ```javascript
 var editor = new Jodit('#redactor', {
@@ -3936,7 +3936,7 @@ Jodit.defaultOptions.language = 'cs';
 console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')); //Hello mr.Perkins Good day
 ```
 
-Fixed [Jodit.destroy](http://xdsoft.net/jodit/doc/module-Jodit.html#.destroy) method
+Fixed [Jodit.destroy](https://xdsoft.net/jodit/docs/classes/jodit.Jodit.html#.destroy) method
 
 ```javascript
 var editor = new Jodit('.jodit');
@@ -3953,7 +3953,7 @@ Jodit.Alert('Hello world!!!');
 
 ### 2.3.20
 
-Fixed dialog's module zIndex manage. Fixed [Dom.css](http://xdsoft.net/jodit/doc/module-Dom.html#~css) method bug. That
+Fixed dialog's module zIndex manage. Fixed [Dom.css](https://xdsoft.net/jodit/docs/modules/dom.html#~css) method bug. That
 example has not worked.
 
 ```javascript
@@ -3968,9 +3968,9 @@ replaced `http:/sitename.net/jodit/files/fg.jpg`
 ### 2.3.18
 
 Added `afterInsertImage` event - triggered after image was
-inserted [selection.insertImage](http://xdsoft.net/jodit/doc/module-Selection.html#-insertImage__anchor). This method
-can execute from [Filebrowser](http://xdsoft.net/jodit/doc/module-Filebrowser.html)
-or [Uploader](http://xdsoft.net/jodit/doc/module-Uploader.html)
+inserted [selection.insertImage](https://xdsoft.net/jodit/docs/modules/selection.html#-insertImage__anchor). This method
+can execute from [Filebrowser](https://xdsoft.net/jodit/docs/modules/modules_file_browser.html)
+or [Uploader](https://xdsoft.net/jodit/docs/modules/modules_uploader.html)
 
 ```javascript
 var editor = new Jodit('#redactor');
@@ -3990,7 +3990,7 @@ Work with table became faster
 ### 2.3.12
 
 -   Fixed filbrowser bug. When a new file is uploaded file list has not been updated
--   Added [dialog.zIndex](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#.dialog) option
+-   Added [dialog.zIndex](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#.dialog) option
 
 ### 2.3.11
 
@@ -4037,24 +4037,24 @@ Fixed BACKSPACE entering behavior. And Fixed ie10 support
 
 ### 2.2.0
 
-Added [iframe](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#.iframe)
-, [iframeStyle](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#.iframeStyle)
-, [iframeIncludeJoditStyle](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#.iframeIncludeJoditStyle)
-, [iframeCSSLinks](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#.iframeCSSLinks)
-, [width](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#.width)
-, [height](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#.height)
-, [minHeight](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#.minHeight).
+Added [iframe](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#.iframe)
+, [iframeStyle](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#.iframeStyle)
+, [iframeIncludeJoditStyle](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#.iframeIncludeJoditStyle)
+, [iframeCSSLinks](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#.iframeCSSLinks)
+, [width](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#.width)
+, [height](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#.height)
+, [minHeight](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#.minHeight).
 `iframe` by default false. When this option is enabled, the editor's content will be placed in an iframe and isolated
 from the rest of the page.
 `width` and `height` you can set size fot editor
 
 ### 2.1.0
 
-Added internationalization. Read more http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#.language
+Added internationalization. Read more https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#.language
 
 ### 2.0.9
 
-Added Split mode. Added [useSplitMode](http://xdsoft.net/jodit/doc/Jodit.defaultOptions.html#.useSplitMode) options (
+Added Split mode. Added [useSplitMode](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#.useSplitMode) options (
 default true) Example [here](http://xdsoft.net/jodit/#splitmode)
 
 ### 2.0.8
@@ -4075,7 +4075,7 @@ Fixed bug in filebrowser
 
 ### 1.2.0
 
-Fixed bug when [selection.insertHTML](http://xdsoft.net/jodit/doc/module-Selection.html#-inner-insertHTML__anchor)
+Fixed bug when [selection.insertHTML](https://xdsoft.net/jodit/docs/modules/selection.html#-inner-insertHTML__anchor)
 doesn't work without focus
 
 ### 1.1.0
