@@ -156,7 +156,7 @@ const editor = Jodit.make('.someselector', {
 	extraButtons: [
 		{
 			name: 'insertDate',
-			iconURL: 'http://xdsoft.net/jodit/logo.png',
+			iconURL: 'https://xdsoft.net/jodit/logo.png',
 			exec: function (editor) {
 				editor.s.insertHTML(new Date().toDateString());
 			}
@@ -173,7 +173,7 @@ const editor = Jodit.make('.someselector', {
 	controls: {
 		insertDate: {
 			name: 'insertDate',
-			iconURL: 'http://xdsoft.net/jodit/logo.png',
+			iconURL: 'https://xdsoft.net/jodit/logo.png',
 			exec: function (editor) {
 				editor.s.insertHTML(new Date().toDateString());
 			}
@@ -228,7 +228,7 @@ const editor = Jodit.make('.someselector', {
 	buttons: ['bold', 'insertText'],
 	controls: {
 		insertText: {
-			iconURL: 'http://xdsoft.net/jodit/logo.png',
+			iconURL: 'https://xdsoft.net/jodit/logo.png',
 			exec: function (editor) {
 				editor.events.fire('someEvent', 'world!!!');
 			}

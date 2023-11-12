@@ -3129,7 +3129,7 @@ var editor = new Jodir('.editor', {
 ### 2.5.57
 
 -   Added `useIframeResizer` option for resize IFRAME tag
-    ![Iframe resizer](http://xdsoft.net/jodit/stuf/iframe-resizer.jpg)
+    ![Iframe resizer](https://xdsoft.net/jodit/stuf/iframe-resizer.jpg)
 -   Added `offsetTopForAssix` option. For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling.
     Therefore, it is necessary to move the toolbar Jodit by this amount
 
@@ -3140,9 +3140,9 @@ var editor = new Jodit('#editor', {
 ```
 
 Without affix offset
-![Without affix](http://xdsoft.net/jodit/stuf/joomla-exampla-affix-bad.jpg)
+![Without affix](https://xdsoft.net/jodit/stuf/joomla-exampla-affix-bad.jpg)
 With affix offset
-![Withou affix](http://xdsoft.net/jodit/stuf/joomla-exampla-affix-good.jpg)
+![Withou affix](https://xdsoft.net/jodit/stuf/joomla-exampla-affix-good.jpg)
 
 ### 2.5.55
 
@@ -3154,7 +3154,7 @@ When you insert text into the editor from another site, all the images are from 
 quite uncomfortable: first I had to download the image from a remote resource, and then upload it to your site, then
 replace the image in the editor. In 2.5.54 it can be done in 3 clicks
 
-![Upload remote image](http://xdsoft.net/jodit/stuf/upload-remote-image.jpg)
+![Upload remote image](https://xdsoft.net/jodit/stuf/upload-remote-image.jpg)
 
 > `Note`. Need update [PHP Connector](https://github.com/xdan/jodit-connectors)
 
@@ -3188,7 +3188,7 @@ Jodit.Alert("File wasn't uploaded", 'Error', function () {
 
 #### Promt
 
-![Promt dialog](http://xdsoft.net/jodit/stuf/promt.jpg)
+![Promt dialog](https://xdsoft.net/jodit/stuf/promt.jpg)
 
 ```javascript
 Jodit.Promt('Enter your name', function (name) {
@@ -3209,7 +3209,7 @@ Jodit.Promt('Enter your name', 'Promt Dialog', function (name) {
 
 #### Confirm
 
-![Confirm dialog](http://xdsoft.net/jodit/stuf/confirm.jpg)
+![Confirm dialog](https://xdsoft.net/jodit/stuf/confirm.jpg)
 
 ```javascript
 Jodit.Confirm('Are you sure?', function (yes) {
@@ -3346,7 +3346,7 @@ var editor = new Jodit('#some-editor', {
 
 -   More comfortable colorpicker
 
-![More comfortable colorpicker](http://xdsoft.net/jodit/stuf/colorpicker.jpg)
+![More comfortable colorpicker](https://xdsoft.net/jodit/stuf/colorpicker.jpg)
 
 -   Added [Helper.normalizeColor](https://xdsoft.net/jodit/docs/modules/helpers_normalize.html#normalizecolor)
 -   Fixed [Helper.colorToHex](https://xdsoft.net/jodit/docs/modules/helpers_color.html#colortohex) now for transparent color it
@@ -3360,7 +3360,7 @@ var editor = new Jodit('#some-editor', {
 
 ### 2.5.42
 
-Fix a few bugs in [JJE](http://xdsoft.net/jodit/#extesions)
+Fix a few bugs in [JJE](https://xdsoft.net/jodit/#extesions)
 
 ### 2.5.40
 
@@ -3438,7 +3438,7 @@ Fix [#issue 11](https://github.com/xdan/jodit/issues/11) in `file:` mode CDN Cod
 ### 2.5.30
 
 Fix Splitmode autohaight
-![Autoheight in Split mode Jodit](http://xdsoft.net/jodit/stuf/split-mode.jpg)
+![Autoheight in Split mode Jodit](https://xdsoft.net/jodit/stuf/split-mode.jpg)
 Fix syncronize code in TableProcessor module
 
 ### 2.5.28
@@ -3458,7 +3458,7 @@ Jodit.Confirm('Are you sure?', 'Confirm', function (success) {
 -   Fixed IE11's
     bug [https://xdsoft.net/jodit/docs/classes/jodit.Jodit.html#comment-2866837441](https://xdsoft.net/jodit/docs/classes/jodit.Jodit.html#comment-2866837441)
 -   Added [textIcons](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#texticons) options - Use text instead of
-    icons. In IE9 it is default - true [Example](http://xdsoft.net/jodit/#example-text-icons)
+    icons. In IE9 it is default - true [Example](https://xdsoft.net/jodit/#example-text-icons)
 
 ```javascript
 var editor = new Jodit('#example2_0', {
@@ -3475,8 +3475,8 @@ var editor = new Jodit('#example2_0', {
 });
 ```
 
-![Text icons](http://xdsoft.net/jodit/stuf/texticons.jpg)
-![Text icons in filebrowser](http://xdsoft.net/jodit/stuf/texticons-filebrowser.jpg)
+![Text icons](https://xdsoft.net/jodit/stuf/texticons.jpg)
+![Text icons in filebrowser](https://xdsoft.net/jodit/stuf/texticons-filebrowser.jpg)
 
 ### 2.5.26
 
@@ -3501,7 +3501,7 @@ But you must remember that Jodit.modules.Dom! = JQuery
 
 -   Fix [Dom.prev](https://xdsoft.net/jodit/docs/modules/dom.html#prev) method
 -   Added navigation and select in preview
-    ![Navigation and select buttons](http://xdsoft.net/jodit/stuf/preview_navigation.jpg)
+    ![Navigation and select buttons](https://xdsoft.net/jodit/stuf/preview_navigation.jpg)
 -   Added [showSelectButtonInPreview](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#filebrowser)
     and [showPreviewNavigation](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#filebrowser)
 
@@ -3569,28 +3569,28 @@ Jodit.Promt('Enter your name', function (name) {
 });
 ```
 
--   Fix `$config` bug in [JJE](http://xdsoft.net/jodit/release/joomla.zip)
+-   Fix `$config` bug in [JJE](https://xdsoft.net/jodit/release/joomla.zip)
 -   Added a few options in JJE plugin
 
 ### 2.5.12
 
 Added edit button in Image Properties Dialog
-![Edit button](http://xdsoft.net/jodit/stuf/editbutton.jpg)
+![Edit button](https://xdsoft.net/jodit/stuf/editbutton.jpg)
 
 ### 2.5.11
 
 -   Added file info in filebrowser
-    ![Filebrowser file info](http://xdsoft.net/jodit/stuf/filebrowsernames.jpg)
+    ![Filebrowser file info](https://xdsoft.net/jodit/stuf/filebrowsernames.jpg)
 -   Added [showFileName,showFileSize,showFileChangeTime](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#filebrowser)
 
 ### 2.5.1
 
 -   Dom module was rewritten and was fixed afew bugs
--   In [OEM and Pro](http://xdsoft.net/jodit/#download)
+-   In [OEM and Pro](https://xdsoft.net/jodit/#download)
     added [Image Editor module](https://xdsoft.net/jodit/docs/modules/modules_image_editor.html) resize and crop image. You can
-    try [here](http://xdsoft.net/jodit/)
-    ![Crop Image](http://xdsoft.net/jodit/stuf/crop.jpg)
-    ![Resize Image](http://xdsoft.net/jodit/stuf/resize.jpg)
+    try [here](https://xdsoft.net/jodit/)
+    ![Crop Image](https://xdsoft.net/jodit/stuf/crop.jpg)
+    ![Resize Image](https://xdsoft.net/jodit/stuf/resize.jpg)
 
 ### 2.4.22
 
@@ -3672,12 +3672,12 @@ Fast Fixed in JJE Fixed a lot of bugs in Jodit
 -   Added [saveModeInCookie](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#savemodeincookie) if it is true that
     the current mode is saved in a cookie , and is restored after a reload of the page
 -   In Joomla Jodit Editor(JJE) added corresponding option
-    saveModeInCookie [Download Jodit Joomla editor](http://xdsoft.net/jodit/release/joomla.zip)
+    saveModeInCookie [Download Jodit Joomla editor](https://xdsoft.net/jodit/release/joomla.zip)
 
 ### 2.3.57
 
 -   Fixed issue with `input[type=checkbox]` and [Dom.attr](https://xdsoft.net/jodit/docs/modules/dom.html#attr) method
--   Release Joomla Jodit Editor (JJE) [Download JJE](http://xdsoft.net/jodit/release/joomla.zip)
+-   Release Joomla Jodit Editor (JJE) [Download JJE](https://xdsoft.net/jodit/release/joomla.zip)
 
 ### 2.3.53
 
@@ -4020,7 +4020,7 @@ Fixed copy-paste for FireFox
 
 ### 2.2.5
 
-Added copy-paste support by clipboard image. [Try](http://xdsoft.net/jodit) paste print screen.
+Added copy-paste support by clipboard image. [Try](https://xdsoft.net/jodit) paste print screen.
 
 ### 2.2.4
 
@@ -4055,7 +4055,7 @@ Added internationalization. Read more https://xdsoft.net/jodit/docs/classes/view
 ### 2.0.9
 
 Added Split mode. Added [useSplitMode](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#.useSplitMode) options (
-default true) Example [here](http://xdsoft.net/jodit/#splitmode)
+default true) Example [here](https://xdsoft.net/jodit/#splitmode)
 
 ### 2.0.8
 

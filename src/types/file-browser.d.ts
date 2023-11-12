@@ -165,7 +165,7 @@ export interface IFileBrowserOptions extends IViewOptions {
 	 * Jodit.make('#editor', {
 	 * 	filebrowser: {
 	 * 		fileRemove: {
-	 * 			url: 'http://xdsoft.net/jodit/connector/index.php?action=fileDelete',
+	 * 			url: 'https://xdsoft.net/jodit/connector/index.php?action=fileDelete',
 	 * 			method: 'POST',
 	 * 		}
 	 * 	}

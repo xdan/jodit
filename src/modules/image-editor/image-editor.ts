@@ -621,9 +621,9 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 	 *				 width: 500
 	 *		 }
 	 * });
-	 * jodit.imageeditor.open('http://xdsoft.net/jodit/images/test.png', function (name, data, success, failed) {
+	 * jodit.imageeditor.open('https://xdsoft.net/jodit/images/test.png', function (name, data, success, failed) {
 	 *		 var img = jodit.node.c('img');
-	 *		 img.setAttribute('src', 'http://xdsoft.net/jodit/images/test.png');
+	 *		 img.setAttribute('src', 'https://xdsoft.net/jodit/images/test.png');
 	 *		 if (box.action !== 'resize') {
 	 *					return failed('Sorry it is work only in resize mode. For croping use FileBrowser');
 	 *		 }

@@ -19,7 +19,7 @@ declare module 'jodit/config' {
 		 * ```javascript
 		 * Jodit.make('#editor', {
 		 *    iframe: true,
-		 *    iframeDefaultSrc: 'http://xdsoft.net/jodit/docs/',
+		 *    iframeDefaultSrc: 'https://xdsoft.net/jodit/docs/',
 		 * });
 		 * ```
 		 */
@@ -32,7 +32,7 @@ declare module 'jodit/config' {
 		 * ```javascript
 		 * new Jodit('#editor', {
 		 *    iframe: true,
-		 *    iframeBaseUrl: 'http://xdsoft.net/jodit/docs/',
+		 *    iframeBaseUrl: 'https://xdsoft.net/jodit/docs/',
 		 * });
 		 * ```
 		 */

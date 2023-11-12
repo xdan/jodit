@@ -71,8 +71,8 @@ declare module 'jodit/config' {
 			 *     }
 			 * });
 			 * editor.value = 'Sorry! <strong>Goodby</strong>\
-			 * <span>mr.</span> <a style="color:red" href="http://xdsoft.net">Freeman</a>';
-			 * console.log(editor.value); //Sorry! <a href="http://xdsoft.net">Freeman</a>
+			 * <span>mr.</span> <a style="color:red" href="https://xdsoft.net">Freeman</a>';
+			 * console.log(editor.value); //Sorry! <a href="https://xdsoft.net">Freeman</a>
 			 * ```
 			 *
 			 * @example
