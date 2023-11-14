@@ -19,21 +19,7 @@ export * from './dialog/';
 export { Dom, LazyWalker } from 'jodit/core/dom';
 export { Plugin } from 'jodit/core/plugin';
 export { Create } from 'jodit/core/create';
-export {
-	UIElement,
-	UIButton,
-	Popup,
-	UISeparator,
-	UIGroup,
-	UIList,
-	UIForm,
-	UIInput,
-	UITextArea,
-	UICheckbox,
-	UIBlock,
-	ProgressBar,
-	Icon
-} from 'jodit/core/ui';
+export * from 'jodit/core/ui';
 export { View } from 'jodit/core/view/view';
 export { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
 export * from './file-browser';

@@ -10,9 +10,10 @@
 
 import './area.less';
 
-import type { IUITextArea, IViewBased } from 'jodit/types';
+import type { IUITextArea, IViewBased, IUIInput } from 'jodit/types';
 import { UIInput } from 'jodit/core/ui/form/inputs/input/input';
 import { component } from 'jodit/core/decorators/component/component';
+import { watch } from 'jodit/core/decorators';
 
 @component
 export class UITextArea extends UIInput implements IUITextArea {
@@ -30,18 +31,30 @@ export class UITextArea extends UIInput implements IUITextArea {
 
 	declare nativeInput: HTMLTextAreaElement;
 
+	protected override createNativeInput(
+		options?: Partial<this['state']>
+	): IUIInput['nativeInput'] {
+		return this.j.create.element('textarea');
+	}
+
 	/** @override */
 	override state: IUITextArea['state'] = { ...UITextArea.defaultState };
 
 	constructor(jodit: IViewBased, state: Partial<IUITextArea['state']>) {
 		super(jodit, state);
 
-		this.nativeInput = this.j.create.element('textarea');
-
 		Object.assign(this.state, state);
 
 		if (this.state.resizable === false) {
 			this.nativeInput.style.resize = 'none';
 		}
+	}
+
+	@watch(['state.size', 'state.resizable'])
+	protected onChangeStateSize(): void {
+		const { size, resizable } = this.state;
+
+		this.nativeInput.style.resize = resizable ? 'auto' : 'none';
+		this.nativeInput.rows = size ?? 5;
 	}
 }
