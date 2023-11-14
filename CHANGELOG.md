@@ -9,6 +9,20 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.0.0-beta.107
+
+### :rocket: New Feature
+
+-   Introduced the pasteExcludeStripTags option. This is a list of tags that won't be removed from the pasted HTML
+    when in INSERT_AS_TEXT mode. By default, it includes `['br', 'hr']`.
+    See https://github.com/xdan/jodit/issues/1033 for more details.
+
+    ```js
+    Jodit.make('#editor', {
+        pasteExcludeStripTags: ['br', 'style']
+    });
+    ```
+
 ## 4.0.0-beta.97
 
 #### :house: Internal
@@ -2328,11 +2342,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ]
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

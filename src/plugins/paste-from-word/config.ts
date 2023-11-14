@@ -30,7 +30,7 @@ declare module 'jodit/config' {
 
 		/**
 		 * Default insert method from word, if not define, it will use defaultActionOnPaste instead
-		 * @example
+		 *
 		 * ```js
 		 * Jodit.make('#editor', {
 		 *   defaultActionOnPasteFromWord: 'insert_clear_html'

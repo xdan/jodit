@@ -8,7 +8,12 @@
  * @module plugins/paste
  */
 
-import type { IControlType, IJodit, IUIOption } from 'jodit/types';
+import type {
+	HTMLTagNames,
+	IControlType,
+	IJodit,
+	IUIOption
+} from 'jodit/types';
 import {
 	CLIPBOARD_ID,
 	INSERT_AS_HTML,
@@ -29,8 +34,8 @@ declare module 'jodit/config' {
 		askBeforePasteHTML: boolean;
 
 		/**
-		 * When the user inserts a piece of HTML, the plugin will ask - How to insert it.
-		 * If after that user insert the same fragment again, the previous option will be used without extra question.
+		 * When the user inserts a snippet of HTML, the plugin will prompt for the insertion method.
+		 * If the user inserts the same fragment again, the previously selected option will be used without prompting for confirmation.
 		 */
 		memorizeChoiceWhenPasteFragment: boolean;
 
@@ -43,6 +48,11 @@ declare module 'jodit/config' {
 		 * Inserts HTML line breaks before all newlines in a string
 		 */
 		nl2brInPlainText: boolean;
+
+		/**
+		 * List of tags that will not be removed from the pasted HTML with INSERT_AS_TEXT mode
+		 */
+		pasteExcludeStripTags: HTMLTagNames[];
 
 		/**
 		 * Options when inserting HTML string
@@ -59,6 +69,7 @@ declare module 'jodit/config' {
 Config.prototype.askBeforePasteHTML = true;
 Config.prototype.processPasteHTML = true;
 Config.prototype.scrollToPastedContent = true;
+Config.prototype.pasteExcludeStripTags = ['br', 'hr'];
 
 Config.prototype.pasteHTMLActionList = [
 	{ value: INSERT_AS_HTML, text: 'Keep' },

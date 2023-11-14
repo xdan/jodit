@@ -511,6 +511,40 @@ describe('Test paste plugin', () => {
 			expect(dialog).is.not.null;
 		});
 
+		describe.only('INSERT_AS_TEXT', () => {
+			it('Should insert as text', () => {
+				const editor = getJodit({
+					disablePlugins: ['wrapNodes']
+				});
+
+				const pastedText =
+					'<h1>Lorem ipsum <strong>dolor sit</strong> amet, <br><br>consetetur sadipscing elitr, sed <br><br></h1>';
+
+				const emulatePasteEvent = function (data) {
+					data.clipboardData = {
+						types: ['text/html'],
+						getData: function () {
+							return pastedText;
+						}
+					};
+				};
+
+				simulateEvent('paste', editor.editor, emulatePasteEvent);
+
+				expect(editor.value).equals('');
+
+				const dialog = getOpenedDialog(editor);
+				expect(dialog).is.not.null;
+
+				clickButton('insert_only_text', dialog);
+				expect(getOpenedDialog(editor)).is.null;
+
+				expect(editor.value).equals(
+					'Lorem ipsum dolor sit amet, <br><br>consetetur sadipscing elitr, sed <br><br>'
+				);
+			});
+		});
+
 		describe('Two times', function () {
 			const pastedText = '<p>test</p>';
 

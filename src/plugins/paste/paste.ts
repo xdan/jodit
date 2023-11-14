@@ -222,7 +222,11 @@ export class paste extends Plugin {
 					break;
 
 				case INSERT_ONLY_TEXT:
-					html = stripTags(html);
+					html = stripTags(
+						html,
+						this.j.ed,
+						new Set(this.j.o.pasteExcludeStripTags)
+					);
 					break;
 
 				case INSERT_AS_TEXT:
