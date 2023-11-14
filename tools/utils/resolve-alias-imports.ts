@@ -60,6 +60,7 @@ const allowPluginsInESM = new Set(
 	[
 		'about',
 		'backspace',
+		'bold',
 		'color',
 		'delete',
 		'dtd',
