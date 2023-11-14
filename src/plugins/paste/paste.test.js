@@ -740,12 +740,12 @@ describe('Test paste plugin', () => {
 			it('Should not show paste html dialog if beforeOpenPasteDialog returned false', function () {
 				const editor = getJodit({
 					events: {
-						beforeOpenPasteDialog: function () // msg,
-						// title,
-						// callback,
-						// clearButton,
-						// clear2Button
-						{
+						beforeOpenPasteDialog: function () {
+							// msg,
+							// title,
+							// callback,
+							// clearButton,
+							// clear2Button
 							return false;
 						}
 					}
