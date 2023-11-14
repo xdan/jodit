@@ -5,5 +5,5 @@
  */
 
 module.exports = {
-	'Line height': 'ความสูงเส้น'
+	'Line height': '行高'
 };

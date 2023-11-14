@@ -5,5 +5,5 @@
  */
 
 module.exports = {
-	Spellcheck: 'สะกดคำ'
+	Spellcheck: '拼字檢查'
 };
