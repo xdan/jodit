@@ -24,31 +24,32 @@ describe('Create UI Form', () => {
 
 				new UISelect(jodit, {
 					name: 'language',
-					label: 'Language',
+					label: 'open quote',
 					value: 'en',
 					options: [
 						{
 							value: 'en',
-							text: 'English'
+							text: 'Classe 1'
 						},
 						{
 							value: 'ru',
-							text: 'Russian'
+							text: 'Classe 2'
 						}
 					],
 					required: true
 				}),
 
 				new UITextArea(jodit, {
-					label: 'Code view',
+					label: 'Class name',
 					resizable: false,
 					name: 'code',
 					required: true,
 					rows: 10,
 					className: 'jodit-paste-code__textarea'
 				}),
+
 				new UIInput(jodit, {
-					label: 'Caption',
+					label: 'Courier New',
 					name: 'caption',
 					value: 10,
 					type: 'number'
@@ -133,7 +134,6 @@ describe('Create UI Form', () => {
 					};
 
 					const input = new Control(jodit, {
-						label: 'Caption',
 						name: 'caption',
 						value: 10,
 						type: 'number',
