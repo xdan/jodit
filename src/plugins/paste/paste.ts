@@ -40,7 +40,7 @@ import { pluginSystem } from 'jodit/core/global';
 
 import { askInsertTypeDialog, getAllTypes, pasteInsertHtml } from './helpers';
 
-import type { PastedData, PastedValue, PasteEvent } from './interface';
+import type { PastedValue, PasteEvent } from './interface';
 
 import './config';
 
@@ -100,20 +100,20 @@ export class paste extends Plugin {
 		}
 
 		const dt = getDataTransfer(e),
-			texts: PastedData = {
-				html: dt?.getData(TEXT_HTML),
-				plain: dt?.getData(TEXT_PLAIN),
-				rtf: dt?.getData(TEXT_RTF)
-			};
+			texts: (string | undefined)[] = [
+				dt?.getData(TEXT_PLAIN),
+				dt?.getData(TEXT_HTML),
+				dt?.getData(TEXT_RTF)
+			];
 
-		let key: keyof PastedData;
-
-		for (key in texts) {
-			const value = texts[key];
-
+		for (const value of texts) {
 			if (
 				isHTML(value) &&
-				(this.j.e.fire('processHTML', e, value, texts) ||
+				(this.j.e.fire('processHTML', e, value, {
+					plain: texts[0],
+					html: texts[1],
+					rtf: texts[2]
+				}) ||
 					this.processHTML(e, value))
 			) {
 				return false;
