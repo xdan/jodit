@@ -2,7 +2,7 @@
 
 The Async module is designed to handle asynchronous operations within the editor.
 
-## Purpose
+## Motivation
 
 The Jodit editor can be created, deleted, and re-created. All asynchronous operations associated with it should be properly handled.
 

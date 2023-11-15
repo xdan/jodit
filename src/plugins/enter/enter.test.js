@@ -1063,7 +1063,10 @@ describe('Enter behavior Tests', function () {
 			].forEach(([source, result, options, mod]) => {
 				describe('For source: ' + source, () => {
 					it('Should be result: ' + result, async () => {
-						const editor = getJodit(options);
+						const editor = getJodit({
+							...options,
+							disablePlugins: ['paste-code']
+						});
 						await editor.waitForReady();
 						editor.focus();
 						editor.value = source;
