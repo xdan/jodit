@@ -46,4 +46,4 @@ export {
 	tr,
 	zh_cn,
 	zh_tw
-};
+} from './';
