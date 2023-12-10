@@ -45,6 +45,7 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 		return '';
 	}
 
+	private __inited: boolean = false;
 	protected abstract afterInit(jodit: T): void;
 	protected abstract beforeDestruct(jodit: T): void;
 
@@ -70,6 +71,7 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 
 	@autobind
 	private __afterInit(): void {
+		this.__inited = true;
 		this.setStatus(STATUSES.ready);
 		this.afterInit(this.jodit);
 	}
@@ -92,6 +94,10 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 			.off('beforeDestruct', this.destruct);
 
 		this.setStatus(STATUSES.beforeDestruct);
+
+		if (!this.__inited) {
+			return super.destruct();
+		}
 
 		if (isJoditObject(j)) {
 			this.buttons?.forEach(btn => {
