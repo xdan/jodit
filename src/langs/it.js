@@ -5,7 +5,7 @@
  */
 
 module.exports = {
-'Type something': 'Scrivi qualcosa...',
+	'Type something': 'Scrivi qualcosa...',
 	Advanced: 'Avanzato',
 	'About Jodit': 'A proposito di Jodit',
 	'Jodit Editor': 'Jodit Editor',
@@ -27,7 +27,7 @@ module.exports = {
 	Bold: 'Grassetto',
 	Italic: 'Corsivo',
 	'Insert Unordered List': 'Inserisci lista non ordinata',
-	'Insert Ordered List': "Inserisci lista ordinata",
+	'Insert Ordered List': 'Inserisci lista ordinata',
 	'Align Center': 'Allinea al centro',
 	'Align Justify': 'Allineamento Giustificato',
 	'Align Left': 'Allinea a Sinistra',
@@ -54,7 +54,7 @@ module.exports = {
 	'Select Special Character': 'Seleziona un carattere speciale',
 	'Insert Special Character': 'Inserisci un carattere speciale',
 	'Paint format': 'Copia formato',
-	'Change mode': 'Cambia modalita\'',
+	'Change mode': "Cambia modalita'",
 	Margins: 'Margini',
 	top: 'su',
 	right: 'destra',
@@ -94,7 +94,7 @@ module.exports = {
 	'Enter Directory name': 'Inserisci il nome della cartella',
 	'Create directory': 'Crea cartella',
 	'type name': 'Digita il nome',
-	'Drop image': "Cancella immagine",
+	'Drop image': 'Cancella immagine',
 	'Drop file': 'Cancella file',
 	'or click': 'o clicca',
 	'Alternative text': 'Testo alternativo',

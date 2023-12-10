@@ -21,4 +21,5 @@ jobs:
     - name: Run Karma Tests
       run: |
         npm ci
-        npm test
+        make lint
+        make test
