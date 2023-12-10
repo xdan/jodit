@@ -8,24 +8,12 @@ describe('Source code test', function () {
 		it('After init container must has source editor container', function (done) {
 			unmockPromise();
 
-			let timeout;
-			const area = appendTestArea(false, true),
-				__done = function () {
-					clearTimeout(timeout);
-					this.events.off('beforeDestruct');
-					this.destruct();
-					area.parentNode.removeChild(area);
-					done();
-				};
+			let isDone = false;
+			const timeout = /*ok*/ setTimeout(() => {
+				done(new Error('Timeout error'));
+			}, 3000);
 
-			let editor;
-
-			timeout = /*ok*/ setTimeout(function () {
-				expect(false).is.true;
-				__done.call(editor);
-			}, 5000);
-
-			editor = getJodit(
+			getJodit(
 				{
 					defaultMode: Jodit.MODE_SOURCE,
 					sourceEditor: 'ace',
@@ -34,16 +22,22 @@ describe('Source code test', function () {
 							return false;
 						},
 						sourceEditorReady: function (editor) {
-							expect(
-								editor.container.querySelectorAll(
-									'.jodit-source__mirror-fake'
-								).length
-							).equals(1);
-							__done.call(editor);
+							try {
+								expect(
+									editor.container.querySelectorAll(
+										'.jodit-source__mirror-fake'
+									).length
+								).equals(1);
+								done();
+							} catch (e) {
+								done(e);
+							} finally {
+								clearTimeout(timeout);
+							}
 						}
 					}
-				},
-				area
+				}
+				// area
 			);
 		}).timeout(6000);
 
@@ -51,33 +45,20 @@ describe('Source code test', function () {
 			it('Should set value in editor and in source', function (done) {
 				unmockPromise();
 
-				let timeout;
-				const area = appendTestArea(false, true),
-					__done = function () {
-						clearTimeout(timeout);
-						this.events.off('beforeDestruct');
-						this.destruct();
-						area.parentNode.removeChild(area);
-						done();
-					};
-
-				let editor;
-
-				timeout = /*ok*/ setTimeout(function () {
-					expect(false).is.true;
-					__done.call(editor);
+				const timeout = /*ok*/ setTimeout(function () {
+					done(new Error('Timeout error'));
 				}, 5000);
 
-				editor = getJodit(
-					{
-						defaultMode: Jodit.MODE_SOURCE,
-						sourceEditor: 'ace',
-						events: {
-							beforeDestruct: function () {
-								return false;
-							},
-							sourceEditorReady: function (editor) {
-								editor.async.setTimeout(() => {
+				const editor = getJodit({
+					defaultMode: Jodit.MODE_SOURCE,
+					sourceEditor: 'ace',
+					events: {
+						beforeDestruct: function () {
+							return false;
+						},
+						sourceEditorReady: function (editor) {
+							editor.async.setTimeout(() => {
+								try {
 									expect(
 										editor.__plugins.source.sourceEditor.getValue()
 									).equals('<p>pop</p>');
@@ -85,13 +66,16 @@ describe('Source code test', function () {
 									expect(
 										editor.__plugins.source.sourceEditor.getValue()
 									).equals('<p>test</p>');
-									__done.call(editor);
-								}, 300);
-							}
+									done();
+								} catch (e) {
+									done(e);
+								} finally {
+									clearTimeout(timeout);
+								}
+							}, 300);
 						}
-					},
-					area
-				);
+					}
+				});
 
 				editor.value = '<p>pop</p>';
 			}).timeout(6000);
@@ -139,69 +123,75 @@ describe('Source code test', function () {
 			it('Should restore collapsed selection when user change mode - from WYSIWYG to TEXTAREA for long string', function (done) {
 				unmockPromise();
 
-				let timeout;
-				const __done = function () {
-					clearTimeout(timeout);
-					done();
-				};
-
-				timeout = /*ok*/ setTimeout(function () {
-					expect(false).is.true;
-					__done();
+				const timeout = /*ok*/ setTimeout(function () {
+					done(new Error('Timeout error'));
 				}, 140100);
 
-				Jodit.make(appendTestArea(), {
+				getJodit({
 					defaultMode: Jodit.MODE_SOURCE,
 					sourceEditor: 'ace',
 					beautifyHTML: false,
 					events: {
 						sourceEditorReady: function (jodit) {
-							jodit.setMode(Jodit.MODE_WYSIWYG);
-							jodit.setEditorValue(
-								('<p>' + 'test '.repeat(50) + '</p>').repeat(1)
-							);
+							try {
+								jodit.setMode(Jodit.MODE_WYSIWYG);
+								jodit.setEditorValue(
+									(
+										'<p>' +
+										'test '.repeat(50) +
+										'</p>'
+									).repeat(1)
+								);
 
-							const sel = jodit.ew.getSelection(),
-								range = jodit.ed.createRange();
+								const sel = jodit.ew.getSelection(),
+									range = jodit.ed.createRange();
 
-							range.selectNodeContents(
-								jodit.editor.querySelector('p')
-							);
+								range.selectNodeContents(
+									jodit.editor.querySelector('p')
+								);
 
-							range.collapse(false);
-							sel.removeAllRanges();
-							sel.addRange(range);
+								range.collapse(false);
+								sel.removeAllRanges();
+								sel.addRange(range);
 
-							jodit.s.insertHTML('hello');
+								jodit.s.insertHTML('hello');
 
-							jodit.setMode(Jodit.MODE_SOURCE);
+								jodit.setMode(Jodit.MODE_SOURCE);
 
-							const ace =
-								jodit.__plugins.source.sourceEditor.instance;
+								const ace =
+									jodit.__plugins.source.sourceEditor
+										.instance;
 
-							expect(ace).not.null;
+								expect(ace).not.null;
 
-							expect(ace.getSelectionRange().start.column).equals(
-								258
-							);
+								expect(
+									ace.getSelectionRange().start.column
+								).equals(258);
 
-							expect(ace.getSelectionRange().start.row).equals(0);
+								expect(
+									ace.getSelectionRange().start.row
+								).equals(0);
 
-							ace.session.insert(
-								ace.getCursorPosition(),
-								' world'
-							);
+								ace.session.insert(
+									ace.getCursorPosition(),
+									' world'
+								);
 
-							expect(
-								jodit.__plugins.source.sourceEditor.getValue()
-							).equals(
-								'<p>' +
-									'test '.repeat(49) +
-									'test hello world</p>'
-							);
+								expect(
+									jodit.__plugins.source.sourceEditor.getValue()
+								).equals(
+									'<p>' +
+										'test '.repeat(49) +
+										'test hello world</p>'
+								);
 
-							mockPromise();
-							__done();
+								done();
+							} catch (e) {
+								done(e);
+							} finally {
+								mockPromise();
+								clearTimeout(timeout);
+							}
 						}
 					}
 				});
@@ -356,16 +346,8 @@ describe('Source code test', function () {
 				const editor = getJodit({
 					useAceEditor: false
 				});
-				editor.value = '<p>test</p>';
-
-				const sel = editor.s.sel,
-					range = editor.s.createRange();
-
-				range.setStart(editor.editor.firstChild.firstChild, 1);
-				range.setEnd(editor.editor.firstChild.firstChild, 3);
-				sel.removeAllRanges();
-				sel.addRange(range);
-
+				editor.value = '<p>t|es|t</p>';
+				setCursorToChar(editor);
 				editor.setMode(Jodit.MODE_SOURCE);
 
 				const mirror = editor.container.querySelector(
@@ -462,27 +444,24 @@ describe('Source code test', function () {
 					beautifyHTML: false,
 					events: {
 						sourceEditorReady: function (jodit) {
-							jodit.s.focus();
-							jodit.value = '<p>test <span>test</span> test</p>';
-							const range = jodit.ed.createRange();
+							try {
+								jodit.s.focus();
+								jodit.value =
+									'<p>test <span>test|</span> test</p>';
+								setCursorToChar(jodit);
+								jodit.setMode(Jodit.MODE_SOURCE);
 
-							range.selectNodeContents(
-								jodit.editor.querySelector('span')
-							);
-							range.collapse(false);
+								jodit.s.insertHTML('loop');
 
-							jodit.s.selectRange(range);
+								expect(jodit.value).equals(
+									'<p>test <span>testloop</span> test</p>'
+								);
+								mockPromise();
 
-							jodit.setMode(Jodit.MODE_SOURCE);
-
-							jodit.s.insertHTML('loop');
-
-							expect(jodit.value).equals(
-								'<p>test <span>testloop</span> test</p>'
-							);
-							mockPromise();
-
-							done();
+								done();
+							} catch (e) {
+								done(e);
+							}
 						}
 					}
 				});

@@ -330,7 +330,8 @@ describe('Search plugin', function () {
 		});
 
 		describe('with SHIFT key', function () {
-			it('Should find a previous match', function (done) {
+			it('Should find a previous match', async () => {
+				unmockPromise();
 				const editor = getJodit({
 					history: {
 						timeout: 0
@@ -361,33 +362,33 @@ describe('Search plugin', function () {
 				editor.s.removeMarkers();
 				editor.editor.firstChild.normalize(); // because Select module splits text node
 
-				editor.events.fire('searchNext').then(() => {
-					simulateEvent(
-						'keydown',
-						'F3',
-						editor.editor,
-						function (options) {
-							options.shiftKey = true;
-						}
-					);
+				await editor.events.fire('searchNext');
 
-					editor.e.on('afterFindAndSelect', () => {
-						const sel = editor.s.sel;
+				simulateEvent(
+					'keydown',
+					'F3',
+					editor.editor,
+					function (options) {
+						options.shiftKey = true;
+					}
+				);
 
-						expect(1).equals(sel.rangeCount);
-						range = sel.getRangeAt(0);
-						expect(
-							editor.editor.firstChild.lastChild.firstChild
-						).equals(range.startContainer);
-						expect(0).equals(range.startOffset);
+				await editor.async.promise(resolve =>
+					editor.e.on('afterFindAndSelect', resolve)
+				);
+				const sel = editor.s.sel;
 
-						expect(
-							editor.editor.firstChild.lastChild.firstChild
-						).equals(range.endContainer);
-						expect(4).equals(range.endOffset);
-						done();
-					});
-				});
+				expect(1).equals(sel.rangeCount);
+				const range = sel.getRangeAt(0);
+				expect(editor.editor.firstChild.lastChild.firstChild).equals(
+					range.startContainer
+				);
+				expect(0).equals(range.startOffset);
+
+				expect(editor.editor.firstChild.lastChild.firstChild).equals(
+					range.endContainer
+				);
+				expect(4).equals(range.endOffset);
 			});
 		});
 	});

@@ -1,5 +1,5 @@
 {
-	"extends": "ts-node/node16/tsconfig.json",
+	"extends": "../node_modules/@tsconfig/node18/tsconfig.json",
 	"compilerOptions": {
 		"target": "es5",
 		"moduleResolution": "NodeNext"

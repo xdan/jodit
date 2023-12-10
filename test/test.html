@@ -48,7 +48,12 @@
 		<script>
 			mocha.setup({
 				ui: 'bdd',
+				// parallel: true,
+				globals: ['html_beautify', 'js_beautify', 'mochaTestName', 'define', 'require', 'ace'],
+				// retries: 2,
 				bail: true,
+				checkLeaks: true,
+				allowUncaught: true,
 				fullTrace: true,
 				inlineDiffs: true
 			});

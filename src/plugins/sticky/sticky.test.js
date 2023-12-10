@@ -90,10 +90,8 @@ describe('Sticky plugin', function () {
 						editor.ownerDocument
 					);
 
-					console.log(offset);
 					window.scroll(0, offset.top + offset.height / 2); // scroll page to bottom
 					simulateEvent('scroll', window);
-					console.log(window.scrollY);
 
 					expect(true).equals(
 						editor.container.classList.contains('jodit_sticky')

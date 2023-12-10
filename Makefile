@@ -41,8 +41,8 @@ version:
 	@echo super_cwd: $(cwd)
 	@echo cwd: $(shell pwd)
 
-.PHONY: start
-start:
+.PHONY: start dev love
+start dev love:
 	@WEBPACK_DEV_PORT=$(WEBPACK_DEV_PORT) $(WEBPACK) serve --progress --mode $(devMode) \
 		--env stat=true \
 		--env es=$(es) \
@@ -200,8 +200,8 @@ test:
 	make test-only-run build=$(es) uglify=$(uglify) fat=$(fat)
 
 
-.PHONY: test-find
-test-find:
+.PHONY: test-find find-test
+test-find find-test:
 	$(TS_NODE_BASE) $(cwd)tools/utils/find-tests.ts
 
 .PHONY: test-only-run
