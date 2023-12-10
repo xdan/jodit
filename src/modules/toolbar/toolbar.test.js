@@ -4,6 +4,56 @@
  * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 describe('Toolbar', function () {
+	describe('Update toolbar', () => {
+		describe('Call updateToolbar method', () => {
+			describe('With different events', () => {
+				describe('defaultTimeout', () => {
+					describe('more then 0', () => {
+						it('should be debounced', async () => {
+							const editor = getJodit({
+								defaultTimeout: 100
+							});
+							let count = 0;
+							const spy = () => {
+								count++;
+							};
+							editor.events.on('afterUpdateToolbar', spy);
+							editor.value = 'test';
+							editor.value = 'test2';
+							editor.value = 'test3';
+							editor.e.fire('updateToolbar');
+
+							expect(count).equals(0);
+							await delay(200);
+							expect(count).equals(1);
+						});
+					});
+
+					describe('less then 0', () => {
+						it('should not be debounced', async () => {
+							const editor = getJodit({
+								defaultTimeout: 0
+							});
+							let count = 0;
+							const spy = () => {
+								count++;
+							};
+							editor.events.on('afterUpdateToolbar', spy);
+							editor.value = 'test';
+							editor.value = 'test2';
+							editor.value = 'test3';
+							editor.e.fire('updateToolbar');
+
+							expect(count).equals(7);
+							await delay(200);
+							expect(count).equals(7);
+						});
+					});
+				});
+			});
+		});
+	});
+
 	it('Should have buttons', function () {
 		const editor = getJodit({
 			toolbarAdaptive: true
@@ -1244,27 +1294,41 @@ describe('Toolbar', function () {
 			});
 		});
 
-		it('When cursor inside SPAN tag with style="font-weight: bold" or style="font-weight: 700", Bold button should be selected', function () {
-			const editor = getJodit({
-					history: {
-						timeout: 0 // disable delay
-					}
-				}),
-				bold = getButton('bold', editor);
+		describe('When cursor inside', () => {
+			describe('SPAN tag with style="font-weight: bold" or style="font-weight: 700"', () => {
+				describe('Bold button ', () => {
+					it('should be selected', () => {
+						const editor = getJodit();
+						const bold = getButton('bold', editor);
 
-			editor.value = '<span style="font-weight: bold">test</span>';
-			editor.s.focus();
+						editor.value =
+							'<span style="font-weight: bold">te|st</span>';
+						editor.s.focus();
+						setCursorToChar(editor);
 
-			const sel = editor.s.sel,
-				range = editor.s.createRange();
-			range.setStart(editor.editor.firstChild.firstChild.firstChild, 2);
-			range.collapse(true);
-			sel.removeAllRanges();
-			sel.addRange(range);
+						simulateEvent('mousedown', editor.editor);
 
-			simulateEvent('mousedown', 0, editor.editor);
+						expect(bold.getAttribute('aria-pressed')).equals(
+							'true'
+						);
+					});
+				});
+			});
 
-			expect(bold.getAttribute('aria-pressed')).equals('true');
+			describe('tag with comment', () => {
+				describe('Toolbar', () => {
+					it('should work correct', async () => {
+						const editor = getJodit({
+							defaultTimeout: 0
+						});
+						editor.value = '<!-- comment -->';
+						editor.s.focus();
+						await editor.async.requestIdlePromise();
+						simulateEvent('mousedown', editor.editor);
+						await editor.async.requestIdlePromise();
+					});
+				});
+			});
 		});
 
 		describe('Check Redo Undo functionality', function () {

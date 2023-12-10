@@ -49,17 +49,20 @@ export function debounce<V extends IViewComponent = IViewComponent>(
 				} should have "async:IAsync" field`
 			);
 
-			const realTimeout = isFunction(timeout)
+			const propTimeout = isFunction(timeout)
 				? timeout(component)
 				: timeout;
+
+			const realTimout =
+				isNumber(propTimeout) || isPlainObject(propTimeout)
+					? propTimeout
+					: component.defaultTimeout;
 
 			Object.defineProperty(component, propertyKey, {
 				configurable: true,
 				value: async[method](
 					(component as any)[propertyKey].bind(component),
-					isNumber(realTimeout) || isPlainObject(realTimeout)
-						? realTimeout
-						: component.defaultTimeout,
+					realTimout,
 					firstCallImmediately
 				)
 			});

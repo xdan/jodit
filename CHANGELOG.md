@@ -11,6 +11,39 @@
 
 ## 4.0.0-beta.108
 
+
+### :bug: Bug Fix
+
+- [Comment block in the template throws error "Cannot read properties of undefined (reading 'font-weight')" #1044](https://github.com/xdan/jodit/issues/1044)
+
+
+#### :house: Internal
+
+```plain
+@types/ace                         ^0.0.50  →   ^0.0.52
+@types/fs-extra                    ^11.0.3  →   ^11.0.4
+@types/karma                        ^6.3.6  →    ^6.3.8
+@types/node                        ^20.8.7  →  ^20.10.3
+@types/postcss-css-variables       ^0.18.2  →   ^0.18.3
+@types/yargs                      ^17.0.29  →  ^17.0.32
+@typescript-eslint/eslint-plugin    ^6.8.0  →   ^6.13.2
+@typescript-eslint/parser           ^6.8.0  →   ^6.13.2
+axios                               ^1.5.1  →    ^1.6.2
+core-js                            ^3.33.1  →   ^3.34.0
+eslint                             ^8.52.0  →   ^8.55.0
+eslint-config-prettier              ^9.0.0  →    ^9.1.0
+eslint-plugin-import               ^2.28.1  →   ^2.29.0
+node-jq                             ^4.0.1  →    ^4.2.2
+postcss                           >=8.4.31  →  >=8.4.32
+prettier                            ^3.0.3  →    ^3.1.0
+stylelint-prettier                  ^4.0.2  →    ^4.1.0
+ts-loader                           ^9.5.0  →    ^9.5.1
+typescript                          ^5.2.2  →    ^5.3.2
+```
+
+
+## 4.0.0-beta.108
+
 -   Fixed a bug in the UITextArea UI component. Instead of adding a textarea element, it was incorrectly adding an input element.
 
 ## 4.0.0-beta.107

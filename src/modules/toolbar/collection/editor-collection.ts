@@ -92,7 +92,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 				Dom.up(
 					elm,
 					(node: Node | null): boolean | void => {
-						if (node && !Dom.isText(node)) {
+						if (node && !Dom.isText(node) && !Dom.isComment(node)) {
 							return this.checkActiveStatus(
 								css,
 								node as HTMLElement

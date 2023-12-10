@@ -141,6 +141,7 @@ export const FileSelectorWidget = (
 		if (
 			elm &&
 			!Dom.isText(elm) &&
+			!Dom.isComment(elm) &&
 			(Dom.isTag(elm, 'img') || $$('img', elm).length)
 		) {
 			currentImage = elm.tagName === 'IMG' ? elm : $$('img', elm)[0];

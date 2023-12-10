@@ -407,6 +407,13 @@ export class Dom {
 	}
 
 	/**
+	 * Check if element is comment node
+	 */
+	static isComment(node: Node): node is Comment {
+		return Boolean(node && node.nodeType === Node.COMMENT_NODE);
+	}
+
+	/**
 	 * Check if element is element node
 	 */
 	static isElement(node: unknown): node is Element {
@@ -772,7 +779,9 @@ export class Dom {
 			node,
 			n =>
 				Boolean(
-					n && (!Dom.isText(n) || trim(n?.nodeValue || '').length)
+					n &&
+						(!(Dom.isText(n) || Dom.isComment(n)) ||
+							trim(n?.nodeValue || '').length)
 				),
 			root
 		);

@@ -28,7 +28,7 @@ import type {
 import { error } from 'jodit/core/helpers/utils/error/error';
 
 import { UIList, UITooltip } from 'jodit/core/ui';
-import { component, autobind } from 'jodit/core/decorators';
+import { component, autobind, debounce, hook } from 'jodit/core/decorators';
 
 import { makeButton, makeSelect } from 'jodit/modules/toolbar/factory';
 
@@ -100,10 +100,10 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		this.j.e.fire('afterUpdateToolbar');
 	}
 
-	override update = this.j.async.debounce(
-		this.__immediateUpdate,
-		() => this.j.defaultTimeout
-	);
+	@debounce()
+	override update(): void {
+		this.__immediateUpdate();
+	}
 
 	/**
 	 * Set direction
@@ -117,10 +117,10 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 
 	constructor(jodit: IViewBased) {
 		super(jodit as T);
-		this.__initEvents();
 	}
 
-	private __initEvents(): void {
+	@hook('ready')
+	protected __initEvents(): void {
 		this.j.e
 			.on(this.__listenEvents, this.update)
 			.on('afterSetMode focus', this.__immediateUpdate);

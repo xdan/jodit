@@ -147,7 +147,12 @@ class xpath extends Plugin {
 			Dom.up(
 				current,
 				(elm: Node | null) => {
-					if (elm && this.j.editor !== elm && !Dom.isText(elm)) {
+					if (
+						elm &&
+						this.j.editor !== elm &&
+						!Dom.isText(elm) &&
+						!Dom.isComment(elm)
+					) {
 						name = elm.nodeName.toLowerCase();
 						xpth = getXPathByElement(
 							elm as HTMLElement,

@@ -21,7 +21,7 @@ import type {
 	ButtonsOption
 } from 'jodit/types';
 import { getStrongControlTypes } from 'jodit/core/ui/helpers/get-strong-control-types';
-import { component, watch } from 'jodit/core/decorators';
+import { component, hook, watch } from 'jodit/core/decorators';
 import { UIGroup } from 'jodit/core/ui/group/group';
 import { UISeparator } from 'jodit/core/ui/group/separator';
 import { UISpacer } from 'jodit/core/ui/group/spacer';
@@ -46,13 +46,13 @@ export class UIList<T extends IViewBased = IViewBased>
 	mode: IUIList['mode'] = 'horizontal';
 
 	@watch('mode')
-	onChangeMode(): void {
+	@hook('ready')
+	protected __onChangeMode(): void {
 		this.setMod('mode', this.mode);
 	}
 
 	constructor(jodit: T) {
 		super(jodit);
-		this.onChangeMode();
 	}
 
 	/**

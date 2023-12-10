@@ -52,18 +52,26 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 		super(jodit);
 
 		jodit.e
-			.on('afterPluginSystemInit', () => {
-				if (isJoditObject(jodit)) {
-					this.buttons?.forEach(btn => {
-						jodit.registerButton(btn);
-					});
-				}
-			})
-			.on('afterInit', () => {
-				this.setStatus(STATUSES.ready);
-				this.afterInit(jodit);
-			})
-			.on('beforeDestruct', this.destruct);
+			.on('afterPluginSystemInit', this.__afterPluginSystemInit)
+			.on('afterInit', this.__afterInit)
+			.on('beforeDestruct', this.__beforeDestruct);
+	}
+
+	@autobind
+	private __afterPluginSystemInit(): void {
+		const { j, buttons } = this;
+
+		if (buttons && isJoditObject(j)) {
+			buttons.forEach(btn => {
+				j.registerButton(btn);
+			});
+		}
+	}
+
+	@autobind
+	private __afterInit(): void {
+		this.setStatus(STATUSES.ready);
+		this.afterInit(this.jodit);
 	}
 
 	init(jodit: T): void {
@@ -71,21 +79,27 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 	}
 
 	@autobind
-	override destruct(): void {
-		if (this.isReady) {
-			this.setStatus(STATUSES.beforeDestruct);
-
-			const { j } = this;
-
-			if (isJoditObject(j)) {
-				this.buttons?.forEach(btn => {
-					j?.unregisterButton(btn);
-				});
-			}
-
-			this.j?.events?.off('beforeDestruct', this.destruct);
-			this.beforeDestruct(this.j);
-			super.destruct();
+	private __beforeDestruct(): void {
+		if (this.isInDestruct) {
+			return;
 		}
+
+		const { j } = this;
+
+		j.e
+			.off('afterPluginSystemInit', this.__afterPluginSystemInit)
+			.off('afterInit', this.__afterInit)
+			.off('beforeDestruct', this.destruct);
+
+		this.setStatus(STATUSES.beforeDestruct);
+
+		if (isJoditObject(j)) {
+			this.buttons?.forEach(btn => {
+				j?.unregisterButton(btn);
+			});
+		}
+
+		this.beforeDestruct(this.j);
+		super.destruct();
 	}
 }
