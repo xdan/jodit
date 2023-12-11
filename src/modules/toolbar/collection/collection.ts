@@ -97,7 +97,7 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 
 		super.update();
 
-		this.j.e.fire('afterUpdateToolbar');
+		this.j.e.fire('afterUpdateToolbar', this);
 	}
 
 	@debounce()

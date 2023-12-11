@@ -13,10 +13,14 @@ describe('Toolbar', function () {
 							const editor = getJodit({
 								defaultTimeout: 100
 							});
+
 							let count = 0;
-							const spy = () => {
-								count++;
+							const spy = collection => {
+								if (collection === editor.toolbar) {
+									count++;
+								}
 							};
+
 							editor.events.on('afterUpdateToolbar', spy);
 							editor.value = 'test';
 							editor.value = 'test2';
@@ -34,10 +38,14 @@ describe('Toolbar', function () {
 							const editor = getJodit({
 								defaultTimeout: 0
 							});
+
 							let count = 0;
-							const spy = () => {
-								count++;
+							const spy = collection => {
+								if (collection === editor.toolbar) {
+									count++;
+								}
 							};
+
 							editor.events.on('afterUpdateToolbar', spy);
 							editor.value = 'test';
 							editor.value = 'test2';
