@@ -690,8 +690,8 @@ describe('Selection Module Tests', function () {
 				'<table><tbody><tr><td>|test|</td></tr></tbody></table>'
 			],
 			['<p>|test</p>', '<p>|test</p>'],
-			['<p>test</p><p>|test|</p>', '<p>test</p>|<p>test</p>|'],
-			['<p>|test|</p>', '|<p>test</p>|'],
+			['<p>test</p><p>|test|</p>', '<p>test</p><p>|test|</p>'],
+			['<p>|test|</p>', '<p>|test|</p>'],
 			[
 				'<ul><li><span>|test|</span>test<s>ss</s></li></ul>',
 				'<ul><li>|<span>test</span>|test<s>ss</s></li></ul>'
@@ -702,7 +702,7 @@ describe('Selection Module Tests', function () {
 			],
 			[
 				'<ul><li><span>|test</span>test<s>ss|</s></li></ul>',
-				'|<ul><li><span>test</span>test<s>ss</s></li></ul>|'
+				'<ul><li>|<span>test</span>test<s>ss</s>|</li></ul>'
 			],
 			[
 				'<ul><li><span>|test</span>test<s>ss|</s>pop</li></ul>',
@@ -722,7 +722,7 @@ describe('Selection Module Tests', function () {
 			],
 			[
 				'<ul><li><span>|test</span>test<s>ss|</s></li><li><span>test</span>test<s>ss</s></li></ul>',
-				'<ul>|<li><span>test</span>test<s>ss</s></li>|<li><span>test</span>test<s>ss</s></li></ul>'
+				'<ul><li>|<span>test</span>test<s>ss</s>|</li><li><span>test</span>test<s>ss</s></li></ul>'
 			]
 		].forEach(([source, result], i) => {
 			describe(`For index ${i}  source: ${source}`, () => {

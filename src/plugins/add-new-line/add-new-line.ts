@@ -12,7 +12,7 @@
 
 import './add-new-line.less';
 
-import type { IBound, IJodit, HTMLTagNames, Nullable } from 'jodit/types';
+import type { IJodit, HTMLTagNames, Nullable } from 'jodit/types';
 import { Dom, Icon, Plugin } from 'jodit/modules';
 import {
 	offset,
@@ -175,13 +175,9 @@ export class addNewLine extends Plugin {
 			e.target === editor.editor &&
 			editor.s.isCollapsed()
 		) {
-			const editorBound: IBound = offset(
-				editor.editor,
-				editor,
-				editor.ed
-			);
+			const editorBound = offset(editor.editor, editor, editor.ed);
 
-			const top = e.pageY - editor.ew.pageYOffset;
+			const top = e.pageY - editor.ew.scrollX;
 
 			const p = editor.createInside.element(editor.o.enter);
 

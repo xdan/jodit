@@ -1540,12 +1540,12 @@ export class Selection implements ISelect {
 
 		if (leftBox !== rightBox) {
 			const rightInsideLeft =
-					Dom.isElement(leftBox) &&
-					Dom.isOrContains(leftBox, rightFake),
-				leftInsideRight =
-					!rightInsideLeft &&
-					Dom.isElement(rightBox) &&
-					Dom.isOrContains(rightBox, leftFake);
+				Dom.isElement(leftBox) && Dom.isOrContains(leftBox, rightFake);
+
+			const leftInsideRight =
+				!rightInsideLeft &&
+				Dom.isElement(rightBox) &&
+				Dom.isOrContains(rightBox, leftFake);
 
 			if (rightInsideLeft || leftInsideRight) {
 				let child: Nullable<Element> = (

@@ -29,7 +29,7 @@ export function moveTheNodeAlongTheEdgeOutward(
 			return;
 		}
 
-		if (Dom.isCell(item.parentElement)) {
+		if (Dom.isBlock(item.parentElement)) {
 			break;
 		}
 

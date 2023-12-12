@@ -24,6 +24,8 @@ describe('Backspace/Delete key', function () {
 
 	describe('More cases', function () {
 		[
+			'<p>test</p><p>|pop|</p><p>stop</p> => <p>test</p><p>|<br></p><p>stop</p>',
+			'<ul><li>test</li><li>|pop|</li><li>stop</li></ul> => <ul><li>test</li><li>|<br></li><li>stop</li></ul>',
 			'<blockquote>t|est</blockquote><ol><li>test2</li><li>te|st3</li><li><a>test4</a></li></ol> => <blockquote>t|</blockquote><ol><li>st3</li><li><a>test4</a></li></ol>',
 			'<blockquote>t|est</blockquote><ol><li>test2</li><li>test3|</li><li><a>test4</a></li></ol> => <blockquote>t|</blockquote><ol><li><a>test4</a></li></ol>',
 			'<ol><li>test2</li><li>test3|</li><li><a>test4</a></li></ol><blockquote>t|est</blockquote> => <ol><li>test2</li><li>test3|est</li></ol>',
