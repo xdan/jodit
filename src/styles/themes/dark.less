@@ -61,21 +61,36 @@
 
 	.jodit-popup {
 		&__content {
-			background: var(--dark-background-ligher);
+			background: var(--dark-background-color);
 		}
 	}
 
 	.jodit-ui-button,
+	.jodit-toolbar-select,
 	.jodit-toolbar-button {
+		--color-text: var(--dark-text-color);
+		--color-icon: var(--dark-icon-color);
+
 		&__text {
-			color: var(--dark-text-color);
+			color: var(--color-text);
+		}
+
+		svg,
+		&__trigger,
+		.jodit-icon {
+			fill: var(--color-icon);
+			stroke: var(--color-icon);
 		}
 
 		&,
+		&__text,
 		&__button,
 		&__trigger {
 			&:hover:not([disabled]) {
+				--color-text: var(--dark-background-color);
+				--color-icon: var(--dark-background-color);
 				background-color: var(--dark-background-ligher);
+				color: var(--dark-background-color);
 			}
 		}
 	}
@@ -104,13 +119,6 @@
 	// stylelint-disable-next-line
 	.jodit-toolbar__box:not(:empty) {
 		background: var(--dark-toolbar-color);
-	}
-
-	.jodit__upload-button svg,
-	.jodit-toolbar-button .jodit-toolbar-button__trigger,
-	.jodit-icon {
-		fill: var(--dark-icon-color);
-		stroke: var(--dark-icon-color);
 	}
 
 	.jodit-icon-close {

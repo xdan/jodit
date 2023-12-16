@@ -9,6 +9,9 @@
 @import url('./table.common');
 
 .jodit-form__inserter {
+	--color-table-cell-background-hover: var(--color-button-background-hover);
+
+
 	.jodit-form__table-creator-box {
 		display: flex;
 
@@ -38,8 +41,8 @@
 					}
 
 					&.jodit_hovered {
-						border-color: var(--color-background-hover);
-						background: var(--color-background-hover);
+						border-color: var(--color-table-cell-background-hover);
+						background: var(--color-table-cell-background-hover);
 					}
 				}
 			}
