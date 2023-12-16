@@ -315,9 +315,8 @@ function allowImportsPluginsAndLanguagesInESM(
 ): ts.Node {
 	const filePath = node.moduleSpecifier.getText().replace(/['"]/g, '');
 
-	if (node.getSourceFile().fileName.includes('langs/index')) {
+	if (/jodit\/langs\//.test(filePath) && node.getSourceFile().fileName.includes('langs/index')) {
 		if (!allowLanguagesInESM.has(filePath)) {
-			if (/jodit\/langs\//.test(filePath)) {
 				return ts.factory.createVariableDeclarationList(
 					[
 						ts.factory.createVariableDeclaration(
@@ -331,8 +330,7 @@ function allowImportsPluginsAndLanguagesInESM(
 					],
 					ts.NodeFlags.Const
 				);
-			}
-			return ts.factory.createIdentifier('');
+			// return ts.factory.createIdentifier('');
 		}
 	}
 
