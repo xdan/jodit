@@ -119,7 +119,7 @@ export class classSpan extends Plugin {
 	override buttons: Plugin['buttons'] = [
 		{
 			name: 'classSpan',
-			group: 'font'
+			group: 'script'
 		}
 	];
 

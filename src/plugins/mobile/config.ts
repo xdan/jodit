@@ -11,6 +11,7 @@
 import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
 import type {
+	ButtonsOption,
 	CanUndef,
 	IControlType,
 	IJodit,
@@ -28,14 +29,135 @@ declare module 'jodit/config' {
 		mobileTapTimeout: number;
 
 		/**
-		 * After resize it will change buttons set for different sizes
+		 * After resizing, the set of buttons will change to accommodate different sizes.
 		 */
 		toolbarAdaptive: boolean;
+
+		/**
+		 * The list of buttons that appear in the editor's toolbar for medium-sized spaces (≥ options.sizeMD).
+		 */
+		buttonsMD: ButtonsOption;
+
+		/**
+		 * The list of buttons that appear in the editor's toolbar for small-sized spaces (≥ options.sizeSM).
+		 */
+		buttonsSM: ButtonsOption;
+
+		/**
+		 * The list of buttons that appear in the editor's toolbar for extra-small spaces (less than options.sizeSM).
+		 */
+		buttonsXS: ButtonsOption;
 	}
 }
 
 Config.prototype.mobileTapTimeout = 300;
 Config.prototype.toolbarAdaptive = true;
+
+Config.prototype.buttonsMD = [
+	{
+		group: 'font-style',
+		buttons: []
+	},
+	{
+		group: 'list',
+		buttons: []
+	},
+	{
+		group: 'font',
+		buttons: []
+	},
+	'---',
+	{
+		group: 'media',
+		buttons: []
+	},
+	'\n',
+	{
+		group: 'state',
+		buttons: []
+	},
+	{
+		group: 'insert',
+		buttons: []
+	},
+	{
+		group: 'indent',
+		buttons: []
+	},
+	{
+		group: 'color',
+		buttons: []
+	},
+	'---',
+	{
+		group: 'history',
+		buttons: []
+	},
+	{
+		group: 'other',
+		buttons: []
+	},
+	'|',
+	'dots'
+];
+
+Config.prototype.buttonsSM = [
+	{
+		group: 'font-style',
+		buttons: []
+	},
+	{
+		group: 'list',
+		buttons: []
+	},
+	'---',
+	{
+		group: 'font',
+		buttons: []
+	},
+	'\n',
+	{
+		group: 'state',
+		buttons: []
+	},
+	{
+		group: 'indent',
+		buttons: []
+	},
+	{
+		group: 'color',
+		buttons: []
+	},
+	'---',
+	{
+		group: 'history',
+		buttons: []
+	},
+	'|',
+	'dots'
+];
+
+Config.prototype.buttonsXS = [
+	{
+		group: 'font-style',
+		buttons: []
+	},
+	{
+		group: 'list',
+		buttons: []
+	},
+	'---',
+	{
+		group: 'font',
+		buttons: []
+	},
+	{
+		group: 'color',
+		buttons: []
+	},
+	'---',
+	'dots'
+];
 
 Config.prototype.controls.dots = {
 	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,

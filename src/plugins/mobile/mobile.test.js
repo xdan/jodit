@@ -9,77 +9,55 @@ describe('Test mobile mode', function () {
 	describe('Toolbar', function () {
 		it('Should have different count buttons for different container sizes', function () {
 			getBox().style.width = '1000px';
-			const editor = getJodit({
-				buttons: [
-					'source',
-					'|',
-					'bold',
-					'strikethrough',
-					'underline',
-					'italic',
-					'|',
-					'ul',
-					'ol',
-					'|',
-					'outdent',
-					'indent',
-					'|',
-					'font',
-					'fontsize',
-					'brush',
-					'paragraph',
-					'|',
-					'image',
-					'video',
-					'table',
-					'link',
-					'|',
-					'align',
-					'undo',
-					'redo',
-					'|',
-					'hr',
-					'eraser',
-					'copyformat',
-					'|',
-					'symbols',
-					'fullsize',
-					'print',
-					'about'
-				]
-			});
+			const editor = getJodit({});
+			const count = () =>
+				editor.container.querySelectorAll(
+					'.jodit-toolbar__box .jodit-toolbar-button'
+				).length;
 
-			expect(27).to.be.below(
-				editor.container.querySelectorAll('.jodit-toolbar-button')
-					.length
-			);
+			expect(count()).to.eq(39);
 
 			getBox().style.width = '790px';
-			simulateEvent('resize', 0, window);
+			simulateEvent('resize', window);
 
-			expect(28).to.be.above(
-				editor.container.querySelectorAll(
-					'.jodit-toolbar__box .jodit-toolbar-button'
-				).length
-			);
+			expect(count()).to.eq(29);
 
 			getBox().style.width = '690px';
-			simulateEvent('resize', 0, window);
+			simulateEvent('resize', window);
 
-			expect(26).to.be.above(
-				editor.container.querySelectorAll(
-					'.jodit-toolbar__box .jodit-toolbar-button'
-				).length
-			);
+			expect(count()).to.eq(19);
 
 			getBox().style.width = '390px';
-			simulateEvent('resize', 0, window);
+			simulateEvent('resize', window);
 
-			expect(15).to.be.above(
-				editor.container.querySelectorAll(
-					'.jodit-toolbar__box .jodit-toolbar-button'
-				).length
-			);
+			expect(count()).to.eq(13);
+		});
+
+		describe('Disable plugins', () => {
+			it('Should remove buttons from these plugins for all sizes', () => {
+				getBox().style.width = '1000px';
+				const editor = getJodit({
+					disablePlugins: ['table']
+				});
+
+				expect(getButton('table', editor)).to.be.null;
+
+				getBox().style.width = '790px';
+
+				simulateEvent('resize', window);
+
+				expect(getButton('table', editor)).to.be.null;
+
+				getBox().style.width = '690px';
+				simulateEvent('resize', window);
+
+				expect(getButton('table', editor)).to.be.null;
+
+				getBox().style.width = '390px';
+				simulateEvent('resize', window);
+
+				expect(getButton('table', editor)).to.be.null;
+			});
 		});
 
 		describe('If buttons were set like string', function () {
@@ -92,40 +70,30 @@ describe('Test mobile mode', function () {
 					buttonsXS: 'source'
 				});
 
-				expect(4).equals(
+				const count = () =>
 					editor.container.querySelectorAll(
 						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+					).length;
+
+				expect(count()).equals(4);
 
 				getBox().style.width = '790px';
-				simulateEvent('resize', 0, window);
+				simulateEvent('resize', window);
 
-				expect(3).equals(
-					editor.container.querySelectorAll(
-						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+				expect(count()).equals(3);
 
 				getBox().style.width = '690px';
-				simulateEvent('resize', 0, window);
+				simulateEvent('resize', window);
 
-				expect(2).equals(
-					editor.container.querySelectorAll(
-						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+				expect(count()).equals(2);
 
 				getBox().style.width = '390px';
-				simulateEvent('resize', 0, window);
+				simulateEvent('resize', window);
 
-				expect(1).equals(
-					editor.container.querySelectorAll(
-						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+				expect(count()).equals(1);
 			});
 		});
+
 		describe('Custom media points', function () {
 			it('Should works like as usual', function () {
 				getBox().style.width = '500px';
@@ -141,38 +109,27 @@ describe('Test mobile mode', function () {
 					sizeSM: 200
 				});
 
-				expect(4).equals(
+				const count = () =>
 					editor.container.querySelectorAll(
 						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+					).length;
+
+				expect(count()).equals(4);
 
 				getBox().style.width = '390px';
-				simulateEvent('resize', 0, window);
+				simulateEvent('resize', window);
 
-				expect(3).equals(
-					editor.container.querySelectorAll(
-						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+				expect(count()).equals(3);
 
 				getBox().style.width = '290px';
-				simulateEvent('resize', 0, window);
+				simulateEvent('resize', window);
 
-				expect(2).equals(
-					editor.container.querySelectorAll(
-						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+				expect(count()).equals(2);
 
 				getBox().style.width = '190px';
-				simulateEvent('resize', 0, window);
+				simulateEvent('resize', window);
 
-				expect(1).equals(
-					editor.container.querySelectorAll(
-						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+				expect(count()).equals(1);
 			});
 		});
 
@@ -191,38 +148,27 @@ describe('Test mobile mode', function () {
 					toolbarAdaptive: false
 				});
 
-				expect(4).equals(
+				const count = () =>
 					editor.container.querySelectorAll(
 						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+					).length;
+
+				expect(count()).equals(4);
 
 				getBox().style.width = '390px';
-				simulateEvent('resize', 0, window);
+				simulateEvent('resize', window);
 
-				expect(4).equals(
-					editor.container.querySelectorAll(
-						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+				expect(count()).equals(4);
 
 				getBox().style.width = '290px';
-				simulateEvent('resize', 0, window);
+				simulateEvent('resize', window);
 
-				expect(4).equals(
-					editor.container.querySelectorAll(
-						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+				expect(count()).equals(4);
 
 				getBox().style.width = '190px';
-				simulateEvent('resize', 0, window);
+				simulateEvent('resize', window);
 
-				expect(4).equals(
-					editor.container.querySelectorAll(
-						'.jodit-toolbar__box .jodit-toolbar-button'
-					).length
-				);
+				expect(count()).equals(4);
 			});
 		});
 	});

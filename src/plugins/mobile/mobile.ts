@@ -18,7 +18,7 @@ import { pluginSystem } from 'jodit/core/global';
 import './config';
 
 /**
- * Rebuild toolbar in depends of editor's width
+ * Rebuild toolbar in depends on editor's width
  */
 export function mobile(editor: IJodit): void {
 	let timeout: number = 0,
