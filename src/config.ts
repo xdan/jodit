@@ -117,8 +117,20 @@ class Config implements IViewOptions {
 
 	commandToHotkeys!: IDictionary<string | string[]>;
 
+	/**
+	 * Reserved for the paid version of the editor
+	 */
 	license: string = '';
 
+	/**
+	 * The name of the preset that will be used to initialize the editor.
+	 * The list of available presets can be found here Jodit.defaultOptions.presets
+	 * ```javascript
+	 * Jodit.make('.editor', {
+	 * 	preset: 'inline'
+	 * });
+	 * ```
+	 */
 	preset: string = 'custom';
 
 	presets: IDictionary = {
@@ -138,6 +150,10 @@ class Config implements IViewOptions {
 		? document
 		: null) as Document;
 
+	/**
+	 * Allows you to specify the window in which the editor will be created. Default - window
+	 * This is necessary if you are creating the editor inside an iframe but the code is running in the parent window
+	 */
 	ownerWindow: Window = (typeof window !== 'undefined'
 		? window
 		: null) as Window;
@@ -162,6 +178,9 @@ class Config implements IViewOptions {
 	 */
 	disabled: boolean = false;
 
+	/**
+	 * In readOnly mode, some buttons can still be useful, for example the button to view source code or print
+	 */
 	activeButtonsInReadOnly: string[] = [
 		'source',
 		'fullsize',
@@ -171,6 +190,16 @@ class Config implements IViewOptions {
 		'selectall'
 	];
 
+	/**
+	 * When the editor is in read-only mode, some commands can still be executed:
+	 * ```javascript
+	 * const editor = Jodit.make('.editor', {
+	 * 	 allowCommandsInReadOnly: ['selectall', 'preview', 'print']
+	 * 	 readonly: true
+	 * });
+	 * editor.execCommand('selectall');// will be selected all content
+	 * editor.execCommand('delete');// but content will not be deleted
+	 */
 	allowCommandsInReadOnly: string[] = ['selectall', 'preview', 'print'];
 
 	/**
@@ -882,6 +911,31 @@ class Config implements IViewOptions {
 	 */
 	controls!: Controls;
 
+	/**
+	 * Some events are called when the editor is initialized, for example, the `afterInit` event.
+	 * So this code won't work:
+	 * ```javascript
+	 * const editor = Jodit.make('#editor');
+	 * editor.events.on('afterInit', () => console.log('afterInit'));
+	 * ```
+	 * You need to do this:
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 		events: {
+	 * 	  	afterInit: () => console.log('afterInit')
+	 * 		}
+	 * });
+	 * ```
+	 * The option can use any Jodit events, for example:
+	 * ```javascript
+	 * const editor = Jodit.make('#editor', {
+	 * 		events: {
+	 * 			hello: (name) => console.log('Hello', name)
+	 * 		}
+	 * });
+	 * editor.e.fire('hello', 'Mike');
+	 * ```
+	 */
 	events: IDictionary<(...args: any[]) => any> = {};
 
 	/**

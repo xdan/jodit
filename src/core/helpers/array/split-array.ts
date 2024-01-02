@@ -8,7 +8,6 @@
  * @module helpers/array
  */
 
-
 export function splitArray(a: string): string[];
 
 export function splitArray<T extends any[]>(a: T): T;
