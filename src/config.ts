@@ -178,7 +178,7 @@ class Config implements IViewOptions {
 	 *
 	 * @example
 	 * ```javascript
-	 * var editor  = new  Jodit(".dark_editor", {
+	 * const editor = Jodit.make(".dark_editor", {
 	 *      toolbarButtonSize: "small"
 	 * });
 	 * ```
@@ -199,7 +199,7 @@ class Config implements IViewOptions {
 	 * Theme (can be "dark")
 	 * @example
 	 * ```javascript
-	 * var editor  = new  Jodit(".dark_editor", {
+	 * const editor = Jodit.make(".dark_editor", {
 	 *      theme: "dark"
 	 * });
 	 * ```

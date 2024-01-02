@@ -19,7 +19,7 @@ declare module 'jodit/config' {
 		 * Show placeholder
 		 * @example
 		 * ```javascript
-		 * var editor = new Jodit('#editor', {
+		 * const editor = Jodit.make('#editor', {
 		 *    showPlaceholder: false
 		 * });
 		 * ```
@@ -31,7 +31,7 @@ declare module 'jodit/config' {
 		 * @example
 		 * ```javascript
 		 * //<textarea id="editor" placeholder="start typing text ..." cols="30" rows="10"></textarea>
-		 * var editor = new Jodit('#editor', {
+		 * const editor = Jodit.make('#editor', {
 		 *    useInputsPlaceholder: true
 		 * });
 		 * ```
@@ -42,7 +42,7 @@ declare module 'jodit/config' {
 		 * Default placeholder
 		 * @example
 		 * ```javascript
-		 * var editor = new Jodit('#editor', {
+		 * const editor = Jodit.make('#editor', {
 		 *    placeholder: 'start typing text ...'
 		 * });
 		 * ```

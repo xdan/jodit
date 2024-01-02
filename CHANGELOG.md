@@ -2569,7 +2569,7 @@ const editor = Jodit.make({
     In textIcons - besides `boolean`, you can put `function(key: string): boolean`;
 
 ```js
-var editor = new Jodit('#editor', {
+const editor = Jodit.make('#editor', {
 	textIcons: key => key !== 'bold'
 });
 ```
@@ -2740,7 +2740,7 @@ root.innerHTML = `
 <div id="edit"></div>
 `;
 
-var editor = new Jodit(root.getElementById('edit'), {
+const editor = Jodit.make(root.getElementById('edit'), {
 	globalFullSize: false,
 	shadowRoot: root
 });
@@ -3204,7 +3204,7 @@ var editor = new Jodir('.editor', {
     Therefore, it is necessary to move the toolbar Jodit by this amount
 
 ```javascript
-var editor = new Jodit('#editor', {
+const editor = Jodit.make('#editor', {
 	offsetTopForAssix: 74
 });
 ```
@@ -3233,7 +3233,7 @@ replace the image in the editor. In 2.5.54 it can be done in 3 clicks
 Added [Jodit.focus](https://xdsoft.net/jodit/docs/modules/jodit.html#.focus) method
 
 ```javascript
-var editor = new Jodit('.redactor');
+const editor = Jodit.make('.redactor');
 editor.focus();
 ```
 
@@ -3302,7 +3302,7 @@ sets of buttons for different sizes editors.
 -   buttonsXS The list of buttons that appear in the editor's toolbar on tiny places (< options.sizeSM).
 
 ```javascript
-var editor = new Jodit('#some-editor', {
+const editor = Jodit.make('#some-editor', {
 	sizeLG: 900,
 	sizeMD: 700,
 	sizeSM: 400,
@@ -3531,7 +3531,7 @@ Jodit.Confirm('Are you sure?', 'Confirm', function (success) {
     icons. In IE9 it is default - true [Example](https://xdsoft.net/jodit/#example-text-icons)
 
 ```javascript
-var editor = new Jodit('#example2_0', {
+const editor = Jodit.make('#example2_0', {
 	textIcons: true,
 	removeButtons: [
 		'hr',
@@ -3695,7 +3695,7 @@ Added [toolbarButtonSize](https://xdsoft.net/jodit/docs/classes/view.View.html#d
 toolbar (can be "small", "middle", "large")
 
 ```javascript
-var editor = new Jodit('#editor', {
+const editor = Jodit.make('#editor', {
 	toolbarButtonSize: 'small'
 });
 ```
@@ -3705,7 +3705,7 @@ var editor = new Jodit('#editor', {
 -   Added node.create method
 
 ```javascript
-var editor = new Jodit('.jodit'),
+const editor = Jodit.make('.jodit'),
 	node = editor.node.create('text', 'Hellow world');
 editor.s.insertNode(node);
 ```
@@ -3773,7 +3773,7 @@ Added [removeEmptyBlocks](https://xdsoft.net/jodit/docs/classes/view.View.html#d
 blocks
 
 ```javascript
-var editor = new Jodit('#editor', {
+const editor = Jodit.make('#editor', {
 	removeEmptyBlocks: false
 });
 editor.val(' '); // add space in editor
@@ -3824,7 +3824,7 @@ either use a general [Uploader](https://xdsoft.net/jodit/docs/modules/modules_up
 completely
 
 ```javascript
-var editor = new Jodit('.redactor', {
+const editor = Jodit.make('.redactor', {
 	filebrowser: {
 		uploader: null
 	},
@@ -3835,7 +3835,7 @@ var editor = new Jodit('.redactor', {
 });
 
 // or
-var editor = new Jodit('.redactor', {
+const editor = Jodit.make('.redactor', {
 	filebrowser: {
 		uploader: {
 			url: 'uploader.php',
@@ -3850,7 +3850,7 @@ var editor = new Jodit('.redactor', {
 Now you can just override some of your settings
 
 ```javascript
-var editor = new Jodit('.redactor', {
+const editor = Jodit.make('.redactor', {
 	filebrowser: {
 		uploader: {
 			url: 'uploader2.php'
@@ -3878,7 +3878,7 @@ Fast fix
 -   Added plugin `Fullsize`. Now you can change fullsize mode
 
 ```javascript
-var editor = new Jodit();
+const editor = Jodit.make();
 editor.events.fire('toggleFullsize');
 editor.events.fire('toggleFullsize', [true]); // fullsize
 editor.events.fire('toggleFullsize', [false]); // usual mode
@@ -3985,7 +3985,7 @@ Fixed dialog's module when was opened Promt window, after Enter submit the form 
 bugs Update [Jodit.i18n](https://xdsoft.net/jodit/docs/classes/jodit.Jodit.html#.i18n) method. Now it can be used staticly
 
 ```javascript
-var editor = new Jodit('#redactor', {
+const editor = Jodit.make('#redactor', {
 	langusage: 'ru'
 });
 console.log(editor.i18n('Cancel')); //Отмена;
@@ -4009,7 +4009,7 @@ console.log(Jodit.prototype.i18n('Hello world', 'mr.Perkins', 'day')); //Hello m
 Fixed [Jodit.destroy](https://xdsoft.net/jodit/docs/classes/jodit.Jodit.html#.destroy) method
 
 ```javascript
-var editor = new Jodit('.jodit');
+const editor = Jodit.make('.jodit');
 editor.destroy();
 ```
 
@@ -4043,7 +4043,7 @@ can execute from [Filebrowser](https://xdsoft.net/jodit/docs/modules/modules_fil
 or [Uploader](https://xdsoft.net/jodit/docs/modules/modules_uploader.html)
 
 ```javascript
-var editor = new Jodit('#redactor');
+const editor = Jodit.make('#redactor');
 editor.events.on('afterInsertImage', function (image) {
 	image.className = 'bloghead4';
 });
