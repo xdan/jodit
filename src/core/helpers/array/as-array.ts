@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2023 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -12,5 +12,9 @@ import { isArray } from 'jodit/core/helpers/checker/is-array';
 
 /**
  * Always return Array
+ * ```javascript
+ * Jodit.modules.Helpers.asArray('test') // ['test']
+ * asArray(['test']) // ['test']
+ * ```
  */
 export const asArray = <T>(a: T[] | T): T[] => (isArray(a) ? a : [a]);
