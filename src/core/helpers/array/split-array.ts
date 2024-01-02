@@ -8,15 +8,20 @@
  * @module helpers/array
  */
 
-/**
- * Split separated elements
- */
+
 export function splitArray(a: string): string[];
 
 export function splitArray<T extends any[]>(a: T): T;
 
 export function splitArray<T extends any[]>(a: T | string): T | string[];
 
-export function splitArray<T extends any[]>(a: T | string): T | string[] {
+/**
+ * Return an array from string or array
+ * ```javascript
+ * Jodit.modules.Helpers.splitArray('1,2,3') // ['1', '2', '3']
+ * Jodit.modules.Helpers.splitArray(['1', '2', '3']) // ['1', '2', '3']
+ * ```
+ */
+export function splitArray<T extends unknown[]>(a: T | string): T | string[] {
 	return Array.isArray(a) ? a : a.split(/[,\s]+/);
 }

@@ -12,8 +12,13 @@ import { reset } from 'jodit/core/helpers/utils/reset';
 import { isNativeFunction } from 'jodit/core/helpers/checker/is-native-function';
 
 /**
- * Always return Array. In some cases(Joomla Mootools)
- * Array.from can be replaced to some bad implementation.
+ * Always return Array. It's a safe polyfill for [Array.from](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from) method
+ * In certain scenarios (such as with Joomla Mootools), Array.from may be substituted with a less optimal implementation
+ * ```javascript
+ * Jodit.modules.Helpers.toArray('123') // ['1', '2', '3']
+ * Jodit.modules.Helpers.toArray(['test']) // ['test']
+ * Jodit.modules.Helpers.toArray(1) // []
+ * ```
  */
 export const toArray = function toArray<T extends typeof Array.from>(
 	...args: Parameters<T>
