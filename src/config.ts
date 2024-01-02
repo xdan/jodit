@@ -28,6 +28,8 @@ import { INSERT_AS_HTML } from 'jodit/core/constants';
  * Default Editor's Configuration
  */
 class Config implements IViewOptions {
+	private constructor() {}
+
 	/**
 	 * Use cache for heavy methods
 	 */
