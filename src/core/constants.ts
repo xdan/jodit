@@ -5,6 +5,13 @@
  */
 
 /**
+ * You can use Jodit constants in your code
+ * ```javascript
+ * import { Jodit } from 'jodit';
+ * console.log(Jodit.constants.IS_IE);
+ * console.log(Jodit.constants.APP_VERSION);
+ * ```
+ * @packageDocumentation
  * @module constants
  */
 
