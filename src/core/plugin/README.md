@@ -9,8 +9,8 @@ Plugins can be both simple functions and complex classes.
 In the simplest case, it's just a function that receives a Jodit instance as input.
 
 ```js
-Jodit.plugins.add('alertMyId', (jodit) => {
-	alert(jodit.id);
+Jodit.plugins.add('alertMyId', jodit => {
+  alert(jodit.id);
 });
 ```
 
@@ -24,10 +24,10 @@ This is usually not what you expect. You probably want the plugin to take action
 The [EventEmiter](https://xdsoft.net/jodit/docs/classes/event_emitter.EventEmitter.html#root) editor will help you with this.
 
 ```js
-Jodit.plugins.add('keyLogger', (jodit) => {
-	jodit.events.on('keydown', e => {
-		sendAnalytics('keydown', e.key);
-	});
+Jodit.plugins.add('keyLogger', jodit => {
+  jodit.events.on('keydown', e => {
+    sendAnalytics('keydown', e.key);
+  });
 });
 ```
 
@@ -35,30 +35,30 @@ As mentioned above, plugins can be more complex than just a function. A plugin c
 
 ```js
 class resizeEditor {
-	hasStyle = true;
+  hasStyle = true;
 
-	buttons = [
-		{
-			name: 'custom',
-			group: 'other'
-		}
-	];
+  buttons = [
+    {
+      name: 'custom',
+      group: 'other'
+    }
+  ];
 
-	static requires = ['enter', 'drag-and-drop'];
+  static requires = ['enter', 'drag-and-drop'];
 
-	init(jodit: IJodit): void {
-		jodit.events.on('afterInit', () => {
-			Jodit.ns.Helpers.css(jodit.editor, {
-				width: 400
-			});
-		});
-	}
+  init(jodit: IJodit): void {
+    jodit.events.on('afterInit', () => {
+      Jodit.ns.Helpers.css(jodit.editor, {
+        width: 400
+      });
+    });
+  }
 
-	destruct() {
-		Jodit.ns.Helpers.css(this.jodit.editor, {
-			width: null
-		});
-	}
+  destruct() {
+    Jodit.ns.Helpers.css(this.jodit.editor, {
+      width: null
+    });
+  }
 }
 
 Jodit.plugins.add('resizeEditor', resizeEditor); // Constructor, not instance
@@ -78,29 +78,29 @@ Jodit will try to load the styles along the same path as the plugin is loaded.
 
 ```typescript
 export interface IPluginButton {
-	name: string;
-	group?: ButtonGroup;
-	position?: number;
-	options?: IControlType;
+  name: string;
+  group?: ButtonGroup;
+  position?: number;
+  options?: IControlType;
 }
 
 export type ButtonGroup =
-	| string
-	| 'source'
-	| 'font-style'
-	| 'script'
-	| 'list'
-	| 'indent'
-	| 'font'
-	| 'color'
-	| 'media'
-	| 'state'
-	| 'clipboard'
-	| 'insert'
-	| 'history'
-	| 'search'
-	| 'other'
-	| 'info';
+  | string
+  | 'source'
+  | 'font-style'
+  | 'script'
+  | 'list'
+  | 'indent'
+  | 'font'
+  | 'color'
+  | 'media'
+  | 'state'
+  | 'clipboard'
+  | 'insert'
+  | 'history'
+  | 'search'
+  | 'other'
+  | 'info';
 ```
 
 Buttons to be automatically added to the editor's button groups.
@@ -108,21 +108,21 @@ Those. if the plugin is connected, the button will appear in the list, if not co
 
 ```js
 Jodit.defaultOptions.controls.insertTime = {
-	icon: require('./icon.svg'),
-	tooltip: 'Insert Time',
-	exec: (editor: IJodit) => {
-		editor.s.insertHTML(new Date().toTimeString());
+  icon: require('./icon.svg'),
+  tooltip: 'Insert Time',
+  exec: (editor: IJodit) => {
+    editor.s.insertHTML(new Date().toTimeString());
     editor.synchronizeValues(); // For history module we need to synchronize values between textarea and editor
-	}
+  }
 };
 
 class insertTimePlugin {
-	buttons = [
-		{
-			name: 'insertTime',
-			group: 'insert'
-		}
-	];
+  buttons = [
+    {
+      name: 'insertTime',
+      group: 'insert'
+    }
+  ];
 }
 
 Jodit.plugins.add('insertTimePlugin', insertTimePlugin);
@@ -151,8 +151,8 @@ This will allow you to find out if it works correctly and if it breaks the behav
 
 ```js
 Jodit.make('#editor', {
-	safeMode: true,
-	safePluginsList: ['about'],
-	extraPlugins: ['yourPluginDev']
+  safeMode: true,
+  safePluginsList: ['about'],
+  extraPlugins: ['yourPluginDev']
 });
 ```
