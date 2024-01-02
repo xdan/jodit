@@ -720,8 +720,8 @@ export class Selection implements ISelect {
 			return;
 		}
 
-		const node = this.j.createInside.div(),
-			fragment = this.j.createInside.fragment();
+		const node = this.j.createInside.div();
+		const fragment = this.j.createInside.fragment();
 
 		let lastChild: Node | null;
 

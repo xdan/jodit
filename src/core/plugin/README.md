@@ -9,7 +9,7 @@ Plugins can be both simple functions and complex classes.
 In the simplest case, it's just a function that receives a Jodit instance as input.
 
 ```js
-Jodit.plugins.add('alertMyId', function (jodit) {
+Jodit.plugins.add('alertMyId', (jodit) => {
 	alert(jodit.id);
 });
 ```
@@ -21,10 +21,10 @@ const editor = Jodit.make('#editorId'); // alert('editorId')
 ```
 
 This is usually not what you expect. You probably want the plugin to take action on certain events.
-The [EventEmiter](https://github.com/xdan/jodit/blob/main/src/types/events.d.ts#L9) editor will help you with this.
+The [EventEmiter](https://xdsoft.net/jodit/docs/classes/event_emitter.EventEmitter.html#root) editor will help you with this.
 
 ```js
-Jodit.plugins.add('keyLogger', function (jodit) {
+Jodit.plugins.add('keyLogger', (jodit) => {
 	jodit.events.on('keydown', e => {
 		sendAnalytics('keydown', e.key);
 	});
@@ -61,7 +61,7 @@ class resizeEditor {
 	}
 }
 
-Jodit.plugins.add('resizeEditor', resizeEditor);
+Jodit.plugins.add('resizeEditor', resizeEditor); // Constructor, not instance
 ```
 
 ### hasStyle
@@ -112,6 +112,7 @@ Jodit.defaultOptions.controls.insertTime = {
 	tooltip: 'Insert Time',
 	exec: (editor: IJodit) => {
 		editor.s.insertHTML(new Date().toTimeString());
+    editor.synchronizeValues(); // For history module we need to synchronize values between textarea and editor
 	}
 };
 
@@ -126,6 +127,15 @@ class insertTimePlugin {
 
 Jodit.plugins.add('insertTimePlugin', insertTimePlugin);
 ```
+
+In the `exec` method we insert the current time into the editor.
+At the same time, if we disable the plugin, the button will disappear from the list.
+
+Note that after insertion we call the `synchronizeValues` method, which synchronizes the values between the textarea and the editor.
+
+This is necessary for the history module to work correctly, since the editor does not use [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) to track changes internally.
+
+> We may move to [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) in the future, but until that happens, you need to call `synchronizeValues` yourself after inserting content to the editor.
 
 ### static requires
 
