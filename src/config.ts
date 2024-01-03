@@ -13,6 +13,7 @@
  * 	 // other options
  * 	 // ...
  * });
+ * ```
  * @packageDocumentation
  * @module config
  */
