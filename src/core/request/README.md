@@ -1,4 +1,4 @@
-# Request module
+# Request
 
 The module is responsible for sending requests over the network:
 

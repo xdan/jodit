@@ -1,4 +1,4 @@
-# Async Module
+# Async
 
 The Async module is designed to handle asynchronous operations within the editor.
 

@@ -1,4 +1,4 @@
-# DOM operation module
+# DOM operation
 
 A module for working with the DOM. All of its methods are static.
 For example, you can insert an element in front of another element:

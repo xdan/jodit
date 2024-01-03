@@ -1,4 +1,4 @@
-# UI component system
+# Component system
 
 Every Jodit element inherits from [Component](https://xdsoft.net/jodit/docs/classes/component.Component.html), and implements the [IComponent](https://xdsoft.net/jodit/docs/interfaces/types.IComponent.html) interface accordingly.
 
