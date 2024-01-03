@@ -58,19 +58,19 @@ ES2021 Version (for modern browsers only):
 
 ```html
 <script type="importmap">
-	{
-		"imports": {
-			"autobind-decorator": "https://unpkg.com/autobind-decorator@2.4.0/lib/esm/index.js"
-		}
-	}
+  {
+    "imports": {
+      "autobind-decorator": "https://unpkg.com/autobind-decorator@2.4.0/lib/esm/index.js"
+    }
+  }
 </script>
 <link rel="stylesheet" href="./node_modules/jodit/es2021/jodit.min.css" />
 <script type="module">
-	import { Jodit } from './node_modules/jodit/esm/index.js';
-	Jodit.make('#editor', {
-		width: 600,
-		height: 400
-	});
+  import { Jodit } from './node_modules/jodit/esm/index.js';
+  Jodit.make('#editor', {
+    width: 600,
+    height: 400
+  });
 </script>
 ```
 
@@ -79,26 +79,26 @@ You can manually include additional plugins and languages as needed.
 
 ```html
 <script type="importmap">
-	{
-		"imports": {
-			"autobind-decorator": "https://unpkg.com/autobind-decorator@2.4.0/lib/esm/index.js"
-		}
-	}
+  {
+    "imports": {
+      "autobind-decorator": "https://unpkg.com/autobind-decorator@2.4.0/lib/esm/index.js"
+    }
+  }
 </script>
 <link rel="stylesheet" href="./node_modules/jodit/es2021/jodit.min.css" />
 <script type="module">
-	import { Jodit } from './node_modules/jodit/esm/index.js';
-	import './node_modules/jodit/esm/plugins/add-new-line/add-new-line.js';
-	import './node_modules/jodit/esm/plugins/fullsize/fullsize.js';
-	import de from './node_modules/jodit/esm/langs/de.js';
+  import { Jodit } from './node_modules/jodit/esm/index.js';
+  import './node_modules/jodit/esm/plugins/add-new-line/add-new-line.js';
+  import './node_modules/jodit/esm/plugins/fullsize/fullsize.js';
+  import de from './node_modules/jodit/esm/langs/de.js';
 
-	Jodit.langs.de = de;
+  Jodit.langs.de = de;
 
-	Jodit.make('#editor', {
-		width: 600,
-		height: 400,
-		language: 'de'
-	});
+  Jodit.make('#editor', {
+    width: 600,
+    height: 400,
+    language: 'de'
+  });
 </script>
 ```
 
@@ -108,8 +108,8 @@ You can manually include additional plugins and languages as needed.
 
 ```html
 <link
-	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.0-beta.24/es2021/jodit.min.css"
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.0-beta.24/es2021/jodit.min.css"
 />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.0-beta.24/es2021/jodit.min.js"></script>
 ```
@@ -118,8 +118,8 @@ You can manually include additional plugins and languages as needed.
 
 ```html
 <link
-	rel="stylesheet"
-	href="https://unpkg.com/jodit@4.0.0-beta.24/es2021/jodit.min.css"
+  rel="stylesheet"
+  href="https://unpkg.com/jodit@4.0.0-beta.24/es2021/jodit.min.css"
 />
 <script src="https://unpkg.com/jodit@4.0.0-beta.24/es2021/jodit.min.js"></script>
 ```
@@ -143,9 +143,9 @@ editor.value = '<p>start</p>';
 
 ```javascript
 Jodit.plugins.yourplugin = function (editor) {
-	editor.events.on('afterInit', function () {
-		editor.s.insertHTMl('Text');
-	});
+  editor.events.on('afterInit', function () {
+    editor.s.insertHTMl('Text');
+  });
 };
 ```
 
@@ -153,15 +153,16 @@ Jodit.plugins.yourplugin = function (editor) {
 
 ```javascript
 const editor = Jodit.make('.someselector', {
-	extraButtons: [
-		{
-			name: 'insertDate',
-			iconURL: 'https://xdsoft.net/jodit/logo.png',
-			exec: function (editor) {
-				editor.s.insertHTML(new Date().toDateString());
-			}
-		}
-	]
+  extraButtons: [
+    {
+      name: 'insertDate',
+      iconURL: 'https://xdsoft.net/jodit/logo.png',
+      exec: function (editor) {
+        editor.s.insertHTML(new Date().toDateString());
+        editor.synchronizeValues(); // For history saving
+      }
+    }
+  ]
 });
 ```
 
@@ -169,16 +170,16 @@ or
 
 ```javascript
 const editor = Jodit.make('.someselector', {
-	buttons: ['bold', 'insertDate'],
-	controls: {
-		insertDate: {
-			name: 'insertDate',
-			iconURL: 'https://xdsoft.net/jodit/logo.png',
-			exec: function (editor) {
-				editor.s.insertHTML(new Date().toDateString());
-			}
-		}
-	}
+  buttons: ['bold', 'insertDate'],
+  controls: {
+    insertDate: {
+      name: 'insertDate',
+      iconURL: 'https://xdsoft.net/jodit/logo.png',
+      exec: function (editor) {
+        editor.s.insertHTML(new Date().toDateString());
+      }
+    }
+  }
 });
 ```
 
@@ -186,54 +187,54 @@ button with plugin
 
 ```javascript
 Jodit.plugins.add('insertText', function (editor) {
-	editor.events.on('someEvent', function (text) {
-		editor.s.insertHTMl('Hello ' + text);
-	});
+  editor.events.on('someEvent', function (text) {
+    editor.s.insertHTMl('Hello ' + text);
+  });
 });
 
 // or
 
 Jodit.plugins.add('textLength', {
-	init(editor) {
-		const div = editor.create.div('jodit_div');
-		editor.container.appendChild(div);
-		editor.events.on('change.textLength', () => {
-			div.innerText = editor.value.length;
-		});
-	},
-	destruct(editor) {
-		editor.events.off('change.textLength');
-	}
+  init(editor) {
+    const div = editor.create.div('jodit_div');
+    editor.container.appendChild(div);
+    editor.events.on('change.textLength', () => {
+      div.innerText = editor.value.length;
+    });
+  },
+  destruct(editor) {
+    editor.events.off('change.textLength');
+  }
 });
 
 // or use class
 
 Jodit.plugins.add(
-	'textLength',
-	class textLength {
-		init(editor) {
-			const div = editor.create.div('jodit_div');
-			editor.container.appendChild(div);
-			editor.events.on('change.textLength', () => {
-				div.innerText = editor.value.length;
-			});
-		}
-		destruct(editor) {
-			editor.events.off('change.textLength');
-		}
-	}
+  'textLength',
+  class textLength {
+    init(editor) {
+      const div = editor.create.div('jodit_div');
+      editor.container.appendChild(div);
+      editor.events.on('change.textLength', () => {
+        div.innerText = editor.value.length;
+      });
+    }
+    destruct(editor) {
+      editor.events.off('change.textLength');
+    }
+  }
 );
 
 const editor = Jodit.make('.someselector', {
-	buttons: ['bold', 'insertText'],
-	controls: {
-		insertText: {
-			iconURL: 'https://xdsoft.net/jodit/logo.png',
-			exec: function (editor) {
-				editor.events.fire('someEvent', 'world!!!');
-			}
-		}
-	}
+  buttons: ['bold', 'insertText'],
+  controls: {
+    insertText: {
+      iconURL: 'https://xdsoft.net/jodit/logo.png',
+      exec: function (editor) {
+        editor.events.fire('someEvent', 'world!!!');
+      }
+    }
+  }
 });
 ```
 
@@ -255,14 +256,14 @@ and set options for Jodit:
 
 ```javascript
 const editor = Jodit.make('#editor', {
-	uploader: {
-		url: 'http://localhost:8181/index-test.php?action=fileUpload'
-	},
-	filebrowser: {
-		ajax: {
-			url: 'http://localhost:8181/index-test.php'
-		}
-	}
+  uploader: {
+    url: 'http://localhost:8181/index-test.php?action=fileUpload'
+  },
+  filebrowser: {
+    ajax: {
+      url: 'http://localhost:8181/index-test.php'
+    }
+  }
 });
 ```
 
