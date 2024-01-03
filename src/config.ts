@@ -5,6 +5,15 @@
  */
 
 /**
+ * Options for the editor. You can set them when creating the editor.
+ * ```javascript
+ * const editor = Jodit.make('#editor', {
+ * 	 toolbar: true,
+ * 	 buttons: ['bold', 'italic', 'underline']
+ * 	 // other options
+ * 	 // ...
+ * });
+ * @packageDocumentation
  * @module config
  */
 

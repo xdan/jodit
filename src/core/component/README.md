@@ -1,6 +1,6 @@
 # UI component system
 
-Every Jodit element inherits from [[Component]], and implements the [[IComponent]] interface accordingly.
+Every Jodit element inherits from [Component](../classes/component.Component.html), and implements the [IComponent](../interfaces/types.IComponent.html) interface accordingly.
 
 Such elements have a name
 
@@ -12,15 +12,15 @@ console.log(jodit.filebrowser.componentName);
 console.log(jodit.uploader.componentName);
 ```
 
-And also each component has its current [[STATUSES | status]]:
+And also each component has its current life cycle status:
 
 ```js
 const jodit = Jodit.male('#editor');
-console.log(jodit.componentStatus);
+console.log(jodit.componentStatus); // beforeInit, ready, beforeDestruct, destructed
 ```
 
-You can work on changes in the status of a component through the decorator [[decorators/hook]]
-either through the method [[Component.hookStatus]]
+You can work on changes in the status of a component through the decorator [decorators/hook](../modules/decorators_hook.html)
+either through the method [Component.hookStatus](../classes/component.Component.html#hookstatus)
 
 ```ts
 import { Component } from 'jodit/core/component';
@@ -33,7 +33,7 @@ cmp.hookStatus('ready', () => {
 });
 ```
 
-To set the status, it is enough to call the method [[Component.setStatus]]
+To set the status, it is enough to call the method [Component.setStatus](../classes/component.Component.html#setstatus)
 
 ```ts
 import { Component } from 'jodit/core/component';
@@ -60,7 +60,7 @@ const cmp = new SomeComponent();
 console.log(cmp.isReady);
 ```
 
-But it’s better not to do this, because with inheritance, such a component will be “ready” ahead of time:
+But it’s better not to do this, because with inheritance, such a component will be `ready` ahead of time:
 
 ```ts
 import type { IJodit, IStatusBar } from 'jodit/types';
@@ -86,7 +86,7 @@ export class SomeAnotherComponent extends SomeComponent {
 }
 ```
 
-Therefore, it is better to use a decorator [[core/decorators/component]]
+Therefore, it is better to use a decorator [decorators/component](../modules/decorators_component.html)
 
 ```ts
 import type { IJodit, IStatusBar } from 'jodit/types';
