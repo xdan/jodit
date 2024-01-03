@@ -1,6 +1,6 @@
-# Hook deorators
+# @hook
 
-Sets a handler for changing the component's status.
+Establishes a handler for modifying the status of the component.
 
 ```ts
 import { component, hook } from 'jodit/core/decorators';
@@ -15,4 +15,4 @@ class UISomeElement extends UIElement {
 }
 ```
 
-Component statuses can be viewed in [[STATUSES]]
+Component statuses can be viewed in [STATUSES](https://xdsoft.net/jodit/docs/modules/component.html#statuses)

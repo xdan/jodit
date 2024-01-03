@@ -1,4 +1,4 @@
-# UI Component decorator
+# @component
 
 Every UI component that inherits from the `UIElement` class must have a component decorator.
 This decorator is responsible for calling `setStatus('ready')` after the `new UI()` operation.

@@ -1,4 +1,4 @@
-# Decorator derive
+# @decorator
 
 Inspired by the great [V4Fire framework](https://github.com/V4Fire), we decided to add a trait mechanism to the editor.
 You can read more about the derive directive in the original [project](https://github.com/V4Fire/Client/tree/master/src/traits).

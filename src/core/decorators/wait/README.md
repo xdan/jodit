@@ -1,4 +1,4 @@
-# Wait something decorator
+# @wait
 
 Wrap function in wait wrapper, it will be called after `condition` returns `true`
 

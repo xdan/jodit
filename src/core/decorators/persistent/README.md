@@ -1,4 +1,4 @@
-# Persistent storage decorator
+# @persistent
 
 Allow save value inside persistent storage as set/get to property
 

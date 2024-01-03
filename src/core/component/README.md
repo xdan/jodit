@@ -1,6 +1,6 @@
 # UI component system
 
-Every Jodit element inherits from [Component](../classes/component.Component.html), and implements the [IComponent](../interfaces/types.IComponent.html) interface accordingly.
+Every Jodit element inherits from [Component](https://xdsoft.net/jodit/docs/classes/component.Component.html), and implements the [IComponent](https://xdsoft.net/jodit/docs/interfaces/types.IComponent.html) interface accordingly.
 
 Such elements have a name
 
@@ -19,8 +19,8 @@ const jodit = Jodit.male('#editor');
 console.log(jodit.componentStatus); // beforeInit, ready, beforeDestruct, destructed
 ```
 
-You can work on changes in the status of a component through the decorator [decorators/hook](../modules/decorators_hook.html)
-either through the method [Component.hookStatus](../classes/component.Component.html#hookstatus)
+You can work on changes in the status of a component through the decorator [decorators/hook](https://xdsoft.net/jodit/docs/modules/decorators_hook.html)
+either through the method [Component.hookStatus](https://xdsoft.net/jodit/docs/classes/component.Component.html#hookstatus)
 
 ```ts
 import { Component } from 'jodit/core/component';
@@ -33,7 +33,7 @@ cmp.hookStatus('ready', () => {
 });
 ```
 
-To set the status, it is enough to call the method [Component.setStatus](../classes/component.Component.html#setstatus)
+To set the status, it is enough to call the method [Component.setStatus](https://xdsoft.net/jodit/docs/classes/component.Component.html#setstatus)
 
 ```ts
 import { Component } from 'jodit/core/component';
@@ -86,7 +86,7 @@ export class SomeAnotherComponent extends SomeComponent {
 }
 ```
 
-Therefore, it is better to use a decorator [decorators/component](../modules/decorators_component.html)
+Therefore, it is better to use a decorator [decorators/component](https://xdsoft.net/jodit/docs/modules/decorators_component.html)
 
 ```ts
 import type { IJodit, IStatusBar } from 'jodit/types';

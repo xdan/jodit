@@ -1,6 +1,6 @@
-# Idle decorators
+# @idle
 
-Wrap function in [[Async.requestIdleCallback]] wrapper
+Wrap function in [Async.requestIdleCallback](https://xdsoft.net/jodit/docs/classes/async.Async.html#requestidlecallback) wrapper
 
 ```ts
 import { component, idle } from 'jodit/core/decorators';

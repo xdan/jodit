@@ -1,4 +1,4 @@
-# Cache methods decorator
+# @cache
 
 The decorator allows you to cache the result of executing any getter of the UI component.
 

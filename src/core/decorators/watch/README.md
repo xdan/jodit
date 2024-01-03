@@ -1,7 +1,7 @@
-# Watch for something decorator
+# @watch
 
 The decorator allows you to hang handlers on changes to the internal fields of the component,
-as well as on any events [[EventEmitter]]
+as well as on any events [EventEmitter](https://xdsoft.net/jodit/docs/modules/event_emitter.html)
 
 For example, we will make a reactive component that will change its color when its field changes:
 
@@ -32,7 +32,7 @@ const elm = new UISomeReactElement(jodit);
 elm.state.color = 'yellow';
 ```
 
-The decorator can also be used to hang event handlers [[EventEmitter]]
+The decorator can also be used to hang event handlers [EventEmitter](https://xdsoft.net/jodit/docs/modules/event_emitter.html)
 
 Then the call signature has its own syntax:
 

@@ -1,4 +1,4 @@
-# Non enumerable decorator
+# @nonenumerable
 
 Decorator that sets the enumerable property of a class field to false.
 
