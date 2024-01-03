@@ -17,13 +17,13 @@ And then use this icon for example in a button in the toolbar
 
 ```js
 Jodit.make('#editor', {
-	buttons: [
-		{
-			icon: 'someIcon',
-			name: 'someButton',
-			exec: e => alert(e.selection.html)
-		}
-	]
+  buttons: [
+    {
+      icon: 'someIcon',
+      name: 'someButton',
+      exec: e => alert(e.selection.html)
+    }
+  ]
 });
 ```
 
@@ -33,13 +33,13 @@ In addition to the added icons in the toolbar, you can also use a simple link to
 
 ```js
 Jodit.make('#editor', {
-	buttons: [
-		{
-			iconURL: 'https://xdsoft.net/jodit/files/artio.jpg',
-			name: 'someButton',
-			exec: e => alert(e.selection.html)
-		}
-	]
+  buttons: [
+    {
+      iconURL: 'https://xdsoft.net/jodit/files/artio.jpg',
+      name: 'someButton',
+      exec: e => alert(e.selection.html)
+    }
+  ]
 });
 ```
 
@@ -49,8 +49,8 @@ Include Jodit and the CDN Font Awesome
 
 ```html
 <link
-	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 />
 <link rel="stylesheet" href="build/jodit.min.css" />
 <script src="build/jodit.min.js"></script>
@@ -66,20 +66,20 @@ And define event `getIcon`:
 
 ```js
 const editor = Jodit.make('#editor', {
-	getIcon: function (name, clearName) {
-		var code = name;
+  getIcon: function (name, clearName) {
+    var code = name;
 
-		// not all font awesome icons is matched to Jodit icons
-		switch (clearName) {
-			case 'redo':
-				code = 'rotate-right';
-				break;
-		}
+    // not all font awesome icons is matched to Jodit icons
+    switch (clearName) {
+      case 'redo':
+        code = 'rotate-right';
+        break;
+    }
 
-		return (
-			'<i style="font-size:14px" class="fa fa-' + code + ' fa-xs"></i>'
-		);
-	}
+    return (
+      '<i style="font-size:14px" class="fa fa-' + code + ' fa-xs"></i>'
+    );
+  }
 });
 ```
 
@@ -87,65 +87,65 @@ For full replacing you can copy this code:
 
 ```js
 const editor = Jodit.make('#editor', {
-	getIcon: function (name, clearName) {
-		var code = clearName;
+  getIcon: function (name, clearName) {
+    var code = clearName;
 
-		switch (clearName) {
-			case 'redo':
-				code = 'rotate-right';
-				break;
+    switch (clearName) {
+      case 'redo':
+        code = 'rotate-right';
+        break;
 
-			case 'video':
-				code = 'video-camera';
-				break;
+      case 'video':
+        code = 'video-camera';
+        break;
 
-			case 'copyformat':
-				code = 'clone';
-				break;
+      case 'copyformat':
+        code = 'clone';
+        break;
 
-			case 'about':
-				code = 'question';
-				break;
+      case 'about':
+        code = 'question';
+        break;
 
-			case 'selectall':
-				code = 'legal';
-				break;
+      case 'selectall':
+        code = 'legal';
+        break;
 
-			case 'symbols':
-				return '<span style="text-align: center;font-size:14px;">Ω</span>';
+      case 'symbols':
+        return '<span style="text-align: center;font-size:14px;">Ω</span>';
 
-			case 'hr':
-				code = 'minus';
-				break;
+      case 'hr':
+        code = 'minus';
+        break;
 
-			case 'left':
-			case 'right':
-			case 'justify':
-			case 'center':
-				code = 'align-' + name;
-				break;
+      case 'left':
+      case 'right':
+      case 'justify':
+      case 'center':
+        code = 'align-' + name;
+        break;
 
-			case 'brush':
-				code = 'tint';
-				break;
+      case 'brush':
+        code = 'tint';
+        break;
 
-			case 'fontsize':
-				code = 'text-height';
-				break;
+      case 'fontsize':
+        code = 'text-height';
+        break;
 
-			case 'ul':
-			case 'ol':
-				code = 'list-' + name;
-				break;
+      case 'ul':
+      case 'ol':
+        code = 'list-' + name;
+        break;
 
-			case 'source':
-				code = 'code';
-				break;
-		}
+      case 'source':
+        code = 'code';
+        break;
+    }
 
-		return (
-			'<i style="font-size:14px" class="fa fa-' + code + ' fa-xs"></i>'
-		);
-	}
+    return (
+      '<i style="font-size:14px" class="fa fa-' + code + ' fa-xs"></i>'
+    );
+  }
 });
 ```
