@@ -49,7 +49,7 @@ dialog.open();
 ```
 
 In all these examples, the dialog opens irrespective of Jodit's configurations, including the selected language and theme.
-To ensure the dialog opens in the same theme as the editor, you can specify the theme in its settings, or utilize the [[IDlg]] trait.
+To ensure the dialog opens in the same theme as the editor, you can specify the theme in its settings, or utilize the [[IDlgs]] trait.
 
 ```js
 const dialog = new Jodit.modules.Dialog({

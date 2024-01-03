@@ -3,9 +3,9 @@
 For interface design, Jodit provides a set of components that allow you to build complex interfaces.
 Their advantage is the uniformity of the insert/drop interfaces. Reactivity created by observing the fields of the component.
 
-Each UI element must implement the interface [[IIUElement]], and should extend [[UIElement]].
+Each UI element must implement the interface [[IUElement]], and should extend [[UIElement]].
 
-> For each element to work, an instance is required when creating it [[IView]]
+> For each element to work, an instance is required when creating it [[IViewBased]]
 
 ```ts
 import './style.less';
