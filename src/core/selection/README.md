@@ -5,7 +5,7 @@ most obvious use case
 
 ## How to insert HTML into Jodit
 
-There is a family of methods for this.[[Select.prototype.insertHTML]], [[Select.prototype.insertNode]], [[Select.prototype.insertImage]].
+There is a family of methods for this.[[ISelect.insertHTML]], [[ISelect.insertNode]], [[ISelect.insertImage]].
 
 ```js
 const jodit = Jodit.make('#editor');
@@ -20,3 +20,15 @@ jodit.selection.insertImage('https://somesite.com/image.png');
 const jodit = Jodit.make('#editor');
 jodit.selection.focus();
 ```
+
+## Apply a style to selected text
+
+```js
+const jodit = Jodit.make('#editor');
+jodit.s.commitStyle({ element: 'h1' }); // Wrap selected text in <h1> tag
+jodit.s.commitStyle({ attributes: { className: 'some-class'} }); // Add class to selected text
+jodit.s.commitStyle({ attributes: { style: { color: 'red' } } }); // Apply style to selected text
+jodit.synchronizeValues();
+```
+
+> s - is a shortcut for `selection`
