@@ -2,7 +2,7 @@
 
 Assistant functions are intended for small basic operations and are divided into subgroups.
 
-For example, the [[helpers/string]] subgroup is designed to work with strings:
+For example, the [[Helpers/string]] subgroup is designed to work with strings:
 
 ```js
 Jodit.modules.Helpers.ucfirst('hello'); // Hello
@@ -11,7 +11,7 @@ Jodit.modules.Helpers.trim('       hello-world  '); // hello-world
 Jodit.modules.Helpers.kebabCase('helloWorld'); // hello-world
 ```
 
-And the [[helpers/html]] subgroup is designed to work with strings containing HTML:
+And the [[Helpers/html]] subgroup is designed to work with strings containing HTML:
 
 ```js
 Jodit.modules.Helpers.nl2br('hello\nworld'); // hello<br>world
@@ -19,7 +19,7 @@ Jodit.modules.Helpers.nl2br('hello\nworld'); // hello<br>world
 
 > All helpers, regardless of the group, are in the namespace `Jodit.modules.Helpers`
 
-The most commonly used helpers are checkers [[helpers/checker]]:
+The most commonly used helpers are checkers [[Helpers/checker]]:
 
 ```js
 Jodit.modules.Helpers.isBoolean('hello'); // false
