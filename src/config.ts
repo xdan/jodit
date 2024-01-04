@@ -209,6 +209,7 @@ class Config implements IViewOptions {
 	 * });
 	 * editor.execCommand('selectall');// will be selected all content
 	 * editor.execCommand('delete');// but content will not be deleted
+	 * ```
 	 */
 	allowCommandsInReadOnly: string[] = ['selectall', 'preview', 'print'];
 
