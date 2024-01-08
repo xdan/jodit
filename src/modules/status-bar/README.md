@@ -1,6 +1,4 @@
-# Status bar module
-
-## Description
+# Status bar
 
 This module provides a status bar for the application.
 Allowing to display a message to the user or additional information about the editor.

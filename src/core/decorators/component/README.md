@@ -75,9 +75,4 @@ In the above example, the `UIData` component sets its status to `ready` manually
 The `onReady` hook is then triggered, displaying an alert message.
 You can interact with and explore the code examples in this [CodeSandbox](https://codesandbox.io/s/decorators-u2h0os?fontsize=14&hidenavigation=1&theme=dark)
 
-<iframe src="https://codesandbox.io/embed/decorators-u2h0os?fontsize=14&hidenavigation=1&theme=dark"
-style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
-title="Decorators"
-allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-/>
+https://codesandbox.io/embed/decorators-u2h0os?fontsize=14&hidenavigation=1&theme=dark
