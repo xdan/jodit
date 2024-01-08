@@ -73,6 +73,7 @@ fetch('index.php').then(resp => {
 
 In the above example, the `UIData` component sets its status to `ready` manually after fetching data from `index.php`.
 The `onReady` hook is then triggered, displaying an alert message.
-You can interact with and explore the code examples in this [CodeSandbox](https://codesandbox.io/s/decorators-u2h0os?fontsize=14&hidenavigation=1&theme=dark)
+
+You can interact with and explore the code examples:
 
 [![Edit Decorators](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/devbox/decorators-u2h0os?embed=1&file=%2Fsrc%2Findex.tsx)
