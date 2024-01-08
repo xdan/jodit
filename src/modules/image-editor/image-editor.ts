@@ -75,6 +75,137 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 		return 'ImageEditor';
 	}
 
+
+	options: ImageEditorOptions;
+	get o(): this['options'] {
+		return this.options;
+	}
+
+	private onSave!: (
+		name: void | string,
+		data: ImageEditorActionBox,
+		hide: () => void,
+		failed: (e: Error) => void
+	) => void;
+
+	/**
+	 * Hide image editor
+	 */
+	@autobind
+	hide(): void {
+		this._dialog.close();
+	}
+
+	/**
+	 * Open image editor
+	 * @example
+	 * ```javascript
+	 * const jodit = Jodit.make('.editor', {
+	 *		 imageeditor: {
+	 *				 crop: false,
+	 *				 closeAfterSave: true,
+	 *				 width: 500
+	 *		 }
+	 * });
+	 * jodit.imageeditor.open('https://xdsoft.net/jodit/images/test.png', function (name, data, success, failed) {
+	 *		 var img = jodit.node.c('img');
+	 *		 img.setAttribute('src', 'https://xdsoft.net/jodit/images/test.png');
+	 *		 if (box.action !== 'resize') {
+	 *					return failed('Sorry it is work only in resize mode. For croping use FileBrowser');
+	 *		 }
+	 *		 img.style.width = data.w;
+	 *		 img.style.height = data.h;
+	 *		 jodit.s.insertNode(img);
+	 *		 success();
+	 * });
+	 * ```
+	 */
+	@autobind
+	open(url: string, save: onSave): Promise<IDialog> {
+		return this.j.async.promise<IDialog>((resolve: Function): void => {
+			const timestamp = new Date().getTime();
+
+			this.image = this.j.c.element('img');
+
+			$$('img,.jodit-icon_loader', this.resize_box).forEach(
+				Dom.safeRemove
+			);
+
+			$$('img,.jodit-icon_loader', this.crop_box).forEach(Dom.safeRemove);
+
+			css(this.cropHandler, 'background', 'transparent');
+
+			this.onSave = save;
+
+			this.resize_box.appendChild(
+				this.j.c.element('i', { class: 'jodit-icon_loader' })
+			);
+
+			this.crop_box.appendChild(
+				this.j.c.element('i', { class: 'jodit-icon_loader' })
+			);
+
+			if (/\?/.test(url)) {
+				url += '&_tst=' + timestamp;
+			} else {
+				url += '?_tst=' + timestamp;
+			}
+
+			this.image.setAttribute('src', url);
+
+			this._dialog.open();
+
+			const { widthInput, heightInput } = refs<HTMLInputElement>(
+				this.editor
+			);
+
+			const onload = (): void => {
+				if (this.isDestructed) {
+					return;
+				}
+
+				this.image.removeEventListener('load', onload);
+				this.naturalWidth = this.image.naturalWidth;
+				this.naturalHeight = this.image.naturalHeight;
+
+				widthInput.value = this.naturalWidth.toString();
+				heightInput.value = this.naturalHeight.toString();
+
+				this.ratio = this.naturalWidth / this.naturalHeight;
+
+				this.resize_box.appendChild(this.image);
+
+				this.cropImage = this.image.cloneNode(true) as HTMLImageElement;
+
+				this.crop_box.appendChild(this.cropImage);
+
+				Dom.safeRemove.apply(
+					null,
+					$$('.jodit-icon_loader', this.editor)
+				);
+
+				if (this.activeTab === TABS.crop) {
+					this.showCrop();
+				}
+
+				this.j.e.fire(this.resizeHandler, 'updatesize');
+				this.j.e.fire(this.cropHandler, 'updatesize');
+
+				this._dialog.setPosition();
+
+				this.j.e.fire('afterImageEditor');
+
+				resolve(this._dialog);
+			};
+
+			this.image.addEventListener('load', onload);
+
+			if (this.image.complete) {
+				onload();
+			}
+		});
+	}
+
 	private resizeUseRatio: boolean = true;
 	private cropUseRatio: boolean = true;
 
@@ -588,136 +719,6 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 			}
 			this.j.e.fire(self.cropHandler, 'updatesize');
 		}
-	}
-
-	options: ImageEditorOptions;
-	get o(): this['options'] {
-		return this.options;
-	}
-
-	onSave!: (
-		name: void | string,
-		data: ImageEditorActionBox,
-		hide: () => void,
-		failed: (e: Error) => void
-	) => void;
-
-	/**
-	 * Hide image editor
-	 */
-	@autobind
-	hide(): void {
-		this._dialog.close();
-	}
-
-	/**
-	 * Open image editor
-	 * @example
-	 * ```javascript
-	 * var jodit = Jodit.make('.editor', {
-	 *		 imageeditor: {
-	 *				 crop: false,
-	 *				 closeAfterSave: true,
-	 *				 width: 500
-	 *		 }
-	 * });
-	 * jodit.imageeditor.open('https://xdsoft.net/jodit/images/test.png', function (name, data, success, failed) {
-	 *		 var img = jodit.node.c('img');
-	 *		 img.setAttribute('src', 'https://xdsoft.net/jodit/images/test.png');
-	 *		 if (box.action !== 'resize') {
-	 *					return failed('Sorry it is work only in resize mode. For croping use FileBrowser');
-	 *		 }
-	 *		 img.style.width = data.w;
-	 *		 img.style.height = data.h;
-	 *		 jodit.s.insertNode(img);
-	 *		 success();
-	 * });
-	 * ```
-	 */
-	@autobind
-	open(url: string, save: onSave): Promise<IDialog> {
-		return this.j.async.promise<IDialog>((resolve: Function): void => {
-			const timestamp = new Date().getTime();
-
-			this.image = this.j.c.element('img');
-
-			$$('img,.jodit-icon_loader', this.resize_box).forEach(
-				Dom.safeRemove
-			);
-
-			$$('img,.jodit-icon_loader', this.crop_box).forEach(Dom.safeRemove);
-
-			css(this.cropHandler, 'background', 'transparent');
-
-			this.onSave = save;
-
-			this.resize_box.appendChild(
-				this.j.c.element('i', { class: 'jodit-icon_loader' })
-			);
-
-			this.crop_box.appendChild(
-				this.j.c.element('i', { class: 'jodit-icon_loader' })
-			);
-
-			if (/\?/.test(url)) {
-				url += '&_tst=' + timestamp;
-			} else {
-				url += '?_tst=' + timestamp;
-			}
-
-			this.image.setAttribute('src', url);
-
-			this._dialog.open();
-
-			const { widthInput, heightInput } = refs<HTMLInputElement>(
-				this.editor
-			);
-
-			const onload = (): void => {
-				if (this.isDestructed) {
-					return;
-				}
-
-				this.image.removeEventListener('load', onload);
-				this.naturalWidth = this.image.naturalWidth;
-				this.naturalHeight = this.image.naturalHeight;
-
-				widthInput.value = this.naturalWidth.toString();
-				heightInput.value = this.naturalHeight.toString();
-
-				this.ratio = this.naturalWidth / this.naturalHeight;
-
-				this.resize_box.appendChild(this.image);
-
-				this.cropImage = this.image.cloneNode(true) as HTMLImageElement;
-
-				this.crop_box.appendChild(this.cropImage);
-
-				Dom.safeRemove.apply(
-					null,
-					$$('.jodit-icon_loader', this.editor)
-				);
-
-				if (this.activeTab === TABS.crop) {
-					this.showCrop();
-				}
-
-				this.j.e.fire(this.resizeHandler, 'updatesize');
-				this.j.e.fire(this.cropHandler, 'updatesize');
-
-				this._dialog.setPosition();
-
-				this.j.e.fire('afterImageEditor');
-
-				resolve(this._dialog);
-			};
-
-			this.image.addEventListener('load', onload);
-
-			if (this.image.complete) {
-				onload();
-			}
-		});
 	}
 
 	constructor(editor: IViewWithToolbar & IDlgs) {
