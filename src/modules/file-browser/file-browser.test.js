@@ -1111,7 +1111,10 @@ function getFirstItem(fb, index = 0, file = false) {
 
 					describe('Create new folder', () => {
 						it('Should create new folder', async () => {
-							const addfolder = getButton('plus', filebrowser.tree);
+							const addfolder = getButton(
+								'plus',
+								filebrowser.tree
+							);
 
 							expect(addfolder).is.not.null;
 
