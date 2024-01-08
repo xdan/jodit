@@ -312,15 +312,18 @@ describe('Toolbar', function () {
 		});
 
 		describe('After enable Fullsize mode', function () {
-			it('Should render toolbar in default container', function () {
+			it('Should render toolbar in default container', () => {
 				const div = appendTestDiv(),
 					editor = Jodit.make(appendTestArea(), {
+						buttons: ['bold', 'fullsize'],
 						toolbar: div
 					});
 
 				const toolbar = editor.toolbar.container;
-				const defaultContainer = editor.defaultToolbarContainer;
+				// @hack Use private property
+				const defaultContainer = editor.__defaultToolbarContainer;
 
+				debugger
 				editor.toggleFullSize(true);
 				expect(defaultContainer).equals(toolbar.parentElement);
 

@@ -101,7 +101,7 @@ export class Table extends ViewComponent<IJodit> {
 		return toArray(this.selected);
 	}
 
-	protected static getSelectedCellsByTable(
+	private static __getSelectedCellsByTable(
 		table: HTMLTableElement
 	): HTMLTableCellElement[] {
 		const cells = Table.__selectedByTable.get(table);
@@ -114,7 +114,7 @@ export class Table extends ViewComponent<IJodit> {
 		return super.destruct();
 	}
 
-	protected static getRowsCount(table: HTMLTableElement): number {
+	private static __getRowsCount(table: HTMLTableElement): number {
 		return table.rows.length;
 	}
 
@@ -122,11 +122,11 @@ export class Table extends ViewComponent<IJodit> {
 	 * Returns rows count in the table
 	 */
 	getRowsCount(table: HTMLTableElement): number {
-		return Table.getRowsCount(table);
+		return Table.__getRowsCount(table);
 	}
 
-	protected static getColumnsCount(table: HTMLTableElement): number {
-		const matrix = Table.formalMatrix(table);
+	private static __getColumnsCount(table: HTMLTableElement): number {
+		const matrix = Table.__formalMatrix(table);
 
 		return matrix.reduce(
 			(max_count, cells) => Math.max(max_count, cells.length),
@@ -138,10 +138,10 @@ export class Table extends ViewComponent<IJodit> {
 	 * Returns columns count in the table
 	 */
 	getColumnsCount(table: HTMLTableElement): number {
-		return Table.getColumnsCount(table);
+		return Table.__getColumnsCount(table);
 	}
 
-	protected static formalMatrix(
+	private static __formalMatrix(
 		table: HTMLTableElement,
 		callback?: (
 			cell: HTMLTableCellElement,
@@ -222,10 +222,10 @@ export class Table extends ViewComponent<IJodit> {
 			rowSpan: number
 		) => false | void
 	): HTMLTableCellElement[][] {
-		return Table.formalMatrix(table, callback);
+		return Table.__formalMatrix(table, callback);
 	}
 
-	protected static formalCoordinate(
+	private static __formalCoordinate(
 		table: HTMLTableElement,
 		cell: HTMLTableCellElement,
 		max = false
@@ -235,7 +235,7 @@ export class Table extends ViewComponent<IJodit> {
 			width: number = 1,
 			height: number = 1;
 
-		Table.formalMatrix(
+		Table.__formalMatrix(
 			table,
 			(
 				td: HTMLTableCellElement,
@@ -271,10 +271,10 @@ export class Table extends ViewComponent<IJodit> {
 		cell: HTMLTableCellElement,
 		max = false
 	): number[] {
-		return Table.formalCoordinate(table, cell, max);
+		return Table.__formalCoordinate(table, cell, max);
 	}
 
-	protected static appendRow(
+	private static __appendRow(
 		table: HTMLTableElement,
 		line: false | HTMLTableRowElement,
 		after: boolean,
@@ -283,7 +283,7 @@ export class Table extends ViewComponent<IJodit> {
 		let row: HTMLTableRowElement;
 
 		if (!line) {
-			const columnsCount = Table.getColumnsCount(table);
+			const columnsCount = Table.__getColumnsCount(table);
 
 			row = create.element('tr');
 
@@ -333,14 +333,14 @@ export class Table extends ViewComponent<IJodit> {
 		line: false | HTMLTableRowElement,
 		after: boolean
 	): void {
-		return Table.appendRow(table, line, after, this.j.createInside);
+		return Table.__appendRow(table, line, after, this.j.createInside);
 	}
 
-	protected static removeRow(
+	private static __removeRow(
 		table: HTMLTableElement,
 		rowIndex: number
 	): void {
-		const box = Table.formalMatrix(table);
+		const box = Table.__formalMatrix(table);
 
 		let dec: boolean;
 		const row = table.rows[rowIndex];
@@ -396,21 +396,21 @@ export class Table extends ViewComponent<IJodit> {
 	 * Remove row
 	 */
 	removeRow(table: HTMLTableElement, rowIndex: number): void {
-		return Table.removeRow(table, rowIndex);
+		return Table.__removeRow(table, rowIndex);
 	}
 
-	protected static appendColumn(
+	private static __appendColumn(
 		table: HTMLTableElement,
 		j: number,
 		after: boolean,
 		create: ICreate
 	): void {
-		const box = Table.formalMatrix(table);
+		const box = Table.__formalMatrix(table);
 
 		let i: number;
 
 		if (j === undefined || j < 0) {
-			j = Table.getColumnsCount(table) - 1;
+			j = Table.__getColumnsCount(table) - 1;
 		}
 
 		for (i = 0; i < box.length; i += 1) {
@@ -455,11 +455,11 @@ export class Table extends ViewComponent<IJodit> {
 	 * Insert column before / after all the columns containing the selected cells
 	 */
 	appendColumn(table: HTMLTableElement, j: number, after: boolean): void {
-		return Table.appendColumn(table, j, after, this.j.createInside);
+		return Table.__appendColumn(table, j, after, this.j.createInside);
 	}
 
-	protected static removeColumn(table: HTMLTableElement, j: number): void {
-		const box = Table.formalMatrix(table);
+	private static __removeColumn(table: HTMLTableElement, j: number): void {
+		const box = Table.__formalMatrix(table);
 
 		let dec: boolean;
 		box.forEach((cells: HTMLTableCellElement[], i: number) => {
@@ -491,10 +491,10 @@ export class Table extends ViewComponent<IJodit> {
 	 * Remove column by index
 	 */
 	removeColumn(table: HTMLTableElement, j: number): void {
-		return Table.removeColumn(table, j);
+		return Table.__removeColumn(table, j);
 	}
 
-	protected static getSelectedBound(
+	private static __getSelectedBound(
 		table: HTMLTableElement,
 		selectedCells: HTMLTableCellElement[]
 	): number[][] {
@@ -503,7 +503,7 @@ export class Table extends ViewComponent<IJodit> {
 			[0, 0]
 		];
 
-		const box = Table.formalMatrix(table);
+		const box = Table.__formalMatrix(table);
 		let i: number, j: number, k: number;
 
 		for (i = 0; i < box.length; i += 1) {
@@ -558,14 +558,14 @@ export class Table extends ViewComponent<IJodit> {
 		table: HTMLTableElement,
 		selectedCells: HTMLTableCellElement[]
 	): number[][] {
-		return Table.getSelectedBound(table, selectedCells);
+		return Table.__getSelectedBound(table, selectedCells);
 	}
 
-	protected static normalizeTable(table: HTMLTableElement): void {
+	private static __normalizeTable(table: HTMLTableElement): void {
 		let i: number, j: number, min: number, not: boolean;
 
 		const __marked: HTMLTableCellElement[] = [],
-			box = Table.formalMatrix(table);
+			box = Table.__formalMatrix(table);
 
 		// remove extra colspans
 		for (j = 0; j < box[0].length; j += 1) {
@@ -669,17 +669,17 @@ export class Table extends ViewComponent<IJodit> {
 	 * Try recalculate all coluns and rows after change
 	 */
 	normalizeTable(table: HTMLTableElement): void {
-		return Table.normalizeTable(table);
+		return Table.__normalizeTable(table);
 	}
 
-	protected static mergeSelected(
+	private static __mergeSelected(
 		table: HTMLTableElement,
 		jodit: IJodit
 	): void {
 		const html: string[] = [],
-			bound = Table.getSelectedBound(
+			bound = Table.__getSelectedBound(
 				table,
-				Table.getSelectedCellsByTable(table)
+				Table.__getSelectedCellsByTable(table)
 			);
 
 		let w: number = 0,
@@ -693,7 +693,7 @@ export class Table extends ViewComponent<IJodit> {
 			__marked: HTMLTableCellElement[] = [];
 
 		if (bound && (bound[0][0] - bound[1][0] || bound[0][1] - bound[1][1])) {
-			Table.formalMatrix(
+			Table.__formalMatrix(
 				table,
 				(
 					cell: HTMLTableCellElement,
@@ -766,7 +766,7 @@ export class Table extends ViewComponent<IJodit> {
 					);
 
 					if (first_j) {
-						Table.setColumnWidthByDelta(
+						Table.__setColumnWidthByDelta(
 							table,
 							first_j,
 							0,
@@ -783,7 +783,7 @@ export class Table extends ViewComponent<IJodit> {
 
 				Table.__unmark(__marked);
 
-				Table.normalizeTable(table);
+				Table.__normalizeTable(table);
 
 				toArray(table.rows).forEach((tr, index) => {
 					if (!tr.cells.length) {
@@ -798,10 +798,10 @@ export class Table extends ViewComponent<IJodit> {
 	 * It combines all of the selected cells into one. The contents of the cells will also be combined
 	 */
 	mergeSelected(table: HTMLTableElement): void {
-		return Table.mergeSelected(table, this.j);
+		return Table.__mergeSelected(table, this.j);
 	}
 
-	protected static splitHorizontal(
+	private static __splitHorizontal(
 		table: HTMLTableElement,
 		jodit: IJodit
 	): void {
@@ -813,16 +813,16 @@ export class Table extends ViewComponent<IJodit> {
 
 		const __marked: HTMLTableCellElement[] = [];
 
-		Table.getSelectedCellsByTable(table).forEach(
+		Table.__getSelectedCellsByTable(table).forEach(
 			(cell: HTMLTableCellElement) => {
 				td = jodit.createInside.element('td');
 				td.appendChild(jodit.createInside.element('br'));
 				tr = jodit.createInside.element('tr');
 
-				coord = Table.formalCoordinate(table, cell);
+				coord = Table.__formalCoordinate(table, cell);
 
 				if (cell.rowSpan < 2) {
-					Table.formalMatrix(table, (tdElm, i, j) => {
+					Table.__formalMatrix(table, (tdElm, i, j) => {
 						if (
 							coord[0] === i &&
 							coord[1] !== j &&
@@ -846,7 +846,7 @@ export class Table extends ViewComponent<IJodit> {
 				} else {
 					Table.__mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
 
-					Table.formalMatrix(
+					Table.__formalMatrix(
 						table,
 						(tdElm: HTMLTableCellElement, i: number, j: number) => {
 							if (
@@ -880,17 +880,17 @@ export class Table extends ViewComponent<IJodit> {
 			}
 		);
 
-		this.normalizeTable(table);
+		this.__normalizeTable(table);
 	}
 
 	/**
 	 * Divides all selected by `jodit_focused_cell` class table cell in 2 parts vertical. Those division into 2 columns
 	 */
 	splitHorizontal(table: HTMLTableElement): void {
-		return Table.splitHorizontal(table, this.j);
+		return Table.__splitHorizontal(table, this.j);
 	}
 
-	protected static splitVertical(
+	private static __splitVertical(
 		table: HTMLTableElement,
 		jodit: IJodit
 	): void {
@@ -898,11 +898,11 @@ export class Table extends ViewComponent<IJodit> {
 
 		const __marked: HTMLTableCellElement[] = [];
 
-		Table.getSelectedCellsByTable(table).forEach(cell => {
-			coord = Table.formalCoordinate(table, cell);
+		Table.__getSelectedCellsByTable(table).forEach(cell => {
+			coord = Table.__formalCoordinate(table, cell);
 
 			if (cell.colSpan < 2) {
-				Table.formalMatrix(table, (tdElm, i, j) => {
+				Table.__formalMatrix(table, (tdElm, i, j) => {
 					if (coord[1] === j && coord[0] !== i && tdElm !== cell) {
 						Table.__mark(
 							tdElm,
@@ -948,24 +948,24 @@ export class Table extends ViewComponent<IJodit> {
 			instance(jodit).removeSelection(cell);
 		});
 
-		Table.normalizeTable(table);
+		Table.__normalizeTable(table);
 	}
 
 	/**
 	 * It splits all the selected cells into 2 parts horizontally. Those. are added new row
 	 */
 	splitVertical(table: HTMLTableElement): void {
-		return Table.splitVertical(table, this.j);
+		return Table.__splitVertical(table, this.j);
 	}
 
-	protected static setColumnWidthByDelta(
+	private static __setColumnWidthByDelta(
 		table: HTMLTableElement,
 		column: number,
 		delta: number,
 		noUnmark: boolean,
 		marked: HTMLTableCellElement[]
 	): void {
-		const box = Table.formalMatrix(table);
+		const box = Table.__formalMatrix(table);
 
 		let clearWidthIndex = 0;
 		for (let i = 0; i < box.length; i += 1) {
@@ -1010,7 +1010,7 @@ export class Table extends ViewComponent<IJodit> {
 		noUnmark: boolean,
 		marked: HTMLTableCellElement[]
 	): void {
-		return Table.setColumnWidthByDelta(
+		return Table.__setColumnWidthByDelta(
 			table,
 			column,
 			delta,

@@ -1217,7 +1217,7 @@ function getFirstItem(fb, index = 0, file = false) {
 									expect(dialog).is.not.null;
 									const previewsButtons =
 										dialog.querySelectorAll(
-											'.jodit-filebrowser-preview__navigation'
+											'.jodit-file-browser-preview__navigation'
 										);
 
 									expect(previewsButtons.length).equals(2);

@@ -6,29 +6,19 @@ rows and columns.
 ## Usage
 
 ```js
+const jodit = Jodit.make('#editor');
 const table = document.createElement('table');
 table.innerHTML = '<tr><td>1</td><td>2</td></tr><tr><td>3</td><td>4</td></tr>';
 console.log(table.rows.length); // 2
-Jodit.modules.Table.appendRow(table, false, false, {
-	element(tag) {
-		return document.createElement(tag);
-	}
-});
+jodit.getInstance('Table').appendRow(table, false, false);
 console.log(table.rows.length); // 3
-```
-
-But better use [[Create DOM]] module
-
-```js
-const jodit = Jodit.make('#editor');
-Jodit.modules.Table.appendRow(table, false, false, jodit.createInside);
 ```
 
 You can append a new row after another row
 
 ```js
 const jodit = Jodit.make('#editor');
-Jodit.modules.Table.appendRow(table, table.rows[1], false, jodit.createInside);
+jodit.getInstance('Table').appendRow(table, table.rows[1], false);
 ```
 
 ## Methods

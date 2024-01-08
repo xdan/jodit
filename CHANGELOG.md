@@ -13,7 +13,7 @@
 
 #### :boom: Breaking Change
 
--   All static methods of the `Jodit.modules.Table` module have been marked as protected and replaced with methods of an instance of the `Table` class with the same name.
+-   All static methods of the `Jodit.modules.Table` module have been removed and replaced with methods of an instance of the `Table` class with the same name.
 
     ```js
     const jodit = Jodit.make('#editor');
