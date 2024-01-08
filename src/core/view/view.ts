@@ -126,6 +126,9 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	readonly create!: ICreate;
 
+	/**
+	 * Short alias for `create`
+	 */
 	@cache
 	get c(): this['create'] {
 		return this.create;
@@ -142,6 +145,9 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	events!: IEventEmitter;
 
+	/**
+	 * Short alias for `events`
+	 */
 	@cache
 	get e(): this['events'] {
 		return this.events;
