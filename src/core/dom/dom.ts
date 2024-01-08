@@ -43,6 +43,10 @@ import {
  * Module for working with DOM
  */
 export class Dom {
+	private constructor() {
+		throw new Error('Dom is static module');
+	}
+
 	/**
 	 * Remove all content from element
 	 */

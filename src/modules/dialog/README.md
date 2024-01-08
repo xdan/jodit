@@ -3,7 +3,7 @@
 The Jodit dialog system enables the creation of modals with a title, footer, and content.
 Each dialog is created as a distinct component that inherits from [[View]].
 
-Several basic wrappers are readily available to swiftly create fundamental windows: [[Dialog system.Alert]]/[[Dialog system.Confirm]]/[[Dialog system.Prompt]]
+Several basic wrappers are readily available to swiftly create fundamental windows: [[Dialog system.Alert | Alert]]/[[Dialog system.Confirm | Confirm]]/[[Dialog system.Prompt | Prompt]]
 
 ```js
 Jodit.Alert('Hello world!', () => {
