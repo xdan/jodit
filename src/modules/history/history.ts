@@ -58,6 +58,44 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 		return 'History';
 	}
 
+	/**
+	 * Return state of the WYSIWYG editor to step back
+	 */
+	redo(): void {
+		if (this.__stack.redo()) {
+			this.startValue = this.snapshot.make();
+			this.fireChangeStack();
+		}
+	}
+
+	canRedo(): boolean {
+		return this.__stack.canRedo();
+	}
+
+	/**
+	 * Return the state of the WYSIWYG editor to step forward
+	 */
+	undo(): void {
+		if (this.__stack.undo()) {
+			this.startValue = this.snapshot.make();
+			this.fireChangeStack();
+		}
+	}
+
+	canUndo(): boolean {
+		return this.__stack.canUndo();
+	}
+
+	clear(): void {
+		this.startValue = this.snapshot.make();
+		this.__stack.clear();
+		this.fireChangeStack();
+	}
+
+	get length(): number {
+		return this.__stack.length;
+	}
+
 	private __startValue!: SnapshotType;
 
 	protected get startValue(): SnapshotType {
@@ -177,44 +215,6 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 			this.startValue = newValue;
 			this.fireChangeStack();
 		}
-	}
-
-	/**
-	 * Return state of the WYSIWYG editor to step back
-	 */
-	redo(): void {
-		if (this.__stack.redo()) {
-			this.startValue = this.snapshot.make();
-			this.fireChangeStack();
-		}
-	}
-
-	canRedo(): boolean {
-		return this.__stack.canRedo();
-	}
-
-	/**
-	 * Return the state of the WYSIWYG editor to step forward
-	 */
-	undo(): void {
-		if (this.__stack.undo()) {
-			this.startValue = this.snapshot.make();
-			this.fireChangeStack();
-		}
-	}
-
-	canUndo(): boolean {
-		return this.__stack.canUndo();
-	}
-
-	clear(): void {
-		this.startValue = this.snapshot.make();
-		this.__stack.clear();
-		this.fireChangeStack();
-	}
-
-	get length(): number {
-		return this.__stack.length;
 	}
 
 	private fireChangeStack(): void {
