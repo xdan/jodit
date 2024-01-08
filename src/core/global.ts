@@ -80,8 +80,8 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 	const name = isString(classFunc)
 		? classFunc
 		: classFunc
-		  ? getClassName(classFunc.prototype)
-		  : 'jodit-utils';
+			? getClassName(classFunc.prototype)
+			: 'jodit-utils';
 
 	const data = boxes.get(jodit) || {},
 		key = name + tag;

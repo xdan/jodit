@@ -43,7 +43,7 @@ Config.prototype.controls.file = {
 						current,
 						'a',
 						editor.editor
-				  ) as HTMLAnchorElement);
+					) as HTMLAnchorElement);
 		}
 
 		return FileSelectorWidget(

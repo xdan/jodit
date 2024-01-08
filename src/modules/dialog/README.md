@@ -73,10 +73,10 @@ Simply calling the appropriate methods on the [[Jodit]] instance is sufficient. 
 
 ```js
 const editor = new Jodit('#editor', {
-  theme: 'dark'
+	theme: 'dark'
 });
 editor.alert('Hello world!');
 editor.confirm('Hello world?', yes => {
-  console.log('Ok?', yes);
+	console.log('Ok?', yes);
 });
 ```

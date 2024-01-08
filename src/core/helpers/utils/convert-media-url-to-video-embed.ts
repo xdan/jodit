@@ -50,7 +50,7 @@ export const convertMediaUrlToVideoEmbed = (
 							'" src="' +
 							protocol +
 							'//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>'
-				  )
+					)
 				: url;
 		case 'youtube.com':
 		case 'www.youtube.com':

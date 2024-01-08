@@ -323,7 +323,6 @@ describe('Toolbar', function () {
 				// @hack Use private property
 				const defaultContainer = editor.__defaultToolbarContainer;
 
-				debugger
 				editor.toggleFullSize(true);
 				expect(defaultContainer).equals(toolbar.parentElement);
 

@@ -88,8 +88,8 @@ export function findControlType(
 								return acc;
 							},
 							{}
-					  )
+						)
 					: list
-		  }
+			}
 		: undefined;
 }

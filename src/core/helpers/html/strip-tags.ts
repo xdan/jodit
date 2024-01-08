@@ -59,7 +59,7 @@ export function stripTags(
 						p.innerHTML,
 						doc,
 						exclude
-				  )}%%%/jodit-${tag}%%%`
+					)}%%%/jodit-${tag}%%%`
 				: `%%%jodit-single-${tag}%%%`;
 			Dom.before(p, doc.createTextNode(text));
 			Dom.safeRemove(p);

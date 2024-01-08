@@ -150,7 +150,7 @@ export class link extends Plugin {
 				? (jodit.c.fromHTML(html, {
 						target_checkbox_box: openInNewTabCheckbox,
 						nofollow_checkbox_box: noFollowCheckbox
-				  }) as HTMLFormElement)
+					}) as HTMLFormElement)
 				: html,
 			htmlForm = Dom.isElement(form) ? form : form.container;
 

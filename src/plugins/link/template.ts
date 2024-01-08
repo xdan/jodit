@@ -76,21 +76,21 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 
 						return null;
 					})()
-			  ])
+				])
 			: null,
 		openInNewTabCheckbox
 			? new UICheckbox(editor, {
 					name: 'target',
 					ref: 'target_checkbox',
 					label: 'Open in new tab'
-			  })
+				})
 			: null,
 		noFollowCheckbox
 			? new UICheckbox(editor, {
 					name: 'nofollow',
 					ref: 'nofollow_checkbox',
 					label: 'No follow'
-			  })
+				})
 			: null,
 		new UIBlock(
 			editor,

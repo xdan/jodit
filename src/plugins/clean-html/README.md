@@ -27,7 +27,6 @@ Jodit.make('#editor', {
 
 You can also disable specific tags. For example, let's disable script tags and images:
 
-
 ```javascript
 Jodit.make('#editor', {
 	cleanHTML: {

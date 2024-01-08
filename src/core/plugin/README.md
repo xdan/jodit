@@ -10,7 +10,7 @@ In the simplest case, it's just a function that receives a Jodit instance as inp
 
 ```js
 Jodit.plugins.add('alertMyId', jodit => {
-  alert(jodit.id);
+	alert(jodit.id);
 });
 ```
 
@@ -25,9 +25,9 @@ The [EventEmiter](https://xdsoft.net/jodit/docs/classes/event_emitter.EventEmitt
 
 ```js
 Jodit.plugins.add('keyLogger', jodit => {
-  jodit.events.on('keydown', e => {
-    sendAnalytics('keydown', e.key);
-  });
+	jodit.events.on('keydown', e => {
+		sendAnalytics('keydown', e.key);
+	});
 });
 ```
 
@@ -78,29 +78,29 @@ Jodit will try to load the styles along the same path as the plugin is loaded.
 
 ```typescript
 export interface IPluginButton {
-  name: string;
-  group?: ButtonGroup;
-  position?: number;
-  options?: IControlType;
+	name: string;
+	group?: ButtonGroup;
+	position?: number;
+	options?: IControlType;
 }
 
 export type ButtonGroup =
-  | string
-  | 'source'
-  | 'font-style'
-  | 'script'
-  | 'list'
-  | 'indent'
-  | 'font'
-  | 'color'
-  | 'media'
-  | 'state'
-  | 'clipboard'
-  | 'insert'
-  | 'history'
-  | 'search'
-  | 'other'
-  | 'info';
+	| string
+	| 'source'
+	| 'font-style'
+	| 'script'
+	| 'list'
+	| 'indent'
+	| 'font'
+	| 'color'
+	| 'media'
+	| 'state'
+	| 'clipboard'
+	| 'insert'
+	| 'history'
+	| 'search'
+	| 'other'
+	| 'info';
 ```
 
 Buttons to be automatically added to the editor's button groups.
@@ -151,8 +151,8 @@ This will allow you to find out if it works correctly and if it breaks the behav
 
 ```js
 Jodit.make('#editor', {
-  safeMode: true,
-  safePluginsList: ['about'],
-  extraPlugins: ['yourPluginDev']
+	safeMode: true,
+	safePluginsList: ['about'],
+	extraPlugins: ['yourPluginDev']
 });
 ```

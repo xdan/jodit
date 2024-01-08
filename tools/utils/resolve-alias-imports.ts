@@ -166,7 +166,7 @@ function resoleAliasImports(dirPath: string): void {
 							? bool
 							: ts.factory.createStringLiteral(
 									globalMaps[name].toString()
-							  );
+								);
 					}
 
 					if (
@@ -315,21 +315,24 @@ function allowImportsPluginsAndLanguagesInESM(
 ): ts.Node {
 	const filePath = node.moduleSpecifier.getText().replace(/['"]/g, '');
 
-	if (/jodit\/langs\//.test(filePath) && node.getSourceFile().fileName.includes('langs/index')) {
+	if (
+		/jodit\/langs\//.test(filePath) &&
+		node.getSourceFile().fileName.includes('langs/index')
+	) {
 		if (!allowLanguagesInESM.has(filePath)) {
-				return ts.factory.createVariableDeclarationList(
-					[
-						ts.factory.createVariableDeclaration(
-							ts.factory.createIdentifier(
-								node.importClause?.getText() ?? ''
-							),
-							undefined,
-							undefined,
-							ts.factory.createObjectLiteralExpression()
-						)
-					],
-					ts.NodeFlags.Const
-				);
+			return ts.factory.createVariableDeclarationList(
+				[
+					ts.factory.createVariableDeclaration(
+						ts.factory.createIdentifier(
+							node.importClause?.getText() ?? ''
+						),
+						undefined,
+						undefined,
+						ts.factory.createObjectLiteralExpression()
+					)
+				],
+				ts.NodeFlags.Const
+			);
 			// return ts.factory.createIdentifier('');
 		}
 	}

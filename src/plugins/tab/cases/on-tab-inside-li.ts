@@ -128,7 +128,7 @@ function appendNestedList(
 					},
 					{} as Record<string, string>
 				)
-		  );
+			);
 
 	newList.appendChild(li);
 	lastElm !== newList && previousLi.appendChild(newList);

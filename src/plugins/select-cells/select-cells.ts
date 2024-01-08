@@ -65,7 +65,8 @@ export class selectCells extends Plugin {
 			// For `clickEditor` correct working. Because `mousedown` on first cell
 			// and mouseup on another cell call `click` only for `TR` element.
 			.on('clickTr clickTbody', (): void | false => {
-				const cellsCount = this.__tableModule.getAllSelectedCells().length;
+				const cellsCount =
+					this.__tableModule.getAllSelectedCells().length;
 
 				if (cellsCount) {
 					if (cellsCount > 1) {
@@ -398,7 +399,10 @@ export class selectCells extends Plugin {
 								);
 
 							columns.forEach(td => {
-								this.__tableModule.removeColumn(table, td.cellIndex);
+								this.__tableModule.removeColumn(
+									table,
+									td.cellIndex
+								);
 							});
 						}
 						break;

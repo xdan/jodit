@@ -173,7 +173,7 @@ export class Async implements IAsync {
 					onFire(...args);
 
 					return promise;
-			  }
+				}
 			: onFire;
 	}
 

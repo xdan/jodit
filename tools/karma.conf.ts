@@ -130,7 +130,12 @@ module.exports = function (cnf: Config): void {
 		hostname: '127.0.0.1',
 		colors: true,
 		logLevel: cnf.LOG_INFO,
-		browsers: ['chrome_debug', 'chrome_headless', 'FirefoxHeadless', 'Firefox'],
+		browsers: [
+			'chrome_debug',
+			'chrome_headless',
+			'FirefoxHeadless',
+			'Firefox'
+		],
 		customLaunchers: {
 			FirefoxHeadless: {
 				base: 'Firefox',

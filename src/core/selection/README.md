@@ -26,7 +26,7 @@ jodit.selection.focus();
 ```js
 const jodit = Jodit.make('#editor');
 jodit.s.commitStyle({ element: 'h1' }); // Wrap selected text in <h1> tag
-jodit.s.commitStyle({ attributes: { className: 'some-class'} }); // Add class to selected text
+jodit.s.commitStyle({ attributes: { className: 'some-class' } }); // Add class to selected text
 jodit.s.commitStyle({ attributes: { style: { color: 'red' } } }); // Apply style to selected text
 jodit.synchronizeValues();
 ```

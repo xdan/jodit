@@ -21,7 +21,7 @@ import { attr, ctrlKey, dataBind, getDataTransfer } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { autobind, throttle } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
-import { FileBrowserFiles } from "jodit/modules/file-browser/ui";
+import { FileBrowserFiles } from 'jodit/modules/file-browser/ui';
 
 /**
  * Process drag and drop image from FileBrowser and movev image inside the editor

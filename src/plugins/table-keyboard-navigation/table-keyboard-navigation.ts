@@ -86,7 +86,10 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 					return;
 				}
 
-				const tableModule = editor.getInstance<Table>('Table', editor.o);
+				const tableModule = editor.getInstance<Table>(
+					'Table',
+					editor.o
+				);
 
 				const table = Dom.up(
 					block,
@@ -119,7 +122,7 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 									? false
 									: (table.querySelector(
 											'tr'
-									  ) as HTMLTableRowElement),
+										) as HTMLTableRowElement),
 								sibling === 'next'
 							);
 							next = (Dom as any)[sibling](

@@ -75,7 +75,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 									ga('data-path'),
 									ga('data-source')
 								)
-					  }
+						}
 					: false,
 
 				self.dataProvider.canI('FileRename')
@@ -90,7 +90,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 									ga('data-source')
 								);
 							}
-					  }
+						}
 					: false,
 
 				self.dataProvider.canI('FileRemove')
@@ -112,7 +112,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 
 								return loadTree(self).catch(self.status);
 							}
-					  }
+						}
 					: false,
 
 				opt.preview
@@ -245,7 +245,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 									})
 									.fire('previewOpened');
 							}
-					  }
+						}
 					: false,
 				{
 					icon: 'upload',

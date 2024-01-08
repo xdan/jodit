@@ -30,7 +30,7 @@ fs.writeFileSync(
 				...(packageJson.name !== 'jodit'
 					? {
 							jodit: '^4.0.0-beta.76'
-					  }
+						}
 					: {})
 			},
 			devDependencies: {}

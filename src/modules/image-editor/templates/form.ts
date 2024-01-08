@@ -53,7 +53,7 @@ export const form = (
 				o.crop
 					? `<div class="${jie}__area ${jie}__area_crop ${act(
 							!o.resize
-					  )}">
+						)}">
 							<div data-ref="cropBox" class="${jie}__box">
 								<div class="${jie}__croper">
 									<i class="jodit_bottomright"></i>
@@ -94,7 +94,7 @@ export const form = (
 				o.crop
 					? `<div data-area="crop" class="${jie}__slider ${act(
 							!o.resize
-					  )}'">
+						)}'">
 							<div class="${jie}__slider-title">
 								${gi('crop')}
 								${i('Crop')}

@@ -11,6 +11,6 @@ export default ({ isProd, isTest }: Variables): { [key in string]: string } => {
 		? {
 				'jodit/core/helpers/utils/assert': 'export {assert(){}};',
 				'./assert': 'export {assert(){}};'
-		  }
+			}
 		: {};
 };

@@ -16,7 +16,7 @@ const jodit = Jodit.make('#editor', {
 
 jodit.imageeditor.open(
 	'https://xdsoft.net/jodit/images/test.png',
-	 (name, data, success, failed) => {
+	(name, data, success, failed) => {
 		const img = jodit.node.c('img');
 		img.setAttribute('src', 'https://xdsoft.net/jodit/images/test.png');
 		if (box.action !== 'resize') {

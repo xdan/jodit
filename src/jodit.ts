@@ -1371,7 +1371,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				? (ConfigProto(
 						options || {},
 						Config.defaultOptions
-				  ) as IWorkPlace['options'])
+					) as IWorkPlace['options'])
 				: this.options,
 			history: new History(this),
 			editorWindow: this.ow

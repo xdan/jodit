@@ -31,7 +31,7 @@ export function getStrongControlTypes(
 		: keys(items, false).map(key => {
 				const value = items[key] || {};
 				return ConfigProto({ name: key }, value) as IControlTypeStrong;
-		  });
+			});
 
 	return elements.map(item =>
 		getControlType(item, controls || Config.defaultOptions.controls)

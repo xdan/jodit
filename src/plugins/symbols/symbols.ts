@@ -146,9 +146,9 @@ export class symbols extends Plugin {
 											? Math.floor(
 													chars.length /
 														self.countInRow
-											  ) *
+												) *
 													self.countInRow +
-											  jIndex
+												jIndex
 											: jIndex;
 
 									if (newIndex > chars.length - 1) {

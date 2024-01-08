@@ -48,7 +48,10 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		}
 
 		this.o.toolbar &&
-			Dom.appendChildFirst(this.container, this.__defaultToolbarContainer);
+			Dom.appendChildFirst(
+				this.container,
+				this.__defaultToolbarContainer
+			);
 
 		return this.__defaultToolbarContainer;
 	}

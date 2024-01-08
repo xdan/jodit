@@ -70,7 +70,7 @@ Consider the following code:
 new Promise(result => {
 	fetch('index.php').then(result);
 }).then(data => {
-  // Here, Jodit is already destroyed
+	// Here, Jodit is already destroyed
 	jodit.setEditorValue(data); // Error
 });
 
@@ -78,7 +78,6 @@ jodit.destruct();
 ```
 
 To prevent such errors, it is recommended to perform all promise-based operations using the `async` method:
-
 
 ```js
 jodit.async
