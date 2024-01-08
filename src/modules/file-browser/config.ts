@@ -223,7 +223,7 @@ Config.prototype.filebrowser = {
 		}</div>`;
 
 		return `<a
-			data-jodit-filebrowser-item="true"
+			data-jodit-file-browser-item="true"
 			data-is-file="${item.isImage ? 0 : 1}"
 			draggable="true"
 			class="${IC}"

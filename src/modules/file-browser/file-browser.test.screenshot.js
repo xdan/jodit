@@ -14,7 +14,7 @@ describe('Filebrowser screenshot testing', () => {
 				return editor.filebrowser.open();
 			});
 
-			await page.waitForSelector('[data-jodit-filebrowser-item="true"]');
+			await page.waitForSelector('[data-jodit-file-browser-item="true"]');
 			const dialog = await page.$('[role="dialog"] .jodit-dialog__panel');
 			const screenshot = await dialog.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this);
@@ -50,10 +50,10 @@ describe('Filebrowser screenshot testing', () => {
 				return editor.filebrowser.open();
 			});
 
-			await page.waitForSelector('[data-jodit-filebrowser-item="true"]');
+			await page.waitForSelector('[data-jodit-file-browser-item="true"]');
 			await page.evaluate(() => {
 				const item = document.querySelector(
-					'[data-jodit-filebrowser-item="true"]'
+					'[data-jodit-file-browser-item="true"]'
 				);
 				const evt = new MouseEvent('contextmenu', {
 					bubbles: true,

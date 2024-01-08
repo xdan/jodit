@@ -64,7 +64,7 @@ export interface FileBrowser extends Dlgs {}
 export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	/** @override */
 	className(): string {
-		return 'Filebrowser';
+		return 'FileBrowser';
 	}
 
 	private browser = this.c.div(this.componentName);

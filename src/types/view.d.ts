@@ -146,6 +146,7 @@ interface IViewBased<T = IViewOptions>
 	getVersion(): string;
 
 	readonly components: Set<IComponent>;
+	getInstance<T extends IComponent>(module: Function, options?: object): T;
 	getInstance<T extends IComponent>(moduleName: string, options?: object): T;
 
 	readonly message: IMessages;

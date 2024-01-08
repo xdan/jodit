@@ -33,7 +33,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	TOOLBAR!: IToolbarCollection;
 	toolbar: this['TOOLBAR'] = makeCollection(this);
 
-	private defaultToolbarContainer: HTMLElement =
+	private __defaultToolbarContainer: HTMLElement =
 		this.c.div('jodit-toolbar__box');
 
 	/**
@@ -48,9 +48,9 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		}
 
 		this.o.toolbar &&
-			Dom.appendChildFirst(this.container, this.defaultToolbarContainer);
+			Dom.appendChildFirst(this.container, this.__defaultToolbarContainer);
 
-		return this.defaultToolbarContainer;
+		return this.__defaultToolbarContainer;
 	}
 
 	/**

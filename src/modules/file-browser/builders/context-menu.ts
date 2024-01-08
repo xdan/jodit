@@ -24,7 +24,7 @@ import {
 	getItem
 } from 'jodit/modules/file-browser/listeners/native-listeners';
 
-const CLASS_PREVIEW = 'jodit-filebrowser-preview',
+const CLASS_PREVIEW = 'jodit-file-browser-preview',
 	preview_tpl_next = (next = 'next', right = 'right'): string =>
 		`<div class="${CLASS_PREVIEW}__navigation ${CLASS_PREVIEW}__navigation_arrow_${next}">` +
 		'' +

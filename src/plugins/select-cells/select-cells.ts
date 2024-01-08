@@ -12,7 +12,7 @@
 
 import type { IBound, IJodit, Nullable } from 'jodit/types';
 import { Plugin } from 'jodit/core/plugin';
-import { Table } from 'jodit/modules';
+import { Table } from 'jodit/modules/table/table';
 import { Dom } from 'jodit/core/dom/dom';
 import { $$, alignElement, position } from 'jodit/core/helpers';
 import { KEY_TAB } from 'jodit/core/constants';
@@ -28,10 +28,10 @@ export class selectCells extends Plugin {
 	static override requires = ['select'];
 
 	/**
-	 * Shortcut for Table module
+	 * Shortcut for Jodit.modules.Table
 	 */
-	private get module(): Table {
-		return this.j.getInstance<Table>('Table', this.j.o);
+	private get __tableModule(): Table {
+		return this.j.getInstance<Table>(Table, this.j.o);
 	}
 
 	protected afterInit(jodit: IJodit): void {
@@ -65,7 +65,7 @@ export class selectCells extends Plugin {
 			// For `clickEditor` correct working. Because `mousedown` on first cell
 			// and mouseup on another cell call `click` only for `TR` element.
 			.on('clickTr clickTbody', (): void | false => {
-				const cellsCount = this.module.getAllSelectedCells().length;
+				const cellsCount = this.__tableModule.getAllSelectedCells().length;
 
 				if (cellsCount) {
 					if (cellsCount > 1) {
@@ -80,12 +80,12 @@ export class selectCells extends Plugin {
 	/**
 	 * First selected cell
 	 */
-	private selectedCell: Nullable<HTMLTableCellElement> = null;
+	private __selectedCell: Nullable<HTMLTableCellElement> = null;
 
 	/**
 	 * User is selecting cells now
 	 */
-	private isSelectionMode: boolean = false;
+	private __isSelectionMode: boolean = false;
 
 	/**
 	 * Mouse click inside the table
@@ -116,17 +116,17 @@ export class selectCells extends Plugin {
 			cell.appendChild(this.j.createInside.element('br'));
 		}
 
-		this.isSelectionMode = true;
-		this.selectedCell = cell;
+		this.__isSelectionMode = true;
+		this.__selectedCell = cell;
 
-		this.module.addSelection(cell);
+		this.__tableModule.addSelection(cell);
 
 		this.j.e
 			.on(
 				table,
 				'mousemove.select-cells touchmove.select-cells',
 				// Don't use decorator because need clear label on mouseup
-				this.j.async.throttle(this.onMove.bind(this, table), {
+				this.j.async.throttle(this.__onMove.bind(this, table), {
 					label: MOUSE_MOVE_LABEL,
 					timeout: this.j.defaultTimeout / 2
 				})
@@ -134,7 +134,7 @@ export class selectCells extends Plugin {
 			.on(
 				table,
 				'mouseup.select-cells touchend.select-cells',
-				this.onStopSelection.bind(this, table)
+				this.__onStopSelection.bind(this, table)
 			);
 
 		return false;
@@ -142,21 +142,21 @@ export class selectCells extends Plugin {
 
 	@watch(':outsideClick')
 	protected onOutsideClick(): void {
-		this.selectedCell = null;
-		this.onRemoveSelection();
+		this.__selectedCell = null;
+		this.__onRemoveSelection();
 	}
 
 	@watch(':change')
 	protected onChange(): void {
-		if (!this.j.isLocked && !this.isSelectionMode) {
-			this.onRemoveSelection();
+		if (!this.j.isLocked && !this.__isSelectionMode) {
+			this.__onRemoveSelection();
 		}
 	}
 
 	/**
 	 * Mouse move inside the table
 	 */
-	private onMove(table: HTMLTableElement, e: MouseEvent): void {
+	private __onMove(table: HTMLTableElement, e: MouseEvent): void {
 		if (this.j.o.readonly && !this.j.isLocked) {
 			return;
 		}
@@ -173,29 +173,29 @@ export class selectCells extends Plugin {
 
 		const cell = Dom.closest(node, ['td', 'th'], table);
 
-		if (!cell || !this.selectedCell) {
+		if (!cell || !this.__selectedCell) {
 			return;
 		}
 
-		if (cell !== this.selectedCell) {
+		if (cell !== this.__selectedCell) {
 			this.j.lock(key);
 		}
 
 		this.unselectCells();
 
-		const bound = this.module.getSelectedBound(table, [
+		const bound = this.__tableModule.getSelectedBound(table, [
 				cell,
-				this.selectedCell
+				this.__selectedCell
 			]),
-			box = this.module.formalMatrix(table);
+			box = this.__tableModule.formalMatrix(table);
 
 		for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
 			for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
-				this.module.addSelection(box[i][j]);
+				this.__tableModule.addSelection(box[i][j]);
 			}
 		}
 
-		const cellsCount = this.module.getAllSelectedCells().length;
+		const cellsCount = this.__tableModule.getAllSelectedCells().length;
 
 		if (cellsCount > 1) {
 			this.j.s.sel?.removeAllRanges();
@@ -222,11 +222,11 @@ export class selectCells extends Plugin {
 	 * On click in outside - remove selection
 	 */
 	@autobind
-	private onRemoveSelection(e?: MouseEvent): void {
+	private __onRemoveSelection(e?: MouseEvent): void {
 		if (
 			!e?.buffer?.actionTrigger &&
-			!this.selectedCell &&
-			this.module.getAllSelectedCells().length
+			!this.__selectedCell &&
+			this.__tableModule.getAllSelectedCells().length
 		) {
 			this.j.unlock();
 			this.unselectCells();
@@ -234,20 +234,20 @@ export class selectCells extends Plugin {
 			return;
 		}
 
-		this.isSelectionMode = false;
-		this.selectedCell = null;
+		this.__isSelectionMode = false;
+		this.__selectedCell = null;
 	}
 
 	/**
-	 * Stop selection process
+	 * Stop a selection process
 	 */
 	@autobind
-	private onStopSelection(table: HTMLTableElement, e: MouseEvent): void {
-		if (!this.selectedCell) {
+	private __onStopSelection(table: HTMLTableElement, e: MouseEvent): void {
+		if (!this.__selectedCell) {
 			return;
 		}
 
-		this.isSelectionMode = false;
+		this.__isSelectionMode = false;
 
 		this.j.unlock();
 
@@ -269,11 +269,11 @@ export class selectCells extends Plugin {
 			return; // Nested tables
 		}
 
-		const bound = this.module.getSelectedBound(table, [
+		const bound = this.__tableModule.getSelectedBound(table, [
 				cell,
-				this.selectedCell
+				this.__selectedCell
 			]),
-			box = this.module.formalMatrix(table);
+			box = this.__tableModule.formalMatrix(table);
 
 		const max = box[bound[1][0]][bound[1][1]],
 			min = box[bound[0][0]][bound[0][1]];
@@ -311,7 +311,7 @@ export class selectCells extends Plugin {
 	 * Remove selection for all cells
 	 */
 	private unselectCells(currentCell?: Nullable<HTMLTableCellElement>): void {
-		const module = this.module;
+		const module = this.__tableModule;
 		const cells = module.getAllSelectedCells();
 
 		if (cells.length) {
@@ -335,7 +335,7 @@ export class selectCells extends Plugin {
 		) {
 			command = command.replace('table', '');
 
-			const cells = this.module.getAllSelectedCells();
+			const cells = this.__tableModule.getAllSelectedCells();
 
 			if (cells.length) {
 				const [cell] = cells;
@@ -352,15 +352,15 @@ export class selectCells extends Plugin {
 
 				switch (command) {
 					case 'splitv':
-						this.module.splitVertical(table);
+						this.__tableModule.splitVertical(table);
 						break;
 
 					case 'splitg':
-						this.module.splitHorizontal(table);
+						this.__tableModule.splitHorizontal(table);
 						break;
 
 					case 'merge':
-						this.module.mergeSelected(table);
+						this.__tableModule.mergeSelected(table);
 						break;
 
 					case 'empty':
@@ -377,7 +377,7 @@ export class selectCells extends Plugin {
 								td => td.parentNode as HTMLTableRowElement
 							)
 						).forEach(row => {
-							this.module.removeRow(table, row.rowIndex);
+							this.__tableModule.removeRow(table, row.rowIndex);
 						});
 
 						break;
@@ -398,14 +398,14 @@ export class selectCells extends Plugin {
 								);
 
 							columns.forEach(td => {
-								this.module.removeColumn(table, td.cellIndex);
+								this.__tableModule.removeColumn(table, td.cellIndex);
 							});
 						}
 						break;
 
 					case 'addcolumnafter':
 					case 'addcolumnbefore':
-						this.module.appendColumn(
+						this.__tableModule.appendColumn(
 							table,
 							cell.cellIndex,
 							command === 'addcolumnafter'
@@ -414,7 +414,7 @@ export class selectCells extends Plugin {
 
 					case 'addrowafter':
 					case 'addrowbefore':
-						this.module.appendRow(
+						this.__tableModule.appendRow(
 							table,
 							cell.parentNode as HTMLTableRowElement,
 							command === 'addrowafter'
@@ -433,7 +433,7 @@ export class selectCells extends Plugin {
 	@autobind
 	private onAfterCommand(command: string): void {
 		if (/^justify/.test(command)) {
-			this.module
+			this.__tableModule
 				.getAllSelectedCells()
 				.forEach(elm => alignElement(command, elm));
 		}
@@ -441,7 +441,7 @@ export class selectCells extends Plugin {
 
 	/** @override */
 	protected beforeDestruct(jodit: IJodit): void {
-		this.onRemoveSelection();
+		this.__onRemoveSelection();
 
 		jodit.e.off('.select-cells');
 	}

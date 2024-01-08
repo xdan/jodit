@@ -2,7 +2,7 @@
 @import (reference) '../../../../styles/mixins';
 @import (reference) '../../styles/file-browser';
 
-.jodit-filebrowser-files {
+.jodit-file-browser-files {
 	position: relative;
 	display: none;
 	height: 100%;
@@ -60,7 +60,7 @@
 			border-color: var(--color-border-selected);
 			background-color: var(--color-border-active);
 
-			.jodit-filebrowser-files__item-info {
+			.jodit-file-browser-files__item-info {
 				background-color: var(--color-border-active);
 				color: white;
 				text-shadow: none;
@@ -91,7 +91,7 @@
 				text-overflow: ellipsis;
 				white-space: nowrap;
 
-				&.jodit-filebrowser-files__item-info-filename {
+				&.jodit-file-browser-files__item-info-filename {
 					font-size: 0.9em;
 					font-weight: bold;
 				}
@@ -124,7 +124,7 @@
 				vertical-align: middle;
 			}
 
-			.jodit-filebrowser-files__item-info {
+			.jodit-file-browser-files__item-info {
 				position: static;
 				display: inline-block;
 				width: ~'calc(100% - 20px)';
@@ -158,7 +158,7 @@
 			&:hover {
 				background-color: #433b5c;
 
-				.jodit-filebrowser-files__item-info {
+				.jodit-file-browser-files__item-info {
 					color: #fff;
 					text-shadow: none;
 				}

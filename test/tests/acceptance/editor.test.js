@@ -459,7 +459,7 @@ describe('Jodit Editor Tests', function () {
 			});
 		});
 
-		describe.only('For modules', () => {
+		describe('For modules', () => {
 			describe('getInstance', () => {
 				it('should return instance of module', () => {
 					const editor = getJodit();
@@ -467,8 +467,8 @@ describe('Jodit Editor Tests', function () {
 						Jodit.modules.Table
 					);
 
-					expect(editor.getInstance('Filebrowser')).is.instanceOf(
-						Jodit.modules.Filebrowser
+					expect(editor.getInstance('FileBrowser')).is.instanceOf(
+						Jodit.modules.FileBrowser
 					);
 
 					expect(editor.getInstance('Ajax')).is.instanceOf(
@@ -476,7 +476,7 @@ describe('Jodit Editor Tests', function () {
 					);
 				});
 
-				it('should allow use contructor as key', () => {
+				it('should allow use a constructor as a key', () => {
 					const editor = getJodit();
 
 					expect(
