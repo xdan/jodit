@@ -705,7 +705,7 @@ describe('Jodit Editor Tests', function () {
 			describe('Get filebrowser and uploader property from editor', function () {
 				('filebrowser' in window.skipTest ? describe.skip : describe)(
 					'FileBrowser',
-					function () {
+					 () => {
 						it('should create instance of Filebrowser  only one time and in lazy mode', function () {
 							const editor = getJodit();
 

@@ -41,7 +41,7 @@ if (typeof window.skipTest === 'undefined') {
 }
 
 if (typeof window.toolbarButtonsCount !== 'number') {
-	window.toolbarButtonsCount = 39;
+	window.toolbarButtonsCount = 40;
 }
 
 /**

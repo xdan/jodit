@@ -8,24 +8,24 @@ describe('Test mobile mode', function () {
 
 	describe('Toolbar', function () {
 		it('Should have different count buttons for different container sizes', function () {
-			getBox().style.width = '1000px';
+			getBox().style.width = '1400px';
 			const editor = getJodit({});
 			const count = () =>
 				editor.container.querySelectorAll(
 					'.jodit-toolbar__box .jodit-toolbar-button'
 				).length;
 
-			expect(count()).to.eq(39);
+			expect(count()).to.eq(40);
 
 			getBox().style.width = '790px';
 			simulateEvent('resize', window);
 
-			expect(count()).to.eq(29);
+			expect(count()).to.eq(30);
 
 			getBox().style.width = '690px';
 			simulateEvent('resize', window);
 
-			expect(count()).to.eq(19);
+			expect(count()).to.eq(20);
 
 			getBox().style.width = '390px';
 			simulateEvent('resize', window);

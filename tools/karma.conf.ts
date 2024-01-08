@@ -130,15 +130,25 @@ module.exports = function (cnf: Config): void {
 		hostname: '127.0.0.1',
 		colors: true,
 		logLevel: cnf.LOG_INFO,
-		browsers: ['ChromeHeadless', 'FirefoxHeadless', 'Firefox'],
+		browsers: ['chrome_debug', 'chrome_headless', 'FirefoxHeadless', 'Firefox'],
 		customLaunchers: {
 			FirefoxHeadless: {
 				base: 'Firefox',
 				flags: ['-width', '1440', '-height', '900', '-headless']
 			},
 
-			ChromeHeadless: {
+			chrome_debug: {
 				base: 'Chrome',
+				flags: [
+					'--window-size=1440,900',
+					'--disable-gpu',
+					'--disable-extensions',
+					'--disable-translate'
+				]
+			},
+
+			chrome_headless: {
+				base: 'ChromeHeadless',
 				flags: [
 					'--window-size=1440,900',
 					'--disable-gpu',
