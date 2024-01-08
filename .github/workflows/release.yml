@@ -34,7 +34,7 @@ jobs:
 
     - name: Publish
       run: |
-        NPM_TOKEN=${{ secrets.NPM_TOKEN }} npm publish ./build --access public --tag beta
+        NPM_TOKEN=${{ secrets.NPM_TOKEN }} npm publish ./build --access public
 
     - name: Trigger generate site hook
       run: |

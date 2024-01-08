@@ -109,9 +109,9 @@ You can manually include additional plugins and languages as needed.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.0-beta.24/es2021/jodit.min.css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.1/es2021/jodit.min.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.0-beta.24/es2021/jodit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.1/es2021/jodit.min.js"></script>
 ```
 
 #### unpkg
@@ -119,9 +119,9 @@ You can manually include additional plugins and languages as needed.
 ```html
 <link
   rel="stylesheet"
-  href="https://unpkg.com/jodit@4.0.0-beta.24/es2021/jodit.min.css"
+  href="https://unpkg.com/jodit@4.0.1/es2021/jodit.min.css"
 />
-<script src="https://unpkg.com/jodit@4.0.0-beta.24/es2021/jodit.min.js"></script>
+<script src="https://unpkg.com/jodit@4.0.1/es2021/jodit.min.js"></script>
 ```
 
 ### Usage

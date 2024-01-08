@@ -142,7 +142,7 @@ build-all:
 	make clean
 	@mkdir -p $(pwd)/build/
 	@$(TS_NODE_BASE) $(cwd)tools/utils/prepare-publish.ts $(pwd)
-	@$(NODE_MODULES_BIN)/replace "4\.0\.0-beta\.\d+" "$(version)" $(pwd)/build/README.md --silent
+	@$(NODE_MODULES_BIN)/replace "4\.0\.1\.\d+" "$(version)" $(pwd)/build/README.md --silent
 
 	@echo 'Build esm ...'
 	make esm
@@ -235,8 +235,8 @@ screenshots-build-image:
 
 .PHONY: newversion
 newversion:
-	#npm version patch --no-git-tag-version
-	npm version prerelease --preid=beta --no-git-tag-version
+	npm version patch --no-git-tag-version
+	#npm version prerelease --preid=beta --no-git-tag-version
 	make newversion-git
 
 .PHONY: newversion-git

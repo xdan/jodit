@@ -9,6 +9,10 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.0.1
+
+[See changelog](https://github.com/xdan/jodit/releases)
+
 ## 4.0.0-beta.121
 
 #### :boom: Breaking Change
