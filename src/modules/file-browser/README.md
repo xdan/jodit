@@ -1,4 +1,4 @@
-# Jodit filebrowser
+# Filebrowser
 
 Module for working with remote images or just files. Allows you to upload / delete / rename files on the server.
 

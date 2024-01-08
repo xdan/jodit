@@ -44,7 +44,7 @@ export class hotkeys extends Plugin {
 		return normalizeKeyAliases(modif.join('+'));
 	};
 
-	specialKeys: { [key: number]: string } = {
+	private specialKeys: { [key: number]: string } = {
 		8: 'backspace',
 		9: 'tab',
 		10: 'return',
@@ -113,7 +113,7 @@ export class hotkeys extends Plugin {
 	};
 
 	/** @override */
-	afterInit(editor: IJodit): void {
+	protected override afterInit(editor: IJodit): void {
 		keys(editor.o.commandToHotkeys, false).forEach(
 			(commandName: string) => {
 				const shortcuts = editor.o.commandToHotkeys[commandName];
@@ -177,7 +177,7 @@ export class hotkeys extends Plugin {
 	}
 
 	/** @override */
-	beforeDestruct(jodit: IJodit): void {
+	protected override beforeDestruct(jodit: IJodit): void {
 		if (jodit.events) {
 			jodit.e.off('.hotkeys');
 		}
