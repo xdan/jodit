@@ -9,12 +9,12 @@
  */
 
 /**
- * Check if name has normal format
+ * Check if name has a normal format
  */
 export function isValidName(name: string): boolean {
 	if (!name.length) {
 		return false;
 	}
 
-	return !/[^0-9A-Za-zа-яА-ЯЁё\w\-_.]/.test(name);
+	return !/[^0-9A-Za-zа-яА-ЯЁё\w\-_. ]/.test(name) && name.trim().length > 0;
 }
