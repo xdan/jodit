@@ -11,7 +11,7 @@
 		"coverage": "make coverage",
 		"newversion": "make newversion",
 		"build": "make build-all",
-		"test": "make test",
+		"test": "make test browsers=chrome_headless",
 		"test:screenshots": "make screenshots-test",
 		"test:debug": "make test-only-run browsers=chrome_debug singleRun=false",
 		"test:chrome": "make test-only-run browsers=chrome_debug",

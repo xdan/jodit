@@ -64,7 +64,8 @@ describe('Toolbar', function () {
 
 	it('Should have buttons', function () {
 		const editor = getJodit({
-			toolbarAdaptive: true
+			toolbarAdaptive: true,
+			disablePlugins: ['speech-recognize']
 		});
 
 		expect(

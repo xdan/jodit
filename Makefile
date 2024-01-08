@@ -197,7 +197,7 @@ test:
 	make test-find
 	make clean
 	make build es=$(es) uglify=$(uglify) isTest=true fat=$(fat)
-	make test-only-run build=$(es) uglify=$(uglify) fat=$(fat)
+	make test-only-run build=$(es) uglify=$(uglify) fat=$(fat) browsers=$(browsers)
 
 
 .PHONY: test-find find-test
