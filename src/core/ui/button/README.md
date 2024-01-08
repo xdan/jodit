@@ -1,3 +1,3 @@
-# Jodit Button UI Element
+# Button UI Element
 
 Component for creating buttons.

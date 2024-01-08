@@ -75,7 +75,6 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 		return 'ImageEditor';
 	}
 
-
 	options: ImageEditorOptions;
 	get o(): this['options'] {
 		return this.options;

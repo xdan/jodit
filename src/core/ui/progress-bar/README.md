@@ -1,1 +1,1 @@
-# Jodit Progress Bar UI element
+# Progress Bar UI element

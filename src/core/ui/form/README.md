@@ -1,4 +1,4 @@
-# Jodit Form UI Element
+# Form UI Element
 
 Component for creating form interfaces.
 
