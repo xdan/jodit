@@ -30,6 +30,7 @@ import { Jodit as DefaultJodit } from './jodit';
 
 import Languages from './languages';
 
+import { isFunction, isString } from 'jodit/core/helpers/checker';
 import * as decorators from './core/decorators';
 import * as Modules from './modules/';
 import * as Icons from './styles/icons/';
@@ -57,7 +58,18 @@ Object.keys(Modules)
 	.filter(esFilter)
 	.forEach((key: string) => {
 		// @ts-ignore
-		DefaultJodit.modules[key] = Modules[key];
+		const module = Modules[key];
+		const name = isFunction(module.prototype?.className)
+			? module.prototype.className()
+			: key;
+
+		if (!isString(name)) {
+			console.warn('Module name must be a string', key);
+			return;
+		}
+
+		// @ts-ignore
+		DefaultJodit.modules[name] = module;
 	});
 
 // Decorators

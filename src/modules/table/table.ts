@@ -38,13 +38,13 @@ export class Table extends ViewComponent<IJodit> {
 
 	private selected: Set<HTMLTableCellElement> = new Set();
 
-	private static selectedByTable: WeakMap<
+	private static __selectedByTable: WeakMap<
 		HTMLTableElement,
 		Set<HTMLTableCellElement>
 	> = new WeakMap();
 
 	@debounce()
-	private recalculateStyles(): void {
+	private __recalculateStyles(): void {
 		const style = getContainer(this.j, Table, 'style', true);
 
 		const selectors: string[] = [];
@@ -63,32 +63,32 @@ export class Table extends ViewComponent<IJodit> {
 
 	addSelection(td: HTMLTableCellElement): void {
 		this.selected.add(td);
-		this.recalculateStyles();
+		this.__recalculateStyles();
 
 		const table = Dom.closest(td, 'table', this.j.editor);
 
 		if (table) {
-			const cells = Table.selectedByTable.get(table) || new Set();
+			const cells = Table.__selectedByTable.get(table) || new Set();
 			cells.add(td);
-			Table.selectedByTable.set(table, cells);
+			Table.__selectedByTable.set(table, cells);
 		}
 	}
 
 	removeSelection(td: HTMLTableCellElement): void {
 		this.selected.delete(td);
 
-		this.recalculateStyles();
+		this.__recalculateStyles();
 
 		const table = Dom.closest(td, 'table', this.j.editor);
 
 		if (table) {
-			const cells = Table.selectedByTable.get(table);
+			const cells = Table.__selectedByTable.get(table);
 
 			if (cells) {
 				cells.delete(td);
 
 				if (!cells.size) {
-					Table.selectedByTable.delete(table);
+					Table.__selectedByTable.delete(table);
 				}
 			}
 		}
@@ -101,10 +101,10 @@ export class Table extends ViewComponent<IJodit> {
 		return toArray(this.selected);
 	}
 
-	static getSelectedCellsByTable(
+	protected static getSelectedCellsByTable(
 		table: HTMLTableElement
 	): HTMLTableCellElement[] {
-		const cells = Table.selectedByTable.get(table);
+		const cells = Table.__selectedByTable.get(table);
 		return cells ? toArray(cells) : [];
 	}
 
@@ -114,17 +114,18 @@ export class Table extends ViewComponent<IJodit> {
 		return super.destruct();
 	}
 
-	/**
-	 * Returns rows count in the table
-	 */
-	static getRowsCount(table: HTMLTableElement): number {
+	protected static getRowsCount(table: HTMLTableElement): number {
 		return table.rows.length;
 	}
 
 	/**
-	 * Returns columns count in the table
+	 * Returns rows count in the table
 	 */
-	static getColumnsCount(table: HTMLTableElement): number {
+	getRowsCount(table: HTMLTableElement): number {
+		return Table.getRowsCount(table);
+	}
+
+	protected static getColumnsCount(table: HTMLTableElement): number {
 		const matrix = Table.formalMatrix(table);
 
 		return matrix.reduce(
@@ -134,10 +135,13 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * Generate formal table martix columns*rows
-	 * @param callback - if return false cycle break
+	 * Returns columns count in the table
 	 */
-	static formalMatrix(
+	getColumnsCount(table: HTMLTableElement): number {
+		return Table.getColumnsCount(table);
+	}
+
+	protected static formalMatrix(
 		table: HTMLTableElement,
 		callback?: (
 			cell: HTMLTableCellElement,
@@ -205,9 +209,23 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * Get cell coordinate in formal table (without colspan and rowspan)
+	 * Generate formal table martix columns*rows
+	 * @param callback - if return false cycle break
 	 */
-	static formalCoordinate(
+	formalMatrix(
+		table: HTMLTableElement,
+		callback?: (
+			cell: HTMLTableCellElement,
+			row: number,
+			col: number,
+			colSpan: number,
+			rowSpan: number
+		) => false | void
+	): HTMLTableCellElement[][] {
+		return Table.formalMatrix(table, callback);
+	}
+
+	protected static formalCoordinate(
 		table: HTMLTableElement,
 		cell: HTMLTableCellElement,
 		max = false
@@ -246,15 +264,17 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * Inserts a new line after row what contains the selected cell
-	 *
-	 * @param table - Working table
-	 * @param line - Insert a new line after/before this
-	 * line contains the selected cell
-	 * @param after - Insert a new line after line contains the selected cell
-	 * @param create - Instance of Create class
+	 * Get cell coordinate in formal table (without colspan and rowspan)
 	 */
-	static appendRow(
+	formalCoordinate(
+		table: HTMLTableElement,
+		cell: HTMLTableCellElement,
+		max = false
+	): number[] {
+		return Table.formalCoordinate(table, cell, max);
+	}
+
+	protected static appendRow(
 		table: HTMLTableElement,
 		line: false | HTMLTableRowElement,
 		after: boolean,
@@ -300,9 +320,26 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * Remove row
+	 * Inserts a new line after row what contains the selected cell
+	 *
+	 * @param table - Working table
+	 * @param line - Insert a new line after/before this
+	 * line contains the selected cell
+	 * @param after - Insert a new line after line contains the selected cell
+	 * @param create - Instance of Create class
 	 */
-	static removeRow(table: HTMLTableElement, rowIndex: number): void {
+	appendRow(
+		table: HTMLTableElement,
+		line: false | HTMLTableRowElement,
+		after: boolean
+	): void {
+		return Table.appendRow(table, line, after, this.j.createInside);
+	}
+
+	protected static removeRow(
+		table: HTMLTableElement,
+		rowIndex: number
+	): void {
 		const box = Table.formalMatrix(table);
 
 		let dec: boolean;
@@ -356,9 +393,13 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * Insert column before / after all the columns containing the selected cells
+	 * Remove row
 	 */
-	static appendColumn(
+	removeRow(table: HTMLTableElement, rowIndex: number): void {
+		return Table.removeRow(table, rowIndex);
+	}
+
+	protected static appendColumn(
 		table: HTMLTableElement,
 		j: number,
 		after: boolean,
@@ -411,9 +452,13 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * Remove column by index
+	 * Insert column before / after all the columns containing the selected cells
 	 */
-	static removeColumn(table: HTMLTableElement, j: number): void {
+	appendColumn(table: HTMLTableElement, j: number, after: boolean): void {
+		return Table.appendColumn(table, j, after, this.j.createInside);
+	}
+
+	protected static removeColumn(table: HTMLTableElement, j: number): void {
 		const box = Table.formalMatrix(table);
 
 		let dec: boolean;
@@ -443,9 +488,13 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * Define bound for selected cells
+	 * Remove column by index
 	 */
-	static getSelectedBound(
+	removeColumn(table: HTMLTableElement, j: number): void {
+		return Table.removeColumn(table, j);
+	}
+
+	protected static getSelectedBound(
 		table: HTMLTableElement,
 		selectedCells: HTMLTableCellElement[]
 	): number[][] {
@@ -503,9 +552,16 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * Try recalculate all coluns and rows after change
+	 * Define bound for selected cells
 	 */
-	static normalizeTable(table: HTMLTableElement): void {
+	getSelectedBound(
+		table: HTMLTableElement,
+		selectedCells: HTMLTableCellElement[]
+	): number[][] {
+		return Table.getSelectedBound(table, selectedCells);
+	}
+
+	protected static normalizeTable(table: HTMLTableElement): void {
 		let i: number, j: number, min: number, not: boolean;
 
 		const __marked: HTMLTableCellElement[] = [],
@@ -534,7 +590,7 @@ export class Table extends ViewComponent<IJodit> {
 						continue; // broken table
 					}
 
-					Table.mark(
+					Table.__mark(
 						box[i][j],
 						'colspan',
 						box[i][j].colSpan - min + 1,
@@ -566,7 +622,7 @@ export class Table extends ViewComponent<IJodit> {
 						continue; // broken table
 					}
 
-					Table.mark(
+					Table.__mark(
 						box[i][j],
 						'rowspan',
 						box[i][j].rowSpan - min + 1,
@@ -606,13 +662,20 @@ export class Table extends ViewComponent<IJodit> {
 			}
 		}
 
-		Table.unmark(__marked);
+		Table.__unmark(__marked);
 	}
 
 	/**
-	 * It combines all of the selected cells into one. The contents of the cells will also be combined
+	 * Try recalculate all coluns and rows after change
 	 */
-	static mergeSelected(table: HTMLTableElement, jodit: IJodit): void {
+	normalizeTable(table: HTMLTableElement): void {
+		return Table.normalizeTable(table);
+	}
+
+	protected static mergeSelected(
+		table: HTMLTableElement,
+		jodit: IJodit
+	): void {
 		const html: string[] = [],
 			bound = Table.getSelectedBound(
 				table,
@@ -672,7 +735,7 @@ export class Table extends ViewComponent<IJodit> {
 								first = cell;
 								first_j = j;
 							} else {
-								Table.mark(td, 'remove', 1, __marked);
+								Table.__mark(td, 'remove', 1, __marked);
 
 								instance(jodit).removeSelection(td);
 							}
@@ -686,14 +749,14 @@ export class Table extends ViewComponent<IJodit> {
 
 			if (first) {
 				if (cols > 1) {
-					Table.mark(first, 'colspan', cols, __marked);
+					Table.__mark(first, 'colspan', cols, __marked);
 				}
 				if (rows > 1) {
-					Table.mark(first, 'rowspan', rows, __marked);
+					Table.__mark(first, 'rowspan', rows, __marked);
 				}
 
 				if (w) {
-					Table.mark(
+					Table.__mark(
 						first,
 						'width',
 						((w / table.offsetWidth) * 100).toFixed(
@@ -718,7 +781,7 @@ export class Table extends ViewComponent<IJodit> {
 
 				alreadyMerged.delete(first);
 
-				Table.unmark(__marked);
+				Table.__unmark(__marked);
 
 				Table.normalizeTable(table);
 
@@ -732,9 +795,16 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * Divides all selected by `jodit_focused_cell` class table cell in 2 parts vertical. Those division into 2 columns
+	 * It combines all of the selected cells into one. The contents of the cells will also be combined
 	 */
-	static splitHorizontal(table: HTMLTableElement, jodit: IJodit): void {
+	mergeSelected(table: HTMLTableElement): void {
+		return Table.mergeSelected(table, this.j);
+	}
+
+	protected static splitHorizontal(
+		table: HTMLTableElement,
+		jodit: IJodit
+	): void {
 		let coord: number[],
 			td: HTMLTableCellElement,
 			tr: HTMLTableRowElement,
@@ -758,7 +828,7 @@ export class Table extends ViewComponent<IJodit> {
 							coord[1] !== j &&
 							tdElm !== cell
 						) {
-							Table.mark(
+							Table.__mark(
 								tdElm,
 								'rowspan',
 								tdElm.rowSpan + 1,
@@ -774,7 +844,7 @@ export class Table extends ViewComponent<IJodit> {
 
 					tr.appendChild(td);
 				} else {
-					Table.mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
+					Table.__mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
 
 					Table.formalMatrix(
 						table,
@@ -802,10 +872,10 @@ export class Table extends ViewComponent<IJodit> {
 				}
 
 				if (cell.colSpan > 1) {
-					Table.mark(td, 'colspan', cell.colSpan, __marked);
+					Table.__mark(td, 'colspan', cell.colSpan, __marked);
 				}
 
-				Table.unmark(__marked);
+				Table.__unmark(__marked);
 				instance(jodit).removeSelection(cell);
 			}
 		);
@@ -814,9 +884,16 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * It splits all the selected cells into 2 parts horizontally. Those. are added new row
+	 * Divides all selected by `jodit_focused_cell` class table cell in 2 parts vertical. Those division into 2 columns
 	 */
-	static splitVertical(table: HTMLTableElement, jodit: IJodit): void {
+	splitHorizontal(table: HTMLTableElement): void {
+		return Table.splitHorizontal(table, this.j);
+	}
+
+	protected static splitVertical(
+		table: HTMLTableElement,
+		jodit: IJodit
+	): void {
 		let coord: number[], td: HTMLTableCellElement, percentage: number;
 
 		const __marked: HTMLTableCellElement[] = [];
@@ -827,7 +904,7 @@ export class Table extends ViewComponent<IJodit> {
 			if (cell.colSpan < 2) {
 				Table.formalMatrix(table, (tdElm, i, j) => {
 					if (coord[1] === j && coord[0] !== i && tdElm !== cell) {
-						Table.mark(
+						Table.__mark(
 							tdElm,
 							'colspan',
 							tdElm.colSpan + 1,
@@ -836,14 +913,14 @@ export class Table extends ViewComponent<IJodit> {
 					}
 				});
 			} else {
-				Table.mark(cell, 'colspan', cell.colSpan - 1, __marked);
+				Table.__mark(cell, 'colspan', cell.colSpan - 1, __marked);
 			}
 
 			td = jodit.createInside.element('td');
 			td.appendChild(jodit.createInside.element('br'));
 
 			if (cell.rowSpan > 1) {
-				Table.mark(td, 'rowspan', cell.rowSpan, __marked);
+				Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
 			}
 
 			const oldWidth = cell.offsetWidth; // get old width
@@ -852,21 +929,21 @@ export class Table extends ViewComponent<IJodit> {
 
 			percentage = oldWidth / table.offsetWidth / 2;
 
-			Table.mark(
+			Table.__mark(
 				cell,
 				'width',
 				(percentage * 100).toFixed(consts.ACCURACY) + '%',
 				__marked
 			);
 
-			Table.mark(
+			Table.__mark(
 				td,
 				'width',
 				(percentage * 100).toFixed(consts.ACCURACY) + '%',
 				__marked
 			);
 
-			Table.unmark(__marked);
+			Table.__unmark(__marked);
 
 			instance(jodit).removeSelection(cell);
 		});
@@ -875,9 +952,13 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * Set column width used delta value
+	 * It splits all the selected cells into 2 parts horizontally. Those. are added new row
 	 */
-	static setColumnWidthByDelta(
+	splitVertical(table: HTMLTableElement): void {
+		return Table.splitVertical(table, this.j);
+	}
+
+	protected static setColumnWidthByDelta(
 		table: HTMLTableElement,
 		column: number,
 		delta: number,
@@ -897,7 +978,7 @@ export class Table extends ViewComponent<IJodit> {
 			const w = cell.offsetWidth;
 			const percent = ((w + delta) / table.offsetWidth) * 100;
 
-			Table.mark(
+			Table.__mark(
 				cell,
 				'width',
 				percent.toFixed(consts.ACCURACY) + '%',
@@ -911,15 +992,34 @@ export class Table extends ViewComponent<IJodit> {
 		for (let i = clearWidthIndex + 1; i < box.length; i += 1) {
 			const cell = box[i][column];
 
-			Table.mark(cell, 'width', null, marked);
+			Table.__mark(cell, 'width', null, marked);
 		}
 
 		if (!noUnmark) {
-			Table.unmark(marked);
+			Table.__unmark(marked);
 		}
 	}
 
-	private static mark(
+	/**
+	 * Set column width used delta value
+	 */
+	setColumnWidthByDelta(
+		table: HTMLTableElement,
+		column: number,
+		delta: number,
+		noUnmark: boolean,
+		marked: HTMLTableCellElement[]
+	): void {
+		return Table.setColumnWidthByDelta(
+			table,
+			column,
+			delta,
+			noUnmark,
+			marked
+		);
+	}
+
+	private static __mark(
 		cell: HTMLTableCellElement,
 		key: string,
 		value: string | number | null,
@@ -932,7 +1032,7 @@ export class Table extends ViewComponent<IJodit> {
 		markedValue.set(cell, dict);
 	}
 
-	private static unmark(marked: HTMLTableCellElement[]): void {
+	private static __unmark(marked: HTMLTableCellElement[]): void {
 		marked.forEach(cell => {
 			const dict = markedValue.get(cell);
 

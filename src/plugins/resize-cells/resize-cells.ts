@@ -138,13 +138,13 @@ export class resizeCells extends Plugin {
 			this.maxX = this.minX + tableBox.width;
 		} else {
 			// find maximum columns
-			const coordinate = Table.formalCoordinate(
+			const coordinate = this.module.formalCoordinate(
 				this.workTable,
 				this.workCell,
 				true
 			);
 
-			Table.formalMatrix(this.workTable, (td, i, j) => {
+			this.module.formalMatrix(this.workTable, (td, i, j) => {
 				if (coordinate[1] === j) {
 					box = td.getBoundingClientRect();
 
@@ -253,9 +253,15 @@ export class resizeCells extends Plugin {
 
 		const marked: HTMLTableCellElement[] = [];
 
-		Table.setColumnWidthByDelta(
+		const tableModule = this.module;
+
+		tableModule.setColumnWidthByDelta(
 			this.workTable,
-			Table.formalCoordinate(this.workTable, this.workCell, true)[1],
+			tableModule.formalCoordinate(
+				this.workTable,
+				this.workCell,
+				true
+			)[1],
 			delta,
 			true,
 			marked
@@ -268,9 +274,9 @@ export class resizeCells extends Plugin {
 			this.workCell.parentNode as HTMLElement
 		) as HTMLTableCellElement;
 
-		Table.setColumnWidthByDelta(
+		tableModule.setColumnWidthByDelta(
 			this.workTable,
-			Table.formalCoordinate(this.workTable, nextTD)[1],
+			tableModule.formalCoordinate(this.workTable, nextTD)[1],
 			-delta,
 			false,
 			marked
@@ -424,9 +430,10 @@ export class resizeCells extends Plugin {
 				}
 			})
 			.on('beforeSetMode.resize-cells', () => {
-				this.module.getAllSelectedCells().forEach(td => {
-					this.module.removeSelection(td);
-					Table.normalizeTable(
+				const tableModule = this.module;
+				tableModule.getAllSelectedCells().forEach(td => {
+					tableModule.removeSelection(td);
+					tableModule.normalizeTable(
 						Dom.closest(
 							td,
 							'table',

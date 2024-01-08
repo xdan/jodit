@@ -458,6 +458,46 @@ describe('Jodit Editor Tests', function () {
 				});
 			});
 		});
+
+		describe.only('For modules', () => {
+			describe('getInstance', () => {
+				it('should return instance of module', () => {
+					const editor = getJodit();
+					expect(editor.getInstance('Table')).is.instanceOf(
+						Jodit.modules.Table
+					);
+
+					expect(editor.getInstance('Filebrowser')).is.instanceOf(
+						Jodit.modules.Filebrowser
+					);
+
+					expect(editor.getInstance('Ajax')).is.instanceOf(
+						Jodit.modules.Ajax
+					);
+				});
+
+				it('should allow use contructor as key', () => {
+					const editor = getJodit();
+
+					expect(
+						editor.getInstance(Jodit.modules.Table)
+					).is.instanceOf(Jodit.modules.Table);
+				});
+
+				it('should memoize instance of module', () => {
+					const editor = getJodit();
+					expect(editor.getInstance('Table')).equals(
+						editor.getInstance('Table')
+					);
+					expect(editor.getInstance(Jodit.modules.Table)).equals(
+						editor.getInstance('Table')
+					);
+					expect(editor.getInstance(Jodit.modules.Table)).equals(
+						editor.getInstance(Jodit.modules.Table)
+					);
+				});
+			});
+		});
 	});
 
 	describe('Editors stack', function () {

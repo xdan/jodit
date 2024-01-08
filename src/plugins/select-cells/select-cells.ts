@@ -183,8 +183,11 @@ export class selectCells extends Plugin {
 
 		this.unselectCells();
 
-		const bound = Table.getSelectedBound(table, [cell, this.selectedCell]),
-			box = Table.formalMatrix(table);
+		const bound = this.module.getSelectedBound(table, [
+				cell,
+				this.selectedCell
+			]),
+			box = this.module.formalMatrix(table);
 
 		for (let i = bound[0][0]; i <= bound[1][0]; i += 1) {
 			for (let j = bound[0][1]; j <= bound[1][1]; j += 1) {
@@ -266,8 +269,11 @@ export class selectCells extends Plugin {
 			return; // Nested tables
 		}
 
-		const bound = Table.getSelectedBound(table, [cell, this.selectedCell]),
-			box = Table.formalMatrix(table);
+		const bound = this.module.getSelectedBound(table, [
+				cell,
+				this.selectedCell
+			]),
+			box = this.module.formalMatrix(table);
 
 		const max = box[bound[1][0]][bound[1][1]],
 			min = box[bound[0][0]][bound[0][1]];
@@ -276,8 +282,8 @@ export class selectCells extends Plugin {
 			'showPopup',
 			table,
 			(): IBound => {
-				const minOffset: IBound = position(min, this.j),
-					maxOffset: IBound = position(max, this.j);
+				const minOffset = position(min, this.j),
+					maxOffset = position(max, this.j);
 
 				return {
 					left: minOffset.left,
@@ -346,15 +352,15 @@ export class selectCells extends Plugin {
 
 				switch (command) {
 					case 'splitv':
-						Table.splitVertical(table, this.j);
+						this.module.splitVertical(table);
 						break;
 
 					case 'splitg':
-						Table.splitHorizontal(table, this.j);
+						this.module.splitHorizontal(table);
 						break;
 
 					case 'merge':
-						Table.mergeSelected(table, this.j);
+						this.module.mergeSelected(table);
 						break;
 
 					case 'empty':
@@ -371,7 +377,7 @@ export class selectCells extends Plugin {
 								td => td.parentNode as HTMLTableRowElement
 							)
 						).forEach(row => {
-							Table.removeRow(table, row.rowIndex);
+							this.module.removeRow(table, row.rowIndex);
 						});
 
 						break;
@@ -392,28 +398,26 @@ export class selectCells extends Plugin {
 								);
 
 							columns.forEach(td => {
-								Table.removeColumn(table, td.cellIndex);
+								this.module.removeColumn(table, td.cellIndex);
 							});
 						}
 						break;
 
 					case 'addcolumnafter':
 					case 'addcolumnbefore':
-						Table.appendColumn(
+						this.module.appendColumn(
 							table,
 							cell.cellIndex,
-							command === 'addcolumnafter',
-							this.j.createInside
+							command === 'addcolumnafter'
 						);
 						break;
 
 					case 'addrowafter':
 					case 'addrowbefore':
-						Table.appendRow(
+						this.module.appendRow(
 							table,
 							cell.parentNode as HTMLTableRowElement,
-							command === 'addrowafter',
-							this.j.createInside
+							command === 'addrowafter'
 						);
 						break;
 				}

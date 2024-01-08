@@ -41,7 +41,6 @@ import {
 	trim,
 	isAbort
 } from 'jodit/core/helpers';
-import { Dom } from 'jodit/core/dom';
 import { makeDataProvider } from './factories';
 import { stateListeners } from './listeners/state-listeners';
 import { nativeListeners } from './listeners/native-listeners';
@@ -448,16 +447,4 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		this.events && this.e.off('.filebrowser');
 		this.uploader && this.uploader.destruct();
 	}
-}
-
-/**
- * @private
- */
-export function isFileBrowserFilesItem(target: unknown): boolean {
-	return (
-		Dom.isElement(target) &&
-		target.classList.contains(
-			FileBrowserFiles.prototype.getFullElName('item')
-		)
-	);
 }

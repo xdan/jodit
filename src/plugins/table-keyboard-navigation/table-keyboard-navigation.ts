@@ -38,10 +38,7 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 
 					block = Dom.up(
 						current,
-						(elm: Node | null) =>
-							elm &&
-							elm.nodeName &&
-							/^td|th$/i.test(elm.nodeName),
+						Dom.isCell,
 						editor.editor
 					) as HTMLTableCellElement;
 
@@ -89,6 +86,8 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 					return;
 				}
 
+				const tableModule = editor.getInstance<Table>('Table', editor.o);
+
 				const table = Dom.up(
 					block,
 					(elm: Node | null) => elm && /^table$/i.test(elm.nodeName),
@@ -114,15 +113,14 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 						) as HTMLTableCellElement;
 
 						if (!next) {
-							Table.appendRow(
+							tableModule.appendRow(
 								table,
 								sibling === 'next'
 									? false
 									: (table.querySelector(
 											'tr'
 									  ) as HTMLTableRowElement),
-								sibling === 'next',
-								editor.createInside
+								sibling === 'next'
 							);
 							next = (Dom as any)[sibling](
 								block,
@@ -138,7 +136,7 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 							let i = 0,
 								j = 0;
 
-							const matrix = Table.formalMatrix(
+							const matrix = tableModule.formalMatrix(
 								table,
 								(elm, _i, _j) => {
 									if (elm === block) {

@@ -303,7 +303,17 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	/**
 	 * Make one instance of one module
 	 */
-	getInstance<T extends IComponent>(moduleName: string, options?: object): T {
+	getInstance<T extends IComponent>(
+		module: ViewComponent,
+		options?: object
+	): T;
+	getInstance<T extends IComponent>(moduleName: string, options?: object): T;
+	getInstance<T extends IComponent>(
+		moduleNameOrConstructor: string | ViewComponent,
+		options?: object
+	): T {
+		const moduleName = isFunction(moduleNameOrConstructor) ? moduleNameOrConstructor.prototype.className() : moduleNameOrConstructor;
+
 		const instance: Nullable<T> = this.e.fire(
 			camelCase('getInstance_' + moduleName),
 			options
@@ -313,7 +323,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 			return instance;
 		}
 
-		const module = modules[moduleName] as any,
+		const module = isFunction(moduleNameOrConstructor) ? moduleNameOrConstructor : modules[moduleName] as any,
 			mi = this.__modulesInstances;
 
 		if (!isFunction(module)) {

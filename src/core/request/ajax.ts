@@ -38,6 +38,10 @@ import { Response } from './response';
 import './config';
 
 export class Ajax<T extends object = any> implements IAjax<T> {
+	className(): string {
+		return 'Ajax';
+	}
+
 	private __async: IAsync = new Async();
 
 	constructor(

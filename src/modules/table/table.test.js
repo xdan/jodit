@@ -61,7 +61,6 @@ describe('Tables Jodit Editor Tests', function () {
 
 			simulateEvent(
 				'mousemove',
-				0,
 				editor.editor.querySelector('td'),
 				function (opt) {
 					opt.offsetX = 3;

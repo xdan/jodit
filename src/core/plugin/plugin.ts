@@ -42,7 +42,7 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 
 	/** @override */
 	className(): string {
-		return '';
+		return 'Plugin';
 	}
 
 	private __inited: boolean = false;
