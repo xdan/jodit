@@ -1,4 +1,4 @@
-# Table
+# Table processor
 
 Module for working with tables. Delete, insert, merger, division of cells,
 rows and columns.
@@ -24,4 +24,4 @@ jodit.getInstance('Table').appendRow(table, table.rows[1], false);
 ## Methods
 
 Module methods are available through the `Jodit.modules.Table` property;
-more details about the methods can be found in the [[table.Table.md | documentation for each of them.]]
+more details about the methods can be found in the [[Table | documentation for each of them.]]
