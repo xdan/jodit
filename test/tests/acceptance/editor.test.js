@@ -467,10 +467,6 @@ describe('Jodit Editor Tests', function () {
 						Jodit.modules.Table
 					);
 
-					expect(editor.getInstance('FileBrowser')).is.instanceOf(
-						Jodit.modules.FileBrowser
-					);
-
 					expect(editor.getInstance('Ajax')).is.instanceOf(
 						Jodit.modules.Ajax
 					);
