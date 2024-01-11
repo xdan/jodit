@@ -14,7 +14,7 @@ function getFirstItem(fb, index = 0, file = false) {
 	)[index];
 }
 
-('filebrowser' in window.skipTest ? describe.skip : describe.only)(
+('filebrowser' in window.skipTest ? describe.skip : describe)(
 	'Jodit FileBrowser Tests',
 	() => {
 		afterEach(() => {
