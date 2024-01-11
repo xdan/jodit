@@ -44,8 +44,9 @@ export class ContextMenu extends Popup implements IContextMenu {
 		y: number,
 		actions: Array<false | IContextMenuAction>
 	): void {
-		const self = this,
-			content = this.j.c.div(this.getFullElName('actions'));
+		const self = this;
+
+		self.clear();
 
 		if (!isArray(actions)) {
 			return;
@@ -63,16 +64,14 @@ export class ContextMenu extends Popup implements IContextMenu {
 
 			action.onAction((e: MouseEvent) => {
 				item.exec?.call(self, e);
+				self.clear();
 				self.close();
 				return false;
 			});
 
-			content.appendChild(action.container);
+			this.append(action);
 		});
 
-		this.setContent(content).open(
-			() => ({ left: x, top: y, width: 0, height: 0 }),
-			true
-		);
+		this.open(() => ({ left: x, top: y, width: 0, height: 0 }), true);
 	}
 }

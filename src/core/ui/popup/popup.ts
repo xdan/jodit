@@ -448,14 +448,11 @@ export class Popup extends UIGroup implements IPopup {
 			.off(ow, 'scroll', up)
 			.off(ow, 'resize', up);
 
-		assert(
-			this.j.container.isConnected,
-			'The container must be built into the DOM'
-		);
-
-		Dom.up(this.j.container, box => {
-			box && this.j.e.off(box, 'scroll mousewheel', up);
-		});
+		if (this.j.container.isConnected) {
+			Dom.up(this.j.container, box => {
+				box && this.j.e.off(box, 'scroll mousewheel', up);
+			});
+		}
 	}
 
 	/**

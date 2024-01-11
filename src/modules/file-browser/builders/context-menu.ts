@@ -262,7 +262,9 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 		}, self.defaultTimeout);
 
 		self.e
-			.on('beforeClose', () => contextmenu.close())
+			.on('beforeClose', () => {
+				contextmenu.close();
+			})
 			.on('beforeDestruct', () => contextmenu.destruct());
 
 		e.stopPropagation();

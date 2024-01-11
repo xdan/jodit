@@ -40,7 +40,7 @@ import { IS_PROD } from 'jodit/core/constants';
 
 export const DEFAULT_SOURCE_NAME = 'default';
 
-const possibleRules = [
+const possibleRules = new Set([
 	'allowFiles',
 	'allowFileMove',
 	'allowFileUpload',
@@ -54,7 +54,7 @@ const possibleRules = [
 	'allowFolderRename',
 	'allowImageResize',
 	'allowImageCrop'
-];
+]);
 
 @autobind
 export default class DataProvider implements IFileBrowserDataProvider {
@@ -179,14 +179,14 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		const rule: keyof IPermissions = 'allow' + action;
 
 		if (!IS_PROD) {
-			if (!possibleRules.includes(rule)) {
+			if (!possibleRules.has(rule)) {
 				throw error('Wrong action ' + action);
 			}
 		}
 
-		const preset = this.o.permissionsPresets[rule];
-		if (preset !== undefined) {
-			return preset;
+		const presetValue = this.o.permissionsPresets[rule];
+		if (presetValue !== undefined) {
+			return presetValue;
 		}
 
 		return (

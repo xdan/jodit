@@ -653,10 +653,15 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			return this;
 		}
 
+		const { e } = this;
+
 		/**
 		 * Called up to close the window
 		 */
-		if (this.e.fire('beforeClose', this) === false) {
+		if (
+			e.fire(this, 'beforeClose') === false ||
+			e.fire('beforeClose', this) === false
+		) {
 			return this;
 		}
 
@@ -675,8 +680,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		/**
 		 * It called after the window is closed
 		 */
-		this.e.fire(this, 'afterClose');
-		this.e.fire(this.ow, 'joditCloseDialog');
+		e.fire(this, 'afterClose');
+		e.fire(this.ow, 'joditCloseDialog');
 
 		if (this.destroyAfterClose) {
 			this.destruct();

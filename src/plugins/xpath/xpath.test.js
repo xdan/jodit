@@ -169,7 +169,7 @@ describe('Path plugin', function () {
 						editor.ownerWindow.getComputedStyle(context).display
 					).equals('block');
 
-					simulateEvent('click', 0, context.querySelector('button'));
+					simulateEvent('click', context.querySelector('button'));
 					expect(editor.value).equals(
 						'<p>Simple text <span>s</span></p>'
 					);

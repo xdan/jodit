@@ -151,11 +151,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 			buttons: this.o.headerButtons ?? ['fullsize', 'dialog.close']
 		});
 
-		['afterClose', 'beforeOpen'].forEach(proxyEvent => {
-			dialog.events.on(dialog, proxyEvent, () => {
-				this.e.fire(proxyEvent);
-			});
-		});
+		['beforeClose', 'afterClose', 'beforeOpen'].forEach(proxyEvent =>
+			dialog.events.on(dialog, proxyEvent, () => this.e.fire(proxyEvent))
+		);
 
 		dialog.setSize(this.o.width, this.o.height);
 

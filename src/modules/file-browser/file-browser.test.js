@@ -14,9 +14,13 @@ function getFirstItem(fb, index = 0, file = false) {
 	)[index];
 }
 
-('filebrowser' in window.skipTest ? describe.skip : describe)(
+('filebrowser' in window.skipTest ? describe.skip : describe.only)(
 	'Jodit FileBrowser Tests',
-	function () {
+	() => {
+		afterEach(() => {
+			defaultPermissions.permissions.allowFileRemove = true;
+		});
+
 		describe('Constructor/Destructor', function () {
 			describe('Without Jodit', function () {
 				it('Should create dialog and load files', function () {
@@ -1138,6 +1142,7 @@ function getFirstItem(fb, index = 0, file = false) {
 				});
 			});
 		});
+
 		describe('Context menu', () => {
 			describe('Right click on image', () => {
 				it('Should open context menu', async () => {
@@ -1174,7 +1179,113 @@ function getFirstItem(fb, index = 0, file = false) {
 					const context = getOpenedPopup(filebrowser);
 
 					expect(context).is.not.null;
-					filebrowser.destruct();
+				});
+
+				describe('Second time', () => {
+					// https://github.com/xdan/jodit/issues/1059
+					it('Should not double content ', async () => {
+						const editor = getJodit({
+							filebrowser: {
+								ajax: {
+									url: 'https://xdsoft.net/jodit/connector/index.php'
+								}
+							}
+						});
+
+						const filebrowser = editor.filebrowser;
+
+						await filebrowser.open(() => {});
+
+						const files = filebrowser.files.container;
+
+						expect(files).is.not.null;
+
+						const item = files.querySelector(
+								'.' +
+									filebrowser.files.getFullElName('item') +
+									'[data-is-file="1"]'
+							),
+							pos = Jodit.modules.Helpers.position(item);
+
+						simulateEvent('contextmenu', item, o => {
+							Object.assign(o, {
+								clientX: pos.left + 10,
+								clientY: pos.top + 10
+							});
+						});
+
+						const context = getOpenedPopup(filebrowser);
+
+						expect(context).is.not.null;
+
+						expect(
+							context.textContent.trim().replace(/\s+/g, ' ')
+						).equals('Rename Delete Preview Download');
+
+						simulateEvent('mousedown', editor.editor);
+
+						const context2 = getOpenedPopup(filebrowser);
+
+						expect(context2).is.null;
+
+						simulateEvent('contextmenu', item, o => {
+							Object.assign(o, {
+								clientX: pos.left + 10,
+								clientY: pos.top + 10
+							});
+						});
+
+						const context3 = getOpenedPopup(filebrowser);
+						expect(context3).is.not.null;
+						expect(
+							context3.textContent.trim().replace(/\s+/g, ' ')
+						).equals('Rename Delete Preview Download');
+					});
+				});
+
+				describe('Closing FileBrowser', () => {
+					it('Should close context menu', async () => {
+						const editor = getJodit({
+							filebrowser: {
+								ajax: {
+									url: 'https://xdsoft.net/jodit/connector/index.php'
+								}
+							}
+						});
+
+						const filebrowser = editor.filebrowser;
+
+						await filebrowser.open(() => {});
+
+						const files = filebrowser.files.container;
+
+						expect(files).is.not.null;
+
+						const item = files.querySelector(
+								'.' +
+									filebrowser.files.getFullElName('item') +
+									'[data-is-file="1"]'
+							),
+							pos = Jodit.modules.Helpers.position(item);
+
+						simulateEvent('contextmenu', item, o => {
+							Object.assign(o, {
+								clientX: pos.left + 10,
+								clientY: pos.top + 10
+							});
+						});
+
+						const context = getOpenedPopup(filebrowser);
+
+						expect(context).is.not.null;
+
+						const dialog = getOpenedDialog(filebrowser);
+
+						expect(dialog).is.not.null;
+
+						dialog.component.close();
+						expect(getOpenedPopup(filebrowser)).is.null;
+					});
 				});
 
 				describe('Click on preview', () => {
