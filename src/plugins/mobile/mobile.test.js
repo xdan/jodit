@@ -17,22 +17,22 @@ describe('Test mobile mode', function () {
 					'.jodit-toolbar__box .jodit-toolbar-button'
 				).length;
 
-			expect(count()).to.eq(39);
+			expect(count()).to.eq(window.toolbarButtonsCount);
 
 			getBox().style.width = '790px';
 			simulateEvent('resize', window);
 
-			expect(count()).to.eq(29);
+			expect(count()).to.eq(window.toolbarButtonsCountMD);
 
 			getBox().style.width = '690px';
 			simulateEvent('resize', window);
 
-			expect(count()).to.eq(19);
+			expect(count()).to.eq(window.toolbarButtonsCountSM);
 
 			getBox().style.width = '390px';
 			simulateEvent('resize', window);
 
-			expect(count()).to.eq(13);
+			expect(count()).to.eq(window.toolbarButtonsCountXS);
 		});
 
 		describe('Disable plugins', () => {
