@@ -7,26 +7,35 @@
 describe('Delete plugin', () => {
 	describe('Select all and exec delete command', () => {
 		[
-			['<p>test</p>', ''],
+			['<p>|test|</p>', ''],
+			['<p>te|st|</p>', '<p>te</p>'],
 			[
-				`<p>You must include the syntax highlighting library yourself, on your site:</p>
-<pre class="language-html">...</pre>
+				`<p>|You must include the syntax highlighting library yourself, on your site:</p>
+<pre class="language-html" contenteditable="false">...</pre>
 </pre>
 <p>After that, the library must be initialized</p>
-<pre class="language-javascript">Prism.highlightAll()</pre>`,
+<pre class="language-javascript" contenteditable="false">Prism.highlightAll()|</pre>`,
 				''
 			]
 		].forEach(([input, result]) => {
 			describe('For input ' + input, () => {
 				it('Should remove all content. Result: ' + result, () => {
-					const editor = getJodit();
+					const editor = getJodit({
+						disablePlugins: ['wrap-nodes']
+					});
 
 					editor.value = input;
 
-					editor.execCommand('selectall');
-					editor.execCommand('delete');
+					setCursorToChar(editor);
+					simulateEvent(
+						['keydown', 'keyup'],
+						Jodit.KEY_BACKSPACE,
+						editor.editor
+					);
 
-					expect(editor.value).equals(result);
+					expect(sortAttributes(editor.value)).equals(
+						sortAttributes(result)
+					);
 				});
 			});
 		});

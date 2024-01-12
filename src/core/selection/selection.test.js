@@ -665,18 +665,16 @@ describe('Selection Module Tests', function () {
 
 			setCursorToChar(editor);
 
-			const nodesNames = [];
+			const nodeNames = [];
 
 			editor.s.eachSelection(function (node) {
-				nodesNames.push(node.nodeName);
+				nodeNames.push(node.nodeName);
 			});
 
 			expect(['#text'].toString().toLowerCase()).equals(
-				nodesNames.toString().toLowerCase()
+				nodeNames.toString().toLowerCase()
 			);
 		});
-
-		describe('If selected element is UL or LI or content in LI', function () {});
 	});
 
 	describe('expandSelection', () => {
@@ -723,6 +721,10 @@ describe('Selection Module Tests', function () {
 			[
 				'<ul><li><span>|test</span>test<s>ss|</s></li><li><span>test</span>test<s>ss</s></li></ul>',
 				'<ul><li>|<span>test</span>test<s>ss</s>|</li><li><span>test</span>test<s>ss</s></li></ul>'
+			],
+			[
+				'<p>|You must include the syntax highlighting library yourself, on your site:</p>\n<pre class="language-html" contenteditable="false">...</pre>\n</pre>\n<p>After that, the library must be initialized</p>\n<pre class="language-javascript" contenteditable="false">Prism.highlightAll()|</pre>',
+				'<p>|You must include the syntax highlighting library yourself, on your site:</p>\n<pre class="language-html" contenteditable="false">...</pre>\n\n<p>After that, the library must be initialized</p>\n<pre class="language-javascript" contenteditable="false">Prism.highlightAll()|</pre>'
 			]
 		].forEach(([source, result], i) => {
 			describe(`For index ${i}  source: ${source}`, () => {
@@ -732,7 +734,7 @@ describe('Selection Module Tests', function () {
 					setCursorToChar(jodit);
 					jodit.s.expandSelection();
 					replaceCursorToChar(jodit);
-					expect(jodit.value).eq(result);
+					expect(sortAttributes(jodit.value)).eq(result);
 				});
 			});
 		});

@@ -1504,8 +1504,8 @@ export class Selection implements ISelect {
 			return this;
 		}
 
-		const { range } = this,
-			c = range.cloneRange();
+		const { range } = this;
+		const c = range.cloneRange();
 
 		if (
 			!Dom.isOrContains(
@@ -1580,6 +1580,11 @@ export class Selection implements ISelect {
 		this.selectRange(c);
 
 		Dom.safeRemove(leftFake, rightFake);
+
+		if (this.isCollapsed()) {
+			throw error('Selection is collapsed');
+		}
+
 		return this;
 	}
 }

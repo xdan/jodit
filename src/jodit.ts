@@ -797,7 +797,6 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		 * })
 		 * ```
 		 */
-
 		result = this.e.fire(
 			`beforeCommand${ucfirst(command)}`,
 			showUI,
@@ -822,16 +821,11 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		if (result !== false) {
 			this.s.focus();
 
-			if (command === 'selectall') {
-				this.s.select(this.editor, true);
-				this.s.expandSelection();
-			} else {
-				try {
-					result = this.nativeExecCommand(command, showUI, value);
-				} catch (e) {
-					if (!IS_PROD) {
-						throw e;
-					}
+			try {
+				result = this.nativeExecCommand(command, showUI, value);
+			} catch (e) {
+				if (!IS_PROD) {
+					throw e;
 				}
 			}
 		}
@@ -844,7 +838,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		 */
 		this.e.fire('afterCommand', command, showUI, value);
 
-		this.setEditorValue(); // synchrony
+		this.__imdSynchronizeValues(); // synchrony
 
 		return result;
 	}

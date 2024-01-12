@@ -92,16 +92,26 @@ export class select extends Plugin {
 		}
 	}
 
-	@watch([':beforeCommand'])
-	protected beforeCommandCut(command: string): void {
+	@watch([':beforeCommandCut'])
+	protected beforeCommandCut(command: string): void | false {
 		const { s } = this.j;
 
-		if (command === 'cut' && !s.isCollapsed()) {
+		if (!s.isCollapsed()) {
 			const current = s.current();
+
 			if (current && Dom.isOrContains(this.j.editor, current)) {
 				this.onCopyNormalizeSelectionBound();
 			}
 		}
+	}
+
+	@watch([':beforeCommandSelectall'])
+	protected beforeCommandSelectall(command: string): false {
+		const { s } = this.j;
+		s.focus();
+		s.select(this.j.editor, true);
+		s.expandSelection();
+		return false;
 	}
 
 	@watch([':copy', ':cut'])
