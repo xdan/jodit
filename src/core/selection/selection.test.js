@@ -723,7 +723,7 @@ describe('Selection Module Tests', function () {
 				'<ul><li>|<span>test</span>test<s>ss</s>|</li><li><span>test</span>test<s>ss</s></li></ul>'
 			],
 			[
-				'<p>|You must include the syntax highlighting library yourself, on your site:</p>\n<pre class="language-html" contenteditable="false">...</pre>\n</pre>\n<p>After that, the library must be initialized</p>\n<pre class="language-javascript" contenteditable="false">Prism.highlightAll()|</pre>',
+				'<p>|You must include the syntax highlighting library yourself, on your site:</p>\n<pre class="language-html" contenteditable="false">...</pre>\n\n<p>After that, the library must be initialized</p>\n<pre class="language-javascript" contenteditable="false">Prism.highlightAll()|</pre>',
 				'<p>|You must include the syntax highlighting library yourself, on your site:</p>\n<pre class="language-html" contenteditable="false">...</pre>\n\n<p>After that, the library must be initialized</p>\n<pre class="language-javascript" contenteditable="false">Prism.highlightAll()|</pre>'
 			]
 		].forEach(([source, result], i) => {
