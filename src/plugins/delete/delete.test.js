@@ -12,7 +12,6 @@ describe('Delete plugin', () => {
 			[
 				`<p>|You must include the syntax highlighting library yourself, on your site:</p>
 <pre class="language-html" contenteditable="false">...</pre>
-</pre>
 <p>After that, the library must be initialized</p>
 <pre class="language-javascript" contenteditable="false">Prism.highlightAll()|</pre>`,
 				''
