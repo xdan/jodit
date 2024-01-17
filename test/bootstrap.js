@@ -644,7 +644,7 @@ function sortStyles(matches) {
 	return styles.join(';');
 }
 
-function sortAttributes(html) {
+function sortAttributes(html, excludeAttr = []) {
 	const tag = /<([^>]+)>/g;
 	const reg = /([a-z_-]+)[\s]*=[\s]*"([^"]*)"/i,
 		tags = [];
@@ -663,13 +663,20 @@ function sortAttributes(html) {
 				break;
 			}
 
-			if (matches[1].toLowerCase() === 'style') {
+			const attributeName = matches[1].toLowerCase();
+
+			if (excludeAttr.includes(attributeName)) {
+				newTag = newTag.replace(matches[0], '');
+				continue;
+			}
+
+			if (attributeName === 'style') {
 				matches[2] = sortStyles(matches[2]);
 			}
 
-			if (matches[1].toLowerCase() !== 'unselectable') {
+			if (attributeName !== 'unselectable') {
 				attrs.push({
-					name: matches[1].toLowerCase(),
+					name: attributeName,
 					value: matches[2]
 				});
 

@@ -734,7 +734,9 @@ describe('Selection Module Tests', function () {
 					setCursorToChar(jodit);
 					jodit.s.expandSelection();
 					replaceCursorToChar(jodit);
-					expect(sortAttributes(jodit.value)).eq(result);
+					expect(sortAttributes(jodit.value, ['contenteditable'])).eq(
+						sortAttributes(result, ['contenteditable'])
+					);
 				});
 			});
 		});

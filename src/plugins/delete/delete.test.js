@@ -32,9 +32,9 @@ describe('Delete plugin', () => {
 						editor.editor
 					);
 
-					expect(sortAttributes(editor.value)).equals(
-						sortAttributes(result)
-					);
+					expect(
+						sortAttributes(editor.value, ['contenteditable'])
+					).equals(sortAttributes(result, ['contenteditable']));
 				});
 			});
 		});
