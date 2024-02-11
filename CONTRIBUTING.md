@@ -99,7 +99,7 @@ make build es=es2021 uglify=true excludePlugins="about,source,bold,image,xpath,s
 Build without some languages:
 
 ```bash
-make build es=es2021 uglify=true excludeLanguages="ru,ar,cs_cz,de,es,fa,fr,he,hu,id,it,ja,ko,nl,pl,pt_br,ru,tr,zh_cn,zh_tw"
+make build es=es2021 uglify=true excludeLanguages="ru,ar,cs_cz,de,es,fa,fi,fr,he,hu,id,it,ja,ko,nl,pl,pt_br,ru,tr,zh_cn,zh_tw"
 ```
 
 ## Tests
