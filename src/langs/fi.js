@@ -227,5 +227,5 @@ module.exports = {
 	'Insert className': 'Lisää luokkanimi',
 	'Press Alt for custom resizing':
 		'Paina Alt muokattuun koon muuttamiseen',
-	"Class name": "Luokan nimi",
+	'Class name': 'Luokan nimi',
 };
