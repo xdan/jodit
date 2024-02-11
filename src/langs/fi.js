@@ -226,5 +226,6 @@ module.exports = {
 	'Find Next': 'Hae seuraava',
 	'Insert className': 'Lisää luokkanimi',
 	'Press Alt for custom resizing':
-		'Paina Alt muokattuun koon muuttamiseen'
+		'Paina Alt muokattuun koon muuttamiseen',
+	"Class name": "Luokan nimi",
 };
