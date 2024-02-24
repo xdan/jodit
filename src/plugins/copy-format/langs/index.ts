@@ -9,6 +9,7 @@ import cs_cz from './cs_cz.js';
 import de from './de.js';
 import es from './es.js';
 import fa from './fa.js';
+import fi from './fi.js';
 import fr from './fr.js';
 import he from './he.js';
 import hu from './hu.js';
@@ -31,6 +32,7 @@ export {
 	de,
 	es,
 	fa,
+	fi,
 	fr,
 	he,
 	hu,
