@@ -130,6 +130,7 @@ export class Popup extends UIGroup implements IPopup {
 		parentContainer?: HTMLElement
 	): this {
 		markOwner(this.jodit, this.container);
+		this.container.classList.add(`jodit_theme_${this.jodit.o.theme}`);
 
 		this.__calculateZIndex();
 
