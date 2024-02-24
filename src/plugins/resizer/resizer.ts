@@ -368,7 +368,6 @@ export class resizer extends Plugin {
 
 	@watch(':change')
 	private __onChangeEditor(): void {
-		console.log('onchange');
 		if (this.isShown) {
 			if (!this.element || !this.element.parentNode) {
 				this.hide();

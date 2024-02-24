@@ -89,10 +89,7 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 					}
 				}
 
-				const tableModule = editor.getInstance<Table>(
-					'Table',
-					editor.o
-				);
+				const tableModule = editor.getInstance<Table>(Table, editor.o);
 
 				const table = Dom.closest(cell, 'table', editor.editor)!;
 
@@ -168,7 +165,6 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 					}
 				}
 
-				console.log('change')
 				editor.synchronizeValues();
 				return false;
 			}
