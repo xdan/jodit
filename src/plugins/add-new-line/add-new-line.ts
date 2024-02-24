@@ -20,7 +20,7 @@ import {
 	call,
 	scrollIntoViewIfNeeded
 } from 'jodit/core/helpers';
-import { autobind, debounce, watch } from 'jodit/core/decorators';
+import { autobind, throttle, watch } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
 
 import './config';
@@ -31,13 +31,13 @@ const ns = 'addnewline';
  * Create helper for adding new paragraph(Jodit.defaultOptions.enter tag) before iframe, table or image
  */
 export class addNewLine extends Plugin {
-	private line = this.j.c.fromHTML(
+	private __line = this.j.c.fromHTML<HTMLDivElement>(
 		`<div role="button" tabindex="-1" title="${this.j.i18n(
 			'Break'
 		)}" class="jodit-add-new-line"><span>${Icon.get('enter')}</span></div>`
-	) as HTMLDivElement;
+	);
 
-	private isMatchedTag = (node: Nullable<Node>): boolean =>
+	private __isMatchedTag = (node: Nullable<Node>): boolean =>
 		Boolean(
 			node &&
 				this.j.o.addNewLineTagsTriggers.includes(
@@ -45,57 +45,61 @@ export class addNewLine extends Plugin {
 				)
 		);
 
-	private timeout!: number;
-	private preview: boolean = false;
-	private current!: HTMLElement | false;
-	private lineInFocus: boolean = false;
-	private isShown: boolean = false;
+	private __timeout!: number;
+	private __isBeforeContent: boolean = false;
+	private __current!: HTMLElement | false;
+	private __lineInFocus: boolean = false;
+	private __isShown: boolean = false;
 
-	private show(): void {
-		if (this.isShown || this.j.o.readonly || this.j.isLocked) {
+	private __show(): void {
+		if (this.j.o.readonly || this.j.isLocked) {
 			return;
 		}
 
-		this.isShown = true;
+		this.j.async.clearTimeout(this.__timeout);
 
-		this.j.async.clearTimeout(this.timeout);
-		this.line.classList.toggle('jodit-add-new-line_after', !this.preview);
-		this.j.container.appendChild(this.line);
-		this.line.style.width = this.j.container.clientWidth + 'px';
+		if (this.__isShown) {
+			return;
+		}
+
+		this.__isShown = true;
+
+		this.j.container.appendChild(this.__line);
+		this.__line.style.width = this.j.container.clientWidth + 'px';
 	}
 
-	private hideForce = (): void => {
-		if (!this.isShown) {
+	private __hideForce = (): void => {
+		if (!this.__isShown) {
 			return;
 		}
 
-		this.isShown = false;
-		this.j.async.clearTimeout(this.timeout);
-		this.lineInFocus = false;
-		Dom.safeRemove(this.line);
-		this.line.style.setProperty('--jd-offset-handle', '0');
+		this.__isShown = false;
+		this.j.async.clearTimeout(this.__timeout);
+		this.__lineInFocus = false;
+		Dom.safeRemove(this.__line);
+		this.__line.style.setProperty('--jd-anl-handle-offset', '0');
 	};
 
 	@watch(':lock')
 	protected onLock(isLocked: true): void {
-		if (isLocked && this.isShown) {
-			this.hideForce();
+		if (isLocked && this.__isShown) {
+			this.__hideForce();
 		}
 	}
 
 	@autobind
-	private hide(): void {
-		if (!this.isShown || this.lineInFocus) {
+	private __hide(): void {
+		if (!this.__isShown || this.__lineInFocus) {
 			return;
 		}
 
-		this.timeout = this.j.async.setTimeout(this.hideForce, {
+		this.__timeout = this.j.async.setTimeout(this.__hideForce, {
 			timeout: 500,
 			label: 'add-new-line-hide'
 		});
 	}
 
-	private canGetFocus = (elm: Node | null): boolean => {
+	private __canGetFocus = (elm: Node | null): boolean => {
 		return (
 			elm != null &&
 			Dom.isBlock(elm) &&
@@ -109,24 +113,24 @@ export class addNewLine extends Plugin {
 		}
 
 		editor.e
-			.on(this.line, 'mousemove', (e: MouseEvent) => {
+			.on(this.__line, 'mousemove', (e: MouseEvent) => {
 				e.stopPropagation();
 			})
-			.on(this.line, 'mousedown touchstart', this.onClickLine)
-			.on('change', this.hideForce)
-			.on(this.line, 'mouseenter', () => {
-				this.j.async.clearTimeout(this.timeout);
-				this.lineInFocus = true;
+			.on(this.__line, 'mousedown touchstart', this.__onClickLine)
+			.on('change', this.__hideForce)
+			.on(this.__line, 'mouseenter', () => {
+				this.j.async.clearTimeout(this.__timeout);
+				this.__lineInFocus = true;
 			})
-			.on(this.line, 'mouseleave', () => {
-				this.lineInFocus = false;
+			.on(this.__line, 'mouseleave', () => {
+				this.__lineInFocus = false;
 			})
-			.on('changePlace', this.addEventListeners.bind(this));
+			.on('changePlace', this.__addEventListeners.bind(this));
 
-		this.addEventListeners();
+		this.__addEventListeners();
 	}
 
-	private addEventListeners(): void {
+	private __addEventListeners(): void {
 		const editor = this.j;
 
 		editor.e
@@ -135,22 +139,26 @@ export class addNewLine extends Plugin {
 			.on(
 				[editor.ow, editor.ew, editor.editor],
 				'scroll' + '.' + ns,
-				this.hideForce
+				this.__hideForce
 			)
-			.on(editor.editor, 'click' + '.' + ns, this.hide)
-			.on(editor.container, 'mouseleave' + '.' + ns, this.hide)
-			.on(editor.editor, 'mousemove' + '.' + ns, this.onMouseMove);
+			.on(editor.editor, 'click' + '.' + ns, this.__hide)
+			.on(editor.container, 'mouseleave' + '.' + ns, this.__hide)
+			.on(editor.editor, 'mousemove' + '.' + ns, this.__onMouseMove);
 	}
 
-	private onClickLine = (e: MouseEvent): void => {
+	private __onClickLine = (e: MouseEvent): void => {
 		const editor = this.j;
 		const p = editor.createInside.element(editor.o.enter);
 
-		if (this.preview && this.current && this.current.parentNode) {
-			if (this.current === editor.editor) {
+		if (
+			this.__isBeforeContent &&
+			this.__current &&
+			this.__current.parentNode
+		) {
+			if (this.__current === editor.editor) {
 				Dom.prepend(editor.editor, p);
 			} else {
-				this.current.parentNode.insertBefore(p, this.current);
+				this.__current.parentNode.insertBefore(p, this.__current);
 			}
 		} else {
 			editor.editor.appendChild(p);
@@ -160,7 +168,7 @@ export class addNewLine extends Plugin {
 		scrollIntoViewIfNeeded(p, editor.editor, editor.ed);
 
 		editor.synchronizeValues();
-		this.hideForce();
+		this.__hideForce();
 
 		e.preventDefault();
 	};
@@ -194,48 +202,41 @@ export class addNewLine extends Plugin {
 			editor.s.setCursorIn(p);
 			editor.synchronizeValues();
 
-			this.hideForce();
+			this.__hideForce();
 			e.preventDefault();
 		}
 	}
 
-	@debounce(ctx => ctx.defaultTimeout * 5)
-	private onMouseMove(e: MouseEvent): void {
+	@throttle(ctx => ctx.defaultTimeout)
+	private __onMouseMove(e: MouseEvent): void {
 		const editor = this.j;
 
-		let currentElement: HTMLElement | null = editor.ed.elementFromPoint(
-			e.clientX,
-			e.clientY
-		) as HTMLElement;
+		let currentElement = editor.ed.elementFromPoint(e.clientX, e.clientY);
 
 		if (
 			!Dom.isHTMLElement(currentElement) ||
-			Dom.isOrContains(this.line, currentElement)
+			!Dom.isOrContains(editor.editor, currentElement)
 		) {
-			return;
-		}
-
-		if (!Dom.isOrContains(editor.editor, currentElement)) {
 			return;
 		}
 
 		if (
 			editor.editor !== currentElement &&
-			!this.isMatchedTag(currentElement)
+			!this.__isMatchedTag(currentElement)
 		) {
-			currentElement = Dom.closest(
+			currentElement = Dom.closest<HTMLElement>(
 				currentElement,
-				this.isMatchedTag,
+				this.__isMatchedTag,
 				editor.editor
-			) as HTMLElement;
+			);
 		}
 
 		if (!currentElement) {
-			this.hide();
+			this.__hide();
 			return;
 		}
 
-		if (this.isMatchedTag(currentElement)) {
+		if (this.__isMatchedTag(currentElement)) {
 			const parentBox = Dom.up(
 				currentElement,
 				Dom.isBlock,
@@ -247,7 +248,7 @@ export class addNewLine extends Plugin {
 			}
 		}
 
-		const pos = position(currentElement, this.j);
+		const pos = position(currentElement as HTMLElement, this.j);
 
 		let top: false | number = false;
 
@@ -263,43 +264,44 @@ export class addNewLine extends Plugin {
 
 		if (Math.abs(clientY - pos.top) <= delta) {
 			top = pos.top;
-			this.preview = true;
+			this.__isBeforeContent = true;
+		} else if (Math.abs(clientY - (pos.top + pos.height)) <= delta) {
+			top = pos.top + pos.height;
+			this.__isBeforeContent = false;
 		}
 
-		if (Math.abs(clientY - (pos.top + pos.height)) <= delta) {
-			top = pos.top + pos.height;
-			this.preview = false;
-		}
+		const isEditor = editor.editor === currentElement;
 
 		if (
 			top !== false &&
-			((editor.editor === currentElement && !this.preview) ||
-				!call(
-					this.preview ? Dom.prev : Dom.next,
-					currentElement,
-					this.canGetFocus,
-					editor.editor
-				))
+			((isEditor && !this.__isBeforeContent) ||
+				(!isEditor &&
+					!call(
+						this.__isBeforeContent ? Dom.prev : Dom.next,
+						currentElement,
+						this.__canGetFocus,
+						editor.editor
+					)))
 		) {
-			this.line.style.top = top + 'px';
-			this.current = currentElement;
-			this.show();
-			this.line.style.setProperty(
-				'--jd-offset-handle',
+			this.__line.style.top = top + 'px';
+			this.__current = currentElement as HTMLElement;
+			this.__show();
+			this.__line.style.setProperty(
+				'--jd-anl-handle-offset',
 				clientX - pos.left - 10 + 'px'
 			);
 		} else {
-			this.current = false;
-			this.hide();
+			this.__current = false;
+			this.__hide();
 		}
 	}
 
 	/** @override */
 	protected beforeDestruct(): void {
-		this.j.async.clearTimeout(this.timeout);
-		this.j.e.off(this.line).off('changePlace', this.addEventListeners);
+		this.j.async.clearTimeout(this.__timeout);
+		this.j.e.off(this.__line).off('changePlace', this.__addEventListeners);
 
-		Dom.safeRemove(this.line);
+		Dom.safeRemove(this.__line);
 
 		this.j.e
 			.off([this.j.ow, this.j.ew, this.j.editor], '.' + ns)
