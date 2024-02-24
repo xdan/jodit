@@ -351,7 +351,8 @@ export class source extends Plugin {
 
 			if (!addEventListener()) {
 				loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(
-					addEventListener
+					addEventListener,
+					() => null
 				);
 			}
 		}
