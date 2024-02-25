@@ -9,6 +9,12 @@ describe('Search plugin', function () {
 
 	beforeEach(() => {
 		unmockPromise();
+		Jodit.defaultOptions.search.useCustomHighlightAPI = false;
+	});
+
+	afterEach(() => {
+		Jodit.defaultOptions.search.useCustomHighlightAPI =
+			typeof Highlight !== 'undefined';
 	});
 
 	function getSearchInputs(editor) {

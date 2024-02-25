@@ -31,7 +31,7 @@ import {
 	clearSelectionWrappersFromHTML,
 	getSelectionWrappers,
 	SentenceFinder,
-	wrapRangesTextsInTmpSpan
+	highlightTextRanges
 } from './helpers';
 
 import './config';
@@ -197,7 +197,7 @@ export class search extends Plugin {
 			this.drawPromise?.rejectCallback();
 			this.j.async.cancelAnimationFrame(this.wrapFrameRequest);
 			clearSelectionWrappers(this.j.editor);
-			this.drawPromise = this.drawSelectionRanges(bounds);
+			this.drawPromise = this.__drawSelectionRanges(bounds);
 		}
 
 		this.previousQuery = query;
@@ -311,7 +311,7 @@ export class search extends Plugin {
 
 	private wrapFrameRequest: number = 0;
 
-	private drawSelectionRanges(
+	private __drawSelectionRanges(
 		ranges: ISelectionRange[]
 	): RejectablePromise<void> {
 		const { async, createInside: ci, editor } = this.j;
@@ -329,7 +329,7 @@ export class search extends Plugin {
 					sRange = parts.shift();
 
 					if (sRange) {
-						wrapRangesTextsInTmpSpan(sRange, parts, ci, editor);
+						highlightTextRanges(this.j, sRange, parts, ci, editor);
 					}
 
 					total += 1;

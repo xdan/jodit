@@ -1,5 +1,9 @@
 {
-	"extends": ["stylelint-config-standard","stylelint-config-idiomatic-order", "stylelint-prettier/recommended"],
+	"extends": [
+		"stylelint-config-standard",
+		"stylelint-config-idiomatic-order",
+		"stylelint-prettier/recommended"
+	],
 	"customSyntax": "postcss-less",
 	"rules": {
 		"prettier/prettier": true,
@@ -8,6 +12,12 @@
 		"selector-not-notation": null,
 		"selector-class-pattern": null,
 		"no-descending-specificity": null,
+		"selector-pseudo-element-no-unknown": [
+			true,
+			{
+				"ignorePseudoElements": ["highlight"]
+			}
+		],
 		"property-no-unknown": [
 			true,
 			{

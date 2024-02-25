@@ -10,7 +10,8 @@ module.exports = {
 	'About Jodit': 'Tietoja Jodit:ista',
 	'Jodit Editor': 'Jodit Editor',
 	"Jodit User's Guide": 'Jodit käyttäjän ohje',
-	'contains detailed help for using': 'sisältää tarkempaa tietoa käyttämiseen',
+	'contains detailed help for using':
+		'sisältää tarkempaa tietoa käyttämiseen',
 	'For information about the license, please go to our website:':
 		'Tietoa lisensoinnista, vieraile verkkosivuillamme:',
 	'Buy full version': 'Osta täysi versio',
@@ -81,7 +82,7 @@ module.exports = {
 		'Koodi on HTML:n tapaista. Säilytetäänkö HTML?',
 	'Paste as HTML': 'Liitä HTML:nä?',
 	Keep: 'Säilytä',
-	Clean: 'Tyhjennä',	
+	Clean: 'Tyhjennä',
 	'Insert as Text': 'Lisää tekstinä',
 	'Word Paste Detected': 'Word liittäminen havaittu',
 	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
@@ -225,7 +226,6 @@ module.exports = {
 	'Find Previous': 'Hae edellinen',
 	'Find Next': 'Hae seuraava',
 	'Insert className': 'Lisää luokkanimi',
-	'Press Alt for custom resizing':
-		'Paina Alt muokattuun koon muuttamiseen',
-	'Class name': 'Luokan nimi',
+	'Press Alt for custom resizing': 'Paina Alt muokattuun koon muuttamiseen',
+	'Class name': 'Luokan nimi'
 };

@@ -9,4 +9,4 @@
  */
 
 export * from './sentence-finder';
-export * from './wrap-ranges-texts-in-tmp-span';
+export * from './highlight-text-ranges';

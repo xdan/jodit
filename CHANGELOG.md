@@ -9,6 +9,11 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.0.7
+
+- Added `search.useCustomHighlightAPI` option to the "Search" plugin to use the built-in text highlighting API https://developer.mozilla.org/en-US/docs/Web/API/CSS_Custom_Highlight_API
+  If the browser does not support this API, then standard text highlighting will be used by wrapping it in the `<span jd-tmp-selection>` tag.
+
 ## 4.0.2
 
 -   [BUG: FileBrowser Context Menu Grows Infinitely](https://github.com/xdan/jodit/issues/1059)

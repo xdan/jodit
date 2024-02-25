@@ -8,7 +8,13 @@
  * @module plugins/search
  */
 
-import type { CanUndef, ICreate, ISelectionRange, Nullable } from 'jodit/types';
+import type {
+	CanUndef,
+	ICreate,
+	IJodit,
+	ISelectionRange,
+	Nullable
+} from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { $$ } from 'jodit/core/helpers/utils/selector';
 
@@ -20,7 +26,8 @@ const TMP_ATTR = 'jd-tmp-selection';
 /**
  * @private
  */
-export function wrapRangesTextsInTmpSpan(
+export function highlightTextRanges(
+	jodit: IJodit,
 	rng: ISelectionRange,
 	restRanges: ISelectionRange[],
 	ci: ICreate,
@@ -30,6 +37,26 @@ export function wrapRangesTextsInTmpSpan(
 		rng.startContainer.nodeValue == null ||
 		rng.endContainer.nodeValue == null
 	) {
+		return;
+	}
+
+	if (
+		jodit.o.search.useCustomHighlightAPI &&
+		typeof Highlight !== 'undefined'
+	) {
+		const ranges = [rng, ...restRanges].map(rng => {
+			const range = jodit.selection.createRange();
+			range.setStart(rng.startContainer, rng.startOffset);
+			range.setEnd(rng.endContainer, rng.endOffset);
+			return range;
+		});
+
+		const searchHighlight = new Highlight(...ranges);
+		// @ts-ignore
+		CSS.highlights.clear();
+		// @ts-ignore
+		CSS.highlights.set('jodit-search-result', searchHighlight);
+		restRanges.length = 0;
 		return;
 	}
 
