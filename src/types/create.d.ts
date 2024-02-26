@@ -91,7 +91,7 @@ interface ICreate {
 	/**
 	 * Create DOM element from HTML text
 	 */
-	fromHTML(html: string, refs?: IDictionary<boolean>): HTMLElement;
+	fromHTML<T extends HTMLElement>(html: string, refs?: IDictionary<boolean>): T;
 
 	/**
 	 * Apply to element `createAttributes` options

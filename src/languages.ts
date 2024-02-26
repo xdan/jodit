@@ -20,6 +20,7 @@ import ar from 'jodit/langs/ar';
 import cs_cz from 'jodit/langs/cs_cz';
 import de from 'jodit/langs/de';
 import es from 'jodit/langs/es';
+import fi from 'jodit/langs/fi';
 import fr from 'jodit/langs/fr';
 import he from 'jodit/langs/he';
 import hu from 'jodit/langs/hu';
@@ -45,6 +46,7 @@ exp = {
 	de,
 	en,
 	es,
+	fi,
 	fr,
 	he,
 	hu,

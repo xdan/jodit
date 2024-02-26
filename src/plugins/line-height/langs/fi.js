@@ -4,9 +4,6 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-/**
- * @module plugins/search
- */
-
-export * from './sentence-finder';
-export * from './highlight-text-ranges';
+module.exports = {
+	'Line height': 'Rivin korkeus'
+};

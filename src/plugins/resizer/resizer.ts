@@ -28,7 +28,7 @@ import {
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { eventEmitter } from 'jodit/core/global';
-import { autobind, debounce, watch } from 'jodit/core/decorators';
+import { autobind, watch } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
 
 import './config';
@@ -96,12 +96,10 @@ export class resizer extends Plugin {
 						data.value = data.value.replace(rgx, '$1');
 					}
 				}
-			)
-			.on('hideResizer', this.hide)
-			.on('change afterInit afterSetMode', this.onChangeEditor);
+			);
 
 		this.addEventListeners();
-		this.onChangeEditor();
+		this.__onChangeEditor();
 	}
 
 	/**
@@ -118,7 +116,7 @@ export class resizer extends Plugin {
 
 		while (node && node !== editor) {
 			if (Dom.isTag(node, allowResizeTags)) {
-				this.bind(node);
+				this.__bind(node);
 				this.onClickElement(node);
 				return;
 			}
@@ -368,8 +366,8 @@ export class resizer extends Plugin {
 		}
 	}
 
-	@debounce()
-	private onChangeEditor(): void {
+	@watch(':change')
+	private __onChangeEditor(): void {
 		if (this.isShown) {
 			if (!this.element || !this.element.parentNode) {
 				this.hide();
@@ -378,7 +376,7 @@ export class resizer extends Plugin {
 			}
 		}
 
-		$$('iframe', this.j.editor).forEach(this.bind);
+		$$('iframe', this.j.editor).forEach(this.__bind);
 	}
 
 	/**
@@ -386,7 +384,7 @@ export class resizer extends Plugin {
 	 * @param element - The element that you want to add a function to resize
 	 */
 	@autobind
-	private bind(element: HTMLElement): void {
+	private __bind(element: HTMLElement): void {
 		if (
 			!Dom.isHTMLElement(element) ||
 			!this.j.o.allowResizeTags.has(
@@ -569,6 +567,7 @@ export class resizer extends Plugin {
 	 * Hide resizer
 	 */
 	@autobind
+	@watch(':hideResizer')
 	private hide(): void {
 		if (!this.isResizeMode) {
 			this.isResizeMode = false;

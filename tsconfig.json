@@ -35,7 +35,7 @@
 
 		"importHelpers": true,
 
-		"lib": ["es5", "esnext", "dom", "scripthost", "es2015.iterable"],
+		"lib": ["es5", "esnext", "DOM", "scripthost", "es2015.iterable"],
 
 		"baseUrl": ".",
 		"paths": {

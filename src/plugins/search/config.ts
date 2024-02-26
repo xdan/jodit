@@ -28,6 +28,12 @@ declare module 'jodit/config' {
 			lazyIdleTimeout: number;
 
 			/**
+			 * Use custom highlight API https://developer.mozilla.org/en-US/docs/Web/API/CSS_Custom_Highlight_API
+			 * or use default implementation (wrap text in span and attribute jd-tmp-selection)
+			 */
+			useCustomHighlightAPI: boolean;
+
+			/**
 			 * Function to search for a string within a substring. The default implementation is [[fuzzySearchIndex]]
 			 * But you can write your own. It must implement the [[FuzzySearch]] interface.
 			 *
@@ -48,7 +54,8 @@ declare module 'jodit/config' {
 
 Config.prototype.useSearch = true;
 Config.prototype.search = {
-	lazyIdleTimeout: 0
+	lazyIdleTimeout: 0,
+	useCustomHighlightAPI: typeof Highlight !== 'undefined'
 };
 
 Icon.set('search', searchIcon);

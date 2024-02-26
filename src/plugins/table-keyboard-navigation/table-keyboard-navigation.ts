@@ -10,14 +10,23 @@
  * @module plugins/table-keyboard-navigation
  */
 
-import type { IJodit } from 'jodit/types';
+import type { IJodit, Nullable } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { Table } from 'jodit/modules/table/table';
 import { pluginSystem } from 'jodit/core/global';
+import { call } from 'jodit/core/helpers';
+
+const WORK_KEYS = new Set([
+	consts.KEY_TAB,
+	consts.KEY_LEFT,
+	consts.KEY_RIGHT,
+	consts.KEY_UP,
+	consts.KEY_DOWN
+]);
 
 /**
- * Process navigate keypressing in table cell
+ * Process navigates key pressing in table cell
  */
 export function tableKeyboardNavigation(editor: IJodit): void {
 	editor.e
@@ -25,160 +34,139 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 		.on(
 			'keydown.tableKeyboardNavigation',
 			(event: KeyboardEvent): false | void => {
-				let current: Element, block: HTMLElement;
-
-				if (
-					event.key === consts.KEY_TAB ||
-					event.key === consts.KEY_LEFT ||
-					event.key === consts.KEY_RIGHT ||
-					event.key === consts.KEY_UP ||
-					event.key === consts.KEY_DOWN
-				) {
-					current = editor.s.current() as Element;
-
-					block = Dom.up(
-						current,
-						Dom.isCell,
-						editor.editor
-					) as HTMLTableCellElement;
-
-					if (!block) {
-						return;
-					}
-
-					const range = editor.s.range;
-
-					if (event.key !== consts.KEY_TAB && current !== block) {
-						if (
-							((event.key === consts.KEY_LEFT ||
-								event.key === consts.KEY_UP) &&
-								(Dom.prev(
-									current,
-									(elm: Node | null) =>
-										event.key === consts.KEY_UP
-											? Dom.isTag(elm, 'br')
-											: Boolean(elm),
-									block
-								) ||
-									(event.key !== consts.KEY_UP &&
-										Dom.isText(current) &&
-										range.startOffset !== 0))) ||
-							((event.key === consts.KEY_RIGHT ||
-								event.key === consts.KEY_DOWN) &&
-								(Dom.next(
-									current,
-									(elm: Node | null) =>
-										event.key === consts.KEY_DOWN
-											? Dom.isTag(elm, 'br')
-											: Boolean(elm),
-									block
-								) ||
-									(event.key !== consts.KEY_DOWN &&
-										Dom.isText(current) &&
-										current.nodeValue &&
-										range.startOffset !==
-											current.nodeValue.length)))
-						) {
-							return;
-						}
-					}
-				} else {
+				const { key } = event;
+				if (!WORK_KEYS.has(key)) {
 					return;
 				}
 
-				const tableModule = editor.getInstance<Table>(
-					'Table',
-					editor.o
+				const current = editor.s.current();
+
+				if (!current) {
+					return;
+				}
+
+				const cell = Dom.up<HTMLTableCellElement>(
+					current,
+					Dom.isCell,
+					editor.editor
 				);
 
-				const table = Dom.up(
-					block,
-					(elm: Node | null) => elm && /^table$/i.test(elm.nodeName),
-					editor.editor
-				) as HTMLTableElement;
+				if (!cell) {
+					return;
+				}
+
+				const { range } = editor.s;
+
+				if (key !== consts.KEY_TAB && current !== cell) {
+					const isNextDirection =
+						key === consts.KEY_RIGHT || key === consts.KEY_DOWN;
+
+					const hasNext = call(
+						!isNextDirection ? Dom.prev : Dom.next,
+						current,
+						elm =>
+							key === consts.KEY_UP || key === consts.KEY_DOWN
+								? Dom.isTag(elm, 'br')
+								: Boolean(elm),
+						cell
+					);
+
+					if (
+						(!isNextDirection &&
+							(hasNext ||
+								(key !== consts.KEY_UP &&
+									Dom.isText(current) &&
+									range.startOffset !== 0))) ||
+						(isNextDirection &&
+							(hasNext ||
+								(key !== consts.KEY_DOWN &&
+									Dom.isText(current) &&
+									current.nodeValue &&
+									range.startOffset !==
+										current.nodeValue.length)))
+					) {
+						return;
+					}
+				}
+
+				const tableModule = editor.getInstance<Table>(Table, editor.o);
+
+				const table = Dom.closest(cell, 'table', editor.editor)!;
+
 				let next: HTMLTableCellElement | null = null;
+				const isPrev = key === consts.KEY_LEFT || event.shiftKey;
+				const getNextCell = (): Nullable<HTMLTableCellElement> =>
+					call(
+						isPrev ? Dom.prev : Dom.next,
+						cell,
+						Dom.isCell,
+						table
+					) as HTMLTableCellElement;
 
-				switch (event.key) {
+				switch (key) {
 					case consts.KEY_TAB:
-					// case consts.KEY_RIGHT:
 					case consts.KEY_LEFT: {
-						const sibling: string =
-							event.key === consts.KEY_LEFT || event.shiftKey
-								? 'prev'
-								: 'next';
-
-						next = (Dom as any)[sibling](
-							block,
-							(elm: Node | null) =>
-								elm &&
-								/^td|th$/i.test((elm as HTMLElement).tagName),
-							table
-						) as HTMLTableCellElement;
+						next = getNextCell();
 
 						if (!next) {
 							tableModule.appendRow(
 								table,
-								sibling === 'next'
+								!isPrev
 									? false
 									: (table.querySelector(
 											'tr'
 										) as HTMLTableRowElement),
-								sibling === 'next'
+								!isPrev
 							);
-							next = (Dom as any)[sibling](
-								block,
-								Dom.isCell,
-								table
-							) as HTMLTableCellElement;
+							next = getNextCell();
 						}
 						break;
 					}
 					case consts.KEY_UP:
 					case consts.KEY_DOWN:
 						{
-							let i = 0,
-								j = 0;
-
-							const matrix = tableModule.formalMatrix(
+							const matrix = tableModule.formalMatrix(table);
+							const [row, column] = tableModule.formalCoordinate(
 								table,
-								(elm, _i, _j) => {
-									if (elm === block) {
-										i = _i;
-										j = _j;
-									}
-								}
+								cell
 							);
-							if (event.key === consts.KEY_UP) {
-								if (matrix[i - 1] !== undefined) {
-									next = matrix[i - 1][j];
+
+							if (key === consts.KEY_UP) {
+								if (matrix[row - 1] !== undefined) {
+									next = matrix[row - 1][column];
 								}
 							} else {
-								if (matrix[i + 1] !== undefined) {
-									next = matrix[i + 1][j];
+								if (matrix[row + 1] !== undefined) {
+									next = matrix[row + 1][column];
 								}
 							}
 						}
 						break;
 				}
 
-				if (next) {
-					if (!next.firstChild) {
-						const first = editor.createInside.element('br');
-						next.appendChild(first);
-						editor.s.setCursorBefore(first);
-					} else {
-						if (event.key === consts.KEY_TAB) {
-							editor.s.select(next, true);
-						} else {
-							editor.s.setCursorIn(
-								next,
-								event.key === consts.KEY_RIGHT ||
-									event.key === consts.KEY_DOWN
-							);
-						}
-					}
-					return false;
+				if (!next) {
+					return;
 				}
+
+				editor.e.fire('hidePopup hideResizer');
+
+				if (!next.firstChild) {
+					const first = editor.createInside.element('br');
+					next.appendChild(first);
+					editor.s.setCursorBefore(first);
+				} else {
+					if (key === consts.KEY_TAB) {
+						editor.s.select(next, true);
+					} else {
+						editor.s.setCursorIn(
+							next,
+							key === consts.KEY_RIGHT || key === consts.KEY_DOWN
+						);
+					}
+				}
+
+				editor.synchronizeValues();
+				return false;
 			}
 		);
 }

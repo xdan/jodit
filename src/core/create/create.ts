@@ -196,10 +196,10 @@ export class Create implements ICreate {
 	 * });
 	 * ```
 	 */
-	fromHTML(
+	fromHTML<T extends HTMLElement>(
 		html: string | number,
 		refsToggleElement?: IDictionary<boolean | void>
-	): HTMLElement {
+	): T {
 		const div = this.div();
 
 		div.innerHTML = html.toString();
@@ -223,7 +223,7 @@ export class Create implements ICreate {
 			});
 		}
 
-		return child;
+		return child as T;
 	}
 
 	/**

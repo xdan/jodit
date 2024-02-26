@@ -10,7 +10,6 @@
 
 import type { IViewBased } from 'jodit/types';
 import { completeUrl } from './complete-url';
-import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 
 export type Loader = (jodit: IViewBased, url: string) => Promise<any>;
@@ -37,45 +36,24 @@ const cacheLoaders = (loader: Loader): Loader => {
 };
 
 /**
- * Append script in document and call callback function after download
- */
-export const appendScript = (
-	jodit: IViewBased,
-	url: string,
-	callback: (this: HTMLElement, e?: Event) => any
-): CallbackAndElement => {
-	const script = jodit.c.element('script');
-
-	script.type = 'text/javascript';
-	script.async = true;
-
-	if (isFunction(callback) && !jodit.isInDestruct) {
-		jodit.e.on(script, 'load', callback);
-	}
-
-	if (!script.src) {
-		script.src = completeUrl(url);
-	}
-
-	jodit.od.body.appendChild(script);
-
-	return {
-		callback,
-		element: script
-	};
-};
-
-/**
  * Load script and return promise
  */
 export const appendScriptAsync = cacheLoaders(
 	(jodit: IViewBased, url: string) => {
-		return new Promise((resolve, reject) => {
+		return jodit.async.promise((resolve, reject) => {
 			if (jodit.isInDestruct) {
-				return;
+				return reject();
 			}
-			const { element } = appendScript(jodit, url, resolve);
-			!jodit.isInDestruct && jodit.e.on(element, 'error', reject);
+
+			const script = jodit.c.element('script', {
+				type: 'text/javascript',
+				async: true,
+				src: completeUrl(url)
+			});
+
+			jodit.od.body.appendChild(script);
+
+			jodit.e.on(script, 'error', reject).on(script, 'load', resolve);
 		});
 	}
 );
@@ -85,9 +63,9 @@ export const appendScriptAsync = cacheLoaders(
  */
 export const appendStyleAsync = cacheLoaders(
 	(jodit: IViewBased, url: string): Promise<HTMLElement> => {
-		return new Promise((resolve, reject) => {
+		return jodit.async.promise((resolve, reject) => {
 			if (jodit.isInDestruct) {
-				return;
+				return reject();
 			}
 
 			const link = jodit.c.element('link');
@@ -112,11 +90,11 @@ export const appendStyleAsync = cacheLoaders(
 	}
 );
 
-export const loadNext = (
+export function loadNext(
 	jodit: IViewBased,
 	urls: string[],
 	i: number = 0
-): Promise<void> => {
+): Promise<void> {
 	if (!isString(urls[i])) {
 		return Promise.resolve();
 	}
@@ -124,7 +102,7 @@ export const loadNext = (
 	return appendScriptAsync(jodit, urls[i]).then(() =>
 		loadNext(jodit, urls, i + 1)
 	);
-};
+}
 
 export function loadNextStyle(
 	jodit: IViewBased,
