@@ -41,6 +41,10 @@ declare global {
 	interface Function {
 		originalConstructor: Function;
 	}
+
+	interface Highlight {
+		(...args: any[]): any;
+	}
 }
 
 export { Jodit };
