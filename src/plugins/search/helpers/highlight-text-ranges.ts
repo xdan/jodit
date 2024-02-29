@@ -42,7 +42,8 @@ export function highlightTextRanges(
 
 	if (
 		jodit.o.search.useCustomHighlightAPI &&
-		typeof Highlight !== 'undefined'
+		// @ts-ignore Because Highlight is not defined in the types TS 5.3.3
+		typeof window.Highlight !== 'undefined'
 	) {
 		const ranges = [rng, ...restRanges].map(rng => {
 			const range = jodit.selection.createRange();
