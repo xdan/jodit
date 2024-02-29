@@ -282,7 +282,7 @@ describe('Plugin system test', () => {
 		it('should allow load plugin from external file', async () => {
 			const editor = getJodit({
 				extraPlugins: ['please'],
-				emoveButtons: ['changeCase'],
+				removeButtons: ['changeCase'],
 				buttons: [
 					{
 						group: 'font-style',
