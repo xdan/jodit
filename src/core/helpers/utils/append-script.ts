@@ -52,7 +52,6 @@ export const appendScriptAsync = cacheLoaders(
 			});
 
 			jodit.od.body.appendChild(script);
-
 			jodit.e.on(script, 'error', reject).on(script, 'load', resolve);
 		});
 	}

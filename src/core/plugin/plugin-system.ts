@@ -86,8 +86,7 @@ export class PluginSystem implements IPluginSystem {
 	 * Public method for async init all plugins
 	 */
 	__init(jodit: IJodit): void {
-		const { extrasList, disableList, filter } = getSpecialLists(jodit);
-
+		const { extraList, disableList, filter } = getSpecialLists(jodit);
 		const doneList: Map<string, Nullable<PluginInstance>> = new Map();
 		const pluginsMap: IDictionary<PluginInstance> = {};
 		const waitingList: Set<string> = new Set();
@@ -122,7 +121,6 @@ export class PluginSystem implements IPluginSystem {
 
 				commit = true;
 				const instance = makeInstance(jodit, plugin);
-
 				if (!instance) {
 					doneList.set(name, null);
 					waitingList.delete(name);
@@ -140,8 +138,8 @@ export class PluginSystem implements IPluginSystem {
 			}
 		};
 
-		if (!extrasList || !extrasList.length) {
-			loadExtras(this.__items, jodit, extrasList, initPlugins);
+		if (extraList && extraList.length) {
+			loadExtras(this.__items, jodit, extraList, initPlugins);
 		}
 
 		initPlugins();
@@ -196,11 +194,11 @@ function bindOnBeforeDestruct(
 }
 
 function getSpecialLists(jodit: IJodit): {
-	extrasList: IExtraPlugin[];
+	extraList: IExtraPlugin[];
 	disableList: Set<string>;
 	filter: Nullable<Set<string>>;
 } {
-	const extrasList: IExtraPlugin[] = jodit.o.extraPlugins.map(s =>
+	const extraList: IExtraPlugin[] = jodit.o.extraPlugins.map(s =>
 		isString(s) ? { name: s } : s
 	);
 
@@ -210,5 +208,5 @@ function getSpecialLists(jodit: IJodit): {
 
 	const filter = jodit.o.safeMode ? new Set(jodit.o.safePluginsList) : null;
 
-	return { extrasList, disableList, filter };
+	return { extraList, disableList, filter };
 }

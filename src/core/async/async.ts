@@ -364,7 +364,7 @@ export class Async implements IAsync {
 			);
 		});
 
-	private cancelIdleCallbackNative =
+	private __cancelIdleCallbackNative =
 		(window as any)['cancelIdleCallback']?.bind(window) ??
 		((request: number): void => {
 			this.clearTimeout(request);
@@ -392,7 +392,7 @@ export class Async implements IAsync {
 
 	cancelIdleCallback(request: number): void {
 		this.requestsIdle.delete(request);
-		return this.cancelIdleCallbackNative(request);
+		return this.__cancelIdleCallbackNative(request);
 	}
 
 	requestAnimationFrame(callback: FrameRequestCallback): number {

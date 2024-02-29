@@ -27,7 +27,7 @@ import { Dom } from 'jodit/core/dom';
 import { makeCollection } from 'jodit/modules/toolbar/factory';
 import { STATUSES } from 'jodit/core/component';
 import { isButtonGroup } from 'jodit/core/ui/helpers/buttons';
-import { autobind } from 'jodit/core/decorators';
+import { autobind, watch } from 'jodit/core/decorators';
 
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	TOOLBAR!: IToolbarCollection;
@@ -67,6 +67,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	/**
 	 * Helper for append toolbar in its place
 	 */
+	@watch(':rebuildToolbar')
 	protected buildToolbar(): void {
 		if (!this.o.toolbar) {
 			return;
