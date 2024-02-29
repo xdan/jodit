@@ -97,6 +97,7 @@ describe('Plugin system test', () => {
 		describe('Buttons', () => {
 			it('should register buttons in groups', () => {
 				const editor = getJodit({
+					removeButtons: ['changeCase'],
 					buttons: [
 						{
 							group: 'font-style',
@@ -281,6 +282,7 @@ describe('Plugin system test', () => {
 		it('should allow load plugin from external file', async () => {
 			const editor = getJodit({
 				extraPlugins: ['please'],
+				emoveButtons: ['changeCase'],
 				buttons: [
 					{
 						group: 'font-style',
