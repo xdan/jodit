@@ -20,6 +20,6 @@ jobs:
 
     - name: Run Karma Tests
       run: |
-        npm ci
+        npm ci --legacy-peer-deps
         make lint
         make test

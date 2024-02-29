@@ -20,7 +20,7 @@ jobs:
 
     - name: Run screenshot Tests
       run: |
-        npm ci
+        npm ci --legacy-peer-deps
         make build es=es2021 fat=true uglify=true
         make screenshots-build-image
         make screenshots-test es=es2021 fat=true min=true
