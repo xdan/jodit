@@ -61,11 +61,11 @@ function getFullUrl(jodit: IJodit, name: string, js: boolean): string {
 export function loadExtras(
 	items: Map<string, PluginType>,
 	jodit: IJodit,
-	extrasList: IExtraPlugin[],
+	extraList: IExtraPlugin[],
 	callback: () => void
 ): void {
 	try {
-		const needLoadExtras = extrasList.filter(
+		const needLoadExtras = extraList.filter(
 			extra => !items.has(normalizeName(extra.name))
 		);
 
@@ -90,7 +90,6 @@ function load(
 ): void {
 	pluginList.map(extra => {
 		const url = extra.url || getFullUrl(jodit, extra.name, true);
-
 		return appendScriptAsync(jodit, url)
 			.then(callback)
 			.catch(() => null);

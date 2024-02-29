@@ -77,7 +77,11 @@ export abstract class Plugin<T extends IViewBased = IJodit>
 	}
 
 	init(jodit: T): void {
-		// empty
+		if (this.jodit.isReady) {
+			this.afterInit(this.jodit);
+			this.__afterPluginSystemInit();
+			this.jodit.e.fire('rebuildToolbar');
+		}
 	}
 
 	@autobind
