@@ -335,6 +335,7 @@ if (typeof window.chai !== 'undefined') {
 
 const i18nkeys = new Set();
 const excludeI18nKeys = new Set([
+	'test',
 	'speechRecognize',
 	'quote',
 	'quotes',
