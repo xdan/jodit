@@ -1,6 +1,6 @@
 {
 	"name": "jodit",
-	"version": "4.0.10",
+	"version": "4.0.11",
 	"description": "Jodit is awesome and usefully wysiwyg editor with filebrowser",
 	"main": "build/jodit.min.js",
 	"types": "./types/index.d.ts",
@@ -108,7 +108,7 @@
 		"ts-loader": "^9.5.1",
 		"ts-node": "^10.9.2",
 		"tslib": "^2.6.2",
-		"typescript": "^5.4.1-rc",
+		"typescript": "^5.3.3",
 		"webpack": "5.89.0",
 		"webpack-cli": "^5.1.4",
 		"webpack-dev-middleware": "^7.0.0",
