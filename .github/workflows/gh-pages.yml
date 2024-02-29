@@ -15,7 +15,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
       - run: make build
       - run: make examples
       - name: Upload Pages artifact
