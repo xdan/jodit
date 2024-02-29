@@ -494,6 +494,41 @@ describe('Jodit Editor Tests', function () {
 				});
 			});
 		});
+
+		describe('beforeInitHook', () => {
+			beforeEach(() => {
+				unmockPromise();
+			});
+
+			it('should be called before init', done => {
+				class JoditCustom extends Jodit {
+					beforeInitHook() {
+						const { async } = this;
+						return async
+							.promise(resolve => {
+								setTimeout(resolve, 400);
+							})
+							.then(
+								() => {
+									// Should not be called
+									expect(true).is.false;
+								},
+								() => {
+									done(); // Destroyed async
+								}
+							);
+					}
+				}
+
+				const area = appendTestArea();
+				const editor = JoditCustom.make(area);
+				expect(editor.isReady).is.false;
+
+				editor.destruct();
+				area.remove();
+				expect(box.children.length).equals(0);
+			});
+		});
 	});
 
 	describe('Editors stack', function () {

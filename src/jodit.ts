@@ -1210,6 +1210,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		const beforeInitHookResult = this.beforeInitHook();
 
 		callPromise(beforeInitHookResult, (): void => {
+			if (this.isInDestruct) {
+				return;
+			}
+
 			this.e.fire('beforeInit', this);
 			pluginSystem.__init(this);
 
@@ -1226,6 +1230,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			instances[this.id] = this;
 
 			const init = (): void => {
+				if (this.isInDestruct) {
+					return;
+				}
+
 				if (this.e) {
 					this.e.fire('afterInit', this);
 				}
@@ -1630,12 +1638,6 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 		this.__elementToPlace.clear();
 
-		if (!this.editor) {
-			return;
-		}
-
-		const buffer = this.getEditorValue();
-
 		this.storage.clear();
 		this.buffer.clear();
 		this.commands.clear();
@@ -1647,6 +1649,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		this.e.off(this.od);
 		this.e.off(this.od.body);
 
+		const buffer = this.editor ? this.getEditorValue() : '';
 		this.places.forEach(
 			({
 				container,
@@ -1657,6 +1660,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				editor,
 				history
 			}) => {
+				if (!element) {
+					return;
+				}
+
 				if (element !== container) {
 					if (element.hasAttribute(__defaultStyleDisplayKey)) {
 						const display = attr(element, __defaultStyleDisplayKey);
