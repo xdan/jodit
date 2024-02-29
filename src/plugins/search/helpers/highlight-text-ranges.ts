@@ -51,6 +51,7 @@ export function highlightTextRanges(
 			return range;
 		});
 
+		// @ts-ignore Because Highlight is not defined in the types TS 5.3.3
 		const searchHighlight = new Highlight(...ranges);
 		// @ts-ignore
 		CSS.highlights.clear();
