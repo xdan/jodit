@@ -1145,7 +1145,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	/**
 	 * Hook after init
 	 */
-	protected afterInitHook(): void {
+	protected afterInitHook(): CanPromise<void> {
 		// do nothing
 	}
 
@@ -1238,11 +1238,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 					this.e.fire('afterInit', this);
 				}
 
-				this.afterInitHook();
-
-				this.setStatus(STATUSES.ready);
-
-				this.e.fire('afterConstructor', this);
+				callPromise(this.afterInitHook(), () => {
+					this.setStatus(STATUSES.ready);
+					this.e.fire('afterConstructor', this);
+				});
 			};
 
 			callPromise(addPlaceResult, init);
