@@ -55,7 +55,12 @@ export function callPromise(
 	callback: () => CanPromise<any>
 ): CanPromise<void> {
 	if (isPromise(condition)) {
-		return condition.finally(callback);
+		return condition
+			.then(
+				resp => resp,
+				() => null
+			)
+			.finally(callback);
 	}
 
 	return callback();
