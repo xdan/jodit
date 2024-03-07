@@ -7,7 +7,4 @@
 import * as es from './es.js';
 import * as en from './en.js';
 
-export {
-	es,
-	en,
-};
+export { es, en };
