@@ -43,9 +43,6 @@ declare module 'jodit/config' {
     }
 }
 
-Config.prototype.usePopupForSpecialCharacters = false;
-Config.prototype.specialCharacters = [];
-
 Config.prototype.aiImproveWritingPrompt = 'It needs to be refined for better clarity, coherence, and overall quality. Please enhance the writing style while keeping the original meaning and language intact.';
 Config.prototype.aiMakeShorterPrompt = 'Please condense this content to make it more concise, while preserving the key messages, language and information.';
 Config.prototype.aiMakeLongerPrompt = 'Expand on this content to provide more detail, depth, and richness, without diverging from the original message and language.';
