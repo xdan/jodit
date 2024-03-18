@@ -1,107 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-		/>
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Jodit Dev</title>
-		<link rel="stylesheet" href="./app.css" />
-		<link rel="stylesheet" href="./build/jodit.css" />
-		<script src="./build/jodit.js"></script>
-		<script src="./build/plugins/speech-recognize/speech-recognize.js"></script>
-		<!--		<script src="./build/plugins/debug/debug.js"></script>-->
-		<link rel="icon" href="https://xdsoft.net/jodit/pro/favicon.png" />
-	</head>
-	<body>
-		<style>
-			body {
-				font-variant-ligatures: contextual;
-				text-rendering: optimizespeed;
-				-webkit-font-smoothing: antialiased;
-			}
 
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Jodit Dev</title>
+	<link rel="stylesheet" href="./app.css" />
+	<link rel="stylesheet" href="./build/jodit.css" />
+	<script src="./build/jodit.js"></script>
+	<script src="./build/plugins/speech-recognize/speech-recognize.js"></script>
+	<!--		<script src="./build/plugins/debug/debug.js"></script>-->
+	<link rel="icon" href="https://xdsoft.net/jodit/pro/favicon.png" />
+</head>
+
+<body>
+	<style>
+		body {
+			font-variant-ligatures: contextual;
+			text-rendering: optimizespeed;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		#box {
+			position: relative;
+			height: 500px;
+			padding: 100px;
+			margin: 20px;
+		}
+
+		@media (max-width: 480px) {
 			#box {
-				position: relative;
-				height: 500px;
-				padding: 100px;
-				margin: 20px;
+				padding: 0;
 			}
-
-			@media (max-width: 480px) {
-				#box {
-					padding: 0;
+		}
+	</style>
+	<div id="box">
+		<h1>Jodit Test Document</h1>
+		<form id="form" action="sss.php">
+			<textarea id="editorNative"></textarea>
+			<button id="btn" type="button">click</button>
+		</form>
+	</div>
+	<script>
+		const editor = Jodit.make(editorNative, {
+			// safeMode: true,
+			// iframe: true,
+			// buttons: ['paragraph', 'align'],
+			// theme: 'dark',
+			// textIcons: true,
+			controls: {
+				paragraph: {
+					// component: 'select',
+				},
+				align: {
+					// component: 'select',
+				},
+				font: {
+					// component: 'select',
+				},
+				fontsize: {
+					// component: 'select',
 				}
-			}
-		</style>
-		<div id="box">
-			<h1>Jodit Test Document</h1>
-			<form id="form" action="sss.php">
-				<textarea id="editorNative"></textarea>
-				<button id="btn" type="button">click</button>
-			</form>
-		</div>
-		<script>
-			const editor = Jodit.make(editorNative, {
-				// safeMode: true,
-				// iframe: true,
-				// buttons: ['paragraph', 'align'],
-				theme: 'dark',
-				// textIcons: true,
-				controls: {
-					paragraph: {
-						// component: 'select',
-					},
-					align: {
-						// component: 'select',
-					},
-					font: {
-						// component: 'select',
-					},
-					fontsize: {
-						// component: 'select',
-					}
-				},
-				// fullsize: true,
-				cache: true,
-				// language: 'ru',
-				filebrowser: {
-					ajax: {
-						url: 'https://xdsoft.net/jodit/finder/'
-					}
-				},
-				uploader: {
-					url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
-				},
-			});
-
-			editor.value = '<!-- comment -->';
-
-			btn.onclick = () => {
-				const start = performance.now();
-				for (let i = 0; i < 100; i++) {
-					editor.toolbar.build(editor.o.buttons);
+			},
+			// fullsize: true,
+			cache: true,
+			// language: 'ru',
+			filebrowser: {
+				ajax: {
+					url: 'https://xdsoft.net/jodit/finder/'
 				}
-				const res = performance.now() - start;
-				console.log('Result:', res);
-				form.appendChild(
-					editor.create.fromHTML(
-						'<input name="content" value="' + res + '">'
-					)
-				);
-			};
-			// delete editor;
-			// const box = new UIBox(editor1);
-			// alert(box.container.outerHTML);
-		</script>
-		<style>
-			.class1 {
-				padding: 100px;
-				border: 1px solid#26ae90;
-				border-radius: 10px;
+			},
+			uploader: {
+				url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
+			},
+			language: 'es',
+			aiAssistantCallback: (prompt, htmlContents) => {
+				return new Promise((resolve, reject) => {
+					fetch('http://localhost:7071/api/ExecuteAICompletion', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							htmlContent: htmlContents,
+							userRequest: prompt
+						})
+					}).then(response => {
+						if (response.ok) {
+							return response.json();
+						}
+						throw new Error('Network response was not ok.');
+					}).then(data => {
+						resolve(data.result);
+					}).catch(error => {
+						reject(error);
+					});
+				});
+			},
+			aiImproveWritingPrompt: 'Necesita ser refinado para mejorar la claridad, coherencia y calidad general. Por favor, mejora el estilo de escritura manteniendo el significado original y el idioma intacto.',
+			aiMakeShorterPrompt: 'Por favor, condensa este contenido para hacerlo más conciso, preservando los mensajes clave, el idioma y la información.',
+			aiMakeLongerPrompt: 'Amplía este contenido para proporcionar más detalle, profundidad y riqueza, sin desviarte del mensaje original y el idioma.',
+			aiSimplifyLanguagePrompt: 'El lenguaje utilizado aquí necesita ser simplificado para una comprensión más fácil, sin alterar la información central y el idioma original.',
+			aiSummarizePrompt: 'Proporciona un breve resumen de este contenido, capturando los puntos esenciales de manera concisa. Preserva el idioma original y el significado.',
+			aiContinuePrompt: 'Continúa la narrativa o discusión de este contenido de manera fluida, manteniendo el mismo idioma, tono y estilo.',
+			aiChangeToneProfessionalPrompt: 'Ajusta el tono para que sea profesional, adecuado para un entorno empresarial o académico formal, mientras se retiene el mensaje original y el idioma.',
+			aiChangeToneFriendlyPrompt: 'Necesita ser reescrito en un tono amistoso manteniendo el mensaje original y el idioma. Por favor, modifica este contenido para que sea cálido, accesible y atractivo.',
+			aiChangeToneFormalPrompt: 'Transforma este contenido para que tenga un tono formal, apropiado para contextos oficiales o serios, sin cambiar los puntos principales y el idioma.',
+			aiChangeToneCasualPrompt: 'Revisa este contenido para que tenga un tono casual y relajado, haciéndolo sentir más personal y menos formal, sin cambiar el significado original y el idioma.',
+			aiChangeToneDirectPrompt: 'Haz que el tono sea más directo, con un lenguaje claro y un enfoque asertivo, sin cambiar el significado original y el idioma.',
+			aiChangeToneConfidentPrompt: 'Infunde este contenido con un tono confiado, mostrando seguridad y decisión, sin cambiar el significado original y el idioma.',
+			aiChangeStyleBusinessPrompt: 'Reescribe este contenido con un estilo orientado al negocio, enfocándose en la claridad, eficiencia y profesionalismo, sin cambiar el significado original y el idioma.',
+			aiChangeStyleLegalPrompt: 'Adapta este contenido a un estilo legal, incorporando la terminología apropiada y la formalidad típica de los documentos legales, sin cambiar el significado original y el idioma.',
+			aiChangeStyleJournalismPrompt: 'Convierte este contenido en un estilo periodístico, enfatizando la precisión factual, la objetividad y la información informativa, sin cambiar el significado original y el idioma.',
+			aiChangeStylePoeticPrompt: 'Recrea este contenido con un estilo poético, utilizando un lenguaje expresivo, ritmo e imágenes para transmitir el mensaje, sin cambiar el significado original y el idioma.',
+			aiTranslateToSpanishPrompt: 'Traduce este contenido al español, asegurando que la traducción sea precisa y mantenga el significado original.',
+			aiTranslateToFrenchPrompt: 'Traduce este contenido al francés, asegurando que la traducción sea precisa y mantenga el significado original.',
+			aiTranslateToGermanPrompt: 'Traduce este contenido al alemán, asegurando que la traducción sea precisa y mantenga el significado original.',
+			aiTranslateToItalianPrompt: 'Traduce este contenido al italiano, asegurando que la traducción sea precisa y mantenga el significado original.',
+			aiTranslateToPortuguesePrompt: 'Traduce este contenido al portugués, asegurando que la traducción sea precisa y mantenga el significado original.',
+			aiTranslateToEnglishPrompt: 'Traduce este contenido al inglés, asegurando que la traducción sea precisa y mantenga el significado original.',
+			aiTranslateToChinesePrompt: 'Traduce este contenido al chino, asegurando que la traducción sea precisa y mantenga el significado original.',
+			aiTranslateToJapanesePrompt: 'Traduce este contenido al japonés, asegurando que la traducción sea precisa y mantenga el significado original.',
+			aiTranslateToKoreanPrompt: 'Traduce este contenido al coreano, asegurando que la traducción sea precisa y mantenga el significado original.',
+			aiTranslateToRussianPrompt: 'Traduce este contenido al ruso, asegurando que la traducción sea precisa y mantenga el significado original.',
+			aiTranslateToArabicPrompt: 'Traduce este contenido al árabe, asegurando que la traducción sea precisa y mantenga el significado original.',
+		});
+
+		editor.value = '<!-- comment -->';
+
+		btn.onclick = () => {
+			const start = performance.now();
+			for (let i = 0; i < 100; i++) {
+				editor.toolbar.build(editor.o.buttons);
 			}
-		</style>
-	</body>
+			const res = performance.now() - start;
+			form.appendChild(
+				editor.create.fromHTML(
+					'<input name="content" value="' + res + '">'
+				)
+			);
+		};
+		// delete editor;
+		// const box = new UIBox(editor1);
+		// alert(box.container.outerHTML);
+	</script>
+	<style>
+		.class1 {
+			padding: 100px;
+			border: 1px solid#26ae90;
+			border-radius: 10px;
+		}
+	</style>
+</body>
+
 </html>

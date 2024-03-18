@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-		/>
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Jodit Start</title>
-		<link rel="stylesheet" href="./public/app.css" />
-		<link rel="stylesheet" href="../build/es2015/jodit.min.css" />
-		<script src="./build/es2015/jodit.min.js"></script>
-		<link rel="icon" href="https://xdsoft.net/jodit/pro/favicon.png"/>
-	</head>
-	<body>
-		<style>
-			#box {
-				padding: 100px;
-				margin: 20px;
-				position: relative;
-				height: 500px;
-			}
 
-			@media (max-width: 480px) {
-				#box {
-					padding: 0;
-				}
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Jodit Start</title>
+	<link rel="stylesheet" href="./public/app.css" />
+	<link rel="stylesheet" href="../build/es2015/jodit.min.css" />
+	<script src="./build/es2015/jodit.min.js"></script>
+	<link rel="icon" href="https://xdsoft.net/jodit/pro/favicon.png" />
+</head>
+
+<body>
+	<style>
+		#box {
+			padding: 100px;
+			margin: 20px;
+			position: relative;
+			height: 500px;
+		}
+
+		@media (max-width: 480px) {
+			#box {
+				padding: 0;
 			}
-		</style>
-		<div id="box">
-			<h1>Jodit Test Document</h1>
-			<textarea id="editor">
+		}
+	</style>
+	<div id="box">
+		<h1>Jodit Test Document</h1>
+		<textarea id="editor">
 				&lt;img src="https://xdsoft.net/jodit/files/artio.jpg"/&gt;
 			</textarea>
-		</div>
-		<script>
-			const editor = Jodit.make('#editor' ,{
-				uploader: {
-					url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
-				},
-				filebrowser: {
-					ajax: {
-						url: 'https://xdsoft.net/jodit/finder/'
-					}
+	</div>
+	<script>
+		const editor = Jodit.make('#editor', {
+			uploader: {
+				url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
+			},
+			filebrowser: {
+				ajax: {
+					url: 'https://xdsoft.net/jodit/finder/'
 				}
-			});
-		</script>
-	</body>
+			}
+
+		});
+	</script>
+</body>
+
 </html>

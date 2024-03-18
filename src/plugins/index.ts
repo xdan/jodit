@@ -64,6 +64,7 @@ import 'jodit/plugins/spellcheck/spellcheck';
 import 'jodit/plugins/stat/stat';
 import 'jodit/plugins/sticky/sticky';
 import 'jodit/plugins/symbols/symbols';
+import 'jodit/plugins/ai-assistant/ai-assistant';
 import 'jodit/plugins/tab/tab';
 import 'jodit/plugins/table/table';
 import 'jodit/plugins/table-keyboard-navigation/table-keyboard-navigation';
