@@ -90,7 +90,7 @@ Build min files:
 make build
 ```
 
-Build without some plugins:
+Build without any plugins:
 
 ```bash
 make build es=es2021 uglify=true excludePlugins="about,source,bold,image,xpath,stat,class-span,color,clean-html,file,focus,enter,backspace,media,preview,pint,redo-undo,resize-cells,search,spellcheck,table"

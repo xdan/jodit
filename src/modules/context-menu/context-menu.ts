@@ -36,7 +36,7 @@ export class ContextMenu extends Popup implements IContextMenu {
 	 * @param actions - Array with plain objects `{icon: 'bin', title: 'Delete', exec: function () {}}`
 	 * @example
 	 * ```javascript
-	 * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }]);
+	 * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }}]);
 	 * ```
 	 */
 	show(

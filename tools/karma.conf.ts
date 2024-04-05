@@ -23,12 +23,12 @@ const argv = yargs
 	.option('fat', {
 		type: 'boolean',
 		demandOption: true,
-		description: 'Use fat version of js files'
+		description: 'Use a fat version of js files'
 	})
 	.option('min', {
 		type: 'boolean',
 		demandOption: true,
-		description: 'Use minified version of js files'
+		description: 'Use a minified version of js files'
 	})
 	.parseSync();
 

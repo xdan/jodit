@@ -84,7 +84,7 @@ export function ConfigProto(
 			return;
 		}
 
-		// On the first level all array are atomic
+		// On the first level all arrays are atomic
 		if (deep !== 0 && isArray(opt) && !isAtom(opt) && isArray(protoKey)) {
 			newOpt[key] = [...opt, ...protoKey.slice(opt.length)];
 			return;

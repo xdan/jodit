@@ -156,7 +156,7 @@ export abstract class Component implements IComponent {
 
 	/**
 	 * The component is currently undergoing destructuring or has already been destroyed.
-	 * Those. you should not hang new events on him now or do anything else with him.
+	 * Those. you should not the app froze new events on him now or do anything else with him.
 	 */
 	get isInDestruct(): boolean {
 		return (
@@ -179,7 +179,7 @@ export abstract class Component implements IComponent {
 
 	abstract className(): string;
 
-	constructor() {
+	protected constructor() {
 		this.uid = 'jodit-uid-' + uniqueUid();
 	}
 

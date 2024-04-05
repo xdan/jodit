@@ -17,7 +17,7 @@ declare module 'jodit/config' {
 			exclude: Set<HTMLTagNames>;
 
 			/**
-			 * If the editor is empty then insert an empty paragraph into it
+			 * If the editor is empty, then insert an empty paragraph into it
 			 * @example
 			 * ```javascript
 			 * Jodit.make('#editor', {

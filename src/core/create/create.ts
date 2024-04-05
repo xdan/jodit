@@ -182,8 +182,9 @@ export class Create implements ICreate {
 	}
 
 	/**
-	 * Create DOM element from HTML text
+	 * Create a DOM element from HTML text
 	 *
+	 // eslint-disable-next-line tsdoc/syntax
 	 * @param refsToggleElement - State dictionary in which you can set the visibility of some of the elements
 	 * ```js
 	 * const editor = Jodit.make('#editor');

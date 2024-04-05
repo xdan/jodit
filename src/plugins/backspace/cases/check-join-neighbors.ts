@@ -25,7 +25,7 @@ export function checkJoinNeighbors(
 	let nextBox: Nullable<Node> = fakeNode,
 		mainClosestBox: Nullable<Node> = nextBox;
 
-	// Find main big closest element
+	// Find the main big closest element
 	while (
 		nextBox &&
 		!Dom.findNotEmptySibling(nextBox, backspace) &&

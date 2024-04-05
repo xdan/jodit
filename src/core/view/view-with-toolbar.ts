@@ -65,7 +65,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	}
 
 	/**
-	 * Helper for append toolbar in its place
+	 * Helper for appended toolbar in its place
 	 */
 	@watch(':rebuildToolbar')
 	protected buildToolbar(): void {
@@ -91,7 +91,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	}
 
 	/**
-	 * Register button for group
+	 * Register button for a group
 	 */
 	registerButton(btn: IPluginButton): this {
 		this.registeredButtons.add(btn);
@@ -111,7 +111,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	}
 
 	/**
-	 * Remove button from group
+	 * Remove button from a group
 	 */
 	unregisterButton(btn: IPluginButton): this {
 		this.registeredButtons.delete(btn);

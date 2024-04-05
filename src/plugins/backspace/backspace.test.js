@@ -152,7 +152,7 @@ describe('Backspace/Delete key', function () {
 			});
 		});
 
-		describe('Select whole text inside element', function () {
+		describe('Select whole text inside an element', function () {
 			describe('Inside P', function () {
 				it('Should remove selected range and remove this P', function () {
 					range.selectNodeContents(editor.editor.firstChild);
@@ -256,7 +256,7 @@ describe('Backspace/Delete key', function () {
 				});
 			});
 
-			describe('Text after SPAN and cursor in the left edge of text', function () {
+			describe('Text after SPAN and cursor on the left edge of a text', function () {
 				it('Should remove char inside span', function () {
 					editor.value = '<p><span>AAA</span>test</p>';
 
@@ -418,7 +418,7 @@ describe('Backspace/Delete key', function () {
 
 			describe('After BackSpace/Delete left empty node', function () {
 				describe('BackSpace', function () {
-					it('Should remove whole node', function () {
+					it('Should remove the whole node', function () {
 						editor.value = '<p>' + Jodit.INVISIBLE_SPACE + 's</p>';
 
 						range.setStart(editor.editor.firstChild.firstChild, 2);
@@ -437,7 +437,7 @@ describe('Backspace/Delete key', function () {
 				});
 
 				describe('Delete', function () {
-					it('Should remove whole node', function () {
+					it('Should remove the whole node', function () {
 						editor.value = '<p>d' + Jodit.INVISIBLE_SPACE + '</p>';
 
 						range.setStart(editor.editor.firstChild.firstChild, 0);
@@ -459,7 +459,7 @@ describe('Backspace/Delete key', function () {
 
 		describe('Cursor after empty text node', function () {
 			describe('BackSpace', function () {
-				it('Should remove this empty text node and first normal char in previous node', function () {
+				it('Should remove this empty text node and first normal char in the previous node', function () {
 					const p = editor.editor.firstChild;
 
 					p.appendChild(
@@ -493,7 +493,7 @@ describe('Backspace/Delete key', function () {
 			});
 
 			describe('Delete', function () {
-				it('Should remove this empty text node and first normal char in next node', function () {
+				it('Should remove this empty text node and first normal char in the next node', function () {
 					const p = editor.editor.firstChild;
 
 					p.appendChild(
@@ -603,8 +603,8 @@ describe('Backspace/Delete key', function () {
 				expect(editor.value).equals('<p> 2 </p>');
 			});
 
-			describe('Near has element', function () {
-				it('Should remove empty tag and set cursor in previous element', function () {
+			describe('Near has an element', function () {
+				it('Should remove empty tag and set cursor in a previous element', function () {
 					editor.value =
 						'<table><tbody>' +
 						'<tr><td>1</td></tr>' +
@@ -653,7 +653,7 @@ describe('Backspace/Delete key', function () {
 				});
 
 				describe('Inside this element and this element empty', function () {
-					it('Should remove empty this empty element', function () {
+					it('Should remove this empty element', function () {
 						editor.value = '<p>|<br></p>';
 						setCursorToChar(editor);
 						// editor.s.focus();
@@ -759,7 +759,7 @@ describe('Backspace/Delete key', function () {
 		});
 
 		describe('HR before P', function () {
-			it('Should simple remove HR but cursor should leave inside P', function () {
+			it('Should simply remove HR but the cursor should leave inside P', function () {
 				editor.value = '<p>lets</p><hr><p>|test</p>';
 				setCursorToChar(editor);
 
@@ -770,7 +770,7 @@ describe('Backspace/Delete key', function () {
 			});
 
 			describe('HR has different display style', function () {
-				it('Should also remove HR but cursor should leave inside P', function () {
+				it('Should also remove HR but the cursor should leave inside P', function () {
 					editor.destruct();
 					const jodit = getJodit(
 						{
@@ -786,7 +786,7 @@ describe('Backspace/Delete key', function () {
 
 					const range = jodit.s.createRange();
 
-					// set cursor in start of element
+					// set cursor in start of an element
 
 					range.selectNodeContents(jodit.editor.lastChild);
 					range.collapse(true);
@@ -802,7 +802,7 @@ describe('Backspace/Delete key', function () {
 
 		describe('The neighbor is empty H1', function () {
 			describe('Backspace', function () {
-				it('Should simple remove this H1', function () {
+				it('Should simply remove this H1', function () {
 					editor.value = '<h1></h1><p>test</p>';
 
 					range.setStartBefore(editor.editor.lastChild.firstChild);
@@ -818,7 +818,7 @@ describe('Backspace/Delete key', function () {
 				});
 
 				describe('H1 with BR', function () {
-					it('Should simple remove this H1', function () {
+					it('Should simply remove this H1', function () {
 						editor.value = '<h1><br></h1><p>|test</p>';
 						setCursorToChar(editor);
 
@@ -834,7 +834,7 @@ describe('Backspace/Delete key', function () {
 			});
 
 			describe('Delete', function () {
-				it('Should simple remove this H1', function () {
+				it('Should simply remove this H1', function () {
 					editor.value = '<p>test|</p><h1></h1>';
 					setCursorToChar(editor);
 
@@ -844,7 +844,7 @@ describe('Backspace/Delete key', function () {
 				});
 
 				describe('H1 with BR', function () {
-					it('Should simple remove this H1', function () {
+					it('Should simply remove this H1', function () {
 						editor.value = '<p>test|</p><h1><br></h1>';
 						setCursorToChar(editor);
 						simulateEvent(
@@ -861,7 +861,7 @@ describe('Backspace/Delete key', function () {
 	});
 
 	describe('inside empty TD', function () {
-		it('Should doing nothing', function () {
+		it('Should do nothing', function () {
 			editor.value =
 				'<table><tbody>' + '<tr><td></td></tr>' + '</tbody></table>';
 
@@ -883,7 +883,7 @@ describe('Backspace/Delete key', function () {
 
 	describe('after last char inside tag', function () {
 		describe('inside A', function () {
-			it('Should remove empty tag and set cursor in previous element', function () {
+			it('Should remove empty tag and set cursor in a previous element', function () {
 				editor.value = '<p><a href="#test">t|</a></p>';
 				setCursorToChar(editor);
 
@@ -976,7 +976,7 @@ describe('Backspace/Delete key', function () {
 		});
 	});
 
-	describe('On the edge of two tag', function () {
+	describe('On the edge of two tags', function () {
 		describe('Backspace', function () {
 			it('Should connect both elements in one element', function () {
 				editor.value = '<p>Test</p><p>Test</p>';
@@ -993,7 +993,7 @@ describe('Backspace/Delete key', function () {
 			});
 
 			describe('inline elements', function () {
-				it('Should move cursor inside first element', function () {
+				it('Should move the cursor inside a first element', function () {
 					editor.value =
 						'<div><span style="color: rgb(0, 0, 255);">This is</span></div>\n' +
 						'<div><span style="color: rgb(0, 0, 255);">my line</span></div>';
@@ -1061,7 +1061,7 @@ describe('Backspace/Delete key', function () {
 				});
 			});
 
-			describe('P after UL and cursor in the left edge of P', function () {
+			describe('P after UL and cursor on the left edge of P', function () {
 				it('Should remove P and move all this content inside last LI', function () {
 					editor.value =
 						'<p>AAA</p>\n' +
@@ -1100,7 +1100,7 @@ describe('Backspace/Delete key', function () {
 				});
 			});
 
-			describe('H1 after P and cursor in the left edge of H1', function () {
+			describe('H1 after P and cursor on the left edge of H1', function () {
 				it('Should remove H1 and move all this content inside last P', function () {
 					editor.value = '<p>AAA</p><h1>CCC</h1>';
 
@@ -1161,7 +1161,7 @@ describe('Backspace/Delete key', function () {
 	describe('In the middle of two UL elements', function () {
 		describe('Backspace', function () {
 			describe('In first LI of second UL', function () {
-				it('Should move content of this LI and put it inside new P', function () {
+				it('Should move the content of this LI and put it inside new P', function () {
 					editor.value =
 						'<ul><li>Test</li></ul><ul><li>|Some text</li></ul>';
 
@@ -1269,7 +1269,7 @@ describe('Backspace/Delete key', function () {
 	describe('Enter backspace/delete in the start of some LI', function () {
 		describe('in first LI', function () {
 			describe('Enter backspace', function () {
-				it('Should remove this LI and move all conntent in P', function () {
+				it('Should remove this LI and move all content in P', function () {
 					editor.value = '<ul><li>Test</li><li>Some text</li></ul>';
 
 					range.setStart(
@@ -1356,8 +1356,8 @@ describe('Backspace/Delete key', function () {
 			expect(editor.value).equals('<ul><li>Test a Some text</li></ul>');
 		});
 
-		describe('And enter Enter', function () {
-			it('Should split this LI on two again', function () {
+		describe('And enter', function () {
+			it('Should split this LI in two again', function () {
 				editor.value = '<ul><li>Test</li><li>Some text</li></ul>';
 
 				range.setStart(

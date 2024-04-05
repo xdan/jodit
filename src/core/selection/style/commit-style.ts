@@ -64,7 +64,7 @@ export class CommitStyle implements ICommitStyle {
 	}
 
 	/**
-	 * New element is block
+	 * New element is blocked
 	 */
 	get elementIsBlock(): boolean {
 		return Boolean(

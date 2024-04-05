@@ -36,10 +36,10 @@ Icon.set('palette', paletteIcon);
  * @example
  * ```javascript
  * const tabs = TabsWidget(editor, {
- *    'Text' : ColorPickerWidget(editor, function (color) {
+ *    'Text': ColorPickerWidget(editor, function (color) {
  *         box.style.color = color;
  *     }, box.style.color),
- *     'Background' : ColorPickerWidget(editor, function (color) {
+ *     'Background': ColorPickerWidget(editor, function (color) {
  *         box.style.backgroundColor = color;
  *     }, box.style.backgroundColor),
  * });

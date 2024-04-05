@@ -13,7 +13,7 @@ import { Dom } from 'jodit/core/dom/dom';
 import { call } from 'jodit/core/helpers/utils';
 
 /**
- * For first item in list on backspace try move his content in new P
+ * For the first item in a list on backspace, try to move his content in new P
  *
  * @example
  * ```html

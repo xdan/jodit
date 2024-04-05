@@ -105,7 +105,7 @@ export class UIButton extends UIElement implements IUIButton {
 	}
 
 	/**
-	 * Set size from parent list
+	 * Set size from a parent list
 	 */
 	@watch('parentElement')
 	protected updateSize(): void {
@@ -186,7 +186,7 @@ export class UIButton extends UIElement implements IUIButton {
 	}
 
 	/**
-	 * Set focus on element
+	 * Set focus on an element
 	 */
 	focus(): void {
 		this.container.focus();

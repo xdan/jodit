@@ -349,7 +349,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			}
 
 			/**
-			 * Fired after popup was opened for some control button
+			 * Fired after the popup was opened for some control button
 			 */
 
 			/**
@@ -365,7 +365,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	private openedPopup: Nullable<IPopup> = null;
 
 	/**
-	 * Create and open popup list
+	 * Create an open popup list
 	 */
 	private __openControlList(control: IControlTypeStrongList): void {
 		const controls: Controls = this.jodit.options.controls ?? {},

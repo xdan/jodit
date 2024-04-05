@@ -165,7 +165,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 				this.removeGlobalResizeListeners();
 
 				/**
-				 * Fired when dialog box is finished to resizing
+				 * Fired when the dialog box is finished to resizing
 				 */
 				this.e.fire(this, 'endResize endMove');
 			}

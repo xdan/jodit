@@ -10,6 +10,10 @@
 const box = document.createElement('div');
 document.body.appendChild(box);
 
+if (typeof chai === 'undefined') {
+	console.error('Please include chai.js');
+}
+
 const expect = typeof chai !== 'undefined' ? chai.expect : function () {},
 	stuff = [];
 
@@ -293,7 +297,7 @@ function mockAjax() {
 									time: '2018-03-15 12:08:54',
 									data: {
 										messages: [
-											'File does not exist or is above the root of the connector'
+											'The File does not exist or is above the root of the connector'
 										],
 										code: 424
 									}
@@ -352,7 +356,7 @@ const excludeI18nKeys = new Set([
 	'remove word',
 	'delete word',
 	'enter',
-	'File does not exist or is above the root of the connector',
+	'The File does not exist or is above the root of the connector',
 	'bar',
 	'Classe 1',
 	'Classe 2',
@@ -530,7 +534,7 @@ function getJodit(options, element) {
 }
 
 /**
- * Create empty DIV block and but it inside Box
+ * Create empty DIV block and it inside Box
  *
  * @param [id]
  * @param [noput]
@@ -928,7 +932,7 @@ function selectCells(editor, indexes) {
 }
 
 /**
- * Set listener and remove it after first call
+ * Set listener and remove it after the first call
  *
  * @param {string} event
  * @param {HTMLElement} element
@@ -989,7 +993,7 @@ function setCursor(elm, inEnd) {
 }
 
 /**
- * Set cursor inside editor by some char
+ * Set cursor inside the editor by some char
  *
  * @param {Jodit} editor
  * @param {string} [char]
@@ -1033,7 +1037,7 @@ function setCursorToChar(editor, char = '|') {
 }
 
 /**
- * Set cursor inside editor by some char
+ * Set cursor inside the editor by some char
  *
  * @param {Jodit} editor
  * @param {string} [char]
@@ -1093,9 +1097,9 @@ function fillXY(data, editor) {
  *
  * Licensed under the Apache License, Version 2
  *
- * Works in a SVG document in Chrome 6+, Safari 5+, Firefox 4+ and IE9+.
- * Works in a HTML5 document in Chrome 7+, Firefox 4+ and IE9+.
- * Does not work in Opera since it doesn't support the SVGElement interface yet.
+ * Works in an SVG document in Chrome 6+, Safari 5+, Firefox 4+ and IE9+.
+ * Works in an HTML5 document in Chrome 7+, Firefox 4+ and IE9+.
+ * It Does not work in Opera since it doesn't support the SVGElement interface yet.
  *
  * I haven't decided on the best name for this property - thus the duplication.
  */
@@ -1138,7 +1142,7 @@ function fillXY(data, editor) {
 			output.push('<!--', node.nodeValue, '-->');
 		} else {
 			throw new Error(
-				'Error serializing XML. Unhandled node of type: ' + nodeType
+				'Error serializing XML. Unhandled node of a type: ' + nodeType
 			);
 		}
 	};
@@ -1167,7 +1171,7 @@ function fillXY(data, editor) {
 				const dXML = new DOMParser();
 
 				dXML.async = false;
-				// Wrap the markup into a SVG node to ensure parsing works.
+				// Wrap the markup into an SVG node to ensure parsing works.
 				const sXML =
 					"<svg xmlns='http://www.w3.org/2000/svg'>" +
 					markupText +

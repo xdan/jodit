@@ -188,7 +188,7 @@ export function checkRemoveChar(
 }
 
 /**
- * Helper remove all empty inline parents
+ * Helper removes all empty inline parents
  */
 function removeEmptyForParent(node: Node, tags: HTMLTagNames): void {
 	let parent = node.parentElement;

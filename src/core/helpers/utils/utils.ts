@@ -52,7 +52,7 @@ export function markOwner(jodit: IViewBased, elm: HTMLElement): void {
 
 export function callPromise(
 	condition: CanPromise<unknown>,
-	callback: () => CanPromise<any>
+	callback?: () => CanPromise<any>
 ): CanPromise<void> {
 	if (isPromise(condition)) {
 		return condition
@@ -63,7 +63,7 @@ export function callPromise(
 			.finally(callback);
 	}
 
-	return callback();
+	return callback?.();
 }
 
 /**

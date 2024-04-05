@@ -352,16 +352,12 @@ export class Async implements IAsync {
 		): number => {
 			const start = Date.now();
 
-			return this.setTimeout(
-				() => {
-					callback({
-						didTimeout: false,
-						timeRemaining: () =>
-							Math.max(0, 50 - (Date.now() - start))
-					});
-				},
-				options?.timeout ?? 1
-			);
+			return this.setTimeout(() => {
+				callback({
+					didTimeout: false,
+					timeRemaining: () => Math.max(0, 50 - (Date.now() - start))
+				});
+			}, options?.timeout ?? 1);
 		});
 
 	private __cancelIdleCallbackNative =

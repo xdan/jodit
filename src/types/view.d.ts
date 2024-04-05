@@ -109,7 +109,7 @@ interface IViewBased<T = IViewOptions>
 	readonly parent: Nullable<IViewBased>;
 
 	/**
-	 * ID attribute for source element, id add \{id\}_editor it's editor's id
+	 * ID attribute for a source element, id add \{id\}_editor it's editor's id
 	 */
 	readonly id: string;
 

@@ -64,7 +64,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	readonly mods: IDictionary<string | boolean | null> = {};
 
 	/**
-	 * ID attribute for source element, id add `{id}_editor` it's editor's id
+	 * ID attribute for a source element, id add `{id}_editor` it's editor's id
 	 */
 	id!: string;
 
@@ -74,7 +74,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	readonly components: Set<IComponent> = new Set();
 
 	/**
-	 * Get path for loading extra staff
+	 * Get a path for loading extra staff
 	 */
 	get basePath(): string {
 		if (this.o.basePath) {
@@ -91,7 +91,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	static readonly esModern: boolean = IS_ES_MODERN; // from webpack.config.js
 
 	/**
-	 * Return default timeout period in milliseconds for some debounce or throttle functions.
+	 * Return a default timeout period in milliseconds for some debounce or throttle functions.
 	 * By default, `{history.timeout}` options
 	 */
 	get defaultTimeout(): number {

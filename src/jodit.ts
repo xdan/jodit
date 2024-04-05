@@ -147,7 +147,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	}
 
 	/**
-	 * Return default timeout period in milliseconds for some debounce or throttle functions.
+	 * Return a default timeout period in milliseconds for some debounce or throttle functions.
 	 * By default, `{history.timeout}` options
 	 */
 	override get defaultTimeout(): number {
@@ -481,7 +481,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	): string {
 		/**
 		 * Triggered before getEditorValue executed.
-		 * If returned not undefined getEditorValue will return this value
+		 * If returned not undefined, getEditorValue will return this value
 		 * @example
 		 * ```javascript
 		 * var editor = Jodit.make("#redactor");
@@ -537,7 +537,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 	/**
 	 * Set editor html value and if set sync fill source element value
-	 * When method was called without arguments - it is simple way to synchronize editor to element
+	 * When method was called without arguments - it is a simple way to synchronize editor to element
 	 */
 	setEditorValue(value?: string): void {
 		/**
@@ -673,7 +673,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	 *
 	 * jodit.execCommand('replaceString', 'test', 'stop');
 	 *
-	 * console.log(jodit.value); // stop test test
+	 * console.log(jodit.value); // stop test
 	 *
 	 * // and you can add hotkeys for command
 	 * jodit.registerCommand('replaceString', {
@@ -792,7 +792,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		 *      parent.s.insertNode(p)
 		 *      parent.s.setCursorIn(p);
 		 *      p.style.textAlign = 'justyfy';
-		 *      return false; // break execute native command
+		 *      return false; // break executes native command
 		 *  }
 		 * })
 		 * ```
@@ -1070,7 +1070,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 	/**
 	 * Switch on/off the editor into the disabled state.
-	 * When in disabled, the user is not able to change the editor content
+	 * When disabled, the user is not able to change the editor content
 	 * This function firing the `disabled` event.
 	 */
 	setDisabled(isDisabled: boolean): void {
@@ -1158,7 +1158,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 	/** @override **/
 	protected override initOwners(): void {
-		// in iframe it can be changed
+		// in iframe, it can be changed
 		this.editorWindow = this.o.ownerWindow;
 		this.ownerWindow = this.o.ownerWindow;
 	}
@@ -1238,10 +1238,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 					this.e.fire('afterInit', this);
 				}
 
-				callPromise(this.afterInitHook(), () => {
-					this.setStatus(STATUSES.ready);
-					this.e.fire('afterConstructor', this);
-				});
+				callPromise(this.afterInitHook());
+
+				this.setStatus(STATUSES.ready);
+				this.e.fire('afterConstructor', this);
 			};
 
 			callPromise(addPlaceResult, init);

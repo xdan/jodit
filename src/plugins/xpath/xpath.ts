@@ -24,7 +24,7 @@ import { pluginSystem } from 'jodit/core/global';
 import './config';
 
 /**
- * Show path to current element in status bar
+ * Show a path to a current element in status bar
  */
 class xpath extends Plugin {
 	private onContext = (bindElement: Node, event: MouseEvent): boolean => {

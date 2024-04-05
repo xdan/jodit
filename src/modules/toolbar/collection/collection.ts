@@ -47,7 +47,7 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		'selectionchange changeSelection focus afterSetMode touchstart focus blur';
 
 	/**
-	 * First button in list
+	 * First button in a list
 	 */
 	get firstButton(): Nullable<IToolbarButton> {
 		const [button] = this.buttons as IToolbarButton[];
@@ -76,7 +76,7 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 	}
 
 	/**
-	 * Button should be disabled
+	 * The Button should be disabled
 	 */
 	shouldBeDisabled(button: IToolbarButton): boolean | undefined {
 		return undefined;
