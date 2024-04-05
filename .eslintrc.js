@@ -87,7 +87,13 @@ module.exports = {
 			'error',
 			{
 				groups: [
-					['jodit/types', 'jodit/core', 'jodit/modules'],
+					[
+						'jodit/types.*\\u0000$',
+						'jodit/types',
+						'jodit/.*\\u0000$',
+						'jodit/core',
+						'jodit/modules'
+					],
 					// Side effect imports.
 					['^\\u0000'],
 					// Parent imports. Put `..` last.

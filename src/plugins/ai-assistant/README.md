@@ -42,7 +42,7 @@ const editor = Jodit.make('#editor', {
 		aiAssistantCallback(prompt, htmlFragment) {
 			// Make API call to OpenAI
 			return fetch(
-				'https://api.openai.com/v1/engines/davinci-codex/completions',
+				'https://api.openai.com/v1/engines/gpt-3.5-turbo-16k/completions',
 				{
 					method: 'POST',
 					headers: {
