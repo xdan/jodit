@@ -13,8 +13,8 @@ import type {
 	EventHandlerBlock,
 	IDictionary
 } from 'jodit/types';
-import { assert } from 'jodit/core/helpers/utils/assert';
 import { toArray } from 'jodit/core/helpers/array/to-array';
+import { assert } from 'jodit/core/helpers/utils/assert';
 
 export const defaultNameSpace = 'JoditEventDefaultNamespace';
 

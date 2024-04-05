@@ -16,6 +16,7 @@ import type {
 	IDictionary
 } from 'jodit/types';
 import { ConfigFlatten, isArray, isString } from 'jodit/core/helpers';
+
 import { Config } from 'jodit/config';
 
 /**

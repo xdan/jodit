@@ -8,7 +8,7 @@
  * @module plugins/print
  */
 
-import type { IJodit, IDictionary } from 'jodit/types';
+import type { IDictionary, IJodit } from 'jodit/types';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 
 /**

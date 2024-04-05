@@ -15,6 +15,7 @@ import {
 	isString
 } from 'jodit/core/helpers/checker';
 import { CamelCaseToKebabCase } from 'jodit/core/helpers/string/kebab-case';
+
 import { css } from './css';
 
 /**

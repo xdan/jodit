@@ -5,10 +5,10 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { call } from 'jodit/core/helpers/utils/utils';
-import { trim } from 'jodit/core/helpers/string/trim';
 import { Dom } from 'jodit/core/dom/dom';
 import { isMarker } from 'jodit/core/helpers/checker/is-marker';
+import { trim } from 'jodit/core/helpers/string/trim';
+import { call } from 'jodit/core/helpers/utils/utils';
 
 /**
  * If the selection area is inside an element that matches the commit (suitable relative),

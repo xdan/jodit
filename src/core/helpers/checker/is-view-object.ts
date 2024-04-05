@@ -9,6 +9,7 @@
  */
 
 import type { IViewBased } from 'jodit/types';
+
 import { isFunction } from './is-function';
 
 /**

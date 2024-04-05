@@ -18,16 +18,15 @@ import type {
 	Nullable,
 	RejectablePromise
 } from 'jodit/types';
-import { setTimeout, clearTimeout } from 'jodit/core/helpers/async';
-
+import { IS_ES_NEXT } from 'jodit/core/constants';
+import { clearTimeout, setTimeout } from 'jodit/core/helpers/async';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { isNumber } from 'jodit/core/helpers/checker/is-number';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isPromise } from 'jodit/core/helpers/checker/is-promise';
 import { isString } from 'jodit/core/helpers/checker/is-string';
-import { isNumber } from 'jodit/core/helpers/checker/is-number';
-import { assert } from 'jodit/core/helpers/utils/assert';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';
-import { IS_ES_NEXT } from 'jodit/core/constants';
+import { assert } from 'jodit/core/helpers/utils/assert';
 
 type Callback = (...args: any[]) => void;
 

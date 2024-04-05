@@ -8,26 +8,26 @@
  * @module view
  */
 
-import './view-with-toolbar.less';
-
 import type {
-	IViewWithToolbar,
-	IToolbarCollection,
 	Buttons,
+	ButtonsGroups,
 	IDictionary,
 	IPluginButton,
+	IToolbarCollection,
 	IViewOptions,
-	ButtonsGroups
+	IViewWithToolbar
 } from 'jodit/types';
-import { View } from 'jodit/core/view/view';
-import { isString } from 'jodit/core/helpers/checker';
-import { splitArray } from 'jodit/core/helpers/array';
-import { resolveElement } from 'jodit/core/helpers/utils';
-import { Dom } from 'jodit/core/dom';
-import { makeCollection } from 'jodit/modules/toolbar/factory';
 import { STATUSES } from 'jodit/core/component';
-import { isButtonGroup } from 'jodit/core/ui/helpers/buttons';
 import { autobind, watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
+import { splitArray } from 'jodit/core/helpers/array';
+import { isString } from 'jodit/core/helpers/checker';
+import { resolveElement } from 'jodit/core/helpers/utils';
+import { isButtonGroup } from 'jodit/core/ui/helpers/buttons';
+import { View } from 'jodit/core/view/view';
+import { makeCollection } from 'jodit/modules/toolbar/factory';
+
+import './view-with-toolbar.less';
 
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	TOOLBAR!: IToolbarCollection;

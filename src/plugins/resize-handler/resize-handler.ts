@@ -11,11 +11,11 @@
  */
 
 import type { IJodit, IPointBound } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
-import { Dom } from 'jodit/core/dom';
 import { autobind } from 'jodit/core/decorators';
-import { Icon } from 'jodit/core/ui';
+import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { Plugin } from 'jodit/core/plugin';
+import { Icon } from 'jodit/core/ui';
 
 import './config';
 

@@ -9,8 +9,8 @@
  */
 
 import { Dom } from 'jodit/core/dom/dom';
-import { trim } from 'jodit/core/helpers/string/trim';
 import { toArray } from 'jodit/core/helpers/array/to-array';
+import { trim } from 'jodit/core/helpers/string/trim';
 
 /**
  * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant

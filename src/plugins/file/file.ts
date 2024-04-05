@@ -15,10 +15,11 @@ import type {
 	IFileBrowserCallBackData,
 	IJodit
 } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom/dom';
-import { FileSelectorWidget } from 'jodit/modules/widget';
 import { pluginSystem } from 'jodit/core/global';
+import { FileSelectorWidget } from 'jodit/modules/widget';
+
+import { Config } from 'jodit/config';
 
 Config.prototype.controls.file = {
 	popup: (editor: IJodit, current: Node | false, close) => {

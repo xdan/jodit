@@ -10,17 +10,17 @@
  * @module plugins/sticky
  */
 
-import './sticky.less';
-
 import type { IJodit } from 'jodit/types';
 import { IS_ES_NEXT, IS_IE, MODE_WYSIWYG } from 'jodit/core/constants';
-import { Plugin } from 'jodit/core/plugin/plugin';
-import { Dom } from 'jodit/core/dom/dom';
-import { css, offset } from 'jodit/core/helpers';
 import { throttle } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { css, offset } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin/plugin';
 
 import './config';
+
+import './sticky.less';
 
 const NEED_DUMMY_BOX = !IS_ES_NEXT && IS_IE;
 

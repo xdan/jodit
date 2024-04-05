@@ -10,22 +10,22 @@
  * @module ui/group
  */
 
-import './group.less';
-
 import type {
+	IDictionary,
 	IUIButtonState,
 	IUIElement,
 	IUIGroup,
 	IViewBased,
 	ModType
 } from 'jodit/types';
-import type { IDictionary } from 'jodit/types';
-import { UIElement } from 'jodit/core/ui/element';
+import { Component } from 'jodit/core/component/component';
 import { component, watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
 import { isArray } from 'jodit/core/helpers';
 import { assert } from 'jodit/core/helpers/utils/assert';
-import { Dom } from 'jodit/core/dom/dom';
-import { Component } from 'jodit/core/component/component';
+import { UIElement } from 'jodit/core/ui/element';
+
+import './group.less';
 
 @component
 export class UIGroup<T extends IViewBased = IViewBased>

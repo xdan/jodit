@@ -13,16 +13,25 @@
 import type {
 	IComponent,
 	ICreate,
+	IDictionary,
+	IEventEmitter,
+	IMessages,
 	IProgressBar,
 	IStorage,
 	IViewBased,
 	IViewOptions,
-	Nullable,
-	IDictionary,
-	IEventEmitter,
-	IMessages
+	Nullable
 } from 'jodit/types';
-import { Storage } from 'jodit/core/storage';
+import {
+	APP_VERSION,
+	BASE_PATH,
+	ES,
+	IS_ES_MODERN,
+	IS_ES_NEXT
+} from 'jodit/core/constants';
+import { cache, derive, hook } from 'jodit/core/decorators';
+import { EventEmitter } from 'jodit/core/event-emitter';
+import { modules } from 'jodit/core/global';
 import {
 	camelCase,
 	ConfigProto,
@@ -32,26 +41,17 @@ import {
 	isFunction,
 	isVoid
 } from 'jodit/core/helpers';
-import {
-	APP_VERSION,
-	BASE_PATH,
-	ES,
-	IS_ES_MODERN,
-	IS_ES_NEXT
-} from 'jodit/core/constants';
+import { Storage } from 'jodit/core/storage';
+import { Elms } from 'jodit/core/traits/elms';
+import { Mods } from 'jodit/core/traits/mods';
 import {
 	Component,
-	STATUSES,
-	ProgressBar,
 	Create,
 	Dom,
+	ProgressBar,
+	STATUSES,
 	ViewComponent
 } from 'jodit/modules';
-import { modules } from 'jodit/core/global';
-import { hook, derive, cache } from 'jodit/core/decorators';
-import { Mods } from 'jodit/core/traits/mods';
-import { Elms } from 'jodit/core/traits/elms';
-import { EventEmitter } from 'jodit/core/event-emitter';
 import { UIMessages } from 'jodit/modules/messages/messages';
 
 export interface View extends Mods, Elms {}

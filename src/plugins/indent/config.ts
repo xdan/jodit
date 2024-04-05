@@ -9,14 +9,14 @@
  */
 
 import type { IControlType, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom';
 import { Icon } from 'jodit/core/ui/icon';
 
-import { getKey } from './helpers';
-
 import indentIcon from './icons/indent.svg';
 import outdentIcon from './icons/outdent.svg';
+import { getKey } from './helpers';
+
+import { Config } from 'jodit/config';
 
 Icon.set('indent', indentIcon).set('outdent', outdentIcon);
 

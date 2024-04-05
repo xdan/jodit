@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, ICommitStyle, HTMLTagNames } from 'jodit/types';
+import type { HTMLTagNames, ICommitStyle, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { attr } from 'jodit/core/helpers/utils/attr';
 
-import { wrapUnwrappedText } from './wrap-unwrapped-text';
 import { wrapList } from './list/wrap-list';
+import { wrapUnwrappedText } from './wrap-unwrapped-text';
 
 /**
  * Replaces the parent tag with the applicable one, or wraps the text and also replaces the tag

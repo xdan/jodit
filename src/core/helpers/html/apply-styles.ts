@@ -8,10 +8,10 @@
  * @module helpers/html
  */
 
-import { Dom } from 'jodit/core/dom/dom';
-import { $$ } from 'jodit/core/helpers/utils/selector';
-import { trim } from 'jodit/core/helpers/string/trim';
 import { IS_PROD } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
+import { trim } from 'jodit/core/helpers/string/trim';
+import { $$ } from 'jodit/core/helpers/utils/selector';
 
 function normalizeCSS(s: string): string {
 	return s

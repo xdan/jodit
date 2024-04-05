@@ -19,9 +19,7 @@ import type {
 	MarkerInfo,
 	Nullable
 } from 'jodit/types';
-
 import * as consts from 'jodit/core/constants';
-
 import {
 	INSEPARABLE_TAGS,
 	INVISIBLE_SPACE,
@@ -29,27 +27,26 @@ import {
 	INVISIBLE_SPACE_REG_EXP_START as INV_START,
 	IS_PROD
 } from 'jodit/core/constants';
-import { Dom } from 'jodit/core/dom/dom';
-
-import {
-	size,
-	attr,
-	error,
-	$$,
-	css,
-	call,
-	toArray,
-	getScrollParent,
-	scrollIntoViewIfNeeded
-} from 'jodit/core/helpers';
 import { autobind } from 'jodit/core/decorators';
-import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers/move-the-node-along-the-edge-outward';
+import { Dom } from 'jodit/core/dom/dom';
+import {
+	$$,
+	attr,
+	call,
+	css,
+	error,
+	getScrollParent,
+	scrollIntoViewIfNeeded,
+	size,
+	toArray
+} from 'jodit/core/helpers';
+import { isFunction, isMarker, isString } from 'jodit/core/helpers/checker';
 import { assert } from 'jodit/core/helpers/utils/assert';
-import { isMarker, isFunction, isString } from 'jodit/core/helpers/checker';
-
-import { CommitStyle } from './style/commit-style';
+import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers/move-the-node-along-the-edge-outward';
 
 import './interface';
+
+import { CommitStyle } from './style/commit-style';
 
 export class Selection implements ISelect {
 	constructor(readonly jodit: IJodit) {

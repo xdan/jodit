@@ -9,9 +9,10 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { Dom } from 'jodit/core/dom/dom';
-import { getMoveFilter } from 'jodit/plugins/backspace/helpers';
 import { LIST_TAGS } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
+
+import { getMoveFilter } from 'jodit/plugins/backspace/helpers';
 
 /**
  * Check if two separate elements can be connected

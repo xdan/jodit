@@ -10,8 +10,6 @@
  * @module ui/popup
  */
 
-import './popup.less';
-
 import type {
 	CanUndef,
 	IBound,
@@ -23,7 +21,10 @@ import type {
 	Nullable,
 	PopupStrategy
 } from 'jodit/types';
+import { Component } from 'jodit/core/component/component';
+import { autobind, throttle } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
+import { eventEmitter, getContainer } from 'jodit/core/global';
 import {
 	attr,
 	css,
@@ -34,12 +35,10 @@ import {
 	ucfirst
 } from 'jodit/core/helpers';
 import { assert } from 'jodit/core/helpers/utils/assert';
-import { UIGroup } from 'jodit/core/ui/group/group';
 import { UIElement } from 'jodit/core/ui/element';
+import { UIGroup } from 'jodit/core/ui/group/group';
 
-import { autobind, throttle } from 'jodit/core/decorators';
-import { Component } from 'jodit/core/component/component';
-import { eventEmitter, getContainer } from 'jodit/core/global';
+import './popup.less';
 
 type getBoundFunc = () => IBound;
 

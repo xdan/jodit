@@ -8,18 +8,17 @@
  * @module plugins/speech-recognize
  */
 
-import type { IControlType, IJodit, IDictionary } from 'jodit/types';
-
-import { Config } from 'jodit/config';
-import { dataBind } from 'jodit/core/helpers/utils/data-bind';
+import type { IControlType, IDictionary, IJodit } from 'jodit/types';
 import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
+import { dataBind } from 'jodit/core/helpers/utils/data-bind';
 import { Icon } from 'jodit/core/ui/icon';
 
-import type { ISpeechRecognizeConstructor } from './interface';
-import { RecognizeManager } from './helpers/recognize-manager';
 import { SpeechRecognition } from './helpers/api';
-
+import { RecognizeManager } from './helpers/recognize-manager';
+import type { ISpeechRecognizeConstructor } from './interface';
 import speechRecognizeIcon from './speech-recognize.svg';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

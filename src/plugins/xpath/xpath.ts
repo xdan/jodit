@@ -10,18 +10,18 @@
  * @module plugins/xpath
  */
 
-import './xpath.less';
-
 import type { IControlTypeStrong, IToolbarButton } from 'jodit/types';
 import { INVISIBLE_SPACE, MODE_WYSIWYG } from 'jodit/core/constants';
-import { ContextMenu } from 'jodit/modules/context-menu/context-menu';
 import { Dom } from 'jodit/core/dom';
-import { getXPathByElement, trim, attr } from 'jodit/core/helpers';
-import { Plugin } from 'jodit/core/plugin';
-import { makeButton } from 'jodit/modules/toolbar/factory';
 import { pluginSystem } from 'jodit/core/global';
+import { attr, getXPathByElement, trim } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
+import { ContextMenu } from 'jodit/modules/context-menu/context-menu';
+import { makeButton } from 'jodit/modules/toolbar/factory';
 
 import './config';
+
+import './xpath.less';
 
 /**
  * Show a path to a current element in status bar

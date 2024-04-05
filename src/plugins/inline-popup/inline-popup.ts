@@ -10,8 +10,6 @@
  * @module plugins/inline-popup
  */
 
-import './inline-popup.less';
-
 import type {
 	Buttons,
 	HTMLTagNames,
@@ -22,26 +20,28 @@ import type {
 	IViewComponent,
 	Nullable
 } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
-import { makeCollection } from 'jodit/modules/toolbar/factory';
-import { Popup } from 'jodit/core/ui/popup';
+import type { Table } from 'jodit/modules/table/table';
+import { autobind, cache, debounce, wait, watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
+import { pluginSystem } from 'jodit/core/global';
 import {
-	splitArray,
-	isString,
-	position,
+	camelCase,
 	isArray,
 	isFunction,
-	toArray,
+	isString,
 	keys,
-	camelCase
+	position,
+	splitArray,
+	toArray
 } from 'jodit/core/helpers';
-import { Dom } from 'jodit/core/dom';
+import { Plugin } from 'jodit/core/plugin';
 import { UIElement } from 'jodit/core/ui';
-import type { Table } from 'jodit/modules/table/table';
-import { debounce, wait, autobind, watch, cache } from 'jodit/core/decorators';
-import { pluginSystem } from 'jodit/core/global';
+import { Popup } from 'jodit/core/ui/popup';
+import { makeCollection } from 'jodit/modules/toolbar/factory';
 
 import './config/config';
+
+import './inline-popup.less';
 
 /**
  * Plugin for show inline popup dialog

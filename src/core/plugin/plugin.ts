@@ -11,7 +11,7 @@
  */
 
 import type { CanUndef, IJodit, IPlugin, IViewBased } from 'jodit/types';
-import { ViewComponent, STATUSES } from 'jodit/core/component';
+import { STATUSES, ViewComponent } from 'jodit/core/component';
 import { autobind } from 'jodit/core/decorators';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 

@@ -9,27 +9,26 @@
  */
 
 import type {
-	IJodit,
-	IDictionary,
 	CommitMode,
-	ICommitStyle
+	ICommitStyle,
+	IDictionary,
+	IJodit
 } from 'jodit/types';
-import { REPLACE } from 'jodit/core/selection';
+import { LIST_TAGS } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
+import { assert } from 'jodit/core/helpers/utils/assert';
+import { INITIAL, REPLACE, UNSET, UNWRAP, WRAP } from 'jodit/core/selection';
 import {
 	extractSelectedPart,
 	getSuitChild,
 	getSuitParent,
+	isInsideInvisibleElement,
 	suitableClosest,
 	toggleAttributes,
+	toggleOrderedList,
 	unwrapChildren,
-	isInsideInvisibleElement,
-	wrap,
-	toggleOrderedList
+	wrap
 } from 'jodit/core/selection/style/api';
-import { Dom } from 'jodit/core/dom/dom';
-import { INITIAL, UNSET, UNWRAP, WRAP } from 'jodit/core/selection';
-import { assert } from 'jodit/core/helpers/utils/assert';
-import { LIST_TAGS } from 'jodit/core/constants';
 
 export const states = {
 	START: 'START',

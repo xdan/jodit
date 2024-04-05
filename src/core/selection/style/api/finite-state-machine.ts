@@ -5,9 +5,9 @@
  */
 
 import type { IDictionary } from 'jodit/types';
+import { IS_PROD } from 'jodit/core/constants';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { assert } from 'jodit/core/helpers/utils/assert';
-import { IS_PROD } from 'jodit/core/constants';
 
 /**
  * A state machine implementation for applying styles.

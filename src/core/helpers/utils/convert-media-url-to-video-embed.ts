@@ -9,6 +9,7 @@
  */
 
 import { isURL } from 'jodit/core/helpers/checker/is-url';
+
 import { parseQuery } from './parse-query';
 
 /**

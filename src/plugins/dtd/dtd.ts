@@ -11,13 +11,14 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
-import { pluginSystem } from 'jodit/core/global';
 import { watch } from 'jodit/core/decorators/watch/watch';
+import { pluginSystem } from 'jodit/core/global';
+import { Plugin } from 'jodit/core/plugin';
 
 import './config';
-import * as beforeInsertCases from './before-insert';
+
 import * as afterInsertCases from './after-insert';
+import * as beforeInsertCases from './before-insert';
 
 class dtd extends Plugin {
 	protected afterInit(jodit: IJodit): void {}

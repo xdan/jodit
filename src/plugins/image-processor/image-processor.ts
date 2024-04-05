@@ -11,11 +11,11 @@
  */
 
 import type { IDictionary, IJodit } from 'jodit/types';
+import { SOURCE_CONSUMER } from 'jodit/core/constants';
+import { debounce, watch } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 import { $$, dataBind } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
-import { debounce, watch } from 'jodit/core/decorators';
-import { SOURCE_CONSUMER } from 'jodit/core/constants';
-import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 

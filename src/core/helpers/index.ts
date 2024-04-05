@@ -10,7 +10,6 @@
  * @module helpers
  */
 
-export * from './utils';
 export * from './array';
 export * from './async';
 export * from './checker';
@@ -19,3 +18,4 @@ export * from './html';
 export * from './normalize';
 export * from './size';
 export * from './string';
+export * from './utils';

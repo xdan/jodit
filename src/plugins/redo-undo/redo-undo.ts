@@ -11,14 +11,15 @@
  */
 
 import type { IControlType, IJodit, IPlugin } from 'jodit/types';
-import { Config } from 'jodit/config';
 import * as consts from 'jodit/core/constants';
-import { Plugin } from 'jodit/core/plugin/plugin';
 import { pluginSystem } from 'jodit/core/global';
+import { Plugin } from 'jodit/core/plugin/plugin';
 import { Icon } from 'jodit/core/ui/icon';
 
 import redoIcon from './icons/redo.svg';
 import undoIcon from './icons/undo.svg';
+
+import { Config } from 'jodit/config';
 
 Icon.set('redo', redoIcon).set('undo', undoIcon);
 

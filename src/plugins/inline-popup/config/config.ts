@@ -9,24 +9,24 @@
  */
 
 import type { IControlType, IDictionary, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
 
-import * as addcolumn from 'jodit/plugins/inline-popup/icons/addcolumn.svg';
-import * as addrow from 'jodit/plugins/inline-popup/icons/addrow.svg';
-import * as merge from 'jodit/plugins/inline-popup/icons/merge.svg';
-import * as th from 'jodit/plugins/inline-popup/icons/th.svg';
-import * as splitg from 'jodit/plugins/inline-popup/icons/splitg.svg';
-import * as splitv from 'jodit/plugins/inline-popup/icons/splitv.svg';
-import * as thList from 'jodit/plugins/inline-popup/icons/th-list.svg';
-
 import a from './items/a';
-import img from './items/img';
 import cells from './items/cells';
-import toolbar from './items/toolbar';
 import jodit from './items/iframe';
 import iframe from './items/iframe';
 import joditMedia from './items/iframe';
+import img from './items/img';
+import toolbar from './items/toolbar';
+
+import { Config } from 'jodit/config';
+import * as addcolumn from 'jodit/plugins/inline-popup/icons/addcolumn.svg';
+import * as addrow from 'jodit/plugins/inline-popup/icons/addrow.svg';
+import * as merge from 'jodit/plugins/inline-popup/icons/merge.svg';
+import * as splitg from 'jodit/plugins/inline-popup/icons/splitg.svg';
+import * as splitv from 'jodit/plugins/inline-popup/icons/splitv.svg';
+import * as th from 'jodit/plugins/inline-popup/icons/th.svg';
+import * as thList from 'jodit/plugins/inline-popup/icons/th-list.svg';
 
 declare module 'jodit/config' {
 	interface Config {

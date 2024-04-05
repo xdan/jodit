@@ -12,7 +12,9 @@
 
 import type { IDictionary, IJodit, IUIForm, Nullable } from 'jodit/types';
 import type { UIForm } from 'jodit/core/ui/form/form';
+import { autobind } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
+import { pluginSystem } from 'jodit/core/global';
 import {
 	attr,
 	convertMediaUrlToVideoEmbed,
@@ -22,8 +24,6 @@ import {
 	stripTags
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
-import { autobind } from 'jodit/core/decorators';
-import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 

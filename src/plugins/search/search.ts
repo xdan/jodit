@@ -11,31 +11,32 @@
  */
 
 import type {
-	ISelectionRange,
-	IJodit,
-	Nullable,
-	IPlugin,
-	IDictionary,
 	CanUndef,
+	IDictionary,
+	IJodit,
+	IPlugin,
+	ISelectionRange,
+	Nullable,
 	RejectablePromise
 } from 'jodit/types';
-import { Dom, LazyWalker } from 'jodit/core/dom';
-import { Plugin } from 'jodit/core/plugin';
+import { IS_PROD } from 'jodit/core/constants';
 import { autobind, cache, watch } from 'jodit/core/decorators';
-import { UISearch } from 'jodit/plugins/search/ui/search';
-import { scrollIntoViewIfNeeded } from 'jodit/core/helpers';
+import { Dom, LazyWalker } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { scrollIntoViewIfNeeded } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
+
+import './config';
 
 import {
 	clearSelectionWrappers,
 	clearSelectionWrappersFromHTML,
 	getSelectionWrappers,
-	SentenceFinder,
-	highlightTextRanges
+	highlightTextRanges,
+	SentenceFinder
 } from './helpers';
 
-import './config';
-import { IS_PROD } from 'jodit/core/constants';
+import { UISearch } from 'jodit/plugins/search/ui/search';
 
 /**
  * Search plugin. it is used for custom search in text

@@ -9,12 +9,13 @@
  */
 
 import type { FuzzySearch, IControlType, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
+
+import './interface';
 
 import searchIcon from './search.svg';
 
-import './interface';
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

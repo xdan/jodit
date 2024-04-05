@@ -8,6 +8,6 @@
  * @module plugins/source
  */
 
-export * from './area';
 export * from './ace';
+export * from './area';
 // export * from "./custom"; // You can add here another source editor

@@ -9,6 +9,7 @@
  */
 
 import type { IJodit } from 'jodit/types';
+
 import { isFunction } from './is-function';
 
 /**

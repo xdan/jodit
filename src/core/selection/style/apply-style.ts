@@ -8,15 +8,15 @@
  * @module selection
  */
 
-import type { IJodit, ICommitStyle } from 'jodit/types';
+import type { ICommitStyle, IJodit } from 'jodit/types';
 
 import { FiniteStateMachine } from './api';
+import { INITIAL } from './commit-style';
 import {
 	type IStyleTransactionValue,
 	states,
 	transactions
 } from './transactions';
-import { INITIAL } from './commit-style';
 
 /** @internal */
 export function ApplyStyle(jodit: IJodit, cs: ICommitStyle): void {

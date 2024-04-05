@@ -11,13 +11,14 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
-import { attr } from 'jodit/core/helpers/utils/attr';
 import { autobind } from 'jodit/core/decorators';
 import { extendLang, pluginSystem } from 'jodit/core/global';
+import { attr } from 'jodit/core/helpers/utils/attr';
+import { Plugin } from 'jodit/core/plugin';
+
+import './config';
 
 import * as langs from './langs';
-import './config';
 
 export class spellcheck extends Plugin {
 	override buttons: Plugin['buttons'] = [

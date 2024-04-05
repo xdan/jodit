@@ -9,9 +9,9 @@
  */
 
 import { isNumeric } from 'jodit/core/helpers/checker/is-numeric';
-import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
-import { colorToHex } from 'jodit/core/helpers/color/color-to-hex';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';
+import { colorToHex } from 'jodit/core/helpers/color/color-to-hex';
+import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
 
 export const NUMBER_FIELDS_REG =
 	/^(left|top|bottom|right|width|min|max|height|margin|padding|fontsize|font-size)/i;

@@ -10,12 +10,13 @@
  * @module plugins/preview
  */
 
-import './preview.less';
-
 import type { IControlType, IJodit } from 'jodit/types';
 import { MODE_SOURCE, MODE_WYSIWYG } from 'jodit/core/constants';
-import { previewBox } from 'jodit/core/helpers/utils/print';
 import { pluginSystem } from 'jodit/core/global';
+import { previewBox } from 'jodit/core/helpers/utils/print';
+
+import './preview.less';
+
 import { Config } from 'jodit/config';
 
 Config.prototype.controls.preview = {

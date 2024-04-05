@@ -8,24 +8,24 @@
  * @module ui/button
  */
 
-import './button.less';
-
 import type {
+	ButtonVariant,
 	IUIButton,
 	IUIButtonState,
 	IUIButtonStatePartial,
-	IViewBased,
-	ButtonVariant
+	IViewBased
 } from 'jodit/types';
-import { UIElement } from 'jodit/core/ui/element';
-import { Dom } from 'jodit/core/dom/dom';
-import { assert, attr } from 'jodit/core/helpers/utils';
-import { isString } from 'jodit/core/helpers/checker/is-string';
-import { isFunction } from 'jodit/core/helpers/checker/is-function';
-import { Icon } from 'jodit/core/ui/icon';
-import { UIList } from 'jodit/core/ui/group/list';
-import { cache, cacheHTML, component, watch } from 'jodit/core/decorators';
 import { STATUSES } from 'jodit/core/component/statuses';
+import { cache, cacheHTML, component, watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { assert, attr } from 'jodit/core/helpers/utils';
+import { UIElement } from 'jodit/core/ui/element';
+import { UIList } from 'jodit/core/ui/group/list';
+import { Icon } from 'jodit/core/ui/icon';
+
+import './button.less';
 
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',

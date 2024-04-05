@@ -11,12 +11,14 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { safeHTML } from 'jodit/core/helpers/html/safe-html';
-import { Plugin } from 'jodit/core/plugin/plugin';
-import { watch, hook } from 'jodit/core/decorators';
+import { hook, watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
 import { LazyWalker } from 'jodit/core/dom/lazy-walker';
 import { pluginSystem } from 'jodit/core/global';
-import { Dom } from 'jodit/core/dom/dom';
+import { safeHTML } from 'jodit/core/helpers/html/safe-html';
+import { Plugin } from 'jodit/core/plugin/plugin';
+
+import './config';
 
 import {
 	getHash,
@@ -24,8 +26,6 @@ import {
 	removeFormatForSelection,
 	visitNodeWalker
 } from './helpers';
-
-import './config';
 
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command

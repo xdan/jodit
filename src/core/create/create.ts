@@ -11,26 +11,24 @@
  */
 
 import type {
-	IDictionary,
 	Attributes,
+	CanUndef,
 	Children,
 	ICreate,
-	CanUndef,
+	IDictionary,
 	NodeFunction
 } from 'jodit/types';
-
+import { INVISIBLE_SPACE } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 import {
-	isPlainObject,
 	asArray,
+	attr,
 	isFunction,
-	refs,
+	isPlainObject,
 	isString,
-	attr
+	refs
 } from 'jodit/core/helpers';
 import { assert } from 'jodit/core/helpers/utils/assert';
-
-import { Dom } from 'jodit/core/dom/dom';
-import { INVISIBLE_SPACE } from 'jodit/core/constants';
 
 export class Create implements ICreate {
 	private get doc(): Document {

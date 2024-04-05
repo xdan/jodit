@@ -11,17 +11,17 @@
  */
 
 import type { IControlType, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
-import { getContainer } from 'jodit/core/global';
-import { Dom } from 'jodit/core/dom';
-import { defaultLanguage } from 'jodit/core/helpers/utils/default-language';
 import * as consts from 'jodit/core/constants';
-import { pluginSystem } from 'jodit/core/global';
-import { Icon } from 'jodit/core/ui/icon';
+import { Dom } from 'jodit/core/dom';
+import { getContainer, pluginSystem } from 'jodit/core/global';
+import { defaultLanguage } from 'jodit/core/helpers/utils/default-language';
 import { previewBox } from 'jodit/core/helpers/utils/print';
+import { Icon } from 'jodit/core/ui/icon';
 
 import { generateCriticalCSS } from './lib/generate-critical-css';
 import printIcon from './print.svg';
+
+import { Config } from 'jodit/config';
 
 Icon.set('print', printIcon);
 

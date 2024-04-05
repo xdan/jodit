@@ -4,20 +4,8 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { CommitMode, IJodit, IStyle, ICommitStyle } from 'jodit/types';
-import { assert, attr } from 'jodit/core/helpers/utils';
-import { css } from 'jodit/core/helpers/utils/css';
-import { dataBind } from 'jodit/core/helpers/utils/data-bind';
-import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
-import { normalizeCssValue } from 'jodit/core/helpers/normalize/normalize-css-value';
-import { size } from 'jodit/core/helpers/size/object-size';
+import type { CommitMode, ICommitStyle, IJodit, IStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
-import {
-	_PREFIX,
-	CHANGE,
-	UNSET,
-	UNWRAP
-} from 'jodit/core/selection/style/commit-style';
 import { getContainer } from 'jodit/core/global';
 import {
 	isBoolean,
@@ -25,6 +13,18 @@ import {
 	isPlainObject,
 	isString
 } from 'jodit/core/helpers/checker';
+import { normalizeCssValue } from 'jodit/core/helpers/normalize/normalize-css-value';
+import { size } from 'jodit/core/helpers/size/object-size';
+import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
+import { assert, attr } from 'jodit/core/helpers/utils';
+import { css } from 'jodit/core/helpers/utils/css';
+import { dataBind } from 'jodit/core/helpers/utils/data-bind';
+import {
+	_PREFIX,
+	CHANGE,
+	UNSET,
+	UNWRAP
+} from 'jodit/core/selection/style/commit-style';
 
 const tak = 'toggleAttributes';
 

@@ -11,8 +11,6 @@
  */
 
 import type { IJodit, InsertMode } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin/plugin';
-
 import {
 	CLIPBOARD_ID,
 	INSERT_AS_TEXT,
@@ -22,27 +20,26 @@ import {
 	TEXT_PLAIN,
 	TEXT_RTF
 } from 'jodit/core/constants';
-import { Dom } from 'jodit/core/dom/dom';
 import { autobind } from 'jodit/core/decorators';
-
+import { Dom } from 'jodit/core/dom/dom';
+import { pluginSystem } from 'jodit/core/global';
 import {
+	cleanFromWord,
+	getDataTransfer,
+	htmlspecialchars,
 	isHTML,
 	isString,
-	trim,
-	cleanFromWord,
-	htmlspecialchars,
 	LimitedStack,
 	nl2br,
 	stripTags,
-	getDataTransfer
+	trim
 } from 'jodit/core/helpers';
-import { pluginSystem } from 'jodit/core/global';
-
-import { askInsertTypeDialog, getAllTypes, pasteInsertHtml } from './helpers';
-
-import type { PastedValue, PasteEvent } from './interface';
+import { Plugin } from 'jodit/core/plugin/plugin';
 
 import './config';
+
+import { askInsertTypeDialog, getAllTypes, pasteInsertHtml } from './helpers';
+import type { PastedValue, PasteEvent } from './interface';
 
 /**
  * Ask before paste HTML source

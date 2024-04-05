@@ -9,9 +9,9 @@
  */
 
 import type { IJodit } from 'jodit/types';
+import { BR } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { scrollIntoViewIfNeeded } from 'jodit/core/helpers/utils/scroll-into-view';
-import { BR } from 'jodit/core/constants';
 
 /**
  * Checks the possibility and necessity of inserting a BR instead of a block

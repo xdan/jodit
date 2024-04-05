@@ -10,11 +10,11 @@
  * @module plugins/resize-cells
  */
 
-import './resize-cells.less';
-
 import type { IBound, IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
-import { Plugin, Table } from 'jodit/modules';
+import { autobind } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
+import { pluginSystem } from 'jodit/core/global';
 import {
 	$$,
 	call,
@@ -22,11 +22,11 @@ import {
 	getContentWidth,
 	offset
 } from 'jodit/core/helpers';
-import { autobind } from 'jodit/core/decorators';
-import { Dom } from 'jodit/core/dom/dom';
-import { pluginSystem } from 'jodit/core/global';
+import { Plugin, Table } from 'jodit/modules';
 
 import './config';
+
+import './resize-cells.less';
 
 const key = 'table_processor_observer-resize';
 

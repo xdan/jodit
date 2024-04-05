@@ -17,17 +17,16 @@ import type {
 	IDictionary,
 	Nullable
 } from 'jodit/types';
-
+import { Async } from 'jodit/core/async';
+import { STATUSES } from 'jodit/core/component/statuses';
+import { uniqueUid } from 'jodit/core/global';
 import {
-	kebabCase,
 	get,
 	getClassName,
 	isFunction,
-	isVoid
+	isVoid,
+	kebabCase
 } from 'jodit/core/helpers';
-import { uniqueUid } from 'jodit/core/global';
-import { STATUSES } from 'jodit/core/component/statuses';
-import { Async } from 'jodit/core/async';
 
 const StatusListHandlers: Map<
 	Component,

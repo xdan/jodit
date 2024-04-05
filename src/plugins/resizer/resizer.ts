@@ -10,28 +10,26 @@
  * @module plugins/resizer
  */
 
-import './resizer.less';
-
-import type { HTMLTagNames, IBound, Nullable } from 'jodit/types';
-import type { IJodit } from 'jodit/types';
+import type { HTMLTagNames, IBound, IJodit, Nullable } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { IS_ES_NEXT, IS_IE, KEY_ALT } from 'jodit/core/constants';
+import { autobind, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
+import { eventEmitter, pluginSystem } from 'jodit/core/global';
 import {
 	$$,
 	attr,
 	css,
-	offset,
+	dataBind,
 	innerWidth,
 	markOwner,
-	dataBind
+	offset
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin/plugin';
-import { eventEmitter } from 'jodit/core/global';
-import { autobind, watch } from 'jodit/core/decorators';
-import { pluginSystem } from 'jodit/core/global';
 
 import './config';
+
+import './resizer.less';
 
 const keyBInd = '__jodit-resizer_binded';
 

@@ -9,8 +9,8 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Dom } from 'jodit/core/dom/dom';
 import { INSEPARABLE_TAGS } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 
 /**
  * @private

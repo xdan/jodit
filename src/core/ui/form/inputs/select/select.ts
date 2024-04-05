@@ -8,16 +8,16 @@
  * @module ui/form
  */
 
-import './select.less';
-
 import type { IUISelect, IViewBased } from 'jodit/types';
-import { attr } from 'jodit/core/helpers/utils/attr';
 import { component } from 'jodit/core/decorators/component/component';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { UIInput } from 'jodit/core/ui/form/inputs/input/input';
 import {
 	inputValidators,
 	selectValidators
 } from 'jodit/core/ui/form/validators';
+
+import './select.less';
 
 @component
 export class UISelect extends UIInput implements IUISelect {

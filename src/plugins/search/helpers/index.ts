@@ -8,5 +8,5 @@
  * @module plugins/search
  */
 
-export * from './sentence-finder';
 export * from './highlight-text-ranges';
+export * from './sentence-finder';

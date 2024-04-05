@@ -9,10 +9,11 @@
  */
 
 import type { HTMLTagNames } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
 
 import enterIcon from './enter.svg';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

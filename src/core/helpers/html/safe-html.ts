@@ -8,8 +8,8 @@
  * @module helpers/html
  */
 
-import { $$, attr } from 'jodit/core/helpers/utils';
 import { Dom } from 'jodit/core/dom/dom';
+import { $$, attr } from 'jodit/core/helpers/utils';
 
 type safeOptions = {
 	removeOnError: boolean;

@@ -13,10 +13,11 @@
 import type { IJodit } from 'jodit/types';
 import { BR, PARAGRAPH } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
-import { attr } from 'jodit/core/helpers';
 import { pluginSystem } from 'jodit/core/global';
+import { attr } from 'jodit/core/helpers';
 
 import './config';
+
 import { getKey } from './helpers';
 
 /**

@@ -9,11 +9,11 @@
  */
 
 import type { IStyle, StyleValue } from 'jodit/types';
-import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
+import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import {
-	normalizeCssValue,
 	normalizeCssNumericValue,
+	normalizeCssValue,
 	NUMBER_FIELDS_REG
 } from 'jodit/core/helpers/normalize/normalize-css-value';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';

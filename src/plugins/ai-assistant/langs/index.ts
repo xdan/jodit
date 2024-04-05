@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as es from './es.js';
 import * as en from './en.js';
+import * as es from './es.js';
 
-export { es, en };
+export { en, es };

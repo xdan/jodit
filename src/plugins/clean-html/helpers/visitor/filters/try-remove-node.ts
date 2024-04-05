@@ -9,8 +9,8 @@
  */
 
 import type { IDictionary, IJodit, Nullable } from 'jodit/types';
-import { Dom } from 'jodit/core/dom/dom';
 import { IS_INLINE } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 import { trim } from 'jodit/core/helpers/string/trim';
 
 /**

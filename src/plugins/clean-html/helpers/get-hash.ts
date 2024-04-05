@@ -9,8 +9,8 @@
  */
 
 import type { IDictionary } from 'jodit/types';
-import { trim } from 'jodit/core/helpers/string/trim';
 import { isString } from 'jodit/core/helpers/checker/is-string';
+import { trim } from 'jodit/core/helpers/string/trim';
 
 /**
  * @private

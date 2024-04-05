@@ -8,8 +8,6 @@
  * @module plugins/mobile
  */
 
-import { Config } from 'jodit/config';
-import * as consts from 'jodit/core/constants';
 import type {
 	ButtonsOption,
 	CanUndef,
@@ -17,9 +15,12 @@ import type {
 	IJodit,
 	IToolbarCollection
 } from 'jodit/types';
-import { makeCollection } from 'jodit/modules/toolbar/factory';
+import * as consts from 'jodit/core/constants';
 import { splitArray } from 'jodit/core/helpers';
 import { ToolbarCollection } from 'jodit/modules/toolbar/collection/collection';
+import { makeCollection } from 'jodit/modules/toolbar/factory';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

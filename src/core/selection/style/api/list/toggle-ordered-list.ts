@@ -4,19 +4,19 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, CommitMode, ICommitStyle } from 'jodit/types';
+import type { CommitMode, ICommitStyle, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { assert } from 'jodit/core/helpers/utils/assert';
-
 import { extractSelectedPart } from 'jodit/core/selection/style/api/extract';
+import { toggleAttributes } from 'jodit/core/selection/style/api/toggle-attributes';
 import {
 	_PREFIX,
 	CHANGE,
 	INITIAL,
-	UNWRAP,
-	REPLACE
+	REPLACE,
+	UNWRAP
 } from 'jodit/core/selection/style/commit-style';
-import { toggleAttributes } from 'jodit/core/selection/style/api/toggle-attributes';
+
 import { wrapList } from './wrap-list';
 
 /**

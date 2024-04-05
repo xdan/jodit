@@ -9,13 +9,14 @@
  */
 
 import type { IControlType, IDictionary, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom';
-import { attr } from 'jodit/core/helpers/utils';
 import { $$, css, scrollIntoViewIfNeeded } from 'jodit/core/helpers';
+import { attr } from 'jodit/core/helpers/utils';
 import { Icon } from 'jodit/core/ui/icon';
 
 import tableIcon from './table.svg';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {
