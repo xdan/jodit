@@ -166,7 +166,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		return this.j.c.fromHTML(
 			result
 				.replace(/\*([^*]+?)\*/g, (_, name) => Icon.get(name) || '')
-				.replace(/&__/g, this.componentName + '__')
+				.replace(/&_/g, this.componentName + '_')
 				.replace(/~([^~]+?)~/g, (_, s) => this.i18n(s))
 		);
 	}

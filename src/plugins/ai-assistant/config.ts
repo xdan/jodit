@@ -14,8 +14,6 @@ import { Icon } from 'jodit/core/ui/icon';
 import magicWandIcon from './ai-assistant.svg';
 import chatBotIcon from './chat-bot.svg';
 
-import './ai-assistant.less';
-
 import { Config } from 'jodit/config';
 
 export interface AiAssistantSettings {

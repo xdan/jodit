@@ -1,0 +1,90 @@
+@import (reference) '../../../styles/variables';
+
+.jodit-ui-ai-assistant {
+	width: 100%;
+	padding: var(--padding-default);
+
+	&__body {
+		margin-bottom: 10px;
+	}
+
+	&__prompt-row {
+		display: flex;
+		align-items: flex-start;
+		margin-bottom: 10px;
+
+		&-label {
+			margin-right: 10px;
+		}
+
+		&-input {
+			flex: 1;
+			margin-right: 10px;
+		}
+
+		.jodit-icon_ai_assistant {
+			cursor: pointer;
+			width: 22px;
+			height: 22px;
+		}
+
+		.jodit-ui-button {
+			margin-right: 10px;
+		}
+
+		.jodit-ui-button_ai_assistant {
+			margin-top: 20px;
+			margin-right: 0;
+		}
+	}
+
+	&__results {
+		padding: 7px;
+		position: relative;
+		border-color: var(--color-label);
+		border-style: solid;
+		border-width: 1px;
+		min-height: 300px;
+		height: 300px;
+		min-width: 100%;
+		overflow: auto;
+	}
+
+	&__close {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 10px;
+		cursor: pointer;
+	}
+
+	&_hide_true {
+		display: none;
+	}
+
+	&__spinner:before {
+		content: '';
+		box-sizing: border-box;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 30px;
+		height: 30px;
+		margin-top: -15px;
+		margin-left: -15px;
+		border-radius: 50%;
+		border: 1px solid #ccc;
+		border-top-color: #8817c3ff;
+		animation: spinner 0.6s linear infinite;
+	}
+
+	&__error {
+		color: var(--color-error);
+	}
+}
+
+@keyframes spinner {
+	to {
+		transform: rotate(360deg);
+	}
+}

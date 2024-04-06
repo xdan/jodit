@@ -55,7 +55,7 @@ export class UIForm extends UIGroup implements IUIForm {
 		return true;
 	}
 
-	onSubmit(handler: (data: IDictionary) => false | void): void {
+	onSubmit(handler: (data: IDictionary) => false | void): this {
 		this.j.e.on(this.container, 'submit', (): false => {
 			const inputs = this.allChildren.filter(elm =>
 				Component.isInstanceOf(elm, UIInput)
@@ -74,6 +74,8 @@ export class UIForm extends UIGroup implements IUIForm {
 
 			return false;
 		});
+
+		return this;
 	}
 
 	/** @override */

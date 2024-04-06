@@ -79,29 +79,36 @@
 				aiAssistantCallback(prompt, htmlFragment) {
 					// Make API call to OpenAI
 					return fetch(
-						'https://api.openai.com/v1/engines/gpt-3.5-turbo-16k/completions',
+						'https://api.openai.com/v1/chat/completions',
 						{
 							method: 'POST',
 							headers: {
 								'Content-Type': 'application/json',
-								Authorization: 'Bearer sk'
+								Authorization: 'Bearer ' + Jodit.modules.Helpers.get('aiAssistant.apiKey')
 							},
 							body: JSON.stringify({
-								prompt: prompt,
-								max_tokens: 60
+								model: "gpt-3.5-turbo",
+								messages: [{
+									role: "system",
+									content: prompt
+								}, {
+									role: "user",
+									content: htmlFragment
+								}]
 							})
 						}
 					)
 						.then(response => response.json())
 						.then(data => {
-							// Process the result and return
-							return data.choices[0].text;
+							if (data.error) {
+								throw new Error(data.error.message);
+							}
+
+							return Jodit.modules.Helpers.get('choices.0.message.content', data) ?? '';
 						});
 				}
 			}
 		});
-
-		// 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
 
 		editor.value = '<!-- comment -->';
 
@@ -117,6 +124,10 @@
 				)
 			);
 		};
+
+		editor.value = '<p>Your secret API keys are listed below. Please note that we do not display your secret API keys again after you generate them.\n' +
+			'\n' +
+			'Do not share your API key with others, or expose it in the browser or other client-side code. In order to protect the security of your account, OpenAI may also automatically disable any API key that we\'ve found has leaked publicly.</p>';
 		// delete editor;
 		// const box = new UIBox(editor1);
 		// alert(box.container.outerHTML);
