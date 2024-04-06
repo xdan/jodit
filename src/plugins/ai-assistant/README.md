@@ -41,24 +41,38 @@ const editor = Jodit.make('#editor', {
 	aiAssistant: {
 		aiAssistantCallback(prompt, htmlFragment) {
 			// Make API call to OpenAI
-			return fetch(
-				'https://api.openai.com/v1/engines/gpt-3.5-turbo-16k/completions',
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: 'Bearer YOUR_OPENAI_API_KEY'
-					},
-					body: JSON.stringify({
-						prompt: prompt,
-						max_tokens: 60
-					})
-				}
-			)
+			return fetch('https://api.openai.com/v1/chat/completions', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + Jodit.constants.TOKENS.TOKEN_GPT
+				},
+				body: JSON.stringify({
+					model: 'gpt-3.5-turbo',
+					messages: [
+						{
+							role: 'system',
+							content: prompt
+						},
+						{
+							role: 'user',
+							content: htmlFragment
+						}
+					]
+				})
+			})
 				.then(response => response.json())
 				.then(data => {
-					// Process the result and return
-					return data.choices[0].text;
+					if (data.error) {
+						throw new Error(data.error.message);
+					}
+
+					return (
+						Jodit.modules.Helpers.get(
+							'choices.0.message.content',
+							data
+						) ?? ''
+					);
 				});
 		}
 	}
@@ -165,10 +179,10 @@ The AI Assistant plugin also provides common prefixes and suffixes that can be u
 
 ```javascript
 const editor = Jodit.make('#editor', {
-  aiAssistant: {
-    aiCommonPrefixPrompt: 'Result should be on Spanish',
-    aiCommonSuffixPrompt: 'Please make the necessary changes to enhance the quality of the content. Text should be clear, concise, and engaging.'
-  }
+	aiAssistant: {
+		aiCommonPrefixPrompt: 'Result should be on Spanish',
+		aiCommonSuffixPrompt:
+			'Please make the necessary changes to enhance the quality of the content. Text should be clear, concise, and engaging.'
+	}
 });
-
-
+```
