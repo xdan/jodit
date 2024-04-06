@@ -4,12 +4,11 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { LoaderContext } from 'webpack';
-
+import * as fs from 'fs';
+import * as path from 'path';
 import * as ts from 'typescript';
 import * as vm from 'vm';
-import * as path from 'path';
-import * as fs from 'fs';
+import type { LoaderContext } from 'webpack';
 
 let keys: string[] = [];
 type Lang = { [key in string]: string };

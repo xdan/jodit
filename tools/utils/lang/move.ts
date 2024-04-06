@@ -4,10 +4,11 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import { makeIndexFile, readLangs, saveJson } from './helpers';
+
+import * as fs from 'fs';
 import * as path from 'path';
 import * as yargs from 'yargs';
-import * as fs from 'fs';
-import { saveJson, readLangs, makeIndexFile } from './helpers';
 
 const argv = yargs
 	.option('key', {

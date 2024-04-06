@@ -4,13 +4,14 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { Variables } from '../variables';
-import { PostBuild } from '../utils/post-build';
 import { fileName } from '../utils/filename';
-import postcss from 'postcss';
-import * as path from 'path';
-import * as fs from 'fs';
+import { PostBuild } from '../utils/post-build';
+import type { Variables } from '../variables';
+
 import autoprefixer from 'autoprefixer';
+import * as fs from 'fs';
+import * as path from 'path';
+import postcss from 'postcss';
 import postcssCssVariables from 'postcss-css-variables';
 
 export default ({

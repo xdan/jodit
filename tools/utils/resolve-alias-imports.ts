@@ -4,12 +4,13 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as path from 'path';
-import * as fs from 'fs';
-import * as ts from 'typescript';
-import yargs from 'yargs/yargs';
-import { hideBin } from 'yargs/helpers';
 import { checkSections } from '../loaders/process-sections';
+
+import * as fs from 'fs';
+import * as path from 'path';
+import * as ts from 'typescript';
+import { hideBin } from 'yargs/helpers';
+import yargs from 'yargs/yargs';
 
 const argv = yargs(hideBin(process.argv))
 	.option('cwd', {

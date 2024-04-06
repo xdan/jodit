@@ -5,12 +5,14 @@
  */
 
 import type { Variables } from '../variables';
-import type { RuleSetRule } from 'webpack';
+
 import css from './css';
 import extraTypescript from './extra-typescript';
-import langs from './langs';
 import internalTypescript from './internal-typescript';
+import langs from './langs';
 import svg from './svg';
+
+import type { RuleSetRule } from 'webpack';
 
 export const rules = (variables: Variables): RuleSetRule[] => {
 	return [

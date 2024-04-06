@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as path from 'path';
 import * as fs from 'fs';
 import * as glob from 'glob';
+import * as path from 'path';
 
 const dir = path.resolve(process.cwd()) + '/';
 console.log('Find directory:', dir);

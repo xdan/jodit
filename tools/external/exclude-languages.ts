@@ -5,6 +5,7 @@
  */
 
 import type { Variables } from '../variables';
+
 import * as fs from 'fs';
 import * as path from 'path';
 

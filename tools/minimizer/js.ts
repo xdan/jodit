@@ -5,8 +5,9 @@
  */
 
 import type { Variables } from '../variables';
-import MinimizeJSPlugin from 'terser-webpack-plugin';
+
 import * as os from 'os';
+import MinimizeJSPlugin from 'terser-webpack-plugin';
 
 export default ({ ESNext, isTest, banner }: Variables): MinimizeJSPlugin =>
 	new MinimizeJSPlugin({

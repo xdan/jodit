@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import { exec } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
-import { exec } from 'child_process';
 
 const header = fs.readFileSync(
 	path.resolve(__dirname, '../../../src/header.js'),

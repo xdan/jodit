@@ -5,12 +5,14 @@
  */
 
 import type { Variables } from '../variables';
-import type { WebpackConfiguration } from 'webpack-cli';
-import * as webpack from 'webpack';
+
+import banner from './banner';
 import define from './define';
 import extractCSS from './extract-css';
-import banner from './banner';
 import postBuild from './post-build';
+
+import * as webpack from 'webpack';
+import type { WebpackConfiguration } from 'webpack-cli';
 
 export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 	const {
@@ -59,6 +61,7 @@ export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 				if (exclude.length) {
 					for (const p of exclude) {
 						if (p.length && resource.includes(p)) {
+							// eslint-disable-next-line no-console
 							console.log('\nExclude:', resource, ' rule: ', p);
 							return true;
 						}

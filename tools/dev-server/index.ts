@@ -4,9 +4,10 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { Configuration, Middleware } from 'webpack-dev-server';
 import type { Variables } from '../variables';
+
 import * as path from 'path';
+import type { Configuration, Middleware } from 'webpack-dev-server';
 
 export const devServer = ({ port, dirname }: Variables): Configuration => ({
 	open: '/stand.html',
