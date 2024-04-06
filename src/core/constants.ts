@@ -27,6 +27,7 @@ export let IS_TEST = process.env.IS_TEST as unknown as boolean;
 export const FAT_MODE = process.env.FAT_MODE as unknown as boolean;
 export const HOMEPAGE = process.env.HOMEPAGE as string;
 export const SET_TEST = (): boolean => (IS_TEST = true);
+export const TOKENS: Record<string, string> = process.env.TOKENS as unknown as Record<string, string>;
 
 export const INVISIBLE_SPACE = '\uFEFF';
 export const NBSP_SPACE = '\u00A0';

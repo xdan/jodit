@@ -84,7 +84,7 @@
 							method: 'POST',
 							headers: {
 								'Content-Type': 'application/json',
-								Authorization: 'Bearer ' + Jodit.modules.Helpers.get('aiAssistant.apiKey')
+								Authorization: 'Bearer ' + Jodit.constants.TOKENS.TOKEN_GPT
 							},
 							body: JSON.stringify({
 								model: "gpt-3.5-turbo",
