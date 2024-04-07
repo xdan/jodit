@@ -110,6 +110,7 @@ Config.prototype.controls.paste = {
 				error = false;
 			} catch (e) {
 				if (!IS_PROD) {
+					// eslint-disable-next-line no-console
 					console.log(e);
 				}
 			}
@@ -120,6 +121,7 @@ Config.prototype.controls.paste = {
 					error = false;
 				} catch (e) {
 					if (!IS_PROD) {
+						// eslint-disable-next-line no-console
 						console.log(e);
 					}
 				}

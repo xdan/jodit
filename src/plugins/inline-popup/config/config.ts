@@ -14,8 +14,6 @@ import { Icon } from 'jodit/core/ui/icon';
 import a from './items/a';
 import cells from './items/cells';
 import jodit from './items/iframe';
-import iframe from './items/iframe';
-import joditMedia from './items/iframe';
 import img from './items/img';
 import toolbar from './items/toolbar';
 
@@ -65,8 +63,8 @@ Config.prototype.popup = {
 	cells,
 	toolbar,
 	jodit,
-	iframe,
-	'jodit-media': joditMedia,
+	iframe: jodit,
+	'jodit-media': jodit,
 	selection: [
 		'bold',
 		'underline',

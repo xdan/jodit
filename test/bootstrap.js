@@ -1258,7 +1258,9 @@ Object.defineProperty(navigator, 'userAgent', {
 function strCompare(result, real, len = 30) {
 	for (let i = 0; i < Math.max(result.length, real.length); i += 1) {
 		if (result[i] !== real[i]) {
+			// eslint-disable-next-line no-console
 			console.log('result', result.substring(i - len, i + len));
+			// eslint-disable-next-line no-console
 			console.log('real', real.substring(i - len, i + len));
 
 			return false;
