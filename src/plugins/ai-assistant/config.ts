@@ -229,7 +229,7 @@ Config.prototype.controls['ai-assistant'] = {
 	},
 	hotkeys: ['ctrl+a+i', 'cmd+a+i'],
 	tooltip: 'AI Assistant',
-	popup: (editor: IJodit, current, close): any => {
+	exec: (editor: IJodit, current, close): any => {
 		editor.e.fire('generateAiAssistantForm.ai-assistant');
 	}
 } as IControlType;

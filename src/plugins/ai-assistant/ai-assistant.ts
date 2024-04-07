@@ -42,31 +42,41 @@ export class aiAssistant extends Plugin {
 	}
 
 	/** @override */
-	override afterInit(jodit: IJodit): void {
-		jodit.e.on('generateAiAssistantForm.ai-assistant', (prompt: string) => {
-			const dialog = jodit.dlg({
-				buttons: ['fullsize', 'dialog.close'],
-				closeOnClickOverlay: true,
-				closeOnEsc: true,
-				resizable: false,
-				draggable: true,
-				minWidth: 460,
-				maxWidth: 460
-			});
-			dialog.bindDestruct(jodit);
+	override afterInit(jodit: IJodit): void {}
 
-			const container = new UiAiAssistant(jodit, {
-				onClose(): void {
-					dialog.close();
-				}
-			});
-			container.bindDestruct(dialog);
-			dialog.open(container, 'AI Assistant', true, false);
+	@watch(':generateAiAssistantForm.ai-assistant')
+	protected onGenerateAiAssistantForm(prompt: string): void {
+		const { jodit } = this;
 
-			container.setPrompt(prompt);
-
-			return dialog;
+		const dialog = jodit.dlg({
+			buttons: ['fullsize', 'dialog.close'],
+			closeOnClickOverlay: true,
+			closeOnEsc: true,
+			resizable: false,
+			draggable: true,
+			minWidth: 460,
+			maxWidth: 460
 		});
+		dialog.bindDestruct(jodit);
+
+		const container = new UiAiAssistant(jodit, {
+			onInsertAfter(html: string): void {
+				jodit.s.focus();
+				jodit.s.setCursorAfter(jodit.s.current()!);
+				jodit.s.insertHTML(html);
+				dialog.close();
+			},
+			onInsert(html: string): void {
+				jodit.s.focus();
+				jodit.s.insertHTML(html);
+				dialog.close();
+			}
+		});
+
+		container.bindDestruct(dialog);
+		dialog.open(container, 'AI Assistant', true, false);
+
+		container.setPrompt(prompt);
 	}
 
 	@watch(':invokeAiAssistant')

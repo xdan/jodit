@@ -34,7 +34,16 @@ export class UiAiAssistant extends UIElement<IJodit> {
 		return 'UIAiAssistant';
 	}
 
-	constructor(jodit: IJodit, { onClose }: { onClose: () => void }) {
+	constructor(
+		jodit: IJodit,
+		{
+			onInsert,
+			onInsertAfter
+		}: {
+			onInsert: (html: string) => void;
+			onInsertAfter: (html: string) => void;
+		}
+	) {
 		super(jodit);
 
 		this.__error = this.getElm('error')!;
@@ -43,39 +52,34 @@ export class UiAiAssistant extends UIElement<IJodit> {
 		this.__results = this.getElm('results')!;
 		this.__spinner = this.getElm('spinner')!;
 
+		this.__insertButton = Button(jodit, '', 'Insert', 'primary').onAction(
+			() => onInsert(this.__aiResult)
+		);
+
 		this.__insertAfterButton = Button(
 			jodit,
 			'',
 			'Insert After',
 			'initial'
-		).onAction(() => {
-			jodit.s.focus();
-			jodit.s.setCursorAfter(jodit.s.current()!);
-			jodit.s.insertHTML(this.__aiResult);
-			onClose();
-		});
+		).onAction(() => onInsertAfter(this.__aiResult));
 
-		this.__submitButton = Button(jodit, 'ai-assistant', '').onAction(() => {
+		const onSubmit = (): void => {
 			if (this.__formAiAssistant.validate()) {
 				this.__formAiAssistant.submit();
-
-				this.__submitButton.state.disabled = true;
-				this.__tryAgainButton.state.disabled = true;
+				this.__toogleSubmitButton(true);
 			}
-		});
+		};
+
+		this.__submitButton = Button(jodit, 'ai-assistant', '').onAction(
+			onSubmit
+		);
 
 		this.__tryAgainButton = Button(
 			jodit,
 			'',
 			'Try Again',
 			'initial'
-		).onAction(() => {
-			if (this.__formAiAssistant.validate()) {
-				this.__formAiAssistant.submit();
-				this.__submitButton.setState({ disabled: true });
-				this.__tryAgainButton.setState({ disabled: true });
-			}
-		});
+		).onAction(onSubmit);
 
 		this.promptInput = new UITextArea(jodit, {
 			name: 'prompt',
@@ -84,16 +88,6 @@ export class UiAiAssistant extends UIElement<IJodit> {
 			placeholder: 'Ask AI to improve generated text',
 			className: this.getFullElName('prompt-row-input')
 		});
-
-		this.__insertButton = Button(jodit, '', 'Insert', 'primary').onAction(
-			() => {
-				if (this.__aiResult) {
-					jodit.s.focus();
-					jodit.s.insertHTML(this.__aiResult);
-				}
-				onClose();
-			}
-		);
 
 		const buttonsBLock = new UIBlock(
 			jodit,
@@ -151,11 +145,22 @@ export class UiAiAssistant extends UIElement<IJodit> {
 			const promptOpt =
 				jodit.o.aiAssistant[prompt as keyof typeof jodit.o.aiAssistant];
 
-			this.promptInput.value = isString(promptOpt) ? promptOpt : prompt;
-			this.__formAiAssistant.submit();
+			const { aiCommonPrefixPrompt, aiCommonSuffixPrompt } =
+				jodit.o.aiAssistant;
 
-			this.__submitButton.state.disabled = true;
-			this.__tryAgainButton.state.disabled = true;
+			this.promptInput.value = [
+				aiCommonPrefixPrompt,
+				isString(promptOpt) ? promptOpt : '',
+				aiCommonSuffixPrompt
+			]
+				.filter(Boolean)
+				.join(' ');
+
+			if (this.promptInput.value) {
+				this.__formAiAssistant.submit();
+
+				this.__toogleSubmitButton(true);
+			}
 		}
 
 		this.promptInput.focus();
@@ -170,8 +175,7 @@ export class UiAiAssistant extends UIElement<IJodit> {
 		this.__aiResult = result;
 		this.__results.appendChild(this.jodit.c.fromHTML(result));
 
-		this.__submitButton.state.disabled = false;
-		this.__tryAgainButton.state.disabled = false;
+		this.__toogleSubmitButton(false);
 	}
 
 	@watch(':ai-assistant-error')
@@ -180,13 +184,16 @@ export class UiAiAssistant extends UIElement<IJodit> {
 		this.setMod('loading', false);
 		this.__error.textContent = error;
 
-		this.__submitButton.state.disabled = false;
-		this.__tryAgainButton.state.disabled = false;
+		this.__toogleSubmitButton(false);
 	}
 
 	@watch('promptInput.nativeInput:input')
 	protected onChangePromptValue(): void {
-		this.__submitButton.state.disabled = !this.promptInput.value;
-		this.__tryAgainButton.state.disabled = !this.promptInput.value;
+		this.__toogleSubmitButton(!this.promptInput.value);
+	}
+
+	private __toogleSubmitButton(value: boolean): void {
+		this.__submitButton.state.disabled = value;
+		this.__tryAgainButton.state.disabled = value;
 	}
 }
