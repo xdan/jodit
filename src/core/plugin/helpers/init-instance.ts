@@ -22,7 +22,7 @@ import { isInitable } from 'jodit/core/helpers/checker';
 import { loadStyle } from './load';
 
 /**
- * Init plugin if it has not dependencies in another case wait requires plugins will be init
+ * Init plugin if it has no dependencies, in another case wait requires plugins will be init
  * @private
  */
 export function init(
