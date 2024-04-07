@@ -45,8 +45,8 @@ if (typeof window.skipTest === 'undefined') {
 }
 
 if (typeof window.toolbarButtonsCount !== 'number') {
-	window.toolbarButtonsCount = 39;
-	window.toolbarButtonsCountMD = 29;
+	window.toolbarButtonsCount = 41;
+	window.toolbarButtonsCountMD = 31;
 	window.toolbarButtonsCountSM = 19;
 	window.toolbarButtonsCountXS = 13;
 }
@@ -339,6 +339,10 @@ if (typeof window.chai !== 'undefined') {
 
 const i18nkeys = new Set();
 const excludeI18nKeys = new Set([
+	'AI Assistant',
+	'AI Commands',
+	'ai-commands',
+	'ai-assistant',
 	'test',
 	'speechRecognize',
 	'quote',
