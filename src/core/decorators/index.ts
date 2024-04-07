@@ -20,4 +20,4 @@ export * from './nonenumerable/nonenumerable';
 export * from './persistent/persistent';
 export * from './wait/wait';
 export * from './watch/watch';
-export { default as autobind } from 'autobind-decorator';
+export * from './autobind/autobind';
