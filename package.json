@@ -47,7 +47,6 @@
 	},
 	"homepage": "https://xdsoft.net/jodit/",
 	"dependencies": {
-		"-": "^0.0.1",
 		"autobind-decorator": "^2.4.0"
 	},
 	"devDependencies": {
