@@ -13,7 +13,8 @@ module.exports = {
 		'header',
 		'mocha',
 		'eslint-plugin-tsdoc',
-		'eslint-plugin-import'
+		'simple-import-sort',
+		'import'
 	],
 	extends: [
 		'eslint:recommended',
@@ -76,7 +77,34 @@ module.exports = {
 		'@typescript-eslint/no-unused-vars': 'off',
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'error',
-		'no-fallthrough': 'off'
+		'no-fallthrough': 'off',
+		'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
+		'simple-import-sort/exports': 'error',
+		'import/first': 'error',
+		'import/newline-after-import': 'error',
+		'import/no-duplicates': 'error',
+		'simple-import-sort/imports': [
+			'error',
+			{
+				groups: [
+					[
+						'jodit/types.*\\u0000$',
+						'jodit/types',
+						'jodit/.*\\u0000$',
+						'jodit/core',
+						'jodit/modules'
+					],
+					// Side effect imports.
+					['^\\u0000'],
+					// Parent imports. Put `..` last.
+					['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+					// Other relative imports. Put same-folder imports and `.` last.
+					['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+					// Style imports.
+					['^.+\\.s?(css|less)$']
+				]
+			}
+		]
 	},
 	overrides: [
 		{

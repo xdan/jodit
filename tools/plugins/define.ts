@@ -5,6 +5,7 @@
  */
 
 import type { Variables } from '../variables';
+
 import * as webpack from 'webpack';
 
 export default ({
@@ -27,7 +28,18 @@ export default ({
 			IS_ES_MODERN: ESModern,
 			HOMEPAGE: JSON.stringify(pkg.homepage),
 			TARGET_ES: JSON.stringify(ES),
-			NODE_ENV: JSON.stringify(mode)
+			NODE_ENV: JSON.stringify(mode),
+			TOKENS: JSON.stringify(
+				Object.keys(process.env)
+					.filter(key => key.startsWith('TOKEN_'))
+					.reduce(
+						(acc, key) => {
+							acc[key] = process.env[key]!;
+							return acc;
+						},
+						{} as Record<string, string>
+					)
+			)
 		}
 	});
 };

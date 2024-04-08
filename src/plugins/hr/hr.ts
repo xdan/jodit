@@ -11,12 +11,13 @@
  */
 
 import type { IControlType, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { Icon } from 'jodit/core/ui/icon';
 
 import hrIcon from './hr.svg';
+
+import { Config } from 'jodit/config';
 
 Icon.set('hr', hrIcon);
 

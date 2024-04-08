@@ -3,11 +3,11 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-import type { IStyle, Nullable, ICommitStyle } from 'jodit/types';
+import type { ICommitStyle, IStyle, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 
-import { isNormalNode } from './is-normal-node';
 import { hasSameStyle, hasSameStyleKeys } from './has-same-style';
+import { isNormalNode } from './is-normal-node';
 
 /**
  * Checks if an item is suitable for applying a commit. The element suits us if it

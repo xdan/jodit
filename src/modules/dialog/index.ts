@@ -10,7 +10,7 @@
  * @module modules/dialog
  */
 
-export { Dialog } from './dialog';
 export { Alert } from './alert';
-export { Prompt } from './prompt';
 export { Confirm } from './confirm';
+export { Dialog } from './dialog';
+export { Prompt } from './prompt';

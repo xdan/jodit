@@ -9,6 +9,7 @@
  */
 
 import type { SnapshotType } from 'jodit/types';
+
 import type { History } from './history';
 
 export class Command {

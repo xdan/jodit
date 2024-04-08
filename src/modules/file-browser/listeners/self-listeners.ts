@@ -9,14 +9,13 @@
  */
 
 import type { IDictionary, IFileBrowser } from 'jodit/types';
-import { isValidName } from 'jodit/core/helpers/checker';
 import { normalizePath } from 'jodit/core/helpers';
-import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
-
+import { isValidName } from 'jodit/core/helpers/checker';
 import { DEFAULT_SOURCE_NAME } from 'jodit/modules/file-browser/data-provider';
-import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
-import { loadItems } from 'jodit/modules/file-browser/fetch/load-items';
 import { deleteFile } from 'jodit/modules/file-browser/fetch/delete-file';
+import { loadItems } from 'jodit/modules/file-browser/fetch/load-items';
+import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
+import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
 
 /**
  * @private

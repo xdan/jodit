@@ -11,13 +11,13 @@
  */
 
 import type { IBound, IJodit, Nullable } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
-import { Table } from 'jodit/modules/table/table';
-import { Dom } from 'jodit/core/dom/dom';
-import { $$, alignElement, position } from 'jodit/core/helpers';
 import { KEY_TAB } from 'jodit/core/constants';
 import { autobind, watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { $$, alignElement, position } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
+import { Table } from 'jodit/modules/table/table';
 
 import './config';
 

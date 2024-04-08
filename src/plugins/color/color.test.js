@@ -6,7 +6,7 @@
 ('colorPlugin' in window.skipTest ? describe.skip : describe)(
 	'Color plugin',
 	function () {
-		it('Open colorpicker set background and color. After this click in another any place. White when popap will be closed. Open again and remove all styles.', function () {
+		it('Open colorpicker set background and color. After this, click in another any place. White when popap will be closed. Open again and remove all styles.', function () {
 			const editor = getJodit();
 
 			editor.value = 'text2text';
@@ -96,7 +96,7 @@
 			});
 
 			describe('Disable', function () {
-				it('should open color picker without button - native color picker', function () {
+				it('should open color picker without a button - native color picker', function () {
 					const editor = getJodit({
 						showBrowserColorPicker: false
 					});

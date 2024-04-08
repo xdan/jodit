@@ -11,6 +11,7 @@
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { call } from 'jodit/core/helpers/utils/utils';
+
 import { getMoveFilter } from 'jodit/plugins/backspace/helpers';
 
 /**

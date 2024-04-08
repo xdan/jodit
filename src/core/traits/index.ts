@@ -8,6 +8,6 @@
  * @module traits
  */
 
+export * from './dlgs';
 export * from './elms';
 export * from './mods';
-export * from './dlgs';

@@ -11,14 +11,15 @@
  */
 
 import type { IControlType, IJodit } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
-import { Config } from 'jodit/config';
 import { Dom } from 'jodit/core/dom/dom';
-import { memorizeExec } from 'jodit/core/helpers/utils/utils';
 import { pluginSystem } from 'jodit/core/global';
+import { memorizeExec } from 'jodit/core/helpers/utils/utils';
+import { Plugin } from 'jodit/core/plugin';
 import { Icon } from 'jodit/core/ui/icon';
 
 import classSpanIcon from './class-span.svg';
+
+import { Config } from 'jodit/config';
 
 Config.prototype.controls.classSpan = {
 	command: 'applyClassName',

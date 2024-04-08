@@ -10,12 +10,10 @@
  * @module modules/toolbar/button
  */
 
-import './button.less';
-
 import type {
 	Controls,
-	IControlType,
 	IControlListItem,
+	IControlType,
 	IControlTypeStrong,
 	IControlTypeStrongList,
 	IPopup,
@@ -24,28 +22,30 @@ import type {
 	IViewBased,
 	Nullable
 } from 'jodit/types';
-import { UIButton, UIButtonState } from 'jodit/core/ui/button';
-import { autobind, component, watch, cacheHTML } from 'jodit/core/decorators';
-import { Dom } from 'jodit/core/dom';
-import { Popup } from 'jodit/core/ui/popup/popup';
-import { makeCollection } from 'jodit/modules/toolbar/factory';
-import {
-	isFunction,
-	isString,
-	position,
-	camelCase,
-	attr,
-	isJoditObject,
-	call,
-	isArray,
-	keys,
-	isPlainObject,
-	assert
-} from 'jodit/core/helpers';
-import { Icon } from 'jodit/core/ui/icon';
-import { ToolbarCollection } from 'jodit/modules/toolbar/collection/collection';
 import { STATUSES } from 'jodit/core/component/statuses';
+import { autobind, cacheHTML, component, watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
+import {
+	assert,
+	attr,
+	call,
+	camelCase,
+	isArray,
+	isFunction,
+	isJoditObject,
+	isPlainObject,
+	isString,
+	keys,
+	position
+} from 'jodit/core/helpers';
+import { UIButton, UIButtonState } from 'jodit/core/ui/button';
 import { findControlType } from 'jodit/core/ui/helpers/get-control-type';
+import { Icon } from 'jodit/core/ui/icon';
+import { Popup } from 'jodit/core/ui/popup/popup';
+import { ToolbarCollection } from 'jodit/modules/toolbar/collection/collection';
+import { makeCollection } from 'jodit/modules/toolbar/factory';
+
+import './button.less';
 
 @component
 export class ToolbarButton<T extends IViewBased = IViewBased>
@@ -349,7 +349,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			}
 
 			/**
-			 * Fired after popup was opened for some control button
+			 * Fired after the popup was opened for some control button
 			 */
 
 			/**
@@ -365,7 +365,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	private openedPopup: Nullable<IPopup> = null;
 
 	/**
-	 * Create and open popup list
+	 * Create an open popup list
 	 */
 	private __openControlList(control: IControlTypeStrongList): void {
 		const controls: Controls = this.jodit.options.controls ?? {},

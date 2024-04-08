@@ -10,13 +10,13 @@
  * @module modules/context-menu
  */
 
-import './context-menu.less';
-
 import type { IContextMenu, IContextMenuAction } from 'jodit/types';
-import { Popup } from 'jodit/core/ui/popup';
-import { Button } from 'jodit/core/ui/button';
-import { isArray } from 'jodit/core/helpers/checker';
 import { component } from 'jodit/core/decorators/component/component';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
+import { Button } from 'jodit/core/ui/button/button/button';
+import { Popup } from 'jodit/core/ui/popup/popup';
+
+import './context-menu.less';
 
 /**
  * Module to generate context menu
@@ -36,7 +36,7 @@ export class ContextMenu extends Popup implements IContextMenu {
 	 * @param actions - Array with plain objects `{icon: 'bin', title: 'Delete', exec: function () {}}`
 	 * @example
 	 * ```javascript
-	 * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }]);
+	 * parent.show(e.clientX, e.clientY, [{icon: 'bin', title: 'Delete', exec: function () { alert(1) }}]);
 	 * ```
 	 */
 	show(

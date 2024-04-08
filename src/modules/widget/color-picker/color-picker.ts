@@ -10,21 +10,22 @@
  * @module modules/widget/color-picker
  */
 
-import './color-picker.less';
-
 import type { IDictionary, IJodit } from 'jodit/types';
+import { Dom } from 'jodit/core/dom';
 import {
-	normalizeColor,
-	hasBrowserColorPicker,
-	isPlainObject,
 	attr,
-	isFunction,
+	hasBrowserColorPicker,
 	isArray,
+	isFunction,
+	isPlainObject,
+	normalizeColor,
 	refs
 } from 'jodit/core/helpers/';
 import { Icon } from 'jodit/core/ui';
-import { Dom } from 'jodit/core/dom';
+
 import paletteIcon from './palette.svg';
+
+import './color-picker.less';
 
 Icon.set('palette', paletteIcon);
 
@@ -36,10 +37,10 @@ Icon.set('palette', paletteIcon);
  * @example
  * ```javascript
  * const tabs = TabsWidget(editor, {
- *    'Text' : ColorPickerWidget(editor, function (color) {
+ *    'Text': ColorPickerWidget(editor, function (color) {
  *         box.style.color = color;
  *     }, box.style.color),
- *     'Background' : ColorPickerWidget(editor, function (color) {
+ *     'Background': ColorPickerWidget(editor, function (color) {
  *         box.style.backgroundColor = color;
  *     }, box.style.backgroundColor),
  * });

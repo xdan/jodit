@@ -10,9 +10,9 @@
 
 import type { Nullable } from 'jodit/types';
 
-export * from './process-old-browser-drag';
-export * from './data-uri-to-blob';
 export * from './build-data';
+export * from './data-uri-to-blob';
+export * from './process-old-browser-drag';
 export * from './send';
 export * from './send-files';
 

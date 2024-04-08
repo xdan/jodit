@@ -9,10 +9,10 @@
  */
 
 import type {
+	IComponent,
 	IContainer,
 	IDictionary,
 	IMods,
-	IComponent,
 	ModType
 } from 'jodit/types';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';

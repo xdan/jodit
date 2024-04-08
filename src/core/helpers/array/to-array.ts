@@ -8,8 +8,8 @@
  * @module helpers/array
  */
 
-import { reset } from 'jodit/core/helpers/utils/reset';
 import { isNativeFunction } from 'jodit/core/helpers/checker/is-native-function';
+import { reset } from 'jodit/core/helpers/utils/reset';
 
 /**
  * Always return Array. It's a safe polyfill for [Array.from](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from) method

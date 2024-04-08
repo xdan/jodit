@@ -495,7 +495,6 @@ describe('Test Dom module', function () {
 					.on('end', () => {
 						for (let i = 0; i < 8000; i += 1) {
 							if (names[i] !== ls[i % 16]) {
-								console.log(i, ls[i % 16], names[i]);
 								break;
 							}
 						}

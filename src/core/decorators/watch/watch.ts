@@ -17,12 +17,12 @@ import type {
 	IDictionary,
 	IViewBased
 } from 'jodit/types';
+import { STATUSES } from 'jodit/core/component/statuses';
+import { observable } from 'jodit/core/event-emitter/observable';
+import { splitArray } from 'jodit/core/helpers/array/split-array';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isViewObject } from 'jodit/core/helpers/checker/is-view-object';
-import { observable } from 'jodit/core/event-emitter/observable';
-import { STATUSES } from 'jodit/core/component/statuses';
-import { splitArray } from 'jodit/core/helpers/array/split-array';
 import { error } from 'jodit/core/helpers/utils/error';
 
 export function getPropertyDescriptor(

@@ -10,20 +10,20 @@
  * @module plugins/add-new-line
  */
 
-import './add-new-line.less';
-
-import type { IJodit, HTMLTagNames, Nullable } from 'jodit/types';
-import { Dom, Icon, Plugin } from 'jodit/modules';
-import {
-	offset,
-	position,
-	call,
-	scrollIntoViewIfNeeded
-} from 'jodit/core/helpers';
+import type { HTMLTagNames, IJodit, Nullable } from 'jodit/types';
 import { autobind, throttle, watch } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
+import {
+	call,
+	offset,
+	position,
+	scrollIntoViewIfNeeded
+} from 'jodit/core/helpers';
+import { Dom, Icon, Plugin } from 'jodit/modules';
 
 import './config';
+
+import './add-new-line.less';
 
 const ns = 'addnewline';
 

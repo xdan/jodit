@@ -9,6 +9,7 @@
  */
 
 import type { IDictionary } from 'jodit/types';
+
 import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {

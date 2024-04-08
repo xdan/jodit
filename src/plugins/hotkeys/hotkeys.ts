@@ -11,15 +11,15 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
+import { KEY_ESC } from 'jodit/core/constants';
+import { pluginSystem } from 'jodit/core/global';
 import {
 	isArray,
 	isString,
 	keys,
 	normalizeKeyAliases
 } from 'jodit/core/helpers';
-import { KEY_ESC } from 'jodit/core/constants';
-import { pluginSystem } from 'jodit/core/global';
+import { Plugin } from 'jodit/core/plugin';
 
 import './config';
 

@@ -8,10 +8,10 @@
  * @module plugins/clean-html
  */
 
-import type { IJodit, Nullable, IDictionary } from 'jodit/types';
+import type { IDictionary, IJodit, Nullable } from 'jodit/types';
+import { IS_PROD } from 'jodit/core/constants';
 
 import * as filters from './filters';
-import { IS_PROD } from 'jodit/core/constants';
 
 type Filter = keyof typeof filters;
 const keys = Object.keys(filters) as Filter[];

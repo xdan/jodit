@@ -15,13 +15,14 @@ import type {
 	PluginInstance,
 	PluginType
 } from 'jodit/types';
-import { isInitable } from 'jodit/core/helpers/checker';
-import { loadStyle } from './load';
 import { IS_PROD } from 'jodit/core/constants';
 import { getContainer } from 'jodit/core/global';
+import { isInitable } from 'jodit/core/helpers/checker';
+
+import { loadStyle } from './load';
 
 /**
- * Init plugin if it has not dependencies in another case wait requires plugins will be init
+ * Init plugin if it has no dependencies, in another case wait requires plugins will be init
  * @private
  */
 export function init(

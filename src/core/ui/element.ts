@@ -15,12 +15,12 @@ import type {
 	Nullable
 } from 'jodit/types';
 import { Component, ViewComponent } from 'jodit/core/component';
-import { Dom } from 'jodit/core/dom/dom';
-import { Mods } from 'jodit/core/traits/mods';
-import { Elms } from 'jodit/core/traits/elms';
-import { isString } from 'jodit/core/helpers/checker/is-string';
-import { Icon } from 'jodit/core/ui/icon';
 import { derive } from 'jodit/core/decorators/derive/derive';
+import { Dom } from 'jodit/core/dom/dom';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { Elms } from 'jodit/core/traits/elms';
+import { Mods } from 'jodit/core/traits/mods';
+import { Icon } from 'jodit/core/ui/icon';
 
 export interface UIElement extends Mods, Elms {}
 
@@ -166,7 +166,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		return this.j.c.fromHTML(
 			result
 				.replace(/\*([^*]+?)\*/g, (_, name) => Icon.get(name) || '')
-				.replace(/&__/g, this.componentName + '__')
+				.replace(/&_/g, this.componentName + '_')
 				.replace(/~([^~]+?)~/g, (_, s) => this.i18n(s))
 		);
 	}

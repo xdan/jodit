@@ -11,26 +11,24 @@
  */
 
 import type {
-	IDictionary,
 	Attributes,
+	CanUndef,
 	Children,
 	ICreate,
-	CanUndef,
+	IDictionary,
 	NodeFunction
 } from 'jodit/types';
-
+import { INVISIBLE_SPACE } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 import {
-	isPlainObject,
 	asArray,
+	attr,
 	isFunction,
-	refs,
+	isPlainObject,
 	isString,
-	attr
+	refs
 } from 'jodit/core/helpers';
 import { assert } from 'jodit/core/helpers/utils/assert';
-
-import { Dom } from 'jodit/core/dom/dom';
-import { INVISIBLE_SPACE } from 'jodit/core/constants';
 
 export class Create implements ICreate {
 	private get doc(): Document {
@@ -182,8 +180,9 @@ export class Create implements ICreate {
 	}
 
 	/**
-	 * Create DOM element from HTML text
+	 * Create a DOM element from HTML text
 	 *
+	 // eslint-disable-next-line tsdoc/syntax
 	 * @param refsToggleElement - State dictionary in which you can set the visibility of some of the elements
 	 * ```js
 	 * const editor = Jodit.make('#editor');

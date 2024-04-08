@@ -22,9 +22,10 @@ import {
 	IS_PROD,
 	TEXT_PLAIN
 } from 'jodit/core/constants';
-import { Config } from 'jodit/config';
 
 import { pasteInsertHtml } from './helpers';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -109,6 +110,7 @@ Config.prototype.controls.paste = {
 				error = false;
 			} catch (e) {
 				if (!IS_PROD) {
+					// eslint-disable-next-line no-console
 					console.log(e);
 				}
 			}
@@ -119,6 +121,7 @@ Config.prototype.controls.paste = {
 					error = false;
 				} catch (e) {
 					if (!IS_PROD) {
+						// eslint-disable-next-line no-console
 						console.log(e);
 					}
 				}

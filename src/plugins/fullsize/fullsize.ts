@@ -10,14 +10,14 @@
  * @module plugins/fullsize
  */
 
-import './fullsize.less';
-
 import type { IViewWithToolbar } from 'jodit/types';
-import { css } from 'jodit/core/helpers/utils/css';
-import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 import { pluginSystem } from 'jodit/core/global';
+import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
+import { css } from 'jodit/core/helpers/utils/css';
 
 import './config';
+
+import './fullsize.less';
 
 const fullsizeStack = new Set();
 

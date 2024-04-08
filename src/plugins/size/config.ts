@@ -44,6 +44,6 @@ Config.prototype.minHeight = 200;
 Config.prototype.maxHeight = 'auto';
 
 /**
- * if set true and height !== auto then after reload editor will be have latest height
+ * if set true and height !== auto then after reload editor will have the latest height
  */
 Config.prototype.saveHeightInStorage = false;

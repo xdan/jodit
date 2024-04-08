@@ -8,12 +8,12 @@
  * @module ui/form
  */
 
-import './area.less';
-
-import type { IUITextArea, IViewBased, IUIInput } from 'jodit/types';
-import { UIInput } from 'jodit/core/ui/form/inputs/input/input';
-import { component } from 'jodit/core/decorators/component/component';
+import type { IUIInput, IUITextArea, IViewBased } from 'jodit/types';
 import { watch } from 'jodit/core/decorators';
+import { component } from 'jodit/core/decorators/component/component';
+import { UIInput } from 'jodit/core/ui/form/inputs/input/input';
+
+import './area.less';
 
 @component
 export class UITextArea extends UIInput implements IUITextArea {

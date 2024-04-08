@@ -8,6 +8,7 @@
  * @module plugins/inline-popup
  */
 import type { IJodit } from 'jodit/types';
+
 import { align } from './img';
 
 export default [

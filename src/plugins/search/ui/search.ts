@@ -8,15 +8,15 @@
  * @module plugins/search
  */
 
-import './search.less';
-
 import type { IJodit, MarkerInfo, Nullable } from 'jodit/types';
-import { Icon, UIElement } from 'jodit/core/ui';
-import { css, position, refs, trim } from 'jodit/core/helpers';
 import { MODE_WYSIWYG } from 'jodit/core/constants';
 import * as consts from 'jodit/core/constants';
 import { autobind, component, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
+import { css, position, refs, trim } from 'jodit/core/helpers';
+import { Icon, UIElement } from 'jodit/core/ui';
+
+import './search.less';
 
 @component
 export class UISearch extends UIElement<IJodit> {

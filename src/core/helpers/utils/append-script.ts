@@ -9,8 +9,9 @@
  */
 
 import type { IViewBased } from 'jodit/types';
-import { completeUrl } from './complete-url';
 import { isString } from 'jodit/core/helpers/checker/is-string';
+
+import { completeUrl } from './complete-url';
 
 export type Loader = (jodit: IViewBased, url: string) => Promise<any>;
 

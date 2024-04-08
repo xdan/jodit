@@ -17,8 +17,8 @@ describe('Bold plugin', () => {
 		jodit.destruct();
 	});
 
-	describe('Click bold button', () => {
-		it('Should add empty STRONG element', async () => {
+	describe('Click the bold button', () => {
+		it('Should add an empty STRONG element', async () => {
 			clickButton('bold', jodit);
 			await jodit.async.requestIdlePromise();
 			replaceCursorToChar(jodit);
@@ -69,8 +69,8 @@ describe('Bold plugin', () => {
 		});
 	});
 
-	describe('Click subscript button', () => {
-		it('Should add empty SUB element', async () => {
+	describe('Click the subscript button', () => {
+		it('Should add empty Subelement', async () => {
 			clickButton('subscript', jodit);
 			await jodit.async.requestIdlePromise();
 			replaceCursorToChar(jodit);
@@ -78,7 +78,7 @@ describe('Bold plugin', () => {
 		});
 
 		describe('Inside sub tag', () => {
-			it('Should move cursor in the outside from the tag', async () => {
+			it('Should move the cursor on the outside from the tag', async () => {
 				jodit.value = '<p><sup>test|</sup></p>';
 				setCursorToChar(jodit);
 				clickButton('superscript', jodit);
@@ -91,7 +91,7 @@ describe('Bold plugin', () => {
 	});
 
 	describe('Click superscript button', () => {
-		it('Should add empty SUP element', async () => {
+		it('Should add an empty SUP element', async () => {
 			clickButton('superscript', jodit);
 			await jodit.async.requestIdlePromise();
 			replaceCursorToChar(jodit);

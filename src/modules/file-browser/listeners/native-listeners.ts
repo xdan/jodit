@@ -10,14 +10,13 @@
 
 import type {
 	HTMLTagNames,
-	IFileBrowserItem,
-	Nullable,
 	IDictionary,
-	IFileBrowser
+	IFileBrowser,
+	IFileBrowserItem,
+	Nullable
 } from 'jodit/types';
-import { ctrlKey, attr } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom';
-
+import { attr, ctrlKey } from 'jodit/core/helpers';
 import contextMenu from 'jodit/modules/file-browser/builders/context-menu';
 import { elementsMap } from 'jodit/modules/file-browser/builders/elements-map';
 import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';

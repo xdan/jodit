@@ -9,8 +9,8 @@
  */
 
 import type { Nullable } from 'jodit/types';
-import { css } from 'jodit/core/helpers/utils';
 import { Dom } from 'jodit/core/dom/dom';
+import { css } from 'jodit/core/helpers/utils';
 
 export function getScrollParent(node: Nullable<Node>): Nullable<Element> {
 	if (!node) {

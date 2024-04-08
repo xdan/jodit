@@ -9,11 +9,12 @@
  */
 
 import type { IControlType, IJodit, ISourceEditor } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { IS_IE, MODE_SOURCE, MODE_SPLIT } from 'jodit/core/constants';
 import { Icon } from 'jodit/core/ui/icon';
 
 import sourceIcon from './source.svg';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

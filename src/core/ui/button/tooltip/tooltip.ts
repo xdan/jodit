@@ -10,16 +10,16 @@
  * @module ui/button
  */
 
-import './tooltip.less';
-
 import type { IPoint, IViewBased } from 'jodit/types';
-import { attr, css } from 'jodit/core/helpers/utils';
-import { getContainer } from 'jodit/core/global';
-import { autobind, component } from 'jodit/core/decorators';
-import { UIElement } from 'jodit/core/ui/element';
-import { Dom } from 'jodit/core/dom';
-import { position } from 'jodit/core/helpers/size/position';
 import { STATUSES } from 'jodit/core/component';
+import { autobind, component } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
+import { getContainer } from 'jodit/core/global';
+import { position } from 'jodit/core/helpers/size/position';
+import { attr, css } from 'jodit/core/helpers/utils';
+import { UIElement } from 'jodit/core/ui/element';
+
+import './tooltip.less';
 
 @component
 export class UITooltip extends UIElement {

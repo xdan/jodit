@@ -9,9 +9,9 @@
  */
 
 import type { IJodit } from 'jodit/types';
+import { BR } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { scrollIntoViewIfNeeded } from 'jodit/core/helpers/utils/scroll-into-view';
-import { BR } from 'jodit/core/constants';
 
 /**
  * Checks the possibility and necessity of inserting a BR instead of a block
@@ -28,7 +28,7 @@ export function checkBR(
 
 	const isBRMode = jodit.o.enter.toLowerCase() === BR.toLowerCase();
 
-	// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
+	// if you use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
 	if (
 		isBRMode ||
 		(shiftKeyPressed && !isMultiLineBlock) ||

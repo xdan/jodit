@@ -11,25 +11,26 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Dom } from 'jodit/core/dom/dom';
-import { Plugin } from 'jodit/core/plugin/plugin';
-import { BR, PARAGRAPH, KEY_ENTER } from 'jodit/core/constants';
+import { BR, KEY_ENTER, PARAGRAPH } from 'jodit/core/constants';
 import { watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
+import { pluginSystem } from 'jodit/core/global';
 import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
+import { Plugin } from 'jodit/core/plugin/plugin';
+
+import './interface';
 
 import {
 	checkBR,
 	checkUnsplittableBox,
-	processEmptyLILeaf,
 	getBlockWrapper,
 	hasPreviousBlock,
 	insertParagraph,
+	moveCursorOutFromSpecialTags,
+	processEmptyLILeaf,
 	splitFragment,
-	wrapText,
-	moveCursorOutFromSpecialTags
+	wrapText
 } from './helpers';
-import { pluginSystem } from 'jodit/core/global';
-import './interface';
 
 /**
  * One of most important core plugins. It is responsible for all the browsers to have the same effect when the Enter

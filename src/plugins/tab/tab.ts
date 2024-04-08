@@ -11,13 +11,14 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
-import { watch } from 'jodit/core/decorators';
 import { KEY_TAB } from 'jodit/core/constants';
+import { watch } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
+import { Plugin } from 'jodit/core/plugin';
+
+import './config';
 
 import { onTabInsideLi } from './cases';
-import './config';
 
 class tab extends Plugin {
 	protected afterInit(jodit: IJodit): void {}

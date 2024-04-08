@@ -9,10 +9,10 @@
  */
 
 import type { IDictionary } from 'jodit/types';
-import { isString } from 'jodit/core/helpers/checker/is-string';
-import { isNumeric } from 'jodit/core/helpers/checker/is-numeric';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
+import { isNumeric } from 'jodit/core/helpers/checker/is-numeric';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
+import { isString } from 'jodit/core/helpers/checker/is-string';
 
 /**
  * Safe access in tree object

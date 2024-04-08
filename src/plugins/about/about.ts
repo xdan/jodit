@@ -10,17 +10,18 @@
  * @module plugins/about
  */
 
-import './about.less';
-
 import type { IControlType, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
-import { css, isLicense, normalizeLicense } from 'jodit/core/helpers/';
 import * as constants from 'jodit/core/constants';
-import { pluginSystem } from 'jodit/core/global';
-import { Icon } from 'jodit/core/ui/icon';
 import { HOMEPAGE } from 'jodit/core/constants';
+import { pluginSystem } from 'jodit/core/global';
+import { css, isLicense, normalizeLicense } from 'jodit/core/helpers/';
+import { Icon } from 'jodit/core/ui/icon';
 
 import aboutIcon from './about.svg';
+
+import './about.less';
+
+import { Config } from 'jodit/config';
 
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {

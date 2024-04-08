@@ -8,14 +8,15 @@
  * @module plugins/link
  */
 
-import type { IControlType, IJodit, IUIOption, IUIForm } from 'jodit/types';
-import { Config } from 'jodit/config';
-import { formTemplate } from './template';
+import type { IControlType, IJodit, IUIForm, IUIOption } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { Icon } from 'jodit/core/ui/icon';
 
 import linkIcon from './icons/link.svg';
 import unlinkIcon from './icons/unlink.svg';
+import { formTemplate } from './template';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

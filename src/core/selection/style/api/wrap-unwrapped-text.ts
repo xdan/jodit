@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, Nullable, ICommitStyle } from 'jodit/types';
+import type { ICommitStyle, IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { isMarker } from 'jodit/core/helpers/checker/is-marker';
 

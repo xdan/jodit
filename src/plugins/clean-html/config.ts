@@ -9,10 +9,11 @@
  */
 
 import type { HTMLTagNames, IDictionary, Nullable } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
 
 import eraserIcon from './eraser.svg';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

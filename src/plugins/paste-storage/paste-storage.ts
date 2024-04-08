@@ -10,8 +10,6 @@
  * @module plugins/paste-storage
  */
 
-import './paste-storage.less';
-
 import type { IDialog } from 'jodit/types';
 import {
 	KEY_DOWN,
@@ -19,11 +17,13 @@ import {
 	KEY_UP,
 	SPACE_REG_EXP
 } from 'jodit/core/constants';
-import { Plugin } from 'jodit/core/plugin/plugin';
 import { Dom } from 'jodit/core/dom/dom';
-import { attr, toArray } from 'jodit/core/helpers';
-import { Button } from 'jodit/core/ui/button/button/button';
 import { pluginSystem } from 'jodit/core/global';
+import { attr, toArray } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin/plugin';
+import { Button } from 'jodit/core/ui/button/button/button';
+
+import './paste-storage.less';
 
 /**
  * Show dialog choose content to paste

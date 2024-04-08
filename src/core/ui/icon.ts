@@ -14,9 +14,9 @@ import type {
 	IUIIconState,
 	IViewBased
 } from 'jodit/types';
-import { css } from 'jodit/core/helpers/utils/css';
-import { camelCase, kebabCase } from 'jodit/core/helpers';
 import { IS_PROD } from 'jodit/core/constants';
+import { camelCase, kebabCase } from 'jodit/core/helpers';
+import { css } from 'jodit/core/helpers/utils/css';
 
 export class Icon {
 	private static icons: IDictionary<string> = {};
@@ -35,7 +35,7 @@ export class Icon {
 			Icon.icons[name.toLowerCase()];
 
 		if (!IS_PROD && !icon) {
-			console.log(`Icon "${name}" not found`);
+			console.warn(`Icon "${name}" not found`);
 		}
 
 		return icon;

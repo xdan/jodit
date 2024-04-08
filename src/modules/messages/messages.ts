@@ -10,18 +10,18 @@
  * @module modules/messages
  */
 
-import './messages.less';
-
 import type {
 	IMessages,
 	IUIElement,
 	IViewBased,
 	MessageVariant
 } from 'jodit/types';
+import { component } from 'jodit/core/decorators/component/component';
 import { css } from 'jodit/core/helpers/utils/css';
 import { UIGroup } from 'jodit/core/ui/group/group';
-import { component } from 'jodit/core/decorators/component/component';
 import { UIMessage } from 'jodit/modules/messages/message';
+
+import './messages.less';
 
 /**
  * Plugin display pop-up messages in the lower right corner of the editor

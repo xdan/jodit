@@ -16,11 +16,11 @@
 
 import type { IPoint, IViewComponent } from 'jodit/types';
 import { TEXT_HTML, TEXT_PLAIN } from 'jodit/core/constants';
+import { autobind, throttle } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
+import { pluginSystem } from 'jodit/core/global';
 import { attr, ctrlKey, dataBind, getDataTransfer } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
-import { autobind, throttle } from 'jodit/core/decorators';
-import { pluginSystem } from 'jodit/core/global';
 import { FileBrowserFiles } from 'jodit/modules/file-browser/ui';
 
 /**

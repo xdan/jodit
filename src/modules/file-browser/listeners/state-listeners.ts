@@ -12,7 +12,6 @@ import type { IFileBrowser, IFileBrowserItem } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { normalizePath } from 'jodit/core/helpers/normalize';
 import { Button } from 'jodit/core/ui/button/button/button';
-
 import { elementsMap } from 'jodit/modules/file-browser/builders/elements-map';
 import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
 

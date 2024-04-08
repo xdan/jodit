@@ -5,7 +5,7 @@
  */
 
 describe('Add new Line plugin', function () {
-	it('Should not add new line element in container before first use', function () {
+	it('Should not add a new line element in container before first use', function () {
 		const editor = getJodit();
 		expect(
 			editor.container.querySelectorAll('.jodit-add-new-line').length
@@ -21,7 +21,7 @@ describe('Add new Line plugin', function () {
 		});
 	};
 
-	it('Should show .jodit-add-new-line after user move mouse under Table,Ifrmae or IMG ', function () {
+	it('Should show .jodit-add-new-line after user moves mouse under Table, Ifrmae or IMG ', function () {
 		const editor = getJodit();
 		editor.value =
 			'<table>' +
@@ -52,7 +52,7 @@ describe('Add new Line plugin', function () {
 		);
 	});
 
-	it('Should add new paragraph after user clicked on newline ', function () {
+	it('Should add a new paragraph after user clicked on newline ', function () {
 		const editor = getJodit();
 		editor.value =
 			'<table><tbody>' +
@@ -134,7 +134,7 @@ describe('Add new Line plugin', function () {
 		);
 	});
 
-	it('Should add new paragraph after user clicked on newline below table in IFRAME mode', function () {
+	it('Should add a new paragraph after user clicked on newline below table in IFRAME mode', function () {
 		const editor = getJodit({
 			ifarme: true
 		});
@@ -179,8 +179,8 @@ describe('Add new Line plugin', function () {
 		);
 	});
 
-	describe('Insert line on top of IMG element that was inside P element', function () {
-		it('Should insert new P before parent P element', function () {
+	describe('Insert line on top of an IMG element that was inside a P element', function () {
+		it('Should insert new P before a parent P element', function () {
 			const editor = getJodit();
 			editor.value =
 				'<p><img src="tests/artio.jpg" style="width: 100px; height: 100px;" alt=""></p>';

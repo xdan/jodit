@@ -5,11 +5,11 @@
  */
 
 import type { IStyle } from 'jodit/types';
-import { css } from 'jodit/core/helpers/utils/css';
+import { Dom } from 'jodit/core/dom/dom';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';
 import { normalizeCssValue } from 'jodit/core/helpers/normalize/normalize-css-value';
-import { Dom } from 'jodit/core/dom/dom';
 import { assert } from 'jodit/core/helpers/utils/assert';
+import { css } from 'jodit/core/helpers/utils/css';
 
 /**
  * Element has the same styles as in the commit

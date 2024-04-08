@@ -18,12 +18,12 @@ import type {
 	IEventEmitter,
 	IEventEmitterOnOptions
 } from 'jodit/types';
-import { isString, isStringArray } from 'jodit/core/helpers/checker/is-string';
-import { isFunction } from 'jodit/core/helpers/checker/is-function';
-import { isArray } from 'jodit/core/helpers/checker/is-array';
-import { error } from 'jodit/core/helpers/utils/error';
-import { splitArray } from 'jodit/core/helpers/array/split-array';
 import { PASSIVE_EVENTS } from 'jodit/core/constants';
+import { splitArray } from 'jodit/core/helpers/array/split-array';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { isString, isStringArray } from 'jodit/core/helpers/checker/is-string';
+import { error } from 'jodit/core/helpers/utils/error';
 
 import { defaultNameSpace, EventHandlersStore } from './store';
 

@@ -8,18 +8,18 @@
  * @module modules/toolbar/button
  */
 
-import './content.less';
-
 import type {
 	IControlTypeContent,
 	IToolbarButton,
 	IViewBased,
 	Nullable
 } from 'jodit/types';
-import { UIButton } from 'jodit/core/ui/button';
-import { Dom } from 'jodit/core/dom';
-import { isString, attr } from 'jodit/core/helpers';
 import { component } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
+import { attr, isString } from 'jodit/core/helpers';
+import { UIButton } from 'jodit/core/ui/button';
+
+import './content.less';
 
 @component
 export class ToolbarContent<T extends IViewBased = IViewBased>

@@ -18,8 +18,8 @@ import {
 	TEXT_HTML,
 	TEXT_PLAIN
 } from 'jodit/core/constants';
-import { getDataTransfer, stripTags } from 'jodit/core/helpers';
 import { pluginSystem } from 'jodit/core/global';
+import { getDataTransfer, stripTags } from 'jodit/core/helpers';
 
 import './config';
 

@@ -9,25 +9,23 @@
  */
 
 import type {
-	IExtraPlugin,
+	CanUndef,
 	IDictionary,
+	IExtraPlugin,
 	IJodit,
 	IPluginSystem,
+	Nullable,
 	PluginInstance,
-	PluginType,
-	CanUndef,
-	Nullable
+	PluginType
 } from 'jodit/types';
-
-import { isDestructable, isString, isArray } from 'jodit/core/helpers/checker';
-
-import { splitArray } from 'jodit/core/helpers/array';
-import { eventEmitter } from 'jodit/core/global';
-import { loadExtras } from 'jodit/core/plugin/helpers/load';
-import { normalizeName } from 'jodit/core/plugin/helpers/utils';
-import { makeInstance } from 'jodit/core/plugin/helpers/make-instance';
-import { init } from 'jodit/core/plugin/helpers/init-instance';
 import { IS_PROD } from 'jodit/core/constants';
+import { eventEmitter } from 'jodit/core/global';
+import { splitArray } from 'jodit/core/helpers/array';
+import { isArray, isDestructable, isString } from 'jodit/core/helpers/checker';
+import { init } from 'jodit/core/plugin/helpers/init-instance';
+import { loadExtras } from 'jodit/core/plugin/helpers/load';
+import { makeInstance } from 'jodit/core/plugin/helpers/make-instance';
+import { normalizeName } from 'jodit/core/plugin/helpers/utils';
 
 import './interface';
 

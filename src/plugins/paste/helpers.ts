@@ -15,15 +15,14 @@ import type {
 	IUIOption,
 	Nullable
 } from 'jodit/types';
+import { TEXT_PLAIN } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 import {
 	isArray,
 	isNumber,
 	isString,
 	isVoid
 } from 'jodit/core/helpers/checker';
-import { Dom } from 'jodit/core/dom/dom';
-
-import { TEXT_PLAIN } from 'jodit/core/constants';
 import { Button } from 'jodit/core/ui/button/button/button';
 
 import type { PasteEvent } from './interface';

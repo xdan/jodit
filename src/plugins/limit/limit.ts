@@ -11,7 +11,6 @@
  */
 
 import type { IJodit, SnapshotType } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
 import {
 	COMMAND_KEYS,
 	INVISIBLE_SPACE_REG_EXP,
@@ -19,6 +18,7 @@ import {
 } from 'jodit/core/constants';
 import { autobind } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
+import { Plugin } from 'jodit/core/plugin';
 
 import './config';
 

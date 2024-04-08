@@ -11,19 +11,19 @@
  */
 
 import type {
-	IDictionary,
-	IViewComponent,
+	DecoratorHandler,
 	IAsyncParams,
-	DecoratorHandler
+	IDictionary,
+	IViewComponent
 } from 'jodit/types';
+import { Component, STATUSES } from 'jodit/core/component';
 import {
 	isFunction,
 	isNumber,
 	isPlainObject
 } from 'jodit/core/helpers/checker';
-import { Component, STATUSES } from 'jodit/core/component';
-import { error } from 'jodit/core/helpers/utils/error';
 import { assert } from 'jodit/core/helpers/utils/assert';
+import { error } from 'jodit/core/helpers/utils/error';
 
 export function debounce<V extends IViewComponent = IViewComponent>(
 	timeout?: number | ((ctx: V) => number | IAsyncParams) | IAsyncParams,

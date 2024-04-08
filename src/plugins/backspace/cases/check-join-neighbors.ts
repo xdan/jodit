@@ -9,9 +9,10 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { Dom } from 'jodit/core/dom/dom';
-import { getMoveFilter } from 'jodit/plugins/backspace/helpers';
 import { LIST_TAGS } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
+
+import { getMoveFilter } from 'jodit/plugins/backspace/helpers';
 
 /**
  * Check if two separate elements can be connected
@@ -25,7 +26,7 @@ export function checkJoinNeighbors(
 	let nextBox: Nullable<Node> = fakeNode,
 		mainClosestBox: Nullable<Node> = nextBox;
 
-	// Find main big closest element
+	// Find the main big closest element
 	while (
 		nextBox &&
 		!Dom.findNotEmptySibling(nextBox, backspace) &&

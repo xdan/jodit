@@ -5,8 +5,9 @@
  */
 
 import type { Variables } from '../variables';
-import type { RuleSetRule } from 'webpack';
+
 import * as path from 'path';
+import type { RuleSetRule } from 'webpack';
 
 export default ({ superDirname }: Variables): RuleSetRule => {
 	return {

@@ -10,10 +10,10 @@
  * @module ui
  */
 
-export * from './element';
 export * from './button';
-export * from './popup';
-export * from './group';
+export * from './element';
 export * from './form';
+export * from './group';
 export * from './icon';
+export * from './popup';
 export * from './progress-bar/progress-bar';
