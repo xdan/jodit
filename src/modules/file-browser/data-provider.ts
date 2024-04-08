@@ -9,23 +9,24 @@
  */
 
 import type {
+	IAjax,
+	IDictionary,
 	IFileBrowserAjaxOptions,
 	IFileBrowserAnswer,
-	IFileBrowserOptions,
-	IViewBased,
-	IPermissions,
 	IFileBrowserDataProvider,
-	ImageBox,
-	IDictionary,
-	IAjax,
-	Nullable,
-	IFileBrowserProcessor,
 	IFileBrowserDataProviderItemsMods,
 	IFileBrowserItem,
+	IFileBrowserOptions,
+	IFileBrowserProcessor,
+	ImageBox,
+	IPermissions,
 	ISourceFile,
-	ISourcesFiles
+	ISourcesFiles,
+	IViewBased,
+	Nullable
 } from 'jodit/types';
-
+import { IS_PROD } from 'jodit/core/constants';
+import { autobind } from 'jodit/core/decorators';
 import {
 	ConfigProto,
 	error,
@@ -34,9 +35,7 @@ import {
 	set
 } from 'jodit/core/helpers';
 import { Ajax } from 'jodit/core/request';
-import { autobind } from 'jodit/core/decorators';
 import { FileBrowserItem } from 'jodit/modules/file-browser/builders/item';
-import { IS_PROD } from 'jodit/core/constants';
 
 export const DEFAULT_SOURCE_NAME = 'default';
 

@@ -11,32 +11,64 @@
  */
 
 import type {
+	AjaxOptions,
+	CanPromise,
 	CustomCommand,
 	ExecCommandCallback,
+	ICreate,
 	IDictionary,
+	IFileBrowser,
+	IFileBrowserCallBackData,
+	IHistory,
+	IJodit,
+	IMessages,
 	IPluginSystem,
+	IResponse,
 	IStatusBar,
+	IUploader,
 	IViewOptions,
 	IWorkPlace,
 	MarkerInfo,
-	Modes,
-	IFileBrowser,
-	IJodit,
-	IUploader,
-	ICreate,
-	IFileBrowserCallBackData,
-	CanPromise,
-	IHistory,
-	AjaxOptions,
-	IResponse,
-	IMessages
+	Modes
 } from 'jodit/types';
-
 import type * as Modules from 'jodit/modules';
-
-import { Config } from 'jodit/config';
 import * as constants from 'jodit/core/constants';
-
+import { FAT_MODE, IS_PROD, lang } from 'jodit/core/constants';
+import {
+	autobind,
+	cache,
+	derive,
+	throttle,
+	watch
+} from 'jodit/core/decorators';
+import {
+	eventEmitter,
+	instances,
+	modules,
+	pluginSystem
+} from 'jodit/core/global';
+import {
+	asArray,
+	attr,
+	callPromise,
+	ConfigProto,
+	css,
+	error,
+	isFunction,
+	isJoditObject,
+	isNumber,
+	isPromise,
+	isString,
+	isVoid,
+	kebabCase,
+	markAsAtomic,
+	normalizeKeyAliases,
+	resolveElement,
+	toArray,
+	ucfirst
+} from 'jodit/core/helpers';
+import { Ajax } from 'jodit/core/request';
+import { Dlgs } from 'jodit/core/traits/dlgs';
 import {
 	Create,
 	Dom,
@@ -48,43 +80,8 @@ import {
 	ViewWithToolbar
 } from 'jodit/modules';
 
-import {
-	asArray,
-	css,
-	isPromise,
-	normalizeKeyAliases,
-	error,
-	isString,
-	attr,
-	isFunction,
-	resolveElement,
-	isVoid,
-	callPromise,
-	toArray,
-	markAsAtomic,
-	ConfigProto,
-	kebabCase,
-	isJoditObject,
-	isNumber,
-	ucfirst
-} from 'jodit/core/helpers';
+import { Config } from 'jodit/config';
 
-import { FAT_MODE, IS_PROD, lang } from 'jodit/core/constants';
-import {
-	instances,
-	pluginSystem,
-	modules,
-	eventEmitter
-} from 'jodit/core/global';
-import {
-	autobind,
-	cache,
-	throttle,
-	watch,
-	derive
-} from 'jodit/core/decorators';
-import { Dlgs } from 'jodit/core/traits/dlgs';
-import { Ajax } from 'jodit/core/request';
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 const __defaultClassesKey = 'data-jodit-default-classes';
 

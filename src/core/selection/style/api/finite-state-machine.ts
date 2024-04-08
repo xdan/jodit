@@ -53,7 +53,7 @@ export class FiniteStateMachine<
 			const res = action.call(this, value);
 
 			assert(res && res !== value, 'Action should return new value');
-			assert(isString(res.next), 'Value should contains next state');
+			assert(isString(res.next), 'Value should contain the next state');
 			assert(
 				res.next !== this.getState(),
 				'The new state should not be equal to the old one.'
@@ -62,6 +62,7 @@ export class FiniteStateMachine<
 			this.setState(res.next);
 
 			if (!IS_PROD && !this.silent) {
+				// eslint-disable-next-line no-console
 				console.log(`State: ${this.getState()}`);
 			}
 

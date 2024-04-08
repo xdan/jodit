@@ -8,20 +8,13 @@
  * @module helpers/utils
  */
 
-import type {
-	HTMLTagNames,
-	IDictionary,
-	IUIElement,
-	Nullable
-} from 'jodit/types/';
-import { Component } from 'jodit/core/component/component';
+import type { HTMLTagNames, IDictionary, Nullable } from 'jodit/types/';
 import { IS_ES_NEXT, IS_IE } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';
 import { attr, error } from 'jodit/core/helpers/utils';
-import { UIElement } from 'jodit/core/ui/element';
 
 let temp = 1;
 
@@ -31,7 +24,8 @@ const $$temp = (): number => {
 };
 
 /**
- * Find all elements by selector and return Array. If it did not find any element it return empty array
+ * Find all elements by selector and return Array. If it did not find any element, it is return empty array
+ * @internal
  *
  * @example
  * ```javascript
@@ -42,21 +36,21 @@ const $$temp = (): number => {
  * })
  * ```
  * @param selector - CSS like selector
- *
+ * @param root - where to search
  */
 export function $$<K extends HTMLTagNames>(
 	selector: K,
-	root: HTMLElement | HTMLDocument | DocumentFragment
+	root: HTMLElement | DocumentFragment
 ): Array<HTMLElementTagNameMap[K]>;
 
 export function $$<T extends HTMLElement>(
 	selector: string,
-	root: HTMLElement | HTMLDocument | DocumentFragment
+	root: HTMLElement | DocumentFragment
 ): T[];
 
 export function $$<T extends Element>(
 	selector: string | HTMLTagNames,
-	root: HTMLElement | HTMLDocument | DocumentFragment
+	root: HTMLElement | DocumentFragment
 ): T[] {
 	let result: NodeList;
 
@@ -125,11 +119,11 @@ export const getXPathByElement = (
  * Find all `ref` or `data-ref` elements inside HTMLElement
  */
 export const refs = <T extends HTMLElement>(
-	root: HTMLElement | IUIElement
+	root: HTMLElement
 ): IDictionary<T> => {
-	if (Component.isInstanceOf<UIElement>(root, UIElement)) {
-		root = root.container;
-	}
+	// if (Component.isInstanceOf<UIElement>(root, UIElement)) {
+	// 	root = root.container;
+	// }
 
 	return $$('[ref],[data-ref]', <HTMLElement>root).reduce((def, child) => {
 		const key = attr(child, '-ref');

@@ -16,18 +16,16 @@ import type {
 	IViewBased,
 	IViewComponent
 } from 'jodit/types';
-
-import { PluginSystem } from './plugin/plugin-system';
-
-import { Dom } from './dom';
-
-import { EventEmitter } from './event-emitter';
-import { isJoditObject } from './helpers/checker/is-jodit-object';
-import { isViewObject } from './helpers/checker/is-view-object';
-import { getClassName } from './helpers/utils/get-class-name';
-import { kebabCase } from './helpers/string/kebab-case';
-import { lang } from './constants';
+import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 import { isString } from 'jodit/core/helpers/checker/is-string';
+import { isViewObject } from 'jodit/core/helpers/checker/is-view-object';
+import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
+import { getClassName } from 'jodit/core/helpers/utils/get-class-name';
+import { PluginSystem } from 'jodit/core/plugin/plugin-system';
+
+import { lang } from './constants';
+import { Dom } from './dom';
+import { EventEmitter } from './event-emitter';
 
 export const instances: IDictionary<IJodit> = {};
 

@@ -35,7 +35,7 @@ export class Icon {
 			Icon.icons[name.toLowerCase()];
 
 		if (!IS_PROD && !icon) {
-			console.log(`Icon "${name}" not found`);
+			console.warn(`Icon "${name}" not found`);
 		}
 
 		return icon;

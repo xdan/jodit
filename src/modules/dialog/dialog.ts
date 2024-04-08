@@ -8,38 +8,39 @@
  * @module modules/dialog
  */
 
-import './dialog.less';
-
 import type {
-	IControlType,
-	IDictionary,
-	IToolbarCollection,
-	IContainer,
-	IDialog,
-	ContentItem,
 	Content,
-	IDialogOptions
+	ContentItem,
+	IContainer,
+	IControlType,
+	IDialog,
+	IDialogOptions,
+	IDictionary,
+	IToolbarCollection
 } from 'jodit/types';
-import { Config } from 'jodit/config';
+import { STATUSES } from 'jodit/core/component';
 import { KEY_ESC } from 'jodit/core/constants';
+import { autobind, component, hook } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
+import { eventEmitter, pluginSystem } from 'jodit/core/global';
+import { asArray, splitArray, toArray } from 'jodit/core/helpers/array';
 import {
+	hasContainer,
 	isArray,
 	isBoolean,
 	isFunction,
 	isString,
-	isVoid,
-	hasContainer
+	isVoid
 } from 'jodit/core/helpers/checker';
-import { asArray, splitArray, toArray } from 'jodit/core/helpers/array';
 import { $$, attr, ConfigProto, css } from 'jodit/core/helpers/utils';
 import { assert } from 'jodit/core/helpers/utils/assert';
-import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
-import { Dom } from 'jodit/core/dom/dom';
-import { STATUSES } from 'jodit/core/component';
-import { eventEmitter, pluginSystem } from 'jodit/core/global';
-import { component, autobind, hook } from 'jodit/core/decorators';
-import { View } from 'jodit/core/view/view';
 import { Icon } from 'jodit/core/ui';
+import { View } from 'jodit/core/view/view';
+import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
+
+import './dialog.less';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

@@ -4,8 +4,9 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import './files.less';
 import { UIGroup } from 'jodit/core/ui';
+
+import './files.less';
 
 export class FileBrowserFiles extends UIGroup {
 	override className(): string {

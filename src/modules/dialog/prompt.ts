@@ -9,9 +9,9 @@
  */
 
 import type { IDialog } from 'jodit/types';
-import { Button } from 'jodit/core/ui/button/button/button';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { attr } from 'jodit/core/helpers/utils/attr';
+import { Button } from 'jodit/core/ui/button/button/button';
 
 import { Dialog } from './dialog';
 

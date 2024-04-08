@@ -43,7 +43,7 @@ export function spy(target: Function): void {
 				this: typeof target,
 				...args: any[]
 			): any {
-				console.log(
+				console.warn(
 					`Class: ${getClassName(target.prototype)} call: ${String(
 						key
 					)}(${args.map(a =>

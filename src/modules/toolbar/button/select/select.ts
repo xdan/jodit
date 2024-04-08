@@ -8,13 +8,13 @@
  * @module modules/toolbar/button
  */
 
-import './select.less';
-
 import type { IViewBased } from 'jodit/types';
 import { component } from 'jodit/core/decorators';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 
 import { ToolbarButton } from '../button';
+
+import './select.less';
 
 @component
 export class ToolbarSelect<

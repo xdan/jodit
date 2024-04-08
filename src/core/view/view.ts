@@ -22,6 +22,9 @@ import type {
 	IViewOptions,
 	Nullable
 } from 'jodit/types';
+import { ViewComponent } from 'jodit/core/component';
+import { Component } from 'jodit/core/component/component';
+import { STATUSES } from 'jodit/core/component/statuses';
 import {
 	APP_VERSION,
 	BASE_PATH,
@@ -29,7 +32,11 @@ import {
 	IS_ES_MODERN,
 	IS_ES_NEXT
 } from 'jodit/core/constants';
-import { cache, derive, hook } from 'jodit/core/decorators';
+import { Create } from 'jodit/core/create/create';
+import { cache } from 'jodit/core/decorators/cache/cache';
+import { derive } from 'jodit/core/decorators/derive/derive';
+import { hook } from 'jodit/core/decorators/hook/hook';
+import { Dom } from 'jodit/core/dom';
 import { EventEmitter } from 'jodit/core/event-emitter';
 import { modules } from 'jodit/core/global';
 import {
@@ -41,17 +48,10 @@ import {
 	isFunction,
 	isVoid
 } from 'jodit/core/helpers';
-import { Storage } from 'jodit/core/storage';
+import { Storage } from 'jodit/core/storage/storage';
 import { Elms } from 'jodit/core/traits/elms';
 import { Mods } from 'jodit/core/traits/mods';
-import {
-	Component,
-	Create,
-	Dom,
-	ProgressBar,
-	STATUSES,
-	ViewComponent
-} from 'jodit/modules';
+import { ProgressBar } from 'jodit/core/ui/progress-bar/progress-bar';
 import { UIMessages } from 'jodit/modules/messages/messages';
 
 export interface View extends Mods, Elms {}

@@ -11,10 +11,9 @@
  */
 
 import type { IFileBrowserCallBackData, IJodit } from 'jodit/types';
-import { isFunction, $$, attr } from 'jodit/core/helpers';
 import { Dom } from 'jodit/core/dom/dom';
-import { UIBlock, UIForm, UIInput, UIButton } from 'jodit/core/ui';
-
+import { $$, attr, isFunction } from 'jodit/core/helpers';
+import { UIBlock, UIButton, UIForm, UIInput } from 'jodit/core/ui';
 import { type TabOption, TabsWidget } from 'jodit/modules/widget/tabs/tabs';
 
 interface ImageSelectorCallbacks {

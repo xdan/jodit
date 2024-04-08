@@ -10,14 +10,14 @@
  * @module modules/widget/tabs
  */
 
-import './tabs.less';
-
 import type { IDictionary, IJodit, IUIButton } from 'jodit/types';
+import { Component } from 'jodit/core/component';
+import { Dom } from 'jodit/core/dom/dom';
 import { $$ } from 'jodit/core/helpers';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { Button, UIElement } from 'jodit/core/ui';
-import { Component } from 'jodit/core/component';
-import { Dom } from 'jodit/core/dom/dom';
+
+import './tabs.less';
 
 export interface TabOption {
 	icon?: string;

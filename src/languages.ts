@@ -15,10 +15,10 @@
 import type { IDictionary } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 
-import en from 'jodit/langs/en';
 import ar from 'jodit/langs/ar';
 import cs_cz from 'jodit/langs/cs_cz';
 import de from 'jodit/langs/de';
+import en from 'jodit/langs/en';
 import es from 'jodit/langs/es';
 import fi from 'jodit/langs/fi';
 import fr from 'jodit/langs/fr';
@@ -27,6 +27,7 @@ import hu from 'jodit/langs/hu';
 import id from 'jodit/langs/id';
 import it from 'jodit/langs/it';
 import ja from 'jodit/langs/ja';
+import keys from 'jodit/langs/keys';
 import ko from 'jodit/langs/ko';
 import mn from 'jodit/langs/mn';
 import nl from 'jodit/langs/nl';
@@ -36,7 +37,6 @@ import ru from 'jodit/langs/ru';
 import tr from 'jodit/langs/tr';
 import zh_cn from 'jodit/langs/zh_cn';
 import zh_tw from 'jodit/langs/zh_tw';
-import keys from 'jodit/langs/keys';
 
 let exp: IDictionary<IDictionary<string>> = {};
 

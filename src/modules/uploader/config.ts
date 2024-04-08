@@ -14,9 +14,10 @@ import type {
 	IUploaderData,
 	IUploaderOptions
 } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

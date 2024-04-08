@@ -8,18 +8,19 @@
  * @module modules/toolbar/collection
  */
 
-import { ToolbarCollection } from './collection';
-import * as consts from 'jodit/core/constants';
-import { Dom } from 'jodit/core/dom';
 import type {
+	IBound,
 	IDictionary,
-	IToolbarButton,
-	IViewBased,
 	IJodit,
-	IBound
+	IToolbarButton,
+	IViewBased
 } from 'jodit/types';
-import { css, isFunction } from 'jodit/core/helpers';
+import * as consts from 'jodit/core/constants';
 import { component } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
+import { css, isFunction } from 'jodit/core/helpers';
+
+import { ToolbarCollection } from './collection';
 
 @component
 export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {

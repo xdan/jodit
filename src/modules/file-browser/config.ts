@@ -8,24 +8,23 @@
  * @module modules/file-browser
  */
 
-import { Config } from 'jodit/config';
-
 import type {
+	IControlType,
+	IDictionary,
 	IFileBrowser,
 	IFileBrowserAnswer,
 	IFileBrowserItem,
 	IFileBrowserOptions,
 	ISource,
 	ISourceFile,
-	IControlType,
-	IDictionary,
 	IUploader,
 	IViewBased
 } from 'jodit/types';
-
 import { isArray, isString } from 'jodit/core/helpers/checker';
-import { UIFileInput } from 'jodit/core/ui/form/inputs/file/file';
 import { humanSizeToBytes } from 'jodit/core/helpers/utils/human-size-to-bytes';
+import { UIFileInput } from 'jodit/core/ui/form/inputs/file/file';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

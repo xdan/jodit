@@ -10,20 +10,20 @@
  * @module modules/status-bar
  */
 
-import './status-bar.less';
-
 import type {
+	CanUndef,
+	IDictionary,
 	IJodit,
 	IStatusBar,
-	IDictionary,
-	ModType,
-	CanUndef
+	ModType
 } from 'jodit/types';
-import { ViewComponent, STATUSES } from 'jodit/core/component';
+import { STATUSES, ViewComponent } from 'jodit/core/component';
+import { component, derive } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
-import { Mods } from 'jodit/core/traits/mods';
 import { Elms } from 'jodit/core/traits/elms';
-import { derive, component } from 'jodit/core/decorators';
+import { Mods } from 'jodit/core/traits/mods';
+
+import './status-bar.less';
 
 export interface StatusBar extends Mods, Elms {}
 

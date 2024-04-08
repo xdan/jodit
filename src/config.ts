@@ -18,21 +18,22 @@
  * @module config
  */
 
+import * as consts from 'jodit/core/constants';
+import { INSERT_AS_HTML } from 'jodit/core/constants';
+
 import type {
-	IExtraPlugin,
-	IDictionary,
-	IViewOptions,
-	NodeFunction,
 	Attributes,
 	ButtonsOption,
 	Controls,
 	IControlType,
-	IUIButtonState,
+	IDictionary,
+	IExtraPlugin,
 	InsertMode,
+	IUIButtonState,
+	IViewOptions,
+	NodeFunction,
 	Nullable
 } from './types';
-import * as consts from 'jodit/core/constants';
-import { INSERT_AS_HTML } from 'jodit/core/constants';
 
 /**
  * Default Editor's Configuration

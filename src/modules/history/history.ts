@@ -11,19 +11,21 @@
  */
 
 import type {
-	IJodit,
-	SnapshotType,
+	IDestructible,
 	IHistory,
+	IJodit,
 	ISnapshot,
 	IStack,
-	IDestructible
+	SnapshotType
 } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { ViewComponent } from 'jodit/core/component';
+import { debounce } from 'jodit/core/decorators';
+
+import { Command } from './command';
 import { Snapshot } from './snapshot';
 import { Stack } from './stack';
-import { Command } from './command';
-import { debounce } from 'jodit/core/decorators';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

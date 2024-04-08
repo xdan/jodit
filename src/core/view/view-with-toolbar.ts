@@ -17,12 +17,13 @@ import type {
 	IViewOptions,
 	IViewWithToolbar
 } from 'jodit/types';
-import { STATUSES } from 'jodit/core/component';
-import { autobind, watch } from 'jodit/core/decorators';
-import { Dom } from 'jodit/core/dom';
+import { STATUSES } from 'jodit/core/component/statuses';
+import { autobind } from 'jodit/core/decorators/autobind/autobind';
+import { watch } from 'jodit/core/decorators/watch/watch';
+import { Dom } from 'jodit/core/dom/dom';
 import { splitArray } from 'jodit/core/helpers/array';
-import { isString } from 'jodit/core/helpers/checker';
-import { resolveElement } from 'jodit/core/helpers/utils';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { resolveElement } from 'jodit/core/helpers/utils/selector';
 import { isButtonGroup } from 'jodit/core/ui/helpers/buttons';
 import { View } from 'jodit/core/view/view';
 import { makeCollection } from 'jodit/modules/toolbar/factory';

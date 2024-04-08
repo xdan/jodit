@@ -9,9 +9,9 @@
  */
 
 import type { IDialog } from 'jodit/types';
-import { Dialog } from 'jodit/modules/dialog/dialog';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { Button } from 'jodit/core/ui/button/button/button';
+import { Dialog } from 'jodit/modules/dialog/dialog';
 
 /**
  * Show `confirm` dialog. Work without Jodit object

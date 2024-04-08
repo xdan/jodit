@@ -10,6 +10,7 @@
  * @module decorators
  */
 
+export * from './autobind/autobind';
 export * from './cache/cache';
 export * from './component/component';
 export * from './debounce/debounce';
@@ -20,4 +21,3 @@ export * from './nonenumerable/nonenumerable';
 export * from './persistent/persistent';
 export * from './wait/wait';
 export * from './watch/watch';
-export * from './autobind/autobind';

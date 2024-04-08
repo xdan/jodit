@@ -10,27 +10,24 @@
  * @module modules/toolbar/collection
  */
 
-import './collection.less';
-
 import type {
+	ButtonsGroups,
+	CanUndef,
+	IBound,
+	IControlTypeStrong,
 	IToolbarButton,
 	IToolbarCollection,
 	IUIButton,
-	Nullable,
-	IControlTypeStrong,
 	IViewBased,
-	ButtonsGroups,
-	CanUndef,
 	IViewWithToolbar,
-	IBound
+	Nullable
 } from 'jodit/types';
-
+import { autobind, component, debounce, hook } from 'jodit/core/decorators';
 import { error } from 'jodit/core/helpers/utils/error/error';
-
 import { UIList, UITooltip } from 'jodit/core/ui';
-import { component, autobind, debounce, hook } from 'jodit/core/decorators';
-
 import { makeButton, makeSelect } from 'jodit/modules/toolbar/factory';
+
+import './collection.less';
 
 @component
 export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
