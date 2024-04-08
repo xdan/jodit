@@ -118,9 +118,6 @@ declare module 'jodit/config' {
 }
 
 const aiAssistantDefaults: AiAssistantSettings = {
-	aiAssistantCallback(prompt: string, htmlFragment: string): Promise<string> {
-		return Promise.resolve('hi');
-	},
 	aiCommonPrefixPrompt: '',
 	aiCommonSuffixPrompt: '',
 	aiImproveWritingPrompt:
