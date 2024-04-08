@@ -30,7 +30,10 @@ const argv = yargs(hideBin(process.argv))
 	})
 	.parseSync();
 
-const globalMaps = {
+const globalMaps: Record<
+	string,
+	boolean | string | number | Record<string, boolean | string | number>
+> = {
 	'process.env.FAT_MODE': false,
 	'process.env.APP_VERSION': argv.ver,
 	'process.env.TARGET_ES': 'es2020',
@@ -38,6 +41,7 @@ const globalMaps = {
 	'process.env.IS_ES_NEXT': true,
 	'process.env.IS_PROD': true,
 	'process.env.IS_TEST': false,
+	'process.env.TOKENS': {},
 	'process.env.HOMEPAGE': 'https://xdsoft.net/jodit/'
 } as const;
 
@@ -142,6 +146,8 @@ function resoleAliasImports(dirPath: string): void {
 			return modulePath;
 		};
 
+		const f = ts.factory;
+
 		const transformer = (
 			ctx: ts.TransformationContext
 		): ts.Transformer<any> => {
@@ -159,15 +165,34 @@ function resoleAliasImports(dirPath: string): void {
 							throw Error(`Unknown variable: ${name}`);
 						}
 
-						const bool = globalMaps[name]
-							? ts.factory.createTrue()
-							: ts.factory.createFalse();
+						const obj = globalMaps[name];
+						if (typeof obj === 'boolean') {
+							return obj ? f.createTrue() : f.createFalse();
+						}
 
-						return typeof globalMaps[name] === 'boolean'
-							? bool
-							: ts.factory.createStringLiteral(
-									globalMaps[name].toString()
+						if (typeof obj === 'string') {
+							return f.createStringLiteral(obj);
+						}
+
+						if (typeof obj === 'number') {
+							return f.createNumericLiteral(obj);
+						}
+
+						return f.createObjectLiteralExpression(
+							Object.keys(obj).map(key => {
+								const value = obj[key];
+								return f.createPropertyAssignment(
+									f.createIdentifier(key),
+									typeof value === 'boolean'
+										? value
+											? f.createTrue()
+											: f.createFalse()
+										: typeof value === 'string'
+											? f.createStringLiteral(value)
+											: f.createNumericLiteral(value)
 								);
+							})
+						);
 					}
 
 					if (
@@ -176,9 +201,9 @@ function resoleAliasImports(dirPath: string): void {
 						node.literal?.getText()
 					) {
 						const newPath = resolvePath(node.literal.getText());
-						return ts.factory.updateLiteralTypeNode(
+						return f.updateLiteralTypeNode(
 							node,
-							ts.factory.createStringLiteral(newPath)
+							f.createStringLiteral(newPath)
 						);
 					}
 
@@ -186,12 +211,12 @@ function resoleAliasImports(dirPath: string): void {
 						ts.isCallExpression(node) &&
 						node.expression.getText() === 'require'
 					) {
-						return ts.factory.updateCallExpression(
+						return f.updateCallExpression(
 							node,
 							node.expression,
 							node.typeArguments,
 							[
-								ts.factory.createStringLiteral(
+								f.createStringLiteral(
 									resolvePath(node.arguments[0].getText())
 								)
 							]
@@ -213,11 +238,11 @@ function resoleAliasImports(dirPath: string): void {
 						const newPath = resolvePath(
 							node.moduleSpecifier.getText()
 						);
-						return ts.factory.updateImportDeclaration(
+						return f.updateImportDeclaration(
 							node,
 							node.modifiers,
 							node.importClause,
-							ts.factory.createStringLiteral(newPath),
+							f.createStringLiteral(newPath),
 							node.assertClause
 						);
 					}
@@ -226,12 +251,12 @@ function resoleAliasImports(dirPath: string): void {
 						const newPath = resolvePath(
 							node.moduleSpecifier.getText()
 						);
-						return ts.factory.updateExportDeclaration(
+						return f.updateExportDeclaration(
 							node,
 							node.modifiers,
 							node.isTypeOnly,
 							node.exportClause,
-							ts.factory.createStringLiteral(newPath),
+							f.createStringLiteral(newPath),
 							node.assertClause
 						);
 					}
