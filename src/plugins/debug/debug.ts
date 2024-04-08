@@ -11,12 +11,12 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin/plugin';
+import { INVISIBLE_SPACE_REG_EXP } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 // @ts-ignore
 import { pluginSystem } from 'jodit/core/global';
-import { Dom } from 'jodit/core/dom/dom';
 import { stripTags } from 'jodit/core/helpers/html/strip-tags';
-import { INVISIBLE_SPACE_REG_EXP } from 'jodit/core/constants';
+import { Plugin } from 'jodit/core/plugin/plugin';
 
 export class Debug extends Plugin {
 	protected afterInit(jodit: IJodit): void {

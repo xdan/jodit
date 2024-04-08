@@ -9,13 +9,13 @@
  */
 
 import type { IExtraPlugin, IJodit, PluginType } from 'jodit/types';
+import { IS_PROD } from 'jodit/core/constants';
+import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
 import {
 	appendScriptAsync,
 	appendStyleAsync
 } from 'jodit/core/helpers/utils/append-script';
-import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
 import { normalizeName } from 'jodit/core/plugin/helpers/utils';
-import { IS_PROD } from 'jodit/core/constants';
 
 const styles: Set<string> = new Set();
 

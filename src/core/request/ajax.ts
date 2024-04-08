@@ -11,31 +11,31 @@
  */
 
 import type {
-	IDictionary,
-	IRequest,
 	AjaxOptions,
 	IAjax,
-	RejectablePromise,
+	IAsync,
+	IDictionary,
+	IRequest,
 	IResponse,
-	IAsync
+	RejectablePromise
 } from 'jodit/types';
-
-import { Config } from 'jodit/config';
-
+import { Async } from 'jodit/core/async';
+import { autobind } from 'jodit/core/decorators/autobind/autobind';
 import {
-	isPlainObject,
-	parseQuery,
 	buildQuery,
-	isString,
+	ConfigProto,
 	isFunction,
-	ConfigProto
+	isPlainObject,
+	isString,
+	parseQuery
 } from 'jodit/core/helpers';
 import * as error from 'jodit/core/helpers/utils/error';
-import { Async } from 'jodit/core/async';
-import { autobind } from 'jodit/core/decorators';
+
+import './config';
 
 import { Response } from './response';
-import './config';
+
+import { Config } from 'jodit/config';
 
 export class Ajax<T extends object = any> implements IAjax<T> {
 	className(): string {

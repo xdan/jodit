@@ -16,8 +16,8 @@ import type {
 } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
-import { css } from 'jodit/core/helpers/utils/css';
 import { hAlignElement } from 'jodit/core/helpers/utils/align';
+import { css } from 'jodit/core/helpers/utils/css';
 
 export const align: IControlType<IJodit> = {
 	name: 'left',

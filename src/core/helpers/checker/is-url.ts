@@ -9,7 +9,7 @@
  */
 
 /**
- * Check if a string is a url
+ * Check if a string is an url
  */
 export function isURL(str: string): boolean {
 	if (str.includes(' ')) {

@@ -13,16 +13,32 @@
 import type {
 	IComponent,
 	ICreate,
+	IDictionary,
+	IEventEmitter,
+	IMessages,
 	IProgressBar,
 	IStorage,
 	IViewBased,
 	IViewOptions,
-	Nullable,
-	IDictionary,
-	IEventEmitter,
-	IMessages
+	Nullable
 } from 'jodit/types';
-import { Storage } from 'jodit/core/storage';
+import { ViewComponent } from 'jodit/core/component';
+import { Component } from 'jodit/core/component/component';
+import { STATUSES } from 'jodit/core/component/statuses';
+import {
+	APP_VERSION,
+	BASE_PATH,
+	ES,
+	IS_ES_MODERN,
+	IS_ES_NEXT
+} from 'jodit/core/constants';
+import { Create } from 'jodit/core/create/create';
+import { cache } from 'jodit/core/decorators/cache/cache';
+import { derive } from 'jodit/core/decorators/derive/derive';
+import { hook } from 'jodit/core/decorators/hook/hook';
+import { Dom } from 'jodit/core/dom';
+import { EventEmitter } from 'jodit/core/event-emitter';
+import { modules } from 'jodit/core/global';
 import {
 	camelCase,
 	ConfigProto,
@@ -32,26 +48,10 @@ import {
 	isFunction,
 	isVoid
 } from 'jodit/core/helpers';
-import {
-	APP_VERSION,
-	BASE_PATH,
-	ES,
-	IS_ES_MODERN,
-	IS_ES_NEXT
-} from 'jodit/core/constants';
-import {
-	Component,
-	STATUSES,
-	ProgressBar,
-	Create,
-	Dom,
-	ViewComponent
-} from 'jodit/modules';
-import { modules } from 'jodit/core/global';
-import { hook, derive, cache } from 'jodit/core/decorators';
-import { Mods } from 'jodit/core/traits/mods';
+import { Storage } from 'jodit/core/storage/storage';
 import { Elms } from 'jodit/core/traits/elms';
-import { EventEmitter } from 'jodit/core/event-emitter';
+import { Mods } from 'jodit/core/traits/mods';
+import { ProgressBar } from 'jodit/core/ui/progress-bar/progress-bar';
 import { UIMessages } from 'jodit/modules/messages/messages';
 
 export interface View extends Mods, Elms {}
@@ -64,7 +64,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	readonly mods: IDictionary<string | boolean | null> = {};
 
 	/**
-	 * ID attribute for source element, id add `{id}_editor` it's editor's id
+	 * ID attribute for a source element, id add `{id}_editor` it's editor's id
 	 */
 	id!: string;
 
@@ -74,7 +74,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	readonly components: Set<IComponent> = new Set();
 
 	/**
-	 * Get path for loading extra staff
+	 * Get a path for loading extra staff
 	 */
 	get basePath(): string {
 		if (this.o.basePath) {
@@ -91,7 +91,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	static readonly esModern: boolean = IS_ES_MODERN; // from webpack.config.js
 
 	/**
-	 * Return default timeout period in milliseconds for some debounce or throttle functions.
+	 * Return a default timeout period in milliseconds for some debounce or throttle functions.
 	 * By default, `{history.timeout}` options
 	 */
 	get defaultTimeout(): number {

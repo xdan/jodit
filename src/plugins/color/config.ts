@@ -9,17 +9,18 @@
  */
 
 import type { HTMLTagNames, IControlType, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
+import { Dom } from 'jodit/core/dom/dom';
 import { css, dataBind } from 'jodit/core/helpers/';
+import { Icon } from 'jodit/core/ui/icon';
 import {
-	type TabOption,
 	ColorPickerWidget,
+	type TabOption,
 	TabsWidget
 } from 'jodit/modules/widget';
-import { Icon } from 'jodit/core/ui/icon';
-import { Dom } from 'jodit/core/dom/dom';
 
 import brushIcon from './brush.svg';
+
+import { Config } from 'jodit/config';
 
 Icon.set('brush', brushIcon);
 

@@ -10,16 +10,16 @@
  * @module plugins/size
  */
 
-import './size.less';
-
 import type { IJodit } from 'jodit/types';
+import { autobind, throttle } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 import { isNumber } from 'jodit/core/helpers/checker/is-number';
 import { css } from 'jodit/core/helpers/utils/css';
 import { Plugin } from 'jodit/core/plugin/plugin';
-import { autobind, throttle } from 'jodit/core/decorators';
-import { pluginSystem } from 'jodit/core/global';
 
 import './config';
+
+import './size.less';
 
 /**
  * Calculate sizes for editor workspace and handle setHeight and setWidth events

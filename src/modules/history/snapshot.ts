@@ -10,8 +10,8 @@
 
 import type { IJodit, ISnapshot, Nullable, SnapshotType } from 'jodit/types';
 import { ViewComponent } from 'jodit/core/component';
-import { Dom } from 'jodit/core/dom';
 import { IS_PROD, TEMP_ATTR } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
 
 /**
  * Module for creating snapshot of editor which includes html content and the current selection

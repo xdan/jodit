@@ -8,26 +8,27 @@
  * @module view
  */
 
-import './view-with-toolbar.less';
-
 import type {
-	IViewWithToolbar,
-	IToolbarCollection,
 	Buttons,
+	ButtonsGroups,
 	IDictionary,
 	IPluginButton,
+	IToolbarCollection,
 	IViewOptions,
-	ButtonsGroups
+	IViewWithToolbar
 } from 'jodit/types';
-import { View } from 'jodit/core/view/view';
-import { isString } from 'jodit/core/helpers/checker';
+import { STATUSES } from 'jodit/core/component/statuses';
+import { autobind } from 'jodit/core/decorators/autobind/autobind';
+import { watch } from 'jodit/core/decorators/watch/watch';
+import { Dom } from 'jodit/core/dom/dom';
 import { splitArray } from 'jodit/core/helpers/array';
-import { resolveElement } from 'jodit/core/helpers/utils';
-import { Dom } from 'jodit/core/dom';
-import { makeCollection } from 'jodit/modules/toolbar/factory';
-import { STATUSES } from 'jodit/core/component';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { resolveElement } from 'jodit/core/helpers/utils/selector';
 import { isButtonGroup } from 'jodit/core/ui/helpers/buttons';
-import { autobind, watch } from 'jodit/core/decorators';
+import { View } from 'jodit/core/view/view';
+import { makeCollection } from 'jodit/modules/toolbar/factory';
+
+import './view-with-toolbar.less';
 
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	TOOLBAR!: IToolbarCollection;
@@ -65,7 +66,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	}
 
 	/**
-	 * Helper for append toolbar in its place
+	 * Helper for appended toolbar in its place
 	 */
 	@watch(':rebuildToolbar')
 	protected buildToolbar(): void {
@@ -91,7 +92,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	}
 
 	/**
-	 * Register button for group
+	 * Register button for a group
 	 */
 	registerButton(btn: IPluginButton): this {
 		this.registeredButtons.add(btn);
@@ -111,7 +112,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 	}
 
 	/**
-	 * Remove button from group
+	 * Remove button from a group
 	 */
 	unregisterButton(btn: IPluginButton): this {
 		this.registeredButtons.delete(btn);

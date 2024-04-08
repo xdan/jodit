@@ -5,9 +5,10 @@
  */
 
 import type { Variables } from '../variables';
-import excludeUtils from './exclude-utils';
-import excludePlugins from './exclude-plugins';
+
 import excludeLanguages from './exclude-languages';
+import excludePlugins from './exclude-plugins';
+import excludeUtils from './exclude-utils';
 
 export const externals = (vars: Variables): { [key in string]: string } => ({
 	...excludeUtils(vars),

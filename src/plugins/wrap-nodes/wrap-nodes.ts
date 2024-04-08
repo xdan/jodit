@@ -11,11 +11,11 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
-import { Dom } from 'jodit/core/dom';
-import { isString } from 'jodit/core/helpers/checker/is-string';
 import { autobind } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { Plugin } from 'jodit/core/plugin';
 
 import './config';
 

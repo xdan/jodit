@@ -10,9 +10,9 @@
 
 import type {
 	HTMLTagNames,
+	ICommitStyle,
 	IJodit,
-	IStyleOptions,
-	ICommitStyle
+	IStyleOptions
 } from 'jodit/types';
 import { IS_BLOCK, LIST_TAGS } from 'jodit/core/constants';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';
@@ -64,7 +64,7 @@ export class CommitStyle implements ICommitStyle {
 	}
 
 	/**
-	 * New element is block
+	 * New element is blocked
 	 */
 	get elementIsBlock(): boolean {
 		return Boolean(

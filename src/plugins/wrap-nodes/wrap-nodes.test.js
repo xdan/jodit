@@ -165,7 +165,7 @@ describe('WrapNodes plugin test', function () {
 		describe(
 			'Default tags ' + Jodit.defaultOptions.wrapNodes.exclude,
 			function () {
-				it('Should not wrap this tags', function () {
+				it('Should not wrap these tags', function () {
 					const editor = getJodit();
 					editor.value =
 						'test <br> <style>*  {color: red} </style> <hr> <img>';
@@ -176,7 +176,7 @@ describe('WrapNodes plugin test', function () {
 			}
 		);
 
-		it('Should not wrap this tags', function () {
+		it('Should not wrap these tags', function () {
 			const editor = getJodit({
 				wrapNodes: {
 					exclude: new Set(['img'])

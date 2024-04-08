@@ -9,6 +9,7 @@
  */
 
 import type { CanUndef, IStack } from 'jodit/types';
+
 import type { Command } from './command';
 
 export class Stack implements IStack {

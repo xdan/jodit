@@ -120,7 +120,7 @@ describe('Plugin system test', () => {
 		});
 
 		describe('Disable plugins', () => {
-			it('should not init plugin', () => {
+			it('should not init plug in', () => {
 				const editor = getJodit({
 					disablePlugins: ['test']
 				});
@@ -199,7 +199,7 @@ describe('Plugin system test', () => {
 		});
 
 		describe('Disable required plugin', () => {
-			it('should not init plugin', () => {
+			it('should not init plug in', () => {
 				getJodit({
 					disablePlugins: ['second']
 				});
@@ -303,7 +303,7 @@ describe('Plugin system test', () => {
 			expect(pleaseInited).is.true;
 		});
 
-		it('should not influence on readiness of the editor', async () => {
+		it('should not influence on the readiness of the editor', async () => {
 			const editor = getJodit({
 				extraPlugins: ['please'],
 				buttons: [

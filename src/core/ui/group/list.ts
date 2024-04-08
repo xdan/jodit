@@ -8,28 +8,28 @@
  * @module ui/group
  */
 
-import './list.less';
-
 import type {
+	ButtonsOption,
 	IControlTypeStrong,
 	IUIButton,
 	IUIElement,
 	IUIGroup,
 	IUIList,
 	IViewBased,
-	Nullable,
-	ButtonsOption
+	Nullable
 } from 'jodit/types';
-import { getStrongControlTypes } from 'jodit/core/ui/helpers/get-strong-control-types';
+import { Component } from 'jodit/core/component/component';
 import { component, hook, watch } from 'jodit/core/decorators';
+import { splitArray } from 'jodit/core/helpers/array/split-array';
+import { UIButton } from 'jodit/core/ui/button/button/button';
 import { UIGroup } from 'jodit/core/ui/group/group';
 import { UISeparator } from 'jodit/core/ui/group/separator';
 import { UISpacer } from 'jodit/core/ui/group/spacer';
-import { UIButton } from 'jodit/core/ui/button/button/button';
 import { isButtonGroup } from 'jodit/core/ui/helpers/buttons';
 import { getControlType } from 'jodit/core/ui/helpers/get-control-type';
-import { splitArray } from 'jodit/core/helpers/array/split-array';
-import { Component } from 'jodit/core/component/component';
+import { getStrongControlTypes } from 'jodit/core/ui/helpers/get-strong-control-types';
+
+import './list.less';
 
 @component
 export class UIList<T extends IViewBased = IViewBased>

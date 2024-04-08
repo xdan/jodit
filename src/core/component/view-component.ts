@@ -9,6 +9,7 @@
  */
 
 import type { IViewBased, IViewComponent } from 'jodit/types';
+
 import { Component } from './component';
 
 export abstract class ViewComponent<T extends IViewBased = IViewBased>

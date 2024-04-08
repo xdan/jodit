@@ -30,7 +30,7 @@ describe('Test Async module', () => {
 			expect(callCount).equals(3);
 		});
 
-		describe('After View was destroyed', () => {
+		describe('After the View was destroyed', () => {
 			it('Should not be called', async () => {
 				asyncM.setTimeout(callSpy, 100);
 				asyncM
@@ -44,7 +44,7 @@ describe('Test Async module', () => {
 			});
 
 			describe('Jodit instance', () => {
-				it('Should work same way', async () => {
+				it('Should work the same way', async () => {
 					const editor = getJodit();
 					editor.async.setTimeout(callSpy, 100);
 					editor.async
@@ -61,7 +61,7 @@ describe('Test Async module', () => {
 	});
 
 	describe('Promise', () => {
-		it('Should has method for rejection in the outside', async () => {
+		it('Should have method for rejection on the outside', async () => {
 			const promise = asyncM.promise(r => Promise.resolve().then(r));
 
 			promise.then(callSpy).catch(e => null);
@@ -73,27 +73,27 @@ describe('Test Async module', () => {
 	});
 
 	describe('setTimeout', () => {
-		it('Should can be called with number timeout', async () => {
+		it('Should be called with number timeout', async () => {
 			asyncM.setTimeout(callSpy, 100);
 			await delay(200);
 			expect(callCount).equals(1);
 		});
 
-		it('Should can be called with options', async () => {
+		it('Should be called with options', async () => {
 			asyncM.setTimeout(callSpy, { timeout: 100 });
 			await delay(200);
 			expect(callCount).equals(1);
 		});
 
 		describe('Clear', () => {
-			it('Should can be cleared with timeout id', async () => {
+			it('Should be cleared with timeout id', async () => {
 				const id = asyncM.setTimeout(callSpy, { timeout: 100 });
 				asyncM.clearTimeout(id);
 				await delay(200);
 				expect(callCount).equals(0);
 			});
 
-			it('Should can be cleared with timeout id', async () => {
+			it('Should be cleared with timeout id', async () => {
 				const id = asyncM.setTimeout(callSpy, { timeout: 100 });
 				asyncM.clearTimeout(id);
 				await delay(200);
@@ -101,7 +101,7 @@ describe('Test Async module', () => {
 			});
 
 			describe('With label', () => {
-				it('Should can be cleared with label', async () => {
+				it('Should be cleared with label', async () => {
 					asyncM.setTimeout(callSpy, { timeout: 100, label: 'test' });
 					asyncM.clearTimeout('test');
 					await delay(200);

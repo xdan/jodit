@@ -10,7 +10,7 @@
  * @module decorators/idle
  */
 
-import type { DecoratorHandler, IDictionary, IComponent } from 'jodit/types';
+import type { DecoratorHandler, IComponent, IDictionary } from 'jodit/types';
 import { Component, STATUSES } from 'jodit/core/component';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { error } from 'jodit/core/helpers/utils/error';

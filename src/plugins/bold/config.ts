@@ -9,6 +9,7 @@
  */
 
 import type { IControlType } from 'jodit/types';
+
 import { Config } from 'jodit/config';
 
 Config.prototype.controls.subscript = {

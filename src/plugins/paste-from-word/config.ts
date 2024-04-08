@@ -9,12 +9,13 @@
  */
 
 import type { InsertMode, IUIOption } from 'jodit/types';
-import { Config } from 'jodit/config';
 import {
 	INSERT_AS_HTML,
 	INSERT_AS_TEXT,
 	INSERT_ONLY_TEXT
 } from 'jodit/core/constants';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

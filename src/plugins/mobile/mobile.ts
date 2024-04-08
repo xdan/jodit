@@ -10,10 +10,10 @@
  * @module plugins/mobile
  */
 
-import type { IToolbarCollection, IJodit, ButtonsGroups } from 'jodit/types';
+import type { ButtonsGroups, IJodit, IToolbarCollection } from 'jodit/types';
+import { pluginSystem } from 'jodit/core/global';
 import { splitArray, toArray } from 'jodit/core/helpers/';
 import { flatButtonsSet } from 'jodit/core/ui/helpers/buttons';
-import { pluginSystem } from 'jodit/core/global';
 
 import './config';
 

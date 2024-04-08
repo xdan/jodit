@@ -5,9 +5,9 @@
  */
 
 import * as fs from 'fs';
+import * as path from 'path';
 // @ts-ignore
 import replace from 'replace';
-import * as path from 'path';
 
 const cwd = path.resolve(process.argv[2]);
 if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {

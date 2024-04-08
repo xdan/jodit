@@ -8,21 +8,21 @@
  * @module ui/form
  */
 
-import './input.less';
-
 import type {
 	IDictionary,
 	IUIInput,
 	IUIInputValidator,
 	IViewBased
 } from 'jodit/types';
-import { UIElement } from 'jodit/core/ui/element';
-import { attr } from 'jodit/core/helpers/utils';
-import { toArray } from 'jodit/core/helpers/array/to-array';
-import { Dom } from 'jodit/core/dom/dom';
 import { autobind, component, debounce, watch } from 'jodit/core/decorators';
-import { Icon } from 'jodit/core/ui/icon';
+import { Dom } from 'jodit/core/dom/dom';
+import { toArray } from 'jodit/core/helpers/array/to-array';
+import { attr } from 'jodit/core/helpers/utils';
+import { UIElement } from 'jodit/core/ui/element';
 import { inputValidators } from 'jodit/core/ui/form/validators';
+import { Icon } from 'jodit/core/ui/icon';
+
+import './input.less';
 
 @component
 export class UIInput extends UIElement implements IUIInput {

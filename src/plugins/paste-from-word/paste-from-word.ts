@@ -11,7 +11,14 @@
  */
 
 import type { IJodit, InsertMode } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
+import type { PastedData, PasteEvent } from 'jodit/plugins/paste/interface';
+import {
+	INSERT_AS_HTML,
+	INSERT_AS_TEXT,
+	INSERT_ONLY_TEXT
+} from 'jodit/core/constants';
+import { watch } from 'jodit/core/decorators';
+import { pluginSystem } from 'jodit/core/global';
 import {
 	applyStyles,
 	cleanFromWord,
@@ -19,21 +26,14 @@ import {
 	isString,
 	stripTags
 } from 'jodit/core/helpers';
-import {
-	INSERT_AS_HTML,
-	INSERT_AS_TEXT,
-	INSERT_ONLY_TEXT
-} from 'jodit/core/constants';
-import { watch } from 'jodit/core/decorators';
+import { Plugin } from 'jodit/core/plugin';
 
-import type { PastedData, PasteEvent } from 'jodit/plugins/paste/interface';
+import './config';
+
 import {
 	askInsertTypeDialog,
 	pasteInsertHtml
 } from 'jodit/plugins/paste/helpers';
-import { pluginSystem } from 'jodit/core/global';
-
-import './config';
 
 export class pasteFromWord extends Plugin {
 	static override requires = ['paste'];

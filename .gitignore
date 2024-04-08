@@ -13,3 +13,4 @@ yarn-error.log
 
 build/*
 examples/build/
+.env

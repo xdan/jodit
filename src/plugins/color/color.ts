@@ -11,8 +11,8 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { normalizeColor } from 'jodit/core/helpers/';
 import { pluginSystem } from 'jodit/core/global';
+import { normalizeColor } from 'jodit/core/helpers/';
 
 import './config';
 

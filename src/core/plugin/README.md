@@ -104,7 +104,7 @@ export type ButtonGroup =
 ```
 
 Buttons to be automatically added to the editor's button groups.
-Those. if the plugin is connected, the button will appear in the list, if not connected, it will disappear.
+Those. If the plugin is connected, the button will appear in the list, if not connected, it will disappear.
 
 ```js
 Jodit.defaultOptions.controls.insertTime = {

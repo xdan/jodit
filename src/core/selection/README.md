@@ -1,7 +1,7 @@
 # Selection
 
 A module for working with the cursor, text selections, processing selections, inserting html in place of the cursor.
-most obvious use case
+Most obvious use case
 
 ## How to insert HTML into Jodit
 

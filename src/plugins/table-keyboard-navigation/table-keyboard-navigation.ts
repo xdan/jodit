@@ -13,9 +13,9 @@
 import type { IJodit, Nullable } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
-import { Table } from 'jodit/modules/table/table';
 import { pluginSystem } from 'jodit/core/global';
 import { call } from 'jodit/core/helpers';
+import { Table } from 'jodit/modules/table/table';
 
 const WORK_KEYS = new Set([
 	consts.KEY_TAB,

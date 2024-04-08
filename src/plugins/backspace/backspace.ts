@@ -11,18 +11,18 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
-import { Dom } from 'jodit/core/dom';
 import { INVISIBLE_SPACE, IS_PROD } from 'jodit/core/constants';
-import { isFunction } from 'jodit/core/helpers/checker/is-function';
-import { moveNodeInsideStart } from 'jodit/core/selection/helpers';
+import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
-
-import type { DeleteMode } from './interface';
-import { cases } from './cases';
-import { checkNotCollapsed } from './cases/check-not-collapsed';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { Plugin } from 'jodit/core/plugin';
+import { moveNodeInsideStart } from 'jodit/core/selection/helpers';
 
 import './config';
+
+import { checkNotCollapsed } from './cases/check-not-collapsed';
+import { cases } from './cases';
+import type { DeleteMode } from './interface';
 
 export class backspace extends Plugin {
 	static override requires = ['hotkeys'];

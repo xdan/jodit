@@ -9,8 +9,8 @@
  */
 
 import type { Nullable } from 'jodit/types';
-import { Dom } from 'jodit/core/dom/dom';
 import { MARKER_CLASS } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 
 /**
  * Define element is selection helper

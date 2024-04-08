@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IDictionary, IStyle, ICommitStyle } from 'jodit/types';
+import type { ICommitStyle, IDictionary, IStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { attr, css } from 'jodit/core/helpers/utils';
 import { hasSameStyleKeys } from 'jodit/core/selection/style/api/has-same-style';

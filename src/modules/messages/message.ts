@@ -9,8 +9,8 @@
  */
 
 import type { IViewBased, MessageVariant } from 'jodit/types';
-import { UIElement } from 'jodit/core/ui';
 import { component } from 'jodit/core/decorators/component/component';
+import { UIElement } from 'jodit/core/ui';
 
 @component
 export class UIMessage extends UIElement {

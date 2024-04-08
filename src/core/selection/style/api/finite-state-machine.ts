@@ -5,9 +5,9 @@
  */
 
 import type { IDictionary } from 'jodit/types';
+import { IS_PROD } from 'jodit/core/constants';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { assert } from 'jodit/core/helpers/utils/assert';
-import { IS_PROD } from 'jodit/core/constants';
 
 /**
  * A state machine implementation for applying styles.
@@ -53,7 +53,7 @@ export class FiniteStateMachine<
 			const res = action.call(this, value);
 
 			assert(res && res !== value, 'Action should return new value');
-			assert(isString(res.next), 'Value should contains next state');
+			assert(isString(res.next), 'Value should contain the next state');
 			assert(
 				res.next !== this.getState(),
 				'The new state should not be equal to the old one.'
@@ -62,6 +62,7 @@ export class FiniteStateMachine<
 			this.setState(res.next);
 
 			if (!IS_PROD && !this.silent) {
+				// eslint-disable-next-line no-console
 				console.log(`State: ${this.getState()}`);
 			}
 

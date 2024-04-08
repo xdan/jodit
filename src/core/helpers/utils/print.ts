@@ -9,11 +9,11 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { isString } from 'jodit/core/helpers/checker/is-string';
 import { Dom } from 'jodit/core/dom/dom';
+import { isString } from 'jodit/core/helpers/checker/is-string';
 
-import { css } from './css';
 import { attr } from './attr';
+import { css } from './css';
 import { $$ } from './selector';
 
 /**

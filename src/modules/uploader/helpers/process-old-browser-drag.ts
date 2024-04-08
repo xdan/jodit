@@ -10,9 +10,10 @@
 
 import type { HandlerError, HandlerSuccess, IUploader } from 'jodit/types';
 import { TEXT_PLAIN } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
 import { getContainer } from 'jodit/core/global';
 import { attr, isJoditObject } from 'jodit/core/helpers';
-import { Dom } from 'jodit/core/dom';
+
 import { dataURItoBlob, sendFiles } from './index';
 
 export function processOldBrowserDrag(

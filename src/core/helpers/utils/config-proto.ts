@@ -9,13 +9,15 @@
  */
 
 import type { IDictionary } from 'jodit/types';
-import { isAtom } from './extend';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';
-import { Config } from 'jodit/config';
+
+import { isAtom } from './extend';
 import { keys } from './utils';
+
+import { Config } from 'jodit/config';
 
 /**
  * @example
@@ -84,7 +86,7 @@ export function ConfigProto(
 			return;
 		}
 
-		// On the first level all array are atomic
+		// On the first level all arrays are atomic
 		if (deep !== 0 && isArray(opt) && !isAtom(opt) && isArray(protoKey)) {
 			newOpt[key] = [...opt, ...protoKey.slice(opt.length)];
 			return;

@@ -11,11 +11,11 @@
  */
 
 import type { IViewComponent, Nullable } from 'jodit/types';
-import { css, ctrlKey, dataBind, splitArray } from 'jodit/core/helpers';
-import { Plugin } from 'jodit/core/plugin';
+import { autobind, throttle } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { getContainer, pluginSystem } from 'jodit/core/global';
-import { autobind, throttle } from 'jodit/core/decorators';
+import { css, ctrlKey, dataBind, splitArray } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
 
 import './config';
 

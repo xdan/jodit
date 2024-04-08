@@ -14,10 +14,12 @@ import type {
 	IControlTypeStrong,
 	IDictionary
 } from 'jodit/types';
-import { getControlType } from './get-control-type';
-import { Config } from 'jodit/config';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { ConfigProto, keys } from 'jodit/core/helpers/utils';
+
+import { getControlType } from './get-control-type';
+
+import { Config } from 'jodit/config';
 
 /**
  * @private

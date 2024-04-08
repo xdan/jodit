@@ -4,19 +4,19 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IJodit, ICommitStyle } from 'jodit/types';
+import type { ICommitStyle, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
-import {
-	_PREFIX,
-	REPLACE,
-	WRAP,
-	INITIAL
-} from 'jodit/core/selection/style/commit-style';
 import {
 	elementsEqualAttributes,
 	isSameAttributes,
 	toggleAttributes
 } from 'jodit/core/selection/style/api';
+import {
+	_PREFIX,
+	INITIAL,
+	REPLACE,
+	WRAP
+} from 'jodit/core/selection/style/commit-style';
 
 /**
  * Replaces non-leaf items with leaf items and either creates a new list or

@@ -9,15 +9,15 @@
  */
 
 import type {
-	CanUndef,
-	IObservable,
 	CallbackFunction,
-	IDictionary
+	CanUndef,
+	IDictionary,
+	IObservable
 } from 'jodit/types';
+import { getPropertyDescriptor } from 'jodit/core/decorators/watch/watch';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { isFastEqual } from 'jodit/core/helpers/checker/is-equal';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
-import { getPropertyDescriptor } from 'jodit/core/decorators/watch/watch';
 
 const OBSERVABLE_OBJECT = Symbol('observable-object');
 

@@ -5,10 +5,10 @@
  */
 
 import type { Variables } from '../variables';
-import type { RuleSetRule } from 'webpack';
 
 import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as path from 'path';
+import type { RuleSetRule } from 'webpack';
 
 export default ({
 	debug,

@@ -9,16 +9,16 @@
  */
 
 import type { CanUndef, IAsync, IDestructible } from 'jodit/types';
-import { Eventify } from 'jodit/core/event-emitter/eventify';
-import { autobind } from 'jodit/core/decorators';
-
 import type {
 	ISpeechRecognize,
 	ISpeechRecognizeResult
 } from 'jodit/plugins/speech-recognize/interface';
-import { PII, WARN } from 'jodit/plugins/speech-recognize/constants';
+import { autobind } from 'jodit/core/decorators';
+import { Eventify } from 'jodit/core/event-emitter/eventify';
 
 import { sound } from './sound';
+
+import { PII, WARN } from 'jodit/plugins/speech-recognize/constants';
 
 @autobind
 export class RecognizeManager

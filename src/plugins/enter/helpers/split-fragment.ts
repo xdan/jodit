@@ -9,8 +9,8 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { scrollIntoViewIfNeeded } from 'jodit/core/helpers/utils/scroll-into-view';
 import { Dom } from 'jodit/core/dom/dom';
+import { scrollIntoViewIfNeeded } from 'jodit/core/helpers/utils/scroll-into-view';
 
 import { insertParagraph } from './insert-paragraph';
 

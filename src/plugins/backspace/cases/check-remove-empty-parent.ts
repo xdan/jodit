@@ -9,8 +9,8 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { Dom } from 'jodit/core/dom';
 import { INSEPARABLE_TAGS } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom';
 
 import { checkJoinTwoLists } from './check-join-two-lists';
 

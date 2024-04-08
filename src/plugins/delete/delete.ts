@@ -11,11 +11,11 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
 import { Dom } from 'jodit/core/dom';
-import { trim } from 'jodit/core/helpers/string/trim';
 import { pluginSystem } from 'jodit/core/global';
 import { $$ } from 'jodit/core/helpers';
+import { trim } from 'jodit/core/helpers/string/trim';
+import { Plugin } from 'jodit/core/plugin';
 
 import './interface';
 

@@ -33,7 +33,7 @@ export abstract class SomeFuntionality {
 
 In classical OOP, we would use inheritance. But if we want to add this functionality to a class,
 which has nothing to do with it, there will be problems.
-Therefore, the traits mechanism was proposed in V4Fire, and Jodit borrowed it.
+Therefore, the trait mechanism was proposed in V4Fire, and Jodit borrowed it.
 
 ```typescript
 import type { IComponent, IDictionary } from 'jodit/types';

@@ -10,8 +10,6 @@
  * @module modules/uploader
  */
 
-import './uploader.less';
-
 import type {
 	HandlerError,
 	HandlerSuccess,
@@ -20,15 +18,14 @@ import type {
 	IUploaderOptions,
 	IViewBased
 } from 'jodit/types';
-import { Config } from 'jodit/config';
+import { STATUSES, ViewComponent } from 'jodit/core/component/';
 import { IS_ES_NEXT, IS_IE } from 'jodit/core/constants';
 import {
+	ConfigProto,
 	error,
-	isJoditObject,
 	isFunction,
-	ConfigProto
+	isJoditObject
 } from 'jodit/core/helpers';
-import { ViewComponent, STATUSES } from 'jodit/core/component/';
 import {
 	ajaxInstances,
 	hasFiles,
@@ -39,6 +36,10 @@ import {
 } from 'jodit/modules/uploader/helpers';
 
 import './config';
+
+import './uploader.less';
+
+import { Config } from 'jodit/config';
 
 export class Uploader extends ViewComponent implements IUploader {
 	declare readonly jodit: IViewBased;

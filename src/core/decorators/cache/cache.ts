@@ -11,17 +11,17 @@
  */
 
 import type { IDictionary, IViewBased, IViewComponent } from 'jodit/types';
+import { STATUSES } from 'jodit/core/component/statuses';
+import { Dom } from 'jodit/core/dom/dom';
 import { isFunction, isViewObject } from 'jodit/core/helpers/checker';
 import { error } from 'jodit/core/helpers/utils/error/error';
-import { Dom } from 'jodit/core/dom/dom';
-import { STATUSES } from 'jodit/core/component/statuses';
 
 export interface CachePropertyDescriptor<T, R> extends PropertyDescriptor {
 	get?: (this: T) => R;
 }
 
 export function cache<T, R>(
-	target: object,
+	_: object,
 	name: PropertyKey,
 	descriptor: CachePropertyDescriptor<T, R>
 ): void {
@@ -51,7 +51,7 @@ export function cache<T, R>(
 
 export function cacheHTML<T extends Function, R>(
 	target: IDictionary,
-	name: string,
+	_: string,
 	descriptor: CachePropertyDescriptor<T, R>
 ): void {
 	const fn = descriptor.value;

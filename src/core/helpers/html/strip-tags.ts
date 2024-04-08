@@ -8,11 +8,11 @@
  * @module helpers/html
  */
 
-import type { Nullable, HTMLTagNames } from 'jodit/types';
-import { isString } from 'jodit/core/helpers/checker/is-string';
-import { $$ } from 'jodit/core/helpers/utils';
-import { trim } from 'jodit/core/helpers/string/trim';
+import type { HTMLTagNames, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { trim } from 'jodit/core/helpers/string/trim';
+import { $$ } from 'jodit/core/helpers/utils';
 
 const NEW_LINE_TAGS: Set<HTMLTagNames> = new Set([
 	'div',

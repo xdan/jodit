@@ -41,9 +41,11 @@ console.info('Min:', args.min);
 const fs = require('fs');
 const expect = require('expect');
 const path = require('path');
+
 const toMatchImageSnapshot = import('expect-mocha-image-snapshot');
 const puppeteer = require('puppeteer');
 const express = require('express');
+
 const app = express();
 
 toMatchImageSnapshot.then(res => {
@@ -117,6 +119,7 @@ if (typeof before !== 'undefined') {
 
 	if (!args.debug) {
 		after(function () {
+			// eslint-disable-next-line no-console
 			console.log('Closing browser');
 			browser.close();
 			listen.close();

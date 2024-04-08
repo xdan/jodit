@@ -9,11 +9,12 @@
  */
 
 import type { IControlType, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { memorizeExec } from 'jodit/core/helpers';
 import { Icon } from 'jodit/core/ui/icon';
 
 import lineHeightIcon from './line-height.svg';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

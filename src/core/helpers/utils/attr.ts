@@ -15,6 +15,7 @@ import {
 	isString
 } from 'jodit/core/helpers/checker';
 import { CamelCaseToKebabCase } from 'jodit/core/helpers/string/kebab-case';
+
 import { css } from './css';
 
 /**
@@ -47,7 +48,7 @@ export function attr(
 /**
  * Alias for `elm.getAttribute` but if set second argument `-{key}`
  * it will also check `data-{key}` attribute
- * if set `value` it is alias for setAttribute with same logic
+ * if set `value` it is alias for setAttribute with the same logic
  */
 export function attr(
 	elm: Element,

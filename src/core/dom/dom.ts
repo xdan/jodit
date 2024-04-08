@@ -21,23 +21,23 @@ import type {
 } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import {
-	isArray,
-	isFunction,
-	isHTML,
-	isString,
-	isVoid,
-	isSet,
-	isMarker
-} from 'jodit/core/helpers/checker';
-import { toArray } from 'jodit/core/helpers/array/to-array';
-import { trim } from 'jodit/core/helpers/string/trim';
-import { $$, attr, call, css, dataBind, error } from 'jodit/core/helpers/utils';
-import {
 	INSEPARABLE_TAGS,
 	LIST_TAGS,
 	NO_EMPTY_TAGS,
 	TEMP_ATTR
 } from 'jodit/core/constants';
+import { toArray } from 'jodit/core/helpers/array/to-array';
+import {
+	isArray,
+	isFunction,
+	isHTML,
+	isMarker,
+	isSet,
+	isString,
+	isVoid
+} from 'jodit/core/helpers/checker';
+import { trim } from 'jodit/core/helpers/string/trim';
+import { $$, attr, call, css, dataBind, error } from 'jodit/core/helpers/utils';
 
 /**
  * Module for working with DOM

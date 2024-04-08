@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import js from './js';
 import css from './css';
+import js from './js';
 
 export const minimizer = [js, css];

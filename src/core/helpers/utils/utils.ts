@@ -11,15 +11,16 @@
 import type {
 	CanPromise,
 	IControlType,
-	IViewBased,
 	IJodit,
-	RejectablePromise,
-	Nullable
+	IViewBased,
+	Nullable,
+	RejectablePromise
 } from 'jodit/types';
 import { isPromise } from 'jodit/core/helpers/checker/is-promise';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';
-import { dataBind } from './data-bind';
+
 import { attr } from './attr';
+import { dataBind } from './data-bind';
 
 /**
  * Call function with parameters
@@ -52,7 +53,7 @@ export function markOwner(jodit: IViewBased, elm: HTMLElement): void {
 
 export function callPromise(
 	condition: CanPromise<unknown>,
-	callback: () => CanPromise<any>
+	callback?: () => CanPromise<any>
 ): CanPromise<void> {
 	if (isPromise(condition)) {
 		return condition
@@ -63,7 +64,7 @@ export function callPromise(
 			.finally(callback);
 	}
 
-	return callback();
+	return callback?.();
 }
 
 /**

@@ -8,11 +8,10 @@
  * @module dom
  */
 
-import type { IAsync, IDestructible } from 'jodit/types';
-import type { Nullable, CanUndef } from 'jodit/types';
-import { Eventify } from 'jodit/core/event-emitter/eventify';
+import type { CanUndef, IAsync, IDestructible, Nullable } from 'jodit/types';
 import { autobind } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
+import { Eventify } from 'jodit/core/event-emitter/eventify';
 
 export class LazyWalker
 	extends Eventify<{

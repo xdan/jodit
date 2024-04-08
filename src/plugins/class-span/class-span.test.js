@@ -171,7 +171,7 @@ describe('classSpan test', () => {
 	describe('Active', function () {
 		describe('In list', function () {
 			describe('ClassSpan button', function () {
-				it('Should be activated then element has some className', function () {
+				it('Should be activated then an element has some className', function () {
 					const editor = getJodit({
 						toolbarAdaptive: false,
 						history: {

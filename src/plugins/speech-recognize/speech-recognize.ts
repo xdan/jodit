@@ -10,20 +10,22 @@
  * @module plugins/speech-recognize
  */
 
-import './speech-recognize.less';
-
 import type { IDictionary, IJodit, IPlugin } from 'jodit/types';
-import { Plugin } from 'jodit/core/plugin';
-import { watch } from 'jodit/core/decorators/watch/watch';
-import { keys } from 'jodit/core/helpers/utils/utils';
-import { extendLang } from 'jodit/core/global';
-import { Dom } from 'jodit/core/dom/dom';
 import { debounce } from 'jodit/core/decorators/debounce/debounce';
+import { watch } from 'jodit/core/decorators/watch/watch';
+import { Dom } from 'jodit/core/dom/dom';
+import { extendLang } from 'jodit/core/global';
+import { keys } from 'jodit/core/helpers/utils/utils';
+import { Plugin } from 'jodit/core/plugin';
+
+import './config';
+
 import { Jodit } from '../../jodit';
 
 import { execSpellCommand } from './helpers/exec-spell-command';
 import * as langs from './langs';
-import './config';
+
+import './speech-recognize.less';
 
 export class SpeechRecognizeNative extends Plugin implements IPlugin {
 	constructor(j: IJodit) {

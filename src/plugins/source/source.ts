@@ -10,8 +10,6 @@
  * @module plugins/source
  */
 
-import './source.less';
-
 import type { IJodit, ISourceEditor } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import {
@@ -21,14 +19,17 @@ import {
 	MODE_SPLIT,
 	SOURCE_CONSUMER
 } from 'jodit/core/constants';
-import { Plugin } from 'jodit/core/plugin';
-import { Dom } from 'jodit/core/dom/dom';
-import { isString, loadNext } from 'jodit/core/helpers';
 import { autobind, watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { isString, loadNext } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin';
+
+import './config';
 
 import { createSourceEditor } from './editor/factory';
-import './config';
+
+import './source.less';
 
 /**
  * Plug-in change simple textarea on CodeMirror editor in Source code mode

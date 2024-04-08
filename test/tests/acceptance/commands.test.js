@@ -24,7 +24,7 @@ describe('Commands Jodit Editor Tests', function () {
 		});
 
 		describe('Exec formatBlock for one inline element', function () {
-			it('Should wrap this element and all nearest inline element in block', function () {
+			it('Should wrap this element and all nearest inline elements in block', function () {
 				const jodit = getJodit();
 				jodit.value = 'stop <span>post</span> ice';
 				const range = jodit.ed.createRange();
@@ -383,7 +383,7 @@ describe('Commands Jodit Editor Tests', function () {
 			).equals(editor.value);
 		});
 
-		it('Set colour to collapsed position should create empty span and insert inward cursor', function () {
+		it('Set color to collapsed position should create empty span and insert inward cursor', function () {
 			const editor = getJodit({
 				disablePlugins: ['WrapNodes']
 			});

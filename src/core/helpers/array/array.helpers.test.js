@@ -5,7 +5,7 @@
  */
 describe('Test array helpers', () => {
 	describe('asArray', () => {
-		it('Should return array', () => {
+		it('Should return an array', () => {
 			expect(Jodit.modules.Helpers.asArray(1)).to.be.an('array');
 			expect(Jodit.modules.Helpers.asArray(1)).deep.eq([1]);
 			expect(Jodit.modules.Helpers.asArray([1])).deep.eq([1]);
@@ -14,7 +14,7 @@ describe('Test array helpers', () => {
 	});
 
 	describe('splitArray', () => {
-		it('Should return array', () => {
+		it('Should return an array', () => {
 			expect(Jodit.modules.Helpers.splitArray('1,3')).deep.eq(['1', '3']);
 			expect(Jodit.modules.Helpers.splitArray(['1', '3'])).deep.eq([
 				'1',
@@ -24,7 +24,7 @@ describe('Test array helpers', () => {
 	});
 
 	describe('toArray', () => {
-		it('Should return array', () => {
+		it('Should return an array', () => {
 			expect(Jodit.modules.Helpers.toArray('13')).deep.eq(['1', '3']);
 			expect(Jodit.modules.Helpers.toArray(['1', '3'])).deep.eq([
 				'1',

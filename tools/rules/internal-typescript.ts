@@ -4,11 +4,12 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { Variables } from '../variables';
-import type { RuleSetRule } from 'webpack';
 import { removeAsserts } from '../utils/transformers/remove-asserts';
+import type { Variables } from '../variables';
+
 import * as path from 'path';
 import * as ts from 'typescript';
+import type { RuleSetRule } from 'webpack';
 
 export default (
 	{

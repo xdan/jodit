@@ -10,20 +10,20 @@
  * @module plugins/placeholder
  */
 
-import './placeholder.less';
-
-import type { IJodit, HTMLTagNames } from 'jodit/types';
+import type { HTMLTagNames, IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
-import { attr } from 'jodit/core/helpers/utils/attr';
-import { css } from 'jodit/core/helpers/utils/css';
-import { isMarker } from 'jodit/core/helpers/checker/is-marker';
-import { Dom } from 'jodit/core/dom/dom';
-import { Plugin } from 'jodit/core/plugin/plugin';
 import { INSEPARABLE_TAGS } from 'jodit/core/constants';
 import { debounce } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { isMarker } from 'jodit/core/helpers/checker/is-marker';
+import { attr } from 'jodit/core/helpers/utils/attr';
+import { css } from 'jodit/core/helpers/utils/css';
+import { Plugin } from 'jodit/core/plugin/plugin';
 
 import './config';
+
+import './placeholder.less';
 
 /**
  * Check if root node is empty

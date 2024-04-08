@@ -12,8 +12,8 @@
 
 import type { IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
-import { $$, attr, dataBind } from 'jodit/core/helpers/utils';
 import { pluginSystem } from 'jodit/core/global';
+import { $$, attr, dataBind } from 'jodit/core/helpers/utils';
 
 import './config';
 

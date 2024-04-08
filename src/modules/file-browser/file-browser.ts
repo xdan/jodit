@@ -8,55 +8,55 @@
  * @module modules/file-browser
  */
 
-import './styles/index.less';
-
-import { Config } from 'jodit/config';
-import * as consts from 'jodit/core/constants';
-
 import type {
+	ButtonsOption,
+	CallbackFunction,
+	CanUndef,
+	IDialog,
+	IDictionary,
 	IFileBrowser,
 	IFileBrowserAnswer,
 	IFileBrowserCallBackData,
+	IFileBrowserDataProvider,
 	IFileBrowserOptions,
 	IFileBrowserState,
-	IFileBrowserDataProvider,
 	IJodit,
 	IStorage,
-	IDictionary,
 	IUploader,
 	IUploaderOptions,
-	IDialog,
-	CanUndef,
-	IViewOptions,
-	CallbackFunction,
-	ButtonsOption
+	IViewOptions
 } from 'jodit/types';
-
-import { Storage } from 'jodit/core/storage';
+import { STATUSES } from 'jodit/core/component';
+import * as consts from 'jodit/core/constants';
+import { IS_PROD } from 'jodit/core/constants';
+import { autobind, cache, derive } from 'jodit/core/decorators';
+import { observable } from 'jodit/core/event-emitter';
 import {
+	ConfigProto,
 	error,
+	isAbort,
 	isFunction,
 	isString,
-	ConfigProto,
-	trim,
-	isAbort
+	trim
 } from 'jodit/core/helpers';
-import { makeDataProvider } from './factories';
-import { stateListeners } from './listeners/state-listeners';
-import { nativeListeners } from './listeners/native-listeners';
-import { selfListeners } from './listeners/self-listeners';
-import { DEFAULT_SOURCE_NAME } from './data-provider';
-import { autobind, cache, derive } from 'jodit/core/decorators';
-import { FileBrowserFiles, FileBrowserTree } from './ui';
-import { observable } from 'jodit/core/event-emitter';
-import { loadTree } from './fetch/load-tree';
-import { loadItems } from './fetch/load-items';
-import { STATUSES } from 'jodit/core/component';
+import { Storage } from 'jodit/core/storage';
 import { Dlgs } from 'jodit/core/traits/dlgs';
 import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
 
 import './config';
-import { IS_PROD } from 'jodit/core/constants';
+
+import { loadItems } from './fetch/load-items';
+import { loadTree } from './fetch/load-tree';
+import { nativeListeners } from './listeners/native-listeners';
+import { selfListeners } from './listeners/self-listeners';
+import { stateListeners } from './listeners/state-listeners';
+import { DEFAULT_SOURCE_NAME } from './data-provider';
+import { makeDataProvider } from './factories';
+import { FileBrowserFiles, FileBrowserTree } from './ui';
+
+import './styles/index.less';
+
+import { Config } from 'jodit/config';
 
 export interface FileBrowser extends Dlgs {}
 

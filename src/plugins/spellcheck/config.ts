@@ -9,10 +9,11 @@
  */
 
 import type { IControlType, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
 
 import spellcheckIcon from './spellcheck.svg';
+
+import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

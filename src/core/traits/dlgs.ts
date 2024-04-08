@@ -8,10 +8,10 @@
  * @module traits
  */
 
-import type { IDialog, IDialogOptions, IViewBased, IDlgs } from 'jodit/types';
-import { Alert, Confirm, Dialog, Prompt } from 'jodit/modules/dialog';
+import type { IDialog, IDialogOptions, IDlgs, IViewBased } from 'jodit/types';
 import { isHTML, isString } from 'jodit/core/helpers/checker';
 import { markOwner } from 'jodit/core/helpers/utils/utils';
+import { Alert, Confirm, Dialog, Prompt } from 'jodit/modules/dialog';
 
 export abstract class Dlgs implements IDlgs {
 	dlg(this: IViewBased & IDlgs, options?: IDialogOptions): IDialog {

@@ -28,7 +28,7 @@ describe('Path plugin', function () {
 				).equals('flex');
 			});
 
-			it('Should show path to selection element', function () {
+			it('Should show a path to a selection element', function () {
 				const editor = getJodit({
 					language: 'en',
 					showXPathInStatusbar: true,
@@ -51,7 +51,7 @@ describe('Path plugin', function () {
 			});
 
 			describe('After change selection', function () {
-				it('Should change path to selection element', function () {
+				it('Should change a path to a selection element', function () {
 					const editor = getJodit({
 						language: 'en',
 						showXPathInStatusbar: true,
@@ -81,7 +81,7 @@ describe('Path plugin', function () {
 				});
 			});
 
-			describe('After click on element of path', function () {
+			describe('After click on an element of path', function () {
 				it('Should select this element', function () {
 					const editor = getJodit({
 						language: 'en',
@@ -128,7 +128,7 @@ describe('Path plugin', function () {
 				});
 			});
 
-			describe('Context menu on element of path', function () {
+			describe('Context menu on an element of path', function () {
 				it('Should open context menu', function () {
 					const editor = getJodit({
 						language: 'en',

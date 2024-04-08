@@ -4,18 +4,19 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import * as path from 'path';
+import 'dotenv/config';
 
-import type { Configuration } from 'webpack';
-import { type Argv, variables } from './variables';
+import { externals } from './external/index';
+import { plugins } from './plugins/index';
+import { rules } from './rules/index';
 import { fileName } from './utils/filename';
 import { includePlugins } from './utils/include-plugins';
-
-import { minimizer } from './minimizer';
-import { rules } from './rules/index';
-import { plugins } from './plugins/index';
-import { externals } from './external/index';
 import { devServer } from './dev-server';
+import { minimizer } from './minimizer';
+import { type Argv, variables } from './variables';
+
+import * as path from 'path';
+import type { Configuration } from 'webpack';
 
 export default (
 	env: object,

@@ -8,18 +8,18 @@
  * @module ui/button
  */
 
-import './group.less';
-
 import type {
 	IDictionary,
 	IUIButton,
 	IUIOption,
 	IViewBased
 } from 'jodit/types';
-import { UIGroup } from 'jodit/core/ui/group/group';
 import { component } from 'jodit/core/decorators/component/component';
-import { UIButton } from 'jodit/core/ui/button/button/button';
 import { assert } from 'jodit/core/helpers/utils/assert';
+import { UIButton } from 'jodit/core/ui/button/button/button';
+import { UIGroup } from 'jodit/core/ui/group/group';
+
+import './group.less';
 
 @component
 export class UIButtonGroup extends UIGroup {

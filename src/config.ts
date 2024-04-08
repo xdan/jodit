@@ -5,7 +5,7 @@
  */
 
 /**
- * Options for the editor. You can set them when creating the editor.
+ * Editor options. These can be configured upon the creation of the editor.
  * ```javascript
  * const editor = Jodit.make('#editor', {
  * 	 toolbar: true,
@@ -18,21 +18,22 @@
  * @module config
  */
 
+import * as consts from 'jodit/core/constants';
+import { INSERT_AS_HTML } from 'jodit/core/constants';
+
 import type {
-	IExtraPlugin,
-	IDictionary,
-	IViewOptions,
-	NodeFunction,
 	Attributes,
 	ButtonsOption,
 	Controls,
 	IControlType,
-	IUIButtonState,
+	IDictionary,
+	IExtraPlugin,
 	InsertMode,
+	IUIButtonState,
+	IViewOptions,
+	NodeFunction,
 	Nullable
 } from './types';
-import * as consts from 'jodit/core/constants';
-import { INSERT_AS_HTML } from 'jodit/core/constants';
 
 /**
  * Default Editor's Configuration
@@ -189,7 +190,7 @@ class Config implements IViewOptions {
 	disabled: boolean = false;
 
 	/**
-	 * In readOnly mode, some buttons can still be useful, for example the button to view source code or print
+	 * In readOnly mode, some buttons can still be useful, for example, the button to view source code or print
 	 */
 	activeButtonsInReadOnly: string[] = [
 		'source',
@@ -247,7 +248,7 @@ class Config implements IViewOptions {
 	theme: string = 'default';
 
 	/**
-	 * if set true then the current mode is saved in a cookie , and is restored after a reload of the page
+	 * if set true, then the current mode is saved in a cookie, and is restored after a reload of the page
 	 */
 	saveModeInStorage: boolean = false;
 
@@ -341,7 +342,7 @@ class Config implements IViewOptions {
 	styleValues: IDictionary = {};
 
 	/**
-	 * After all changes in editors for textarea will call change trigger
+	 * After all, changes in editors for textarea will call change trigger
 	 *
 	 * @example
 	 * ```javascript
@@ -502,7 +503,7 @@ class Config implements IViewOptions {
 	editHTMLDocumentMode: boolean = false;
 
 	/**
-	 * Use when you need insert new block element
+	 * Use when you need to insert new block element
 	 * use enter option if not set
 	 */
 	enterBlock: 'p' | 'div' =
@@ -684,7 +685,7 @@ class Config implements IViewOptions {
 	basePath?: string;
 
 	/**
-	 * These buttons list will be added to option.buttons
+	 * These buttons list will be added to the option. Buttons
 	 */
 	extraButtons: Array<string | IControlType> = [];
 

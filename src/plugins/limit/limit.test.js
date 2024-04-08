@@ -59,7 +59,7 @@ describe('Limit plugin', function () {
 					});
 				});
 
-				it('should allow press them', done => {
+				it('should allow to press them', done => {
 					const editor = getJodit({
 						limitChars: 5
 					});
@@ -148,7 +148,7 @@ describe('Limit plugin', function () {
 	});
 
 	describe('Paste', function () {
-		describe('When editor already full', function () {
+		describe('When editor already fulls', function () {
 			it('should deny insert any chars', function (done) {
 				const editor = getJodit({
 					limitChars: 5,
@@ -204,7 +204,7 @@ describe('Limit plugin', function () {
 
 	describe('Limit words', function () {
 		describe('Paste', function () {
-			describe('When editor already full', function () {
+			describe('When editor already fulls', function () {
 				it('should deny insert any chars', function (done) {
 					const editor = getJodit({
 						limitWords: 3,

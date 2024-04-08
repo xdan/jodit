@@ -1,7 +1,7 @@
 # Create DOM
 
 Every internal DOM node of both the editor interface and the editor content itself must be created through this module.
-This is due to the fact that the interface can be shown in an iframe, or another window.
+This is because the interface can be shown in an iframe, or another window.
 And in this case, you need to create its elements using the document from this window.
 In order not to worry about it yourself, this module was created.
 

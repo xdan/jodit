@@ -11,16 +11,18 @@
  */
 
 import type {
+	CanUndef,
+	IControlType,
 	IDictionary,
 	IJodit,
-	IControlType,
-	CanUndef,
 	IStyle
 } from 'jodit/types';
-import { Config } from 'jodit/config';
-import { isArray } from 'jodit/core/helpers';
 import { pluginSystem } from 'jodit/core/global';
+import { isArray } from 'jodit/core/helpers';
 import { Icon } from 'jodit/core/ui/icon';
+
+import './interface';
+import './config';
 
 import boldIcon from './icons/bold.svg';
 import italicIcon from './icons/italic.svg';
@@ -29,8 +31,7 @@ import subscriptIcon from './icons/subscript.svg';
 import superscriptIcon from './icons/superscript.svg';
 import underlineIcon from './icons/underline.svg';
 
-import './interface';
-import './config';
+import { Config } from 'jodit/config';
 
 /**
  * Adds `bold`,` strikethrough`, `underline` and` italic` buttons to Jodit

@@ -11,10 +11,10 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { css, defaultLanguage, attr, callPromise } from 'jodit/core/helpers/';
-import { error } from 'jodit/core/helpers';
 import { MODE_SOURCE } from 'jodit/core/constants';
 import { pluginSystem } from 'jodit/core/global';
+import { error } from 'jodit/core/helpers';
+import { attr, callPromise, css, defaultLanguage } from 'jodit/core/helpers/';
 
 import './config';
 

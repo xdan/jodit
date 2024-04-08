@@ -10,15 +10,16 @@
  * @module plugins/justify
  */
 
-import type { IJodit, IControlType } from 'jodit/types';
-import { Config } from 'jodit/config';
+import type { IControlType, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
-import { css } from 'jodit/core/helpers/utils/css';
-import { alignElement } from 'jodit/core/helpers/utils/align';
 import { pluginSystem } from 'jodit/core/global';
+import { alignElement } from 'jodit/core/helpers/utils/align';
+import { css } from 'jodit/core/helpers/utils/css';
 import { Icon } from 'jodit/core/ui/icon';
 
 import justifyIcon from './justify.svg';
+
+import { Config } from 'jodit/config';
 
 Icon.set('justify', justifyIcon);
 

@@ -9,6 +9,7 @@
  */
 
 import type { IJodit, IUIElement, IUIForm, Nullable } from 'jodit/types';
+import { UIButton } from 'jodit/core/ui/button';
 import {
 	UIBlock,
 	UICheckbox,
@@ -16,7 +17,6 @@ import {
 	UIInput,
 	UISelect
 } from 'jodit/core/ui/form';
-import { UIButton } from 'jodit/core/ui/button';
 
 export const formTemplate = (editor: IJodit): IUIForm => {
 	const {

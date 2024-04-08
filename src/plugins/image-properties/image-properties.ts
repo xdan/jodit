@@ -10,41 +10,39 @@
  * @module plugins/image-properties
  */
 
-import './image-properties.less';
-
 import type {
 	IDialog,
 	IFileBrowserCallBackData,
 	IJodit,
 	ImageHAlign
 } from 'jodit/types';
-
-import { Dom, Popup, Icon, Plugin } from 'jodit/modules';
-
-import {
-	css,
-	trim,
-	attr,
-	position,
-	isArray,
-	markOwner,
-	isString,
-	refs,
-	kebabCase,
-	isNumeric,
-	hAlignElement
-} from 'jodit/core/helpers';
-import { FileSelectorWidget, TabsWidget } from 'jodit/modules/widget';
-import { Button } from 'jodit/core/ui/button';
-import { watch, autobind } from 'jodit/core/decorators';
-import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
+import { autobind, watch } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
+import {
+	attr,
+	css,
+	hAlignElement,
+	isArray,
+	isNumeric,
+	isString,
+	kebabCase,
+	markOwner,
+	position,
+	refs,
+	trim
+} from 'jodit/core/helpers';
+import { Button } from 'jodit/core/ui/button';
+import { Dom, Icon, Plugin, Popup } from 'jodit/modules';
+import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
+import { FileSelectorWidget, TabsWidget } from 'jodit/modules/widget';
+
+import './config';
 
 import { form } from './templates/form';
 import { mainTab } from './templates/main-tab';
 import { positionTab } from './templates/position-tab';
 
-import './config';
+import './image-properties.less';
 
 /**
  * Plug-in for image editing window

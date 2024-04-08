@@ -10,9 +10,20 @@
  * @module jodit
  */
 
-import './styles/index.less';
+import { isFunction, isString } from 'jodit/core/helpers/checker';
+
+import 'jodit/plugins/index';
 
 import * as constants from './core/constants';
+import * as decorators from './core/decorators';
+import * as Modules from './modules/';
+import * as Icons from './styles/icons/';
+// JODIT-SECTION-END:POLYFILLS
+import { Jodit as DefaultJodit } from './jodit';
+import Languages from './languages';
+
+import './styles/index.less';
+import './styles/themes/dark.less';
 
 // JODIT-SECTION-START:POLYFILLS
 
@@ -23,21 +34,6 @@ if (
 ) {
 	require('./polyfills');
 }
-
-// JODIT-SECTION-END:POLYFILLS
-
-import { Jodit as DefaultJodit } from './jodit';
-
-import Languages from './languages';
-
-import { isFunction, isString } from 'jodit/core/helpers/checker';
-import * as decorators from './core/decorators';
-import * as Modules from './modules/';
-import * as Icons from './styles/icons/';
-
-import 'jodit/plugins/index';
-
-import './styles/themes/dark.less';
 
 // copy constants in Jodit
 Object.keys(constants).forEach((key: string) => {

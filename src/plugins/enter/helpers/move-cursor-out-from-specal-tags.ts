@@ -8,7 +8,7 @@
  * @module plugins/enter
  */
 
-import type { IJodit, HTMLTagNames } from 'jodit/types';
+import type { HTMLTagNames, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 
 /**

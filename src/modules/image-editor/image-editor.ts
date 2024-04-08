@@ -10,28 +10,31 @@
  * @module modules/image-editor
  */
 
+import type {
+	IDialog,
+	IDictionary,
+	IDlgs,
+	IFileBrowserDataProvider,
+	IJodit,
+	ImageAction,
+	ImageEditorActionBox,
+	ImageEditorOptions,
+	IUIButton,
+	IViewWithToolbar
+} from 'jodit/types';
+import { ViewComponent } from 'jodit/core/component';
+import { autobind, component, debounce, throttle } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom';
+import { $$, attr, call, css, refs, toArray, trim } from 'jodit/core/helpers';
+import { Button } from 'jodit/core/ui/button';
+
+import './config';
+
+import { form } from './templates/form';
+
 import './image-editor.less';
 
-import type {
-	ImageEditorActionBox,
-	IJodit,
-	ImageEditorOptions,
-	ImageAction,
-	IUIButton,
-	IDictionary,
-	IFileBrowserDataProvider,
-	IDialog,
-	IViewWithToolbar,
-	IDlgs
-} from 'jodit/types';
 import { Config } from 'jodit/config';
-import { ViewComponent } from 'jodit/core/component';
-import { $$, attr, call, css, refs, toArray, trim } from 'jodit/core/helpers';
-import { Dom } from 'jodit/core/dom';
-import { Button } from 'jodit/core/ui/button';
-import { form } from './templates/form';
-import { component, debounce, throttle, autobind } from 'jodit/core/decorators';
-import './config';
 
 interface onSave {
 	(

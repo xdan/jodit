@@ -10,30 +10,33 @@
  * @module modules
  */
 
-export * from 'jodit/core/event-emitter';
-export { Async } from 'jodit/core/async';
-export * from 'jodit/core/request';
-export { Component, ViewComponent, STATUSES } from 'jodit/core/component';
+import { Component, STATUSES, ViewComponent } from 'jodit/core/component';
+import * as Helpers from 'jodit/core/helpers';
+
+export { Component, STATUSES, ViewComponent };
+
 export { ContextMenu } from './context-menu/context-menu';
 export * from './dialog/';
-export { Dom, LazyWalker } from 'jodit/core/dom';
-export { Plugin } from 'jodit/core/plugin';
+export * from './file-browser';
+export { Async } from 'jodit/core/async';
 export { Create } from 'jodit/core/create';
+export { Dom, LazyWalker } from 'jodit/core/dom';
+export * from 'jodit/core/event-emitter';
+export { Plugin } from 'jodit/core/plugin';
+export * from 'jodit/core/request';
 export * from 'jodit/core/ui';
 export { View } from 'jodit/core/view/view';
 export { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
-export * from './file-browser';
-import * as Helpers from 'jodit/core/helpers/';
 export { Helpers };
-export { ImageEditor } from './image-editor/image-editor';
 export { History } from './history/history';
 export { Snapshot } from './history/snapshot';
-export { Selection, CommitStyle } from 'jodit/core/selection';
+export { ImageEditor } from './image-editor/image-editor';
+export { UIMessages } from './messages/messages';
 export { StatusBar } from './status-bar/status-bar';
 export { Table } from './table/table';
-export { ToolbarEditorCollection } from './toolbar/collection/editor-collection';
-export { ToolbarCollection } from './toolbar/collection/collection';
 export * from './toolbar/button';
+export { ToolbarCollection } from './toolbar/collection/collection';
+export { ToolbarEditorCollection } from './toolbar/collection/editor-collection';
 export { Uploader } from './uploader/uploader';
-export { UIMessages } from './messages/messages';
 export { PluginSystem } from 'jodit/core/plugin/plugin-system';
+export { CommitStyle, Selection } from 'jodit/core/selection';

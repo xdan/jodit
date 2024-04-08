@@ -12,9 +12,9 @@
 
 import type { Nullable } from 'jodit/types';
 import { INVISIBLE_SPACE_REG_EXP, SPACE_REG_EXP } from 'jodit/core/constants';
-import { Plugin } from 'jodit/core/plugin/plugin';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { Plugin } from 'jodit/core/plugin/plugin';
 
 import './config';
 

@@ -9,13 +9,14 @@
  */
 
 import type { IControlType, IJodit } from 'jodit/types';
-import { Config } from 'jodit/config';
 import { Icon } from 'jodit/core/ui/icon';
 
 import copyIcon from './icons/copy.svg';
 import cutIcon from './icons/cut.svg';
 import pasteIcon from './icons/paste.svg';
 import selectAllIcon from './icons/select-all.svg';
+
+import { Config } from 'jodit/config';
 
 Config.prototype.controls.cut = {
 	command: 'cut',

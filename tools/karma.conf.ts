@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { Config } from 'karma';
-import * as yargs from 'yargs';
 import * as fs from 'fs';
+import type { Config } from 'karma';
 import path from 'path';
+import * as yargs from 'yargs';
 
 const argv = yargs
 	.option('cwd', {
@@ -23,12 +23,12 @@ const argv = yargs
 	.option('fat', {
 		type: 'boolean',
 		demandOption: true,
-		description: 'Use fat version of js files'
+		description: 'Use a fat version of js files'
 	})
 	.option('min', {
 		type: 'boolean',
 		demandOption: true,
-		description: 'Use minified version of js files'
+		description: 'Use a minified version of js files'
 	})
 	.parseSync();
 

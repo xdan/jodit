@@ -9,6 +9,69 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.1.1
+
+-   Added plugin AI Assistant. https://github.com/xdan/jodit/pull/1088 Thanks @huizarmx
+
+#### :house: Internal
+
+-   Update dependencies
+
+```plain
+
+@tsconfig/node18                    ^18.2.2  →   ^18.2.4
+@types/node                       ^20.11.25  →  ^20.12.2
+@typescript-eslint/eslint-plugin     ^7.1.1  →    ^7.5.0
+@typescript-eslint/parser            ^7.1.1  →    ^7.5.0
+autoprefixer                       ^10.4.18  →  ^10.4.19
+axios                                ^1.6.7  →    ^1.6.8
+core-js                             ^3.36.0  →   ^3.36.1
+cssnano-preset-advanced              ^6.1.0  →    ^6.1.2
+eslint-plugin-mocha                 ^10.4.0  →   ^10.4.1
+glob                               ^10.3.10  →  ^10.3.12
+mocha                               ^10.3.0  →   ^10.4.0
+open                                ^10.0.4  →   ^10.1.0
+postcss                            >=8.4.35  →  >=8.4.38
+stylelint                           ^16.2.1  →   ^16.3.1
+typescript                           ^5.4.2  →    ^5.4.3
+webpack                              5.90.3  →    5.91.0
+webpack-dev-middleware               ^7.0.0  →    ^7.2.0
+webpack-dev-server                   ^5.0.2  →    ^5.0.4
+```
+
+-   Update dependencies
+
+```plain
+@types/node                       ^20.10.7  →  ^20.11.25
+@typescript-eslint/eslint-plugin   ^6.18.0  →     ^7.1.1
+@typescript-eslint/parser          ^6.18.0  →     ^7.1.1
+autoprefixer                      ^10.4.16  →   ^10.4.18
+axios                               ^1.6.5  →     ^1.6.7
+core-js                            ^3.35.0  →    ^3.36.0
+css-loader                          ^6.8.1  →    ^6.10.0
+css-minimizer-webpack-plugin        ^5.0.1  →     ^6.0.0
+cssnano-preset-advanced             ^6.0.3  →     ^6.1.0
+eslint                             ^8.56.0  →    ^8.57.0
+eslint-plugin-mocha                ^10.2.0  →    ^10.4.0
+eslint-plugin-prettier              ^5.1.2  →     ^5.1.3
+karma                               ^6.4.2  →     ^6.4.3
+karma-firefox-launcher              ^2.1.2  →     ^2.1.3
+less-loader                        ^11.1.4  →    ^12.2.0
+mini-css-extract-plugin             ^2.7.6  →     ^2.8.1
+mocha                              ^10.2.0  →    ^10.3.0
+node-jq                             ^4.2.2  →     ^4.3.1
+open                               ^10.0.3  →    ^10.0.4
+postcss                           >=8.4.33  →   >=8.4.35
+postcss-loader                      ^7.3.4  →     ^8.1.1
+prettier                            ^3.1.1  →     ^3.2.5
+style-loader                        ^3.3.3  →     ^3.3.4
+stylelint                          ^16.1.0  →    ^16.2.1
+typescript                          ^5.3.3  →     ^5.4.2
+webpack                             5.89.0  →     5.90.3
+webpack-dev-server                 ^4.15.1  →     ^5.0.2
+webpack-hot-middleware             ^2.26.0  →    ^2.26.1
+```
+
 ## 4.0.15
 
 -   Fixed bug in `beforeInit` hook. If the hook returned a promise, and the editor was destroyed after that,
@@ -53,7 +116,7 @@
 
 ### :bug: Bug Fix
 
--   [Folder rename not working if "space" is added in folder name #1054](https://github.com/xdan/jodit/issues/1054)
+-   [Folder renames not working if "space" is added in folder name #1054](https://github.com/xdan/jodit/issues/1054)
 
 #### :house: Internal
 
@@ -149,7 +212,7 @@ typescript                          ^5.2.2  →    ^5.3.2
     });
     ```
 
--   [copy pasting twitter or istagram or etc not as expected #1032](https://github.com/xdan/jodit/issues/1032)
+-   [copy pasting twitter or istagram or etc. not as expected #1032](https://github.com/xdan/jodit/issues/1032)
 
 ## 4.0.0-beta.97
 
@@ -318,8 +381,8 @@ webpack                             5.88.2  →    5.89.0
 #### :boom: Breaking Change
 
 -   Removed deprecated selection.applyStyle method
--   Changed Create.sandbox signature to return body,iframe tuple
--   In the plugin system, the requires field has been removed from instances,
+-   Change Creates. Sandbox signature to return body,iframe tuple
+-   In the plugin system, the requirement field has been removed from instances,
     only the field in the constructor has been left
     ```js
     class somePlugin extends Jodit.modulules.Plugin {
@@ -2470,11 +2533,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ]
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`

@@ -11,8 +11,8 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { normalizeSize } from 'jodit/core/helpers/';
 import { pluginSystem } from 'jodit/core/global';
+import { normalizeSize } from 'jodit/core/helpers/';
 
 import './config';
 

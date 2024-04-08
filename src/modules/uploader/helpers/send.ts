@@ -9,8 +9,8 @@
  */
 
 import type { IDictionary, IUploader, IUploaderAnswer } from 'jodit/types';
-import { Ajax } from 'jodit/core/request';
 import { isFunction, isPromise } from 'jodit/core/helpers';
+import { Ajax } from 'jodit/core/request';
 import { buildData } from 'jodit/modules/uploader/helpers/build-data';
 
 export const ajaxInstances: WeakMap<IUploader, Set<Ajax>> = new WeakMap();
@@ -41,8 +41,6 @@ export function send(
 								let percentComplete = evt.loaded / evt.total;
 
 								percentComplete *= 100;
-
-								console.log('progress', percentComplete);
 
 								uploader.j.progressbar
 									.show()
