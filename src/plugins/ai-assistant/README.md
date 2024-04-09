@@ -9,7 +9,9 @@ To use the AI Assistant plugin, you need to include it in your Jodit editor conf
 ```javascript
 const editor = Jodit.make('#editor', {
 	aiAssistant: {
-		aiAssistantCallback() {}
+		aiAssistantCallback() {
+			return Promise.resolve('AI Assistant is not configured');
+		}
 	}
 });
 ```
