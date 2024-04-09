@@ -76,12 +76,13 @@
 				url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
 			},
 			aiAssistant: {
-				aiAssistantCallback(prompt, htmlFragment) {
+				async aiAssistantCallback(prompt, htmlFragment) {
 					// Make API call to OpenAI
 					return fetch(
 						'https://api.openai.com/v1/chat/completions',
 						{
 							method: 'POST',
+							mode: 'cors',
 							headers: {
 								'Content-Type': 'application/json',
 								Authorization: 'Bearer ' + Jodit.constants.TOKENS.TOKEN_GPT

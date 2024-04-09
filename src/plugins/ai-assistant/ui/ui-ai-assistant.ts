@@ -66,7 +66,8 @@ export class UiAiAssistant extends UIElement<IJodit> {
 		const onSubmit = (): void => {
 			if (this.__formAiAssistant.validate()) {
 				this.__formAiAssistant.submit();
-				this.__toogleSubmitButton(true);
+				this.__toggleInsertButton(true);
+				this.__toggleSubmitButton(true);
 			}
 		};
 
@@ -76,8 +77,8 @@ export class UiAiAssistant extends UIElement<IJodit> {
 
 		this.__tryAgainButton = Button(
 			jodit,
+			'update',
 			'',
-			'Try Again',
 			'initial'
 		).onAction(onSubmit);
 
@@ -156,10 +157,12 @@ export class UiAiAssistant extends UIElement<IJodit> {
 				.filter(Boolean)
 				.join(' ');
 
+			this.__toggleInsertButton(true);
+
 			if (this.promptInput.value) {
 				this.__formAiAssistant.submit();
 
-				this.__toogleSubmitButton(true);
+				this.__toggleSubmitButton(true);
 			}
 		}
 
@@ -175,7 +178,8 @@ export class UiAiAssistant extends UIElement<IJodit> {
 		this.__aiResult = result;
 		this.__results.appendChild(this.jodit.c.fromHTML(result));
 
-		this.__toogleSubmitButton(false);
+		this.__toggleSubmitButton(false);
+		this.__toggleInsertButton(false);
 	}
 
 	@watch(':ai-assistant-error')
@@ -183,17 +187,25 @@ export class UiAiAssistant extends UIElement<IJodit> {
 		this.__aiResult = '';
 		this.setMod('loading', false);
 		this.__error.textContent = error;
-
-		this.__toogleSubmitButton(false);
+		Dom.detach(this.__results);
+		this.__toggleSubmitButton(false);
+		const hideMod = this.getFullElName('', 'hide', 'true');
+		this.__results.classList.add(hideMod);
+		this.__toggleInsertButton(true);
 	}
 
 	@watch('promptInput.nativeInput:input')
 	protected onChangePromptValue(): void {
-		this.__toogleSubmitButton(!this.promptInput.value);
+		this.__toggleSubmitButton(!this.promptInput.value);
 	}
 
-	private __toogleSubmitButton(value: boolean): void {
+	private __toggleSubmitButton(value: boolean): void {
 		this.__submitButton.state.disabled = value;
 		this.__tryAgainButton.state.disabled = value;
+	}
+
+	private __toggleInsertButton(value: boolean): void {
+		this.__insertButton.state.disabled = value;
+		this.__insertAfterButton.state.disabled = value;
 	}
 }
