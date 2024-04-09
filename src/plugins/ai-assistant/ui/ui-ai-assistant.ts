@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/ai-assistant
+ */
+
 import type { IJodit, IUIButton } from 'jodit/types';
 import { component } from 'jodit/core/decorators/component/component';
 import watch from 'jodit/core/decorators/watch/watch';
@@ -75,12 +79,9 @@ export class UiAiAssistant extends UIElement<IJodit> {
 			onSubmit
 		);
 
-		this.__tryAgainButton = Button(
-			jodit,
-			'update',
-			'',
-			'initial'
-		).onAction(onSubmit);
+		this.__tryAgainButton = Button(jodit, 'update', '', 'initial').onAction(
+			onSubmit
+		);
 
 		this.promptInput = new UITextArea(jodit, {
 			name: 'prompt',

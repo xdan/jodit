@@ -18,7 +18,6 @@ import * as constants from './core/constants';
 import * as decorators from './core/decorators';
 import * as Modules from './modules/';
 import * as Icons from './styles/icons/';
-// JODIT-SECTION-END:POLYFILLS
 import { Jodit as DefaultJodit } from './jodit';
 import Languages from './languages';
 
@@ -34,6 +33,8 @@ if (
 ) {
 	require('./polyfills');
 }
+
+// JODIT-SECTION-END:POLYFILLS
 
 // copy constants in Jodit
 Object.keys(constants).forEach((key: string) => {

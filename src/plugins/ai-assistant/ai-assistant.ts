@@ -5,9 +5,9 @@
  */
 
 /**
- * [[include:plugins/jodit-ai/README.md]]
+ * [[include:plugins/ai-assistant/README.md]]
  * @packageDocumentation
- * @module plugins/joditai
+ * @module plugins/ai-assistant
  */
 
 import type { IJodit } from 'jodit/types';
