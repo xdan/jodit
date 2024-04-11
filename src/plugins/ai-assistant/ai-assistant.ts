@@ -53,9 +53,9 @@ export class aiAssistant extends Plugin {
 			closeOnClickOverlay: true,
 			closeOnEsc: true,
 			resizable: false,
-			draggable: true,
-			minWidth: 460,
-			maxWidth: 460
+			draggable: true
+			// minWidth: 460,
+			// maxWidth: 460
 		});
 		dialog.bindDestruct(jodit);
 

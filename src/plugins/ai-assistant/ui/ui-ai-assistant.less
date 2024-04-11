@@ -3,6 +3,11 @@
 .jodit-ui-ai-assistant {
 	width: 100%;
 	padding: var(--padding-default);
+	min-width: 460px;
+
+	@media (max-width: 768px) {
+		min-width: 100%;
+	}
 
 	&__body {
 		margin-bottom: 10px;
@@ -39,7 +44,7 @@
 	}
 
 	&__results {
-		padding: 7px;
+		padding: var(--padding-default);
 		position: relative;
 		border-color: var(--color-label);
 		border-style: solid;
@@ -49,6 +54,10 @@
 		min-width: 100%;
 		overflow: auto;
 		line-height: 1.5;
+	}
+
+	&__results p {
+		margin: 0 0 10px;
 	}
 
 	&__close {
