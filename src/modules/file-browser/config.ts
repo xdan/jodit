@@ -20,6 +20,7 @@ import type {
 	IUploader,
 	IViewBased
 } from 'jodit/types';
+import 'jodit/core/request/config';
 import { isArray, isString } from 'jodit/core/helpers/checker';
 import { humanSizeToBytes } from 'jodit/core/helpers/utils/human-size-to-bytes';
 import { UIFileInput } from 'jodit/core/ui/form/inputs/file/file';

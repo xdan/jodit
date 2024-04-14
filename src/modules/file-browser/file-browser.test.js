@@ -174,6 +174,31 @@ function getFirstItem(fb, index = 0, file = false) {
 				});
 			});
 
+			describe('Expand AJAX options', () => {
+				it('Should not change other default options', () => {
+					unmockPromise();
+
+					const filebrowser = new Jodit.modules.FileBrowser({
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php',
+							method: 'GET'
+						}
+					});
+
+					filebrowser.dataProvider.get('permissions');
+
+					const perm =
+						filebrowser.dataProvider.__ajaxInstances.get(
+							'permissions'
+						);
+					expect(perm.options.headers).deep.equals({});
+					expect(perm.options.successStatuses).deep.equals([
+						200, 201, 202
+					]);
+					filebrowser.destruct();
+				});
+			});
+
 			describe('Use POST method', function () {
 				it('Should add params only into body', function (done) {
 					const filebrowser = new Jodit.modules.FileBrowser({

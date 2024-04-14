@@ -71,17 +71,17 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return this.options;
 	}
 
-	private ajaxInstances: Map<string, IAjax<IFileBrowserAnswer>> = new Map();
+	private __ajaxInstances: Map<string, IAjax<IFileBrowserAnswer>> = new Map();
 
 	protected get<T extends IFileBrowserAnswer = IFileBrowserAnswer>(
 		name: keyof IFileBrowserOptions
 	): Promise<T> {
-		const ai = this.ajaxInstances;
+		const instances = this.__ajaxInstances;
 
-		if (ai.has(name)) {
-			const ajax = ai.get(name);
+		if (instances.has(name)) {
+			const ajax = instances.get(name);
 			ajax?.abort();
-			ai.delete(name);
+			instances.delete(name);
 		}
 
 		const opts = <IFileBrowserAjaxOptions>ConfigProto(
@@ -102,14 +102,14 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		}
 
 		const ajax = new Ajax<T>(opts);
-		ai.set(name, ajax);
+		instances.set(name, ajax);
 
 		const promise = ajax.send();
 
 		promise
 			.finally(() => {
 				ajax.destruct();
-				ai.delete(name);
+				instances.delete(name);
 
 				this.progressHandler(100);
 			})
@@ -590,7 +590,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	}
 
 	destruct(): any {
-		this.ajaxInstances.forEach(a => a.destruct());
-		this.ajaxInstances.clear();
+		this.__ajaxInstances.forEach(a => a.destruct());
+		this.__ajaxInstances.clear();
 	}
 }
