@@ -12,6 +12,12 @@ nvm use
 npm ci
 ```
 
+To work you will need to install [make](https://www.gnu.org/software/make/).
+
+```bash
+make start
+```
+
 Make code changes and add automated tests in the `test/tests/` folder.
 Run:
 
