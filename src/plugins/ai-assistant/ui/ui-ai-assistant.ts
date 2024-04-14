@@ -195,7 +195,7 @@ export class UiAiAssistant extends UIElement<IJodit> {
 		this.__toggleInsertButton(true);
 	}
 
-	@watch('promptInput.nativeInput:input')
+	@watch('promptInput:change')
 	protected onChangePromptValue(): void {
 		this.__toggleSubmitButton(!this.promptInput.value);
 	}

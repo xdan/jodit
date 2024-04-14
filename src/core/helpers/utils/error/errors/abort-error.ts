@@ -8,9 +8,25 @@
  * @module helpers/utils
  */
 
-export class AbortError extends Error {
-	constructor(m: string) {
-		super(m);
-		Object.setPrototypeOf(this, AbortError.prototype);
-	}
+/**
+ * `AbortError` is not a separate exception, but rather a {@link DOMException} with a special `name`.
+ * https://webidl.spec.whatwg.org/#aborterror
+ */
+export type AbortError = DOMException & { name: 'AbortError' };
+
+export function abort(message: string = 'Aborted'): Error {
+	return new DOMException(message, 'AbortError') as AbortError;
 }
+
+export function isAbortError(error: unknown): error is AbortError {
+	return (
+		Boolean(error) &&
+		error instanceof DOMException &&
+		error.name === 'AbortError'
+	);
+}
+
+/**
+ * @deprecated use `isAbortError`
+ */
+export const isAbort = isAbortError;

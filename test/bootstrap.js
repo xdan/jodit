@@ -339,10 +339,6 @@ if (typeof window.chai !== 'undefined') {
 
 const i18nkeys = new Set();
 const excludeI18nKeys = new Set([
-	'AI Assistant',
-	'AI Commands',
-	'ai-commands',
-	'ai-assistant',
 	'test',
 	'speechRecognize',
 	'quote',
@@ -884,7 +880,7 @@ function getOpenedDialog(editor) {
 function getButton(buttonName, joditOrElement, role, last) {
 	const elm = joditOrElement.container || joditOrElement;
 
-	return (
+	const button =
 		elm.querySelector(
 			'.jodit-toolbar-button.jodit-toolbar-button_' +
 				buttonName +
@@ -900,7 +896,23 @@ function getButton(buttonName, joditOrElement, role, last) {
 				'[role="' +
 				(role || 'button') +
 				'"]'
-		)
+		);
+
+	if (button) {
+		return button;
+	}
+
+	return (
+		Array.from(
+			elm.querySelectorAll('[role="' + (role || 'button') + '"]')
+		).find(button => {
+			if (
+				button.textContent.trim().toLowerCase() ===
+				buttonName.toLowerCase()
+			) {
+				return button;
+			}
+		}) || null
 	);
 }
 

@@ -105,6 +105,10 @@ export class UIMessages extends UIGroup implements IMessages {
 			return;
 		}
 
+		if (!this.__box) {
+			throw new Error('Container is not defined: ' + key);
+		}
+
 		this.__box.appendChild(this.container);
 
 		const msg = new UIMessage(this.j, { text, variant });

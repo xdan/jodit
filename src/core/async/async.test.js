@@ -7,6 +7,10 @@
 describe('Test Async module', () => {
 	let asyncM,
 		callCount = 0,
+		rejectCount = 0,
+		rejectSpy = () => {
+			rejectCount++;
+		},
 		callSpy = () => {
 			callCount++;
 		};
@@ -15,6 +19,7 @@ describe('Test Async module', () => {
 		unmockPromise();
 		asyncM = new Jodit.modules.Async();
 		callCount = 0;
+		rejectCount = 0;
 	});
 
 	describe('All async tasks', () => {
@@ -64,11 +69,33 @@ describe('Test Async module', () => {
 		it('Should have method for rejection on the outside', async () => {
 			const promise = asyncM.promise(r => Promise.resolve().then(r));
 
-			promise.then(callSpy).catch(e => null);
+			promise.then(callSpy).catch(e => {
+				expect(Jodit.modules.Helpers.isAbortError(e)).is.true;
+				rejectSpy();
+			});
+			// debugger
 			promise.rejectCallback();
 
-			await delay(200);
+			await asyncM.requestIdlePromise();
 			expect(callCount).equals(0);
+			expect(rejectCount).equals(1);
+		});
+
+		describe('Destroy module', () => {
+			it('Should reject promise when module is destroyed', async () => {
+				const promise = asyncM.promise(r => Promise.resolve().then(r));
+
+				promise.then(callSpy).catch(e => {
+					expect(Jodit.modules.Helpers.isAbortError(e)).is.true;
+					rejectSpy();
+				});
+
+				asyncM.destruct();
+
+				await new Promise(resolve => setTimeout(resolve, 4));
+				expect(callCount).equals(0);
+				expect(rejectCount).equals(1);
+			});
 		});
 	});
 

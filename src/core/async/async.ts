@@ -27,6 +27,7 @@ import { isPromise } from 'jodit/core/helpers/checker/is-promise';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';
 import { assert } from 'jodit/core/helpers/utils/assert';
+import { abort } from 'jodit/core/helpers/utils/error/errors/abort-error';
 
 type Callback = (...args: any[]) => void;
 
@@ -277,9 +278,9 @@ export class Async implements IAsync {
 		let rejectCallback: RejectablePromise<T>['rejectCallback'] = () => {};
 
 		const promise = new Promise<T>((resolve, reject) => {
-			this.promisesRejections.add(reject);
-			rejectCallback = (): void => reject(Error('Reject promise'));
-			return executor(resolve, reject);
+			rejectCallback = (): void => reject(abort());
+			this.promisesRejections.add(rejectCallback);
+			executor(resolve, reject);
 		});
 
 		if (!promise.finally && typeof process !== 'undefined' && !IS_ES_NEXT) {

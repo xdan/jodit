@@ -34,7 +34,7 @@ import { observable } from 'jodit/core/event-emitter';
 import {
 	ConfigProto,
 	error,
-	isAbort,
+	isAbortError,
 	isFunction,
 	isString,
 	trim
@@ -130,7 +130,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	}
 
 	private errorHandler = (resp: Error | IFileBrowserAnswer): void => {
-		if (isAbort(resp)) {
+		if (isAbortError(resp)) {
 			return;
 		}
 
@@ -189,7 +189,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	 */
 	@autobind
 	status(message: string | Error, success?: boolean): void {
-		if (!message || isAbort(message)) {
+		if (!message || isAbortError(message)) {
 			return;
 		}
 
