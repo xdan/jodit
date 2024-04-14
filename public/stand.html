@@ -77,6 +77,7 @@
 			},
 			aiAssistant: {
 				async aiAssistantCallback(prompt, htmlFragment) {
+					return `<p>${'sdsd'.repeat(100)}</p>`.repeat(100);
 					// Make API call to OpenAI
 					return fetch(
 						'https://api.openai.com/v1/chat/completions',

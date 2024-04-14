@@ -10,7 +10,7 @@
  * @module plugins/ai-assistant
  */
 
-import type { IJodit } from 'jodit/types';
+import type { IDialog, IJodit } from 'jodit/types';
 import { watch } from 'jodit/core/decorators/watch/watch';
 import { extendLang, pluginSystem } from 'jodit/core/global';
 import { isAbortError } from 'jodit/core/helpers/checker/is-abort-error';
@@ -37,28 +37,22 @@ export class aiAssistant extends Plugin {
 		}
 	];
 
+	private __dialog: IDialog;
+	private __container: UiAiAssistant;
+
 	constructor(jodit: IJodit) {
 		super(jodit);
 		extendLang(langs);
-	}
-
-	/** @override */
-	override afterInit(jodit: IJodit): void {}
-
-	@watch(':generateAiAssistantForm.ai-assistant')
-	protected onGenerateAiAssistantForm(prompt: string): void {
-		const { jodit } = this;
 
 		const dialog = jodit.dlg({
 			buttons: ['fullsize', 'dialog.close'],
 			closeOnClickOverlay: true,
 			closeOnEsc: true,
 			resizable: false,
-			draggable: true
-			// minWidth: 460,
-			// maxWidth: 460
+			draggable: true,
+			minHeight: 160
 		});
-		dialog.bindDestruct(jodit);
+		this.__dialog = dialog;
 
 		const container = new UiAiAssistant(jodit, {
 			onInsertAfter(html: string): void {
@@ -74,10 +68,16 @@ export class aiAssistant extends Plugin {
 			}
 		});
 
-		container.bindDestruct(dialog);
-		dialog.open(container, 'AI Assistant', true, false);
+		this.__container = container;
+	}
 
-		container.setPrompt(prompt);
+	/** @override */
+	override afterInit(jodit: IJodit): void {}
+
+	@watch(':generateAiAssistantForm.ai-assistant')
+	protected onGenerateAiAssistantForm(prompt: string): void {
+		this.__dialog.open(this.__container, 'AI Assistant');
+		this.__container.setPrompt(prompt);
 	}
 
 	@watch(':invokeAiAssistant')
@@ -110,7 +110,10 @@ export class aiAssistant extends Plugin {
 	}
 
 	/** @override */
-	protected beforeDestruct(_: IJodit): void {}
+	protected beforeDestruct(_: IJodit): void {
+		this.__container.destruct();
+		this.__dialog.destruct();
+	}
 }
 
 pluginSystem.add('ai-assistant', aiAssistant);

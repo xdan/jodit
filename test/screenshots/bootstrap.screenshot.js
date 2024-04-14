@@ -108,6 +108,11 @@ if (typeof before !== 'undefined') {
 		await page.evaluate(() => {
 			window.editor?.destruct();
 			window.editor = Jodit.make('#editor-area', {
+				aiAssistant: {
+					aiAssistantCallback: async (text, html) => {
+						return `AI: ${text} HTML: ${html} answer`;
+					}
+				},
 				filebrowser: {
 					ajax: {
 						url: 'https://xdsoft.net/jodit/finder/'
