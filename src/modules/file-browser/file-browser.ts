@@ -30,6 +30,7 @@ import { STATUSES } from 'jodit/core/component';
 import * as consts from 'jodit/core/constants';
 import { IS_PROD } from 'jodit/core/constants';
 import { autobind, cache, derive } from 'jodit/core/decorators';
+import { watch } from 'jodit/core/decorators/watch/watch';
 import { observable } from 'jodit/core/event-emitter';
 import {
 	ConfigProto,
@@ -180,6 +181,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	/**
 	 * It displays a message in the status bar of filebrowser
 	 *
+	 * @param message - The message that will be displayed
 	 * @param success - true It will be shown a message light . If no option is specified ,
 	 * ßan error will be shown the red
 	 * @example
@@ -271,7 +273,8 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 
 				const header = this.c.div();
 
-				this.toolbar?.build(this.__getButtons()).appendTo(header);
+				this.toolbar?.appendTo(header);
+				this.__updateToolbarButtons();
 
 				this._dialog.open(this.browser, header);
 
@@ -286,6 +289,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 			}) as Promise<void>;
 	}
 
+	private __prevButtons: ButtonsOption = [];
 	private __getButtons(): ButtonsOption {
 		const options = (this.o.buttons ?? ([] as ButtonsOption)) as Exclude<
 			ButtonsOption,
@@ -445,4 +449,31 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		this.events && this.e.off('.filebrowser');
 		this.uploader && this.uploader.destruct();
 	}
+
+	@watch('dataProvider:changePermissions')
+	private __updateToolbarButtons(): void {
+		const buttons = this.__getButtons();
+		if (isEqualButtonList(this.__prevButtons, buttons)) {
+			return;
+		}
+		this.__prevButtons = buttons;
+		this.toolbar?.build(buttons);
+	}
+}
+
+function isEqualButtonList(
+	prevButtons: ButtonsOption,
+	buttons: ButtonsOption
+): boolean {
+	if (prevButtons.length !== buttons.length) {
+		return false;
+	}
+
+	for (let i = 0; i < prevButtons.length; i++) {
+		if (prevButtons[i] !== buttons[i]) {
+			return false;
+		}
+	}
+
+	return true;
 }

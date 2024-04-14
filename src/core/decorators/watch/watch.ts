@@ -159,5 +159,3 @@ export function watch(
 		}
 	};
 }
-
-export default watch;

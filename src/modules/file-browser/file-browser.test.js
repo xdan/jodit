@@ -228,6 +228,73 @@ function getFirstItem(fb, index = 0, file = false) {
 		});
 
 		describe('Toolbar', function () {
+			describe('Permissions', () => {
+				it('Should show allowed buttons', async () => {
+					const fileBrowser = new Jodit.modules.FileBrowser({
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php'
+						}
+					});
+
+					await fileBrowser
+						.open(() => {})
+						.then(() => {
+							expect(getButton('remove', fileBrowser.toolbar)).to
+								.be.not.null;
+						});
+
+					fileBrowser.destruct();
+				});
+
+				describe('Disable permissions', () => {
+					it('Should show only allowed buttons', async () => {
+						const fileBrowser = new Jodit.modules.FileBrowser({
+							ajax: {
+								url: 'https://xdsoft.net/jodit/connector/index.php'
+							},
+							permissionsPresets: {
+								allowFileRemove: false
+							}
+						});
+
+						await fileBrowser
+							.open(() => {})
+							.then(() => {
+								expect(getButton('remove', fileBrowser.toolbar))
+									.to.be.null;
+							});
+
+						fileBrowser.destruct();
+					});
+
+					describe('Changed from server', () => {
+						it('Should show only allowed buttons', async () => {
+							unmockPromise();
+							const fileBrowser = new Jodit.modules.FileBrowser({
+								ajax: {
+									url: 'https://xdsoft.net/jodit/connector/index.php'
+								}
+							});
+
+							await fileBrowser
+								.open(() => {})
+								.then(async () => {
+									defaultPermissions.permissions.allowFileRemove = false;
+									await fileBrowser.dataProvider.permissions(
+										'',
+										''
+									);
+									expect(
+										getButton('remove', fileBrowser.toolbar)
+									).to.be.null;
+								});
+
+							fileBrowser.destruct();
+						});
+					});
+				});
+			});
+
 			describe('Without Jodit', function () {
 				it('Should create filebrowser and show standart toolbar', function (done) {
 					const filebrowser = new Jodit.modules.FileBrowser({
@@ -258,7 +325,7 @@ function getFirstItem(fb, index = 0, file = false) {
 
 			describe('Disable buttons', function () {
 				describe('Edit button', function () {
-					it('Should be disable while not selected some image', function (done) {
+					it('Should be disabled while not selected some image', function (done) {
 						const filebrowser = new Jodit.modules.FileBrowser({
 							ajax: {
 								url: 'https://xdsoft.net/jodit/connector/index.php'

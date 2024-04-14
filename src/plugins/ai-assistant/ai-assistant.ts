@@ -11,7 +11,7 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import watch from 'jodit/core/decorators/watch/watch';
+import { watch } from 'jodit/core/decorators/watch/watch';
 import { extendLang, pluginSystem } from 'jodit/core/global';
 import { isAbortError } from 'jodit/core/helpers/checker/is-abort-error';
 import { Plugin } from 'jodit/core/plugin/plugin';

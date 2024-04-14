@@ -163,6 +163,12 @@ export default class DataProvider implements IFileBrowserDataProvider {
 					) as IFileBrowserAnswer;
 
 					if (respData.data.permissions) {
+						this.parent.events.fire(
+							this,
+							'changePermissions',
+							this.__currentPermissions,
+							respData.data.permissions
+						);
 						this.__currentPermissions = respData.data.permissions;
 					}
 				}

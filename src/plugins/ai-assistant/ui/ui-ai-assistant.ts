@@ -10,7 +10,7 @@
 
 import type { IJodit, IUIButton } from 'jodit/types';
 import { component } from 'jodit/core/decorators/component/component';
-import watch from 'jodit/core/decorators/watch/watch';
+import { watch } from 'jodit/core/decorators/watch/watch';
 import { Dom } from 'jodit/core/dom/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { Button, UIBlock, UIForm, UITextArea } from 'jodit/core/ui';
