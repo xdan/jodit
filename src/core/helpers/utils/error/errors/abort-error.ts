@@ -8,6 +8,8 @@
  * @module helpers/utils
  */
 
+import { isAbortError } from 'jodit/core/helpers/checker/is-abort-error';
+
 /**
  * `AbortError` is not a separate exception, but rather a {@link DOMException} with a special `name`.
  * https://webidl.spec.whatwg.org/#aborterror
@@ -18,15 +20,7 @@ export function abort(message: string = 'Aborted'): Error {
 	return new DOMException(message, 'AbortError') as AbortError;
 }
 
-export function isAbortError(error: unknown): error is AbortError {
-	return (
-		Boolean(error) &&
-		error instanceof DOMException &&
-		error.name === 'AbortError'
-	);
-}
-
 /**
- * @deprecated use `isAbortError`
+ * @deprecated use `isAbortError` instead
  */
 export const isAbort = isAbortError;
