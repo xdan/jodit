@@ -56,6 +56,16 @@ describe('AI Assistant', () => {
 			expect(getOpenedDialog(editor)).to.be.not.null;
 		});
 
+		it('Should cache ai-assistant dialog', () => {
+			clickButton('ai_assistant', editor);
+			const dialog = getOpenedDialog(editor);
+			expect(dialog).to.be.not.null;
+			clickButton('close', dialog);
+			expect(getOpenedDialog(editor)).to.be.null;
+			clickButton('ai_assistant', editor);
+			expect(getOpenedDialog(editor)).to.be.equal(dialog);
+		});
+
 		describe('Main button in this dialog', () => {
 			it('Should be disabled before enter text', () => {
 				clickButton('ai_assistant', editor);

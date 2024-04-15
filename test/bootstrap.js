@@ -62,6 +62,14 @@ function delay(timeout) {
 	});
 }
 
+function idle() {
+	return new naturalPromise(resolve => {
+		typeof requestIdleCallback === 'function'
+			? requestIdleCallback(resolve)
+			: setTimeout(resolve, 0);
+	});
+}
+
 const defaultPermissions = {
 	permissions: {
 		allowFiles: true,

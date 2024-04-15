@@ -8,10 +8,12 @@ describe('Test Async module', () => {
 	let asyncM,
 		callCount = 0,
 		rejectCount = 0,
-		rejectSpy = () => {
+		rejectSpy = type => () => {
+			// console.log(type);
 			rejectCount++;
 		},
-		callSpy = () => {
+		callSpy = type => () => {
+			// console.log(type);
 			callCount++;
 		};
 
@@ -24,39 +26,40 @@ describe('Test Async module', () => {
 
 	describe('All async tasks', () => {
 		it('Should be called', async () => {
-			asyncM.setTimeout(callSpy, 100);
+			asyncM.setTimeout(callSpy('timeout'), 100);
 			asyncM
 				.promise(r => Promise.resolve().then(r))
-				.then(callSpy)
+				.then(callSpy('promise'))
 				.catch(e => null);
-			asyncM.requestIdleCallback(callSpy);
-
+			asyncM.requestIdleCallback(callSpy('idle'));
 			await delay(200);
+			await idle();
 			expect(callCount).equals(3);
 		});
 
 		describe('After the View was destroyed', () => {
 			it('Should not be called', async () => {
-				asyncM.setTimeout(callSpy, 100);
+				asyncM.setTimeout(callSpy('timeout'), 100);
 				asyncM
 					.promise(r => Promise.resolve().then(r))
-					.then(callSpy)
+					.then(callSpy('promise'))
 					.catch(e => null);
-				asyncM.requestIdleCallback(callSpy);
+				asyncM.requestIdleCallback(callSpy('idle'));
 				asyncM.destruct();
 				await delay(200);
+				await idle();
 				expect(callCount).equals(0);
 			});
 
 			describe('Jodit instance', () => {
 				it('Should work the same way', async () => {
 					const editor = getJodit();
-					editor.async.setTimeout(callSpy, 100);
+					editor.async.setTimeout(callSpy('setTimeout'), 100);
 					editor.async
 						.promise(r => Promise.resolve().then(r))
-						.then(callSpy)
+						.then(callSpy('promise'))
 						.catch(e => null);
-					editor.async.requestIdleCallback(callSpy);
+					editor.async.requestIdleCallback(callSpy('idle'));
 					editor.destruct();
 					await delay(200);
 					expect(callCount).equals(0);
@@ -69,9 +72,9 @@ describe('Test Async module', () => {
 		it('Should have method for rejection on the outside', async () => {
 			const promise = asyncM.promise(r => Promise.resolve().then(r));
 
-			promise.then(callSpy).catch(e => {
+			promise.then(callSpy('promise')).catch(e => {
 				expect(Jodit.modules.Helpers.isAbortError(e)).is.true;
-				rejectSpy();
+				rejectSpy('promise')();
 			});
 			// debugger
 			promise.rejectCallback();
@@ -85,9 +88,9 @@ describe('Test Async module', () => {
 			it('Should reject promise when module is destroyed', async () => {
 				const promise = asyncM.promise(r => Promise.resolve().then(r));
 
-				promise.then(callSpy).catch(e => {
+				promise.then(callSpy('promise')).catch(e => {
 					expect(Jodit.modules.Helpers.isAbortError(e)).is.true;
-					rejectSpy();
+					rejectSpy('promise')();
 				});
 
 				asyncM.destruct();
@@ -101,27 +104,31 @@ describe('Test Async module', () => {
 
 	describe('setTimeout', () => {
 		it('Should be called with number timeout', async () => {
-			asyncM.setTimeout(callSpy, 100);
+			asyncM.setTimeout(callSpy('setTimeout'), 100);
 			await delay(200);
 			expect(callCount).equals(1);
 		});
 
 		it('Should be called with options', async () => {
-			asyncM.setTimeout(callSpy, { timeout: 100 });
+			asyncM.setTimeout(callSpy('setTimeout'), { timeout: 100 });
 			await delay(200);
 			expect(callCount).equals(1);
 		});
 
 		describe('Clear', () => {
 			it('Should be cleared with timeout id', async () => {
-				const id = asyncM.setTimeout(callSpy, { timeout: 100 });
+				const id = asyncM.setTimeout(callSpy('setTimeout'), {
+					timeout: 100
+				});
 				asyncM.clearTimeout(id);
 				await delay(200);
 				expect(callCount).equals(0);
 			});
 
 			it('Should be cleared with timeout id', async () => {
-				const id = asyncM.setTimeout(callSpy, { timeout: 100 });
+				const id = asyncM.setTimeout(callSpy('setTimeout'), {
+					timeout: 100
+				});
 				asyncM.clearTimeout(id);
 				await delay(200);
 				expect(callCount).equals(0);
@@ -129,7 +136,10 @@ describe('Test Async module', () => {
 
 			describe('With label', () => {
 				it('Should be cleared with label', async () => {
-					asyncM.setTimeout(callSpy, { timeout: 100, label: 'test' });
+					asyncM.setTimeout(callSpy('timeout'), {
+						timeout: 100,
+						label: 'test'
+					});
 					asyncM.clearTimeout('test');
 					await delay(200);
 					expect(callCount).equals(0);
@@ -137,23 +147,23 @@ describe('Test Async module', () => {
 
 				describe('Several call with one label', () => {
 					it('Should clear previous call', async () => {
-						asyncM.setTimeout(callSpy, {
+						asyncM.setTimeout(callSpy('timeout1'), {
 							timeout: 100,
 							label: 'test'
 						});
-						asyncM.setTimeout(callSpy, {
+						asyncM.setTimeout(callSpy('timeout2'), {
 							timeout: 100,
 							label: 'test'
 						});
-						asyncM.setTimeout(callSpy, {
+						asyncM.setTimeout(callSpy('timeout3'), {
 							timeout: 100,
 							label: 'test'
 						});
-						asyncM.setTimeout(callSpy, {
+						asyncM.setTimeout(callSpy('timeout4'), {
 							timeout: 100,
 							label: 'test'
 						});
-						asyncM.setTimeout(callSpy, {
+						asyncM.setTimeout(callSpy('timeout5'), {
 							timeout: 100
 						});
 
@@ -195,7 +205,7 @@ describe('Test Async module', () => {
 
 	describe('requestAnimationFrame', () => {
 		it('Should call as usual requestAnimationFrame', done => {
-			asyncM.requestAnimationFrame(callSpy);
+			asyncM.requestAnimationFrame(callSpy('requestAnimationFrame'));
 			/*ok*/ requestAnimationFrame(() => {
 				expect(callCount).equals(1);
 				done();
@@ -204,7 +214,7 @@ describe('Test Async module', () => {
 
 		describe('Clear', () => {
 			it('Should not be called after destruct', done => {
-				asyncM.requestAnimationFrame(callSpy);
+				asyncM.requestAnimationFrame(callSpy('requestAnimationFrame'));
 				asyncM.destruct();
 				/*ok*/ requestAnimationFrame(() => {
 					expect(callCount).equals(0);

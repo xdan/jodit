@@ -11,6 +11,7 @@
  */
 
 import type { IDialog, IJodit } from 'jodit/types';
+import { cache } from 'jodit/core/decorators/cache/cache';
 import { watch } from 'jodit/core/decorators/watch/watch';
 import { extendLang, pluginSystem } from 'jodit/core/global';
 import { isAbortError } from 'jodit/core/helpers/checker/is-abort-error';
@@ -37,14 +38,9 @@ export class aiAssistant extends Plugin {
 		}
 	];
 
-	private __dialog: IDialog;
-	private __container: UiAiAssistant;
-
-	constructor(jodit: IJodit) {
-		super(jodit);
-		extendLang(langs);
-
-		const dialog = jodit.dlg({
+	@cache
+	private get __dialog(): IDialog {
+		return this.jodit.dlg({
 			buttons: ['fullsize', 'dialog.close'],
 			closeOnClickOverlay: true,
 			closeOnEsc: true,
@@ -52,23 +48,30 @@ export class aiAssistant extends Plugin {
 			draggable: true,
 			minHeight: 160
 		});
-		this.__dialog = dialog;
+	}
 
-		const container = new UiAiAssistant(jodit, {
+	@cache
+	private get __container(): UiAiAssistant {
+		const { jodit, __dialog } = this;
+
+		return new UiAiAssistant(jodit, {
 			onInsertAfter(html: string): void {
 				jodit.s.focus();
 				jodit.s.setCursorAfter(jodit.s.current()!);
 				jodit.s.insertHTML(html);
-				dialog.close();
+				__dialog.close();
 			},
 			onInsert(html: string): void {
 				jodit.s.focus();
 				jodit.s.insertHTML(html);
-				dialog.close();
+				__dialog.close();
 			}
 		});
+	}
 
-		this.__container = container;
+	constructor(jodit: IJodit) {
+		super(jodit);
+		extendLang(langs);
 	}
 
 	/** @override */

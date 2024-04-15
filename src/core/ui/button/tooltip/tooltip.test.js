@@ -98,7 +98,6 @@
 
 				button = getButton('indent', editor);
 				expect(button).is.not.null;
-
 				simulateEvent('mouseenter', button.parentElement); // toolbar-button
 
 				tooltip =
