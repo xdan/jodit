@@ -10,8 +10,8 @@
  * @module plugins/ai-assistant
  */
 
-import type { IDialog, IJodit } from 'jodit/types';
-import { cache } from 'jodit/core/decorators/cache/cache';
+import type { IDestructible, IDialog, IJodit } from 'jodit/types';
+import { cache, cached } from 'jodit/core/decorators/cache/cache';
 import { watch } from 'jodit/core/decorators/watch/watch';
 import { extendLang, pluginSystem } from 'jodit/core/global';
 import { isAbortError } from 'jodit/core/helpers/checker/is-abort-error';
@@ -114,8 +114,8 @@ export class aiAssistant extends Plugin {
 
 	/** @override */
 	protected beforeDestruct(_: IJodit): void {
-		this.__container.destruct();
-		this.__dialog.destruct();
+		cached<IDestructible>(this, '__container')?.destruct();
+		cached<IDestructible>(this, '__dialog')?.destruct();
 	}
 }
 

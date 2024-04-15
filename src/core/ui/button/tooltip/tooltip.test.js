@@ -79,6 +79,7 @@
 				let tooltip =
 					editor.ownerDocument.querySelector('.jodit-ui-tooltip');
 				expect(tooltip).is.not.null;
+
 				const title = tooltip.textContent;
 				editor.destruct();
 

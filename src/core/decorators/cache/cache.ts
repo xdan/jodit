@@ -10,7 +10,12 @@
  * @module decorators/cache
  */
 
-import type { IDictionary, IViewBased, IViewComponent } from 'jodit/types';
+import type {
+	IDictionary,
+	IViewBased,
+	IViewComponent,
+	Nullable
+} from 'jodit/types';
 import { STATUSES } from 'jodit/core/component/statuses';
 import { Dom } from 'jodit/core/dom/dom';
 import { isFunction, isViewObject } from 'jodit/core/helpers/checker';
@@ -18,6 +23,14 @@ import { error } from 'jodit/core/helpers/utils/error/error';
 
 export interface CachePropertyDescriptor<T, R> extends PropertyDescriptor {
 	get?: (this: T) => R;
+}
+
+export function cached<T>(object: object, property: string): Nullable<T> {
+	const descriptor = Object.getOwnPropertyDescriptor(object, property);
+	if (!descriptor || isFunction(descriptor.get)) {
+		return null;
+	}
+	return descriptor.value as T;
 }
 
 export function cache<T, R>(

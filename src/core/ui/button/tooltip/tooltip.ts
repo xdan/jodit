@@ -35,14 +35,14 @@ export class UITooltip extends UIElement {
 
 	constructor(view: IViewBased) {
 		super(view);
-
 		if (
 			!view.o.textIcons &&
 			view.o.showTooltip &&
 			!view.o.useNativeTooltip
 		) {
 			view.hookStatus(STATUSES.ready, () => {
-				getContainer(view, UITooltip).appendChild(this.container);
+				// TODO Move it inside __open method. Now it is here becous testcase failed with capturing
+				getContainer(this.j, UITooltip).appendChild(this.container);
 
 				view.e.on(
 					view.container,
@@ -126,6 +126,7 @@ export class UITooltip extends UIElement {
 
 		const tooltip = attr(e.target, 'aria-label');
 
+
 		if (!tooltip) {
 			return;
 		}
@@ -160,7 +161,6 @@ export class UITooltip extends UIElement {
 	private __delayShowTimeout: number = 0;
 	private __hideTimeout: number = 0;
 
-	@autobind
 	private __delayOpen(getPoint: () => IPoint, content: string): void {
 		const to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
 

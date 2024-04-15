@@ -28,7 +28,7 @@ export function spy(target: Function): void {
 
 	methods.forEach(key => {
 		// Ignore special case target method
-		if (key === 'constructor') {
+		if (['className', 'constructor'].includes(key)) {
 			return;
 		}
 
@@ -39,25 +39,25 @@ export function spy(target: Function): void {
 
 		// Only methods need binding
 		if (descriptor && isFunction(descriptor.value)) {
-			target.prototype[key] = function (
-				this: typeof target,
-				...args: any[]
-			): any {
-				console.warn(
-					`Class: ${getClassName(target.prototype)} call: ${String(
-						key
-					)}(${args.map(a =>
-						isPlainObject(a) ||
-						isString(a) ||
-						isBoolean(a) ||
-						isNumber(a)
-							? JSON.stringify(a)
-							: {}.toString.call(a)
-					)})`
-				);
+			Object.defineProperty(target.prototype, key, {
+				...descriptor,
+				value: function (this: typeof target, ...args: any[]): any {
+					console.warn(
+						`Class: ${getClassName(target.prototype)} call: ${String(
+							key
+						)}(${args.map(a =>
+							isPlainObject(a) ||
+							isString(a) ||
+							isBoolean(a) ||
+							isNumber(a)
+								? JSON.stringify(a)
+								: {}.toString.call(a)
+						)})`
+					);
 
-				return descriptor.value.apply(this, args);
-			};
+					return descriptor.value.apply(this, args);
+				},
+			});
 		}
 	});
 }
