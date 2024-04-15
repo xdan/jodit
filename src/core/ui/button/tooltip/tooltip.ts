@@ -126,7 +126,6 @@ export class UITooltip extends UIElement {
 
 		const tooltip = attr(e.target, 'aria-label');
 
-
 		if (!tooltip) {
 			return;
 		}

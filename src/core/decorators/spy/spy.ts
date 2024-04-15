@@ -56,7 +56,7 @@ export function spy(target: Function): void {
 					);
 
 					return descriptor.value.apply(this, args);
-				},
+				}
 			});
 		}
 	});
