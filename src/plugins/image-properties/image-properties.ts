@@ -75,11 +75,13 @@ const normalSizeFromString = (value: string | number): string | number => {
 export class imageProperties extends Plugin {
 	protected state: {
 		image: HTMLImageElement;
+		currentImage: HTMLImageElement;
 		ratio: number;
 		sizeIsLocked: boolean;
 		marginIsLocked: boolean;
 	} = {
 		image: new Image(),
+		currentImage: new Image(),
 		get ratio(): number {
 			return this.image.naturalWidth / this.image.naturalHeight || 1;
 		},
@@ -183,21 +185,23 @@ export class imageProperties extends Plugin {
 			return;
 		}
 
-		this.dialog = this.j.dlg({
+		const dialog = this.j.dlg({
 			minWidth: Math.min(400, screen.width),
 			minHeight: 590,
 			buttons: ['fullsize', 'dialog.close']
 		});
+		this.dialog = dialog;
 
 		const editor = this.j,
 			opt = editor.o,
 			i18n = editor.i18n.bind(editor),
 			buttons = {
 				check: Button(editor, 'ok', 'Apply', 'primary'),
-				remove: Button(editor, 'bin', 'Delete')
+				remove: Button(editor, 'bin', 'Delete'),
+				cancel: Button(editor, 'cancel', 'Cancel')
 			};
 
-		editor.e.on(this.dialog, 'afterClose', () => {
+		editor.e.on(dialog, 'afterClose', () => {
 			if (
 				this.state.image.parentNode &&
 				opt.image.selectImageAfterClose
@@ -208,10 +212,11 @@ export class imageProperties extends Plugin {
 
 		buttons.remove.onAction(() => {
 			editor.s.removeNode(this.state.image);
-			this.dialog.close();
+			dialog.close();
 		});
-
-		const { dialog } = this;
+		buttons.cancel.onAction(() => {
+			dialog.close();
+		});
 
 		dialog.setHeader(i18n('Image properties'));
 
@@ -289,7 +294,7 @@ export class imageProperties extends Plugin {
 			}
 		);
 
-		dialog.setFooter([buttons.remove, buttons.check]);
+		dialog.setFooter([[buttons.remove, buttons.cancel], buttons.check]);
 
 		dialog.setSize(this.j.o.image.dialogWidth);
 	}
@@ -405,23 +410,24 @@ export class imageProperties extends Plugin {
 			},
 			updateSizes = (): void => {
 				const width =
-						attr(image, 'width') ||
-						css(image, 'width', true) ||
-						false,
-					height =
-						attr(image, 'height') ||
-						css(image, 'height', true) ||
-						false;
+					attr(image, 'width') || css(image, 'width', true) || false;
+
+				const height =
+					attr(image, 'height') ||
+					css(image, 'height', true) ||
+					false;
 
 				imageWidth.value =
 					width !== false
 						? normalSizeFromString(width).toString()
-						: image.offsetWidth.toString();
+						: (image.offsetWidth || image.naturalWidth).toString();
 
 				imageHeight.value =
 					height !== false
 						? normalSizeFromString(height).toString()
-						: image.offsetHeight.toString();
+						: (
+								image.offsetHeight || image.naturalHeight
+							).toString();
 
 				this.state.sizeIsLocked = ((): boolean => {
 					if (
@@ -442,7 +448,11 @@ export class imageProperties extends Plugin {
 
 				imageAlt.value = attr(image, 'alt') || '';
 
-				const a = Dom.closest(image, 'a', this.j.editor);
+				const a = Dom.closest(
+					this.state.currentImage,
+					'a',
+					this.j.editor
+				);
 
 				if (a) {
 					imageLink.value = attr(a, 'href') || '';
@@ -499,7 +509,7 @@ export class imageProperties extends Plugin {
 		} = refs<HTMLInputElement>(this.form);
 
 		const opt = this.j.o;
-		const { image } = this.state;
+		const { currentImage: image } = this.state;
 
 		// styles
 		if (opt.image.editStyle) {
@@ -711,7 +721,7 @@ export class imageProperties extends Plugin {
 							popup.close();
 						},
 
-						filebrowser: (data: IFileBrowserCallBackData) => {
+						filebrowser: async (data: IFileBrowserCallBackData) => {
 							if (
 								data &&
 								isArray(data.files) &&
@@ -719,7 +729,7 @@ export class imageProperties extends Plugin {
 							) {
 								attr(this.state.image, 'src', data.files[0]);
 								popup.close();
-
+								await this.state.image.decode();
 								this.updateValues();
 							}
 						}
@@ -759,7 +769,10 @@ export class imageProperties extends Plugin {
 									return;
 								}
 
-								self.state.image = image;
+								self.state.currentImage = image;
+								self.state.image = image.cloneNode(
+									true
+								) as HTMLImageElement;
 
 								if (!editor.o.readonly) {
 									e.stopImmediatePropagation();
@@ -777,7 +790,10 @@ export class imageProperties extends Plugin {
 			.on(
 				'openImageProperties.imageproperties',
 				(image: HTMLImageElement) => {
-					this.state.image = image;
+					self.state.currentImage = image;
+					this.state.image = image.cloneNode(
+						true
+					) as HTMLImageElement;
 					this.open();
 				}
 			);

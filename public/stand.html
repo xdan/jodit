@@ -112,7 +112,8 @@
 			}
 		});
 
-		editor.value = '<!-- comment -->';
+		editor.value = '<p style="font-size: 16.5pt; margin: 0">Body Subtitle</p>\n' +
+			'<p style="font-size: 10pt; line-height: normal; margin: 7px 0 0 0;">To modify this template, place it into your Outlook editor.</p>';
 
 		btn.onclick = () => {
 			const start = performance.now();
@@ -127,9 +128,6 @@
 			);
 		};
 
-		editor.value = '<p>Your secret API keys are listed below. Please note that we do not display your secret API keys again after you generate them.\n' +
-			'\n' +
-			'Do not share your API key with others, or expose it in the browser or other client-side code. In order to protect the security of your account, OpenAI may also automatically disable any API key that we\'ve found has leaked publicly.</p>';
 		// delete editor;
 		// const box = new UIBox(editor1);
 		// alert(box.container.outerHTML);

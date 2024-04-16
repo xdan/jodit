@@ -241,6 +241,8 @@ newversion:
 
 .PHONY: newversion-git
 newversion-git:
+	git config user.name "xdan"
+	git config user.email "chupurnov@gmail.com"
 	git add --all  && git commit -m "New version $(version) Read more $(CHANGELOG_URL)"
 	git tag $(version)
 	@if [ "$(push)" = "true" ]; then \

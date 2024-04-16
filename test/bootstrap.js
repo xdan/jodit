@@ -1359,3 +1359,13 @@ if (typeof before === 'function') {
 		};
 	});
 }
+
+function getFirstFBItem(fb, index = 0, file = false) {
+	return fb.browser.querySelectorAll(
+		'.' +
+			fb.files.getFullElName('item') +
+			'[data-is-file="' +
+			(file ? 1 : 0) +
+			'"]'
+	)[index];
+}

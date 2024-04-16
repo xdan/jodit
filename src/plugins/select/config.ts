@@ -22,10 +22,19 @@ declare module 'jodit/config' {
 			 * `<ul><li>|test|</li><li>|test</li></ul>` will be `<ul>|<li>test</li><li>|test</li></ul>`
 			 */
 			normalizeSelectionBeforeCutAndCopy: boolean;
+
+			/**
+			 * Normalize selection after triple click
+			 * @example
+			 *
+			 * `<ul><li>|test</li><li>|pop</li></ul>` will be `<ul><li>|test|</li><li>pop</li</ul>|`
+			 */
+			normalizeTripleClick: boolean;
 		};
 	}
 }
 
 Config.prototype.select = {
-	normalizeSelectionBeforeCutAndCopy: false
+	normalizeSelectionBeforeCutAndCopy: false,
+	normalizeTripleClick: true
 };
