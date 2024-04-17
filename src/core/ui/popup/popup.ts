@@ -183,7 +183,7 @@ export class Popup extends UIGroup implements IPopup {
 		let pe = this.parentElement;
 
 		while (pe) {
-			if (checkView(j)) {
+			if (checkView(pe.j)) {
 				return;
 			}
 

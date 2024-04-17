@@ -1,144 +1,159 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+		/>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Jodit Dev</title>
+		<link rel="stylesheet" href="./app.css" />
+		<link rel="stylesheet" href="./build/jodit.css" />
+		<script src="./build/jodit.js"></script>
+		<script src="./build/plugins/speech-recognize/speech-recognize.js"></script>
+		<!--		<script src="./build/plugins/debug/debug.js"></script>-->
+		<link rel="icon" href="https://xdsoft.net/jodit/pro/favicon.png" />
+	</head>
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport"
-		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<title>Jodit Dev</title>
-	<link rel="stylesheet" href="./app.css" />
-	<link rel="stylesheet" href="./build/jodit.css" />
-	<script src="./build/jodit.js"></script>
-	<script src="./build/plugins/speech-recognize/speech-recognize.js"></script>
-	<!--		<script src="./build/plugins/debug/debug.js"></script>-->
-	<link rel="icon" href="https://xdsoft.net/jodit/pro/favicon.png" />
-</head>
+	<body>
+		<style>
+			body {
+				font-variant-ligatures: contextual;
+				text-rendering: optimizespeed;
+				-webkit-font-smoothing: antialiased;
+			}
 
-<body>
-	<style>
-		body {
-			font-variant-ligatures: contextual;
-			text-rendering: optimizespeed;
-			-webkit-font-smoothing: antialiased;
-		}
-
-		#box {
-			position: relative;
-			height: 500px;
-			padding: 100px;
-			margin: 20px;
-		}
-
-		@media (max-width: 480px) {
 			#box {
-				padding: 0;
+				position: relative;
+				height: 500px;
+				padding: 100px;
+				margin: 20px;
 			}
-		}
-	</style>
-	<div id="box">
-		<h1>Jodit Test Document</h1>
-		<form id="form" action="sss.php">
-			<textarea id="editorNative"></textarea>
-			<button id="btn" type="button">click</button>
-		</form>
-	</div>
-	<script>
-		const editor = Jodit.make(editorNative, {
-			// safeMode: true,
-			// iframe: true,
-			// buttons: ['paragraph', 'align'],
-			// theme: 'dark',
-			// textIcons: true,
-			controls: {
-				paragraph: {
-					// component: 'select',
-				},
-				align: {
-					// component: 'select',
-				},
-				font: {
-					// component: 'select',
-				},
-				fontsize: {
-					// component: 'select',
+
+			@media (max-width: 480px) {
+				#box {
+					padding: 0;
 				}
-			},
-			// fullsize: true,
-			cache: true,
-			// language: 'ru',
-			filebrowser: {
-				ajax: {
-					url: 'https://xdsoft.net/jodit/finder/'
-				}
-			},
-			uploader: {
-				url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
-			},
-			aiAssistant: {
-				async aiAssistantCallback(prompt, htmlFragment) {
-					return `<p>${'sdsd'.repeat(100)}</p>`.repeat(100);
-					// Make API call to OpenAI
-					return fetch(
-						'https://api.openai.com/v1/chat/completions',
-						{
-							method: 'POST',
-							mode: 'cors',
-							headers: {
-								'Content-Type': 'application/json',
-								Authorization: 'Bearer ' + Jodit.constants.TOKENS.TOKEN_GPT
-							},
-							body: JSON.stringify({
-								model: "gpt-3.5-turbo",
-								messages: [{
-									role: "system",
-									content: prompt
-								}, {
-									role: "user",
-									content: htmlFragment
-								}]
-							})
-						}
-					)
-						.then(response => response.json())
-						.then(data => {
-							if (data.error) {
-								throw new Error(data.error.message);
+			}
+		</style>
+		<div id="box">
+			<h1>Jodit Test Document</h1>
+			<form id="form" action="sss.php">
+				<textarea id="editorNative"></textarea>
+				<button id="btn" type="button">click</button>
+			</form>
+		</div>
+		<script>
+			const editor = Jodit.make(editorNative, {
+				// safeMode: true,
+				// iframe: true,
+				// buttons: ['paragraph', 'align'],
+				// theme: 'dark',
+				// textIcons: true,
+				controls: {
+					paragraph: {
+						// component: 'select',
+					},
+					align: {
+						// component: 'select',
+					},
+					font: {
+						// component: 'select',
+					},
+					fontsize: {
+						// component: 'select',
+					}
+				},
+				// fullsize: true,
+				cache: true,
+				// language: 'ru',
+				filebrowser: {
+					ajax: {
+						url: 'https://xdsoft.net/jodit/finder/'
+					}
+				},
+				uploader: {
+					url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
+				},
+				aiAssistant: {
+					async aiAssistantCallback(prompt, htmlFragment) {
+						return `<p>${'sdsd'.repeat(100)}</p>`.repeat(100);
+						// Make API call to OpenAI
+						return fetch(
+							'https://api.openai.com/v1/chat/completions',
+							{
+								method: 'POST',
+								mode: 'cors',
+								headers: {
+									'Content-Type': 'application/json',
+									Authorization:
+										'Bearer ' +
+										Jodit.constants.TOKENS.TOKEN_GPT
+								},
+								body: JSON.stringify({
+									model: 'gpt-3.5-turbo',
+									messages: [
+										{
+											role: 'system',
+											content: prompt
+										},
+										{
+											role: 'user',
+											content: htmlFragment
+										}
+									]
+								})
 							}
+						)
+							.then(response => response.json())
+							.then(data => {
+								if (data.error) {
+									throw new Error(data.error.message);
+								}
 
-							return Jodit.modules.Helpers.get('choices.0.message.content', data) ?? '';
-						});
+								return (
+									Jodit.modules.Helpers.get(
+										'choices.0.message.content',
+										data
+									) ?? ''
+								);
+							});
+					}
 				}
-			}
-		});
+			});
 
-		editor.value = '<p style="font-size: 16.5pt; margin: 0">Body Subtitle</p>\n' +
-			'<p style="font-size: 10pt; line-height: normal; margin: 7px 0 0 0;">To modify this template, place it into your Outlook editor.</p>';
+			editor.value =
+				'<p style="font-size: 16.5pt; margin: 0"><a href="stand.html"><img src="https://xdsoft.net/jodit/finder/files/pexels-arianna-jade-4006617.jpg" id="lio" alt="Tada" style="margin: 1px 2px 3px 4px; border: 2px solid #f00;" title="Ola ha" width="300"></a>Body Subtitle</p>\n' +
+				'<p style="font-size: 10pt; line-height: normal; margin: 7px 0 0 0;">To modify this template, place it into your Outlook editor.</p>';
 
-		btn.onclick = () => {
-			const start = performance.now();
-			for (let i = 0; i < 100; i++) {
-				editor.toolbar.build(editor.o.buttons);
-			}
-			const res = performance.now() - start;
-			form.appendChild(
-				editor.create.fromHTML(
-					'<input name="content" value="' + res + '">'
-				)
+			editor.events.fire(
+				'openImageProperties',
+				editor.editor.querySelector('img')
 			);
-		};
+			btn.onclick = () => {
+				const start = performance.now();
+				for (let i = 0; i < 100; i++) {
+					editor.toolbar.build(editor.o.buttons);
+				}
+				const res = performance.now() - start;
+				form.appendChild(
+					editor.create.fromHTML(
+						'<input name="content" value="' + res + '">'
+					)
+				);
+			};
 
-		// delete editor;
-		// const box = new UIBox(editor1);
-		// alert(box.container.outerHTML);
-	</script>
-	<style>
-		.class1 {
-			padding: 100px;
-			border: 1px solid#26ae90;
-			border-radius: 10px;
-		}
-	</style>
-</body>
-
+			// delete editor;
+			// const box = new UIBox(editor1);
+			// alert(box.container.outerHTML);
+		</script>
+		<style>
+			.class1 {
+				padding: 100px;
+				border: 1px solid#26ae90;
+				border-radius: 10px;
+			}
+		</style>
+	</body>
 </html>

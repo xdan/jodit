@@ -4,8 +4,9 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe.only('Edit image tests', () => {
+describe('Edit image tests', () => {
 	const IMAGE = '<img alt="artio" src="tests/artio.jpg"/>';
+	const { refs, css } = Jodit.modules.Helpers;
 
 	describe('Image properties dialog', () => {
 		describe('Double-click on image', () => {
@@ -19,6 +20,57 @@ describe.only('Edit image tests', () => {
 				const dialog = getOpenedDialog(editor);
 
 				expect(dialog).is.not.null;
+			});
+
+			describe.only('Editor props and click button', () => {
+				let editor, dialog;
+				beforeEach(async () => {
+					editor = getJodit();
+
+					editor.value = IMAGE;
+					const img = editor.editor.querySelector('img');
+					simulateEvent('dblclick', img);
+					await img.decode();
+
+					dialog = getOpenedDialog(editor);
+					const form = dialog.querySelector(
+						'.jodit-ui-image-properties-form'
+					).component;
+
+					expect(form).is.not.null;
+					form.getElm('imageAlt').value = 'Diff art';
+					simulateEvent('change', form.getElm('imageAlt'));
+					await editor.async.requestIdlePromise();
+				});
+
+				describe('Remove', () => {
+					it('Should close dialog and remove image from editor', async () => {
+
+						clickButton('Delete', dialog);
+						await editor.async.requestIdlePromise();
+						expect(sortAttributes(editor.value)).eq('<p></p>');
+					});
+				});
+
+				describe('Cancel', () => {
+					it('Should just close dialog', async () => {
+						clickButton('Cancel', dialog);
+						await editor.async.requestIdlePromise();
+						expect(sortAttributes(editor.value)).eq(
+							'<p><img alt="artio" src="tests/artio.jpg"></p>'
+						);
+					});
+				});
+
+				describe('Apply', () => {
+					it('Should apply edited options', async () => {
+						clickButton('Apply', dialog);
+						await editor.async.requestIdlePromise();
+						expect(sortAttributes(editor.value)).eq(
+							'<p><img alt="Diff art" src="tests/artio.jpg"></p>'
+						);
+					});
+				});
 			});
 
 			describe('Disable by image.openOnDblClick', () => {
@@ -39,6 +91,68 @@ describe.only('Edit image tests', () => {
 					const dialog = getOpenedDialog(editor);
 
 					expect(dialog).is.null;
+				});
+			});
+
+			[
+				['editSize', 'imageSizes'],
+				['showPreview', 'imageView'],
+				['editSrc', 'editSrc'],
+				['editTitle', 'editTitle'],
+				['editAlt', 'editAlt'],
+				['editLink', 'editLink'],
+				['editLink', 'editLinkTarget'],
+				['editImage', 'editImage'],
+				['changeImage', 'changeImage'],
+				['editMargins', 'editMargins'],
+				['editAlign', 'editAlign'],
+				['editStyle', 'editStyle'],
+				['editClass', 'editClass'],
+				['editId', 'editId'],
+				['editBorderRadius', 'editBorderRadius']
+			].forEach(([option, ref]) => {
+				describe('Enable ' + option, () => {
+					it('should hide image sizes', () => {
+						const editor = getJodit({
+							image: {
+								[option]: true
+							}
+						});
+
+						editor.value = IMAGE;
+
+						simulateEvent(
+							'dblclick',
+							editor.editor.querySelector('img')
+						);
+
+						const dialog = getOpenedDialog(editor);
+
+						const refElms = refs(dialog);
+						expect(css(refElms[ref], 'display')).not.equals('none');
+					});
+				});
+
+				describe('Disable ' + option, () => {
+					it('should hide image sizes', () => {
+						const editor = getJodit({
+							image: {
+								[option]: false
+							}
+						});
+
+						editor.value = IMAGE;
+
+						simulateEvent(
+							'dblclick',
+							editor.editor.querySelector('img')
+						);
+
+						const dialog = getOpenedDialog(editor);
+
+						const refElms = refs(dialog);
+						expect(css(refElms[ref], 'display')).equals('none');
+					});
 				});
 			});
 		});
@@ -1348,10 +1462,8 @@ describe.only('Edit image tests', () => {
 
 							clickButton('ok', dialog4);
 
-							expect(
-								dialog.querySelector('[data-ref="imageSrc"]')
-									.value
-							).equals(
+							const { imageSrc } = refs(dialog);
+							expect(imageSrc.value).equals(
 								'https://xdsoft.net/jodit/files/artio.jpg'
 							);
 
@@ -1359,6 +1471,78 @@ describe.only('Edit image tests', () => {
 						});
 					});
 				});
+			});
+		});
+	});
+
+	describe('Classes', () => {
+		describe('No available classes defined', () => {
+			it('Should render as input box', () => {
+				const area = appendTestArea();
+				const editor = Jodit.make(area, {
+					history: {
+						timeout: 0
+					},
+					disablePlugins: 'mobile'
+				});
+
+				editor.value =
+					'<img alt="" src="https://xdsoft.net/jodit/files/th.jpg">';
+
+				simulateEvent('dblclick', editor.editor.querySelector('img'));
+
+				const dialog = getOpenedDialog(editor);
+
+				expect(dialog).is.not.null;
+
+				const { editImage, classes } = refs(dialog);
+
+				expect(editImage).is.not.null;
+
+				expect(classes.tagName).equals('INPUT');
+			});
+		});
+
+		describe('Available classes defined', () => {
+			it('Should render as select box', () => {
+				const area = appendTestArea();
+				const editor = Jodit.make(area, {
+					history: {
+						timeout: 0
+					},
+					image: {
+						availableClasses: [
+							'rte-image-width-50',
+							['rte-image-width-75', '75 % width']
+						]
+					},
+					disablePlugins: 'mobile'
+				});
+
+				editor.value =
+					'<img alt="" src="https://xdsoft.net/jodit/files/th.jpg">';
+
+				simulateEvent('dblclick', editor.editor.querySelector('img'));
+
+				const dialog = getOpenedDialog(editor);
+
+				expect(dialog).is.not.null;
+				expect(
+					dialog.querySelectorAll('[data-ref="editImage"]').length
+				).equals(1);
+
+				const { classes } = refs(dialog);
+				expect(classes.tagName).equals('SELECT');
+
+				const options = [];
+				classes.querySelectorAll('option').forEach(option => {
+					options.push([option.value, option.textContent]);
+				});
+
+				expect(options).to.eql([
+					['rte-image-width-50', 'rte-image-width-50'],
+					['rte-image-width-75', '75 % width']
+				]);
 			});
 		});
 	});

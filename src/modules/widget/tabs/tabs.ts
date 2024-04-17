@@ -10,7 +10,7 @@
  * @module modules/widget/tabs
  */
 
-import type { IDictionary, IJodit, IUIButton } from 'jodit/types';
+import type { IDictionary, IUIButton, IViewBased } from 'jodit/types';
 import { Component } from 'jodit/core/component';
 import { Dom } from 'jodit/core/dom/dom';
 import { $$ } from 'jodit/core/helpers';
@@ -22,7 +22,7 @@ import './tabs.less';
 export interface TabOption {
 	icon?: string;
 	name: string;
-	content: HTMLElement | ((this: IJodit) => void) | UIElement;
+	content: HTMLElement | ((this: IViewBased) => void) | UIElement;
 }
 
 /**
@@ -54,9 +54,9 @@ export interface TabOption {
  * ```
  */
 export const TabsWidget = (
-	jodit: IJodit,
+	jodit: IViewBased,
 	tabs: TabOption[],
-	state?: { __activeTab: string }
+	state?: { activeTab: string }
 ): HTMLDivElement => {
 	const box = jodit.c.div('jodit-tabs'),
 		tabBox = jodit.c.div('jodit-tabs__wrapper'),
@@ -131,7 +131,7 @@ export const TabsWidget = (
 			}
 
 			if (state) {
-				state.__activeTab = name;
+				state.activeTab = name;
 			}
 
 			return false;
@@ -154,14 +154,14 @@ export const TabsWidget = (
 	});
 
 	const tab =
-		!state || !state.__activeTab || !nameToTab[state.__activeTab]
+		!state || !state.activeTab || !nameToTab[state.activeTab]
 			? firstTab
-			: state.__activeTab;
+			: state.activeTab;
 
 	setActive(tab);
 
 	if (state) {
-		let __activeTab = state.__activeTab;
+		let __activeTab = state.activeTab;
 
 		Object.defineProperty(state, '__activeTab', {
 			configurable: true,

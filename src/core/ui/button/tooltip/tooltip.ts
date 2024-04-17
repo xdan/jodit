@@ -41,7 +41,7 @@ export class UITooltip extends UIElement {
 			!view.o.useNativeTooltip
 		) {
 			view.hookStatus(STATUSES.ready, () => {
-				// TODO Move it inside __open method. Now it is here becous testcase failed with capturing
+				// TODO Move it inside __open method. Now it is here because testcase failed with capturing
 				getContainer(this.j, UITooltip).appendChild(this.container);
 
 				view.e.on(
@@ -67,6 +67,7 @@ export class UITooltip extends UIElement {
 		const view = this.j;
 		view.e
 			.on(view.ow, 'scroll.tooltip', this.__hide)
+			.on(view.ow, 'joditCloseDialog', this.__hide)
 			.on(view.container, 'mouseleave.tooltip', this.__hide)
 			.on(
 				[

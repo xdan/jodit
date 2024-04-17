@@ -11,12 +11,14 @@
  */
 
 import type {
+	IDestructible,
 	IDialog,
 	IFileBrowserCallBackData,
 	IJodit,
 	ImageHAlign
 } from 'jodit/types';
-import { autobind, watch } from 'jodit/core/decorators';
+import { autobind, cache, cached, watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import {
 	attr,
@@ -27,22 +29,19 @@ import {
 	isString,
 	kebabCase,
 	markOwner,
-	position,
-	refs,
-	trim
+	position
 } from 'jodit/core/helpers';
+import { Plugin } from 'jodit/core/plugin/plugin';
 import { Button } from 'jodit/core/ui/button';
-import { Dom, Icon, Plugin, Popup } from 'jodit/modules';
+import { Popup } from 'jodit/core/ui/popup/popup';
 import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
-import { FileSelectorWidget, TabsWidget } from 'jodit/modules/widget';
+import { FileSelectorWidget } from 'jodit/modules/widget';
 
 import './config';
 
-import { form } from './templates/form';
-import { mainTab } from './templates/main-tab';
-import { positionTab } from './templates/position-tab';
-
-import './image-properties.less';
+import { UIImagePropertiesForm } from './ui/ui-image-form';
+import { normalSizeFromString, normalSizeToString } from './utils/utils';
+import type { ImagePropertiesState } from './interface';
 
 /**
  * Plug-in for image editing window
@@ -58,89 +57,110 @@ import './image-properties.less';
  * ```
  */
 
-const normalSizeToString = (value: string): string => {
-	value = trim(value);
-	return /^[0-9]+$/.test(value) ? value + 'px' : value;
-};
-
-const normalSizeFromString = (value: string | number): string | number => {
-	return /^[-+]?[0-9.]+px$/.test(value.toString())
-		? parseFloat(value.toString())
-		: value;
-};
-
 /**
  * Show dialog with image's options
  */
 export class imageProperties extends Plugin {
-	protected state: {
-		image: HTMLImageElement;
-		currentImage: HTMLImageElement;
-		ratio: number;
-		sizeIsLocked: boolean;
-		marginIsLocked: boolean;
-	} = {
+	protected state: ImagePropertiesState = {
 		image: new Image(),
-		currentImage: new Image(),
+		sourceImage: new Image(),
 		get ratio(): number {
-			return this.image.naturalWidth / this.image.naturalHeight || 1;
+			const { naturalWidth, naturalHeight } = this.sourceImage;
+			return naturalWidth / naturalHeight || 1;
 		},
+		updateTick: 0,
 		sizeIsLocked: true,
-		marginIsLocked: true
+		marginIsLocked: true,
+		values: {
+			style: '',
+			imageSrc: '',
+			borderRadius: 0,
+			imageTitle: '',
+			imageAlt: '',
+			imageLink: '',
+			imageLinkOpenInNewTab: false,
+			imageWidth: 0,
+			imageHeight: 0,
+			marginTop: 0,
+			marginRight: 0,
+			marginBottom: 0,
+			marginLeft: 0,
+			classes: '',
+			id: '',
+			align: ''
+		}
 	};
 
-	private activeTabState: { __activeTab: 'Image' | 'Advanced' } = {
-		__activeTab: 'Image'
+	private activeTabState: { activeTab: 'Image' | 'Advanced' } = {
+		activeTab: 'Image'
 	};
 
-	@watch('state.marginIsLocked')
-	protected onChangeMarginIsLocked(): void {
-		if (!this.form) {
-			return;
-		}
-
-		const { marginRight, marginBottom, marginLeft, lockMargin } =
-			refs<HTMLInputElement>(this.form);
-
-		[marginRight, marginBottom, marginLeft].forEach(elm => {
-			attr(elm, 'disabled', this.state.marginIsLocked || null);
-		});
-
-		lockMargin.innerHTML = Icon.get(
-			this.state.marginIsLocked ? 'lock' : 'unlock'
+	@cache
+	private get form(): UIImagePropertiesForm {
+		return new UIImagePropertiesForm(
+			this.j,
+			this.state,
+			this.activeTabState,
+			{
+				openImageEditor: this.openImageEditor.bind(this),
+				openImagePopup: this.openImagePopup.bind(this)
+			}
 		);
 	}
-
-	@watch('state.sizeIsLocked')
-	protected onChangeSizeIsLocked(): void {
-		if (!this.form) {
-			return;
-		}
-
-		const { lockSize, imageWidth } = refs<HTMLInputElement>(this.form);
-
-		lockSize.innerHTML = Icon.get(
-			this.state.sizeIsLocked ? 'lock' : 'unlock'
-		);
-
-		lockSize.classList.remove('jodit-properties__lock');
-		lockSize.classList.remove('jodit-properties__unlock');
-
-		lockSize.classList.add(
-			this.state.sizeIsLocked
-				? 'jodit-properties__lock'
-				: 'jodit-properties__unlock'
-		);
-
-		this.j.e.fire(imageWidth, 'change');
-	}
-
-	private form!: HTMLElement;
 
 	/**
 	 * Dialog for form
 	 */
-	private dialog!: IDialog;
+	@cache
+	private get dialog(): IDialog {
+		const { j } = this;
+		const dialog = j.dlg({
+			minWidth: Math.min(400, screen.width),
+			minHeight: 590,
+			buttons: ['fullsize', 'dialog.close']
+		});
+
+		const buttons = {
+			check: Button(j, 'ok', 'Apply', 'primary'),
+			remove: Button(j, 'bin', 'Delete'),
+			cancel: Button(j, 'cancel', 'Cancel')
+		};
+
+		buttons.check.onAction(() => {
+			this.__applyValuesToImage();
+			j.synchronizeValues();
+			dialog.close();
+		});
+
+		buttons.remove.onAction(() => {
+			j.s.removeNode(this.state.sourceImage);
+			dialog.close();
+		});
+
+		buttons.cancel.onAction(() => {
+			dialog.close();
+		});
+
+		dialog.setHeader(j.i18n('Image properties'));
+
+		dialog.setContent(this.form);
+
+		dialog.setFooter([[buttons.remove, buttons.cancel], buttons.check]);
+
+		j.e.on(dialog, 'afterClose', () => {
+			if (
+				this.state.image.parentNode &&
+				j.o.image.selectImageAfterClose
+			) {
+				j.s.select(this.state.sourceImage);
+			}
+		});
+
+		dialog.setSize(j.o.image.dialogWidth);
+		markOwner(j, dialog.container);
+
+		return dialog;
+	}
 
 	/**
 	 * Open dialog editing image properties
@@ -157,463 +177,21 @@ export class imageProperties extends Plugin {
 	 * ```
 	 */
 	protected open(): void | false {
-		this.makeForm();
-		this.activeTabState.__activeTab = 'Image';
+		this.activeTabState.activeTab = 'Image';
 
 		this.j.e.fire('hidePopup');
 
-		markOwner(this.j, this.dialog.container);
-
-		this.state.marginIsLocked = true;
-		this.state.sizeIsLocked = true;
-
-		this.onChangeMarginIsLocked();
-		this.onChangeSizeIsLocked();
-
-		this.updateValues();
-
 		this.dialog.open().setModal(true).setPosition();
+
+		this.__readValuesFromImage();
 
 		return false;
 	}
 
 	/**
-	 * Create form for edit image properties
-	 */
-	private makeForm(): void {
-		if (this.dialog) {
-			return;
-		}
-
-		const dialog = this.j.dlg({
-			minWidth: Math.min(400, screen.width),
-			minHeight: 590,
-			buttons: ['fullsize', 'dialog.close']
-		});
-		this.dialog = dialog;
-
-		const editor = this.j,
-			opt = editor.o,
-			i18n = editor.i18n.bind(editor),
-			buttons = {
-				check: Button(editor, 'ok', 'Apply', 'primary'),
-				remove: Button(editor, 'bin', 'Delete'),
-				cancel: Button(editor, 'cancel', 'Cancel')
-			};
-
-		editor.e.on(dialog, 'afterClose', () => {
-			if (
-				this.state.image.parentNode &&
-				opt.image.selectImageAfterClose
-			) {
-				editor.s.select(this.state.image);
-			}
-		});
-
-		buttons.remove.onAction(() => {
-			editor.s.removeNode(this.state.image);
-			dialog.close();
-		});
-		buttons.cancel.onAction(() => {
-			dialog.close();
-		});
-
-		dialog.setHeader(i18n('Image properties'));
-
-		const mainForm = form(editor);
-		this.form = mainForm;
-
-		dialog.setContent(mainForm);
-
-		const { tabsBox } = refs<HTMLInputElement>(this.form);
-
-		if (tabsBox) {
-			tabsBox.appendChild(
-				TabsWidget(
-					editor,
-					[
-						{ name: 'Image', content: mainTab(editor) },
-						{ name: 'Advanced', content: positionTab(editor) }
-					],
-					this.activeTabState
-				)
-			);
-		}
-
-		buttons.check.onAction(this.onApply);
-
-		const { changeImage, editImage } = refs<HTMLInputElement>(this.form);
-
-		editor.e.on(changeImage, 'click', this.openImagePopup);
-
-		if (opt.image.useImageEditor) {
-			editor.e.on(editImage, 'click', this.openImageEditor);
-		}
-
-		const { lockSize, lockMargin, imageWidth, imageHeight } =
-			refs<HTMLInputElement>(mainForm);
-
-		if (lockSize) {
-			editor.e.on(lockSize, 'click', () => {
-				this.state.sizeIsLocked = !this.state.sizeIsLocked;
-			});
-		}
-
-		editor.e.on(lockMargin, 'click', (e: MouseEvent) => {
-			this.state.marginIsLocked = !this.state.marginIsLocked;
-			e.preventDefault();
-		});
-
-		const changeSizes = (event: any): void => {
-			if (!isNumeric(imageWidth.value) || !isNumeric(imageHeight.value)) {
-				return;
-			}
-
-			const w = parseFloat(imageWidth.value),
-				h = parseFloat(imageHeight.value);
-
-			if (event.target === imageWidth) {
-				imageHeight.value = Math.round(w / this.state.ratio).toString();
-			} else {
-				imageWidth.value = Math.round(h * this.state.ratio).toString();
-			}
-		};
-
-		editor.e.on(
-			[imageWidth, imageHeight],
-			'change keydown mousedown paste',
-			(event: any) => {
-				if (!this.state.sizeIsLocked) {
-					return;
-				}
-
-				editor.async.setTimeout(changeSizes.bind(this, event), {
-					timeout: editor.defaultTimeout,
-					label: 'image-properties-changeSize'
-				});
-			}
-		);
-
-		dialog.setFooter([[buttons.remove, buttons.cancel], buttons.check]);
-
-		dialog.setSize(this.j.o.image.dialogWidth);
-	}
-
-	/**
-	 * Set input values from image
-	 */
-	private updateValues(): void {
-		const opt = this.j.o;
-
-		const { image } = this.state;
-
-		const {
-			marginTop,
-			marginRight,
-			marginBottom,
-			marginLeft,
-			lockMargin,
-			imageSrc,
-			id,
-			classes,
-			align,
-			style,
-			imageTitle,
-			imageAlt,
-			borderRadius,
-			imageLink,
-			imageWidth,
-			imageHeight,
-			imageLinkOpenInNewTab,
-			imageViewSrc,
-			lockSize
-		} = refs<HTMLInputElement>(this.form);
-
-		const updateLock = (): void => {
-				lockMargin.checked = this.state.marginIsLocked;
-				lockSize.checked = this.state.sizeIsLocked;
-			},
-			updateAlign = (): void => {
-				if (
-					image.style.cssFloat &&
-					['left', 'right'].indexOf(
-						image.style.cssFloat.toLowerCase()
-					) !== -1
-				) {
-					align.value = css(image, 'float') as string;
-				} else {
-					if (
-						(css(image, 'display') as string) === 'block' &&
-						image.style.marginLeft === 'auto' &&
-						image.style.marginRight === 'auto'
-					) {
-						align.value = 'center';
-					}
-				}
-			},
-			updateBorderRadius = (): void => {
-				borderRadius.value = (
-					parseInt(image.style.borderRadius || '0', 10) || '0'
-				).toString();
-			},
-			updateId = (): void => {
-				id.value = attr(image, 'id') || '';
-			},
-			updateStyle = (): void => {
-				style.value = attr(image, 'style') || '';
-			},
-			updateClasses = (): void => {
-				classes.value = (attr(image, 'class') || '').replace(
-					/jodit_focused_image[\s]*/,
-					''
-				);
-			},
-			updateMargins = (): void => {
-				if (!opt.image.editMargins) {
-					return;
-				}
-
-				let equal = true,
-					wasEmptyField = false;
-
-				[marginTop, marginRight, marginBottom, marginLeft].forEach(
-					elm => {
-						const id = attr(elm, 'data-ref') || '';
-
-						let value: number | string =
-							image.style.getPropertyValue(kebabCase(id));
-
-						if (!value) {
-							wasEmptyField = true;
-							elm.value = '';
-							return;
-						}
-
-						if (/^[0-9]+(px)?$/.test(value)) {
-							value = parseInt(value, 10);
-						}
-
-						elm.value = value.toString() || '';
-
-						if (
-							(wasEmptyField && elm.value) ||
-							(equal &&
-								id !== 'marginTop' &&
-								elm.value !== marginTop.value)
-						) {
-							equal = false;
-						}
-					}
-				);
-
-				this.state.marginIsLocked = equal;
-			},
-			updateSizes = (): void => {
-				const width =
-					attr(image, 'width') || css(image, 'width', true) || false;
-
-				const height =
-					attr(image, 'height') ||
-					css(image, 'height', true) ||
-					false;
-
-				imageWidth.value =
-					width !== false
-						? normalSizeFromString(width).toString()
-						: (image.offsetWidth || image.naturalWidth).toString();
-
-				imageHeight.value =
-					height !== false
-						? normalSizeFromString(height).toString()
-						: (
-								image.offsetHeight || image.naturalHeight
-							).toString();
-
-				this.state.sizeIsLocked = ((): boolean => {
-					if (
-						!isNumeric(imageWidth.value) ||
-						!isNumeric(imageHeight.value)
-					) {
-						return false;
-					}
-
-					const w = parseFloat(imageWidth.value),
-						h = parseFloat(imageHeight.value);
-
-					return Math.abs(w - h * this.state.ratio) < 1;
-				})();
-			},
-			updateText = (): void => {
-				imageTitle.value = attr(image, 'title') || '';
-
-				imageAlt.value = attr(image, 'alt') || '';
-
-				const a = Dom.closest(
-					this.state.currentImage,
-					'a',
-					this.j.editor
-				);
-
-				if (a) {
-					imageLink.value = attr(a, 'href') || '';
-
-					imageLinkOpenInNewTab.checked =
-						attr(a, 'target') === '_blank';
-				} else {
-					imageLink.value = '';
-					imageLinkOpenInNewTab.checked = false;
-				}
-			},
-			updateSrc = (): void => {
-				imageSrc.value = attr(image, 'src') || '';
-
-				if (imageViewSrc) {
-					attr(imageViewSrc, 'src', attr(image, 'src') || '');
-				}
-			};
-
-		updateLock();
-		updateSrc();
-		updateText();
-		updateSizes();
-		updateMargins();
-		updateClasses();
-		updateId();
-		updateBorderRadius();
-		updateAlign();
-		updateStyle();
-	}
-
-	/**
-	 * Apply form's values to image
-	 */
-	@autobind
-	private onApply(): void {
-		const {
-			style,
-			imageSrc,
-			borderRadius,
-			imageTitle,
-			imageAlt,
-			imageLink,
-			imageWidth,
-			imageHeight,
-			marginTop,
-			marginRight,
-			marginBottom,
-			marginLeft,
-			imageLinkOpenInNewTab,
-			align,
-			classes,
-			id
-		} = refs<HTMLInputElement>(this.form);
-
-		const opt = this.j.o;
-		const { currentImage: image } = this.state;
-
-		// styles
-		if (opt.image.editStyle) {
-			attr(image, 'style', style.value || null);
-		}
-
-		// Src
-		if (imageSrc.value) {
-			attr(image, 'src', imageSrc.value);
-		} else {
-			Dom.safeRemove(image);
-			this.dialog.close();
-			return;
-		}
-
-		// Border radius
-		if (borderRadius.value !== '0' && /^[0-9]+$/.test(borderRadius.value)) {
-			image.style.borderRadius = borderRadius.value + 'px';
-		} else {
-			image.style.borderRadius = '';
-		}
-
-		// Title
-		attr(image, 'title', imageTitle.value || null);
-
-		// Alt
-		attr(image, 'alt', imageAlt.value || null);
-
-		// Link
-		let link = Dom.closest(image, 'a', this.j.editor);
-
-		if (imageLink.value) {
-			if (!link) {
-				link = Dom.wrap(image, 'a', this.j.createInside);
-			}
-
-			attr(link, 'href', imageLink.value);
-
-			attr(
-				link,
-				'target',
-				imageLinkOpenInNewTab.checked ? '_blank' : null
-			);
-		} else {
-			if (link && link.parentNode) {
-				link.parentNode.replaceChild(image, link);
-			}
-		}
-
-		// Size
-		if (
-			imageWidth.value !== image.offsetWidth.toString() ||
-			imageHeight.value !== image.offsetHeight.toString()
-		) {
-			const updatedtWidth = trim(imageWidth.value)
-				? normalSizeToString(imageWidth.value)
-				: null;
-			const updatedHeight = trim(imageHeight.value)
-				? normalSizeToString(imageHeight.value)
-				: null;
-
-			css(image, {
-				width: updatedtWidth,
-				height: updatedHeight
-			});
-
-			attr(image, 'width', attr(image, 'width') ? updatedtWidth : null);
-			attr(image, 'height', attr(image, 'height') ? updatedHeight : null);
-		}
-
-		const margins = [marginTop, marginRight, marginBottom, marginLeft];
-
-		if (opt.image.editMargins) {
-			if (!this.state.marginIsLocked) {
-				margins.forEach((margin: HTMLInputElement) => {
-					const side = attr(margin, 'data-ref') || '';
-					css(image, side, normalSizeToString(margin.value));
-				});
-			} else {
-				css(image, 'margin', normalSizeToString(marginTop.value));
-			}
-		}
-
-		if (opt.image.editClass) {
-			attr(image, 'class', classes.value || null);
-		}
-
-		if (opt.image.editId) {
-			attr(image, 'id', id.value || null);
-		}
-
-		if (opt.image.editAlign) {
-			hAlignElement(image, align.value as ImageHAlign);
-		}
-
-		this.j.synchronizeValues();
-		this.dialog.close();
-	}
-
-	/**
 	 * Open image editor dialog
 	 */
-	@autobind
-	private openImageEditor(): void {
+	protected openImageEditor(): void {
 		const url: string = attr(this.state.image, 'src') || '',
 			a = this.j.c.element('a'),
 			loadExternal = (): void => {
@@ -638,7 +216,7 @@ export class imageProperties extends Plugin {
 															resp.newfilename
 													);
 
-													this.updateValues();
+													this.state.updateTick++;
 												}
 											}
 										);
@@ -680,7 +258,7 @@ export class imageProperties extends Plugin {
 								timestamp.toString()
 						);
 
-						this.updateValues();
+						this.state.updateTick++;
 					},
 					error => {
 						this.j.alert(error.message);
@@ -692,33 +270,33 @@ export class imageProperties extends Plugin {
 			});
 	}
 
-	/**
-	 * Open popup with filebrowser/uploader buttons for image
-	 */
-	@autobind
-	private openImagePopup(event: MouseEvent): void {
-		const popup = new Popup(this.j),
-			{ changeImage } = refs(this.form);
+	protected openImagePopup(e: MouseEvent): void {
+		const { j } = this;
 
-		popup.setZIndex(this.dialog.getZIndex() + 1);
+		const popup = new Popup(this.dialog);
+
+		const closePopup = (): void => {
+			popup.close();
+			popup.destruct();
+		};
+
+		const changeImage = e.target as HTMLElement;
+
+		// popup.setZIndex(/*this.dialog.getZIndex()*/ +1);
 
 		popup
 			.setContent(
 				FileSelectorWidget(
-					this.j,
+					j,
 					{
 						upload: (data: IFileBrowserCallBackData) => {
 							if (data.files && data.files.length) {
-								attr(
-									this.state.image,
-									'src',
-									data.baseurl + data.files[0]
-								);
+								this.state.values.imageSrc =
+									data.baseurl + data.files[0];
 							}
 
-							this.updateValues();
-
-							popup.close();
+							j.e.fire(this, 'update');
+							closePopup();
 						},
 
 						filebrowser: async (data: IFileBrowserCallBackData) => {
@@ -727,20 +305,264 @@ export class imageProperties extends Plugin {
 								isArray(data.files) &&
 								data.files.length
 							) {
-								attr(this.state.image, 'src', data.files[0]);
-								popup.close();
-								await this.state.image.decode();
-								this.updateValues();
+								this.state.values.imageSrc = data.files[0];
+								closePopup();
 							}
 						}
 					},
 					this.state.image,
-					popup.close
+					closePopup
 				)
 			)
 			.open(() => position(changeImage));
+	}
 
-		event.stopPropagation();
+	/**
+	 * Apply form's values to image
+	 */
+	@autobind
+	private __applyValuesToImage(): void {
+		const {
+			style,
+			imageSrc,
+			borderRadius,
+			imageTitle,
+			imageAlt,
+			imageLink,
+			imageWidth,
+			imageHeight,
+			marginTop,
+			marginRight,
+			marginBottom,
+			marginLeft,
+			imageLinkOpenInNewTab,
+			align,
+			classes,
+			id
+		} = this.state.values;
+
+		const opt = this.j.o;
+		const { sourceImage: image } = this.state;
+
+		// styles
+		if (opt.image.editStyle) {
+			attr(image, 'style', style || null);
+		}
+
+		// Src
+		if (imageSrc) {
+			attr(image, 'src', imageSrc);
+		} else {
+			Dom.safeRemove(image);
+			return;
+		}
+
+		// Border radius
+		image.style.borderRadius = borderRadius ? borderRadius + 'px' : '';
+
+		// Title
+		attr(image, 'title', imageTitle || null);
+
+		// Alt
+		attr(image, 'alt', imageAlt || null);
+
+		// Link
+		let link = Dom.closest(image, 'a', this.j.editor);
+
+		if (imageLink) {
+			if (!link) {
+				link = Dom.wrap(image, 'a', this.j.createInside);
+			}
+
+			attr(link, 'href', imageLink);
+			attr(link, 'target', imageLinkOpenInNewTab ? '_blank' : null);
+		} else {
+			if (link && link.parentNode) {
+				link.parentNode.replaceChild(image, link);
+			}
+		}
+
+		// Size
+		if (
+			imageWidth !== image.offsetWidth ||
+			imageHeight !== image.offsetHeight
+		) {
+			const updatedtWidth = imageWidth
+				? normalSizeToString(imageWidth)
+				: null;
+
+			const updatedHeight = imageHeight
+				? normalSizeToString(imageHeight)
+				: null;
+
+			css(image, {
+				width: updatedtWidth,
+				height: updatedHeight
+			});
+
+			attr(image, 'width', attr(image, 'width') ? updatedtWidth : null);
+			attr(image, 'height', attr(image, 'height') ? updatedHeight : null);
+		}
+
+		const margins = [marginTop, marginRight, marginBottom, marginLeft];
+
+		if (opt.image.editMargins) {
+			if (!this.state.marginIsLocked) {
+				const sides = [
+					'margin-top',
+					'margin-right',
+					'margin-bottom',
+					'margin-left'
+				];
+				margins.forEach((margin, index) => {
+					const side = sides[index];
+					css(image, side, normalSizeToString(margin));
+				});
+			} else {
+				const v = normalSizeToString(marginTop);
+				css(image, 'margin', v);
+			}
+		}
+
+		if (opt.image.editClass) {
+			attr(image, 'class', classes || null);
+		}
+
+		if (opt.image.editId) {
+			attr(image, 'id', id || null);
+		}
+
+		if (opt.image.editAlign) {
+			hAlignElement(image, align);
+		}
+	}
+
+	/**
+	 * Read values from image and set it to state
+	 * @private
+	 */
+	@watch('state.updateTick')
+	private __readValuesFromImage(): void {
+		const { sourceImage: image } = this.state;
+
+		// Align
+		if (
+			image.style.cssFloat &&
+			['left', 'right'].indexOf(image.style.cssFloat.toLowerCase()) !== -1
+		) {
+			this.state.values.align = css(image, 'float') as ImageHAlign;
+		} else {
+			if (
+				(css(image, 'display') as string) === 'block' &&
+				image.style.marginLeft === 'auto' &&
+				image.style.marginRight === 'auto'
+			) {
+				this.state.values.align = 'center';
+			} else {
+				this.state.values.align = '';
+			}
+		}
+
+		// Border radius
+		this.state.values.borderRadius =
+			parseInt(image.style.borderRadius || '0', 10) || 0;
+
+		// Id
+		this.state.values.id = attr(image, 'id') || '';
+
+		// Title
+		this.state.values.imageTitle = attr(image, 'title') || '';
+
+		// Alt
+		this.state.values.imageAlt = attr(image, 'alt') || '';
+
+		// Style
+		this.state.values.style = attr(image, 'style') || '';
+
+		// Classes
+		this.state.values.classes = (attr(image, 'class') || '').replace(
+			/jodit_focused_image[\s]*/,
+			''
+		);
+
+		// Margins
+		let equal = true,
+			wasEmptyField = false;
+
+		(
+			['marginTop', 'marginRight', 'marginBottom', 'marginLeft'] as const
+		).forEach(id => {
+			let value: number | string = image.style.getPropertyValue(
+				kebabCase(id)
+			);
+
+			if (!value) {
+				wasEmptyField = true;
+				this.state.values[id] = 0;
+				return;
+			}
+
+			if (/^[0-9]+(px)?$/.test(value)) {
+				value = parseInt(value, 10);
+			}
+
+			this.state.values[id] = value;
+
+			if (
+				(wasEmptyField && this.state.values[id]) ||
+				(equal &&
+					id !== 'marginTop' &&
+					this.state.values[id] !== this.state.values.marginTop)
+			) {
+				equal = false;
+			}
+		});
+
+		this.state.marginIsLocked = equal;
+
+		// Image size
+		const width =
+			attr(image, 'width') || css(image, 'width', true) || false;
+
+		const height =
+			attr(image, 'height') || css(image, 'height', true) || false;
+
+		this.state.values.imageWidth =
+			width !== false
+				? normalSizeFromString(width)
+				: image.offsetWidth || image.naturalWidth;
+
+		this.state.values.imageHeight =
+			height !== false
+				? normalSizeFromString(height)
+				: image.offsetHeight || image.naturalHeight;
+
+		this.state.sizeIsLocked = ((): boolean => {
+			const { imageWidth, imageHeight } = this.state.values;
+			if (!isNumeric(imageWidth) || !isNumeric(imageHeight)) {
+				return false;
+			}
+
+			const w = parseFloat(imageWidth.toString()),
+				h = parseFloat(imageHeight.toString());
+
+			return Math.abs(w - h * this.state.ratio) < 2;
+		})();
+
+		// Link
+		const a = Dom.closest(this.state.sourceImage, 'a', this.j.editor);
+
+		if (a) {
+			this.state.values.imageLink = attr(a, 'href') || '';
+			this.state.values.imageLinkOpenInNewTab =
+				attr(a, 'target') === '_blank';
+		} else {
+			this.state.values.imageLink = '';
+			this.state.values.imageLinkOpenInNewTab = false;
+		}
+
+		// Src
+		this.state.values.imageSrc = attr(image, 'src') || '';
 	}
 
 	/** @override **/
@@ -769,7 +591,7 @@ export class imageProperties extends Plugin {
 									return;
 								}
 
-								self.state.currentImage = image;
+								self.state.sourceImage = image;
 								self.state.image = image.cloneNode(
 									true
 								) as HTMLImageElement;
@@ -790,7 +612,7 @@ export class imageProperties extends Plugin {
 			.on(
 				'openImageProperties.imageproperties',
 				(image: HTMLImageElement) => {
-					self.state.currentImage = image;
+					self.state.sourceImage = image;
 					this.state.image = image.cloneNode(
 						true
 					) as HTMLImageElement;
@@ -801,7 +623,8 @@ export class imageProperties extends Plugin {
 
 	/** @override */
 	protected beforeDestruct(editor: IJodit): void {
-		this.dialog && this.dialog.destruct();
+		cached<IDestructible>(this, 'dialog')?.destruct();
+		cached<IDestructible>(this, 'form')?.destruct();
 		editor.e.off(editor.editor, '.imageproperties').off('.imageproperties');
 	}
 }
