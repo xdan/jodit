@@ -8,6 +8,7 @@ import type { IJodit, ImageHAlign } from 'jodit/types';
 import { component } from 'jodit/core/decorators/component/component';
 import { hook } from 'jodit/core/decorators/hook/hook';
 import { watch } from 'jodit/core/decorators/watch/watch';
+import { css } from 'jodit/core/helpers';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { UIElement } from 'jodit/core/ui/element';
@@ -104,7 +105,7 @@ export class UIImagePositionTab extends UIElement<IJodit> {
 	}
 
 	@hook('ready')
-	@watch('state.align')
+	@watch('state.values.align')
 	protected onStateAlignChange(): void {
 		const align = this.getElm('align') as HTMLSelectElement;
 		align.value = this.state.values.align;
@@ -239,5 +240,24 @@ export class UIImagePositionTab extends UIElement<IJodit> {
 				marginLeft.value
 			);
 		}
+	}
+
+	@hook('ready')
+	protected hideFieldByOptions(): void {
+		const opt = this.j.o.image;
+
+		(
+			[
+				['editMargins', 'editMargins'],
+				['editAlign', 'editAlign'],
+				['editStyle', 'editStyle'],
+				['editClass', 'editClass'],
+				['editId', 'editId'],
+				['editBorderRadius', 'editBorderRadius']
+			] as const
+		).forEach(([optKey, elmKey]) => {
+			const elm = this.getElm(elmKey) as HTMLElement;
+			css(elm, 'display', opt[optKey] ? null : 'none');
+		});
 	}
 }

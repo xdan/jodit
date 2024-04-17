@@ -4,15 +4,17 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IViewBased } from 'jodit/types';
+import type { IJodit } from 'jodit/types';
 import { component } from 'jodit/core/decorators/component/component';
+import { hook } from 'jodit/core/decorators/hook/hook';
 import { watch } from 'jodit/core/decorators/watch/watch';
+import { css } from 'jodit/core/helpers';
 import { UIGroup } from 'jodit/core/ui/group/group';
 
 import type { ImagePropertiesAPI, ImagePropertiesState } from '../interface';
 
 @component
-export class UIImageMainTab extends UIGroup {
+export class UIImageMainTab extends UIGroup<IJodit> {
 	override className(): string {
 		return 'UIImageMainTab';
 	}
@@ -22,7 +24,7 @@ export class UIImageMainTab extends UIGroup {
 	}
 
 	constructor(
-		view: IViewBased,
+		view: IJodit,
 		private state: ImagePropertiesState,
 		private handlers: ImagePropertiesAPI
 	) {
@@ -34,7 +36,7 @@ export class UIImageMainTab extends UIGroup {
 			<label>~Src~</label>
 			<div class="jodit-input_group">
 				<input class="jodit-input &__imageSrc" type="text"/>
-				<div class="jodit-input_group-buttons">
+				<div class="jodit-input_group-buttons &__fixImage">
 						<a class="jodit-button &__changeImage">*image*</a>
 						<a class="jodit-button &__editImage">*crop*</a>
 				</div>
@@ -155,5 +157,43 @@ export class UIImageMainTab extends UIGroup {
 		this.state.values.imageLinkOpenInNewTab = (
 			this.getElm('imageLinkOpenInNewTab') as HTMLInputElement
 		).checked;
+	}
+
+	@hook('ready')
+	protected hideFieldByOptions(): void {
+		const o = this.j.o;
+		const opt = o.image;
+
+		(
+			[
+				['editSrc', 'editSrc'],
+				['editTitle', 'editTitle'],
+				['editAlt', 'editAlt'],
+				['editLink', 'editLink'],
+				['editLink', 'editLinkTarget'],
+				['useImageEditor', 'editImage']
+			] as const
+		).forEach(([optKey, elmKey]) => {
+			const elm = this.getElm(elmKey) as HTMLElement;
+			css(elm, 'display', opt[optKey] ? null : 'none');
+		});
+
+		const changeImage = this.getElm('changeImage') as HTMLElement;
+		const needShowChangeImage = Boolean(
+			o.filebrowser.ajax.url || o.uploader.url
+		);
+		css(changeImage, 'display', needShowChangeImage ? null : 'none');
+
+		const editImage = this.getElm('editImage') as HTMLElement;
+		const needShowEditImage =
+			Boolean(o.filebrowser.ajax.url) && opt.useImageEditor;
+		css(editImage, 'display', needShowEditImage ? null : 'none');
+
+		const fixImage = this.getElm('fixImage') as HTMLElement;
+		css(
+			fixImage,
+			'display',
+			needShowChangeImage || needShowEditImage ? null : 'none'
+		);
 	}
 }

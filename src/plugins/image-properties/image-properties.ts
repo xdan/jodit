@@ -407,6 +407,13 @@ export class imageProperties extends Plugin {
 		const margins = [marginTop, marginRight, marginBottom, marginLeft];
 
 		if (opt.image.editMargins) {
+			const applyMargin = (key: string, value: number | string): void => {
+				const oldValue = css(image, key);
+				const v = normalSizeToString(value);
+				if (oldValue.toString() !== v.toString()) {
+					css(image, key, v);
+				}
+			};
 			if (!this.state.marginIsLocked) {
 				const sides = [
 					'margin-top',
@@ -416,11 +423,10 @@ export class imageProperties extends Plugin {
 				];
 				margins.forEach((margin, index) => {
 					const side = sides[index];
-					css(image, side, normalSizeToString(margin));
+					applyMargin(side, margin);
 				});
 			} else {
-				const v = normalSizeToString(marginTop);
-				css(image, 'margin', v);
+				applyMargin('margin', marginTop);
 			}
 		}
 

@@ -13,7 +13,7 @@ import type {
 } from 'jodit/types';
 import { debounce, hook, watch } from 'jodit/core/decorators';
 import { component } from 'jodit/core/decorators/component/component';
-import { attr, isNumeric } from 'jodit/core/helpers';
+import { attr, css, isNumeric } from 'jodit/core/helpers';
 import { UIGroup } from 'jodit/core/ui/group/group';
 import { Icon } from 'jodit/core/ui/icon';
 import { TabsWidget } from 'jodit/modules/widget';
@@ -183,5 +183,20 @@ export class UIImagePropertiesForm extends UIGroup<IJodit> {
 	protected onStateValuesImageSrcChange(): void {
 		const imageViewSrc = this.getElm('imageViewSrc') as HTMLImageElement;
 		attr(imageViewSrc, 'src', this.state.values.imageSrc);
+	}
+
+	@hook('ready')
+	protected hideFieldByOptions(): void {
+		const opt = this.j.o.image;
+
+		(
+			[
+				['editSize', 'imageSizes'],
+				['showPreview', 'imageView']
+			] as const
+		).forEach(([optKey, elmKey]) => {
+			const elm = this.getElm(elmKey) as HTMLElement;
+			css(elm, 'display', opt[optKey] ? null : 'none');
+		});
 	}
 }
