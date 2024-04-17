@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe.only('Edit image tests', () => {
+describe('Edit image tests', () => {
 	const IMAGE = '<img alt="artio" src="tests/artio.jpg"/>';
 	const { css } = Jodit.modules.Helpers;
 
