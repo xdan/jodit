@@ -134,4 +134,4 @@ export interface ImagePropertiesOptions {
 	 * Select image after close dialog
 	 */
 	selectImageAfterClose: boolean;
-};
+}

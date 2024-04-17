@@ -161,16 +161,16 @@ export const TabsWidget = (
 	setActive(tab);
 
 	if (state) {
-		let __activeTab = state.activeTab;
+		let activeTab = state.activeTab;
 
-		Object.defineProperty(state, '__activeTab', {
+		Object.defineProperty(state, 'activeTab', {
 			configurable: true,
 			enumerable: false,
 			get() {
-				return __activeTab;
+				return activeTab;
 			},
 			set(value: string) {
-				__activeTab = value;
+				activeTab = value;
 
 				setActive(value);
 			}

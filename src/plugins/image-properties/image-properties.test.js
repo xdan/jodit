@@ -181,6 +181,39 @@ describe.only('Edit image tests', () => {
 			});
 		});
 
+		describe('Main tab', () => {
+			it('should be opened first', async () => {
+				const editor = getJodit();
+				editor.value = IMAGE;
+				const img = editor.editor.querySelector('img');
+				await img.decode();
+				simulateEvent('dblclick', img);
+				const dialog = getOpenedDialog(editor);
+				expect(dialog).is.not.null;
+				clickButton('Advanced', dialog);
+				expect(
+					getButton('Image', dialog).getAttribute('aria-pressed')
+				).equals('false');
+				expect(
+					getButton('Advanced', dialog).getAttribute('aria-pressed')
+				).equals('true');
+
+				clickButton('close', dialog);
+				expect(getOpenedDialog(editor)).is.null;
+
+				simulateEvent('dblclick', img);
+				const dialog2 = getOpenedDialog(editor);
+				expect(dialog2).equals(dialog);
+
+				expect(
+					getButton('Image', dialog).getAttribute('aria-pressed')
+				).equals('true');
+				expect(
+					getButton('Advanced', dialog).getAttribute('aria-pressed')
+				).equals('false');
+			});
+		});
+
 		describe('Change border radius', () => {
 			it('should change image border radius', () => {
 				const editor = getJodit();
