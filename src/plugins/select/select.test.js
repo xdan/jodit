@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe.only('Test select plugin', () => {
+describe('Test select plugin', () => {
 	describe('On triple click', () => {
 		[
 			[
