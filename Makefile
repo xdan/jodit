@@ -212,6 +212,13 @@ test-only-run:
 coverage:
 	npx --yes type-coverage ./src --detail --ignore-files 'build/**' --ignore-files 'test/**' --ignore-files 'examples/**'
 
+.PHONY: screenshots-update
+screenshots-update:
+	make build es=es2021 fat=true uglify=true
+	make screenshots-build-image
+	make screenshots-test es=es2021 fat=true min=true updateTests=true
+
+
 .PHONY: screenshots-all
 screenshots-all:
 	make screenshots-build-image

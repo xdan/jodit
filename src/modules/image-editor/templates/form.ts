@@ -28,11 +28,12 @@ export const form = (
 		ref: string,
 		active: boolean = true
 	): string => `<div class="jodit-form__group">
-			<label>${i(label)}</label>
-
-			<label class='jodit-switcher'>
-				<input ${act(active, 'checked')} data-ref="${ref}" type="checkbox"/>
-				<span class="jodit-switcher__slider"></span>
+			<label class="jodit-switcher-wrapper">
+				<span class='jodit-switcher'>
+					<input ${act(active, 'checked')} data-ref="${ref}" type="checkbox"/>
+					<span class="jodit-switcher__slider"></span>
+				</span>
+				<span>${i(label)}</span>
 			</label>
 	</div>`;
 
