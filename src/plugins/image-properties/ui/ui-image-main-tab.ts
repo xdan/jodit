@@ -90,7 +90,7 @@ export class UIImageMainTab extends UIGroup<IJodit> {
 	 */
 	@watch('changeImage:click')
 	protected onChangeImageClick(e: MouseEvent): void {
-		this.handlers.openImagePopup(e);
+		this.handlers.openImagePopup(this.getElm('changeImage') as HTMLElement);
 		e.stopPropagation();
 	}
 

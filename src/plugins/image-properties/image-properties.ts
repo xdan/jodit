@@ -87,13 +87,8 @@ export class imageProperties extends Plugin {
 			{
 				openImageEditor: () =>
 					openImageEditorDialog(this.j, this.state),
-				openImagePopup: (e: MouseEvent) =>
-					openImagePopup(
-						this.j,
-						this.dialog,
-						this.state,
-						e.target as HTMLElement
-					)
+				openImagePopup: target =>
+					openImagePopup(this.j, this.dialog, this.state, target)
 			}
 		);
 	}

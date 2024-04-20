@@ -47,7 +47,7 @@ export function position(
 	return {
 		left: Math.round(xPos),
 		top: Math.round(yPos),
-		width: Math.round(elm.offsetWidth),
-		height: Math.round(elm.offsetHeight)
+		width: Math.round(elm.offsetWidth ?? rect.width),
+		height: Math.round(elm.offsetHeight ?? rect.height)
 	};
 }

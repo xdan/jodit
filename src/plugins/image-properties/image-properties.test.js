@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Edit image tests', () => {
+describe.only('Edit image tests', () => {
 	const IMAGE = '<img alt="artio" src="tests/artio.jpg"/>';
 	const { css } = Jodit.modules.Helpers;
 
@@ -1252,7 +1252,7 @@ describe('Edit image tests', () => {
 					expect(form.getElm('editImage')).is.not.null;
 				});
 
-				describe.only('Click on image button', () => {
+				describe('Click on image button', () => {
 					let editor;
 					let imagePropertiesDialog;
 					let form;
@@ -1359,7 +1359,7 @@ describe('Edit image tests', () => {
 
 									clickButton('Browse', popup);
 
-									[fb, dialog] = getFB(editor);
+									const [fb, dialog] = getFB(editor);
 
 									simulateEvent('click', getFirstFBItem(fb));
 
@@ -1372,8 +1372,8 @@ describe('Edit image tests', () => {
 											resolve
 										)
 									);
-									expect(imageWidth.value).equals(10);
-									expect(imageHeight.value).equals(20);
+									expect(imageWidth.value).equals('500');
+									expect(imageHeight.value).equals('375');
 								});
 							});
 
@@ -1395,7 +1395,7 @@ describe('Edit image tests', () => {
 
 									clickButton('Browse', popup);
 
-									[fb, dialog] = getFB(editor);
+									const [fb, dialog] = getFB(editor);
 
 									simulateEvent('click', getFirstFBItem(fb));
 
@@ -1408,8 +1408,9 @@ describe('Edit image tests', () => {
 											resolve
 										)
 									);
-									expect(imageWidth.value).equals(10);
-									expect(imageHeight.value).equals(20);
+
+									expect(imageWidth.value).equals('500');
+									expect(imageHeight.value).equals('281');
 								});
 							});
 						});

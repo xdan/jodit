@@ -36,7 +36,7 @@ export interface ImagePropertiesState {
 
 export interface ImagePropertiesAPI {
 	openImageEditor: () => void;
-	openImagePopup: (e: MouseEvent) => void;
+	openImagePopup: (target: HTMLElement) => void;
 }
 
 export interface ImagePropertiesOptions {
