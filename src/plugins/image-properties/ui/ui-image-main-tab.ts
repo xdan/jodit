@@ -66,18 +66,6 @@ export class UIImageMainTab extends UIGroup<IJodit> {
 	protected async onStateImageSrcChange(): Promise<void> {
 		const imageSrc = this.getElm('imageSrc') as HTMLInputElement;
 		imageSrc.value = this.state.values.imageSrc;
-
-		const image = new Image();
-		image.src = this.state.values.imageSrc;
-		image.decode().then(
-			() => {
-				imageSrc.classList.remove('jodit-error');
-				this.state.image = image;
-			},
-			() => {
-				imageSrc.classList.add('jodit-error');
-			}
-		);
 	}
 
 	@watch('imageSrc:change')

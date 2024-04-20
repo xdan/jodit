@@ -190,6 +190,13 @@ export class UIImagePositionTab extends UIElement<IJodit> {
 		lockMargin.innerHTML = Icon.get(
 			this.state.marginIsLocked ? 'lock' : 'unlock'
 		);
+
+		if (this.state.marginIsLocked) {
+			const marginTop = this.state.values.marginTop;
+			this.state.values.marginRight = marginTop as string;
+			this.state.values.marginBottom = marginTop;
+			this.state.values.marginLeft = marginTop as string;
+		}
 	}
 
 	@hook('ready')

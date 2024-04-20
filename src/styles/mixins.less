@@ -143,3 +143,15 @@
 		}
 	}
 }
+
+.loader() {
+	display: inline-block;
+	width: var(--icon-loader-size);
+	height: var(--icon-loader-size);
+	animation: rotate 2s ease-out 0s infinite;
+	// stylelint-disable-next-line function-no-unknown
+	background: data-uri('./icons/loader.png') no-repeat center;
+	background-size: 100% 100%;
+	vertical-align: middle;
+	will-change: transform;
+}

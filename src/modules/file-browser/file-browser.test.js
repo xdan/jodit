@@ -1403,25 +1403,23 @@
 
 						expect(context).is.not.null;
 
-						await new Promise(resolve => {
-							filebrowser.events.on(
+						clickButton('eye', context);
+
+						await new Promise(resolve =>
+							filebrowser.events.one(
 								'previewOpenedAndLoaded',
-								function () {
-									const dialog = getOpenedDialog(filebrowser);
+								resolve
+							)
+						);
 
-									expect(dialog).is.not.null;
-									const previewsButtons =
-										dialog.querySelectorAll(
-											'.jodit-file-browser-preview__navigation'
-										);
+						const dialog = getOpenedDialog(filebrowser);
 
-									expect(previewsButtons.length).equals(2);
-									resolve();
-								}
-							);
+						expect(dialog).is.not.null;
+						const previewsButtons = dialog.querySelectorAll(
+							'.jodit-file-browser-preview__navigation'
+						);
 
-							clickButton('eye', context);
-						});
+						expect(previewsButtons.length).equals(2);
 					});
 				});
 			});

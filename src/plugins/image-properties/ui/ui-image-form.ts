@@ -181,8 +181,16 @@ export class UIImagePropertiesForm extends UIGroup<IJodit> {
 	@hook('ready')
 	@watch('state.values.imageSrc')
 	protected onStateValuesImageSrcChange(): void {
+		const { imageSrc } = this.state.values;
+		if (!imageSrc) {
+			return;
+		}
 		const imageViewSrc = this.getElm('imageViewSrc') as HTMLImageElement;
-		attr(imageViewSrc, 'src', this.state.values.imageSrc);
+		attr(imageViewSrc, 'src', imageSrc);
+
+		const image = new Image();
+		image.src = imageSrc;
+		this.state.image = image;
 	}
 
 	@hook('ready')

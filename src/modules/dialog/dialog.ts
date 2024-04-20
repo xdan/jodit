@@ -208,6 +208,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			 * Fired when dialog box is started moving
 			 */
 			this.e.fire(this, 'startMove');
+			this.e.fire('closeAllPopups');
 		}
 	}
 

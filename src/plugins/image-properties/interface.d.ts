@@ -29,7 +29,6 @@ export interface ImagePropertiesState {
 	image: HTMLImageElement;
 	sourceImage: HTMLImageElement;
 	ratio: number;
-	updateTick: number;
 	sizeIsLocked: boolean;
 	marginIsLocked: boolean;
 	values: EditValues;

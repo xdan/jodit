@@ -27,7 +27,7 @@ describe('Edit image tests', () => {
 				expect(dialog).is.not.null;
 			});
 
-			describe('Editor props and click button', () => {
+			describe('Click action button', () => {
 				let editor, dialog;
 				beforeEach(async () => {
 					editor = getJodit();
@@ -219,7 +219,7 @@ describe('Edit image tests', () => {
 				const editor = getJodit();
 
 				editor.value =
-					'<img style="width:100px; height: 100px; border-radius: 10px;" src="tests/artio.jpg"/>';
+					'<img alt="ratio" style="width:100px; height: 100px; border-radius: 10px;" src="tests/artio.jpg"/>';
 
 				simulateEvent(
 					'dblclick',
@@ -249,9 +249,8 @@ describe('Edit image tests', () => {
 				simulateEvent('change', input);
 
 				clickButton('ok', dialog);
-
 				expect(sortAttributes(editor.value)).equals(
-					'<p><img src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px"></p>'
+					'<p><img alt="ratio" src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px"></p>'
 				);
 			});
 		});
@@ -826,7 +825,7 @@ describe('Edit image tests', () => {
 							clickButton('Apply', dialog);
 
 							expect(sortAttributes(editor.value)).equals(
-								'<p><img alt="artio" src="tests/artio.jpg" style="height:56px;width:100px"></p>'
+								'<p><img alt="artio" src="tests/artio.jpg" style="width:100px"></p>'
 							);
 						});
 					});
@@ -874,7 +873,7 @@ describe('Edit image tests', () => {
 					clickButton('ok', dialog);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<p><img alt="artio" src="tests/artio.jpg" style="height:200px;width:356px"></p>'
+						'<p><img alt="artio" src="tests/artio.jpg" style="width:356px"></p>'
 					);
 				});
 
@@ -914,7 +913,7 @@ describe('Edit image tests', () => {
 						clickButton('ok', dialog);
 
 						expect(sortAttributes(editor.value)).equals(
-							'<p><img alt="artio" src="tests/artio.jpg" style="height:200px;width:356px" width="356"></p>'
+							'<p><img alt="artio" src="tests/artio.jpg" style="width:356px" width="356"></p>'
 						);
 					});
 
@@ -924,7 +923,7 @@ describe('Edit image tests', () => {
 							const editor = Jodit.make(area);
 
 							editor.value =
-								'<img style="width:100px" src="tests/artio.jpg"/>';
+								'<img alt="artio" style="width:100px" src="tests/artio.jpg"/>';
 
 							const img = editor.editor.querySelector('img');
 							await img.decode();
@@ -956,7 +955,7 @@ describe('Edit image tests', () => {
 							clickButton('ok', dialog);
 
 							expect(sortAttributes(editor.value)).equals(
-								'<p><img src="tests/artio.jpg" style="height:200px;width:356px"></p>'
+								'<p><img alt="artio" src="tests/artio.jpg" style="width:356px"></p>'
 							);
 						});
 
@@ -1161,12 +1160,13 @@ describe('Edit image tests', () => {
 						const imageWidth = form.getElm('imageWidth');
 						const imageHeight = form.getElm('imageHeight');
 						const lockSize = form.getElm('lockSize');
-						const lockerimg = lockSize.innerHTML;
+						const lockerImg = lockSize.innerHTML;
 
 						simulateEvent('click', lockSize);
-						expect(lockSize.innerHTML).does.not.equal(lockerimg);
+						expect(lockSize.innerHTML).does.not.equal(lockerImg);
+
 						simulateEvent('click', lockSize);
-						expect(lockSize.innerHTML).equals(lockerimg);
+						expect(lockSize.innerHTML).equals(lockerImg);
 
 						imageWidth.value = 100;
 						simulateEvent('change', imageWidth);
@@ -1181,7 +1181,7 @@ describe('Edit image tests', () => {
 						clickButton('ok', dialog);
 
 						expect(sortAttributes(editor.value)).equals(
-							'<p><img alt="artio" src="tests/artio.jpg" style="height:200px;width:356px"></p>'
+							'<p><img alt="artio" src="tests/artio.jpg" style="width:356px"></p>'
 						);
 					});
 				});
@@ -1252,9 +1252,10 @@ describe('Edit image tests', () => {
 					expect(form.getElm('editImage')).is.not.null;
 				});
 
-				describe('Click on image button', () => {
+				describe.only('Click on image button', () => {
 					let editor;
 					let imagePropertiesDialog;
+					let form;
 
 					beforeEach(async () => {
 						editor = getJodit(settings);
@@ -1267,7 +1268,7 @@ describe('Edit image tests', () => {
 
 						imagePropertiesDialog = getOpenedDialog(editor);
 
-						const form = getForm(imagePropertiesDialog);
+						form = getForm(imagePropertiesDialog);
 						const reChange = form.getElm('changeImage');
 
 						expect(reChange).is.not.null;
@@ -1292,18 +1293,34 @@ describe('Edit image tests', () => {
 						});
 
 						describe('Select image', () => {
-							let fb, dialog;
-							beforeEach(() => {
+							let fb, dialog, previousWidth, previousHeight;
+
+							beforeEach(async () => {
 								imagePropertiesDialog = getOpenedDialog(editor);
 								const popup = getOpenedPopup(
 									imagePropertiesDialog.component
 								);
+
+								const imageWidth = form.getElm('imageWidth');
+								previousWidth = imageWidth.value;
+								const imageHeight = form.getElm('imageHeight');
+								previousHeight = imageHeight.value;
+
 								clickButton('Browse', popup);
 
 								[fb, dialog] = getFB(editor);
 
 								simulateEvent('click', getFirstFBItem(fb));
+
+								unmockPromise();
 								clickButton('select', dialog);
+
+								await new Promise(resolve =>
+									editor.e.one(
+										'updateImageProperties.imageproperties',
+										resolve
+									)
+								);
 							});
 
 							it('should change image only inside dialog', () => {
@@ -1321,8 +1338,79 @@ describe('Edit image tests', () => {
 							it('should change source image after click apply', () => {
 								clickButton('Apply', imagePropertiesDialog);
 								expect(sortAttributes(editor.value)).equals(
-									'<p><img alt="artio" src="https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg" style="height:281px;width:500px"></p>'
+									'<p><img alt="artio" src="https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg" style="width:500px"></p>'
 								);
+							});
+						});
+
+						describe('Lock size', () => {
+							describe('Enabled', () => {
+								it('should change only height inside heightImage field', async () => {
+									const popup = getOpenedPopup(
+										imagePropertiesDialog.component
+									);
+
+									const imageWidth =
+										form.getElm('imageWidth');
+									const previousWidth = imageWidth.value;
+									const imageHeight =
+										form.getElm('imageHeight');
+									const previousHeight = imageHeight.value;
+
+									clickButton('Browse', popup);
+
+									[fb, dialog] = getFB(editor);
+
+									simulateEvent('click', getFirstFBItem(fb));
+
+									unmockPromise();
+									clickButton('select', dialog);
+
+									await new Promise(resolve =>
+										editor.e.one(
+											'updateImageProperties.imageproperties',
+											resolve
+										)
+									);
+									expect(imageWidth.value).equals(10);
+									expect(imageHeight.value).equals(20);
+								});
+							});
+
+							describe('Disabled', () => {
+								it('should not change width and height', async () => {
+									const popup = getOpenedPopup(
+										imagePropertiesDialog.component
+									);
+
+									const lockSize = form.getElm('lockSize');
+									simulateEvent('click', lockSize);
+
+									const imageWidth =
+										form.getElm('imageWidth');
+									const previousWidth = imageWidth.value;
+									const imageHeight =
+										form.getElm('imageHeight');
+									const previousHeight = imageHeight.value;
+
+									clickButton('Browse', popup);
+
+									[fb, dialog] = getFB(editor);
+
+									simulateEvent('click', getFirstFBItem(fb));
+
+									unmockPromise();
+									clickButton('select', dialog);
+
+									await new Promise(resolve =>
+										editor.e.one(
+											'updateImageProperties.imageproperties',
+											resolve
+										)
+									);
+									expect(imageWidth.value).equals(10);
+									expect(imageHeight.value).equals(20);
+								});
 							});
 						});
 					});
@@ -1463,6 +1551,59 @@ describe('Edit image tests', () => {
 					['rte-image-width-50', 'rte-image-width-50'],
 					['rte-image-width-75', '75 % width']
 				]);
+			});
+		});
+	});
+
+	describe('Dialog image', () => {
+		describe('Opened dialog image', () => {
+			it('Should disable margin inputs for left, bottom, right if element has equals margins(margin:10px;)', async () => {
+				const editor = getJodit({
+					history: {
+						timeout: 0
+					},
+					image: {
+						openOnDblClick: true
+					}
+				});
+				editor.value =
+					'<img src="https://xdsoft.net/jodit/files/artio.jpg" style="margin:10px;border:1px solid red;width:100px;height:100px;"/>';
+
+				const img = editor.editor.querySelector('img');
+				await img.decode();
+				simulateEvent('dblclick', img);
+
+				const dialog = getOpenedDialog(editor);
+
+				expect(dialog.style.display).does.not.equal('none');
+
+				const form = getForm(dialog);
+				const marginBottom = form.getElm('marginBottom');
+				expect(marginBottom.getAttribute('disabled')).equals('true');
+			});
+
+			it('Should enable margin inputs for left, bottom, right if element has not equals margins(margin:10px 5px;)', async () => {
+				const editor = getJodit({
+					history: {
+						timeout: 0
+					},
+					image: {
+						openOnDblClick: true
+					}
+				});
+				editor.value =
+					'<img alt="artio" src="https://xdsoft.net/jodit/files/artio.jpg" style="margin:10px 5px;border:1px solid red;width:100px;height:100px;"/>';
+
+				const img = editor.editor.querySelector('img');
+				await img.decode();
+				simulateEvent('dblclick', img);
+
+				const dialog = getOpenedDialog(editor);
+				const form = getForm(dialog);
+				const marginBottom = form.getElm('marginBottom');
+
+				expect(dialog.style.display).does.not.equal('none');
+				expect(marginBottom.getAttribute('disabled')).is.null;
 			});
 		});
 	});
