@@ -80,6 +80,7 @@ export const TabsWidget = (
 
 		buttonList.forEach(b => {
 			b.state.variant = 'initial';
+			b.state.activated = false;
 		});
 
 		$$('.jodit-tab', tabBox).forEach(a => {
@@ -87,6 +88,7 @@ export const TabsWidget = (
 		});
 
 		nameToTab[tab].button.state.variant = 'outline';
+		nameToTab[tab].button.state.activated = true;
 		nameToTab[tab].tab.classList.add('jodit-tab_active');
 	};
 
