@@ -3,7 +3,8 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Toolbar', function () {
+
+describe('Toolbar', () => {
 	describe('Update toolbar', () => {
 		describe('Call updateToolbar method', () => {
 			describe('With different events', () => {
@@ -415,7 +416,7 @@ describe('Toolbar', function () {
 				expect(popup).is.not.null;
 			});
 
-			describe('in the left side', function () {
+			describe('on the left side', function () {
 				it('Should open popup in toolbar with float by left editor side', function () {
 					const editor = getJodit({
 						buttons: ['video'],
@@ -437,7 +438,7 @@ describe('Toolbar', function () {
 				});
 			});
 
-			describe('in the right side', function () {
+			describe('on the right side', function () {
 				it('Should open popup in toolbar with float by left editor side', function () {
 					const editor = getJodit({
 						width: 306,
@@ -454,12 +455,13 @@ describe('Toolbar', function () {
 						disablePlugins: 'mobile'
 					});
 
+					editor.value = '<p>test</p>'.repeat(10);
+
 					clickButton('video', editor, 'button', true);
 
 					const popup = getOpenedPopup(editor);
 
 					expect(popup).is.not.null;
-
 					const positionPopup = offset(popup);
 					const positionContainer = offset(editor.container);
 
