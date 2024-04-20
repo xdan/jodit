@@ -4,8 +4,15 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-require('../../../test/screenshots/bootstrap.screenshot.js');
-const expect = require('expect');
+import type { IJodit } from '../../types';
+import { page } from '../../../test/screenshots/bootstrap.screenshot';
+
+import expect from 'expect';
+import { toMatchImageSnapshot } from 'jest-image-snapshot';
+
+expect.extend({ toMatchImageSnapshot });
+
+declare let editor: IJodit;
 
 describe('Dialog screenshot testing', () => {
 	describe('Open alert dialog', () => {
@@ -16,7 +23,7 @@ describe('Dialog screenshot testing', () => {
 
 			await page.waitForSelector('[role="dialog"] .jodit-dialog__panel');
 			const dialog = await page.$('[role="dialog"] .jodit-dialog__panel');
-			const screenshot = await dialog.screenshot();
+			const screenshot = await dialog!.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this);
 		}).timeout(10_000);
 	});
@@ -29,7 +36,7 @@ describe('Dialog screenshot testing', () => {
 
 			await page.waitForSelector('[role="dialog"] .jodit-dialog__panel');
 			const dialog = await page.$('[role="dialog"] .jodit-dialog__panel');
-			const screenshot = await dialog.screenshot();
+			const screenshot = await dialog!.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this);
 		}).timeout(10_000);
 	});

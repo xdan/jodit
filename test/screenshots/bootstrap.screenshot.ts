@@ -4,7 +4,14 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-const yargs = require('yargs');
+import expect from 'expect';
+// @ts-ignore
+import toMatchImageSnapshot from 'expect-mocha-image-snapshot';
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import puppeteer, { Browser, Page } from 'puppeteer';
+import yargs from 'yargs';
 
 const args = yargs
 	.option('build', {
@@ -27,7 +34,7 @@ const args = yargs
 		default: false,
 		description: 'Fat file'
 	})
-	.parseSync();
+	.parse();
 
 if (!args.build) {
 	throw new Error('Build type is not defined');
@@ -38,19 +45,9 @@ console.info('Debug:', args.debug);
 console.info('Fat:', args.fat);
 console.info('Min:', args.min);
 
-const fs = require('fs');
-const expect = require('expect');
-const path = require('path');
-
-const toMatchImageSnapshot = import('expect-mocha-image-snapshot');
-const puppeteer = require('puppeteer');
-const express = require('express');
-
 const app = express();
 
-toMatchImageSnapshot.then(res => {
-	expect.extend(res);
-});
+expect.extend({ toMatchImageSnapshot });
 
 const port = 2003;
 const host = `http://localhost:${port}`;
@@ -74,19 +71,12 @@ app.use(
 );
 app.use('/build', express.static(path.resolve(__dirname, '../../build')));
 
-const listen = app.listen(port, error => {
-	if (error) {
-		console.error(error);
-	}
+const listen = app.listen(port, host, () => {
+	console.info(`Server started on ${host}`);
 });
 
-// eslint-disable-next-line tsdoc/syntax
-/** @type puppeteer.Browser*/
-let browser;
-
-// eslint-disable-next-line tsdoc/syntax
-/** @type puppeteer*/
-let page;
+let browser: Browser;
+let page: Page;
 
 if (typeof before !== 'undefined') {
 	before(async function () {
@@ -103,19 +93,21 @@ if (typeof before !== 'undefined') {
 			]
 		});
 
-		global.page = await browser.newPage();
-		await global.page.setViewport({ width: 1200, height: 800 });
-		await global.page.goto(host, { waitUntil: 'networkidle2' });
+		page = await browser.newPage();
+		await page.setViewport({ width: 1200, height: 800 });
+		await page.goto(host, { waitUntil: 'networkidle2' });
 	});
 
 	beforeEach(async function () {
 		this.timeout(10_000);
-		await global.page.reload({ waitUntil: 'networkidle2' });
+		await page.reload({ waitUntil: 'networkidle2' });
 		await page.evaluate(() => {
+			// @ts-ignore
 			window.editor?.destruct();
+			// @ts-ignore
 			window.editor = Jodit.make('#editor-area', {
 				aiAssistant: {
-					aiAssistantCallback: async (text, html) => {
+					aiAssistantCallback: async (text: string, html: string) => {
 						return `AI: ${text} HTML: ${html} answer`;
 					}
 				},
@@ -140,7 +132,4 @@ if (typeof before !== 'undefined') {
 	require('./mock.request');
 }
 
-module.exports = {
-	page,
-	browser
-};
+export { browser, expect, page };

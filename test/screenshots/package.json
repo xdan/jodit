@@ -1,12 +1,17 @@
 {
 	"name": "jodit-screenshot-stand",
 	"dependencies": {
+		"@types/chai": "^4.3.14",
+		"@types/mocha": "^9.0.0",
 		"@types/node": "^20.12.7",
-		"chai": "^4.3.10",
+    "@types/jest-image-snapshot": "^6.4.0",
+
+		"chai": "^5.1.0",
 		"expect-mocha-image-snapshot": "^3.0.15",
 		"express": "^4.19.2",
+		"jest-image-snapshot": "^6.4.0",
 		"mocha": "^10.2.0",
-		"puppeteer": "^21.5.0",
+		"puppeteer": "^22.6.5",
 		"ts-node": "^10.9.2",
 		"tslib": "^2.6.2",
 		"typescript": "^5.4.5",

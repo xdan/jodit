@@ -30,6 +30,7 @@ NODE_MODULES_BIN := ./node_modules/.bin
 TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project ./tools/tsconfig.json
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
 KARMA := @TS_NODE_TRANSPILE_ONLY=true $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
+MOCHA := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/mocha
 
 .PHONY: update
 update:
@@ -230,12 +231,14 @@ screenshots-all:
 
 .PHONY: screenshots-test
 screenshots-test:
-	docker run -v $(shell pwd)/build:/app/build/ -v $(shell pwd)/test:/app/test/ \
+	docker run \
 		-p 2003:2003 \
 		-e SNAPSHOT_UPDATE=$(updateTests) \
-		-v $(shell pwd)/src:/app/src/ jodit-screenshots \
+		-v $(shell pwd)/build:/app/build/ \
+		-v $(shell pwd)/test:/app/test/ \
+		-v $(shell pwd)/src:/app/src/ \
 		-v $(shell pwd)/tools:/app/tools/ jodit-screenshots \
-		 $(TS_NODE_BASE) ./node_modules/.bin/mocha ./src/**/**.screenshot.ts --build=$(es) --min=$(uglify) --fat=$(fat)
+		$(MOCHA) /app/src/**/**.test.screenshot.ts --build=$(es) --min=$(uglify) --fat=$(fat)
 
 .PHONY: screenshots-build-image
 screenshots-build-image:

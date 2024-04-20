@@ -47,12 +47,14 @@
 	},
 	"homepage": "https://xdsoft.net/jodit/",
 	"dependencies": {
-		"autobind-decorator": "^2.4.0"
+		"autobind-decorator": "^2.4.0",
+		"jest-image-snapshot": "^6.4.0"
 	},
 	"devDependencies": {
 		"@tsconfig/node18": "^18.2.4",
 		"@types/ace": "^0.0.52",
 		"@types/fs-extra": "^11.0.4",
+		"@types/jest-image-snapshot": "^6.4.0",
 		"@types/karma": "^6.3.8",
 		"@types/mocha": "^10.0.6",
 		"@types/node": "^20.12.5",
