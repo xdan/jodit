@@ -11,6 +11,7 @@ import { css } from 'jodit/core/helpers/utils/css';
 import type { EditValues, ImagePropertiesState } from '../interface';
 import { normalSizeFromString } from '../utils/utils';
 
+/** @private */
 export async function readSizes(
 	image: HTMLImageElement,
 	values: EditValues,

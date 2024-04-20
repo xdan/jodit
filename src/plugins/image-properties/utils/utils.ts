@@ -7,6 +7,7 @@
 import { isNumber } from 'jodit/core/helpers/checker/is-number';
 import { trim } from 'jodit/core/helpers/string/trim';
 
+/** @private */
 export const normalSizeFromString = (
 	value: string | number
 ): string | number => {
@@ -15,6 +16,7 @@ export const normalSizeFromString = (
 		: value;
 };
 
+/** @private */
 export const normalSizeToString = (value: string | number): string => {
 	if (isNumber(value)) {
 		return value ? value + 'px' : value.toString();

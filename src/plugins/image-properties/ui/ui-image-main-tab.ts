@@ -13,6 +13,7 @@ import { UIGroup } from 'jodit/core/ui/group/group';
 
 import type { ImagePropertiesAPI, ImagePropertiesState } from '../interface';
 
+/** @private */
 @component
 export class UIImageMainTab extends UIGroup<IJodit> {
 	override className(): string {

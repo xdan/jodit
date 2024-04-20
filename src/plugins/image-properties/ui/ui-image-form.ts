@@ -25,6 +25,7 @@ import { UIImagePositionTab } from './ui-image-position-tab';
 
 import './ui-image-form.less';
 
+/** @private */
 @component
 export class UIImagePropertiesForm extends UIGroup<IJodit> {
 	override className(): string {

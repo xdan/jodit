@@ -9,6 +9,7 @@ import { css } from 'jodit/core/helpers/utils/css';
 
 import type { EditValues } from '../interface';
 
+/** @private */
 export function readAlign(image: HTMLImageElement, values: EditValues): void {
 	// Align
 	if (

@@ -8,6 +8,7 @@ import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { attr } from 'jodit/core/helpers/utils/attr';
 
+/** @private */
 export function applyLink(
 	j: IJodit,
 	image: HTMLImageElement,

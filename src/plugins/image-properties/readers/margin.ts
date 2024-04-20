@@ -8,6 +8,7 @@ import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
 
 import type { EditValues, ImagePropertiesState } from '../interface';
 
+/** @private */
 export function readMargins(
 	image: HTMLImageElement,
 	values: EditValues,

@@ -17,6 +17,7 @@ import { Icon } from 'jodit/core/ui/icon';
 import type { ImagePropertiesAPI, ImagePropertiesState } from '../interface';
 import { normalSizeFromString } from '../utils/utils';
 
+/** @private */
 @component
 export class UIImagePositionTab extends UIElement<IJodit> {
 	className(): string {

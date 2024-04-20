@@ -20,9 +20,9 @@ import { moveNodeInsideStart } from 'jodit/core/selection/helpers';
 
 import './config';
 
+import type { DeleteMode } from './interface';
 import { checkNotCollapsed } from './cases/check-not-collapsed';
 import { cases } from './cases';
-import type { DeleteMode } from './interface';
 
 export class backspace extends Plugin {
 	static override requires = ['hotkeys'];

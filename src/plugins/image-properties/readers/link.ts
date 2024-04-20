@@ -10,6 +10,7 @@ import { attr } from 'jodit/core/helpers/utils/attr';
 
 import type { EditValues, ImagePropertiesState } from '../interface';
 
+/** @private */
 export function readLink(
 	state: ImagePropertiesState,
 	j: IJodit,

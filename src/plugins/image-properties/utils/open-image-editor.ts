@@ -13,6 +13,7 @@ import type { ImagePropertiesState } from '../interface';
 
 /**
  * Open image editor dialog
+ * @private
  */
 export function openImageEditorDialog(
 	j: IJodit,

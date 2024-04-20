@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import style from '../loaders/style';
 import type { Variables } from '../variables';
+import style from '../loaders/style';
 
 import type { RuleSetRule } from 'webpack';
 

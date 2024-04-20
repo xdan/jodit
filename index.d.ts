@@ -4,8 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IComponent, Nullable } from './src/types';
-import type { IJodit } from './src/types';
+import type { IComponent, IJodit, Nullable } from './src/types';
 
 declare global {
 	const Jodit: IJodit;

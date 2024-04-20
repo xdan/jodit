@@ -16,6 +16,7 @@ import { applySize } from './size';
 
 /**
  * Apply form's values to image
+ * @private
  */
 export function applyValuesToImage(
 	j: IJodit,

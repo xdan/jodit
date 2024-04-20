@@ -12,6 +12,7 @@ import { FileSelectorWidget } from 'jodit/modules/widget/file-selector/file-sele
 
 import type { ImagePropertiesState } from '../interface';
 
+/** @private */
 export function openImagePopup(
 	j: IJodit,
 	dialog: IDialog,

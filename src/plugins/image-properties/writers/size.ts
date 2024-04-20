@@ -9,6 +9,7 @@ import { css } from 'jodit/core/helpers/utils/css';
 
 import { normalSizeToString } from '../utils/utils';
 
+/** @private */
 export function applySize(
 	image: HTMLImageElement,
 	imageWidth: number | string,
