@@ -75,14 +75,16 @@ describe('Dialog system tests', function () {
 			const dialog = getOpenedDialog(editor);
 			expect(dialog).is.not.null;
 
-			const changeImage = dialog.querySelector(
-				'a[data-ref="changeImage"]'
-			);
+			const form = dialog.querySelector(
+				'.jodit-ui-image-properties-form'
+			).component;
+
+			const changeImage = form.getElm('changeImage');
 			expect(changeImage).is.not.null;
 
 			simulateEvent('click', changeImage);
 
-			const popup2 = getOpenedPopup(editor);
+			const popup2 = getOpenedPopup(dialog.component);
 			expect(popup2).is.not.null;
 
 			const pos = Jodit.modules.Helpers.position(popup2),
@@ -128,64 +130,6 @@ describe('Dialog system tests', function () {
 			const dialog3 = Jodit.Alert(div);
 			expect(div).equals(document.getElementById('hello3'));
 			dialog3.close();
-		});
-	});
-
-	describe('Dialog image', function () {
-		describe('Opened dialog image', function () {
-			it('Should disable margin inputs for left, bottom, right if element has equals margins(margin:10px;)', function () {
-				const editor = getJodit({
-					history: {
-						timeout: 0
-					},
-					image: {
-						openOnDblClick: true
-					}
-				});
-				editor.value =
-					'<img src="https://xdsoft.net/jodit/files/artio.jpg" style="margin:10px;border:1px solid red;width:100px;height:100px;"/>';
-				simulateEvent(
-					'dblclick',
-					0,
-					editor.editor.querySelector('img')
-				);
-
-				const dialog = getOpenedDialog(editor);
-
-				expect(dialog.style.display).does.not.equal('none');
-				expect(
-					dialog.querySelectorAll(
-						'[data-ref="marginBottom"][disabled]'
-					).length
-				).equals(1);
-			});
-
-			it('Should enable margin inputs for left, bottom, right if element has not equals margins(margin:10px 5px;)', function () {
-				const editor = getJodit({
-					history: {
-						timeout: 0
-					},
-					image: {
-						openOnDblClick: true
-					}
-				});
-				editor.value =
-					'<img src="https://xdsoft.net/jodit/files/artio.jpg" style="margin:10px 5px;border:1px solid red;width:100px;height:100px;"/>';
-				simulateEvent(
-					'dblclick',
-					0,
-					editor.editor.querySelector('img')
-				);
-
-				const dialog = getOpenedDialog(editor);
-
-				expect(dialog.style.display).does.not.equal('none');
-				expect(
-					dialog.querySelectorAll(
-						'[data-ref="marginBottom"][disabled]'
-					).length
-				).equals(0);
-			});
 		});
 	});
 });

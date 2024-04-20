@@ -75,7 +75,7 @@ export class select extends Plugin {
 	}
 
 	/**
-	 * @event outsideClick(e) - when user clicked in the outside of editor
+	 * @event outsideClick(e) - when user clicked on the outside of editor
 	 */
 	@watch('ow:click')
 	protected onOutsideClick(e: MouseEvent): void {
@@ -93,7 +93,7 @@ export class select extends Plugin {
 	}
 
 	@watch([':beforeCommandCut'])
-	protected beforeCommandCut(command: string): void | false {
+	protected beforeCommandCut(): void | false {
 		const { s } = this.j;
 
 		if (!s.isCollapsed()) {
@@ -106,12 +106,32 @@ export class select extends Plugin {
 	}
 
 	@watch([':beforeCommandSelectall'])
-	protected beforeCommandSelectall(command: string): false {
+	protected beforeCommandSelectAll(): false {
 		const { s } = this.j;
 		s.focus();
 		s.select(this.j.editor, true);
 		s.expandSelection();
 		return false;
+	}
+
+	/**
+	 * Normalize selection after triple click
+	 */
+	@watch([':click'])
+	protected onTripleClickNormalizeSelection(e: MouseEvent): void {
+		if (e.detail !== 3 || !this.j.o.select.normalizeTripleClick) {
+			return;
+		}
+
+		const { s } = this.j;
+		const { startContainer, startOffset } = s.range;
+		if (startOffset === 0 && Dom.isText(startContainer)) {
+			s.select(
+				Dom.closest(startContainer, Dom.isBlock, this.j.editor) ||
+					startContainer,
+				true
+			);
+		}
 	}
 
 	@watch([':copy', ':cut'])

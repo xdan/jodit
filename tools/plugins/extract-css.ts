@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { fileName } from '../utils/filename';
 import type { Variables } from '../variables';
+import { fileName } from '../utils/filename';
 
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 

@@ -1,0 +1,87 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../../styles/variables';
+@import (reference) '../../../styles/mixins';
+
+.jodit-ui-image-position-tab,
+.jodit-ui-image-properties-form {
+	&__lockMargin > svg,
+	&__lockSize > svg {
+		display: inline-block;
+		overflow: hidden;
+		width: var(--icon-middle-size);
+		height: var(--icon-middle-size);
+		fill: var(--color-dark);
+		line-height: var(--icon-middle-size);
+		transform-origin: 0 0 !important;
+		vertical-align: middle;
+	}
+
+	&__view-box {
+		padding: var(--padding-default);
+	}
+
+	&__imageView {
+		display: flex;
+		height: var(--width-default);
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		margin: 0 0 var(--padding-default);
+		background-color: var(--color-background-light-gray);
+
+		img {
+			max-width: 100%;
+			max-height: 100%;
+		}
+	}
+
+	&__imageSizes.jodit-form__group {
+		min-width: auto;
+		flex-direction: row;
+		align-items: center;
+		padding: 0;
+		margin: 0;
+
+		a {
+			display: inline-block;
+			cursor: pointer;
+		}
+	}
+
+	.jodit-form__group {
+		padding: 0;
+	}
+
+	&__tabsBox {
+		padding: 0 var(--padding-default);
+	}
+}
+
+.jodit-ui-image-properties-form {
+	&_lock_true::before {
+		content: '';
+		left: 0;
+		top: 0;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: var(--color-button-background-hover-opacity60);
+		z-index: 3;
+	}
+
+	&_lock_true::after {
+		content: '';
+		.loader();
+		left: 50%;
+		top: 50%;
+		margin-left: -10px;
+		margin-top: -10px;
+		position: absolute;
+		background-size: var(--icon-loader-size);
+	}
+}

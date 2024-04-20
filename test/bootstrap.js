@@ -859,7 +859,7 @@ function simulateEvent(type, keyCodeOrElement, elementOrApplyOpt, applyOpt) {
  * @return {HTMLElement|null}
  */
 function getOpenedPopup(editor) {
-	const root = editor.o.shadowRoot || editor.ownerDocument;
+	const root = (editor.o && editor.o.shadowRoot) || editor.ownerDocument;
 	const popups = root.querySelectorAll(
 		'[role="popup"][data-editor_id="' + editor.id + '"]:last-child'
 	);
@@ -1358,4 +1358,14 @@ if (typeof before === 'function') {
 			}
 		};
 	});
+}
+
+function getFirstFBItem(fb, index = 0, file = false) {
+	return fb.browser.querySelectorAll(
+		'.' +
+			fb.files.getFullElName('item') +
+			'[data-is-file="' +
+			(file ? 1 : 0) +
+			'"]'
+	)[index];
 }

@@ -4,16 +4,6 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-function getFirstItem(fb, index = 0, file = false) {
-	return fb.browser.querySelectorAll(
-		'.' +
-			fb.files.getFullElName('item') +
-			'[data-is-file="' +
-			(file ? 1 : 0) +
-			'"]'
-	)[index];
-}
-
 ('filebrowser' in window.skipTest ? describe.skip : describe)(
 	'Jodit FileBrowser Tests',
 	() => {
@@ -384,14 +374,14 @@ function getFirstItem(fb, index = 0, file = false) {
 
 								simulateEvent(
 									'click',
-									getFirstItem(filebrowser)
+									getFirstFBItem(filebrowser)
 								);
 
 								expect(edit.hasAttribute('disabled')).is.false;
 
 								simulateEvent(
 									'click',
-									getFirstItem(filebrowser, 1),
+									getFirstFBItem(filebrowser, 1),
 									function (data) {
 										data[
 											!navigator.userAgent.indexOf(
@@ -440,7 +430,7 @@ function getFirstItem(fb, index = 0, file = false) {
 
 										simulateEvent(
 											'click',
-											getFirstItem(filebrowser)
+											getFirstFBItem(filebrowser)
 										);
 
 										expect(remove.hasAttribute('disabled'))
@@ -483,7 +473,7 @@ function getFirstItem(fb, index = 0, file = false) {
 
 										simulateEvent(
 											'click',
-											getFirstItem(filebrowser)
+											getFirstFBItem(filebrowser)
 										);
 
 										expect(remove.hasAttribute('disabled'))
@@ -766,7 +756,7 @@ function getFirstItem(fb, index = 0, file = false) {
 
 							simulateEvent(
 								'click',
-								getFirstItem(filebrowser, 0, true)
+								getFirstFBItem(filebrowser, 0, true)
 							);
 
 							expect(select.hasAttribute('disabled')).is.false;
@@ -1399,7 +1389,7 @@ function getFirstItem(fb, index = 0, file = false) {
 
 						expect(files).is.not.null;
 
-						const item = getFirstItem(filebrowser),
+						const item = getFirstFBItem(filebrowser),
 							pos = Jodit.modules.Helpers.position(item);
 
 						simulateEvent('contextmenu', item, function (o) {
@@ -1413,25 +1403,23 @@ function getFirstItem(fb, index = 0, file = false) {
 
 						expect(context).is.not.null;
 
-						await new Promise(resolve => {
-							filebrowser.events.on(
+						clickButton('eye', context);
+
+						await new Promise(resolve =>
+							filebrowser.events.one(
 								'previewOpenedAndLoaded',
-								function () {
-									const dialog = getOpenedDialog(filebrowser);
+								resolve
+							)
+						);
 
-									expect(dialog).is.not.null;
-									const previewsButtons =
-										dialog.querySelectorAll(
-											'.jodit-file-browser-preview__navigation'
-										);
+						const dialog = getOpenedDialog(filebrowser);
 
-									expect(previewsButtons.length).equals(2);
-									resolve();
-								}
-							);
+						expect(dialog).is.not.null;
+						const previewsButtons = dialog.querySelectorAll(
+							'.jodit-file-browser-preview__navigation'
+						);
 
-							clickButton('eye', context);
-						});
+						expect(previewsButtons.length).equals(2);
 					});
 				});
 			});

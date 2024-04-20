@@ -13,9 +13,9 @@ import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
 import { dataBind } from 'jodit/core/helpers/utils/data-bind';
 import { Icon } from 'jodit/core/ui/icon';
 
+import type { ISpeechRecognizeConstructor } from './interface';
 import { SpeechRecognition } from './helpers/api';
 import { RecognizeManager } from './helpers/recognize-manager';
-import type { ISpeechRecognizeConstructor } from './interface';
 import speechRecognizeIcon from './speech-recognize.svg';
 
 import { Config } from 'jodit/config';

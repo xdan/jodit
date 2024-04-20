@@ -227,7 +227,7 @@ describe('Search plugin', function () {
 						}
 					);
 
-					editor.e.on('afterFindAndSelect', () => {
+					editor.e.one('afterFindAndSelect', () => {
 						try {
 							const sel = editor.s.sel;
 

@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { Variables } from '../variables';
 import { fileName } from '../utils/filename';
 import { PostBuild } from '../utils/post-build';
-import type { Variables } from '../variables';
 
 import autoprefixer from 'autoprefixer';
 import * as fs from 'fs';

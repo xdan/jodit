@@ -141,8 +141,8 @@
 	flex-direction: column;
 	margin-bottom: var(--padding-default);
 
-	> label {
-		margin-bottom: var(--padding-default);
+	label {
+		margin-bottom: calc(var(--padding-default) / 2);
 	}
 }
 
@@ -202,6 +202,15 @@
 	width: 16px;
 	height: 16px;
 	vertical-align: middle;
+}
+
+.jodit-switcher-wrapper {
+	display: flex;
+	align-items: center;
+
+	.jodit-switcher + span {
+		margin-left: var(--padding-default);
+	}
 }
 
 .jodit-switcher {

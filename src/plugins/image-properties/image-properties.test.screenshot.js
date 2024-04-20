@@ -10,10 +10,12 @@ const expect = require('expect');
 describe('Image properties screenshot testing', () => {
 	describe('Open image properties', () => {
 		it('works', async function () {
-			await page.evaluate(() => {
+			await page.evaluate(async () => {
 				editor.value =
 					'<p><a target="_blank" href="https://xdsoft.net/jodit/files/th.jpg"><img alt="test image" title="test title" class="some-class" src="https://xdsoft.net/jodit/files/th.jpg"></a></p>';
-				simulateEvent('dblclick', editor.editor.querySelector('img'));
+				const img = editor.editor.querySelector('img');
+				await img.decode();
+				simulateEvent('dblclick', img);
 			});
 
 			await page.waitForSelector('[role="dialog"]');

@@ -119,11 +119,11 @@ export const getXPathByElement = (
  * Find all `ref` or `data-ref` elements inside HTMLElement
  */
 export const refs = <T extends HTMLElement>(
-	root: HTMLElement
+	root: HTMLElement | { container: HTMLElement }
 ): IDictionary<T> => {
-	// if (Component.isInstanceOf<UIElement>(root, UIElement)) {
-	// 	root = root.container;
-	// }
+	if ('container' in root) {
+		root = root.container;
+	}
 
 	return $$('[ref],[data-ref]', <HTMLElement>root).reduce((def, child) => {
 		const key = attr(child, '-ref');

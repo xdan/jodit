@@ -212,6 +212,13 @@ test-only-run:
 coverage:
 	npx --yes type-coverage ./src --detail --ignore-files 'build/**' --ignore-files 'test/**' --ignore-files 'examples/**'
 
+.PHONY: screenshots-update
+screenshots-update:
+	make build es=es2021 fat=true uglify=true
+	make screenshots-build-image
+	make screenshots-test es=es2021 fat=true min=true updateTests=true
+
+
 .PHONY: screenshots-all
 screenshots-all:
 	make screenshots-build-image
@@ -241,6 +248,8 @@ newversion:
 
 .PHONY: newversion-git
 newversion-git:
+	git config user.name "xdan"
+	git config user.email "chupurnov@gmail.com"
 	git add --all  && git commit -m "New version $(version) Read more $(CHANGELOG_URL)"
 	git tag $(version)
 	@if [ "$(push)" = "true" ]; then \

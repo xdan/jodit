@@ -52,6 +52,7 @@ export interface IUIIconState {
 
 export type ButtonVariant =
 	| 'initial'
+	| 'outline'
 	| 'default'
 	| 'primary'
 	| 'secondary'

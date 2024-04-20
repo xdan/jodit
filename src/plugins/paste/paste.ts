@@ -38,8 +38,8 @@ import { Plugin } from 'jodit/core/plugin/plugin';
 
 import './config';
 
-import { askInsertTypeDialog, getAllTypes, pasteInsertHtml } from './helpers';
 import type { PastedValue, PasteEvent } from './interface';
+import { askInsertTypeDialog, getAllTypes, pasteInsertHtml } from './helpers';
 
 /**
  * Ask before paste HTML source
