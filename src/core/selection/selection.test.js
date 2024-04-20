@@ -677,7 +677,7 @@ describe('Selection Module Tests', function () {
 		});
 	});
 
-	describe('~expandSelection', () => {
+	describe('expandSelection', () => {
 		[
 			[
 				'<table><tbody><tr><td>|test|</td><td>pop</td></tr></tbody></table>',
