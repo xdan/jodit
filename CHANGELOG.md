@@ -9,16 +9,11 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
-## 4.2
+## 4.2.1
 
 ### :bug: Bug Fix
 
 -   [Size of picture is not correct when changin a picture #1107](https://github.com/xdan/jodit/issues/1107)
-
-## 4.1.17
-
-### :bug: Bug Fix
-
 -   [Selection by triple click removes close tag + open tag of next paragraph #1101](https://github.com/xdan/jodit/issues/1101)
     Added options `select.normalizeTripleClick: boolean = true` to normalize selection after triple click
     For disable this behavior set `select.normalizeTripleClick: false`
