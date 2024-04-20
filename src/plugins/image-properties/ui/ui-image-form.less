@@ -13,12 +13,10 @@
 	&__lockSize > svg {
 		display: inline-block;
 		overflow: hidden;
-		width: 14px;
-		height: 14px;
-		fill: #222;
-		font-size: 8px;
-		font-style: normal;
-		line-height: 14px;
+		width: var(--icon-middle-size);
+		height: var(--icon-middle-size);
+		fill: var(--color-dark);
+		line-height: var(--icon-middle-size);
 		transform-origin: 0 0 !important;
 		vertical-align: middle;
 	}
@@ -29,12 +27,12 @@
 
 	&__imageView {
 		display: flex;
-		height: 150px;
+		height: var(--width-default);
 		align-items: center;
 		justify-content: center;
 		padding: 0;
 		margin: 0 0 var(--padding-default);
-		background-color: #f6f6f6;
+		background-color: var(--color-background-light-gray);
 
 		img {
 			max-width: 100%;
@@ -46,23 +44,25 @@
 		min-width: auto;
 		flex-direction: row;
 		align-items: center;
-		padding: 0 !important;
-		margin: 0 !important;
+		padding: 0;
+		margin: 0;
 
 		a {
 			display: inline-block;
 			cursor: pointer;
 		}
+	}
 
-		.jodit-input {
-			width: ~'calc(50% - 8px)' !important;
-		}
+	.jodit-form__group {
+		padding: 0;
+	}
+
+	&__tabsBox {
+		padding: 0 var(--padding-default);
 	}
 }
 
 .jodit-ui-image-properties-form {
-	//position: relative;
-
 	&_lock_true::before {
 		content: '';
 		left: 0;
@@ -82,6 +82,6 @@
 		margin-left: -10px;
 		margin-top: -10px;
 		position: absolute;
-		background-size: 20px;
+		background-size: var(--icon-loader-size);
 	}
 }

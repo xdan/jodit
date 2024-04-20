@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/image-properties
+ */
+
 import type { ImageHAlign } from 'jodit/types';
 
 export type EditValues = {
