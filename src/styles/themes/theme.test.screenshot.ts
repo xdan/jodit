@@ -19,7 +19,7 @@ describe('Theme screenshot testing', () => {
 			failureThreshold: 0.1,
 			failureThresholdType: 'percent'
 		});
-	}).timeout(10000);
+	}).timeout(10_000);
 
 	describe('Dark theme', () => {
 		it('should render dark theme', async function () {
@@ -37,7 +37,7 @@ describe('Theme screenshot testing', () => {
 				failureThreshold: 0.1,
 				failureThresholdType: 'percent'
 			});
-		}).timeout(10000);
+		}).timeout(10_000);
 
 		describe('Dialog theme', () => {
 			it('should render with same theme', async function () {
@@ -54,7 +54,7 @@ describe('Theme screenshot testing', () => {
 				);
 				const screenshot = await container.screenshot();
 				expect(screenshot).toMatchImageSnapshot(this);
-			}).timeout(10000);
+			}).timeout(10_000);
 		});
 	});
 });

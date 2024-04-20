@@ -27,7 +27,7 @@ BUILD_ESM := true
 UGLIFY_ESM := false
 CHANGELOG_URL := https://github.com/xdan/jodit/blob/main/CHANGELOG.md
 NODE_MODULES_BIN := ./node_modules/.bin
-TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project $(cwd)tools/tsconfig.json
+TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project ./tools/tsconfig.json
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
 KARMA := @TS_NODE_TRANSPILE_ONLY=true $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
 
@@ -234,7 +234,8 @@ screenshots-test:
 		-p 2003:2003 \
 		-e SNAPSHOT_UPDATE=$(updateTests) \
 		-v $(shell pwd)/src:/app/src/ jodit-screenshots \
-		node --input-type=module ./node_modules/.bin/mocha ./src/**/**.screenshot.js --build=$(es) --min=$(uglify) --fat=$(fat)
+		-v $(shell pwd)/tools:/app/tools/ jodit-screenshots \
+		 $(TS_NODE_BASE) ./node_modules/.bin/mocha ./src/**/**.screenshot.ts --build=$(es) --min=$(uglify) --fat=$(fat)
 
 .PHONY: screenshots-build-image
 screenshots-build-image:

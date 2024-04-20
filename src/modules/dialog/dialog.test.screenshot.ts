@@ -18,7 +18,7 @@ describe('Dialog screenshot testing', () => {
 			const dialog = await page.$('[role="dialog"] .jodit-dialog__panel');
 			const screenshot = await dialog.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this);
-		}).timeout(10000);
+		}).timeout(10_000);
 	});
 
 	describe('Open confirm dialog', () => {
@@ -31,7 +31,7 @@ describe('Dialog screenshot testing', () => {
 			const dialog = await page.$('[role="dialog"] .jodit-dialog__panel');
 			const screenshot = await dialog.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this);
-		}).timeout(10000);
+		}).timeout(10_000);
 	});
 
 	describe('Open prompt dialog', () => {
@@ -50,6 +50,6 @@ describe('Dialog screenshot testing', () => {
 			const dialog = await page.$('[role="dialog"] .jodit-dialog__panel');
 			const screenshot = await dialog.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this);
-		}).timeout(10000);
+		}).timeout(10_000);
 	});
 });

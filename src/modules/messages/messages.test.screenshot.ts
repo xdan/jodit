@@ -21,5 +21,5 @@ describe('Messages screenshot testing', () => {
 		const dialog = await page.$('.jodit');
 		const screenshot = await dialog.screenshot();
 		expect(screenshot).toMatchImageSnapshot(this);
-	}).timeout(10000);
+	}).timeout(10_000);
 });

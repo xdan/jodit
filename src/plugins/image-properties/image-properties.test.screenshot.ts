@@ -24,6 +24,6 @@ describe('Image properties screenshot testing', () => {
 			);
 			const screenshot = await element.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this);
-		}).timeout(10000);
+		}).timeout(10_000);
 	});
 });

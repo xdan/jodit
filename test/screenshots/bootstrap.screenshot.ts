@@ -80,11 +80,17 @@ const listen = app.listen(port, error => {
 	}
 });
 
+// eslint-disable-next-line tsdoc/syntax
+/** @type puppeteer.Browser*/
 let browser;
+
+// eslint-disable-next-line tsdoc/syntax
+/** @type puppeteer*/
+let page;
 
 if (typeof before !== 'undefined') {
 	before(async function () {
-		this.timeout(10000);
+		this.timeout(10_000);
 		browser = await puppeteer.launch({
 			headless: args.debug ? false : 'new',
 			executablePath: '/usr/bin/google-chrome-stable',
@@ -103,7 +109,7 @@ if (typeof before !== 'undefined') {
 	});
 
 	beforeEach(async function () {
-		this.timeout(10000);
+		this.timeout(10_000);
 		await global.page.reload({ waitUntil: 'networkidle2' });
 		await page.evaluate(() => {
 			window.editor?.destruct();
@@ -133,3 +139,8 @@ if (typeof before !== 'undefined') {
 
 	require('./mock.request');
 }
+
+module.exports = {
+	page,
+	browser
+};

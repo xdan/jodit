@@ -7,11 +7,11 @@
 require('../../../test/screenshots/bootstrap.screenshot.js');
 const expect = require('expect');
 
-describe('Link popup screenshot testing', () => {
-	describe('Open link popup', () => {
+describe('Color picker screenshot testing', () => {
+	describe('Open color picker', () => {
 		it('works', async function () {
 			await page.evaluate(() => {
-				return clickButton('link', editor);
+				return clickButton('brush', editor);
 			});
 
 			await page.waitForSelector('[role="popup"]');
@@ -21,6 +21,6 @@ describe('Link popup screenshot testing', () => {
 			);
 			const screenshot = await element.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this);
-		}).timeout(10000);
+		}).timeout(10_000);
 	});
 });

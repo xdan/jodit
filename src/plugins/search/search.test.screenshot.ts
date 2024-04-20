@@ -37,7 +37,7 @@ describe('Search screenshot testing', () => {
 				const element = await page.$('.jodit-ui-search__box');
 				const screenshot = await element.screenshot();
 				expect(screenshot).toMatchImageSnapshot(this);
-			}).timeout(10000);
+			}).timeout(10_000);
 		});
 	});
 });

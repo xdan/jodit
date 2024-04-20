@@ -4,14 +4,14 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-require('../../../test/screenshots/bootstrap.screenshot.js');
+require('../../../test/screenshots/bootstrap.screenshot.ts');
 const expect = require('expect');
 
-describe('Color picker screenshot testing', () => {
-	describe('Open color picker', () => {
+describe('Link popup screenshot testing', () => {
+	describe('Open link popup', () => {
 		it('works', async function () {
 			await page.evaluate(() => {
-				return clickButton('brush', editor);
+				return clickButton('link', editor);
 			});
 
 			await page.waitForSelector('[role="popup"]');
@@ -21,6 +21,6 @@ describe('Color picker screenshot testing', () => {
 			);
 			const screenshot = await element.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this);
-		}).timeout(10000);
+		}).timeout(10_000);
 	});
 });

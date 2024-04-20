@@ -20,6 +20,6 @@ describe('Image popup screenshot testing', () => {
 			const element = await page.$('.jodit-popup');
 			const screenshot = await element.screenshot();
 			expect(screenshot).toMatchImageSnapshot(this);
-		}).timeout(10000);
+		}).timeout(10_000);
 	});
 });

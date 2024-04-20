@@ -54,6 +54,7 @@
 		"@types/ace": "^0.0.52",
 		"@types/fs-extra": "^11.0.4",
 		"@types/karma": "^6.3.8",
+		"@types/mocha": "^10.0.6",
 		"@types/node": "^20.12.5",
 		"@types/postcss-css-variables": "^0.18.3",
 		"@types/yargs": "^17.0.32",
