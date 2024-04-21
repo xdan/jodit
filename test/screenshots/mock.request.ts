@@ -6,7 +6,7 @@
 
 import { args } from './args.screenshot';
 
-import { expect, Page } from '@playwright/test';
+import { expect, type Page } from '@playwright/test';
 import fs from 'fs';
 import mime from 'mime-types';
 import path from 'path';
@@ -183,6 +183,7 @@ export const mockRequest = async (page: Page): Promise<void> => {
 			await page.route(`https://${host}${pathname}`, async route => {
 				for (const item of process) {
 					const { filter, data } = item;
+
 					if (
 						filter({
 							url: route.request().url(),
@@ -196,16 +197,31 @@ export const mockRequest = async (page: Page): Promise<void> => {
 							body: JSON.stringify(data)
 						});
 					}
-
-					await route.fulfill({
-						status: 404,
-						contentType: 'text/plain',
-						body: 'Not Found!'
-					});
 				}
+
+				throw new Error(
+					'Not found mock data: ' +
+						JSON.stringify({
+							url: route.request().url(),
+							method: route.request().method().toLowerCase(),
+							body: route.request().postDataJSON()
+						})
+				);
 			});
 		}
 	}
+
+	await page.route('https://xdsoft.net/**', route => {
+		if (route.request().resourceType() === 'image') {
+			return route.fulfill({
+				status: 200,
+				contentType: 'image/png',
+				body: buffer
+			});
+		}
+
+		return route.continue();
+	});
 };
 
 export async function makeCeptJodit(page: Page, config = {}): Promise<void> {

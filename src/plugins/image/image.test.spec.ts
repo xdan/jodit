@@ -4,33 +4,33 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IJodit } from '../../types';
 import {
 	checkScreenshot,
+	makeCeptJodit,
 	mockRequest
 } from '../../../test/screenshots/mock.request';
 
 import { test } from '@playwright/test';
 
-test.describe('AI Assistant screenshot testing', () => {
+declare let editor: IJodit;
+
+test.describe('Image popup screenshot testing', () => {
 	test.beforeEach(async ({ page }) => {
 		await mockRequest(page);
 		await page.goto('/');
-		await page.evaluate(() => {
-			// @ts-ignore
-			window.editor = Jodit.make('#editor-area', {
-				aiAssistant: {
-					aiAssistantCallback: async (text: string, html: string) => {
-						return `AI Assistant: ${text} ${html}`;
-					}
-				}
-			});
-		});
+		await makeCeptJodit(page);
 	});
 
-	test.describe('Open Assistant dialog', () => {
+	test.describe('Open image popup', () => {
 		test('works', async function ({ page }) {
-			await page.click('[data-ref="ai-assistant"]');
-			await checkScreenshot(page, '[role="dialog"] .jodit-dialog__panel');
+			await page.evaluate(async () => {
+				editor.value = '<p><br/></p>';
+			});
+
+			await page.click('[data-ref="image"]');
+
+			await checkScreenshot(page, '.jodit-popup');
 		});
 	});
 });

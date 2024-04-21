@@ -4,27 +4,45 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-require('../../../test/screenshots/bootstrap.screenshot.js');
-const expect = require('expect');
+import type { IJodit } from '../../types';
+import {
+	checkScreenshot,
+	mockRequest
+} from '../../../test/screenshots/mock.request';
 
-describe('Filebrowser screenshot testing', () => {
-	describe('Open filebrowser', () => {
-		it('works', async function () {
+import { test } from '@playwright/test';
+
+declare let editor: IJodit;
+
+test.describe('Filebrowser screenshot testing', () => {
+	test.beforeEach(async ({ page }) => {
+		await mockRequest(page);
+		await page.goto('/');
+	});
+
+	test.describe('Open filebrowser', () => {
+		test('works', async function ({ page }) {
 			await page.evaluate(() => {
+				// @ts-ignore
+				editor = Jodit.make('#editor-area', {
+					filebrowser: {
+						ajax: {
+							url: 'https://xdsoft.net/jodit/finder/'
+						}
+					}
+				});
 				return editor.filebrowser.open();
 			});
 
 			await page.waitForSelector('[data-jodit-file-browser-item="true"]');
-			const dialog = await page.$('[role="dialog"] .jodit-dialog__panel');
-			const screenshot = await dialog.screenshot();
-			expect(screenshot).toMatchImageSnapshot(this);
-		}).timeout(10_000);
+			await checkScreenshot(page, '[role="dialog"] .jodit-dialog__panel');
+		});
 	});
 
-	describe('Hide edit buttons', () => {
-		it('works', async function () {
+	test.describe('Hide edit buttons', () => {
+		test('works', async function ({ page }) {
 			await page.evaluate(() => {
-				editor.destruct();
+				// @ts-ignore
 				editor = Jodit.make('#editor-area', {
 					filebrowser: {
 						permissionsPresets: {
@@ -54,7 +72,7 @@ describe('Filebrowser screenshot testing', () => {
 			await page.evaluate(() => {
 				const item = document.querySelector(
 					'[data-jodit-file-browser-item="true"]'
-				);
+				)!;
 				const evt = new MouseEvent('contextmenu', {
 					bubbles: true,
 					cancelable: true,
@@ -65,10 +83,8 @@ describe('Filebrowser screenshot testing', () => {
 				});
 				item.dispatchEvent(evt);
 			});
-			const dialog = await page.$('[role="dialog"] .jodit-dialog__panel');
 			await page.waitForSelector('.jodit-context-menu[role="popup"]');
-			const screenshot = await dialog.screenshot();
-			expect(screenshot).toMatchImageSnapshot(this);
-		}).timeout(10_000);
+			await checkScreenshot(page, '[role="dialog"] .jodit-dialog__panel');
+		});
 	});
 });
