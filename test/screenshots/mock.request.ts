@@ -135,6 +135,48 @@ const mockData: Record<string, Record<string, Array<MockResponse>>> = {
 };
 
 export const mockRequest = async (page: Page): Promise<void> => {
+	await page.route('https://xdsoft.net/**', route => {
+		if (route.request().resourceType() === 'image') {
+			return route.fulfill({
+				status: 200,
+				contentType: 'image/png',
+				body: buffer
+			});
+		}
+
+		for (const host in mockData) {
+			for (const pathname in mockData[host]) {
+				const process = mockData[host][pathname];
+				for (const item of process) {
+					const { filter, data } = item;
+
+					if (
+						filter({
+							url: route.request().url(),
+							method: route.request().method().toLowerCase(),
+							body: route.request().postDataJSON()
+						})
+					) {
+						return route.fulfill({
+							status: 200,
+							contentType: 'application/json',
+							body: JSON.stringify(data)
+						});
+					}
+				}
+			}
+		}
+
+		throw new Error(
+			'Not found mock data: ' +
+				JSON.stringify({
+					url: route.request().url(),
+					method: route.request().method().toLowerCase(),
+					body: route.request().postDataJSON()
+				})
+		);
+	});
+
 	await page.route('/**/*', route => {
 		const url = new URL(route.request().url());
 		let filePath = path.join(__dirname, '../../', url.pathname);
@@ -175,52 +217,6 @@ export const mockRequest = async (page: Page): Promise<void> => {
 			contentType: 'image/png',
 			body: buffer
 		});
-	});
-
-	for (const host in mockData) {
-		for (const pathname in mockData[host]) {
-			const process = mockData[host][pathname];
-			await page.route(`https://${host}${pathname}`, async route => {
-				for (const item of process) {
-					const { filter, data } = item;
-
-					if (
-						filter({
-							url: route.request().url(),
-							method: route.request().method().toLowerCase(),
-							body: route.request().postDataJSON()
-						})
-					) {
-						return await route.fulfill({
-							status: 200,
-							contentType: 'application/json',
-							body: JSON.stringify(data)
-						});
-					}
-				}
-
-				throw new Error(
-					'Not found mock data: ' +
-						JSON.stringify({
-							url: route.request().url(),
-							method: route.request().method().toLowerCase(),
-							body: route.request().postDataJSON()
-						})
-				);
-			});
-		}
-	}
-
-	await page.route('https://xdsoft.net/**', route => {
-		if (route.request().resourceType() === 'image') {
-			return route.fulfill({
-				status: 200,
-				contentType: 'image/png',
-				body: buffer
-			});
-		}
-
-		return route.continue();
 	});
 };
 

@@ -244,7 +244,7 @@ screenshots-test:
 		-e MIN=$(uglify) \
 		-e FAT=$(fat) \
 		jodit-screenshots \
-		npx playwright test
+		npx playwright test # --update-snapshots
 
 .PHONY: screenshots-build-image
 screenshots-build-image:
