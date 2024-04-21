@@ -231,18 +231,22 @@ screenshots-all:
 
 .PHONY: screenshots-test
 screenshots-test:
-	docker run \
-		-p 2003:2003 \
-		-e SNAPSHOT_UPDATE=$(updateTests) \
+	docker run -it --rm --ipc=host \
 		-v $(shell pwd)/build:/app/build/ \
 		-v $(shell pwd)/test:/app/test/ \
 		-v $(shell pwd)/src:/app/src/ \
-		-v $(shell pwd)/tools:/app/tools/ jodit-screenshots \
-		$(MOCHA) /app/src/**/**.test.screenshot.ts --build=$(es) --min=$(uglify) --fat=$(fat)
+		-v $(shell pwd)/tools:/app/tools/ \
+		-v $(shell pwd)/playwright.config.ts:/app/playwright.config.ts \
+		-e BUILD=$(es) \
+		-e MIN=$(uglify) \
+		-e FAT=$(fat) \
+		jodit-screenshots \
+		npx playwright test
 
 .PHONY: screenshots-build-image
 screenshots-build-image:
 	docker build -t jodit-screenshots -f test/screenshots/Dockerfile .
+
 
 .PHONY: newversion
 newversion:

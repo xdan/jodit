@@ -18,4 +18,3 @@ examples/build/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-!/test-results/
