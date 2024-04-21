@@ -20,9 +20,9 @@ jobs:
     - name: Build
       run: make build es=es2021 fat=true uglify=true
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: make screenshots-build-image
     - name: Run Playwright tests
-      run: BUILD=es2021 MIN=true FAT=true npx playwright test
+      run: make screenshots-test es=es2021 fat=true min=true  updateTests=true
     - uses: actions/upload-artifact@v4
       if: always()
       with:

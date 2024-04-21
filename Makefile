@@ -232,10 +232,13 @@ screenshots-all:
 .PHONY: screenshots-test
 screenshots-test:
 	docker run -it --rm --ipc=host \
+		-p 9323:9323 \
 		-v $(shell pwd)/build:/app/build/ \
 		-v $(shell pwd)/test:/app/test/ \
 		-v $(shell pwd)/src:/app/src/ \
 		-v $(shell pwd)/tools:/app/tools/ \
+		-v $(shell pwd)/tools:/app/tools/ \
+		-v $(shell pwd)/playwright-report:/app/playwright-report/ \
 		-v $(shell pwd)/playwright.config.ts:/app/playwright.config.ts \
 		-e BUILD=$(es) \
 		-e MIN=$(uglify) \
