@@ -41,7 +41,7 @@ test.describe('Image editor screenshot testing', () => {
 						.open('https://xdsoft.net/jodit/files/artio.jpg');
 				});
 
-				await page.click('.jodit-dialog__toolbar .jodit-button_crop');
+				await page.click('[data-area="crop"] > div');
 
 				await checkScreenshot(
 					page,

@@ -4,11 +4,25 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-require('../../../test/screenshots/bootstrap.screenshot.js');
-const expect = require('expect');
+import type { IJodit } from '../../types';
+import {
+	checkScreenshot,
+	makeCeptJodit,
+	mockRequest
+} from '../../../test/screenshots/mock.request';
 
-describe('Messages screenshot testing', () => {
-	it('works', async function () {
+import { test } from '@playwright/test';
+
+declare let editor: IJodit;
+
+test.describe('Messages screenshot testing', () => {
+	test.beforeEach(async ({ page }) => {
+		await mockRequest(page);
+		await page.goto('/');
+		await makeCeptJodit(page);
+	});
+
+	test('works', async function ({ page }) {
 		await page.evaluate(async () => {
 			editor.value = '<p>Some text</p>'.repeat(10);
 			editor.message.info('Hello world! This is info message');
@@ -18,8 +32,6 @@ describe('Messages screenshot testing', () => {
 		});
 
 		await page.waitForSelector('.jodit-ui-message');
-		const dialog = await page.$('.jodit');
-		const screenshot = await dialog.screenshot();
-		expect(screenshot).toMatchImageSnapshot(this);
-	}).timeout(10_000);
+		await checkScreenshot(page, '.jodit-container');
+	});
 });
