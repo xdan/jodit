@@ -17,7 +17,7 @@ test.describe('AI Assistant screenshot testing', () => {
 
 	test.describe('Open Assistant dialog', () => {
 		test('works', async function ({ page }) {
-			await page.click('[data-ref="ai_assistant"]');
+			await page.click('[data-ref="ai-assistant"]');
 			await checkScreenshot(page, '[role="dialog"] .jodit-dialog__panel');
 		});
 	});
