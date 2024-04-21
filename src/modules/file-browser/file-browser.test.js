@@ -1389,8 +1389,8 @@
 
 						expect(files).is.not.null;
 
-						const item = getFirstFBItem(filebrowser),
-							pos = Jodit.modules.Helpers.position(item);
+						const item = getFirstFBItem(filebrowser);
+						const pos = Jodit.modules.Helpers.position(item);
 
 						simulateEvent('contextmenu', item, function (o) {
 							Object.assign(o, {
@@ -1403,14 +1403,13 @@
 
 						expect(context).is.not.null;
 
-						clickButton('eye', context);
-
-						await new Promise(resolve =>
+						await new Promise(resolve => {
 							filebrowser.events.one(
 								'previewOpenedAndLoaded',
 								resolve
-							)
-						);
+							);
+							clickButton('eye', context);
+						});
 
 						const dialog = getOpenedDialog(filebrowser);
 
