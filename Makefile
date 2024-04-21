@@ -27,9 +27,10 @@ BUILD_ESM := true
 UGLIFY_ESM := false
 CHANGELOG_URL := https://github.com/xdan/jodit/blob/main/CHANGELOG.md
 NODE_MODULES_BIN := ./node_modules/.bin
-TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project $(cwd)tools/tsconfig.json
+TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project ./tools/tsconfig.json
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
 KARMA := @TS_NODE_TRANSPILE_ONLY=true $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
+MOCHA := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/mocha
 
 .PHONY: update
 update:
@@ -230,15 +231,25 @@ screenshots-all:
 
 .PHONY: screenshots-test
 screenshots-test:
-	docker run -v $(shell pwd)/build:/app/build/ -v $(shell pwd)/test:/app/test/ \
-		-p 2003:2003 \
-		-e SNAPSHOT_UPDATE=$(updateTests) \
-		-v $(shell pwd)/src:/app/src/ jodit-screenshots \
-		node --input-type=module ./node_modules/.bin/mocha ./src/**/**.screenshot.js --build=$(es) --min=$(uglify) --fat=$(fat)
+	docker run --ipc=host \
+		-p 9323:9323 \
+		-v $(shell pwd)/build:/app/build/ \
+		-v $(shell pwd)/test:/app/test/ \
+		-v $(shell pwd)/src:/app/src/ \
+		-v $(shell pwd)/tools:/app/tools/ \
+		-v $(shell pwd)/tools:/app/tools/ \
+		-v $(shell pwd)/playwright-report:/app/playwright-report/ \
+		-v $(shell pwd)/playwright.config.ts:/app/playwright.config.ts \
+		-e BUILD=$(es) \
+		-e MIN=$(uglify) \
+		-e FAT=$(fat) \
+		jodit-screenshots \
+		npx playwright test # --update-snapshots
 
 .PHONY: screenshots-build-image
 screenshots-build-image:
 	docker build -t jodit-screenshots -f test/screenshots/Dockerfile .
+
 
 .PHONY: newversion
 newversion:
