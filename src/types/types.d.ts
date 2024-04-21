@@ -76,8 +76,6 @@ interface IComponent<T extends IViewBased = IViewBased> extends IDestructible {
 	): void;
 
 	bindDestruct(component: IComponent): this;
-
-	open(jpg: string): any;
 }
 
 interface IViewComponent<T extends IViewBased = IViewBased> extends IComponent {
