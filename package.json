@@ -47,10 +47,10 @@
 	},
 	"homepage": "https://xdsoft.net/jodit/",
 	"dependencies": {
-		"@types/mime-types": "^2.1.4",
 		"autobind-decorator": "^2.4.0"
 	},
 	"devDependencies": {
+		"@types/mime-types": "^2.1.4",
 		"@playwright/test": "^1.43.1",
 		"@tsconfig/node18": "^18.2.4",
 		"@types/ace": "^0.0.52",
