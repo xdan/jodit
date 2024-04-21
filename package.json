@@ -47,10 +47,11 @@
 	},
 	"homepage": "https://xdsoft.net/jodit/",
 	"dependencies": {
-		"autobind-decorator": "^2.4.0",
-		"jest-image-snapshot": "^6.4.0"
+		"@types/mime-types": "^2.1.4",
+		"autobind-decorator": "^2.4.0"
 	},
 	"devDependencies": {
+		"@playwright/test": "^1.43.1",
 		"@tsconfig/node18": "^18.2.4",
 		"@types/ace": "^0.0.52",
 		"@types/fs-extra": "^11.0.4",
@@ -92,6 +93,7 @@
 		"less": "^4.2.0",
 		"less-loader": "^12.2.0",
 		"merge-stream": "^2.0.0",
+		"mime-types": "^2.1.35",
 		"mini-css-extract-plugin": "^2.8.1",
 		"mocha": "^10.4.0",
 		"node-jq": "^4.3.1",

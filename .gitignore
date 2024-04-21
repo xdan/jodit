@@ -14,3 +14,8 @@ yarn-error.log
 build/*
 examples/build/
 .env
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+!/test-results/
