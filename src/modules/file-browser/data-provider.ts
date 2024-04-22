@@ -28,6 +28,7 @@ import type {
 import { IS_PROD } from 'jodit/core/constants';
 import { autobind } from 'jodit/core/decorators';
 import {
+	abort,
 	ConfigProto,
 	error,
 	isFunction,
@@ -148,6 +149,9 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 		if (this.o.permissions.url) {
 			return this.get('permissions').then(resp => {
+				if (this.parent.isInDestruct) {
+					throw abort();
+				}
 				let process:
 					| ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
 					| undefined = (this.o.permissions as any).process;

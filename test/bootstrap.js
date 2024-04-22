@@ -1361,11 +1361,21 @@ if (typeof before === 'function') {
 }
 
 function getFirstFBItem(fb, index = 0, file = false) {
-	return fb.browser.querySelectorAll(
-		'.' +
-			fb.files.getFullElName('item') +
-			'[data-is-file="' +
-			(file ? 1 : 0) +
-			'"]'
+	return (fb.browser || fb.container).querySelectorAll(
+		[
+			`.${fb.files.getFullElName('item')}[data-is-file="${file ? 1 : 0}"]`,
+			`.jodit-ui-browser-item.jodit-ui-browser-item_is-file_${file}`
+		].join(',')
 	)[index];
+}
+
+function getFBItemByText(fb, text) {
+	return Array.from(
+		(fb.browser || fb.container).querySelectorAll(
+			[
+				`.${fb.files.getFullElName('item')}`,
+				'.jodit-ui-browser-item'
+			].join(',')
+		)
+	).find(item => item.textContent.trim().includes(text));
 }

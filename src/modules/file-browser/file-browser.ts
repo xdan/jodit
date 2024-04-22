@@ -290,7 +290,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 					});
 			})
 			.catch((e: Error): void => {
-				if (!IS_PROD) {
+				if (!isAbortError(e) && !IS_PROD) {
 					throw e;
 				}
 			}) as Promise<void>;

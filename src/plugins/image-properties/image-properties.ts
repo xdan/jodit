@@ -14,7 +14,7 @@ import type { IDestructible, IDialog, IJodit, IUIButton } from 'jodit/types';
 import { cache, cached, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { isNumeric, markOwner } from 'jodit/core/helpers';
+import { isAbortError, isNumeric, markOwner } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { Button } from 'jodit/core/ui/button';
 
@@ -178,7 +178,11 @@ export class imageProperties extends Plugin {
 			.promise((resolve, reject) =>
 				readValuesFromImage(this.j, this.state).then(resolve, reject)
 			)
-			.catch((e: Error) => this.dialog.message.error(e.message))
+			.catch((e: Error) => {
+				if (!isAbortError(e)) {
+					this.dialog.message.error(e.message);
+				}
+			})
 			.finally(() => this.__unlock());
 
 		return false;

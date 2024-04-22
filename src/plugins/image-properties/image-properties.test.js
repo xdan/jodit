@@ -18,15 +18,17 @@ describe('Edit image tests', () => {
 	}
 
 	function waitForImageReady(editor) {
-		return new Promise(resolve =>
-			editor.e.one('updateImageProperties.imageproperties', resolve)
-		);
+		return new Promise(resolve => {
+			editor.e.one('updateImageProperties.imageproperties', resolve);
+			setTimeout(resolve, 500);
+		});
 	}
 
 	function waitForFileBrowserReady(fb) {
-		return new Promise(resolve =>
-			fb.e.one('fileBrowserReady.filebrowser', resolve)
-		);
+		return new Promise(resolve => {
+			fb.e.one('fileBrowserReady.filebrowser', resolve);
+			setTimeout(resolve, 500);
+		});
 	}
 
 	describe('Image properties dialog', () => {
@@ -1388,7 +1390,10 @@ describe('Edit image tests', () => {
 
 								[fb, dialog] = await getFB(editor);
 
-								simulateEvent('click', getFirstFBItem(fb));
+								simulateEvent(
+									'click',
+									getFBItemByText(fb, 'ibanez')
+								);
 
 								unmockPromise();
 								clickButton('select', dialog);
@@ -1434,7 +1439,10 @@ describe('Edit image tests', () => {
 
 									const [fb, dialog] = await getFB(editor);
 
-									simulateEvent('click', getFirstFBItem(fb));
+									simulateEvent(
+										'click',
+										getFBItemByText(fb, 'ibanez')
+									);
 
 									unmockPromise();
 									clickButton('select', dialog);
@@ -1465,7 +1473,10 @@ describe('Edit image tests', () => {
 
 									const [fb, dialog] = await getFB(editor);
 
-									simulateEvent('click', getFirstFBItem(fb));
+									simulateEvent(
+										'click',
+										getFBItemByText(fb, 'ibanez')
+									);
 
 									unmockPromise();
 									clickButton('select', dialog);
