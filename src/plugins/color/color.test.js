@@ -6,7 +6,7 @@
 ('colorPlugin' in window.skipTest ? describe.skip : describe)(
 	'Color plugin',
 	function () {
-		it('Open colorpicker set background and color. After this, click in another any place. White when popap will be closed. Open again and remove all styles.', function () {
+		it('Open color picker set background and color. After this, click in another any place. White when popap will be closed. Open again and remove all styles.', function () {
 			const editor = getJodit();
 
 			editor.value = 'text2text';
@@ -188,32 +188,61 @@
 			});
 		});
 
-		describe.only('Disable plugin', () => {
-			it('should not show brush button', () => {
-				const editor = getJodit({
-					disablePlugins: ['color']
+		describe('Disable/Enable plugin', () => {
+			describe('Disable', () => {
+				let editor;
+				beforeEach(() => {
+					editor = getJodit({
+						disablePlugins: ['color']
+					});
+					editor.value = '<table><tr><td>test</td></tr></table>';
 				});
-				expect(getButton('brush', editor)).is.null;
+
+				it('should not show brush button', () => {
+					expect(getButton('brush', editor)).is.null;
+				});
+
+				it('should not show brush button inside inline popup', () => {
+					const td = editor.editor.querySelector('td');
+					const pos = Jodit.modules.Helpers.position(td);
+
+					simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+						Object.assign(e, {
+							clientX: pos.left,
+							clientY: pos.top
+						});
+					});
+
+					const popup = getOpenedPopup(editor);
+					expect(getButton('brushTable', popup)).is.null;
+				});
 			});
 
-			it('should not show brush button inside inline popup', () => {
-				const editor = getJodit({
-					disablePlugins: ['color']
+			describe('Enable', () => {
+				let editor;
+				beforeEach(() => {
+					editor = getJodit();
+					editor.value = '<table><tr><td>test</td></tr></table>';
 				});
-				editor.value = '<table><tr><td>test</td></tr></table>';
 
-				const td = editor.editor.querySelector('td');
-				const pos = Jodit.modules.Helpers.position(td);
+				it('should not show brush button', () => {
+					expect(getButton('brush', editor)).is.not.null;
+				});
 
-				simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
-					Object.assign(e, {
-						clientX: pos.left,
-						clientY: pos.top
+				it('should not show brush button inside inline popup', () => {
+					const td = editor.editor.querySelector('td');
+					const pos = Jodit.modules.Helpers.position(td);
+
+					simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+						Object.assign(e, {
+							clientX: pos.left,
+							clientY: pos.top
+						});
 					});
+
+					const popup = getOpenedPopup(editor);
+					expect(getButton('brushTable', popup)).is.not.null;
 				});
-debugger
-				const popup = getOpenedPopup(editor);
-				expect(getButton('brush', popup)).is.null;
 			});
 		});
 	}

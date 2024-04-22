@@ -27,8 +27,7 @@ Icon.set('brush', brushIcon);
 
 Config.prototype.controls.brushTable = {
 	isVisible: (editor: IJodit): boolean => {
-		// TODO Check if the current jodit instance has plugin Color
-		return false;
+		return !editor.o.disablePlugins.includes('color');
 	},
 	icon: 'brush',
 	popup: (editor, _, close): void | false | HTMLElement => {
@@ -72,6 +71,9 @@ Config.prototype.controls.brushTable = {
 } as IControlType;
 
 Config.prototype.controls.brush = {
+	isVisible: (editor: IJodit): boolean => {
+		return !editor.o.disablePlugins.includes('color');
+	},
 	update(editor: IJodit, button): void {
 		const color = dataBind(button, 'color');
 
