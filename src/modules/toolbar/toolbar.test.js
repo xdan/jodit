@@ -439,7 +439,7 @@ describe('Toolbar', () => {
 			});
 
 			describe('on the right side', function () {
-				it('Should open popup in toolbar with float by left editor side', function () {
+				it('Should open popup in toolbar with float by left editor side', async () => {
 					const editor = getJodit({
 						width: 306,
 						buttons: [
@@ -456,6 +456,10 @@ describe('Toolbar', () => {
 					});
 
 					editor.value = '<p>test</p>'.repeat(10);
+					window.scrollTo(0, 10_000)
+					await new Promise(resolve =>
+						requestAnimationFrame(resolve)
+					);
 
 					clickButton('video', editor, 'button', true);
 
@@ -464,6 +468,7 @@ describe('Toolbar', () => {
 					expect(popup).is.not.null;
 					const positionPopup = offset(popup);
 					const positionContainer = offset(editor.container);
+
 
 					expect(
 						Math.abs(
