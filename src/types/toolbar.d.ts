@@ -40,6 +40,8 @@ interface IControlType<
 
 	component?: 'button' | 'select';
 
+	isVisible?: (editor: T, control: IControlType) => boolean;
+
 	/**
 	 * You can use it function for control - active/not active button
 	 *

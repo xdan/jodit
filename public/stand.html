@@ -41,17 +41,18 @@
 			<h1>Jodit Test Document</h1>
 			<form id="form" action="sss.php">
 				<div id="app"></div>
-<!--				<textarea id="editorNative"></textarea>-->
+				<textarea id="editorNative"></textarea>
 				<button id="btn" type="button">click</button>
 			</form>
 		</div>
 		<script>
-			const app = document.getElementById('app');
-			app.attachShadow({ mode: 'open' });
-			const root = app.shadowRoot;
-			root.innerHTML = '<link rel="stylesheet" href="./build/es2021/jodit.fat.min.css"/><div id="edit"></div>';
-			const editor = Jodit.make(root.getElementById('edit'), {
-				shadowRoot: root,
+			// const app = document.getElementById('app');
+			// app.attachShadow({ mode: 'open' });
+			// const root = app.shadowRoot;
+			// root.innerHTML = '<link rel="stylesheet" href="./build/es2021/jodit.fat.min.css"/><div id="edit"></div>';
+			// const editor = Jodit.make('root.getElementById('edit')', {
+			const editor = Jodit.make('#editorNative', {
+				// shadowRoot: root,
 				// safeMode: true,
 				// iframe: true,
 				// buttons: ['paragraph', 'align'],
@@ -129,14 +130,14 @@
 				}
 			});
 
-			editor.value =
-				'<p style="font-size: 16.5pt; margin: 0"><a href="stand.html"><img src="https://xdsoft.net/jodit/finder/files/pexels-arianna-jade-4006617.jpg" id="lio" alt="Tada" style="margin: 1px 2px 3px 4px; border: 2px solid #f00;" title="Ola ha" width="300"></a>Body Subtitle</p>\n' +
+			editor.value =  '<p style="font-size: 16.5pt; margin: 0"><a href="stand.html"><img src="https://xdsoft.net/jodit/finder/files/pexels-arianna-jade-4006617.jpg" id="lio" alt="Tada" style="margin: 1px 2px 3px 4px; border: 2px solid #f00;" title="Ola ha" width="300"></a>Body Subtitle</p>\n' +
+				'<table><tbody><tr><th>header</th><td>1</td></tr></tbody></table>' +
 				'<p style="font-size: 10pt; line-height: normal; margin: 7px 0 0 0;">To modify this template, place it into your Outlook editor.</p>';
 
-			editor.events.fire(
-				'openImageProperties',
-				editor.editor.querySelector('img')
-			);
+			// editor.events.fire(
+			// 	'openImageProperties',
+			// 	editor.editor.querySelector('img')
+			// );
 			btn.onclick = () => {
 				const start = performance.now();
 				for (let i = 0; i < 100; i++) {

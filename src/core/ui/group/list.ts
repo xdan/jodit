@@ -156,7 +156,8 @@ export class UIList<T extends IViewBased = IViewBased>
 		};
 
 		const isNotRemoved = (b: IControlTypeStrong): boolean =>
-			!this.removeButtons.includes(b.name);
+			!this.removeButtons.includes(b.name) &&
+			(!b.isVisible || b.isVisible?.(this.j, b));
 
 		items.forEach(item => {
 			if (isButtonGroup(item)) {

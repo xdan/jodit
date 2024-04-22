@@ -9,8 +9,9 @@
  */
 
 import type { HTMLTagNames, IControlType, IJodit } from 'jodit/types';
+import type { Table } from 'jodit/modules';
 import { Dom } from 'jodit/core/dom/dom';
-import { css, dataBind } from 'jodit/core/helpers/';
+import { css, dataBind, isJoditObject } from 'jodit/core/helpers/';
 import { Icon } from 'jodit/core/ui/icon';
 import {
 	ColorPickerWidget,
@@ -23,6 +24,52 @@ import brushIcon from './brush.svg';
 import { Config } from 'jodit/config';
 
 Icon.set('brush', brushIcon);
+
+Config.prototype.controls.brushTable = {
+	isVisible: (editor: IJodit): boolean => {
+		// TODO Check if the current jodit instance has plugin Color
+		return false;
+	},
+	icon: 'brush',
+	popup: (editor, _, close): void | false | HTMLElement => {
+		if (!isJoditObject(editor)) {
+			return;
+		}
+
+		const tableModule = editor.getInstance<Table>('Table', editor.o),
+			selected = tableModule.getAllSelectedCells();
+
+		if (!selected.length) {
+			return false;
+		}
+
+		const makeColorPicker = (key: string): HTMLElement =>
+			ColorPickerWidget(
+				editor,
+				(value: string) => {
+					selected.forEach(cell => {
+						css(cell, key, value);
+					});
+
+					editor.lock();
+					editor.synchronizeValues();
+					close();
+					editor.unlock();
+				},
+				css(selected[0], key) as string
+			);
+
+		return TabsWidget(editor, [
+			{
+				name: 'Background',
+				content: makeColorPicker('background-color')
+			},
+			{ name: 'Text', content: makeColorPicker('color') },
+			{ name: 'Border', content: makeColorPicker('border-color') }
+		]);
+	},
+	tooltip: 'Background'
+} as IControlType;
 
 Config.prototype.controls.brush = {
 	update(editor: IJodit, button): void {
@@ -155,6 +202,7 @@ Config.prototype.controls.brush = {
 
 		return TabsWidget(editor, tabs, currentElement as any);
 	},
+
 	exec(jodit: IJodit, current, { button }): void | false {
 		const mode = dataBind(button, 'color-mode'),
 			color = dataBind(button, 'color');

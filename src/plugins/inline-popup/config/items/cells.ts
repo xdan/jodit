@@ -12,7 +12,6 @@ import type { IControlType } from 'jodit/types';
 import type { Table } from 'jodit/modules/table/table';
 import { isJoditObject, isString } from 'jodit/core/helpers/checker';
 import { css } from 'jodit/core/helpers/utils/css';
-import { ColorPickerWidget, TabsWidget } from 'jodit/modules/widget';
 
 const cmd = (control: IControlType): string =>
 	control.args && isString(control.args[0])
@@ -20,47 +19,7 @@ const cmd = (control: IControlType): string =>
 		: '';
 
 export default [
-	{
-		name: 'brush',
-		popup: (editor, _, close): void | false | HTMLElement => {
-			if (!isJoditObject(editor)) {
-				return;
-			}
-
-			const tableModule = editor.getInstance<Table>('Table', editor.o),
-				selected = tableModule.getAllSelectedCells();
-
-			if (!selected.length) {
-				return false;
-			}
-
-			const makeColorPicker = (key: string): HTMLElement =>
-				ColorPickerWidget(
-					editor,
-					(value: string) => {
-						selected.forEach(cell => {
-							css(cell, key, value);
-						});
-
-						editor.lock();
-						editor.synchronizeValues();
-						close();
-						editor.unlock();
-					},
-					css(selected[0], key) as string
-				);
-
-			return TabsWidget(editor, [
-				{
-					name: 'Background',
-					content: makeColorPicker('background-color')
-				},
-				{ name: 'Text', content: makeColorPicker('color') },
-				{ name: 'Border', content: makeColorPicker('border-color') }
-			]);
-		},
-		tooltip: 'Background'
-	},
+	'brushTable',
 	{
 		name: 'valign',
 		list: ['Top', 'Middle', 'Bottom', 'Normal'],

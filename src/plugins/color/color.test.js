@@ -205,13 +205,13 @@
 				const td = editor.editor.querySelector('td');
 				const pos = Jodit.modules.Helpers.position(td);
 
-				simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+				simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
 					Object.assign(e, {
 						clientX: pos.left,
 						clientY: pos.top
 					});
 				});
-
+debugger
 				const popup = getOpenedPopup(editor);
 				expect(getButton('brush', popup)).is.null;
 			});
