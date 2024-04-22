@@ -280,7 +280,14 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 
 				this.e.fire('sort.filebrowser', this.state.sortBy);
 
-				loadTree(this).then(resolve, reject);
+				loadTree(this)
+					.then(resolve, reject)
+					.finally(() => {
+						if (this.isInDestruct) {
+							return;
+						}
+						this?.e?.fire('fileBrowserReady.filebrowser');
+					});
 			})
 			.catch((e: Error): void => {
 				if (!IS_PROD) {

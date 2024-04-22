@@ -206,7 +206,7 @@ test-find find-test:
 	$(TS_NODE_BASE) $(cwd)tools/utils/find-tests.ts
 
 .PHONY: test-only-run test-run-only
-test-only-run:
+test-only-run test-run-only:
 	$(KARMA) --browsers $(browsers) $(cwd)tools/karma.conf.ts --single-run $(singleRun) --build=$(build) --min=$(uglify) --fat=$(fat) --cwd=$(pwd)
 
 .PHONY: coverage
