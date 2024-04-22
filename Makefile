@@ -27,10 +27,9 @@ BUILD_ESM := true
 UGLIFY_ESM := false
 CHANGELOG_URL := https://github.com/xdan/jodit/blob/main/CHANGELOG.md
 NODE_MODULES_BIN := ./node_modules/.bin
-TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project ./tools/tsconfig.json
+TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project $(cwd)tools/tsconfig.json
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
 KARMA := @TS_NODE_TRANSPILE_ONLY=true $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
-MOCHA := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/mocha
 
 .PHONY: update
 update:

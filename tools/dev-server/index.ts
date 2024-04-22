@@ -29,6 +29,10 @@ export const devServer = ({ port, dirname }: Variables): Configuration => ({
 			publicPath: '/test'
 		},
 		{
+			directory: path.join(dirname, 'build'),
+			publicPath: '/build'
+		},
+		{
 			directory: path.join(dirname, 'src'),
 			publicPath: '/src'
 		},

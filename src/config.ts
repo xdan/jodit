@@ -171,6 +171,28 @@ class Config implements IViewOptions {
 
 	/**
 	 * Shadow root if Jodit was created in it
+	 *
+	 * ```html
+	 * <div id="editor"></div>
+	 * ```
+	 *
+	 * ```js
+	 * const app = document.getElementById('editor');
+	 * app.attachShadow({ mode: 'open' });
+	 * const root = app.shadowRoot;
+	 *
+	 * root.innerHTML = `
+	 * <link rel="stylesheet" href="./build/jodit.css"/>
+	 * <h1>Jodit example in Shadow DOM</h1>
+	 * <div id="edit"></div>
+	 * `;
+	 *
+	 * const editor = Jodit.make(root.getElementById('edit'), {
+	 * 	globalFullSize: false,
+	 * 	shadowRoot: root
+	 * });
+	 * editor.value = '<p>start</p>';
+	 * ```
 	 */
 	shadowRoot: Nullable<ShadowRoot> = null;
 
