@@ -333,7 +333,7 @@ export class Popup extends UIGroup implements IPopup {
 			return strategy;
 		};
 
-		// Try find match position inside Jodit.container
+		// Try to find match position inside Jodit.container
 		let strategy = getMatchStrategy(position(this.j.container, this.j));
 
 		// If not found or is not inside window view

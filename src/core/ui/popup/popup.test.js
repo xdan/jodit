@@ -73,6 +73,7 @@
 
 		const openPopup = function (getBound, content, strategy) {
 			const editor = getJodit();
+			editor.value = '<p>test</p>'.repeat(100);
 
 			const popup = new Jodit.modules.Popup(editor);
 
