@@ -20,6 +20,7 @@ import type {
 } from 'jodit/types';
 import { IS_ES_NEXT } from 'jodit/core/constants';
 import { clearTimeout, setTimeout } from 'jodit/core/helpers/async';
+import { isAbortError } from 'jodit/core/helpers/checker/is-abort-error';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { isNumber } from 'jodit/core/helpers/checker/is-number';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
@@ -168,6 +169,11 @@ export class Async implements IAsync {
 			? (...args: any[]): Promise<any> => {
 					const promise = this.promise(res => {
 						promises.push(res);
+					}).catch((e: unknown) => {
+						if (isAbortError(e)) {
+							return null;
+						}
+						throw e;
 					});
 
 					onFire(...args);
@@ -278,7 +284,7 @@ export class Async implements IAsync {
 		let rejectCallback: RejectablePromise<T>['rejectCallback'] = () => {};
 
 		const promise = new Promise<T>((resolve, reject) => {
-			rejectCallback = (): void => reject(abort());
+			rejectCallback = (): void => reject(abort('Abort async'));
 			this.promisesRejections.add(rejectCallback);
 			executor(resolve, reject);
 		});

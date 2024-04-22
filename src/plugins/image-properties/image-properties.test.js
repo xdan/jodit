@@ -1303,9 +1303,12 @@ describe('Edit image tests', () => {
 
 				const getFB = async editor => {
 					const dialog = getOpenedDialog(editor);
-					const fb = dialog.querySelector(
+					const fbContainer = dialog.querySelector(
 						'.jodit-file-browser'
-					).component;
+					);
+					const fb = fbContainer
+						? fbContainer.component
+						: dialog.component;
 					await waitForFileBrowserReady(fb);
 					return [fb, dialog];
 				};
