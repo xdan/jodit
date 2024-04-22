@@ -18,7 +18,7 @@ jobs:
       - run: make build
       - run: make examples
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./examples
 
