@@ -187,5 +187,34 @@
 				});
 			});
 		});
+
+		describe.only('Disable plugin', () => {
+			it('should not show brush button', () => {
+				const editor = getJodit({
+					disablePlugins: ['color']
+				});
+				expect(getButton('brush', editor)).is.null;
+			});
+
+			it('should not show brush button inside inline popup', () => {
+				const editor = getJodit({
+					disablePlugins: ['color']
+				});
+				editor.value = '<table><tr><td>test</td></tr></table>';
+
+				const td = editor.editor.querySelector('td');
+				const pos = Jodit.modules.Helpers.position(td);
+
+				simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+					Object.assign(e, {
+						clientX: pos.left,
+						clientY: pos.top
+					});
+				});
+
+				const popup = getOpenedPopup(editor);
+				expect(getButton('brush', popup)).is.null;
+			});
+		});
 	}
 );
