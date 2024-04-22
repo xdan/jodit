@@ -456,7 +456,7 @@ describe('Toolbar', () => {
 					});
 
 					editor.value = '<p>test</p>'.repeat(10);
-					window.scrollTo(0, 10_000)
+					window.scrollTo(0, 10_000);
 					await new Promise(resolve =>
 						requestAnimationFrame(resolve)
 					);
@@ -468,7 +468,6 @@ describe('Toolbar', () => {
 					expect(popup).is.not.null;
 					const positionPopup = offset(popup);
 					const positionContainer = offset(editor.container);
-
 
 					expect(
 						Math.abs(
