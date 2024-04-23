@@ -17,10 +17,10 @@ describe('Edit image tests', () => {
 			.component;
 	}
 
-	function waitForImageReady(editor) {
+	function waitForImageDialogReady(editor) {
 		return new Promise(resolve => {
 			editor.e.one('updateImageProperties.imageproperties', resolve);
-			setTimeout(resolve, 500);
+			setTimeout(resolve, 1500);
 		});
 	}
 
@@ -29,6 +29,41 @@ describe('Edit image tests', () => {
 			fb.e.one('fileBrowserReady.filebrowser', resolve);
 			setTimeout(resolve, 500);
 		});
+	}
+
+	async function openImagePropertiesDialog(value, opts) {
+		const editor = getJodit(opts);
+
+		editor.value = value || IMAGE;
+		const img = editor.editor.querySelector('img');
+
+		await img.decode();
+
+		simulateEvent('dblclick', img);
+
+		const dialog = getOpenedDialog(editor);
+		if (!dialog) {
+			return { editor, img, dialog, form: null };
+		}
+
+		await waitForImageDialogReady(editor);
+
+		const form = getForm(dialog);
+		const imageWidth = form.getElm('imageWidth');
+		const imageHeight = form.getElm('imageHeight');
+		const lockSize = form.getElm('lockSize');
+
+		await editor.async.requestIdlePromise();
+
+		return {
+			editor,
+			img,
+			dialog,
+			form,
+			imageWidth,
+			imageHeight,
+			lockSize
+		};
 	}
 
 	describe('Image properties dialog', () => {
@@ -48,26 +83,15 @@ describe('Edit image tests', () => {
 			describe('Click action button', () => {
 				let editor, dialog;
 				beforeEach(async () => {
-					editor = getJodit();
+					const refs = await openImagePropertiesDialog();
+					refs.form.getElm('imageAlt').value = 'Diff art';
+					simulateEvent('change', refs.form.getElm('imageAlt'));
 
-					editor.value = IMAGE;
-					const img = editor.editor.querySelector('img');
-					simulateEvent('dblclick', img);
-					await img.decode();
-
-					dialog = getOpenedDialog(editor);
-					const form = dialog.querySelector(
-						'.jodit-ui-image-properties-form'
-					).component;
-
-					expect(form).is.not.null;
-
-					form.getElm('imageAlt').value = 'Diff art';
-					simulateEvent('change', form.getElm('imageAlt'));
-
-					form.getElm('marginTop').value = 8;
-					simulateEvent('change', form.getElm('marginTop'));
-					await editor.async.requestIdlePromise();
+					refs.form.getElm('marginTop').value = 8;
+					simulateEvent('change', refs.form.getElm('marginTop'));
+					await refs.editor.async.requestIdlePromise();
+					dialog = refs.dialog;
+					editor = refs.editor;
 				});
 
 				describe('Remove', () => {
@@ -100,23 +124,14 @@ describe('Edit image tests', () => {
 			});
 
 			describe('Disable by image.openOnDblClick', () => {
-				it('should not open image properties dialog', () => {
-					const editor = getJodit({
+				it('should not open image properties dialog', async () => {
+					const refs = await openImagePropertiesDialog(IMAGE, {
 						image: {
 							openOnDblClick: false
 						}
 					});
 
-					editor.value = IMAGE;
-					simulateEvent(
-						'dblclick',
-
-						editor.editor.querySelector('img')
-					);
-
-					const dialog = getOpenedDialog(editor);
-
-					expect(dialog).is.null;
+					expect(refs.dialog).is.null;
 				});
 			});
 
@@ -138,28 +153,15 @@ describe('Edit image tests', () => {
 				['editBorderRadius', 'editBorderRadius']
 			].forEach(([option, ref]) => {
 				describe('Enable ' + option, () => {
-					it('should hide image sizes', () => {
-						const editor = getJodit({
+					it('should hide image sizes', async () => {
+						const refs = await openImagePropertiesDialog(IMAGE, {
 							image: {
 								[option]: true
 							}
 						});
 
-						editor.value = IMAGE;
-
-						simulateEvent(
-							'dblclick',
-							editor.editor.querySelector('img')
-						);
-
-						const dialog = getOpenedDialog(editor);
-
-						const form = dialog.querySelector(
-							'.jodit-ui-image-properties-form'
-						).component;
-
-						expect(form).is.not.null;
-						const refElm = form.getElm(ref);
+						expect(refs.form).is.not.null;
+						const refElm = refs.form.getElm(ref);
 						expect(css(refElm, 'display')).not.equals(
 							'none',
 							`Reference ${ref} element should be visible`
@@ -168,28 +170,14 @@ describe('Edit image tests', () => {
 				});
 
 				describe('Disable ' + option, () => {
-					it('should hide image sizes', () => {
-						const editor = getJodit({
+					it('should hide image sizes', async () => {
+						const refs = await openImagePropertiesDialog(IMAGE, {
 							image: {
 								[option]: false
 							}
 						});
 
-						editor.value = IMAGE;
-
-						simulateEvent(
-							'dblclick',
-							editor.editor.querySelector('img')
-						);
-
-						const dialog = getOpenedDialog(editor);
-
-						const form = dialog.querySelector(
-							'.jodit-ui-image-properties-form'
-						).component;
-
-						expect(form).is.not.null;
-						const refElm = form.getElm(ref);
+						const refElm = refs.form.getElm(ref);
 						expect(css(refElm, 'display')).equals(
 							'none',
 							`Reference ${ref} with "${option}: false" element should not be visible`
@@ -201,65 +189,47 @@ describe('Edit image tests', () => {
 
 		describe('Main tab', () => {
 			it('should be opened first', async () => {
-				const editor = getJodit();
-				editor.value = IMAGE;
-				const img = editor.editor.querySelector('img');
-				await img.decode();
-				simulateEvent('dblclick', img);
-				const dialog = getOpenedDialog(editor);
-				expect(dialog).is.not.null;
-				clickButton('Advanced', dialog);
+				const refs = await openImagePropertiesDialog();
+				clickButton('Advanced', refs.dialog);
 				expect(
-					getButton('Image', dialog).getAttribute('aria-pressed')
+					getButton('Image', refs.dialog).getAttribute('aria-pressed')
 				).equals('false');
 				expect(
-					getButton('Advanced', dialog).getAttribute('aria-pressed')
+					getButton('Advanced', refs.dialog).getAttribute(
+						'aria-pressed'
+					)
 				).equals('true');
 
-				clickButton('close', dialog);
-				expect(getOpenedDialog(editor)).is.null;
+				clickButton('close', refs.dialog);
+				expect(getOpenedDialog(refs.editor)).is.null;
 
-				simulateEvent('dblclick', img);
-				const dialog2 = getOpenedDialog(editor);
-				expect(dialog2).equals(dialog);
+				simulateEvent('dblclick', refs.img);
+				const dialog2 = getOpenedDialog(refs.editor);
+				expect(dialog2).equals(refs.dialog);
 
 				expect(
-					getButton('Image', dialog).getAttribute('aria-pressed')
+					getButton('Image', refs.dialog).getAttribute('aria-pressed')
 				).equals('true');
 				expect(
-					getButton('Advanced', dialog).getAttribute('aria-pressed')
+					getButton('Advanced', refs.dialog).getAttribute(
+						'aria-pressed'
+					)
 				).equals('false');
 			});
 		});
 
 		describe('Change border radius', () => {
 			it('should change image border radius', async () => {
-				const editor = getJodit();
-
-				editor.value =
-					'<img alt="ratio" style="width:100px; height: 100px; border-radius: 10px;" src="tests/artio.jpg"/>';
-
-				simulateEvent(
-					'dblclick',
-
-					editor.editor.querySelector('img')
+				const refs = await openImagePropertiesDialog(
+					'<img alt="ratio" style="width:100px; height: 100px; border-radius: 10px;" src="tests/artio.jpg"/>'
 				);
+				clickButton('Advanced', refs.dialog);
 
-				const dialog = getOpenedDialog(editor);
-
-				expect(dialog).is.not.null;
-
-				await waitForImageReady(editor);
-
-				clickButton('Advanced', dialog);
-
-				const tab = dialog.querySelector('.jodit-tab.jodit-tab_active');
+				const tab = refs.dialog.querySelector(
+					'.jodit-tab.jodit-tab_active'
+				);
 				expect(tab).is.not.null;
-
-				const form = getForm(dialog);
-
-				expect(form).is.not.null;
-				const input = form.getElm('borderRadius');
+				const input = refs.form.getElm('borderRadius');
 
 				expect(input).is.not.null;
 
@@ -268,8 +238,8 @@ describe('Edit image tests', () => {
 				input.value = 100;
 				simulateEvent('change', input);
 
-				clickButton('ok', dialog);
-				expect(sortAttributes(editor.value)).equals(
+				clickButton('ok', refs.dialog);
+				expect(sortAttributes(refs.editor.value)).equals(
 					'<p><img alt="ratio" src="tests/artio.jpg" style="border-radius:100px;height:100px;width:100px"></p>'
 				);
 			});
@@ -277,36 +247,22 @@ describe('Edit image tests', () => {
 
 		describe('Change classes', () => {
 			it('should change image classlist', async () => {
-				const editor = getJodit();
+				const refs = await openImagePropertiesDialog(
+					'<p><img class="images123" style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>'
+				);
 
-				editor.value =
-					'<p><img class="images123" style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
+				clickButton('Advanced', refs.dialog);
 
-				const img = editor.editor.querySelector('img');
-				await img.decode();
-
-				simulateEvent('dblclick', img);
-
-				const dialog = getOpenedDialog(editor);
-
-				expect(dialog).is.not.null;
-
-				await waitForImageReady(editor);
-
-				clickButton('Advanced', dialog);
-
-				const form = getForm(dialog);
-
-				const input = form.getElm('classes');
+				const input = refs.form.getElm('classes');
 				expect(input).is.not.null;
 
 				expect(input.value.toString()).equals('images123');
 
 				input.value = 'tavble ';
 				simulateEvent('change', input);
-				clickButton('ok', dialog);
+				clickButton('ok', refs.dialog);
 
-				expect(sortAttributes(editor.value)).equals(
+				expect(sortAttributes(refs.editor.value)).equals(
 					'<p><img class="tavble " src="tests/artio.jpg" style="height:100px;width:100px"></p>'
 				);
 			});
@@ -314,25 +270,13 @@ describe('Edit image tests', () => {
 
 		describe('Change styles', () => {
 			it('should change image styles', async () => {
-				const editor = getJodit();
+				const refs = await openImagePropertiesDialog(
+					'<p><img alt="111" style="padding:10px;width:100px; height: 100px;" src="tests/artio.jpg"/></p>'
+				);
 
-				editor.value =
-					'<p><img alt="111" style="padding:10px;width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
+				clickButton('Advanced', refs.dialog);
 
-				const img = editor.editor.querySelector('img');
-				await img.decode();
-				simulateEvent('dblclick', img);
-
-				const dialog = getOpenedDialog(editor);
-
-				expect(dialog).is.not.null;
-
-				await waitForImageReady(editor);
-
-				clickButton('Advanced', dialog);
-
-				const form = getForm(dialog);
-				const input = form.getElm('style');
+				const input = refs.form.getElm('style');
 				expect(input).is.not.null;
 
 				expect(sortStyles(input.value.toString())).equals(
@@ -341,9 +285,9 @@ describe('Edit image tests', () => {
 
 				input.value = 'padding:20px;background-color: #ff0000;';
 				simulateEvent('change', input);
-				clickButton('ok', dialog);
+				clickButton('ok', refs.dialog);
 
-				expect(sortAttributes(editor.value)).equals(
+				expect(sortAttributes(refs.editor.value)).equals(
 					'<p><img alt="111" src="tests/artio.jpg" style="background-color:#FF0000;height:100px;padding:20px;width:100px"></p>'
 				);
 			});
@@ -351,32 +295,21 @@ describe('Edit image tests', () => {
 
 		describe('Change id', () => {
 			it('should change image id', async () => {
-				const editor = getJodit();
+				const refs = await openImagePropertiesDialog(
+					'<p><img alt="111" id="stop123"  style="width:100px; height: 100px;"  src="tests/artio.jpg"/></p>'
+				);
 
-				editor.value =
-					'<p><img alt="111" id="stop123"  style="width:100px; height: 100px;"  src="tests/artio.jpg"/></p>';
-
-				const img = editor.editor.querySelector('img');
-				await img.decode();
-				simulateEvent('dblclick', img);
-
-				const dialog = getOpenedDialog(editor);
-
-				await waitForImageReady(editor);
-
-				clickButton('Advanced', dialog);
-				const form = getForm(dialog);
-
-				const input = form.getElm('id');
+				clickButton('Advanced', refs.dialog);
+				const input = refs.form.getElm('id');
 				expect(input).is.not.null;
 
 				expect(input.value.toString()).equals('stop123');
 
 				input.value = 'fast12';
 				simulateEvent('change', input);
-				clickButton('ok', dialog);
+				clickButton('ok', refs.dialog);
 
-				expect(sortAttributes(editor.value)).equals(
+				expect(sortAttributes(refs.editor.value)).equals(
 					'<p><img alt="111" id="fast12" src="tests/artio.jpg" style="height:100px;width:100px"></p>'
 				);
 			});
@@ -385,32 +318,21 @@ describe('Edit image tests', () => {
 		describe('Change align', () => {
 			describe('left', () => {
 				it('should change image horizontal align', async () => {
-					const editor = getJodit();
+					const refs = await openImagePropertiesDialog(
+						'<p><img alt="111" style="width:100px; height: 100px;"  src="tests/artio.jpg"/></p>'
+					);
+					clickButton('Advanced', refs.dialog);
 
-					editor.value =
-						'<p><img alt="111" style="width:100px; height: 100px;"  src="tests/artio.jpg"/></p>';
-
-					const img = editor.editor.querySelector('img');
-					await img.decode();
-					simulateEvent('dblclick', img);
-
-					const dialog = getOpenedDialog(editor);
-
-					await waitForImageReady(editor);
-
-					clickButton('Advanced', dialog);
-					const form = getForm(dialog);
-
-					const input = form.getElm('align');
+					const input = refs.form.getElm('align');
 					expect(input).is.not.null;
 
 					expect(input.value.toString()).equals('');
 
 					input.value = 'left';
 					simulateEvent('change', input);
-					clickButton('ok', dialog);
+					clickButton('ok', refs.dialog);
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(sortAttributes(refs.editor.value)).equals(
 						'<p><img alt="111" src="tests/artio.jpg" style="float:left;height:100px;width:100px"></p>'
 					);
 				});
@@ -418,32 +340,21 @@ describe('Edit image tests', () => {
 
 			describe('right', () => {
 				it('should change image horizontal align', async () => {
-					const editor = getJodit();
+					const refs = await openImagePropertiesDialog(
+						'<p><img alt="111" style="width:100px; height: 100px;"  src="tests/artio.jpg"/></p>'
+					);
+					clickButton('Advanced', refs.dialog);
 
-					editor.value =
-						'<p><img alt="111" style="width:100px; height: 100px;"  src="tests/artio.jpg"/></p>';
-
-					const img = editor.editor.querySelector('img');
-					await img.decode();
-					simulateEvent('dblclick', img);
-
-					const dialog = getOpenedDialog(editor);
-
-					await waitForImageReady(editor);
-
-					clickButton('Advanced', dialog);
-					const form = getForm(dialog);
-
-					const input = form.getElm('align');
+					const input = refs.form.getElm('align');
 
 					expect(input.value.toString()).equals('');
 
 					input.value = 'right';
 					simulateEvent('change', input);
 
-					clickButton('ok', dialog);
+					clickButton('ok', refs.dialog);
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(sortAttributes(refs.editor.value)).equals(
 						'<p><img alt="111" src="tests/artio.jpg" style="float:right;height:100px;width:100px"></p>'
 					);
 				});
@@ -451,31 +362,21 @@ describe('Edit image tests', () => {
 
 			describe('center', () => {
 				it('should change image horizontal align', async () => {
-					const editor = getJodit();
+					const refs = await openImagePropertiesDialog(
+						'<p><img alt="111" style="float:left;width:100px; height: 100px;" src="tests/artio.jpg"/></p>'
+					);
 
-					editor.value =
-						'<p><img alt="111" style="float:left;width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
+					clickButton('Advanced', refs.dialog);
 
-					const img = editor.editor.querySelector('img');
-					await img.decode();
-
-					simulateEvent('dblclick', img);
-
-					const dialog = getOpenedDialog(editor);
-					await waitForImageReady(editor);
-
-					clickButton('Advanced', dialog);
-					const form = getForm(dialog);
-
-					const input = form.getElm('align');
+					const input = refs.form.getElm('align');
 					expect(input.value.toString()).equals('left');
 
 					input.value = 'center';
 					simulateEvent('change', input);
 
-					clickButton('ok', dialog);
+					clickButton('ok', refs.dialog);
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(sortAttributes(refs.editor.value)).equals(
 						'<p><img alt="111" src="tests/artio.jpg" style="display:block;height:100px;margin-left:auto;margin-right:auto;width:100px"></p>'
 					);
 				});
@@ -483,23 +384,13 @@ describe('Edit image tests', () => {
 
 			describe('Clear align', () => {
 				it('should clear some align', async () => {
-					const editor = getJodit();
+					const refs = await openImagePropertiesDialog(
+						'<p><img alt="111" src="tests/artio.jpg" style="width:100px; height: 100px;display:block;margin-left:auto;margin-right:auto"/></p>'
+					);
 
-					editor.value =
-						'<p><img alt="111" src="tests/artio.jpg" style="width:100px; height: 100px;display:block;margin-left:auto;margin-right:auto"/></p>';
+					clickButton('Advanced', refs.dialog);
 
-					const img = editor.editor.querySelector('img');
-					await img.decode();
-					simulateEvent('dblclick', img);
-
-					const dialog = getOpenedDialog(editor);
-
-					await waitForImageReady(editor);
-
-					clickButton('Advanced', dialog);
-					const form = getForm(dialog);
-
-					const input = form.getElm('align');
+					const input = refs.form.getElm('align');
 					expect(input).is.not.null;
 
 					expect(input.value.toString()).equals('center');
@@ -507,9 +398,9 @@ describe('Edit image tests', () => {
 					input.value = '';
 					simulateEvent('change', input);
 
-					clickButton('ok', dialog);
+					clickButton('ok', refs.dialog);
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(sortAttributes(refs.editor.value)).equals(
 						'<p><img alt="111" src="tests/artio.jpg" style="height:100px;width:100px"></p>'
 					);
 				});
@@ -519,27 +410,17 @@ describe('Edit image tests', () => {
 		describe('Change margins', () => {
 			describe('Change marginTop with lock', () => {
 				it('should change all margins', async () => {
-					const editor = getJodit();
+					const refs = await openImagePropertiesDialog(
+						'<p><img alt="111" style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/></p>'
+					);
 
-					editor.value =
-						'<p><img alt="111" style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
+					clickButton('Advanced', refs.dialog);
 
-					const img = editor.editor.querySelector('img');
-					await img.decode();
-					simulateEvent('dblclick', img);
-
-					const dialog = getOpenedDialog(editor);
-
-					await waitForImageReady(editor);
-
-					clickButton('Advanced', dialog);
-					const form = getForm(dialog);
-
-					const marginTop = form.getElm('marginTop');
+					const marginTop = refs.form.getElm('marginTop');
 
 					expect(marginTop).is.not.null;
 
-					const marginBottom = form.getElm('marginBottom');
+					const marginBottom = refs.form.getElm('marginBottom');
 					expect(marginBottom).is.not.null;
 
 					expect(marginTop.value).equals('10');
@@ -548,9 +429,9 @@ describe('Edit image tests', () => {
 
 					marginTop.value = 100;
 					simulateEvent('change', marginTop);
-					clickButton('ok', dialog);
+					clickButton('ok', refs.dialog);
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(sortAttributes(refs.editor.value)).equals(
 						'<p><img alt="111" src="tests/artio.jpg" style="height:100px;margin:100px;width:100px"></p>'
 					);
 				});
@@ -558,33 +439,22 @@ describe('Edit image tests', () => {
 
 			describe('Change marginTop with unlock', () => {
 				it('should change only marginTop', async () => {
-					const editor = getJodit();
+					const refs = await openImagePropertiesDialog(
+						'<p><img alt="111" style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/></p>'
+					);
 
-					editor.value =
-						'<p><img alt="111" style="margin: 10px;width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
+					clickButton('Advanced', refs.dialog);
 
-					const img = editor.editor.querySelector('img');
-					await img.decode();
-					simulateEvent('dblclick', img);
-
-					const dialog = getOpenedDialog(editor);
-
-					await waitForImageReady(editor);
-
-					clickButton('Advanced', dialog);
-
-					const form = getForm(dialog);
-
-					const marginBottom = form.getElm('marginBottom');
-					const marginTop = form.getElm('marginTop');
-					const marginLeft = form.getElm('marginLeft');
-					const marginRight = form.getElm('marginRight');
-					const lockMargin = form.getElm('lockMargin');
+					const marginBottom = refs.form.getElm('marginBottom');
+					const marginTop = refs.form.getElm('marginTop');
+					const marginLeft = refs.form.getElm('marginLeft');
+					const marginRight = refs.form.getElm('marginRight');
+					const lockMargin = refs.form.getElm('lockMargin');
 
 					expect(lockMargin).is.not.null;
-					const lockerimg = lockMargin.innerHTML;
+					const lockerImg = lockMargin.innerHTML;
 					simulateEvent('click', lockMargin);
-					expect(lockMargin.innerHTML).does.not.equal(lockerimg);
+					expect(lockMargin.innerHTML).does.not.equal(lockerImg);
 
 					expect(marginTop.value.toString()).equals('10');
 
@@ -605,9 +475,9 @@ describe('Edit image tests', () => {
 					marginLeft.value = 220;
 					simulateEvent('change', marginLeft);
 
-					clickButton('ok', dialog);
+					clickButton('ok', refs.dialog);
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(sortAttributes(refs.editor.value)).equals(
 						'<p><img alt="111" src="tests/artio.jpg" style="height:100px;margin:100px 20px 10px 220px;width:100px"></p>'
 					);
 				});
@@ -616,30 +486,19 @@ describe('Edit image tests', () => {
 
 		describe('Change title', () => {
 			it('should change image title', async () => {
-				const editor = getJodit();
-
-				editor.value =
-					'<p><img alt="111" title="sting" style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
-				const img = editor.editor.querySelector('img');
-				await img.decode();
-				simulateEvent('dblclick', img);
-
-				const dialog = getOpenedDialog(editor);
-
-				const form = getForm(dialog);
-
-				await waitForImageReady(editor);
-
-				const input = form.getElm('imageTitle');
+				const refs = await openImagePropertiesDialog(
+					'<p><img alt="111" title="sting" style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>'
+				);
+				const input = refs.form.getElm('imageTitle');
 
 				expect(input).is.not.null;
 				expect(input.value).equals('sting');
 
 				input.value = 'Stop';
 				simulateEvent('change', input);
-				clickButton('ok', dialog);
+				clickButton('ok', refs.dialog);
 
-				expect(sortAttributes(editor.value)).equals(
+				expect(sortAttributes(refs.editor.value)).equals(
 					'<p><img alt="111" src="tests/artio.jpg" style="height:100px;width:100px" title="Stop"></p>'
 				);
 			});
@@ -647,35 +506,19 @@ describe('Edit image tests', () => {
 
 		describe('Change alt', () => {
 			it('should change image alt', async () => {
-				const editor = getJodit();
-				const image = new Image();
-
-				image.src = 'tests/artio.jpg';
-				await image.decode();
-
-				editor.value =
-					'<p><img alt="test" style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
-
-				const img = editor.editor.querySelector('img');
-				await img.decode();
-
-				simulateEvent('dblclick', img);
-
-				const dialog = getOpenedDialog(editor);
-				await waitForImageReady(editor);
-
-				const form = getForm(dialog);
-
-				const input = form.getElm('imageAlt');
+				const refs = await openImagePropertiesDialog(
+					'<p><img alt="test" style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>'
+				);
+				const input = refs.form.getElm('imageAlt');
 
 				expect(input).is.not.null;
 				expect(input.value).equals('test');
 
 				input.value = 'Stop';
 				simulateEvent('change', input);
-				clickButton('ok', dialog);
+				clickButton('ok', refs.dialog);
 
-				expect(sortAttributes(editor.value)).equals(
+				expect(sortAttributes(refs.editor.value)).equals(
 					'<p><img alt="Stop" src="tests/artio.jpg" style="height:100px;width:100px"></p>'
 				);
 			});
@@ -683,22 +526,10 @@ describe('Edit image tests', () => {
 
 		describe('Change link', () => {
 			it('should change image wrapper', async () => {
-				const editor = getJodit();
-
-				editor.value =
-					'<p><img alt="111" style="width:100px; height: 100px;"  src="tests/artio.jpg"/></p>';
-
-				const img = editor.editor.querySelector('img');
-				await img.decode();
-
-				simulateEvent('dblclick', img);
-
-				const dialog = getOpenedDialog(editor);
-
-				await waitForImageReady(editor);
-
-				const form = getForm(dialog);
-				const input = form.getElm('imageLink');
+				const refs = await openImagePropertiesDialog(
+					'<p><img alt="111" style="width:100px; height: 100px;"  src="tests/artio.jpg"/></p>'
+				);
+				const input = refs.form.getElm('imageLink');
 
 				expect(input).is.not.null;
 				expect(input.value).equals('');
@@ -706,30 +537,19 @@ describe('Edit image tests', () => {
 				input.value = 'https://xdsoft.net/';
 				simulateEvent('change', input);
 
-				clickButton('ok', dialog);
+				clickButton('ok', refs.dialog);
 
-				expect(sortAttributes(editor.value)).equals(
+				expect(sortAttributes(refs.editor.value)).equals(
 					'<p><a href="https://xdsoft.net/"><img alt="111" src="tests/artio.jpg" style="height:100px;width:100px"></a></p>'
 				);
 			});
 
 			describe('open link in new tab', () => {
 				it('should change image wrapper with target="_blank"', async () => {
-					const editor = getJodit();
-
-					editor.value =
-						'<p><img alt="111" style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>';
-
-					const img = editor.editor.querySelector('img');
-					await img.decode();
-					simulateEvent('dblclick', img);
-
-					const dialog = getOpenedDialog(editor);
-
-					await waitForImageReady(editor);
-
-					const form = getForm(dialog);
-					const input = form.getElm('imageLink');
+					const refs = await openImagePropertiesDialog(
+						'<p><img alt="111" style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>'
+					);
+					const input = refs.form.getElm('imageLink');
 
 					expect(input).is.not.null;
 					expect(input.value).equals('');
@@ -737,13 +557,13 @@ describe('Edit image tests', () => {
 					input.value = 'https://xdsoft.net/';
 					simulateEvent('change', input);
 
-					const checkbox = form.getElm('imageLinkOpenInNewTab');
+					const checkbox = refs.form.getElm('imageLinkOpenInNewTab');
 					checkbox.checked = true;
 					simulateEvent('change', checkbox);
 
-					clickButton('ok', dialog);
+					clickButton('ok', refs.dialog);
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(sortAttributes(refs.editor.value)).equals(
 						'<p><a href="https://xdsoft.net/" target="_blank"><img alt="111" src="tests/artio.jpg" style="height:100px;width:100px"></a></p>'
 					);
 				});
@@ -751,27 +571,16 @@ describe('Edit image tests', () => {
 
 			describe('Open dialog for image wrapped in link', () => {
 				it('should change image wrapper', async () => {
-					const editor = getJodit();
+					const refs = await openImagePropertiesDialog(
+						'<a href="https://xdan.ru" target="_blank"><img alt="111" style="width:100px; height: 100px;"  src="tests/artio.jpg"/></a>'
+					);
 
-					editor.value =
-						'<a href="https://xdan.ru" target="_blank"><img alt="111" style="width:100px; height: 100px;"  src="tests/artio.jpg"/></a>';
-
-					const img = editor.editor.querySelector('img');
-					await img.decode();
-
-					simulateEvent('dblclick', img);
-
-					const dialog = getOpenedDialog(editor);
-
-					await waitForImageReady(editor);
-
-					const form = getForm(dialog);
-					const input = form.getElm('imageLink');
+					const input = refs.form.getElm('imageLink');
 
 					expect(input).is.not.null;
 					expect(input.value).equals('https://xdan.ru');
 
-					const checkbox = form.getElm('imageLinkOpenInNewTab');
+					const checkbox = refs.form.getElm('imageLinkOpenInNewTab');
 					expect(checkbox.checked).is.true;
 
 					input.value = 'https://xdsoft.net/';
@@ -779,9 +588,9 @@ describe('Edit image tests', () => {
 					checkbox.checked = false;
 					simulateEvent('change', checkbox);
 
-					clickButton('ok', dialog);
+					clickButton('ok', refs.dialog);
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(sortAttributes(refs.editor.value)).equals(
 						'<p><a href="https://xdsoft.net/"><img alt="111" src="tests/artio.jpg" style="height:100px;width:100px"></a></p>'
 					);
 				});
@@ -789,26 +598,15 @@ describe('Edit image tests', () => {
 
 			describe('Unlink', () => {
 				it('should remove image wrapper', async () => {
-					const editor = getJodit();
-
-					editor.value =
-						'<a href="https://xdan.ru" target="_blank"><img alt="111" style="width:100px; height: 100px;" src="tests/artio.jpg"/></a>';
-
-					const img = editor.editor.querySelector('img');
-					await img.decode();
-					simulateEvent('dblclick', img);
-
-					const dialog = getOpenedDialog(editor);
-
-					await waitForImageReady(editor);
-
-					const form = getForm(dialog);
-					const input = form.getElm('imageLink');
+					const refs = await openImagePropertiesDialog(
+						'<a href="https://xdan.ru" target="_blank"><img alt="111" style="width:100px; height: 100px;" src="tests/artio.jpg"/></a>'
+					);
+					const input = refs.form.getElm('imageLink');
 
 					expect(input).is.not.null;
 					expect(input.value).equals('https://xdan.ru');
 
-					const checkbox = form.getElm('imageLinkOpenInNewTab');
+					const checkbox = refs.form.getElm('imageLinkOpenInNewTab');
 					expect(checkbox.checked).is.true;
 
 					input.value = '';
@@ -816,9 +614,9 @@ describe('Edit image tests', () => {
 					checkbox.checked = false;
 					simulateEvent('change', checkbox);
 
-					clickButton('ok', dialog);
+					clickButton('ok', refs.dialog);
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(sortAttributes(refs.editor.value)).equals(
 						'<p><img alt="111" src="tests/artio.jpg" style="height:100px;width:100px"></p>'
 					);
 				});
@@ -828,47 +626,25 @@ describe('Edit image tests', () => {
 		describe('Change size', () => {
 			describe('dblclick on image and open dialog', () => {
 				describe('width and height', () => {
-					let editor,
-						img,
-						dialog,
-						imageWidth,
-						imageHeight,
-						lockSize,
-						form;
+					let refs;
 
 					beforeEach(async () => {
-						editor = getJodit();
-
-						editor.value = IMAGE;
-						img = editor.editor.querySelector('img');
-
-						await img.decode();
-
-						simulateEvent('dblclick', img);
-
-						dialog = getOpenedDialog(editor);
-
-						await waitForImageReady(editor);
-
-						form = getForm(dialog);
-						imageWidth = form.getElm('imageWidth');
-						imageHeight = form.getElm('imageHeight');
-						lockSize = form.getElm('lockSize');
+						refs = await openImagePropertiesDialog();
 					});
 
 					describe('were not changed', () => {
 						it('should not set style', () => {
-							expect(imageWidth.value).equals(
-								img.offsetWidth.toString()
+							expect(refs.imageWidth.value).equals(
+								refs.img.offsetWidth.toString()
 							);
-							expect(imageHeight.value).equals(
-								img.offsetHeight.toString()
+							expect(refs.imageHeight.value).equals(
+								refs.img.offsetHeight.toString()
 							);
-							expect(form.getMod('lock-size')).is.true;
+							expect(refs.form.getMod('lock-size')).is.true;
 
-							clickButton('Apply', dialog);
+							clickButton('Apply', refs.dialog);
 
-							expect(sortAttributes(editor.value)).equals(
+							expect(sortAttributes(refs.editor.value)).equals(
 								'<p><img alt="artio" src="tests/artio.jpg"></p>'
 							);
 						});
@@ -876,181 +652,139 @@ describe('Edit image tests', () => {
 
 					describe('were changed', () => {
 						it('should set correct style', () => {
-							imageWidth.value = 100;
-							simulateEvent('change', imageWidth);
+							refs.imageWidth.value = 100;
+							simulateEvent('change', refs.imageWidth);
 
-							clickButton('Apply', dialog);
+							clickButton('Apply', refs.dialog);
 
-							expect(sortAttributes(editor.value)).equals(
+							expect(sortAttributes(refs.editor.value)).equals(
 								'<p><img alt="artio" src="tests/artio.jpg" style="width:100px"></p>'
 							);
 						});
 					});
 				});
 
+				describe('Width is not number', () => {
+					it('should not change ant put it inside input', async () => {
+						const refs = await openImagePropertiesDialog(
+							'<p><img alt="artio" width=3000 style="width: 40%;" src="tests/artio.jpg"/></p>'
+						);
+
+						const previousHeight = refs.imageHeight.value;
+						expect(previousHeight).equals('');
+						expect(refs.imageWidth.value).equals('40%');
+						expect(refs.form.getMod('lock-size')).is.false;
+
+						refs.imageWidth.value = '30%';
+						simulateEvent('change', refs.imageWidth);
+
+						expect(refs.imageHeight.value).equals(previousHeight);
+
+						clickButton('Apply', refs.dialog);
+
+						expect(sortAttributes(refs.editor.value)).equals(
+							'<p><img alt="artio" src="tests/artio.jpg" style="width:30%"></p>'
+						);
+					});
+				});
+
 				it('should create inputs contains width and height', async () => {
-					const area = appendTestArea();
-					const editor = Jodit.make(area);
+					const refs = await openImagePropertiesDialog();
 
-					editor.value = IMAGE;
-					const img = editor.editor.querySelector('img');
-					await img.decode();
+					expect(refs.imageWidth).is.not.null;
+					expect(refs.imageHeight).is.not.null;
 
-					simulateEvent('dblclick', img);
-
-					expect(area.id).equals(editor.id);
-
-					const dialog = getOpenedDialog(editor);
-					expect(dialog).is.not.null;
-
-					await waitForImageReady(editor);
-
-					const form = getForm(dialog);
-					const imageWidth = form.getElm('imageWidth');
-					const imageHeight = form.getElm('imageHeight');
-
-					expect(imageWidth).is.not.null;
-					expect(imageHeight).is.not.null;
-
-					expect(imageWidth.value).equals(img.offsetWidth.toString());
-					expect(imageHeight.value).equals(
-						img.offsetHeight.toString()
+					expect(refs.imageWidth.value).equals(
+						refs.img.offsetWidth.toString()
+					);
+					expect(refs.imageHeight.value).equals(
+						refs.img.offsetHeight.toString()
 					);
 
-					expect(form.getMod('lock-size')).is.true;
+					expect(refs.form.getMod('lock-size')).is.true;
 
-					imageWidth.value = 100;
-					simulateEvent('change', imageWidth);
-					expect(imageHeight.value).does.not.equal(
-						img.offsetHeight.toString()
+					refs.imageWidth.value = 100;
+					simulateEvent('change', refs.imageWidth);
+					expect(refs.imageHeight.value).does.not.equal(
+						refs.img.offsetHeight.toString()
 					);
 
-					imageHeight.value = 200;
-					simulateEvent('change', imageHeight);
-					expect(imageWidth.value).does.not.equal('100');
+					refs.imageHeight.value = 200;
+					simulateEvent('change', refs.imageHeight);
+					expect(refs.imageWidth.value).does.not.equal('100');
 
-					clickButton('ok', dialog);
+					clickButton('ok', refs.dialog);
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(sortAttributes(refs.editor.value)).equals(
 						'<p><img alt="artio" src="tests/artio.jpg" style="width:356px"></p>'
 					);
 				});
 
 				describe('image has width in attributes', () => {
 					it('should put this width in input, inside height should be auto', async () => {
-						const area = appendTestArea();
-						const editor = Jodit.make(area);
+						const refs = await openImagePropertiesDialog(
+							'<p><img alt="artio" width="100" src="tests/artio.jpg"/></p>'
+						);
+						expect(refs.imageWidth.value).equals('100');
+						expect(refs.imageHeight.value).equals('56');
 
-						editor.value =
-							'<p><img alt="artio" width="100px" src="tests/artio.jpg"/></p>';
+						refs.imageWidth.value = 200;
+						simulateEvent('change', refs.imageWidth);
 
-						const img = editor.editor.querySelector('img');
-						await img.decode();
+						expect(refs.imageHeight.value).equals('112');
 
-						simulateEvent('dblclick', img);
+						refs.imageHeight.value = 200;
+						simulateEvent('change', refs.imageHeight);
+						expect(refs.imageWidth.value).equals('356');
 
-						expect(area.id).equals(editor.id);
+						clickButton('ok', refs.dialog);
 
-						const dialog = getOpenedDialog(editor);
-
-						await waitForImageReady(editor);
-
-						const form = getForm(dialog);
-						const imageWidth = form.getElm('imageWidth');
-						const imageHeight = form.getElm('imageHeight');
-
-						expect(imageWidth.value).equals('100');
-						expect(imageHeight.value).equals('56');
-
-						imageWidth.value = 200;
-						simulateEvent('change', imageWidth);
-
-						expect(imageHeight.value).equals('112');
-
-						imageHeight.value = 200;
-						simulateEvent('change', imageHeight);
-						expect(imageWidth.value).equals('356');
-
-						clickButton('ok', dialog);
-
-						expect(sortAttributes(editor.value)).equals(
+						expect(sortAttributes(refs.editor.value)).equals(
 							'<p><img alt="artio" src="tests/artio.jpg" style="width:356px" width="356"></p>'
 						);
 					});
 
 					describe('same in style', () => {
 						it('should put this width in input, inside height should be auto', async () => {
-							const area = appendTestArea();
-							const editor = Jodit.make(area);
+							const refs = await openImagePropertiesDialog(
+								'<p><img alt="artio" style="width:100px" src="tests/artio.jpg"/></p>'
+							);
 
-							editor.value =
-								'<p><img alt="artio" style="width:100px" src="tests/artio.jpg"/></p>';
+							expect(refs.imageWidth.value).equals('100');
+							expect(refs.imageHeight.value).equals('56');
+							expect(refs.form.getMod('lock-size')).is.true;
 
-							const img = editor.editor.querySelector('img');
-							await img.decode();
+							refs.imageWidth.value = 200;
+							simulateEvent('change', refs.imageWidth);
 
-							simulateEvent('dblclick', img);
+							expect(refs.imageHeight.value).equals('112');
 
-							expect(area.id).equals(editor.id);
+							refs.imageHeight.value = 200;
+							simulateEvent('change', refs.imageHeight);
+							expect(refs.imageWidth.value).equals('356');
 
-							const dialog = getOpenedDialog(editor);
+							clickButton('ok', refs.dialog);
 
-							await waitForImageReady(editor);
-
-							const form = getForm(dialog);
-							const imageWidth = form.getElm('imageWidth');
-							const imageHeight = form.getElm('imageHeight');
-							const lockSize = form.getElm('lockSize');
-
-							expect(imageWidth.value).equals('100');
-							expect(imageHeight.value).equals('56');
-							expect(form.getMod('lock-size')).is.true;
-
-							imageWidth.value = 200;
-							simulateEvent('change', imageWidth);
-
-							expect(imageHeight.value).equals('112');
-
-							imageHeight.value = 200;
-							simulateEvent('change', imageHeight);
-							expect(imageWidth.value).equals('356');
-
-							clickButton('ok', dialog);
-
-							expect(sortAttributes(editor.value)).equals(
+							expect(sortAttributes(refs.editor.value)).equals(
 								'<p><img alt="artio" src="tests/artio.jpg" style="width:356px"></p>'
 							);
 						});
 
 						describe('Attributes has not pixel value', () => {
 							it('should put these values in inputs', async () => {
-								const area = appendTestArea();
-								const editor = Jodit.make(area);
+								const refs = await openImagePropertiesDialog(
+									'<p><img alt="111" style="width:100%;height:30rem" src="tests/artio.jpg"/></p>'
+								);
 
-								editor.value =
-									'<p><img alt="111" style="width:100%;height:30rem" src="tests/artio.jpg"/></p>';
+								expect(refs.imageWidth.value).equals('100%');
+								expect(refs.imageHeight.value).equals('30rem');
+								expect(refs.form.getMod('lock-size')).is.false;
 
-								const img = editor.editor.querySelector('img');
-								await img.decode();
-								simulateEvent('dblclick', img);
+								clickButton('ok', refs.dialog);
 
-								expect(area.id).equals(editor.id);
-
-								const dialog = getOpenedDialog(editor);
-
-								await waitForImageReady(editor);
-
-								const form = getForm(dialog);
-								const imageWidth = form.getElm('imageWidth');
-								const imageHeight = form.getElm('imageHeight');
-
-								expect(imageWidth.value).equals('100%');
-								expect(imageHeight.value).equals('30rem');
-								expect(form.getMod('lock-size')).is.false;
-
-								clickButton('ok', dialog);
-
-								expect(sortAttributes(editor.value)).equals(
+								expect(
+									sortAttributes(refs.editor.value)
+								).equals(
 									'<p><img alt="111" src="tests/artio.jpg" style="height:30rem;width:100%"></p>'
 								);
 							});
@@ -1060,85 +794,52 @@ describe('Edit image tests', () => {
 
 				describe('image has width and height attributes', () => {
 					it('should put these attributes in inputs and lock button should be switched off', async () => {
-						const area = appendTestArea();
-						const editor = Jodit.make(area);
+						const refs = await openImagePropertiesDialog(
+							'<p><img alt="111" width="100px" height="200px" src="tests/artio.jpg"/></p>'
+						);
 
-						editor.value =
-							'<p><img alt="111" width="100px" height="200px" src="tests/artio.jpg"/></p>';
+						expect(refs.imageWidth.value).equals('100');
+						expect(refs.imageHeight.value).equals('200');
 
-						const img = editor.editor.querySelector('img');
+						expect(refs.form.getMod('lock-size')).is.false;
 
-						await img.decode();
-						simulateEvent('dblclick', img);
+						refs.imageWidth.value = 200;
+						simulateEvent('change', refs.imageWidth);
+						expect(refs.imageHeight.value).equals('200');
 
-						expect(area.id).equals(editor.id);
+						refs.imageHeight.value = 1900;
+						simulateEvent('change', refs.imageHeight);
+						expect(refs.imageWidth.value).equals('200');
 
-						const dialog = getOpenedDialog(editor);
+						clickButton('ok', refs.dialog);
 
-						await waitForImageReady(editor);
-
-						const form = getForm(dialog);
-						const imageWidth = form.getElm('imageWidth');
-						const imageHeight = form.getElm('imageHeight');
-
-						expect(imageWidth.value).equals('100');
-						expect(imageHeight.value).equals('200');
-
-						expect(form.getMod('lock-size')).is.false;
-
-						imageWidth.value = 200;
-						simulateEvent('change', imageWidth);
-						expect(imageHeight.value).equals('200');
-
-						imageHeight.value = 1900;
-						simulateEvent('change', imageHeight);
-						expect(imageWidth.value).equals('200');
-
-						clickButton('ok', dialog);
-
-						expect(sortAttributes(editor.value)).equals(
+						expect(sortAttributes(refs.editor.value)).equals(
 							'<p><img alt="111" height="1900" src="tests/artio.jpg" style="height:1900px;width:200px" width="200"></p>'
 						);
 					});
 
 					describe('same in style', () => {
 						it('should put these values in inputs and lock button should be switch off', async () => {
-							const area = appendTestArea();
-							const editor = Jodit.make(area);
+							const refs = await openImagePropertiesDialog(
+								'<p><img alt="111" style="width:100px;height:200px" src="tests/artio.jpg"/></p>'
+							);
 
-							editor.value =
-								'<p><img alt="111" style="width:100px;height:200px" src="tests/artio.jpg"/></p>';
+							expect(refs.imageWidth.value).equals('100');
+							expect(refs.imageHeight.value).equals('200');
 
-							const img = editor.editor.querySelector('img');
-							await img.decode();
-							simulateEvent('dblclick', img);
+							expect(refs.form.getMod('lock-size')).is.false;
 
-							expect(area.id).equals(editor.id);
+							refs.imageWidth.value = 200;
+							simulateEvent('change', refs.imageWidth);
+							expect(refs.imageHeight.value).equals('200');
 
-							const dialog = getOpenedDialog(editor);
+							refs.imageHeight.value = 1900;
+							simulateEvent('change', refs.imageHeight);
+							expect(refs.imageWidth.value).equals('200');
 
-							await waitForImageReady(editor);
+							clickButton('ok', refs.dialog);
 
-							const form = getForm(dialog);
-							const imageWidth = form.getElm('imageWidth');
-							const imageHeight = form.getElm('imageHeight');
-
-							expect(imageWidth.value).equals('100');
-							expect(imageHeight.value).equals('200');
-
-							expect(form.getMod('lock-size')).is.false;
-
-							imageWidth.value = 200;
-							simulateEvent('change', imageWidth);
-							expect(imageHeight.value).equals('200');
-
-							imageHeight.value = 1900;
-							simulateEvent('change', imageHeight);
-							expect(imageWidth.value).equals('200');
-
-							clickButton('ok', dialog);
-
-							expect(sortAttributes(editor.value)).equals(
+							expect(sortAttributes(refs.editor.value)).equals(
 								'<p><img alt="111" src="tests/artio.jpg" style="height:1900px;width:200px"></p>'
 							);
 						});
@@ -1148,113 +849,73 @@ describe('Edit image tests', () => {
 
 			describe('unlock ratio', () => {
 				it('should create inputs with width and height', async () => {
-					const editor = getJodit();
+					const refs = await openImagePropertiesDialog();
 
-					editor.value = IMAGE;
-					const img = editor.editor.querySelector('img');
-					await img.decode();
-					simulateEvent('dblclick', img);
+					expect(refs.lockSize).is.not.null;
+					expect(refs.imageWidth).is.not.null;
+					expect(refs.imageHeight).is.not.null;
 
-					const dialog = getOpenedDialog(editor);
-
-					await waitForImageReady(editor);
-
-					expect(dialog).is.not.null;
-
-					const form = getForm(dialog);
-					const imageWidth = form.getElm('imageWidth');
-					const imageHeight = form.getElm('imageHeight');
-					const lockSize = form.getElm('lockSize');
-
-					expect(lockSize).is.not.null;
-					expect(imageWidth).is.not.null;
-					expect(imageHeight).is.not.null;
-
-					expect(imageWidth.value).equals(img.offsetWidth.toString());
-					expect(imageHeight.value).equals(
-						img.offsetHeight.toString()
+					expect(refs.imageWidth.value).equals(
+						refs.img.offsetWidth.toString()
+					);
+					expect(refs.imageHeight.value).equals(
+						refs.img.offsetHeight.toString()
 					);
 
-					simulateEvent('click', lockSize);
+					simulateEvent('click', refs.lockSize);
 
-					imageWidth.value = 100;
-					simulateEvent('change', imageWidth);
-					expect(imageHeight.value).equals(
-						img.offsetHeight.toString()
+					refs.imageWidth.value = 100;
+					simulateEvent('change', refs.imageWidth);
+					expect(refs.imageHeight.value).equals(
+						refs.img.offsetHeight.toString()
 					);
 
-					imageHeight.value = 200;
-					simulateEvent('change', imageHeight);
-					expect(imageWidth.value).equals('100');
+					refs.imageHeight.value = 200;
+					simulateEvent('change', refs.imageHeight);
+					expect(refs.imageWidth.value).equals('100');
 
-					clickButton('ok', dialog);
+					clickButton('ok', refs.dialog);
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(sortAttributes(refs.editor.value)).equals(
 						'<p><img alt="artio" src="tests/artio.jpg" style="height:200px;width:100px"></p>'
 					);
 				});
 
 				describe('For no proportional value', () => {
 					it('should not create connected size inputs', async () => {
-						const editor = getJodit();
-
-						editor.value =
-							'<p><img width="45px" height="212px" src="tests/artio.jpg"/></p>';
-						const img = editor.editor.querySelector('img');
-						await img.decode();
-						simulateEvent('dblclick', img);
-
-						const dialog = getOpenedDialog(editor);
-
-						await waitForImageReady(editor);
-
-						expect(dialog).is.not.null;
-
-						const form = getForm(dialog);
-
-						expect(form.getMod('lock-size')).is.false;
+						const refs = await openImagePropertiesDialog(
+							'<p><img alt="111" width="45px" height="212px" src="tests/artio.jpg"/></p>'
+						);
+						expect(refs.form.getMod('lock-size')).is.false;
 					});
 				});
 
 				describe('Toggle ratio again', () => {
 					it('should create connected inputs with width and height', async () => {
-						const editor = getJodit();
+						const refs = await openImagePropertiesDialog();
+						const lockerImg = refs.lockSize.innerHTML;
 
-						editor.value = IMAGE;
-						const img = editor.editor.querySelector('img');
-
-						await img.decode();
-						simulateEvent('dblclick', img);
-
-						const dialog = getOpenedDialog(editor);
-						await waitForImageReady(editor);
-						expect(dialog).is.not.null;
-
-						const form = getForm(dialog);
-						const imageWidth = form.getElm('imageWidth');
-						const imageHeight = form.getElm('imageHeight');
-						const lockSize = form.getElm('lockSize');
-						const lockerImg = lockSize.innerHTML;
-
-						simulateEvent('click', lockSize);
-						expect(lockSize.innerHTML).does.not.equal(lockerImg);
-
-						simulateEvent('click', lockSize);
-						expect(lockSize.innerHTML).equals(lockerImg);
-
-						imageWidth.value = 100;
-						simulateEvent('change', imageWidth);
-						expect(imageHeight.value).does.not.equal(
-							img.offsetHeight.toString()
+						simulateEvent('click', refs.lockSize);
+						expect(refs.lockSize.innerHTML).does.not.equal(
+							lockerImg
 						);
 
-						imageHeight.value = 200;
-						simulateEvent('change', imageHeight);
-						expect(imageWidth.value).does.not.equal('100');
+						simulateEvent('click', refs.lockSize);
+						expect(refs.lockSize.innerHTML).equals(lockerImg);
 
-						clickButton('ok', dialog);
+						refs.imageWidth.value = 100;
+						simulateEvent('change', refs.imageWidth);
+						expect(refs.imageHeight.value).does.not.equal(
+							refs.img.offsetHeight.toString()
+						);
 
-						expect(sortAttributes(editor.value)).equals(
+						refs.imageHeight.value = 200;
+						simulateEvent('change', refs.imageHeight);
+						expect(refs.imageWidth.value).does.not.equal('100');
+
+						clickButton('ok', refs.dialog);
+
+						expect(sortAttributes(refs.editor.value)).equals(
 							'<p><img alt="artio" src="tests/artio.jpg" style="width:356px"></p>'
 						);
 					});
@@ -1265,22 +926,9 @@ describe('Edit image tests', () => {
 		describe('Show file browser buttons and edit image button', () => {
 			describe("If uploader or file browser settings don't set", () => {
 				it('should not show buttons', async () => {
-					const editor = getJodit();
-
-					editor.value = IMAGE;
-					const img = editor.editor.querySelector('img');
-					await img.decode();
-					simulateEvent('dblclick', img);
-
-					const dialog = getOpenedDialog(editor);
-
-					await waitForImageReady(editor);
-
-					expect(dialog).is.not.null;
-
-					const form = getForm(dialog);
-					const fb = form.getElm('changeImage');
-					const edit = form.getElm('editImage');
+					const refs = await openImagePropertiesDialog();
+					const fb = refs.form.getElm('changeImage');
+					const edit = refs.form.getElm('editImage');
 					expect(fb).is.not.null;
 					expect(edit).is.not.null;
 
@@ -1324,7 +972,7 @@ describe('Edit image tests', () => {
 
 					const dialog = getOpenedDialog(editor);
 
-					await waitForImageReady(editor);
+					await waitForImageDialogReady(editor);
 
 					const form = getForm(dialog);
 					const fb = form.getElm('changeImage');
@@ -1349,7 +997,7 @@ describe('Edit image tests', () => {
 
 						imagePropertiesDialog = getOpenedDialog(editor);
 
-						await waitForImageReady(editor);
+						await waitForImageDialogReady(editor);
 
 						form = getForm(imagePropertiesDialog);
 						const reChange = form.getElm('changeImage');
@@ -1401,7 +1049,7 @@ describe('Edit image tests', () => {
 								unmockPromise();
 								clickButton('select', dialog);
 
-								await waitForImageReady(editor);
+								await waitForImageDialogReady(editor);
 							});
 
 							it('should change image only inside dialog', () => {
@@ -1450,7 +1098,7 @@ describe('Edit image tests', () => {
 									unmockPromise();
 									clickButton('select', dialog);
 
-									await waitForImageReady(editor);
+									await waitForImageDialogReady(editor);
 									expect(imageWidth.value).equals('500');
 									expect(imageHeight.value).equals('375');
 								});
@@ -1484,7 +1132,7 @@ describe('Edit image tests', () => {
 									unmockPromise();
 									clickButton('select', dialog);
 
-									await waitForImageReady(editor);
+									await waitForImageDialogReady(editor);
 
 									expect(imageWidth.value).equals('500');
 									expect(imageHeight.value).equals('281');
@@ -1512,7 +1160,7 @@ describe('Edit image tests', () => {
 
 							const dialog = getOpenedDialog(editor);
 
-							await waitForImageReady(editor);
+							await waitForImageDialogReady(editor);
 
 							expect(dialog).is.not.null;
 
@@ -1559,30 +1207,17 @@ describe('Edit image tests', () => {
 	describe('Classes', () => {
 		describe('No available classes defined', () => {
 			it('Should render as input box', async () => {
-				const area = appendTestArea();
-				const editor = Jodit.make(area, {
-					history: {
-						timeout: 0
-					},
-					disablePlugins: 'mobile'
-				});
-
-				editor.value =
-					'<p><img alt="" src="https://xdsoft.net/jodit/files/th.jpg"></p>';
-
-				const img = editor.editor.querySelector('img');
-				await img.decode();
-				simulateEvent('dblclick', img);
-
-				const dialog = getOpenedDialog(editor);
-
-				await waitForImageReady(editor);
-
-				expect(dialog).is.not.null;
-
-				const form = getForm(dialog);
-				const editImage = form.getElm('editImage');
-				const classes = form.getElm('classes');
+				const refs = await openImagePropertiesDialog(
+					'<p><img alt="" src="https://xdsoft.net/jodit/files/th.jpg"></p>',
+					{
+						history: {
+							timeout: 0
+						},
+						disablePlugins: 'mobile'
+					}
+				);
+				const editImage = refs.form.getElm('editImage');
+				const classes = refs.form.getElm('classes');
 
 				expect(editImage).is.not.null;
 
@@ -1592,39 +1227,26 @@ describe('Edit image tests', () => {
 
 		describe('Available classes defined', () => {
 			it('Should render as select box', async () => {
-				const area = appendTestArea();
-				const editor = Jodit.make(area, {
-					history: {
-						timeout: 0
-					},
-					image: {
-						availableClasses: [
-							'rte-image-width-50',
-							['rte-image-width-75', '75 % width']
-						]
-					},
-					disablePlugins: 'mobile'
-				});
-
-				editor.value =
-					'<p><img alt="" src="https://xdsoft.net/jodit/files/th.jpg"/></p>';
-				const img = editor.editor.querySelector('img');
-				await img.decode();
-
-				simulateEvent('dblclick', img);
-
-				const dialog = getOpenedDialog(editor);
-
-				await waitForImageReady(editor);
-
-				expect(dialog).is.not.null;
-
-				const form = getForm(dialog);
-				const editImage = form.getElm('editImage');
+				const refs = await openImagePropertiesDialog(
+					'<p><img alt="" src="https://xdsoft.net/jodit/files/th.jpg"/></p>',
+					{
+						history: {
+							timeout: 0
+						},
+						image: {
+							availableClasses: [
+								'rte-image-width-50',
+								['rte-image-width-75', '75 % width']
+							]
+						},
+						disablePlugins: 'mobile'
+					}
+				);
+				const editImage = refs.form.getElm('editImage');
 
 				expect(editImage).is.not.null;
 
-				const classes = form.getElm('classes');
+				const classes = refs.form.getElm('classes');
 
 				expect(classes.tagName).equals('SELECT');
 
@@ -1644,56 +1266,37 @@ describe('Edit image tests', () => {
 	describe('Dialog image', () => {
 		describe('Opened dialog image', () => {
 			it('Should disable margin inputs for left, bottom, right if element has equals margins(margin:10px;)', async () => {
-				const editor = getJodit({
-					history: {
-						timeout: 0
-					},
-					image: {
-						openOnDblClick: true
+				const refs = await openImagePropertiesDialog(
+					'<p><img alt="111" src="https://xdsoft.net/jodit/files/artio.jpg" style="margin:10px;border:1px solid red;width:100px;height:100px;"/></p>',
+					{
+						history: {
+							timeout: 0
+						},
+						image: {
+							openOnDblClick: true
+						}
 					}
-				});
-				editor.value =
-					'<p><img alt="111" src="https://xdsoft.net/jodit/files/artio.jpg" style="margin:10px;border:1px solid red;width:100px;height:100px;"/></p>';
-
-				const img = editor.editor.querySelector('img');
-				await img.decode();
-				simulateEvent('dblclick', img);
-
-				const dialog = getOpenedDialog(editor);
-
-				await waitForImageReady(editor);
-
-				expect(dialog.style.display).does.not.equal('none');
-
-				const form = getForm(dialog);
-				const marginBottom = form.getElm('marginBottom');
+				);
+				expect(refs.dialog.style.display).does.not.equal('none');
+				const marginBottom = refs.form.getElm('marginBottom');
 				expect(marginBottom.getAttribute('disabled')).equals('true');
 			});
 
 			it('Should enable margin inputs for left, bottom, right if element has not equals margins(margin:10px 5px;)', async () => {
-				const editor = getJodit({
-					history: {
-						timeout: 0
-					},
-					image: {
-						openOnDblClick: true
+				const refs = await openImagePropertiesDialog(
+					'<p><img alt="artio" src="https://xdsoft.net/jodit/files/artio.jpg" style="margin:10px 5px;border:1px solid red;width:100px;height:100px;"/></p>',
+					{
+						history: {
+							timeout: 0
+						},
+						image: {
+							openOnDblClick: true
+						}
 					}
-				});
-				editor.value =
-					'<p><img alt="artio" src="https://xdsoft.net/jodit/files/artio.jpg" style="margin:10px 5px;border:1px solid red;width:100px;height:100px;"/></p>';
+				);
+				const marginBottom = refs.form.getElm('marginBottom');
 
-				const img = editor.editor.querySelector('img');
-				await img.decode();
-				simulateEvent('dblclick', img);
-
-				const dialog = getOpenedDialog(editor);
-
-				await waitForImageReady(editor);
-
-				const form = getForm(dialog);
-				const marginBottom = form.getElm('marginBottom');
-
-				expect(dialog.style.display).does.not.equal('none');
+				expect(refs.dialog.style.display).does.not.equal('none');
 				expect(marginBottom.getAttribute('disabled')).is.null;
 			});
 		});

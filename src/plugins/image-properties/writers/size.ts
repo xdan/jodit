@@ -4,6 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import { isNumeric } from 'jodit/core/helpers/checker/is-numeric';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { css } from 'jodit/core/helpers/utils/css';
 
@@ -32,7 +33,13 @@ export function applySize(
 			height: updatedWidth && sizeIsLocked ? null : updatedHeight
 		});
 
-		attr(image, 'width', attr(image, 'width') ? updatedWidth : null);
+		attr(
+			image,
+			'width',
+			updatedWidth && isNumeric(imageWidth) && attr(image, 'width')
+				? updatedWidth
+				: null
+		);
 
 		if (!attr(image, 'width') || sizeIsLocked) {
 			updatedHeight = null;

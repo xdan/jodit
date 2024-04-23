@@ -19,19 +19,23 @@ export async function readSizes(
 ): Promise<void> {
 	await image.decode();
 
-	const width = attr(image, 'width') || css(image, 'width', true) || false;
+	const width = css(image, 'width', true) || attr(image, 'width') || false;
 
-	const height = attr(image, 'height') || css(image, 'height', true) || false;
+	const height = css(image, 'height', true) || attr(image, 'height') || false;
 
 	values.imageWidth =
 		width !== false
 			? normalSizeFromString(width)
 			: image.offsetWidth || image.naturalWidth;
 
-	values.imageHeight =
-		height !== false
-			? normalSizeFromString(height)
-			: image.offsetHeight || image.naturalHeight;
+	if (isNumeric(values.imageWidth)) {
+		values.imageHeight =
+			height !== false
+				? normalSizeFromString(height)
+				: image.offsetHeight || image.naturalHeight;
+	} else {
+		values.imageHeight = height || '';
+	}
 
 	const { imageWidth, imageHeight } = values;
 
