@@ -214,7 +214,7 @@
 					});
 
 					const popup = getOpenedPopup(editor);
-					expect(getButton('brushTable', popup)).is.null;
+					expect(getButton('brushCell', popup)).is.null;
 				});
 			});
 
@@ -241,7 +241,7 @@
 					});
 
 					const popup = getOpenedPopup(editor);
-					expect(getButton('brushTable', popup)).is.not.null;
+					expect(getButton('brushCell', popup)).is.not.null;
 				});
 			});
 		});

@@ -187,7 +187,7 @@ describe('Text Inline Popup plugin', function () {
 						expect(popup && popup.parentNode.parentNode != null).is
 							.true;
 
-						clickTrigger('brush', popup);
+						clickButton('brushCell', popup);
 
 						const popupColor = getOpenedPopup(editor);
 

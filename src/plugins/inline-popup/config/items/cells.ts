@@ -19,7 +19,7 @@ const cmd = (control: IControlType): string =>
 		: '';
 
 export default [
-	'brushTable',
+	'brushCell',
 	{
 		name: 'valign',
 		list: ['Top', 'Middle', 'Bottom', 'Normal'],

@@ -25,7 +25,7 @@ import { Config } from 'jodit/config';
 
 Icon.set('brush', brushIcon);
 
-Config.prototype.controls.brushTable = {
+Config.prototype.controls.brushCell = {
 	isVisible: (editor: IJodit): boolean => {
 		return !editor.o.disablePlugins.includes('color');
 	},
