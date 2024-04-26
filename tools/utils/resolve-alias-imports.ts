@@ -70,7 +70,6 @@ const allowPluginsInESM = new Set(
 		'delete',
 		'dtd',
 		'enter',
-		'enter',
 		'font',
 		'format-block',
 		'hotkeys',
