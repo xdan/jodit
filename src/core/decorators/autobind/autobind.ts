@@ -4,4 +4,10 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * [[include:core/decorators/autobind/README.md]]
+ * @packageDocumentation
+ * @module decorators/autobind
+ */
+
 export { default as autobind } from 'autobind-decorator';
