@@ -237,261 +237,317 @@ describe('Text Inline Popup plugin', function () {
 			expect(popup).is.not.null;
 		});
 
-		it('Select table cell and change it vertical align', function () {
-			const editor = getJodit();
+		describe('Select table cell', () => {
+			it('Select table cell and change it vertical align', function () {
+				const editor = getJodit();
 
-			editor.value =
-				'<table>' +
-				'<tr><td style="vertical-align: middle">3</td></tr>' +
-				'</table>';
+				editor.value =
+					'<table>' +
+					'<tr><td style="vertical-align: middle">3</td></tr>' +
+					'</table>';
 
-			const td = editor.editor.querySelector('td'),
-				pos = Jodit.modules.Helpers.position(td);
+				const td = editor.editor.querySelector('td'),
+					pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
-				Object.assign(e, {
-					clientX: pos.left,
-					clientY: pos.top
+				simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+					Object.assign(e, {
+						clientX: pos.left,
+						clientY: pos.top
+					});
+				});
+
+				const popup = getOpenedPopup(editor);
+				expect(popup && popup.parentNode.parentNode != null).is.true;
+
+				clickTrigger('valign', popup);
+
+				const popupColor = getOpenedPopup(editor);
+				expect(popupColor).is.not.null;
+
+				clickButton('Bottom', popupColor);
+
+				expect(td.style.verticalAlign).equals('bottom');
+			});
+
+			it('Select table cell and split it by vertical', function () {
+				const editor = getJodit();
+
+				editor.value =
+					'<table style="width: 300px;">' +
+					'<tr><td>3</td></tr>' +
+					'</table>';
+
+				const td = editor.editor.querySelector('td'),
+					pos = Jodit.modules.Helpers.position(td);
+
+				simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+					Object.assign(e, {
+						clientX: pos.left,
+						clientY: pos.top
+					});
+				});
+				const popup = getOpenedPopup(editor);
+				clickTrigger('splitv', popup);
+
+				const list = getOpenedPopup(editor);
+				expect(list).is.not.null;
+				clickButton('tablesplitv', list);
+
+				expect(sortAttributes(editor.value)).equals(
+					'<table style="width:300px"><tbody><tr><td style="width:49.83%">3</td><td style="width:49.83%"><br></td></tr></tbody></table>'
+				);
+			});
+
+			it('Select table cell and split it by horizontal', function () {
+				const editor = getJodit();
+
+				editor.value =
+					'<table style="width: 300px;">' +
+					'<tr><td>5</td></tr>' +
+					'</table>';
+
+				const td = editor.editor.querySelector('td'),
+					pos = Jodit.modules.Helpers.position(td);
+
+				simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+					Object.assign(e, {
+						clientX: pos.left,
+						clientY: pos.top
+					});
+				});
+
+				const popup = getOpenedPopup(editor);
+
+				clickTrigger('splitv', popup);
+				const list = getOpenedPopup(editor);
+				expect(list).is.not.null;
+				clickButton('tablesplitg', list);
+
+				expect(sortAttributes(editor.value)).equals(
+					'<table style="width:300px"><tbody><tr><td>5</td></tr><tr><td><br></td></tr></tbody></table>'
+				);
+			});
+
+			it('Select two table cells and merge then in one', function () {
+				const editor = getJodit();
+
+				editor.value =
+					'<table style="width: 300px;">' +
+					'<tr><td>5</td><td>6</td></tr>' +
+					'</table>';
+
+				const td = editor.editor.querySelector('td'),
+					next = editor.editor.querySelectorAll('td')[1];
+
+				simulateEvent('mousedown', td);
+
+				simulateEvent(['mousemove', 'mouseup'], next);
+
+				const popup = getOpenedPopup(editor);
+
+				clickButton('merge', popup);
+
+				expect(sortAttributes(editor.value)).equals(
+					'<table style="width:300px"><tbody><tr><td>5<br>6</td></tr></tbody></table>'
+				);
+			});
+
+			describe('Add', () => {
+				let editor, popup;
+
+				beforeEach(() => {
+					editor = getJodit();
+
+					editor.value =
+						'<table>' + '<tr><td>3</td></tr>' + '</table>';
+
+					const td = editor.editor.querySelector('td'),
+						pos = Jodit.modules.Helpers.position(td);
+
+					simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+						Object.assign(e, {
+							clientX: pos.left,
+							clientY: pos.top
+						});
+					});
+
+					popup = getOpenedPopup(editor);
+
+					expect(popup && popup.parentNode.parentNode != null).is
+						.true;
+				});
+
+				describe('Click on icon', () => {
+					describe('Add column', () => {
+						it('Should just open popup', () => {
+							clickButton('addcolumn', popup);
+
+							const popupColor = getOpenedPopup(editor);
+							expect(popupColor).does.not.eq(popup);
+						});
+					});
+
+					describe('Add row', () => {
+						it('Should just open popup', () => {
+							clickButton('addrow', popup);
+
+							const popupColor = getOpenedPopup(editor);
+							expect(popupColor).does.not.eq(popup);
+						});
+					});
+				});
+
+				describe('column before', () => {
+					it('Should add column before this', () => {
+						clickTrigger('addcolumn', popup);
+
+						const popupColor = getOpenedPopup(editor);
+
+						clickButton('Insert column before', popupColor);
+
+						expect(sortAttributes(editor.value)).equals(
+							'<table><tbody><tr><td></td><td>3</td></tr></tbody></table>'
+						);
+					});
+				});
+
+				describe('row above', () => {
+					it('Should add row above this', () => {
+						clickTrigger('addrow', popup);
+
+						const popupColor = getOpenedPopup(editor);
+
+
+						clickButton('Insert row above', popupColor);
+
+						expect(sortAttributes(editor.value)).equals(
+							'<table><tbody><tr><td></td></tr><tr><td>3</td></tr></tbody></table>'
+						);
+					});
 				});
 			});
 
-			const popup = getOpenedPopup(editor);
-			expect(popup && popup.parentNode.parentNode != null).is.true;
+			describe('Remove', () => {
+				let editor = null,
+					popup;
+				beforeEach(() => {
+					editor = getJodit();
 
-			clickTrigger('valign', popup);
+					editor.value =
+						'<table>' +
+						'<tr><td>1</td><td>4</td></tr>' +
+						'<tr><td>2</td><td>5</td></tr>' +
+						'<tr><td>3</td><td>6</td></tr>' +
+						'</table>';
 
-			const popupColor = getOpenedPopup(editor);
-			expect(popupColor).is.not.null;
+					const td = editor.editor.querySelectorAll('td')[1],
+						pos = Jodit.modules.Helpers.position(td);
 
-			clickButton('Bottom', popupColor);
+					simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+						Object.assign(e, {
+							clientX: pos.left,
+							clientY: pos.top
+						});
+					});
 
-			expect(td.style.verticalAlign).equals('bottom');
-		});
+					popup = getOpenedPopup(editor);
 
-		it('Select table cell and split it by vertical', function () {
-			const editor = getJodit();
-
-			editor.value =
-				'<table style="width: 300px;">' +
-				'<tr><td>3</td></tr>' +
-				'</table>';
-
-			const td = editor.editor.querySelector('td'),
-				pos = Jodit.modules.Helpers.position(td);
-
-			simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
-				Object.assign(e, {
-					clientX: pos.left,
-					clientY: pos.top
+					expect(popup && popup.parentNode.parentNode != null).is
+						.true;
 				});
-			});
-			const popup = getOpenedPopup(editor);
-			clickTrigger('splitv', popup);
 
-			const list = getOpenedPopup(editor);
-			expect(list).is.not.null;
-			clickButton('tablesplitv', list);
+				describe('Row', () => {
+					it('should remove it row', () => {
+						clickTrigger('delete', popup);
 
-			expect(sortAttributes(editor.value)).equals(
-				'<table style="width:300px"><tbody><tr><td style="width:49.83%">3</td><td style="width:49.83%"><br></td></tr></tbody></table>'
-			);
-		});
+						const popupColor = getOpenedPopup(editor);
+						expect(
+							popupColor &&
+								window.getComputedStyle(popupColor).display
+						).equals('block');
 
-		it('Select table cell and split it by horizontal', function () {
-			const editor = getJodit();
+						clickButton('Delete row', popupColor);
 
-			editor.value =
-				'<table style="width: 300px;">' +
-				'<tr><td>5</td></tr>' +
-				'</table>';
-
-			const td = editor.editor.querySelector('td'),
-				pos = Jodit.modules.Helpers.position(td);
-
-			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
-				Object.assign(e, {
-					clientX: pos.left,
-					clientY: pos.top
+						expect(editor.value).equals(
+							'<table><tbody><tr><td>2</td><td>5</td></tr><tr><td>3</td><td>6</td></tr></tbody></table>'
+						);
+					});
 				});
-			});
 
-			const popup = getOpenedPopup(editor);
+				describe('Column', () => {
+					it('should remove whole table', () => {
+						clickTrigger('delete', popup);
 
-			clickTrigger('splitv', popup);
-			const list = getOpenedPopup(editor);
-			expect(list).is.not.null;
-			clickButton('tablesplitg', list);
+						const popupColor = getOpenedPopup(editor);
 
-			expect(sortAttributes(editor.value)).equals(
-				'<table style="width:300px"><tbody><tr><td>5</td></tr><tr><td><br></td></tr></tbody></table>'
-			);
-		});
+						clickButton('Delete column', popupColor);
 
-		it('Select two table cells and merge then in one', function () {
-			const editor = getJodit();
+						expect(editor.value).equals(
+							'<table><tbody><tr><td>1</td></tr><tr><td>2</td></tr><tr><td>3</td></tr></tbody></table>'
+						);
+					});
+				});
 
-			editor.value =
-				'<table style="width: 300px;">' +
-				'<tr><td>5</td><td>6</td></tr>' +
-				'</table>';
+				describe('Table', () => {
+					it('should remove whole table', () => {
+						clickTrigger('delete', popup);
 
-			const td = editor.editor.querySelector('td'),
-				next = editor.editor.querySelectorAll('td')[1];
+						const popupColor = getOpenedPopup(editor);
 
-			simulateEvent('mousedown', td);
+						clickButton('Delete table', popupColor);
 
-			simulateEvent(['mousemove', 'mouseup'], next);
+						expect(editor.value).equals('');
+					});
+				});
 
-			const popup = getOpenedPopup(editor);
+				describe('Click on the trash button', () => {
+					it('should just open trigger', () => {
+						clickButton('delete', popup);
 
-			clickButton('merge', popup);
-
-			expect(sortAttributes(editor.value)).equals(
-				'<table style="width:300px"><tbody><tr><td>5<br>6</td></tr></tbody></table>'
-			);
-		});
-
-		it('Select table cell add column before this', function () {
-			const editor = getJodit();
-
-			editor.value = '<table>' + '<tr><td>3</td></tr>' + '</table>';
-
-			const td = editor.editor.querySelector('td'),
-				pos = Jodit.modules.Helpers.position(td);
-
-			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
-				Object.assign(e, {
-					clientX: pos.left,
-					clientY: pos.top
+						const popupColor = getOpenedPopup(editor);
+						expect(popupColor).does.not.eq(popup);
+					});
 				});
 			});
 
-			const popup = getOpenedPopup(editor);
+			it('Select table cell and remove whole table should hide inline popup', function () {
+				const editor = getJodit();
 
-			expect(popup && popup.parentNode.parentNode != null).is.true;
+				editor.value =
+					'<table>' +
+					'<tr><td>1</td></tr>' +
+					'<tr><td>2</td></tr>' +
+					'<tr><td>3</td></tr>' +
+					'</table>';
 
-			clickTrigger('addcolumn', popup);
+				const td = editor.editor.querySelectorAll('td')[1];
 
-			const popupColor = getOpenedPopup(editor);
-			expect(
-				popupColor && window.getComputedStyle(popupColor).display
-			).equals('block');
+				const pos = Jodit.modules.Helpers.position(td);
 
-			simulateEvent('click', 0, popupColor.querySelector('button'));
-
-			expect(sortAttributes(editor.value)).equals(
-				'<table><tbody><tr><td></td><td>3</td></tr></tbody></table>'
-			);
-		});
-
-		it('Select table cell and add row above this', function () {
-			const editor = getJodit();
-
-			editor.value = '<table>' + '<tr><td>3</td></tr>' + '</table>';
-
-			const td = editor.editor.querySelector('td'),
-				pos = Jodit.modules.Helpers.position(td);
-
-			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
-				Object.assign(e, {
-					clientX: pos.left,
-					clientY: pos.top
+				simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+					Object.assign(e, {
+						clientX: pos.left,
+						clientY: pos.top
+					});
 				});
+
+				const popup = getOpenedPopup(editor);
+
+				expect(popup && popup.parentNode.parentNode != null).is.true;
+
+				clickTrigger('delete', popup);
+
+				const popupColor = getOpenedPopup(editor);
+				expect(
+					popupColor && window.getComputedStyle(popupColor).display
+				).equals('block');
+
+				simulateEvent('click', 0, popupColor.querySelector('button'));
+
+				expect(editor.value).equals('');
+
+				expect(popup && popup.parentNode).is.null;
 			});
-
-			const popup = getOpenedPopup(editor);
-
-			expect(popup && popup.parentNode.parentNode != null).is.true;
-
-			clickTrigger('addrow', popup);
-
-			const popupColor = getOpenedPopup(editor);
-			expect(
-				popupColor && window.getComputedStyle(popupColor).display
-			).equals('block');
-
-			simulateEvent('click', 0, popupColor.querySelector('button'));
-
-			expect(sortAttributes(editor.value)).equals(
-				'<table><tbody><tr><td></td></tr><tr><td>3</td></tr></tbody></table>'
-			);
-		});
-
-		it('Select table cell and remove it row', function () {
-			const editor = getJodit();
-
-			editor.value =
-				'<table>' +
-				'<tr><td>1</td></tr>' +
-				'<tr><td>2</td></tr>' +
-				'<tr><td>3</td></tr>' +
-				'</table>';
-
-			const td = editor.editor.querySelectorAll('td')[1],
-				pos = Jodit.modules.Helpers.position(td);
-
-			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
-				Object.assign(e, {
-					clientX: pos.left,
-					clientY: pos.top
-				});
-			});
-
-			const popup = getOpenedPopup(editor);
-
-			expect(popup && popup.parentNode.parentNode != null).is.true;
-
-			clickTrigger('delete', popup);
-
-			const popupColor = getOpenedPopup(editor);
-			expect(
-				popupColor && window.getComputedStyle(popupColor).display
-			).equals('block');
-
-			simulateEvent('click', 0, popupColor.querySelectorAll('button')[1]);
-
-			expect(editor.value).equals(
-				'<table><tbody><tr><td>1</td></tr><tr><td>3</td></tr></tbody></table>'
-			);
-		});
-
-		it('Select table cell and remove whole table should hide inline popup', function () {
-			const editor = getJodit();
-
-			editor.value =
-				'<table>' +
-				'<tr><td>1</td></tr>' +
-				'<tr><td>2</td></tr>' +
-				'<tr><td>3</td></tr>' +
-				'</table>';
-
-			const td = editor.editor.querySelectorAll('td')[1];
-
-			const pos = Jodit.modules.Helpers.position(td);
-
-			simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
-				Object.assign(e, {
-					clientX: pos.left,
-					clientY: pos.top
-				});
-			});
-
-			const popup = getOpenedPopup(editor);
-
-			expect(popup && popup.parentNode.parentNode != null).is.true;
-
-			clickTrigger('delete', popup);
-
-			const popupColor = getOpenedPopup(editor);
-			expect(
-				popupColor && window.getComputedStyle(popupColor).display
-			).equals('block');
-
-			simulateEvent('click', 0, popupColor.querySelector('button'));
-
-			expect(editor.value).equals('');
-
-			expect(popup && popup.parentNode).is.null;
 		});
 
 		describe('Link inside cell', function () {

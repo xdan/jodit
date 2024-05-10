@@ -64,9 +64,13 @@ export default [
 			tableaddcolumnbefore: 'Insert column before',
 			tableaddcolumnafter: 'Insert column after'
 		},
-		exec: (editor, table, { control }): void => {
+		exec: (editor, table, { control }): void | false => {
 			if (!isJoditObject(editor)) {
 				return;
+			}
+
+			if (!control.args) {
+				return false;
 			}
 
 			const command = cmd(control);
@@ -81,9 +85,13 @@ export default [
 			tableaddrowbefore: 'Insert row above',
 			tableaddrowafter: 'Insert row below'
 		},
-		exec: (editor, table, { control }): void => {
+		exec: (editor, table, { control }): void | false => {
 			if (!isJoditObject(editor)) {
 				return;
+			}
+
+			if (!control.args) {
+				return false;
 			}
 
 			const command = cmd(control);
@@ -101,9 +109,13 @@ export default [
 			tablebincolumn: 'Delete column',
 			tableempty: 'Empty cell'
 		},
-		exec: (editor, table, { control }): void => {
+		exec: (editor, table, { control }): void | false => {
 			if (!isJoditObject(editor)) {
 				return;
+			}
+
+			if (!control.args) {
+				return false;
 			}
 
 			const command = cmd(control);
