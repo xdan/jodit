@@ -121,30 +121,6 @@ function resoleAliasImports(dirPath: string): void {
 			true
 		);
 
-		const resolvePath = (str: string): string => {
-			let modulePath = str.replace(/['"]/g, '');
-
-			if (/^\..+\.svg$/.test(modulePath)) {
-				return modulePath + '.js';
-			}
-
-			if (alias.test(modulePath)) {
-				modulePath = resolveAlias(modulePath, dirPath);
-			}
-
-			if (
-				!modulePath.startsWith('.') &&
-				!/^(jodit|jodit-pro)\/esm/.test(modulePath) &&
-				!allowPackages.has(modulePath)
-			) {
-				throw new Error(
-					`Allow only relative paths file:${filePath} import: ${modulePath}`
-				);
-			}
-
-			return modulePath;
-		};
-
 		const f = ts.factory;
 
 		const transformer = (
@@ -199,7 +175,10 @@ function resoleAliasImports(dirPath: string): void {
 						node.parent?.kind === ts.SyntaxKind.LastTypeNode &&
 						node.literal?.getText()
 					) {
-						const newPath = resolvePath(node.literal.getText());
+						const newPath = resolvePath(
+							node.literal.getText(),
+							filePath
+						);
 						return f.updateLiteralTypeNode(
 							node,
 							f.createStringLiteral(newPath)
@@ -216,7 +195,10 @@ function resoleAliasImports(dirPath: string): void {
 							node.typeArguments,
 							[
 								f.createStringLiteral(
-									resolvePath(node.arguments[0].getText())
+									resolvePath(
+										node.arguments[0].getText(),
+										filePath
+									)
 								)
 							]
 						);
@@ -235,8 +217,10 @@ function resoleAliasImports(dirPath: string): void {
 						}
 
 						const newPath = resolvePath(
-							node.moduleSpecifier.getText()
+							node.moduleSpecifier.getText(),
+							filePath
 						);
+
 						return f.updateImportDeclaration(
 							node,
 							node.modifiers,
@@ -248,8 +232,10 @@ function resoleAliasImports(dirPath: string): void {
 
 					if (ts.isExportDeclaration(node) && node.moduleSpecifier) {
 						const newPath = resolvePath(
-							node.moduleSpecifier.getText()
+							node.moduleSpecifier.getText(),
+							filePath
 						);
+
 						return f.updateExportDeclaration(
 							node,
 							node.modifiers,
@@ -297,42 +283,9 @@ function resolveAlias(pathWithAlias: string, dirPath: string): string {
 	);
 
 	const relative = path.relative(dirPath, subPath);
-	const relPath = relative.startsWith('.') ? relative : `./${relative}`;
+	return relative.startsWith('.') ? relative : `./${relative}`;
 
-	// For esm add extension
-	if (
-		argv.mode === 'esm' &&
-		!pathWithAlias.endsWith('.js') &&
-		!allowPackages.has(pathWithAlias)
-	) {
-		const fullPath = path.resolve(dirPath, relPath);
-		let isDir =
-			fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory();
-
-		if (!fs.existsSync(fullPath)) {
-			const superDirectory = path.resolve(
-				cwd,
-				'../../node_modules',
-				pathWithAlias.replace(alias, '$1/src/')
-			);
-
-			if (
-				fs.existsSync(superDirectory) &&
-				fs.statSync(superDirectory).isDirectory()
-			) {
-				isDir = true;
-			}
-		}
-
-		if (isDir) {
-			pathWithAlias +=
-				(!pathWithAlias.endsWith('/') ? '/' : '') + 'index.js';
-		} else {
-			pathWithAlias += '.js';
-		}
-	}
-
-	return pathWithAlias.replace(alias, '$1/esm/');
+	// return pathWithAlias.replace(alias, '$1/esm/');
 }
 
 function allowImportsPluginsAndLanguagesInESM(
@@ -369,4 +322,44 @@ function allowImportsPluginsAndLanguagesInESM(
 	}
 
 	return node;
+}
+
+function resolvePath(str: string, filePath: string): string {
+	const dirPath = path.dirname(filePath);
+
+	let modulePath = str.replace(/['"]/g, '');
+
+	if (/^\..+\.svg$/.test(modulePath)) {
+		return modulePath + '.js';
+	}
+
+	if (alias.test(modulePath)) {
+		modulePath = resolveAlias(modulePath, dirPath);
+	}
+
+	if (!modulePath.startsWith('.') && !allowPackages.has(modulePath)) {
+		throw new Error(
+			`Allow only relative paths file:${filePath} import: ${modulePath}`
+		);
+	}
+
+	// For esm add extension
+	if (
+		argv.mode === 'esm' &&
+		!modulePath.endsWith('.js') &&
+		!allowPackages.has(modulePath)
+	) {
+		const fullPath = path.resolve(dirPath, modulePath);
+
+		const isDir =
+			fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory();
+
+		if (isDir) {
+			modulePath += (!modulePath.endsWith('/') ? '/' : '') + 'index.js';
+		} else {
+			modulePath += '.js';
+		}
+	}
+
+	return modulePath;
 }

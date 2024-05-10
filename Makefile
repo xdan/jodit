@@ -288,3 +288,16 @@ examples:
 	@mkdir -p ./examples/build
 	@cp -R ./build/* ./examples/build
 	@$(NODE_MODULES_BIN)/replace '../build' './build' ./examples -r --include='*.html'
+
+.PHONY: esm-t
+esm-t:
+		@echo 'Build esm ...'
+		make esm
+
+		@echo 'Build types ...'
+		make build es=es2018 uglify=false generateTypes=$(BUILD_DTS)
+		make dts
+
+		rm -rf ../jodit-examples/node_modules/jodit/esm
+		mkdir ../jodit-examples/node_modules/jodit/esm
+		cp -R ./build/esm/* ../jodit-examples/node_modules/jodit/esm
