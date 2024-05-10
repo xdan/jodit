@@ -10,3 +10,4 @@
 
 export * from './selection';
 export * from './style/commit-style';
+export * from './style/constants';

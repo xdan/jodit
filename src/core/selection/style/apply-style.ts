@@ -11,7 +11,7 @@
 import type { ICommitStyle, IJodit } from 'jodit/types';
 
 import { FiniteStateMachine } from './api';
-import { INITIAL } from './commit-style';
+import { INITIAL } from './constants';
 import {
 	type IStyleTransactionValue,
 	states,
