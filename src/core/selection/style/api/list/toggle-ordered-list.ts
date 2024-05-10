@@ -15,7 +15,7 @@ import {
 	INITIAL,
 	REPLACE,
 	UNWRAP
-} from 'jodit/core/selection/style/commit-style';
+} from 'jodit/core/selection/style/constants';
 
 import { wrapList } from './wrap-list';
 

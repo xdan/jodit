@@ -16,6 +16,7 @@ import type {
 } from 'jodit/types';
 import { IS_BLOCK, LIST_TAGS } from 'jodit/core/constants';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';
+import { _PREFIX } from 'jodit/core/selection/style/constants';
 
 import { ApplyStyle } from './apply-style';
 
@@ -84,20 +85,20 @@ export class CommitStyle implements ICommitStyle {
 	apply(jodit: IJodit): void {
 		const { hooks } = this.options;
 
+		const keys = (hooks ? Object.keys(hooks) : []) as Array<
+			keyof Required<IStyleOptions>['hooks']
+		>;
+
 		try {
-			hooks &&
-				Object.keys(hooks).forEach(key => {
-					// @ts-ignore
-					jodit.e.on(camelCase(_PREFIX + '_' + key), hooks[key]);
-				});
+			keys.forEach(key => {
+				jodit.e.on(camelCase(_PREFIX + '_' + key), hooks![key]!);
+			});
 
 			ApplyStyle(jodit, this);
 		} finally {
-			hooks &&
-				Object.keys(hooks).forEach(key => {
-					// @ts-ignore
-					jodit.e.off(camelCase(_PREFIX + '_' + key), hooks[key]);
-				});
+			keys.forEach(key => {
+				jodit.e.off(camelCase(_PREFIX + '_' + key), hooks![key]!);
+			});
 
 			this.__applyMap = new WeakMap();
 		}

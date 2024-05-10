@@ -24,7 +24,7 @@ import {
 	CHANGE,
 	UNSET,
 	UNWRAP
-} from 'jodit/core/selection/style/commit-style';
+} from 'jodit/core/selection/style/constants';
 
 const tak = 'toggleAttributes';
 

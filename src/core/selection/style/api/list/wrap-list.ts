@@ -16,7 +16,7 @@ import {
 	INITIAL,
 	REPLACE,
 	WRAP
-} from 'jodit/core/selection/style/commit-style';
+} from 'jodit/core/selection/style/constants';
 
 /**
  * Replaces non-leaf items with leaf items and either creates a new list or
