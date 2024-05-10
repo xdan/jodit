@@ -4,7 +4,7 @@ Adds to the editor the ability to change the size of elements such as pictures, 
 
 ```js
 Jodit.make('#editor', {
-	allowResizeTags: Jodit.atom(['img']),
+	allowResizeTags: new Set(['img']),
 	resizer: {
 		showSize: true,
 		hideSizeTimeout: 2000,
