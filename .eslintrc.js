@@ -27,6 +27,7 @@ module.exports = {
 		node: true
 	},
 	rules: {
+		complexity: ['warn', 20],
 		'no-octal-escape': 0,
 		'@typescript-eslint/no-unsafe-declaration-merging': 'off',
 		'mocha/no-skipped-tests': 'error',
