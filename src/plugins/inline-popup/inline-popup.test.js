@@ -417,7 +417,6 @@ describe('Text Inline Popup plugin', function () {
 
 						const popupColor = getOpenedPopup(editor);
 
-
 						clickButton('Insert row above', popupColor);
 
 						expect(sortAttributes(editor.value)).equals(
