@@ -14,7 +14,8 @@ import { Dom } from 'jodit/core/dom';
 import { getContainer } from 'jodit/core/global';
 import { attr, isJoditObject } from 'jodit/core/helpers';
 
-import { dataURItoBlob, sendFiles } from './index';
+import { sendFiles } from './send-files';
+import { dataURItoBlob } from './data-uri-to-blob';
 
 export function processOldBrowserDrag(
 	self: IUploader,

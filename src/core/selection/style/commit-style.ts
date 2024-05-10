@@ -19,21 +19,6 @@ import { camelCase } from 'jodit/core/helpers/string/camel-case';
 
 import { ApplyStyle } from './apply-style';
 
-/** @internal */
-export const WRAP = 'wrap';
-/** @internal */
-export const UNWRAP = 'unwrap';
-/** @internal */
-export const CHANGE = 'change';
-/** @internal */
-export const UNSET = 'unset';
-/** @internal */
-export const INITIAL = 'initial';
-/** @internal */
-export const REPLACE = 'replace';
-/** @internal */
-export const _PREFIX = 'commitStyle';
-
 export class CommitStyle implements ICommitStyle {
 	private __applyMap: WeakMap<HTMLElement, Record<string, boolean>> =
 		new WeakMap();
