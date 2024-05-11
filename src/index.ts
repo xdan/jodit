@@ -10,16 +10,16 @@
  * @module jodit
  */
 
+import { Jodit as DefaultJodit } from './jodit';
 import { isFunction, isString } from 'jodit/core/helpers/checker';
-
-import 'jodit/plugins/index';
 
 import * as constants from './core/constants';
 import * as decorators from './core/decorators';
 import * as Modules from './modules/';
 import * as Icons from './styles/icons/';
-import { Jodit as DefaultJodit } from './jodit';
 import Languages from './languages';
+
+import 'jodit/plugins/index';
 
 import './styles/index.less';
 import './styles/themes/dark.less';
