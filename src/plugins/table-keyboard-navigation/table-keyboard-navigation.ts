@@ -35,58 +35,11 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 			'keydown.tableKeyboardNavigation',
 			(event: KeyboardEvent): false | void => {
 				const { key } = event;
-				if (!WORK_KEYS.has(key)) {
-					return;
-				}
 
-				const current = editor.s.current();
-
-				if (!current) {
-					return;
-				}
-
-				const cell = Dom.up<HTMLTableCellElement>(
-					current,
-					Dom.isCell,
-					editor.editor
-				);
+				const cell = findCell(editor, key);
 
 				if (!cell) {
 					return;
-				}
-
-				const { range } = editor.s;
-
-				if (key !== consts.KEY_TAB && current !== cell) {
-					const isNextDirection =
-						key === consts.KEY_RIGHT || key === consts.KEY_DOWN;
-
-					const hasNext = call(
-						!isNextDirection ? Dom.prev : Dom.next,
-						current,
-						elm =>
-							key === consts.KEY_UP || key === consts.KEY_DOWN
-								? Dom.isTag(elm, 'br')
-								: Boolean(elm),
-						cell
-					);
-
-					if (
-						(!isNextDirection &&
-							(hasNext ||
-								(key !== consts.KEY_UP &&
-									Dom.isText(current) &&
-									range.startOffset !== 0))) ||
-						(isNextDirection &&
-							(hasNext ||
-								(key !== consts.KEY_DOWN &&
-									Dom.isText(current) &&
-									current.nodeValue &&
-									range.startOffset !==
-										current.nodeValue.length)))
-					) {
-						return;
-					}
 				}
 
 				const tableModule = editor.getInstance<Table>(Table, editor.o);
@@ -172,3 +125,63 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 }
 
 pluginSystem.add('tableKeyboardNavigation', tableKeyboardNavigation);
+
+function findCell(
+	editor: IJodit,
+	key: string
+): HTMLTableCellElement | undefined {
+	if (!WORK_KEYS.has(key)) {
+		return;
+	}
+
+	const current = editor.s.current();
+
+	if (!current) {
+		return;
+	}
+
+	const cell = Dom.up<HTMLTableCellElement>(
+		current,
+		Dom.isCell,
+		editor.editor
+	);
+
+	if (!cell) {
+		return;
+	}
+
+	const { range } = editor.s;
+
+	if (key !== consts.KEY_TAB && current !== cell) {
+		const isNextDirection =
+			key === consts.KEY_RIGHT || key === consts.KEY_DOWN;
+
+		const hasNext = call(
+			!isNextDirection ? Dom.prev : Dom.next,
+			current,
+			elm =>
+				key === consts.KEY_UP || key === consts.KEY_DOWN
+					? Dom.isTag(elm, 'br')
+					: Boolean(elm),
+			cell
+		);
+
+		if (
+			(!isNextDirection &&
+				(hasNext ||
+					(key !== consts.KEY_UP &&
+						Dom.isText(current) &&
+						range.startOffset !== 0))) ||
+			(isNextDirection &&
+				(hasNext ||
+					(key !== consts.KEY_DOWN &&
+						Dom.isText(current) &&
+						current.nodeValue &&
+						range.startOffset !== current.nodeValue.length)))
+		) {
+			return;
+		}
+	}
+
+	return cell;
+}

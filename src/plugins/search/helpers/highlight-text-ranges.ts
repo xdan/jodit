@@ -40,25 +40,7 @@ export function highlightTextRanges(
 		return;
 	}
 
-	if (
-		jodit.o.search.useCustomHighlightAPI &&
-		// @ts-ignore Because Highlight is not defined in the types TS 5.3.3
-		typeof window.Highlight !== 'undefined'
-	) {
-		const ranges = [rng, ...restRanges].map(rng => {
-			const range = jodit.selection.createRange();
-			range.setStart(rng.startContainer, rng.startOffset);
-			range.setEnd(rng.endContainer, rng.endOffset);
-			return range;
-		});
-
-		// @ts-ignore Because Highlight is not defined in the types TS 5.3.3
-		const searchHighlight = new Highlight(...ranges);
-		// @ts-ignore
-		CSS.highlights.clear();
-		// @ts-ignore
-		CSS.highlights.set('jodit-search-result', searchHighlight);
-		restRanges.length = 0;
+	if (checkNativeSelectionMethod(jodit, rng, restRanges)) {
 		return;
 	}
 
@@ -68,45 +50,7 @@ export function highlightTextRanges(
 
 	Dom.markTemporary(span);
 
-	const startText = rng.startContainer.nodeValue;
-
-	let diff = 0;
-	if (rng.startOffset !== 0) {
-		const text = ci.text(startText.substring(0, rng.startOffset));
-		rng.startContainer.nodeValue = startText.substring(rng.startOffset);
-		Dom.before(rng.startContainer, text);
-
-		if (rng.startContainer === rng.endContainer) {
-			diff = rng.startOffset;
-			rng.endOffset -= diff;
-		}
-
-		rng.startOffset = 0;
-	}
-
-	const endText = rng.endContainer.nodeValue;
-
-	if (rng.endOffset !== endText.length) {
-		const text = ci.text(endText.substring(rng.endOffset));
-		rng.endContainer.nodeValue = endText.substring(0, rng.endOffset);
-		Dom.after(rng.endContainer, text);
-
-		for (const range of restRanges) {
-			if (range.startContainer === rng.endContainer) {
-				range.startContainer = text;
-				range.startOffset = range.startOffset - rng.endOffset - diff;
-
-				if (range.endContainer === rng.endContainer) {
-					range.endContainer = text;
-					range.endOffset = range.endOffset - rng.endOffset - diff;
-				}
-			} else {
-				break;
-			}
-		}
-
-		rng.endOffset = rng.endContainer.nodeValue.length;
-	}
+	normalizeRanges(rng, restRanges, ci);
 
 	let next: CanUndef<Nullable<Node>> = rng.startContainer;
 
@@ -164,6 +108,82 @@ export function clearSelectionWrappersFromHTML(root: string): string {
 /**
  * @private
  */
-export function isSelectionWrapper(node: unknown): boolean {
+function isSelectionWrapper(node: unknown): boolean {
 	return Dom.isElement(node) && node.hasAttribute(TMP_ATTR);
+}
+
+function checkNativeSelectionMethod(
+	jodit: IJodit,
+	rng: ISelectionRange,
+	restRanges: ISelectionRange[]
+): boolean {
+	if (
+		jodit.o.search.useCustomHighlightAPI &&
+		// @ts-ignore Because Highlight is not defined in the types TS 5.3.3
+		typeof window.Highlight !== 'undefined'
+	) {
+		const ranges = [rng, ...restRanges].map(rng => {
+			const range = jodit.selection.createRange();
+			range.setStart(rng.startContainer, rng.startOffset);
+			range.setEnd(rng.endContainer, rng.endOffset);
+			return range;
+		});
+
+		// @ts-ignore Because Highlight is not defined in the types TS 5.3.3
+		const searchHighlight = new Highlight(...ranges);
+		// @ts-ignore
+		CSS.highlights.clear();
+		// @ts-ignore
+		CSS.highlights.set('jodit-search-result', searchHighlight);
+		restRanges.length = 0;
+		return true;
+	}
+
+	return false;
+}
+
+function normalizeRanges(
+	rng: ISelectionRange,
+	restRanges: ISelectionRange[],
+	ci: ICreate
+): void {
+	const startText = rng.startContainer.nodeValue!;
+
+	let diff = 0;
+	if (rng.startOffset !== 0) {
+		const text = ci.text(startText.substring(0, rng.startOffset));
+		rng.startContainer.nodeValue = startText.substring(rng.startOffset);
+		Dom.before(rng.startContainer, text);
+
+		if (rng.startContainer === rng.endContainer) {
+			diff = rng.startOffset;
+			rng.endOffset -= diff;
+		}
+
+		rng.startOffset = 0;
+	}
+
+	const endText = rng.endContainer.nodeValue!;
+
+	if (rng.endOffset !== endText.length) {
+		const text = ci.text(endText.substring(rng.endOffset));
+		rng.endContainer.nodeValue = endText.substring(0, rng.endOffset);
+		Dom.after(rng.endContainer, text);
+
+		for (const range of restRanges) {
+			if (range.startContainer === rng.endContainer) {
+				range.startContainer = text;
+				range.startOffset = range.startOffset - rng.endOffset - diff;
+
+				if (range.endContainer === rng.endContainer) {
+					range.endContainer = text;
+					range.endOffset = range.endOffset - rng.endOffset - diff;
+				}
+			} else {
+				break;
+			}
+		}
+
+		rng.endOffset = rng.endContainer.nodeValue.length;
+	}
 }

@@ -202,51 +202,12 @@ export class link extends Plugin {
 			url_input.value = attr(link, 'href') || '';
 
 			if (modeClassName) {
-				switch (modeClassName) {
-					case 'input':
-						if (className_input) {
-							className_input.value = attr(link, 'class') || '';
-						}
-						break;
-
-					case 'select':
-						if (className_select) {
-							for (
-								let i = 0;
-								i < className_select.selectedOptions.length;
-								i++
-							) {
-								const option = className_select.options.item(i);
-
-								if (option) {
-									option.selected = false;
-								}
-							}
-
-							const classNames = attr(link, 'class') || '';
-
-							classNames.split(' ').forEach(className => {
-								if (className) {
-									for (
-										let i = 0;
-										i < className_select.options.length;
-										i++
-									) {
-										const option =
-											className_select.options.item(i);
-
-										if (
-											option?.value &&
-											option.value === className
-										) {
-											option.selected = true;
-										}
-									}
-								}
-							});
-						}
-						break;
-				}
+				readClassnames(
+					modeClassName,
+					className_input,
+					link,
+					className_select
+				);
 			}
 
 			if (openInNewTabCheckbox && target_checkbox) {
@@ -323,54 +284,15 @@ export class link extends Plugin {
 			links.forEach(a => {
 				attr(a, 'href', url_input.value);
 
-				if (modeClassName && (className_input ?? className_select)) {
-					if (modeClassName === 'input') {
-						if (
-							className_input.value === '' &&
-							a.hasAttribute('class')
-						) {
-							attr(a, 'class', null);
-						}
-
-						if (className_input.value !== '') {
-							attr(a, 'class', className_input.value);
-						}
-					} else if (modeClassName === 'select') {
-						if (a.hasAttribute('class')) {
-							attr(a, 'class', null);
-						}
-
-						for (
-							let i = 0;
-							i < className_select.selectedOptions.length;
-							i++
-						) {
-							const className =
-								className_select.selectedOptions.item(i)?.value;
-
-							if (className) {
-								a.classList.add(className);
-							}
-						}
-					}
-				}
+				writeClasses(
+					modeClassName,
+					className_input,
+					className_select,
+					a
+				);
 
 				if (!isImageContent) {
-					let newContent = a.textContent;
-
-					if (content_input.value.trim().length) {
-						if (textWasChanged) {
-							newContent = content_input.value;
-						}
-					} else {
-						newContent = url_input.value;
-					}
-
-					const content = a.textContent;
-
-					if (newContent !== content) {
-						a.textContent = newContent;
-					}
+					writeImage(a, content_input, textWasChanged, url_input);
 				}
 
 				if (openInNewTabCheckbox && target_checkbox) {
@@ -423,3 +345,107 @@ export class link extends Plugin {
 }
 
 pluginSystem.add('link', link);
+
+function writeClasses(
+	modeClassName: any,
+	className_input: HTMLInputElement,
+	className_select: HTMLSelectElement,
+	a: HTMLAnchorElement
+): void {
+	if (modeClassName && (className_input ?? className_select)) {
+		if (modeClassName === 'input') {
+			if (className_input.value === '' && a.hasAttribute('class')) {
+				attr(a, 'class', null);
+			}
+
+			if (className_input.value !== '') {
+				attr(a, 'class', className_input.value);
+			}
+		} else if (modeClassName === 'select') {
+			if (a.hasAttribute('class')) {
+				attr(a, 'class', null);
+			}
+
+			for (let i = 0; i < className_select.selectedOptions.length; i++) {
+				const className =
+					className_select.selectedOptions.item(i)?.value;
+
+				if (className) {
+					a.classList.add(className);
+				}
+			}
+		}
+	}
+}
+
+function readClassnames(
+	modeClassName: any,
+	className_input: HTMLInputElement,
+	link: HTMLAnchorElement,
+	className_select: HTMLSelectElement
+): void {
+	switch (modeClassName) {
+		case 'input':
+			if (className_input) {
+				className_input.value = attr(link, 'class') || '';
+			}
+			break;
+
+		case 'select':
+			if (className_select) {
+				for (
+					let i = 0;
+					i < className_select.selectedOptions.length;
+					i++
+				) {
+					const option = className_select.options.item(i);
+
+					if (option) {
+						option.selected = false;
+					}
+				}
+
+				const classNames = attr(link, 'class') || '';
+
+				classNames.split(' ').forEach(className => {
+					if (className) {
+						for (
+							let i = 0;
+							i < className_select.options.length;
+							i++
+						) {
+							const option = className_select.options.item(i);
+
+							if (option?.value && option.value === className) {
+								option.selected = true;
+							}
+						}
+					}
+				});
+			}
+			break;
+	}
+}
+
+function writeImage(
+	a: HTMLAnchorElement,
+	content_input: HTMLInputElement,
+	textWasChanged: boolean,
+	url_input: HTMLInputElement
+): void {
+	let newContent = a.textContent;
+
+	if (content_input.value.trim().length) {
+		if (textWasChanged) {
+			newContent = content_input.value;
+		}
+	} else {
+		newContent = url_input.value;
+	}
+
+	const content = a.textContent;
+
+	if (newContent !== content) {
+		a.textContent = newContent;
+	}
+}

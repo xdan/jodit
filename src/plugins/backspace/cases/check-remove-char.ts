@@ -38,33 +38,14 @@ export function checkRemoveChar(
 	const step = backspace ? -1 : 1;
 	const anotherSibling = Dom.sibling(fakeNode, !backspace);
 
-	let sibling: Nullable<Node> = Dom.sibling(fakeNode, backspace),
-		removeNeighbor: Nullable<Node> = null;
+	let sibling: Nullable<Node> = Dom.sibling(fakeNode, backspace);
+	let removeNeighbor: Nullable<Node> = null;
 
-	let charRemoved: boolean = false,
-		removed: CanUndef<string>;
-
-	const getNextInlineSibling = (sibling: Node): Nullable<Node> => {
-		let nextSibling = Dom.sibling(sibling, backspace);
-
-		if (
-			!nextSibling &&
-			sibling.parentNode &&
-			sibling.parentNode !== jodit.editor
-		) {
-			nextSibling = findMostNestedNeighbor(
-				sibling,
-				!backspace,
-				jodit.editor,
-				true
-			);
-		}
-
-		return nextSibling;
-	};
+	let charRemoved: boolean = false;
+	let removed: CanUndef<string>;
 
 	if (!sibling) {
-		sibling = getNextInlineSibling(fakeNode);
+		sibling = getNextInlineSibling(fakeNode, backspace, jodit.editor);
 	}
 
 	while (sibling && (Dom.isText(sibling) || Dom.isInlineBlock(sibling))) {
@@ -79,62 +60,7 @@ export function checkRemoveChar(
 		}
 
 		if (sibling.nodeValue?.length) {
-			// For Unicode escapes
-			let value = toArray(sibling.nodeValue);
-
-			const length = value.length;
-
-			let index = backspace ? length - 1 : 0;
-
-			if (value[index] === INVISIBLE_SPACE) {
-				while (value[index] === INVISIBLE_SPACE) {
-					index += step;
-				}
-			}
-
-			removed = value[index];
-
-			if (value[index + step] === INVISIBLE_SPACE) {
-				index += step;
-
-				while (value[index] === INVISIBLE_SPACE) {
-					index += step;
-				}
-
-				index += backspace ? 1 : -1;
-			}
-
-			if (backspace && index < 0) {
-				value = [];
-			} else {
-				value = value.slice(
-					backspace ? 0 : index + 1,
-					backspace ? index : length
-				);
-			}
-
-			if (
-				!anotherSibling ||
-				!Dom.isText(anotherSibling) ||
-				(!backspace ? / $/ : /^ /).test(
-					anotherSibling.nodeValue ?? ''
-				) ||
-				!trimInv(anotherSibling.nodeValue || '').length
-			) {
-				for (
-					let i = backspace ? value.length - 1 : 0;
-					backspace ? i >= 0 : i < value.length;
-					i += backspace ? -1 : 1
-				) {
-					if (value[i] === ' ') {
-						value[i] = NBSP_SPACE;
-					} else {
-						break;
-					}
-				}
-			}
-
-			sibling.nodeValue = value.join('');
+			removed = tryRemoveChar(sibling, backspace, step, anotherSibling);
 		}
 
 		if (!sibling.nodeValue?.length) {
@@ -142,21 +68,24 @@ export function checkRemoveChar(
 		}
 
 		if (!isVoid(removed) && removed !== INVISIBLE_SPACE) {
+			checkRepeatRemoveCharAction(
+				backspace,
+				sibling,
+				fakeNode,
+				mode,
+				removed,
+				jodit
+			);
+
 			charRemoved = true;
-
-			call(backspace ? Dom.after : Dom.before, sibling, fakeNode);
-
-			if (
-				mode === 'sentence' ||
-				(mode === 'word' && removed !== ' ' && removed !== NBSP_SPACE)
-			) {
-				checkRemoveChar(jodit, fakeNode, backspace, mode);
-			}
-
 			break;
 		}
 
-		const nextSibling = getNextInlineSibling(sibling);
+		const nextSibling = getNextInlineSibling(
+			sibling,
+			backspace,
+			jodit.editor
+		);
 
 		if (removeNeighbor) {
 			Dom.safeRemove(removeNeighbor);
@@ -187,6 +116,20 @@ export function checkRemoveChar(
 	return charRemoved;
 }
 
+function getNextInlineSibling(
+	sibling: Node,
+	backspace: boolean,
+	root: HTMLElement
+): Nullable<Node> {
+	let nextSibling = Dom.sibling(sibling, backspace);
+
+	if (!nextSibling && sibling.parentNode && sibling.parentNode !== root) {
+		nextSibling = findMostNestedNeighbor(sibling, !backspace, root, true);
+	}
+
+	return nextSibling;
+}
+
 /**
  * Helper removes all empty inline parents
  */
@@ -215,5 +158,93 @@ function addBRInsideEmptyBlock(jodit: IJodit, node: Node): void {
 		Dom.each(node.parentElement, Dom.isEmptyTextNode)
 	) {
 		Dom.after(node, jodit.createInside.element('br'));
+	}
+}
+
+function tryRemoveChar(
+	sibling: Node,
+	backspace: boolean,
+	step: number,
+	anotherSibling: Node | null | Text
+): string {
+	// For Unicode escapes
+	let value = toArray(sibling.nodeValue!);
+
+	const length = value.length;
+
+	let index = backspace ? length - 1 : 0;
+
+	if (value[index] === INVISIBLE_SPACE) {
+		while (value[index] === INVISIBLE_SPACE) {
+			index += step;
+		}
+	}
+
+	const removed = value[index];
+
+	if (value[index + step] === INVISIBLE_SPACE) {
+		index += step;
+
+		while (value[index] === INVISIBLE_SPACE) {
+			index += step;
+		}
+
+		index += backspace ? 1 : -1;
+	}
+
+	if (backspace && index < 0) {
+		value = [];
+	} else {
+		value = value.slice(
+			backspace ? 0 : index + 1,
+			backspace ? index : length
+		);
+	}
+	replaceSpaceOnNBSP(anotherSibling, backspace, value);
+
+	sibling.nodeValue = value.join('');
+	return removed;
+}
+
+function replaceSpaceOnNBSP(
+	anotherSibling: Node | Text | null,
+	backspace: boolean,
+	value: string[]
+): void {
+	if (
+		!anotherSibling ||
+		!Dom.isText(anotherSibling) ||
+		(!backspace ? / $/ : /^ /).test(anotherSibling.nodeValue ?? '') ||
+		!trimInv(anotherSibling.nodeValue || '').length
+	) {
+		for (
+			let i = backspace ? value.length - 1 : 0;
+			backspace ? i >= 0 : i < value.length;
+			i += backspace ? -1 : 1
+		) {
+			if (value[i] === ' ') {
+				value[i] = NBSP_SPACE;
+			} else {
+				break;
+			}
+		}
+	}
+}
+
+function checkRepeatRemoveCharAction(
+	backspace: boolean,
+	sibling: Node,
+	fakeNode: Node,
+	mode: 'char' | 'word' | 'sentence',
+	removed: string,
+	jodit: IJodit
+): void {
+	call(backspace ? Dom.after : Dom.before, sibling, fakeNode);
+
+	if (
+		mode === 'sentence' ||
+		(mode === 'word' && removed !== ' ' && removed !== NBSP_SPACE)
+	) {
+		checkRemoveChar(jodit, fakeNode, backspace, mode);
 	}
 }

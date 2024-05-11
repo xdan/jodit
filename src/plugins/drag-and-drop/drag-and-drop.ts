@@ -149,55 +149,13 @@ export class dragAndDrop extends Plugin {
 				this.bufferRange ||
 				(sel && sel.rangeCount ? sel.getRangeAt(0) : null);
 
-			let fragment: DocumentFragment | HTMLElement | null = null;
-
-			if (!this.draggable && range) {
-				fragment = this.isCopyMode
-					? range.cloneContents()
-					: range.extractContents();
-			} else if (this.draggable) {
-				if (this.isCopyMode) {
-					const [tagName, field] =
-						attr(this.draggable, '-is-file') === '1'
-							? ['a', 'href']
-							: ['img', 'src'];
-
-					fragment = this.j.createInside.element(tagName);
-
-					fragment.setAttribute(
-						field,
-						attr(this.draggable, 'data-src') ||
-							attr(this.draggable, 'src') ||
-							''
-					);
-					if (tagName === 'a') {
-						fragment.textContent = attr(fragment, field) || '';
-					}
-				} else {
-					fragment = dataBind(this.draggable, 'target');
-				}
-			} else if (this.getText(event)) {
-				fragment = this.j.createInside.fromHTML(
-					this.getText(event) as string
-				);
-			}
+			const fragment = this.__getWorkFragment(range, event);
 
 			sel && sel.removeAllRanges();
 			this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
 
 			if (fragment) {
-				this.j.s.insertNode(fragment, false, false);
-
-				if (range && fragment.firstChild && fragment.lastChild) {
-					range.setStartBefore(fragment.firstChild);
-					range.setEndAfter(fragment.lastChild);
-					this.j.s.selectRange(range);
-					this.j.e.fire('synchro');
-				}
-
-				if (Dom.isTag(fragment, 'img') && this.j.events) {
-					this.j.e.fire('afterInsertImage', fragment);
-				}
+				this.__insertFragment.call(this, fragment, range);
 			}
 
 			event.preventDefault();
@@ -206,6 +164,64 @@ export class dragAndDrop extends Plugin {
 
 		this.isFragmentFromEditor = false;
 		this.removeDragListeners();
+	}
+
+	private __getWorkFragment(
+		range: Range | null,
+		event: DragEvent
+	): DocumentFragment | HTMLElement | null {
+		let fragment: DocumentFragment | HTMLElement | null = null;
+
+		if (!this.draggable && range) {
+			fragment = this.isCopyMode
+				? range.cloneContents()
+				: range.extractContents();
+		} else if (this.draggable) {
+			if (this.isCopyMode) {
+				const [tagName, field] =
+					attr(this.draggable, '-is-file') === '1'
+						? ['a', 'href']
+						: ['img', 'src'];
+
+				fragment = this.j.createInside.element(tagName);
+
+				fragment.setAttribute(
+					field,
+					attr(this.draggable, 'data-src') ||
+						attr(this.draggable, 'src') ||
+						''
+				);
+				if (tagName === 'a') {
+					fragment.textContent = attr(fragment, field) || '';
+				}
+			} else {
+				fragment = dataBind(this.draggable, 'target');
+			}
+		} else if (this.getText(event)) {
+			fragment = this.j.createInside.fromHTML(
+				this.getText(event) as string
+			);
+		}
+
+		return fragment;
+	}
+
+	private __insertFragment(
+		fragment: DocumentFragment | HTMLElement,
+		range: Range | null
+	): void {
+		this.j.s.insertNode(fragment, false, false);
+
+		if (range && fragment.firstChild && fragment.lastChild) {
+			range.setStartBefore(fragment.firstChild);
+			range.setEndAfter(fragment.lastChild);
+			this.j.s.selectRange(range);
+			this.j.e.fire('synchro');
+		}
+
+		if (Dom.isTag(fragment, 'img') && this.j.events) {
+			this.j.e.fire('afterInsertImage', fragment);
+		}
 	}
 
 	private getText = (event: DragEvent): string | null => {

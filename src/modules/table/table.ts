@@ -210,6 +210,7 @@ export class Table extends ViewComponent<IJodit> {
 
 	/**
 	 * Generate formal table martix columns*rows
+	 * @param table - Working table
 	 * @param callback - if return false cycle break
 	 */
 	formalMatrix(
@@ -326,7 +327,6 @@ export class Table extends ViewComponent<IJodit> {
 	 * @param line - Insert a new line after/before this
 	 * line contains the selected cell
 	 * @param after - Insert a new line after line contains the selected cell
-	 * @param create - Instance of Create class
 	 */
 	appendRow(
 		table: HTMLTableElement,
@@ -562,79 +562,15 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	private static __normalizeTable(table: HTMLTableElement): void {
-		let i: number, j: number, min: number, not: boolean;
-
 		const __marked: HTMLTableCellElement[] = [],
 			box = Table.__formalMatrix(table);
 
-		// remove extra colspans
-		for (j = 0; j < box[0].length; j += 1) {
-			min = 1000000;
-			not = false;
-
-			for (i = 0; i < box.length; i += 1) {
-				if (box[i][j] === undefined) {
-					continue; // broken table
-				}
-
-				if (box[i][j].colSpan < 2) {
-					not = true;
-					break;
-				}
-
-				min = Math.min(min, box[i][j].colSpan);
-			}
-			if (!not) {
-				for (i = 0; i < box.length; i += 1) {
-					if (box[i][j] === undefined) {
-						continue; // broken table
-					}
-
-					Table.__mark(
-						box[i][j],
-						'colspan',
-						box[i][j].colSpan - min + 1,
-						__marked
-					);
-				}
-			}
-		}
-
-		// remove extra rowspans
-		for (i = 0; i < box.length; i += 1) {
-			min = 1000000;
-			not = false;
-
-			for (j = 0; j < box[i].length; j += 1) {
-				if (box[i][j] === undefined) {
-					continue; // broken table
-				}
-				if (box[i][j].rowSpan < 2) {
-					not = true;
-					break;
-				}
-				min = Math.min(min, box[i][j].rowSpan);
-			}
-
-			if (!not) {
-				for (j = 0; j < box[i].length; j += 1) {
-					if (box[i][j] === undefined) {
-						continue; // broken table
-					}
-
-					Table.__mark(
-						box[i][j],
-						'rowspan',
-						box[i][j].rowSpan - min + 1,
-						__marked
-					);
-				}
-			}
-		}
+		Table.__removeExtraColspans(box, __marked);
+		Table.__removeExtraRowspans(box, __marked);
 
 		// remove rowspans and colspans equal 1 and empty class
-		for (i = 0; i < box.length; i += 1) {
-			for (j = 0; j < box[i].length; j += 1) {
+		for (let i = 0; i < box.length; i += 1) {
+			for (let j = 0; j < box[i].length; j += 1) {
 				if (box[i][j] === undefined) {
 					continue; // broken table
 				}
@@ -663,6 +599,82 @@ export class Table extends ViewComponent<IJodit> {
 		}
 
 		Table.__unmark(__marked);
+	}
+
+	private static __removeExtraColspans(
+		box: HTMLTableCellElement[][],
+		__marked: HTMLTableCellElement[]
+	): void {
+		for (let j = 0; j < box[0].length; j += 1) {
+			let min = 1000000;
+			let not = false;
+
+			for (let i = 0; i < box.length; i += 1) {
+				if (box[i][j] === undefined) {
+					continue; // broken table
+				}
+
+				if (box[i][j].colSpan < 2) {
+					not = true;
+					break;
+				}
+
+				min = Math.min(min, box[i][j].colSpan);
+			}
+			if (!not) {
+				for (let i = 0; i < box.length; i += 1) {
+					if (box[i][j] === undefined) {
+						continue; // broken table
+					}
+
+					Table.__mark(
+						box[i][j],
+						'colspan',
+						box[i][j].colSpan - min + 1,
+						__marked
+					);
+				}
+			}
+		}
+	}
+
+	private static __removeExtraRowspans(
+		box: HTMLTableCellElement[][],
+		marked: HTMLTableCellElement[]
+	): void {
+		let i: number = 0;
+		let j: number = 0;
+
+		for (i = 0; i < box.length; i += 1) {
+			let min = 1000000;
+			let not = false;
+
+			for (j = 0; j < box[i].length; j += 1) {
+				if (box[i][j] === undefined) {
+					continue; // broken table
+				}
+				if (box[i][j].rowSpan < 2) {
+					not = true;
+					break;
+				}
+				min = Math.min(min, box[i][j].rowSpan);
+			}
+
+			if (!not) {
+				for (j = 0; j < box[i].length; j += 1) {
+					if (box[i][j] === undefined) {
+						continue; // broken table
+					}
+
+					Table.__mark(
+						box[i][j],
+						'rowspan',
+						box[i][j].rowSpan - min + 1,
+						marked
+					);
+				}
+			}
+		}
 	}
 
 	/**

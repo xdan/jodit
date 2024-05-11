@@ -10,6 +10,7 @@
  * @module jodit
  */
 
+// eslint-disable-next-line simple-import-sort/imports
 import { Jodit as DefaultJodit } from './jodit';
 import { isFunction, isString } from 'jodit/core/helpers/checker';
 

@@ -39,48 +39,17 @@ export function sendFiles(
 		return Promise.reject(error('Need files'));
 	}
 
-	const promises: Array<Promise<any>> = [];
+	const promises: Array<Promise<unknown>> = [];
 
 	if (o.insertImageAsBase64URI) {
-		let file: File, i: number;
-
-		for (i = 0; i < fileList.length; i += 1) {
-			file = fileList[i];
-
-			if (file && file.type) {
-				const mime = file.type.match(/\/([a-z0-9]+)/i) as string[];
-
-				const extension = mime[1] ? mime[1].toLowerCase() : '';
-
-				if (o.imagesExtensions.includes(extension)) {
-					const reader = new FileReader();
-
-					promises.push(
-						uploader.j.async.promise((resolve, reject) => {
-							reader.onerror = reject;
-							reader.onloadend = (): void => {
-								const resp = {
-									baseurl: '',
-									files: [reader.result],
-									isImages: [true]
-								} as IUploaderData;
-
-								const handler = isFunction(handlerSuccess)
-									? handlerSuccess
-									: o.defaultHandlerSuccess;
-
-								handler.call(uploader, resp);
-
-								resolve(resp);
-							};
-							reader.readAsDataURL(file);
-						})
-					);
-
-					(fileList[i] as any) = null;
-				}
-			}
-		}
+		readImagesWithReader(
+			fileList,
+			o.imagesExtensions,
+			promises,
+			uploader,
+			handlerSuccess,
+			o.defaultHandlerSuccess
+		);
 	}
 
 	fileList = fileList.filter(a => a);
@@ -96,7 +65,7 @@ export function sendFiles(
 			file = fileList[i];
 
 			if (file) {
-				const hasRealExtension = /\.[\d\w]+$/.test(file.name);
+				const hasRealExtension = /\.\w+$/.test(file.name);
 				const mime = file.type.match(/\/([a-z0-9]+)/i) as string[];
 
 				const extension: string =
@@ -174,4 +143,56 @@ export function sendFiles(
 	}
 
 	return Promise.all(promises);
+}
+
+function readImagesWithReader(
+	fileList: File[],
+	imagesExtensions: string[],
+	promises: Array<Promise<any>>,
+	uploader: IUploader,
+	handlerSuccess: ((resp: IUploaderData) => void) | undefined,
+	defaultHandlerSuccess: (resp: IUploaderData) => void
+): void {
+	let file: File, i: number;
+
+	for (i = 0; i < fileList.length; i += 1) {
+		file = fileList[i];
+
+		if (file && file.type) {
+			const mime = file.type.match(/\/([a-z0-9]+)/i) as string[];
+
+			const extension = mime[1] ? mime[1].toLowerCase() : '';
+
+			if (!imagesExtensions.includes(extension)) {
+				continue;
+			}
+
+			const reader = new FileReader();
+
+			promises.push(
+				uploader.j.async.promise((resolve, reject) => {
+					reader.onerror = reject;
+					reader.onloadend = (): void => {
+						const resp = {
+							baseurl: '',
+							files: [reader.result],
+							isImages: [true]
+						} as IUploaderData;
+
+						const handler = isFunction(handlerSuccess)
+							? handlerSuccess
+							: defaultHandlerSuccess;
+
+						handler.call(uploader, resp);
+
+						resolve(resp);
+					};
+
+					reader.readAsDataURL(file);
+				})
+			);
+
+			(fileList[i] as any) = null;
+		}
+	}
 }
