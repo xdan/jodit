@@ -23,8 +23,6 @@ import * as consts from 'jodit/core/constants';
 import {
 	INSEPARABLE_TAGS,
 	INVISIBLE_SPACE,
-	INVISIBLE_SPACE_REG_EXP_END as INV_END,
-	INVISIBLE_SPACE_REG_EXP_START as INV_START,
 	IS_PROD
 } from 'jodit/core/constants';
 import { autobind } from 'jodit/core/decorators';
@@ -47,6 +45,7 @@ import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers/mov
 import './interface';
 
 import { CommitStyle } from './style/commit-style';
+import { cursorInTheEdgeOfString, findCorrectCurrentNode } from './helpers';
 
 export class Selection implements ISelect {
 	constructor(readonly jodit: IJodit) {
@@ -544,76 +543,46 @@ export class Selection implements ISelect {
 	/**
 	 * Returns the current element under the cursor inside editor
 	 */
-	current(checkChild: boolean = true): null | Node {
-		if (this.j.getRealMode() === consts.MODE_WYSIWYG) {
-			const sel = this.sel;
+	current(checkChild: boolean = true): Nullable<Node> {
+		if (this.j.getRealMode() !== consts.MODE_WYSIWYG) {
+			return null;
+		}
 
-			if (!sel || sel.rangeCount === 0) {
-				return null;
-			}
+		const sel = this.sel;
 
-			const range = sel.getRangeAt(0);
+		if (!sel || sel.rangeCount === 0) {
+			return null;
+		}
 
-			let node = range.startContainer,
-				rightMode: boolean = false;
+		const range = sel.getRangeAt(0);
 
-			const child = (nd: Node): Node | null =>
-				rightMode ? nd.lastChild : nd.firstChild;
+		let node = range.startContainer;
+		let rightMode: boolean = false;
 
-			if (Dom.isTag(node, 'br') && sel.isCollapsed) {
-				return node;
-			}
+		const child = (nd: Node): Node | null =>
+			rightMode ? nd.lastChild : nd.firstChild;
 
-			if (!Dom.isText(node)) {
-				node = range.startContainer.childNodes[range.startOffset];
+		if (Dom.isTag(node, 'br') && sel.isCollapsed) {
+			return node;
+		}
 
-				if (!node) {
-					node =
-						range.startContainer.childNodes[range.startOffset - 1];
+		if (!Dom.isText(node)) {
+			const ret = findCorrectCurrentNode(
+				node,
+				range,
+				rightMode,
+				sel.isCollapsed,
+				checkChild,
+				child
+			);
 
-					rightMode = true;
-				}
+			node = ret.node;
+			rightMode = ret.rightMode;
+		}
 
-				if (node && sel.isCollapsed && !Dom.isText(node)) {
-					// test Current method - Cursor in the left of some SPAN
-					if (!rightMode && Dom.isText(node.previousSibling)) {
-						node = node.previousSibling;
-					} else if (checkChild) {
-						let current: Node | null = child(node);
-
-						while (current) {
-							if (current && Dom.isText(current)) {
-								node = current;
-								break;
-							}
-							current = child(current);
-						}
-					}
-				}
-
-				if (node && !sel.isCollapsed && !Dom.isText(node)) {
-					let leftChild: Node | null = node,
-						rightChild: Node | null = node;
-
-					do {
-						leftChild = leftChild.firstChild;
-						rightChild = rightChild.lastChild;
-					} while (leftChild && rightChild && !Dom.isText(leftChild));
-
-					if (
-						leftChild === rightChild &&
-						leftChild &&
-						Dom.isText(leftChild)
-					) {
-						node = leftChild;
-					}
-				}
-			}
-
-			// check - cursor inside editor
-			if (node && Dom.isOrContains(this.area, node)) {
-				return node;
-			}
+		// check - cursor inside editor
+		if (node && Dom.isOrContains(this.area, node)) {
+			return node;
 		}
 
 		return null;
@@ -622,6 +591,7 @@ export class Selection implements ISelect {
 	/**
 	 * Insert element in editor
 	 *
+	 * @param node - Node for insert
 	 * @param insertCursorAfter - After insert, cursor will move after element
 	 * @param fireChange - After insert, editor fire change event. You can prevent this behavior
 	 */
@@ -704,6 +674,7 @@ export class Selection implements ISelect {
 	 * Inserts in the current cursor position some HTML snippet
 	 *
 	 * @param html - HTML The text to be inserted into the document
+	 * @param insertCursorAfter - After insert, cursor will move after element
 	 * @example
 	 * ```javascript
 	 * parent.s.insertHTML('<img src="image.png"/>');
@@ -762,6 +733,7 @@ export class Selection implements ISelect {
 	 *
 	 * @param url - URL for image, or HTMLImageElement
 	 * @param styles - If specified, it will be applied <code>$(image).css(styles)</code>
+	 * @param defaultWidth - If specified, it will be applied <code>css('width', defaultWidth)</code>
 	 */
 	insertImage(
 		url: string | HTMLImageElement,
@@ -840,112 +812,116 @@ export class Selection implements ISelect {
 	eachSelection(callback: (current: Node) => void): void {
 		const sel = this.sel;
 
-		if (sel && sel.rangeCount) {
-			const range = sel.getRangeAt(0);
+		if (!sel || !sel.rangeCount) {
+			return;
+		}
 
-			let root = range.commonAncestorContainer;
+		const range = sel.getRangeAt(0);
 
-			if (!Dom.isHTMLElement(root)) {
-				root = root.parentElement as HTMLElement;
-			}
+		let root = range.commonAncestorContainer;
 
-			const nodes: Node[] = [],
-				startOffset = range.startOffset,
-				length = root.childNodes.length,
-				elementOffset = startOffset < length ? startOffset : length - 1;
+		if (!Dom.isHTMLElement(root)) {
+			root = root.parentElement as HTMLElement;
+		}
 
-			let start: Node =
-					range.startContainer === this.area
-						? root.childNodes[elementOffset]
-						: range.startContainer,
-				end: Node =
-					range.endContainer === this.area
-						? root.childNodes[range.endOffset - 1]
-						: range.endContainer;
+		const nodes: Node[] = [];
+		const startOffset = range.startOffset;
+		const length = root.childNodes.length;
+		const elementOffset = startOffset < length ? startOffset : length - 1;
 
+		let start: Node =
+			range.startContainer === this.area
+				? root.childNodes[elementOffset]
+				: range.startContainer;
+
+		let end: Node =
+			range.endContainer === this.area
+				? root.childNodes[range.endOffset - 1]
+				: range.endContainer;
+
+		if (
+			Dom.isText(start) &&
+			start === range.startContainer &&
+			range.startOffset === start.nodeValue?.length &&
+			start.nextSibling
+		) {
+			start = start.nextSibling;
+		}
+
+		if (
+			Dom.isText(end) &&
+			end === range.endContainer &&
+			range.endOffset === 0 &&
+			end.previousSibling
+		) {
+			end = end.previousSibling;
+		}
+
+		const checkElm = (node: Nullable<Node>): void => {
 			if (
-				Dom.isText(start) &&
-				start === range.startContainer &&
-				range.startOffset === start.nodeValue?.length &&
-				start.nextSibling
+				node &&
+				node !== root &&
+				!Dom.isEmptyTextNode(node) &&
+				!isMarker(node as HTMLElement)
 			) {
-				start = start.nextSibling;
+				nodes.push(node);
+			}
+		};
+
+		checkElm(start);
+
+		if (start !== end && Dom.isOrContains(root, start, true)) {
+			Dom.find(
+				start,
+				node => {
+					checkElm(node);
+
+					// checks parentElement as well because partial selections are not equal to entire element
+					return (
+						node === end ||
+						(node && node.contains && node.contains(end))
+					);
+				},
+				<HTMLElement>root,
+				true,
+				false
+			);
+		}
+
+		const forEvery = (current: Node): void => {
+			if (!Dom.isOrContains(this.j.editor, current, true)) {
+				return;
 			}
 
-			if (
-				Dom.isText(end) &&
-				end === range.endContainer &&
-				range.endOffset === 0 &&
-				end.previousSibling
-			) {
-				end = end.previousSibling;
+			if (current.nodeName.match(/^(UL|OL)$/)) {
+				return toArray(current.childNodes).forEach(forEvery);
 			}
 
-			const checkElm = (node: Nullable<Node>): void => {
-				if (
-					node &&
-					node !== root &&
-					!Dom.isEmptyTextNode(node) &&
-					!isMarker(node as HTMLElement)
-				) {
-					nodes.push(node);
+			if (Dom.isTag(current, 'li')) {
+				if (current.firstChild) {
+					current = current.firstChild;
+				} else {
+					const currentB = this.j.createInside.text(INVISIBLE_SPACE);
+
+					current.appendChild(currentB);
+					current = currentB;
 				}
-			};
-
-			checkElm(start);
-
-			if (start !== end && Dom.isOrContains(root, start, true)) {
-				Dom.find(
-					start,
-					node => {
-						checkElm(node);
-
-						// checks parentElement as well because partial selections are not equal to entire element
-						return (
-							node === end ||
-							(node && node.contains && node.contains(end))
-						);
-					},
-					<HTMLElement>root,
-					true,
-					false
-				);
 			}
 
-			const forEvery = (current: Node): void => {
-				if (!Dom.isOrContains(this.j.editor, current, true)) {
-					return;
-				}
+			callback(current);
+		};
 
-				if (current.nodeName.match(/^(UL|OL)$/)) {
-					return toArray(current.childNodes).forEach(forEvery);
-				}
-
-				if (Dom.isTag(current, 'li')) {
-					if (current.firstChild) {
-						current = current.firstChild;
-					} else {
-						const currentB =
-							this.j.createInside.text(INVISIBLE_SPACE);
-
-						current.appendChild(currentB);
-						current = currentB;
-					}
-				}
-
-				callback(current);
-			};
-
-			if (nodes.length === 0 && Dom.isEmptyTextNode(start)) {
+		if (nodes.length === 0) {
+			if (Dom.isEmptyTextNode(start)) {
 				nodes.push(start);
 			}
 
-			if (nodes.length === 0 && start.firstChild) {
+			if (start.firstChild) {
 				nodes.push(start.firstChild);
 			}
-
-			nodes.forEach(forEvery);
 		}
+
+		nodes.forEach(forEvery);
 	}
 
 	/**
@@ -988,18 +964,7 @@ export class Selection implements ISelect {
 
 		// check right offset
 		if (Dom.isText(container)) {
-			const text = container.nodeValue?.length ? container.nodeValue : '';
-
-			if (end && text.replace(INV_END(), '').length > offset) {
-				return false;
-			}
-
-			const inv = INV_START().exec(text);
-
-			if (
-				start &&
-				((inv && inv[0].length < offset) || (!inv && offset > 0))
-			) {
+			if (cursorInTheEdgeOfString(container, offset, start, end)) {
 				return false;
 			}
 		} else {
@@ -1117,6 +1082,7 @@ export class Selection implements ISelect {
 
 	/**
 	 * Set cursor in the node
+	 * @param node - Node element
 	 * @param inStart - set cursor in start of element
 	 */
 	@autobind
@@ -1200,6 +1166,7 @@ export class Selection implements ISelect {
 
 	/**
 	 * Select node
+	 * @param node - Node element
 	 * @param inward - select all inside
 	 */
 	select(
