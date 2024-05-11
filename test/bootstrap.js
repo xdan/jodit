@@ -73,14 +73,19 @@ function delay(timeout) {
  */
 function waitingForEvent(editor, event, timeout = 1000) {
 	return new naturalPromise(resolve => {
-		editor.e.one(event, resolve);
+		let timer = 0;
 
 		if (timeout) {
-			setTimeout(() => {
-				editor.e.off(event, handler);
+			timer = setTimeout(() => {
+				editor.e.off(event, resolve);
 				resolve();
 			}, timeout);
 		}
+
+		editor.e.one(event, () => {
+			clearTimeout(timer);
+			resolve();
+		});
 	});
 }
 

@@ -80,8 +80,11 @@ dts:
 	@echo Prepare types ...
 	@mkdir -p ./build/types/types
 	@cp -R ./tsconfig.json ./build/types/
-	@cp -R ./src/typings.d.ts ./build/types/
-	@cp -R ./src/types/* ./build/types/types
+
+	@echo 'Copy declarations ...';
+	@$(TS_NODE_BASE) $(cwd)/tools/utils/copy-declaration-files-to-esm-build.ts $(pwd)/src/ $(pwd)/build/types ;
+
+
 	@if [ -d ./build/types/node_modules/jodit ]; then \
 		echo "Remove super types ..."; \
 		rm -rf ./build/types/node_modules/; \
@@ -91,8 +94,10 @@ dts:
 		cp -R ./build/types/src/* ./build/types/; \
 		rm -rf ./build/types/src/; \
 	fi;
+
 	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/types --mode=dts --ver=$(version)
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
+
 	@if [ -d ./build/esm ]; then \
 		echo "Copy types to esm folder ..."; \
 		cp -R ./build/types/* ./build/esm; \
@@ -291,11 +296,12 @@ examples:
 
 .PHONY: esm-t
 esm-t:
+		make clean
 		@echo 'Build esm ...'
 		make esm
 
 		@echo 'Build types ...'
-		make build es=es2018 uglify=false generateTypes=$(BUILD_DTS)
+		make build es=es2018 uglify=false generateTypes=true
 		make dts
 
 		rm -rf ../jodit-examples/node_modules/jodit/esm
