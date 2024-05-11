@@ -61,6 +61,13 @@ export function checkRemoveChar(
 
 		if (sibling.nodeValue?.length) {
 			removed = tryRemoveChar(sibling, backspace, step, anotherSibling);
+
+			if (
+				!sibling.nodeValue.length &&
+				Dom.isInlineBlock(sibling.parentNode)
+			) {
+				sibling.nodeValue = INVISIBLE_SPACE;
+			}
 		}
 
 		if (!sibling.nodeValue?.length) {

@@ -6,7 +6,7 @@
 
 describe('Clean html plugin', function () {
 	describe('Exec bold for collapsed range and move cursor in another place', () => {
-		it('Should remove STRONG element', async () => {
+		it('Should remove empty STRONG element', async () => {
 			const editor = getJodit({
 				cleanHTML: {
 					timeout: 0

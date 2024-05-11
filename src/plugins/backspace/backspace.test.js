@@ -24,6 +24,8 @@ describe('Backspace/Delete key', function () {
 
 	describe('More cases', function () {
 		[
+			'<p>test</p><p><strong>p|</strong></p> => <p>test</p><p><strong>|</strong></p>',
+			'<p>test</p><p><a href="#">p|</a></p> => <p>test</p><p>|<br></p>',
 			'<p>test</p><p>|pop|</p><p>stop</p> => <p>test</p><p>|<br></p><p>stop</p>',
 			'<ul><li>test</li><li>|pop|</li><li>stop</li></ul> => <ul><li>test</li><li>|<br></li><li>stop</li></ul>',
 			'<blockquote>t|est</blockquote><ol><li>test2</li><li>te|st3</li><li><a>test4</a></li></ol> => <blockquote>t|</blockquote><ol><li>st3</li><li><a>test4</a></li></ol>',
@@ -78,41 +80,46 @@ describe('Backspace/Delete key', function () {
 		].forEach(function (pars) {
 			const [key, value, button, options, insert] = pars.split(' => ');
 
-			describe(`For key "${key}"`, function () {
-				it(`Should be ${value}`, async () => {
-					let jodit = editor;
+			describe(
+				`For key "${key}"` +
+					(options ? ' with options: ' + options : ''),
+				function () {
+					it(`Should be ${value}`, async () => {
+						let jodit = editor;
 
-					if (options) {
-						editor.destruct();
+						if (options) {
+							editor.destruct();
 
-						jodit = getJodit(
-							(options && JSON.parse(options)) || {},
-							area
+							jodit = getJodit(
+								(options && JSON.parse(options)) || {},
+								area
+							);
+						}
+
+						jodit.value = key;
+						setCursorToChar(jodit);
+						simulateEvent(
+							'keydown',
+							button || Jodit.KEY_BACKSPACE,
+							jodit.editor
 						);
-					}
 
-					jodit.value = key;
-					setCursorToChar(jodit);
-					simulateEvent(
-						'keydown',
-						button || Jodit.KEY_BACKSPACE,
-						jodit.editor
-					);
-
-					if (insert) {
 						await jodit.async.requestIdlePromise();
-						jodit.s.insertNode(jodit.createInside.text(insert));
-					}
 
-					replaceCursorToChar(jodit);
-					expect(
-						sortAttributes(jodit.value).replace(
-							/<span style="background-color:var\(--jd-color-background-default\)">([^<]+?)<\/span>/,
-							'$1'
-						)
-					).equals(value);
-				});
-			});
+						if (insert) {
+							jodit.s.insertNode(jodit.createInside.text(insert));
+						}
+
+						replaceCursorToChar(jodit);
+						expect(
+							sortAttributes(jodit.value).replace(
+								/<span style="background-color:var\(--jd-color-background-default\)">([^<]+?)<\/span>/,
+								'$1'
+							)
+						).equals(value);
+					});
+				}
+			);
 		});
 	});
 
@@ -882,14 +889,48 @@ describe('Backspace/Delete key', function () {
 	});
 
 	describe('after last char inside tag', function () {
-		describe('inside A', function () {
-			it('Should remove empty tag and set cursor in a previous element', function () {
+		describe('inside A', () => {
+			it('Should remove empty tag and set cursor in a previous element', () => {
 				editor.value = '<p><a href="#test">t|</a></p>';
 				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
 				expect(editor.value).equals('<p><br></p>');
+			});
+		});
+
+		describe('inside STRONG', () => {
+			beforeEach(async () => {
+				editor.value = '<p><strong>t|</strong></p>';
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+				await editor.async.requestIdlePromise();
+			});
+
+			it('Should stay inside empty tag', async () => {
+				replaceCursorToChar(editor);
+				expect(editor.value).equals('<p><strong>|</strong></p>');
+
+				// INVISIBLE_SPACE
+				expect(editor.getNativeEditorValue()).equals(
+					'<p><strong>\ufeff|</strong></p>'
+				);
+			});
+
+			describe('After enter text. This strong', () => {
+				it('Should have only that text', async () => {
+					editor.s.insertNode(editor.createInside.text(' a '));
+					await waitingForEvent(editor, 'finishedCleanHTMLWorker');
+					replaceCursorToChar(editor);
+					expect(editor.value).equals('<p><strong> a |</strong></p>');
+					// TODO: May be sometimes. Need fix clean-html.remove-inv-text-nodes
+					// expect(editor.getNativeEditorValue()).equals(
+					// 	'<p><strong> a |</strong></p>'
+					// );
+				});
 			});
 		});
 

@@ -63,6 +63,27 @@ function delay(timeout) {
 	});
 }
 
+/**
+ * Waiting for Jodit event. If event not fired in timeout - resolve
+ *
+ * @param {IJodit} editor
+ * @param {string} event
+ * @param {number} [timeout]
+ * @returns {Promise<void>}
+ */
+function waitingForEvent(editor, event, timeout = 1000) {
+	return new naturalPromise(resolve => {
+		editor.e.one(event, resolve);
+
+		if (timeout) {
+			setTimeout(() => {
+				editor.e.off(event, handler);
+				resolve();
+			}, timeout);
+		}
+	});
+}
+
 function idle() {
 	return new naturalPromise(resolve => {
 		typeof requestIdleCallback === 'function'
