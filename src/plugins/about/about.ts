@@ -16,12 +16,11 @@ import { HOMEPAGE } from 'jodit/core/constants';
 import { pluginSystem } from 'jodit/core/global';
 import { css, isLicense, normalizeLicense } from 'jodit/core/helpers/';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import aboutIcon from './about.svg';
 
 import './about.less';
-
-import { Config } from 'jodit/config';
 
 Config.prototype.controls.about = {
 	exec: (editor: IJodit) => {

@@ -15,8 +15,7 @@ import type {
 	IControlTypeStrong,
 	IDictionary
 } from 'jodit/types';
-import { ConfigFlatten, isArray, isString } from 'jodit/core/helpers';
-
+import { ConfigFlatten, /*isArray,*/ isString } from 'jodit/core/helpers';
 import { Config } from 'jodit/config';
 
 /**
@@ -73,24 +72,24 @@ export function findControlType(
 		key = namespaceOrKey;
 	}
 
-	const list = store[key]?.list;
+	// const list = store[key]?.list;
 
 	return store[key]
 		? {
 				name: key,
-				...ConfigFlatten(store[key]),
-				list: isArray(list)
-					? (<Array<string>>list).reduce(
-							(
-								acc: IDictionary<string | number>,
-								k: string | number
-							) => {
-								acc[k] = k;
-								return acc;
-							},
-							{}
-						)
-					: list
+				...ConfigFlatten(store[key])
+				// list: isArray(list)
+				// 	? (<Array<string>>list).reduce(
+				// 			(
+				// 				acc: IDictionary<string | number>,
+				// 				k: string | number
+				// 			) => {
+				// 				acc[String(k)] = k;
+				// 				return acc;
+				// 			},
+				// 			{}
+				// 		)
+				// 	: list
 			}
 		: undefined;
 }

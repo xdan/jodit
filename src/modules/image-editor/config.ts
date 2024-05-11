@@ -10,11 +10,10 @@
 
 import type { ImageEditorOptions } from 'jodit/types';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import cropIcon from './icons/crop.svg';
 import resizeIcon from './icons/resize.svg';
-
-import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

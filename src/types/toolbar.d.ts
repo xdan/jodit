@@ -26,7 +26,7 @@ import type { IMods } from './traits';
 
 interface IControlType<
 	T extends IViewBased = IJodit | IViewBased | IFileBrowser,
-	B = IToolbarButton
+	B extends IToolbarButton = IToolbarButton
 > {
 	name?: string;
 	text?: string;
@@ -290,7 +290,7 @@ interface IControlListItem {
 
 interface IControlTypeStrong extends IControlType {
 	name: NonNullable<IControlType['name']>;
-	list?: IDictionary<string | number>;
+	// list?: IDictionary<string | number>;
 }
 
 interface IControlTypeContent extends IControlTypeStrong {

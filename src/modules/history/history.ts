@@ -20,12 +20,11 @@ import type {
 } from 'jodit/types';
 import { ViewComponent } from 'jodit/core/component';
 import { debounce } from 'jodit/core/decorators';
+import { Config } from 'jodit/config';
 
 import { Command } from './command';
 import { Snapshot } from './snapshot';
 import { Stack } from './stack';
-
-import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

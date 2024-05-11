@@ -43,6 +43,7 @@ import {
 import { Storage } from 'jodit/core/storage';
 import { Dlgs } from 'jodit/core/traits/dlgs';
 import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
+import { Config } from 'jodit/config';
 
 import './config';
 
@@ -56,8 +57,6 @@ import { makeDataProvider } from './factories';
 import { FileBrowserFiles, FileBrowserTree } from './ui';
 
 import './styles/index.less';
-
-import { Config } from 'jodit/config';
 
 export interface FileBrowser extends Dlgs {}
 

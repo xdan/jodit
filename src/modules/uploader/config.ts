@@ -16,7 +16,6 @@ import type {
 } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
-
 import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {

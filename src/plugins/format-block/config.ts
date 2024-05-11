@@ -9,12 +9,12 @@
  */
 
 import type { IControlType, IJodit } from 'jodit/types';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
+import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import paragraphIcon from './paragraph.svg';
-
-import { Config } from 'jodit/config';
 
 Icon.set('paragraph', paragraphIcon);
 
@@ -41,7 +41,7 @@ Config.prototype.controls.paragraph = {
 		const currentValue = button.state.value,
 			list = control.list;
 
-		if (list && list[currentValue.toString()]) {
+		if (isPlainObject(list) && list[currentValue.toString()]) {
 			if (editor.o.textIcons) {
 				button.state.text = list[currentValue.toString()].toString();
 			}
@@ -71,7 +71,8 @@ Config.prototype.controls.paragraph = {
 	isActive: (editor: IJodit, button): boolean => {
 		return (
 			button.state.value !== editor.o.enter &&
-			Boolean(button.control.list?.[button.state.value as string])
+			isPlainObject(button.control.list) &&
+			Boolean(button.control.list[button.state.value as string])
 		);
 	},
 

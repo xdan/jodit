@@ -17,9 +17,8 @@ import type {
 } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { FileSelectorWidget } from 'jodit/modules/widget';
-
 import { Config } from 'jodit/config';
+import { FileSelectorWidget } from 'jodit/modules/widget';
 
 Config.prototype.controls.file = {
 	popup: (editor: IJodit, current: Node | false, close) => {

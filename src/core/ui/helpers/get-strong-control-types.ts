@@ -16,10 +16,9 @@ import type {
 } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { ConfigProto, keys } from 'jodit/core/helpers/utils';
+import { Config } from 'jodit/config';
 
 import { getControlType } from './get-control-type';
-
-import { Config } from 'jodit/config';
 
 /**
  * @private

@@ -16,10 +16,9 @@ import { pluginSystem } from 'jodit/core/global';
 import { memorizeExec } from 'jodit/core/helpers/utils/utils';
 import { Plugin } from 'jodit/core/plugin';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import classSpanIcon from './class-span.svg';
-
-import { Config } from 'jodit/config';
 
 Config.prototype.controls.classSpan = {
 	command: 'applyClassName',

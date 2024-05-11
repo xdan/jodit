@@ -37,10 +37,9 @@ import { assert } from 'jodit/core/helpers/utils/assert';
 import { Icon } from 'jodit/core/ui';
 import { View } from 'jodit/core/view/view';
 import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
+import { Config } from 'jodit/config';
 
 import './dialog.less';
-
-import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

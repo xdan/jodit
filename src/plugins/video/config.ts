@@ -13,11 +13,10 @@ import { convertMediaUrlToVideoEmbed } from 'jodit/core/helpers';
 import { Button } from 'jodit/core/ui/button';
 import { UIBlock, UIForm, UIInput, UITextArea } from 'jodit/core/ui/form';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 import { type TabOption, TabsWidget } from 'jodit/modules/widget';
 
 import videoIcon from './video.svg';
-
-import { Config } from 'jodit/config';
 
 Icon.set('video', videoIcon);
 

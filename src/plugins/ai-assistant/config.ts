@@ -10,11 +10,10 @@
 
 import type { IControlType, IJodit } from 'jodit/types';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import magicWandIcon from './ai-assistant.svg';
 import chatBotIcon from './chat-bot.svg';
-
-import { Config } from 'jodit/config';
 
 export interface AiAssistantSettings {
 	/** Callback function for AI assistant to process and return the result */

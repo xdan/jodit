@@ -17,11 +17,10 @@ import { getContainer, pluginSystem } from 'jodit/core/global';
 import { defaultLanguage } from 'jodit/core/helpers/utils/default-language';
 import { previewBox } from 'jodit/core/helpers/utils/print';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import { generateCriticalCSS } from './lib/generate-critical-css';
 import printIcon from './print.svg';
-
-import { Config } from 'jodit/config';
 
 Icon.set('print', printIcon);
 

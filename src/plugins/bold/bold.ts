@@ -20,6 +20,7 @@ import type {
 import { pluginSystem } from 'jodit/core/global';
 import { isArray } from 'jodit/core/helpers';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import './interface';
 import './config';
@@ -30,8 +31,6 @@ import strikethroughIcon from './icons/strikethrough.svg';
 import subscriptIcon from './icons/subscript.svg';
 import superscriptIcon from './icons/superscript.svg';
 import underlineIcon from './icons/underline.svg';
-
-import { Config } from 'jodit/config';
 
 /**
  * Adds `bold`,` strikethrough`, `underline` and` italic` buttons to Jodit

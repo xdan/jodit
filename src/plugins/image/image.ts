@@ -19,11 +19,10 @@ import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { $$ } from 'jodit/core/helpers';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 import { FileSelectorWidget } from 'jodit/modules/widget';
 
 import imageIcon from './image.svg';
-
-import { Config } from 'jodit/config';
 
 Icon.set('image', imageIcon);
 

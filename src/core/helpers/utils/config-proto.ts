@@ -13,11 +13,10 @@ import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';
+import { Config } from 'jodit/config';
 
 import { isAtom } from './extend';
 import { keys } from './utils';
-
-import { Config } from 'jodit/config';
 
 /**
  * @example

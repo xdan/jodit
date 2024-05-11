@@ -26,6 +26,7 @@ import {
 	isFunction,
 	isJoditObject
 } from 'jodit/core/helpers';
+import { Config } from 'jodit/config';
 import {
 	ajaxInstances,
 	hasFiles,
@@ -38,8 +39,6 @@ import {
 import './config';
 
 import './uploader.less';
-
-import { Config } from 'jodit/config';
 
 export class Uploader extends ViewComponent implements IUploader {
 	declare readonly jodit: IViewBased;

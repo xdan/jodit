@@ -15,11 +15,10 @@ import { Dom } from 'jodit/core/dom/dom';
 import { extendLang, pluginSystem } from 'jodit/core/global';
 import { css } from 'jodit/core/helpers/utils/css';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import copyFormatIcon from './copy-format.svg';
 import * as langs from './langs';
-
-import { Config } from 'jodit/config';
 
 const pluginKey = 'copy-format';
 

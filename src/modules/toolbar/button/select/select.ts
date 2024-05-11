@@ -10,6 +10,7 @@
 
 import type { IViewBased } from 'jodit/types';
 import { component } from 'jodit/core/decorators';
+import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 
 import { ToolbarButton } from '../button';
@@ -43,7 +44,9 @@ export class ToolbarSelect<
 				key = keys[0];
 			}
 
-			const text = (list[key.toString()] || key).toString();
+			const text = (
+				isPlainObject(list) ? list[key.toString()] || key : key
+			).toString();
 
 			this.state.text =
 				this.control.textTemplate?.(this.jodit, text) ?? text;

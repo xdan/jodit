@@ -27,14 +27,13 @@ import { autobind, component, debounce, throttle } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { $$, attr, call, css, refs, toArray, trim } from 'jodit/core/helpers';
 import { Button } from 'jodit/core/ui/button';
+import { Config } from 'jodit/config';
 
 import './config';
 
 import { form } from './templates/form';
 
 import './image-editor.less';
-
-import { Config } from 'jodit/config';
 
 interface onSave {
 	(

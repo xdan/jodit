@@ -11,13 +11,12 @@
 import type { IControlType, IViewBased } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import fullsizeIcon from './icons/fullsize.svg';
 import shrinkIcon from './icons/shrink.svg';
 
 import './fullsize.less';
-
-import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

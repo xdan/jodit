@@ -13,6 +13,7 @@ import type { Table } from 'jodit/modules';
 import { Dom } from 'jodit/core/dom/dom';
 import { css, dataBind, isJoditObject } from 'jodit/core/helpers/';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 import {
 	ColorPickerWidget,
 	type TabOption,
@@ -20,8 +21,6 @@ import {
 } from 'jodit/modules/widget';
 
 import brushIcon from './brush.svg';
-
-import { Config } from 'jodit/config';
 
 Icon.set('brush', brushIcon);
 

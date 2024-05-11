@@ -93,6 +93,7 @@ module.exports = {
 						'jodit/types',
 						'jodit/.*\\u0000$',
 						'jodit/core',
+						'jodit/config',
 						'jodit/modules'
 					],
 

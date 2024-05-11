@@ -13,13 +13,13 @@
 import type { IControlType, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { isPlainObject } from 'jodit/core/helpers';
 import { alignElement } from 'jodit/core/helpers/utils/align';
 import { css } from 'jodit/core/helpers/utils/css';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import justifyIcon from './justify.svg';
-
-import { Config } from 'jodit/config';
 
 Icon.set('justify', justifyIcon);
 
@@ -45,11 +45,15 @@ Config.prototype.controls.align = {
 				currentValue = 'left';
 			}
 
+			const { list, data } = control;
+
 			if (
-				control.data &&
-				control.data.currentValue !== currentValue &&
-				control.list &&
-				control.list[currentValue]
+				data &&
+				data.currentValue !== currentValue &&
+				list &&
+				(isPlainObject(list)
+					? list[currentValue]
+					: (list as string[]).includes(currentValue))
 			) {
 				if (editor.o.textIcons || control.component === 'select') {
 					button.state.text = currentValue;
@@ -57,7 +61,7 @@ Config.prototype.controls.align = {
 					button.state.icon.name = currentValue;
 				}
 
-				control.data.currentValue = currentValue;
+				data.currentValue = currentValue;
 			}
 		}
 	},

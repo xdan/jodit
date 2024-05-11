@@ -30,12 +30,11 @@ import {
 	parseQuery
 } from 'jodit/core/helpers';
 import * as error from 'jodit/core/helpers/utils/error';
+import { Config } from 'jodit/config';
 
 import './config';
 
 import { Response } from './response';
-
-import { Config } from 'jodit/config';
 
 export class Ajax<T extends object = any> implements IAjax<T> {
 	className(): string {

@@ -14,7 +14,6 @@ import {
 	INSERT_AS_TEXT,
 	INSERT_ONLY_TEXT
 } from 'jodit/core/constants';
-
 import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {

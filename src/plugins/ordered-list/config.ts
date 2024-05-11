@@ -11,11 +11,10 @@
 import type { IControlType, IJodit } from 'jodit/types';
 import { dataBind } from 'jodit/core/helpers/utils/data-bind';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import olIcon from './icons/ol.svg';
 import ulIcon from './icons/ul.svg';
-
-import { Config } from 'jodit/config';
 
 const memoExec: IControlType<IJodit>['exec'] = (
 	jodit,

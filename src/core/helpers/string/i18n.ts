@@ -16,7 +16,6 @@ import {
 	defaultLanguage as defineLanguage,
 	error
 } from 'jodit/core/helpers/utils';
-
 import { Config } from 'jodit/config';
 
 /**

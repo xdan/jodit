@@ -13,10 +13,9 @@ import { Dom } from 'jodit/core/dom';
 import { $$, css, scrollIntoViewIfNeeded } from 'jodit/core/helpers';
 import { attr } from 'jodit/core/helpers/utils';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import tableIcon from './table.svg';
-
-import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

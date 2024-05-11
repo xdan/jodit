@@ -13,7 +13,6 @@
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
-
 import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {

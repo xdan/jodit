@@ -69,6 +69,7 @@ import {
 } from 'jodit/core/helpers';
 import { Ajax } from 'jodit/core/request';
 import { Dlgs } from 'jodit/core/traits/dlgs';
+import { Config } from 'jodit/config';
 import {
 	Create,
 	Dom,
@@ -79,8 +80,6 @@ import {
 	STATUSES,
 	ViewWithToolbar
 } from 'jodit/modules';
-
-import { Config } from 'jodit/config';
 
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 const __defaultClassesKey = 'data-jodit-default-classes';

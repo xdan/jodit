@@ -18,3 +18,4 @@ examples/build/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+stack.md

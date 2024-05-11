@@ -13,11 +13,10 @@ import { Dom } from 'jodit/core/dom';
 import { trimChars } from 'jodit/core/helpers/string/trim';
 import { css } from 'jodit/core/helpers/utils/css';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import fontIcon from './icons/font.svg';
 import fontsizeIcon from './icons/fontsize.svg';
-
-import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {

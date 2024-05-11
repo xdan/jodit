@@ -15,11 +15,10 @@ import * as consts from 'jodit/core/constants';
 import { pluginSystem } from 'jodit/core/global';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import redoIcon from './icons/redo.svg';
 import undoIcon from './icons/undo.svg';
-
-import { Config } from 'jodit/config';
 
 Icon.set('redo', redoIcon).set('undo', undoIcon);
 

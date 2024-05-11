@@ -11,12 +11,11 @@
 import type { IControlType, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { Icon } from 'jodit/core/ui/icon';
+import { Config } from 'jodit/config';
 
 import indentIcon from './icons/indent.svg';
 import outdentIcon from './icons/outdent.svg';
 import { getKey } from './helpers';
-
-import { Config } from 'jodit/config';
 
 Icon.set('indent', indentIcon).set('outdent', outdentIcon);
 

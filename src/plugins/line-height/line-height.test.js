@@ -50,9 +50,15 @@ describe('LineHeight plugin test', () => {
 						}
 					}
 				});
+				jodit.value = '<p>test|</p>';
+				setCursorToChar(jodit);
 				clickTrigger('lineHeight', jodit);
 				const list = getOpenedPopup(jodit);
 				expect(list.innerText).eq('1\n2\n3\n3.5');
+				clickButton('3', list);
+				expect(sortAttributes(jodit.value)).eq(
+					'<p style="line-height:3">test</p>'
+				);
 			});
 		});
 	});
