@@ -12,7 +12,7 @@ import {
 	INVISIBLE_SPACE_REG_EXP_END as INV_END,
 	INVISIBLE_SPACE_REG_EXP_START as INV_START
 } from 'jodit/core/constants';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 
 export * from './move-node-inside-start';
 export * from './move-the-node-along-the-edge-outward';
