@@ -48,6 +48,8 @@ export const appendScriptAsync = cacheLoaders(
 
 			const script = jodit.c.element('script', {
 				type: 'text/javascript',
+				crossorigin: 'anonymous',
+				referrerpolicy: 'no-referrer',
 				async: true,
 				src: completeUrl(url)
 			});
