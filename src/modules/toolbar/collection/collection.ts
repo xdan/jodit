@@ -97,7 +97,7 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		this.j.e.fire('afterUpdateToolbar', this);
 	}
 
-	@debounce()
+	@debounce(ctx => ctx.j.defaultTimeout, true)
 	override update(): void {
 		this.__immediateUpdate();
 	}
