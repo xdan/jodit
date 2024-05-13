@@ -13,23 +13,23 @@ import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * You can redefine hotkeys for some command
+		 *
+		 * @example
+		 * ```js
+		 * const jodit = Jodit.make('#editor', {
+		 *  commandToHotkeys: {
+		 *      bold: 'ctrl+shift+b',
+		 *      italic: ['ctrl+i', 'ctrl+b'],
+		 *  }
+		 * })
+		 * ```
+		 */
 		commandToHotkeys: IDictionary<string | string[]>;
 	}
 }
 
-/**
- * You can redefine hotkeys for some command
- *
- * @example
- * ```js
- * var jodit = Jodit.make('#editor', {
- *  commandToHotkeys: {
- *      bold: 'ctrl+shift+b',
- *      italic: ['ctrl+i', 'ctrl+b'],
- *  }
- * })
- * ```
- */
 Config.prototype.commandToHotkeys = {
 	removeFormat: ['ctrl+shift+m', 'cmd+shift+m'],
 	insertOrderedList: ['ctrl+shift+7', 'cmd+shift+7'],
