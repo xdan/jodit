@@ -558,10 +558,12 @@ function appendTestArea(id, noput) {
 function getJodit(options, element) {
 	const editor = Jodit.make(element || appendTestArea(), options);
 
-	window.scrollTo(
-		0,
-		Jodit.modules.Helpers.offset(editor.container, editor, editor.od).top
-	);
+	window.scrollTo({
+		left: 0,
+		top: Jodit.modules.Helpers.offset(editor.container, editor, editor.od)
+			.top,
+		behavior: 'instant'
+	});
 
 	editor.container &&
 		editor.container.setAttribute('data-test-case', window.mochaTestName);
@@ -916,32 +918,41 @@ function getOpenedDialog(editor) {
 function getButton(buttonName, joditOrElement, role, last) {
 	const elm = joditOrElement.container || joditOrElement;
 
-	const button =
-		elm.querySelector(
-			'.jodit-toolbar-button.jodit-toolbar-button_' +
-				buttonName +
-				(last ? ':last-child' : '') +
-				' [role="' +
-				(role || 'button') +
-				'"]'
-		) ||
-		elm.querySelector(
-			'.jodit-ui-button.jodit-ui-button_' +
-				buttonName +
-				(last ? ':last-child' : '') +
-				'[role="' +
-				(role || 'button') +
-				'"]'
-		);
+	const classes = ['jodit-toolbar-button', 'jodit-ui-button'];
+	const roleSelector = role ? `[role="${role}"]` : '[role]';
+	let button;
 
-	if (button) {
-		return button;
+	if (!/\s/.test(buttonName)) {
+		for (const className of classes) {
+			const prefix = `.${className}.${className}_${buttonName}${last ? ':last-child' : ''}`;
+			button = elm.querySelector(`${prefix} ${roleSelector}`);
+
+			if (button) {
+				return button;
+			}
+
+			button = elm.querySelector(`${prefix}${roleSelector}`);
+
+			if (button) {
+				return button;
+			}
+		}
+
+		if (button) {
+			return button;
+		}
+	}
+
+	if (!role) {
+		button = getButton(buttonName, elm, 'button', last);
+
+		if (button) {
+			return button;
+		}
 	}
 
 	return (
-		Array.from(
-			elm.querySelectorAll('[role="' + (role || 'button') + '"]')
-		).find(button => {
+		Array.from(elm.querySelectorAll(roleSelector)).find(button => {
 			if (
 				button.textContent.trim().toLowerCase() ===
 				buttonName.toLowerCase()

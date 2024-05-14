@@ -13,8 +13,8 @@
 import type { IDictionary, IUIButton, IViewBased } from 'jodit/types';
 import { Component } from 'jodit/core/component';
 import { Dom } from 'jodit/core/dom/dom';
-import { $$ } from 'jodit/core/helpers';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { Button, UIElement } from 'jodit/core/ui';
 
 import './tabs.less';
@@ -58,17 +58,22 @@ export const TabsWidget = (
 	tabs: TabOption[],
 	state?: { activeTab: string }
 ): HTMLDivElement => {
-	const box = jodit.c.div('jodit-tabs'),
-		tabBox = jodit.c.div('jodit-tabs__wrapper'),
-		buttons = jodit.c.div('jodit-tabs__buttons'),
-		nameToTab: IDictionary<{
-			button: IUIButton;
-			tab: HTMLElement;
-		}> = {},
-		buttonList: IUIButton[] = [];
+	const box = jodit.c.div('jodit-tabs');
+	const tabBox = jodit.c.div('jodit-tabs__wrapper');
 
-	let firstTab: string = '',
-		tabCount: number = 0;
+	const buttons = jodit.c.div('jodit-tabs__buttons');
+	attr(buttons, {
+		role: 'tablist',
+		'aria-orientation': 'horizontal'
+	});
+
+	const nameToTab: IDictionary<{
+		button: IUIButton;
+		tab: HTMLElement;
+	}> = {};
+	const buttonList: IUIButton[] = [];
+
+	let firstTab: string = '';
 
 	box.appendChild(buttons);
 	box.appendChild(tabBox);
@@ -79,25 +84,28 @@ export const TabsWidget = (
 		}
 
 		buttonList.forEach(b => {
-			b.state.variant = 'initial';
 			b.state.activated = false;
 		});
 
-		$$('.jodit-tab', tabBox).forEach(a => {
-			a.classList.remove('jodit-tab_active');
-		});
+		Object.values(nameToTab).forEach(({ tab }) =>
+			tab.classList.remove('jodit-tab_active')
+		);
 
-		nameToTab[tab].button.state.variant = 'outline';
 		nameToTab[tab].button.state.activated = true;
 		nameToTab[tab].tab.classList.add('jodit-tab_active');
 	};
 
 	tabs.forEach(({ icon, name, content }) => {
-		const tab = jodit.c.div('jodit-tab'),
-			button = Button(jodit, icon || name, name);
+		const tab = jodit.c.div('jodit-tab');
+		attr(tab, {
+			role: 'tabpanel'
+		});
+
+		const button = Button(jodit, icon || name, name);
+		button.state.role = 'tab';
 
 		// Stop lose the focus
-		jodit.e.on(button.container, 'mousedown', (e: MouseEvent) =>
+		jodit.e.on(button.container, 'pointerdown', (e: MouseEvent) =>
 			e.preventDefault()
 		);
 
@@ -143,16 +151,10 @@ export const TabsWidget = (
 			button,
 			tab
 		};
-
-		tabCount += 1;
 	});
 
-	if (!tabCount) {
-		return box;
-	}
-
-	$$('a', buttons).forEach(a => {
-		a.style.width = (100 / tabCount).toFixed(10) + '%';
+	Object.values(nameToTab).forEach(({ button }) => {
+		button.container.style.width = (100 / tabs.length).toFixed(10) + '%';
 	});
 
 	const tab =

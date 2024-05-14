@@ -67,6 +67,7 @@ export interface IUIButtonState {
 	variant: ButtonVariant;
 
 	type: 'button' | 'submit';
+	role: 'button' | 'tab';
 	disabled: boolean;
 	activated: boolean;
 

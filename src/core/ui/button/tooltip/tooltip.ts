@@ -21,6 +21,21 @@ import { UIElement } from 'jodit/core/ui/element';
 
 import './tooltip.less';
 
+const WINDOW_EVENTS_ON_HIDE = [
+	'scroll.tooltip',
+	'joditCloseDialog',
+	'mouseleave.tooltip'
+];
+
+const JODIT_EVENTS_ON_HIDE = [
+	'escape.tooltip',
+	'change.tooltip',
+	'changePlace.tooltip',
+	'afterOpenPopup.tooltip',
+	'hidePopup.tooltip',
+	'closeAllPopups.tooltip'
+];
+
 @component
 export class UITooltip extends UIElement {
 	private __isOpened = false;
@@ -41,7 +56,7 @@ export class UITooltip extends UIElement {
 			!view.o.useNativeTooltip
 		) {
 			view.hookStatus(STATUSES.ready, () => {
-				// TODO Move it inside __open method. Now it is here because testcase failed with capturing
+				// TODO Move it inside __show method. Now it is here because testcase failed with capturing
 				getContainer(this.j, UITooltip).appendChild(this.container);
 
 				view.e.on(
@@ -58,34 +73,23 @@ export class UITooltip extends UIElement {
 
 	private __listenClose: boolean = false;
 
-	private __addListenersOnClose(): void {
+	private __addListenersOnEnter(): void {
 		if (this.__listenClose) {
 			return;
 		}
 
 		this.__listenClose = true;
 		const view = this.j;
+
 		view.e
-			.on(view.ow, 'scroll.tooltip', this.__hide)
-			.on(view.ow, 'joditCloseDialog', this.__hide)
-			.on(view.container, 'mouseleave.tooltip', this.__hide)
-			.on(
-				[
-					'escape.tooltip',
-					'change.tooltip',
-					'changePlace.tooltip',
-					'afterOpenPopup.tooltip',
-					'hidePopup.tooltip',
-					'closeAllPopups.tooltip'
-				],
-				this.__hide
-			)
-			.on(view.container, 'mouseleave', this.__onMouseLeave, {
+			.on(view.ow, WINDOW_EVENTS_ON_HIDE, this.__hide)
+			.on(JODIT_EVENTS_ON_HIDE, this.__hide)
+			.on(view.container, 'mouseleave.tooltip', this.__onMouseLeave, {
 				capture: true
 			});
 	}
 
-	private __removeListenersOnClose(): void {
+	private __removeListenersOnLeave(): void {
 		if (!this.__listenClose) {
 			return;
 		}
@@ -94,18 +98,8 @@ export class UITooltip extends UIElement {
 
 		const view = this.j;
 		view.e
-			.off(view.ow, 'scroll.tooltip', this.__hide)
-			.off(
-				[
-					'escape.tooltip',
-					'change.tooltip',
-					'changePlace.tooltip',
-					'afterOpenPopup.tooltip',
-					'hidePopup.tooltip',
-					'closeAllPopups.tooltip'
-				],
-				this.__hide
-			)
+			.off(view.ow, WINDOW_EVENTS_ON_HIDE, this.__hide)
+			.off(JODIT_EVENTS_ON_HIDE, this.__hide)
 			.off(view.container, 'mouseleave.tooltip', this.__onMouseLeave);
 	}
 
@@ -145,46 +139,45 @@ export class UITooltip extends UIElement {
 
 		this.__currentTarget = e.target;
 
-		const pos = position(e.target);
+		const target = e.target as HTMLElement;
 
-		this.__addListenersOnClose();
+		this.__open(() => {
+			const pos = position(target);
 
-		this.__delayOpen(
-			() => ({
+			return {
 				x: pos.left + pos.width / 2,
 				y: pos.top + pos.height
-			}),
-			tooltip
-		);
+			};
+		}, tooltip);
 	}
 
 	private __delayShowTimeout: number = 0;
 	private __hideTimeout: number = 0;
 
-	private __delayOpen(getPoint: () => IPoint, content: string): void {
-		const to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
+	private __open(getPoint: () => IPoint, content: string): void {
+		this.__addListenersOnEnter();
+
+		this.__isOpened = true;
 
 		this.j.async.clearTimeout(this.__hideTimeout);
 		this.j.async.clearTimeout(this.__delayShowTimeout);
 
+		const to = this.j.o.showTooltipDelay || this.j.defaultTimeout;
+
+		if (!to) {
+			this.__show(getPoint, content);
+			return;
+		}
+
 		this.__delayShowTimeout = this.j.async.setTimeout(
-			() => this.__open(getPoint, content),
-			{
-				timeout: to,
-				label: 'tooltip'
-			}
+			() => this.__show(getPoint, content),
+			to
 		);
 	}
 
-	private __open(getPoint: () => IPoint, content: string): void {
+	private __show(getPoint: () => IPoint, content: string): void {
 		this.setMod('visible', true);
 		this.getElm('content')!.innerHTML = content;
-
-		this.__isOpened = true;
-		this.__setPosition(getPoint);
-	}
-
-	private __setPosition(getPoint: () => IPoint): void {
 		const point = getPoint();
 
 		css(this.container, {
@@ -197,12 +190,12 @@ export class UITooltip extends UIElement {
 	private __hide(): void {
 		this.j.async.clearTimeout(this.__delayShowTimeout);
 		this.j.async.clearTimeout(this.__hideTimeout);
-		this.__removeListenersOnClose();
+		this.__removeListenersOnLeave();
 
 		if (this.__isOpened) {
 			this.__isOpened = false;
 			this.setMod('visible', false);
-
+			this.getElm('content')!.innerHTML = '';
 			css(this.container, {
 				left: -5000
 			});
@@ -211,11 +204,12 @@ export class UITooltip extends UIElement {
 
 	@autobind
 	private __hideDelay(): void {
+		this.j.async.clearTimeout(this.__delayShowTimeout);
+		this.j.async.clearTimeout(this.__hideTimeout);
+
 		if (!this.__isOpened) {
 			return;
 		}
-
-		this.j.async.clearTimeout(this.__delayShowTimeout);
 
 		this.__hideTimeout = this.async.setTimeout(
 			this.__hide,
@@ -224,7 +218,11 @@ export class UITooltip extends UIElement {
 	}
 
 	override destruct(): void {
-		this.j.e.off(this.j.container, 'mouseenter', this.__onMouseEnter);
+		this.j.e.off(
+			this.j.container,
+			'mouseenter.tooltip',
+			this.__onMouseEnter
+		);
 		this.__hide();
 		super.destruct();
 	}

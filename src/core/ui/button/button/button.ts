@@ -30,6 +30,7 @@ import './button.less';
 export const UIButtonState = (): IUIButtonState => ({
 	size: 'middle',
 	type: 'button',
+	role: 'button',
 	name: '',
 	value: '',
 
@@ -102,6 +103,11 @@ export class UIButton extends UIElement implements IUIButton {
 	@watch('state.type', { immediately: false })
 	protected onChangeType(): void {
 		attr(this.container, 'type', this.state.type);
+	}
+
+	@watch('state.role', { immediately: false })
+	protected onChangeRole(): void {
+		attr(this.container, 'role', this.state.role);
 	}
 
 	/**

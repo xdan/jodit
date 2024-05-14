@@ -135,10 +135,10 @@
 				'<table><tbody><tr><th>header</th><td>1</td></tr></tbody></table>' +
 				'<p style="font-size: 10pt; line-height: normal; margin: 7px 0 0 0;">To modify this template, place it into your Outlook editor.</p>';
 
-			// editor.events.fire(
-			// 	'openImageProperties',
-			// 	editor.editor.querySelector('img')
-			// );
+			editor.events.fire(
+				'openImageProperties',
+				editor.editor.querySelector('img')
+			);
 			btn.onclick = () => {
 				const start = performance.now();
 				for (let i = 0; i < 100; i++) {

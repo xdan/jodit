@@ -190,16 +190,20 @@ describe('Edit image tests', () => {
 		describe('Main tab', () => {
 			it('should be opened first', async () => {
 				const refs = await openImagePropertiesDialog();
-				clickButton('Advanced', refs.dialog);
+				clickButton('Advanced', refs.dialog, 'tab');
 				expect(
-					getButton('Image', refs.dialog).getAttribute('aria-pressed')
+					getButton('Image', refs.dialog, 'tab').getAttribute(
+						'aria-pressed'
+					)
 				).equals('false');
 				expect(
-					getButton('Advanced', refs.dialog).getAttribute(
+					getButton('Advanced', refs.dialog, 'tab').getAttribute(
 						'aria-pressed'
 					)
 				).equals('true');
 
+
+debugger
 				clickButton('close', refs.dialog);
 				expect(getOpenedDialog(refs.editor)).is.null;
 
@@ -208,10 +212,12 @@ describe('Edit image tests', () => {
 				expect(dialog2).equals(refs.dialog);
 
 				expect(
-					getButton('Image', refs.dialog).getAttribute('aria-pressed')
+					getButton('Image', refs.dialog, 'tab').getAttribute(
+						'aria-pressed'
+					)
 				).equals('true');
 				expect(
-					getButton('Advanced', refs.dialog).getAttribute(
+					getButton('Advanced', refs.dialog, 'tab').getAttribute(
 						'aria-pressed'
 					)
 				).equals('false');
@@ -321,7 +327,7 @@ describe('Edit image tests', () => {
 					const refs = await openImagePropertiesDialog(
 						'<p><img alt="111" style="width:100px; height: 100px;"  src="tests/artio.jpg"/></p>'
 					);
-					clickButton('Advanced', refs.dialog);
+					clickButton('Advanced', refs.dialog, 'tab');
 
 					const input = refs.form.getElm('align');
 					expect(input).is.not.null;
@@ -343,7 +349,7 @@ describe('Edit image tests', () => {
 					const refs = await openImagePropertiesDialog(
 						'<p><img alt="111" style="width:100px; height: 100px;"  src="tests/artio.jpg"/></p>'
 					);
-					clickButton('Advanced', refs.dialog);
+					clickButton('Advanced', refs.dialog, 'tab');
 
 					const input = refs.form.getElm('align');
 
@@ -366,7 +372,7 @@ describe('Edit image tests', () => {
 						'<p><img alt="111" style="float:left;width:100px; height: 100px;" src="tests/artio.jpg"/></p>'
 					);
 
-					clickButton('Advanced', refs.dialog);
+					clickButton('Advanced', refs.dialog, 'tab');
 
 					const input = refs.form.getElm('align');
 					expect(input.value.toString()).equals('left');
@@ -388,7 +394,7 @@ describe('Edit image tests', () => {
 						'<p><img alt="111" src="tests/artio.jpg" style="width:100px; height: 100px;display:block;margin-left:auto;margin-right:auto"/></p>'
 					);
 
-					clickButton('Advanced', refs.dialog);
+					clickButton('Advanced', refs.dialog, 'tab');
 
 					const input = refs.form.getElm('align');
 					expect(input).is.not.null;
@@ -1016,7 +1022,7 @@ describe('Edit image tests', () => {
 							const popup = getOpenedPopup(
 								imagePropertiesDialog.component
 							);
-							clickButton('Browse', popup);
+							clickButton('Browse', popup, 'tab');
 
 							const fb = getOpenedDialog(editor);
 							expect(fb).is.not.null;
@@ -1037,7 +1043,7 @@ describe('Edit image tests', () => {
 								const imageHeight = form.getElm('imageHeight');
 								previousHeight = imageHeight.value;
 
-								clickButton('Browse', popup);
+								clickButton('Browse', popup, 'tab');
 
 								[fb, dialog] = await getFB(editor);
 
