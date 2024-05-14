@@ -202,8 +202,6 @@ describe('Edit image tests', () => {
 					)
 				).equals('true');
 
-
-debugger
 				clickButton('close', refs.dialog);
 				expect(getOpenedDialog(refs.editor)).is.null;
 
