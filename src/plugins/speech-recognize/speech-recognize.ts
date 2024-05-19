@@ -93,7 +93,6 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 		const { j } = this;
 		const { s } = j;
 
-
 		if (!this._checkCommand(text)) {
 			const { range } = s,
 				node = s.current();

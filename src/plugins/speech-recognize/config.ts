@@ -150,9 +150,7 @@ Config.prototype.controls.speechRecognize = {
 				jodit.e.fire('speechRecognizeProgressResult', text)
 			);
 
-			api.on('error', (text: string): void =>
-				jodit.message.error(text)
-			);
+			api.on('error', (text: string): void => jodit.message.error(text));
 
 			button.hookStatus('beforeDestruct', () => {
 				dataBind(jodit, 'speech', null);
