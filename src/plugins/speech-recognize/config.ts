@@ -10,6 +10,8 @@
 
 import type { IControlType, IDictionary, IJodit } from 'jodit/types';
 import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { dataBind } from 'jodit/core/helpers/utils/data-bind';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
@@ -18,7 +20,6 @@ import type { ISpeechRecognizeConstructor } from './interface';
 import { SpeechRecognition } from './helpers/api';
 import { RecognizeManager } from './helpers/recognize-manager';
 import speechRecognizeIcon from './speech-recognize.svg';
-import { attr, isString } from 'jodit/core/helpers';
 
 declare module 'jodit/config' {
 	interface Config {
