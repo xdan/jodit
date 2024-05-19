@@ -11,7 +11,6 @@
  */
 
 import type { IDictionary, IJodit, IPlugin } from 'jodit/types';
-import { debounce } from 'jodit/core/decorators/debounce/debounce';
 import { watch } from 'jodit/core/decorators/watch/watch';
 import { Dom } from 'jodit/core/dom/dom';
 import { extendLang } from 'jodit/core/global';
@@ -28,16 +27,12 @@ import * as langs from './langs';
 import './speech-recognize.less';
 
 export class SpeechRecognizeNative extends Plugin implements IPlugin {
-	constructor(j: IJodit) {
-		super(j);
-
-		if (j.o.speechRecognize.api) {
-			j.registerButton({
-				group: 'state',
-				name: 'speechRecognize'
-			});
+	override buttons = [
+		{
+			group: 'state',
+			name: 'speechRecognize'
 		}
-	}
+	];
 
 	protected override afterInit(jodit: IJodit): void {
 		const { commands } = jodit.o.speechRecognize;
@@ -66,12 +61,14 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 		}
 	}
 
-	protected override beforeDestruct(jodit: IJodit): void {}
+	protected override beforeDestruct(jodit: IJodit): void {
+		Dom.safeRemove(this.messagePopup);
+	}
 
 	private messagePopup!: HTMLElement;
+	private __hidePopupTimeout!: number;
 
 	@watch(':speechRecognizeProgressResult')
-	@debounce()
 	protected onSpeechRecognizeProgressResult(text: string): void {
 		if (!this.messagePopup) {
 			this.messagePopup = this.j.create.div(
@@ -80,25 +77,22 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 		}
 
 		this.j.workplace.appendChild(this.messagePopup);
-		this.j.async.setTimeout(
-			() => {
-				Dom.safeRemove(this.messagePopup);
-			},
-			{
-				label: 'onSpeechRecognizeProgressResult',
-				timeout: 1000
-			}
-		);
+		this.j.async.clearTimeout(this.__hidePopupTimeout);
+		this.__hidePopupTimeout = this.j.async.setTimeout(() => {
+			Dom.safeRemove(this.messagePopup);
+		}, 1000);
 
 		this.messagePopup.innerText = text + '|';
 	}
 
 	@watch(':speechRecognizeResult')
 	protected onSpeechRecognizeResult(text: string): void {
-		const { j } = this,
-			{ s } = j;
-
+		this.j.async.clearTimeout(this.__hidePopupTimeout);
 		Dom.safeRemove(this.messagePopup);
+
+		const { j } = this;
+		const { s } = j;
+
 
 		if (!this._checkCommand(text)) {
 			const { range } = s,

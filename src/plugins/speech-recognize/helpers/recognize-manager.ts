@@ -95,10 +95,18 @@ export class RecognizeManager
 			}
 		});
 
-		this._api.start();
+		try {
+			this._api.start();
+		} catch (e: unknown) {
+			this._onError(e as SpeechSynthesisErrorEvent);
+			this.stop();
+			return;
+		}
+
 		this.__on('speechstart', this._onSpeechStart)
 			.__on('error', this._onError)
-			.__on('result', this._onResult);
+			.__on('result', this._onProgress)
+			.__on('end', this._onResults);
 	}
 
 	stop(): void {
@@ -106,14 +114,13 @@ export class RecognizeManager
 			return;
 		}
 
-		try {
-			this._api.abort();
-			this._api.stop();
-		} catch {}
+		this._api.abort();
+		this._api.stop();
 
 		this.__off('speechstart', this._onSpeechStart)
 			.__off('error', this._onError)
-			.__off('result', this._onResult);
+			.__off('result', this._onProgress)
+			.__off('end', this._onResults);
 
 		this.async.clearTimeout(this._restartTimeout);
 
@@ -163,46 +170,58 @@ export class RecognizeManager
 		return this;
 	}
 
-	private _progressTimeout: number = 0;
-	private _onResult(e: ISpeechRecognizeResult): void {
-		if (!this._isEnabled) {
-			return;
-		}
-
-		this.async.clearTimeout(this._progressTimeout);
-
-		const resultItem = e.results.item(e.resultIndex);
-		const { transcript } = resultItem.item(0);
-
-		const resultHandler = (): void => {
-			try {
-				this.async.clearTimeout(this._restartTimeout);
-				this.emit('result', transcript);
-			} catch {}
-
-			this.restart();
-
-			this.emit('pulse', false);
-			this._makeSound(PII);
-		};
-
-		if (resultItem.isFinal === false) {
-			this.emit('progress', transcript);
-			this._progressTimeout = this.async.setTimeout(resultHandler, 500);
-			return;
-		}
-
-		resultHandler();
+	private _onResults(e: ISpeechRecognizeResult): void {
+		this.emit('pulse', false);
+		this.emit('result', this.__interimResults);
+		this.__interimResults = '';
+		this._makeSound(PII);
+		this.restart();
 	}
 
-	private _onError(): void {
+	private __interimResults: string = '';
+
+	private _onProgress(e: ISpeechRecognizeResult): void {
 		if (!this._isEnabled) {
 			return;
+		}
+
+		this.__interimResults = '';
+
+		if (!e.results) {
+			return;
+		}
+
+		for (let i = 0; i < e.results.length; i++) {
+			const resultItem = e.results.item(i);
+			const { transcript } = resultItem.item(0);
+			this.__interimResults += transcript;
+		}
+
+		if (this.__interimResults) {
+			this.emit('progress', this.__interimResults);
+		}
+	}
+
+	private _onError(e: SpeechSynthesisErrorEvent): void {
+		if (e.error === 'voice-unavailable') {
+			this.emit('error', 'Voice unavailable');
+		}
+
+		if (e.error === 'not-allowed') {
+			this.emit('error', 'Not allowed');
+		}
+
+		if (
+			e.error === 'language-unavailable' ||
+			// @ts-ignore
+			e.error === 'language-not-supported'
+		) {
+			this.emit('error', 'Language unavailable');
 		}
 
 		this._makeSound(WARN);
 		this.emit('pulse', false);
-		this.restart();
+		this.stop();
 	}
 
 	private _makeSound(frequency: number): void {

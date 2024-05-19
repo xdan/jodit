@@ -22,7 +22,7 @@ import speechRecognizeIcon from './speech-recognize.svg';
 declare module 'jodit/config' {
 	interface Config {
 		speechRecognize: {
-			readonly api: ISpeechRecognizeConstructor;
+			readonly api: ISpeechRecognizeConstructor | null;
 
 			/**
 			 * Returns and sets the language of the current SpeechRecognition.
@@ -76,9 +76,9 @@ declare module 'jodit/config' {
 }
 
 Config.prototype.speechRecognize = {
-	api: SpeechRecognition,
+	api: typeof SpeechRecognition !== 'undefined' ? SpeechRecognition : null,
 	sound: true,
-	continuous: true,
+	continuous: false,
 	interimResults: true,
 	commands: {
 		'newline|enter': 'enter',
@@ -98,6 +98,10 @@ Config.prototype.speechRecognize = {
 Icon.set('speech-recognize', speechRecognizeIcon);
 
 Config.prototype.controls.speechRecognize = {
+	isVisible(j: IJodit): boolean {
+		return Boolean(j.o.speechRecognize.api);
+	},
+
 	isActive(jodit, _): boolean {
 		const api = dataBind<RecognizeManager>(jodit, 'speech');
 		return Boolean(api?.isEnabled);
@@ -109,14 +113,14 @@ Config.prototype.controls.speechRecognize = {
 
 	exec(jodit: IJodit, current, { button, control }): void {
 		const {
-			api: Api,
+			api: ApiConstructor,
 			lang,
 			continuous,
 			interimResults,
 			sound
 		} = jodit.o.speechRecognize;
 
-		if (!Api) {
+		if (!ApiConstructor) {
 			jodit.alert('Speech recognize API unsupported in your browser');
 			return;
 		}
@@ -124,7 +128,7 @@ Config.prototype.controls.speechRecognize = {
 		let api = dataBind<RecognizeManager>(jodit, 'speech');
 
 		if (!api) {
-			const nativeApi = new Api();
+			const nativeApi = new ApiConstructor();
 			api = new RecognizeManager(jodit.async, nativeApi);
 
 			api.lang = lang;
@@ -146,7 +150,12 @@ Config.prototype.controls.speechRecognize = {
 				jodit.e.fire('speechRecognizeProgressResult', text)
 			);
 
+			api.on('error', (text: string): void =>
+				jodit.message.error(text)
+			);
+
 			button.hookStatus('beforeDestruct', () => {
+				dataBind(jodit, 'speech', null);
 				api.destruct();
 			});
 		}
@@ -167,6 +176,9 @@ Config.prototype.controls.speechRecognize = {
 		}
 
 		api.toggle();
+		if (api.isEnabled) {
+			button.setMod('pulse', true);
+		}
 		button.state.activated = api.isEnabled;
 	},
 
