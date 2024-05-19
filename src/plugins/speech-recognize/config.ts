@@ -18,6 +18,7 @@ import type { ISpeechRecognizeConstructor } from './interface';
 import { SpeechRecognition } from './helpers/api';
 import { RecognizeManager } from './helpers/recognize-manager';
 import speechRecognizeIcon from './speech-recognize.svg';
+import { attr, isString } from 'jodit/core/helpers';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -131,7 +132,10 @@ Config.prototype.controls.speechRecognize = {
 			const nativeApi = new ApiConstructor();
 			api = new RecognizeManager(jodit.async, nativeApi);
 
-			api.lang = lang;
+			api.lang = isString(lang)
+				? lang
+				: attr(jodit.od.documentElement, 'lang') ?? undefined;
+
 			api.continuous = continuous;
 			api.interimResults = interimResults;
 			api.sound = sound;

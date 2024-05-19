@@ -193,8 +193,10 @@ export class RecognizeManager
 
 		for (let i = 0; i < e.results.length; i++) {
 			const resultItem = e.results.item(i);
-			const { transcript } = resultItem.item(0);
-			this.__interimResults += transcript;
+			if (resultItem.length) {
+				const { transcript } = resultItem.item(0);
+				this.__interimResults += transcript;
+			}
 		}
 
 		if (this.__interimResults) {

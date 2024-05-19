@@ -14,6 +14,7 @@ export interface ISpeechRecognizeResult {
 		item(index: number): {
 			isFinal?: boolean;
 			item(subIndex: number): { transcript: string };
+			length: number;
 		};
 		length: number;
 	};
