@@ -2,9 +2,8 @@ name: Generate site
 
 on:
     push:
-        branches: [main]
-        tags-ignore:
-            - '*'
+      tags-ignore:
+          - '*'
 
 jobs:
     docs:

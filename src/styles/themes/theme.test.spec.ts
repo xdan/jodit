@@ -22,7 +22,9 @@ test.describe('Theme screenshot testing', () => {
 	});
 
 	test('should render usual theme', async function ({ page }) {
-		await makeCeptJodit(page);
+		await makeCeptJodit(page, {
+			disablePlugins: ['speech-recognize']
+		});
 
 		await page.evaluate(async () => {
 			editor.value = '<p>Some text</p>'.repeat(3);
@@ -34,7 +36,8 @@ test.describe('Theme screenshot testing', () => {
 	test.describe('Dark theme', () => {
 		test('should render dark theme', async function ({ page }) {
 			await makeCeptJodit(page, {
-				theme: 'dark'
+				theme: 'dark',
+				disablePlugins: ['speech-recognize']
 			});
 
 			await page.evaluate(async () => {
