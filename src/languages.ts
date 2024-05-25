@@ -35,6 +35,7 @@ import pl from 'jodit/langs/pl';
 import pt_br from 'jodit/langs/pt_br';
 import ru from 'jodit/langs/ru';
 import tr from 'jodit/langs/tr';
+import ua from 'jodit/langs/ua';
 import zh_cn from 'jodit/langs/zh_cn';
 import zh_tw from 'jodit/langs/zh_tw';
 
@@ -60,6 +61,7 @@ exp = {
 	pt_br,
 	ru,
 	tr,
+	ua,
 	zh_cn,
 	zh_tw
 };

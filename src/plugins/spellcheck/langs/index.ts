@@ -23,6 +23,7 @@ import * as pl from './pl.js';
 import * as pt_br from './pt_br.js';
 import * as ru from './ru.js';
 import * as tr from './tr.js';
+import * as ua from './ua.js';
 import * as zh_cn from './zh_cn.js';
 import * as zh_tw from './zh_tw.js';
 
@@ -46,6 +47,7 @@ export {
 	pt_br,
 	ru,
 	tr,
+	ua,
 	zh_cn,
 	zh_tw
 };
