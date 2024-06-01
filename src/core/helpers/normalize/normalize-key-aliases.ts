@@ -23,7 +23,8 @@ export function normalizeKeyAliases(keys: string): string {
 		ctrl: 2,
 		control: 2,
 		alt: 3,
-		shift: 4
+		shift: 4,
+		space: 5
 	};
 
 	return keys

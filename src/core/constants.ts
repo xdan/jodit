@@ -210,8 +210,8 @@ export const KEY_ALIASES: IDictionary<string> = {
 	option: 'alt',
 	return: 'enter',
 	right: 'arrowright',
-	space: ' ',
-	spacebar: ' ',
+	space: 'space',
+	spacebar: 'space',
 	up: 'arrowup',
 	win: 'meta',
 	windows: 'meta'

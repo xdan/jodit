@@ -28,10 +28,10 @@ import './config';
  */
 export class hotkeys extends Plugin {
 	private onKeyPress = (event: KeyboardEvent): string => {
-		const special: string | false = this.specialKeys[event.which],
-			character: string = (
-				event.key || String.fromCharCode(event.which)
-			).toLowerCase();
+		const special: string | false = this.specialKeys[event.which];
+		const character: string = (
+			event.key || String.fromCharCode(event.which)
+		).toLowerCase();
 
 		const modif: string[] = [special || character];
 
@@ -140,10 +140,11 @@ export class hotkeys extends Plugin {
 			.on(
 				'keydown.hotkeys',
 				(event: KeyboardEvent): void | false => {
-					const shortcut: string = this.onKeyPress(event),
-						stop = {
-							shouldStop: true
-						};
+					const shortcut: string = this.onKeyPress(event);
+
+					const stop = {
+						shouldStop: true
+					};
 
 					const resultOfFire = this.j.e.fire(
 						shortcut + '.hotkey',

@@ -7,23 +7,29 @@
 describe('Test helpers', function () {
 	describe('Normalizers', function () {
 		describe('normalizeKeyAliases', function () {
-			it('Should convert some hotkeys to normal', function () {
-				const hotkeys = {
-					'cmd+ alt+s': 'meta+alt+s',
-					'cmd++': 'meta++',
-					'ctrl+ alt+s': 'control+alt+s',
-					' command+s': 'meta+s',
-					'alt+s+ctrl': 'control+alt+s',
-					'shift+ctrl+cmd+D': 'meta+control+shift+d',
-					'meta+windows+win+ctrl+cmd': 'meta+control',
-					'cmd+ alt+ shift ': 'meta+alt+shift',
-					'return + esc ': 'enter+escape'
-				};
+			const hotkeys = {
+				'cmd+ alt+s': 'meta+alt+s',
+				'cmd++': 'meta++',
+				'ctrl+ alt+s': 'control+alt+s',
+				' command+s': 'meta+s',
+				'alt+s+ctrl': 'control+alt+s',
+				'shift+ctrl+cmd+D': 'meta+control+shift+d',
+				'meta+windows+win+ctrl+cmd': 'meta+control',
+				'cmd+ alt+ shift ': 'meta+alt+shift',
+				'cmd+ alt+alt+ shift ': 'meta+alt+shift',
+				'return + esc ': 'enter+escape',
+				'ctrl + space ': 'control+space',
+				'ctrl + space + B': 'control+space+b',
+				'ctrl + b+space': 'control+space+b'
+			};
 
-				Object.keys(hotkeys).forEach(function (key) {
-					expect(hotkeys[key]).equals(
-						Jodit.modules.Helpers.normalizeKeyAliases(key)
-					);
+			Object.keys(hotkeys).forEach(key => {
+				describe(`Should convert ${key} to normalised`, () => {
+					it(`Should convert hotkeys to ${hotkeys[key]}`, () => {
+						expect(hotkeys[key]).equals(
+							Jodit.modules.Helpers.normalizeKeyAliases(key)
+						);
+					});
 				});
 			});
 		});
