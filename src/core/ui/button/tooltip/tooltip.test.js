@@ -119,6 +119,26 @@
 						expect(getTooltipElm().textContent).equals('');
 					});
 				});
+
+				describe('Inside popup', async () => {
+					it('Should show tooltip', async () => {
+						editor.value = '<p><a href="index.html">test</a></p>';
+						simulateEvent(
+							'click',
+							editor.editor.querySelector('a')
+						);
+						await editor.async.requestIdlePromise();
+						const popup = getOpenedPopup(editor);
+						expect(popup).is.not.null;
+						const editLink = getButton('link', popup);
+						expect(editLink).is.not.null;
+						simulateEvent('mouseenter', editLink.parentElement);
+						await delay(100);
+						const tooltip = getTooltipElm();
+						expect(tooltip).is.not.null;
+						expect(tooltip.textContent).equals('Edit link');
+					});
+				});
 			});
 
 			it('Should have different tooltip for each language', async () => {

@@ -75,27 +75,66 @@ describe('Jodit Events system Tests', function () {
 			});
 		});
 
-		it('Add and remove event handler', function () {
-			const editor = getJodit(),
-				div = document.createElement('button');
+		describe('Add and remove event handler', () => {
+			describe('Remove handler', () => {
+				it('Should stop listening events', () => {
+					const editor = getJodit();
+					const div = document.createElement('button');
 
-			let work = 0;
+					let work = 0;
 
-			document.body.appendChild(div);
+					document.body.appendChild(div);
 
-			editor.events.on(div, 'click', function () {
-				work++;
+					editor.events.on(div, 'click', function () {
+						work++;
+					});
+
+					simulateEvent('click', div);
+					expect(work).equals(1);
+
+					editor.events.off(div, 'click');
+
+					simulateEvent('click', div);
+					expect(work).equals(1);
+
+					div.parentNode.removeChild(div);
+				});
 			});
 
-			simulateEvent('click', 0, div);
-			expect(work).equals(1);
+			describe('Remove for whole element', () => {
+				it('Should stop listening all events', () => {
+					const editor = getJodit();
+					const div = document.createElement('button');
 
-			editor.events.off(div, 'click');
+					const works = [];
 
-			simulateEvent('click', 0, div);
-			expect(work).equals(1);
+					document.body.appendChild(div);
 
-			div.parentNode.removeChild(div);
+					editor.events.on(div, 'click', function () {
+						works.push('A');
+					});
+
+					editor.events.on(div, 'click', function () {
+						works.push('B');
+					});
+
+					editor.events.on(div, 'mousedown', function () {
+						works.push('C');
+					});
+
+					simulateEvent('click', div);
+					simulateEvent('mousedown', div);
+					expect(works).deep.equals(['A', 'B', 'C']);
+
+					editor.events.off(div);
+
+					simulateEvent('click', div);
+					simulateEvent('mousedown', div);
+					expect(works).deep.equals(['A', 'B', 'C']);
+
+					div.parentNode.removeChild(div);
+				});
+			});
 		});
 
 		describe('Add a few handlers for several evens and remove all handlers', function () {

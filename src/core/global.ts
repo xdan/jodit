@@ -87,11 +87,11 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 	const view = isViewObject(jodit) ? jodit : jodit.j;
 
 	if (!data[key]) {
-		let c = view.c,
-			body =
-				isJoditObject(jodit) && jodit.o.shadowRoot
-					? jodit.o.shadowRoot
-					: jodit.od.body;
+		let c = view.c;
+		let body =
+			isJoditObject(jodit) && jodit.o.shadowRoot
+				? jodit.o.shadowRoot
+				: jodit.od.body;
 
 		if (
 			createInsideEditor &&
@@ -118,6 +118,8 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 		data[key] = box;
 
 		jodit.hookStatus('beforeDestruct', () => {
+			view.events.off(box);
+
 			Dom.safeRemove(box);
 			delete data[key];
 
@@ -127,6 +129,8 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 		});
 
 		boxes.set(jodit, data);
+
+		view.events.fire('getContainer', box);
 	}
 
 	data[key].classList.remove('jodit_theme_default', 'jodit_theme_dark');

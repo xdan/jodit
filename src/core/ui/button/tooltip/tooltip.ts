@@ -55,20 +55,23 @@ export class UITooltip extends UIElement {
 			view.o.showTooltip &&
 			!view.o.useNativeTooltip
 		) {
-			view.hookStatus(STATUSES.ready, () => {
-				// TODO Move it inside __show method. Now it is here because testcase failed with capturing
-				getContainer(this.j, UITooltip).appendChild(this.container);
+			this.j.e.on('getContainer', (box: HTMLElement) => {
+				this.__onAttach(box);
+			});
 
-				view.e.on(
-					view.container,
-					'mouseenter.tooltip',
-					this.__onMouseEnter,
-					{
-						capture: true
-					}
-				);
+			view.hookStatus(STATUSES.ready, () => {
+				this.__onAttach(this.j.container);
 			});
 		}
+	}
+
+	private __onAttach(container: HTMLElement): void {
+		// TODO Move it inside __show method. Now it is here because testcase failed with capturing
+		getContainer(this.j, UITooltip).appendChild(this.container);
+
+		this.j.e.on(container, 'mouseenter.tooltip', this.__onMouseEnter, {
+			capture: true
+		});
 	}
 
 	private __listenClose: boolean = false;

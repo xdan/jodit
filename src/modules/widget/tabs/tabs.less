@@ -8,7 +8,8 @@
 @import (reference) '../../../styles/mixins';
 
 .jodit-tabs {
-	--box-shadow-tabs: 0 0 #0000, 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px -1px rgba(0,0,0,.1);
+	--box-shadow-tabs: 0 0 #0000, 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+		0 1px 2px -1px rgba(0, 0, 0, 0.1);
 
 	.font();
 
@@ -28,8 +29,10 @@
 			}
 		}
 
-		.jodit-ui-button:active:not([disabled]), .jodit-ui-button[aria-pressed='true']:not([disabled]) {
-			&, .jodit-ui-button__text {
+		.jodit-ui-button:active:not([disabled]),
+		.jodit-ui-button[aria-pressed='true']:not([disabled]) {
+			&,
+			.jodit-ui-button__text {
 				background-color: var(--color-background-default);
 			}
 			box-shadow: var(--box-shadow-tabs);
@@ -97,7 +100,8 @@
 			background-color: var(--dark-background-color);
 			border-radius: var(--border-radius-default);
 
-			.jodit-ui-button:active:not([disabled]), .jodit-ui-button[aria-pressed='true']:not([disabled]) {
+			.jodit-ui-button:active:not([disabled]),
+			.jodit-ui-button[aria-pressed='true']:not([disabled]) {
 				//background-color: transparent;
 				.jodit-ui-button__text {
 					color: var(--dark-toolbar-color);
