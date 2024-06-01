@@ -238,73 +238,130 @@ describe('Tables Jodit Editor Tests', () => {
 			});
 		});
 
-		it('Method appendColumn should append column in the end', () => {
-			const editor = getJodit();
+		describe.only('appendColumn', () => {
+			describe('Simple append column', () => {
+				it('should append column in the end', () => {
+					const editor = getJodit();
 
-			editor.value =
-				'<table>' +
-				'<tr><td>1</td><td>2</td></tr>' +
-				'<tr><td colspan="2">3</td></tr>' +
-				'</table>';
+					editor.value =
+						'<table>' +
+						'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td colspan="2">3</td></tr>' +
+						'</table>';
 
-			editor
-				.getInstance(Jodit.modules.Table)
-				.appendColumn(editor.editor.firstChild, -1, true);
+					editor
+						.getInstance(Jodit.modules.Table)
+						.appendColumn(editor.editor.firstChild, -1, true);
 
-			expect(editor.value.toLowerCase()).equals(
-				'<table>' +
-					'<tbody>' +
-					'<tr><td>1</td><td>2</td><td></td></tr>' +
-					'<tr><td colspan="2">3</td><td></td></tr>' +
-					'</tbody>' +
-					'</table>'
-			);
-		});
+					expect(editor.value.toLowerCase()).equals(
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td>2</td><td></td></tr>' +
+							'<tr><td colspan="2">3</td><td></td></tr>' +
+							'</tbody>' +
+							'</table>'
+					);
+				});
+			});
 
-		it('Method appendColumn with second argument should append column after that column', () => {
-			const editor = getJodit();
+			describe('With colspan', () => {
+				it('should append correct', () => {
+					const editor = getJodit();
 
-			editor.value =
-				'<table>' +
-				'<tr><td>1</td><td>2</td></tr>' +
-				'<tr><td colspan="2">3</td></tr>' +
-				'</table>';
+					editor.value =
+						'<table style="border-collapse:collapse;width: 100%;">' +
+						'<tbody>' +
+						'<tr>' +
+						'<td colspan="2" rowspan="2"><br></td>' +
+						'<td><br></td>' +
+						'</tr>' +
+						'<tr>' +
+						'<td><br></td>' +
+						'</tr>' +
+						'<tr>' +
+						'<td><br></td>' +
+						'<td><br></td>' +
+						'<td><br></td>' +
+						'</tr>' +
+						'</tbody>' +
+						'</table>';
 
-			editor
-				.getInstance(Jodit.modules.Table)
-				.appendColumn(editor.editor.firstChild, 0, true);
+					editor
+						.getInstance(Jodit.modules.Table)
+						.appendColumn(editor.editor.firstChild, 0, true);
 
-			expect(editor.value.toLowerCase()).equals(
-				'<table>' +
-					'<tbody>' +
-					'<tr><td>1</td><td></td><td>2</td></tr>' +
-					'<tr><td colspan="3">3</td></tr>' +
-					'</tbody>' +
-					'</table>'
-			);
-		});
+					expect(editor.value.toLowerCase()).equals(
+						'<table style="border-collapse:collapse;width: 100%;">' +
+							'<tbody>' +
+							'<tr>' +
+							'<td colspan="2" rowspan="2"><br></td>' +
+							'<td rowspan="2"><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>'
+					);
+				});
+			});
 
-		it('Method appendColumn with second argument and third = false should append column before that column', () => {
-			const editor = getJodit();
+			describe('with second argument ', () => {
+				it('should append column after that column', () => {
+					const editor = getJodit();
 
-			editor.value =
-				'<table>' +
-				'<tr><td>1</td><td>2</td></tr>' +
-				'<tr><td colspan="2">3</td></tr>' +
-				'</table>';
+					editor.value =
+						'<table>' +
+						'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td colspan="2">3</td></tr>' +
+						'</table>';
 
-			editor
-				.getInstance(Jodit.modules.Table)
-				.appendColumn(editor.editor.firstChild, 1, false);
+					editor
+						.getInstance(Jodit.modules.Table)
+						.appendColumn(editor.editor.firstChild, 0, true);
 
-			expect(editor.value.toLowerCase()).equals(
-				'<table>' +
-					'<tbody>' +
-					'<tr><td>1</td><td></td><td>2</td></tr>' +
-					'<tr><td colspan="3">3</td></tr>' +
-					'</tbody>' +
-					'</table>'
-			);
+					expect(editor.value.toLowerCase()).equals(
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td></td><td>2</td></tr>' +
+							'<tr><td colspan="3">3</td></tr>' +
+							'</tbody>' +
+							'</table>'
+					);
+				});
+
+				describe('and third = false ', () => {
+					it('should append column before that column', () => {
+						const editor = getJodit();
+
+						editor.value =
+							'<table>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'<tr><td colspan="2">3</td></tr>' +
+							'</table>';
+
+						editor
+							.getInstance(Jodit.modules.Table)
+							.appendColumn(editor.editor.firstChild, 1, false);
+
+						expect(editor.value.toLowerCase()).equals(
+							'<table>' +
+								'<tbody>' +
+								'<tr><td>1</td><td></td><td>2</td></tr>' +
+								'<tr><td colspan="3">3</td></tr>' +
+								'</tbody>' +
+								'</table>'
+						);
+					});
+				});
+			});
 		});
 
 		describe('Remove row', () => {
