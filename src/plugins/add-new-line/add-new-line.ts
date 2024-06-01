@@ -136,11 +136,13 @@ export class addNewLine extends Plugin {
 		editor.e
 			.off(editor.editor, '.' + ns)
 			.off(editor.container, '.' + ns)
+			.off('.' + ns)
 			.on(
 				[editor.ow, editor.ew, editor.editor],
 				'scroll' + '.' + ns,
 				this.__hideForce
 			)
+			.on('finishedCleanHTMLWorker' + '.' + ns, this.__hideForce)
 			.on(editor.editor, 'click' + '.' + ns, this.__hide)
 			.on(editor.container, 'mouseleave' + '.' + ns, this.__hide)
 			.on(editor.editor, 'mousemove' + '.' + ns, this.__onMouseMove);
@@ -305,7 +307,8 @@ export class addNewLine extends Plugin {
 
 		this.j.e
 			.off([this.j.ow, this.j.ew, this.j.editor], '.' + ns)
-			.off(this.j.container, '.' + ns);
+			.off(this.j.container, '.' + ns)
+			.off('.' + ns);
 	}
 }
 
