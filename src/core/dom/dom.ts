@@ -37,7 +37,15 @@ import {
 	isVoid
 } from 'jodit/core/helpers/checker';
 import { trim } from 'jodit/core/helpers/string/trim';
-import { $$, attr, call, css, dataBind, error } from 'jodit/core/helpers/utils';
+import {
+	$$,
+	assert,
+	attr,
+	call,
+	css,
+	dataBind,
+	error
+} from 'jodit/core/helpers/utils';
 
 /**
  * Module for working with DOM
@@ -213,6 +221,10 @@ export class Dom {
 	 */
 	static replace<T extends HTMLElement>(
 		elm: Node,
+		newTagName: HTMLTagNames
+	): T;
+	static replace<T extends HTMLElement>(
+		elm: Node,
 		newTagName: HTMLTagNames,
 		create: ICreate,
 		withAttributes?: boolean,
@@ -221,24 +233,29 @@ export class Dom {
 	static replace<T extends Node>(
 		elm: Node,
 		newTagName: T | string,
-		create: ICreate,
+		create?: ICreate,
 		withAttributes?: boolean,
 		notMoveContent?: boolean
 	): T;
 	static replace<T extends Node>(
 		elm: Node,
 		newTagName: HTMLTagNames | T | string,
-		create: ICreate,
+		create?: ICreate,
 		withAttributes = false,
 		notMoveContent = false
 	): T {
 		if (isHTML(newTagName)) {
-			newTagName = create.fromHTML(newTagName) as unknown as T;
+			assert(create, 'Need create instance for new tag');
+			newTagName = create.fromHTML(newTagName) as Node as T;
 		}
 
-		const tag = isString(newTagName)
-			? create.element(newTagName)
-			: newTagName;
+		let tag: T;
+		if (isString(newTagName)) {
+			assert(create, 'Need create instance for new tag');
+			tag = create.element(newTagName) as Node as T;
+		} else {
+			tag = newTagName;
+		}
 
 		if (!notMoveContent) {
 			while (elm.firstChild) {

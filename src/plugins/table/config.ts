@@ -44,6 +44,8 @@ Config.prototype.controls.table = {
 		}
 	},
 	popup: (editor: IJodit, current, close, button) => {
+		editor.editor.normalize();
+		const snapshot = editor.history.snapshot.make();
 		const control = button.control;
 
 		const default_rows_count =
@@ -194,11 +196,28 @@ Config.prototype.controls.table = {
 					}
 				);
 
-				if (editor.editor.firstChild) {
-					editor.s.insertNode(crt.text('\n'), false, false);
-				}
+				editor.s.restore();
+				editor.s.removeMarkers();
+				editor.editor.normalize();
+				editor.history.snapshot.restore(snapshot);
 
-				editor.s.insertNode(table, false);
+				const block = Dom.furthest(
+					editor.s.current(),
+					Dom.isBlock,
+					editor.editor
+				);
+
+				if (block && Dom.isEmpty(block)) {
+					Dom.replace(block, table, undefined, false, true);
+				} else {
+					if (block) {
+						const fake = crt.text('\n');
+						Dom.after(block, fake);
+						Dom.after(fake, table);
+					} else {
+						editor.s.insertNode(table, false);
+					}
+				}
 
 				if (first_td) {
 					editor.s.setCursorIn(first_td);
