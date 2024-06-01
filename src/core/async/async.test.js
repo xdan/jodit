@@ -76,7 +76,6 @@ describe('Test Async module', () => {
 				expect(Jodit.modules.Helpers.isAbortError(e)).is.true;
 				rejectSpy('promise')();
 			});
-			// debugger
 			promise.rejectCallback();
 
 			await asyncM.requestIdlePromise();

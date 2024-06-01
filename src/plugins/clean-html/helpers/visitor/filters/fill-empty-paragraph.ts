@@ -12,6 +12,14 @@ import type { IJodit } from 'jodit/types';
 import { INSEPARABLE_TAGS } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 
+const TABLE_CONTAINER_TAGS = new Set([
+	'table',
+	'tbody',
+	'thead',
+	'tfoot',
+	'tr'
+] as const);
+
 /**
  * @private
  */
@@ -23,7 +31,8 @@ export function fillEmptyParagraph(
 	if (
 		jodit.o.cleanHTML.fillEmptyParagraph &&
 		Dom.isBlock(nodeElm) &&
-		Dom.isEmpty(nodeElm, INSEPARABLE_TAGS)
+		Dom.isEmpty(nodeElm, INSEPARABLE_TAGS) &&
+		!Dom.isTag(nodeElm, TABLE_CONTAINER_TAGS)
 	) {
 		const br = jodit.createInside.element('br');
 		nodeElm.appendChild(br);

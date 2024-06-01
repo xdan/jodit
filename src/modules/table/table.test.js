@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Tables Jodit Editor Tests', function () {
-	describe('Methods', function () {
-		it('After init container must has one element .jodit-table-resizer', function () {
+describe('Tables Jodit Editor Tests', () => {
+	describe('Methods', () => {
+		it('After init container must have one element .jodit-table-resizer', () => {
 			const editor = getJodit();
 			expect(editor.editor.querySelector('.jodit-table-resizer')).equals(
 				null
@@ -31,7 +31,6 @@ describe('Tables Jodit Editor Tests', function () {
 			editor.s.insertNode(table2);
 			simulateEvent(
 				'mousemove',
-				0,
 				table2.querySelector('td'),
 				function (opt) {
 					opt.offsetX = 3;
@@ -43,7 +42,7 @@ describe('Tables Jodit Editor Tests', function () {
 			).equals(1);
 		});
 
-		it('Process wrong table', function () {
+		it('Process wrong table', () => {
 			const editor = getJodit();
 			editor.value =
 				'<table>' +
@@ -74,13 +73,13 @@ describe('Tables Jodit Editor Tests', function () {
 			).equals(1);
 		});
 
-		it('Method getRowsCount should return TR count', function () {
+		it('Method getRowsCount should return TR count', () => {
 			const editor = getJodit();
 
 			editor.value =
 				'<table>' +
 				[1, 2, 3, 4]
-					.map(function () {
+					.map(() => {
 						return '<tr>' + '<td>1</td>' + '<td>2</td>' + '</tr>';
 					})
 					.join('') +
@@ -94,7 +93,7 @@ describe('Tables Jodit Editor Tests', function () {
 			).equals(4);
 		});
 
-		it('Method getColumnsCount should return maximum of TH or TD in one row in table', function () {
+		it('Method getColumnsCount should return maximum of TH or TD in one row in table', () => {
 			const editor = getJodit();
 
 			editor.value =
@@ -113,8 +112,8 @@ describe('Tables Jodit Editor Tests', function () {
 			).equals(4);
 		});
 
-		describe('appendRow', function () {
-			it('should append one row in the end of table', function () {
+		describe('appendRow', () => {
+			it('should append one row in the end of table', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -131,8 +130,8 @@ describe('Tables Jodit Editor Tests', function () {
 				);
 			});
 
-			describe('with second argument', function () {
-				it('should append one row after row', function () {
+			describe('with second argument', () => {
+				it('should append one row after row', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -158,8 +157,8 @@ describe('Tables Jodit Editor Tests', function () {
 					);
 				});
 
-				describe('Set rowspan', function () {
-					it('should append one row after row and recalculate all rowspan', function () {
+				describe('Set rowspan', () => {
+					it('should append one row after row and recalculate all rowspan', () => {
 						const editor = getJodit();
 
 						editor.value =
@@ -186,8 +185,8 @@ describe('Tables Jodit Editor Tests', function () {
 					});
 				});
 
-				describe('with styled row', function () {
-					it('should append one row after this row and copy matching styles', function () {
+				describe('with styled row', () => {
+					it('should append one row after this row and copy matching styles', () => {
 						const editor = getJodit();
 
 						editor.value =
@@ -214,8 +213,8 @@ describe('Tables Jodit Editor Tests', function () {
 				});
 			});
 
-			describe('with second=TR  and third=false arguments ', function () {
-				it('should append and one row before row', function () {
+			describe('with second=TR  and third=false arguments ', () => {
+				it('should append and one row before row', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -239,7 +238,7 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 		});
 
-		it('Method appendColumn should append column in the end', function () {
+		it('Method appendColumn should append column in the end', () => {
 			const editor = getJodit();
 
 			editor.value =
@@ -262,7 +261,7 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		it('Method appendColumn with second argument should append column after that column', function () {
+		it('Method appendColumn with second argument should append column after that column', () => {
 			const editor = getJodit();
 
 			editor.value =
@@ -285,7 +284,7 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		it('Method appendColumn with second argument and third = false should append column before that column', function () {
+		it('Method appendColumn with second argument and third = false should append column before that column', () => {
 			const editor = getJodit();
 
 			editor.value =
@@ -308,8 +307,8 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		describe('Remove row', function () {
-			it('Remove row should delete TR from table', function () {
+		describe('Remove row', () => {
+			it('Remove row should delete TR from table', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -340,7 +339,7 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 
 			describe('Remove simple row without rowspan', () => {
-				it('should simple remove row', function () {
+				it('should simple remove row', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -364,7 +363,7 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 
 			describe('Remove row which not consists td, because of in previous row was cell with rowspan', () => {
-				it('should simple remove row and decrement rowspan', function () {
+				it('should simple remove row and decrement rowspan', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -388,7 +387,7 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 
 			describe('Remove row which not consists td, because of in previous row was cell with rowspan and colspan', () => {
-				it('should simple remove row and decrement rowspan once time', function () {
+				it('should simple remove row and decrement rowspan once time', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -417,7 +416,7 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 
 			describe('Remove row which consists td with rowspan ', () => {
-				it('should simple remove row and decrement rowspan and move that cell into next row', function () {
+				it('should simple remove row and decrement rowspan and move that cell into next row', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -442,7 +441,7 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 
 			describe('Remove row which consists td with rowspan and colspan ', () => {
-				it('should simple remove row and decrement rowspan and move that cell into next row', function () {
+				it('should simple remove row and decrement rowspan and move that cell into next row', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -469,7 +468,7 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 
 			describe('Remove row which consists last td with rowspan and colspan ', () => {
-				it('should simple remove row and decrement rowspan and move that cell into next row in last position', function () {
+				it('should simple remove row and decrement rowspan and move that cell into next row in last position', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -495,43 +494,122 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 		});
 
-		describe('Method merge selected cells', function () {
-			it('Simple should merge all selected cells into one ', function () {
-				const editor = getJodit();
+		describe('Merge selected cells', () => {
+			describe('Select several cells', () => {
+				it('Should merge all selected cells into one ', () => {
+					const editor = getJodit();
 
-				editor.value =
-					'<table>' +
-					'<tr><td>1</td><td>2</td></tr>' +
-					'<tr><td>3</td><td>4</td></tr>' +
-					'<tr><td>5</td><td>6</td></tr>' +
-					'</table>';
+					editor.value =
+						'<table>' +
+						'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>' +
+						'<tr><td>5</td><td>6</td></tr>' +
+						'</table>';
 
-				selectCells(editor, [0, 1, 2, 3]);
-				// const table = new editor.getInstance(Jodit.modules.Table)(editor);
-				editor
-					.getInstance(Jodit.modules.Table)
-					.mergeSelected(editor.editor.firstChild);
+					selectCells(editor, [0, 1, 2, 3]);
+					// const table = new editor.getInstance(Jodit.modules.Table)(editor);
+					editor
+						.getInstance(Jodit.modules.Table)
+						.mergeSelected(editor.editor.firstChild);
 
-				expect(sortAttributes(editor.editor.innerHTML)).equals(
-					'<table>' +
-						'<tbody>' +
-						'<tr>' +
-						'<td colspan="2">1<br>2<br>3<br>4</td>' +
-						'</tr>' +
-						'<tr>' +
-						'<td>5</td>' +
-						'<td>6</td>' +
-						'</tr>' +
-						'</tbody>' +
-						'</table>'
-				);
+					expect(sortAttributes(editor.editor.innerHTML)).equals(
+						'<table>' +
+							'<tbody>' +
+							'<tr>' +
+							'<td colspan="2">1<br>2<br>3<br>4</td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td>5</td>' +
+							'<td>6</td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>'
+					);
 
-				expect(
-					editor.getInstance('Table', editor.o).selected.size
-				).equals(1);
+					expect(
+						editor.getInstance('Table', editor.o).selected.size
+					).equals(1);
+				});
 			});
 
-			it('With colspan and rowspan into one ', function () {
+			describe('Select all cells', () => {
+				let editor;
+				beforeEach(() => {
+					editor = getJodit({
+						cleanHTML: {
+							fillEmptyParagraph: true
+						}
+					});
+				});
+
+				describe('Empty cells', () => {
+					it('Should merge all cells into one ', async () => {
+						editor.value =
+							'<table>' +
+							'<tbody>' +
+							'<tr><td><br></td><td><br></td></tr>' +
+							'<tr><td><br></td><td><br></td></tr>' +
+							'</tbody>' +
+							'</table>';
+
+						selectCells(editor, [0, 1, 2, 3]);
+
+						editor
+							.getInstance(Jodit.modules.Table)
+							.mergeSelected(
+								editor.editor.querySelector('table')
+							);
+
+						await waitingForEvent(
+							editor,
+							'finishedCleanHTMLWorker'
+						);
+
+						expect(editor.editor.innerHTML).equals(
+							'<table><tbody><tr><td><br></td></tr></tbody></table>'
+						);
+
+						expect(
+							editor.getInstance('Table', editor.o).selected.size
+						).equals(1);
+					});
+				});
+
+				describe('Cells with content', () => {
+					it('Should merge all cells into one ', async () => {
+						editor.value =
+							'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'<tr><td>3<br></td><td>4<br></td></tr>' +
+							'</tbody>' +
+							'</table>';
+
+						selectCells(editor, [0, 1, 2, 3]);
+
+						editor
+							.getInstance(Jodit.modules.Table)
+							.mergeSelected(
+								editor.editor.querySelector('table')
+							);
+
+						await waitingForEvent(
+							editor,
+							'finishedCleanHTMLWorker'
+						);
+
+						expect(editor.editor.innerHTML).equals(
+							'<table><tbody><tr><td>1<br>2<br>3<br><br>4<br></td></tr></tbody></table>'
+						);
+
+						expect(
+							editor.getInstance('Table', editor.o).selected.size
+						).equals(1);
+					});
+				});
+			});
+
+			it('With colspan and rowspan into one ', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -569,7 +647,7 @@ describe('Tables Jodit Editor Tests', function () {
 				).equals(1);
 			});
 
-			it('A few cells with colspan and rowspan', function () {
+			it('A few cells with colspan and rowspan', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -617,7 +695,7 @@ describe('Tables Jodit Editor Tests', function () {
 				);
 			});
 
-			it('Merge cells in center', function () {
+			it('Merge cells in center', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -671,7 +749,7 @@ describe('Tables Jodit Editor Tests', function () {
 				);
 			});
 
-			it('Normalize merged cells', function () {
+			it('Normalize merged cells', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -705,8 +783,8 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 		});
 
-		describe('Split selected cells', function () {
-			it('Split cell by Horizontal', function () {
+		describe('Split selected cells', () => {
+			it('Split cell by Horizontal', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -734,7 +812,7 @@ describe('Tables Jodit Editor Tests', function () {
 				);
 			});
 
-			it('Split cell with rowspan by horizontal', function () {
+			it('Split cell with rowspan by horizontal', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -774,7 +852,7 @@ describe('Tables Jodit Editor Tests', function () {
 				);
 			});
 
-			it('Split cell with rowspan by horizontal 2', function () {
+			it('Split cell with rowspan by horizontal 2', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -813,7 +891,7 @@ describe('Tables Jodit Editor Tests', function () {
 				);
 			});
 
-			it('Split cell by vertical', function () {
+			it('Split cell by vertical', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -842,33 +920,37 @@ describe('Tables Jodit Editor Tests', function () {
 		});
 	});
 
-	describe('Work with tables', function () {
-		it('Create table and insert into cell some text', function () {
-			const editor = getJodit();
-			editor.ownerWindow.focus();
-			editor.value = '<p>|</p>';
-			setCursorToChar(editor);
+	describe('Work with tables', () => {
+		describe('Create table', () => {
+			describe('And insert into cell some text', () => {
+				it('Should work as expected', () => {
+					const editor = getJodit();
+					editor.ownerWindow.focus();
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
 
-			const table = editor.createInside.element('table'),
-				tr = editor.createInside.element('tr'),
-				td = editor.createInside.element('td'),
-				td2 = editor.createInside.element('td');
+					const table = editor.createInside.element('table'),
+						tr = editor.createInside.element('tr'),
+						td = editor.createInside.element('td'),
+						td2 = editor.createInside.element('td');
 
-			tr.appendChild(td);
-			tr.appendChild(td2);
-			table.appendChild(tr);
+					tr.appendChild(td);
+					tr.appendChild(td2);
+					table.appendChild(tr);
 
-			editor.s.focus();
-			editor.s.insertNode(table, false);
-			editor.s.setCursorIn(table, false); // set cursor in last cell
-			editor.s.insertNode(editor.createInside.text('ok'));
+					editor.s.focus();
+					editor.s.insertNode(table, false);
+					editor.s.setCursorIn(table, false); // set cursor in last cell
+					editor.s.insertNode(editor.createInside.text('ok'));
 
-			expect(editor.value).equals(
-				'<table style="border-collapse:collapse;width: 100%;"><tr><td></td><td>ok</td></tr></table>'
-			);
+					expect(editor.value).equals(
+						'<table style="border-collapse:collapse;width: 100%;"><tr><td></td><td>ok</td></tr></table>'
+					);
+				});
+			});
 		});
 
-		it('After insert table like html without tbody, it should be appear', function () {
+		it('After insert table like html without tbody, it should be appear', () => {
 			const editor = getJodit();
 
 			editor.value =
@@ -884,8 +966,8 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		describe('After press Tab button cursor', function () {
-			it('should move cursor in next cell in table', function () {
+		describe('After press Tab button cursor', () => {
+			it('should move cursor in next cell in table', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -914,7 +996,7 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 		});
 
-		it('After press Tab + Shift buttons cursor should be in next cell in table', function () {
+		it('After press Tab + Shift buttons cursor should be in next cell in table', () => {
 			const editor = getJodit();
 
 			editor.value =
@@ -943,7 +1025,7 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		it('After press Right arrow not in the end of cell it should do nothing', function () {
+		it('After press Right arrow not in the end of cell it should do nothing', () => {
 			const editor = getJodit();
 
 			editor.value =
@@ -965,7 +1047,7 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		it('After press Left arrow in the start of cell it should work like tab + shift', function () {
+		it('After press Left arrow in the start of cell it should work like tab + shift', () => {
 			const editor = getJodit();
 
 			editor.value =
@@ -995,7 +1077,7 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		it("After press Top arrow in the first cell's line cursor should move into top cell", function () {
+		it("After press Top arrow in the first cell's line cursor should move into top cell", () => {
 			const editor = getJodit();
 
 			editor.value =
@@ -1035,7 +1117,7 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		it("After press Bottom arrow in the first cell's line cursor should move into bottom cell", function () {
+		it("After press Bottom arrow in the first cell's line cursor should move into bottom cell", () => {
 			const editor = getJodit();
 
 			editor.value =
@@ -1072,7 +1154,7 @@ describe('Tables Jodit Editor Tests', function () {
 			);
 		});
 
-		it("After press Tab in last table's cell in table should add new row and move into first cell form it", function () {
+		it("After press Tab in last table's cell in table should add new row and move into first cell form it", () => {
 			const editor = getJodit();
 
 			editor.value =
@@ -1184,8 +1266,8 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 		});
 
-		describe('Remove column', function () {
-			it('Remove simple column without colspan should simple remove all cells in column', function () {
+		describe('Remove column', () => {
+			it('Remove simple column without colspan should simple remove all cells in column', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -1210,7 +1292,7 @@ describe('Tables Jodit Editor Tests', function () {
 						'</table>'
 				);
 			});
-			it('Remove column which consists td with colspan should remove all cells in column but that td should decrement colspan', function () {
+			it('Remove column which consists td with colspan should remove all cells in column but that td should decrement colspan', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -1235,7 +1317,7 @@ describe('Tables Jodit Editor Tests', function () {
 						'</table>'
 				);
 			});
-			it('Remove column which not consists td with colspan should remove all cells in column but that td should decrement colspan too', function () {
+			it('Remove column which not consists td with colspan should remove all cells in column but that td should decrement colspan too', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -1261,7 +1343,7 @@ describe('Tables Jodit Editor Tests', function () {
 				);
 			});
 
-			it('Remove column part of that td (colspan and rowspan) in another column should remove all cells in column but that td should decrement colspan once time', function () {
+			it('Remove column part of that td (colspan and rowspan) in another column should remove all cells in column but that td should decrement colspan once time', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -1293,7 +1375,7 @@ describe('Tables Jodit Editor Tests', function () {
 			});
 		});
 
-		describe('Select cells', function () {
+		describe('Select cells', () => {
 			it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound', function (done) {
 				const editor = getJodit();
 
@@ -1321,8 +1403,8 @@ describe('Tables Jodit Editor Tests', function () {
 				});
 			});
 
-			describe('Set custom selected border color', function () {
-				it('Should add css rule in document for selected css', function () {
+			describe('Set custom selected border color', () => {
+				it('Should add css rule in document for selected css', () => {
 					const editor = getJodit({
 						table: {
 							selectionCellStyle:
@@ -1352,8 +1434,8 @@ describe('Tables Jodit Editor Tests', function () {
 					).equals('#FF0000');
 				});
 
-				describe('For iframe mode', function () {
-					it('Should add css rule in editor document for selected css', function () {
+				describe('For iframe mode', () => {
+					it('Should add css rule in editor document for selected css', () => {
 						const editor = getJodit({
 							iframe: true,
 							table: {
@@ -1386,8 +1468,8 @@ describe('Tables Jodit Editor Tests', function () {
 				});
 			});
 
-			describe('When we press mouse button over cell in subtable and move mouse to another cell', function () {
-				it('should select all cells in bound in that table', function () {
+			describe('When we press mouse button over cell in subtable and move mouse to another cell', () => {
+				it('should select all cells in bound in that table', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -1430,7 +1512,7 @@ describe('Tables Jodit Editor Tests', function () {
 				});
 			});
 
-			it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound even if between be colspan and rowspan', function () {
+			it('When we press mouse button over cell and move mouse to another cell, it should select all cells in bound even if between be colspan and rowspan', () => {
 				const editor = getJodit();
 
 				editor.value =

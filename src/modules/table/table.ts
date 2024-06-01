@@ -797,7 +797,7 @@ export class Table extends ViewComponent<IJodit> {
 
 				Table.__normalizeTable(table);
 
-				toArray(table.rows).forEach((tr, index) => {
+				toArray(table.rows).forEach(tr => {
 					if (!tr.cells.length) {
 						Dom.safeRemove(tr);
 					}
@@ -807,7 +807,7 @@ export class Table extends ViewComponent<IJodit> {
 	}
 
 	/**
-	 * It combines all of the selected cells into one. The contents of the cells will also be combined
+	 * It combines all the selected cells into one. The contents of the cells will also be combined
 	 */
 	mergeSelected(table: HTMLTableElement): void {
 		return Table.__mergeSelected(table, this.j);
