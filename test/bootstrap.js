@@ -1310,17 +1310,21 @@ Object.defineProperty(navigator, 'userAgent', {
 
 /**
  *
- * @param {string} result
- * @param {string} real
+ * @param {string} textA
+ * @param {string} textB
  * @return {boolean}
  */
-function strCompare(result, real, len = 30) {
-	for (let i = 0; i < Math.max(result.length, real.length); i += 1) {
-		if (result[i] !== real[i]) {
+function strCompare(textA, textB, len = 30) {
+	for (let i = 0; i < Math.max(textA.length, textB.length); i += 1) {
+		if (textA[i] !== textB[i]) {
 			// eslint-disable-next-line no-console
-			console.log('result', result.substring(i - len, i + len));
+			console.log(
+				`textA: ${textA.substring(i - len, i)}|${textA.substring(i, i + len)}`
+			);
 			// eslint-disable-next-line no-console
-			console.log('real', real.substring(i - len, i + len));
+			console.log(
+				`textB: ${textB.substring(i - len, i)}|${textB.substring(i, i + len)}`
+			);
 
 			return false;
 		}

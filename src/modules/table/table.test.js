@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Tables Jodit Editor Tests', () => {
+describe.only('Tables Jodit Editor Tests', () => {
 	describe('Methods', () => {
 		it('After init container must have one element .jodit-table-resizer', () => {
 			const editor = getJodit();
@@ -238,10 +238,14 @@ describe('Tables Jodit Editor Tests', () => {
 			});
 		});
 
-		describe.only('appendColumn', () => {
+		describe('appendColumn', () => {
 			describe('Simple append column', () => {
-				it('should append column in the end', () => {
-					const editor = getJodit();
+				it('should append column in the end', async () => {
+					const editor = getJodit({
+						cleanHTML: {
+							fillEmptyParagraph: true
+						}
+					});
 
 					editor.value =
 						'<table>' +
@@ -251,47 +255,169 @@ describe('Tables Jodit Editor Tests', () => {
 
 					editor
 						.getInstance(Jodit.modules.Table)
-						.appendColumn(editor.editor.firstChild, -1, true);
+						.appendColumn(editor.editor.firstChild);
+
+					await waitingForEvent(editor, 'finishedCleanHTMLWorker');
 
 					expect(editor.value.toLowerCase()).equals(
 						'<table>' +
 							'<tbody>' +
-							'<tr><td>1</td><td>2</td><td></td></tr>' +
-							'<tr><td colspan="2">3</td><td></td></tr>' +
+							'<tr><td>1</td><td>2</td><td><br></td></tr>' +
+							'<tr><td colspan="2">3</td><td><br></td></tr>' +
 							'</tbody>' +
 							'</table>'
 					);
 				});
 			});
 
-			describe('With colspan', () => {
-				it('should append correct', () => {
-					const editor = getJodit();
-
-					editor.value =
-						'<table style="border-collapse:collapse;width: 100%;">' +
-						'<tbody>' +
-						'<tr>' +
-						'<td colspan="2" rowspan="2"><br></td>' +
-						'<td><br></td>' +
-						'</tr>' +
-						'<tr>' +
-						'<td><br></td>' +
-						'</tr>' +
-						'<tr>' +
-						'<td><br></td>' +
-						'<td><br></td>' +
-						'<td><br></td>' +
-						'</tr>' +
-						'</tbody>' +
-						'</table>';
-
-					editor
-						.getInstance(Jodit.modules.Table)
-						.appendColumn(editor.editor.firstChild, 0, true);
-
-					expect(editor.value.toLowerCase()).equals(
-						'<table style="border-collapse:collapse;width: 100%;">' +
+			describe('with arguments', () => {
+				[
+					[
+						// 0
+						'<table>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td><br></td><td>2</td></tr>' +
+							'</tbody>' +
+							'</table>',
+						0,
+						true
+					],
+					[
+						// 1
+						'<table>' +
+							'<tr><td colspan="2">1</td><td>2</td></tr>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr><td colspan="2">1</td><td><br></td><td>2</td></tr>' +
+							'</tbody>' +
+							'</table>',
+						0,
+						true
+					],
+					[
+						// 2
+						'<table>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'<tr><td>3</td><td>4</td></tr>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td><br></td><td>2</td></tr>' +
+							'<tr><td>3</td><td><br></td><td>4</td></tr>' +
+							'</tbody>' +
+							'</table>',
+						0,
+						true
+					],
+					[
+						// 3
+						'<table>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td><br></td><td>2</td></tr>' +
+							'</tbody>' +
+							'</table>',
+						0,
+						true
+					],
+					[
+						// 4
+						'<table>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'<tr><td>3</td><td>4</td></tr>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td>2</td><td><br></td></tr>' +
+							'<tr><td>3</td><td>4</td><td><br></td></tr>' +
+							'</tbody>' +
+							'</table>',
+						1,
+						true
+					],
+					[
+						// 5
+						'<table>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr><td><br></td><td>1</td><td>2</td></tr>' +
+							'</tbody>' +
+							'</table>',
+						0,
+						false
+					],
+					[
+						// 6
+						'<table>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'<tr><td>3</td><td>4</td></tr>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr><td><br></td><td>1</td><td>2</td></tr>' +
+							'<tr><td><br></td><td>3</td><td>4</td></tr>' +
+							'</tbody>' +
+							'</table>',
+						0,
+						false
+					],
+					[
+						// 7
+						'<table>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'<tr><td colspan="2">3</td></tr>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td><br></td><td>2</td></tr>' +
+							'<tr><td colspan="3">3</td></tr>' +
+							'</tbody>' +
+							'</table>',
+						0,
+						true
+					],
+					[
+						// 8
+						'<table>' +
+							'<tr><td>1</td><td>2</td><td>3</td></tr>' +
+							'<tr><td colspan="2">4</td><td>5</td></tr>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>1</td><td><br></td><td>2</td><td>3</td></tr>' +
+							'<tr><td colspan="3">4</td><td>5</td></tr>' +
+							'</tbody>' +
+							'</table>',
+						0,
+						true
+					],
+					[
+						// 9
+						'<table style="border-collapse:collapse;width:100%">' +
+							'<tbody>' +
+							'<tr>' +
+							'<td colspan="2" rowspan="2"><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>',
+						'<table style="border-collapse:collapse;width:100%">' +
 							'<tbody>' +
 							'<tr>' +
 							'<td colspan="2" rowspan="2"><br></td>' +
@@ -308,57 +434,137 @@ describe('Tables Jodit Editor Tests', () => {
 							'<td><br></td>' +
 							'</tr>' +
 							'</tbody>' +
-							'</table>'
-					);
-				});
-			});
-
-			describe('with second argument ', () => {
-				it('should append column after that column', () => {
-					const editor = getJodit();
-
-					editor.value =
-						'<table>' +
-						'<tr><td>1</td><td>2</td></tr>' +
-						'<tr><td colspan="2">3</td></tr>' +
-						'</table>';
-
-					editor
-						.getInstance(Jodit.modules.Table)
-						.appendColumn(editor.editor.firstChild, 0, true);
-
-					expect(editor.value.toLowerCase()).equals(
+							'</table>',
+						0,
+						true
+					],
+					[
+						// 10
+						'<table style="border-collapse:collapse;width:100%">' +
+							'<tbody>' +
+							'<tr>' +
+							'<td colspan="2" rowspan="2"><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>',
+						'<table style="border-collapse:collapse;width:100%">' +
+							'<tbody>' +
+							'<tr>' +
+							'<td rowspan="2"><br></td>' +
+							'<td colspan="2" rowspan="2"><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>',
+						0,
+						false
+					],
+					[
+						// 11
 						'<table>' +
 							'<tbody>' +
-							'<tr><td>1</td><td></td><td>2</td></tr>' +
-							'<tr><td colspan="3">3</td></tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'<td rowspan="2"><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
 							'</tbody>' +
-							'</table>'
-					);
-				});
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'<td rowspan="2"><br></td>' +
+							'<td rowspan="2"><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>',
+						1,
+						true
+					],
+					[
+						'<table>' +
+							'<tbody>' +
+							'<tr>' +
+							'<td colspan="2"><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr>' +
+							'<td colspan="3"><br></td>' +
+							'</tr>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>',
+						2,
+						false
+					]
+				].forEach(([value, result, column, after], index) => {
+					describe(`Case #${index} Value is ${value} and column is ${column} and after is ${after}`, () => {
+						it('should return result ' + result, async () => {
+							const editor = getJodit({
+								cleanHTML: {
+									fillEmptyParagraph: true
+								}
+							});
 
-				describe('and third = false ', () => {
-					it('should append column before that column', () => {
-						const editor = getJodit();
+							editor.value = value;
 
-						editor.value =
-							'<table>' +
-							'<tr><td>1</td><td>2</td></tr>' +
-							'<tr><td colspan="2">3</td></tr>' +
-							'</table>';
+							editor
+								.getInstance(Jodit.modules.Table)
+								.appendColumn(
+									editor.editor.firstChild,
+									editor.editor.querySelectorAll('td')[
+										column
+									],
+									after
+								);
+							await waitingForEvent(
+								editor,
+								'finishedCleanHTMLWorker'
+							);
 
-						editor
-							.getInstance(Jodit.modules.Table)
-							.appendColumn(editor.editor.firstChild, 1, false);
-
-						expect(editor.value.toLowerCase()).equals(
-							'<table>' +
-								'<tbody>' +
-								'<tr><td>1</td><td></td><td>2</td></tr>' +
-								'<tr><td colspan="3">3</td></tr>' +
-								'</tbody>' +
-								'</table>'
-						);
+							// if () {}
+							strCompare(sortAttributes(editor.value), result);
+							expect(sortAttributes(editor.value)).equals(result);
+						});
 					});
 				});
 			});

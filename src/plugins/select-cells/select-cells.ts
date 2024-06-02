@@ -411,7 +411,7 @@ export class selectCells extends Plugin {
 					case 'addcolumnbefore':
 						this.__tableModule.appendColumn(
 							table,
-							cell.cellIndex,
+							cell,
 							command === 'addcolumnafter'
 						);
 						break;

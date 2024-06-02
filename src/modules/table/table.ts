@@ -18,6 +18,7 @@ import { Dom } from 'jodit/core/dom';
 import { getContainer } from 'jodit/core/global';
 import {
 	$$,
+	// $$,
 	attr,
 	cssPath,
 	isNumber,
@@ -399,63 +400,45 @@ export class Table extends ViewComponent<IJodit> {
 		return Table.__removeRow(table, rowIndex);
 	}
 
-	private static __appendColumn(
-		table: HTMLTableElement,
-		j: number,
-		after: boolean,
-		create: ICreate
-	): void {
-		const box = Table.__formalMatrix(table);
-
-		let i: number;
-
-		if (j === undefined || j < 0) {
-			j = Table.__getColumnsCount(table) - 1;
-		}
-
-		for (i = 0; i < box.length; i += 1) {
-			const cell = create.element('td');
-			const td = box[i][j];
-
-			let added: boolean = false;
-
-			if (after) {
-				if (
-					(box[i] && td && j + 1 >= box[i].length) ||
-					td !== box[i][j + 1]
-				) {
-					if (td.nextSibling) {
-						Dom.before(td.nextSibling, cell);
-					} else {
-						td.parentNode && td.parentNode.appendChild(cell);
-					}
-					added = true;
-				}
-			} else {
-				if (
-					j - 1 < 0 ||
-					(box[i][j] !== box[i][j - 1] && box[i][j].parentNode)
-				) {
-					Dom.before(box[i][j], cell);
-					added = true;
-				}
-			}
-
-			if (!added) {
-				attr(
-					box[i][j],
-					'colspan',
-					parseInt(attr(box[i][j], 'colspan') || '1', 10) + 1
-				);
-			}
-		}
-	}
-
 	/**
 	 * Insert column before / after all the columns containing the selected cells
 	 */
-	appendColumn(table: HTMLTableElement, j: number, after: boolean): void {
-		return Table.__appendColumn(table, j, after, this.j.createInside);
+	appendColumn(
+		table: HTMLTableElement,
+		selectedCell: HTMLTableCellElement,
+		insertAfter: boolean
+	): void {
+		const box = Table.__formalMatrix(table);
+
+		const columnIndex = insertAfter
+			? selectedCell.cellIndex + ((selectedCell.colSpan || 1) - 1)
+			: selectedCell.cellIndex;
+
+		const newColumnIndex = insertAfter ? columnIndex + 1 : columnIndex;
+
+		for (let i = 0; i < box.length; ) {
+			const cells = box[i];
+
+			if (
+				cells[columnIndex] !== cells[newColumnIndex] ||
+				columnIndex === newColumnIndex
+			) {
+				const cell = this.j.createInside.element('td');
+				if (insertAfter) {
+					Dom.after(cells[columnIndex], cell);
+				} else {
+					Dom.before(cells[columnIndex], cell);
+				}
+
+				if (cells[columnIndex].rowSpan > 1) {
+					cell.rowSpan = cells[columnIndex].rowSpan;
+				}
+			} else {
+				cells[columnIndex].colSpan += 1;
+			}
+
+			i += cells[columnIndex].rowSpan || 1;
+		}
 	}
 
 	private static __removeColumn(table: HTMLTableElement, j: number): void {
