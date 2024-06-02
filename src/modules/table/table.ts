@@ -18,7 +18,6 @@ import { Dom } from 'jodit/core/dom';
 import { getContainer } from 'jodit/core/global';
 import {
 	$$,
-	// $$,
 	attr,
 	cssPath,
 	isNumber,
