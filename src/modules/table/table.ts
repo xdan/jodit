@@ -406,9 +406,17 @@ export class Table extends ViewComponent<IJodit> {
 	appendColumn(
 		table: HTMLTableElement,
 		selectedCell: HTMLTableCellElement,
-		insertAfter: boolean
+		insertAfter: boolean = true
 	): void {
 		const box = Table.__formalMatrix(table);
+
+		if (!insertAfter && Dom.isCell(selectedCell.previousElementSibling)) {
+			return this.appendColumn(
+				table,
+				selectedCell.previousElementSibling as HTMLTableCellElement,
+				true
+			);
+		}
 
 		const columnIndex = insertAfter
 			? selectedCell.cellIndex + ((selectedCell.colSpan || 1) - 1)

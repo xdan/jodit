@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe.only('Tables Jodit Editor Tests', () => {
+describe('Tables Jodit Editor Tests', () => {
 	describe('Methods', () => {
 		it('After init container must have one element .jodit-table-resizer', () => {
 			const editor = getJodit();
@@ -255,7 +255,11 @@ describe.only('Tables Jodit Editor Tests', () => {
 
 					editor
 						.getInstance(Jodit.modules.Table)
-						.appendColumn(editor.editor.firstChild);
+						.appendColumn(
+							editor.editor.firstChild,
+							editor.editor.querySelectorAll('td')[1],
+							true
+						);
 
 					await waitingForEvent(editor, 'finishedCleanHTMLWorker');
 
@@ -535,6 +539,44 @@ describe.only('Tables Jodit Editor Tests', () => {
 							'</table>',
 						2,
 						false
+					],
+					[
+						'<table>' +
+							'<tbody>' +
+							'<tr>' +
+							'<td>1</td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr>' +
+							'<td><br></td>' +
+							'<td>1</td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>',
+						0,
+						false
+					],
+					[
+						'<table>' +
+							'<tbody>' +
+							'<tr>' +
+							'<td>1</td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>',
+						'<table>' +
+							'<tbody>' +
+							'<tr>' +
+							'<td>1</td>' +
+							'<td><br></td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>',
+						0,
+						true
 					]
 				].forEach(([value, result, column, after], index) => {
 					describe(`Case #${index} Value is ${value} and column is ${column} and after is ${after}`, () => {

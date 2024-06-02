@@ -13,6 +13,7 @@
 
 ### :bug: Bug Fix
 
+-   [Table dragging creates an issue #1128](https://github.com/xdan/jodit/issues/1128)
 -   AddNewLine plugin shown incorrect position after CleanHTML plugin
 -   Inserting a new table - added extra spaces before the table
 -   When merging multiple table cells after the TR tag, the CleanHTML plugin added `<br>`
