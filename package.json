@@ -51,7 +51,6 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.45.0",
-		"@swc/core": "^1.6.5",
 		"@tsconfig/node18": "^18.2.4",
 		"@types/ace": "^0.0.52",
 		"@types/fs-extra": "^11.0.4",
@@ -110,7 +109,6 @@
 		"stylelint-config-idiomatic-order": "v10.0.0",
 		"stylelint-config-standard": "^36.0.1",
 		"stylelint-prettier": "^5.0.0",
-		"swc-loader": "^0.2.6",
 		"synchronous-promise": "2.0.17",
 		"terser-webpack-plugin": "^5.3.10",
 		"ts-loader": "^9.5.1",

@@ -88,10 +88,24 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 
 	if (!data[key]) {
 		let c = view.c;
-		let body =
-			isJoditObject(jodit) && jodit.o.shadowRoot
-				? jodit.o.shadowRoot
-				: jodit.od.body;
+		let body: HTMLElement | ShadowRoot;
+
+		if (isJoditObject(jodit) && jodit.o.shadowRoot) {
+			body = jodit.o.shadowRoot;
+		} else {
+			body = jodit.od.body;
+
+			if (isJoditObject(jodit)) {
+				const dialog = Dom.closest(
+					jodit.container,
+					'dialog',
+					jodit.od.body
+				);
+				if (dialog) {
+					body = dialog;
+				}
+			}
+		}
 
 		if (
 			createInsideEditor &&

@@ -8,90 +8,90 @@
 	function () {
 		const position = Jodit.modules.Helpers.position;
 
-		let textBox;
-		const elms = [];
-
-		beforeEach(function () {
-			textBox = document.createElement('div');
-			Object.assign(textBox.style, {
-				position: 'fixed',
-				display: 'flex',
-				flexWrap: 'wrap',
-				top: 0,
-				left: 0,
-				width: '100%',
-				height: '100%',
-				background: 'red'
-			});
-			document.body.appendChild(textBox);
-
-			for (let i = 0; i < 4; i += 1) {
-				for (let j = 0; j < 4; j += 1) {
-					const elmBox = document.createElement('div');
-
-					Object.assign(elmBox.style, {
-						width: '25%',
-						height: '25%',
-						background:
-							'rgb(' +
-							(i * 30 + 128) +
-							',' +
-							(j * 30 + 28) +
-							', ' +
-							(i * 10 + j * 10 + 100) +
-							')'
-					});
-
-					textBox.appendChild(elmBox);
-					elms.push(elmBox);
-				}
-			}
-		});
-
-		afterEach(function () {
-			textBox && textBox.remove();
-			elms.length = 0;
-		});
-
-		const aliases = {
-			leftTop: function () {
-				return elms[0];
-			},
-			rightTop: function () {
-				return elms[3];
-			},
-			leftBottom: function () {
-				return elms[12];
-			},
-			rightBottom: function () {
-				return elms[15];
-			},
-			center: function () {
-				return elms[5];
-			}
-		};
-
-		const openPopup = function (getBound, content, strategy) {
-			const editor = getJodit();
-			editor.value = '<p>test</p>'.repeat(100);
-
-			const popup = new Jodit.modules.Popup(editor);
-
-			if (strategy) {
-				popup.strategy = strategy;
-			}
-
-			popup.setContent(content || 'Test content').open(getBound);
-
-			return {
-				left: parseInt(popup.container.style.left, 10),
-				top: parseInt(popup.container.style.top, 10),
-				width: popup.container.offsetWidth,
-				height: popup.container.offsetHeight
-			};
-		};
-
 		describe('Open popup on some target', function () {
+			let textBox;
+			const elms = [];
+
+			beforeEach(function () {
+				textBox = document.createElement('div');
+				Object.assign(textBox.style, {
+					position: 'fixed',
+					display: 'flex',
+					flexWrap: 'wrap',
+					top: 0,
+					left: 0,
+					width: '100%',
+					height: '100%',
+					background: 'red'
+				});
+				document.body.appendChild(textBox);
+
+				for (let i = 0; i < 4; i += 1) {
+					for (let j = 0; j < 4; j += 1) {
+						const elmBox = document.createElement('div');
+
+						Object.assign(elmBox.style, {
+							width: '25%',
+							height: '25%',
+							background:
+								'rgb(' +
+								(i * 30 + 128) +
+								',' +
+								(j * 30 + 28) +
+								', ' +
+								(i * 10 + j * 10 + 100) +
+								')'
+						});
+
+						textBox.appendChild(elmBox);
+						elms.push(elmBox);
+					}
+				}
+			});
+
+			afterEach(function () {
+				textBox && textBox.remove();
+				elms.length = 0;
+			});
+
+			const aliases = {
+				leftTop: function () {
+					return elms[0];
+				},
+				rightTop: function () {
+					return elms[3];
+				},
+				leftBottom: function () {
+					return elms[12];
+				},
+				rightBottom: function () {
+					return elms[15];
+				},
+				center: function () {
+					return elms[5];
+				}
+			};
+
+			const openPopup = function (getBound, content, strategy) {
+				const editor = getJodit();
+				editor.value = '<p>test</p>'.repeat(100);
+
+				const popup = new Jodit.modules.Popup(editor);
+
+				if (strategy) {
+					popup.strategy = strategy;
+				}
+
+				popup.setContent(content || 'Test content').open(getBound);
+
+				return {
+					left: parseInt(popup.container.style.left, 10),
+					top: parseInt(popup.container.style.top, 10),
+					width: popup.container.offsetWidth,
+					height: popup.container.offsetHeight
+				};
+			};
+
 			describe('Usual case - there is enough space under element', function () {
 				it('should show popup under element', function () {
 					const div = appendTestDiv();
@@ -211,6 +211,26 @@
 						});
 					});
 				});
+			});
+		});
+
+		describe('Popup inside <dialog>', () => {
+			it('Should show popup inside dialog', () => {
+				const dialog = document.createElement('dialog');
+				document.body.appendChild(dialog);
+				dialog.showModal();
+
+				const area = appendTestDiv();
+				dialog.appendChild(area);
+
+				const editor = getJodit({}, area);
+				editor.value = '<p>test</p>'.repeat(100);
+				clickTrigger('brush', editor);
+				const popup = getOpenedPopup(editor);
+				expect(popup).is.not.null;
+				expect(popup.closest('dialog')).equals(dialog);
+				editor.destruct();
+				dialog.remove();
 			});
 		});
 	}
