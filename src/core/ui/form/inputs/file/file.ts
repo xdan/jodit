@@ -21,6 +21,7 @@ export class UIFileInput extends UIInput {
 
 	override state: UIInput['state'] & {
 		onlyImages: boolean;
+		tooltip?: string;
 	} = {
 		...UIInput.defaultState,
 		type: 'file',
@@ -36,6 +37,7 @@ export class UIFileInput extends UIInput {
 		options: Partial<this['state']>
 	): HTMLElement {
 		this.button = new UIButton(this.j, {
+			tooltip: options.tooltip,
 			icon: {
 				name: 'plus'
 			}

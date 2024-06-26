@@ -322,12 +322,14 @@ Config.prototype.filebrowser = {
 Config.prototype.controls.filebrowser = {
 	upload: {
 		icon: 'plus',
+		tooltip: 'Upload file',
 		isInput: true,
 		isDisabled: (browser: IFileBrowser): boolean =>
 			!browser.dataProvider.canI('FileUpload'),
 
-		getContent: (filebrowser: IFileBrowser): HTMLElement => {
+		getContent: (filebrowser: IFileBrowser, btnInt): HTMLElement => {
 			const btn = new UIFileInput(filebrowser, {
+				tooltip: btnInt.control.tooltip as string,
 				onlyImages: filebrowser.state.onlyImages
 			});
 
@@ -339,6 +341,7 @@ Config.prototype.controls.filebrowser = {
 
 	remove: {
 		icon: 'bin',
+		tooltip: 'Remove file',
 		isDisabled: (browser: IFileBrowser): boolean => {
 			return (
 				!browser.state.activeElements.length ||
@@ -351,12 +354,14 @@ Config.prototype.controls.filebrowser = {
 	} as IControlType,
 
 	update: {
+		tooltip: 'Update file list',
 		exec: (editor: IFileBrowser) => {
 			editor.e.fire('update.filebrowser');
 		}
 	} as IControlType,
 
 	select: {
+		tooltip: 'Select file',
 		icon: 'check',
 		isDisabled: (browser: IFileBrowser): boolean =>
 			!browser.state.activeElements.length,
@@ -366,6 +371,7 @@ Config.prototype.controls.filebrowser = {
 	} as IControlType,
 
 	edit: {
+		tooltip: 'Edit image',
 		icon: 'pencil',
 		isDisabled: (browser: IFileBrowser): boolean => {
 			const selected = browser.state.activeElements;
@@ -385,6 +391,7 @@ Config.prototype.controls.filebrowser = {
 	} as IControlType,
 
 	tiles: {
+		tooltip: 'Tiles view',
 		icon: 'th',
 		isActive: (filebrowser: IFileBrowser): boolean =>
 			filebrowser.state.view === 'tiles',
@@ -394,6 +401,7 @@ Config.prototype.controls.filebrowser = {
 	} as IControlType,
 
 	list: {
+		tooltip: 'List view',
 		icon: 'th-list',
 		isActive: (filebrowser: IFileBrowser): boolean =>
 			filebrowser.state.view === 'list',
