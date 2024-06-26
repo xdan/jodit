@@ -3,9 +3,9 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Stat plugin', function () {
-	describe('After init and change', function () {
-		it('Should show chars count and words count', function () {
+describe('Stat plugin', () => {
+	describe('After init and change', () => {
+		it('Should show chars count and words count', () => {
 			const editor = getJodit({
 				language: 'en',
 				showCharsCounter: true,
@@ -29,8 +29,32 @@ describe('Stat plugin', function () {
 			);
 		});
 
-		describe('Count HTML Chars', function () {
-			it('Should show real HTML chars count', function () {
+		describe('Count spaces', () => {
+			it('Should show chars count with spaces', () => {
+				const editor = getJodit({
+					language: 'en',
+					showCharsCounter: true,
+					countTextSpaces: true,
+					showHTMLCharsCounter: true,
+					defaultTimeout: 0
+				});
+
+				editor.value =
+					'<p>Simple text</p>\n\n<p>Simple&nbsp;&nbsp;text</p>';
+				const statusbar =
+					editor.container.querySelector('.jodit-status-bar');
+
+				expect(
+					Number(/Chars: (\d+)+/.exec(statusbar.textContent)[1])
+				).equals(23);
+				expect(
+					Number(/Words: (\d+)+/.exec(statusbar.textContent)[1])
+				).equals(4);
+			});
+		});
+
+		describe('Count HTML Chars', () => {
+			it('Should show real HTML chars count', () => {
 				const editor = getJodit({
 					language: 'en',
 					showCharsCounter: true,
@@ -45,12 +69,14 @@ describe('Stat plugin', function () {
 				const statusbar =
 					editor.container.querySelector('.jodit-status-bar');
 
-				expect(statusbar.textContent.match(/Chars: 36/)).is.not.null;
+				expect(
+					Number(/Chars: (\d+)+/.exec(statusbar.textContent)[1])
+				).equals(36);
 			});
 		});
 
-		describe('Hide chars count', function () {
-			it('Should show only words count', function () {
+		describe('Hide chars count', () => {
+			it('Should show only words count', () => {
 				const editor = getJodit({
 					language: 'en',
 					showCharsCounter: false,
@@ -71,8 +97,8 @@ describe('Stat plugin', function () {
 			});
 		});
 
-		describe('Hide words count', function () {
-			it('Should show only chars count', function () {
+		describe('Hide words count', () => {
+			it('Should show only chars count', () => {
 				const editor = getJodit({
 					language: 'en',
 					showCharsCounter: true,
@@ -93,8 +119,8 @@ describe('Stat plugin', function () {
 			});
 		});
 
-		describe('Hide words and chars count', function () {
-			it('Should hide status bar', function () {
+		describe('Hide words and chars count', () => {
+			it('Should hide status bar', () => {
 				const editor = getJodit({
 					language: 'en',
 					showCharsCounter: false,

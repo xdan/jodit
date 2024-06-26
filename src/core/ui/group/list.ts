@@ -67,7 +67,7 @@ export class UIList<T extends IViewBased = IViewBased>
 	 */
 	get buttons(): IUIButton[] {
 		return this.allChildren.filter(elm =>
-			Component.isInstanceOf(elm, UIButton)
+			Component.isInstanceOf<UIButton>(elm, UIButton)
 		) as IUIButton[];
 	}
 

@@ -51,9 +51,19 @@ export class stat extends Plugin {
 		const text = this.j.text;
 
 		if (this.j.o.showCharsCounter && this.charCounter) {
-			const chars = this.j.o.countHTMLChars
-				? this.j.value
-				: text.replace(SPACE_REG_EXP(), '');
+			let chars: string;
+
+			if (this.j.o.countHTMLChars) {
+				chars = this.j.value;
+			} else {
+				if (this.j.o.countTextSpaces) {
+					chars = text
+						.replace(INVISIBLE_SPACE_REG_EXP(), '')
+						.replace(/[\r\n]/g, '');
+				} else {
+					chars = text.replace(SPACE_REG_EXP(), '');
+				}
+			}
 
 			this.charCounter.textContent = this.j.i18n(
 				'Chars: %d',

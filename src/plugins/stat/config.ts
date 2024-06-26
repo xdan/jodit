@@ -14,10 +14,12 @@ declare module 'jodit/config' {
 	interface Config {
 		showCharsCounter: boolean;
 		countHTMLChars: boolean;
+		countTextSpaces: boolean;
 		showWordsCounter: boolean;
 	}
 }
 
 Config.prototype.showCharsCounter = true;
 Config.prototype.countHTMLChars = false;
+Config.prototype.countTextSpaces = false;
 Config.prototype.showWordsCounter = true;

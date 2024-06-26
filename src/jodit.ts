@@ -1179,6 +1179,9 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				return elementSource.component;
 			}
 		} catch (e) {
+			if (!IS_PROD) {
+				throw e;
+			}
 			this.destruct();
 			throw e;
 		}

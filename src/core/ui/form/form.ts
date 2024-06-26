@@ -10,7 +10,7 @@
  * @module ui/form
  */
 
-import type { IDictionary, IUIForm, IUIInput, IUISelect } from 'jodit/types';
+import type { IDictionary, IUIForm } from 'jodit/types';
 import { Component } from 'jodit/core/component/component';
 import { component } from 'jodit/core/decorators/component/component';
 import { attr } from 'jodit/core/helpers/utils';
@@ -33,8 +33,8 @@ export class UIForm extends UIGroup implements IUIForm {
 
 	validate(): boolean {
 		const inputs = this.allChildren.filter(elm =>
-			Component.isInstanceOf(elm, UIInput)
-		) as IUIInput[];
+			Component.isInstanceOf<UIInput>(elm, UIInput)
+		);
 
 		for (const input of inputs) {
 			if (!input.validate()) {
@@ -43,8 +43,8 @@ export class UIForm extends UIGroup implements IUIForm {
 		}
 
 		const selects = this.allChildren.filter(elm =>
-			Component.isInstanceOf(elm, UISelect)
-		) as IUISelect[];
+			Component.isInstanceOf<UISelect>(elm, UISelect)
+		);
 
 		for (const select of selects) {
 			if (!select.validate()) {
@@ -58,8 +58,8 @@ export class UIForm extends UIGroup implements IUIForm {
 	onSubmit(handler: (data: IDictionary) => false | void): this {
 		this.j.e.on(this.container, 'submit', (): false => {
 			const inputs = this.allChildren.filter(elm =>
-				Component.isInstanceOf(elm, UIInput)
-			) as IUIInput[];
+				Component.isInstanceOf<UIInput>(elm, UIInput)
+			);
 
 			if (!this.validate()) {
 				return false;
