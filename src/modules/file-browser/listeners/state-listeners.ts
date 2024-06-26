@@ -171,7 +171,8 @@ export function stateListeners(this: IFileBrowser): void {
 						);
 
 						const action =
-							(actionName: string) => (e: MouseEvent) => {
+							(actionName: string) =>
+							(e: MouseEvent): void => {
 								this.e.fire(`${actionName}.filebrowser`, {
 									name,
 									path: normalizePath(source.path + '/'),

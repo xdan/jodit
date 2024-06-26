@@ -50,7 +50,7 @@ export function Confirm(
 	$label.appendChild(dialog.c.fromHTML(msg));
 	$div.appendChild($label);
 
-	const action = (yes: boolean) => () => {
+	const action = (yes: boolean) => (): void => {
 		if (!callback || callback(yes) !== false) {
 			dialog.close();
 		}
