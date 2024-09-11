@@ -142,7 +142,7 @@ module.exports = {
 	table: 'tableau',
 	image: 'image',
 	eraser: 'gomme',
-	paragraph: 'clause',
+	paragraph: 'paragraphe',
 	fontsize: 'taille de police',
 	video: 'Video',
 	font: 'police',
