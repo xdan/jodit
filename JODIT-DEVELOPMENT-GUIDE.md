@@ -1,10 +1,10 @@
 # Jodit Development Guide
 
-## Avoid Default Export
+## Avoid Using Default Exports
 
-To effectively track module usage, it is recommended not to use default exports.
+To improve module traceability, it's recommended to avoid default exports.
 
-Wrong:
+Incorrect:
 
 ```typescript
 export default class Some {}
@@ -12,7 +12,7 @@ export default class Some {}
 import Some from './some';
 ```
 
-Right:
+Correct:
 
 ```typescript
 export class Some {}
@@ -20,19 +20,19 @@ export class Some {}
 import { Some } from './some';
 ```
 
-## Prefer Full File Paths and Use the Jodit Namespace
+## Prefer Full File Paths and the Jodit Namespace
 
-For better tree-shaking, reduced code cohesion, and to avoid circular dependencies,
-it is preferable to use full file paths instead of shortcuts.
-Additionally, use the `jodit` namespace instead of relative paths.
+For better tree-shaking, reduced code coupling, and to avoid circular dependencies,
+use full file paths instead of shortcuts.
+Also, prefer the jodit namespace over relative paths.
 
-Wrong:
+Incorrect:
 
 ```typescript
 import { trim, isString, htmlspecialchars } from '../core/helpers';
 ```
 
-Right:
+Correct:
 
 ```typescript
 import { trim } from 'jodit/core/helpers/string/trim';
@@ -40,24 +40,24 @@ import { isString } from 'jodit/core/helpers/checkers/is-string';
 import { htmlspecialchars } from 'jodit/core/helpers/html/htmlspecialchars';
 ```
 
-If multiple modules are imported from the same place, you can use the most extreme shortcut.
+If you are importing multiple modules from the same path, use the shortest valid path.
 
-Wrong:
+Incorrect:
 
 ```typescript
 import { trim, isString, isUrl } from 'jodit/core/helpers';
 ```
 
-Right:
+Correct:
 
 ```typescript
 import { trim } from 'jodit/core/helpers/string/trim';
 import { isString, isUrl } from 'jodit/core/helpers/checkers';
 ```
 
-## Import order
+## Import Order
 
-Imports should follow the following order:
+Imports should be organized in the following order:
 
 -   Styles
 -
@@ -67,9 +67,9 @@ Imports should follow the following order:
 -   Local types
 -   Local modules
 
-> Don't forget to use the `type` keyword if you only need the type
+> Remember to use the type keyword if you're importing types only.
 
-Wrong:
+Incorrect:
 
 ```typescript
 import './config';
@@ -79,7 +79,7 @@ import { IJodit } from 'jodit/types';
 import './styles.less';
 ```
 
-Right:
+Correct:
 
 ```typescript
 import './styles.less';
@@ -91,10 +91,9 @@ import type { LocalType } from './interface';
 import './config';
 ```
 
-## Re-export Multiple Modules in a Folder's Index.ts
+## Re-export Multiple Modules in an index.ts File
 
-If a folder contains multiple modules,
-it is recommended to re-export them in the folder's `index.ts` file.
+If a folder contains multiple modules, it's recommended to re-export them in the folder's `index.ts` file.
 
 folder/subfolder/some.ts
 
@@ -123,4 +122,4 @@ folder/index.ts
 export * from "./subfolder"
 ```
 
-By following this structure, you can easily import the modules from their respective folders.
+This structure allows for easier imports from the respective folder.
