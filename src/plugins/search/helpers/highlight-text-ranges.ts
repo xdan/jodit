@@ -121,7 +121,8 @@ function checkNativeSelectionMethod(
 	if (
 		jodit.o.search.useCustomHighlightAPI &&
 		// @ts-ignore Because Highlight is not defined in the types TS 5.3.3
-		globalWindow && typeof globalWindow.Highlight !== 'undefined'
+		globalWindow &&
+		typeof globalWindow.Highlight !== 'undefined'
 	) {
 		const ranges = [rng, ...restRanges].map(rng => {
 			const range = jodit.selection.createRange();
