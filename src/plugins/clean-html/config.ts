@@ -28,9 +28,9 @@ declare module 'jodit/config' {
 			replaceOldTags: IDictionary<HTMLTagNames> | false;
 
 			/**
-			 * Use iframe[sandbox] to paste HTML code into the editor to check it for safety
-			 * Allows you not to run scripts and handlers, but it works much slower
-			 * @example
+			 * You can use an iframe with the sandbox attribute to safely paste and test HTML code.
+			 * It prevents scripts and handlers from running, but it does slow things down.
+			 *
 			 * ```javascript
 			 * Jodit.make('#editor', {
 			 * 	 cleanHTML: {

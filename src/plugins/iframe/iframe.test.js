@@ -26,6 +26,25 @@
 				});
 			});
 
+			describe('Set iframeSandbox', () => {
+				it('Should set sandbox attribute to iframe', done => {
+					unmockPromise();
+
+					getJodit({
+						iframe: true,
+						iframeSandbox: 'allow-scripts allow-presentation',
+						events: {
+							afterConstructor: function (editor) {
+								expect(
+									editor.iframe.getAttribute('sandbox')
+								).equals('allow-scripts allow-presentation');
+								done();
+							}
+						}
+					});
+				});
+			});
+
 			describe('And exec command', function () {
 				it('Should use body like editor area', function (done) {
 					unmockPromise();

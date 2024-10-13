@@ -94,6 +94,10 @@ export function iframe(editor: IJodit): void {
 			iframe.setAttribute('tabindex', opt.tabIndex.toString());
 			iframe.setAttribute('frameborder', '0');
 
+			if (opt.iframeSandbox != null) {
+				iframe.setAttribute('sandbox', opt.iframeSandbox);
+			}
+
 			editor.workplace.appendChild(iframe);
 			editor.iframe = iframe;
 

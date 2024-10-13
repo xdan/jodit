@@ -30,7 +30,7 @@ declare module 'jodit/config' {
 		 *
 		 * @example
 		 * ```javascript
-		 * new Jodit('#editor', {
+		 * Jodit.make('#editor', {
 		 *    iframe: true,
 		 *    iframeBaseUrl: 'https://xdsoft.net/jodit/docs/',
 		 * });
@@ -52,7 +52,7 @@ declare module 'jodit/config' {
 		 * Custom style to be used inside the iframe to display content.
 		 * @example
 		 * ```javascript
-		 * new Jodit('#editor', {
+		 * Jodit.make('#editor', {
 		 *    iframe: true,
 		 *    iframeStyle: 'html{margin: 0px;}',
 		 * })
@@ -65,13 +65,26 @@ declare module 'jodit/config' {
 		 *
 		 * @example
 		 * ```javascript
-		 * new Jodit('#editor', {
+		 * Jodit.make('#editor', {
 		 *    iframe: true,
 		 *    iframeCSSLinks: ['styles/default.css'],
 		 * })
 		 * ```
 		 */
 		iframeCSSLinks: string[];
+
+		/**
+		 * Custom sandbox attribute for the iframe.
+		 * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#sandbox
+		 * ```javascript
+		 * Jodit.make('#editor', {
+		 * 		iframe: true,
+		 * 		iframeSandbox: 'allow-scripts allow-same-origin'
+		 * });
+		 * ```
+		 * Empty string value means that all restrictions are enabled.
+		 */
+		iframeSandbox: string | null;
 	}
 }
 
@@ -146,3 +159,4 @@ Config.prototype.iframeStyle =
 	'-ms-user-select: none' +
 	'}';
 Config.prototype.iframeCSSLinks = [];
+Config.prototype.iframeSandbox = null;
