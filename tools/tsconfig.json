@@ -1,8 +1,8 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	"display": "Node 18",
+	"display": "Node 20",
 
-	"_version": "18.2.0",
+	"_version": "20.16.0",
 
 	"compilerOptions": {
 		"lib": ["es2023"],

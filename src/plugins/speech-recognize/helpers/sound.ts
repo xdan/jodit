@@ -27,8 +27,9 @@ export function sound({
 	type?: 'sine' | 'square' | 'sawtooth' | 'triangle';
 } = {}): void {
 	if (
-		typeof (globalWindow as any).AudioContext === 'undefined' &&
-		typeof (globalWindow as any).webkitAudioContext === 'undefined'
+		!globalWindow ||
+		(typeof (globalWindow as any).AudioContext === 'undefined' &&
+			typeof (globalWindow as any).webkitAudioContext === 'undefined')
 	) {
 		return;
 	}

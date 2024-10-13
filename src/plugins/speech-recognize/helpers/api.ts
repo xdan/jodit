@@ -9,7 +9,10 @@
  */
 
 import type { ISpeechRecognizeConstructor } from 'jodit/plugins/speech-recognize/interface';
+import { globalWindow } from 'jodit/core/constants';
 
-export const SpeechRecognition: ISpeechRecognizeConstructor =
-	(window as any).SpeechRecognition ||
-	(window as any).webkitSpeechRecognition;
+export const SpeechRecognition: ISpeechRecognizeConstructor | undefined =
+	globalWindow
+		? (globalWindow as any).SpeechRecognition ||
+			(globalWindow as any).webkitSpeechRecognition
+		: undefined;

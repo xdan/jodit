@@ -56,8 +56,8 @@ declare module 'jodit/config' {
 Config.prototype.useSearch = true;
 Config.prototype.search = {
 	lazyIdleTimeout: 0,
-	// @ts-ignore Because Highlight is not defined in the types TS 5.3.3
-	useCustomHighlightAPI: typeof globalWindow.Highlight !== 'undefined'
+	useCustomHighlightAPI:
+		globalWindow && typeof globalWindow.Highlight !== 'undefined'
 };
 
 Icon.set('search', searchIcon);

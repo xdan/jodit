@@ -40,10 +40,12 @@ export const SPACE_REG_EXP_START = (): RegExp => /^[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_END = (): RegExp => /[\s\n\t\r\uFEFF\u200b]+$/g;
 
 export const globalWindow: typeof window =
-	typeof window !== 'undefined' ? window : ({} as typeof window);
+	typeof window !== 'undefined' ? window : (undefined as typeof window);
 
 export const globalDocument: Document =
-	typeof document !== 'undefined' ? document : ({} as Document);
+	typeof document !== 'undefined'
+		? document
+		: (undefined as unknown as Document);
 
 export const IS_BLOCK =
 	/^(ADDRESS|ARTICLE|ASIDE|BLOCKQUOTE|CANVAS|DD|DFN|DIV|DL|DT|FIELDSET|FIGCAPTION|FIGURE|FOOTER|FORM|H[1-6]|HEADER|HGROUP|HR|LI|MAIN|NAV|NOSCRIPT|OUTPUT|P|PRE|RUBY|SCRIPT|STYLE|OBJECT|OL|SECTION|IFRAME|JODIT|JODIT-MEDIA|UL|TR|TD|TH|TBODY|THEAD|TFOOT|TABLE|BODY|HTML|VIDEO)$/i;
@@ -196,7 +198,7 @@ export const INSERT_ONLY_TEXT = 'insert_only_text';
 export const SAFE_COUNT_CHANGE_CALL = 10;
 
 export const IS_MAC =
-	typeof window !== 'undefined' &&
+	typeof globalWindow !== 'undefined' &&
 	/Mac|iPod|iPhone|iPad/.test(globalWindow.navigator.platform);
 
 export const KEY_ALIASES: IDictionary<string> = {

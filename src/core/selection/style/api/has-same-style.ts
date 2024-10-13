@@ -42,11 +42,13 @@ export function hasSameStyle(elm: Node, rules: IStyle): boolean {
 	);
 }
 
-const elm = globalDocument.createElement('div');
-elm.style.color = 'red';
-assert(hasSameStyle(elm, { color: 'red' }), 'Style test');
-assert(hasSameStyle(elm, { fontSize: null }), 'Style test');
-assert(hasSameStyle(elm, { fontSize: '' }), 'Style test');
+if (globalDocument) {
+	const elm = globalDocument.createElement('div');
+	elm.style.color = 'red';
+	assert(hasSameStyle(elm, { color: 'red' }), 'Style test');
+	assert(hasSameStyle(elm, { fontSize: null }), 'Style test');
+	assert(hasSameStyle(elm, { fontSize: '' }), 'Style test');
+}
 
 /**
  * Element has the similar styles keys
@@ -63,8 +65,13 @@ export function hasSameStyleKeys(elm: Node, rules: IStyle): boolean {
 	);
 }
 
-const elm2 = globalDocument.createElement('div');
-elm2.style.color = 'red';
-assert(hasSameStyleKeys(elm2, { color: 'red' }), 'Style test');
-assert(!hasSameStyleKeys(elm2, { font: 'Arial', color: 'red' }), 'Style test');
-assert(!hasSameStyleKeys(elm2, { border: '1px solid #ccc' }), 'Style test');
+if (globalDocument) {
+	const elm2 = globalDocument.createElement('div');
+	elm2.style.color = 'red';
+	assert(hasSameStyleKeys(elm2, { color: 'red' }), 'Style test');
+	assert(
+		!hasSameStyleKeys(elm2, { font: 'Arial', color: 'red' }),
+		'Style test'
+	);
+	assert(!hasSameStyleKeys(elm2, { border: '1px solid #ccc' }), 'Style test');
+}
