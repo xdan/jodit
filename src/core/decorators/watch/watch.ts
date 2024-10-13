@@ -83,7 +83,6 @@ export function watch(
 					let ctx = context;
 
 					if (objectPath.length) {
-						// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 						ctx = component.get<CanUndef<object>>(objectPath)!;
 					}
 

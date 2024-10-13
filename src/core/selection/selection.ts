@@ -809,6 +809,7 @@ export class Selection implements ISelect {
 	/**
 	 * Call callback for all selection node
 	 */
+	// eslint-disable-next-line complexity
 	eachSelection(callback: (current: Node) => void): void {
 		const sel = this.sel;
 

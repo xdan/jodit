@@ -32,7 +32,7 @@ if (
 	constants.ES === 'es5' &&
 	typeof window !== 'undefined'
 ) {
-	require('./polyfills');
+	import('./polyfills');
 }
 
 // JODIT-SECTION-END:POLYFILLS

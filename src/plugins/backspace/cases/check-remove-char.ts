@@ -29,6 +29,7 @@ import { findMostNestedNeighbor } from 'jodit/plugins/backspace/helpers';
  * ```
  * @private
  */
+// eslint-disable-next-line complexity
 export function checkRemoveChar(
 	jodit: IJodit,
 	fakeNode: Node,

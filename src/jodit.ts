@@ -87,6 +87,7 @@ const __defaultClassesKey = 'data-jodit-default-classes';
 /**
  * Class Jodit. Main class
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Jodit extends Dlgs {}
 
 @derive(Dlgs)

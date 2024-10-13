@@ -58,6 +58,7 @@ import { FileBrowserFiles, FileBrowserTree } from './ui';
 
 import './styles/index.less';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FileBrowser extends Dlgs {}
 
 @derive(Dlgs)
@@ -92,7 +93,6 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		return makeDataProvider(this, this.options);
 	}
 
-	// eslint-disable-next-line no-unused-vars
 	private onSelect(
 		callback?: (_: IFileBrowserCallBackData) => void
 	): CallbackFunction {

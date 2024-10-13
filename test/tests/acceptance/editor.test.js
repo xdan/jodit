@@ -33,55 +33,46 @@ describe('Jodit Editor Tests', function () {
 			describe('Undefined,null,false,bad seelctor,function,number, text node', function () {
 				it('Should be not valid selector', function () {
 					expect(function () {
-						// eslint-disable-next-line no-new
 						Jodit.make(0);
 					}).to.throw(Error);
 
 					expect(function () {
-						// eslint-disable-next-line no-new
 						Jodit.make();
 					}).to.throw(Error);
 
 					expect(function () {
-						// eslint-disable-next-line no-new
 						Jodit.make(null);
 					}).to.throw(Error);
 
 					expect(function () {
-						// eslint-disable-next-line no-new
 						Jodit.make(false);
 					}).to.throw(Error);
 
 					expect(function () {
-						// eslint-disable-next-line no-new
 						Jodit.make('.salomon');
 					}).to.throw(Error);
 
 					expect(function () {
-						// eslint-disable-next-line no-new
 						Jodit.make('>asdsad.salomon');
 					}).to.throw(Error);
 
 					expect(function () {
-						// eslint-disable-next-line no-new
 						Jodit.make(function () {});
 					}).to.throw(Error);
 
 					expect(function () {
-						// eslint-disable-next-line no-new
 						Jodit.make(233);
 					}).to.throw(Error);
 
 					const elm = document.createTextNode('stop');
 					expect(function () {
-						// eslint-disable-next-line no-new
 						Jodit.make(elm);
 					}).to.throw(Error);
 				});
 			});
 
 			describe('HTMLTextAreaElement', function () {
-				it('Should be instance of HTMLElement', function () {
+				it('Should be instanced of HTMLElement', function () {
 					const area = appendTestArea('editor2');
 
 					const editor2 = getJodit(undefined, area);

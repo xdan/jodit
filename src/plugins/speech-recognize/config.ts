@@ -135,7 +135,7 @@ Config.prototype.controls.speechRecognize = {
 
 			api.lang = isString(lang)
 				? lang
-				: attr(jodit.od.documentElement, 'lang') ?? undefined;
+				: (attr(jodit.od.documentElement, 'lang') ?? undefined);
 
 			api.continuous = continuous;
 			api.interimResults = interimResults;

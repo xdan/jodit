@@ -6,7 +6,6 @@
 
 /* eslint no-unused-vars: 0 */
 /* eslint-disable tsdoc/syntax */
-/* eslint-disable complexity */
 
 const box = document.createElement('div');
 document.body.appendChild(box);
@@ -300,8 +299,7 @@ function mockAjax() {
 				}
 			});
 
-			// eslint-disable-next-line complexity
-			return new Promise(function (resolve) {
+			return new Promise(resolve => {
 				switch (action) {
 					case 'folderCreate': {
 						temp.folderName = ajax.options.data.name;

@@ -76,7 +76,7 @@ export class CommitStyle implements ICommitStyle {
 		return this.elementIsBlock ? 'p' : 'span';
 	}
 
-	get elementIsDefault(): Boolean {
+	get elementIsDefault(): boolean {
 		return this.element === this.defaultTag;
 	}
 

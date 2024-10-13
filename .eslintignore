@@ -1,7 +1,0 @@
-node_modules
-test/loader.js
-build
-types
-examples/assets/prism.js
-examples/build/
-!/test-results/

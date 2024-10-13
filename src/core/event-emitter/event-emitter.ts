@@ -342,7 +342,7 @@ export class EventEmitter implements IEventEmitter {
 									passive: true,
 									capture: options?.capture ?? false
 								}
-							: options?.capture ?? false;
+							: (options?.capture ?? false);
 
 					syntheticCallback.options = eOpts;
 

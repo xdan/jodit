@@ -541,7 +541,6 @@ export default class DataProvider implements IFileBrowserDataProvider {
 			};
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const query = this.o[type]!;
 
 		if (query.data === undefined) {
