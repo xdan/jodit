@@ -38,6 +38,8 @@ describe('Edit image tests', () => {
 		const img = editor.editor.querySelector('img');
 
 		await img.decode();
+		await waitForImageLoaded(img);
+		await waitForCondition(() => img.offsetWidth > 0);
 
 		simulateEvent('dblclick', img);
 
@@ -47,6 +49,8 @@ describe('Edit image tests', () => {
 		}
 
 		await waitForImageDialogReady(editor);
+
+		await editor.async.requestIdlePromise();
 
 		const form = getForm(dialog);
 		const imageWidth = form.getElm('imageWidth');
@@ -311,6 +315,7 @@ describe('Edit image tests', () => {
 
 				input.value = 'fast12';
 				simulateEvent('change', input);
+
 				clickButton('ok', refs.dialog);
 
 				expect(sortAttributes(refs.editor.value)).equals(
@@ -356,6 +361,7 @@ describe('Edit image tests', () => {
 					input.value = 'right';
 					simulateEvent('change', input);
 
+					await refs.editor.async.requestIdlePromise();
 					clickButton('ok', refs.dialog);
 
 					expect(sortAttributes(refs.editor.value)).equals(
@@ -378,6 +384,7 @@ describe('Edit image tests', () => {
 					input.value = 'center';
 					simulateEvent('change', input);
 
+					await refs.editor.async.requestIdlePromise();
 					clickButton('ok', refs.dialog);
 
 					expect(sortAttributes(refs.editor.value)).equals(
@@ -402,6 +409,7 @@ describe('Edit image tests', () => {
 					input.value = '';
 					simulateEvent('change', input);
 
+					await refs.editor.async.requestIdlePromise();
 					clickButton('ok', refs.dialog);
 
 					expect(sortAttributes(refs.editor.value)).equals(
@@ -433,6 +441,8 @@ describe('Edit image tests', () => {
 
 					marginTop.value = 100;
 					simulateEvent('change', marginTop);
+
+					await refs.editor.async.requestIdlePromise();
 					clickButton('ok', refs.dialog);
 
 					expect(sortAttributes(refs.editor.value)).equals(
@@ -479,6 +489,7 @@ describe('Edit image tests', () => {
 					marginLeft.value = 220;
 					simulateEvent('change', marginLeft);
 
+					await refs.editor.async.requestIdlePromise();
 					clickButton('ok', refs.dialog);
 
 					expect(sortAttributes(refs.editor.value)).equals(
@@ -500,6 +511,8 @@ describe('Edit image tests', () => {
 
 				input.value = 'Stop';
 				simulateEvent('change', input);
+
+				await refs.editor.async.requestIdlePromise();
 				clickButton('ok', refs.dialog);
 
 				expect(sortAttributes(refs.editor.value)).equals(
@@ -520,6 +533,8 @@ describe('Edit image tests', () => {
 
 				input.value = 'Stop';
 				simulateEvent('change', input);
+
+				await refs.editor.async.requestIdlePromise();
 				clickButton('ok', refs.dialog);
 
 				expect(sortAttributes(refs.editor.value)).equals(
@@ -541,6 +556,7 @@ describe('Edit image tests', () => {
 				input.value = 'https://xdsoft.net/';
 				simulateEvent('change', input);
 
+				await refs.editor.async.requestIdlePromise();
 				clickButton('ok', refs.dialog);
 
 				expect(sortAttributes(refs.editor.value)).equals(
@@ -565,6 +581,7 @@ describe('Edit image tests', () => {
 					checkbox.checked = true;
 					simulateEvent('change', checkbox);
 
+					await refs.editor.async.requestIdlePromise();
 					clickButton('ok', refs.dialog);
 
 					expect(sortAttributes(refs.editor.value)).equals(
@@ -592,6 +609,7 @@ describe('Edit image tests', () => {
 					checkbox.checked = false;
 					simulateEvent('change', checkbox);
 
+					await refs.editor.async.requestIdlePromise();
 					clickButton('ok', refs.dialog);
 
 					expect(sortAttributes(refs.editor.value)).equals(
@@ -618,6 +636,7 @@ describe('Edit image tests', () => {
 					checkbox.checked = false;
 					simulateEvent('change', checkbox);
 
+					await refs.editor.async.requestIdlePromise();
 					clickButton('ok', refs.dialog);
 
 					expect(sortAttributes(refs.editor.value)).equals(
@@ -637,7 +656,7 @@ describe('Edit image tests', () => {
 					});
 
 					describe('were not changed', () => {
-						it('should not set style', () => {
+						it('should not set style', async () => {
 							expect(refs.imageWidth.value).equals(
 								refs.img.offsetWidth.toString()
 							);
@@ -646,6 +665,7 @@ describe('Edit image tests', () => {
 							);
 							expect(refs.form.getMod('lock-size')).is.true;
 
+							await refs.editor.async.requestIdlePromise();
 							clickButton('Apply', refs.dialog);
 
 							expect(sortAttributes(refs.editor.value)).equals(
@@ -655,10 +675,11 @@ describe('Edit image tests', () => {
 					});
 
 					describe('were changed', () => {
-						it('should set correct style', () => {
+						it('should set correct style', async () => {
 							refs.imageWidth.value = 100;
 							simulateEvent('change', refs.imageWidth);
 
+							await refs.editor.async.requestIdlePromise();
 							clickButton('Apply', refs.dialog);
 
 							expect(sortAttributes(refs.editor.value)).equals(
@@ -684,6 +705,7 @@ describe('Edit image tests', () => {
 
 						expect(refs.imageHeight.value).equals(previousHeight);
 
+						await refs.editor.async.requestIdlePromise();
 						clickButton('Apply', refs.dialog);
 
 						expect(sortAttributes(refs.editor.value)).equals(
@@ -717,6 +739,7 @@ describe('Edit image tests', () => {
 					simulateEvent('change', refs.imageHeight);
 					expect(refs.imageWidth.value).does.not.equal('100');
 
+					await refs.editor.async.requestIdlePromise();
 					clickButton('ok', refs.dialog);
 
 					expect(sortAttributes(refs.editor.value)).equals(
@@ -741,6 +764,7 @@ describe('Edit image tests', () => {
 						simulateEvent('change', refs.imageHeight);
 						expect(refs.imageWidth.value).equals('356');
 
+						await refs.editor.async.requestIdlePromise();
 						clickButton('ok', refs.dialog);
 
 						expect(sortAttributes(refs.editor.value)).equals(
@@ -767,6 +791,7 @@ describe('Edit image tests', () => {
 							simulateEvent('change', refs.imageHeight);
 							expect(refs.imageWidth.value).equals('356');
 
+							await refs.editor.async.requestIdlePromise();
 							clickButton('ok', refs.dialog);
 
 							expect(sortAttributes(refs.editor.value)).equals(
@@ -784,6 +809,7 @@ describe('Edit image tests', () => {
 								expect(refs.imageHeight.value).equals('30rem');
 								expect(refs.form.getMod('lock-size')).is.false;
 
+								await refs.editor.async.requestIdlePromise();
 								clickButton('ok', refs.dialog);
 
 								expect(
@@ -815,6 +841,7 @@ describe('Edit image tests', () => {
 						simulateEvent('change', refs.imageHeight);
 						expect(refs.imageWidth.value).equals('200');
 
+						await refs.editor.async.requestIdlePromise();
 						clickButton('ok', refs.dialog);
 
 						expect(sortAttributes(refs.editor.value)).equals(
@@ -841,6 +868,7 @@ describe('Edit image tests', () => {
 							simulateEvent('change', refs.imageHeight);
 							expect(refs.imageWidth.value).equals('200');
 
+							await refs.editor.async.requestIdlePromise();
 							clickButton('ok', refs.dialog);
 
 							expect(sortAttributes(refs.editor.value)).equals(
@@ -878,6 +906,7 @@ describe('Edit image tests', () => {
 					simulateEvent('change', refs.imageHeight);
 					expect(refs.imageWidth.value).equals('100');
 
+					await refs.editor.async.requestIdlePromise();
 					clickButton('ok', refs.dialog);
 
 					expect(sortAttributes(refs.editor.value)).equals(
@@ -890,6 +919,7 @@ describe('Edit image tests', () => {
 						const refs = await openImagePropertiesDialog(
 							'<p><img alt="111" width="45px" height="212px" src="tests/artio.jpg"/></p>'
 						);
+						await refs.editor.async.requestIdlePromise();
 						expect(refs.form.getMod('lock-size')).is.false;
 					});
 				});
@@ -917,6 +947,7 @@ describe('Edit image tests', () => {
 						simulateEvent('change', refs.imageHeight);
 						expect(refs.imageWidth.value).does.not.equal('100');
 
+						await refs.editor.async.requestIdlePromise();
 						clickButton('ok', refs.dialog);
 
 						expect(sortAttributes(refs.editor.value)).equals(

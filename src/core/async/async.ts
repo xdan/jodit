@@ -64,8 +64,8 @@ export class Async implements IAsync {
 			this.clearLabel(options.label);
 		}
 
-		const timer = setTimeout(callback, timeout, ...args),
-			key = options.label || timer;
+		const timer = setTimeout(callback, timeout, ...args);
+		const key = options.label || timer;
 
 		this.timers.set(key, timer);
 		this.__callbacks.set(key, callback);

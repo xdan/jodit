@@ -15,18 +15,22 @@
 			language: 'en'
 		};
 
+		let timers;
+
 		beforeEach(() => {
+			timers = mockTimers();
 			box.style.minHeight = '300px';
 			box.style.padding = '50px';
 		});
 
 		afterEach(() => {
+			timers.cleanup();
 			box.style.minHeight = '';
 			box.style.padding = '';
 		});
 
-		describe('Native tooltip', function () {
-			it('Should have different tooltip for each language', function () {
+		describe('Native tooltip', () => {
+			it('Should have different tooltip for each language', () => {
 				const editor = getJodit({
 					...OPTIONS,
 					useNativeTooltip: true
@@ -58,7 +62,7 @@
 			});
 		});
 
-		describe('Jodit tooltip', function () {
+		describe('Jodit tooltip', () => {
 			let editor, button1, button2, button3;
 
 			function getTooltipElm() {
@@ -75,65 +79,65 @@
 				await editor.async.requestIdlePromise();
 			});
 
-			describe('On enter button', async () => {
-				it('Should show tooltip', async () => {
+			describe('On enter button', () => {
+				it('Should show tooltip', () => {
 					simulateEvent('mouseenter', button1.parentElement);
-					await delay(100);
+					timers.delay(100);
 					const tooltip = getTooltipElm();
 					expect(tooltip).is.not.null;
 					expect(tooltip.textContent).equals('Bold');
 				});
 
-				describe('On leave button', async () => {
-					it('Should hide tooltip', async () => {
+				describe('On leave button', () => {
+					it('Should hide tooltip', () => {
 						simulateEvent('mouseenter', button1.parentElement);
-						await delay(100);
+						timers.delay(100);
 						expect(getTooltipElm().textContent).equals('Bold');
 						simulateEvent('mouseleave', button1.parentElement);
-						await delay(100);
+						timers.delay(100);
 						const tooltip = getTooltipElm();
 						expect(tooltip.textContent).equals('');
 					});
 				});
 
-				describe('On leave editor', async () => {
-					it('Should hide tooltip', async () => {
+				describe('On leave editor', () => {
+					it('Should hide tooltip', () => {
 						simulateEvent('mouseenter', button1.parentElement);
-						await delay(100);
+						timers.delay(100);
 						expect(getTooltipElm().textContent).equals('Bold');
 						simulateEvent('mouseleave', editor.container);
-						await delay(100);
+						timers.delay(100);
 						expect(getTooltipElm().textContent).equals('');
 					});
 				});
 
-				describe('On scroll page', async () => {
-					it('Should hide tooltip', async () => {
+				describe('On scroll page', () => {
+					it('Should hide tooltip', () => {
 						simulateEvent('mouseenter', button1.parentElement);
-						await delay(100);
+						timers.delay(100);
 						expect(getTooltipElm().textContent).equals('Bold');
 
 						simulateEvent('scroll', editor.ownerWindow);
 
-						await delay(100);
+						timers.delay(100);
 						expect(getTooltipElm().textContent).equals('');
 					});
 				});
 
-				describe('Inside popup', async () => {
-					it('Should show tooltip', async () => {
+				describe('Inside popup', () => {
+					it('Should show tooltip', () => {
 						editor.value = '<p><a href="index.html">test</a></p>';
 						simulateEvent(
 							'click',
 							editor.editor.querySelector('a')
 						);
-						await editor.async.requestIdlePromise();
+
 						const popup = getOpenedPopup(editor);
 						expect(popup).is.not.null;
 						const editLink = getButton('link', popup);
 						expect(editLink).is.not.null;
 						simulateEvent('mouseenter', editLink.parentElement);
-						await delay(100);
+						timers.delay(100);
 						const tooltip = getTooltipElm();
 						expect(tooltip).is.not.null;
 						expect(tooltip.textContent).equals('Edit link');
@@ -141,13 +145,14 @@
 				});
 			});
 
-			it('Should have different tooltip for each language', async () => {
+			it('Should have different tooltip for each language', () => {
 				simulateEvent('mouseenter', button1.parentElement);
-				await delay(100);
+				timers.delay(100);
 				let tooltip = getTooltipElm();
 				expect(tooltip).is.not.null;
 
 				const title = tooltip.textContent;
+
 				editor.destruct();
 
 				editor = getJodit({
@@ -164,7 +169,7 @@
 				button1 = getButton('bold', editor);
 				expect(button1).is.not.null;
 				simulateEvent('mouseenter', button1.parentElement); // toolbar-button
-				await delay(100);
+				timers.delay(100);
 				tooltip = getTooltipElm();
 
 				expect(tooltip).is.not.null;
@@ -182,10 +187,10 @@
 			describe('Show one tooltip button', () => {
 				let tooltip, title;
 
-				beforeEach(async () => {
+				beforeEach(() => {
 					simulateEvent('mouseenter', button1.parentElement);
 
-					await delay(100);
+					timers.delay(100);
 					tooltip = getTooltipElm();
 
 					expect(tooltip).is.not.null;
@@ -196,10 +201,10 @@
 				});
 
 				describe('Fast enter other button', () => {
-					it('Should show different tooltip', async () => {
-						await delay(10);
+					it('Should show different tooltip', () => {
+						timers.delay(10);
 						simulateEvent('mouseenter', button2.parentElement);
-						await delay(100);
+						timers.delay(100);
 						tooltip = getTooltipElm();
 						expect(tooltip).is.not.null;
 						expect(tooltip.textContent).equals('Italic');
@@ -207,28 +212,28 @@
 					});
 
 					describe('Through other buttons', () => {
-						it('Should show last tooltip', async () => {
-							await delay(10);
+						it('Should show last tooltip', () => {
+							timers.delay(10);
 							simulateEvent('mouseleave', button1.parentElement);
-							await delay(10);
+							timers.delay(10);
 							simulateEvent('mouseenter', button2.parentElement);
-							await delay(10);
+							timers.delay(10);
 							simulateEvent('mouseleave', button2.parentElement);
-							await delay(10);
+							timers.delay(10);
 							simulateEvent('mouseenter', button3.parentElement);
-							await delay(100);
+							timers.delay(100);
 							tooltip = getTooltipElm();
 							expect(tooltip.textContent).equals('Underline');
 						});
 					});
 
 					describe('Fast leave', () => {
-						it('Should not show any tooltip', async () => {
-							await delay(10);
+						it('Should not show any tooltip', () => {
+							timers.delay(10);
 							simulateEvent('mouseenter', button2.parentElement);
-							await delay(10);
+							timers.delay(10);
 							simulateEvent('mouseleave', button2.parentElement);
-							await delay(100);
+							timers.delay(100);
 							tooltip = getTooltipElm();
 							expect(tooltip.textContent).equals('');
 						});

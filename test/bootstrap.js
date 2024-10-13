@@ -41,6 +41,68 @@ function unmockPromise() {
 	window.Promise = naturalPromise;
 }
 
+let mockTimersCb = [];
+
+const originalSetTimeout = window.setTimeout;
+const originalClearTimeout = window.clearTimeout;
+
+/**
+ * Mock timers
+ * ```javascript
+ * let timers;
+ * beforeEach(() => {
+ *   timers = mockTimers();
+ * });
+ * afterEach(() => {
+ *   timers.cleanup();
+ * })
+ * it('test', () => {
+ *   timers.delay(100);
+ *   timers.runAll();
+ * });
+ * ```
+ * @returns {{delay(*): void, cleanup(): void, runAll(): void}}
+ */
+function mockTimers() {
+	mockTimersCb = [];
+
+	window.setTimeout = function (fn, delay) {
+		mockTimersCb.push({
+			fn,
+			activationTime: Date.now() + delay
+		});
+		return mockTimersCb.length - 1;
+	};
+
+	window.clearTimeout = function (id) {
+		mockTimersCb[id] = null;
+	};
+
+	return {
+		delay(time) {
+			const now = Date.now();
+			for (let i = 0; i < mockTimersCb.length; i += 1) {
+				const timer = mockTimersCb[i];
+				if (timer && now + time >= timer.activationTime) {
+					timer.fn();
+					mockTimersCb[i] = null;
+				}
+			}
+		},
+		cleanup() {
+			window.setTimeout = originalSetTimeout;
+			window.clearTimeout = originalClearTimeout;
+			mockTimersCb = [];
+		},
+		runAll() {
+			mockTimersCb.forEach(fn => {
+				fn && fn();
+			});
+			mockTimersCb = [];
+		}
+	};
+}
+
 if (typeof window.skipTest === 'undefined') {
 	window.skipTest = {};
 }
@@ -56,6 +118,7 @@ if (typeof window.toolbarButtonsCount !== 'number') {
  *
  * @param {number} timeout
  * @return {*}
+ * @deprecated Use mockTimers instead and mockTimers().delay
  */
 function delay(timeout) {
 	return new naturalPromise(resolve => {
@@ -85,6 +148,54 @@ function waitingForEvent(editor, event, timeout = 1000) {
 		editor.e.one(event, () => {
 			clearTimeout(timer);
 			resolve();
+		});
+	});
+}
+
+/**
+ * Waiting for image loaded
+ * ```js
+ * let image = new Image();
+ * image.src = 'https://xdsoft.net/jodit/images/artio.jpg';
+ * await waitForImageLoaded(image);
+ * ```
+ * @param {HTMLImageElement} image
+ * @returns {Promise<void>}
+ */
+function waitForImageLoaded(image) {
+	return new naturalPromise(resolve => {
+		if (image.complete) {
+			resolve();
+		} else {
+			image.onload = resolve;
+		}
+	});
+}
+
+/**
+ * Waiting for condition
+ * ```js
+ * await waitForCondition(() => {
+ *  return document.querySelector('.jodit');
+ * }, 1000);
+ * ```
+ * @param condition
+ * @param timeout
+ * @returns {*}
+ */
+function waitForCondition(condition, timeout = 1000) {
+	return new naturalPromise((resolve, reject) => {
+		let time = Date.now();
+		requestAnimationFrame(function check() {
+			if (Date.now() - time > timeout) {
+				reject('Timeout waitForCondition');
+			} else {
+				if (condition()) {
+					resolve();
+				} else {
+					requestAnimationFrame(check);
+				}
+			}
 		});
 	});
 }
@@ -375,6 +486,7 @@ if (typeof window.chai !== 'undefined') {
 
 const i18nkeys = new Set();
 const excludeI18nKeys = new Set([
+	'символ',
 	'test',
 	'speechRecognize',
 	'quote',
