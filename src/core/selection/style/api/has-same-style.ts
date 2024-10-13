@@ -5,6 +5,7 @@
  */
 
 import type { IStyle } from 'jodit/types';
+import { globalDocument } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';
 import { normalizeCssValue } from 'jodit/core/helpers/normalize/normalize-css-value';
@@ -41,7 +42,7 @@ export function hasSameStyle(elm: Node, rules: IStyle): boolean {
 	);
 }
 
-const elm = document.createElement('div');
+const elm = globalDocument.createElement('div');
 elm.style.color = 'red';
 assert(hasSameStyle(elm, { color: 'red' }), 'Style test');
 assert(hasSameStyle(elm, { fontSize: null }), 'Style test');
@@ -62,7 +63,7 @@ export function hasSameStyleKeys(elm: Node, rules: IStyle): boolean {
 	);
 }
 
-const elm2 = document.createElement('div');
+const elm2 = globalDocument.createElement('div');
 elm2.style.color = 'red';
 assert(hasSameStyleKeys(elm2, { color: 'red' }), 'Style test');
 assert(!hasSameStyleKeys(elm2, { font: 'Arial', color: 'red' }), 'Style test');

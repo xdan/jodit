@@ -28,6 +28,7 @@ UGLIFY_ESM := false
 CHANGELOG_URL := https://github.com/xdan/jodit/blob/main/CHANGELOG.md
 NODE_MODULES_BIN := ./node_modules/.bin
 TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project $(cwd)tools/tsconfig.json
+TSX_BASE := $(NODE_MODULES_BIN)/tsx
 WEBPACK := $(TS_NODE_BASE) $(NODE_MODULES_BIN)/webpack
 KARMA := @TS_NODE_TRANSPILE_ONLY=true $(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
 
@@ -141,6 +142,10 @@ esm:
 	@echo "ESM build not yet available"
 endif
 
+.PHONY: check-esm-build
+check-esm-build:
+	@echo 'Check esm modules ...'
+	@$(TSX_BASE) $(cwd)/tools/check-esm-build.ts
 
 .PHONY: build-all
 build-all:

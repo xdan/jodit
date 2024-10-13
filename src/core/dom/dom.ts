@@ -21,6 +21,7 @@ import type {
 } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import {
+	globalDocument,
 	INSEPARABLE_TAGS,
 	LIST_TAGS,
 	NO_EMPTY_TAGS,
@@ -1018,7 +1019,7 @@ export class Dom {
 		filter: (node: Node) => boolean = (): boolean => true
 	): void {
 		const fragment: DocumentFragment = (
-			from.ownerDocument || document
+			from.ownerDocument || globalDocument
 		).createDocumentFragment();
 
 		toArray(from.childNodes)

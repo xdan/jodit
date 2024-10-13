@@ -8,6 +8,8 @@
  * @module helpers/checker
  */
 
+import { globalDocument } from 'jodit/core/constants';
+
 /**
  * Check if browser has a color picker (a new HTML5 attribute for input tag)
  */
@@ -15,7 +17,7 @@ export function hasBrowserColorPicker(): boolean {
 	let supportsColor = true;
 
 	try {
-		const a = document.createElement('input');
+		const a = globalDocument.createElement('input');
 
 		a.type = 'color';
 		a.value = '!';

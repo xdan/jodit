@@ -20,6 +20,7 @@ import type {
 	RejectablePromise
 } from 'jodit/types';
 import { Async } from 'jodit/core/async';
+import { globalWindow } from 'jodit/core/constants';
 import { autobind } from 'jodit/core/decorators/autobind/autobind';
 import {
 	buildQuery,
@@ -77,7 +78,7 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 
 		if (
 			isString(obj) ||
-			obj instanceof window.FormData ||
+			obj instanceof globalWindow.FormData ||
 			(typeof obj === 'object' && obj != null && isFunction(obj.append))
 		) {
 			return obj as string | FormData;

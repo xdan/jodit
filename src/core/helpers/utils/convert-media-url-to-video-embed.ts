@@ -8,6 +8,7 @@
  * @module helpers/utils
  */
 
+import { globalDocument } from 'jodit/core/constants';
 import { isURL } from 'jodit/core/helpers/checker/is-url';
 
 import { parseQuery } from './parse-query';
@@ -24,7 +25,7 @@ export const convertMediaUrlToVideoEmbed = (
 		return url;
 	}
 
-	const parser: HTMLAnchorElement = document.createElement('a'),
+	const parser: HTMLAnchorElement = globalDocument.createElement('a'),
 		pattern1: RegExp = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
 
 	parser.href = url;

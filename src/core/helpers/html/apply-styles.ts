@@ -8,7 +8,7 @@
  * @module helpers/html
  */
 
-import { IS_PROD } from 'jodit/core/constants';
+import { globalDocument, IS_PROD } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { trim } from 'jodit/core/helpers/string/trim';
 import { $$ } from 'jodit/core/helpers/utils/selector';
@@ -44,10 +44,10 @@ export function applyStyles(html: string): string {
 	html = html.substring(html.indexOf('<html '), html.length);
 	html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
 
-	const iframe = document.createElement('iframe');
+	const iframe = globalDocument.createElement('iframe');
 
 	iframe.style.display = 'none';
-	document.body.appendChild(iframe);
+	globalDocument.body.appendChild(iframe);
 
 	let convertedString: string = '',
 		collection: HTMLElement[] = [];

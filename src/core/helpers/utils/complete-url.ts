@@ -4,12 +4,14 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import { globalWindow } from 'jodit/core/constants';
+
 /**
  * @module helpers/utils
  */
 
 export const completeUrl = (url: string): string => {
-	if (window.location.protocol === 'file:' && /^\/\//.test(url)) {
+	if (globalWindow.location.protocol === 'file:' && /^\/\//.test(url)) {
 		url = 'https:' + url;
 	}
 

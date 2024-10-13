@@ -8,6 +8,7 @@
  * @module helpers/utils
  */
 
+import { globalDocument } from 'jodit/core/constants';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 
 /**
@@ -21,8 +22,8 @@ export const defaultLanguage = (
 		return language;
 	}
 
-	if (document.documentElement && document.documentElement.lang) {
-		return document.documentElement.lang;
+	if (globalDocument.documentElement && globalDocument.documentElement.lang) {
+		return globalDocument.documentElement.lang;
 	}
 
 	if (navigator.language) {

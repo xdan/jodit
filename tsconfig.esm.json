@@ -35,13 +35,13 @@
 
 		"importHelpers": true,
 
-		"lib": ["es5", "esnext", "dom", "scripthost", "es2015.iterable"],
+		"lib": ["esnext", "dom", "scripthost", "es2015.iterable"],
 
 		"baseUrl": ".",
 		"paths": {
 			"jodit/*": ["./src/*"]
 		},
-		"types": ["./src/typings.d.ts", "./index.d.ts", "./node_modules/@types/ace", "./node_modules/@types/node/index.d.ts"]
+		"types": ["./src/typings.d.ts", "./index.d.ts", "./node_modules/@types/ace", "./node_modules/@types/node"]
 	},
 	"files": ["./src/index.ts"],
 	"exclude": ["./node_modules", "./build", "./tools"]

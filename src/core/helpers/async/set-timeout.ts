@@ -8,6 +8,8 @@
  * @module helpers/async
  */
 
+import { globalWindow } from 'jodit/core/constants';
+
 /**
  * Create async callback if set timeout value - else call function immediately
  */
@@ -19,7 +21,7 @@ export function setTimeout<T = any>(
 	if (!timeout) {
 		callback.call(null, ...args);
 	} else {
-		return window.setTimeout(callback, timeout, ...args);
+		return globalWindow.setTimeout(callback, timeout, ...args);
 	}
 
 	return 0;
@@ -29,5 +31,5 @@ export function setTimeout<T = any>(
  * Clear timeout
  */
 export function clearTimeout(timer: number): void {
-	window.clearTimeout(timer);
+	globalWindow.clearTimeout(timer);
 }

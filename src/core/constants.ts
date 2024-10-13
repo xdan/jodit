@@ -39,6 +39,12 @@ export const SPACE_REG_EXP = (): RegExp => /[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_START = (): RegExp => /^[\s\n\t\r\uFEFF\u200b]+/g;
 export const SPACE_REG_EXP_END = (): RegExp => /[\s\n\t\r\uFEFF\u200b]+$/g;
 
+export const globalWindow: typeof window =
+	typeof window !== 'undefined' ? window : ({} as typeof window);
+
+export const globalDocument: Document =
+	typeof document !== 'undefined' ? document : ({} as Document);
+
 export const IS_BLOCK =
 	/^(ADDRESS|ARTICLE|ASIDE|BLOCKQUOTE|CANVAS|DD|DFN|DIV|DL|DT|FIELDSET|FIGCAPTION|FIGURE|FOOTER|FORM|H[1-6]|HEADER|HGROUP|HR|LI|MAIN|NAV|NOSCRIPT|OUTPUT|P|PRE|RUBY|SCRIPT|STYLE|OBJECT|OL|SECTION|IFRAME|JODIT|JODIT-MEDIA|UL|TR|TD|TH|TBODY|THEAD|TFOOT|TABLE|BODY|HTML|VIDEO)$/i;
 
@@ -191,7 +197,7 @@ export const SAFE_COUNT_CHANGE_CALL = 10;
 
 export const IS_MAC =
 	typeof window !== 'undefined' &&
-	/Mac|iPod|iPhone|iPad/.test(window.navigator.platform);
+	/Mac|iPod|iPhone|iPad/.test(globalWindow.navigator.platform);
 
 export const KEY_ALIASES: IDictionary<string> = {
 	add: '+',
@@ -222,7 +228,7 @@ export const BASE_PATH: string = ((): string => {
 		return '';
 	}
 
-	const script = document.currentScript as HTMLScriptElement,
+	const script = globalDocument.currentScript as HTMLScriptElement,
 		removeScriptName = (s: string): string => {
 			const parts = s.split('/');
 
@@ -237,13 +243,14 @@ export const BASE_PATH: string = ((): string => {
 		return removeScriptName(script.src);
 	}
 
-	const scripts = document.querySelectorAll<HTMLScriptElement>('script[src]');
+	const scripts =
+		globalDocument.querySelectorAll<HTMLScriptElement>('script[src]');
 
 	if (scripts && scripts.length) {
 		return removeScriptName(scripts[scripts.length - 1].src);
 	}
 
-	return window.location.href;
+	return globalWindow.location.href;
 })();
 
 export const TEMP_ATTR = 'data-jodit-temp';

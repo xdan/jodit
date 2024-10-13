@@ -9,7 +9,7 @@
  */
 
 import type { IDictionary, Nullable } from 'jodit/types';
-import { IS_PROD } from 'jodit/core/constants';
+import { globalDocument, IS_PROD } from 'jodit/core/constants';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 
 import { get } from './get';
@@ -26,11 +26,11 @@ const map: IDictionary = {};
  */
 export function reset<T extends Function>(key: string): Nullable<T> {
 	if (!(key in map)) {
-		const iframe = document.createElement('iframe');
+		const iframe = globalDocument.createElement('iframe');
 
 		try {
 			iframe.src = 'about:blank';
-			document.body.appendChild(iframe);
+			globalDocument.body.appendChild(iframe);
 
 			if (!iframe.contentWindow) {
 				return null;

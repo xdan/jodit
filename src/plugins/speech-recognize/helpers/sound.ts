@@ -8,6 +8,8 @@
  * @module plugins/speech-recognize
  */
 
+import { globalWindow } from 'jodit/core/constants';
+
 import { PII } from 'jodit/plugins/speech-recognize/constants';
 
 /**
@@ -25,15 +27,15 @@ export function sound({
 	type?: 'sine' | 'square' | 'sawtooth' | 'triangle';
 } = {}): void {
 	if (
-		typeof window.AudioContext === 'undefined' &&
-		typeof (window as any).webkitAudioContext === 'undefined'
+		typeof (globalWindow as any).AudioContext === 'undefined' &&
+		typeof (globalWindow as any).webkitAudioContext === 'undefined'
 	) {
 		return;
 	}
 
 	// one context per document
-	const context = new (window.AudioContext ||
-		(window as any).webkitAudioContext)();
+	const context = new ((globalWindow as any).AudioContext ||
+		(globalWindow as any as any).webkitAudioContext)();
 
 	const vol = context.createGain();
 	const osc = context.createOscillator();

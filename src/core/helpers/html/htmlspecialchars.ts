@@ -8,11 +8,13 @@
  * @module helpers/html
  */
 
+import { globalDocument } from 'jodit/core/constants';
+
 /**
  * Convert special characters to HTML entities
  */
 export function htmlspecialchars(html: string): string {
-	const tmp = document.createElement('div');
+	const tmp = globalDocument.createElement('div');
 	tmp.textContent = html;
 	return tmp.innerHTML;
 }

@@ -8,6 +8,8 @@
  * @module helpers/checker
  */
 
+import { globalDocument } from 'jodit/core/constants';
+
 /**
  * Check if a string is an url
  */
@@ -28,7 +30,7 @@ export function isURL(str: string): boolean {
 		}
 	}
 
-	const a = document.createElement('a');
+	const a = globalDocument.createElement('a');
 	a.href = str;
 
 	return Boolean(a.hostname);

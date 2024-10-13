@@ -5,6 +5,7 @@
  */
 
 import type { CommitMode, ICommitStyle, IJodit, IStyle } from 'jodit/types';
+import { globalDocument } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { getContainer } from 'jodit/core/global';
 import {
@@ -215,7 +216,7 @@ function getShadowRoot(jodit: IJodit): HTMLElement {
 
 	const container = getContainer(jodit);
 
-	const iframe = document.createElement('iframe');
+	const iframe = globalDocument.createElement('iframe');
 	css(iframe, {
 		width: 0,
 		height: 0,

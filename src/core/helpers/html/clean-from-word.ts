@@ -8,6 +8,7 @@
  * @module helpers/html
  */
 
+import { globalDocument } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 import { trim } from 'jodit/core/helpers/string/trim';
@@ -28,7 +29,7 @@ export function cleanFromWord(html: string): string {
 	let convertedString: string = '';
 
 	try {
-		const div = document.createElement('div');
+		const div = globalDocument.createElement('div');
 		div.innerHTML = html;
 
 		const marks: Node[] = [];

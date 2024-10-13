@@ -9,6 +9,7 @@
  */
 
 import type { FuzzySearch, IControlType, IJodit } from 'jodit/types';
+import { globalWindow } from 'jodit/core/constants';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
 
@@ -56,7 +57,7 @@ Config.prototype.useSearch = true;
 Config.prototype.search = {
 	lazyIdleTimeout: 0,
 	// @ts-ignore Because Highlight is not defined in the types TS 5.3.3
-	useCustomHighlightAPI: typeof window.Highlight !== 'undefined'
+	useCustomHighlightAPI: typeof globalWindow.Highlight !== 'undefined'
 };
 
 Icon.set('search', searchIcon);

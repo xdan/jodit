@@ -9,6 +9,7 @@
  */
 
 import type { Nullable } from 'jodit/types';
+import { globalDocument } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { css } from 'jodit/core/helpers/utils';
 
@@ -28,7 +29,7 @@ export function getScrollParent(node: Nullable<Node>): Nullable<Element> {
 
 	return (
 		getScrollParent(node.parentNode) ||
-		document.scrollingElement ||
-		document.body
+		globalDocument.scrollingElement ||
+		globalDocument.body
 	);
 }

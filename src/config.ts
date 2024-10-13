@@ -19,7 +19,11 @@
  */
 
 import * as consts from 'jodit/core/constants';
-import { INSERT_AS_HTML } from 'jodit/core/constants';
+import {
+	globalDocument,
+	globalWindow,
+	INSERT_AS_HTML
+} from 'jodit/core/constants';
 
 import type {
 	Attributes,
@@ -157,17 +161,13 @@ class Config implements IViewOptions {
 		}
 	};
 
-	ownerDocument: Document = (typeof document !== 'undefined'
-		? document
-		: null) as Document;
+	ownerDocument: Document = globalDocument;
 
 	/**
 	 * Allows you to specify the window in which the editor will be created. Default - window
 	 * This is necessary if you are creating the editor inside an iframe but the code is running in the parent window
 	 */
-	ownerWindow: Window = (typeof window !== 'undefined'
-		? window
-		: null) as Window;
+	ownerWindow: Window = globalWindow;
 
 	/**
 	 * Shadow root if Jodit was created in it

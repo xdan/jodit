@@ -18,7 +18,7 @@ import type {
 	IEventEmitter,
 	IEventEmitterOnOptions
 } from 'jodit/types';
-import { PASSIVE_EVENTS } from 'jodit/core/constants';
+import { globalDocument, PASSIVE_EVENTS } from 'jodit/core/constants';
 import { splitArray } from 'jodit/core/helpers/array/split-array';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
@@ -55,7 +55,7 @@ export class EventEmitter implements IEventEmitter {
 
 	readonly __key: string = '__JoditEventEmitterNamespaces';
 
-	private __doc: Document = document;
+	private __doc: Document = globalDocument;
 
 	private __eachEvent(
 		events: CanArray<string>,
