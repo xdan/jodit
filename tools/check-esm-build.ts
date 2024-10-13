@@ -45,6 +45,7 @@ import '../build/esm/plugins/resize-cells/resize-cells';
 import '../build/esm/plugins/resize-handler/resize-handler';
 import '../build/esm/plugins/select/select';
 
+// @ts-ignore
 import { Jodit } from '../build/esm/index';
 
 if (typeof Jodit === 'undefined') {

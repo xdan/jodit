@@ -79,7 +79,7 @@ declare module 'jodit/config' {
 		 * ```javascript
 		 * Jodit.make('#editor', {
 		 * 		iframe: true,
-		 * 		iframeSandbox: 'allow-scripts allow-same-origin'
+		 * 		iframeSandbox: 'allow-same-origin allow-scripts'
 		 * });
 		 * ```
 		 * Empty string value means that all restrictions are enabled.

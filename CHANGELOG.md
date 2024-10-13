@@ -23,8 +23,6 @@ Jodit.make('#editor', {
 });
 ```
 
-## 4.2.30
-
 #### :house: Internal
 
 -   Move to ESLint 9

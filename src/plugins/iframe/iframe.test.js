@@ -32,12 +32,12 @@
 
 					getJodit({
 						iframe: true,
-						iframeSandbox: 'allow-scripts allow-presentation',
+						iframeSandbox: 'allow-same-origin',
 						events: {
 							afterConstructor: function (editor) {
 								expect(
 									editor.iframe.getAttribute('sandbox')
-								).equals('allow-scripts allow-presentation');
+								).equals('allow-same-origin');
 								done();
 							}
 						}
