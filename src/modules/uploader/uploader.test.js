@@ -64,7 +64,7 @@ describe('Test uploader module', function () {
 									);
 
 									expect(sortAttributes(editor.value)).equals(
-										'<p>test<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px"></p>'
+										'<p>test<img src="https://xdsoft.net/jodit/files/logo.gif" width="300"></p>'
 									);
 
 									done();
@@ -98,7 +98,7 @@ describe('Test uploader module', function () {
 								}
 							},
 							events: {
-								afterInsertImage: function (img) {
+								afterInsertImage: img => {
 									try {
 										expect(img.src).equals(
 											'https://xdsoft.net/jodit/files/test_logo.gif'
@@ -107,7 +107,8 @@ describe('Test uploader module', function () {
 										expect(
 											sortAttributes(editor.value)
 										).equals(
-											'<p>test<img src="https://xdsoft.net/jodit/files/test_logo.gif" style="width:300px"></p>'
+											// Because afterInsertImage called before resizer handler we use attribute width
+											'<p>test<img src="https://xdsoft.net/jodit/files/test_logo.gif" width="300"></p>'
 										);
 
 										done();
@@ -148,6 +149,9 @@ describe('Test uploader module', function () {
 							history: {
 								timeout: 0
 							},
+							resizer: {
+								forImageChangeAttributes: true
+							},
 							uploader: {
 								url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload'
 							},
@@ -168,7 +172,7 @@ describe('Test uploader module', function () {
 										expect(
 											sortAttributes(editor.value)
 										).equals(
-											'<p>test<img src="https://xdsoft.net/jodit/files/logo.gif" style="width:300px"></p>'
+											'<p>test<img src="https://xdsoft.net/jodit/files/logo.gif" width="300"></p>'
 										);
 										done();
 									} catch (e) {
