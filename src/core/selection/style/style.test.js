@@ -31,6 +31,20 @@ describe('Apply style', () => {
 						],
 						// Lists
 						[
+							'<ul><li>|test<br>Text|</li></ul><br>to text',
+							{ element: 'ul' },
+							'|test<br>Text|<br>to text',
+							{
+								enter: 'BR',
+								disablePlugins: [
+									'wrap-nodes',
+									'add-new-line',
+									'enter'
+								],
+								buttons: ['ul', 'ol']
+							}
+						],
+						[
 							'<ol><li>ordered</li><li>|list</li><li>pop</li></ol>',
 							{ element: 'ul' },
 							'<ol><li>ordered</li></ol><ul><li>|list</li></ul><ol><li>pop</li></ol>'

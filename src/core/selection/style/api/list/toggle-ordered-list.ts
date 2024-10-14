@@ -86,7 +86,7 @@ function unwrapList(
 	li: HTMLElement,
 	jodit: IJodit,
 	cs: ICommitStyle
-): HTMLElement {
+): HTMLElement | DocumentFragment {
 	const result = jodit.e.fire(`${_PREFIX}BeforeUnwrapList`, mode, list, cs);
 
 	if (result) {
@@ -103,5 +103,12 @@ function unwrapList(
 		'Element should be inside the list'
 	);
 	Dom.unwrap(li.parentElement);
-	return Dom.replace(li, jodit.o.enter, jodit.createInside);
+
+	return Dom.replace(
+		li,
+		jodit.o.enter.toLowerCase() !== 'br'
+			? jodit.o.enter
+			: jodit.createInside.fragment(),
+		jodit.createInside
+	);
 }

@@ -25,7 +25,7 @@ import {
  */
 export function wrapList(
 	commitStyle: ICommitStyle,
-	wrapper: HTMLElement,
+	wrapper: HTMLElement | DocumentFragment,
 	jodit: IJodit
 ): HTMLElement {
 	const result = jodit.e.fire(

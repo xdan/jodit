@@ -4,11 +4,11 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Test orderedList plugin', function () {
-	describe('Commands', function () {
-		describe('Unordered', function () {
-			describe('insertUnorderedList', function () {
-				it('Run command insertUnorderedList should wrap or replace all paragraphs and headings to ul>li', function () {
+describe('Test orderedList plugin', () => {
+	describe('Commands', () => {
+		describe('Unordered', () => {
+			describe('insertUnorderedList', () => {
+				it('Run command insertUnorderedList should wrap or replace all paragraphs and headings to ul>li', () => {
 					const editor = getJodit();
 					editor.value = '<h1>test</h1><h2>test</h2><p>test</p>';
 
@@ -20,7 +20,7 @@ describe('Test orderedList plugin', function () {
 					);
 				});
 
-				it('If press Enter inside <li> in the end it should create new <li> and cursor must be in it', function () {
+				it('If press Enter inside <li> in the end it should create new <li> and cursor must be in it', () => {
 					const editor = getJodit();
 					editor.value = '<ul><li>test|</li></ul>';
 					setCursorToChar(editor);
@@ -55,8 +55,8 @@ describe('Test orderedList plugin', function () {
 				});
 			});
 
-			describe('Exec command on selected text', function () {
-				it('Should wrap this text in ul/li', function () {
+			describe('Exec command on selected text', () => {
+				it('Should wrap this text in ul/li', () => {
 					const editor = getJodit();
 					editor.value = 'Hello world';
 					editor.s.select(editor.editor.firstChild);
@@ -69,8 +69,8 @@ describe('Test orderedList plugin', function () {
 				});
 			});
 
-			describe('Exec command on collapsed cursor', function () {
-				it('Should wrap whole text in ul/li', function () {
+			describe('Exec command on collapsed cursor', () => {
+				it('Should wrap whole text in ul/li', () => {
 					const editor = getJodit();
 					editor.value = 'Hello world';
 					editor.s.setCursorAfter(
@@ -85,8 +85,8 @@ describe('Test orderedList plugin', function () {
 				});
 			});
 
-			describe('With second argument', function () {
-				it('Should wrap this text in styled ul/li', function () {
+			describe('With second argument', () => {
+				it('Should wrap this text in styled ul/li', () => {
 					const editor = getJodit();
 					editor.value = '<p>|Hello world|</p>';
 					setCursorToChar(editor);
@@ -100,9 +100,9 @@ describe('Test orderedList plugin', function () {
 			});
 		});
 
-		describe('Ordered', function () {
-			describe('Exec command on selected text', function () {
-				it('Should wrap this text inside ol/li', function () {
+		describe('Ordered', () => {
+			describe('Exec command on selected text', () => {
+				it('Should wrap this text inside ol/li', () => {
 					const editor = getJodit();
 					editor.value = 'Hello world';
 					editor.s.select(editor.editor.firstChild);
@@ -116,9 +116,9 @@ describe('Test orderedList plugin', function () {
 			});
 		});
 
-		describe('Run second time', function () {
-			describe('On same place', function () {
-				it('Should unwrap source elements', function () {
+		describe('Run second time', () => {
+			describe('On same place', () => {
+				it('Should unwrap source elements', () => {
 					const editor = getJodit();
 					editor.value = '<p>test</p>';
 					editor.s.setCursorIn(editor.editor.firstChild);
@@ -157,8 +157,8 @@ describe('Test orderedList plugin', function () {
 				});
 			});
 
-			describe('Unordered after Unordered', function () {
-				it('Should unwrap selected ul/li', function () {
+			describe('Unordered after Unordered', () => {
+				it('Should unwrap selected ul/li', () => {
 					const editor = getJodit();
 					editor.value = '<ul><li>Hello world</li></ul>';
 					editor.s.select(editor.editor.firstChild);
@@ -171,8 +171,8 @@ describe('Test orderedList plugin', function () {
 				});
 			});
 
-			describe('Ordered after Unordered', function () {
-				it('Should replace selected ul/li to ol/li', function () {
+			describe('Ordered after Unordered', () => {
+				it('Should replace selected ul/li to ol/li', () => {
 					const editor = getJodit();
 					editor.value = '<ul><li>Hello world</li></ul>';
 					editor.s.select(editor.editor.firstChild);
@@ -185,8 +185,8 @@ describe('Test orderedList plugin', function () {
 				});
 			});
 
-			describe('With another second argument', function () {
-				it('Should change style.listStyleType', function () {
+			describe('With another second argument', () => {
+				it('Should change style.listStyleType', () => {
 					const editor = getJodit();
 					editor.value =
 						'<ul style="list-style-type: circle"><li>Hello world</li></ul>';
@@ -202,10 +202,10 @@ describe('Test orderedList plugin', function () {
 		});
 	});
 
-	describe('UI', function () {
-		describe('Click on unordered list button', function () {
-			describe('when selection is collapsed', function () {
-				it('should wrap current box in new <ul><li> element', function () {
+	describe('UI', () => {
+		describe('Click on unordered list button', () => {
+			describe('when selection is collapsed', () => {
+				it('should wrap current box in new <ul><li> element', () => {
 					const editor = getJodit();
 
 					editor.value = '<p>|Text to text</p>';
@@ -221,11 +221,46 @@ describe('Test orderedList plugin', function () {
 					);
 				});
 			});
+
+			describe('when selection is not collapsed', () => {
+				let editor;
+				beforeEach(() => {
+					editor = getJodit({
+						enter: 'BR',
+						disablePlugins: ['wrap-nodes', 'add-new-line', 'enter'],
+						buttons: ['ul', 'ol']
+					});
+
+					editor.value = '|test<br>Text|<br>to text';
+					setCursorToChar(editor);
+				});
+
+				describe('Enter mode: BR', () => {
+					it('Should wrap selected text in new <ul><li> element', () => {
+						clickButton('ul', editor);
+						expect(sortAttributes(editor.value)).equals(
+							'<ul><li>test<br>Text</li></ul><br>to text'
+						);
+					});
+
+					describe('Click second time', () => {
+						it('Should unwrap selected text', () => {
+							editor.value =
+								'<ul><li>|test<br>Text|</li></ul><br>to text';
+							setCursorToChar(editor);
+							clickButton('ul', editor);
+							expect(sortAttributes(editor.value)).equals(
+								'test<br>Text<br>to text'
+							);
+						});
+					});
+				});
+			});
 		});
 
-		describe('Click on trigger and click on some element', function () {
-			describe('when selection is collapsed', function () {
-				it('should wrap current box in new <ul><li> element with list-style-type', function () {
+		describe('Click on trigger and click on some element', () => {
+			describe('when selection is collapsed', () => {
+				it('should wrap current box in new <ul><li> element with list-style-type', () => {
 					const editor = getJodit();
 
 					editor.value = '<p>|Text to text</p>';
@@ -241,8 +276,8 @@ describe('Test orderedList plugin', function () {
 					);
 				});
 
-				describe('click on default after this', function () {
-					it('should remove extra list style', function () {
+				describe('click on default after this', () => {
+					it('should remove extra list style', () => {
 						const editor = getJodit();
 
 						editor.value = '<p>|Text to text</p>';
@@ -267,8 +302,8 @@ describe('Test orderedList plugin', function () {
 				});
 			});
 
-			describe('Click on same element inside popup two times', function () {
-				it('should return ul to first state', function () {
+			describe('Click on same element inside popup two times', () => {
+				it('should return ul to first state', () => {
 					const editor = getJodit();
 
 					editor.value = '<p>|Text to text</p>';
