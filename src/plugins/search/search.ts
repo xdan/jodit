@@ -44,11 +44,11 @@ import { UISearch } from 'jodit/plugins/search/ui/search';
  *
  * @example
  * ```typescript
- * var jodit = Jodit.make('#editor', {
+ * const jodit = Jodit.make('#editor', {
  *  useSearch: false
  * });
  * // or
- * var jodit = Jodit.make('#editor', {
+ * const jodit = Jodit.make('#editor', {
  *  disablePlugins: 'search'
  * });
  * ```
@@ -159,7 +159,7 @@ export class search extends Plugin {
 				const textNode = this.j.createInside.text(this.ui.replace);
 
 				Dom.safeInsertNode(rng, textNode);
-				clearSelectionWrappers(this.j.editor);
+				clearSelectionWrappers(this.j);
 				this.j.s.setCursorAfter(textNode);
 				this.tryScrollToElement(textNode);
 
@@ -197,7 +197,7 @@ export class search extends Plugin {
 		) {
 			this.drawPromise?.rejectCallback();
 			this.j.async.cancelAnimationFrame(this.wrapFrameRequest);
-			clearSelectionWrappers(this.j.editor);
+			clearSelectionWrappers(this.j);
 			this.drawPromise = this.__drawSelectionRanges(bounds);
 		}
 
@@ -363,14 +363,15 @@ export class search extends Plugin {
 					this.ui.close();
 				})
 				.on(this.ui, 'afterClose', () => {
-					clearSelectionWrappers(editor.editor);
+					clearSelectionWrappers(editor);
 					this.ui.currentIndex = 0;
 					this.ui.count = 0;
 					this.cache = {};
+					editor.focus();
 				})
 				.on('click', () => {
 					this.ui.currentIndex = 0;
-					clearSelectionWrappers(editor.editor);
+					clearSelectionWrappers(editor);
 				})
 				.on('change.search', () => {
 					this.cache = {};
@@ -384,7 +385,7 @@ export class search extends Plugin {
 						}
 
 						if (this.ui.isOpened) {
-							this.updateCounters();
+							void this.updateCounters();
 						}
 					}, editor.defaultTimeout)
 				)

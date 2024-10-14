@@ -92,8 +92,9 @@ export function getSelectionWrappers(root: HTMLElement): HTMLElement[] {
 /**
  * @private
  */
-export function clearSelectionWrappers(root: HTMLElement): void {
-	getSelectionWrappers(root).forEach(span => Dom.unwrap(span));
+export function clearSelectionWrappers(jodit: IJodit): void {
+	getSelectionWrappers(jodit.editor).forEach(span => Dom.unwrap(span));
+	clearNativeSelection(jodit);
 }
 
 /**
@@ -131,7 +132,6 @@ function checkNativeSelectionMethod(
 			return range;
 		});
 
-		// @ts-ignore Because Highlight is not defined in the types TS 5.3.3
 		const searchHighlight = new Highlight(...ranges);
 		// @ts-ignore
 		CSS.highlights.clear();
@@ -142,6 +142,18 @@ function checkNativeSelectionMethod(
 	}
 
 	return false;
+}
+
+export function clearNativeSelection(jodit: IJodit): void {
+	if (
+		jodit.o.search.useCustomHighlightAPI &&
+		// @ts-ignore Because Highlight is not defined in the types TS 5.3.3
+		globalWindow &&
+		typeof globalWindow.Highlight !== 'undefined'
+	) {
+		// @ts-ignore
+		CSS.highlights.clear();
+	}
 }
 
 function normalizeRanges(

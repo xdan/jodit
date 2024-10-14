@@ -125,7 +125,7 @@ export class UISearch extends UIElement<IJodit> {
 				return false;
 			})
 			.on(next, 'pointerdown', (): false => {
-				jodit.e.fire('searchNext');
+				void jodit.e.fire('searchNext');
 				return false;
 			})
 			.on(prev, 'pointerdown', (): false => {
@@ -138,12 +138,12 @@ export class UISearch extends UIElement<IJodit> {
 			.on(
 				this.queryInput,
 				'keydown',
-				this.j.async.debounce((e: KeyboardEvent) => {
+				this.j.async.debounce(async (e: KeyboardEvent) => {
 					switch (e.key) {
 						case consts.KEY_ENTER:
 							e.preventDefault();
 							e.stopImmediatePropagation();
-							if (jodit.e.fire('searchNext')) {
+							if (await jodit.e.fire('searchNext')) {
 								this.close();
 							}
 

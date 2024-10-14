@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Search plugin', function () {
+describe('Search plugin', () => {
 	const search = Jodit.plugins.get('search');
 
 	beforeEach(() => {
@@ -19,11 +19,14 @@ describe('Search plugin', function () {
 
 	function getSearchInputs(editor) {
 		const search = editor.container.querySelector('.jodit-ui-search');
-		const query = search.querySelector('[data-ref="query"]');
-		const replace = search.querySelector('[data-ref="replace"]');
-		const replaceButton = search.querySelector('[data-ref="replace-btn"]');
-
-		return { search, query, replace, replaceButton };
+		return {
+			search,
+			query: search.querySelector('[data-ref="query"]'),
+			replace: search.querySelector('[data-ref="replace"]'),
+			replaceButton: search.querySelector('[data-ref="replace-btn"]'),
+			closeButton: search.querySelector('[data-ref="cancel"]'),
+			nextButton: search.querySelector('[data-ref="next"]')
+		};
 	}
 
 	describe('Disable option', function () {
@@ -571,5 +574,90 @@ describe('Search plugin', function () {
 				simulateEvent('pointerdown', replaceButton);
 			});
 		});
+
+		describe('After close', () => {
+			let editor, search, inputs;
+
+			beforeEach(async () => {
+				editor = getJodit({
+					defaultTimeout: 0
+				});
+
+				editor.value = '<p>test</p>';
+
+				clickTrigger('find', editor);
+				clickButton('find', getOpenedPopup(editor));
+
+				await editor.async.requestIdlePromise();
+				inputs = getSearchInputs(editor);
+				inputs.query.value = 't';
+			});
+
+			describe('With Enter button', () => {
+				it('Should remove all highlights', async () => {
+					simulateEvent('keydown', Jodit.KEY_ENTER, inputs.query);
+					await editor.async.requestIdlePromise();
+					expect(editor.getNativeEditorValue()).equals('<p>test</p>');
+				});
+			});
+
+			describe('With Close button', () => {
+				it('Should remove all highlights', async () => {
+					simulateEvent('pointerdown', inputs.nextButton);
+					await editor.async.requestIdlePromise();
+					expect(
+						sortAttributes(editor.getNativeEditorValue())
+					).equals(
+						'<p><span data-jodit-temp="true" jd-tmp-selection="true">t</span>es<span data-jodit-temp="true" jd-tmp-selection="true">t</span></p>'
+					);
+					simulateEvent('pointerdown', inputs.closeButton);
+					await editor.async.requestIdlePromise();
+					expect(editor.getNativeEditorValue()).equals('<p>test</p>');
+				});
+			});
+		});
 	});
+
+	(typeof Highlight !== 'undefined' ? describe : describe.skip)(
+		'Custom highlight API',
+		() => {
+			let editor, inputs;
+
+			beforeEach(async () => {
+				editor = getJodit({
+					defaultTimeout: 0,
+					search: {
+						useCustomHighlightAPI: true
+					}
+				});
+
+				editor.value = '<p>test</p>';
+
+				clickTrigger('find', editor);
+				clickButton('find', getOpenedPopup(editor));
+
+				await editor.async.requestIdlePromise();
+				inputs = getSearchInputs(editor);
+				inputs.query.value = 't';
+				simulateEvent('pointerdown', inputs.nextButton);
+				await editor.async.requestIdlePromise();
+			});
+
+			it('Should use custom highlight API', async () => {
+				expect(CSS.highlights.size).equals(1);
+				expect(CSS.highlights.get('jodit-search-result')).is.instanceof(
+					Highlight
+				);
+			});
+
+			describe('After close', () => {
+				it('Should remove all highlights', async () => {
+					const inputs = getSearchInputs(editor);
+					simulateEvent('pointerdown', inputs.closeButton);
+					await editor.async.requestIdlePromise();
+					expect(CSS.highlights.size).equals(0);
+				});
+			});
+		}
+	);
 });
