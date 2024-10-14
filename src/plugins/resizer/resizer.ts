@@ -123,6 +123,19 @@ export class resizer extends Plugin {
 		}
 	}
 
+	@watch(':afterInsertImage')
+	protected __afterInsertImage(image: HTMLImageElement): void {
+		if (this.j.o.resizer.forImageChangeAttributes) {
+			return;
+		}
+
+		const width = attr(image, 'width');
+		if (width && !css(image, 'width', true)) {
+			css(image, 'width', width);
+			attr(image, 'width', null);
+		}
+	}
+
 	private addEventListeners(): void {
 		const editor = this.j;
 

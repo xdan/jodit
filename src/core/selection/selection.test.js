@@ -923,4 +923,44 @@ describe('Selection Module Tests', function () {
 			expect(editor.value).equals('<div>1</div><div>2</div><div>3</div>');
 		});
 	});
+
+	describe('insertImage', () => {
+		it('Should insert image element', function () {
+			const editor = getJodit({
+				resizer: {
+					forImageChangeAttributes: true
+				}
+			});
+			editor.value = '<p>|</p>';
+			setCursorToChar(editor);
+			editor.s.insertImage(
+				'https://xdsoft.net/jodit/images/artio.jpg',
+				{},
+				300
+			);
+			expect(sortAttributes(editor.value)).equals(
+				'<p><img src="https://xdsoft.net/jodit/images/artio.jpg" width="300"></p>'
+			);
+		});
+
+		describe('Disable forImageChangeAttributes', () => {
+			it('Should insert image element with style', function () {
+				const editor = getJodit({
+					resizer: {
+						forImageChangeAttributes: false
+					}
+				});
+				editor.value = '<p>|</p>';
+				setCursorToChar(editor);
+				editor.s.insertImage(
+					'https://xdsoft.net/jodit/images/artio.jpg',
+					{},
+					300
+				);
+				expect(sortAttributes(editor.value)).equals(
+					'<p><img src="https://xdsoft.net/jodit/images/artio.jpg" style="width:300px"></p>'
+				);
+			});
+		});
+	});
 });

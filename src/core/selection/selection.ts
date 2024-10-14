@@ -30,7 +30,6 @@ import { Dom } from 'jodit/core/dom/dom';
 import {
 	$$,
 	attr,
-	call,
 	css,
 	error,
 	getScrollParent,
@@ -758,14 +757,7 @@ export class Selection implements ISelect {
 				dw += 'px';
 			}
 
-			call(
-				// @ts-ignore
-				this.j.o.resizer.forImageChangeAttributes ? attr : css,
-				image,
-				'width',
-				// @ts-ignore
-				dw
-			);
+			attr(image, 'width', dw);
 		}
 
 		if (styles && typeof styles === 'object') {
@@ -797,7 +789,7 @@ export class Selection implements ISelect {
 		 * [[FileBrowser]] or [[Uploader]]
 		 * @example
 		 * ```javascript
-		 * var editor = Jodit.make("#redactor");
+		 * const editor = Jodit.make("#redactor");
 		 * editor.e.on('afterInsertImage', function (image) {
 		 *     image.className = 'bloghead4';
 		 * });
