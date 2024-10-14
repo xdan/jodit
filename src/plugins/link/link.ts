@@ -145,21 +145,21 @@ export class link extends Plugin {
 				modeClassName
 			} = jodit.o.link;
 
-		const html = formTemplate(jodit),
-			form = isString(html)
-				? (jodit.c.fromHTML(html, {
-						target_checkbox_box: openInNewTabCheckbox,
-						nofollow_checkbox_box: noFollowCheckbox
-					}) as HTMLFormElement)
-				: html,
-			htmlForm = Dom.isElement(form) ? form : form.container;
+		const html = formTemplate(jodit);
+		const form = isString(html)
+			? (jodit.c.fromHTML(html, {
+					target_checkbox_box: openInNewTabCheckbox,
+					nofollow_checkbox_box: noFollowCheckbox
+				}) as HTMLFormElement)
+			: html;
+		const htmlForm = Dom.isElement(form) ? form : form.container;
 
-		const elements = refs(htmlForm),
-			{ insert, unlink, content_input_box } = elements,
-			{ target_checkbox, nofollow_checkbox, url_input } =
-				elements as IDictionary<HTMLInputElement>,
-			currentElement = current,
-			isImageContent = Dom.isImage(currentElement);
+		const elements = refs(htmlForm);
+		const { insert, unlink, content_input_box } = elements;
+		const { target_checkbox, nofollow_checkbox, url_input } =
+			elements as IDictionary<HTMLInputElement>;
+		const currentElement = current;
+		const isImageContent = Dom.isImage(currentElement);
 
 		let { content_input } = elements as IDictionary<HTMLInputElement>;
 
@@ -261,7 +261,7 @@ export class link extends Plugin {
 
 			const ci = jodit.createInside;
 
-			if (!link) {
+			if (!link || !Dom.isOrContains(jodit.editor, link)) {
 				if (!jodit.s.isCollapsed()) {
 					const node = jodit.s.current();
 

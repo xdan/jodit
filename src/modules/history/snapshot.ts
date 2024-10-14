@@ -10,8 +10,8 @@
 
 import type { IJodit, ISnapshot, Nullable, SnapshotType } from 'jodit/types';
 import { ViewComponent } from 'jodit/core/component';
-import { IS_PROD, TEMP_ATTR } from 'jodit/core/constants';
-import { Dom } from 'jodit/core/dom';
+import { IS_PROD } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 
 /**
  * Module for creating snapshot of editor which includes html content and the current selection
@@ -154,14 +154,16 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 			}
 		};
 
-		snapshot.html = this.removeJoditSelection(this.j.editor);
+		snapshot.html = this.__getCleanedEditorValue(this.j.editor);
 
 		const sel = this.j.s.sel;
 
 		if (sel && sel.rangeCount) {
-			const range = sel.getRangeAt(0),
-				startContainer = this.calcHierarchyLadder(range.startContainer),
-				endContainer = this.calcHierarchyLadder(range.endContainer);
+			const range = sel.getRangeAt(0);
+			const startContainer = this.calcHierarchyLadder(
+				range.startContainer
+			);
+			const endContainer = this.calcHierarchyLadder(range.endContainer);
 
 			let startOffset = Snapshot.strokeOffset(
 					range.startContainer,
@@ -204,8 +206,8 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		this.transaction(() => {
 			const scroll = this.storeScrollState();
 
-			const value = this.j.getNativeEditorValue();
-			if (value !== snapshot.html) {
+			const html = this.__getCleanedEditorValue(this.j.editor);
+			if (html !== snapshot.html) {
 				this.j.value = snapshot.html;
 			}
 
@@ -270,10 +272,10 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		return (Dom.isText(node) && !node.nodeValue) || Dom.isTemporary(node);
 	}
 
-	private removeJoditSelection(node: HTMLElement): string {
+	private __getCleanedEditorValue(node: HTMLElement): string {
 		const clone = node.cloneNode(true) as HTMLElement;
 
-		clone.querySelectorAll(`[${TEMP_ATTR}]`).forEach(Dom.unwrap);
+		Dom.temporaryList(clone).forEach(Dom.unwrap);
 
 		return clone.innerHTML;
 	}

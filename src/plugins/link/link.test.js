@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Link plugin', function () {
-	describe('Insert link', function () {
-		describe('Insert simple link', function () {
-			it('Should insert as simple link', function () {
+describe('Link plugin', () => {
+	describe('Insert link', () => {
+		describe('Insert simple link', () => {
+			it('Should insert as simple link', () => {
 				const editor = getJodit();
 
 				simulatePaste(
@@ -21,8 +21,8 @@ describe('Link plugin', function () {
 				);
 			});
 
-			describe('For not collapsed selection', function () {
-				it('Should insert as link with selected content', function () {
+			describe('For not collapsed selection', () => {
+				it('Should insert as link with selected content', () => {
 					const editor = getJodit();
 
 					editor.value = '<p>test |test|</p>';
@@ -40,9 +40,9 @@ describe('Link plugin', function () {
 				});
 			});
 
-			describe('Disable', function () {
-				describe('Disable any convert', function () {
-					it('Should not change source link', function () {
+			describe('Disable', () => {
+				describe('Disable any convert', () => {
+					it('Should not change source link', () => {
 						const editor = getJodit({
 							link: {
 								processPastedLink: false
@@ -58,7 +58,7 @@ describe('Link plugin', function () {
 			});
 		});
 
-		describe('Insert youtube link', function () {
+		describe('Insert youtube link', () => {
 			[
 				[
 					'https://www.youtube.com/watch?v=Cy1qd16VDhM&ab_channel=КонстантинСёмин',
@@ -69,29 +69,26 @@ describe('Link plugin', function () {
 					'https://www.youtube.com/embed/8Qn_spdM5Zg'
 				]
 			].forEach(function (lnk) {
-				describe('Insert link ' + lnk[0], function () {
-					it(
-						'Should insert iframe with video ' + lnk[1],
-						function () {
-							const editor = getJodit();
+				describe('Insert link ' + lnk[0], () => {
+					it('Should insert iframe with video ' + lnk[1], () => {
+						const editor = getJodit();
 
-							simulatePaste(editor.editor, lnk[0]);
+						simulatePaste(editor.editor, lnk[0]);
 
-							expect(sortAttributes(editor.value)).equal(
-								sortAttributes(
-									'<iframe width="400" height="345" src="' +
-										lnk[1] +
-										'" frameborder="0" allowfullscreen=""></iframe>'
-								)
-							);
-						}
-					);
+						expect(sortAttributes(editor.value)).equal(
+							sortAttributes(
+								'<iframe width="400" height="345" src="' +
+									lnk[1] +
+									'" frameborder="0" allowfullscreen=""></iframe>'
+							)
+						);
+					});
 				});
 			});
 
-			describe('Disable', function () {
-				describe('Disable any convert', function () {
-					it('Should not change source link', function () {
+			describe('Disable', () => {
+				describe('Disable any convert', () => {
+					it('Should not change source link', () => {
 						const editor = getJodit({
 							link: {
 								processPastedLink: false,
@@ -109,8 +106,8 @@ describe('Link plugin', function () {
 					});
 				});
 
-				describe('Disable video convert', function () {
-					it('Should insert video link as simple link', function () {
+				describe('Disable video convert', () => {
+					it('Should insert video link as simple link', () => {
 						const editor = getJodit({
 							link: {
 								processVideoLink: false
@@ -130,11 +127,11 @@ describe('Link plugin', function () {
 		});
 	});
 
-	describe('Toolbar link', function () {
-		describe('Click link button', function () {
-			describe('Edit exists link', function () {
-				describe('Content input was not changed', function () {
-					it('Should save link content', function () {
+	describe('Toolbar link', () => {
+		describe('Click link button', () => {
+			describe('Edit exists link', () => {
+				describe('Content input was not changed', () => {
+					it('Should save link content', () => {
 						const editor = getJodit();
 
 						editor.value =
@@ -180,8 +177,8 @@ describe('Link plugin', function () {
 						);
 					});
 
-					describe('For relative link', function () {
-						it('Should work same way', function () {
+					describe('For relative link', () => {
+						it('Should work same way', () => {
 							const editor = getJodit();
 
 							editor.value =
@@ -216,8 +213,8 @@ describe('Link plugin', function () {
 					});
 				});
 
-				describe('Content input was changed', function () {
-					it('Should replace link content', function () {
+				describe('Content input was changed', () => {
+					it('Should replace link content', () => {
 						const editor = getJodit();
 
 						editor.value =
@@ -255,8 +252,8 @@ describe('Link plugin', function () {
 						);
 					});
 
-					describe('Content stay clear', function () {
-						it('Should replace link content to url', function () {
+					describe('Content stay clear', () => {
+						it('Should replace link content to url', () => {
 							const editor = getJodit();
 
 							editor.value =
@@ -300,9 +297,9 @@ describe('Link plugin', function () {
 					});
 				});
 
-				describe('Select some text inside link', function () {
-					describe('Content input was not changed', function () {
-						it("Should open edit popup with full link's content", function () {
+				describe('Select some text inside link', () => {
+					describe('Content input was not changed', () => {
+						it("Should open edit popup with full link's content", () => {
 							const editor = getJodit();
 
 							editor.value =
@@ -354,8 +351,8 @@ describe('Link plugin', function () {
 						});
 					});
 
-					describe('Content input was changed', function () {
-						it("Should open edit popup with full link's content and after submit should replace full link's content", function () {
+					describe('Content input was changed', () => {
+						it("Should open edit popup with full link's content and after submit should replace full link's content", () => {
 							const editor = getJodit();
 
 							editor.value =
@@ -404,9 +401,9 @@ describe('Link plugin', function () {
 					});
 				});
 
-				describe('Press unlink button', function () {
-					describe('In inline popup', function () {
-						it('Should unwrap existing link', function () {
+				describe('Press unlink button', () => {
+					describe('In inline popup', () => {
+						it('Should unwrap existing link', () => {
 							const editor = getJodit();
 
 							editor.value =
@@ -426,8 +423,8 @@ describe('Link plugin', function () {
 						});
 					});
 
-					describe('In toolbar popup', function () {
-						it('Should unwrap existing link', function () {
+					describe('In toolbar popup', () => {
+						it('Should unwrap existing link', () => {
 							const editor = getJodit();
 
 							editor.value =
@@ -492,10 +489,10 @@ describe('Link plugin', function () {
 				});
 			});
 
-			describe('In dialog', function () {
-				describe('Edit exists link', function () {
-					describe('Content input was not changed', function () {
-						it('Should save link content', function () {
+			describe('In dialog', () => {
+				describe('Edit exists link', () => {
+					describe('Content input was not changed', () => {
+						it('Should save link content', () => {
 							const editor = getJodit();
 
 							editor.value =
@@ -541,16 +538,16 @@ describe('Link plugin', function () {
 				});
 			});
 
-			describe('Open LINK insert dialog and insert new link', function () {
-				it('Should insert new link', function () {
+			describe('Open LINK insert dialog and insert new link', () => {
+				it('Should insert new link', () => {
 					let popup_opened = 0;
 
 					const editor = getJodit({
 						events: {
-							beforeLinkOpenPopup: function () {
+							beforeLinkOpenPopup: () => {
 								popup_opened += 1;
 							},
-							afterLinkOpenPopup: function () {
+							afterLinkOpenPopup: () => {
 								popup_opened += 1;
 							}
 						},
@@ -601,14 +598,14 @@ describe('Link plugin', function () {
 					expect(list.parentNode).is.null;
 				});
 
-				it('Should fire change event', function () {
+				it('Should fire change event', () => {
 					let change = 0;
 
 					const editor = getJodit();
 
 					editor.value = '<p>|<br></p>';
 					setCursorToChar(editor);
-					editor.events.on('change', function () {
+					editor.events.on('change', () => {
 						change += 1;
 					});
 
@@ -626,14 +623,14 @@ describe('Link plugin', function () {
 					expect(change).equals(1);
 				});
 
-				describe('Set custom popup template', function () {
-					it('Should show this template inside popup', function () {
+				describe('Set custom popup template', () => {
+					it('Should show this template inside popup', () => {
 						const tpl =
 							'<form class="form_url"><input ref="url_input" type="url"><button>save</button></form>';
 
 						const editor = getJodit({
 							link: {
-								formTemplate: function () {
+								formTemplate: () => {
 									return tpl;
 								}
 							}
@@ -665,14 +662,14 @@ describe('Link plugin', function () {
 						);
 					});
 
-					describe('Use data-ref instead ref', function () {
-						it('Should show this template inside popup', function () {
+					describe('Use data-ref instead ref', () => {
+						it('Should show this template inside popup', () => {
 							const tpl =
 								'<form class="form_url"><input data-ref="url_input" type="url"><button>save</button></form>';
 
 							const editor = getJodit({
 								link: {
-									formTemplate: function () {
+									formTemplate: () => {
 										return tpl;
 									}
 								}
@@ -711,8 +708,8 @@ describe('Link plugin', function () {
 						});
 					});
 
-					describe('Add class name in form', function () {
-						it('Should show form with this class', function () {
+					describe('Add class name in form', () => {
+						it('Should show form with this class', () => {
 							const editor = getJodit({
 								link: {
 									formClassName: 'bootstrap_form'
@@ -731,9 +728,9 @@ describe('Link plugin', function () {
 					});
 				});
 
-				describe('On selected content', function () {
-					describe('Selected text', function () {
-						it('Should wrap selected text in link', function () {
+				describe('On selected content', () => {
+					describe('Selected text', () => {
+						it('Should wrap selected text in link', () => {
 							const editor = getJodit({
 								toolbarAdaptive: false
 							});
@@ -797,9 +794,9 @@ describe('Link plugin', function () {
 						});
 					});
 
-					describe('Selected image', function () {
-						describe('On open popup', function () {
-							it('Should hide text input', function () {
+					describe('Selected image', () => {
+						describe('On open popup', () => {
+							it('Should hide text input', () => {
 								const editor = getJodit({
 									toolbarAdaptive: false,
 									history: {
@@ -829,7 +826,7 @@ describe('Link plugin', function () {
 							});
 						});
 
-						it('Should wrap selected image in link', function () {
+						it('Should wrap selected image in link', () => {
 							const editor = getJodit({
 								toolbarAdaptive: false,
 								history: {
@@ -878,7 +875,7 @@ describe('Link plugin', function () {
 					});
 				});
 
-				it('Should restore source text after user clicked on Unlink button', function () {
+				it('Should restore source text after user clicked on Unlink button', () => {
 					const editor = getJodit({
 						history: {
 							timeout: 0
@@ -927,8 +924,8 @@ describe('Link plugin', function () {
 				});
 			});
 
-			describe('Was selected part of text', function () {
-				it('Should show dialog form with this text', function () {
+			describe('Was selected part of text', () => {
+				it('Should show dialog form with this text', () => {
 					const editor = getJodit();
 
 					editor.value = '<p>one green bottle hanging under wall</p>';
@@ -950,8 +947,8 @@ describe('Link plugin', function () {
 				});
 			});
 
-			describe('Was selected part of html', function () {
-				it('Should show dialog form with selection text content from this HTML', function () {
+			describe('Was selected part of html', () => {
+				it('Should show dialog form with selection text content from this HTML', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -977,10 +974,10 @@ describe('Link plugin', function () {
 					);
 				});
 
-				describe('Was selected image', function () {
-					describe('Image was inside the Table', function () {
-						describe('Edit with contect menu', function () {
-							it('Should wrap selected image inside the link', function () {
+				describe('Was selected image', () => {
+					describe('Image was inside the Table', () => {
+						describe('Edit with contect menu', () => {
+							it('Should wrap selected image inside the link', () => {
 								const editor = getJodit({
 									popup: {
 										img: ['link', 'unlink']
@@ -1051,8 +1048,8 @@ describe('Link plugin', function () {
 						});
 					});
 
-					describe('Image had not anchor parent', function () {
-						it('Should show dialog without content input and after submit wrap this image', function () {
+					describe('Image had not anchor parent', () => {
+						it('Should show dialog without content input and after submit wrap this image', () => {
 							const editor = getJodit();
 
 							editor.value =
@@ -1095,8 +1092,8 @@ describe('Link plugin', function () {
 						});
 					});
 
-					describe('Image had anchor parent', function () {
-						it('Should show dialog without content input and after submit wrap this image', function () {
+					describe('Image had anchor parent', () => {
+						it('Should show dialog without content input and after submit wrap this image', () => {
 							const editor = getJodit();
 
 							editor.value =
@@ -1143,8 +1140,8 @@ describe('Link plugin', function () {
 					});
 				});
 
-				describe('After submit this part', function () {
-					it('should be wrapped inside anchor', function () {
+				describe('After submit this part', () => {
+					it('should be wrapped inside anchor', () => {
 						const editor = getJodit();
 
 						editor.value =
@@ -1183,9 +1180,9 @@ describe('Link plugin', function () {
 		});
 	});
 
-	describe('Link with class name (modeClassName=input/default)', function () {
-		describe('Add class name on link', function () {
-			it('Should insert new link with a class name', function () {
+	describe('Link with class name (modeClassName=input/default)', () => {
+		describe('Add class name on link', () => {
+			it('Should insert new link with a class name', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -1227,8 +1224,8 @@ describe('Link plugin', function () {
 			});
 		});
 
-		describe('Vérify class name on link', function () {
-			it('Should have link with a class name', function () {
+		describe('Vérify class name on link', () => {
+			it('Should have link with a class name', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -1256,8 +1253,8 @@ describe('Link plugin', function () {
 			});
 		});
 
-		describe('Modify class name on link', function () {
-			it('Should modify link with a new class name', function () {
+		describe('Modify class name on link', () => {
+			it('Should modify link with a new class name', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -1293,8 +1290,8 @@ describe('Link plugin', function () {
 			});
 		});
 
-		describe('Delete class name on link', function () {
-			it('Should modify link witout class name', function () {
+		describe('Delete class name on link', () => {
+			it('Should modify link witout class name', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -1331,9 +1328,9 @@ describe('Link plugin', function () {
 		});
 	});
 
-	describe('Link with class name (modeClassName=select)', function () {
-		describe('Add class name on link', function () {
-			it('Should insert new link with a class name', function () {
+	describe('Link with class name (modeClassName=select)', () => {
+		describe('Add class name on link', () => {
+			it('Should insert new link with a class name', () => {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
@@ -1388,8 +1385,8 @@ describe('Link plugin', function () {
 			});
 		});
 
-		describe('Vérify class name on link', function () {
-			it('Should have link with a class name', function () {
+		describe('Vérify class name on link', () => {
+			it('Should have link with a class name', () => {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
@@ -1431,8 +1428,8 @@ describe('Link plugin', function () {
 			});
 		});
 
-		describe('Modify class name on link', function () {
-			it('Should modify link with a new class name', function () {
+		describe('Modify class name on link', () => {
+			it('Should modify link with a new class name', () => {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
@@ -1481,8 +1478,8 @@ describe('Link plugin', function () {
 			});
 		});
 
-		describe('Delete class name on link', function () {
-			it('Should modify link witout class name', function () {
+		describe('Delete class name on link', () => {
+			it('Should modify link witout class name', () => {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
@@ -1532,9 +1529,9 @@ describe('Link plugin', function () {
 		});
 	});
 
-	describe('Link with class name (modeClassName="select", selectMultipleClassName=true)', function () {
-		describe('Add class name on link', function () {
-			it('Should insert new link with a class name', function () {
+	describe('Link with class name (modeClassName="select", selectMultipleClassName=true)', () => {
+		describe('Add class name on link', () => {
+			it('Should insert new link with a class name', () => {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
@@ -1591,8 +1588,8 @@ describe('Link plugin', function () {
 			});
 		});
 
-		describe('Vérify class name on link', function () {
-			it('Should have link with a class name', function () {
+		describe('Vérify class name on link', () => {
+			it('Should have link with a class name', () => {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
@@ -1637,8 +1634,8 @@ describe('Link plugin', function () {
 			});
 		});
 
-		describe('Modify class name on link', function () {
-			it('Should modify link with a new class name', function () {
+		describe('Modify class name on link', () => {
+			it('Should modify link with a new class name', () => {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
@@ -1691,8 +1688,8 @@ describe('Link plugin', function () {
 			});
 		});
 
-		describe('Delete class name on link', function () {
-			it('Should modify link witout class name', function () {
+		describe('Delete class name on link', () => {
+			it('Should modify link witout class name', () => {
 				const editor = getJodit({
 					link: {
 						modeClassName: 'select',
@@ -1740,6 +1737,37 @@ describe('Link plugin', function () {
 						'<p><a href="https://xdsoft.net/jodit/" class="val1 val3">two green <em>bottles hanging</em> under</a> wall</p>'
 				);
 			});
+		});
+	});
+
+	describe('Edit link with iframe', () => {
+		it('Should work fine', () => {
+			const editor = getJodit();
+			editor.value = `<p>—
+    		<!-- --> <a href="https://www.gutenberg.org/cache/epub/55/pg55-images.html">|The Wonderful Wizard of Oz</a> <em>by L. Frank Baum</em>.
+			</p>
+			<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1002833698?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Every Day's Like This"></iframe></div>`;
+			setCursorToChar(editor);
+			clickButton('link', editor);
+			const popup = getOpenedPopup(editor);
+			const form = popup.querySelector('.jodit-ui-form');
+			expect(form).is.not.null;
+
+			const input = form.querySelector('input[ref=url_input]');
+
+			expect(input).is.not.null;
+			expect(input.value).equals(
+				'https://www.gutenberg.org/cache/epub/55/pg55-images.html'
+			);
+			input.value = 'https://xdsoft.net/jodit/';
+
+			simulateEvent('submit', form);
+
+			expect(
+				sortAttributes(editor.value).replace(/[\t\n\s]+/g, ' ')
+			).equals(
+				'<p>— <!-- --> <a href="https://xdsoft.net/jodit/">The Wonderful Wizard of Oz</a> <em>by L. Frank Baum</em>. </p> <div style="padding:56.25% 0 0 0;position:relative"><iframe allow="autoplay; fullscreen; picture-in-picture; clipboard-write" frameborder="0" src="https://player.vimeo.com/video/1002833698?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" style="height:100%;left:0;position:absolute;top:0;width:100%" title="Every Day\'s Like This"></iframe></div>'
+			);
 		});
 	});
 });
