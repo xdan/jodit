@@ -322,7 +322,7 @@ export class link extends Plugin {
 		};
 
 		if (Dom.isElement(form)) {
-			jodit.e.on(form, 'submit', (event: Event) => {
+			jodit.e.on(form, 'submit', (event: SubmitEvent) => {
 				event.preventDefault();
 				event.stopImmediatePropagation();
 				onSubmit();

@@ -10,6 +10,7 @@
 :root {
 	--popup-box-shadow: 0 4px 1px -2px rgb(76 76 76 / 20%),
 		0 3px 3px 0 rgb(76 76 76 / 15%), 0 1px 4px 0 rgb(76 76 76 / 13%);
+	--popup-max-height: max(50vh, 350px);
 }
 
 .jodit-popup {
@@ -25,7 +26,7 @@
 		.font();
 
 		overflow: auto;
-		max-height: 300px;
+		max-height: var(--popup-max-height, 400px);
 		padding: var(--padding-default);
 		background: var(--color-background-default);
 		overflow-scrolling: touch;

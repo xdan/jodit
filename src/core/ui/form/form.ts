@@ -83,6 +83,7 @@ export class UIForm extends UIGroup implements IUIForm {
 		const form = this.j.c.element('form');
 		form.classList.add(this.componentName);
 		attr(form, 'dir', this.j.o.direction || 'auto');
+		attr(form, 'novalidate', '');
 		return form;
 	}
 

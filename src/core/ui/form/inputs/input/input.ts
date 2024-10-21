@@ -200,7 +200,22 @@ export class UIInput extends UIElement implements IUIInput {
 	validate(): boolean {
 		this.error = '';
 
-		return toArray(this.validators).every(validator => validator(this));
+		const validate = toArray(this.validators).every(validator =>
+			validator(this)
+		);
+		this.__markInputInvalid();
+
+		return validate;
+	}
+
+	private __markInputInvalid(): void {
+		if (this.error) {
+			this.nativeInput.setAttribute('aria-invalid', 'true');
+			this.nativeInput.setCustomValidity?.(this.error);
+		} else {
+			this.nativeInput.removeAttribute('aria-invalid');
+			this.nativeInput.setCustomValidity?.('');
+		}
 	}
 
 	/** @override **/
