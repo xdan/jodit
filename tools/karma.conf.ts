@@ -59,6 +59,31 @@ if (
 	throw new Error('Invalid minified build option');
 }
 
+const FirefoxHeadless = {
+	base: 'Firefox',
+	flags: ['-width', '1440', '-height', '900', '-headless']
+};
+
+const chrome_debug = {
+	base: 'Chrome',
+	flags: [
+		'--window-size=1440,900',
+		'--disable-gpu',
+		'--disable-extensions',
+		'--disable-translate'
+	]
+};
+
+const chrome_headless = {
+	base: 'ChromeHeadless',
+	flags: [
+		'--window-size=1440,900',
+		'--disable-gpu',
+		'--disable-extensions',
+		'--disable-translate'
+	]
+};
+
 function findFiles(dir: string): string[] {
 	return fs
 		.readdirSync(dir, { withFileTypes: true })
@@ -79,12 +104,15 @@ console.info('Build files: ', buildFiles);
 
 module.exports = function (cnf: Config): void {
 	cnf.set({
+		retryLimit: 5, // default 2
+
 		basePath: argv.cwd,
-		frameworks: ['mocha', 'chai'],
+		frameworks: ['mocha'],
 
 		mime: {
 			'text/css': ['css'],
 			'text/x-typescript': ['ts', 'tsx'],
+			'text/javascript': ['js'],
 			'image/jpeg': ['jpg']
 		},
 
@@ -103,6 +131,14 @@ module.exports = function (cnf: Config): void {
 			'./public/app.css',
 			'./test/tests/browser-module.js',
 			'./node_modules/synchronous-promise/index.js',
+
+			// Chai 5.x doesn't support browser, but inside Chrome this solution doesn't work
+			// Some tests could not wait for the promise to resolve eg.: Jodit FileBrowser Tests >>> Click on preview > Should open preview dialog
+			{
+				pattern: './test/tests/chai-loader.js',
+				type: 'module'
+			},
+			// './node_modules/chai/chai.js',
 
 			...buildFiles,
 
@@ -134,33 +170,14 @@ module.exports = function (cnf: Config): void {
 			'chrome_debug',
 			'chrome_headless',
 			'FirefoxHeadless',
+			'Chrome',
 			'Firefox'
 		],
 		customLaunchers: {
-			FirefoxHeadless: {
-				base: 'Firefox',
-				flags: ['-width', '1440', '-height', '900', '-headless']
-			},
-
-			chrome_debug: {
-				base: 'Chrome',
-				flags: [
-					'--window-size=1440,900',
-					'--disable-gpu',
-					'--disable-extensions',
-					'--disable-translate'
-				]
-			},
-
-			chrome_headless: {
-				base: 'ChromeHeadless',
-				flags: [
-					'--window-size=1440,900',
-					'--disable-gpu',
-					'--disable-extensions',
-					'--disable-translate'
-				]
-			}
+			chrome_debug,
+			chrome_headless,
+			Chrome: chrome_headless,
+			FirefoxHeadless
 		},
 
 		autoWatch: true,
@@ -171,7 +188,6 @@ module.exports = function (cnf: Config): void {
 			'karma-chrome-launcher',
 			'karma-firefox-launcher',
 			'karma-mocha',
-			'karma-chai',
 			'karma-sourcemap-loader'
 		],
 

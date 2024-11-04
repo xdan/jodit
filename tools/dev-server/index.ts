@@ -42,15 +42,6 @@ export const devServer = ({ port, dirname }: Variables): Configuration => ({
 			watch: false
 		}
 	],
-	setupMiddlewares: (middlewares, devServer): Middleware[] => {
-		if (!devServer) {
-			throw new Error('webpack-dev-server is not defined');
-		}
-
-		// devServer.app.get('/test', express.static(dirname + '/test'));
-
-		return middlewares;
-	},
 	hot: true,
 	host: 'localhost',
 	port

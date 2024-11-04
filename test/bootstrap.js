@@ -10,21 +10,24 @@
 const box = document.createElement('div');
 document.body.appendChild(box);
 
-if (typeof chai === 'undefined') {
-	console.error('Please include chai.js');
-}
+typeof before === 'function' &&
+	before(async () => {
+		if (typeof waitChai !== 'undefined') {
+			window.expect = await waitChai;
+		}
 
-const expect = typeof chai !== 'undefined' ? chai.expect : function () {},
-	stuff = [];
+		if (typeof chai !== 'undefined') {
+			window.expect = chai.expect;
+		}
+
+		if (typeof expect === 'undefined') {
+			console.error('Please include chai.js');
+		}
+	});
+
+const staff = [];
 
 const stringify = Jodit.ns.Helpers.stringify;
-
-typeof window.chai !== 'undefined' &&
-	(function () {
-		chai.config.truncateThreshold = 0;
-		chai.config.includeStack = true;
-		// chai.config.showDiff = true;
-	})();
 
 typeof window.mocha !== 'undefined' && mocha.timeout(15000);
 Jodit.constants.SET_TEST();
@@ -226,7 +229,7 @@ const defaultPermissions = {
 };
 
 function mockAjax() {
-	if (typeof window.chai !== 'undefined') {
+	if (typeof window.expect !== 'undefined') {
 		let temp = {};
 		Jodit.modules.Ajax.prototype.send = function () {
 			const ajax = this;
@@ -463,24 +466,27 @@ function unmockAjax() {
 	Jodit.modules.Ajax.prototype.send = oldAjaxSender;
 }
 
-if (typeof window.chai !== 'undefined') {
-	mockPromise();
-	mockAjax();
-	window.FormData = function () {
-		this.data = {};
-		this.names = {};
-		this.append = function (key, value, name) {
-			this.data[key] = value;
-			this.names[key] = name;
-		};
-		this.get = function (key) {
-			return this.data[key];
-		};
-		this.getName = function (key) {
-			return this.names[key];
-		};
-	};
-}
+typeof before === 'function' &&
+	before(() => {
+		if (typeof window.expect !== 'undefined') {
+			mockPromise();
+			mockAjax();
+			window.FormData = function () {
+				this.data = {};
+				this.names = {};
+				this.append = function (key, value, name) {
+					this.data[key] = value;
+					this.names[key] = name;
+				};
+				this.get = function (key) {
+					return this.data[key];
+				};
+				this.getName = function (key) {
+					return this.names[key];
+				};
+			};
+		}
+	});
 
 const i18nkeys = new Set();
 const excludeI18nKeys = new Set([
@@ -611,11 +617,11 @@ function removeStuff() {
 		Jodit.instances[key].destruct();
 	});
 
-	stuff.forEach(function (elm) {
+	staff.forEach(function (elm) {
 		elm && elm.parentNode && elm.parentNode.removeChild(elm);
 	});
 
-	stuff.length = 0;
+	staff.length = 0;
 
 	Array.from(
 		document.querySelectorAll(
@@ -654,7 +660,7 @@ function appendTestArea(id, noput) {
 	textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
 	box.appendChild(textarea);
 
-	!noput && stuff.push(textarea);
+	!noput && staff.push(textarea);
 	return textarea;
 }
 
@@ -692,7 +698,7 @@ function appendTestDiv(id, noput) {
 	const textarea = document.createElement('div');
 	textarea.setAttribute('id', id || 'editor_' + new Date().getTime());
 	box.appendChild(textarea);
-	!noput && stuff.push(textarea);
+	!noput && staff.push(textarea);
 	return textarea;
 }
 
@@ -884,7 +890,7 @@ function fillBoxBr(count) {
 	for (let i = 0; i < 100; i += 1) {
 		const br = document.createElement('br');
 		getBox().appendChild(br);
-		stuff.push(br);
+		staff.push(br);
 	}
 }
 
@@ -1241,7 +1247,7 @@ function createPoint(x, y, color, fixed = false) {
 	div.style.top = parseInt(y, 10) + 'px';
 
 	document.body.appendChild(div);
-	stuff.push(div);
+	staff.push(div);
 }
 
 function offset(el) {
@@ -1399,24 +1405,27 @@ function FileXLS() {
 	};
 }
 
-if (typeof window.chai !== 'undefined') {
-	window.FileReader = function () {
-		const self = this;
-		self.result = null;
-		/**
-		 *
-		 * @param {FileImage} file
-		 */
-		self.readAsDataURL = function (file) {
-			self.result = file.dataURI;
-			self.onloadend && self.onloadend();
-		};
-	};
-}
+typeof before === 'function' &&
+	before(() => {
+		if (typeof window.expect !== 'undefined') {
+			window.FileReader = function () {
+				const self = this;
+				self.result = null;
+				/**
+				 *
+				 * @param {FileImage} file
+				 */
+				self.readAsDataURL = function (file) {
+					self.result = file.dataURI;
+					self.onloadend && self.onloadend();
+				};
+			};
+		}
 
-Object.defineProperty(navigator, 'userAgent', {
-	value: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 YaBrowser/18.9.0.3363 Yowser/2.5 Safari/537.36'
-});
+		Object.defineProperty(navigator, 'userAgent', {
+			value: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 YaBrowser/18.9.0.3363 Yowser/2.5 Safari/537.36'
+		});
+	});
 
 /**
  *

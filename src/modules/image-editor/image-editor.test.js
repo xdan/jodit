@@ -13,6 +13,8 @@ describe('Image editor', () => {
 	describe('Crop mode', () => {
 		describe('Enable ratio', () => {
 			it('Should deny crop image without ratio', async () => {
+				unmockPromise();
+
 				const area = appendTestArea();
 				const editor = Jodit.make(area, {
 					history: {
@@ -120,6 +122,8 @@ describe('Image editor', () => {
 
 		describe('Disable ratio', () => {
 			it('Should allow crop image without ratio', async () => {
+				unmockPromise();
+
 				const area = appendTestArea();
 
 				const editor = Jodit.make(area, {

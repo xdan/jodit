@@ -9,6 +9,34 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.2.39
+
+#### :house: Internal
+
+- Chai.js switched to ESM from version 5.0.0, which led to problems with tests inside browser.
+  To solve the problem, we abandoned node_modules version and switched to jsdelivr+esm
+  We are not removing the dependency yet, see `./test/tests/chai-loader.js`
+
+- Update dependencies
+
+```plain
+ @eslint/compat                       ^1.2.0  →   ^1.2.2
+ @eslint/js                          ^9.12.0  →  ^9.14.0
+ @playwright/test                    ^1.48.0  →  ^1.48.2
+ @types/karma                         ^6.3.8  →   ^6.3.9
+ @types/node                       ^20.16.11  →  ^22.8.7
+ @typescript-eslint/eslint-plugin     ^8.8.1  →  ^8.12.2
+ @typescript-eslint/parser            ^8.8.1  →  ^8.12.2
+ compression                          ^1.7.4  →   ^1.7.5
+ core-js                             ^3.38.1  →  ^3.39.0
+ eslint                              ^9.12.0  →  ^9.14.0
+ mini-css-extract-plugin              ^2.9.1  →   ^2.9.2
+ mocha                               ^10.7.3  →  ^10.8.2
+ tslib                                ^2.7.0  →   ^2.8.1
+ tsx                                 ^4.19.1  →  ^4.19.2
+ webpack                              5.95.0  →   5.96.1
+```
+
 ## 4.2.38
 
 ### :bug: Bug Fix

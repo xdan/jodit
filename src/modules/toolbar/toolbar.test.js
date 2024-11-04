@@ -1349,7 +1349,7 @@ describe('Toolbar', () => {
 		});
 
 		describe('Check Redo Undo functionality', function () {
-			it('Should change disable in icon then then can not be executed', function () {
+			it('Should change disable in icon then can not be executed', function () {
 				const area = appendTestArea();
 				area.value = 'top';
 				const editor = new Jodit(area, {
