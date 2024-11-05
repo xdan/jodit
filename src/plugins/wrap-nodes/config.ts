@@ -16,12 +16,12 @@ declare module 'jodit/config' {
 		wrapNodes: {
 			/**
 			 * List of tags that should not be wrapped
+			 * Default: `new Set(['hr', 'style', 'br'])`
 			 */
 			exclude: Set<HTMLTagNames>;
 
 			/**
 			 * If the editor is empty, then insert an empty paragraph into it
-			 * @example
 			 * ```javascript
 			 * Jodit.make('#editor', {
 			 * 	wrapNodes: {
@@ -29,6 +29,7 @@ declare module 'jodit/config' {
 			 * 	}
 			 * });
 			 * ```
+			 * Default: `true`
 			 */
 			emptyBlockAfterInit: boolean;
 		};
