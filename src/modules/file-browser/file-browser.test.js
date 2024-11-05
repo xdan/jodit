@@ -1108,22 +1108,25 @@
 					expect(tree).is.not.null;
 				});
 
+				const ALL_SOURCES = [
+					'.',
+					'ceicom',
+					'FolderInArea2',
+					'test',
+					'Add folder',
+					'second',
+					'.',
+					'ceicom1',
+					'test2',
+					'Add folder'
+				];
+
 				describe('Sidebar', () => {
 					it('Should show all sources', async () => {
-						expect(list()).deep.equals([
-							'.',
-							'ceicom',
-							'test',
-							'Add folder',
-							'second',
-							'.',
-							'ceicom1',
-							'test2',
-							'Add folder'
-						]);
+						expect(list()).deep.equals(ALL_SOURCES);
 					});
 
-					describe('Click on folder', () => {
+					describe('Click on some folder inside default source', () => {
 						it('Should show subfolders only for this folder and source', async () => {
 							await clickFolderItem('ceicom');
 
@@ -1140,17 +1143,28 @@
 								await clickFolderItem('ceicom');
 								await clickFolderItem('..');
 
-								expect(list()).deep.equals([
-									'.',
-									'ceicom',
-									'test',
-									'Add folder',
-									'second',
-									'.',
-									'ceicom1',
-									'test2',
-									'Add folder'
-								]);
+								expect(list()).deep.equals(ALL_SOURCES);
+							});
+						});
+					});
+
+					describe('Click on second folder inside default source', () => {
+						it('Should show subfolders only for this folder and source', async () => {
+							await clickFolderItem('FolderInArea2');
+
+							expect(list()).deep.equals([
+								'.',
+								'..',
+								'Add folder'
+							]);
+						});
+
+						describe('Click on ..', () => {
+							it('Should return state to all sources', async () => {
+								await clickFolderItem('FolderInArea2');
+								await clickFolderItem('..');
+
+								expect(list()).deep.equals(ALL_SOURCES);
 							});
 						});
 					});
@@ -1172,17 +1186,7 @@
 								await clickFolderItem('ceicom1');
 								await clickFolderItem('..');
 
-								expect(list()).deep.equals([
-									'.',
-									'ceicom',
-									'test',
-									'Add folder',
-									'second',
-									'.',
-									'ceicom1',
-									'test2',
-									'Add folder'
-								]);
+								expect(list()).deep.equals(ALL_SOURCES);
 							});
 						});
 
@@ -1216,17 +1220,7 @@
 
 									await clickFolderItem('..');
 
-									expect(list()).deep.equals([
-										'.',
-										'ceicom',
-										'test',
-										'Add folder',
-										'second',
-										'.',
-										'ceicom1',
-										'test2',
-										'Add folder'
-									]);
+									expect(list()).deep.equals(ALL_SOURCES);
 								});
 							});
 						});

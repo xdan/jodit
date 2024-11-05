@@ -369,7 +369,7 @@ function mockAjax() {
 							title: 'Some files',
 							baseurl: 'https://xdsoft.net/jodit/files/',
 							path: '',
-							folders: ['.', folderName, 'test']
+							folders: ['.', folderName, 'FolderInArea2', 'test']
 						};
 
 						const SECOND_SOURCE = {
@@ -389,65 +389,82 @@ function mockAjax() {
 									code: 220
 								}
 							});
-						} else {
-							if (path === 'ceicom') {
-								resolve({
-									success: true,
-									time: '2018-03-15 12:49:49',
-									data: {
-										sources: [
-											{
-												...FIRST_SOURCE,
-												path: 'ceicom',
-												folders: [
-													'.',
-													'..',
-													'subceicom'
-												]
-											}
-										]
-									}
-								});
-							} else if (request.data.source === 'second') {
-								switch (path) {
-									case 'ceicom1/subceicom1':
-										resolve({
-											success: true,
-											time: '2018-03-15 12:49:49',
-											data: {
-												sources: [
-													{
-														...SECOND_SOURCE,
-														path: 'ceicom1/subceicom1',
-														folders: [
-															'.',
-															'..',
-															'subceicom2'
-														]
-													}
-												]
-											}
-										});
-									case 'ceicom1':
-										resolve({
-											success: true,
-											time: '2018-03-15 12:49:49',
-											data: {
-												sources: [
-													{
-														...SECOND_SOURCE,
-														path: 'ceicom1',
-														folders: [
-															'.',
-															'..',
-															'subceicom1'
-														]
-													}
-												]
-											}
-										});
-										break;
-								}
+						} else if (request.data.source === 'default') {
+							switch (path) {
+								case 'ceicom':
+									resolve({
+										success: true,
+										time: '2018-03-15 12:49:49',
+										data: {
+											sources: [
+												{
+													...FIRST_SOURCE,
+													path: 'ceicom',
+													folders: [
+														'.',
+														'..',
+														'subceicom'
+													]
+												}
+											]
+										}
+									});
+									break;
+								case 'FolderInArea2':
+									resolve({
+										success: true,
+										time: '2018-03-15 12:49:49',
+										data: {
+											sources: [
+												{
+													...FIRST_SOURCE,
+													path: 'FolderInArea2',
+													folders: ['.', '..']
+												}
+											]
+										}
+									});
+									break;
+							}
+						} else if (request.data.source === 'second') {
+							switch (path) {
+								case 'ceicom1/subceicom1':
+									resolve({
+										success: true,
+										time: '2018-03-15 12:49:49',
+										data: {
+											sources: [
+												{
+													...SECOND_SOURCE,
+													path: 'ceicom1/subceicom1',
+													folders: [
+														'.',
+														'..',
+														'subceicom2'
+													]
+												}
+											]
+										}
+									});
+								case 'ceicom1':
+									resolve({
+										success: true,
+										time: '2018-03-15 12:49:49',
+										data: {
+											sources: [
+												{
+													...SECOND_SOURCE,
+													path: 'ceicom1',
+													folders: [
+														'.',
+														'..',
+														'subceicom1'
+													]
+												}
+											]
+										}
+									});
+									break;
 							}
 						}
 						break;
