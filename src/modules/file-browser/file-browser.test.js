@@ -1062,7 +1062,7 @@
 			});
 		});
 
-		describe('CRUD Folder', () => {
+		describe('Tree', () => {
 			let editor, filebrowser;
 
 			beforeEach(async () => {
@@ -1075,93 +1075,171 @@
 				});
 
 				filebrowser = editor.filebrowser;
-				await filebrowser.open(function () {});
+				await filebrowser.open(() => {});
 			});
 
-			describe('Rename', () => {
-				let dialog, tree;
+			describe('Several sources', () => {
+				let tree;
+
+				const list = () =>
+					tree.innerText
+						.trim()
+						.replace(/[ \t]+/g, ' ')
+						.split(/[\n]+/)
+						.map(item => item.trim())
+						.filter(item => item);
+
+				const clickFolderItem = async str => {
+					const item = Array.from(
+						tree.querySelectorAll(
+							'.' + filebrowser.tree.getFullElName('item')
+						)
+					).find(item => item.textContent.trim() === str);
+
+					expect(item).is.not.null;
+					simulateEvent('click', item);
+
+					await filebrowser.async.requestIdlePromise();
+				};
 
 				beforeEach(() => {
 					tree = filebrowser.tree.container;
 
 					expect(tree).is.not.null;
-
-					const item = tree.querySelectorAll(
-						'.' + filebrowser.tree.getFullElName('item')
-					)[1];
-
-					expect(item).is.not.null;
-
-					const trigger = getButton('rename', item);
-
-					expect(trigger).is.not.null;
-
-					expect(trigger.parentElement.textContent.trim()).equals(
-						'ceicom'
-					);
-					simulateEvent('click', trigger);
-
-					dialog = getOpenedDialog(editor);
-					expect(dialog).is.not.null;
-					expect(dialog).does.not.equal(filebrowser._dialog);
-
-					expect(dialog.querySelector('input').value).equals(
-						'ceicom'
-					);
 				});
 
-				describe('Folder', () => {
-					it('Should create button inside every folder of list', async () => {
-						dialog.querySelector('input').value = 'ceicom1';
-						clickButton('ok', dialog);
-
-						await filebrowser.async.requestIdlePromise();
-
-						const item2 = tree.querySelectorAll(
-							'.' + filebrowser.tree.getFullElName('item')
-						)[1];
-						expect(item2.textContent.trim()).equals('ceicom1');
+				describe('Sidebar', () => {
+					it('Should show all sources', async () => {
+						expect(list()).deep.equals([
+							'.',
+							'ceicom',
+							'test',
+							'Add folder',
+							'second',
+							'.',
+							'ceicom1',
+							'test2',
+							'Add folder'
+						]);
 					});
 
-					describe('With space', () => {
-						it('Should rename folder correct', async () => {
-							dialog.querySelector('input').value =
-								'ceicom1 post';
-							clickButton('ok', dialog);
+					describe('Click on folder', () => {
+						it('Should show subfolders only for this folder and source', async () => {
+							await clickFolderItem('ceicom');
 
-							await filebrowser.async.requestIdlePromise();
-
-							const item2 = tree.querySelectorAll(
-								'.' + filebrowser.tree.getFullElName('item')
-							)[1];
-							expect(item2.textContent.trim()).equals(
-								'ceicom1 post'
-							);
+							expect(list()).deep.equals([
+								'.',
+								'..',
+								'subceicom',
+								'Add folder'
+							]);
 						});
 
-						describe('Only space', () => {
-							it('Should not rename folder correct', async () => {
-								dialog.querySelector('input').value = '    ';
-								clickButton('ok', dialog);
+						describe('Click on ..', () => {
+							it('Should return state to all sources', async () => {
+								await clickFolderItem('ceicom');
+								await clickFolderItem('..');
 
-								await filebrowser.async.requestIdlePromise();
+								expect(list()).deep.equals([
+									'.',
+									'ceicom',
+									'test',
+									'Add folder',
+									'second',
+									'.',
+									'ceicom1',
+									'test2',
+									'Add folder'
+								]);
+							});
+						});
+					});
 
-								const item2 = tree.querySelectorAll(
-									'.' + filebrowser.tree.getFullElName('item')
-								)[1];
-								expect(item2.textContent.trim()).equals(
-									'ceicom'
-								);
+					describe('Click on folder in second source', () => {
+						it('Should show subfolders only for this folder and source', async () => {
+							await clickFolderItem('ceicom1');
+							expect(list()).deep.equals([
+								'second',
+								'.',
+								'..',
+								'subceicom1',
+								'Add folder'
+							]);
+						});
+
+						describe('Click on ..', () => {
+							it('Should return state to all sources', async () => {
+								await clickFolderItem('ceicom1');
+								await clickFolderItem('..');
+
+								expect(list()).deep.equals([
+									'.',
+									'ceicom',
+									'test',
+									'Add folder',
+									'second',
+									'.',
+									'ceicom1',
+									'test2',
+									'Add folder'
+								]);
+							});
+						});
+
+						describe('Go inside subfolder', () => {
+							it('Should show only folders for this subfolders', async () => {
+								await clickFolderItem('ceicom1');
+								await clickFolderItem('subceicom1');
+
+								expect(list()).deep.equals([
+									'second',
+									'.',
+									'..',
+									'subceicom2',
+									'Add folder'
+								]);
+							});
+
+							describe('Click on ..', () => {
+								it('Should return inside previous folder', async () => {
+									await clickFolderItem('ceicom1');
+									await clickFolderItem('subceicom1');
+									await clickFolderItem('..');
+
+									expect(list()).deep.equals([
+										'second',
+										'.',
+										'..',
+										'subceicom1',
+										'Add folder'
+									]);
+
+									await clickFolderItem('..');
+
+									expect(list()).deep.equals([
+										'.',
+										'ceicom',
+										'test',
+										'Add folder',
+										'second',
+										'.',
+										'ceicom1',
+										'test2',
+										'Add folder'
+									]);
+								});
 							});
 						});
 					});
 				});
 			});
 
-			describe('Remove', () => {
-				describe('Folder', () => {
-					it('Should create button inside every folder of list', async () => {
-						const tree = filebrowser.tree.container;
+			describe('CRUD Folder', () => {
+				describe('Rename', () => {
+					let dialog, tree;
+
+					beforeEach(() => {
+						tree = filebrowser.tree.container;
 
 						expect(tree).is.not.null;
 
@@ -1171,54 +1249,141 @@
 
 						expect(item).is.not.null;
 
-						const trigger = getButton('remove', item);
+						const trigger = getButton('rename', item);
 
 						expect(trigger).is.not.null;
 
+						expect(trigger.parentElement.textContent.trim()).equals(
+							'ceicom'
+						);
 						simulateEvent('click', trigger);
 
-						const dialog = getOpenedDialog(editor);
+						dialog = getOpenedDialog(editor);
 						expect(dialog).is.not.null;
 						expect(dialog).does.not.equal(filebrowser._dialog);
 
-						clickButton('ok', dialog);
-
-						filebrowser.destruct();
-					});
-				});
-			});
-
-			describe('Create', () => {
-				describe('Folder', () => {
-					it('Should create button below folders list', async () => {
-						const addfolder = getButton('plus', filebrowser.tree);
-						expect(addfolder).is.not.null;
+						expect(dialog.querySelector('input').value).equals(
+							'ceicom'
+						);
 					});
 
-					describe('Create new folder', () => {
-						it('Should create new folder', async () => {
-							const addfolder = getButton(
-								'plus',
-								filebrowser.tree
-							);
-
-							expect(addfolder).is.not.null;
-
-							simulateEvent('click', addfolder);
-
-							const dialog = getOpenedDialog(editor);
-
-							expect(dialog).is.not.null;
-							dialog.querySelector('input').value = 'free';
+					describe('Folder', () => {
+						it('Should create button inside every folder of list', async () => {
+							dialog.querySelector('input').value = 'ceicom1';
 							clickButton('ok', dialog);
+
 							await filebrowser.async.requestIdlePromise();
 
+							const item2 = tree.querySelectorAll(
+								'.' + filebrowser.tree.getFullElName('item')
+							)[1];
+							expect(item2.textContent.trim()).equals('ceicom1');
+						});
+
+						describe('With space', () => {
+							it('Should rename folder correct', async () => {
+								dialog.querySelector('input').value =
+									'ceicom1 post';
+								clickButton('ok', dialog);
+
+								await filebrowser.async.requestIdlePromise();
+
+								const item2 = tree.querySelectorAll(
+									'.' + filebrowser.tree.getFullElName('item')
+								)[1];
+								expect(item2.textContent.trim()).equals(
+									'ceicom1 post'
+								);
+							});
+
+							describe('Only space', () => {
+								it('Should not rename folder correct', async () => {
+									dialog.querySelector('input').value =
+										'    ';
+									clickButton('ok', dialog);
+
+									await filebrowser.async.requestIdlePromise();
+
+									const item2 = tree.querySelectorAll(
+										'.' +
+											filebrowser.tree.getFullElName(
+												'item'
+											)
+									)[1];
+									expect(item2.textContent.trim()).equals(
+										'ceicom'
+									);
+								});
+							});
+						});
+					});
+				});
+
+				describe('Remove', () => {
+					describe('Folder', () => {
+						it('Should create button inside every folder of list', async () => {
 							const tree = filebrowser.tree.container;
+
+							expect(tree).is.not.null;
 
 							const item = tree.querySelectorAll(
 								'.' + filebrowser.tree.getFullElName('item')
 							)[1];
-							expect(item.textContent.trim()).equals('free');
+
+							expect(item).is.not.null;
+
+							const trigger = getButton('remove', item);
+
+							expect(trigger).is.not.null;
+
+							simulateEvent('click', trigger);
+
+							const dialog = getOpenedDialog(editor);
+							expect(dialog).is.not.null;
+							expect(dialog).does.not.equal(filebrowser._dialog);
+
+							clickButton('ok', dialog);
+
+							filebrowser.destruct();
+						});
+					});
+				});
+
+				describe('Create', () => {
+					describe('Folder', () => {
+						it('Should create button below folders list', async () => {
+							const addfolder = getButton(
+								'plus',
+								filebrowser.tree
+							);
+							expect(addfolder).is.not.null;
+						});
+
+						describe('Create new folder', () => {
+							it('Should create new folder', async () => {
+								const addfolder = getButton(
+									'plus',
+									filebrowser.tree
+								);
+
+								expect(addfolder).is.not.null;
+
+								simulateEvent('click', addfolder);
+
+								const dialog = getOpenedDialog(editor);
+
+								expect(dialog).is.not.null;
+								dialog.querySelector('input').value = 'free';
+								clickButton('ok', dialog);
+								await filebrowser.async.requestIdlePromise();
+
+								const tree = filebrowser.tree.container;
+
+								const item = tree.querySelectorAll(
+									'.' + filebrowser.tree.getFullElName('item')
+								)[1];
+								expect(item.textContent.trim()).equals('free');
+							});
 						});
 					});
 				});

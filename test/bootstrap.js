@@ -364,26 +364,92 @@ function mockAjax() {
 						const folderName = temp.folderName || 'ceicom';
 						delete temp.folderName;
 
-						resolve({
-							success: true,
-							time: '2018-03-15 12:49:49',
-							data: {
-								sources: [
-									{
-										name: 'default',
-										title: 'Some files',
-										baseurl:
-											'https://xdsoft.net/jodit/files/',
-										path: '',
-										folders:
-											path === ''
-												? ['.', folderName, 'test']
-												: []
+						const FIRST_SOURCE = {
+							name: 'default',
+							title: 'Some files',
+							baseurl: 'https://xdsoft.net/jodit/files/',
+							path: '',
+							folders: ['.', folderName, 'test']
+						};
+
+						const SECOND_SOURCE = {
+							name: 'second',
+							title: 'Other files',
+							baseurl: 'https://xdsoft.net/jodit/files/others/',
+							path: '',
+							folders: ['.', 'ceicom1', 'test2']
+						};
+
+						if (path === '') {
+							resolve({
+								success: true,
+								time: '2018-03-15 12:49:49',
+								data: {
+									sources: [FIRST_SOURCE, SECOND_SOURCE],
+									code: 220
+								}
+							});
+						} else {
+							if (path === 'ceicom') {
+								resolve({
+									success: true,
+									time: '2018-03-15 12:49:49',
+									data: {
+										sources: [
+											{
+												...FIRST_SOURCE,
+												path: 'ceicom',
+												folders: [
+													'.',
+													'..',
+													'subceicom'
+												]
+											}
+										]
 									}
-								],
-								code: 220
+								});
+							} else if (request.data.source === 'second') {
+								switch (path) {
+									case 'ceicom1/subceicom1':
+										resolve({
+											success: true,
+											time: '2018-03-15 12:49:49',
+											data: {
+												sources: [
+													{
+														...SECOND_SOURCE,
+														path: 'ceicom1/subceicom1',
+														folders: [
+															'.',
+															'..',
+															'subceicom2'
+														]
+													}
+												]
+											}
+										});
+									case 'ceicom1':
+										resolve({
+											success: true,
+											time: '2018-03-15 12:49:49',
+											data: {
+												sources: [
+													{
+														...SECOND_SOURCE,
+														path: 'ceicom1',
+														folders: [
+															'.',
+															'..',
+															'subceicom1'
+														]
+													}
+												]
+											}
+										});
+										break;
+								}
 							}
-						});
+						}
 						break;
 					}
 
