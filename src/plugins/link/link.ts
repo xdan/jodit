@@ -17,6 +17,7 @@ import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import {
 	attr,
+	call,
 	convertMediaUrlToVideoEmbed,
 	isString,
 	isURL,
@@ -102,7 +103,15 @@ export class link extends Plugin {
 		jodit.e.stopPropagation('processPaste');
 
 		if (jodit.o.link.processVideoLink) {
-			const embed = convertMediaUrlToVideoEmbed(html);
+			const embed = call(
+				jodit.o.video?.parseUrlToVideoEmbed ??
+					convertMediaUrlToVideoEmbed,
+				html,
+				{
+					width: jodit.o.video?.defaultWidth,
+					height: jodit.o.video?.defaultHeight
+				}
+			);
 
 			if (embed !== html) {
 				return jodit.createInside.fromHTML(embed) as HTMLAnchorElement;

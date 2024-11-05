@@ -9,7 +9,7 @@
  */
 
 import type { IControlType, IJodit, IUIForm } from 'jodit/types';
-import { convertMediaUrlToVideoEmbed } from 'jodit/core/helpers';
+import { call, convertMediaUrlToVideoEmbed } from 'jodit/core/helpers';
 import { Button } from 'jodit/core/ui/button';
 import { UIBlock, UIForm, UIInput, UITextArea } from 'jodit/core/ui/form';
 import { Icon } from 'jodit/core/ui/icon';
@@ -18,13 +18,55 @@ import { type TabOption, TabsWidget } from 'jodit/modules/widget';
 
 import videoIcon from './video.svg';
 
+declare module 'jodit/config' {
+	interface Config {
+		video: {
+			/**
+			 * Custom function for parsing video URL to embed code
+			 * ```javascript
+			 * Jodit.make('#editor', {
+			 * 		video: {
+			 * 			// Defaul behavior
+			 * 			parseUrlToVideoEmbed: (url, size) => Jodit.modules.Helpers.convertMediaUrlToVideoEmbed(url, size)
+			 * 		}
+			 * });
+			 * ```
+			 */
+			parseUrlToVideoEmbed?: (
+				url: string,
+				{
+					width,
+					height
+				}?: {
+					width?: number;
+					height?: number;
+				}
+			) => string;
+			/**
+			 * Default width for video iframe. Default: 400
+			 */
+			defaultWidth?: number;
+			/**
+			 * Default height for video iframe. Default: 345
+			 */
+			defaultHeight?: number;
+		};
+	}
+}
+
+Config.prototype.video = {
+	parseUrlToVideoEmbed: convertMediaUrlToVideoEmbed,
+	defaultWidth: 400,
+	defaultHeight: 345
+};
+
 Icon.set('video', videoIcon);
 
 Config.prototype.controls.video = {
-	popup: (editor: IJodit, current, close) => {
-		const formLink: IUIForm = new UIForm(editor, [
-				new UIBlock(editor, [
-					new UIInput(editor, {
+	popup: (jodit: IJodit, current, close) => {
+		const formLink: IUIForm = new UIForm(jodit, [
+				new UIBlock(jodit, [
+					new UIInput(jodit, {
 						name: 'url',
 						required: true,
 						label: 'URL',
@@ -32,34 +74,34 @@ Config.prototype.controls.video = {
 						validators: ['url']
 					})
 				]),
-				new UIBlock(editor, [
-					Button(editor, '', 'Insert', 'primary').onAction(() =>
+				new UIBlock(jodit, [
+					Button(jodit, '', 'Insert', 'primary').onAction(() =>
 						formLink.submit()
 					)
 				])
 			]),
-			formCode: IUIForm = new UIForm(editor, [
-				new UIBlock(editor, [
-					new UITextArea(editor, {
+			formCode: IUIForm = new UIForm(jodit, [
+				new UIBlock(jodit, [
+					new UITextArea(jodit, {
 						name: 'code',
 						required: true,
 						label: 'Embed code'
 					})
 				]),
-				new UIBlock(editor, [
-					Button(editor, '', 'Insert', 'primary').onAction(() =>
+				new UIBlock(jodit, [
+					Button(jodit, '', 'Insert', 'primary').onAction(() =>
 						formCode.submit()
 					)
 				])
 			]),
 			tabs: TabOption[] = [],
 			insertCode = (code: string): void => {
-				editor.s.restore();
-				editor.s.insertHTML(code);
+				jodit.s.restore();
+				jodit.s.insertHTML(code);
 				close();
 			};
 
-		editor.s.save();
+		jodit.s.save();
 
 		tabs.push(
 			{
@@ -75,14 +117,24 @@ Config.prototype.controls.video = {
 		);
 
 		formLink.onSubmit(data => {
-			insertCode(convertMediaUrlToVideoEmbed(data.url));
+			insertCode(
+				call(
+					jodit.o.video?.parseUrlToVideoEmbed ??
+						convertMediaUrlToVideoEmbed,
+					data.url,
+					{
+						width: jodit.o.video?.defaultWidth,
+						height: jodit.o.video?.defaultHeight
+					}
+				)
+			);
 		});
 
 		formCode.onSubmit(data => {
 			insertCode(data.code);
 		});
 
-		return TabsWidget(editor, tabs);
+		return TabsWidget(jodit, tabs);
 	},
 
 	tags: ['iframe'],

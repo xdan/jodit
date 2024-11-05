@@ -13,11 +13,14 @@ document.body.appendChild(box);
 typeof before === 'function' &&
 	before(async () => {
 		if (typeof waitChai !== 'undefined') {
-			window.expect = await waitChai;
+			window.chai = await waitChai;
 		}
 
 		if (typeof chai !== 'undefined') {
 			window.expect = chai.expect;
+			chai.config.includeStack = true;
+			chai.config.showDiff = true;
+			chai.config.truncateThreshold = 500;
 		}
 
 		if (typeof expect === 'undefined') {
@@ -302,6 +305,7 @@ function mockAjax() {
 				}
 			});
 
+			// eslint-disable-next-line complexity
 			return new Promise(resolve => {
 				switch (action) {
 					case 'folderCreate': {

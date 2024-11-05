@@ -18,15 +18,21 @@ import { parseQuery } from './parse-query';
  */
 export const convertMediaUrlToVideoEmbed = (
 	url: string,
-	width: number = 400,
-	height: number = 345
+	{
+		width = 400,
+		height = 345
+	}: {
+		width?: number;
+		height?: number;
+	} = {}
 ): string => {
 	if (!isURL(url)) {
 		return url;
 	}
 
-	const parser: HTMLAnchorElement = globalDocument.createElement('a'),
-		pattern1: RegExp = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
+	const parser: HTMLAnchorElement = globalDocument.createElement('a');
+	const pattern1: RegExp =
+		/(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
 
 	parser.href = url;
 
@@ -60,7 +66,11 @@ export const convertMediaUrlToVideoEmbed = (
 		case 'www.youtu.be': {
 			const query: any = parser.search
 				? parseQuery(parser.search)
-				: { v: parser.pathname.substr(1) };
+				: { v: parser.pathname.substring(1) };
+
+			if (/^embed\/.*/.test(query.v)) {
+				query.v = query.v.substring(6);
+			}
 
 			return query.v
 				? '<iframe width="' +

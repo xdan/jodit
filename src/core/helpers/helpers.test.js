@@ -545,6 +545,54 @@ describe('Test helpers', function () {
 				).equals('ToolbarButton');
 			});
 		});
+
+		describe('convertMediaUrlToVideoEmbed', () => {
+			[
+				[
+					'bla://www.youtube.com/watch?v=9bZkp7q19f0&ab_channel=officialpsy',
+					'bla://www.youtube.com/watch?v=9bZkp7q19f0&ab_channel=officialpsy'
+				],
+				[
+					'https://www.youtube.com/watch?v=9bZkp7q19f0&ab_channel=officialpsy',
+					'<iframe width="40" height="34" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>',
+					{ width: 40, height: 34 }
+				],
+				[
+					'https://www.youtube.com/embed/9bZkp7q19f0',
+					'<iframe width="40" height="345" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>',
+					{ width: 40 }
+				],
+				[
+					'https://youtube.com/embed/9bZkp7q19f0',
+					'<iframe width="400" height="40" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>',
+					{ height: 40 }
+				],
+				[
+					'https://youtu.be/watch/?v=9bZkp7q19f0',
+					'<iframe width="400" height="40" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>',
+					{ height: 40 }
+				],
+				[
+					'https://vimeo.com/55302365',
+					'<iframe width="400" height="345" src="https://player.vimeo.com/video/55302365" frameborder="0" allowfullscreen></iframe>'
+				],
+				[
+					'https://www.vimeo.com/55302365',
+					'<iframe width="400" height="345" src="https://player.vimeo.com/video/55302365" frameborder="0" allowfullscreen></iframe>'
+				]
+			].forEach(([url, result, size]) => {
+				describe('For url: ' + url, () => {
+					it('should parse result: ' + result, () => {
+						expect(
+							Jodit.modules.Helpers.convertMediaUrlToVideoEmbed(
+								url,
+								size
+							)
+						).equals(result);
+					});
+				});
+			});
+		});
 	});
 
 	describe('Config prototype', function () {
