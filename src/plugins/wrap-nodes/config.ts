@@ -14,6 +14,9 @@ import { Config } from 'jodit/config';
 declare module 'jodit/config' {
 	interface Config {
 		wrapNodes: {
+			/**
+			 * List of tags that should not be wrapped
+			 */
 			exclude: Set<HTMLTagNames>;
 
 			/**

@@ -23,8 +23,17 @@ declare module 'jodit/config' {
 			 * Replace &amp;nbsp; to plain space
 			 */
 			replaceNBSP: boolean;
+			/**
+			 * Remove empty P tags, if they are not in the beginning of the text
+			 */
 			fillEmptyParagraph: boolean;
+			/**
+			 * Remove empty elements
+			 */
 			removeEmptyElements: boolean;
+			/**
+			 * Replace old tags to new eg. <i> to <em>, <b> to <strong>
+			 */
 			replaceOldTags: IDictionary<HTMLTagNames> | false;
 
 			/**
