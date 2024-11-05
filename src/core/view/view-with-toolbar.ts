@@ -24,6 +24,7 @@ import { Dom } from 'jodit/core/dom/dom';
 import { splitArray } from 'jodit/core/helpers/array';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { resolveElement } from 'jodit/core/helpers/utils/selector';
+import { UITooltip } from 'jodit/core/ui';
 import { isButtonGroup } from 'jodit/core/ui/helpers/buttons';
 import { View } from 'jodit/core/view/view';
 import { makeCollection } from 'jodit/modules/toolbar/factory';
@@ -163,6 +164,8 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 
 	override readonly isJodit: boolean = false;
 
+	private __tooltip: UITooltip = new UITooltip(this);
+
 	/** @override **/
 	protected constructor(
 		options?: Partial<IViewOptions>,
@@ -181,7 +184,10 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 
 		this.setStatus(STATUSES.beforeDestruct);
 		this.e.off('beforeToolbarBuild', this.beforeToolbarBuild);
+
+		this.__tooltip.destruct();
 		this.toolbar.destruct();
+
 		// @ts-ignore After destruct, we are not responsible for anything
 		this.toolbar = undefined;
 		super.destruct();

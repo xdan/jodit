@@ -1,6 +1,7 @@
 # @cache
 
 The decorator allows you to cache the result of executing any getter of the UI component.
+The result of the getter execution will be cached and returned in subsequent calls, but only within one instance of the class.
 
 ```typescript
 import { cache, component } from 'jodit/core/decorators';

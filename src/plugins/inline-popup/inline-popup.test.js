@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe.only('Text Inline Popup plugin', () => {
+describe('Text Inline Popup plugin', () => {
 	describe('Image', () => {
 		describe('Click on the image', () => {
 			it('Should Open inline popup', () => {
@@ -246,8 +246,8 @@ describe.only('Text Inline Popup plugin', () => {
 					'<tr><td style="vertical-align: middle">3</td></tr>' +
 					'</table>';
 
-				const td = editor.editor.querySelector('td'),
-					pos = Jodit.modules.Helpers.position(td);
+				const td = editor.editor.querySelector('td');
+				const pos = Jodit.modules.Helpers.position(td);
 
 				simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
 					Object.assign(e, {
@@ -565,7 +565,6 @@ describe.only('Text Inline Popup plugin', () => {
 					});
 				});
 
-
 				const popup = getOpenedPopup(editor);
 
 				expect(popup && popup.parentNode.parentNode != null).is.true;
@@ -575,7 +574,7 @@ describe.only('Text Inline Popup plugin', () => {
 
 				expect(popup && popup.parentNode).is.null;
 			});
-		})
+		});
 
 		describe('Select text inside table cell', () => {
 			it('Should show popup for text selection', () => {

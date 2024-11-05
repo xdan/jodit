@@ -24,7 +24,7 @@ import type {
 } from 'jodit/types';
 import { autobind, component, debounce, hook } from 'jodit/core/decorators';
 import { error } from 'jodit/core/helpers/utils/error/error';
-import { UIList, UITooltip } from 'jodit/core/ui';
+import { UIList } from 'jodit/core/ui';
 import { makeButton, makeSelect } from 'jodit/modules/toolbar/factory';
 
 import './collection.less';
@@ -110,8 +110,6 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		this.container.setAttribute('dir', direction);
 	}
 
-	private __tooltip: Nullable<UITooltip> = new UITooltip(this.jodit);
-
 	constructor(jodit: IViewBased) {
 		super(jodit as T);
 	}
@@ -158,9 +156,6 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		if (this.isDestructed) {
 			return;
 		}
-
-		this.__tooltip?.destruct();
-		this.__tooltip = null;
 
 		this.j.e
 			.off(this.__listenEvents, this.update)

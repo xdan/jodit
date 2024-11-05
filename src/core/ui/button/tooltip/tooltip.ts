@@ -33,6 +33,7 @@ const JODIT_EVENTS_ON_HIDE = [
 	'changePlace.tooltip',
 	'afterOpenPopup.tooltip',
 	'hidePopup.tooltip',
+	'beforePopupClose.tooltip',
 	'closeAllPopups.tooltip'
 ];
 
@@ -65,13 +66,25 @@ export class UITooltip extends UIElement {
 		}
 	}
 
+	private __attachedContainers: Set<HTMLElement> = new Set();
+
 	private __onAttach(container: HTMLElement): void {
 		// TODO Move it inside __show method. Now it is here because testcase failed with capturing
 		getContainer(this.j, UITooltip).appendChild(this.container);
 
-		this.j.e.on(container, 'mouseenter.tooltip', this.__onMouseEnter, {
-			capture: true
-		});
+		this.__attachedContainers.add(container);
+		this.__attachedContainers.add(this.j.container);
+
+		this.j.e
+			.on(container, 'mouseenter.tooltip', this.__onMouseEnter, {
+				capture: true
+			})
+			.on(container, 'mouseleave.tooltip', this.__onMouseLeave, {
+				capture: true
+			})
+			.on(this.j.container, 'mouseleave.tooltip', this.__onMouseLeave, {
+				capture: true
+			});
 	}
 
 	private __listenClose: boolean = false;
@@ -86,10 +99,7 @@ export class UITooltip extends UIElement {
 
 		view.e
 			.on(view.ow, WINDOW_EVENTS_ON_HIDE, this.__hide)
-			.on(JODIT_EVENTS_ON_HIDE, this.__hide)
-			.on(view.container, 'mouseleave.tooltip', this.__onMouseLeave, {
-				capture: true
-			});
+			.on(JODIT_EVENTS_ON_HIDE, this.__hide);
 	}
 
 	private __removeListenersOnLeave(): void {
@@ -100,10 +110,10 @@ export class UITooltip extends UIElement {
 		this.__listenClose = false;
 
 		const view = this.j;
+
 		view.e
 			.off(view.ow, WINDOW_EVENTS_ON_HIDE, this.__hide)
-			.off(JODIT_EVENTS_ON_HIDE, this.__hide)
-			.off(view.container, 'mouseleave.tooltip', this.__onMouseLeave);
+			.off(JODIT_EVENTS_ON_HIDE, this.__hide);
 	}
 
 	private __currentTarget: HTMLElement | null = null;
@@ -221,11 +231,12 @@ export class UITooltip extends UIElement {
 	}
 
 	override destruct(): void {
-		this.j.e.off(
-			this.j.container,
-			'mouseenter.tooltip',
-			this.__onMouseEnter
-		);
+		this.__attachedContainers.forEach(container => {
+			this.j.e
+				.off(container, 'mouseenter.tooltip', this.__onMouseEnter)
+				.off(container, 'mouseleave.tooltip', this.__onMouseLeave);
+		});
+
 		this.__hide();
 		super.destruct();
 	}

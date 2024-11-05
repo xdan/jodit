@@ -10,7 +10,7 @@
 		const OPTIONS = {
 			toolbarAdaptive: false,
 			useNativeTooltip: false,
-			buttons: ['bold', 'italic', 'underline'],
+			buttons: ['bold', 'italic', 'underline', 'align'],
 			showTooltipDelay: 50,
 			language: 'en'
 		};
@@ -63,7 +63,7 @@
 		});
 
 		describe('Jodit tooltip', () => {
-			let editor, button1, button2, button3;
+			let editor, button1, button2, button3, button4;
 
 			function getTooltipElm() {
 				return editor.ownerDocument.querySelector('.jodit-ui-tooltip');
@@ -75,6 +75,7 @@
 				button1 = getButton('bold', editor);
 				button2 = getButton('italic', editor);
 				button3 = getButton('underline', editor);
+				button4 = getButton('justify', editor);
 
 				await editor.async.requestIdlePromise();
 			});
@@ -97,6 +98,27 @@
 						timers.delay(100);
 						const tooltip = getTooltipElm();
 						expect(tooltip.textContent).equals('');
+					});
+
+					describe('Inside popup', () => {
+						it('Should hide tooltip', async () => {
+							clickTrigger('left', editor);
+							const popup = getOpenedPopup(editor);
+							simulateEvent(
+								'mouseenter',
+								getButton('center', popup).parentElement
+							);
+							timers.delay(100);
+							expect(getTooltipElm().textContent).equals(
+								'Align Center'
+							);
+
+							simulateEvent('mouseleave', popup.parentElement);
+							timers.delay(100);
+
+							const tooltip = getTooltipElm();
+							expect(tooltip.textContent).equals('');
+						});
 					});
 				});
 
@@ -237,6 +259,34 @@
 							tooltip = getTooltipElm();
 							expect(tooltip.textContent).equals('');
 						});
+					});
+				});
+			});
+
+			describe('Inside popup', () => {
+				describe('Hiding popup', () => {
+					it('should hide it tooltip', () => {
+						editor.value = '<p><a href="index.html">test</a></p>';
+						simulateEvent(
+							'click',
+							editor.editor.querySelector('a')
+						);
+
+						const popup = getOpenedPopup(editor);
+						expect(popup).is.not.null;
+						const editLink = getButton('link', popup);
+						expect(editLink).is.not.null;
+						simulateEvent('mouseenter', editLink.parentElement);
+
+						timers.delay(100);
+						const tooltip = getTooltipElm();
+						expect(tooltip).is.not.null;
+						expect(tooltip.textContent).equals('Edit link');
+
+						simulateEvent('click', editor.editor);
+						timers.delay(100);
+						expect(getOpenedPopup(editor)).is.null;
+						expect(getTooltipElm().textContent.trim()).equals('');
 					});
 				});
 			});
