@@ -20,7 +20,6 @@ import type {
 	IViewComponent,
 	Nullable
 } from 'jodit/types';
-import type { Table } from 'jodit/modules/table/table';
 import { autobind, cache, debounce, wait, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
@@ -266,15 +265,11 @@ export class inlinePopup extends Plugin {
 			return;
 		}
 
-		const type = 'selection',
-			sel = this.j.s.sel,
-			range = this.j.s.range;
+		const type = 'selection';
+		const sel = this.j.s.sel;
+		const range = this.j.s.range;
 
-		if (
-			sel?.isCollapsed ||
-			this.isSelectedTarget(range) ||
-			this.tableModule.getAllSelectedCells().length
-		) {
+		if (sel?.isCollapsed || this.isSelectedTarget(range)) {
 			if (this.type === type && this.popup.isOpened) {
 				this.hidePopup();
 			}
@@ -311,9 +306,9 @@ export class inlinePopup extends Plugin {
 	/**
 	 * Shortcut for Table module
 	 */
-	private get tableModule(): Table {
-		return this.j.getInstance<Table>('Table', this.j.o);
-	}
+	// private get tableModule(): Table {
+	// 	return this.j.getInstance<Table>('Table', this.j.o);
+	// }
 
 	/** @override **/
 	protected beforeDestruct(jodit: IJodit): void {

@@ -4,10 +4,10 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Text Inline Popup plugin', function () {
-	describe('Image', function () {
-		describe('Click on the image', function () {
-			it('Should Open inline popup', function () {
+describe.only('Text Inline Popup plugin', () => {
+	describe('Image', () => {
+		describe('Click on the image', () => {
+			it('Should Open inline popup', () => {
 				const editor = getJodit();
 
 				editor.value = '<img alt="" src="tests/artio.jpg"/>';
@@ -22,8 +22,8 @@ describe('Text Inline Popup plugin', function () {
 				);
 			});
 
-			describe('and click in opened popup on pencil button', function () {
-				it('Should Open edit image dialog', function () {
+			describe('and click in opened popup on pencil button', () => {
+				it('Should Open edit image dialog', () => {
 					const editor = getJodit();
 
 					editor.value = '<img alt="" src="tests/artio.jpg"/>';
@@ -48,9 +48,9 @@ describe('Text Inline Popup plugin', function () {
 		});
 	});
 
-	describe('Link', function () {
-		describe('Click on the link', function () {
-			it('Should Open inline popup', function () {
+	describe('Link', () => {
+		describe('Click on the link', () => {
+			it('Should Open inline popup', () => {
 				const editor = getJodit();
 
 				editor.value = '<a href="../artio.jpg"/>test</a>';
@@ -64,8 +64,8 @@ describe('Text Inline Popup plugin', function () {
 				);
 			});
 
-			describe('and click in opened popup on pencil button', function () {
-				it('Should Open edit link dialog', function () {
+			describe('and click in opened popup on pencil button', () => {
+				it('Should Open edit link dialog', () => {
 					const editor = getJodit();
 
 					editor.value = '<a href="../artio.jpg"/>test</a>';
@@ -87,8 +87,8 @@ describe('Text Inline Popup plugin', function () {
 					).equals('../artio.jpg');
 				});
 
-				describe('on different links', function () {
-					it('Should Open edit link dialog with different values', function () {
+				describe('on different links', () => {
+					it('Should Open edit link dialog with different values', () => {
 						const editor = getJodit();
 
 						editor.value =
@@ -132,10 +132,10 @@ describe('Text Inline Popup plugin', function () {
 		});
 	});
 
-	describe('Table', function () {
-		describe('Table button', function () {
-			describe('Select table cell', function () {
-				it('Should Select table cell', function () {
+	describe('Table', () => {
+		describe('Table button', () => {
+			describe('Select table cell', () => {
+				it('Should Select table cell', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -161,8 +161,8 @@ describe('Text Inline Popup plugin', function () {
 					);
 				});
 
-				describe('and press brush button', function () {
-					it('Should Select table cell and fill it in yellow', function () {
+				describe('and press brush button', () => {
+					it('Should Select table cell and fill it in yellow', () => {
 						const editor = getJodit();
 
 						editor.value =
@@ -213,7 +213,7 @@ describe('Text Inline Popup plugin', function () {
 			});
 		});
 
-		it('Open inline popup after click inside the cell', function () {
+		it('Open inline popup after click inside the cell', () => {
 			const editor = getJodit();
 
 			editor.value = '<table><tbody><tr><td>1</td></tr></tbody></table>';
@@ -238,7 +238,7 @@ describe('Text Inline Popup plugin', function () {
 		});
 
 		describe('Select table cell', () => {
-			it('Select table cell and change it vertical align', function () {
+			it('Select table cell and change it vertical align', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -269,7 +269,7 @@ describe('Text Inline Popup plugin', function () {
 				expect(td.style.verticalAlign).equals('bottom');
 			});
 
-			it('Select table cell and split it by vertical', function () {
+			it('Select table cell and split it by vertical', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -298,7 +298,7 @@ describe('Text Inline Popup plugin', function () {
 				);
 			});
 
-			it('Select table cell and split it by horizontal', function () {
+			it('Select table cell and split it by horizontal', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -328,7 +328,7 @@ describe('Text Inline Popup plugin', function () {
 				);
 			});
 
-			it('Select two table cells and merge then in one', function () {
+			it('Select two table cells and merge then in one', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -509,7 +509,7 @@ describe('Text Inline Popup plugin', function () {
 				});
 			});
 
-			it('Select table cell and remove whole table should hide inline popup', function () {
+			it('Select table cell and remove whole table should hide inline popup', () => {
 				const editor = getJodit();
 
 				editor.value =
@@ -549,9 +549,60 @@ describe('Text Inline Popup plugin', function () {
 			});
 		});
 
-		describe('Link inside cell', function () {
-			describe('Click on the link', function () {
-				it('Should Open inline popup', function () {
+		describe('Starting to change text', () => {
+			it('Should hide inline popup', () => {
+				const editor = getJodit();
+
+				editor.value = '<table><tr><td>1</td></tr></table>';
+
+				const td = editor.editor.querySelector('td'),
+					pos = Jodit.modules.Helpers.position(td);
+
+				simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+					Object.assign(e, {
+						clientX: pos.left,
+						clientY: pos.top
+					});
+				});
+
+
+				const popup = getOpenedPopup(editor);
+
+				expect(popup && popup.parentNode.parentNode != null).is.true;
+
+				editor.e.fire('change');
+				editor.e.fire('change');
+
+				expect(popup && popup.parentNode).is.null;
+			});
+		})
+
+		describe('Select text inside table cell', () => {
+			it('Should show popup for text selection', () => {
+				const editor = getJodit({
+					toolbarInlineForSelection: true
+				});
+
+				editor.value =
+					'<table>' +
+					'<tr><td>text |inside| cell</td></tr>' +
+					'</table>';
+
+				const td = editor.editor.querySelector('td');
+
+				simulateEvent(['mousedown'], td);
+				setCursorToChar(editor);
+				simulateEvent(['mouseup', 'selectionchange'], td);
+
+				const popup = getOpenedPopup(editor);
+				expect(popup && popup.parentNode.parentNode != null).is.true;
+				expect(getButton('bold', popup)).is.not.null;
+			});
+		});
+
+		describe('Link inside cell', () => {
+			describe('Click on the link', () => {
+				it('Should Open inline popup', () => {
 					const editor = getJodit();
 
 					editor.value =
@@ -608,9 +659,9 @@ describe('Text Inline Popup plugin', function () {
 		});
 	});
 
-	describe('when a string is passed to the popup config', function () {
-		it('Should show the content of the string in the popup', function () {
-			it('Should Open inline popup', function () {
+	describe('when a string is passed to the popup config', () => {
+		it('Should show the content of the string in the popup', () => {
+			it('Should Open inline popup', () => {
 				const editor = getJodit({
 					popup: {
 						a: '<div class="custom-popup-test">foo</div>'

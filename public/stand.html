@@ -52,6 +52,7 @@
 			// root.innerHTML = '<link rel="stylesheet" href="./build/es2021/jodit.fat.min.css"/><div id="edit"></div>';
 			// const editor = Jodit.make('root.getElementById('edit')', {
 			const editor = Jodit.make('#editorNative', {
+				toolbarInlineForSelection: true,
 				commandToHotkeys: {
 					someCustomCommand: 'shift+space'
 				},

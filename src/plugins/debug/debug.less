@@ -1,0 +1,56 @@
+.jodit-debug {
+	background: #f6f6f6;
+	position: relative;
+
+	padding: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: stretch;
+
+	> * {
+		padding: var(--padding-default);
+	}
+
+	&__tree {
+		width: 40%;
+
+		.jodit-debug__tree-elm-name {
+			color: #052e88;
+		}
+
+		.jodit-debug__tree-element_selected {
+			background: #1e7e34;
+			color: #fff;
+		}
+
+		.jodit-debug__tree-cursor {
+			background: #dc3232;
+			color: #fff;
+		}
+	}
+
+	&__sel {}
+
+	&__events {
+		width: 40%;
+
+		max-height: 500px;
+		overflow: auto;
+		background: #1e7e34;
+		color: #fff;
+
+		span {
+			color: #cacaca;
+			font-size: 0.8em;
+		}
+
+		.jodit-debug__events-clear {
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding: 5px;
+			cursor: pointer;
+			color: red;
+		}
+	}
+}

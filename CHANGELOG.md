@@ -9,15 +9,21 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.2.40
+
+### :bug: Bug Fix
+
+-   [Toolbar Customization Issue When Selecting Text Inside Table Cells](https://github.com/xdan/jodit/issues/1131)
+
 ## 4.2.39
 
 #### :house: Internal
 
-- Chai.js switched to ESM from version 5.0.0, which led to problems with tests inside browser.
-  To solve the problem, we abandoned node_modules version and switched to jsdelivr+esm
-  We are not removing the dependency yet, see `./test/tests/chai-loader.js`
+-   Chai.js switched to ESM from version 5.0.0, which led to problems with tests inside browser.
+    To solve the problem, we abandoned node_modules version and switched to jsdelivr+esm
+    We are not removing the dependency yet, see `./test/tests/chai-loader.js`
 
-- Update dependencies
+-   Update dependencies
 
 ```plain
  @eslint/compat                       ^1.2.0  →   ^1.2.2
@@ -2887,11 +2893,11 @@ Related with https://github.com/xdan/jodit/issues/574. In some cases need to lim
 -   @property {IUIOption[]} link.selectOptionsClassName=[] The list of the option for the select (to use with
     modeClassName="select")
 -   ex: [
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "", text: "" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val1", text: "text1" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val2", text: "text2" },
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           	{ value: "val3", text: "text3" }
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ]
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "", text: "" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val1", text: "text1" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val2", text: "text2" },
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	{ value: "val3", text: "text3" }
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ]
     PR: https://github.com/xdan/jodit/pull/577 Thanks @s-renier-taonix-fr
 
 ##### New option `statusbar: boolean = true`
