@@ -19,6 +19,44 @@ describe('Enter behavior Tests', function () {
 				editor.s.insertHTML('stop');
 				expect(editor.value).equals('test<br>stop<br>');
 			});
+
+			describe('Inside table cell', function () {
+				it('Should simple insert BR element', function () {
+					const editor = getJodit();
+
+					editor.value =
+						'<table><tbody><tr><td>test|</td></tr></tbody></table>';
+					setCursorToChar(editor);
+					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+					replaceCursorToChar(editor);
+					expect(sortAttributes(editor.value)).equals(
+						'<table><tbody><tr><td>test<br>|<br></td></tr></tbody></table>'
+					);
+				});
+
+				describe('With SHIFT button', function () {
+					it('Should work same way', function () {
+						const editor = getJodit();
+
+						editor.value =
+							'<table><tbody><tr><td>test|</td></tr></tbody></table>';
+						setCursorToChar(editor);
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor,
+							options => {
+								options.shiftKey = true;
+							}
+						);
+						replaceCursorToChar(editor);
+
+						expect(sortAttributes(editor.value)).equals(
+							'<table><tbody><tr><td>test<br>|<br></td></tr></tbody></table>'
+						);
+					});
+				});
+			});
 		});
 
 		describe('If Enter was pressed in not wrapped text in the end, it text ', function () {

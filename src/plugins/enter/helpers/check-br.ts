@@ -25,12 +25,15 @@ export function checkBR(
 	const isMultiLineBlock = Boolean(
 		Dom.closest(fake, ['pre', 'blockquote'], jodit.editor)
 	);
+	const isCell =
+		!isMultiLineBlock && Dom.closest(fake, ['td', 'th'], jodit.editor);
 
 	const isBRMode = jodit.o.enter.toLowerCase() === BR.toLowerCase();
 
 	// if you use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
 	if (
 		isBRMode ||
+		isCell ||
 		(shiftKeyPressed && !isMultiLineBlock) ||
 		(!shiftKeyPressed && isMultiLineBlock)
 	) {

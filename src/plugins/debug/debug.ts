@@ -135,7 +135,7 @@ export class Debug extends Plugin {
 					break;
 			}
 
-			if (Dom.isNode(e.target)) {
+			if (e && Dom.isNode(e.target)) {
 				result.push(`<span>${e.target.nodeName}</span>`);
 			}
 
