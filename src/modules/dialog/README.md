@@ -58,7 +58,7 @@ const dialog = new Jodit.modules.Dialog({
 
 // or
 
-const editor = new Jodit('#editor', {
+const editor = Jodit.make('#editor', {
 	theme: 'dark'
 });
 const dialog = editor.dlg();
@@ -72,7 +72,7 @@ Thanks to the trait mechanism, there's no need to create utility dialogs like Al
 Simply calling the appropriate methods on the [[Jodit]] instance is sufficient. The dialog will automatically adopt the editor's theme and language settings.
 
 ```js
-const editor = new Jodit('#editor', {
+const editor = Jodit.make('#editor', {
 	theme: 'dark'
 });
 editor.alert('Hello world!');
