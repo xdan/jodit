@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/image-properties
+ */
+
 import { isNumber } from 'jodit/core/helpers/checker/is-number';
 import { trim } from 'jodit/core/helpers/string/trim';
 

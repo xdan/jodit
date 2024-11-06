@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/image-properties
+ */
+
 import type { IJodit, ImageHAlign } from 'jodit/types';
 import { component } from 'jodit/core/decorators/component/component';
 import { hook } from 'jodit/core/decorators/hook/hook';

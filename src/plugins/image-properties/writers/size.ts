@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/image-properties
+ */
+
 import { isNumeric } from 'jodit/core/helpers/checker/is-numeric';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { css } from 'jodit/core/helpers/utils/css';

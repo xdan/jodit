@@ -4,6 +4,10 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/image-properties
+ */
+
 import type { IDialog, IFileBrowserCallBackData, IJodit } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { position } from 'jodit/core/helpers/size/position';
