@@ -54,6 +54,7 @@ export function extractSelectedPart(
 
 /**
  * Retrieves content before after the selected area, clears it if it is empty, and inserts before after the framed selection
+ * @private
  */
 function extractAndMove(
 	wrapper: HTMLElement,
