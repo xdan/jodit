@@ -4,6 +4,11 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/**
+ * @module plugins/ai-assistant
+ */
+
+
 import * as en from './en.js';
 import * as es from './es.js';
 
