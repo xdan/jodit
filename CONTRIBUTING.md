@@ -111,7 +111,7 @@ make build es=es2021 uglify=true excludeLanguages="ru,ar,cs_cz,de,es,fa,fi,fr,he
 ## Tests
 
 Before making any functional changes or fixing a bug, you need to create tests for them.
-We follow the [TDD (Test-Driven Development)](<(https://en.wikipedia.org/wiki/Test-driven_development)>) methodology,
+We follow the [TDD (Test-Driven Development)](https://en.wikipedia.org/wiki/Test-driven_development) methodology,
 where we write automated tests first and then implement the functionality.
 Maintaining a comprehensive test suite is crucial for our editor.
 To run all tests, use the following command:
