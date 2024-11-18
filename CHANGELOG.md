@@ -11,6 +11,11 @@
 
 ## 4.2.42
 
+### :rocket: New Feature
+
+-   With the symbols plugin you can use the Shift key to select multiple symbols.
+    [special character #1194](https://github.com/xdan/jodit/issues/1194)
+
 ### :bug: Bug Fix
 
 -   Fixed a bug in the logic of the ControlType.popup method; if the method did not return anything,

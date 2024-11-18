@@ -232,7 +232,7 @@ describe('Symbols plugin', () => {
 		});
 
 		describe('Press Enter or mousedown on element', () => {
-			it('Should insert character', () => {
+			it('Should insert character and close dialog', () => {
 				const area = appendTestArea();
 				const editor = new Jodit(area, {
 					toolbarAdaptive: false,
@@ -266,6 +266,48 @@ describe('Symbols plugin', () => {
 				simulateEvent('mousedown', currentActive2);
 
 				expect(editor.value).equals('<p>test&amp;½</p>');
+			});
+
+			describe('with shift', () => {
+				it('Should not close dialog', () => {
+					const editor = getJodit({
+						toolbarAdaptive: false,
+						buttons: 'symbols'
+					});
+
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
+
+					const btn = getButton('symbols', editor);
+
+					simulateEvent('click', btn);
+					let dialog = getOpenedDialog(editor);
+
+					const currentActive = dialog.getElementsByTagName('a')[5];
+
+					simulateEvent('mousedown', currentActive, function (data) {
+						data.shiftKey = true;
+					});
+
+					expect(editor.value).equals('<p>test&amp;</p>');
+
+					expect(getOpenedDialog(editor)).equals(dialog);
+
+					const currentActive2 =
+						dialog.getElementsByTagName('a')[125];
+
+					for (let i = 0; i < 3; i++) {
+						simulateEvent(
+							'mousedown',
+							currentActive2,
+							function (data) {
+								data.shiftKey = true;
+							}
+						);
+					}
+
+					expect(editor.value).equals('<p>test&amp;½½½</p>');
+				});
 			});
 		});
 	});

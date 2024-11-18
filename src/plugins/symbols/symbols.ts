@@ -108,7 +108,9 @@ export class symbols extends Plugin {
 						if (Dom.isTag(this, 'a')) {
 							jodit.s.focus();
 							jodit.s.insertHTML(this.innerHTML);
-							jodit.e.fire(this, 'close_dialog');
+							if (!e?.shiftKey) {
+								jodit.e.fire(this, 'close_dialog');
+							}
 							e && e.preventDefault();
 							e && e.stopImmediatePropagation();
 						}
