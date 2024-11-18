@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Undo/Redo behaviors', function () {
-	describe('Do some changes', function () {
-		it('Should change redo/undo stack', function () {
+describe('Undo/Redo behaviors', () => {
+	describe('Do some changes', () => {
+		it('Should change redo/undo stack', () => {
 			const editor = getJodit({
 				history: {
 					timeout: 0
@@ -80,8 +80,8 @@ describe('Undo/Redo behaviors', function () {
 				);
 			});
 
-			describe('Several changes from autside with editor.value', function () {
-				it('Should change redo/undo stack immediately', function () {
+			describe('Several changes from autside with editor.value', () => {
+				it('Should change redo/undo stack immediately', () => {
 					const editor = getJodit();
 
 					editor.value = '<p>test1<p>';
@@ -97,8 +97,8 @@ describe('Undo/Redo behaviors', function () {
 		});
 	});
 
-	describe('Commands', function () {
-		it('Undo. Enter text wait and again enter text. After execute "undo" command. First text should be returned', function () {
+	describe('Commands', () => {
+		it('Undo. Enter text wait and again enter text. After execute "undo" command. First text should be returned', () => {
 			const editor = getJodit({
 				history: {
 					timeout: 0 // disable delay
@@ -111,7 +111,7 @@ describe('Undo/Redo behaviors', function () {
 			expect(editor.value).equals('<p>test</p>');
 		});
 
-		it('Redo. Enter text wait and again enter text. After execute "undo" + "redo" command in editor should be second text', function () {
+		it('Redo. Enter text wait and again enter text. After execute "undo" + "redo" command in editor should be second text', () => {
 			const editor = getJodit({
 				history: {
 					timeout: 0
@@ -126,7 +126,7 @@ describe('Undo/Redo behaviors', function () {
 			expect(editor.value).equals('<p>test2</p>');
 		});
 
-		it('Check react UndoRedo to another changes', function () {
+		it('Check react UndoRedo to another changes', () => {
 			const editor = getJodit({
 				history: {
 					timeout: 0
@@ -150,8 +150,8 @@ describe('Undo/Redo behaviors', function () {
 		});
 	});
 
-	describe('Clear stack', function () {
-		it('Should disable both buttons in toolbar and all calls redo and undo must do nothing', function () {
+	describe('Clear stack', () => {
+		it('Should disable both buttons in toolbar and all calls redo and undo must do nothing', () => {
 			const editor = getJodit({
 				toolbarAdaptive: false,
 				history: {
@@ -196,8 +196,8 @@ describe('Undo/Redo behaviors', function () {
 		});
 	});
 
-	describe('Limited history', function () {
-		it('Should store only limited history', function () {
+	describe('Limited history', () => {
+		it('Should store only limited history', () => {
 			const editor = getJodit({
 				history: {
 					maxHistoryLength: 3
