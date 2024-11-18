@@ -38,6 +38,10 @@ export interface ISnapshot {
 	make(): SnapshotType;
 	restoreOnlySelection(snapshot: SnapshotType): void;
 	restore(snapshot: SnapshotType): void;
+
+	/**
+	 * Pack all changes in one transaction without creating history point
+	 */
 	transaction(changes: () => void): void;
 }
 

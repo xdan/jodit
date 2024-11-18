@@ -56,3 +56,14 @@ const editor = Jodit.make('#editor');
 editor.value = '<p>Hello world!</p>';
 console.log(editor.history.snapshot.make()); // {html: "<p>Hello world!</p>", range: {…}}
 ```
+
+If you don't want the change to go into history, you can call the `editor.history.snapshot.transaction(fn)` method:
+
+```js
+console.log(editor.history.length); // 0
+editor.history.snapshot.transaction(() => {
+  editor.s.insertNode(editor.createInside.text('123'));
+  editor.s.insertHTML('123');
+});
+console.log(editor.history.length); // 0
+```

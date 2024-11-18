@@ -123,8 +123,10 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		this.__isBlocked = enable;
 	}
 
+	private __levelOfTransaction: number = 0;
 	transaction(changes: () => void): void {
 		this.__block(true);
+		this.__levelOfTransaction += 1;
 
 		try {
 			changes();
@@ -132,9 +134,13 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 			if (!IS_PROD) {
 				throw e;
 			}
-		}
+		} finally {
+			this.__levelOfTransaction -= 1;
 
-		this.__block(false);
+			if (this.__levelOfTransaction === 0) {
+				this.__block(false);
+			}
+		}
 	}
 
 	/**

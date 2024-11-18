@@ -227,4 +227,39 @@ describe('Undo/Redo behaviors', () => {
 			expect(editor.value).equals('<p>123456</p>');
 		});
 	});
+
+	describe('Transactions', () => {
+		it('should pack all changes inside one and not create history point', () => {
+			const editor = getJodit();
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+			editor.s.insertNode(editor.createInside.text('123'));
+			editor.s.insertNode(editor.createInside.text('123'));
+			expect(editor.history.length).equals(4);
+
+			editor.history.snapshot.transaction(() => {
+				editor.s.insertNode(editor.createInside.text('123'));
+				editor.s.insertNode(editor.createInside.text('123'));
+				editor.s.insertNode(editor.createInside.text('123'));
+			});
+
+			expect(editor.history.length).equals(4);
+			expect(editor.value).equals('<p>test123123123123123</p>');
+		});
+
+		it('should block the snapshot', () => {
+			const editor = getJodit();
+
+			expect(editor.history.snapshot.isBlocked).is.false;
+
+			editor.history.snapshot.transaction(() => {
+				expect(editor.history.snapshot.isBlocked).is.true;
+				editor.s.insertNode(editor.createInside.text('123'));
+				editor.s.insertHTML('123');
+				expect(editor.history.snapshot.isBlocked).is.true;
+			});
+
+			expect(editor.history.snapshot.isBlocked).is.false;
+		});
+	});
 });

@@ -16,6 +16,7 @@
 -   Fixed a bug in the logic of the ControlType.popup method; if the method did not return anything,
     it could be used as an alternative to `exec`. But when called again it did not work.
 -   Fixed logic in the symbols plugin
+-   [Does it have an API for closing record operations #1193](https://github.com/xdan/jodit/issues/1193)
 
 ## 4.2.41
 

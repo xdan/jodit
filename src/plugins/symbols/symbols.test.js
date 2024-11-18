@@ -17,7 +17,7 @@ describe('Symbols plugin', () => {
 		expect(btn).is.not.null;
 	});
 
-	describe.only('Click symbol button', () => {
+	describe('Click symbol button', () => {
 		let editor, btn, dialog;
 
 		beforeEach(() => {
