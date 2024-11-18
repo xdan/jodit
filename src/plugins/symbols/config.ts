@@ -241,7 +241,7 @@ Icon.set('symbols', symbolsIcon);
 Config.prototype.controls.symbols = {
 	hotkeys: ['ctrl+shift+i', 'cmd+shift+i'],
 	tooltip: 'Insert Special Character',
-	popup: (editor: IJodit, current, close): any => {
+	popup: (editor: IJodit, current, close): HTMLElement | undefined => {
 		const container: HTMLElement | undefined = editor.e.fire(
 			'generateSpecialCharactersTable.symbols'
 		);
@@ -254,20 +254,22 @@ Config.prototype.controls.symbols = {
 				box.appendChild(container);
 				editor.e.on(container, 'close_dialog', close);
 				return box;
-			} else {
-				editor
-					.alert(
-						container,
-						'Select Special Character',
-						undefined,
-						'jodit-symbols'
-					)
-					.bindDestruct(editor);
-
-				const a = container.querySelector('a');
-
-				a && a.focus();
 			}
+
+			editor
+				.alert(
+					container,
+					'Select Special Character',
+					undefined,
+					'jodit-symbols'
+				)
+				.bindDestruct(editor);
+
+			const a = container.querySelector('a');
+
+			a && a.focus();
 		}
+
+		return;
 	}
 } as IControlType;

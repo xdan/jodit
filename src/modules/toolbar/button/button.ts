@@ -319,33 +319,44 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		if (isFunction(ctr.popup)) {
 			const popup = this.openPopup();
 			popup.parentElement = this;
+			try {
+				if (
+					this.j.e.fire(
+						camelCase(`before-${ctr.name}-open-popup`),
+						this.target,
+						ctr,
+						popup
+					) !== false
+				) {
+					const target =
+						this.toolbar?.getTarget(this) ?? this.target ?? null;
 
-			if (
-				this.j.e.fire(
-					camelCase(`before-${ctr.name}-open-popup`),
-					this.target,
-					ctr,
-					popup
-				) !== false
-			) {
-				const target =
-					this.toolbar?.getTarget(this) ?? this.target ?? null;
+					const elm = ctr.popup(
+						this.j,
+						target,
+						this.__closePopup,
+						this
+					);
 
-				const elm = ctr.popup(this.j, target, this.__closePopup, this);
-
-				if (elm) {
-					popup
-						.setContent(
-							isString(elm) ? this.j.c.fromHTML(elm) : elm
-						)
-						.open(
-							() => position(this.container),
-							false,
-							this.j.o.allowTabNavigation
-								? this.container
-								: undefined
-						);
+					if (elm) {
+						popup
+							.setContent(
+								isString(elm) ? this.j.c.fromHTML(elm) : elm
+							)
+							.open(
+								() => position(this.container),
+								false,
+								this.j.o.allowTabNavigation
+									? this.container
+									: undefined
+							);
+					} else {
+						this.__closePopup();
+					}
 				}
+			} catch (e: unknown) {
+				this.__closePopup();
+				throw e;
 			}
 
 			/**
@@ -477,6 +488,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		this.j.e
 			.on(this.ow, 'mousedown touchstart', this.onOutsideClick)
 			.on('escape closeAllPopups', this.onOutsideClick);
+
 		return this.openedPopup;
 	}
 

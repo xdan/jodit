@@ -33,7 +33,6 @@ import './symbols.less';
  * The plugin inserts characters that are not part of the standard keyboard.
  */
 export class symbols extends Plugin {
-	/** @override */
 	override buttons: Plugin['buttons'] = [
 		{
 			name: 'symbols',
@@ -41,18 +40,17 @@ export class symbols extends Plugin {
 		}
 	];
 
-	private countInRow: number = 17;
+	private __countInRow: number = 17;
 
 	constructor(jodit: IJodit) {
 		super(jodit);
 		extendLang(langs);
 	}
 
-	/** @override */
 	override afterInit(jodit: IJodit): void {
 		jodit.e.on('generateSpecialCharactersTable.symbols', () => {
 			const container = jodit.c.fromHTML(
-					`<div class="jodit-symbols__container">
+				`<div class="jodit-symbols__container">
 						<div class="jodit-symbols__container_table">
 							<table class="jodit-symbols__table"><tbody></tbody></table>
 						</div>
@@ -60,20 +58,23 @@ export class symbols extends Plugin {
 							<div class="jodit-symbols__preview"></div>
 						</div>
 					</div>`
-				) as HTMLDivElement,
-				preview = container.querySelector(
-					'.jodit-symbols__preview'
-				) as HTMLDivElement,
-				table = container.querySelector('table') as HTMLTableElement,
-				body: HTMLTableSectionElement = table.tBodies[0],
-				chars: HTMLAnchorElement[] = [];
+			) as HTMLDivElement;
+
+			const preview = container.querySelector(
+				'.jodit-symbols__preview'
+			) as HTMLDivElement;
+
+			const table = container.querySelector('table') as HTMLTableElement;
+			const body: HTMLTableSectionElement = table.tBodies[0];
+			const chars: HTMLAnchorElement[] = [];
 
 			for (let i: number = 0; i < jodit.o.specialCharacters.length; ) {
 				const tr = jodit.c.element('tr');
 
 				for (
 					let j = 0;
-					j < this.countInRow && i < jodit.o.specialCharacters.length;
+					j < this.__countInRow &&
+					i < jodit.o.specialCharacters.length;
 					j += 1, i += 1
 				) {
 					const td = jodit.c.element('td'),
@@ -138,22 +139,22 @@ export class symbols extends Plugin {
 							case KEY_DOWN:
 								newIndex =
 									e.key === KEY_UP
-										? index - self.countInRow
-										: index + self.countInRow;
+										? index - self.__countInRow
+										: index + self.__countInRow;
 
 								if (chars[newIndex] === undefined) {
 									newIndex =
 										e.key === KEY_UP
 											? Math.floor(
 													chars.length /
-														self.countInRow
+														self.__countInRow
 												) *
-													self.countInRow +
+													self.__countInRow +
 												jIndex
 											: jIndex;
 
 									if (newIndex > chars.length - 1) {
-										newIndex -= self.countInRow;
+										newIndex -= self.__countInRow;
 									}
 								}
 

@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Symbols plugin', function () {
-	it('Should create symbol button in toolbar and after click open dialog with symbols', function () {
+describe('Symbols plugin', () => {
+	it('Should create symbol button in toolbar', () => {
 		const area = appendTestArea();
 		const editor = Jodit.make(area, {
 			toolbarAdaptive: false,
@@ -14,15 +14,40 @@ describe('Symbols plugin', function () {
 		editor.value = 'test';
 
 		const btn = getButton('symbols', editor);
-		expect(null).does.not.equal(btn);
-
-		simulateEvent('click', 0, btn);
-		const dialog = getOpenedDialog(editor);
-		expect(null).does.not.equal(dialog);
+		expect(btn).is.not.null;
 	});
 
-	describe('Symbols dialog', function () {
-		it('Should have focus on first element after open', function () {
+	describe.only('Click symbol button', () => {
+		let editor, btn, dialog;
+
+		beforeEach(() => {
+			editor = getJodit({
+				toolbarAdaptive: false,
+				buttons: 'symbols'
+			});
+			editor.value = '<p>test|</p>';
+
+			btn = getButton('symbols', editor);
+			simulateEvent('click', btn);
+			dialog = getOpenedDialog(editor);
+		});
+
+		it('Should open dialog with symbols', () => {
+			expect(dialog).is.not.null;
+		});
+
+		describe('Double times', () => {
+			it('Should open dialog again', () => {
+				simulateEvent('click', getButton('close', dialog));
+				expect(getOpenedDialog(editor)).is.null;
+				simulateEvent('click', btn);
+				expect(getOpenedDialog(editor)).is.not.null;
+			});
+		});
+	});
+
+	describe('Symbols dialog', () => {
+		it('Should have focus on first element after open', () => {
 			const area = appendTestArea();
 			const editor = new Jodit(area, {
 				toolbarAdaptive: false,
@@ -42,8 +67,8 @@ describe('Symbols plugin', function () {
 			);
 		});
 
-		describe('Press key left', function () {
-			it('Should select previous element', function () {
+		describe('Press key left', () => {
+			it('Should select previous element', () => {
 				const area = appendTestArea();
 				const editor = new Jodit(area, {
 					toolbarAdaptive: false,
@@ -75,8 +100,8 @@ describe('Symbols plugin', function () {
 			});
 		});
 
-		describe('Press key right', function () {
-			it('Should select next element', function () {
+		describe('Press key right', () => {
+			it('Should select next element', () => {
 				const area = appendTestArea();
 				const editor = new Jodit(area, {
 					toolbarAdaptive: false,
@@ -108,8 +133,8 @@ describe('Symbols plugin', function () {
 			});
 		});
 
-		describe('Press key top', function () {
-			it('Should select element above', function () {
+		describe('Press key top', () => {
+			it('Should select element above', () => {
 				const area = appendTestArea();
 
 				const editor = new Jodit(area, {
@@ -158,8 +183,8 @@ describe('Symbols plugin', function () {
 			});
 		});
 
-		describe('Press key bottom', function () {
-			it('Should select element below', function () {
+		describe('Press key bottom', () => {
+			it('Should select element below', () => {
 				const area = appendTestArea();
 				const editor = new Jodit(area, {
 					toolbarAdaptive: false,
@@ -206,8 +231,8 @@ describe('Symbols plugin', function () {
 			});
 		});
 
-		describe('Press Enter or mousdown on element', function () {
-			it('Should insert character', function () {
+		describe('Press Enter or mousedown on element', () => {
+			it('Should insert character', () => {
 				const area = appendTestArea();
 				const editor = new Jodit(area, {
 					toolbarAdaptive: false,
@@ -245,8 +270,8 @@ describe('Symbols plugin', function () {
 		});
 	});
 
-	describe('Symbols popup', function () {
-		it('Should create popup this symbols', function () {
+	describe('Symbols popup', () => {
+		it('Should create popup this symbols', () => {
 			const area = appendTestArea();
 			const editor = new Jodit(area, {
 				toolbarAdaptive: false,
