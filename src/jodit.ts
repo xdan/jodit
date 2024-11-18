@@ -154,7 +154,17 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	}
 
 	/**
-	 * Method wrap usual Has Object in Object helper for prevent deep object merging in options*
+	 * Method wrap usual object in Object helper for prevent deep object merging in options*
+	 * ```js
+	 * const editor = Jodit.make('#editor', {
+	 * 	controls: {
+	 * 		fontsize: {
+	 * 			list: Jodit.atom([8, 9, 10])
+	 * 		}
+	 * 	}
+	 * });
+	 * ```
+	 * In this case, the array [8, 9, 10] will not be combined with other arrays, but will replace them
 	 */
 	static atom<T>(object: T): T {
 		return markAsAtomic(object);
