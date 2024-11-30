@@ -24,6 +24,7 @@ export default ({
 				options: {
 					transpileOnly: true,
 					allowTsInNodeModules: true,
+					onlyCompileBundledFiles: true,
 					compilerOptions: {
 						allowJs: true,
 						target: ES,

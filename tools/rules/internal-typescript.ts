@@ -32,6 +32,7 @@ export default (
 				options: {
 					transpileOnly: isProd && !isTest && !generateTypes,
 					allowTsInNodeModules: true,
+					onlyCompileBundledFiles: true,
 					compilerOptions: {
 						allowJs: true,
 						target: ES,
