@@ -161,11 +161,26 @@ describe('Test interface', function () {
 					direction: 'rtl'
 				});
 
-				expect('rtl').equals(editor.editor.getAttribute('dir'));
-				expect('rtl').equals(editor.container.getAttribute('dir'));
-				expect('rtl').equals(
-					editor.toolbar.container.getAttribute('dir')
+				expect(editor.editor.getAttribute('dir')).equals('rtl');
+				expect(editor.container.getAttribute('dir')).equals('rtl');
+				expect(editor.toolbar.container.getAttribute('dir')).equals(
+					'rtl'
 				);
+			});
+
+			describe('Source editor', function () {
+				it('Should have RTL direction', function () {
+					const editor = getJodit({
+						direction: 'rtl',
+						sourceEditor: 'area'
+					});
+					clickButton('source', editor);
+					expect(
+						editor.container
+							.querySelector('.jodit-source__mirror')
+							.getAttribute('dir')
+					).equals('rtl');
+				});
 			});
 		});
 

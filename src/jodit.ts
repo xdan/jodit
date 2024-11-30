@@ -1558,6 +1558,9 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			this.editor.style.direction = direction;
 			this.editor.setAttribute('dir', direction);
 
+			this.container.style.direction = direction;
+			this.container.setAttribute('dir', direction);
+
 			this.toolbar.setDirection(direction);
 		}
 

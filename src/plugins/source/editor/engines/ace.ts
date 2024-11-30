@@ -115,6 +115,11 @@ export class AceEditor
 
 			this.instance = ace.edit(fakeMirror);
 
+			if (editor.o.direction === 'rtl') {
+				this.instance.setOption('rtlText', true);
+				this.instance.setOption('rtl', true);
+			}
+
 			this.instance.setTheme(editor.o.sourceEditorNativeOptions.theme);
 			this.instance.renderer.setShowGutter(
 				editor.o.sourceEditorNativeOptions.showGutter

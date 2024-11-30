@@ -25,7 +25,8 @@ export class TextAreaEditor
 
 	init(editor: IJodit): any {
 		this.instance = editor.c.element('textarea', {
-			class: 'jodit-source__mirror'
+			class: 'jodit-source__mirror',
+			dir: editor.o.direction === 'rtl' ? 'rtl' : undefined
 		});
 
 		this.container.appendChild(this.instance);
