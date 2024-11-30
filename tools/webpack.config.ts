@@ -62,7 +62,7 @@ export default (
 		devtool: debug ? 'inline-source-map' : false,
 
 		entry: {
-			jodit: ['./src/index'],
+			jodit: ['./src/index.ts'],
 			...(!fat ? pluginsEntries : {})
 		},
 

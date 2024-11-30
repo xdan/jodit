@@ -4,4 +4,4 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-module.exports = require('./tools/webpack.config');
+export { default } from './tools/webpack.config';
