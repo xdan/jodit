@@ -76,6 +76,7 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	disabled?: boolean;
 	readonly?: boolean;
 	iframe?: boolean;
+	direction?: 'ltr' | 'rtl' | '';
 
 	namespace?: string;
 

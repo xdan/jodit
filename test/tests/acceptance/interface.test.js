@@ -182,6 +182,17 @@ describe('Test interface', function () {
 					).equals('rtl');
 				});
 			});
+
+			describe('Open some dialog', function () {
+				it('Should have RTL direction', function () {
+					const editor = getJodit({
+						direction: 'rtl'
+					});
+					editor.alert('Hello');
+					const dialog = getOpenedDialog(editor);
+					expect(dialog.getAttribute('dir')).equals('rtl');
+				});
+			});
 		});
 
 		describe('For iframe mode', function () {

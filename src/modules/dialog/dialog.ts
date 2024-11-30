@@ -720,6 +720,11 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			</div>`
 		) as HTMLDivElement;
 
+		if (self.options.direction === 'rtl') {
+			self.container.style.direction = 'rtl';
+			self.container.setAttribute('dir', 'rtl');
+		}
+
 		if (this.o.zIndex) {
 			this.container.style.zIndex = this.o.zIndex.toString();
 		}

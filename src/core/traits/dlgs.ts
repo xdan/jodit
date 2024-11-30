@@ -20,6 +20,7 @@ export abstract class Dlgs implements IDlgs {
 			shadowRoot: this.o.shadowRoot,
 			ownerWindow: this.o.ownerWindow,
 			defaultTimeout: this.o.defaultTimeout,
+			direction: this.o.direction,
 			theme: this.o.theme,
 			globalFullSize: this.o.globalFullSize,
 			...options
