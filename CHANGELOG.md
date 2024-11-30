@@ -9,6 +9,52 @@
 > -   :house: [Internal]
 > -   :nail_care: [Polish]
 
+## 4.2.44
+
+### :rocket: New Feature
+
+- Added method `Jodit.modules.Helpers.ConfigDeepFlatten` it allows make plain object from prototype chain object.
+
+```typescript
+const editor = Jodit.make('#editor', {
+  image: {
+    dialogWidth: 500
+  }
+});
+
+console.log(editor.o.image.openOnDblClick) // true
+// But you can't get all options in plain object
+console.log(JSON.stringify(editor.o.image)); // {"dialogWidth":500}
+
+const plain = Jodit.modules.Helpers.ConfigDeepFlatten(editor.o.image);
+console.log(JSON.stringify(plain)); // {"dialogWidth":500, "openOnDblClick": true, "editSrc": true, ...}
+```
+
+#### :house: Internal
+
+- Update dependencies
+
+```plain
+ @eslint/compat                      ^1.2.2  →    ^1.2.3
+ @eslint/eslintrc                    ^3.1.0  →    ^3.2.0
+ @eslint/js                         ^9.14.0  →   ^9.16.0
+ @playwright/test                   ^1.48.2  →   ^1.49.0
+ @types/mocha                       ^10.0.9  →  ^10.0.10
+ @types/node                        ^22.8.7  →  ^22.10.1
+ @typescript-eslint/eslint-plugin   ^8.12.2  →   ^8.16.0
+ @typescript-eslint/parser          ^8.12.2  →   ^8.16.0
+ axios                               ^1.7.7  →    ^1.7.8
+ eslint                             ^9.14.0  →   ^9.16.0
+ eslint-plugin-tsdoc                 ^0.3.0  →    ^0.4.0
+ globals                           ^15.11.0  →  ^15.12.0
+ less                                ^4.2.0  →    ^4.2.1
+ postcss                           >=8.4.47  →  >=8.4.49
+ prettier                            ^3.3.3  →    ^3.4.1
+ stylelint                         ^16.10.0  →  ^16.11.0
+ typescript                          ^5.6.3  →    ^5.7.2
+```
+
+
 ## 4.2.42
 
 ### :rocket: New Feature

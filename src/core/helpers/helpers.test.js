@@ -4,9 +4,9 @@
  * Copyright (c) 2013-2024 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-describe('Test helpers', function () {
-	describe('Normalizers', function () {
-		describe('normalizeKeyAliases', function () {
+describe('Test helpers', () => {
+	describe('Normalizers', () => {
+		describe('normalizeKeyAliases', () => {
 			const hotkeys = {
 				'cmd+ alt+s': 'meta+alt+s',
 				'cmd++': 'meta++',
@@ -34,8 +34,8 @@ describe('Test helpers', function () {
 			});
 		});
 
-		describe('normalizePath', function () {
-			it('Should normalize slashes and join some parts', function () {
+		describe('normalizePath', () => {
+			it('Should normalize slashes and join some parts', () => {
 				const variants = {
 					'/data/test/': ['/data/test/'],
 					'data/test/': ['data/test/'],
@@ -64,9 +64,9 @@ describe('Test helpers', function () {
 		});
 	});
 
-	describe('Checkers', function () {
-		describe('isVoid', function () {
-			it('Should check value is undefned or null', function () {
+	describe('Checkers', () => {
+		describe('isVoid', () => {
+			it('Should check value is undefned or null', () => {
 				const values = [
 					[1, false],
 					[undefined, true],
@@ -84,8 +84,8 @@ describe('Test helpers', function () {
 			});
 		});
 
-		describe('isURL', function () {
-			it('Should check value is URL', function () {
+		describe('isURL', () => {
+			it('Should check value is URL', () => {
 				const variants = {
 					'12345678901234567890123': 0,
 					'http://j.mp': 1,
@@ -135,8 +135,8 @@ describe('Test helpers', function () {
 			});
 		});
 
-		describe('isInt', function () {
-			it('Should check value is int or not', function () {
+		describe('isInt', () => {
+			it('Should check value is int or not', () => {
 				const values = [
 					'cmd+ alt+s',
 					false,
@@ -168,8 +168,8 @@ describe('Test helpers', function () {
 			});
 		});
 
-		describe('isNumeric', function () {
-			it('Should check value is int or not', function () {
+		describe('isNumeric', () => {
+			it('Should check value is int or not', () => {
 				const values = [
 					'cmd+ alt+s',
 					false,
@@ -209,8 +209,8 @@ describe('Test helpers', function () {
 			});
 		});
 
-		describe('isNumber', function () {
-			it('Should check value is a number', function () {
+		describe('isNumber', () => {
+			it('Should check value is a number', () => {
 				const values = [
 					'cmd+ alt+s',
 					false,
@@ -231,7 +231,7 @@ describe('Test helpers', function () {
 		});
 	});
 
-	describe('String', function () {
+	describe('String', () => {
 		describe('fuzzySearchIndex', () => {
 			const fuzzySearchIndex = Jodit.modules.Helpers.fuzzySearchIndex;
 			const I = Jodit.INVISIBLE_SPACE;
@@ -320,8 +320,8 @@ describe('Test helpers', function () {
 		});
 	});
 
-	describe('HTML', function () {
-		describe('stripTags', function () {
+	describe('HTML', () => {
+		describe('stripTags', () => {
 			const values = [
 				['<p>Type something<p>', 'Type something'],
 				['<p>Type <strong>something</strong><p>', 'Type something'],
@@ -345,8 +345,8 @@ describe('Test helpers', function () {
 			];
 
 			for (const value of values) {
-				describe('Put HTML text input: ' + value[0], function () {
-					it('Should return only output: ' + value[1], function () {
+				describe('Put HTML text input: ' + value[0], () => {
+					it('Should return only output: ' + value[1], () => {
 						expect(value[1]).equals(
 							Jodit.modules.Helpers.stripTags(
 								value[0],
@@ -360,9 +360,9 @@ describe('Test helpers', function () {
 		});
 	});
 
-	describe('Object', function () {
-		describe('get', function () {
-			it('Should get value from keyChain else return null', function () {
+	describe('Object', () => {
+		describe('get', () => {
+			it('Should get value from keyChain else return null', () => {
 				const obj = {
 					a1: 2,
 					a: {
@@ -405,8 +405,8 @@ describe('Test helpers', function () {
 			});
 		});
 
-		describe('set', function () {
-			it('Should set value by keyChain', function () {
+		describe('set', () => {
+			it('Should set value by keyChain', () => {
 				let obj = {};
 
 				const values = [
@@ -498,9 +498,9 @@ describe('Test helpers', function () {
 		});
 	});
 
-	describe('Utils', function () {
-		describe('reset', function () {
-			it('It should reset native browser method', function () {
+	describe('Utils', () => {
+		describe('reset', () => {
+			it('It should reset native browser method', () => {
 				expect(typeof Jodit.modules.Helpers.reset('Array.from')).equals(
 					'function'
 				);
@@ -519,7 +519,7 @@ describe('Test helpers', function () {
 				).deep.equals(['1', '2', '3']);
 			});
 
-			it('should be cached', function () {
+			it('should be cached', () => {
 				expect(Jodit.modules.Helpers.reset('Array.from') !== Array.from)
 					.is.true;
 
@@ -530,10 +530,10 @@ describe('Test helpers', function () {
 			});
 		});
 
-		describe('getClassName', function () {
+		describe('getClassName', () => {
 			const getClassName = Jodit.modules.Helpers.getClassName;
 
-			it('Should return normal(not uglifyed) name for instance of class', function () {
+			it('Should return normal(not uglifyed) name for instance of class', () => {
 				expect(getClassName(Jodit.modules.Popup.prototype)).equals(
 					'Popup'
 				);
@@ -595,11 +595,15 @@ describe('Test helpers', function () {
 		});
 	});
 
-	describe('Config prototype', function () {
+	describe('Config prototype', () => {
 		const ConfigProto = Jodit.modules.Helpers.ConfigProto;
+		const ConfigFlatten = Jodit.modules.Helpers.ConfigFlatten;
+		const ConfigDeepFlatten = Jodit.modules.Helpers.ConfigDeepFlatten;
+		const isPlainObject = Jodit.modules.Helpers.isPlainObject;
 
-		it('Should use object B as prototype for A', function () {
-			const A = {
+		let A, B, C;
+		beforeEach(() => {
+			A = {
 				a: 1,
 
 				e: {
@@ -608,7 +612,7 @@ describe('Test helpers', function () {
 					}
 				}
 			};
-			const B = {
+			B = {
 				a: 2,
 				b: 3,
 				e: {
@@ -618,9 +622,10 @@ describe('Test helpers', function () {
 					}
 				}
 			};
+			C = ConfigProto(A, B);
+		});
 
-			const C = ConfigProto(A, B);
-
+		it('Should use object B as prototype for A', () => {
 			expect(C).does.not.eq(A);
 			expect(C.a).eq(1);
 			expect(C.b).eq(3);
@@ -631,8 +636,8 @@ describe('Test helpers', function () {
 			expect(C.e.f.h).eq(9);
 		});
 
-		describe('Several prototypes', function () {
-			it('Should use all objects as prototype for A', function () {
+		describe('Several prototypes', () => {
+			it('Should use all objects as prototype for A', () => {
 				const A = {
 					a: 1,
 
@@ -676,8 +681,8 @@ describe('Test helpers', function () {
 			});
 		});
 
-		describe('Atom values', function () {
-			it('Should not merge', function () {
+		describe('Atom values', () => {
+			it('Should not merge', () => {
 				const A = {
 					a: Jodit.atom({
 						b: {
@@ -702,8 +707,8 @@ describe('Test helpers', function () {
 			});
 		});
 
-		describe('Arrays', function () {
-			it('Should merge - not concat', function () {
+		describe('Arrays', () => {
+			it('Should merge - not concat', () => {
 				const A = {
 					a: {
 						b: [1, 2, 3, 4]
@@ -721,8 +726,8 @@ describe('Test helpers', function () {
 				expect(res.a.b).deep.eq([1, 2, 3, 4, 9]);
 			});
 
-			describe('Atom array', function () {
-				it('Should be not merged', function () {
+			describe('Atom array', () => {
+				it('Should be not merged', () => {
 					const A = {
 						a: { b: Jodit.atom([1, 2, 3, 4]) }
 					};
@@ -736,8 +741,8 @@ describe('Test helpers', function () {
 					expect(res.a.b).deep.eq([1, 2, 3, 4]);
 				});
 
-				describe('On first level all arrays', function () {
-					it('Should work as atomic', function () {
+				describe('On first level all arrays', () => {
+					it('Should work as atomic', () => {
 						const A = {
 							a: [1, 2, 3, 4]
 						};
@@ -750,6 +755,64 @@ describe('Test helpers', function () {
 
 						expect(res.a).deep.eq([1, 2, 3, 4]);
 					});
+				});
+			});
+		});
+
+		function JSONstringifyOrder(obj, space) {
+			const allKeys = new Set();
+			JSON.stringify(obj, (key, value) => (allKeys.add(key), value));
+			return JSON.stringify(obj, Array.from(allKeys).sort(), space);
+		}
+
+		describe('Print object', () => {
+			describe('Just prototype object', () => {
+				it('Should print as first argument', () => {
+					expect(JSONstringifyOrder(C)).equals(JSONstringifyOrder(A));
+				});
+			});
+
+			describe('ConfigFlatten', () => {
+				it('Should ass shallow merge A and B', () => {
+					const flatten = ConfigFlatten(C);
+					const merged = { ...B, ...A };
+					expect(JSONstringifyOrder(flatten)).equals(
+						JSONstringifyOrder(merged)
+					);
+				});
+			});
+
+			function isObject(item) {
+				return item && typeof item === 'object' && !Array.isArray(item);
+			}
+
+			function mergeDeep(target, ...sources) {
+				if (!sources.length) return target;
+				const source = sources.shift();
+
+				if (isObject(target) && isObject(source)) {
+					for (const key in source) {
+						if (isObject(source[key])) {
+							if (!target[key])
+								Object.assign(target, { [key]: {} });
+							mergeDeep(target[key], source[key]);
+						} else {
+							Object.assign(target, { [key]: source[key] });
+						}
+					}
+				}
+
+				return mergeDeep(target, ...sources);
+			}
+
+			describe('ConfigDeepFlatten', () => {
+				it('Should ass deep merge A and B', () => {
+					const flatten = ConfigDeepFlatten(C);
+					const merged = mergeDeep({}, B, A);
+
+					expect(JSONstringifyOrder(flatten)).equals(
+						JSONstringifyOrder(merged)
+					);
 				});
 			});
 		});

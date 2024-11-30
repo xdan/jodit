@@ -105,3 +105,29 @@ export function ConfigFlatten(obj: IDictionary): IDictionary {
 		return app;
 	}, {} as IDictionary);
 }
+
+/**
+ * Returns a plain object from a prototype-based object.
+ * ```typescript
+ * const editor = Jodit.make('#editor', {
+ *   image: {
+ *     dialogWidth: 500
+ *   }
+ * });
+ *
+ * console.log(editor.o.image.openOnDblClick) // true
+ * // But you can't get all options in plain object
+ * console.log(JSON.stringify(editor.o.image)); // {"dialogWidth":500}
+ *
+ * const plain = Jodit.modules.Helpers.ConfigDeepFlatten(editor.o.image);
+ * console.log(JSON.stringify(plain)); // {"dialogWidth":500, "openOnDblClick": true, "editSrc": true, ...}
+ * ```
+ */
+export function ConfigDeepFlatten(obj: IDictionary): IDictionary {
+	return keys(obj, false).reduce((app, key) => {
+		app[key] = isPlainObject(obj[key])
+			? ConfigDeepFlatten(obj[key])
+			: obj[key];
+		return app;
+	}, {} as IDictionary);
+}

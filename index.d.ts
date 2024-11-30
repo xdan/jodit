@@ -13,25 +13,6 @@ declare global {
 		component: Nullable<IComponent>;
 	}
 
-	interface CaretPosition {
-		offsetNode: Node;
-		offset: number;
-	}
-
-	interface IdleDeadline {
-		readonly didTimeout: boolean;
-		timeRemaining(): DOMHighResTimeStamp;
-	}
-
-	// https://github.com/xdan/jodit/issues/743
-	interface IdleRequestCallback {
-		(deadline: IdleDeadline): void;
-	}
-
-	interface Document {
-		caretPositionFromPoint?(x: number, y: number): CaretPosition;
-	}
-
 	// https://github.com/xdan/jodit/issues/718
 	interface ShadowRoot {
 		getSelection(): ReturnType<Window['getSelection']>;

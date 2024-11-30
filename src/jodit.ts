@@ -1532,17 +1532,6 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 			this.__prepareWYSIWYGEditor();
 
-			// direction
-			if (this.o.direction) {
-				const direction =
-					this.o.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
-
-				this.container.style.direction = direction;
-				this.container.setAttribute('dir', direction);
-
-				this.toolbar.setDirection(direction);
-			}
-
 			if (this.o.triggerChangeEvent) {
 				this.e.on(
 					'change',
@@ -1568,6 +1557,8 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 			this.editor.style.direction = direction;
 			this.editor.setAttribute('dir', direction);
+
+			this.toolbar.setDirection(direction);
 		}
 
 		// proxy events
