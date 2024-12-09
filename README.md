@@ -8,6 +8,7 @@ without the use of additional libraries. It includes a file editor and image edi
 [![Build Status](https://github.com/xdan/jodit/workflows/Run%20tests/badge.svg)](https://github.com/xdan/jodit/actions/workflows/tests.yml)
 [![npm version](https://badge.fury.io/js/jodit.svg)](https://badge.fury.io/js/jodit)
 [![npm](https://img.shields.io/npm/dm/jodit.svg)](https://www.npmjs.com/package/jodit)
+[![npm](https://img.shields.io/npm/dm/jodit-react.svg)](https://www.npmjs.com/package/jodit-react)
 
 -   [Demo and Official site](https://xdsoft.net/jodit/)
 -   [PRO Version](https://xdsoft.net/jodit/pro/)
