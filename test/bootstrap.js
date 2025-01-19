@@ -613,6 +613,7 @@ const excludeI18nKeys = new Set([
 	'empty',
 	'adddate',
 	'URL',
+	'Hello',
 	'Custom',
 	'list_test',
 	'OS System Font',
