@@ -9,6 +9,39 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.2.48
+
+### :bug: Bug Fix
+
+- [Source code mode: When the text area is resized, the number of visible code view lines does not dynamically adjust #1206](https://github.com/xdan/jodit/issues/1206)
+
+#### :house: Internal
+
+- Use typings for `options` in `Jodti.make(element, options)` method
+
+Before:
+
+```typescript
+class Jodit {
+	static make(element: HTMLElement | string, options?: object): Jodit {
+		//...
+	}
+}
+```
+
+After:
+
+```typescript
+class Jodit {
+	static make(
+		element: HTMLElement | string,
+		options?: DeepPartial<Config>
+	): Jodit {
+		//...
+	}
+}
+```
+
 ## 4.2.45
 
 - Fixed bug with RTL mode when all dialogs were opened without RTL mode

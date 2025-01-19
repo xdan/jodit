@@ -153,10 +153,15 @@ export class AceEditor
 				this.setValue(this.getValue());
 			}
 
-			const onResize = this.j.async.debounce(() => {
-				if (editor.isInDestruct) {
+			const onResize = this.j.async.throttle(() => {
+				if (
+					editor.isInDestruct ||
+					editor.getMode() === constants.MODE_WYSIWYG
+				) {
 					return;
 				}
+
+				const hasFocus = this.instance.isFocused();
 
 				if (editor.o.height !== 'auto') {
 					this.instance.setOption(
@@ -169,9 +174,12 @@ export class AceEditor
 				}
 
 				this.instance.resize();
+				hasFocus && this.focus();
 			}, this.j.defaultTimeout * 2);
 
-			editor.e.on('afterResize afterSetMode', onResize);
+			editor.e
+				.on(editor, 'resize', onResize)
+				.on('afterResize afterSetMode', onResize);
 
 			onResize();
 
@@ -240,6 +248,7 @@ export class AceEditor
 	}
 
 	focus(): void {
+		this.instance.container.focus();
 		this.instance.focus();
 	}
 

@@ -89,6 +89,8 @@ export class size extends Plugin {
 	 * Manually change height
 	 */
 	private __setHeight(height: number | string): void {
+		const { clientHeight, clientWidth } = this.j.container;
+
 		if (isNumber(height)) {
 			const { minHeight, maxHeight } = this.j.o;
 
@@ -107,13 +109,15 @@ export class size extends Plugin {
 			this.j.storage.set('height', height);
 		}
 
-		this.__resizeWorkspaceImd();
+		this.__resizeWorkspaceImd({ clientHeight, clientWidth });
 	}
 
 	/**
 	 * Manually change width
 	 */
 	private __setWidth(width: number | string): void {
+		const { clientHeight, clientWidth } = this.j.container;
+
 		if (isNumber(width)) {
 			const { minWidth, maxWidth } = this.j.o;
 
@@ -128,7 +132,7 @@ export class size extends Plugin {
 
 		css(this.j.container, 'width', width);
 
-		this.__resizeWorkspaceImd();
+		this.__resizeWorkspaceImd({ clientHeight, clientWidth });
 	}
 
 	/**
@@ -146,7 +150,15 @@ export class size extends Plugin {
 	 * Calculate workspace height
 	 */
 	@autobind
-	private __resizeWorkspaceImd(): void {
+	private __resizeWorkspaceImd(
+		{
+			clientHeight,
+			clientWidth
+		}: {
+			clientHeight: number;
+			clientWidth: number;
+		} = this.j.container
+	): void {
 		if (!this.j || this.j.isDestructed || !this.j.o || this.j.o.inline) {
 			return;
 		}
@@ -185,6 +197,16 @@ export class size extends Plugin {
 					? this.j.container.offsetHeight - this.__getNotWorkHeight()
 					: 'auto'
 			);
+		}
+
+		const { clientHeight: newClientHeight, clientWidth: newClientWidth } =
+			this.j.container as HTMLElement;
+
+		if (
+			clientHeight !== newClientHeight ||
+			clientWidth !== newClientWidth
+		) {
+			this.j.e.fire(this.j, 'resize');
 		}
 	}
 

@@ -54,6 +54,9 @@
 			// const editor = Jodit.make('root.getElementById('edit')', {
 			const editor = Jodit.make('#editorNative', {
 				toolbarInlineForSelection: true,
+				"allowResizeX": true,
+				"height": 150,
+				"width": 500,
 				commandToHotkeys: {
 					someCustomCommand: 'shift+space'
 				},
@@ -62,8 +65,8 @@
 						alert(111);
 					}
 				},
-				direction: 'rtl',
-				tabIndex: 0,
+				// direction: 'rtl',
+				// tabIndex: 0,
 				// shadowRoot: root,
 				// safeMode: true,
 				// disablePlugins: ['clean-html'],
