@@ -14,6 +14,7 @@ import type {
 	AjaxOptions,
 	CanPromise,
 	CustomCommand,
+	DeepPartial,
 	ExecCommandCallback,
 	ICreate,
 	IDictionary,
@@ -173,7 +174,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	/**
 	 * Factory for creating Jodit instance
 	 */
-	static make(element: HTMLElement | string, options?: object): Jodit {
+	static make(
+		element: HTMLElement | string,
+		options?: DeepPartial<Config>
+	): Jodit {
 		return new this(element, options);
 	}
 
@@ -1176,7 +1180,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	 * @param element - Selector or HTMLElement
 	 * @param options - Editor's options
 	 */
-	protected constructor(element: HTMLElement | string, options?: object) {
+	protected constructor(
+		element: HTMLElement | string,
+		options?: DeepPartial<Config>
+	) {
 		super(options as IViewOptions, true);
 
 		try {
