@@ -21,18 +21,18 @@ Jodit.make('#editor', {
 });
 ```
 
--   `limitWords` - Limits the number of words separated by spaces. Limitation does not include HTML tags and attributes
--   `limitChars` - Limits the number of characters not including spaces and special characters. Tags and attributes are also ignored.
--   `limitHTML` - If this option is enabled, then `limitWords` and `limitChars` count tags and their attributes.
+- `limitWords` - Limits the number of words separated by spaces. Limitation does not include HTML tags and attributes
+- `limitChars` - Limits the number of characters not including spaces and special characters. Tags and attributes are also ignored.
+- `limitHTML` - If this option is enabled, then `limitWords` and `limitChars` count tags and their attributes.
 
 ## Events
 
 When limits are reached, a series of events occur:
 
--   `limit.limit` - Upon reaching any of the limits
--   `denyChars.limit` - When the character limit is reached
--   `denyWords.limit` - Upon reaching any words
--   `denyPaste.limit` - If the user wanted to insert text beyond the limits
+- `limit.limit` - Upon reaching any of the limits
+- `denyChars.limit` - When the character limit is reached
+- `denyWords.limit` - Upon reaching any words
+- `denyPaste.limit` - If the user wanted to insert text beyond the limits
 
 ```js
 const jodit = Jodit.make('#editor', {

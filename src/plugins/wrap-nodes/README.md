@@ -31,4 +31,4 @@ Plugin settings are under the namespace [[Config.wrapNodes]]
 
 ## Plugin settings
 
--   `emptyBlockAfterInit` - If true, then after initialization, the plugin will add an empty paragraph block to the empty document.
+- `emptyBlockAfterInit` - If true, then after initialization, the plugin will add an empty paragraph block to the empty document.

@@ -117,28 +117,28 @@ Jodit.make('#editor', {
 
 ## Settings
 
--   filebrowser.howLongShowMsg=3000 How long to show an error message
-    in the status bar (ms)
--   filebrowser.sort=function (a, b, sortBy, parent) { return b.changed - a.changed;}
-    Items sort functions
--   filebrowser.sortBy='changed-desc' Sort by field
--   filebrowser.filter=function (item, searchWord) { return item.name.toLowerCase().indexOf(searchWord.toLowerCase()) !== -1} Filter items
--   filebrowser.showFileName=true Show filename in thumbs
--   filebrowser.showFileSize=true Show filesize in thumbs
--   filebrowser.showFileChangeTime=true Show the last modification time in thumbs
--   filebrowser.editImage=true use [[ImageEditor]] - crop and resize image
--   filebrowser.preview=true Show preview button in context menu
--   filebrowser.showPreviewNavigation=true Show navigation buttons in preview
--   filebrowser.showSelectButtonInPreview=true Show select button in preview
--   filebrowser.contextMenu=true use context menu
--   filebrowser.createNewFolder=true The ability to create a directory of the web browser
--   filebrowser.deleteFolder=true The ability to delete directories from the web browser
--   filebrowser.moveFolder=true The ability to move directories from the web browser
--   filebrowser.moveFile=true The ability to move file from the web browser
--   filebrowser.showFoldersPanel=true Show folders panel
--   filebrowser.width=763px The width of the web browser
--   filebrowser.height=400px The height of the file browser
--   filebrowser.buttons=`[ 'filebrowser.upload', 'filebrowser.remove', 'filebrowser.update', 'filebrowser.select', 'filebrowser.edit', '|', 'filebrowser.tiles', 'filebrowser.list', '|', 'filebrowser.filter', '|', 'filebrowser.sort', ]`
+- filebrowser.howLongShowMsg=3000 How long to show an error message
+  in the status bar (ms)
+- filebrowser.sort=function (a, b, sortBy, parent) { return b.changed - a.changed;}
+  Items sort functions
+- filebrowser.sortBy='changed-desc' Sort by field
+- filebrowser.filter=function (item, searchWord) { return item.name.toLowerCase().indexOf(searchWord.toLowerCase()) !== -1} Filter items
+- filebrowser.showFileName=true Show filename in thumbs
+- filebrowser.showFileSize=true Show filesize in thumbs
+- filebrowser.showFileChangeTime=true Show the last modification time in thumbs
+- filebrowser.editImage=true use [[ImageEditor]] - crop and resize image
+- filebrowser.preview=true Show preview button in context menu
+- filebrowser.showPreviewNavigation=true Show navigation buttons in preview
+- filebrowser.showSelectButtonInPreview=true Show select button in preview
+- filebrowser.contextMenu=true use context menu
+- filebrowser.createNewFolder=true The ability to create a directory of the web browser
+- filebrowser.deleteFolder=true The ability to delete directories from the web browser
+- filebrowser.moveFolder=true The ability to move directories from the web browser
+- filebrowser.moveFile=true The ability to move file from the web browser
+- filebrowser.showFoldersPanel=true Show folders panel
+- filebrowser.width=763px The width of the web browser
+- filebrowser.height=400px The height of the file browser
+- filebrowser.buttons=`[ 'filebrowser.upload', 'filebrowser.remove', 'filebrowser.update', 'filebrowser.select', 'filebrowser.edit', '|', 'filebrowser.tiles', 'filebrowser.list', '|', 'filebrowser.filter', '|', 'filebrowser.sort', ]`
 
 Example:
 
@@ -168,8 +168,8 @@ var editor = Jodit.make('#editor', {
 });
 ```
 
--   filebrowser.isSuccess method to check - whether the response positive
--   filebrowser.getMessage method for receiving a message from the response
+- filebrowser.isSuccess method to check - whether the response positive
+- filebrowser.getMessage method for receiving a message from the response
 
 ```javascript
 Jodit.make('#editor', {
@@ -184,13 +184,13 @@ Jodit.make('#editor', {
 });
 ```
 
--   filebrowser.view='tiles' Filelist view - `tiles` or `list`
--   filebrowser.ajax The default settings for AJAX connections to the server.
-    Most of the settings like here [jQuery.ajax](http://api.jquery.com/jQuery.ajax/) but is not jQuery.ajax
--   filebrowser.ajax.prepareData Method of preparation
-    of data to be sent to the server
--   filebrowser.ajax.process The method of processing the
-    data obtained after administration of the server. Must return this PlainObject format
+- filebrowser.view='tiles' Filelist view - `tiles` or `list`
+- filebrowser.ajax The default settings for AJAX connections to the server.
+  Most of the settings like here [jQuery.ajax](http://api.jquery.com/jQuery.ajax/) but is not jQuery.ajax
+- filebrowser.ajax.prepareData Method of preparation
+  of data to be sent to the server
+- filebrowser.ajax.process The method of processing the
+  data obtained after administration of the server. Must return this PlainObject format
 
 ```js
 const response = {
@@ -203,36 +203,36 @@ const response = {
 };
 ```
 
--   filebrowser.ajax.url='' Address entry point on the server for AJAX connection
--   filebrowser.ajax.data={} Default data to send to the server
--   filebrowser.ajax.headers={} An object of additional header key/value pairs toWYSIWYG
-    send along with requests using the `XMLHttpRequest` transport. The header `X-Requested-With: XMLHttpRequest`
-    is always added, but its default `XMLHttpRequest` value can be changed here.
-    @property {object} `filebrowser.resize` Settings for AJAX connections to the server to resize
-    image. By default, the uses [[Config.filebrowser.ajax]] with argument
-    action=create
--   filebrowser.crop Settings for AJAX connections to the server to crop image.
-    By default, the uses [[Config.filebrowser.ajax]] with argument
-    action=create
--   filebrowser.c Settings for AJAX connections to the server to create
-    the category . By default, the uses [[Config.filebrowser.ajax]]
-    with argument `action=create`
--   filebrowser.move Settings for AJAX connections to the server for the moving
-    image or category . By default uses [[Config.filebrowser.ajax]]
-    with argument `action=move`
--   filebrowser.remove Settings for AJAX connections to the server toWYSIWYG
-    delete the image or category . By default uses [[Config.filebrowser.ajax]]
-    with argument `action=remove`
-    @property {object} filebrowser.folder Settings for AJAX connections to the server toWYSIWYG
-    download the list of categories .
-    By default uses [[Config.filebrowser.ajax]]
-    with argument `action=folder`
--   filebrowser.items Settings for AJAX connections to the server to download
-    the image list in the specified category . By default uses
-    [[Config.filebrowser.ajax]] with argument action=items
--   filebrowser.uploader=null Settings Module [[Uploader]]
-    for fast uploading images in category via Drag&Drop file in the file browser. The default settings of
-    the module [[Uploader]]
+- filebrowser.ajax.url='' Address entry point on the server for AJAX connection
+- filebrowser.ajax.data={} Default data to send to the server
+- filebrowser.ajax.headers={} An object of additional header key/value pairs toWYSIWYG
+  send along with requests using the `XMLHttpRequest` transport. The header `X-Requested-With: XMLHttpRequest`
+  is always added, but its default `XMLHttpRequest` value can be changed here.
+  @property {object} `filebrowser.resize` Settings for AJAX connections to the server to resize
+  image. By default, the uses [[Config.filebrowser.ajax]] with argument
+  action=create
+- filebrowser.crop Settings for AJAX connections to the server to crop image.
+  By default, the uses [[Config.filebrowser.ajax]] with argument
+  action=create
+- filebrowser.c Settings for AJAX connections to the server to create
+  the category . By default, the uses [[Config.filebrowser.ajax]]
+  with argument `action=create`
+- filebrowser.move Settings for AJAX connections to the server for the moving
+  image or category . By default uses [[Config.filebrowser.ajax]]
+  with argument `action=move`
+- filebrowser.remove Settings for AJAX connections to the server toWYSIWYG
+  delete the image or category . By default uses [[Config.filebrowser.ajax]]
+  with argument `action=remove`
+  @property {object} filebrowser.folder Settings for AJAX connections to the server toWYSIWYG
+  download the list of categories .
+  By default uses [[Config.filebrowser.ajax]]
+  with argument `action=folder`
+- filebrowser.items Settings for AJAX connections to the server to download
+  the image list in the specified category . By default uses
+  [[Config.filebrowser.ajax]] with argument action=items
+- filebrowser.uploader=null Settings Module [[Uploader]]
+  for fast uploading images in category via Drag&Drop file in the file browser. The default settings of
+  the module [[Uploader]]
 
 Example:
 

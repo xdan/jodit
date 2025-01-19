@@ -66,15 +66,15 @@ Jodit.plugins.add('resizeEditor', resizeEditor); // Constructor, not instance
 
 ### hasStyle
 
--   Type: boolean
--   Default: false
+- Type: boolean
+- Default: false
 
 Jodit will try to load the styles along the same path as the plugin is loaded.
 
 ### buttons
 
--   Type: Array<IPluginButton>
--   Default: `[]`
+- Type: Array<IPluginButton>
+- Default: `[]`
 
 ```typescript
 export interface IPluginButton {
@@ -139,8 +139,8 @@ This is necessary for the history module to work correctly, since the editor doe
 
 ### static requires
 
--   Type: Array<string>
--   Default: []
+- Type: Array<string>
+- Default: []
 
 If your plugin depends on other plugins, then it must be initialized after them.
 

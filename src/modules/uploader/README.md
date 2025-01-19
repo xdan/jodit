@@ -10,7 +10,7 @@ Here are some of them:
 
 ### uploader.url
 
--   Type: `string`
+- Type: `string`
 
 Point of entry for file uploader. This is a required parameter.
 
@@ -24,15 +24,15 @@ Jodit.make('#editor', {
 
 ### uploader.format
 
--   Type: `string`
--   Default: 'json'
+- Type: `string`
+- Default: 'json'
 
 The format of the received data
 
 ### uploader.headers
 
--   Type: `string`
--   Default: null
+- Type: `string`
+- Default: null
 
 An object of additional header key/value pairs to send along with
 requests using the XMLHttpRequest transport. See [[Ajax.defaultAjaxOptions]]
@@ -42,8 +42,8 @@ parameter.
 
 ### uploader.data
 
--   Type: `object`|`boolean`
--   Default: false
+- Type: `object`|`boolean`
+- Default: false
 
 POST parameters
 
@@ -63,19 +63,19 @@ Jodit.make('#editor', {
 
 ### uploader.isSuccess
 
--   Type: `function`
+- Type: `function`
 
 Check if received data was positive
 
 ### uploader.getMessage
 
--   Type: `function`
+- Type: `function`
 
 If you need display a message use this
 
 ### uploader.process
 
--   Type: `function`
+- Type: `function`
 
 The method of processing data received from the server. Must return special object:
 
@@ -91,26 +91,26 @@ const process = resp => ({
 
 ### uploader.error
 
--   Type: `function`
+- Type: `function`
 
 Process negative situation. For example file wasn't uploaded because of file permission
 
 ### uploader.defaultHandlerSuccess
 
--   Type: `function`
+- Type: `function`
 
 Default success result processor. In first param it get `uploader.process` result
 
 ### uploader.defaultHandlerError
 
--   Type: `function`
+- Type: `function`
 
 Default error result processor.
 
 ## uploader.processFileName
 
--   Type: `function`
--   Default: `(key, file, name) => [key, file, name]`
+- Type: `function`
+- Default: `(key, file, name) => [key, file, name]`
 
 The method can be used to change the name of the uploaded file.
 

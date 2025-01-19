@@ -62,8 +62,8 @@ If you don't want the change to go into history, you can call the `editor.histor
 ```js
 console.log(editor.history.length); // 0
 editor.history.snapshot.transaction(() => {
-  editor.s.insertNode(editor.createInside.text('123'));
-  editor.s.insertHTML('123');
+	editor.s.insertNode(editor.createInside.text('123'));
+	editor.s.insertHTML('123');
 });
 console.log(editor.history.length); // 0
 ```

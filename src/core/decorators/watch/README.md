@@ -36,9 +36,9 @@ The decorator can also be used to hang event handlers [EventEmitter](https://xds
 
 Then the call signature has its own syntax:
 
--   `:{EVENT}`
--   `{CONTEXT}:{EVENT}`
--   `{CONTEXT}:{EVENT.NAMESPACE}`
+- `:{EVENT}`
+- `{CONTEXT}:{EVENT}`
+- `{CONTEXT}:{EVENT.NAMESPACE}`
 
 For example, this is how you can hang a click handler on the component container:
 

@@ -35,17 +35,17 @@ As you type, you can see what the browser has recognized.
 Text commands are also available during typing.
 By default, there is a set of commands -
 
--   `newline|enter` - Enter
--   `delete|remove word|delete word` - Delete word
--   `comma` - Insert comma
--   `underline` - Insert underscore
--   `hyphen` - Insert hyphen
--   `space` - Insert space
--   `question` - Insert question mark
--   `dot` - Insert point
--   `quote|quotes|open quote` - Insert single quote
--   `header|header h1` - Apply Formatting Heading 1
--   `select all` - Select all text
+- `newline|enter` - Enter
+- `delete|remove word|delete word` - Delete word
+- `comma` - Insert comma
+- `underline` - Insert underscore
+- `hyphen` - Insert hyphen
+- `space` - Insert space
+- `question` - Insert question mark
+- `dot` - Insert point
+- `quote|quotes|open quote` - Insert single quote
+- `header|header h1` - Apply Formatting Heading 1
+- `select all` - Select all text
 
 > Synonymous expressions are defined through the `|` sign
 

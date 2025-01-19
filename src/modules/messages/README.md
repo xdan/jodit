@@ -26,6 +26,6 @@ If you want to override the appearance of popup messages, you can use the follow
 
 Where `variant_secondary` can be replaced with:
 
--   `variant_error` or `type_danger`
--   `variant_info` or `type_primary`
--   `variant_success`
+- `variant_error` or `type_danger`
+- `variant_info` or `type_primary`
+- `variant_success`
