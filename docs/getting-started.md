@@ -32,13 +32,6 @@ unpkg
 <script src="https://unpkg.com/jodit@4.3.1/es2021/jodit.min.js"></script>
 ```
 
-Self-hosted · Download files
-
-```html
-<link rel="stylesheet" href="build/es2021/jodit.min.css" />
-<script src="build/es2021/jodit.min.js"></script>
-```
-
 Usage
 
 ```html
