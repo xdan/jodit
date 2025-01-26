@@ -10,7 +10,7 @@
  * @module plugins/clipboard
  */
 
-import type { IJodit, IPlugin } from 'jodit/types';
+import type { IJodit, IPlugin, IStorage } from 'jodit/types';
 import type { Plugin } from 'jodit/core/plugin';
 import {
 	CLIPBOARD_ID,
@@ -18,6 +18,7 @@ import {
 	TEXT_HTML,
 	TEXT_PLAIN
 } from 'jodit/core/constants';
+import { cached } from 'jodit/core/decorators/cache/cache';
 import { pluginSystem } from 'jodit/core/global';
 import { getDataTransfer, stripTags } from 'jodit/core/helpers';
 
@@ -94,7 +95,7 @@ export class clipboard implements IPlugin {
 
 	/** @override */
 	destruct(editor: IJodit): void {
-		editor?.buffer?.set(CLIPBOARD_ID, '');
+		cached<IStorage>(editor, 'buffer')?.set(CLIPBOARD_ID, '');
 		editor?.events?.off('.' + CLIPBOARD_ID);
 	}
 }

@@ -9,6 +9,33 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.3.1
+
+#### :boom: Breaking Change
+
+- Added the `popupRoot` option for all `IViewBased` classes (`Dialog`, `Jodit`, `FileBrowser`). Allows you to specify the parental element of dialogs and popup windows.
+- If the option is not specified, then when creating a dialogue, there is a bypass of a tree, starting with the editor. If an element is found `dialog` or eny element with `position: fixed` or `position: absolute`, then it is used as a parent.
+- Also, `shadowRoot` can be used as a `popupRoot`
+
+Those. Parent search priorities:
+
+1. `popupRoot` option
+2. `shadowRoot` option
+3. The closest element `dialog` or with style `position: fixed` or `position: absolute`
+4. document.body
+
+This is necessary in cases where Jodit is displayed inside the dialog windows with a focus interception.
+For example, when inserting in [mui dialog] (https://mui.com/material-ui/react-dialog/)
+
+If this is your situation, then in most cases you won't need to do anything, as Jodit will find the correct parent element on its own.
+But if your code logic was configured specifically to insert into `document.body`, then you will need to explicitly specify `popupRoot: document.body`
+
+```typescript
+const editor = Jodit.make('#editor', {
+  popupRoot: document.body
+});
+```
+
 ## 4.2.48
 
 ### :bug: Bug Fix

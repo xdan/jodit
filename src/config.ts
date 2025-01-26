@@ -978,6 +978,11 @@ class Config implements IViewOptions {
 	textIcons: boolean = false;
 
 	/**
+	 * Element for dialog container
+	 */
+	popupRoot: Nullable<HTMLElement> = null;
+
+	/**
 	 * shows a INPUT[type=color] to open the browser color picker, on the right bottom of widget color picker
 	 */
 	showBrowserColorPicker: boolean = true;

@@ -3,7 +3,7 @@
 The module is used to create pop-up windows next to interface elements.
 
 ```js
-import { Popup } from 'jodit/core/ui';
+const { Popup } = Jodit.modules;
 
 const popup = new Popup(jodit);
 popup.setContent('Hello world').open(() => ({

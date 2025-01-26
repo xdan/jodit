@@ -31,23 +31,30 @@ const $$temp = (): number => {
  * ```javascript
  * Jodit.modules.Helpers.$$('.someselector').forEach(function (elm) {
  *      elm.addEventListener('click', function () {
- *          alert(''Clicked');
+ *          alert('Clicked');
  *      });
  * })
  * ```
  * @param selector - CSS like selector
  * @param root - where to search
+ * @deprecated Do not use it in new code
  */
 export function $$<K extends HTMLTagNames>(
 	selector: K,
 	root: HTMLElement | DocumentFragment
 ): Array<HTMLElementTagNameMap[K]>;
 
+/**
+ * @deprecated Do not use it in new code
+ */
 export function $$<T extends HTMLElement>(
 	selector: string,
 	root: HTMLElement | DocumentFragment
 ): T[];
 
+/**
+ * @deprecated Do not use it in new code
+ */
 export function $$<T extends Element>(
 	selector: string | HTMLTagNames,
 	root: HTMLElement | DocumentFragment

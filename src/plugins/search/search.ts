@@ -12,6 +12,7 @@
 
 import type {
 	CanUndef,
+	IDestructible,
 	IDictionary,
 	IJodit,
 	IPlugin,
@@ -20,7 +21,7 @@ import type {
 	RejectablePromise
 } from 'jodit/types';
 import { IS_PROD } from 'jodit/core/constants';
-import { autobind, cache, watch } from 'jodit/core/decorators';
+import { autobind, cache, cached, watch } from 'jodit/core/decorators';
 import { Dom, LazyWalker } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { scrollIntoViewIfNeeded } from 'jodit/core/helpers';
@@ -450,7 +451,7 @@ export class search extends Plugin {
 
 	/** @override */
 	beforeDestruct(jodit: IJodit): void {
-		this.ui.destruct();
+		cached<IDestructible>(this, 'ui')?.destruct();
 		jodit.e.off('.search');
 	}
 }

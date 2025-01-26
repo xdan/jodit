@@ -96,6 +96,8 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 
 	shadowRoot?: Nullable<ShadowRoot>;
 
+	popupRoot?: Nullable<HTMLElement>;
+
 	ownerWindow?: Window;
 
 	language?: string;

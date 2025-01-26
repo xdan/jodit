@@ -116,6 +116,7 @@ describe('Dialog system tests', function () {
 				dialog.close();
 			});
 		});
+
 		it('Should get string or HTMLElement or array of string or array of HTMLElement in arguments', function () {
 			const dialog = Jodit.Alert(['<div id="hello1">Hello</div>']);
 			expect(document.getElementById('hello1')).is.not.null;
@@ -130,6 +131,107 @@ describe('Dialog system tests', function () {
 			const dialog3 = Jodit.Alert(div);
 			expect(div).equals(document.getElementById('hello3'));
 			dialog3.close();
+		});
+	});
+
+	describe('When editor inside specific container', () => {
+		describe('Specify shadowRoot option', () => {
+			it('Should be append to shadowRoot', () => {
+				const app = appendTestDiv();
+				app.attachShadow({ mode: 'open' });
+				const root = app.shadowRoot;
+				root.innerHTML = '<div id="edit"></div>';
+
+				const editor = getJodit(
+					{
+						shadowRoot: root
+					},
+					root.getElementById('edit')
+				);
+
+				const dialog = editor.alert('Hello');
+
+				// Because shadowRoot is DocumentFragment
+				expect(dialog.container.isConnected).is.true;
+				expect(dialog.container.parentElement).equals(null);
+			});
+		});
+
+		describe('Specify popupRoot option', () => {
+			it('Should be append to this element', () => {
+				const box = appendTestDiv();
+
+				const editor = getJodit({
+					popupRoot: box
+				});
+
+				const dialog = editor.alert('Hello');
+
+				expect(dialog.container.parentElement).equals(box);
+			});
+
+			describe('And specify shadowRoot option', () => {
+				it('Should be append to popupRoot', () => {
+					const app = appendTestDiv();
+					app.attachShadow({ mode: 'open' });
+					const root = app.shadowRoot;
+
+					root.innerHTML = '<div id="edit"></div>';
+
+					const box = appendTestDiv();
+
+					const editor = getJodit(
+						{
+							shadowRoot: root,
+							popupRoot: box
+						},
+						root.getElementById('edit')
+					);
+
+					const dialog = editor.alert('Hello');
+
+					expect(dialog.container.parentElement).equals(box);
+				});
+			});
+		});
+
+		describe('Inside "dialog"', () => {
+			it('Should be append to this element', () => {
+				const box = document.createElement('dialog');
+				document.body.appendChild(box);
+
+				const editor = getJodit();
+				box.appendChild(editor.container);
+
+				const dialog = editor.alert('Hello');
+
+				expect(dialog.container.parentElement).equals(box);
+
+				box.remove();
+			});
+		});
+
+		describe('Inside', () => {
+			['fixed', 'absolute'].forEach(position => {
+				describe('Inside position: ' + position, () => {
+					it('Should be append to this element', () => {
+						const div = appendTestDiv();
+						div.style.position = position;
+						div.style.top = '0';
+						div.style.left = '0';
+						div.style.width = '100px';
+						div.style.height = '100px';
+						div.style.overflow = 'auto';
+
+						const editor = getJodit();
+						div.appendChild(editor.container);
+
+						const dialog = editor.alert('Hello');
+
+						expect(dialog.container.parentElement).equals(div);
+					});
+				});
+			});
 		});
 	});
 });

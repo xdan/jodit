@@ -14,8 +14,10 @@ import type {
 	IDictionary,
 	IJodit,
 	IViewBased,
-	IViewComponent
+	IViewComponent,
+	IViewOptions
 } from 'jodit/types';
+import { css } from 'jodit/core/helpers';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isViewObject } from 'jodit/core/helpers/checker/is-view-object';
@@ -86,26 +88,12 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 
 	const view = isViewObject(jodit) ? jodit : jodit.j;
 
+	let body: HTMLElement | ShadowRoot | null = null;
+
 	if (!data[key]) {
 		let c = view.c;
-		let body: HTMLElement | ShadowRoot;
 
-		if (isJoditObject(jodit) && jodit.o.shadowRoot) {
-			body = jodit.o.shadowRoot;
-		} else {
-			body = jodit.od.body;
-
-			if (isJoditObject(jodit)) {
-				const dialog = Dom.closest(
-					jodit.container,
-					'dialog',
-					jodit.od.body
-				);
-				if (dialog) {
-					body = dialog;
-				}
-			}
-		}
+		body = getPopupViewRoot(view.o, view.container, jodit.od.body);
 
 		if (
 			createInsideEditor &&
@@ -151,6 +139,32 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 	data[key].classList.add(`jodit_theme_${view.o.theme || 'default'}`);
 
 	return data[key] as HTMLElementTagNameMap[T];
+}
+
+/**
+ * Get root element for view
+ * @internal
+ */
+export function getPopupViewRoot(
+	o: IViewOptions,
+	container: HTMLElement,
+	defaultRoot: HTMLElement
+): HTMLElement {
+	return (
+		o.popupRoot ??
+		(o.shadowRoot as unknown as HTMLElement) ??
+		Dom.closest<HTMLElement>(
+			container,
+			parentElement =>
+				Dom.isHTMLElement(parentElement) &&
+				(Dom.isTag(parentElement, 'dialog') ||
+					['fixed', 'absolute'].includes(
+						css(parentElement, 'position') as string
+					)),
+			defaultRoot
+		) ??
+		defaultRoot
+	);
 }
 
 /**

@@ -9,15 +9,23 @@
  */
 
 import type { IDialog, IDialogOptions, IDlgs, IViewBased } from 'jodit/types';
+import { getPopupViewRoot } from 'jodit/core/global';
 import { isHTML, isString } from 'jodit/core/helpers/checker';
 import { markOwner } from 'jodit/core/helpers/utils/utils';
 import { Alert, Confirm, Dialog, Prompt } from 'jodit/modules/dialog';
 
 export abstract class Dlgs implements IDlgs {
 	dlg(this: IViewBased & IDlgs, options?: IDialogOptions): IDialog {
+		const popupRoot = getPopupViewRoot(
+			this.o,
+			this.container,
+			this.od.body
+		);
+
 		const dialog = new Dialog({
 			language: this.o.language,
 			shadowRoot: this.o.shadowRoot,
+			popupRoot,
 			ownerWindow: this.o.ownerWindow,
 			defaultTimeout: this.o.defaultTimeout,
 			direction: this.o.direction,
@@ -25,6 +33,7 @@ export abstract class Dlgs implements IDlgs {
 			globalFullSize: this.o.globalFullSize,
 			...options
 		});
+
 		markOwner(this, dialog.container);
 		dialog.parent = this;
 		return dialog.bindDestruct(this);

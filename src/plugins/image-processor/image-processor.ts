@@ -10,9 +10,9 @@
  * @module plugins/image-processor
  */
 
-import type { IDictionary, IJodit } from 'jodit/types';
+import type { IDictionary, IJodit, IStorage } from 'jodit/types';
 import { SOURCE_CONSUMER } from 'jodit/core/constants';
-import { debounce, watch } from 'jodit/core/decorators';
+import { cached, debounce, watch } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
 import { $$, dataBind } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
@@ -29,16 +29,17 @@ export class imageProcessor extends Plugin {
 	protected afterInit(jodit: IJodit): void {}
 
 	protected beforeDestruct(jodit: IJodit): void {
-		const list = jodit.buffer.get<IDictionary>(JODIT_IMAGE_BLOB_ID);
+		const buffer = cached<IStorage>(jodit, 'buffer');
+		const list = buffer?.get<IDictionary>(JODIT_IMAGE_BLOB_ID);
 
-		if (list) {
+		if (buffer && list) {
 			const keys = Object.keys(list);
 
 			for (const uri of keys) {
 				URL.revokeObjectURL(uri);
 			}
 
-			jodit.buffer.delete(JODIT_IMAGE_BLOB_ID);
+			buffer.delete(JODIT_IMAGE_BLOB_ID);
 		}
 	}
 

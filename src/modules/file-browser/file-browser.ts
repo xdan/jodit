@@ -12,6 +12,7 @@ import type {
 	ButtonsOption,
 	CallbackFunction,
 	CanUndef,
+	IDestructible,
 	IDialog,
 	IDictionary,
 	IFileBrowser,
@@ -29,7 +30,7 @@ import type {
 import { STATUSES } from 'jodit/core/component';
 import * as consts from 'jodit/core/constants';
 import { IS_PROD } from 'jodit/core/constants';
-import { autobind, cache, derive } from 'jodit/core/decorators';
+import { autobind, cache, cached, derive } from 'jodit/core/decorators';
 import { watch } from 'jodit/core/decorators/watch/watch';
 import { observable } from 'jodit/core/event-emitter';
 import {
@@ -449,9 +450,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 			return;
 		}
 
-		super.destruct();
+		cached<IDestructible>(this, '_dialog')?.destruct();
 
-		this._dialog.destruct();
+		super.destruct();
 		this.events && this.e.off('.filebrowser');
 		this.uploader && this.uploader.destruct();
 	}

@@ -13,6 +13,7 @@
 import type {
 	IComponent,
 	ICreate,
+	IDestructible,
 	IDictionary,
 	IEventEmitter,
 	IMessages,
@@ -33,7 +34,7 @@ import {
 	IS_ES_NEXT
 } from 'jodit/core/constants';
 import { Create } from 'jodit/core/create/create';
-import { cache } from 'jodit/core/decorators/cache/cache';
+import { cache, cached } from 'jodit/core/decorators/cache/cache';
 import { derive } from 'jodit/core/decorators/derive/derive';
 import { hook } from 'jodit/core/decorators/hook/hook';
 import { Dom } from 'jodit/core/dom';
@@ -372,8 +373,8 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 			return;
 		}
 
-		this.progressbar.destruct();
-		this.message.destruct();
+		cached<IDestructible>(this, 'progressbar')?.destruct();
+		cached<IDestructible>(this, 'message')?.destruct();
 
 		if (this.events) {
 			this.events.destruct();
@@ -381,9 +382,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 			this.events = undefined;
 		}
 
-		if (this.buffer) {
-			this.buffer.clear();
-		}
+		cached<IStorage>(this, 'buffer')?.clear();
 
 		Dom.safeRemove(this.container);
 

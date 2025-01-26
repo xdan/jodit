@@ -94,7 +94,17 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	private offsetY?: number;
 
 	private get destination(): HTMLElement {
-		return (this.o.shadowRoot ?? this.od.body) as HTMLElement;
+		const { popupRoot, shadowRoot } = this.o;
+
+		if (popupRoot) {
+			return popupRoot;
+		}
+
+		if (shadowRoot) {
+			return shadowRoot as unknown as HTMLElement;
+		}
+
+		return this.od.body;
 	}
 
 	private destroyAfterClose: boolean = false;
@@ -153,16 +163,16 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	}
 
 	@autobind
-	private onMouseUp(): void {
+	private __onMouseUp(): void {
 		if (this.draggable || this.resizable) {
-			this.removeGlobalResizeListeners();
+			this.__removeGlobalResizeListeners();
 
 			this.draggable = false;
 			this.resizable = false;
 			this.unlockSelect();
 
 			if (this.e) {
-				this.removeGlobalResizeListeners();
+				this.__removeGlobalResizeListeners();
 
 				/**
 				 * Fired when the dialog box is finished to resizing
@@ -176,7 +186,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 *
 	 */
 	@autobind
-	private onHeaderMouseDown(e: MouseEvent): void {
+	private __onHeaderMouseDown(e: MouseEvent): void {
 		const target: HTMLElement = e.target as HTMLElement;
 
 		if (
@@ -200,7 +210,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.lockSelect();
 
-		this.addGlobalResizeListeners();
+		this.__addGlobalResizeListeners();
 
 		if (this.e) {
 			/**
@@ -212,7 +222,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	}
 
 	@autobind
-	private onMouseMove(e: MouseEvent): void {
+	private __onMouseMove(e: MouseEvent): void {
 		if (this.draggable && this.o.draggable) {
 			this.setPosition(
 				this.startPoint.x + e.clientX - this.startX,
@@ -255,7 +265,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	}
 
 	@autobind
-	private onEsc(e: KeyboardEvent): void {
+	private __onEsc(e: KeyboardEvent): void {
 		if (!this.o.closeOnEsc) {
 			return;
 		}
@@ -277,7 +287,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		}
 	}
 
-	private onResize = (): void => {
+	private __onResize = (): void => {
 		if (
 			this.options &&
 			this.o.resizable &&
@@ -291,7 +301,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	};
 
 	@autobind
-	private onResizerMouseDown(e: MouseEvent): void {
+	private __onResizerMouseDown(e: MouseEvent): void {
 		this.resizable = true;
 		this.startX = e.clientX;
 		this.startY = e.clientY;
@@ -301,7 +311,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.lockSelect();
 
-		this.addGlobalResizeListeners();
+		this.__addGlobalResizeListeners();
 
 		if (this.e) {
 			/**
@@ -311,20 +321,20 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		}
 	}
 
-	private addGlobalResizeListeners(): void {
+	private __addGlobalResizeListeners(): void {
 		const self = this;
 
 		self.e
-			.on(self.ow, 'pointermove touchmove', self.onMouseMove)
-			.on(self.ow, 'pointerup touchend', self.onMouseUp);
+			.on(self.ow, 'pointermove touchmove', self.__onMouseMove)
+			.on(self.ow, 'pointerup touchend', self.__onMouseUp);
 	}
 
-	private removeGlobalResizeListeners(): void {
+	private __removeGlobalResizeListeners(): void {
 		const self = this;
 
 		self.e
-			.off(self.ow, 'mousemove pointermove', self.onMouseMove)
-			.off(self.ow, 'mouseup pointerup', self.onMouseUp);
+			.off(self.ow, 'mousemove pointermove', self.__onMouseMove)
+			.off(self.ow, 'mouseup pointerup', self.__onMouseUp);
 	}
 
 	declare OPTIONS: IDialogOptions;
@@ -676,7 +686,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		Dom.safeRemove(this.container);
 
-		this.removeGlobalResizeListeners();
+		this.__removeGlobalResizeListeners();
 
 		/**
 		 * It called after the window is closed
@@ -780,13 +790,13 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			self.e.on(
 				headerBox,
 				'pointerdown touchstart',
-				self.onHeaderMouseDown
+				self.__onHeaderMouseDown
 			);
 
 		self.e.on(
 			self.resizer,
 			'mousedown touchstart',
-			self.onResizerMouseDown
+			self.__onResizerMouseDown
 		);
 
 		const fullSize = pluginSystem.get('fullsize') as Function;
@@ -794,8 +804,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.e
 			.on(self.container, 'close_dialog', self.close)
-			.on(this.ow, 'keydown', this.onEsc)
-			.on(this.ow, 'resize', this.onResize);
+			.on(this.ow, 'keydown', this.__onEsc)
+			.on(this.ow, 'resize', this.__onResize);
 
 		if (this.o.closeOnClickOverlay) {
 			const overlay = self.getElm('overlay');
@@ -831,12 +841,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		}
 
 		if (this.events) {
-			this.removeGlobalResizeListeners();
+			this.__removeGlobalResizeListeners();
 
 			this.events
 				.off(this.container, 'close_dialog', self.close)
-				.off(this.ow, 'keydown', this.onEsc)
-				.off(this.ow, 'resize', this.onResize);
+				.off(this.ow, 'keydown', this.__onEsc)
+				.off(this.ow, 'resize', this.__onResize);
 		}
 
 		super.destruct();

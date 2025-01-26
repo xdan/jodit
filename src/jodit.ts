@@ -26,6 +26,7 @@ import type {
 	IPluginSystem,
 	IResponse,
 	IStatusBar,
+	IStorage,
 	IUploader,
 	IViewOptions,
 	IWorkPlace,
@@ -38,6 +39,7 @@ import { FAT_MODE, IS_PROD, lang } from 'jodit/core/constants';
 import {
 	autobind,
 	cache,
+	cached,
 	derive,
 	throttle,
 	watch
@@ -1648,8 +1650,9 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 		this.__elementToPlace.clear();
 
-		this.storage.clear();
-		this.buffer.clear();
+		cached<IStorage>(this, 'storage')?.clear();
+		cached<IStorage>(this, 'buffer')?.clear();
+
 		this.commands.clear();
 
 		this.__selectionLocked = null;
@@ -1659,7 +1662,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		this.e.off(this.od);
 		this.e.off(this.od.body);
 
-		const buffer = this.editor ? this.getEditorValue() : '';
+		const tmpValue = this.editor ? this.getEditorValue() : '';
 		this.places.forEach(
 			({
 				container,
@@ -1720,7 +1723,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 				// inline mode
 				if (container === element) {
-					element.innerHTML = buffer;
+					element.innerHTML = tmpValue;
 				}
 
 				history.destruct();
