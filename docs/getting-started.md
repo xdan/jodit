@@ -17,9 +17,9 @@ cdnjs
 ```html
 <link
 	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.1/es2021/jodit.min.css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.3.1/es2021/jodit.min.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.1/es2021/jodit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.3.1/es2021/jodit.min.js"></script>
 ```
 
 unpkg
@@ -27,9 +27,9 @@ unpkg
 ```html
 <link
 	rel="stylesheet"
-	href="https://unpkg.com/jodit@4.0.1/es2021/jodit.min.css"
+	href="https://unpkg.com/jodit@4.3.1/es2021/jodit.min.css"
 />
-<script src="https://unpkg.com/jodit@4.0.1/es2021/jodit.min.js"></script>
+<script src="https://unpkg.com/jodit@4.3.1/es2021/jodit.min.js"></script>
 ```
 
 Self-hosted · Download files
