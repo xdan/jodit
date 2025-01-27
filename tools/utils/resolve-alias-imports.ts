@@ -8,6 +8,13 @@ import { checkSections } from '../loaders/process-sections';
 
 import * as fs from 'fs';
 import * as path from 'path';
+import type {
+	FalseLiteral,
+	NumericLiteral,
+	ObjectLiteralExpression,
+	StringLiteral,
+	TrueLiteral
+} from 'typescript';
 import * as ts from 'typescript';
 import { hideBin } from 'yargs/helpers';
 import yargs from 'yargs/yargs';
@@ -17,6 +24,11 @@ const argv = yargs(hideBin(process.argv))
 		type: 'string',
 		demandOption: true,
 		description: 'Work directory'
+	})
+	.option('rootDir', {
+		type: 'string',
+		demandOption: true,
+		description: 'Root directory'
 	})
 	.option('mode', {
 		demandOption: true,
@@ -50,17 +62,6 @@ if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
 	throw new Error('Invalid types directory');
 }
 
-const alias = /^(jodit|jodit-pro)\//;
-const allowPackages = new Set([
-	'a-color-picker',
-	'autobind-decorator',
-	'classlist-polyfill',
-	'es6-promise/auto',
-	'core-js/es/symbol',
-	'core-js/es/array/find-index',
-	'core-js/es/array/from'
-]);
-
 const allowPluginsInESM = new Set(
 	[
 		'about',
@@ -92,6 +93,16 @@ const allowPluginsInESM = new Set(
 				p => `jodit-pro/plugins/${p}/${p}`
 			)
 		)
+);
+
+const tsConfig = JSON.parse(
+	fs.readFileSync(
+		path.resolve(
+			argv.rootDir,
+			`tsconfig${argv.mode === 'esm' ? '.esm' : ''}.json`
+		),
+		'utf8'
+	)
 );
 
 const allowLanguagesInESM = new Set(['jodit/langs/en']);
@@ -132,42 +143,7 @@ function resoleAliasImports(dirPath: string): void {
 						ts.isPropertyAccessExpression(node) &&
 						/process\.env/.test(node.getFullText())
 					) {
-						const name = node
-							.getFullText()
-							.trim() as keyof typeof globalMaps;
-
-						if (!(name in globalMaps)) {
-							throw Error(`Unknown variable: ${name}`);
-						}
-
-						const obj = globalMaps[name];
-						if (typeof obj === 'boolean') {
-							return obj ? f.createTrue() : f.createFalse();
-						}
-
-						if (typeof obj === 'string') {
-							return f.createStringLiteral(obj);
-						}
-
-						if (typeof obj === 'number') {
-							return f.createNumericLiteral(obj);
-						}
-
-						return f.createObjectLiteralExpression(
-							Object.keys(obj).map(key => {
-								const value = obj[key];
-								return f.createPropertyAssignment(
-									f.createIdentifier(key),
-									typeof value === 'boolean'
-										? value
-											? f.createTrue()
-											: f.createFalse()
-										: typeof value === 'string'
-											? f.createStringLiteral(value)
-											: f.createNumericLiteral(value)
-								);
-							})
-						);
+						return resolveWebpackEnvs(node, f);
 					}
 
 					if (
@@ -272,20 +248,103 @@ function resoleAliasImports(dirPath: string): void {
 	});
 }
 
-function resolveAlias(pathWithAlias: string, dirPath: string): string {
-	const filePathWithoutAlias = pathWithAlias.replace(alias, '/');
+function resolveAlias(
+	pathWithAlias: string,
+	dirPath: string
+): {
+	isPackage?: boolean;
+	originalPath: string;
+	relativePath: string;
+	absolutePath: string;
+} {
+	const CHECK_EXTENSIONS = ['', '.ts', '.d.ts', '.js', '.svg', '.css'];
 
-	const subPath = path.join(
-		cwd,
-		filePathWithoutAlias.startsWith('/')
-			? '.' + filePathWithoutAlias
-			: filePathWithoutAlias
-	);
+	if (pathWithAlias.startsWith('.')) {
+		for (const ext of CHECK_EXTENSIONS) {
+			if (fs.existsSync(path.resolve(dirPath, pathWithAlias + ext))) {
+				return {
+					originalPath: pathWithAlias,
+					relativePath: pathWithAlias + ext,
+					absolutePath: path.resolve(dirPath, pathWithAlias + ext)
+				};
+			}
 
-	const relative = path.relative(dirPath, subPath);
-	return relative.startsWith('.') ? relative : `./${relative}`;
+			if (argv.mode !== 'esm' && pathWithAlias.endsWith('.js')) {
+				if (
+					fs.existsSync(
+						path.resolve(
+							dirPath,
+							pathWithAlias.replace(/.js$/, ext)
+						)
+					)
+				) {
+					return {
+						originalPath: pathWithAlias,
+						relativePath: pathWithAlias.replace(/.js$/, ext),
+						absolutePath: path.resolve(
+							dirPath,
+							pathWithAlias.replace(/.js$/, ext)
+						)
+					};
+				}
+			}
+		}
 
-	// return pathWithAlias.replace(alias, '$1/esm/');
+		throw `Relative path ${pathWithAlias} not found in ${dirPath}`;
+	}
+
+	for (const ext of CHECK_EXTENSIONS) {
+		if (
+			fs.existsSync(
+				path.resolve(argv.rootDir, 'node_modules', pathWithAlias + ext)
+			)
+		) {
+			return {
+				isPackage: true,
+				originalPath: pathWithAlias,
+				relativePath: pathWithAlias + ext,
+				absolutePath: path.resolve(
+					argv.rootDir,
+					'node_modules',
+					pathWithAlias + ext
+				)
+			};
+		}
+	}
+
+	for (const key in tsConfig.compilerOptions.paths) {
+		const keyRegExp = RegExp(key.replace(/\*/g, '(.*)'));
+		const parts = keyRegExp.exec(pathWithAlias);
+		if (parts) {
+			const relPath = parts[1];
+			for (const aliasPath of tsConfig.compilerOptions.paths[key]) {
+				const resolvedPath = aliasPath
+					.replace(/^\.\/src/, './') // Because rootPath is src
+					.replace(/\*/, relPath);
+
+				const fullPath = path.resolve(argv.cwd, resolvedPath);
+
+				for (const ext of CHECK_EXTENSIONS) {
+					if (fs.existsSync(fullPath + ext)) {
+						const relativePath = path.relative(
+							dirPath,
+							fullPath + ext
+						);
+
+						return {
+							originalPath: pathWithAlias,
+							relativePath: relativePath.startsWith('.')
+								? relativePath
+								: `./${relativePath}`,
+							absolutePath: fullPath + ext
+						};
+					}
+				}
+			}
+		}
+	}
+
+	throw `Alias ${pathWithAlias} not found`;
 }
 
 function allowImportsPluginsAndLanguagesInESM(
@@ -333,11 +392,10 @@ function resolvePath(str: string, filePath: string): string {
 		return modulePath + '.js';
 	}
 
-	if (alias.test(modulePath)) {
-		modulePath = resolveAlias(modulePath, dirPath);
-	}
+	const moduleInfo = resolveAlias(modulePath, dirPath);
+	modulePath = moduleInfo.relativePath;
 
-	if (!modulePath.startsWith('.') && !allowPackages.has(modulePath)) {
+	if (!modulePath.startsWith('.') && !moduleInfo.isPackage) {
 		throw new Error(
 			`Allow only relative paths file:${filePath} import: ${modulePath}`
 		);
@@ -347,9 +405,9 @@ function resolvePath(str: string, filePath: string): string {
 	if (
 		argv.mode === 'esm' &&
 		!modulePath.endsWith('.js') &&
-		!allowPackages.has(modulePath)
+		!moduleInfo.isPackage
 	) {
-		const fullPath = path.resolve(dirPath, modulePath);
+		const fullPath = moduleInfo.absolutePath;
 
 		const isDir =
 			fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory();
@@ -362,4 +420,49 @@ function resolvePath(str: string, filePath: string): string {
 	}
 
 	return modulePath;
+}
+
+function resolveWebpackEnvs(
+	node: ts.PropertyAccessExpression,
+	f: ts.NodeFactory
+):
+	| ObjectLiteralExpression
+	| TrueLiteral
+	| FalseLiteral
+	| StringLiteral
+	| NumericLiteral {
+	const name = node.getFullText().trim() as keyof typeof globalMaps;
+
+	if (!(name in globalMaps)) {
+		throw Error(`Unknown variable: ${name}`);
+	}
+
+	const obj = globalMaps[name];
+	if (typeof obj === 'boolean') {
+		return obj ? f.createTrue() : f.createFalse();
+	}
+
+	if (typeof obj === 'string') {
+		return f.createStringLiteral(obj);
+	}
+
+	if (typeof obj === 'number') {
+		return f.createNumericLiteral(obj);
+	}
+
+	return f.createObjectLiteralExpression(
+		Object.keys(obj).map(key => {
+			const value = obj[key];
+			return f.createPropertyAssignment(
+				f.createIdentifier(key),
+				typeof value === 'boolean'
+					? value
+						? f.createTrue()
+						: f.createFalse()
+					: typeof value === 'string'
+						? f.createStringLiteral(value)
+						: f.createNumericLiteral(value)
+			);
+		})
+	);
 }

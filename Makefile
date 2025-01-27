@@ -96,8 +96,8 @@ dts:
 		rm -rf ./build/types/src/; \
 	fi;
 
-	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=./build/types --mode=dts --ver=$(version)
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
+	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --rootDir=$(pwd)  --cwd=./build/types --mode=dts --ver=$(version)
 
 	@if [ -d ./build/esm ]; then \
 		echo "Copy types to esm folder ..."; \
@@ -119,17 +119,17 @@ esm:
 	@echo 'Remove style imports ...'
 	@$(NODE_MODULES_BIN)/replace "import .+\.(less|css)('|\");" '' $(pwd)/build/esm -r --silent
 
+	@echo 'Copy icons ...'
+	@$(TS_NODE_BASE) $(cwd)/tools/utils/copy-icons-in-esm.ts $(pwd)/src/ $(pwd)/build/esm
+
 	echo 'Resolve alias imports ...'
-	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --cwd=$(pwd)/build/esm --mode=esm --ver=$(version)
+	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --rootDir=$(pwd) --cwd=$(pwd)/build/esm --mode=esm --ver=$(version)
 
 	@if [ -d "$(pwd)/src/langs" ]; then\
 			echo 'Copy langs ...'; \
 			rsync -r --exclude '*.test.js' $(pwd)/src/langs/*.js $(pwd)/build/esm/langs ;\
 			$(NODE_MODULES_BIN)/replace "module.exports = " "export default " $(pwd)/build/esm/ -r --silent; \
 	fi
-
-	@echo 'Copy icons ...'
-	@$(TS_NODE_BASE) $(cwd)/tools/utils/copy-icons-in-esm.ts $(pwd)/src/ $(pwd)/build/esm
 
 	@if [ "$(UGLIFY_ESM)" = "true" ]; then \
 		echo 'Uglify esm modules ...'; \
