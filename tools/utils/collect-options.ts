@@ -198,7 +198,7 @@ async function writeNewConfigFile(
 	const newCode = printer.printFile(newSourceFile);
 
 	fs.writeFileSync(
-		configPath.replace('config', 'config2'),
+		configPath,
 		await prettier.format(newCode + '\n' + options.join('\n'), {
 			...(prettierConfig as prettier.Options),
 			parser: 'typescript'
