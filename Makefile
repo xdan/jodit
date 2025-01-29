@@ -322,3 +322,4 @@ append-config-types:
 	@$(TS_NODE_BASE) $(cwd)tools/utils/collect-options.ts --cwd=./src --esmDir=./build/esm
 	echo 'Resolve alias imports ...'
 	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --rootDir=$(pwd) --cwd=$(pwd)/build/esm --filter=config.d.ts --mode=dts --ver=$(version)
+	cp ./build/esm/config.d.ts ./build/types/config.d.ts
