@@ -18,6 +18,7 @@
  * @module config
  */
 
+// eslint-disable-next-line max-classes-per-file
 import * as consts from 'jodit/core/constants';
 import {
 	globalDocument,
@@ -39,11 +40,22 @@ import type {
 	Nullable
 } from './types';
 
+class ProtoConfig {
+	/**
+	 * Behavior for buttons
+	 */
+	controls: Controls = {};
+}
+
+ProtoConfig.prototype.controls = {};
+
 /**
  * Default Editor's Configuration
  */
-class Config implements IViewOptions {
-	private constructor() {}
+class Config extends ProtoConfig implements IViewOptions {
+	private constructor() {
+		super();
+	}
 
 	/**
 	 * Use cache for heavy methods
@@ -941,11 +953,6 @@ class Config implements IViewOptions {
 	];
 
 	/**
-	 * Behavior for buttons
-	 */
-	controls!: Controls;
-
-	/**
 	 * Some events are called when the editor is initialized, for example, the `afterInit` event.
 	 * So this code won't work:
 	 * ```javascript
@@ -997,7 +1004,5 @@ class Config implements IViewOptions {
 		return Config.__defaultOptions;
 	}
 }
-
-Config.prototype.controls = {};
 
 export { Config };
