@@ -14,22 +14,19 @@ export default ({
 	ES,
 	dirname,
 	fat,
-	superDirname
+	superDirname,
+	uglify
 }: Variables): RuleSetRule => {
 	return {
 		test: /\.(js|ts)$/,
 		use: [
 			{
-				loader: 'ts-loader',
+				loader: 'swc-loader',
 				options: {
-					transpileOnly: true,
-					allowTsInNodeModules: true,
-					onlyCompileBundledFiles: true,
-					compilerOptions: {
-						allowJs: true,
-						target: ES,
-						skipLibCheck: true
-					}
+					jsc: {
+						target: ES
+					},
+					minify: uglify
 				}
 			},
 			{
