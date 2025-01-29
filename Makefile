@@ -320,3 +320,5 @@ esm-t:
 append-config-types:
 	@echo 'Append config types ...'
 	@$(TS_NODE_BASE) $(cwd)tools/utils/collect-options.ts --cwd=./src --esmDir=./build/esm
+	echo 'Resolve alias imports ...'
+	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --rootDir=$(pwd) --cwd=$(pwd)/build/esm --filter=config.d.ts --mode=dts --ver=$(version)
