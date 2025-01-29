@@ -62,6 +62,16 @@ if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
 	throw new Error('Invalid types directory');
 }
 
+const allowPackages = new Set([
+	'a-color-picker',
+	'autobind-decorator',
+	'classlist-polyfill',
+	'es6-promise/auto',
+	'core-js/es/symbol',
+	'core-js/es/array/find-index',
+	'core-js/es/array/from'
+]);
+
 const allowPluginsInESM = new Set(
 	[
 		'about',
@@ -106,6 +116,9 @@ const tsConfig = JSON.parse(
 );
 
 const allowLanguagesInESM = new Set(['jodit/langs/en']);
+
+const CHECK_EXTENSIONS = ['', '.js', '.ts', '.d.ts', '.svg', '.css'];
+CHECK_EXTENSIONS.push(...CHECK_EXTENSIONS.map(e => '/index' + e));
 
 resoleAliasImports(cwd);
 
@@ -257,7 +270,18 @@ function resolveAlias(
 	relativePath: string;
 	absolutePath: string;
 } {
-	const CHECK_EXTENSIONS = ['', '.ts', '.d.ts', '.js', '.svg', '.css'];
+	if (allowPackages.has(pathWithAlias)) {
+		return {
+			isPackage: true,
+			originalPath: pathWithAlias,
+			relativePath: pathWithAlias,
+			absolutePath: path.resolve(
+				argv.rootDir,
+				'node_modules',
+				pathWithAlias
+			)
+		};
+	}
 
 	if (pathWithAlias.startsWith('.')) {
 		for (const ext of CHECK_EXTENSIONS) {
@@ -294,11 +318,13 @@ function resolveAlias(
 	}
 
 	for (const ext of CHECK_EXTENSIONS) {
-		if (
-			fs.existsSync(
-				path.resolve(argv.rootDir, 'node_modules', pathWithAlias + ext)
-			)
-		) {
+		const fullPath = path.resolve(
+			argv.rootDir,
+			'node_modules',
+			pathWithAlias + ext
+		);
+
+		if (fs.existsSync(fullPath) && fs.statSync(fullPath).isFile()) {
 			return {
 				isPackage: true,
 				originalPath: pathWithAlias,

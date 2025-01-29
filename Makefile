@@ -97,12 +97,15 @@ dts:
 	fi;
 
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
+
 	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --rootDir=$(pwd)  --cwd=./build/types --mode=dts --ver=$(version)
 
 	@if [ -d ./build/esm ]; then \
 		echo "Copy types to esm folder ..."; \
 		cp -R ./build/types/* ./build/esm; \
 	fi
+
+	@make append-config-types
 else
 dts:
 	@echo "Types not yet available"
@@ -312,3 +315,8 @@ esm-t:
 		rm -rf ../jodit-examples/node_modules/jodit/esm
 		mkdir ../jodit-examples/node_modules/jodit/esm
 		cp -R ./build/esm/* ../jodit-examples/node_modules/jodit/esm
+
+.PHONY: append-config-types
+append-config-types:
+	@echo 'Append config types ...'
+	@$(TS_NODE_BASE) $(cwd)tools/utils/collect-options.ts --cwd=./src --esmDir=./build/esm

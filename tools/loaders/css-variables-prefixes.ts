@@ -6,9 +6,11 @@
 
 import type { LoaderContext } from 'webpack';
 
-export default function (this: LoaderContext<{}>, source: string): string {
+export default function (this: LoaderContext<unknown>, source: string): string {
 	this.cacheable && this.cacheable(true);
-	return source.replace(/--([a-z0-9_-]+)/g, '--jd-$1');
+	return source.replace(/--([a-z0-9_-]+)/g, (match, name) =>
+		/^jd-/.test(name) ? match : `--jd-${name}`
+	);
 }
 
 export const seperable = true;

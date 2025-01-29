@@ -92,8 +92,8 @@ export default (
 				'.svg'
 			],
 			alias: {
-				jodit: path.resolve(superDirname, './src/'),
-				'jodit-pro': path.resolve(dirname, './src/'),
+				[superDirname === dirname ? 'jodit' : 'jodit-pro']:
+					path.resolve(dirname, './src/'),
 				super: path.resolve(superDirname, './src/')
 			},
 			symlinks: false

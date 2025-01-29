@@ -15,7 +15,8 @@ import { Config } from 'jodit/config';
 
 import linkIcon from './icons/link.svg';
 import unlinkIcon from './icons/unlink.svg';
-import { formTemplate } from './template';
+
+import { formTemplate } from 'jodit/plugins/link/template';
 
 declare module 'jodit/config' {
 	interface Config {

@@ -8,9 +8,8 @@
  * @module plugins/image-properties
  */
 
+import type { ImagePropertiesOptions } from 'jodit/plugins/image-properties/interface';
 import { Config } from 'jodit/config';
-
-import type { ImagePropertiesOptions } from './interface';
 
 declare module 'jodit/config' {
 	interface Config {
