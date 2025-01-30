@@ -99,7 +99,6 @@ dts:
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
 
 	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --rootDir=$(pwd)  --cwd=./build/types --mode=dts --ver=$(version)
-	@make replace-import-types
 
 	@if [ -d ./build/esm ]; then \
 		echo "Copy types to esm folder ..."; \
