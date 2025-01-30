@@ -447,6 +447,10 @@ function resolvePath(str: string, filePath: string): string {
 
 	modulePath = moduleInfo.relativePath;
 
+	if (argv.mode !== 'esm' && modulePath.endsWith('.d.ts')) {
+		modulePath = modulePath.replace(/.d.ts$/, '');
+	}
+
 	if (moduleInfo.isPackage) {
 		return modulePath;
 	}
