@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import { IS_PROD } from 'jodit/core/constants';
+
 /**
  * @module helpers/utils
  */
@@ -20,6 +22,10 @@ function assert<T>(
 	condition: T | false | 0 | '' | null | undefined,
 	message: string
 ): asserts condition {
+	if (IS_PROD) {
+		return;
+	}
+
 	if (!condition) {
 		throw new AssertionError(`Assertion failed: ${message}`);
 	}
