@@ -49,6 +49,8 @@ https://github.com/cdnjs/cdnjs/issues/14261
 
 ## Usage
 
+Jodit Editor can be initialized by calling the `Jodit.make` method with the selector of the textarea element.
+
 ```html
 <textarea id="editor"></textarea>
 <script>
@@ -58,7 +60,7 @@ https://github.com/cdnjs/cdnjs/issues/14261
 </script>
 ```
 
-## Full example
+### Full example
 
 You can use the following code to create a simple HTML page with Jodit Editor.
 
@@ -92,7 +94,7 @@ You can use the following code to create a simple HTML page with Jodit Editor.
 </html>
 ```
 
-## Full example PRO version
+### Full example PRO version
 
 Same as above, but with the PRO version.
 
