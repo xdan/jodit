@@ -49,3 +49,25 @@ Jodit.make('#editor', {
 ```
 
 The plugin settings can be accessed under the namespace [[Config.cleanHTML]].
+
+## Allow and deny tags
+
+The option `allowTags` is more priority than` denyTags`.
+If the `allowTags` is set, then all the tags that are not indicated in` allowTags` will be removed.
+
+```javascript
+const editor = Jodit.make('#editor', {
+	cleanHTML: {
+	  allowTags: {
+			script: true,
+		},
+		denyTags: {
+			script: true,
+		}
+	}
+});
+
+editor.value = '<script>alert(1)</script><p>test</p>';
+// The result will be only <script>alert(1)</script> because the script tag is allowed
+console.log(editor.value); // <script>alert(1)</script>
+```

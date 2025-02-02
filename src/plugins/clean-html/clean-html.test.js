@@ -174,43 +174,49 @@ describe('Clean html plugin', function () {
 						{ cleanHTML: { safeJavaScriptLink: false } }
 					]
 				].forEach(function (test) {
-					describe(`For "${test[0]}"`, function () {
-						it(`Should clean to "${sortAttributes(
-							test[1]
-						)}"`, function () {
-							const editor = getJodit({
-								disablePlugins: ['WrapNodes'],
-								cleanHTML: { useIframeSandbox },
-								...test[3]
-							});
+					(test[4] ? describe.only : describe)(
+						`For "${test[0]}"`,
+						function () {
+							it(`Should clean to "${sortAttributes(
+								test[1]
+							)}"`, function () {
+								const editor = getJodit({
+									disablePlugins: ['WrapNodes'],
+									cleanHTML: { useIframeSandbox },
+									...test[3]
+								});
 
-							editor.e.on('beforeSetNativeEditorValue', data => {
-								data.value = data.value.replace(
-									'onerror',
-									'_onerror'
+								editor.e.on(
+									'beforeSetNativeEditorValue',
+									data => {
+										data.value = data.value.replace(
+											'onerror',
+											'_onerror'
+										);
+										return false;
+									}
 								);
-								return false;
+
+								editor.value = test[0];
+
+								if (!setCursorToChar(editor)) {
+									const range = editor.s.createRange();
+									range.selectNodeContents(editor.editor);
+									editor.s.selectRange(range);
+								}
+
+								clickButton('eraser', editor);
+
+								if (test[2]) {
+									editor.s.insertHTML(test[2]);
+								}
+
+								expect(sortAttributes(editor.value)).equals(
+									sortAttributes(test[1])
+								);
 							});
-
-							editor.value = test[0];
-
-							if (!setCursorToChar(editor)) {
-								const range = editor.s.createRange();
-								range.selectNodeContents(editor.editor);
-								editor.s.selectRange(range);
-							}
-
-							clickButton('eraser', editor);
-
-							if (test[2]) {
-								editor.s.insertHTML(test[2]);
-							}
-
-							expect(sortAttributes(editor.value)).equals(
-								sortAttributes(test[1])
-							);
-						});
-					});
+						}
+					);
 				});
 			});
 		});
@@ -337,37 +343,53 @@ describe('Clean html plugin', function () {
 	});
 
 	describe('Allow tags', function () {
-		describe('Parameter like string', function () {
-			it('Should remove all tags not in allowTags options', function (done) {
-				const editor = getJodit({
-					cleanHTML: {
-						timeout: 0,
-						allowTags: 'p'
-					}
-				});
-
-				editor.value = '<p>te<strong>stop</strong>st</p><h1>pop</h1>';
-				editor.e.on('finishedCleanHTMLWorker', () => {
-					expect(editor.value).equals('<p>test</p>');
-					done();
-				});
-			});
-		});
-
-		describe('Parameter like hash', function () {
-			it('Should remove all tags not in allowTags options', function (done) {
-				const editor = getJodit({
-					cleanHTML: {
-						timeout: 0,
-						allowTags: {
-							p: true
+		describe('Parameter', function () {
+			[
+				[
+					'<p>te<strong>stop</strong>st</p><h1>pop</h1>',
+					'<p>test</p>',
+					{
+						cleanHTML: {
+							timeout: 0,
+							allowTags: 'p'
 						}
 					}
-				});
-				editor.value = '<p>te<strong>stop</strong>st</p><h1>pop</h1>';
-				editor.e.on('finishedCleanHTMLWorker', () => {
-					expect(editor.value).equals('<p>test</p>');
-					done();
+				],
+				[
+					'<p>te<strong>stop</strong>s<span>t</span></p><h1>pop</h1>',
+					'<p>te<strong>stop</strong>s</p>',
+					{
+						cleanHTML: {
+							allowTags: {
+								p: true,
+								strong: true
+							}
+						}
+					}
+				],
+				[
+					'<p>some text<script async="" id="cr1" src="https://post.crowdriff.com/js/crowdriff.js" type="text/javascript"></script></p>',
+					'<p>some text<script async="" id="cr1" src="https://post.crowdriff.com/js/crowdriff.js" type="text/javascript"></script></p>',
+					{
+						cleanHTML: {
+							allowTags: {
+								p: true,
+								script: true
+							}
+						}
+					}
+				]
+			].forEach(([html, result, options]) => {
+				describe(`For ${html}`, () => {
+					it('Should remove all tags not in allowTags options', async () => {
+						const editor = getJodit(options);
+						editor.value = html;
+						await waitingForEvent(
+							editor,
+							'finishedCleanHTMLWorker'
+						);
+						expect(editor.value).equals(result);
+					});
 				});
 			});
 		});

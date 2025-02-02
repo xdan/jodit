@@ -495,5 +495,39 @@ describe('Source code test', function () {
 				});
 			});
 		});
+
+		describe('Add <script> width cleanHTML: { allowTags: { script: true } }', () => {
+			describe('And change mode', () => {
+				it('Should not remove script tag', async () => {
+					const editor = getJodit({
+						cleanHTML: {
+							allowTags: {
+								p: true,
+								script: true
+							}
+						}
+					});
+
+					editor.value =
+						'<p>some text<script type="text/javascript" id="cr-embed-c8ea384249b100dd506fab87" src="https://post.crowdriff.com/js/crowdriff.js" async></script></p>';
+
+					await editor.async.requestIdlePromise();
+					editor.setMode(Jodit.MODE_SOURCE);
+					await editor.async.requestIdlePromise();
+
+					expect(sortAttributes(editor.value)).equals(
+						'<p>some text<script async="" id="cr-embed-c8ea384249b100dd506fab87" src="https://post.crowdriff.com/js/crowdriff.js" type="text/javascript"></script></p>'
+					);
+
+					await editor.async.requestIdlePromise();
+					editor.setMode(Jodit.MODE_WYSIWYG);
+					await editor.async.requestIdlePromise();
+
+					expect(sortAttributes(editor.value)).equals(
+						'<p>some text<script async="" id="cr-embed-c8ea384249b100dd506fab87" src="https://post.crowdriff.com/js/crowdriff.js" type="text/javascript"></script></p>'
+					);
+				});
+			});
+		});
 	});
 });

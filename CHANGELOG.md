@@ -9,6 +9,22 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.5.1
+
+#### :boom: Breaking Change
+
+- If the `cleanHTML.allowTags` option was set, then this did not affect `cleanHTML.denyTags`. Now if both options are set,
+  then `cleanHTML.denyTags` will only be applied to those tags that are not indicated in `cleanHTML.allowTags`
+
+```js
+Jodit.make('#editor', {
+	cleanHTML: {
+		allowTags: 'script,p', // Only Script and P tags will be allowed
+		denyTags: 'script,img' // This option is completely ignored
+	}
+});
+```
+
 ## 4.4.8
 
 ### :bug: Bug Fix
@@ -38,7 +54,7 @@ But if your code logic was configured specifically to insert into `document.body
 
 ```typescript
 const editor = Jodit.make('#editor', {
-  popupRoot: document.body
+	popupRoot: document.body
 });
 ```
 
@@ -4240,7 +4256,7 @@ But you must remember that Jodit.modules.Dom! = JQuery
 Added [cleanHTML.allowTags](https://xdsoft.net/jodit/docs/classes/view.View.html#defaultoptions#cleanhtml) option.
 
 ```javascript
-var editor = Jodit('#editor', {
+var editor = Jodit.make('#editor', {
 	allowTags: 'p,a[href],table,tr,td, img[src=1.png]' // allow only <p>,<a>,<table>,<tr>,<td>,<img> tags and for <a> allow only `href` attribute and <img> allow only `src` atrribute == '1.png'
 });
 editor.val(
@@ -4252,7 +4268,7 @@ console.log(editor.val()); //Sorry! <a href="http://xsoft.net">Freeman</a>
 Or you can use PlainObject. This code equivalent to the top
 
 ```javascript
-var editor = Jodit('#editor', {
+var editor = Jodit.make('#editor', {
 	allowTags: {
 		p: true,
 		a: {

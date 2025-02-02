@@ -50,15 +50,21 @@ function isRemovableNode(
 	allow: IDictionary | false,
 	deny: IDictionary | false
 ): boolean {
-	if (
-		!Dom.isText(node) &&
-		((allow && !allow[node.nodeName]) || (deny && deny[node.nodeName]))
-	) {
-		return true;
+	if (!Dom.isText(node)) {
+		if (allow && !allow[node.nodeName]) {
+			return true;
+		}
+
+		if (!allow && deny && deny[node.nodeName]) {
+			return true;
+		}
+	}
+
+	if (!jodit.o.cleanHTML.removeEmptyElements) {
+		return false;
 	}
 
 	return (
-		jodit.o.cleanHTML.removeEmptyElements &&
 		Dom.isElement(node) &&
 		node.nodeName.match(IS_INLINE) != null &&
 		!Dom.isTemporary(node) &&
