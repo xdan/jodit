@@ -51,3 +51,16 @@ jobs:
     - name: Trigger update PRO version
       run: |
         curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/jodit/jodit-pro/dispatches --data '{"event_type": "newversion" }'
+
+    - name: Get tag
+      id: get_version
+      run: |
+        VERSION=$(node -p "require('./package.json').version")
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Show new version
+      run: |
+        VERSION=${{ steps.get_version.outputs.version }}
+        PACKAGE_NAME="jodit"
+        echo "[New version npm](https://www.npmjs.com/package/${PACKAGE_NAME}/v/${VERSION})" >> $GITHUB_STEP_SUMMARY
