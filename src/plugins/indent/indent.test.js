@@ -3,10 +3,10 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
-describe('Test editor indent plugin', function () {
-	describe('Indent', function () {
-		describe('Exec Indent command several times', function () {
-			it('Should increase margin-left', function () {
+describe('Test editor indent plugin', () => {
+	describe('Indent', () => {
+		describe('Exec Indent command several times', () => {
+			it('Should increase margin-left', () => {
 				const editor = getJodit();
 				editor.value = '<ul><li>|test</li></ul>';
 
@@ -31,7 +31,7 @@ describe('Test editor indent plugin', function () {
 				);
 			});
 
-			describe('Inside table cell', function () {
+			describe('Inside table cell', () => {
 				it('Should increase padding-left', () => {
 					const editor = getJodit();
 					editor.value =
@@ -60,8 +60,8 @@ describe('Test editor indent plugin', function () {
 				});
 			});
 
-			describe('For RTL direction', function () {
-				it('Should increase margin-right', function () {
+			describe('For RTL direction', () => {
+				it('Should increase margin-right', () => {
 					const editor = getJodit({
 						direction: 'rtl'
 					});
@@ -97,7 +97,7 @@ describe('Test editor indent plugin', function () {
 		});
 	});
 
-	it('should indent multi-line selection of various child elements only on 1st 2 lines', function () {
+	it('should indent multi-line selection of various child elements only on 1st 2 lines', () => {
 		const editor = getJodit();
 		editor.value = `
     <p>
@@ -134,7 +134,7 @@ describe('Test editor indent plugin', function () {
 		expect(el3.style.marginLeft).equals('');
 	});
 
-	it('should indent multi-line selection of "dd" and "dt" child elements only on 1st 2 dt/dd groups', function () {
+	it('should indent multi-line selection of "dd" and "dt" child elements only on 1st 2 dt/dd groups', () => {
 		const editor = getJodit();
 		editor.value = `
     <dl>
@@ -179,8 +179,8 @@ describe('Test editor indent plugin', function () {
 		expect(el6.style.marginLeft).equals('');
 	});
 
-	describe('If selection element outside the editor', function () {
-		it('should do nothing', function () {
+	describe('If selection element outside the editor', () => {
+		it('should do nothing', () => {
 			const editor = getJodit(),
 				div = appendTestDiv();
 			editor.value = 'test';
@@ -200,8 +200,8 @@ describe('Test editor indent plugin', function () {
 		});
 	});
 
-	describe('Indent plugin', function () {
-		it('Should set active outdent button if current container has marginLeft', function () {
+	describe('Indent plugin', () => {
+		it('Should set active outdent button if current container has marginLeft', () => {
 			const area = appendTestArea();
 			const editor = new Jodit(area, {
 				toolbarAdaptive: false,
@@ -224,8 +224,85 @@ describe('Test editor indent plugin', function () {
 				.false;
 		});
 
-		describe('Press Indent button', function () {
-			it('Should increase indent for current blocks', function () {
+		describe('Press Indent button', () => {
+			describe('With enter BR mode', () => {
+				describe('Collapsed seelction', () => {
+					[
+						[
+							'test<br>|text<br>some text again',
+							'test<br><p style="margin-left: 10px;">text</p><br>some text again'
+						],
+						[
+							'test<br>text<br>|some text again',
+							'test<br>text<br><p style="margin-left: 10px;">some text again</p>'
+						],
+						[
+							'|test<br>text<br>some text again',
+							'<p style="margin-left: 10px;">test</p><br>text<br>some text again'
+						]
+					].forEach(([value, result]) => {
+						describe(`For input: "${value}"`, () => {
+							it('Should wrap current line in block and increase margin-left', () => {
+								const editor = getJodit({
+									enter: 'BR'
+								});
+								editor.value = value;
+
+								setCursorToChar(editor);
+
+								clickButton('indent', editor);
+
+								expect(editor.value).equals(result);
+							});
+						});
+					});
+				});
+
+				describe('Not collapsed seelction', () => {
+					[
+						[
+							'test<br>|text<br>some text again|',
+							'test<br><p style="margin-left: 10px;">text</p><p style="margin-left: 10px;"><br>some text again</p>'
+						],
+						[
+							'test<br>|text|<br>some text again',
+							'test<br><p style="margin-left: 10px;">text</p><br>some text again'
+						]
+					].forEach(([value, result]) => {
+						describe(`For input: "${value}"`, () => {
+							it('Should wrap lines selection in separated blocks and increase margin-left', () => {
+								const editor = getJodit({
+									enter: 'BR'
+								});
+								editor.value = value;
+
+								setCursorToChar(editor);
+
+								clickButton('indent', editor);
+
+								expect(editor.value).equals(result);
+							});
+						});
+					});
+				});
+			});
+
+			describe('Several lines with <br> inside block', () => {
+				it('Should just increase margin-left for whole block', () => {
+					const editor = getJodit();
+					editor.value = '<p>test<br>test<br>|test<br>test</p>';
+
+					setCursorToChar(editor);
+
+					clickButton('indent', editor);
+
+					expect(editor.value).equals(
+						'<p style="margin-left: 10px;">test<br>test<br>test<br>test</p>'
+					);
+				});
+			});
+
+			it('Should increase indent for current blocks', () => {
 				const area = appendTestArea();
 				const editor = new Jodit(area, {
 					toolbarAdaptive: false,
@@ -259,8 +336,8 @@ describe('Test editor indent plugin', function () {
 			});
 		});
 
-		describe('Run indent command for inline elements', function () {
-			it('should wrap elements in block and change margin for it', function () {
+		describe('Run indent command for inline elements', () => {
+			it('should wrap elements in block and change margin for it', () => {
 				const editor = getJodit();
 				editor.value = '<p>a|<br>b<br>c<br></p>';
 				setCursorToChar(editor);

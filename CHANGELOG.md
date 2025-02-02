@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.4.8
+
+### :bug: Bug Fix
+
+- Fixed an error when in Jodit in the line transfer mode BR, when the indent button pressed the element was removed
+
 ## 4.3.1
 
 #### :boom: Breaking Change

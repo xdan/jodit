@@ -66,6 +66,65 @@ export class Dom {
 	}
 
 	/**
+	 * Wrap all inline next siblings
+	 */
+	static wrapNextInline(
+		current: Node,
+		tag: Node | HTMLTagNames,
+		editor: IJodit
+	): HTMLElement {
+		let tmp: Nullable<Node>;
+		const first: Node = current;
+		let last: Node = current;
+
+		editor.s.save();
+
+		let needFindNext: boolean = false;
+
+		do {
+			needFindNext = false;
+			tmp = last.nextSibling;
+
+			if (tmp && !Dom.isBlock(tmp) && !Dom.isTag(tmp, 'br')) {
+				needFindNext = true;
+				last = tmp;
+			}
+		} while (needFindNext);
+
+		return Dom.__wrapElements(tag, editor, first, last);
+	}
+
+	private static __wrapElements(
+		tag: Node | HTMLTagNames,
+		editor: IJodit,
+		first: Node,
+		last: Node
+	): HTMLElement {
+		const wrapper = isString(tag) ? editor.createInside.element(tag) : tag;
+
+		if (first.parentNode) {
+			first.parentNode.insertBefore(wrapper, first);
+		}
+
+		let next: Nullable<Node> = first;
+
+		while (next) {
+			next = first.nextSibling;
+			wrapper.appendChild(first);
+
+			if (first === last || !next) {
+				break;
+			}
+
+			first = next;
+		}
+
+		editor.s.restore();
+
+		return wrapper as HTMLElement;
+	}
+
+	/**
 	 * Wrap all inline siblings
 	 */
 	static wrapInline(
@@ -73,9 +132,9 @@ export class Dom {
 		tag: Node | HTMLTagNames,
 		editor: IJodit
 	): HTMLElement {
-		let tmp: Nullable<Node>,
-			first: Node = current,
-			last: Node = current;
+		let tmp: Nullable<Node>;
+		let first: Node = current;
+		let last: Node = current;
 
 		editor.s.save();
 
@@ -101,28 +160,7 @@ export class Dom {
 			}
 		} while (needFindNext);
 
-		const wrapper = isString(tag) ? editor.createInside.element(tag) : tag;
-
-		if (first.parentNode) {
-			first.parentNode.insertBefore(wrapper, first);
-		}
-
-		let next: Nullable<Node> = first;
-
-		while (next) {
-			next = first.nextSibling;
-			wrapper.appendChild(first);
-
-			if (first === last || !next) {
-				break;
-			}
-
-			first = next;
-		}
-
-		editor.s.restore();
-
-		return wrapper as HTMLElement;
+		return Dom.__wrapElements(tag, editor, first, last);
 	}
 
 	static wrap<K extends HTMLTagNames>(

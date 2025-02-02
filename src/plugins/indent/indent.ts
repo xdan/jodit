@@ -11,14 +11,43 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { BR, PARAGRAPH } from 'jodit/core/constants';
+import { BR } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { attr } from 'jodit/core/helpers';
+import { attr, call } from 'jodit/core/helpers/utils';
 
 import './config';
 
 import { getKey } from './helpers';
+
+const applyIndentToBox = (
+	processedElements: Set<HTMLElement>,
+	currentBox: HTMLElement,
+	editor: IJodit,
+	command: string
+): void => {
+	if (!currentBox) {
+		return;
+	}
+
+	if (processedElements.has(currentBox)) {
+		return;
+	}
+
+	const key = getKey(editor.o.direction, currentBox);
+
+	processedElements.add(currentBox);
+
+	let value = currentBox.style[key] ? parseInt(currentBox.style[key], 10) : 0;
+
+	value += editor.o.indentMargin * (command === 'outdent' ? -1 : 1);
+
+	currentBox.style[key] = value > 0 ? value + 'px' : '';
+
+	if (!attr(currentBox, 'style')) {
+		attr(currentBox, 'style', null);
+	}
+};
 
 /**
  * Indents the line containing the selection or insertion point.
@@ -34,8 +63,19 @@ export function indent(editor: IJodit): void {
 			group: 'indent'
 		});
 
-	const callback = (command: string): void | false => {
-		const processedElements: HTMLElement[] = [];
+	const indentCommand = (command: string): void | false => {
+		const processedElements: Set<HTMLElement> = new Set();
+		const { enter, enterBlock } = editor.o;
+		const isBrMode = enter.toLowerCase() === BR;
+		const current = editor.s.current();
+
+		if (isBrMode && editor.s.isCollapsed()) {
+			if (current) {
+				const box = Dom.wrapNextInline(current, enterBlock, editor);
+				applyIndentToBox(processedElements, box, editor, command);
+				return false;
+			}
+		}
 
 		editor.s.eachSelection((current): false | void => {
 			editor.s.save();
@@ -44,12 +84,11 @@ export function indent(editor: IJodit): void {
 				? Dom.up(current, Dom.isBlock, editor.editor)
 				: false;
 
-			const { enter } = editor.o;
-
 			if (!currentBox && current) {
-				currentBox = Dom.wrapInline(
+				currentBox = call(
+					!isBrMode ? Dom.wrapInline : Dom.wrapNextInline,
 					current,
-					enter !== BR ? enter : PARAGRAPH,
+					!isBrMode ? (enter.toLowerCase() as 'p') : enterBlock,
 					editor
 				);
 			}
@@ -59,26 +98,7 @@ export function indent(editor: IJodit): void {
 				return false;
 			}
 
-			const alreadyIndented = processedElements.includes(currentBox);
-
-			if (currentBox && !alreadyIndented) {
-				const key = getKey(editor.o.direction, currentBox);
-
-				processedElements.push(currentBox);
-
-				let value = currentBox.style[key]
-					? parseInt(currentBox.style[key], 10)
-					: 0;
-
-				value +=
-					editor.o.indentMargin * (command === 'outdent' ? -1 : 1);
-
-				currentBox.style[key] = value > 0 ? value + 'px' : '';
-
-				if (!attr(currentBox, 'style')) {
-					attr(currentBox, 'style', null);
-				}
-			}
+			applyIndentToBox(processedElements, currentBox, editor, command);
 
 			editor.s.restore();
 		});
@@ -89,12 +109,12 @@ export function indent(editor: IJodit): void {
 	};
 
 	editor.registerCommand('indent', {
-		exec: callback,
+		exec: indentCommand,
 		hotkeys: ['ctrl+]', 'cmd+]']
 	});
 
 	editor.registerCommand('outdent', {
-		exec: callback,
+		exec: indentCommand,
 		hotkeys: ['ctrl+[', 'cmd+[']
 	});
 }
