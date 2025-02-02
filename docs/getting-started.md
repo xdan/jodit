@@ -36,6 +36,9 @@ yarn add jodit
 
 ### cdnjs
 
+Unfortunatelly, cdnjs does not have the latest version of Jodit. The latest version is 4.2.47.
+https://github.com/cdnjs/cdnjs/issues/14261
+
 ```html
 <link
 	rel="stylesheet"
