@@ -91,6 +91,10 @@ You can manually include additional plugins and languages as needed.
   import { Jodit } from './node_modules/jodit/esm/index.js';
   import './node_modules/jodit/esm/plugins/add-new-line/add-new-line.js';
   import './node_modules/jodit/esm/plugins/fullsize/fullsize.js';
+
+  // Or import all plugins
+  import './node_modules/jodit/esm/plugins/all.js';
+
   import de from './node_modules/jodit/esm/langs/de.js';
 
   Jodit.langs.de = de;

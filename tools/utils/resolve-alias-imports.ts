@@ -368,7 +368,7 @@ function resolveAlias(
 				const somePath = path.resolve(argv.cwd, resolvedPath);
 
 				for (const ext of CHECK_EXTENSIONS) {
-					const fullPath = safeConcat(somePath, ext)
+					const fullPath = safeConcat(somePath, ext);
 
 					if (
 						fs.existsSync(fullPath) &&

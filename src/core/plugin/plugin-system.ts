@@ -44,6 +44,10 @@ import './interface';
 export class PluginSystem implements IPluginSystem {
 	private __items = new Map<string, PluginType>();
 
+	get size(): number {
+		return this.__items.size;
+	}
+
 	/**
 	 * Add plugin in store
 	 */

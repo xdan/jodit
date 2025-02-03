@@ -62,6 +62,7 @@ export interface IExtraPlugin {
 }
 
 export interface IPluginSystem {
+	readonly size: number;
 	add(name: string, plugin: any): void;
 	wait(name: string): Promise<void>;
 	get(name: string): PluginType | void;

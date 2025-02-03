@@ -9,6 +9,19 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.5.2
+
+### :rocket: New Feature
+
+- Added plugins/all.js for ESM build
+
+```js
+import { Jodit } from 'jodit/esm/index.js';
+console.log(Jodit.plugins.size); // 21 See. https://github.com/xdan/jodit/blob/main/tools/utils/resolve-alias-imports.ts#L81
+import 'jodit/esm/plugins/all.js';
+console.log(Jodit.plugins.size); // 62 and more in the future
+```
+
 ## 4.5.1
 
 #### :boom: Breaking Change

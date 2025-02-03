@@ -20,6 +20,12 @@ push ?= true
 outputFolder ?= ''
 version = $(shell cat package.json | ./node_modules/node-jq/bin/jq -r '.version')
 
+ifneq ("$(wildcard .env)","")
+		include .env
+endif
+
+pluginsCount ?= $(PLUGINS_COUNT)
+
 WEBPACK_DEV_PORT := 2000
 ACTIONS_URL := https://github.com/xdan/jodit/actions/
 BUILD_DTS := true
@@ -103,6 +109,7 @@ dts:
 	@if [ -d ./build/esm ]; then \
 		echo "Copy types to esm folder ..."; \
 		cp -R ./build/types/* ./build/esm; \
+		cp -R $(pwd)/build/esm/plugins/index.d.ts $(pwd)/build/esm/plugins/all.d.ts; \
 	fi
 
 	@make append-config-types
@@ -125,7 +132,8 @@ esm:
 	@echo 'Copy icons ...'
 	@$(TS_NODE_BASE) $(cwd)/tools/utils/copy-icons-in-esm.ts $(pwd)/src/ $(pwd)/build/esm
 
-	echo 'Resolve alias imports ...'
+	@echo 'Resolve alias imports ...'
+	@cp -R $(pwd)/build/esm/plugins/index.js $(pwd)/build/esm/plugins/all.js
 	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --rootDir=$(pwd) --cwd=$(pwd)/build/esm --mode=esm --ver=$(version)
 
 	@if [ -d "$(pwd)/src/langs" ]; then\
@@ -148,7 +156,7 @@ endif
 .PHONY: check-esm-build
 check-esm-build:
 	@echo 'Check esm modules ...'
-	@$(TSX_BASE) $(cwd)/tools/check-esm-build.ts
+	@PLUGINS_COUNT=$(pluginsCount) $(TSX_BASE) $(cwd)/tools/check-esm-build.ts
 
 .PHONY: build-all
 build-all:
