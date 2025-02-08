@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.5.4
+
+#### :house: Internal
+
+- ESM build is going to the ES2018 target, not ES2020. This is due to the fact that the ES2020 target is not supported by all browsers. The ES2018 target is supported by all modern browsers. If you need to support older browsers, you can use the ES5 build.
+
 ## 4.5.2
 
 ### :rocket: New Feature
