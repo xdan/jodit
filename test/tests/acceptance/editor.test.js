@@ -97,7 +97,7 @@ describe('Jodit Editor Tests', function () {
 			});
 
 			describe('Found element', function () {
-				it('Should be instance of HTMLElement', function () {
+				it('Should be instanced of HTMLElement', function () {
 					const div = document.createElement('div');
 					div.innerHTML = '<h1>Test</h1>';
 					div.setAttribute('id', 'test2222');
@@ -196,19 +196,43 @@ describe('Jodit Editor Tests', function () {
 			});
 
 			describe('Set nested array', function () {
-				it('Should create editor with merged default array and set array', function () {
-					Jodit.defaultOptions.someArray = {
-						data: [1, 2, 3, 4]
-					};
-					const editor = getJodit({
-						someArray: {
-							data: [5, 6, 7]
-						}
-					});
+				[
+					[
+						() => {
+							Jodit.defaultOptions.someArray = {
+								data: [1, 2, 3, 4]
+							};
+						},
+						{
+							someArray: {
+								data: [5, 6, 7]
+							}
+						},
+						'{"data":[5,6,7,4]}'
+					],
+					[
+						() => {
+							Jodit.defaultOptions.someArray = [1, 2, 3, 4];
+						},
+						{
+							someArray: [5, 6, 7]
+						},
+						'[5,6,7]'
+					]
+				].forEach(([setting, options, result]) => {
+					describe('Set nested/root array', () => {
+						it('Should create editor with merged default array and set array', function () {
+							setting();
 
-					expect(editor.options.someArray.data.toString()).equals(
-						'5,6,7,4'
-					);
+							const editor = getJodit(options);
+
+							expect(
+								JSON.stringify(
+									editor.options.someArray
+								).toString()
+							).equals(result);
+						});
+					});
 				});
 
 				describe('Set nested array like Jodit.atom', function () {

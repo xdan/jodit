@@ -802,6 +802,94 @@ describe('Test paste plugin', () => {
 					expect(dialog).is.not.null;
 					expect(parseInt(dialog.style.left, 10)).equals(10);
 				});
+
+				describe('Add custom options inside dialog', () => {
+					describe('Change pasteHTMLActionList', () => {
+						it('Should add custom options', () => {
+							const editor = getJodit({
+								events: {
+									onCustomPasteHTMLOption: (action, html) => {
+										if (action === 'custom') {
+											return html.replace(
+												/<span[^>]*>([^<]+)<\/span>/g,
+												'$1'
+											);
+										}
+									}
+								},
+								pasteHTMLActionList: [
+									{
+										text: 'Custom',
+										value: 'custom'
+									}
+								]
+							});
+
+							const pastedText = '<p>t<span>e</span>st</p>';
+
+							const emulatePasteEvent = data => {
+								data.clipboardData = {
+									types: ['text/html'],
+									getData: () => pastedText
+								};
+							};
+
+							simulateEvent(
+								'paste',
+								editor.editor,
+								emulatePasteEvent
+							);
+
+							expect(editor.value).equals('');
+							const dialog = getOpenedDialog(editor);
+							const button = getButton('custom', dialog);
+							expect(button).is.not.null;
+
+							simulateEvent('click', button);
+
+							expect(editor.value).equals('<p>test</p>');
+						});
+					});
+
+					describe('Do not ask', () => {
+						it('Should use custom handler', () => {
+							const editor = getJodit({
+								events: {
+									onCustomPasteHTMLOption: (action, html) => {
+										if (action === 'custom') {
+											return html.replace(
+												/<span[^>]*>([^<]+)<\/span>/g,
+												'$1'
+											);
+										}
+									}
+								},
+								askBeforePasteHTML: false,
+								defaultActionOnPaste: 'custom'
+							});
+
+							const pastedText = '<p>t<span>e</span>st</p>';
+
+							const emulatePasteEvent = data => {
+								data.clipboardData = {
+									types: ['text/html'],
+									getData: () => pastedText
+								};
+							};
+
+							simulateEvent(
+								'paste',
+								editor.editor,
+								emulatePasteEvent
+							);
+
+							const dialog = getOpenedDialog(editor);
+							expect(dialog).is.null;
+
+							expect(editor.value).equals('<p>test</p>');
+						});
+					});
+				});
 			});
 		});
 	});

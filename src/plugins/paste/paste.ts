@@ -230,7 +230,18 @@ export class paste extends Plugin {
 					html = htmlspecialchars(html);
 					break;
 
-				default:
+				default: {
+					const newHTML = this.j.e.fire(
+						'onCustomPasteHTMLOption',
+						action,
+						html,
+						e
+					);
+
+					if (typeof newHTML === 'string') {
+						html = newHTML;
+					}
+				}
 			}
 		}
 

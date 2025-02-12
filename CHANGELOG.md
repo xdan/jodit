@@ -9,6 +9,39 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.5.5
+
+### :rocket: New Feature
+
+- Added the ability to add their html inserts to the plugin `paste`
+
+```js
+Jodit.make('#editor', {
+	events: {
+		onCustomPasteHTMLOption: (action, html) => {
+			if (action === 'custom') {
+				const div = document.createElement('div');
+				div.innerHTML = html;
+				const spans = div.querySelectorAll('span');
+				for (let i = 0; i < spans.length; i++) {
+					const span = spans[i];
+					const p = document.createElement('p');
+					p.innerHTML = span.innerHTML;
+					span.parentNode.replaceChild(p, span);
+				}
+				return div.innerHTML;
+			}
+		}
+	},
+	pasteHTMLActionList: [
+		{
+			text: 'Custom',
+			value: 'custom'
+		}
+	]
+});
+```
+
 ## 4.5.4
 
 #### :house: Internal
