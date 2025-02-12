@@ -12,6 +12,7 @@ excludeLanguages ?= ''
 includePlugins ?= ''
 excludePlugins ?= ''
 singleRun ?= true
+forceSwc ?= false
 isTest ?= false
 debug ?= false
 updateTests ?= false
@@ -59,6 +60,7 @@ start dev love:
 		--env includePlugins=$(includePlugins) \
 		--env excludePlugins=$(excludePlugins) \
 		--env isTest=$(isTest) \
+		--env forceSwc=$(forceSwc) \
 		--env fat=$(fat)
 
 .PHONY: build

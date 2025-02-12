@@ -12,6 +12,7 @@ function Bool(str: string | boolean | undefined): boolean {
 
 export type ES_TARGET = 'es5' | 'es2015' | 'es2018' | 'es2021';
 export type Argv = {
+	forceSwc?: boolean;
 	WEBPACK_SERVE?: boolean;
 	filename?: (name: string) => string;
 	env: object;
@@ -33,6 +34,7 @@ export type Argv = {
 
 export type Variables = {
 	argv: { filename?: (name: string) => string };
+	forceSwc?: boolean;
 	exclude: string[];
 	/**
 	 * Path to root Jodit directory
@@ -119,6 +121,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 			? parseInt(process.env.WEBPACK_DEV_PORT)
 			: 2000,
 		argv,
+		forceSwc: Bool(argv.forceSwc),
 		onlyTS: false, // TODO
 		exclude,
 		generateTypes: Bool(argv.generateTypes),

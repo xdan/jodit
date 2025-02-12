@@ -20,14 +20,35 @@ export default (
 		isProd,
 		isTest,
 		fat,
-		superDirname
+		superDirname,
+		uglify,
+		forceSwc
 	}: Variables,
 	cwd: string
 ): RuleSetRule => {
-	return {
-		test: /\.(js|ts)$/,
-		use: [
-			{
+	const useSWC = (isProd && !isTest && !generateTypes) || forceSwc;
+	if (useSWC) {
+		console.info('Use SWC');
+	}
+
+	const loader = useSWC
+		? {
+				loader: 'swc-loader',
+				options: {
+					jsc: {
+						target: ES,
+						parser: {
+							syntax: 'typescript',
+							tsx: false,
+							dynamicImport: false,
+							decorators: true
+						}
+						// externalHelpers: true
+					},
+					minify: uglify
+				}
+			}
+		: {
 				loader: 'ts-loader',
 				options: {
 					transpileOnly: isProd && !isTest && !generateTypes,
@@ -39,11 +60,16 @@ export default (
 						declaration: true,
 						declarationDir: path.resolve(dirname, './build/types')
 					},
-					getCustomTransformers: (program: ts.Program) => ({
+					getCustomTransformers: (): unknown => ({
 						before: isProd && !isTest ? [removeAsserts()] : []
 					})
 				}
-			},
+			};
+
+	return {
+		test: /\.(js|ts)$/,
+		use: [
+			loader,
 			{
 				loader: path.resolve(
 					superDirname,

@@ -1267,8 +1267,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		});
 	}
 
-	currentPlace!: IWorkPlace;
-	places!: IWorkPlace[];
+	currentPlace: IWorkPlace = {
+		options: this.options
+	} as any;
+	places: IWorkPlace[] = [];
 
 	private readonly __elementToPlace: Map<HTMLElement, IWorkPlace> = new Map();
 
