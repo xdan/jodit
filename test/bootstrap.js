@@ -100,7 +100,7 @@ function mockTimers() {
 			mockTimersCb = [];
 		},
 		runAll() {
-			mockTimersCb.forEach(fn => {
+			mockTimersCb.forEach(({ fn }) => {
 				fn && fn();
 			});
 			mockTimersCb = [];
