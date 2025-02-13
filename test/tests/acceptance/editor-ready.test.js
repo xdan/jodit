@@ -80,7 +80,6 @@ describe('Readiness', () => {
 					`${Jodit.constants.BASE_PATH}plugins/custom6/custom6.js`,
 					{
 						then() {
-							debugger;
 							Jodit.plugins.add('custom6', Custom6);
 							return Promise.resolve();
 						}
