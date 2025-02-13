@@ -24,6 +24,9 @@ export default ({
 				loader: 'swc-loader',
 				options: {
 					jsc: {
+						parser: {
+							syntax: 'typescript'
+						},
 						target: ES
 					},
 					minify: uglify
@@ -37,6 +40,15 @@ export default ({
 				options: {
 					POLYFILLS: !ESModern,
 					FAT: fat
+				}
+			},
+			{
+				loader: path.resolve(
+					superDirname,
+					'./tools/loaders/constants-loader.ts'
+				),
+				options: {
+					superDirname: superDirname
 				}
 			}
 		],

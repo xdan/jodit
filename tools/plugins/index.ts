@@ -13,7 +13,6 @@ import postBuild from './post-build';
 
 import * as webpack from 'webpack';
 import type { WebpackConfiguration } from 'webpack-cli';
-import path from 'path';
 
 export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 	const {
@@ -23,9 +22,7 @@ export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 		onlyTS,
 		debug,
 		exclude,
-		progressFunction,
-		superDirname,
-		dirname
+		progressFunction
 	} = vars;
 
 	const plugins: Array<webpack.ProgressPlugin | webpack.DelegatedPlugin> = [
@@ -75,16 +72,6 @@ export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 			}
 		})
 	);
-
-	if (superDirname !== dirname) {
-		// Because constants are used webpack define plugin
-		plugins.push(
-			new webpack.NormalModuleReplacementPlugin(
-				/core\/constants/,
-				path.join(superDirname, './src/core/constants.ts')
-			)
-		);
-	}
 
 	return plugins;
 };
