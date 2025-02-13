@@ -5,7 +5,7 @@
  */
 
 // eslint-disable-next-line max-classes-per-file
-describe.only('Readiness', () => {
+describe('Readiness', () => {
 	describe('Method waitForReady', () => {
 		describe('Custom plugin', () => {
 			let cssLoaded = false;
