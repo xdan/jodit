@@ -15,15 +15,10 @@ import { completeUrl } from './complete-url';
 
 export type Loader = (jodit: IViewBased, url: string) => Promise<any>;
 
-export interface CallbackAndElement {
-	callback: EventListener;
-	element: HTMLElement;
-}
-
-const alreadyLoadedList = new Map<string, Promise<any>>();
+export const alreadyLoadedList = new Map<string, Promise<any>>();
 
 const cacheLoaders = (loader: Loader): Loader => {
-	return async (jodit: IViewBased, url: string): Promise<any> => {
+	return (jodit: IViewBased, url: string): Promise<any> => {
 		if (alreadyLoadedList.has(url)) {
 			return alreadyLoadedList.get(url) as Promise<any>;
 		}

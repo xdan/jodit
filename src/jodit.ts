@@ -121,9 +121,12 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		});
 	}
 
+	/**
+	 * @deprecated I don't know why I wrote itp
+	 */
 	static get ready(): Promise<IJodit> {
 		return new Promise(resolve => {
-			eventEmitter.on('oditready', resolve);
+			eventEmitter.on('joditready', resolve);
 		});
 	}
 

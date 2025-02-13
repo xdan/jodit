@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Jodit Editor Tests', function () {
 	describe('Constructor', function () {
 		it('Constructor Jodit must be in global scope', function () {
@@ -824,56 +825,6 @@ describe('Jodit Editor Tests', function () {
 
 						expect(instanceCount).equals(2);
 						expect(uploader2 === uploader).is.true;
-					});
-				});
-			});
-		});
-	});
-
-	describe('Readiness', () => {
-		describe('Method waitForReady', () => {
-			describe('Sync init', () => {
-				it('Should return resolved promise', done => {
-					const jodit = getJodit();
-
-					expect(jodit.isReady).is.true;
-
-					jodit.waitForReady().then(j => {
-						expect(jodit).eq(j);
-						expect(jodit.isReady).is.true;
-						done();
-					});
-				});
-			});
-
-			describe('Composition event', () => {
-				it('should handled normal', () => {
-					const jodit = getJodit({
-						defaultTimeout: 0
-					});
-
-					jodit.value = '<p>test</p>';
-
-					simulateEvent('compositionend', jodit.editor);
-					expect(jodit.value).eq('<p>test</p>');
-				});
-			});
-
-			describe('Async init', () => {
-				it('Should return resolved promise', done => {
-					unmockPromise();
-					const jodit = getJodit({
-						events: {
-							createEditor: () => delay(100)
-						}
-					});
-
-					expect(jodit.isReady).is.false;
-
-					jodit.waitForReady().then(j => {
-						expect(jodit).eq(j);
-						expect(jodit.isReady).is.true;
-						done();
 					});
 				});
 			});

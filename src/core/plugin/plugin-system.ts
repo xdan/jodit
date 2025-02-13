@@ -146,6 +146,7 @@ export class PluginSystem implements IPluginSystem {
 
 		initPlugins();
 		bindOnBeforeDestruct(jodit, pluginsMap);
+
 		if (!IS_PROD && waitingList.size) {
 			console.warn(
 				'After init plugin waiting list is not clean:',
