@@ -95,8 +95,7 @@ function mockTimers() {
 			}
 		},
 		cleanup() {
-			window.setTimeout = originalSetTimeout;
-			window.clearTimeout = originalClearTimeout;
+			unmockTimers();
 			mockTimersCb = [];
 		},
 		runAll() {
@@ -106,6 +105,11 @@ function mockTimers() {
 			mockTimersCb = [];
 		}
 	};
+}
+
+function unmockTimers() {
+	window.setTimeout = originalSetTimeout;
+	window.clearTimeout = originalClearTimeout;
 }
 
 if (typeof window.skipTest === 'undefined') {
@@ -723,6 +727,7 @@ function removeStuff() {
 	getBox().removeAttribute('style');
 
 	mockPromise();
+	unmockTimers();
 }
 
 if (typeof afterEach === 'function') {
