@@ -374,7 +374,7 @@ export class Async implements IAsync {
 
 	requestIdleCallback(
 		callback: IdleRequestCallback,
-		options?: { timeout: number }
+		options: { timeout: number } = { timeout: 100 }
 	): number {
 		const request = this.requestIdleCallbackNative(callback, options);
 		this.requestsIdle.add(request);
