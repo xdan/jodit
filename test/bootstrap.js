@@ -123,7 +123,6 @@ if (typeof window.toolbarButtonsCount !== 'number') {
  *
  * @param {number} timeout
  * @return {*}
- * @deprecated Use mockTimers instead and mockTimers().delay
  */
 function delay(timeout) {
 	return new naturalPromise(resolve => {

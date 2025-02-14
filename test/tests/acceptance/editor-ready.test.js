@@ -277,7 +277,9 @@ describe('Readiness', () => {
 
 		describe('Async init', () => {
 			it('Should return resolved promise', done => {
+				const timers = mockTimers();
 				unmockPromise();
+
 				const jodit = getJodit({
 					events: {
 						createEditor: () => delay(100)
@@ -285,10 +287,12 @@ describe('Readiness', () => {
 				});
 
 				expect(jodit.isReady).is.false;
+				timers.delay(700);
 
 				jodit.waitForReady().then(j => {
 					expect(jodit).eq(j);
 					expect(jodit.isReady).is.true;
+					timers.cleanup();
 					done();
 				});
 			});
