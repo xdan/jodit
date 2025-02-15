@@ -231,6 +231,11 @@ describe('Test Async module', () => {
 			expect(result).to.equal('test result');
 		});
 
+		it('should return promise in yield method', async function () {
+			const result = await asyncM.schedulerYield();
+			expect(result).to.equal(undefined);
+		});
+
 		it('should catch errors thrown in the task and reject the promise', async function () {
 			try {
 				await asyncM.schedulerPostTask(() => {
