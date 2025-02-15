@@ -9,6 +9,42 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.5.12
+
+#### :house: Internal
+
+```
+ @eslint/compat                      ^1.2.3  →    ^1.2.6
+ @eslint/js                         ^9.16.0  →   ^9.20.0
+ @playwright/test                   ^1.49.0  →   ^1.50.1
+ @swc/core                         ^1.10.11  →  ^1.10.16
+ @types/node                       ^22.10.1  →  ^22.13.4
+ @typescript-eslint/eslint-plugin   ^8.16.0  →   ^8.24.0
+ @typescript-eslint/parser          ^8.16.0  →   ^8.24.0
+ axios                               ^1.7.8  →    ^1.7.9
+ compression                         ^1.7.5  →    ^1.8.0
+ core-js                            ^3.39.0  →   ^3.40.0
+ dotenv                             ^16.4.5  →   ^16.4.7
+ eslint                             ^9.16.0  →   ^9.20.1
+ eslint-config-prettier              ^9.1.0  →   ^10.0.1
+ eslint-plugin-prettier              ^5.2.1  →    ^5.2.3
+ glob                               ^11.0.0  →   ^11.0.1
+ globals                           ^15.12.0  →  ^15.15.0
+ less                                ^4.2.1  →    ^4.2.2
+ mocha                              ^10.8.2  →   ^11.1.0
+ postcss                           >=8.4.49  →   >=8.5.2
+ prettier                            ^3.4.1  →    ^3.5.1
+ stylelint                         ^16.11.0  →  ^16.14.1
+ stylelint-config-standard          ^36.0.1  →   ^37.0.0
+ stylelint-prettier                  ^5.0.2  →    ^5.0.3
+ terser-webpack-plugin              ^5.3.10  →   ^5.3.11
+ ts-loader                           ^9.5.1  →    ^9.5.2
+ typescript                          ^5.7.2  →    ^5.7.3
+ webpack                             5.96.1  →    5.98.0
+ webpack-cli                         ^5.1.4  →    ^6.0.1
+ webpack-dev-server                  ^5.1.0  →    ^5.2.0
+```
+
 ## 4.5.10
 
 #### :house: Internal
