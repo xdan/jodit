@@ -157,7 +157,7 @@ In this example, the code will output "A", pause for 1 second, and then output "
 
 The `Async` module provides a convenient API for scheduling tasks.
 The ideology is inspired by [Scheduler API] (https://developer.mozilla.org/en-us/docs/web/api/scheduler)
-And by default uses the same API, if it is available.
+And by default uses the same API, if it is available https://caniuse.com/mdn-api_scheduler.
 
 ```js
 await jodit.async.schedulePostTask(() => {
