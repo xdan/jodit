@@ -30,7 +30,7 @@ jobs:
 
     - name: Check ESM build
       run: |
-        make check-esm-build pluginsCount=62
+        make check-esm-build pluginsCount=63
 
     - name: Test all
       run: |
