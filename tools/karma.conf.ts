@@ -130,13 +130,13 @@ module.exports = function (cnf: Config): void {
 
 			'./public/app.css',
 			'./test/tests/browser-module.js',
-			'./test/chai/chai.min.js',
 			'./node_modules/synchronous-promise/index.js',
 
 			...buildFiles,
 
 			...Array.from(
 				new Set([
+					path.resolve(__dirname, '../test/chai/chai.min.js'),
 					path.resolve(__dirname, '../test/bootstrap.js'),
 					path.resolve(argv.cwd, 'test/bootstrap.js'),
 					path.resolve(__dirname, '../src/**/*.test.js'),
