@@ -153,11 +153,40 @@ async function Run() {
 
 In this example, the code will output "A", pause for 1 second, and then output "B".
 
+## Schedule API
+
+The `Async` module provides a convenient API for scheduling tasks.
+The ideology is inspired by [Scheduler API] (https://developer.mozilla.org/en-us/docs/web/api/scheduler)
+And by default uses the same API, if it is available.
+
+```js
+await jodit.async.schedulePostTask(() => {
+  console.log('A');
+});
+
+await jodit.async.scheduleYield();
+
+const result = await jodit.async.schedulePostTask(() => {
+  return 'B';
+}, {
+  signal: new AbortController().signal,
+  priority: 'user-blocking'
+  delay: 100
+});
+```
+
 ## Clear
 
 You can manually remove all asynchronous editor operations without waiting for the destruction of the editor:
 
-```js
-jodit.async.setTimeout(() => alert('Hello'), 1000);
+```javascript
+jodit.async.setTimeout(() => alert('Hello'), 1000); // Will not be called
+jodit.async.schedulePostTask(() => alert('Hello2')); // Will not be called
+jodit.async.requestIdleCallback(() => alert('Hello2')); // Will not be called
+jodit.async
+	.preomise(resolve => {
+		setTimeout(resolve, 1000);
+	})
+	.then(() => alert('Hello3')); // Will not be called
 jodit.async.clear();
 ```
