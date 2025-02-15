@@ -134,6 +134,7 @@ esm:
 
 	@echo 'Resolve alias imports ...'
 	@cp -R $(pwd)/build/esm/plugins/index.js $(pwd)/build/esm/plugins/all.js
+	@npx replace "JODIT-SECTION-" "JODIT-" $(pwd)/build/esm/plugins/all.js --silent
 	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --rootDir=$(pwd) --cwd=$(pwd)/build/esm --mode=esm --ver=$(version)
 
 	@if [ -d "$(pwd)/src/langs" ]; then\
