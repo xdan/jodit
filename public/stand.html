@@ -39,11 +39,9 @@
 		</style>
 		<div id="box">
 			<h1>Jodit Test Document</h1>
-			<form id="form" action="sss.php">
+			<form id="form">
 				<div id="app"></div>
-				<input type="text">
 				<textarea id="editorNative"></textarea>
-				<button id="btn" type="button">click</button>
 			</form>
 		</div>
 		<script>
@@ -54,16 +52,8 @@
 			// const editor = Jodit.make('root.getElementById('edit')', {
 			const editor = Jodit.make('#editorNative', {
 				toolbarInlineForSelection: true,
-				"allowResizeX": true,
-				"height": 150,
-				"width": 500,
 				commandToHotkeys: {
 					someCustomCommand: 'shift+space'
-				},
-				events: {
-					beforeCommandSomecustomcommand: () => {
-						alert(111);
-					}
 				},
 				// direction: 'rtl',
 				// tabIndex: 0,
@@ -90,7 +80,7 @@
 				},
 				// fullsize: true,
 				cache: true,
-				language: 'ua',
+				// language: 'ua',
 				filebrowser: {
 					ajax: {
 						url: 'https://xdsoft.net/jodit/finder/'
@@ -144,7 +134,7 @@
 							});
 					}
 				},
-				language: 'ja',
+				// language: 'ja',
 				i18n: {
 					ja: {
 						'Please fill out this field': 'URLを入力してください',

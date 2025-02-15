@@ -1,16 +1,16 @@
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import pluginHeader from 'eslint-plugin-header';
-import mocha from 'eslint-plugin-mocha';
-import tsdoc from 'eslint-plugin-tsdoc';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import _import from 'eslint-plugin-import';
 import { fixupPluginRules } from '@eslint/compat';
-import globals from 'globals';
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+import pluginHeader from 'eslint-plugin-header';
+import _import from 'eslint-plugin-import';
+import mocha from 'eslint-plugin-mocha';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import tsdoc from 'eslint-plugin-tsdoc';
+import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
 
 pluginHeader.rules.header.meta.schema = false;
 
@@ -27,6 +27,7 @@ export default [
 		ignores: [
 			'**/node_modules',
 			'test/loader.js',
+			'test/chai/chai.min.js',
 			'**/build',
 			'**/types',
 			'examples/assets/prism.js',
