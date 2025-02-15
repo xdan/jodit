@@ -16,6 +16,8 @@ The rest of the methods can be found in the [[Dom | documentation]]
 
 > All module methods are static. So you don't need an instance to use them.
 
+## LazyWalker
+
 The module also includes the [[LazyWalker]] class. It is convenient for cases when it is necessary to go through
 the entire tree of elements, but this must be done without stopping the main thread of execution.
 For example, your plugin can search for some nodes, or text. If each time you run through the entire tree in a loop,

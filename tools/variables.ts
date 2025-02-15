@@ -83,8 +83,6 @@ export const variables = (argv: Argv, dir: string): Variables => {
  */
 	`;
 
-	argv = { ...argv.env, ...argv };
-
 	const debug = !argv || !argv.mode || !argv.mode.match(/production/);
 
 	const isTest = Bool(argv && argv.isTest);

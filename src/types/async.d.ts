@@ -77,6 +77,16 @@ export interface IAsync extends IDestructible {
 	}): RejectablePromise<number>;
 	cancelIdleCallback(request: number): void;
 
+	schedulerPostTask<T = void>(
+		task: () => T,
+		options: {
+			delay?: number;
+			priority?: 'background' | 'user-blocking' | 'user-visible';
+			signal?: AbortSignal
+		}
+	): Promise<T>;
+	schedulerYield(): Promise<void>;
+
 	/**
 	 * Smart wrapper for `requestAnimationFrame`
 	 */

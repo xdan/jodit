@@ -47,6 +47,15 @@ https://github.com/cdnjs/cdnjs/issues/14261
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.2.47/es2021/jodit.min.js"></script>
 ```
 
+## Download archive
+
+You can use the [Jodit Builder](https://xdsoft.net/jodit/builder/) service to download a zip archive. Then, simply include the necessary files:
+
+```html
+<link rel="stylesheet" href="./archive/jodit.min.css" />
+<script src="./archive/jodit.min.js"></script>
+```
+
 ## Usage
 
 Jodit Editor can be initialized by calling the `Jodit.make` method with the selector of the textarea element.

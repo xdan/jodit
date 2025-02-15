@@ -347,10 +347,11 @@ export class Async implements IAsync {
 		);
 	}
 
-	private requestsIdle: Set<number> = new Set();
-	private requestsRaf: Set<number> = new Set();
+	private __requestsIdle: Set<number> = new Set();
+	private __controllers: Set<AbortController> = new Set();
+	private __requestsRaf: Set<number> = new Set();
 
-	private requestIdleCallbackNative =
+	private __requestIdleCallbackNative =
 		(window as any)['requestIdleCallback']?.bind(window) ??
 		((
 			callback: IdleRequestCallback,
@@ -376,8 +377,8 @@ export class Async implements IAsync {
 		callback: IdleRequestCallback,
 		options: { timeout: number } = { timeout: 100 }
 	): number {
-		const request = this.requestIdleCallbackNative(callback, options);
-		this.requestsIdle.add(request);
+		const request = this.__requestIdleCallbackNative(callback, options);
+		this.__requestsIdle.add(request);
 		return request;
 	}
 
@@ -392,25 +393,91 @@ export class Async implements IAsync {
 		});
 	}
 
+	/**
+	 * Try to use scheduler.postTask if it is available https://wicg.github.io/scheduling-apis/
+	 */
+	schedulerPostTask<T = void>(
+		task: () => T,
+		options: {
+			signal?: AbortSignal;
+			delay?: number;
+			priority?: 'background' | 'user-blocking' | 'user-visible';
+		} = {
+			delay: 0,
+			priority: 'user-visible'
+		}
+	): Promise<T> {
+		const controller = new AbortController();
+		if (options.signal) {
+			options.signal.addEventListener('abort', () => controller.abort());
+		}
+
+		this.__controllers.add(controller);
+
+		// @ts-ignore
+		if (typeof globalThis.scheduler !== 'undefined') {
+			const scheduler: {
+				postTask: <T>(task: () => T, options: any) => Promise<T>;
+				// @ts-ignore
+			} = globalThis.scheduler;
+
+			const promise = scheduler.postTask(task, {
+				...options,
+				signal: controller.signal
+			});
+
+			promise
+				.finally(() => {
+					this.__controllers.delete(controller);
+				})
+				.catch(() => null);
+
+			return promise;
+		}
+
+		return this.promise<T>((resolve, reject) => {
+			const timeout = this.setTimeout(() => {
+				try {
+					resolve(task());
+				} catch (e) {
+					reject(e);
+				}
+				this.__controllers.delete(controller);
+			}, options.delay || 1);
+
+			controller.signal.addEventListener('abort', () => {
+				this.clearTimeout(timeout);
+				this.__controllers.delete(controller);
+				reject(abort());
+			});
+		});
+	}
+
+	schedulerYield(): Promise<void> {
+		return this.schedulerPostTask(() => {}, { priority: 'user-visible' });
+	}
+
 	cancelIdleCallback(request: number): void {
-		this.requestsIdle.delete(request);
+		this.__requestsIdle.delete(request);
 		return this.__cancelIdleCallbackNative(request);
 	}
 
 	requestAnimationFrame(callback: FrameRequestCallback): number {
 		const request = requestAnimationFrame(callback);
-		this.requestsRaf.add(request);
+		this.__requestsRaf.add(request);
 		return request;
 	}
 
 	cancelAnimationFrame(request: number): void {
-		this.requestsRaf.delete(request);
+		this.__requestsRaf.delete(request);
 		cancelAnimationFrame(request);
 	}
 
 	clear(): void {
-		this.requestsIdle.forEach(key => this.cancelIdleCallback(key));
-		this.requestsRaf.forEach(key => this.cancelAnimationFrame(key));
+		this.__requestsIdle.forEach(key => this.cancelIdleCallback(key));
+		this.__requestsRaf.forEach(key => this.cancelAnimationFrame(key));
+
+		this.__controllers.forEach(controller => controller.abort());
 
 		this.timers.forEach(key =>
 			clearTimeout(this.timers.get(key) as number)

@@ -222,4 +222,89 @@ describe('Test Async module', () => {
 			});
 		});
 	});
+
+	describe('Scheduler API', () => {
+		it('should execute the task and resolve with the returned value', async function () {
+			const result = await asyncM.schedulerPostTask(() => {
+				return 'test result';
+			});
+			expect(result).to.equal('test result');
+		});
+
+		it('should catch errors thrown in the task and reject the promise', async function () {
+			try {
+				await asyncM.schedulerPostTask(() => {
+					throw new Error('error test');
+				});
+				throw new Error('Promise should have been rejected');
+			} catch (err) {
+				expect(err).to.be.an('error');
+				expect(err.message).to.equal('error test');
+			}
+		});
+
+		it('should delay task execution when delay option is set', async function () {
+			const start = Date.now();
+			await asyncM.schedulerPostTask(
+				() => {
+					return 'done';
+				},
+				{ delay: 100 }
+			);
+			const end = Date.now();
+			expect(end - start).to.be.at.least(100);
+		});
+
+		it('should abort the task if signal is aborted', async function () {
+			const controller = new AbortController();
+			const { signal } = controller;
+			controller.abort();
+
+			try {
+				await asyncM.schedulerPostTask(
+					() => {
+						return 'should not run';
+					},
+					{ signal }
+				);
+				throw new Error('Task should be aborted and promise rejected');
+			} catch (err) {
+				expect(err).to.exist;
+			}
+		});
+
+		it('Should call as usual', done => {
+			asyncM.schedulerPostTask(callSpy('schedulerPostTask'));
+			asyncM.schedulerPostTask(callSpy('schedulerPostTask'));
+			asyncM.schedulerPostTask(callSpy('schedulerPostTask'));
+			asyncM.schedulerPostTask(callSpy('schedulerPostTask'));
+			asyncM.setTimeout(() => {
+				expect(callCount).equals(4);
+				done();
+			}, 100);
+		});
+
+		describe('Clear', () => {
+			it('Should not be called after destruct', done => {
+				asyncM.schedulerPostTask(callSpy('schedulerPostTask'));
+				asyncM.destruct();
+				setTimeout(() => {
+					expect(callCount).equals(0);
+					done();
+				});
+			}, 100);
+
+			it('Should abort by signal', done => {
+				const controller = new AbortController();
+				asyncM.schedulerPostTask(callSpy('schedulerPostTask'), {
+					signal: controller.signal
+				});
+				controller.abort();
+				setTimeout(() => {
+					expect(callCount).equals(0);
+					done();
+				});
+			}, 100);
+		});
+	});
 });

@@ -130,15 +130,8 @@ module.exports = function (cnf: Config): void {
 
 			'./public/app.css',
 			'./test/tests/browser-module.js',
+			'./test/chai/chai.min.js',
 			'./node_modules/synchronous-promise/index.js',
-
-			// Chai 5.x doesn't support browser, but inside Chrome this solution doesn't work
-			// Some tests could not wait for the promise to resolve eg.: Jodit FileBrowser Tests >>> Click on preview > Should open preview dialog
-			{
-				pattern: './test/tests/chai-loader.js',
-				type: 'module'
-			},
-			// './node_modules/chai/chai.js',
 
 			...buildFiles,
 

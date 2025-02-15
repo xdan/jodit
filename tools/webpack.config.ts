@@ -24,6 +24,8 @@ export default (
 	dir = process.cwd(),
 	onlyTS = false
 ): Configuration => {
+	argv = { ...argv.env, ...argv };
+
 	const vars = variables(argv, dir);
 
 	const {
@@ -63,7 +65,7 @@ export default (
 
 		entry: {
 			jodit: ['./src/index.ts'],
-			...(!fat ? pluginsEntries : {})
+			...(!fat ? pluginsEntries : {}),
 		},
 
 		output: {

@@ -9,6 +9,27 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.5.10
+
+#### :house: Internal
+
+- Shit of the Chai JS module to the browser because the developers decided not to support the assembly for browsers anymore
+
+### :rocket: New Feature
+
+- Added API launching tasks for schedule with a reference on https://wicg.github.io/scheduling-apis/
+- [LazyWalker](https://xdsoft.net/jodit/docs/modules/dom.html#lazywalker) module now uses the new API for scheduling tasks
+
+```js
+const editor = Jodit.make('#editor');
+editor.schedulePostTask(
+	() => {
+		console.log('Task 1');
+	},
+	{ priority: 'user-blocking' }
+);
+```
+
 ## 4.5.5
 
 ### :rocket: New Feature
@@ -1661,7 +1682,7 @@ Jodit.make('#editor', {
 
 - Separate plugin for voice recognition and input of recognized text into the editor.
   [Feature Request: Add ability for user to dictate using local device microphone as input #828](https://github.com/xdan/jodit/issues/828)
-    > This plugin is not included in the main Jodit build. It must be connected separately [Подробнее](./src/plugins/speech-recognize/README.md)
+    > This plugin is not included in the main Jodit build. It must be connected separately [Read more](./src/plugins/speech-recognize/README.md)
 
 ## 3.18.5
 
@@ -2530,7 +2551,7 @@ while (!next2.done) {
 
 #### :rocket: New Feature
 
-- В eventEmitter добавлены методы:
+- The methods added to Eventemitter:
     - `mute(event?: string)` Doesn't start any handler;
     - `isMuted(event?: string)` No handlers are triggered for the event
     - `unmute(event?: string)` Returns event handling

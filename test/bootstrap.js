@@ -12,10 +12,6 @@ document.body.appendChild(box);
 
 typeof before === 'function' &&
 	before(async () => {
-		if (typeof waitChai !== 'undefined') {
-			window.chai = await waitChai;
-		}
-
 		if (typeof chai !== 'undefined') {
 			window.expect = chai.expect;
 			chai.config.includeStack = true;

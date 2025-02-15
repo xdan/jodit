@@ -31,7 +31,7 @@ export class LazyWalker
 		this.workNodes = Dom.eachGen(root, !this.options.reverse);
 
 		this.isFinished = false;
-		this.startIdleRequest();
+		this._requestStarting();
 		return this;
 	}
 
@@ -42,10 +42,10 @@ export class LazyWalker
 	constructor(
 		private readonly async: IAsync,
 		private readonly options: {
-			readonly timeout?: number;
 			readonly whatToShow?: number;
 			readonly reverse?: boolean;
 			readonly timeoutChunkSize?: number;
+			readonly timeout?: number;
 		} = {}
 	) {
 		super();
@@ -53,10 +53,16 @@ export class LazyWalker
 
 	private idleId: number = 0;
 
-	private startIdleRequest(): void {
-		this.idleId = this.async.requestIdleCallback(this.workPerform, {
-			timeout: this.options.timeout ?? 10
-		});
+	private __schedulerController: AbortController | null = null;
+
+	private _requestStarting(): void {
+		this.__schedulerController = new AbortController();
+		this.async
+			.schedulerPostTask(this.__workPerform, {
+				delay: this.options.timeout,
+				signal: this.__schedulerController.signal
+			})
+			.catch(() => null);
 	}
 
 	break(reason?: string): void {
@@ -87,18 +93,14 @@ export class LazyWalker
 	}
 
 	@autobind
-	private workPerform(deadline: IdleDeadline): void {
+	private __workPerform(): void {
 		if (this.workNodes) {
 			this.isWorked = true;
 
 			let count = 0;
 			const chunkSize = this.options.timeoutChunkSize ?? 50;
 
-			while (
-				!this.isFinished &&
-				(deadline.timeRemaining() > 0 ||
-					(deadline.didTimeout && count <= chunkSize))
-			) {
+			while (!this.isFinished && count <= chunkSize) {
 				const item = this.workNodes.next();
 				count += 1;
 				if (this.visitNode(item.value)) {
@@ -115,7 +117,7 @@ export class LazyWalker
 		}
 
 		if (!this.isFinished) {
-			this.startIdleRequest();
+			this._requestStarting();
 		}
 	}
 
