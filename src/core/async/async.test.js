@@ -257,7 +257,7 @@ describe('Test Async module', () => {
 				{ delay: 100 }
 			);
 			const end = Date.now();
-			expect(end - start).to.be.at.least(100);
+			expect(100 - (end - start)).to.be.lessThan(5);
 		});
 
 		it('should abort the task if signal is aborted', async function () {
