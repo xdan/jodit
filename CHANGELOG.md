@@ -9,6 +9,21 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.5.17
+
+### :rocket: New Feature
+
+- In Readonly mode, the ability to disable navigation by links has been added. By default, the option is enabled.
+
+```js
+const editor = Jodit.make('#editor', {
+  readonly: true,
+  link: {
+    preventReadOnlyNavigation: true
+  }
+});
+```
+
 ## 4.5.12
 
 #### :house: Internal

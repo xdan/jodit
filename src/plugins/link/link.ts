@@ -43,8 +43,10 @@ export class link extends Plugin {
 	/** @override */
 	protected override afterInit(jodit: IJodit): void {
 		if (jodit.o.link.followOnDblClick) {
-			jodit.e.on('dblclick.link', this.onDblClickOnLink);
+			jodit.e.on('dblclick.link', this.__onDblClickOnLink);
 		}
+
+		jodit.e.on(jodit.editor, 'click.link', this.__onClickReadOnlyLink);
 
 		if (jodit.o.link.processPastedLink) {
 			jodit.e.on('processPaste.link', this.onProcessPasteLink);
@@ -76,7 +78,7 @@ export class link extends Plugin {
 	}
 
 	@autobind
-	private onDblClickOnLink(e: MouseEvent): void {
+	private __onDblClickOnLink(e: MouseEvent): void {
 		if (!Dom.isTag(e.target, 'a')) {
 			return;
 		}
@@ -348,8 +350,22 @@ export class link extends Plugin {
 	protected override beforeDestruct(jodit: IJodit): void {
 		jodit.e
 			.off('generateLinkForm.link', this.__generateForm)
-			.off('dblclick.link', this.onDblClickOnLink)
+			.off('dblclick.link', this.__onDblClickOnLink)
+			.off(jodit.editor, 'click.link', this.__onClickReadOnlyLink)
 			.off('processPaste.link', this.onProcessPasteLink);
+	}
+
+	@autobind
+	private __onClickReadOnlyLink(e: MouseEvent): void {
+		const { jodit } = this;
+
+		if (
+			jodit.o.readonly &&
+			jodit.o.link.preventReadOnlyNavigation &&
+			Dom.isTag(e.target, 'a')
+		) {
+			e.preventDefault();
+		}
 	}
 }
 

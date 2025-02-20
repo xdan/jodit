@@ -41,7 +41,9 @@
 			<h1>Jodit Test Document</h1>
 			<form id="form">
 				<div id="app"></div>
-				<textarea id="editorNative"></textarea>
+				<textarea id="editorNative">
+					Hello <a href="https://xdsoft.net/jodit">Jodit</a> World!
+				</textarea>
 			</form>
 		</div>
 		<script>
@@ -51,10 +53,59 @@
 			// root.innerHTML = '<link rel="stylesheet" href="./build/es2021/jodit.fat.min.css"/><div id="edit"></div>';
 			// const editor = Jodit.make('root.getElementById('edit')', {
 			const editor = Jodit.make('#editorNative', {
-				toolbarInlineForSelection: true,
-				commandToHotkeys: {
-					someCustomCommand: 'shift+space'
+				// readonly: true,
+				showXPathInStatusbar: false,
+				placeholder: "Start typing...",
+				toolbar: true,
+				askBeforePasteHTML: false,
+				cleanHTML: {
+					pastedHTML: true,
 				},
+				buttons: [
+					"fullsize",
+				],
+				style: {
+					fontSize: "16px",
+					lineHeight: "1.5",
+					padding: "10px",
+					// minheight: "65vh",
+					maxheight: "65vh",
+				},
+				// iframe: true,
+				iframeCSS: `
+          body {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            line-height: 1.5;
+          }
+          table {
+            border-collapse: collapse !important;
+            width: 100% !important;
+            border: 2px solid #000 !important;
+          }
+          th, td {
+            border: 2px solid #000 !important;
+            padding: 8px !important;
+            text-align: left !important;
+          }
+          th {
+            background-color: #f2f2f2 !important;
+          }
+        `,
+				contentStyle: `
+          table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 2px solid black !important;
+          }
+          th, td {
+            border: 2px solid black !important;
+            padding: 8px !important;
+            text-align: left;
+          }
+        `,
+				maxheight: "65vh",
 				// direction: 'rtl',
 				// tabIndex: 0,
 				// shadowRoot: root,
@@ -141,31 +192,6 @@
 					},
 				},
 			});
-
-			editor.value =  '<p style="font-size: 16.5pt; margin: 0"><a href="stand.html"><img src="https://xdsoft.net/jodit/finder/files/pexels-arianna-jade-4006617.jpg" id="lio" alt="Tada" style="margin: 1px 2px 3px 4px; border: 2px solid #f00;" title="Ola ha" width="300"></a>Body Subtitle</p>\n' +
-				'<table><tbody><tr><th>header</th><td>1</td></tr></tbody></table>' +
-				'<p style="font-size: 10pt; line-height: normal; margin: 7px 0 0 0;">To modify this template, place it into your Outlook editor.</p>';
-			editor.value = '';
-			// editor.events.fire(
-			// 	'openImageProperties',
-			// 	editor.editor.querySelector('img')
-			// );
-			btn.onclick = () => {
-				const start = performance.now();
-				for (let i = 0; i < 100; i++) {
-					editor.toolbar.build(editor.o.buttons);
-				}
-				const res = performance.now() - start;
-				form.appendChild(
-					editor.create.fromHTML(
-						'<input name="content" value="' + res + '">'
-					)
-				);
-			};
-
-			// delete editor;
-			// const box = new UIBox(editor1);
-			// alert(box.container.outerHTML);
 		</script>
 		<style>
 			.class1 {

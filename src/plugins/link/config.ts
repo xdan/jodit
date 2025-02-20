@@ -73,6 +73,11 @@ declare module 'jodit/config' {
 			selectOptionsClassName: IUIOption[];
 
 			hotkeys: string[];
+
+			/**
+			 * Prevent navigation to the link if it is readonly. Default: true
+			 */
+			preventReadOnlyNavigation: boolean;
 		};
 	}
 }
@@ -86,6 +91,7 @@ Config.prototype.link = {
 	openInNewTabCheckbox: true,
 	modeClassName: 'input',
 	selectMultipleClassName: true,
+	preventReadOnlyNavigation: true,
 	selectSizeClassName: 3,
 	selectOptionsClassName: [],
 	hotkeys: ['ctrl+k', 'cmd+k']
