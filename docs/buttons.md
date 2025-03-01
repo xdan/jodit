@@ -23,6 +23,10 @@ Jodit.make('#editor', {
 });
 ```
 
+{% include [cdn](./_includes/cdn.md) %}
+
+{% include [Example1](./_includes/example1.md) %}
+
 > We implement the [IControlType](https://xdsoft.net/jodit/docs/interfaces/types.IControlType.html) interface.
 
 We are using the pre-connected icon `source`.
@@ -227,21 +231,6 @@ Jodit.make('#editor', {
 			}
 		}
 	]
-});
-```
-
-Such display settings can be used in any Jodit button.
-For example, we will reduce the view of the list of the "Paragraph" button that allows you to use the H1 tag, etc. to the highlighted text:
-
-```js
-Jodit.make('#editor', {
-  controls: {
-    paragraph: {
-      childTemplate: (editor, tag, text) => {
-        return `<${tag} style="font-size: 12px">${text}</${tag}>`;
-      }
-    }
-  }
 });
 ```
 
