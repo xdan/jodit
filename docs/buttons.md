@@ -24,9 +24,6 @@ Jodit.make('#editor', {
 });
 ```
 
-{% include [cdn](./_includes/cdn.md) %}
-
-{% include [Example1](./_includes/example1.md) %}
 
 > We implement the [IControlType](https://xdsoft.net/jodit/docs/interfaces/types.IControlType.html) interface.
 
@@ -109,8 +106,6 @@ Jodit.make('#editor', {
 	]
 });
 ```
-
-{% include [List1](./_includes/list1.md) %}
 
 When a list is used, the button will display a special arrow for expanding the list.
 
@@ -277,8 +272,6 @@ Jodit.make('#editor', {
 	]
 });
 ```
-
-{% include [List2](./_includes/list2.md) %}
 
 You can use any buttons defined in the `Jodit.defaultOptions.controls` list.
 
