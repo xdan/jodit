@@ -13,3 +13,4 @@ Jodit.make('#example1', {
   ]
 });
 </script>
+<br/>
