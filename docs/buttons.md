@@ -28,7 +28,6 @@ Jodit.make('#editor', {
 
 {% include [Example1](./_includes/example1.md) %}
 
-
 > We implement the [IControlType](https://xdsoft.net/jodit/docs/interfaces/types.IControlType.html) interface.
 
 We are using the pre-connected icon `source`.
@@ -313,18 +312,18 @@ For this purpose, the [IControlType](https://xdsoft.net/jodit/docs/interfaces/ty
 
 ```js
 Jodit.make('#editor', {
-    buttons: [
-        {
-            name: 'button',
-            icon: 'cut',
-            isDisabled: (editor, control) => {
-                return editor.selection.isCollapsed();
-            },
-            exec: editor => {
-                editor.execCommand('cut');
-            }
-        }
-    ]
+	buttons: [
+		{
+			name: 'button',
+			icon: 'cut',
+			isDisabled: (editor, control) => {
+				return editor.selection.isCollapsed();
+			},
+			exec: editor => {
+				editor.execCommand('cut');
+			}
+		}
+	]
 });
 ```
 
@@ -334,18 +333,18 @@ There is also the `isActive` method, which can be used to signal to the user tha
 
 ```js
 Jodit.make('#editor', {
-    buttons: [
-        {
-            icon: 'link',
-            isActive: (editor, control) => {
-                const current = editor.selection.current();
-                return Jodit.modules.Dom.closest(current, 'a', editor.editor);
-            },
-            exec: editor => {
-                editor.execCommand('unlink');
-            }
-        }
-    ]
+	buttons: [
+		{
+			icon: 'link',
+			isActive: (editor, control) => {
+				const current = editor.selection.current();
+				return Jodit.modules.Dom.closest(current, 'a', editor.editor);
+			},
+			exec: editor => {
+				editor.execCommand('unlink');
+			}
+		}
+	]
 });
 ```
 
@@ -355,16 +354,16 @@ You can even remove the button from the toolbar entirely if it is not needed at 
 
 ```js
 Jodit.make('#editor', {
-    buttons: [
-        {
-            icon: 'link',
-            isVisible: (editor, control) => {
-                return editor.selection.isCollapsed();
-            },
-            exec: editor => {
-                editor.execCommand('unlink');
-            }
-        }
-    ]
+	buttons: [
+		{
+			icon: 'link',
+			isVisible: (editor, control) => {
+				return editor.selection.isCollapsed();
+			},
+			exec: editor => {
+				editor.execCommand('unlink');
+			}
+		}
+	]
 });
 ```
