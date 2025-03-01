@@ -47,8 +47,6 @@ Jodit.make('#editor', {
 });
 ```
 
-{% include [Example2](./_includes/example2.md) %}
-
 **Note:** In this example we call the [popup](https://xdsoft.net/jodit/docs/interfaces/types.IControlType.html#popup) handler rather than [exec](https://xdsoft.net/jodit/docs/interfaces/types.IControlType.html#exec). This means that clicking the button will display a popup window. You can add any content to this popup; everything returned by the `popup` function will be included in the window. Jodit also supports simple string values:
 
 ```js
