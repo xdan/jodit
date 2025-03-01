@@ -51,6 +51,8 @@ Jodit.make('#editor', {
 });
 ```
 
+{% include [Example2](./_includes/example2.md) %}
+
 **Note:** In this example we call the [popup](https://xdsoft.net/jodit/docs/interfaces/types.IControlType.html#popup) handler rather than [exec](https://xdsoft.net/jodit/docs/interfaces/types.IControlType.html#exec). This means that clicking the button will display a popup window. You can add any content to this popup; everything returned by the `popup` function will be included in the window. Jodit also supports simple string values:
 
 ```js
@@ -108,6 +110,8 @@ Jodit.make('#editor', {
 	]
 });
 ```
+
+{% include [List1](./_includes/list1.md) %}
 
 When a list is used, the button will display a special arrow for expanding the list.
 
@@ -274,6 +278,8 @@ Jodit.make('#editor', {
 	]
 });
 ```
+
+{% include [List2](./_includes/list2.md) %}
 
 You can use any buttons defined in the `Jodit.defaultOptions.controls` list.
 
