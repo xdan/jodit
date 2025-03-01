@@ -230,6 +230,21 @@ Jodit.make('#editor', {
 });
 ```
 
+Such display settings can be used in any Jodit button.
+For example, we will reduce the view of the list of the "Paragraph" button that allows you to use the H1 tag, etc. to the highlighted text:
+
+```js
+Jodit.make('#editor', {
+  controls: {
+    paragraph: {
+      childTemplate: (editor, tag, text) => {
+        return `<${tag} style="font-size: 12px">${text}</${tag}>`;
+      }
+    }
+  }
+});
+```
+
 ---
 
 ## Button Lists
