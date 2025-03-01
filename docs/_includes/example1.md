@@ -5,6 +5,7 @@ Jodit.make('#example1', {
   buttons: [
     {
       icon: 'source',
+      mode: Jodit.constants.MODE_SPLIT,
       exec: editor => {
         editor.toggleMode();
       }

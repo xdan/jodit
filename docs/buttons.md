@@ -15,6 +15,7 @@ Jodit.make('#editor', {
 	buttons: [
 		{
 			icon: 'source',
+			mode: Jodit.constants.MODE_SPLIT, // The button is available in both modes
 			exec: editor => {
 				editor.toggleMode();
 			}
@@ -26,6 +27,7 @@ Jodit.make('#editor', {
 {% include [cdn](./_includes/cdn.md) %}
 
 {% include [Example1](./_includes/example1.md) %}
+
 
 > We implement the [IControlType](https://xdsoft.net/jodit/docs/interfaces/types.IControlType.html) interface.
 
