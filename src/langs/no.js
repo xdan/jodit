@@ -189,5 +189,14 @@ module.exports = {
 	preview: 'Forhåndsvisning',
 	spellcheck: 'Stavekontroll',
 	'Speech Recognize': 'Talegjenkjenning',
-	'Line height': 'Linjehøyde'
+	'Line height': 'Linjehøyde',
+	apply: 'Bruk',
+	edit: 'Rediger',
+	'Show all': 'Vis alle',
+	sound: 'Lyd',
+	'Interim Results': 'Foreløpige resultater',
+	default: 'Standard',
+	circle: 'Sirkel',
+	dot: 'Punkt',
+	square: 'Firkant'
 };
