@@ -31,6 +31,7 @@ import keys from 'jodit/langs/keys';
 import ko from 'jodit/langs/ko';
 import mn from 'jodit/langs/mn';
 import nl from 'jodit/langs/nl';
+import no from 'jodit/langs/no';
 import pl from 'jodit/langs/pl';
 import pt_br from 'jodit/langs/pt_br';
 import ru from 'jodit/langs/ru';
@@ -57,6 +58,7 @@ exp = {
 	ko,
 	mn,
 	nl,
+	no,
 	pl,
 	pt_br,
 	ru,
