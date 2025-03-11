@@ -31,7 +31,8 @@ ru,
 tr,
 zh_cn,
 zh_tw,
-ua
+ua,
+no
 ```
 
 If you do not find your language, then you can create a language file yourself by [copying any of the other languages](https://github.com/xdan/jodit/tree/main/src/langs)
