@@ -220,5 +220,8 @@ module.exports = {
 	'Word Paste Detected': 'كلمة لصق الكشف عن',
 	Clean: 'نظيفة',
 	'Insert className': 'أدخل اسم الفصل',
-	'Press Alt for custom resizing': 'اضغط البديل لتغيير حجم مخصص'
+	'Press Alt for custom resizing': 'اضغط البديل لتغيير حجم مخصص',
+	'Line height': 'ارتفاع الخط',
+	spellcheck: 'التدقيق الإملائي',
+	'Speech Recognize': 'التعرف على الكلام'
 };

@@ -10,9 +10,11 @@ module.exports = {
 	'Jodit Editor': 'Jodit-redigerer',
 	"Jodit User's Guide": 'Jodit brukerveiledning',
 	'contains detailed help for using': 'Inneholder detaljert hjelp for bruk',
-	'For information about the license, please go to our website:': 'For informasjon om lisensen, besøk vår nettside:',
+	'For information about the license, please go to our website:':
+		'For informasjon om lisensen, besøk vår nettside:',
 	'Buy full version': 'Kjøp fullversjon',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.': 'Opphavsrett © XDSoft.net - Chupurnov Valeriy. Alle rettigheter forbeholdt.',
+	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
+		'Opphavsrett © XDSoft.net - Chupurnov Valeriy. Alle rettigheter forbeholdt.',
 	Anchor: 'Anker',
 	'Open in new tab': 'Åpne i ny fane',
 	'Open in fullsize': 'Åpne i fullskjerm',
@@ -75,13 +77,15 @@ module.exports = {
 	'Image properties': 'Bildeegenskaper',
 	Cancel: 'Avbryt',
 	Ok: 'OK',
-	'Your code is similar to HTML. Keep as HTML?': 'Koden din ligner HTML. Beholde som HTML?',
+	'Your code is similar to HTML. Keep as HTML?':
+		'Koden din ligner HTML. Beholde som HTML?',
 	'Paste as HTML': 'Lim inn som HTML',
 	Keep: 'Behold',
 	Clean: 'Rens',
 	'Insert as Text': 'Lim inn som tekst',
 	'Word Paste Detected': 'Word-innliming oppdaget',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?': 'Innholdet du limer inn kommer fra et Microsoft Word/Excel-dokument. Vil du beholde formatet eller rense det?',
+	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
+		'Innholdet du limer inn kommer fra et Microsoft Word/Excel-dokument. Vil du beholde formatet eller rense det?',
 	'Insert only Text': 'Lim inn kun tekst',
 	'File Browser': 'Filutforsker',
 	'Error on load list': 'Feil ved lasting av liste',
@@ -187,9 +191,8 @@ module.exports = {
 	'Add folder': 'Legg til mappe',
 	palette: 'Palett',
 	preview: 'Forhåndsvisning',
-	spellcheck: 'Stavekontroll',
-	'Speech Recognize': 'Talegjenkjenning',
 	'Line height': 'Linjehøyde',
+	'Insert className': 'Sett inn klassenavn',
 	apply: 'Bruk',
 	edit: 'Rediger',
 	'Show all': 'Vis alle',
@@ -198,5 +201,9 @@ module.exports = {
 	default: 'Standard',
 	circle: 'Sirkel',
 	dot: 'Punkt',
-	square: 'Firkant'
+	square: 'Firkant',
+	'Press Alt for custom resizing': 'Trykk på Alt for å endre størrelse',
+	'Copy selection': 'Kopier utvalg',
+	'Paste from clipboard': 'Lim inn fra utklippstavlen',
+	Find: 'Finne'
 };

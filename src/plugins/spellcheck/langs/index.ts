@@ -19,6 +19,7 @@ import * as ja from './ja.js';
 import * as ko from './ko.js';
 import * as mn from './mn.js';
 import * as nl from './nl.js';
+import * as no from './no.js';
 import * as pl from './pl.js';
 import * as pt_br from './pt_br.js';
 import * as ru from './ru.js';
@@ -43,6 +44,7 @@ export {
 	ko,
 	mn,
 	nl,
+	no,
 	pl,
 	pt_br,
 	ru,
