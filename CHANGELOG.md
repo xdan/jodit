@@ -9,6 +9,26 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.6.1
+
+#### :boom: Breaking Change
+
+- ESM assembly uses the flag fat_mode = true
+
+Before in ESM build:
+
+```js
+console.log(Jodit.constants.FAT_MODE); // false`
+console.log(Jodit.fatMode); // false`
+```
+
+Now:
+
+```js
+console.log(Jodit.constants.FAT_MODE); // true`
+console.log(Jodit.fatMode); // true`
+```
+
 ## 4.5.20
 
 #### :house: Internal
