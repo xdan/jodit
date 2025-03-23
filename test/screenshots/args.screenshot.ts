@@ -4,8 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 
 const args = {
 	build: process.env.BUILD,

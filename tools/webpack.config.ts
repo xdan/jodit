@@ -65,7 +65,7 @@ export default (
 
 		entry: {
 			jodit: ['./src/index.ts'],
-			...(!fat ? pluginsEntries : {}),
+			...(!fat ? pluginsEntries : {})
 		},
 
 		output: {

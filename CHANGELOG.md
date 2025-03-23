@@ -9,6 +9,34 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.5.19
+
+#### :house: Internal
+
+```
+ @eslint/compat                      ^1.2.6  →     ^1.2.7
+ @eslint/eslintrc                    ^3.2.0  →     ^3.3.0
+ @eslint/js                         ^9.20.0  →    ^9.22.0
+ @playwright/test                   ^1.50.1  →    ^1.51.0
+ @swc/core                         ^1.10.16  →    ^1.11.8
+ @types/node                       ^22.13.4  →  ^22.13.10
+ @typescript-eslint/eslint-plugin   ^8.24.0  →    ^8.26.1
+ @typescript-eslint/parser          ^8.24.0  →    ^8.26.1
+ autoprefixer                      ^10.4.20  →   ^10.4.21
+ axios                               ^1.7.9  →     ^1.8.2
+ core-js                            ^3.40.0  →    ^3.41.0
+ css-minimizer-webpack-plugin        ^7.0.0  →     ^7.0.2
+ eslint                             ^9.20.1  →    ^9.22.0
+ eslint-config-prettier             ^10.0.1  →    ^10.1.1
+ globals                           ^15.15.0  →    ^16.0.0
+ postcss                            >=8.5.2  →    >=8.5.3
+ prettier                            ^3.5.1  →     ^3.5.3
+ stylelint                         ^16.14.1  →   ^16.15.0
+ terser-webpack-plugin              ^5.3.11  →    ^5.3.14
+ tsx                                ^4.19.2  →    ^4.19.3
+ typescript                          ^5.7.3  →     ^5.8.2
+```
+
 ## 4.5.17
 
 ### :rocket: New Feature

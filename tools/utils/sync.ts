@@ -35,6 +35,7 @@ fs.watch(source, { recursive: true }, (event, filename) => {
 	}
 
 	if (event === 'change') {
+		// eslint-disable-next-line no-console
 		console.log(
 			'Copy:',
 			path.resolve(source, filename),
@@ -60,6 +61,7 @@ function sync(folder: string): void {
 			const filepath = path.relative(source, full);
 			const targetFull = path.resolve(target, filepath);
 			if (!fs.existsSync(targetFull)) {
+				// eslint-disable-next-line no-console
 				console.log('Not exists', targetFull);
 				fs.cpSync(full, targetFull);
 			} else {
@@ -67,6 +69,7 @@ function sync(folder: string): void {
 				const contentTarget = fs.readFileSync(targetFull, 'utf-8');
 
 				if (contentSource !== contentTarget) {
+					// eslint-disable-next-line no-console
 					console.log('Diff', targetFull);
 					fs.cpSync(full, targetFull);
 				}

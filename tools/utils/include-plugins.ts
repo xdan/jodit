@@ -13,6 +13,7 @@ type Entries = {
 
 export const includePlugins = (dir: string): [Entries, string[]] => {
 	const entryFiles: string[] = [];
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	const make: { paths: string[] } = require(path.resolve(dir, './make.js'));
 
 	const pluginsEntries: Entries = make.paths.reduce(

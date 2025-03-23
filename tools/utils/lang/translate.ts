@@ -83,6 +83,7 @@ async function translate(text: string, lang = 'ru'): Promise<string | void> {
 
 		return text;
 	} catch (e) {
+		// eslint-disable-next-line no-console
 		console.log(e);
 	}
 }
@@ -99,6 +100,7 @@ const translateAll = (text: string): Promise<void> => {
 			path.parse(filepath).base
 		);
 
+		// eslint-disable-next-line @typescript-eslint/no-require-imports
 		const data = fs.existsSync(newFilePath) ? require(newFilePath) : {};
 
 		if (!data[text]) {

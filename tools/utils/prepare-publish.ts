@@ -14,6 +14,7 @@ if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
 	throw new Error('Invalid directory');
 }
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const packageJson = require(path.resolve(cwd, 'package.json'));
 
 fs.writeFileSync(

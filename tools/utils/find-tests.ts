@@ -9,6 +9,7 @@ import * as glob from 'glob';
 import * as path from 'path';
 
 const dir = path.resolve(process.cwd()) + '/';
+// eslint-disable-next-line no-console
 console.log('Find directory:', dir);
 
 const list = [];
@@ -25,4 +26,5 @@ fs.writeFileSync(
 	`// prettier-ignore\nwindow.fileCasesJodit = ${JSON.stringify(list)};`
 );
 
+// eslint-disable-next-line no-console
 console.log(`Found: ${list.length} files`);

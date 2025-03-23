@@ -14,6 +14,7 @@ export class PostBuild {
 				try {
 					return this.fn(stats);
 				} catch (e) {
+					// eslint-disable-next-line no-console
 					console.log(e);
 				}
 			}

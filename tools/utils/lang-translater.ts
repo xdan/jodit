@@ -31,4 +31,5 @@ const argv = yargs
 
 console.info('Work directory:', argv.dir);
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 require(path.resolve(__dirname, `./lang/${argv.command}.js`))();

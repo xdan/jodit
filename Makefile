@@ -203,7 +203,7 @@ test-all:
 .PHONY: lint
 lint:
 	$(NODE_MODULES_BIN)/tsc --noemit --noErrorTruncation
-	$(NODE_MODULES_BIN)/eslint ./src/ ./test/
+	$(NODE_MODULES_BIN)/eslint ./src/ ./test/ ./tools
 	$(NODE_MODULES_BIN)/stylelint ./src/**/**.less
 
 .PHONY: fix

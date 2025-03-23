@@ -13,7 +13,7 @@ import type { LoaderContext } from 'webpack';
 let keys: string[] = [];
 type Lang = { [key in string]: string };
 
-export default function (this: LoaderContext<{}>, source: string): string {
+export default function (this: LoaderContext<object>, source: string): string {
 	this.cacheable && this.cacheable(true);
 
 	const isEn = this.resourcePath.includes('en.js');

@@ -28,13 +28,15 @@ function readAndCopyIcons(dir: string): void {
 		if (/\.(svg|json)$/.test(file.name)) {
 			const isJSON = /\.(json)$/.test(file.name);
 			const content = isJSON
-				? require(path.join(fullDir, file.name))
+				? // eslint-disable-next-line @typescript-eslint/no-require-imports
+					require(path.join(fullDir, file.name))
 				: fs
 						.readFileSync(path.join(fullDir, file.name), 'utf8')
 						.replace(/[\n\t\s]+/g, ' ');
 
 			const targetPath = path.join(esmDir, dir, file.name + '.js');
 
+			// eslint-disable-next-line no-console
 			console.log(
 				'Copy:',
 				path.join(fullDir, file.name),

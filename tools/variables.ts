@@ -72,6 +72,7 @@ export type Variables = {
 };
 
 export const variables = (argv: Argv, dir: string): Variables => {
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	const pkg = require(path.resolve(dir, './package.json'));
 
 	const banner = `/*!

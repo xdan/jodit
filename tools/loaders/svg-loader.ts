@@ -6,7 +6,7 @@
 import type { LoaderContext } from 'webpack';
 
 export default function (
-	this: LoaderContext<{}> & { value: string },
+	this: LoaderContext<object> & { value: string },
 	content: string
 ): string {
 	this.cacheable && this.cacheable();

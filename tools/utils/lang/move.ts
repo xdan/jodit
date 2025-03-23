@@ -51,6 +51,7 @@ export default async (): Promise<void> => {
 	await Promise.all(
 		files.map(async ([_, file]) => {
 			const sourceFilename = path.resolve(sourcePath, file);
+			// eslint-disable-next-line @typescript-eslint/no-require-imports
 			const json = require(sourceFilename);
 			if (!json[key]) {
 				console.info(`File ${file} does not have key ${key}`);
@@ -63,7 +64,8 @@ export default async (): Promise<void> => {
 
 			const targetFilename = path.resolve(targetPath, file);
 			const targetJSON: any = fs.existsSync(targetFilename)
-				? require(targetFilename)
+				? // eslint-disable-next-line @typescript-eslint/no-require-imports
+					require(targetFilename)
 				: {};
 
 			targetJSON[keyTo] = value;
