@@ -31,6 +31,7 @@ ACTIONS_URL := https://github.com/xdan/jodit/actions/
 BUILD_DTS := true
 BUILD_ESM := true
 UGLIFY_ESM := false
+LINT_FOLDERS := ./src/ ./test/ ./tools
 CHANGELOG_URL := https://github.com/xdan/jodit/blob/main/CHANGELOG.md
 NODE_MODULES_BIN := ./node_modules/.bin
 TS_NODE_BASE := $(NODE_MODULES_BIN)/ts-node --project $(cwd)tools/tsconfig.json
@@ -203,7 +204,7 @@ test-all:
 .PHONY: lint
 lint:
 	$(NODE_MODULES_BIN)/tsc --noemit --noErrorTruncation
-	$(NODE_MODULES_BIN)/eslint ./src/ ./test/ ./tools
+	$(NODE_MODULES_BIN)/eslint $(LINT_FOLDERS)
 	$(NODE_MODULES_BIN)/stylelint ./src/**/**.less
 
 .PHONY: fix
