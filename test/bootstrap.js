@@ -190,11 +190,22 @@ function waitForImageLoaded(image) {
 function waitForCondition(condition, timeout = 1000) {
 	return new naturalPromise((resolve, reject) => {
 		let time = Date.now();
+
+		let fallbackTimer;
+
+		const callFallback = () => {
+			clearTimeout(fallbackTimer);
+			reject('Timeout waitForCondition');
+		};
+
+		fallbackTimer = setTimeout(callFallback, timeout);
+
 		requestAnimationFrame(function check() {
 			if (Date.now() - time > timeout) {
-				reject('Timeout waitForCondition');
+				callFallback();
 			} else {
 				if (condition()) {
+					clearTimeout(fallbackTimer);
 					resolve();
 				} else {
 					requestAnimationFrame(check);
