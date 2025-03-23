@@ -9,6 +9,23 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.5.20
+
+#### :house: Internal
+
+```
+ @eslint/eslintrc                     ^3.3.0  →     ^3.3.1
+ @eslint/js                          ^9.22.0  →    ^9.23.0
+ @playwright/test                    ^1.51.0  →    ^1.51.1
+ @swc/core                           ^1.11.8  →   ^1.11.12
+ @types/node                       ^22.13.10  →  ^22.13.11
+ @typescript-eslint/eslint-plugin    ^8.26.1  →    ^8.27.0
+ @typescript-eslint/parser           ^8.26.1  →    ^8.27.0
+ axios                                ^1.8.2  →     ^1.8.4
+ eslint                              ^9.22.0  →    ^9.23.0
+ stylelint                          ^16.15.0  →   ^16.16.0
+```
+
 ## 4.5.19
 
 #### :house: Internal
