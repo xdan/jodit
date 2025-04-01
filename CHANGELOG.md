@@ -9,6 +9,28 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.6.2
+
+#### :house: Internal
+
+- When the option is turned on `extraPlugins`. If the plugin module does not find the desired plugin, then it tries to load it from the same folder where the plugin itself.
+  For example, if you connect the Jodit script from `./node_moudules/jodit/es2018/jodit.js` and you have a plugin `./node_moudules/jodit/es2018/plugins/my-plugin/`
+
+  ```js
+  Jodit.make ('#Editor', {
+    extraPlugins: ['my-plugin'] // Will Be Loaded from ./node_modules/jodit/plugins/my-plugin/my-plugin.js
+  });
+  `` `
+
+  But now if you connect Jodit from `./node_moudules/jodit/es2018/jodit.min.js`
+  then the plugin will be loaded from `./node_modules/jodit/es2018/plugins/my-plugin/my-plugin.min.js`
+
+  ```js
+  Jodit.make ('#Editor', {
+    extraPlugins: ['my-plugin'] // Will Be Loaded from ./node_modules/jodit/plugins/my-plugin/my-plugin.min.js
+  });
+  `` `
+
 ## 4.6.1
 
 #### :boom: Breaking Change

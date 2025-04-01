@@ -225,21 +225,43 @@ export const KEY_ALIASES: IDictionary<string> = {
 	windows: 'meta'
 };
 
-export const BASE_PATH: string = ((): string => {
-	if (typeof document === 'undefined') {
-		return '';
+const removeScriptName = (
+	src: string
+): {
+	basePath: string;
+	isMin: boolean;
+} => {
+	const parts = src.split('/');
+	const isMin =
+		typeof process.env.MINIFIED === 'boolean'
+			? process.env.MINIFIED
+			: /\.min\.js/.test(src);
+
+	if (/\.js/.test(parts[parts.length - 1])) {
+		return {
+			basePath: parts.slice(0, parts.length - 1).join('/') + '/',
+			isMin
+		};
 	}
 
-	const script = globalDocument.currentScript as HTMLScriptElement,
-		removeScriptName = (s: string): string => {
-			const parts = s.split('/');
+	return {
+		basePath: src,
+		isMin
+	};
+};
 
-			if (/\.js/.test(parts[parts.length - 1])) {
-				return parts.slice(0, parts.length - 1).join('/') + '/';
-			}
-
-			return s;
+const { basePath, isMin } = ((): {
+	basePath: string;
+	isMin: boolean;
+} => {
+	if (typeof document === 'undefined') {
+		return {
+			basePath: '',
+			isMin: Boolean(process.env.MINIFIED as unknown as boolean)
 		};
+	}
+
+	const script = globalDocument.currentScript as HTMLScriptElement;
 
 	if (script) {
 		return removeScriptName(script.src);
@@ -252,8 +274,18 @@ export const BASE_PATH: string = ((): string => {
 		return removeScriptName(scripts[scripts.length - 1].src);
 	}
 
-	return globalWindow.location.href;
+	return removeScriptName(globalWindow.location.href);
 })();
+
+/**
+ * Path to the current script
+ */
+export const BASE_PATH: string = basePath;
+
+/**
+ * Current script is minified
+ */
+export const BASE_PATH_IS_MIN: boolean = isMin;
 
 export const TEMP_ATTR = 'data-jodit-temp';
 

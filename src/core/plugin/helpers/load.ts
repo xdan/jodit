@@ -43,6 +43,7 @@ export async function loadStyle(
  */
 function getFullUrl(jodit: IJodit, name: string, js: boolean): string {
 	name = kebabCase(name);
+	const min = jodit.minified ? '.min' : '';
 
 	return (
 		jodit.basePath +
@@ -50,6 +51,7 @@ function getFullUrl(jodit: IJodit, name: string, js: boolean): string {
 		name +
 		'/' +
 		name +
+		min +
 		'.' +
 		(js ? 'js' : 'css')
 	);

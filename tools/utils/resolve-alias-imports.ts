@@ -52,6 +52,7 @@ const globalMaps: Record<
 	boolean | string | number | Record<string, boolean | string | number>
 > = {
 	'process.env.FAT_MODE': true, // Don't use css in esm
+	'process.env.MINIFIED': false,
 	'process.env.APP_VERSION': argv.ver,
 	'process.env.TARGET_ES': 'es2020',
 	'process.env.IS_ES_MODERN': true,

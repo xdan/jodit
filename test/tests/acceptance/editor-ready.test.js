@@ -110,6 +110,7 @@ describe('Readiness', () => {
 					Jodit.plugins.add('custom', Custom);
 
 					const jodit = getJodit({
+						minified: false,
 						extraPlugins: ['custom']
 					});
 
@@ -131,6 +132,7 @@ describe('Readiness', () => {
 					Jodit.plugins.add('custom2', Custom2);
 
 					const jodit = getJodit({
+						minified: false,
 						extraPlugins: ['custom2']
 					});
 
@@ -152,6 +154,7 @@ describe('Readiness', () => {
 					Jodit.plugins.add('custom3', Custom3);
 
 					const jodit = getJodit({
+						minified: false,
 						extraPlugins: ['custom3']
 					});
 
@@ -171,6 +174,7 @@ describe('Readiness', () => {
 			describe('With loadable plugin', () => {
 				it('Should wait for load and resolve promise', async () => {
 					const jodit = getJodit({
+						minified: false,
 						extraPlugins: ['custom4']
 					});
 
@@ -192,6 +196,7 @@ describe('Readiness', () => {
 						Jodit.plugins.add('custom5', Custom5);
 
 						const jodit = getJodit({
+							minified: false,
 							extraPlugins: ['custom5']
 						});
 
@@ -211,6 +216,7 @@ describe('Readiness', () => {
 				describe('With required loadable plugin', () => {
 					it('Should resolve promise and after this waiting for loading', async () => {
 						const jodit = getJodit({
+							minified: false,
 							extraPlugins: ['custom6', 'custom4']
 						});
 
@@ -231,6 +237,7 @@ describe('Readiness', () => {
 					describe('For not defined plugin in requires', () => {
 						it('Should not init custom plugin', async () => {
 							const jodit = getJodit({
+								minified: false,
 								extraPlugins: ['custom6']
 							});
 
@@ -250,7 +257,9 @@ describe('Readiness', () => {
 
 		describe('Sync init', () => {
 			it('Should return resolved promise', done => {
-				const jodit = getJodit();
+				const jodit = getJodit({
+					minified: false
+				});
 
 				expect(jodit.isReady).is.true;
 
@@ -265,6 +274,7 @@ describe('Readiness', () => {
 		describe('Composition event', () => {
 			it('should handle normal', () => {
 				const jodit = getJodit({
+					minified: false,
 					defaultTimeout: 0
 				});
 

@@ -68,7 +68,13 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	getIcon?: (name: string, clearName: string) => CanUndef<string>;
 
 	headerButtons?: string | Array<IControlType | string | ButtonsGroup>;
-	basePath?: string;
+	readonly basePath?: string;
+
+	/**
+	 * Plugin autoloader should load minified version of the file
+	 */
+	readonly minified?: boolean;
+
 	theme?: string;
 
 	defaultTimeout?: number;
@@ -117,6 +123,7 @@ interface IViewBased<T = IViewOptions>
 	readonly id: string;
 
 	readonly basePath: string;
+	readonly minified: boolean;
 
 	readonly isLocked: boolean;
 	isLockedNotBy(name: string): boolean;

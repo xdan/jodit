@@ -16,12 +16,14 @@ export default ({
 	isTest,
 	fat,
 	ES,
-	mode
+	mode,
+	uglify
 }: Variables): webpack.DefinePlugin => {
 	return new webpack.DefinePlugin({
 		'process.env': {
 			APP_VERSION: JSON.stringify(pkg.version),
 			FAT_MODE: fat,
+			MINIFIED: uglify,
 			IS_PROD: isProd,
 			IS_TEST: isTest,
 			IS_ES_NEXT: ESNext,

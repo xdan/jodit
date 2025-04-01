@@ -29,6 +29,7 @@ import { STATUSES } from 'jodit/core/component/statuses';
 import {
 	APP_VERSION,
 	BASE_PATH,
+	BASE_PATH_IS_MIN,
 	ES,
 	IS_ES_MODERN,
 	IS_ES_NEXT
@@ -83,6 +84,17 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		}
 
 		return BASE_PATH;
+	}
+
+	/**
+	 * Plugin autoloader should load minified version of the file
+	 */
+	get minified(): boolean {
+		if (this.o.minified !== undefined) {
+			return this.o.minified;
+		}
+
+		return BASE_PATH_IS_MIN;
 	}
 
 	// from webpack.config.ts

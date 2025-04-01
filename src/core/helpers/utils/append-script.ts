@@ -49,8 +49,8 @@ export const appendScriptAsync = cacheLoaders(
 				src: completeUrl(url)
 			});
 
+			jodit.e.one(script, 'error', reject).one(script, 'load', resolve);
 			jodit.od.body.appendChild(script);
-			jodit.e.on(script, 'error', reject).on(script, 'load', resolve);
 		});
 	}
 );

@@ -89,6 +89,7 @@ export class PluginSystem implements IPluginSystem {
 	 */
 	__init(jodit: IJodit): void {
 		const { extraList, disableList, filter } = getSpecialLists(jodit);
+
 		const doneList: Map<string, Nullable<PluginInstance>> = new Map();
 		const pluginsMap: IDictionary<PluginInstance> = {};
 		const waitingList: Set<string> = new Set();
@@ -101,6 +102,7 @@ export class PluginSystem implements IPluginSystem {
 			}
 
 			let commit: boolean = false;
+
 			this.__getFullPluginsList(filter).forEach(([name, plugin]) => {
 				if (disableList.has(name) || doneList.has(name)) {
 					return;

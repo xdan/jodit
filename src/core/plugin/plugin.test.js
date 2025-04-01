@@ -220,12 +220,15 @@ describe('Plugin system test', () => {
 	});
 
 	describe('Extra plugin', () => {
-		let originalCreateElement, pleaseInited;
+		let originalCreateElement = document.createElement;
+		let pleaseInited;
+		let loadScriptPath = '';
 
 		beforeEach(() => {
 			unmockPromise();
-			originalCreateElement = document.createElement;
 			pleaseInited = false;
+			loadScriptPath = '';
+
 			Object.defineProperty(document, 'createElement', {
 				value: function (tagName) {
 					if (tagName === 'script') {
@@ -239,6 +242,14 @@ describe('Plugin system test', () => {
 							value: function (k, v) {
 								if (k !== 'src') {
 									originalSetAttribute.call(this, k, v);
+								} else {
+									loadScriptPath = v
+										.replace(
+											/(127\.0\.0\.1|localhost):[0-9]+/,
+											'localhost:2000'
+										)
+										.replace(/build\/es\d+\//, '/build/')
+										.replace(/\/base\//, '');
 								}
 							}
 						});
@@ -246,7 +257,7 @@ describe('Plugin system test', () => {
 						setTimeout(() => {
 							Jodit.plugins.add(
 								'please',
-								class extends Jodit.modules.Plugin {
+								class Please extends Jodit.modules.Plugin {
 									buttons = [
 										{
 											name: 'test',
@@ -262,8 +273,10 @@ describe('Plugin system test', () => {
 							);
 							simulateEvent('load', script);
 						}, 100);
+
 						return script;
 					}
+
 					return originalCreateElement.call(this, tagName);
 				},
 				configurable: true,
@@ -272,48 +285,81 @@ describe('Plugin system test', () => {
 		});
 
 		afterEach(() => {
-			mockPromise();
 			Object.defineProperty(document, 'createElement', {
 				value: originalCreateElement
 			});
 			Jodit.plugins.remove('please');
+			Jodit.plugins.remove('test');
+			mockPromise();
 		});
 
-		it('should allow load plugin from external file', async () => {
-			const editor = getJodit({
-				extraPlugins: ['please'],
-				removeButtons: ['changeCase'],
-				buttons: [
-					{
-						group: 'font-style',
-						buttons: []
-					}
-				]
+		describe('Load extra plugin', () => {
+			it('should allow load plugin from external file', async () => {
+				const editor = getJodit({
+					extraPlugins: ['please'],
+					removeButtons: ['changeCase'],
+					minified: false,
+					buttons: [
+						{
+							group: 'font-style',
+							buttons: []
+						}
+					]
+				});
+
+				await Jodit.plugins.wait('please');
+				await editor.async.requestIdlePromise();
+				await editor.waitForReady();
+
+				expect(
+					editor.toolbar.buttons.map(b => b.state.name)
+				).deep.equals([
+					'bold',
+					'italic',
+					'underline',
+					'strikethrough',
+					'eraser',
+					'test'
+				]);
+				expect(pleaseInited).is.true;
+
+				expect(loadScriptPath).equals(
+					'http://localhost:2000/build/plugins/please/please.js'
+				);
 			});
-			await Jodit.plugins.wait('please');
-			await editor.async.requestIdlePromise();
-			expect(editor.toolbar.buttons.map(b => b.state.name)).deep.equals([
-				'bold',
-				'italic',
-				'underline',
-				'strikethrough',
-				'eraser',
-				'test'
-			]);
-			expect(pleaseInited).is.true;
 		});
 
-		it('should not influence on the readiness of the editor', async () => {
-			const editor = getJodit({
-				extraPlugins: ['please'],
-				buttons: [
-					{
-						group: 'font-style',
-						buttons: []
-					}
-				]
+		describe('Load minified version', () => {
+			it('should allow load plugin from external file', async () => {
+				const editor = getJodit({
+					extraPlugins: ['please'],
+					minified: true
+				});
+
+				await Jodit.plugins.wait('please');
+				await editor.async.requestIdlePromise();
+				await editor.waitForReady();
+				expect(pleaseInited).is.true;
+
+				expect(loadScriptPath).equals(
+					'http://localhost:2000/build/plugins/please/please.min.js'
+				);
 			});
-			expect(editor.isReady).is.true;
+		});
+
+		describe('isReady', () => {
+			it('should not influence on the readiness of the editor', async () => {
+				const editor = getJodit({
+					extraPlugins: ['please'],
+					buttons: [
+						{
+							group: 'font-style',
+							buttons: []
+						}
+					]
+				});
+				expect(editor.isReady).is.true;
+			});
 		});
 
 		describe('Destruct Jodit before plugin loaded', () => {
