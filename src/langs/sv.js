@@ -9,10 +9,13 @@ module.exports = {
 	'About Jodit': 'Om Jodit',
 	'Jodit Editor': 'Jodit Editor',
 	"Jodit User's Guide": 'Jodit användarguide',
-	'contains detailed help for using': 'Innehåller detaljerad hjälp för användning',
-	'For information about the license, please go to our website:': 'För information om licensen, vänligen besök vår webbsida:',
+	'contains detailed help for using':
+		'Innehåller detaljerad hjälp för användning',
+	'For information about the license, please go to our website:':
+		'För information om licensen, vänligen besök vår webbsida:',
 	'Buy full version': 'Köp full version',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.': 'Upphovsrätt © XDSoft.net - Chupurnov Valeriy. Alla rättigheter förbehållna.',
+	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
+		'Upphovsrätt © XDSoft.net - Chupurnov Valeriy. Alla rättigheter förbehållna.',
 	Anchor: 'Ankare',
 	'Open in new tab': 'Öppna i ny flik',
 	'Open in fullsize': 'Öppna i fullskärm',
@@ -75,13 +78,15 @@ module.exports = {
 	'Image properties': 'Bildegenskaper',
 	Cancel: 'Avbryt',
 	Ok: 'OK',
-	'Your code is similar to HTML. Keep as HTML?': 'Din kod liknar HTML. Vill du behålla som HTML?',
+	'Your code is similar to HTML. Keep as HTML?':
+		'Din kod liknar HTML. Vill du behålla som HTML?',
 	'Paste as HTML': 'Klistra in som HTML',
 	Keep: 'Behåll',
 	Clean: 'Rensa',
 	'Insert as Text': 'Klistra in som text',
 	'Word Paste Detected': 'Word-klistring upptäckt',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?': 'Det inklistrade innehållet kommer från ett Microsoft Word/Excel-dokument. Vill du behålla formatet eller rensa det?',
+	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
+		'Det inklistrade innehållet kommer från ett Microsoft Word/Excel-dokument. Vill du behålla formatet eller rensa det?',
 	'Insert only Text': 'Klistra in endast text',
 	'File Browser': 'Filutforskare',
 	'Error on load list': 'Fel vid inläsning av lista',
@@ -198,7 +203,8 @@ module.exports = {
 	circle: 'Cirkel',
 	dot: 'Prick',
 	square: 'Fyrkant',
-	'Press Alt for custom resizing': 'Tryck på Alt för anpassad storleksändring',
+	'Press Alt for custom resizing':
+		'Tryck på Alt för anpassad storleksändring',
 	'Copy selection': 'Kopiera markering',
 	'Paste from clipboard': 'Klistra in från urklipp',
 	Find: 'Hitta'
