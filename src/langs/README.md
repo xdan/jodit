@@ -25,14 +25,15 @@ it,
 ja,
 ko,
 nl,
+no,
 pl,
 pt_br,
 ru,
+sv,
 tr,
-zh_cn,
-zh_tw,
 ua,
-no
+zh_cn,
+zh_tw
 ```
 
 If you do not find your language, then you can create a language file yourself by [copying any of the other languages](https://github.com/xdan/jodit/tree/main/src/langs)
