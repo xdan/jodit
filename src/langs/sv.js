@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Swedish (Svenska)
 module.exports = {
 	'Type something': 'Skriv något...',
 	'About Jodit': 'Om Jodit',
@@ -223,5 +225,8 @@ module.exports = {
 	'Line height': 'Radavstånd',
 	Edit: 'Redigera',
 	Sound: 'Ljud',
-	'Interim Results': 'Preliminära resultat'
+	'Interim Results': 'Preliminära resultat',
+	'Embed code': 'Bädda in kod',
+	All: 'Välj alla',
+	'License: %s': 'Licens: %s'
 };

@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Norwegian (Norsk)
 module.exports = {
 	'Type something': 'Skriv noe',
 	'About Jodit': 'Om Jodit',
@@ -205,5 +207,30 @@ module.exports = {
 	'Press Alt for custom resizing': 'Trykk på Alt for å endre størrelse',
 	'Copy selection': 'Kopier utvalg',
 	'Paste from clipboard': 'Lim inn fra utklippstavlen',
-	Find: 'Finne'
+	Find: 'Finne',
+	'Embed code': 'Bygge inn kode',
+	Edit: 'Rediger',
+	All: 'Velg alle',
+	'License: %s': 'Lisens: %s',
+	'You can only edit your own images. Download this image on the host?':
+		'Du kan bare redigere dine egne bilder. Last ned dette bildet på verten?',
+	'The image has been successfully uploaded to the host!':
+		'Bildet har blitt lastet opp til verten!',
+	'There are no files': 'Det er ingen filer i denne katalogen',
+	Rename: 'Gi nytt navn',
+	'Enter new name': 'Skriv inn nytt navn',
+	download: 'Last ned',
+	"Your browser doesn't support direct access to the clipboard.":
+		'Nettleseren din støtter ikke direkte tilgang til utklippstavlen.',
+	copy: 'kopi',
+	'Border radius': 'Grenseradius',
+	Apply: 'Bruk',
+	'Please fill out this field': 'Vennligst fyll ut dette feltet',
+	'Please enter a web address': 'Vennligst skriv inn en webadresse',
+	Default: 'Standard',
+	Circle: 'Sirkel',
+	Dot: 'Prikk',
+	Quadrate: 'Firkant',
+	'Find Previous': 'Finn forrige',
+	'Find Next': 'Finn neste'
 };

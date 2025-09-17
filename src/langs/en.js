@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+// English
+
 module.exports = {
 	'Type something': 'Start writing...',
 	pencil: 'Edit',

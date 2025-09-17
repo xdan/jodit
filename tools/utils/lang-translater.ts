@@ -5,9 +5,10 @@
  */
 
 import * as path from 'path';
-import * as yargs from 'yargs';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
 	.option('command', {
 		alias: 'c',
 		type: 'string',

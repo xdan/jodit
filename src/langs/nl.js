@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Dutch (Nederlands)
 module.exports = {
 	'Type something': 'Begin met typen..',
 	Advanced: 'Geavanceerd',
@@ -222,5 +224,6 @@ module.exports = {
 	'Find Previous': 'Vorige Zoeken',
 	'Find Next': 'Volgende Zoeken',
 	'Insert className': 'Voeg de klassenaam in',
-	'Press Alt for custom resizing': 'Druk op Alt voor aangepaste grootte'
+	'Press Alt for custom resizing': 'Druk op Alt voor aangepaste grootte',
+	'License: %s': 'Licentie: %s'
 };

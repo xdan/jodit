@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Persian (فارسی)
 module.exports = {
 	'Type something': 'چیزی بنویسید',
 	Advanced: 'پیشرفته',
@@ -221,5 +223,6 @@ module.exports = {
 	'Find Previous': 'پیدا کردن قبلی',
 	'Find Next': 'پیدا کردن بعدی',
 	'Insert className': 'Insertar nombre de clase',
-	'Press Alt for custom resizing': 'برای تغییر اندازه سفارشی فشار دهید'
+	'Press Alt for custom resizing': 'برای تغییر اندازه سفارشی فشار دهید',
+	'License: %s': 'مجوز: %s'
 };

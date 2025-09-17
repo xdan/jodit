@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Portuguese Brazil (Português do Brasil)
 module.exports = {
 	'Type something': 'Escreva algo...',
 	Advanced: 'Avançado',
@@ -226,5 +228,6 @@ module.exports = {
 	'Find Next': 'Localizar Próxima',
 	'Insert className': 'Insira o nome da classe',
 	'Press Alt for custom resizing':
-		'Pressione Alt para redimensionamento personalizado'
+		'Pressione Alt para redimensionamento personalizado',
+	'License: %s': 'Licença: %s'
 };

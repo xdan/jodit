@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Chinese Traditional (繁體中文)
 module.exports = {
 	'Type something': '輸入一些內容',
 	Advanced: '進階',
@@ -218,5 +220,7 @@ module.exports = {
 	'Find Previous': '尋找上一個',
 	'Find Next': '尋找下一個',
 	'Insert className': '插入 class 名稱',
-	'Press Alt for custom resizing': '按住 Alt 以調整自訂大小'
+	'Press Alt for custom resizing': '按住 Alt 以調整自訂大小',
+	Edit: '編輯',
+	'License: %s': '許可證: %s'
 };

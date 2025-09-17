@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Japanese (日本語)
 module.exports = {
 	'Type something': 'なにかタイプしてください',
 	Advanced: '高度な設定',
@@ -225,5 +227,6 @@ module.exports = {
 	'Upper Roman': 'ローマ数字大文字',
 	'Insert className': 'クラス名を挿入',
 	'Press Alt for custom resizing':
-		'カスタムサイズ変更のためのAltキーを押します'
+		'カスタムサイズ変更のためのAltキーを押します',
+	'License: %s': 'ライセンス: %s'
 };

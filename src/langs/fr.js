@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// French (Français)
 module.exports = {
 	'Type something': 'Ecrivez ici',
 	'About Jodit': 'A propos de Jodit',
@@ -219,5 +221,9 @@ module.exports = {
 	'Find Next': 'Suivant',
 	'Insert className': 'Insérer un nom de classe',
 	'Press Alt for custom resizing':
-		'Appuyez sur Alt pour un redimensionnement personnalisé'
+		'Appuyez sur Alt pour un redimensionnement personnalisé',
+	'Embed code': "Code d'intégration",
+	Edit: 'Modifier',
+	All: 'Tout sélectionner',
+	'License: %s': 'Licence: %s'
 };

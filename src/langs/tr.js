@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Turkish (Türkçe)
 module.exports = {
 	'Type something': 'Bir şeyler yaz',
 	Advanced: 'Gelişmiş',
@@ -221,5 +223,6 @@ module.exports = {
 	'Find Next': 'Sonrakini Bul',
 	'Insert className': 'Sınıf adı girin',
 	'Press Alt for custom resizing':
-		'Özel yeniden boyutlandırma için Alt tuşuna basın'
+		'Özel yeniden boyutlandırma için Alt tuşuna basın',
+	'License: %s': 'Lisans: %s'
 };

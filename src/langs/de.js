@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+// German (Deutsch)
+
 module.exports = {
 	'Type something': 'Bitte geben Sie einen Text ein',
 	Advanced: 'Fortgeschritten',
@@ -227,5 +229,6 @@ module.exports = {
 	'Find Next': 'Weitersuchen',
 	'Insert className': 'className (CSS) einfügen',
 	'Press Alt for custom resizing':
-		'Drücken Sie Alt für benutzerdefinierte Größenanpassung'
+		'Drücken Sie Alt für benutzerdefinierte Größenanpassung',
+	'License: %s': 'Lizenz: %s'
 };

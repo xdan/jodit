@@ -587,6 +587,7 @@ typeof before === 'function' &&
 
 const i18nkeys = new Set();
 const excludeI18nKeys = new Set([
+	'symbols',
 	'символ',
 	'test',
 	'speechRecognize',

@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+// Czech (Čeština)
+
 module.exports = {
 	'Type something': 'Napiš něco',
 	'About Jodit': 'O Jodit',

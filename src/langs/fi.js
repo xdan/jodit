@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Finnish (Suomi)
 module.exports = {
 	'Type something': 'Kirjoita jotain...',
 	Advanced: 'Avanzado',
@@ -227,5 +229,6 @@ module.exports = {
 	'Find Next': 'Hae seuraava',
 	'Insert className': 'Lisää luokkanimi',
 	'Press Alt for custom resizing': 'Paina Alt muokattuun koon muuttamiseen',
-	'Class name': 'Luokan nimi'
+	'Class name': 'Luokan nimi',
+	'License: %s': 'Lisenssi: %s'
 };

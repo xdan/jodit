@@ -7,9 +7,10 @@
 import * as fs from 'fs';
 import type { Config } from 'karma';
 import path from 'path';
-import * as yargs from 'yargs';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
 	.option('cwd', {
 		type: 'string',
 		demandOption: true,

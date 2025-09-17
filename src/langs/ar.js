@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+// Arabic (العربية)
+
 module.exports = {
 	'Type something': 'إبدأ في الكتابة...',
 	'About Jodit': 'حول جوديت',
@@ -223,5 +225,6 @@ module.exports = {
 	'Press Alt for custom resizing': 'اضغط البديل لتغيير حجم مخصص',
 	'Line height': 'ارتفاع الخط',
 	spellcheck: 'التدقيق الإملائي',
-	'Speech Recognize': 'التعرف على الكلام'
+	'Speech Recognize': 'التعرف على الكلام',
+	All: 'تحديد الكل'
 };

@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Hungarian (Magyar)
 module.exports = {
 	'Type something': 'Írjon be valamit',
 	Advanced: 'Haladó',
@@ -222,5 +224,6 @@ module.exports = {
 	'Find Previous': 'Megtalálja Előző',
 	'Find Next': 'Következő Keresése',
 	'Insert className': 'Helyezze be az osztály nevét',
-	'Press Alt for custom resizing': 'Nyomja meg az Alt egyéni átméretezés'
+	'Press Alt for custom resizing': 'Nyomja meg az Alt egyéni átméretezés',
+	'License: %s': 'Licenc: %s'
 };

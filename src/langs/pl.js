@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Polish (Polski)
 module.exports = {
 	'Type something': 'Napisz coś',
 	Advanced: 'Zaawansowane',
@@ -222,5 +224,6 @@ module.exports = {
 	'Find Previous': 'Znaleźć Poprzednie',
 	'Find Next': 'Znajdź Dalej',
 	'Insert className': 'Wstaw nazwę zajęć',
-	'Press Alt for custom resizing': 'Naciśnij Alt, aby zmienić rozmiar'
+	'Press Alt for custom resizing': 'Naciśnij Alt, aby zmienić rozmiar',
+	'License: %s': 'Licencja: %s'
 };

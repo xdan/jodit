@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Indonesian (Bahasa Indonesia)
 module.exports = {
 	'Type something': 'Ketik sesuatu',
 	'About Jodit': 'Tentang Jodit',

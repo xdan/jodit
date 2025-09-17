@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+// Chinese Simplified (简体中文)
 module.exports = {
 	'Type something': '输入一些内容',
 	Advanced: '高级',
@@ -220,5 +222,6 @@ module.exports = {
 	'Find Previous': '查找上一个',
 	'Find Next': '查找下一个',
 	'Insert className': '插入班级名称',
-	'Press Alt for custom resizing': '按Alt自定义调整大小'
+	'Press Alt for custom resizing': '按Alt自定义调整大小',
+	'License: %s': '许可证: %s'
 };

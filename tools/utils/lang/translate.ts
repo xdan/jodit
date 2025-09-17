@@ -9,9 +9,10 @@ import { makeIndexFile, readLangs, saveJson } from './helpers';
 import request from 'axios';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as yargs from 'yargs';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
 	.option('str', {
 		type: 'string',
 		demandOption: true,

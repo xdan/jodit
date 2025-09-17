@@ -4,18 +4,19 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+
+
+// Hebrew (עברית)
 module.exports = {
 	'Type something': 'הקלד משהו...',
 	Advanced: 'מתקדם',
 	'About Jodit': 'About Jodit',
 	'Jodit Editor': 'Jodit Editor',
-	"Jodit User's Guide": "Jodit User's Guide",
+	"Jodit User's Guide": 'Jodit User\'s Guide',
 	'contains detailed help for using': 'contains detailed help for using.',
-	'For information about the license, please go to our website:':
-		'For information about the license, please go to our website:',
+	'For information about the license, please go to our website:': 'For information about the license, please go to our website:',
 	'Buy full version': 'Buy full version',
-	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.':
-		'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.',
+	'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.': 'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.',
 	Anchor: 'מקום עיגון',
 	'Open in new tab': 'פתח בכרטיסיה חדשה',
 	'Open in fullsize': 'פתח את העורך בחלון חדש',
@@ -76,15 +77,13 @@ module.exports = {
 	'Image properties': 'מאפייני תמונה',
 	Cancel: 'ביטול',
 	Ok: 'אישור',
-	'Your code is similar to HTML. Keep as HTML?':
-		'הקוד דומה לHTML, האם להשאיר כHTML',
+	'Your code is similar to HTML. Keep as HTML?': 'הקוד דומה לHTML, האם להשאיר כHTML',
 	'Paste as HTML': 'הדבק כHTML',
 	Keep: 'השאר',
 	Clean: 'נקה',
 	'Insert as Text': 'הכנס כטקסט',
 	'Word Paste Detected': 'זוהתה הדבקה מ"וורד"',
-	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'התוכן המודבק מגיע ממסמך וורד/אקסל. האם ברצונך להשאיר את העיצוב או לנקותו',
+	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?': 'התוכן המודבק מגיע ממסמך וורד/אקסל. האם ברצונך להשאיר את העיצוב או לנקותו',
 	'Insert only Text': 'הכנס טקסט בלבד',
 	'File Browser': 'סייר הקבצים',
 	'Error on load list': 'שגיאה  בזמן טעינת רשימה',
@@ -192,10 +191,8 @@ module.exports = {
 	No: 'לא',
 	Remove: 'הסר',
 	Select: 'בחר',
-	'You can only edit your own images. Download this image on the host?':
-		'רק קבצים המשוייכים שלך ניתנים לעריכה. האם להוריד את הקובץ?',
-	'The image has been successfully uploaded to the host!':
-		'התמונה עלתה בהצלחה!',
+	'You can only edit your own images. Download this image on the host?': 'רק קבצים המשוייכים שלך ניתנים לעריכה. האם להוריד את הקובץ?',
+	'The image has been successfully uploaded to the host!': 'התמונה עלתה בהצלחה!',
 	palette: 'לוח',
 	'There are no files': 'אין קבצים בספריה זו.',
 	Rename: 'הונגרית',
@@ -203,8 +200,7 @@ module.exports = {
 	preview: 'תצוגה מקדימה',
 	download: 'הורד',
 	'Paste from clipboard': 'להדביק מהלוח',
-	"Your browser doesn't support direct access to the clipboard.":
-		'הדפדפן שלך לא תומך גישה ישירה ללוח.',
+	"Your browser doesn't support direct access to the clipboard.": 'הדפדפן שלך לא תומך גישה ישירה ללוח.',
 	'Copy selection': 'העתק בחירה',
 	copy: 'העתק',
 	'Border radius': 'רדיוס הגבול',
@@ -220,5 +216,6 @@ module.exports = {
 	'Find Previous': 'מצא את הקודם',
 	'Find Next': 'חפש את הבא',
 	'Insert className': 'הכנס את שם הכיתה',
-	'Press Alt for custom resizing': 'לחץ על אלט לשינוי גודל מותאם אישית'
+	'Press Alt for custom resizing': 'לחץ על אלט לשינוי גודל מותאם אישית',
+	'License: %s': 'רישיון: %s'
 };

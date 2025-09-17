@@ -26,5 +26,5 @@ export function dataURItoBlob(dataURI: string): Blob {
 		ia[i] = byteString.charCodeAt(i);
 	}
 
-	return new Blob([ia], { type: mimeString });
+	return new Blob([ia.buffer as ArrayBuffer], { type: mimeString });
 }

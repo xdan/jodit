@@ -8,9 +8,10 @@ import { makeIndexFile, readLangs, saveJson } from './helpers';
 
 import * as fs from 'fs';
 import * as path from 'path';
-import * as yargs from 'yargs';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
 	.option('key', {
 		type: 'string',
 		demandOption: true,
