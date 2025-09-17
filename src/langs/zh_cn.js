@@ -4,7 +4,6 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
 // Chinese Simplified (简体中文)
 module.exports = {
 	'Type something': '输入一些内容',

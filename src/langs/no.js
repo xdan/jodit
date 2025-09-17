@@ -4,7 +4,6 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
 // Norwegian (Norsk)
 module.exports = {
 	'Type something': 'Skriv noe',

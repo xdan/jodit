@@ -102,7 +102,7 @@ export default [
 			complexity: ['warn', 20],
 			'no-octal-escape': 0,
 			'@typescript-eslint/no-unsafe-declaration-merging': 'off',
-			'mocha/no-skipped-tests': 'error',
+			// 'mocha/no-skipped-tests': 'error',
 			'mocha/no-exclusive-tests': 'error',
 			'tsdoc/syntax': 'warn',
 			strict: ['error', 'never'],

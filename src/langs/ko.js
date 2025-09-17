@@ -4,7 +4,6 @@
  * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-
 // Korean (한국어)
 module.exports = {
 	'Type something': '무엇이든 입력하세요',
