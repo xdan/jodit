@@ -5,8 +5,6 @@
  */
 
 /* eslint no-unused-vars: 0 */
-/* eslint-disable tsdoc/syntax */
-
 const box = document.createElement('div');
 document.body.appendChild(box);
 

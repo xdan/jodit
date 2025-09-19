@@ -14,7 +14,7 @@ const SKIP_LANGS = ['en.js', 'keys.js', 'i18n.test.js']; // Files to skip
 
 /**
  * Extract translations object from a JS module file
- * @param {string} filePath
+ * @param {String} filePath
  * @returns {Object|null}
  */
 function extractTranslations(filePath) {

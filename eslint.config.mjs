@@ -229,5 +229,12 @@ export default [
 		rules: {
 			'@typescript-eslint/explicit-function-return-type': ['error']
 		}
+	},
+	{
+		files: ['**/*.js'],
+
+		rules: {
+			'tsdoc/syntax': 'off'
+		}
 	}
 ];
