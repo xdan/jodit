@@ -9,6 +9,47 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.6.7
+
+#### :rocket: New Feature
+
+- Added ability to insert UI elements at specific index positions in UIGroup using the `append` method
+  - `group.append(element, 0)` - inserts at the beginning
+  - `group.append(element, index)` - inserts at specific position
+  - Maintains backward compatibility with existing `append(element, distElement)` usage
+
+- Added array reconciliation utilities in `core/helpers/array`
+  - `reconcileArrays` - compares two arrays and returns differences (added, removed, kept, moved items)
+  - `applyArrayReconciliation` - applies reconciliation patches to transform one array into another
+  - Supports both primitive arrays and object arrays with custom key functions
+  - Useful for efficient list updates and state management
+
+## 4.6.6
+
+#### :house: Internal
+
+- Updated Playwright version to 1.55.0
+- Updated screenshot snapshots for message and link popup tests
+
+## 4.6.5
+
+#### :house: Internal
+
+- Translation improvements and updates
+
+## 4.6.4
+
+#### :house: Internal
+
+- Refactor translation files for improved readability and consistency
+- Added missing translations and language updates
+
+## 4.6.3
+
+#### :house: Internal
+
+- Community contributions and localization improvements
+
 ## 4.6.2
 
 #### :house: Internal

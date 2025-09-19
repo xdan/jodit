@@ -9,5 +9,10 @@
  */
 
 export { asArray } from './as-array';
+export {
+	applyArrayReconciliation,
+	reconcileArrays,
+	type ReconcileResult
+} from './reconcile-arrays';
 export { splitArray } from './split-array';
 export { toArray } from './to-array';

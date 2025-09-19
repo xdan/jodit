@@ -82,24 +82,45 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	/**
 	 * Append new element into group
 	 */
-	append(elm: IUIElement | IUIElement[], distElement?: string): this {
-		if (isArray(elm)) {
-			elm.forEach(item => this.append(item, distElement));
+	append(elm: IUIElement, index?: number): this;
+	append(elm: IUIElement, distElement?: string): this;
+	append(elm: IUIElement[], distElement?: string): this;
+	append(
+		elms: IUIElement | IUIElement[],
+		distElementOrIndex?: string | number
+	): this {
+		if (isArray(elms)) {
+			assert(
+				typeof distElementOrIndex !== 'number',
+				'You can not use index when append array of elements'
+			);
+			elms.forEach(item => this.append(item, distElementOrIndex));
 			return this;
 		}
 
-		this.elements.push(elm);
+		const elm = elms;
+		let index = undefined;
+
+		if (typeof distElementOrIndex === 'number') {
+			index = Math.min(
+				Math.max(0, distElementOrIndex),
+				this.elements.length
+			);
+			this.elements.splice(index, 0, elm);
+		} else {
+			this.elements.push(elm);
+		}
 
 		if (elm.name) {
 			elm.container.classList.add(this.getFullElName(elm.name));
 		}
 
-		if (distElement) {
-			const distElm = this.getElm(distElement);
+		if (distElementOrIndex && typeof distElementOrIndex === 'string') {
+			const distElm = this.getElm(distElementOrIndex);
 			assert(distElm != null, 'Element does not exist');
 			distElm.appendChild(elm.container);
 		} else {
-			this.appendChildToContainer(elm.container);
+			this.appendChildToContainer(elm.container, index);
 		}
 
 		elm.parentElement = this;
@@ -117,8 +138,23 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	/**
 	 * Allow set another container for the box of all children
 	 */
-	protected appendChildToContainer(childContainer: HTMLElement): void {
-		this.container.appendChild(childContainer);
+	protected appendChildToContainer(
+		childContainer: HTMLElement,
+		index?: number
+	): void {
+		if (
+			index === undefined ||
+			index < 0 ||
+			index > this.elements.length - 1 ||
+			this.container.children[index] == null
+		) {
+			this.container.appendChild(childContainer);
+		} else {
+			this.container.insertBefore(
+				childContainer,
+				this.container.children[index]
+			);
+		}
 	}
 
 	/**

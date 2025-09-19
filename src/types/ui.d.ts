@@ -99,7 +99,10 @@ export interface IUIButton extends IViewComponent, IUIElement, IFocusable {
 export interface IUIGroup extends IUIElement {
 	readonly elements: IUIElement[];
 	readonly allChildren: IUIElement[];
-	append(elm: IUIElement | IUIElement[], distElement?: string): this;
+	append(elm: IUIElement, index?: number): this;
+	append(elm: IUIElement, distElement?: string): this;
+	append(elms: IUIElement[], distElement?: string): this;
+	append(elm: IUIElement | IUIElement[],  distElementOrIndex?: string | number): this;
 	remove(elm: IUIElement): this;
 	clear(): this;
 }
