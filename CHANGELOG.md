@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.6.12
+
+#### :boom: Breaking Change
+
+Remove reconcileArrays functionality and associated tests
+
 ## 4.6.7
 
 #### :rocket: New Feature
