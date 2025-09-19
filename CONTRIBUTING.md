@@ -129,7 +129,7 @@ npm test
 In several browsers:
 
 ```bash
-make test browsers Chrome,Firefox
+make test browsers=Chrome,Firefox
 ```
 
 This command builds the project and runs the automated tests.
@@ -137,6 +137,12 @@ If you only want to run the tests on an existing build, you can simply use:
 
 ```sh
 make test-only-run
+```
+
+or
+
+```sh
+make test-only-run browsers=Chrome
 ```
 
 If you need to run a specific test, you can use the `only` method:

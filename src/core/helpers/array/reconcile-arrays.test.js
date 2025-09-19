@@ -5,7 +5,7 @@
  */
 
 describe('Test reconcileArrays', () => {
-	const { reconcileArrays, applyArrayReconciliation } = Jodit.modules;
+	const { reconcileArrays, applyArrayReconciliation } = Jodit.modules.Helpers;
 
 	describe('reconcileArrays', () => {
 		describe('with primitive arrays', () => {
@@ -28,7 +28,10 @@ describe('Test reconcileArrays', () => {
 				expect(result.added).to.deep.equal([]);
 				expect(result.removed).to.deep.equal([1, 3, 5]);
 				expect(result.kept).to.deep.equal([2, 4]);
-				expect(result.moved).to.deep.equal([]);
+				expect(result.moved).to.deep.equal([
+					{ item: 2, from: 1, to: 0 },
+					{ item: 4, from: 3, to: 1 }
+				]);
 			});
 
 			it('should detect moved items', () => {
