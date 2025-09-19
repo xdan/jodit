@@ -22,7 +22,6 @@ import { Component } from 'jodit/core/component/component';
 import { component, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { isArray } from 'jodit/core/helpers';
-import { assert } from 'jodit/core/helpers/utils/assert';
 import { UIElement } from 'jodit/core/ui/element';
 
 import './group.less';
@@ -90,10 +89,11 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		distElementOrIndex?: string | number
 	): this {
 		if (isArray(elms)) {
-			assert(
-				typeof distElementOrIndex !== 'number',
-				'You can not use index when append array of elements'
-			);
+			if (typeof distElementOrIndex === 'number') {
+				throw new Error(
+					'You can not use index when append array of elements'
+				);
+			}
 			elms.forEach(item => this.append(item, distElementOrIndex));
 			return this;
 		}
@@ -117,7 +117,9 @@ export class UIGroup<T extends IViewBased = IViewBased>
 
 		if (distElementOrIndex && typeof distElementOrIndex === 'string') {
 			const distElm = this.getElm(distElementOrIndex);
-			assert(distElm != null, 'Element does not exist');
+			if (distElm == null) {
+				throw new Error('Element does not exist');
+			}
 			distElm.appendChild(elm.container);
 		} else {
 			this.appendChildToContainer(elm.container, index);

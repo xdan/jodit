@@ -109,6 +109,10 @@ export default (
 			minimizer: minimizer.map(mnm => mnm(vars))
 		},
 
+		performance: {
+			hints: false
+		},
+
 		module: {
 			rules: rules(vars)
 		},

@@ -6,6 +6,7 @@
 
 describe('Test group ui', () => {
 	const { UIGroup, UIButton } = Jodit.modules;
+
 	let editor;
 	beforeEach(() => {
 		editor = getJodit();
