@@ -60,24 +60,6 @@ export function hasSameStyleKeys(elm: Node, rules: IStyle): boolean {
 			Object.keys(rules).every(property => {
 				const value = css(elm, property, true);
 
-				// Don't consider block elements as suitable for inline text styles
-				// This prevents breaking HTML structure when applying text colors
-				if (property === 'color' && Dom.isBlock(elm) && value !== '') {
-					// Only consider it suitable if it's the exact same color value
-					const normalizedElmValue = normalizeCssValue(
-						property,
-						value as string
-					);
-					const normalizedRuleValue = normalizeCssValue(
-						property,
-						rules[property] as string
-					);
-					return (
-						normalizedElmValue.toString().toLowerCase() ===
-						normalizedRuleValue.toString().toLowerCase()
-					);
-				}
-
 				return value !== '';
 			})
 	);
