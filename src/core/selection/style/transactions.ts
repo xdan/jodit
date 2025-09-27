@@ -147,14 +147,28 @@ export const transactions: IStyleTransactions = {
 			const suit = suitableClosest(style, element, jodit.editor);
 			assert(suit, 'This place should have an element');
 
-			if (!style.elementIsBlock) {
-				extractSelectedPart(suit, element, jodit);
+			// If we're applying inline styles to a block element, don't split the block
+			const isApplyingInlineStyle =
+				!style.elementIsBlock && style.options.attributes?.style;
+			const shouldNotSplitBlock =
+				isApplyingInlineStyle && Dom.isBlock(suit);
+
+			if (!shouldNotSplitBlock) {
+				if (!style.elementIsBlock) {
+					extractSelectedPart(suit, element, jodit);
+				}
+
+				return {
+					...value,
+					element: suit,
+					next: states.ELEMENT
+				};
 			}
 
+			// Create a new wrapper instead of splitting the block
 			return {
 				...value,
-				element: suit,
-				next: states.ELEMENT
+				next: states.WRAP
 			};
 		}
 	},
