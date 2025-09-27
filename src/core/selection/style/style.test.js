@@ -2238,5 +2238,87 @@ describe('Apply style', () => {
 				});
 			});
 		});
+
+		describe('Issue #1281: HTML structure preservation with foreColor', function () {
+			describe('Case 1: Styled div with span should not break structure', function () {
+				it('Should change text color but preserve HTML structure', function () {
+					const editor = getJodit();
+
+					// Set up the problematic HTML structure from the issue
+					editor.value =
+						'<div style="font-family: Arial, sans-serif; color: #333;"><span>Merci de planifier cette intervention dans les meilleurs délais</span></div>';
+
+					const range = editor.s.createRange();
+					const spanElement = editor.editor.querySelector('span');
+					const textNode = spanElement.firstChild;
+
+					// Select "intervention" text (position 25-37 in the text)
+					range.setStart(textNode, 25);
+					range.setEnd(textNode, 37);
+					editor.s.selectRange(range);
+
+					// Apply red color using CommitStyle directly (core style system test)
+					const Style = Jodit.ns.CommitStyle;
+					const style = new Style({
+						element: 'span',
+						attributes: {
+							style: { color: 'rgb(255, 0, 0)' }
+						}
+					});
+					style.apply(editor);
+
+					const result = editor.value;
+
+					// 1. BASIC FUNCTIONALITY: Text color should change (this should work)
+					expect(result).to.include('color: rgb(255, 0, 0)'); // Must apply red color
+					expect(result).to.include('intervention'); // Must preserve the text
+
+					// 2. STRUCTURE PRESERVATION: Should NOT create multiple divs (this was the bug)
+					expect(result).to.not.include('</div><div'); // Should not break structure
+
+					// 3. EXPECTED BEHAVIOR: Should create nested span instead
+					expect(result).to.include(
+						'<span>Merci de planifier cette <span style="color: rgb(255, 0, 0);">intervention</span> dans les meilleurs délais</span>'
+					);
+				});
+			});
+
+			describe('Case 2: Simple div should work correctly', function () {
+				it('Should work correctly with simple div structure', function () {
+					const editor = getJodit();
+
+					// Set up the working HTML structure from the issue
+					editor.value = '<div><span>Same text here</span></div>';
+
+					const range = editor.s.createRange();
+					const spanElement = editor.editor.querySelector('span');
+					const textNode = spanElement.firstChild;
+
+					// Select "text" word
+					range.setStart(textNode, 5);
+					range.setEnd(textNode, 9);
+					editor.s.selectRange(range);
+
+					// Apply red color using CommitStyle directly (core style system test)
+					const Style = Jodit.ns.CommitStyle;
+					const style = new Style({
+						element: 'span',
+						attributes: {
+							style: { color: 'rgb(255, 0, 0)' }
+						}
+					});
+					style.apply(editor);
+
+					const result = editor.value;
+
+					// This should work correctly (as mentioned in the issue)
+					expect(result).to.include(
+						'<div><span>Same <span style="color:'
+					); // Should create nested span
+					expect(result).to.include('text'); // Should preserve the text
+					expect(result).to.include('here</span></div>'); // Should preserve structure
+				});
+			});
+		});
 	});
 });
