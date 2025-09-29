@@ -2238,5 +2238,197 @@ describe('Apply style', () => {
 				});
 			});
 		});
+
+		describe('Issue #1281: HTML structure preservation with ALL style properties', function () {
+			describe('Case 1: Styled div with multiple properties should not break structure', function () {
+				it('Should change color but preserve HTML structure', function () {
+					const editor = getJodit();
+
+					// Set up div with multiple styles like in real usage
+					editor.value =
+						'<div style="font-family: Arial, sans-serif; background-color: yellow; color: blue; font-size: 14px;"><span>Test text here</span></div>';
+
+					const range = editor.s.createRange();
+					const spanElement = editor.editor.querySelector('span');
+					const textNode = spanElement.firstChild;
+
+					// Select "text" word
+					range.setStart(textNode, 5);
+					range.setEnd(textNode, 9);
+					editor.s.selectRange(range);
+
+					// Apply red color using CommitStyle directly (core style system test)
+					const Style = Jodit.ns.CommitStyle;
+					const style = new Style({
+						element: 'span',
+						attributes: {
+							style: { color: 'rgb(255, 0, 0)' }
+						}
+					});
+					style.apply(editor);
+
+					const result = editor.value;
+
+					// 1. BASIC FUNCTIONALITY: Text color should change
+					expect(result).to.include('color: rgb(255, 0, 0)'); // Must apply red color
+					expect(result).to.include('text'); // Must preserve the text
+
+					// 2. STRUCTURE PRESERVATION: Should NOT create multiple divs (this was the bug)
+					expect(result).to.not.include('</div><div'); // Should not break structure
+
+					// 3. EXPECTED BEHAVIOR: Should create nested span instead
+					expect(result).to.include(
+						'<span>Test <span style="color: rgb(255, 0, 0);">text</span> here</span>'
+					);
+				});
+
+				it('Should change background-color but preserve HTML structure', function () {
+					const editor = getJodit();
+
+					// Same div with multiple styles
+					editor.value =
+						'<div style="font-family: Arial, sans-serif; background-color: yellow; color: blue; font-size: 14px;"><span>Test text here</span></div>';
+
+					const range = editor.s.createRange();
+					const spanElement = editor.editor.querySelector('span');
+					const textNode = spanElement.firstChild;
+
+					// Select "text" word
+					range.setStart(textNode, 5);
+					range.setEnd(textNode, 9);
+					editor.s.selectRange(range);
+
+					// Apply red background
+					const Style = Jodit.ns.CommitStyle;
+					const style = new Style({
+						element: 'span',
+						attributes: {
+							style: { 'background-color': 'rgb(255, 0, 0)' }
+						}
+					});
+					style.apply(editor);
+
+					const result = editor.value;
+
+					// Should NOT break structure for background-color either
+					expect(result).to.include(
+						'background-color: rgb(255, 0, 0)'
+					); // Must apply red background
+					expect(result).to.not.include('</div><div'); // Should not break structure
+					expect(result).to.include(
+						'<span>Test <span style="background-color: rgb(255, 0, 0);">text</span> here</span>'
+					);
+				});
+
+				it('Should change font-family but preserve HTML structure', function () {
+					const editor = getJodit();
+
+					// Same div with multiple styles
+					editor.value =
+						'<div style="font-family: Arial, sans-serif; background-color: yellow; color: blue; font-size: 14px;"><span>Test text here</span></div>';
+
+					const range = editor.s.createRange();
+					const spanElement = editor.editor.querySelector('span');
+					const textNode = spanElement.firstChild;
+
+					// Select "text" word
+					range.setStart(textNode, 5);
+					range.setEnd(textNode, 9);
+					editor.s.selectRange(range);
+
+					// Apply different font-family
+					const Style = Jodit.ns.CommitStyle;
+					const style = new Style({
+						element: 'span',
+						attributes: {
+							style: { 'font-family': 'Times, serif' }
+						}
+					});
+					style.apply(editor);
+
+					const result = editor.value;
+
+					// Should NOT break structure for font-family
+					expect(result).to.include('Times, serif'); // Must apply new font
+					expect(result).to.not.include('</div><div'); // Should not break structure
+					expect(result).to.include(
+						'<span>Test <span style="font-family: Times, serif;">text</span> here</span>'
+					);
+				});
+
+				it('Should change font-size but preserve HTML structure', function () {
+					const editor = getJodit();
+
+					// Same div with multiple styles
+					editor.value =
+						'<div style="font-family: Arial, sans-serif; background-color: yellow; color: blue; font-size: 14px;"><span>Test text here</span></div>';
+
+					const range = editor.s.createRange();
+					const spanElement = editor.editor.querySelector('span');
+					const textNode = spanElement.firstChild;
+
+					// Select "text" word
+					range.setStart(textNode, 5);
+					range.setEnd(textNode, 9);
+					editor.s.selectRange(range);
+
+					// Apply different font-size
+					const Style = Jodit.ns.CommitStyle;
+					const style = new Style({
+						element: 'span',
+						attributes: {
+							style: { 'font-size': '18px' }
+						}
+					});
+					style.apply(editor);
+
+					const result = editor.value;
+
+					// Should NOT break structure for font-size
+					expect(result).to.include('18px'); // Must apply new font size
+					expect(result).to.not.include('</div><div'); // Should not break structure
+					expect(result).to.include(
+						'<span>Test <span style="font-size: 18px;">text</span> here</span>'
+					);
+				});
+			});
+
+			describe('Case 2: Simple div should work correctly for any property', function () {
+				it('Should work correctly with simple div structure', function () {
+					const editor = getJodit();
+
+					// Set up the working HTML structure (no conflicting styles)
+					editor.value = '<div><span>Same text here</span></div>';
+
+					const range = editor.s.createRange();
+					const spanElement = editor.editor.querySelector('span');
+					const textNode = spanElement.firstChild;
+
+					// Select "text" word
+					range.setStart(textNode, 5);
+					range.setEnd(textNode, 9);
+					editor.s.selectRange(range);
+
+					// Apply red color using CommitStyle directly (core style system test)
+					const Style = Jodit.ns.CommitStyle;
+					const style = new Style({
+						element: 'span',
+						attributes: {
+							style: { color: 'rgb(255, 0, 0)' }
+						}
+					});
+					style.apply(editor);
+
+					const result = editor.value;
+
+					// This should work correctly (as mentioned in the issue)
+					expect(result).to.include(
+						'<div><span>Same <span style="color:'
+					); // Should create nested span
+					expect(result).to.include('text'); // Should preserve the text
+					expect(result).to.include('here</span></div>'); // Should preserve structure
+				});
+			});
+		});
 	});
 });

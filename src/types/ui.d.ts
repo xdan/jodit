@@ -102,7 +102,10 @@ export interface IUIGroup extends IUIElement {
 	append(elm: IUIElement, index?: number): this;
 	append(elm: IUIElement, distElement?: string): this;
 	append(elms: IUIElement[], distElement?: string): this;
-	append(elm: IUIElement | IUIElement[],  distElementOrIndex?: string | number): this;
+	append(
+		elm: IUIElement | IUIElement[],
+		distElementOrIndex?: string | number
+	): this;
 	remove(elm: IUIElement): this;
 	clear(): this;
 }

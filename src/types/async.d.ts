@@ -82,7 +82,7 @@ export interface IAsync extends IDestructible {
 		options: {
 			delay?: number;
 			priority?: 'background' | 'user-blocking' | 'user-visible';
-			signal?: AbortSignal
+			signal?: AbortSignal;
 		}
 	): Promise<T>;
 	schedulerYield(): Promise<void>;
