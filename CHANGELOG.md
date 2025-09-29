@@ -11,6 +11,12 @@
 
 ## 4.6.13
 
+#### :bug: Bug Fix
+
+- Fixed HTML structure destruction when applying inline styles to partial text selections within block elements
+  - Prevented block elements (divs, paragraphs) from being split into multiple fragments when applying inline styles
+  - Modified style application to create proper span wrappers inside existing elements instead of extracting parts
+  - Preserves block element structure while allowing style application (PR #1284)
 
 
 ## 4.6.12
