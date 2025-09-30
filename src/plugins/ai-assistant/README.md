@@ -9,7 +9,7 @@ To use the AI Assistant plugin, you need to include it in your Jodit editor conf
 ```javascript
 const editor = Jodit.make('#editor', {
 	aiAssistant: {
-		aiAssistantCallback(propmt, htmlFragment) {
+		aiAssistantCallback(prompt, htmlFragment) {
 			return Promise.resolve('AI Assistant is not configured');
 		}
 	}
@@ -92,7 +92,7 @@ Here are some examples of using different prompts:
 ```javascript
 const editor = Jodit.make('#editor', {
 	aiAssistant: {
-		aiShortenTextPrompt: 'Shorten this text'
+		aiMakeShorterPrompt: 'Shorten this text'
 	}
 });
 ```
