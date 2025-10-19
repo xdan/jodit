@@ -8,6 +8,8 @@ describe('Test table plugin', () => {
 	describe('Click button and click to some cell', () => {
 		it('should create and insert new table', () => {
 			const editor = getJodit();
+			editor.s.focus();
+
 			clickButton('table', editor);
 			const popup = getOpenedPopup(editor);
 			simulateEvent(
@@ -50,6 +52,54 @@ describe('Test table plugin', () => {
 			expect(sortAttributes(editor.value)).eq(
 				'<table style="border-collapse:collapse;width:100%"><tbody>\n<tr>\n\t<td style="color:red;width:33.33%"><br></td>\n\t<td style="color:red;width:33.33%"><br></td>\n\t<td style="color:red;width:33.33%"><br></td></tr></tbody></table>'
 			);
+		});
+	});
+
+	describe('splitBlockOnInsertTable option', () => {
+		describe('When splitBlockOnInsertTable is true (default)', () => {
+			it('should split the current block when inserting table', () => {
+				const editor = getJodit();
+				editor.value = '<p>Hello |world</p>';
+				setCursorToChar(editor);
+
+				clickButton('table', editor);
+				const popup = getOpenedPopup(editor);
+				simulateEvent(
+					'mousedown',
+					popup.querySelector('span[data-index="0"]')
+				);
+
+				expect(editor.value).eq(
+					'<p>Hello \n</p><table style="border-collapse:collapse;width: 100%;"><tbody>\n<tr>\n\t<td style="width: 100%;"><br></td></tr></tbody></table><p>world</p>'
+				);
+			});
+		});
+
+		describe('When splitBlockOnInsertTable is false', () => {
+			it('should insert table after the current block without splitting', () => {
+				const editor = getJodit({
+					table: {
+						splitBlockOnInsertTable: false
+					}
+				});
+				editor.value = '<p>Hello world|</p>';
+				setCursorToChar(editor);
+
+				clickButton('table', editor);
+				const popup = getOpenedPopup(editor);
+
+				simulateEvent(
+					'mousedown',
+					popup.querySelector('span[data-index="0"]')
+				);
+
+				expect(editor.editor.querySelectorAll('p').length).eq(1);
+				expect(editor.editor.querySelector('table')).is.not.null;
+				expect(editor.editor.firstChild.nodeName).eq('P');
+				expect(editor.editor.firstChild.nextElementSibling.nodeName).eq(
+					'TABLE'
+				);
+			});
 		});
 	});
 });

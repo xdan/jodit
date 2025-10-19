@@ -20,6 +20,7 @@ import tableIcon from './table.svg';
 declare module 'jodit/config' {
 	interface Config {
 		table: {
+			splitBlockOnInsertTable: boolean;
 			selectionCellStyle: string;
 			useExtraClassesOptions: boolean;
 		};
@@ -27,6 +28,7 @@ declare module 'jodit/config' {
 }
 
 Config.prototype.table = {
+	splitBlockOnInsertTable: true,
 	selectionCellStyle: 'border: 1px double #1e88e5 !important;',
 	useExtraClassesOptions: false
 };
@@ -212,8 +214,22 @@ Config.prototype.controls.table = {
 				} else {
 					if (block) {
 						const fake = crt.text('\n');
-						Dom.after(block, fake);
-						Dom.after(fake, table);
+						if (!editor.o.table.splitBlockOnInsertTable) {
+							Dom.after(block, fake);
+							Dom.after(fake, table);
+						} else {
+							const range = editor.s.range;
+							range.collapse(false);
+							range.insertNode(fake);
+							range.collapse(false);
+							editor.s.selectRange(range);
+
+							const firstPart = editor.s.splitSelection(
+								block,
+								fake
+							);
+							Dom.after(firstPart!, table);
+						}
 					} else {
 						editor.s.insertNode(table, false);
 					}

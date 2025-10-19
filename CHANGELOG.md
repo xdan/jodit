@@ -9,6 +9,14 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.6.15
+
+#### :rocket: New Feature and :boom: Breaking Change
+
+- Added `table.splitBlockOnInsertTable` option to control table insertion behavior ([#1295](https://github.com/xdan/jodit/issues/1295))
+  - When `true` (default): splits the current block when inserting a table
+  - When `false`: inserts table after the current block without splitting it
+
 ## 4.6.14
 
 - Add lineHeight support to copy-format plugin and update tests
