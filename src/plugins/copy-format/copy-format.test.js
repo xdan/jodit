@@ -67,6 +67,36 @@ describe('Copy format plugin', function () {
 		);
 	});
 
+	it('Should copy lineHeight from element and paste it in new selection', function () {
+		getBox().style.width = 'auto';
+		const editor = getJodit();
+
+		editor.value =
+			'<div style="line-height: 11px;">text <span>test</span> post</div>';
+		editor.s.focus();
+		editor.s.setCursorIn(editor.editor.querySelector('span'));
+
+		expect(getButton('copyformat', editor)).is.not.null;
+		expect(
+			getButton('copyformat', editor).getAttribute('aria-pressed')
+		).equals('false');
+
+		clickButton('copyformat', editor);
+
+		expect(
+			getButton('copyformat', editor).getAttribute('aria-pressed')
+		).equals('true');
+
+		const range = editor.s.createRange(true);
+		range.selectNode(editor.editor.firstChild.lastChild);
+
+		simulateEvent('mouseup', editor.editor);
+
+		expect(editor.value).equals(
+			'<div style="line-height: 11px;">text <span>test</span><span style="line-height: 11px;"> post</span></div>'
+		);
+	});
+
 	describe('Test', function () {
 		it('Should copy fontSize and color from element and paste it in new selection', function () {
 			getBox().style.width = 'auto';
@@ -176,7 +206,7 @@ describe('Copy format plugin', function () {
 					'<p><img src="tests/artio.jpg" ' +
 						'style="border-image:none;border-radius:50%;border:1px solid #CCCCCC;height:100px;margin:20px;width:100px"> test ' +
 						'<img src="tests/artio.jpg" ' +
-						'style="border-image:none;border-color:#CCCCCC;border-radius:50%;border-style:solid;border-width:1px;height:100px;margin:20px;width:100px"></p>'
+						'style="border-image:none;border-color:#CCCCCC;border-radius:50%;border-style:solid;border-width:1px;height:100px;line-height:16px;margin:20px;width:100px"></p>'
 				)
 			);
 		});

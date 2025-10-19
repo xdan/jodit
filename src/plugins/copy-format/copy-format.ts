@@ -27,9 +27,11 @@ const pluginKey = 'copy-format';
  */
 
 const copyStyles: string[] = [
+	'lineHeight',
 	'fontWeight',
 	'fontStyle',
 	'fontSize',
+	'fontFamily',
 	'color',
 	'margin',
 	'padding',
@@ -38,8 +40,7 @@ const copyStyles: string[] = [
 	'borderColor',
 	'borderRadius',
 	'backgroundColor',
-	'textDecorationLine',
-	'fontFamily'
+	'textDecorationLine'
 ];
 
 const getStyle = (
