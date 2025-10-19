@@ -622,6 +622,8 @@ export class Selection implements ISelect {
 			if (sel && sel.rangeCount) {
 				const range = sel.getRangeAt(0);
 
+				const { firstChild } = node;
+
 				if (
 					Dom.isOrContains(this.area, range.commonAncestorContainer)
 				) {
@@ -629,6 +631,20 @@ export class Selection implements ISelect {
 				} else {
 					this.area.appendChild(node);
 				}
+
+				[
+					(): Nullable<Node | undefined> =>
+						firstChild?.previousSibling,
+					(): Nullable<Node | undefined> =>
+						firstChild?.previousSibling,
+					(): Nullable<Node | undefined> =>
+						firstChild?.previousSibling?.lastChild
+				].forEach(getChildNode => {
+					const childNode = getChildNode();
+					if (childNode && Dom.isEmptyTextNode(childNode)) {
+						Dom.safeRemove(childNode);
+					}
+				});
 			} else {
 				this.area.appendChild(node);
 			}
