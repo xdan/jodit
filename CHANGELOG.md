@@ -11,8 +11,9 @@
 
 ## 4.6.16
 
-- 
+#### :bug: Bug Fix
 
+- blank lines are being inserted[#1294](https://github.com/xdan/jodit/issues/1294)
 
 ## 4.6.15
 
