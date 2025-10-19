@@ -9,6 +9,10 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.6.14
+
+- Add lineHeight support to copy-format plugin and update tests
+
 ## 4.6.13
 
 #### :bug: Bug Fix
