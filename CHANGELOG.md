@@ -9,6 +9,15 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.6.17
+
+#### :bug: Bug Fix
+
+- Fixed issue with adding class names to links when multiple selection options were involved.
+- Corrected the logic for selecting multiple class names from a dropdown.
+- Ensured that links are created with all selected class names applied.
+- Updated tests to verify the correct behavior of link creation with multiple class names.
+
 ## 4.6.16
 
 #### :bug: Bug Fix

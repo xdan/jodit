@@ -372,7 +372,7 @@ export class link extends Plugin {
 pluginSystem.add('link', link);
 
 function writeClasses(
-	modeClassName: any,
+	modeClassName: 'input' | 'select',
 	className_input: HTMLInputElement,
 	className_select: HTMLSelectElement,
 	a: HTMLAnchorElement
@@ -396,7 +396,12 @@ function writeClasses(
 					className_select.selectedOptions.item(i)?.value;
 
 				if (className) {
-					a.classList.add(className);
+					className
+						.split(/\s+/)
+						.filter(cn => cn.trim().length > 0)
+						.forEach(cn => {
+							a.classList.add(cn);
+						});
 				}
 			}
 		}
@@ -404,7 +409,7 @@ function writeClasses(
 }
 
 function readClassnames(
-	modeClassName: any,
+	modeClassName: 'input' | 'select',
 	className_input: HTMLInputElement,
 	link: HTMLAnchorElement,
 	className_select: HTMLSelectElement
@@ -432,21 +437,27 @@ function readClassnames(
 
 				const classNames = attr(link, 'class') || '';
 
-				classNames.split(' ').forEach(className => {
-					if (className) {
-						for (
-							let i = 0;
-							i < className_select.options.length;
-							i++
-						) {
-							const option = className_select.options.item(i);
+				classNames
+					.split(/\s+/)
+					.filter(cn => cn.trim().length > 0)
+					.forEach(className => {
+						if (className) {
+							for (
+								let i = 0;
+								i < className_select.options.length;
+								i++
+							) {
+								const option = className_select.options.item(i);
 
-							if (option?.value && option.value === className) {
-								option.selected = true;
+								if (
+									option?.value &&
+									option.value === className
+								) {
+									option.selected = true;
+								}
 							}
 						}
-					}
-				});
+					});
 			}
 			break;
 	}

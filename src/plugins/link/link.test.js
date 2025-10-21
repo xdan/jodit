@@ -1336,7 +1336,7 @@ describe('Link plugin', () => {
 						modeClassName: 'select',
 						selectOptionsClassName: [
 							{ value: '', text: '' },
-							{ value: 'val1', text: 'text1' },
+							{ value: 'val1 yes_one zerro', text: 'text1' },
 							{ value: 'val2', text: 'text2' },
 							{ value: 'val3', text: 'text3' }
 						]
@@ -1373,14 +1373,14 @@ describe('Link plugin', () => {
 
 				for (let i = 0; i < className_select.options.length; i++) {
 					let option = className_select.options.item(i);
-					option.selected = option.value === 'val1';
+					option.selected = option.value.includes('val1');
 				}
 
 				simulateEvent('submit', 0, form);
 
 				expect(editor.value).equals(
-					'<p>one <a href="https://xdsoft.net/jodit/" class="val1">green <strong>bottle hanging</strong> under wall</a></p>' +
-						'<p><a href="https://xdsoft.net/jodit/" class="val1">two green <em>bottles hanging</em> under</a> wall</p>'
+					'<p>one <a href="https://xdsoft.net/jodit/" class="val1 yes_one zerro">green <strong>bottle hanging</strong> under wall</a></p>' +
+						'<p><a href="https://xdsoft.net/jodit/" class="val1 yes_one zerro">two green <em>bottles hanging</em> under</a> wall</p>'
 				);
 			});
 		});
