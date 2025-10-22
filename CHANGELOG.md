@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.6.18
+
+#### :bug: Bug Fix
+
+- Enhance class name handling in link plugin
+- Improved appearance of the multiple choice select
+
 ## 4.6.17
 
 #### :bug: Bug Fix
