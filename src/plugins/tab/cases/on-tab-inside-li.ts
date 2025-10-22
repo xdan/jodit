@@ -140,7 +140,7 @@ function removeNestedList(
 	li: HTMLElement
 ): void {
 	const parentLi = Dom.closest(list, 'li', jodit.editor);
-	assert(parentLi, 'tab parentLi is null');
+	assert(parentLi, 'tab parent li is null');
 
 	const items = Array.from(list.children).filter(t =>
 		Dom.isLeaf(t)

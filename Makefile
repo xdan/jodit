@@ -175,6 +175,7 @@ build-all:
 	make dts
 
 	@echo 'Builds ...'
+	rm -rf $(pwd)/build/es2018
 	make build es=es2018
 	make build es=es2018 uglify=true fat=true
 
@@ -196,10 +197,10 @@ build-all:
 
 .PHONY: test-all
 test-all:
-	make test-only-run build=es2021 uglify=$(uglify) fat=$(fat)
-	make test-only-run build=es2018 uglify=$(uglify) fat=$(fat)
-	make test-only-run build=es2015 uglify=$(uglify) fat=$(fat)
-	make test-only-run build=es5 uglify=$(uglify) fat=$(fat)
+	make test-only-run build=es2021 uglify=$(uglify) fat=$(fat) browsers=$(browsers)
+	make test-only-run build=es2018 uglify=$(uglify) fat=$(fat) browsers=$(browsers)
+	make test-only-run build=es2015 uglify=$(uglify) fat=$(fat) browsers=$(browsers)
+	make test-only-run build=es5 uglify=$(uglify) fat=$(fat) browsers=$(browsers)
 
 .PHONY: lint
 lint:

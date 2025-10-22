@@ -93,7 +93,7 @@ export class UIButton extends UIElement implements IUIButton {
 	/**
 	 * DOM container for button
 	 */
-	protected button!: HTMLElement;
+	protected button: HTMLElement;
 
 	@watch('state.size', { immediately: false })
 	protected onChangeSize(): void {

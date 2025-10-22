@@ -32,7 +32,7 @@ import { makeCollection } from 'jodit/modules/toolbar/factory';
 import './view-with-toolbar.less';
 
 export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
-	TOOLBAR!: IToolbarCollection;
+	declare TOOLBAR: IToolbarCollection;
 	toolbar: this['TOOLBAR'] = makeCollection(this);
 
 	private __defaultToolbarContainer: HTMLElement =

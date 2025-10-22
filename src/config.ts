@@ -39,11 +39,15 @@ import type {
 	Nullable
 } from './types';
 
+let ConfigPrototype = {};
+
 /**
  * Default Editor's Configuration
  */
 class Config implements IViewOptions {
-	private constructor() {}
+	private constructor() {
+		Object.assign(this, ConfigPrototype);
+	}
 
 	/**
 	 * Use cache for heavy methods
@@ -997,6 +1001,8 @@ class Config implements IViewOptions {
 		return Config.__defaultOptions;
 	}
 }
+
+ConfigPrototype = Config.prototype;
 
 Config.prototype.controls = {};
 

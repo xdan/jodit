@@ -17,7 +17,7 @@ import './file.less';
 
 @component
 export class UIFileInput extends UIInput {
-	private button!: IUIButton;
+	declare private button: IUIButton;
 
 	override state: UIInput['state'] & {
 		onlyImages: boolean;

@@ -87,8 +87,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		return 'Dialog';
 	}
 
-	private readonly resizer!: HTMLElement;
-	override toolbar!: IToolbarCollection;
+	private readonly resizer: HTMLElement;
+	declare toolbar: IToolbarCollection;
 
 	private offsetX?: number;
 	private offsetY?: number;
@@ -339,14 +339,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 	declare OPTIONS: IDialogOptions;
 
-	readonly dialog!: HTMLElement;
+	readonly dialog: HTMLElement;
 
 	workplace!: HTMLDivElement;
 
-	private readonly dialogbox_header!: HTMLElement;
-	private readonly dialogbox_content!: HTMLElement;
-	private readonly dialogbox_footer!: HTMLElement;
-	private readonly dialogbox_toolbar!: HTMLElement;
+	private readonly dialogbox_header: HTMLElement;
+	private readonly dialogbox_content: HTMLElement;
+	private readonly dialogbox_footer: HTMLElement;
+	private readonly dialogbox_toolbar: HTMLElement;
 
 	/**
 	 * Specifies the size of the window
@@ -852,11 +852,9 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		super.destruct();
 	}
 
-	static override defaultOptions: IDialogOptions;
+	static override defaultOptions: IDialogOptions = {
+		...View.defaultOptions,
+		closeOnClickOverlay: false,
+		closeOnEsc: true
+	};
 }
-
-Dialog.defaultOptions = {
-	...View.defaultOptions,
-	closeOnClickOverlay: false,
-	closeOnEsc: true
-};

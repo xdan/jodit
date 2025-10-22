@@ -85,7 +85,6 @@ export const variables = (argv: Argv, dir: string): Variables => {
 	`;
 
 	const debug = !argv || !argv.mode || !argv.mode.match(/production/);
-
 	const isTest = Bool(argv && argv.isTest);
 
 	const mode = (debug ? 'development' : argv.mode) ?? 'production';

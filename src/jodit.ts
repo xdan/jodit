@@ -352,6 +352,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	}
 
 	override set options(opt: Config) {
+		this.__options = opt;
 		this.__setPlaceField('options', opt);
 	}
 
@@ -1194,7 +1195,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		try {
 			const elementSource = resolveElement(
 				element,
-				this.o.shadowRoot || this.od
+				this.options.shadowRoot || this.od
 			);
 
 			if (Jodit.isJoditAssigned(elementSource)) {
@@ -1270,8 +1271,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		});
 	}
 
-	currentPlace!: IWorkPlace;
-	places!: IWorkPlace[];
+	currentPlace: IWorkPlace = {
+		options: this.__options
+	} as IWorkPlace;
+	places: IWorkPlace[] = [];
 
 	private readonly __elementToPlace: Map<HTMLElement, IWorkPlace> = new Map();
 

@@ -142,7 +142,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		}
 	};
 
-	override OPTIONS!: IFileBrowserOptions;
+	declare OPTIONS: IFileBrowserOptions;
 
 	@cache
 	private get _dialog(): IDialog {

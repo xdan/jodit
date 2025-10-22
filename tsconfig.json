@@ -43,5 +43,5 @@
 		}
 	},
 	"exclude": ["tools/**/*"],
-	"files": ["./src/index.ts", "./src/typings.d.ts", "./index.d.ts"]
+	"files": ["./src/index.ts", "./src/polyfills.ts", "./src/typings.d.ts", "./index.d.ts"]
 }

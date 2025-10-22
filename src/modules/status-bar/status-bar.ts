@@ -34,7 +34,7 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 		return 'StatusBar';
 	}
 
-	container!: HTMLDivElement;
+	readonly container: HTMLDivElement;
 
 	/**
 	 * Hide statusbar

@@ -20,6 +20,11 @@ function assert<T>(
 	condition: T | false | 0 | '' | null | undefined,
 	message: string
 ): asserts condition {
+	if (process.env.IS_PROD) {
+		// @ts-ignore
+		// return;
+	}
+
 	if (!condition) {
 		throw new AssertionError(`Assertion failed: ${message}`);
 	}

@@ -1,6 +1,6 @@
 {
 	"name": "jodit",
-	"version": "4.6.18",
+	"version": "4.7.0",
 	"description": "Jodit is an awesome and useful wysiwyg editor with filebrowser",
 	"main": "build/jodit.min.js",
 	"types": "./types/index.d.ts",
@@ -46,10 +46,9 @@
 		"url": "https://github.com/xdan/jodit/issues"
 	},
 	"homepage": "https://xdsoft.net/jodit/",
-	"dependencies": {
-		"autobind-decorator": "^2.4.0"
-	},
+	"dependencies": {},
 	"devDependencies": {
+		"autobind-decorator": "^2.4.0",
 		"@eslint/compat": "^1.3.2",
 		"@eslint/eslintrc": "^3.3.1",
 		"@eslint/js": "^9.35.0",

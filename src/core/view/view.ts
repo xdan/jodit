@@ -68,7 +68,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	/**
 	 * ID attribute for a source element, id add `{id}_editor` it's editor's id
 	 */
-	id!: string;
+	id: string;
 
 	/**
 	 * All created ViewComponent inside this view
@@ -137,7 +137,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		return Storage.makeStorage(true, this.id);
 	}
 
-	readonly create!: ICreate;
+	readonly create: ICreate;
 
 	/**
 	 * Short alias for `create`
@@ -147,7 +147,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		return this.create;
 	}
 
-	private __container!: HTMLDivElement;
+	private __container: HTMLDivElement;
 	get container(): HTMLDivElement {
 		return this.__container;
 	}
@@ -156,7 +156,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		this.__container = container;
 	}
 
-	events!: IEventEmitter;
+	events: IEventEmitter;
 
 	/**
 	 * Short alias for `events`
@@ -175,7 +175,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	}
 
 	OPTIONS: IViewOptions = View.defaultOptions;
-	private __options!: this['OPTIONS'];
+	protected __options!: this['OPTIONS'];
 	get options(): this['OPTIONS'] {
 		return this.__options;
 	}
@@ -299,7 +299,6 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		readonly isJodit: boolean = false
 	) {
 		super();
-
 		this.id = new Date().getTime().toString();
 
 		this.initOptions(options);
@@ -308,7 +307,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		this.events = new EventEmitter(this.od);
 		this.create = new Create(this.od);
 
-		this.container = this.c.div(`jodit ${this.componentName}`);
+		this.__container = this.c.div(`jodit ${this.componentName}`);
 	}
 
 	private __modulesInstances: Map<string, IComponent> = new Map();

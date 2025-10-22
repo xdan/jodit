@@ -29,7 +29,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	extends ViewComponent<T>
 	implements IUIElement, Mods, Elms
 {
-	container!: HTMLElement;
+	container: HTMLElement;
 	name: string = '';
 
 	private __parentElement: Nullable<IUIElement> = null;

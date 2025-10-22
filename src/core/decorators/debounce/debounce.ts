@@ -41,7 +41,6 @@ export function debounce<V extends IViewComponent = IViewComponent>(
 
 		target.hookStatus(STATUSES.ready, (component: V) => {
 			const { async } = component;
-
 			assert(
 				async != null,
 				`Component ${

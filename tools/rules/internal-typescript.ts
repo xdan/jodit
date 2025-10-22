@@ -7,8 +7,7 @@
 import type { Variables } from '../variables';
 import { removeAsserts } from '../utils/transformers/remove-asserts';
 
-import * as path from 'path';
-import * as ts from 'typescript';
+import path from 'path';
 import type { RuleSetRule } from 'webpack';
 
 export default (
@@ -20,30 +19,57 @@ export default (
 		isProd,
 		isTest,
 		fat,
-		superDirname
+		superDirname,
+		uglify
 	}: Variables,
 	cwd: string
 ): RuleSetRule => {
+	const transpileOnly = !generateTypes;
+	const useSwc = transpileOnly;
+
 	return {
 		test: /\.(js|ts)$/,
 		use: [
-			{
-				loader: 'ts-loader',
-				options: {
-					transpileOnly: isProd && !isTest && !generateTypes,
-					allowTsInNodeModules: true,
-					onlyCompileBundledFiles: true,
-					compilerOptions: {
-						allowJs: true,
-						target: ES,
-						declaration: true,
-						declarationDir: path.resolve(dirname, './build/types')
+			useSwc
+				? {
+						loader: 'swc-loader',
+						options: {
+							jsc: {
+								parser: {
+									syntax: 'typescript',
+									decorators: true
+								},
+								target: ES,
+								transform: {
+									legacyDecorator: true,
+									decoratorMetadata: false
+								},
+								externalHelpers: true
+							},
+							minify: false
+						}
+					}
+				: {
+						loader: 'ts-loader',
+						options: {
+							transpileOnly: false,
+							allowTsInNodeModules: true,
+							onlyCompileBundledFiles: true,
+							compilerOptions: {
+								allowJs: true,
+								target: ES,
+								declaration: true,
+								declarationDir: path.resolve(
+									dirname,
+									'./build/types'
+								)
+							},
+							getCustomTransformers: () => ({
+								before:
+									isProd && !isTest ? [removeAsserts()] : []
+							})
+						}
 					},
-					getCustomTransformers: (program: ts.Program) => ({
-						before: isProd && !isTest ? [removeAsserts()] : []
-					})
-				}
-			},
 			{
 				loader: path.resolve(
 					superDirname,

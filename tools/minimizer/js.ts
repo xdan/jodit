@@ -9,18 +9,21 @@ import type { Variables } from '../variables';
 import * as os from 'os';
 import MinimizeJSPlugin from 'terser-webpack-plugin';
 
-export default ({ ESNext, isTest, banner }: Variables): MinimizeJSPlugin =>
-	new MinimizeJSPlugin({
+const isSWC = true;
+
+export default ({ ESNext, isTest, banner }: Variables): MinimizeJSPlugin => {
+	const config = {
 		parallel: os.cpus().length,
 		extractComments: false,
 
 		exclude: './src/langs',
 
 		terserOptions: {
-			ecma: ESNext ? 2018 : 5,
+			ecma: (ESNext ? 2018 : 5) as 5 | 2018,
 
 			mangle: {
-				reserved: ['Jodit']
+				reserved: ['Jodit'],
+				// properties: false
 			},
 
 			compress: {
@@ -35,6 +38,8 @@ export default ({ ESNext, isTest, banner }: Variables): MinimizeJSPlugin =>
 				pure_getters: true,
 				unsafe_comps: true,
 
+				pure_funcs: ['assert'],
+
 				passes: 3
 			},
 
@@ -44,4 +49,14 @@ export default ({ ESNext, isTest, banner }: Variables): MinimizeJSPlugin =>
 				preamble: banner
 			}
 		}
-	});
+	};
+
+	return new MinimizeJSPlugin(
+		!isSWC
+			? config
+			: {
+					...config,
+					minify: MinimizeJSPlugin.swcMinify
+				}
+	);
+};

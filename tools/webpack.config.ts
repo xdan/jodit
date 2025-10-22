@@ -44,7 +44,7 @@ export default (
 	const [pluginsEntries] = includePlugins(dir);
 
 	console.info(
-		`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify} Fat:${fat} GenerateTypes:${vars.generateTypes}`
+		`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify} Fat:${fat} GenerateTypes:${vars.generateTypes} SWC: ${!vars.generateTypes}`
 	);
 
 	return {
@@ -65,7 +65,8 @@ export default (
 
 		entry: {
 			jodit: ['./src/index.ts'],
-			...(!fat ? pluginsEntries : {})
+			...(!fat ? pluginsEntries : {}),
+			...(ES === 'es5' ? { polyfills: ['./src/polyfills.ts'] } : {})
 		},
 
 		output: {
@@ -102,10 +103,11 @@ export default (
 		},
 
 		optimization: {
+			sideEffects: false,
 			minimize: !debug && uglify,
 			moduleIds: debug ? 'named' : false,
-			concatenateModules: false,
-			mangleExports: true,
+			concatenateModules: true,
+			mangleExports: false,
 			minimizer: minimizer.map(mnm => mnm(vars))
 		},
 

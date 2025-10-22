@@ -25,18 +25,6 @@ import 'jodit/plugins/index';
 import './styles/index.less';
 import './styles/themes/dark.less';
 
-// JODIT-SECTION-START:POLYFILLS
-
-if (
-	typeof process !== 'undefined' &&
-	constants.ES === 'es5' &&
-	typeof window !== 'undefined'
-) {
-	import('./polyfills');
-}
-
-// JODIT-SECTION-END:POLYFILLS
-
 // copy constants in Jodit
 Object.keys(constants).forEach((key: string) => {
 	(DefaultJodit as any)[key] = (constants as any)[key];

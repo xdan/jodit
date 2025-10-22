@@ -9,6 +9,14 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.7.1
+
+#### :boom: Breaking Change
+
+- For es5 build, polyfills are not included by default anymore.
+  You can include them manually by importing `jodit/es5/polyfills.min.js`
+- Use `swc-loader` for build instead of `ts-loader` for better performance and smaller bundle size.
+
 ## 4.6.17
 
 #### :bug: Bug Fix

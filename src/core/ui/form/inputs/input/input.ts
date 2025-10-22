@@ -31,7 +31,8 @@ export class UIInput extends UIElement implements IUIInput {
 		return 'UIInput';
 	}
 
-	nativeInput!: IUIInput['nativeInput'];
+	/** @override */
+	declare nativeInput: IUIInput['nativeInput'];
 
 	private label = this.j.c.span(this.getFullElName('label'));
 	private icon = this.j.c.span(this.getFullElName('icon'));
@@ -40,7 +41,7 @@ export class UIInput extends UIElement implements IUIInput {
 		Icon.get('cancel')
 	);
 
-	private wrapper!: HTMLElement;
+	declare private wrapper: HTMLElement;
 
 	static defaultState: IUIInput['state'] = {
 		className: '',
