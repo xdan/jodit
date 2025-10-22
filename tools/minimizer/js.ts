@@ -22,8 +22,7 @@ export default ({ ESNext, isTest, banner }: Variables): MinimizeJSPlugin => {
 			ecma: (ESNext ? 2018 : 5) as 5 | 2018,
 
 			mangle: {
-				reserved: ['Jodit'],
-				// properties: false
+				reserved: ['Jodit']
 			},
 
 			compress: {
