@@ -255,7 +255,6 @@ screenshots-all:
 .PHONY: screenshots-test
 screenshots-test:
 	docker run \
-		-it	\
 		--ipc=host \
 		-p 9323:9323 \
 		-v $(shell pwd)/build:/app/build/ \

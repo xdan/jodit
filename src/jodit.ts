@@ -1272,7 +1272,8 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	}
 
 	currentPlace: IWorkPlace = {
-		options: this.__options
+		options: this.__options,
+		container: this.__container
 	} as IWorkPlace;
 	places: IWorkPlace[] = [];
 

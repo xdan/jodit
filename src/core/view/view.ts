@@ -147,7 +147,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 		return this.create;
 	}
 
-	private __container: HTMLDivElement;
+	protected __container: HTMLDivElement;
 	get container(): HTMLDivElement {
 		return this.__container;
 	}
