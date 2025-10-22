@@ -17,6 +17,32 @@
   You can include them manually by importing `jodit/es5/polyfills.min.js`
 - Use `swc-loader` for build instead of `ts-loader` for better performance and smaller bundle size.
 
+
+#### :house: Internal
+
+```
+ @eslint/compat                      ^1.3.2  →    ^1.4.0
+ @eslint/js                         ^9.35.0  →   ^9.38.0
+ @playwright/test                   ^1.55.1  →   ^1.56.1
+ @types/node                        ^24.5.1  →   ^24.9.1
+ @typescript-eslint/eslint-plugin   ^8.44.0  →   ^8.46.2
+ @typescript-eslint/parser          ^8.44.0  →   ^8.46.2
+ chai                                ^6.0.1  →    ^6.2.0
+ core-js                            ^3.45.1  →   ^3.46.0
+ cross-env                          ^10.0.0  →   ^10.1.0
+ dotenv                             ^17.2.2  →   ^17.2.3
+ eslint                             ^9.35.0  →   ^9.38.0
+ eslint-plugin-mocha                ^11.1.0  →   ^11.2.0
+ less                                ^4.4.1  →    ^4.4.2
+ mocha                              ^11.7.2  →   ^11.7.4
+ stylelint                         ^16.24.0  →  ^16.25.0
+ stylelint-config-standard          ^39.0.0  →   ^39.0.1
+ tsx                                ^4.20.5  →   ^4.20.6
+ typescript                          ^5.9.2  →    ^5.9.3
+ webpack                            5.101.3  →   5.102.1
+ webpack-dev-middleware              ^7.4.3  →    ^7.4.5
+```
+
 ## 4.6.18
 
 #### :bug: Bug Fix
