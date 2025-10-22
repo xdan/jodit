@@ -138,6 +138,15 @@
 				uploader: {
 					url: 'https://xdsoft.net/jodit/finder/?action=fileUpload'
 				},
+				link: {
+						modeClassName: 'select',
+						selectOptionsClassName: [
+							{ value: '', text: '' },
+							{ value: 'val1 yes_one zerro', text: 'text1' },
+							{ value: 'val2', text: 'text2' },
+							{ value: 'val3 yes_one', text: 'text3' }
+						]
+					},
 				aiAssistant: {
 					async aiAssistantCallback(prompt, htmlFragment) {
 						return `<p>${'sdsd'.repeat(100)}</p>`.repeat(100);

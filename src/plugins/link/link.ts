@@ -451,7 +451,10 @@ function readClassnames(
 
 								if (
 									option?.value &&
-									option.value === className
+									option.value
+										.split(/\s+/)
+										.map(cn => cn.trim())
+										.includes(className)
 								) {
 									option.selected = true;
 								}

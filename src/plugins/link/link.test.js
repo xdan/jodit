@@ -1338,7 +1338,7 @@ describe('Link plugin', () => {
 							{ value: '', text: '' },
 							{ value: 'val1 yes_one zerro', text: 'text1' },
 							{ value: 'val2', text: 'text2' },
-							{ value: 'val3', text: 'text3' }
+							{ value: 'val3 yes_one', text: 'text3' }
 						]
 					}
 				});
@@ -1382,6 +1382,30 @@ describe('Link plugin', () => {
 					'<p>one <a href="https://xdsoft.net/jodit/" class="val1 yes_one zerro">green <strong>bottle hanging</strong> under wall</a></p>' +
 						'<p><a href="https://xdsoft.net/jodit/" class="val1 yes_one zerro">two green <em>bottles hanging</em> under</a> wall</p>'
 				);
+
+				clickButton('link', editor);
+
+				const popup2 = getOpenedPopup(editor);
+
+				const form2 = popup2.querySelector('.jodit-ui-form');
+				expect(form2).is.not.null;
+
+				const className_select2 = form2.querySelector(
+					'select[ref=className_select]'
+				);
+
+				expect(className_select2).is.not.null;
+
+				let count = 0;
+				for (let i = 0; i < className_select2.options.length; i++) {
+					let option = className_select2.options.item(i);
+					count += option.selected ? 1 : 0;
+					expect(option.selected).equals(
+						option.value.includes('yes_one')
+					);
+				}
+
+				expect(count).equals(2);
 			});
 		});
 

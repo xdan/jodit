@@ -17,6 +17,13 @@
   You can include them manually by importing `jodit/es5/polyfills.min.js`
 - Use `swc-loader` for build instead of `ts-loader` for better performance and smaller bundle size.
 
+## 4.6.18
+
+#### :bug: Bug Fix
+
+- Enhance class name handling in link plugin
+- Improved appearance of the multiple choice select
+
 ## 4.6.17
 
 #### :bug: Bug Fix
