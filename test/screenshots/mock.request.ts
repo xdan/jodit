@@ -6,7 +6,7 @@
 
 import { args } from './args.screenshot';
 
-import { expect, type Page } from '@playwright/test';
+import { expect, type Page, type Route } from '@playwright/test';
 import fs from 'fs';
 import mime from 'mime-types';
 import path from 'path';
@@ -134,7 +134,53 @@ const mockData: Record<string, Record<string, Array<MockResponse>>> = {
 	}
 };
 
+const commonHandler = (route: Route): void => {
+	const url = new URL(route.request().url());
+	let filePath = path.join(__dirname, '../../', url.pathname);
+	switch (url.pathname) {
+		case '/custom.css':
+		case '/normalize.css':
+			filePath = path.join(__dirname, '.', url.pathname);
+			break;
+		case '/bootstrap.js':
+			filePath = path.join(__dirname, '..', url.pathname);
+			break;
+		case '/':
+			filePath = path.resolve(__dirname, './index.html');
+			break;
+	}
+
+	let fileContents = fs.readFileSync(filePath, 'utf8');
+
+	if (url.pathname === '/') {
+		fileContents = fileContents
+			.replace(/es2015/g, args.build!)
+			.replace(
+				/jodit\.min/g,
+				`jodit${args.fat ? '.fat' : ''}${args.min ? '.min' : ''}`
+			);
+	}
+
+	route.fulfill({
+		status: 200,
+		contentType: mime.lookup(filePath) || 'application/octet-stream',
+		body: fileContents
+	});
+};
+
 export const mockRequest = async (page: Page): Promise<void> => {
+	await page.route('/**/*', commonHandler);
+	await page.route(/.*/, commonHandler);
+	await page.route('http://127.0.0.1:1234/**', commonHandler);
+
+	await page.route(/\.(png|jpe?g)$/i, route => {
+		route.fulfill({
+			status: 200,
+			contentType: 'image/png',
+			body: buffer
+		});
+	});
+
 	await page.route('https://xdsoft.net/**', route => {
 		if (route.request().resourceType() === 'image') {
 			return route.fulfill({
@@ -175,48 +221,6 @@ export const mockRequest = async (page: Page): Promise<void> => {
 					body: route.request().postDataJSON()
 				})
 		);
-	});
-
-	await page.route('/**/*', route => {
-		const url = new URL(route.request().url());
-		let filePath = path.join(__dirname, '../../', url.pathname);
-		switch (url.pathname) {
-			case '/custom.css':
-			case '/normalize.css':
-				filePath = path.join(__dirname, '.', url.pathname);
-				break;
-			case '/bootstrap.js':
-				filePath = path.join(__dirname, '..', url.pathname);
-				break;
-			case '/':
-				filePath = path.resolve(__dirname, './index.html');
-				break;
-		}
-
-		let fileContents = fs.readFileSync(filePath, 'utf8');
-
-		if (url.pathname === '/') {
-			fileContents = fileContents
-				.replace(/es2015/g, args.build!)
-				.replace(
-					/jodit\.min/g,
-					`jodit${args.fat ? '.fat' : ''}${args.min ? '.min' : ''}`
-				);
-		}
-
-		route.fulfill({
-			status: 200,
-			contentType: mime.lookup(filePath) || 'application/octet-stream',
-			body: fileContents
-		});
-	});
-
-	await page.route('**/*.{png,jpg,jpeg}', route => {
-		route.fulfill({
-			status: 200,
-			contentType: 'image/png',
-			body: buffer
-		});
 	});
 };
 

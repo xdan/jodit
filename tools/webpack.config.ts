@@ -103,10 +103,9 @@ export default (
 		},
 
 		optimization: {
-			sideEffects: false,
 			minimize: !debug && uglify,
 			moduleIds: debug ? 'named' : false,
-			concatenateModules: true,
+			concatenateModules: false,
 			mangleExports: false,
 			minimizer: minimizer.map(mnm => mnm(vars))
 		},

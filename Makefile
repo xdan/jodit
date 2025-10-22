@@ -254,7 +254,9 @@ screenshots-all:
 
 .PHONY: screenshots-test
 screenshots-test:
-	docker run --ipc=host \
+	docker run \
+		-it	\
+		--ipc=host \
 		-p 9323:9323 \
 		-v $(shell pwd)/build:/app/build/ \
 		-v $(shell pwd)/test:/app/test/ \
@@ -267,8 +269,7 @@ screenshots-test:
 		-e MIN=$(uglify) \
 		-e FAT=$(fat) \
 		jodit-screenshots \
-		npx playwright test --update-snapshots
-
+		npx playwright test
 .PHONY: screenshots-build-image
 screenshots-build-image:
 	docker build -t jodit-screenshots -f test/screenshots/Dockerfile .

@@ -22,7 +22,7 @@ jobs:
     - name: Install Playwright Browsers
       run: make screenshots-build-image
     - name: Run Playwright tests
-      run: make screenshots-test es=es2021 fat=true min=true  updateTests=true
+      run: make screenshots-test es=es2021 fat=true min=true
     - uses: actions/upload-artifact@v4
       if: always()
       with:
