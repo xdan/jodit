@@ -21,8 +21,16 @@ export function send(
 ): Promise<IUploaderAnswer> {
 	const requestData = buildData(uploader, data);
 
-	const sendData = (
-		request: FormData | IDictionary<string> | string
+	const showProgress = (progress:number)=>{
+		uploader.j.progressbar.show().progress(progress);
+		if (progress >= 100) {
+			uploader.j.progressbar.hide();
+		}
+	}
+
+	let sendData = (
+		request: FormData | IDictionary<string> | string,
+		showProgress:(progress:number)=>void
 	): Promise<any> => {
 		const ajax = new Ajax<IUploaderAnswer>({
 			xhr: (): XMLHttpRequest => {
@@ -32,8 +40,7 @@ export function send(
 					(uploader.j.ow as any).FormData !== undefined &&
 					xhr.upload
 				) {
-					uploader.j.progressbar.show().progress(10);
-
+					showProgress(10);
 					xhr.upload.addEventListener(
 						'progress',
 						evt => {
@@ -41,20 +48,13 @@ export function send(
 								let percentComplete = evt.loaded / evt.total;
 
 								percentComplete *= 100;
-
-								uploader.j.progressbar
-									.show()
-									.progress(percentComplete);
-
-								if (percentComplete >= 100) {
-									uploader.j.progressbar.hide();
-								}
+								showProgress(percentComplete)
 							}
 						},
 						false
 					);
 				} else {
-					uploader.j.progressbar.hide();
+					showProgress(100)
 				}
 
 				return xhr;
@@ -98,11 +98,15 @@ export function send(
 			});
 	};
 
+	if (isFunction(uploader.o.customUploadFunction)) {
+		sendData = uploader.o.customUploadFunction
+	}
+
 	if (isPromise(requestData)) {
-		return requestData.then(sendData).catch(error => {
+		return requestData.then((data)=>sendData(data, showProgress)).catch(error => {
 			uploader.o.error.call(uploader, error);
 		});
 	}
 
-	return sendData(requestData);
+	return sendData(requestData,showProgress);
 }

@@ -121,6 +121,21 @@ export interface IUploaderOptions<T> {
 	defaultHandlerError: HandlerError;
 
 	contentType: (this: T, requestData: any) => string | false;
+
+	/**
+	 * This method can be used to replace the function of uploading files
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 	uploader: {
+	 * 		customUploadFunction: (requestData, showProgress) => fetch(requestData).then((res)=>{
+	 *			showProgress(100)
+	 *			return res.json()
+	 *		})
+	 * 	}
+	 * });
+	 * ```
+	 */
+	customUploadFunction?: (requestData: any, showProgress:(progress:number) => void ) => Promise<IUploaderAnswer>;
 }
 
 export interface IUploader extends IViewComponent {

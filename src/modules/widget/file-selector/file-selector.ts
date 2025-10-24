@@ -57,7 +57,7 @@ export const FileSelectorWidget = (
 	if (
 		callbacks.upload &&
 		editor.o.uploader &&
-		(editor.o.uploader.url || editor.o.uploader.insertImageAsBase64URI)
+		(editor.o.uploader.url || editor.o.uploader.insertImageAsBase64URI || editor.o.uploader.customUploadFunction)
 	) {
 		const dragBox = editor.c.fromHTML(
 			'<div class="jodit-drag-and-drop__file-box">' +
