@@ -53,11 +53,13 @@ export const FileSelectorWidget = (
 	let currentImage: any;
 
 	const tabs: TabOption[] = [];
+	const options = editor.o.uploader;
 
 	if (
 		callbacks.upload &&
-		editor.o.uploader &&
-		(editor.o.uploader.url || editor.o.uploader.insertImageAsBase64URI || editor.o.uploader.customUploadFunction)
+		(options.url ||
+			options.insertImageAsBase64URI ||
+			options.customUploadFunction)
 	) {
 		const dragBox = editor.c.fromHTML(
 			'<div class="jodit-drag-and-drop__file-box">' +
@@ -76,7 +78,7 @@ export const FileSelectorWidget = (
 			resp => {
 				const handler = isFunction(callbacks.upload)
 					? callbacks.upload
-					: editor.o.uploader.defaultHandlerSuccess;
+					: options.defaultHandlerSuccess;
 
 				if (isFunction(handler)) {
 					handler.call(editor, resp);

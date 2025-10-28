@@ -9,6 +9,23 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.7.5
+
+#### :rocket: New Feature
+
+- Added method `uploader.customUploadFunction`. This method can be used to replace the function of uploading files
+    ```javascript
+    Jodit.make('#editor', {
+    	uploader: {
+    		customUploadFunction: (requestData, showProgress) =>
+    			fetch(requestData).then(res => {
+    				showProgress(100);
+    				return res.json();
+    			})
+    	}
+    });
+    ```
+
 ## 4.7.1
 
 #### :boom: Breaking Change
@@ -16,7 +33,6 @@
 - For es5 build, polyfills are not included by default anymore.
   You can include them manually by importing `jodit/es5/polyfills.min.js`
 - Use `swc-loader` for build instead of `ts-loader` for better performance and smaller bundle size.
-
 
 #### :house: Internal
 
@@ -70,8 +86,8 @@
 #### :rocket: New Feature and :boom: Breaking Change
 
 - Added `table.splitBlockOnInsertTable` option to control table insertion behavior ([#1295](https://github.com/xdan/jodit/issues/1295))
-  - When `true` (default): splits the current block when inserting a table
-  - When `false`: inserts table after the current block without splitting it
+    - When `true` (default): splits the current block when inserting a table
+    - When `false`: inserts table after the current block without splitting it
 
 ## 4.6.14
 
@@ -82,10 +98,9 @@
 #### :bug: Bug Fix
 
 - Fixed HTML structure destruction when applying inline styles to partial text selections within block elements
-  - Prevented block elements (divs, paragraphs) from being split into multiple fragments when applying inline styles
-  - Modified style application to create proper span wrappers inside existing elements instead of extracting parts
-  - Preserves block element structure while allowing style application (PR #1284)
-
+    - Prevented block elements (divs, paragraphs) from being split into multiple fragments when applying inline styles
+    - Modified style application to create proper span wrappers inside existing elements instead of extracting parts
+    - Preserves block element structure while allowing style application (PR #1284)
 
 ## 4.6.12
 
@@ -98,15 +113,15 @@ Remove reconcileArrays functionality and associated tests
 #### :rocket: New Feature
 
 - Added ability to insert UI elements at specific index positions in UIGroup using the `append` method
-  - `group.append(element, 0)` - inserts at the beginning
-  - `group.append(element, index)` - inserts at specific position
-  - Maintains backward compatibility with existing `append(element, distElement)` usage
+    - `group.append(element, 0)` - inserts at the beginning
+    - `group.append(element, index)` - inserts at specific position
+    - Maintains backward compatibility with existing `append(element, distElement)` usage
 
 - Added array reconciliation utilities in `core/helpers/array`
-  - `reconcileArrays` - compares two arrays and returns differences (added, removed, kept, moved items)
-  - `applyArrayReconciliation` - applies reconciliation patches to transform one array into another
-  - Supports both primitive arrays and object arrays with custom key functions
-  - Useful for efficient list updates and state management
+    - `reconcileArrays` - compares two arrays and returns differences (added, removed, kept, moved items)
+    - `applyArrayReconciliation` - applies reconciliation patches to transform one array into another
+    - Supports both primitive arrays and object arrays with custom key functions
+    - Useful for efficient list updates and state management
 
 ## 4.6.6
 
@@ -141,20 +156,21 @@ Remove reconcileArrays functionality and associated tests
 - When the option is turned on `extraPlugins`. If the plugin module does not find the desired plugin, then it tries to load it from the same folder where the plugin itself.
   For example, if you connect the Jodit script from `./node_moudules/jodit/es2018/jodit.js` and you have a plugin `./node_moudules/jodit/es2018/plugins/my-plugin/`
 
-  ```js
-  Jodit.make ('#Editor', {
-    extraPlugins: ['my-plugin'] // Will Be Loaded from ./node_modules/jodit/plugins/my-plugin/my-plugin.js
-  });
-  `` `
+    ````js
+    Jodit.make ('#Editor', {
+      extraPlugins: ['my-plugin'] // Will Be Loaded from ./node_modules/jodit/plugins/my-plugin/my-plugin.js
+    });
+    `` `
 
-  But now if you connect Jodit from `./node_moudules/jodit/es2018/jodit.min.js`
-  then the plugin will be loaded from `./node_modules/jodit/es2018/plugins/my-plugin/my-plugin.min.js`
+    But now if you connect Jodit from `./node_moudules/jodit/es2018/jodit.min.js`
+    then the plugin will be loaded from `./node_modules/jodit/es2018/plugins/my-plugin/my-plugin.min.js`
 
-  ```js
-  Jodit.make ('#Editor', {
-    extraPlugins: ['my-plugin'] // Will Be Loaded from ./node_modules/jodit/plugins/my-plugin/my-plugin.min.js
-  });
-  `` `
+    ```js
+    Jodit.make ('#Editor', {
+      extraPlugins: ['my-plugin'] // Will Be Loaded from ./node_modules/jodit/plugins/my-plugin/my-plugin.min.js
+    });
+    `` `
+    ````
 
 ## 4.6.1
 
@@ -229,10 +245,10 @@ console.log(Jodit.fatMode); // true`
 
 ```js
 const editor = Jodit.make('#editor', {
-  readonly: true,
-  link: {
-    preventReadOnlyNavigation: true
-  }
+	readonly: true,
+	link: {
+		preventReadOnlyNavigation: true
+	}
 });
 ```
 
@@ -1268,7 +1284,6 @@ webpack                             5.88.2  →    5.89.0
     }
     ```
 - Deprecated were removed
-
     - `Dom.isTag` does not support array
     - `Select.applyStyle` method was removed
     - `history.observer` was removed

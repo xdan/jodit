@@ -21,16 +21,16 @@ export function send(
 ): Promise<IUploaderAnswer> {
 	const requestData = buildData(uploader, data);
 
-	const showProgress = (progress:number)=>{
+	const showProgress = (progress: number): void => {
 		uploader.j.progressbar.show().progress(progress);
 		if (progress >= 100) {
 			uploader.j.progressbar.hide();
 		}
-	}
+	};
 
 	let sendData = (
 		request: FormData | IDictionary<string> | string,
-		showProgress:(progress:number)=>void
+		showProgress: (progress: number) => void
 	): Promise<any> => {
 		const ajax = new Ajax<IUploaderAnswer>({
 			xhr: (): XMLHttpRequest => {
@@ -48,13 +48,13 @@ export function send(
 								let percentComplete = evt.loaded / evt.total;
 
 								percentComplete *= 100;
-								showProgress(percentComplete)
+								showProgress(percentComplete);
 							}
 						},
 						false
 					);
 				} else {
-					showProgress(100)
+					showProgress(100);
 				}
 
 				return xhr;
@@ -99,14 +99,16 @@ export function send(
 	};
 
 	if (isFunction(uploader.o.customUploadFunction)) {
-		sendData = uploader.o.customUploadFunction
+		sendData = uploader.o.customUploadFunction;
 	}
 
 	if (isPromise(requestData)) {
-		return requestData.then((data)=>sendData(data, showProgress)).catch(error => {
-			uploader.o.error.call(uploader, error);
-		});
+		return requestData
+			.then(data => sendData(data, showProgress))
+			.catch(error => {
+				uploader.o.error.call(uploader, error);
+			});
 	}
 
-	return sendData(requestData,showProgress);
+	return sendData(requestData, showProgress);
 }
