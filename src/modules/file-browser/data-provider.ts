@@ -26,7 +26,6 @@ import type {
 	Nullable
 } from 'jodit/types';
 import { IS_PROD } from 'jodit/core/constants';
-import { autobind } from 'jodit/core/decorators';
 import {
 	abort,
 	ConfigProto,
@@ -56,7 +55,6 @@ const possibleRules = new Set([
 	'allowImageCrop'
 ]);
 
-@autobind
 export default class DataProvider implements IFileBrowserDataProvider {
 	private __currentPermissions: Nullable<IPermissions> = null;
 

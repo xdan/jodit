@@ -9,6 +9,47 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.7.6
+
+#### :boom: Breaking Change
+
+- **`@autobind` decorator now only supports methods, not classes**
+  - Replaced external `autobind-decorator` dependency with internal implementation
+  - The old package is no longer maintained (last release was 7 years ago)
+  - **Migration Option 1** (Recommended): Apply `@autobind` to individual methods:
+    ```typescript
+    // Before (no longer supported):
+    @autobind
+    class MyClass {
+        method1() { }
+        method2() { }
+    }
+
+    // After:
+    class MyClass {
+        @autobind
+        method1() { }
+
+        @autobind
+        method2() { }
+    }
+    ```
+  - **Migration Option 2** (If you need class-level binding): Install and use the original package directly:
+    ```bash
+    npm install autobind-decorator
+    ```
+    ```typescript
+    import autobind from 'autobind-decorator';
+
+    @autobind
+    class MyClass {
+        method1() { }
+        method2() { }
+    }
+    ```
+    Note: `autobind-decorator` package is no longer maintained, but it still works if you need class-level binding.
+  - Internal affected files: `data-provider.ts`, `resize-handler.ts`, `size.ts`, `recognize-manager.ts`
+
 ## 4.7.5
 
 #### :rocket: New Feature

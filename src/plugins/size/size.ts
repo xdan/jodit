@@ -24,7 +24,6 @@ import './size.less';
 /**
  * Calculate sizes for editor workspace and handle setHeight and setWidth events
  */
-@autobind
 export class size extends Plugin {
 	protected afterInit(editor: IJodit): void {
 		editor.e
@@ -88,6 +87,7 @@ export class size extends Plugin {
 	/**
 	 * Manually change height
 	 */
+	@autobind
 	private __setHeight(height: number | string): void {
 		const { clientHeight, clientWidth } = this.j.container;
 
@@ -115,6 +115,7 @@ export class size extends Plugin {
 	/**
 	 * Manually change width
 	 */
+	@autobind
 	private __setWidth(width: number | string): void {
 		const { clientHeight, clientWidth } = this.j.container;
 

@@ -1,6 +1,6 @@
 # @autobind
 
-This decorator is used to bind the class methods to the class instance. This is useful when you want to pass the class methods as a callback and you want to preserve the class instance.
+This decorator is used to bind class methods to the class instance. This is useful when you want to pass class methods as callbacks and preserve the correct `this` context.
 
 ```typescript
 import { autobind } from 'jodit/core/decorators';
@@ -18,26 +18,8 @@ button.addEventListener('click', elm.onClick);
 button.click(); // UIComponent instance
 ```
 
-Also, you can use this decorator to bind all class methods to the class instance:
+## Important Notes
 
-```typescript
-import { autobind } from 'jodit/core/decorators';
-
-@autobind
-class UIComponent {
-	onClick1() {
-		console.log(this); // UIComponent instance
-	}
-	onClick2() {
-		console.log(this); // UIComponent instance
-	}
-}
-
-const elm = new UIComponent();
-const button = document.createElement('button');
-button.addEventListener('click', elm.onClick1);
-button.addEventListener('click', elm.onClick2);
-button.click(); // UIComponent instance,UIComponent instance
-```
-
-> Now `autobind` is just alias for `autobind-decorator` package. But in our future versions, we will replace it with our own implementation.
+- This decorator can only be applied to **individual methods**, not to entire classes
+- The bound method is cached on the instance for performance
+- The decorator throws a `TypeError` if applied to a non-method property

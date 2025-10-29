@@ -71,7 +71,6 @@ if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
 
 const allowPackages = new Set([
 	'a-color-picker',
-	'autobind-decorator',
 	'classlist-polyfill',
 	'es6-promise/auto',
 	'core-js/es/symbol',

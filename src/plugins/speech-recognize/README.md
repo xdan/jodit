@@ -18,12 +18,12 @@ const editor = Jodit.make('#editor');
 
 **CDN:**
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/jodit.es2021.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/jodit.es2021.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.7.6/es2021/jodit.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.7.6/es2021/jodit.min.js"></script>
 
 <!-- Speech Recognize Plugin -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/plugins/speech-recognize/speech-recognize.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/3.18.2/plugins/speech-recognize/speech-recognize.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.7.6/es2021/plugins/speech-recognize/speech-recognize.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.7.6/es2021/plugins/speech-recognize/speech-recognize.min.js"></script>
 ```
 
 ## Features

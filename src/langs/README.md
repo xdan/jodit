@@ -53,7 +53,7 @@ Jodit.langs.sml = {
 And include this file after Jodit
 
 ```html
-<script src="./node_modules/jodit/build/jodit.es2021.min.js"></script>
+<script src="./node_modules/jodit/es2021/jodit.min.js"></script>
 <script src="./somepath/sml.js"></script>
 <script>
 	Jodit.make('#editor', {

@@ -44,7 +44,7 @@ export default (
 	const [pluginsEntries] = includePlugins(dir);
 
 	console.info(
-		`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify} Fat:${fat} GenerateTypes:${vars.generateTypes} SWC: ${!vars.generateTypes}`
+		`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify} Fat:${fat} GenerateTypes:${vars.generateTypes} SWC:${vars.useSWC}`
 	);
 
 	return {

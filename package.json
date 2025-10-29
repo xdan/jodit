@@ -63,7 +63,6 @@
 		"@types/yargs": "^17.0.33",
 		"@typescript-eslint/eslint-plugin": "^8.46.2",
 		"@typescript-eslint/parser": "^8.46.2",
-		"autobind-decorator": "^2.4.0",
 		"autoprefixer": "^10.4.21",
 		"axios": "^1.12.2",
 		"chai": "^6.2.0",

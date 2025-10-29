@@ -306,7 +306,8 @@ editor.e.on('toggleFullSize', () => {
 
 ## Notes
 
-- Plugin is class-based, extends `Plugin` base class with `@autobind` decorator
+- Plugin is class-based, extends `Plugin` base class
+- Uses `@autobind` decorator on event handler methods for proper `this` binding
 - Requires `size` module (specified in `static requires: string[]`)
 - Handle has class `jodit-editor__resize` for styling
 - Uses custom SVG icon via `Icon.get('resize_handler')`

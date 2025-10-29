@@ -36,15 +36,12 @@ yarn add jodit
 
 ### cdnjs
 
-Unfortunatelly, cdnjs does not have the latest version of Jodit. The latest version is 4.2.47.
-https://github.com/cdnjs/cdnjs/issues/14261
-
 ```html
 <link
 	rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.2.47/es2021/jodit.min.css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.7.6/es2021/jodit.min.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.2.47/es2021/jodit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.7.6/es2021/jodit.min.js"></script>
 ```
 
 ## Download archive

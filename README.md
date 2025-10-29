@@ -58,13 +58,6 @@ ES2021 Version (for modern browsers only):
 #### ESM Modules:
 
 ```html
-<script type="importmap">
-  {
-    "imports": {
-      "autobind-decorator": "https://unpkg.com/autobind-decorator@2.4.0/lib/esm/index.js"
-    }
-  }
-</script>
 <link rel="stylesheet" href="./node_modules/jodit/es2021/jodit.min.css" />
 <script type="module">
   import { Jodit } from './node_modules/jodit/esm/index.js';
@@ -79,13 +72,6 @@ The ESM modules automatically include only the [basic set of plugins](https://gi
 You can manually include additional plugins and languages as needed.
 
 ```html
-<script type="importmap">
-  {
-    "imports": {
-      "autobind-decorator": "https://unpkg.com/autobind-decorator@2.4.0/lib/esm/index.js"
-    }
-  }
-</script>
 <link rel="stylesheet" href="./node_modules/jodit/es2021/jodit.min.css" />
 <script type="module">
   import { Jodit } from './node_modules/jodit/esm/index.js';
@@ -114,9 +100,9 @@ You can manually include additional plugins and languages as needed.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.1/es2021/jodit.min.css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.7.6/es2021/jodit.min.css"
 />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.0.1/es2021/jodit.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jodit/4.7.6/es2021/jodit.min.js"></script>
 ```
 
 #### unpkg
@@ -124,9 +110,9 @@ You can manually include additional plugins and languages as needed.
 ```html
 <link
   rel="stylesheet"
-  href="https://unpkg.com/jodit@4.0.1/es2021/jodit.min.css"
+  href="https://unpkg.com/jodit@4.7.6/es2021/jodit.min.css"
 />
-<script src="https://unpkg.com/jodit@4.0.1/es2021/jodit.min.js"></script>
+<script src="https://unpkg.com/jodit@4.7.6/es2021/jodit.min.js"></script>
 ```
 
 ### Usage

@@ -19,7 +19,6 @@ import { Icon } from 'jodit/core/ui';
 
 import './config';
 
-@autobind
 export class resizeHandler extends Plugin {
 	/** @override **/
 	static override requires: string[] = ['size'];
@@ -74,6 +73,7 @@ export class resizeHandler extends Plugin {
 	/**
 	 * Handler: Click on handle - start resizing
 	 */
+	@autobind
 	private onHandleResizeStart(e: MouseEvent): void {
 		this.isResized = true;
 
@@ -92,6 +92,7 @@ export class resizeHandler extends Plugin {
 	/**
 	 * Handler: Mouse move after start resizing
 	 */
+	@autobind
 	private onHandleResize(e: MouseEvent): void {
 		if (!this.isResized) {
 			return;
@@ -111,6 +112,7 @@ export class resizeHandler extends Plugin {
 	/**
 	 * End of resizing
 	 */
+	@autobind
 	private onHandleResizeEnd(): void {
 		if (this.isResized) {
 			this.isResized = false;

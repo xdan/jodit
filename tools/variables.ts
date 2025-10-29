@@ -18,6 +18,7 @@ export type Argv = {
 	mode?: 'production' | 'development';
 	isTest?: boolean;
 	generateTypes?: boolean;
+	useSWC?: boolean;
 	uglify?: boolean;
 	fat?: boolean;
 	stat?: boolean;
@@ -69,6 +70,7 @@ export type Variables = {
 	 */
 	fat: boolean;
 	port: number;
+	useSWC: boolean;
 };
 
 export const variables = (argv: Argv, dir: string): Variables => {
@@ -143,6 +145,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 		mode,
 		ES,
 		ESModern,
-		ESNext
+		ESNext,
+		useSWC: argv.useSWC ? Boolean(argv.useSWC) : !Bool(argv.generateTypes)
 	};
 };

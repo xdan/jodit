@@ -33,7 +33,7 @@
 
 		"sourceMap": true,
 
-		"importHelpers": true,
+		"importHelpers": false,
 
 		"lib": ["esnext", "DOM", "scripthost", "es2015.iterable"],
 

@@ -20,7 +20,6 @@ import { sound } from './sound';
 
 import { PII, WARN } from 'jodit/plugins/speech-recognize/constants';
 
-@autobind
 export class RecognizeManager
 	extends Eventify<{
 		pulse: (enable: boolean) => void;
@@ -170,6 +169,7 @@ export class RecognizeManager
 		return this;
 	}
 
+	@autobind
 	private _onResults(e: ISpeechRecognizeResult): void {
 		this.emit('pulse', false);
 		this.emit('result', this.__interimResults);
@@ -180,6 +180,7 @@ export class RecognizeManager
 
 	private __interimResults: string = '';
 
+	@autobind
 	private _onProgress(e: ISpeechRecognizeResult): void {
 		if (!this._isEnabled) {
 			return;
@@ -204,6 +205,7 @@ export class RecognizeManager
 		}
 	}
 
+	@autobind
 	private _onError(e: SpeechSynthesisErrorEvent): void {
 		if (e.error === 'voice-unavailable') {
 			this.emit('error', 'Voice unavailable');

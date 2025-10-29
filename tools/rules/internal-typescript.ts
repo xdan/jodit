@@ -15,22 +15,18 @@ export default (
 		dirname,
 		ES,
 		ESModern,
-		generateTypes,
 		isProd,
 		isTest,
 		fat,
 		superDirname,
-		uglify
+		useSWC
 	}: Variables,
 	cwd: string
 ): RuleSetRule => {
-	const transpileOnly = !generateTypes;
-	const useSwc = transpileOnly;
-
 	return {
 		test: /\.(js|ts)$/,
 		use: [
-			useSwc
+			useSWC
 				? {
 						loader: 'swc-loader',
 						options: {
