@@ -26,7 +26,7 @@ export default ({ ESNext, isTest, banner }: Variables): MinimizeJSPlugin => {
 			},
 
 			compress: {
-				unsafe_arrows: ESNext,
+				unsafe_arrows: false,
 				unsafe_methods: ESNext,
 				unsafe: ESNext,
 
