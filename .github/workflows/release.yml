@@ -1,6 +1,8 @@
 name: Publish Package to npmjs
 
 on:
+  repository_dispatch:
+    types: [ release ]
   push:
     tags: ["*"]
 
@@ -58,8 +60,7 @@ jobs:
 
     - name: Trigger update PRO version
       run: |
-        echo "Skipped"  
-      #curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/jodit/jodit-pro/dispatches --data '{"event_type": "newversion" }'
+        curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/jodit/jodit-pro/dispatches --data '{"event_type": "newversion" }'
 
     - name: Get tag
       id: get_version

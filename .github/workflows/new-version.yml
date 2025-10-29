@@ -1,0 +1,36 @@
+name: New version
+
+on:
+  workflow_dispatch:
+
+  repository_dispatch:
+    types: [newversion]
+
+jobs:
+  newversion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+      - uses: actions/setup-node@v4 #Setup Node
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - name: Create local changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          make newversion push=false
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          tags: true
+
+      - name: Trigger release action
+        run: |
+          curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/xdan/jodit/dispatches --data '{"event_type": "release" }'    
