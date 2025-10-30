@@ -114,6 +114,9 @@ dts:
 	fi
 
 	@make append-config-types
+
+	@echo 'Remove tsconfig.json from build ...'
+	@rm -rf ./build/types/tsconfig.json ./build/esm/tsconfig.json
 else
 dts:
 	@echo "Types not yet available"
@@ -150,6 +153,9 @@ esm:
 			$(NODE_MODULES_BIN)/terser "$$fname" -o "$$fname" --compress passes=5,ecma=2020 --mangle --keep-classnames --keep-fnames  --module; \
 		done \
 	fi;
+
+	@echo 'Remove tsconfig.json esm build ...'
+	@rm -rf ./build/esm/tsconfig.json
 else
 esm:
 	@echo "ESM build not yet available"
