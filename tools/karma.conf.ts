@@ -37,6 +37,8 @@ if (argv.grep) {
 	console.info('Grep glob pattern: ', argv.grep);
 }
 
+const isESM = argv.build === 'esm';
+
 const buildDir = './build/' + argv.build;
 
 const workDirectory = path.resolve(argv.cwd, buildDir);
@@ -101,7 +103,34 @@ function findFiles(dir: string): string[] {
 const buildFiles = findFiles(buildDir);
 
 console.info('Build directory: ', buildDir);
-console.info('Build files: ', buildFiles);
+console.info('Build files count: ', buildFiles.length);
+
+const files = !isESM
+	? [
+			'./test/tests/browser-module.js',
+			'./node_modules/synchronous-promise/index.js',
+
+			...buildFiles,
+
+			...Array.from(
+				new Set([
+					path.resolve(__dirname, '../test/chai/chai.min.js'),
+					path.resolve(__dirname, '../test/bootstrap.js'),
+					path.resolve(argv.cwd, 'test/bootstrap.js'),
+					path.resolve(__dirname, '../src/**/*.test.js'),
+					path.resolve(argv.cwd, './src/**/*.test.js'),
+					path.resolve(__dirname, '../test/tests/**/*.test.js'),
+					path.resolve(argv.cwd, 'test/tests/**/*.test.js')
+				])
+			)
+		]
+	: [
+			path.resolve(__dirname, '../test/chai/chai.min.js'),
+			{
+				type: 'module' as const,
+				pattern: path.resolve(argv.cwd, './**/*.test.esm.js')
+			}
+		];
 
 module.exports = function (cnf: Config): void {
 	cnf.set({
@@ -130,25 +159,13 @@ module.exports = function (cnf: Config): void {
 			},
 
 			'./public/app.css',
-			'./test/tests/browser-module.js',
-			'./node_modules/synchronous-promise/index.js',
-
-			...buildFiles,
-
-			...Array.from(
-				new Set([
-					path.resolve(__dirname, '../test/chai/chai.min.js'),
-					path.resolve(__dirname, '../test/bootstrap.js'),
-					path.resolve(argv.cwd, 'test/bootstrap.js'),
-					path.resolve(__dirname, '../src/**/*.test.js'),
-					path.resolve(argv.cwd, './src/**/*.test.js'),
-					path.resolve(__dirname, '../test/tests/**/*.test.js'),
-					path.resolve(argv.cwd, 'test/tests/**/*.test.js')
-				])
-			)
+			...files
 		],
 
+		preprocessors: { './**/*.test.esm.js': ['esbuild'] },
+
 		proxies: {
+			'/build/esm/plugins/all.js': '/base/build/esm/plugins/all.js',
 			'/app.css': '/base/public/app.css',
 			'/public/app.css': '/base/public/app.css',
 			'/tests/artio.jpg': '/base/test/tests/artio.jpg',
@@ -182,7 +199,8 @@ module.exports = function (cnf: Config): void {
 			'karma-chrome-launcher',
 			'karma-firefox-launcher',
 			'karma-mocha',
-			'karma-sourcemap-loader'
+			'karma-sourcemap-loader',
+			'karma-esbuild'
 		],
 
 		client: {

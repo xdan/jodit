@@ -197,6 +197,7 @@ build-all:
 
 .PHONY: test-all
 test-all:
+	make test-only-run build=esm browsers=$(browsers) uglify=false fat=false
 	make test-only-run build=es2021 uglify=$(uglify) fat=$(fat) browsers=$(browsers)
 	make test-only-run build=es2018 uglify=$(uglify) fat=$(fat) browsers=$(browsers)
 	make test-only-run build=es2015 uglify=$(uglify) fat=$(fat) browsers=$(browsers)

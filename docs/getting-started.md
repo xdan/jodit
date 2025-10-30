@@ -1,16 +1,22 @@
 # Getting Started
 
-## via npm
+## Installation
 
-```shell
-npm install jodit
-```
+{% list tabs %}
 
-## via yarn
+- npm
 
-```shell
-yarn add jodit
-```
+  ```shell
+  npm install jodit
+  ```
+
+- yarn
+
+  ```shell
+  yarn add jodit
+  ```
+
+{% endlist %}
 
 ## CDN
 
@@ -72,15 +78,21 @@ The easiest way to use Jodit in React is with the official `jodit-react` wrapper
 
 ### Installation
 
-```shell
-npm install jodit-react
-```
+{% list tabs %}
 
-or
+- npm
 
-```shell
-yarn add jodit-react
-```
+  ```shell
+  npm install jodit-react
+  ```
+
+- yarn
+
+  ```shell
+  yarn add jodit-react
+  ```
+
+{% endlist %}
 
 ### Basic Usage
 
