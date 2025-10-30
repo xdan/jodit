@@ -51,6 +51,7 @@ if (
 }
 
 if (
+	!isESM &&
 	!fs.existsSync(
 		buildDir +
 			'/jodit' +
