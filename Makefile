@@ -150,9 +150,16 @@ esm:
 	@if [ "$(UGLIFY_ESM)" = "true" ]; then \
 		echo 'Uglify esm modules ...'; \
 		find "$(pwd)/build/esm" -name "*.js" | while read fname; do \
-			$(NODE_MODULES_BIN)/terser "$$fname" -o "$$fname" --compress passes=5,ecma=2020 --mangle --keep-classnames --keep-fnames  --module; \
-		done \
-	fi;
+			$(NODE_MODULES_BIN)/esbuild "$$fname" \
+				--minify \
+				--target=es2020 \
+				--format=esm \
+				--keep-names \
+				--legal-comments=none \
+				--outfile="$$fname" \
+				--allow-overwrite; \
+		done; \
+	fi
 
 	@echo 'Remove tsconfig.json esm build ...'
 	@rm -rf ./build/esm/tsconfig.json
