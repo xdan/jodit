@@ -1,7 +1,6 @@
-import '../../../build/esm/plugins/all.js';
+import 'base/build/esm/plugins/all.js';
 
-import { Jodit } from '../../../build/esm/index.js';
-
+import { Jodit } from 'base/build/esm/index.js';
 import { expect } from 'chai';
 
 describe('ESM build', () => {

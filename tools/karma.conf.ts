@@ -166,9 +166,14 @@ module.exports = function (cnf: Config): void {
 		],
 
 		preprocessors: { './**/*.test.esm.js': ['esbuild'] },
+		// @ts-expect-error karma-esbuild does not have types
+		esbuild: {
+			alias: {
+				base: argv.cwd
+			}
+		},
 
 		proxies: {
-			'/build/esm/plugins/all.js': '/base/build/esm/plugins/all.js',
 			'/app.css': '/base/public/app.css',
 			'/public/app.css': '/base/public/app.css',
 			'/tests/artio.jpg': '/base/test/tests/artio.jpg',
