@@ -66,6 +66,220 @@ Jodit Editor can be initialized by calling the `Jodit.make` method with the sele
 </script>
 ```
 
+## Using with React
+
+The easiest way to use Jodit in React is with the official `jodit-react` wrapper.
+
+### Installation
+
+```shell
+npm install jodit-react
+```
+
+or
+
+```shell
+yarn add jodit-react
+```
+
+### Basic Usage
+
+```jsx
+import React, { useState, useRef, useMemo, useCallback } from 'react';
+import JoditEditor from 'jodit-react';
+
+function App() {
+	const editor = useRef(null);
+	const [content, setContent] = useState('');
+
+	const config = useMemo(
+		() => ({
+			readonly: false,
+			placeholder: 'Start typing...'
+		}),
+		[]
+	);
+
+	const handleBlur = useCallback((newContent) => {
+		setContent(newContent);
+	}, []);
+
+	const handleChange = useCallback((newContent) => {
+		// You can handle onChange here if needed
+	}, []);
+
+	return (
+		<JoditEditor
+			ref={editor}
+			value={content}
+			config={config}
+			onBlur={handleBlur}
+			onChange={handleChange}
+		/>
+	);
+}
+
+export default App;
+```
+
+### Advanced Example
+
+```jsx
+import React, { useState, useRef, useMemo, useCallback } from 'react';
+import JoditEditor from 'jodit-react';
+
+function App() {
+	const editor = useRef(null);
+	const [content, setContent] = useState('<p>Initial content</p>');
+
+	const config = useMemo(
+		() => ({
+			readonly: false,
+			placeholder: 'Start typing...',
+			buttons: [
+				'bold',
+				'italic',
+				'underline',
+				'|',
+				'ul',
+				'ol',
+				'|',
+				'font',
+				'fontsize',
+				'brush',
+				'|',
+				'image',
+				'link',
+				'|',
+				'align',
+				'undo',
+				'redo'
+			],
+			height: 400,
+			uploader: {
+				insertImageAsBase64URI: true
+			}
+		}),
+		[]
+	);
+
+	const handleBlur = useCallback((newContent) => {
+		setContent(newContent);
+	}, []);
+
+	const handleChange = useCallback((newContent) => {
+		// You can handle onChange here if needed
+	}, []);
+
+	return (
+		<div>
+			<h1>My React App with Jodit</h1>
+			<JoditEditor
+				ref={editor}
+				value={content}
+				config={config}
+				tabIndex={1}
+				onBlur={handleBlur}
+				onChange={handleChange}
+			/>
+			<div>
+				<h2>Content Preview:</h2>
+				<div dangerouslySetInnerHTML={{ __html: content }} />
+			</div>
+		</div>
+	);
+}
+
+export default App;
+```
+
+{% cut "Custom React wrapper without jodit-react" %}
+
+If you prefer to create your own React wrapper without using `jodit-react`, you can integrate Jodit directly:
+
+### Installation
+
+First, install Jodit via npm or yarn as shown above.
+
+### Basic React Component
+
+```jsx
+import React, { useRef, useEffect } from 'react';
+import Jodit from 'jodit';
+import 'jodit/es2021/jodit.min.css';
+
+function JoditEditor({ value, onChange, config }) {
+	const editorRef = useRef(null);
+	const joditRef = useRef(null);
+
+	useEffect(() => {
+		if (!editorRef.current) return;
+
+		// Initialize Jodit
+		joditRef.current = Jodit.make(editorRef.current, {
+			...config,
+			events: {
+				change: (newValue) => {
+					onChange?.(newValue);
+				}
+			}
+		});
+
+		// Set initial value
+		if (value) {
+			joditRef.current.value = value;
+		}
+
+		// Cleanup on unmount
+		return () => {
+			joditRef.current?.destruct();
+		};
+	}, []);
+
+	// Update value when it changes externally
+	useEffect(() => {
+		if (joditRef.current && value !== joditRef.current.value) {
+			joditRef.current.value = value;
+		}
+	}, [value]);
+
+	return <textarea ref={editorRef} />;
+}
+
+export default JoditEditor;
+```
+
+### Usage Example
+
+```jsx
+import React, { useState } from 'react';
+import JoditEditor from './JoditEditor';
+
+function App() {
+	const [content, setContent] = useState('<p>Initial content</p>');
+
+	const config = {
+		buttons: ['bold', 'italic', 'underline', '|', 'ul', 'ol'],
+		height: 400
+	};
+
+	return (
+		<div>
+			<h1>My React App with Jodit</h1>
+			<JoditEditor
+				value={content}
+				onChange={setContent}
+				config={config}
+			/>
+		</div>
+	);
+}
+
+export default App;
+```
+
+{% endcut %}
+
 ### Full example
 
 You can use the following code to create a simple HTML page with Jodit Editor.
