@@ -126,10 +126,12 @@ const files = !isESM
 		]
 	: [
 			path.resolve(__dirname, '../test/chai/chai.min.js'),
-			{
-				type: 'module' as const,
-				pattern: path.resolve(argv.cwd, './**/*.test.esm.js')
-			}
+			...Array.from(
+				new Set([
+					path.resolve(argv.cwd, './**/*.test.esm.js'),
+					path.resolve(__dirname, '../test/**/*.test.esm.js')
+				])
+			).map(p => ({ pattern: p, type: 'module' as const }))
 		];
 
 module.exports = function (cnf: Config): void {
