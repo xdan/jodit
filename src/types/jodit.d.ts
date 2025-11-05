@@ -30,6 +30,12 @@ interface IWorkPlace {
 	element: HTMLElement;
 	container: HTMLDivElement;
 	workplace: HTMLDivElement;
+	slots: {
+		top: HTMLDivElement;
+		bottom: HTMLDivElement;
+		left: HTMLDivElement;
+		right: HTMLDivElement;
+	}
 	statusbar: IStatusBar;
 	iframe?: HTMLIFrameElement | void;
 	editorWindow: Window;

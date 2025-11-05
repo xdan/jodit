@@ -1,0 +1,72 @@
+.jodit {
+	/* CSS custom properties остаются как есть */
+	--jodit-slot-top-height: auto;
+	--jodit-slot-bottom-height: auto;
+	--jodit-slot-left-width: auto;
+	--jodit-slot-right-width: auto;
+
+	.jodit-workplace-slot__top,
+	.jodit-workplace-slot__bottom {
+		flex: 0 0 auto;
+		min-width: 0;
+
+		&:empty {
+			display: none;
+		}
+	}
+
+	.jodit-workplace-slot__top {
+		height: var(--jodit-slot-top-height);
+
+		&:not(:empty) {
+			border-bottom: 1px solid var(--color-border, transparent);
+		}
+	}
+
+	.jodit-workplace-slot__bottom {
+		height: var(--jodit-slot-bottom-height);
+
+		&:not(:empty) {
+			border-top: 1px solid var(--color-border, transparent);
+		}
+	}
+
+	.jodit-workplace-slot__center {
+		display: flex;
+		flex: 1 1 auto;
+		min-height: 0;
+		min-width: 0;
+		align-items: stretch;
+		gap: 0;
+	}
+
+	.jodit-workplace-slot__left,
+	.jodit-workplace-slot__right {
+		flex: 0 0 auto;
+		min-width: 0;
+		max-width: 50%;
+		overflow: auto;
+
+		&:empty {
+			display: none;
+		}
+	}
+
+	.jodit-workplace-slot__left {
+		width: var(--jodit-slot-left-width);
+
+		&:not(:empty) + .jodit-workplace {
+			border-left: 1px solid var(--color-border, transparent);
+		}
+	}
+
+	.jodit-workplace-slot__right {
+		width: var(--jodit-slot-right-width);
+	}
+
+	.jodit-workplace {
+		& + .jodit-workplace-slot__right:not(:empty) {
+			border-left: 1px solid var(--color-border, transparent);
+		}
+	}
+}

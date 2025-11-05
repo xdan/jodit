@@ -86,6 +86,9 @@ import {
 
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 const __defaultClassesKey = 'data-jodit-default-classes';
+const NOEDIT = {
+	contenteditable: false
+};
 
 /**
  * Class Jodit. Main class
@@ -1364,11 +1367,29 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			element.style.display = 'none';
 		}
 
-		const workplace = this.c.div('jodit-workplace', {
-			contenteditable: false
-		});
+		const topSlot = this.c.div('jodit-workplace-slot__top');
 
-		container.appendChild(workplace);
+		container.appendChild(topSlot);
+
+		const workPlaceContainer = this.c.div(
+			'jodit-workplace-slot__center',
+			NOEDIT
+		);
+
+		const workplace = this.c.div('jodit-workplace', NOEDIT);
+
+		const leftSlot = this.c.div('jodit-workplace-slot__left', NOEDIT);
+		const rightSlot = this.c.div('jodit-workplace-slot__right', NOEDIT);
+
+		workPlaceContainer.appendChild(leftSlot);
+		workPlaceContainer.appendChild(workplace);
+		workPlaceContainer.appendChild(rightSlot);
+
+		container.appendChild(workPlaceContainer);
+
+		const bottomPanel = this.c.div('jodit-workplace-slot__bottom', NOEDIT);
+
+		container.appendChild(bottomPanel);
 
 		if (element.parentNode && element !== container) {
 			element.parentNode.insertBefore(container, element);
@@ -1393,6 +1414,12 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			element,
 			container,
 			workplace,
+			slots: {
+				top: topSlot,
+				bottom: bottomPanel,
+				left: leftSlot,
+				right: rightSlot
+			},
 			statusbar: new StatusBar(this, container),
 			options: this.isReady
 				? (ConfigProto(

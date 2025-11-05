@@ -228,7 +228,12 @@ Config.prototype.controls.table = {
 								block,
 								fake
 							);
-							Dom.after(firstPart!, table);
+
+							if (firstPart) {
+								Dom.after(firstPart, table);
+							} else {
+								Dom.after(block, table);
+							}
 						}
 					} else {
 						editor.s.insertNode(table, false);

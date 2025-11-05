@@ -247,6 +247,7 @@ export class UIButton extends UIElement implements IUIButton {
 	}
 
 	override destruct(): any {
+		this.j.e.off(this);
 		this.j.e.off(this.container);
 		return super.destruct();
 	}
@@ -271,6 +272,7 @@ export class UIButton extends UIElement implements IUIButton {
 		};
 
 		this.actionHandlers.forEach(callback => callback.call(this, e));
+		this.j.e.fire(this, 'click', e);
 	}
 }
 
