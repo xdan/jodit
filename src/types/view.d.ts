@@ -138,7 +138,7 @@ interface IViewBased<T = IViewOptions>
 	readonly buffer: IStorage;
 	/** @deprecated Use asyncStorage instead */
 	readonly storage: IStorage;
-	readonly asyncStorage: Promise<IAsyncStorage>;
+	readonly asyncStorage: IAsyncStorage;
 
 	readonly progressbar: IProgressBar;
 

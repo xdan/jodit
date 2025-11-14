@@ -164,7 +164,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	 * Container for persistent set/get value
 	 */
 	@cache
-	get asyncStorage(): Promise<IAsyncStorage> {
+	get asyncStorage(): IAsyncStorage {
 		return AsyncStorage.makeStorage(true, this.id);
 	}
 
@@ -397,6 +397,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 		cached<IDestructible>(this, 'progressbar')?.destruct();
 		cached<IDestructible>(this, 'message')?.destruct();
+		cached<IAsyncStorage>(this, 'asyncStorage')?.close();
 
 		if (this.events) {
 			this.events.destruct();

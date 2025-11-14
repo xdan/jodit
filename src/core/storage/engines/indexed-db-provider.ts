@@ -37,11 +37,6 @@ export class IndexedDBProvider<T = StorageValueType>
 		}
 
 		this.dbPromise = new Promise<IDBDatabase>((resolve, reject) => {
-			if (typeof indexedDB === 'undefined') {
-				reject(new Error('IndexedDB is not supported'));
-				return;
-			}
-
 			const request = indexedDB.open(this.dbName, this.DB_VERSION);
 
 			request.onerror = (): void => {
@@ -72,10 +67,15 @@ export class IndexedDBProvider<T = StorageValueType>
 		callback: (store: IDBObjectStore) => IDBRequest<R>
 	): Promise<R> {
 		try {
+			console.log('Starting transaction in mode:', mode);
 			const db = await this.getDB();
+			console.log('Database connection established');
 			const transaction = db.transaction([this.storeName], mode);
+			console.log('Transaction created for store:', this.storeName);
 			const store = transaction.objectStore(this.storeName);
 			const request = callback(store);
+
+			console.log('Performing transaction in mode:', mode);
 
 			return new Promise<R>((resolve, reject) => {
 				request.onsuccess = (): void => {
@@ -93,14 +93,9 @@ export class IndexedDBProvider<T = StorageValueType>
 
 	async set(key: string, value: T): Promise<this> {
 		try {
-			const result = await this.performTransaction('readwrite', store =>
+			await this.performTransaction('readwrite', store =>
 				store.put(value, key)
 			);
-
-			// Handle case where result might be a promise
-			if (result && typeof result === 'object' && 'then' in result) {
-				await result;
-			}
 		} catch (e) {
 			if (!IS_PROD) {
 				console.error(e);
@@ -112,14 +107,9 @@ export class IndexedDBProvider<T = StorageValueType>
 
 	async delete(key: string): Promise<this> {
 		try {
-			const result = await this.performTransaction('readwrite', store =>
+			await this.performTransaction('readwrite', store =>
 				store.delete(key)
 			);
-
-			// Handle case where result might be a promise
-			if (result && typeof result === 'object' && 'then' in result) {
-				await result;
-			}
 		} catch {}
 
 		return this;
@@ -127,16 +117,9 @@ export class IndexedDBProvider<T = StorageValueType>
 
 	async get<R = T>(key: string): Promise<R | void> {
 		try {
-			let result = await this.performTransaction('readonly', store =>
+			return await this.performTransaction('readonly', store =>
 				store.get(key)
 			);
-
-			// Handle case where result might be a promise
-			if (result && typeof result === 'object' && 'then' in result) {
-				result = await result;
-			}
-
-			return result as R | void;
 		} catch {
 			return undefined;
 		}
@@ -144,14 +127,9 @@ export class IndexedDBProvider<T = StorageValueType>
 
 	async exists(key: string): Promise<boolean> {
 		try {
-			let result = await this.performTransaction('readonly', store =>
+			const result = await this.performTransaction('readonly', store =>
 				store.get(key)
 			);
-
-			// Handle case where result might be a promise
-			if (result && typeof result === 'object' && 'then' in result) {
-				result = await result;
-			}
 
 			return result !== undefined;
 		} catch {
@@ -161,14 +139,7 @@ export class IndexedDBProvider<T = StorageValueType>
 
 	async clear(): Promise<this> {
 		try {
-			const result = await this.performTransaction('readwrite', store =>
-				store.clear()
-			);
-
-			// Handle case where result might be a promise
-			if (result && typeof result === 'object' && 'then' in result) {
-				await result;
-			}
+			await this.performTransaction('readwrite', store => store.clear());
 		} catch {}
 
 		return this;
@@ -245,6 +216,10 @@ export class IndexedDBProvider<T = StorageValueType>
 }
 
 let cachedResult: boolean | null = null;
+
+export function clearUseIndexedDBCache(): void {
+	cachedResult = null;
+}
 
 /**
  * Check if IndexedDB is available

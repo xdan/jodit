@@ -12,6 +12,7 @@ describe('AsyncStorage', () => {
 		beforeEach(() => {
 			localStorage.clear();
 			sessionStorage.clear();
+			unmockPromise();
 		});
 
 		afterEach(() => {
@@ -30,8 +31,7 @@ describe('AsyncStorage', () => {
 					// Ignore errors
 				}
 
-				await async.requestIdlePromise();
-				storage = await AsyncStorage.makeStorage(true, 'testAsync');
+				storage = AsyncStorage.makeStorage(true, 'testAsync');
 			});
 
 			afterEach(async () => {
@@ -41,9 +41,7 @@ describe('AsyncStorage', () => {
 
 				try {
 					await storage.clear();
-					if (storage.provider && storage.provider.close) {
-						await storage.provider.close();
-					}
+					await storage.close();
 					indexedDB.deleteDatabase('Jodit_testAsync');
 				} catch (e) {
 					// Ignore errors
@@ -125,8 +123,7 @@ describe('AsyncStorage', () => {
 					// Ignore errors
 				}
 
-				await async.requestIdlePromise();
-				storage = await AsyncStorage.makeStorage(
+				storage = AsyncStorage.makeStorage(
 					'indexedDB',
 					'testIndexedDB'
 				);
@@ -139,9 +136,7 @@ describe('AsyncStorage', () => {
 
 				try {
 					await storage.clear();
-					if (storage.provider && storage.provider.close) {
-						await storage.provider.close();
-					}
+					await storage.close();
 					indexedDB.deleteDatabase('Jodit_testIndexedDB');
 				} catch (e) {
 					// Ignore errors
@@ -175,15 +170,13 @@ describe('AsyncStorage', () => {
 
 			beforeEach(async () => {
 				localStorage.clear();
-				storage = await AsyncStorage.makeStorage(
-					'localStorage',
-					'testLS'
-				);
+				storage = AsyncStorage.makeStorage('localStorage', 'testLS');
 			});
 
 			afterEach(async () => {
 				if (storage) {
 					await storage.clear();
+					await storage.close();
 				}
 				localStorage.clear();
 			});
@@ -238,15 +231,13 @@ describe('AsyncStorage', () => {
 
 			beforeEach(async () => {
 				sessionStorage.clear();
-				storage = await AsyncStorage.makeStorage(
-					'sessionStorage',
-					'testSS'
-				);
+				storage = AsyncStorage.makeStorage('sessionStorage', 'testSS');
 			});
 
 			afterEach(async () => {
 				if (storage) {
 					await storage.clear();
+					await storage.close();
 				}
 				sessionStorage.clear();
 			});
@@ -270,7 +261,7 @@ describe('AsyncStorage', () => {
 
 			beforeEach(async () => {
 				// Use false to force memory storage
-				storage = await AsyncStorage.makeStorage(false, 'testMemory');
+				storage = AsyncStorage.makeStorage(false, 'testMemory');
 			});
 
 			it('Should create storage with memory provider', async () => {
@@ -287,11 +278,11 @@ describe('AsyncStorage', () => {
 			});
 
 			it('Should work independently from persistent storage', async () => {
-				const persistentStorage = await AsyncStorage.makeStorage(
+				const persistentStorage = AsyncStorage.makeStorage(
 					'localStorage',
 					'testPersist'
 				);
-				const memoryStorage = await AsyncStorage.makeStorage(
+				const memoryStorage = AsyncStorage.makeStorage(
 					false,
 					'testMem'
 				);
@@ -307,6 +298,42 @@ describe('AsyncStorage', () => {
 
 				await persistentStorage.clear();
 			});
+
+			it('Should fallback to memory when IndexedDB is not available', async () => {
+				// Temporarily override canUseIndexedDB to return false
+				const originalIndexedDb = window.indexedDB;
+
+				try {
+					Object.defineProperty(window, 'indexedDB', {
+						value: undefined,
+						configurable: true
+					});
+					// Mock canUseIndexedDB to return false
+					Jodit.modules.clearUseIndexedDBCache();
+
+					const storage = AsyncStorage.makeStorage(
+						true,
+						'testFallback'
+					);
+
+					// Should still work with memory provider
+					await storage.set('key1', 'value1');
+					const value = await storage.get('key1');
+					expect(value).equals('value1');
+
+					expect(await storage.provider).instanceof(
+						Jodit.modules.MemoryStorageProvider
+					);
+
+					// Should not persist to IndexedDB
+					await storage.clear();
+				} finally {
+					Object.defineProperty(window, 'indexedDB', {
+						value: originalIndexedDb,
+						configurable: true
+					});
+				}
+			});
 		});
 
 		describe('Storage strategies isolation', () => {
@@ -316,11 +343,11 @@ describe('AsyncStorage', () => {
 			});
 
 			it('localStorage and sessionStorage strategies should be independent', async () => {
-				const localStorageAsync = await AsyncStorage.makeStorage(
+				const localStorageAsync = AsyncStorage.makeStorage(
 					'localStorage',
 					'strategyTest'
 				);
-				const sessionStorageAsync = await AsyncStorage.makeStorage(
+				const sessionStorageAsync = AsyncStorage.makeStorage(
 					'sessionStorage',
 					'strategyTest'
 				);
@@ -360,11 +387,11 @@ describe('AsyncStorage', () => {
 			});
 
 			it('Should isolate data by suffix (localStorage)', async () => {
-				const storage1 = await AsyncStorage.makeStorage(
+				const storage1 = AsyncStorage.makeStorage(
 					'localStorage',
 					'app1'
 				);
-				const storage2 = await AsyncStorage.makeStorage(
+				const storage2 = AsyncStorage.makeStorage(
 					'localStorage',
 					'app2'
 				);
@@ -383,14 +410,8 @@ describe('AsyncStorage', () => {
 			});
 
 			it('Should isolate data by suffix (indexedDB)', async () => {
-				const storage1 = await AsyncStorage.makeStorage(
-					'indexedDB',
-					'app1'
-				);
-				const storage2 = await AsyncStorage.makeStorage(
-					'indexedDB',
-					'app2'
-				);
+				const storage1 = AsyncStorage.makeStorage('indexedDB', 'app1');
+				const storage2 = AsyncStorage.makeStorage('indexedDB', 'app2');
 
 				await storage1.set('key', 'value1');
 				await storage2.set('key', 'value2');
@@ -414,11 +435,11 @@ describe('AsyncStorage', () => {
 			});
 
 			it('Should clear only own data', async () => {
-				const storage1 = await AsyncStorage.makeStorage(
+				const storage1 = AsyncStorage.makeStorage(
 					'localStorage',
 					'app1'
 				);
-				const storage2 = await AsyncStorage.makeStorage(
+				const storage2 = AsyncStorage.makeStorage(
 					'localStorage',
 					'app2'
 				);
@@ -443,10 +464,7 @@ describe('AsyncStorage', () => {
 
 			beforeEach(async () => {
 				localStorage.clear();
-				storage = await AsyncStorage.makeStorage(
-					'localStorage',
-					'typeTest'
-				);
+				storage = AsyncStorage.makeStorage('localStorage', 'typeTest');
 			});
 
 			afterEach(async () => {
@@ -512,6 +530,7 @@ describe('AsyncStorage', () => {
 			});
 
 			it('Should return true for available IndexedDB', async () => {
+				Jodit.modules.clearUseIndexedDBCache();
 				const result = await Jodit.modules.canUseIndexedDB();
 				expect(result).is.true;
 			});

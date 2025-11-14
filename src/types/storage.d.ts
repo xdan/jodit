@@ -29,4 +29,5 @@ export interface IAsyncStorage<T = StorageValueType> {
 	get<R = T>(key: string): Promise<R | void>;
 	exists(key: string): Promise<boolean>;
 	clear(): Promise<this>;
+	close(): Promise<void>;
 }

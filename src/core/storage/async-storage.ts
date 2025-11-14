@@ -15,45 +15,65 @@ import { StorageKey } from './storage';
 
 export class AsyncStorage<T = StorageValueType> implements IAsyncStorage<T> {
 	protected constructor(
-		readonly provider: IStorage<T> | IAsyncStorage<T>,
+		private provider: Promise<IStorage<T> | IAsyncStorage<T>>,
 		suffix?: string
 	) {
 		if (suffix) {
 			this.prefix += suffix;
 		}
 	}
+
 	readonly prefix = StorageKey;
 	async set(key: string, value: T): Promise<this> {
-		await this.provider.set(camelCase(this.prefix + key), value);
+		const provider = await this.provider;
+		await provider.set(camelCase(this.prefix + key), value);
 		return this;
 	}
 
 	async delete(key: string): Promise<this> {
-		await this.provider.delete(camelCase(this.prefix + key));
+		const provider = await this.provider;
+		await provider.delete(camelCase(this.prefix + key));
 		return this;
 	}
 
 	async get<R = T>(key: string): Promise<R | void> {
-		return this.provider.get<R>(camelCase(this.prefix + key));
+		const provider = await this.provider;
+		return provider.get<R>(camelCase(this.prefix + key));
 	}
 
 	async exists(key: string): Promise<boolean> {
-		return this.provider.exists(camelCase(this.prefix + key));
+		const provider = await this.provider;
+		return provider.exists(camelCase(this.prefix + key));
 	}
 
 	async clear(): Promise<this> {
-		await this.provider.clear();
+		const provider = await this.provider;
+		await provider.clear();
 		return this;
 	}
 
-	static async makeStorage(
+	async close(): Promise<void> {
+		const provider = await this.provider;
+		if ('close' in provider && typeof provider.close === 'function') {
+			await provider.close();
+		}
+	}
+
+	static makeStorage(
 		persistentOrStrategy:
 			| boolean
 			| WebStorageStrategy
+			| 'memoryStorage'
 			| 'indexedDB' = false,
 		suffix?: string
-	): Promise<IAsyncStorage> {
-		let provider;
+	): IAsyncStorage {
+		let provider:
+			| void
+			| Promise<IStorage | IAsyncStorage>
+			| IStorage
+			| IAsyncStorage = undefined;
+
+		let storage: AsyncStorage | null = null;
 
 		if (
 			persistentOrStrategy === 'localStorage' ||
@@ -69,18 +89,22 @@ export class AsyncStorage<T = StorageValueType> implements IAsyncStorage<T> {
 			persistentOrStrategy === 'indexedDB' ||
 			persistentOrStrategy === true
 		) {
-			if (await canUseIndexedDB()) {
-				provider = new IndexedDBProvider(
-					StorageKey + (suffix || ''),
-					'keyValueStore'
-				);
-			}
+			provider = canUseIndexedDB().then(canUse =>
+				canUse
+					? new IndexedDBProvider(
+							StorageKey + (suffix || ''),
+							'keyValueStore'
+						)
+					: new MemoryStorageProvider()
+			);
 		}
 
 		if (!provider) {
 			provider = new MemoryStorageProvider();
 		}
 
-		return new AsyncStorage(provider, suffix);
+		storage = new AsyncStorage(Promise.resolve(provider), suffix);
+
+		return storage;
 	}
 }
