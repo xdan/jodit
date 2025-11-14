@@ -9,6 +9,33 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## Unreleased
+
+#### :rocket: New Feature
+
+- **AsyncStorage API with IndexedDB support**
+  - Added `AsyncStorage` class for asynchronous storage operations
+  - Implemented `IndexedDBProvider` for persistent browser storage with async API
+  - Support for multiple storage strategies: `indexedDB`, `localStorage`, `sessionStorage`, and in-memory fallback
+  - Comprehensive test coverage for all storage providers and async operations
+  - `canUseIndexedDB()` utility function to check IndexedDB availability
+
+#### :house: Internal
+
+- **Enhanced storage system**
+  - Refactored storage providers to support both sync and async interfaces
+  - Added workplace slots layout system for improved editor structure
+  - Comprehensive test suites for storage functionality (`storage.test.js`, `async-storage.test.js`)
+  - Added slot system tests (`slots.test.js`) for UI layout validation
+  - Improved CSS variable handling for slot dimensions
+  - Updated build configuration to use esbuild for ESM minification
+
+#### :bug: Bug Fix
+
+- **Fixed IndexedDB store name handling in AsyncStorage**
+  - Correctly construct database names with suffix for proper isolation
+  - Use consistent `keyValueStore` as the object store name
+
 ## 4.7.6
 
 #### :boom: Breaking Change
