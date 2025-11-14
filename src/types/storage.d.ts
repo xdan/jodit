@@ -16,9 +16,17 @@ export type StorageValueType =
 	| StorageValueType[];
 
 export interface IStorage<T = StorageValueType> {
-	set(key: string, value: T): IStorage<T>;
-	delete(key: string): IStorage<T>;
+	set(key: string, value: T): this;
+	delete(key: string): this;
 	get<R = T>(key: string): R | void;
 	exists(key: string): boolean;
-	clear(): IStorage<T>;
+	clear(): this;
+}
+
+export interface IAsyncStorage<T = StorageValueType> {
+	set(key: string, value: T): Promise<this>;
+	delete(key: string): Promise<this>;
+	get<R = T>(key: string): Promise<R | void>;
+	exists(key: string): Promise<boolean>;
+	clear(): Promise<this>;
 }

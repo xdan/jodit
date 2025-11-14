@@ -11,6 +11,7 @@
  */
 
 import type {
+	IAsyncStorage,
 	IComponent,
 	ICreate,
 	IDestructible,
@@ -50,6 +51,7 @@ import {
 	isFunction,
 	isVoid
 } from 'jodit/core/helpers';
+import { AsyncStorage } from 'jodit/core/storage/async-storage';
 import { Storage } from 'jodit/core/storage/storage';
 import { Elms } from 'jodit/core/traits/elms';
 import { Mods } from 'jodit/core/traits/mods';
@@ -74,6 +76,26 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	 * All created ViewComponent inside this view
 	 */
 	readonly components: Set<IComponent> = new Set();
+
+	readonly events: IEventEmitter;
+
+	readonly create: ICreate;
+
+	protected constructor(
+		options?: Partial<IViewOptions>,
+		readonly isJodit: boolean = false
+	) {
+		super();
+		this.id = new Date().getTime().toString();
+
+		this.initOptions(options);
+		this.initOwners();
+
+		this.events = options?.eventEmmiter ?? new EventEmitter(this.od);
+		this.create = new Create(this.od);
+
+		this.__container = this.c.div(`jodit ${this.componentName}`);
+	}
 
 	/**
 	 * Get a path for loading extra staff
@@ -131,13 +153,20 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	/**
 	 * Container for persistent set/get value
+	 * @deprecated Use asyncStorage instead
 	 */
 	@cache
 	get storage(): IStorage {
 		return Storage.makeStorage(true, this.id);
 	}
 
-	readonly create: ICreate;
+	/**
+	 * Container for persistent set/get value
+	 */
+	@cache
+	get asyncStorage(): Promise<IAsyncStorage> {
+		return AsyncStorage.makeStorage(true, this.id);
+	}
 
 	/**
 	 * Short alias for `create`
@@ -155,8 +184,6 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 	set container(container: HTMLDivElement) {
 		this.__container = container;
 	}
-
-	events: IEventEmitter;
 
 	/**
 	 * Short alias for `events`
@@ -292,22 +319,6 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 		const e = options?.events;
 		e && Object.keys(e).forEach((key: string) => this.e.on(key, e[key]));
-	}
-
-	protected constructor(
-		options?: Partial<IViewOptions>,
-		readonly isJodit: boolean = false
-	) {
-		super();
-		this.id = new Date().getTime().toString();
-
-		this.initOptions(options);
-		this.initOwners();
-
-		this.events = new EventEmitter(this.od);
-		this.create = new Create(this.od);
-
-		this.__container = this.c.div(`jodit ${this.componentName}`);
 	}
 
 	private __modulesInstances: Map<string, IComponent> = new Map();

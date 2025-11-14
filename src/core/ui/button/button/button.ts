@@ -162,11 +162,15 @@ export class UIButton extends UIElement implements IUIButton {
 
 	@watch('state.tooltip', { immediately: false })
 	protected onChangeTooltip(): void {
+		const i8nTooltip = this.state.tooltip
+			? this.jodit.i18n(this.state.tooltip)
+			: null;
+
 		if (this.get('j.o.useNativeTooltip')) {
-			attr(this.container, 'title', this.state.tooltip);
+			attr(this.container, 'title', i8nTooltip);
 		}
 
-		attr(this.container, 'aria-label', this.state.tooltip);
+		attr(this.container, 'aria-label', i8nTooltip);
 	}
 
 	@watch('state.tabIndex', { immediately: false })

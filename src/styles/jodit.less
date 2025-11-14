@@ -8,17 +8,20 @@
 
 .jodit,
 .jodit-container {
+	--jodit-workplace-height: auto;
+
 	&,
 	* {
 		box-sizing: border-box;
 	}
 
 	.jodit-workplace {
-		min-width: 0;
-		min-height: 0;
-		flex: 1 1 auto;
 		position: relative;
 		overflow: auto;
+		min-width: 0;
+		height: var(--jodit-workplace-height);
+		min-height: 0;
+		flex: 1 1 auto;
 
 		.jodit-wysiwyg,
 		.jodit-wysiwyg_iframe {

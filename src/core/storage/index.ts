@@ -8,6 +8,8 @@
  * @module storage
  */
 
+export * from './async-storage';
+export * from './engines/indexed-db-provider';
 export * from './engines/local-storage-provider';
 export * from './engines/memory-storage-provider';
 export * from './storage';

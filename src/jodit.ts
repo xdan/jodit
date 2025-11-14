@@ -931,7 +931,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		if (super.lock(name)) {
 			this.__selectionLocked = this.s.save();
 			this.s.clear();
-			this.editor.classList.add('jodit_lock');
+			this.container.classList.add('jodit_lock');
 			this.e.fire('lock', true);
 			return true;
 		}
@@ -944,7 +944,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	 */
 	override unlock(): boolean {
 		if (super.unlock()) {
-			this.editor.classList.remove('jodit_lock');
+			this.container.classList.remove('jodit_lock');
 
 			if (this.__selectionLocked) {
 				this.s.restore();
@@ -1367,27 +1367,32 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			element.style.display = 'none';
 		}
 
-		const topSlot = this.c.div('jodit-workplace-slot__top');
+		const SLOT = 'workplace-slot';
+
+		const topSlot = this.c.div(this.getFullElName(SLOT, 'top'), NOEDIT);
 
 		container.appendChild(topSlot);
 
-		const workPlaceContainer = this.c.div(
-			'jodit-workplace-slot__center',
+		const centerSlot = this.c.div(
+			this.getFullElName(SLOT, 'center'),
 			NOEDIT
 		);
 
 		const workplace = this.c.div('jodit-workplace', NOEDIT);
 
-		const leftSlot = this.c.div('jodit-workplace-slot__left', NOEDIT);
-		const rightSlot = this.c.div('jodit-workplace-slot__right', NOEDIT);
+		const leftSlot = this.c.div(this.getFullElName(SLOT, 'left'), NOEDIT);
+		const rightSlot = this.c.div(this.getFullElName(SLOT, 'right'), NOEDIT);
 
-		workPlaceContainer.appendChild(leftSlot);
-		workPlaceContainer.appendChild(workplace);
-		workPlaceContainer.appendChild(rightSlot);
+		centerSlot.appendChild(leftSlot);
+		centerSlot.appendChild(workplace);
+		centerSlot.appendChild(rightSlot);
 
-		container.appendChild(workPlaceContainer);
+		container.appendChild(centerSlot);
 
-		const bottomPanel = this.c.div('jodit-workplace-slot__bottom', NOEDIT);
+		const bottomPanel = this.c.div(
+			this.getFullElName(SLOT, 'bottom'),
+			NOEDIT
+		);
 
 		container.appendChild(bottomPanel);
 
@@ -1417,6 +1422,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			slots: {
 				top: topSlot,
 				bottom: bottomPanel,
+				center: centerSlot,
 				left: leftSlot,
 				right: rightSlot
 			},

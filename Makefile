@@ -64,8 +64,8 @@ start dev love:
 
 .PHONY: build
 build:
-	@TS_NODE_TRANSPILE_ONLY=true $(WEBPACK) --progress --mode production \
-		--env stat=true \
+	@TS_NODE_TRANSPILE_ONLY=true $(WEBPACK) $(if $(watch), watch, --progress) --mode production \
+		$(if $(watch),, --env stat=true) \
 		--env es=$(es) \
 		--env uglify=$(uglify) \
 		--env isTest=$(isTest) \
@@ -234,7 +234,7 @@ prettify:
 test:
 	make test-find
 	make clean
-	make build es=$(es) uglify=$(uglify) isTest=true fat=$(fat)
+	make build es=$(es) uglify=$(uglify) isTest=true fat=$(fat) stat=false
 	make test-only-run build=$(es) uglify=$(uglify) fat=$(fat) browsers=$(browsers)
 
 
@@ -244,7 +244,13 @@ test-find find-test:
 
 .PHONY: test-only-run test-run-only
 test-only-run test-run-only:
-	$(KARMA) --browsers $(browsers) $(cwd)tools/karma.conf.ts --single-run $(singleRun) --build=$(build) --min=$(uglify) --fat=$(fat) --cwd=$(pwd)
+	$(KARMA) --browsers $(browsers) $(cwd)tools/karma.conf.ts --single-run=$(singleRun) --build=$(build) --min=$(uglify) --fat=$(fat) --cwd=$(pwd) $(if $(watch), --auto-watch,)
+
+
+.PHONY: test-watch
+test-watch:
+	@echo "Start build and test in watch mode ..."
+	@$(NODE_MODULES_BIN)/concurrently --kill-others "make build watch=true es=$(es)" "make test-run-only watch=true singleRun=false build=$(es)"
 
 .PHONY: coverage
 coverage:

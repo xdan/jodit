@@ -101,4 +101,9 @@ export class UIButtonGroup extends UIGroup {
 
 		this.options.onChange?.(result);
 	}
+
+	override setParentView(view: IViewBased): this {
+		this.elements.forEach(elm => elm.setParentView(view));
+		return super.setParentView(view);
+	}
 }

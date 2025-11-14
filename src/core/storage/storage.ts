@@ -15,7 +15,8 @@ import { camelCase } from 'jodit/core/helpers/string/camel-case';
 
 import {
 	canUsePersistentStorage,
-	LocalStorageProvider
+	LocalStorageProvider,
+	type WebStorageStrategy
 } from './engines/local-storage-provider';
 import { MemoryStorageProvider } from './engines/memory-storage-provider';
 
@@ -24,12 +25,12 @@ export const StorageKey: string = 'Jodit_';
 export class Storage<T = StorageValueType> implements IStorage<T> {
 	readonly prefix = StorageKey;
 
-	set(key: string, value: T): IStorage<T> {
+	set(key: string, value: T): this {
 		this.provider.set(camelCase(this.prefix + key), value);
 		return this;
 	}
 
-	delete(key: string): IStorage<T> {
+	delete(key: string): this {
 		this.provider.delete(camelCase(this.prefix + key));
 		return this;
 	}
@@ -42,7 +43,7 @@ export class Storage<T = StorageValueType> implements IStorage<T> {
 		return this.provider.exists(camelCase(this.prefix + key));
 	}
 
-	clear(): IStorage<T> {
+	clear(): this {
 		this.provider.clear();
 		return this;
 	}
@@ -56,11 +57,28 @@ export class Storage<T = StorageValueType> implements IStorage<T> {
 		}
 	}
 
-	static makeStorage(persistent: boolean = false, suffix?: string): IStorage {
+	static makeStorage(
+		persistentOrStrategy: boolean | WebStorageStrategy = false,
+		suffix?: string
+	): IStorage {
 		let provider;
 
-		if (persistent && canUsePersistentStorage()) {
-			provider = new LocalStorageProvider(StorageKey + suffix);
+		if (
+			persistentOrStrategy === 'localStorage' ||
+			persistentOrStrategy === 'sessionStorage'
+		) {
+			if (canUsePersistentStorage(persistentOrStrategy)) {
+				provider = new LocalStorageProvider(
+					StorageKey + (suffix || ''),
+					persistentOrStrategy
+				);
+			}
+		} else if (persistentOrStrategy === true) {
+			if (canUsePersistentStorage('localStorage')) {
+				provider = new LocalStorageProvider(
+					StorageKey + (suffix || '')
+				);
+			}
 		}
 
 		if (!provider) {

@@ -38,13 +38,14 @@ export default (
 		debug,
 		fat,
 		uglify,
-		outputPath
+		outputPath,
+		stat
 	} = vars;
 
 	const [pluginsEntries] = includePlugins(dir);
 
 	console.info(
-		`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify} Fat:${fat} GenerateTypes:${vars.generateTypes} SWC:${vars.useSWC}`
+		`ES:${ES} Mode:${mode} Test:${isTest} Uglify:${uglify} Fat:${fat} GenerateTypes:${vars.generateTypes} SWC:${vars.useSWC} Stat:${stat}`
 	);
 
 	return {
@@ -57,9 +58,11 @@ export default (
 		target: ['web', 'es5'],
 		context: dir,
 
-		stats: {
-			colors: true
-		},
+		stats: stat
+			? {
+					colors: true
+				}
+			: 'errors-only',
 
 		devtool: debug ? 'inline-source-map' : false,
 

@@ -33,6 +33,7 @@ interface IWorkPlace {
 	slots: {
 		top: HTMLDivElement;
 		bottom: HTMLDivElement;
+		center: HTMLDivElement;
 		left: HTMLDivElement;
 		right: HTMLDivElement;
 	}

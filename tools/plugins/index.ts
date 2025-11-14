@@ -22,18 +22,21 @@ export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 		onlyTS,
 		debug,
 		exclude,
-		progressFunction
+		progressFunction,
+		stat
 	} = vars;
 
 	const plugins: Array<webpack.ProgressPlugin | webpack.DelegatedPlugin> = [
 		define(vars)
 	];
 
-	plugins.push(
-		new webpack.ProgressPlugin(
-			progressFunction ? progressFunction : undefined
-		)
-	);
+	if (stat) {
+		plugins.push(
+			new webpack.ProgressPlugin(
+				progressFunction ? progressFunction : undefined
+			)
+		);
+	}
 
 	if (isProd) {
 		if (!onlyTS) {

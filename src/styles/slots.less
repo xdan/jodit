@@ -1,72 +1,85 @@
 .jodit {
-	/* CSS custom properties остаются как есть */
-	--jodit-slot-top-height: auto;
-	--jodit-slot-bottom-height: auto;
-	--jodit-slot-left-width: auto;
-	--jodit-slot-right-width: auto;
+	--slot-top-height: auto;
+	--slot-bottom-height: auto;
+	--slot-left-width: auto;
+	--slot-right-width: auto;
 
-	.jodit-workplace-slot__top,
-	.jodit-workplace-slot__bottom {
-		flex: 0 0 auto;
+	.jodit-jodit__workplace-slot_top_true,
+	.jodit-jodit__workplace-slot_bottom_true {
 		min-width: 0;
+		flex: 0 0 auto;
 
 		&:empty {
 			display: none;
 		}
 	}
 
-	.jodit-workplace-slot__top {
-		height: var(--jodit-slot-top-height);
+	.jodit-jodit__workplace-slot_top_true {
+		height: var(--slot-top-height);
 
 		&:not(:empty) {
 			border-bottom: 1px solid var(--color-border, transparent);
 		}
 	}
 
-	.jodit-workplace-slot__bottom {
-		height: var(--jodit-slot-bottom-height);
+	.jodit-jodit__workplace-slot_bottom_true {
+		height: var(--slot-bottom-height);
 
 		&:not(:empty) {
 			border-top: 1px solid var(--color-border, transparent);
 		}
 	}
 
-	.jodit-workplace-slot__center {
+	.jodit-jodit__workplace-slot_center_true {
 		display: flex;
-		flex: 1 1 auto;
-		min-height: 0;
 		min-width: 0;
+		min-height: 0;
+		max-height: var(--jodit-workplace-height);
+		flex: 1 1 auto;
 		align-items: stretch;
 		gap: 0;
 	}
 
-	.jodit-workplace-slot__left,
-	.jodit-workplace-slot__right {
-		flex: 0 0 auto;
+	.jodit-jodit__workplace-slot_left_true,
+	.jodit-jodit__workplace-slot_right_true {
+		overflow: auto;
 		min-width: 0;
 		max-width: 50%;
-		overflow: auto;
+		flex: 0 0 auto;
+		contain: size;
 
 		&:empty {
 			display: none;
 		}
 	}
 
-	.jodit-workplace-slot__left {
-		width: var(--jodit-slot-left-width);
+	.jodit-jodit__workplace-slot_left_true {
+		width: var(--slot-left-width);
 
 		&:not(:empty) + .jodit-workplace {
 			border-left: 1px solid var(--color-border, transparent);
 		}
 	}
 
-	.jodit-workplace-slot__right {
-		width: var(--jodit-slot-right-width);
+	.jodit-jodit__workplace-slot_right_true {
+		width: var(--slot-right-width);
 	}
 
 	.jodit-workplace {
-		& + .jodit-workplace-slot__right:not(:empty) {
+		& + .jodit-jodit__workplace-slot_right_true:not(:empty) {
 			border-left: 1px solid var(--color-border, transparent);
+		}
+	}
+
+	&.jodit_lock {
+		user-select: none !important;
+
+		.jodit-jodit__workplace-slot_left_true,
+		.jodit-jodit__workplace-slot_right_true,
+		.jodit-jodit__workplace-slot_top_true,
+		.jodit-jodit__workplace-slot_bottom_true,
+		.jodit-jodit__workplace-slot_center_true {
+			overflow: hidden;
 		}
 	}
 }

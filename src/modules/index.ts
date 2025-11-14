@@ -40,3 +40,4 @@ export { ToolbarEditorCollection } from './toolbar/collection/editor-collection'
 export { Uploader } from './uploader/uploader';
 export { PluginSystem } from 'jodit/core/plugin/plugin-system';
 export { CommitStyle, Selection } from 'jodit/core/selection';
+export * from 'jodit/core/storage';
