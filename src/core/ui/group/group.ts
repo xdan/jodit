@@ -200,6 +200,11 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		}
 	}
 
+	override setParentView(view: T): this {
+		this.elements?.forEach(elm => elm.setParentView(view));
+		return super.setParentView(view);
+	}
+
 	/** @override */
 	override destruct(): any {
 		this.clear();

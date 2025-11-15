@@ -67,16 +67,10 @@ export class IndexedDBProvider<T = StorageValueType>
 		callback: (store: IDBObjectStore) => IDBRequest<R>
 	): Promise<R> {
 		try {
-			console.log('Starting transaction in mode:', mode);
 			const db = await this.getDB();
-			console.log('Database connection established');
 			const transaction = db.transaction([this.storeName], mode);
-			console.log('Transaction created for store:', this.storeName);
 			const store = transaction.objectStore(this.storeName);
 			const request = callback(store);
-
-			console.log('Performing transaction in mode:', mode);
-
 			return new Promise<R>((resolve, reject) => {
 				request.onsuccess = (): void => {
 					resolve(request.result);

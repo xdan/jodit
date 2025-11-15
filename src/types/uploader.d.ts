@@ -135,7 +135,10 @@ export interface IUploaderOptions<T> {
 	 * });
 	 * ```
 	 */
-	customUploadFunction?: (requestData: any, showProgress:(progress:number) => void ) => Promise<IUploaderAnswer>;
+	customUploadFunction?: (
+		requestData: any,
+		showProgress: (progress: number) => void
+	) => Promise<IUploaderAnswer>;
 }
 
 export interface IUploader extends IViewComponent {
@@ -156,6 +159,8 @@ export interface IUploader extends IViewComponent {
 		handlerSuccess?: HandlerSuccess,
 		handlerError?: HandlerError
 	): void;
+
+	upload(files: FileList | File[] | null): Promise<IUploaderData>;
 
 	readonly path: string;
 

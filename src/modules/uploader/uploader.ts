@@ -15,6 +15,7 @@ import type {
 	HandlerSuccess,
 	IJodit,
 	IUploader,
+	IUploaderData,
 	IUploaderOptions,
 	IViewBased
 } from 'jodit/types';
@@ -285,6 +286,12 @@ export class Uploader extends ViewComponent implements IUploader {
 				);
 			})
 			.catch(e => handlerE.call(uploader, e));
+	}
+
+	upload(files: FileList | File[] | null): Promise<IUploaderData> {
+		return this.async.promise<IUploaderData>((resolve, reject) => {
+			sendFiles(this, files, resolve, reject);
+		});
 	}
 
 	constructor(editor: IViewBased, options?: IUploaderOptions<Uploader>) {
