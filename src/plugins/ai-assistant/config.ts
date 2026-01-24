@@ -22,7 +22,37 @@ declare module 'jodit/config' {
 	}
 }
 
-const aiAssistantDefaults: AiAssistantSettings = {
+export const aiAssitentCommands = {
+	aiImproveWritingPrompt: 'Improve writing',
+	aiMakeShorterPrompt: 'Make shorter',
+	aiMakeLongerPrompt: 'Make longer',
+	aiSimplifyLanguagePrompt: 'Simplify language',
+	aiSummarizePrompt: 'Summarize',
+	aiContinuePrompt: 'Continue',
+	aiChangeToneProfessionalPrompt: 'Change tone to professional',
+	aiChangeToneFriendlyPrompt: 'Change tone to friendly',
+	aiChangeToneFormalPrompt: 'Change tone to formal',
+	aiChangeToneCasualPrompt: 'Change tone to casual',
+	aiChangeToneDirectPrompt: 'Change tone to direct',
+	aiChangeToneConfidentPrompt: 'Change tone to confident',
+	aiChangeStyleBusinessPrompt: 'Change style to business',
+	aiChangeStyleLegalPrompt: 'Change style to legal',
+	aiChangeStyleJournalismPrompt: 'Change style of journalism',
+	aiChangeStylePoeticPrompt: 'Change style to poetic',
+	aiTranslateToSpanishPrompt: 'Translate to Spanish',
+	aiTranslateToFrenchPrompt: 'Translate to French',
+	aiTranslateToGermanPrompt: 'Translate to German',
+	aiTranslateToItalianPrompt: 'Translate to Italian',
+	aiTranslateToPortuguesePrompt: 'Translate to Portuguese',
+	aiTranslateToEnglishPrompt: 'Translate to English',
+	aiTranslateToChinesePrompt: 'Translate to Chinese',
+	aiTranslateToJapanesePrompt: 'Translate to Japanese',
+	aiTranslateToKoreanPrompt: 'Translate to Korean',
+	aiTranslateToRussianPrompt: 'Translate to Russian',
+	aiTranslateToArabicPrompt: 'Translate to Arabic'
+};
+
+export const aiAssistantDefaults: AiAssistantSettings = {
 	aiCommonPrefixPrompt: '',
 	aiCommonSuffixPrompt: '',
 	aiImproveWritingPrompt:
@@ -91,35 +121,7 @@ Config.prototype.controls['ai-commands'] = {
 		return !editor.o.aiAssistant.aiAssistantCallback;
 	},
 	tooltip: 'AI Commands',
-	list: {
-		aiImproveWritingPrompt: 'Improve writing',
-		aiMakeShorterPrompt: 'Make shorter',
-		aiMakeLongerPrompt: 'Make longer',
-		aiSimplifyLanguagePrompt: 'Simplify language',
-		aiSummarizePrompt: 'Summarize',
-		aiContinuePrompt: 'Continue',
-		aiChangeToneProfessionalPrompt: 'Change tone to professional',
-		aiChangeToneFriendlyPrompt: 'Change tone to friendly',
-		aiChangeToneFormalPrompt: 'Change tone to formal',
-		aiChangeToneCasualPrompt: 'Change tone to casual',
-		aiChangeToneDirectPrompt: 'Change tone to direct',
-		aiChangeToneConfidentPrompt: 'Change tone to confident',
-		aiChangeStyleBusinessPrompt: 'Change style to business',
-		aiChangeStyleLegalPrompt: 'Change style to legal',
-		aiChangeStyleJournalismPrompt: 'Change style of journalism',
-		aiChangeStylePoeticPrompt: 'Change style to poetic',
-		aiTranslateToSpanishPrompt: 'Translate to Spanish',
-		aiTranslateToFrenchPrompt: 'Translate to French',
-		aiTranslateToGermanPrompt: 'Translate to German',
-		aiTranslateToItalianPrompt: 'Translate to Italian',
-		aiTranslateToPortuguesePrompt: 'Translate to Portuguese',
-		aiTranslateToEnglishPrompt: 'Translate to English',
-		aiTranslateToChinesePrompt: 'Translate to Chinese',
-		aiTranslateToJapanesePrompt: 'Translate to Japanese',
-		aiTranslateToKoreanPrompt: 'Translate to Korean',
-		aiTranslateToRussianPrompt: 'Translate to Russian',
-		aiTranslateToArabicPrompt: 'Translate to Arabic'
-	},
+	list: aiAssitentCommands,
 	exec: (editor, event, { control }): void | false => {
 		editor.e.fire('generateAiAssistantForm.ai-assistant', control.name);
 	}

@@ -17,6 +17,7 @@ debug ?= false
 updateTests ?= false
 fat ?= false
 push ?= true
+useSWC ?= true
 outputFolder ?= ''
 version = $(shell cat package.json | ./node_modules/node-jq/bin/jq -r '.version')
 
@@ -60,6 +61,7 @@ start dev love:
 		--env includePlugins=$(includePlugins) \
 		--env excludePlugins=$(excludePlugins) \
 		--env isTest=$(isTest) \
+		--env useSWC=$(useSWC) \
 		--env fat=$(fat)
 
 .PHONY: build

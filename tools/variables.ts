@@ -146,6 +146,6 @@ export const variables = (argv: Argv, dir: string): Variables => {
 		ES,
 		ESModern,
 		ESNext,
-		useSWC: argv.useSWC ? Boolean(argv.useSWC) : !Bool(argv.generateTypes)
+		useSWC: argv.useSWC ? Bool(argv.useSWC) : !Bool(argv.generateTypes)
 	};
 };

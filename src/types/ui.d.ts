@@ -193,6 +193,7 @@ export interface IUIRange extends IUIInput {
 	readonly state: IUIInput['state'] & {
 		min: number;
 		max: number;
+		step?: number;
 	};
 }
 
