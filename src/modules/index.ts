@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -40,3 +40,4 @@ export { ToolbarEditorCollection } from './toolbar/collection/editor-collection'
 export { Uploader } from './uploader/uploader';
 export { PluginSystem } from 'jodit/core/plugin/plugin-system';
 export { CommitStyle, Selection } from 'jodit/core/selection';
+export * from 'jodit/core/storage';

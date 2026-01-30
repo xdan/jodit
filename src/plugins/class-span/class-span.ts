@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -49,9 +49,7 @@ Config.prototype.controls.classSpan = {
 
 			return Boolean(
 				button.control.args &&
-					currentBpx.classList.contains(
-						button.control.args[0].toString()
-					)
+				currentBpx.classList.contains(button.control.args[0].toString())
 			);
 		}
 
@@ -80,9 +78,9 @@ Config.prototype.controls.classSpan = {
 
 			return Boolean(
 				currentBpx &&
-					currentBpx !== editor.editor &&
-					btn.control.list !== undefined &&
-					present
+				currentBpx !== editor.editor &&
+				btn.control.list !== undefined &&
+				present
 			);
 		}
 

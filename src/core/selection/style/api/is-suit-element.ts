@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 import type { ICommitStyle, IStyle, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
@@ -44,9 +44,9 @@ export function isSuitElement(
 
 	const elmHasSameStyle = Boolean(
 		options.attributes?.style &&
-			(strictStyle
-				? hasSameStyle(elm, options.attributes.style as IStyle)
-				: hasSameStyleKeys(elm, options.attributes.style as IStyle))
+		(strictStyle
+			? hasSameStyle(elm, options.attributes.style as IStyle)
+			: hasSameStyleKeys(elm, options.attributes.style as IStyle))
 	);
 
 	if (elmHasSameStyle && !commitStyle.elementIsList) {
@@ -95,7 +95,7 @@ export function isSameStyleChild(
 
 	const elmHasSameStyle = Boolean(
 		options.attributes?.style &&
-			hasSameStyleKeys(elm, options.attributes?.style as IStyle)
+		hasSameStyleKeys(elm, options.attributes?.style as IStyle)
 	);
 
 	return elmIsSame && elmHasSameStyle;

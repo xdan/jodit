@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -86,6 +86,9 @@ import {
 
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 const __defaultClassesKey = 'data-jodit-default-classes';
+const NOEDIT = {
+	contenteditable: false
+};
 
 /**
  * Class Jodit. Main class
@@ -928,7 +931,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		if (super.lock(name)) {
 			this.__selectionLocked = this.s.save();
 			this.s.clear();
-			this.editor.classList.add('jodit_lock');
+			this.container.classList.add('jodit_lock');
 			this.e.fire('lock', true);
 			return true;
 		}
@@ -941,7 +944,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	 */
 	override unlock(): boolean {
 		if (super.unlock()) {
-			this.editor.classList.remove('jodit_lock');
+			this.container.classList.remove('jodit_lock');
 
 			if (this.__selectionLocked) {
 				this.s.restore();
@@ -1364,11 +1367,34 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			element.style.display = 'none';
 		}
 
-		const workplace = this.c.div('jodit-workplace', {
-			contenteditable: false
-		});
+		const SLOT = 'workplace-slot';
 
-		container.appendChild(workplace);
+		const topSlot = this.c.div(this.getFullElName(SLOT, 'top'), NOEDIT);
+
+		container.appendChild(topSlot);
+
+		const centerSlot = this.c.div(
+			this.getFullElName(SLOT, 'center'),
+			NOEDIT
+		);
+
+		const workplace = this.c.div('jodit-workplace', NOEDIT);
+
+		const leftSlot = this.c.div(this.getFullElName(SLOT, 'left'), NOEDIT);
+		const rightSlot = this.c.div(this.getFullElName(SLOT, 'right'), NOEDIT);
+
+		centerSlot.appendChild(leftSlot);
+		centerSlot.appendChild(workplace);
+		centerSlot.appendChild(rightSlot);
+
+		container.appendChild(centerSlot);
+
+		const bottomPanel = this.c.div(
+			this.getFullElName(SLOT, 'bottom'),
+			NOEDIT
+		);
+
+		container.appendChild(bottomPanel);
 
 		if (element.parentNode && element !== container) {
 			element.parentNode.insertBefore(container, element);
@@ -1393,6 +1419,13 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			element,
 			container,
 			workplace,
+			slots: {
+				top: topSlot,
+				bottom: bottomPanel,
+				center: centerSlot,
+				left: leftSlot,
+				right: rightSlot
+			},
 			statusbar: new StatusBar(this, container),
 			options: this.isReady
 				? (ConfigProto(

@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -198,6 +198,11 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		if (options?.name) {
 			this.name = options.name;
 		}
+	}
+
+	override setParentView(view: T): this {
+		this.elements?.forEach(elm => elm.setParentView(view));
+		return super.setParentView(view);
 	}
 
 	/** @override */

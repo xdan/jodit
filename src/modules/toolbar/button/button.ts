@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -287,11 +287,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		}
 
 		if (ctr.tooltip) {
-			state.tooltip = this.j.i18n(
-				isFunction(ctr.tooltip)
-					? ctr.tooltip(this.j, ctr, this)
-					: ctr.tooltip
-			);
+			state.tooltip = isFunction(ctr.tooltip)
+				? ctr.tooltip(this.j, ctr, this)
+				: ctr.tooltip;
 		}
 
 		state.hasTrigger = Boolean(ctr.list || (ctr.popup && ctr.exec));

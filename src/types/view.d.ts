@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -25,7 +25,7 @@ import type {
 	Nullable
 } from './types';
 import type { Attributes, ICreate } from './create';
-import type { IStorage } from './storage';
+import type { IAsyncStorage, IStorage } from './storage';
 import type { IUIButtonState } from './ui';
 import type { IEventEmitter } from './events';
 import type { IPluginButton } from './plugin';
@@ -107,13 +107,12 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 	ownerWindow?: Window;
 
 	language?: string;
+
+	eventEmmiter?: IEventEmitter;
 }
 
 interface IViewBased<T = IViewOptions>
-	extends IContainer,
-		IComponent,
-		IMods,
-		IElms {
+	extends IContainer, IComponent, IMods, IElms {
 	readonly isView: true;
 	readonly parent: Nullable<IViewBased>;
 
@@ -134,7 +133,9 @@ interface IViewBased<T = IViewOptions>
 	toggleFullSize(isFullSize?: boolean): void;
 
 	readonly buffer: IStorage;
+	/** @deprecated Use asyncStorage instead */
 	readonly storage: IStorage;
+	readonly asyncStorage: IAsyncStorage;
 
 	readonly progressbar: IProgressBar;
 

@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -30,6 +30,13 @@ interface IWorkPlace {
 	element: HTMLElement;
 	container: HTMLDivElement;
 	workplace: HTMLDivElement;
+	slots: {
+		top: HTMLDivElement;
+		bottom: HTMLDivElement;
+		center: HTMLDivElement;
+		left: HTMLDivElement;
+		right: HTMLDivElement;
+	};
 	statusbar: IStatusBar;
 	iframe?: HTMLIFrameElement | void;
 	editorWindow: Window;

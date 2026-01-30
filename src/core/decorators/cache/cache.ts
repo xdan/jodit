@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -11,14 +11,12 @@
  */
 
 import type {
-	IComponent,
 	IDictionary,
 	IViewBased,
 	IViewComponent,
 	Nullable
 } from 'jodit/types';
 import { STATUSES } from 'jodit/core/component/statuses';
-import { IS_PROD } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { isFunction, isViewObject } from 'jodit/core/helpers/checker';
 import { error } from 'jodit/core/helpers/utils/error/error';
@@ -147,13 +145,6 @@ export function cache<T, R>(
 	}
 
 	descriptor.get = function (this: T): R {
-		if (!IS_PROD) {
-			if ((this as IComponent).isInDestruct) {
-				console.error(
-					'Trying to access property in destructed component'
-				);
-			}
-		}
 		const value = getter.call(this);
 
 		if (value && (value as IDictionary).noCache === true) {

@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -40,9 +40,9 @@ export class addNewLine extends Plugin {
 	private __isMatchedTag = (node: Nullable<Node>): boolean =>
 		Boolean(
 			node &&
-				this.j.o.addNewLineTagsTriggers.includes(
-					node.nodeName.toLowerCase() as HTMLTagNames
-				)
+			this.j.o.addNewLineTagsTriggers.includes(
+				node.nodeName.toLowerCase() as HTMLTagNames
+			)
 		);
 
 	private __timeout!: number;

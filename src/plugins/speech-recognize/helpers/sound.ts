@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -35,8 +35,10 @@ export function sound({
 	}
 
 	// one context per document
-	const context = new ((globalWindow as any).AudioContext ||
-		(globalWindow as any as any).webkitAudioContext)();
+	const context = new (
+		(globalWindow as any).AudioContext ||
+		(globalWindow as any as any).webkitAudioContext
+	)();
 
 	const vol = context.createGain();
 	const osc = context.createOscillator();

@@ -1,13 +1,15 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 @import (reference) './mixins';
 
 .jodit,
 .jodit-container {
+	--jodit-workplace-height: auto;
+
 	&,
 	* {
 		box-sizing: border-box;
@@ -16,6 +18,10 @@
 	.jodit-workplace {
 		position: relative;
 		overflow: auto;
+		min-width: 0;
+		height: var(--jodit-workplace-height);
+		min-height: 0;
+		flex: 1 1 auto;
 
 		.jodit-wysiwyg,
 		.jodit-wysiwyg_iframe {

@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 import type { IStyle } from 'jodit/types';
@@ -19,26 +19,26 @@ import { css } from 'jodit/core/helpers/utils/css';
 export function hasSameStyle(elm: Node, rules: IStyle): boolean {
 	return Boolean(
 		!Dom.isTag(elm, 'font') &&
-			Dom.isHTMLElement(elm) &&
-			Object.keys(rules).every(property => {
-				const value = css(elm, property, true);
+		Dom.isHTMLElement(elm) &&
+		Object.keys(rules).every(property => {
+			const value = css(elm, property, true);
 
-				if (
-					value === '' &&
-					(rules[property] === '' || rules[property] == null)
-				) {
-					return true;
-				}
+			if (
+				value === '' &&
+				(rules[property] === '' || rules[property] == null)
+			) {
+				return true;
+			}
 
-				return (
-					!isVoid(value) &&
-					value !== '' &&
-					!isVoid(rules[property]) &&
-					normalizeCssValue(property, rules[property] as string)
-						.toString()
-						.toLowerCase() === value.toString().toLowerCase()
-				);
-			})
+			return (
+				!isVoid(value) &&
+				value !== '' &&
+				!isVoid(rules[property]) &&
+				normalizeCssValue(property, rules[property] as string)
+					.toString()
+					.toLowerCase() === value.toString().toLowerCase()
+			);
+		})
 	);
 }
 
@@ -56,12 +56,12 @@ if (globalDocument) {
 export function hasSameStyleKeys(elm: Node, rules: IStyle): boolean {
 	return Boolean(
 		!Dom.isTag(elm, 'font') &&
-			Dom.isHTMLElement(elm) &&
-			Object.keys(rules).every(property => {
-				const value = css(elm, property, true);
+		Dom.isHTMLElement(elm) &&
+		Object.keys(rules).every(property => {
+			const value = css(elm, property, true);
 
-				return value !== '';
-			})
+			return value !== '';
+		})
 	);
 }
 

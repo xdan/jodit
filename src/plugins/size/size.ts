@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -173,7 +173,12 @@ export class size extends Plugin {
 			this.__getNotWorkHeight();
 
 		if (isNumber(minHeight) && minHeight > 0) {
-			[this.j.workplace, this.j.iframe, this.j.editor].map(elm => {
+			[
+				this.j.workplace,
+				this.j.currentPlace.slots.center,
+				this.j.iframe,
+				this.j.editor
+			].map(elm => {
 				elm && css(elm, 'minHeight', minHeight);
 			});
 
@@ -183,7 +188,12 @@ export class size extends Plugin {
 		if (isNumber(this.j.o.maxHeight)) {
 			const maxHeight = this.j.o.maxHeight - this.__getNotWorkHeight();
 
-			[this.j.workplace, this.j.iframe, this.j.editor].map(elm => {
+			[
+				this.j.workplace,
+				this.j.currentPlace.slots.center,
+				this.j.iframe,
+				this.j.editor
+			].map(elm => {
 				elm && css(elm, 'maxHeight', maxHeight);
 			});
 
@@ -191,12 +201,16 @@ export class size extends Plugin {
 		}
 
 		if (this.j.container) {
-			css(
-				this.j.workplace,
-				'height',
+			const heightValue =
 				this.j.o.height !== 'auto' || this.j.isFullSize
 					? this.j.container.offsetHeight - this.__getNotWorkHeight()
-					: 'auto'
+					: 'auto';
+
+			css(this.j.workplace, 'height', heightValue);
+
+			this.j.container.style.setProperty(
+				'--jd-jodit-workplace-height',
+				isNumber(heightValue) ? heightValue + 'px' : heightValue
 			);
 		}
 

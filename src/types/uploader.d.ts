@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -135,7 +135,10 @@ export interface IUploaderOptions<T> {
 	 * });
 	 * ```
 	 */
-	customUploadFunction?: (requestData: any, showProgress:(progress:number) => void ) => Promise<IUploaderAnswer>;
+	customUploadFunction?: (
+		requestData: any,
+		showProgress: (progress: number) => void
+	) => Promise<IUploaderAnswer>;
 }
 
 export interface IUploader extends IViewComponent {
@@ -156,6 +159,8 @@ export interface IUploader extends IViewComponent {
 		handlerSuccess?: HandlerSuccess,
 		handlerError?: HandlerError
 	): void;
+
+	upload(files: FileList | File[] | null): Promise<IUploaderData>;
 
 	readonly path: string;
 

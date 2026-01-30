@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -283,8 +283,8 @@ export interface IFileBrowserDataProvider extends IDestructible {
 // TODO - Remove extending
 export interface IFileBrowser<
 	T extends IFileBrowserOptions = IFileBrowserOptions
-> extends IViewWithToolbar<T>,
-		IDlgs {
+>
+	extends IViewWithToolbar<T>, IDlgs {
 	readonly dataProvider: IFileBrowserDataProvider;
 	readonly state: IFileBrowserState & IObservable;
 
@@ -334,8 +334,7 @@ export interface IUniqueHash {
 }
 
 export interface IFileBrowserItemWrapper
-	extends IFileBrowserItemElement,
-		IUniqueHash {
+	extends IFileBrowserItemElement, IUniqueHash {
 	path: string;
 	fileURL: string;
 	imageURL: string;

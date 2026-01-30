@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -35,8 +35,7 @@ import type { CanUndef, IDestructible } from 'jodit/types';
 export abstract class Eventify<
 	MAP extends { [key: string]: (...args: any[]) => any },
 	EVENT extends keyof MAP = keyof MAP
-> implements IDestructible
-{
+> implements IDestructible {
 	private __map: Map<keyof MAP, Set<Function>> = new Map();
 
 	on(name: EVENT, func: MAP[EVENT]): this {

@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -10,17 +10,17 @@
 
 import type { IStorage, StorageValueType } from 'jodit/types';
 
-export class MemoryStorageProvider<T = StorageValueType>
-	implements IStorage<T>
-{
+export class MemoryStorageProvider<
+	T = StorageValueType
+> implements IStorage<T> {
 	private data: Map<string, T> = new Map();
 
-	set(key: string, value: T): IStorage<T> {
+	set(key: string, value: T): this {
 		this.data.set(key, value);
 		return this;
 	}
 
-	delete(key: string): IStorage<T> {
+	delete(key: string): this {
 		this.data.delete(key);
 		return this;
 	}
@@ -33,7 +33,7 @@ export class MemoryStorageProvider<T = StorageValueType>
 		return this.data.has(key);
 	}
 
-	clear(): IStorage<T> {
+	clear(): this {
 		this.data.clear();
 		return this;
 	}

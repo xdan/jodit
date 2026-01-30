@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -79,9 +79,9 @@ Config.prototype.controls.fontsize = {
 		const normalize = button.control.data?.normalize ?? (<T>(v: T): T => v);
 		return Boolean(
 			value &&
-				button.control.args &&
-				normalize(button.control.args[0].toString()) ===
-					normalize(value.toString())
+			button.control.args &&
+			normalize(button.control.args[0].toString()) ===
+				normalize(value.toString())
 		);
 	},
 

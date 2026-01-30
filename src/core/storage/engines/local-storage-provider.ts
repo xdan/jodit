@@ -1,66 +1,76 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
  * @module storage
  */
 
-import type { BooleanFunction, IStorage, StorageValueType } from 'jodit/types';
+import type { IStorage, StorageValueType } from 'jodit/types';
+
+export type WebStorageStrategy = 'localStorage' | 'sessionStorage';
 
 /**
  * Check if user disable local storages/cookie etc.
  */
-export const canUsePersistentStorage: BooleanFunction =
-	((): BooleanFunction => {
-		const canUse = (): boolean => {
-			const tmpKey = '___Jodit___' + Math.random().toString();
+export const canUsePersistentStorage = (
+	strategy: WebStorageStrategy = 'localStorage'
+): boolean => {
+	const cache = new Map<WebStorageStrategy, boolean>();
 
-			try {
-				localStorage.setItem(tmpKey, '1');
-				const result = localStorage.getItem(tmpKey) === '1';
-				localStorage.removeItem(tmpKey);
+	return ((): boolean => {
+		if (cache.has(strategy)) {
+			return cache.get(strategy)!;
+		}
 
-				return result;
-			} catch {}
+		const tmpKey = '___Jodit___' + Math.random().toString();
 
-			return false;
-		};
+		const storage =
+			strategy === 'sessionStorage' ? sessionStorage : localStorage;
 
-		let result: boolean | undefined;
+		try {
+			storage.setItem(tmpKey, '1');
+			const result = storage.getItem(tmpKey) === '1';
+			storage.removeItem(tmpKey);
 
-		return () => {
-			if (result === undefined) {
-				result = canUse();
-			}
-
+			cache.set(strategy, result);
 			return result;
-		};
+		} catch {}
+
+		cache.set(strategy, false);
+		return false;
 	})();
+};
 
 /**
- * Persistent storage in localStorage
+ * Persistent storage in localStorage or sessionStorage
  */
 export class LocalStorageProvider<T = StorageValueType> implements IStorage<T> {
-	set(key: string, value: T): IStorage<T> {
+	private get storage(): Storage {
+		return this.strategy === 'sessionStorage'
+			? sessionStorage
+			: localStorage;
+	}
+
+	set(key: string, value: T): this {
 		try {
-			const buffer = localStorage.getItem(this.rootKey);
+			const buffer = this.storage.getItem(this.rootKey);
 
 			const json = buffer ? JSON.parse(buffer) : {};
 
 			json[key] = value;
 
-			localStorage.setItem(this.rootKey, JSON.stringify(json));
+			this.storage.setItem(this.rootKey, JSON.stringify(json));
 		} catch {}
 
 		return this;
 	}
 
-	delete(key: string): IStorage<T> {
+	delete(key: string): this {
 		try {
-			localStorage.removeItem(this.rootKey);
+			this.storage.removeItem(this.rootKey);
 		} catch {}
 
 		return this;
@@ -68,7 +78,7 @@ export class LocalStorageProvider<T = StorageValueType> implements IStorage<T> {
 
 	get<R = T>(key: string): R | void {
 		try {
-			const buffer = localStorage.getItem(this.rootKey);
+			const buffer = this.storage.getItem(this.rootKey);
 
 			const json = buffer ? JSON.parse(buffer) : {};
 
@@ -80,11 +90,14 @@ export class LocalStorageProvider<T = StorageValueType> implements IStorage<T> {
 		return this.get(key) != null;
 	}
 
-	constructor(readonly rootKey: string) {}
+	constructor(
+		readonly rootKey: string,
+		readonly strategy: WebStorageStrategy = 'localStorage'
+	) {}
 
-	clear(): IStorage<T> {
+	clear(): this {
 		try {
-			localStorage.removeItem(this.rootKey);
+			this.storage.removeItem(this.rootKey);
 		} catch {}
 
 		return this;

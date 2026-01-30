@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 import type { Variables } from '../variables';
@@ -22,18 +22,21 @@ export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 		onlyTS,
 		debug,
 		exclude,
-		progressFunction
+		progressFunction,
+		stat
 	} = vars;
 
 	const plugins: Array<webpack.ProgressPlugin | webpack.DelegatedPlugin> = [
 		define(vars)
 	];
 
-	plugins.push(
-		new webpack.ProgressPlugin(
-			progressFunction ? progressFunction : undefined
-		)
-	);
+	if (stat) {
+		plugins.push(
+			new webpack.ProgressPlugin(
+				progressFunction ? progressFunction : undefined
+			)
+		);
+	}
 
 	if (isProd) {
 		if (!onlyTS) {

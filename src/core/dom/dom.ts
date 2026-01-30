@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -407,10 +407,10 @@ export class Dom {
 		// Duck-typing
 		return Boolean(
 			object &&
-				isString((object as Node).nodeName) &&
-				typeof (object as Node).nodeType === 'number' &&
-				(object as Node).childNodes &&
-				isFunction((object as Node).appendChild)
+			isString((object as Node).nodeName) &&
+			typeof (object as Node).nodeType === 'number' &&
+			(object as Node).childNodes &&
+			isFunction((object as Node).appendChild)
 		);
 	}
 
@@ -840,8 +840,8 @@ export class Dom {
 			n =>
 				Boolean(
 					n &&
-						(!(Dom.isText(n) || Dom.isComment(n)) ||
-							trim(n?.nodeValue || '').length)
+					(!(Dom.isText(n) || Dom.isComment(n)) ||
+						trim(n?.nodeValue || '').length)
 				),
 			root
 		);

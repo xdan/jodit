@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -228,7 +228,12 @@ Config.prototype.controls.table = {
 								block,
 								fake
 							);
-							Dom.after(firstPart!, table);
+
+							if (firstPart) {
+								Dom.after(firstPart, table);
+							} else {
+								Dom.after(block, table);
+							}
 						}
 					} else {
 						editor.s.insertNode(table, false);

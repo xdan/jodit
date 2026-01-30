@@ -1,7 +1,7 @@
 /*!
  * Jodit Editor (https://xdsoft.net/jodit/)
  * Released under MIT see LICENSE.txt in the project root for license information.
- * Copyright (c) 2013-2025 Valeriy Chupurnov. All rights reserved. https://xdsoft.net
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
 /**
@@ -962,13 +962,13 @@ export class Selection implements ISelect {
 		const isSignificant = (elm: Node | null): boolean =>
 			Boolean(
 				elm &&
-					!Dom.isTag(elm, 'br') &&
-					!Dom.isEmptyTextNode(elm) &&
-					!Dom.isTemporary(elm) &&
-					!(
-						Dom.isElement(elm) &&
-						this.j.e.fire('isInvisibleForCursor', elm) === true
-					)
+				!Dom.isTag(elm, 'br') &&
+				!Dom.isEmptyTextNode(elm) &&
+				!Dom.isTemporary(elm) &&
+				!(
+					Dom.isElement(elm) &&
+					this.j.e.fire('isInvisibleForCursor', elm) === true
+				)
 			);
 
 		// check right offset
