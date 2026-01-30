@@ -265,7 +265,11 @@ export class imageProperties extends Plugin {
 
 		try {
 			this.__lock();
-			await image.decode();
+			try {
+				await image.decode();
+			} catch (e: unknown) {
+				console.error(e);
+			}
 			if (this.state.sizeIsLocked && isNumeric(values.imageWidth)) {
 				const w = parseFloat(values.imageWidth.toString());
 				values.imageHeight = Math.round(w / this.state.ratio);

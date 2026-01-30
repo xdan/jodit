@@ -21,7 +21,11 @@ export async function readSizes(
 	values: EditValues,
 	state: ImagePropertiesState
 ): Promise<void> {
-	await image.decode();
+	try {
+		await image.decode();
+	} catch (e: unknown) {
+		console.error(e);
+	}
 
 	const width = css(image, 'width', true) || attr(image, 'width') || false;
 
