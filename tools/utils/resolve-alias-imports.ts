@@ -75,7 +75,8 @@ const allowPackages = new Set([
 	'es6-promise/auto',
 	'core-js/es/symbol',
 	'core-js/es/array/find-index',
-	'core-js/es/array/from'
+	'core-js/es/array/from',
+	'marked'
 ]);
 
 const allowPluginsInESM = new Set(
