@@ -101,4 +101,9 @@ export interface AiAssistantSettings {
 
 	/** Prompt for translating text to Arabic */
 	aiTranslateToArabicPrompt: string;
+
+	[key: string]:
+		| string
+		| ((prompt: string, htmlFragment: string) => Promise<string>)
+		| undefined;
 }
