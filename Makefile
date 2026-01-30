@@ -291,6 +291,7 @@ screenshots-test:
 		-e FAT=$(fat) \
 		jodit-screenshots \
 		npx playwright test
+
 .PHONY: screenshots-build-image
 screenshots-build-image:
 	docker build -t jodit-screenshots -f test/screenshots/Dockerfile .

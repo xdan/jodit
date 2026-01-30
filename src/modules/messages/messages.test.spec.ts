@@ -28,6 +28,7 @@ test.describe('Messages screenshot testing', () => {
 			editor.message.info('Hello world! This is info message');
 			editor.message.success('Hello Mars! This is success message');
 			editor.message.error('Hello Venus! This is error message');
+			editor.focus();
 			await editor.async.delay(400);
 		});
 
