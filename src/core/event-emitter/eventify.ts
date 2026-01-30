@@ -35,8 +35,7 @@ import type { CanUndef, IDestructible } from 'jodit/types';
 export abstract class Eventify<
 	MAP extends { [key: string]: (...args: any[]) => any },
 	EVENT extends keyof MAP = keyof MAP
-> implements IDestructible
-{
+> implements IDestructible {
 	private __map: Map<keyof MAP, Set<Function>> = new Map();
 
 	on(name: EVENT, func: MAP[EVENT]): this {

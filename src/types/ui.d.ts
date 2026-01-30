@@ -22,11 +22,7 @@ import type { ButtonsOption } from './toolbar';
 import type { IElms, IMods } from './traits';
 
 export interface IUIElement
-	extends IViewComponent,
-		IContainer,
-		IDestructible,
-		IMods,
-		IElms {
+	extends IViewComponent, IContainer, IDestructible, IMods, IElms {
 	parentElement: Nullable<IUIElement>;
 	container: HTMLElement;
 	name: string;

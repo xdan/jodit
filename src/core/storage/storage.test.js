@@ -19,6 +19,7 @@ describe('Storage', () => {
 
 		describe('localStorage strategy (default)', () => {
 			beforeEach(() => {
+				unmockPromise();
 				provider = new LocalStorageProvider('TestApp');
 			});
 
@@ -71,6 +72,7 @@ describe('Storage', () => {
 
 		describe('sessionStorage strategy', () => {
 			beforeEach(() => {
+				unmockPromise();
 				sessionStorage.clear();
 				provider = new LocalStorageProvider(
 					'TestApp',
@@ -182,6 +184,7 @@ describe('Storage', () => {
 		let provider;
 
 		beforeEach(async () => {
+			unmockPromise();
 			// Clean up any existing databases
 			try {
 				indexedDB.deleteDatabase('TestDB');

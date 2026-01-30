@@ -49,9 +49,7 @@ Config.prototype.controls.classSpan = {
 
 			return Boolean(
 				button.control.args &&
-					currentBpx.classList.contains(
-						button.control.args[0].toString()
-					)
+				currentBpx.classList.contains(button.control.args[0].toString())
 			);
 		}
 
@@ -80,9 +78,9 @@ Config.prototype.controls.classSpan = {
 
 			return Boolean(
 				currentBpx &&
-					currentBpx !== editor.editor &&
-					btn.control.list !== undefined &&
-					present
+				currentBpx !== editor.editor &&
+				btn.control.list !== undefined &&
+				present
 			);
 		}
 

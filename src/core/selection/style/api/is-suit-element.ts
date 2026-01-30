@@ -44,9 +44,9 @@ export function isSuitElement(
 
 	const elmHasSameStyle = Boolean(
 		options.attributes?.style &&
-			(strictStyle
-				? hasSameStyle(elm, options.attributes.style as IStyle)
-				: hasSameStyleKeys(elm, options.attributes.style as IStyle))
+		(strictStyle
+			? hasSameStyle(elm, options.attributes.style as IStyle)
+			: hasSameStyleKeys(elm, options.attributes.style as IStyle))
 	);
 
 	if (elmHasSameStyle && !commitStyle.elementIsList) {
@@ -95,7 +95,7 @@ export function isSameStyleChild(
 
 	const elmHasSameStyle = Boolean(
 		options.attributes?.style &&
-			hasSameStyleKeys(elm, options.attributes?.style as IStyle)
+		hasSameStyleKeys(elm, options.attributes?.style as IStyle)
 	);
 
 	return elmIsSame && elmHasSameStyle;

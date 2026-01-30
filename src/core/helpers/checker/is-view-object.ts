@@ -18,8 +18,8 @@ import { isFunction } from './is-function';
 export function isViewObject(jodit: unknown): jodit is IViewBased {
 	return Boolean(
 		jodit &&
-			jodit instanceof Object &&
-			isFunction(jodit.constructor) &&
-			(jodit as IViewBased).isView
+		jodit instanceof Object &&
+		isFunction(jodit.constructor) &&
+		(jodit as IViewBased).isView
 	);
 }

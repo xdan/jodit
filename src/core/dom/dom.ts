@@ -407,10 +407,10 @@ export class Dom {
 		// Duck-typing
 		return Boolean(
 			object &&
-				isString((object as Node).nodeName) &&
-				typeof (object as Node).nodeType === 'number' &&
-				(object as Node).childNodes &&
-				isFunction((object as Node).appendChild)
+			isString((object as Node).nodeName) &&
+			typeof (object as Node).nodeType === 'number' &&
+			(object as Node).childNodes &&
+			isFunction((object as Node).appendChild)
 		);
 	}
 
@@ -840,8 +840,8 @@ export class Dom {
 			n =>
 				Boolean(
 					n &&
-						(!(Dom.isText(n) || Dom.isComment(n)) ||
-							trim(n?.nodeValue || '').length)
+					(!(Dom.isText(n) || Dom.isComment(n)) ||
+						trim(n?.nodeValue || '').length)
 				),
 			root
 		);

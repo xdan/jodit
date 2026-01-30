@@ -79,9 +79,9 @@ Config.prototype.controls.fontsize = {
 		const normalize = button.control.data?.normalize ?? (<T>(v: T): T => v);
 		return Boolean(
 			value &&
-				button.control.args &&
-				normalize(button.control.args[0].toString()) ===
-					normalize(value.toString())
+			button.control.args &&
+			normalize(button.control.args[0].toString()) ===
+				normalize(value.toString())
 		);
 	},
 

@@ -283,8 +283,8 @@ export interface IFileBrowserDataProvider extends IDestructible {
 // TODO - Remove extending
 export interface IFileBrowser<
 	T extends IFileBrowserOptions = IFileBrowserOptions
-> extends IViewWithToolbar<T>,
-		IDlgs {
+>
+	extends IViewWithToolbar<T>, IDlgs {
 	readonly dataProvider: IFileBrowserDataProvider;
 	readonly state: IFileBrowserState & IObservable;
 
@@ -334,8 +334,7 @@ export interface IUniqueHash {
 }
 
 export interface IFileBrowserItemWrapper
-	extends IFileBrowserItemElement,
-		IUniqueHash {
+	extends IFileBrowserItemElement, IUniqueHash {
 	path: string;
 	fileURL: string;
 	imageURL: string;

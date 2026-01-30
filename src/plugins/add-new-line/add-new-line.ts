@@ -40,9 +40,9 @@ export class addNewLine extends Plugin {
 	private __isMatchedTag = (node: Nullable<Node>): boolean =>
 		Boolean(
 			node &&
-				this.j.o.addNewLineTagsTriggers.includes(
-					node.nodeName.toLowerCase() as HTMLTagNames
-				)
+			this.j.o.addNewLineTagsTriggers.includes(
+				node.nodeName.toLowerCase() as HTMLTagNames
+			)
 		);
 
 	private __timeout!: number;

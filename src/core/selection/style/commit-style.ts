@@ -64,7 +64,7 @@ export class CommitStyle implements ICommitStyle {
 	get isElementCommit(): boolean {
 		return Boolean(
 			this.options.element &&
-				this.options.element !== this.options.defaultTag
+			this.options.element !== this.options.defaultTag
 		);
 	}
 

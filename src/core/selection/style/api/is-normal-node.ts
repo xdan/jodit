@@ -15,8 +15,8 @@ import { isMarker } from 'jodit/core/helpers/checker/is-marker';
 export function isNormalNode(elm: Nullable<Node>): boolean {
 	return Boolean(
 		elm &&
-			!Dom.isEmptyTextNode(elm) &&
-			!Dom.isTemporary(elm) &&
-			!isMarker(elm)
+		!Dom.isEmptyTextNode(elm) &&
+		!Dom.isTemporary(elm) &&
+		!isMarker(elm)
 	);
 }

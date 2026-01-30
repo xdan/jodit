@@ -35,8 +35,10 @@ export function sound({
 	}
 
 	// one context per document
-	const context = new ((globalWindow as any).AudioContext ||
-		(globalWindow as any as any).webkitAudioContext)();
+	const context = new (
+		(globalWindow as any).AudioContext ||
+		(globalWindow as any as any).webkitAudioContext
+	)();
 
 	const vol = context.createGain();
 	const osc = context.createOscillator();

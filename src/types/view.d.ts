@@ -112,10 +112,7 @@ interface IViewOptions extends ILanguageOptions, IToolbarOptions {
 }
 
 interface IViewBased<T = IViewOptions>
-	extends IContainer,
-		IComponent,
-		IMods,
-		IElms {
+	extends IContainer, IComponent, IMods, IElms {
 	readonly isView: true;
 	readonly parent: Nullable<IViewBased>;
 

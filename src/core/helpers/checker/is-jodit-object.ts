@@ -18,10 +18,10 @@ import { isFunction } from './is-function';
 export function isJoditObject(jodit: unknown): jodit is IJodit {
 	return Boolean(
 		jodit &&
-			jodit instanceof Object &&
-			isFunction(jodit.constructor) &&
-			// @ts-ignore
-			((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
-				(jodit as IJodit).isJodit)
+		jodit instanceof Object &&
+		isFunction(jodit.constructor) &&
+		// @ts-ignore
+		((typeof Jodit !== 'undefined' && jodit instanceof Jodit) ||
+			(jodit as IJodit).isJodit)
 	);
 }

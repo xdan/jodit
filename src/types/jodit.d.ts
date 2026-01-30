@@ -36,7 +36,7 @@ interface IWorkPlace {
 		center: HTMLDivElement;
 		left: HTMLDivElement;
 		right: HTMLDivElement;
-	}
+	};
 	statusbar: IStatusBar;
 	iframe?: HTMLIFrameElement | void;
 	editorWindow: Window;

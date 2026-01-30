@@ -14,9 +14,9 @@ import { IS_PROD } from 'jodit/core/constants';
 /**
  * Persistent storage using IndexedDB
  */
-export class IndexedDBProvider<T = StorageValueType>
-	implements IAsyncStorage<T>
-{
+export class IndexedDBProvider<
+	T = StorageValueType
+> implements IAsyncStorage<T> {
 	private dbPromise: Promise<IDBDatabase> | null = null;
 	private readonly DB_VERSION = 1;
 	private readonly storeName: string;

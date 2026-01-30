@@ -962,13 +962,13 @@ export class Selection implements ISelect {
 		const isSignificant = (elm: Node | null): boolean =>
 			Boolean(
 				elm &&
-					!Dom.isTag(elm, 'br') &&
-					!Dom.isEmptyTextNode(elm) &&
-					!Dom.isTemporary(elm) &&
-					!(
-						Dom.isElement(elm) &&
-						this.j.e.fire('isInvisibleForCursor', elm) === true
-					)
+				!Dom.isTag(elm, 'br') &&
+				!Dom.isEmptyTextNode(elm) &&
+				!Dom.isTemporary(elm) &&
+				!(
+					Dom.isElement(elm) &&
+					this.j.e.fire('isInvisibleForCursor', elm) === true
+				)
 			);
 
 		// check right offset
