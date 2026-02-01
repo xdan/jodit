@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.8.6
+
+#### :house: Internal
+
+- refactor: reorganize workflow jobs to separate linting and building steps
+
 ## 4.8.3
 
 #### :house: Internal
