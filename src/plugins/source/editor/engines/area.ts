@@ -18,10 +18,14 @@ export class TextAreaEditor
 	extends SourceEditor<HTMLTextAreaElement>
 	implements ISourceEditor
 {
-	private autosize = this.j.async.debounce(() => {
-		this.instance.style.height = 'auto';
-		this.instance.style.height = this.instance.scrollHeight + 'px';
-	}, this.j.defaultTimeout);
+	private autosize = this.j.async.debounce(
+		() => {
+			this.instance.style.height = 'auto';
+			this.instance.style.height = this.instance.scrollHeight + 'px';
+		},
+		this.j.defaultTimeout,
+		true
+	);
 
 	init(editor: IJodit): any {
 		this.instance = editor.c.element('textarea', {

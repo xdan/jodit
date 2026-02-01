@@ -186,28 +186,27 @@ export class AceEditor
 			this.onReady();
 		};
 
-		editor.e.on('afterSetMode', () => {
+		const initAceEditor = (): void => {
 			if (
-				editor.getRealMode() !== constants.MODE_SOURCE &&
-				editor.getMode() !== constants.MODE_SPLIT
+				editor.isInDestruct ||
+				(editor.getRealMode() !== constants.MODE_SOURCE &&
+					editor.getMode() !== constants.MODE_SPLIT)
 			) {
 				return;
 			}
 
 			this.fromWYSIWYG();
 			tryInitAceEditor();
-		});
+		};
 
-		tryInitAceEditor();
+		editor.e.on('afterSetMode', initAceEditor);
+
+		initAceEditor();
 
 		// global add ace editor in browser
 		if (!this.aceExists()) {
 			loadNext(editor, editor.o.sourceEditorCDNUrlsJS)
-				.then(() => {
-					if (!editor.isInDestruct) {
-						tryInitAceEditor();
-					}
-				})
+				.then(initAceEditor)
 				.catch(() => null);
 		}
 	}

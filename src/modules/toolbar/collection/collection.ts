@@ -22,7 +22,13 @@ import type {
 	IViewWithToolbar,
 	Nullable
 } from 'jodit/types';
-import { autobind, component, debounce, hook } from 'jodit/core/decorators';
+import {
+	autobind,
+	component,
+	debounce,
+	hook,
+	watch
+} from 'jodit/core/decorators';
 import { error } from 'jodit/core/helpers/utils/error/error';
 import { UIList } from 'jodit/core/ui';
 import { makeButton, makeSelect } from 'jodit/modules/toolbar/factory';
@@ -40,7 +46,7 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 	}
 
 	private readonly __listenEvents =
-		'updatePlugins updateToolbar changeStack mousedown mouseup keydown change afterInit readonly afterResize ' +
+		'updatePlugins updateToolbar changeStack mousedown mouseup keydown change readonly afterResize ' +
 		'selectionchange changeSelection focus afterSetMode touchstart focus blur';
 
 	/**
@@ -86,6 +92,7 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		return button.target || null;
 	}
 
+	@watch(':afterInit')
 	@autobind
 	private __immediateUpdate(): void {
 		if (this.isDestructed || this.j.isLocked) {

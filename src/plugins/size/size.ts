@@ -43,7 +43,7 @@ export class size extends Plugin {
 				this.__resizeWorkspaceImd
 			);
 
-		this.__initialize();
+		this.__immediateInitialize();
 	}
 
 	/**
@@ -51,6 +51,10 @@ export class size extends Plugin {
 	 */
 	@throttle()
 	private __initialize(): void {
+		this.__immediateInitialize();
+	}
+
+	private __immediateInitialize(): void {
 		const { j } = this;
 
 		if (j.o.inline) {
