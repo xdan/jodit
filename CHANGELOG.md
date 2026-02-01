@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.8.3
+
+#### :house: Internal
+
+- feat: enhance editor functionality with MutationObserver and refactor initialization methods
+
 ## 4.8.1
 
 #### :rocket: New Feature

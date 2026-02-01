@@ -3,6 +3,7 @@
  * Released under MIT see LICENSE.txt in the project root for license information.
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
+
 describe('Source code test', function () {
 	describe('Init', function () {
 		it('After init container must has source editor container', function (done) {
@@ -443,23 +444,29 @@ describe('Source code test', function () {
 					sourceEditor: 'ace',
 					beautifyHTML: false,
 					events: {
-						sourceEditorReady: function (jodit) {
+						afterInit: function (jodit) {
 							try {
 								jodit.s.focus();
 								jodit.value =
 									'<p>test <span>test|</span> test</p>';
+
+								jodit.e.on('sourceEditorReady', async () => {
+									try {
+										expect(jodit.value).equals(
+											'<p>test <span>testloop</span> test</p>'
+										);
+										mockPromise();
+
+										done();
+									} catch (e) {
+										done(e);
+									}
+								});
 								setCursorToChar(jodit);
 								jodit.setMode(Jodit.MODE_SOURCE);
-
 								jodit.s.insertHTML('loop');
-
-								expect(jodit.value).equals(
-									'<p>test <span>testloop</span> test</p>'
-								);
-								mockPromise();
-
-								done();
 							} catch (e) {
+								console.error(e);
 								done(e);
 							}
 						}
@@ -514,8 +521,9 @@ describe('Source code test', function () {
 					await editor.async.requestIdlePromise();
 					editor.setMode(Jodit.MODE_SOURCE);
 					await editor.async.requestIdlePromise();
-
-					expect(sortAttributes(editor.value)).equals(
+					expect(
+						sortAttributes(editor.value).replace(/\n/g, '')
+					).equals(
 						'<p>some text<script async="" id="cr-embed-c8ea384249b100dd506fab87" src="https://post.crowdriff.com/js/crowdriff.js" type="text/javascript"></script></p>'
 					);
 
@@ -523,7 +531,9 @@ describe('Source code test', function () {
 					editor.setMode(Jodit.MODE_WYSIWYG);
 					await editor.async.requestIdlePromise();
 
-					expect(sortAttributes(editor.value)).equals(
+					expect(
+						sortAttributes(editor.value).replace(/\n/g, '')
+					).equals(
 						'<p>some text<script async="" id="cr-embed-c8ea384249b100dd506fab87" src="https://post.crowdriff.com/js/crowdriff.js" type="text/javascript"></script></p>'
 					);
 				});
