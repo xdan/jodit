@@ -13,6 +13,12 @@
 
 #### :house: Internal
 
+- feat: add issue templates for bug reports and feature requests
+
+## 4.8.8
+
+#### :house: Internal
+
 - fix: ensure tags are ignored on push events in tests workflow
 
 ## 4.8.6
