@@ -181,7 +181,8 @@ class xpath extends Plugin {
 
 	private calcPath: () => void = this.j.async.debounce(
 		this.calcPathImd,
-		this.j.defaultTimeout * 2
+		this.j.defaultTimeout * 2,
+		true
 	);
 
 	protected container?: HTMLElement;

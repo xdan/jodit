@@ -1,0 +1,90 @@
+name: Bug Report
+description: Report a bug in Jodit Editor
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug! Please fill out the form below.
+
+  - type: input
+    id: version
+    attributes:
+      label: Jodit Version
+      description: What version of Jodit are you using?
+      placeholder: "4.x.x"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - iOS
+        - Android
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: react
+    attributes:
+      label: Is React App?
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: reproduced
+    attributes:
+      label: Reproduced on xdsoft.net?
+      description: Can you reproduce this bug on https://xdsoft.net/jodit/?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Code to reproduce
+      description: A self-contained demonstration of the problem
+      render: js
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What actually happened?
+    validations:
+      required: true

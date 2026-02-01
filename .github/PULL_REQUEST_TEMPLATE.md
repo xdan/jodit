@@ -1,14 +1,14 @@
-<!--
+## Description
 
-Thank you for submitting a pull request!
+<!-- Describe your changes -->
 
-Here's a checklist you might find useful.
-[ ] There is an associated issue that is labelled
-  'Bug' or 'help wanted' or is in the Community milestone
-[ ] Code is up-to-date with the `main` branch
-[ ] You've successfully run `npm test` locally
-[ ] There are new or updated tests validating the change
-
--->
+## Related Issue
 
 Fixes #
+
+## Checklist
+
+- [ ] There is an associated issue labeled `bug` or `enhancement`
+- [ ] Code is up-to-date with the `main` branch
+- [ ] `npm test` passes locally
+- [ ] New or updated tests validate the change
