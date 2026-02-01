@@ -7,8 +7,8 @@ on:
     tags: ["*"]
 
 jobs:
-  build:
-    name: Build
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
 
     steps:
@@ -24,6 +24,21 @@ jobs:
 
       - name: Lint
         run: make lint
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
 
       - name: Build
         run: make build-all
@@ -41,7 +56,7 @@ jobs:
   test:
     name: Test (${{ matrix.build }})
     runs-on: ubuntu-latest
-    needs: build
+    needs: [lint, build]
 
     strategy:
       fail-fast: false
