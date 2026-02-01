@@ -3,6 +3,7 @@ name: Generate documentation
 on:
     push:
         branches: [main]
+        tags-ignore: [ '*' ]
 
 jobs:
     docs:
