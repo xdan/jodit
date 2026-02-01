@@ -191,6 +191,23 @@ class xpath extends Plugin {
 		if (this.j.o.showXPathInStatusbar) {
 			this.container = this.j.c.div('jodit-xpath');
 
+			const init = (): void => {
+				if (!this.j.o.showXPathInStatusbar || !this.container) {
+					return;
+				}
+
+				this.j.statusbar.append(this.container);
+
+				if (this.j.getRealMode() === MODE_WYSIWYG) {
+					this.calcPath();
+				} else {
+					if (this.container) {
+						this.container.innerHTML = INVISIBLE_SPACE;
+					}
+					this.appendSelectAll();
+				}
+			};
+
 			this.j.e
 				.off('.xpath')
 				.on(
@@ -199,23 +216,10 @@ class xpath extends Plugin {
 				)
 				.on(
 					'afterSetMode.xpath afterInit.xpath changePlace.xpath',
-					() => {
-						if (!this.j.o.showXPathInStatusbar || !this.container) {
-							return;
-						}
-
-						this.j.statusbar.append(this.container);
-
-						if (this.j.getRealMode() === MODE_WYSIWYG) {
-							this.calcPath();
-						} else {
-							if (this.container) {
-								this.container.innerHTML = INVISIBLE_SPACE;
-							}
-							this.appendSelectAll();
-						}
-					}
+					init
 				);
+
+			init();
 
 			this.calcPath();
 		}
