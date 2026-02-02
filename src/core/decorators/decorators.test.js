@@ -53,11 +53,12 @@ describe('Decorators', () => {
 			editor = getJodit();
 		});
 
+		let i = 0;
 		beforeEach(() => {
 			if (useClasses) {
 				A = class extends Jodit.modules.UIElement {
 					className() {
-						return 'A';
+						return 'A' + i++;
 					}
 
 					setStatus(status) {
@@ -74,7 +75,7 @@ describe('Decorators', () => {
 
 				B = class extends DecoratedA {
 					className() {
-						return 'B';
+						return 'B' + i++;
 					}
 				};
 			} else {
@@ -89,7 +90,7 @@ describe('Decorators', () => {
 					}
 
 					A.prototype.className = function () {
-						return 'A';
+						return 'A' + i++;
 					};
 
 					A.prototype.setStatus = function (status) {
@@ -117,7 +118,7 @@ describe('Decorators', () => {
 					}
 
 					B.prototype.className = function () {
-						return 'B';
+						return 'B' + i++;
 					};
 					return B;
 				})(DecoratedA);
@@ -131,7 +132,9 @@ describe('Decorators', () => {
 		it('Should set ready status after new instance DecoratedA', () => {
 			const a = new DecoratedA(editor);
 			expect(a.componentStatus).eq('ready');
-			expect(statuses).deep.eq(['readyA']);
+			expect(statuses.map(n => n.replace(/\d+/g, ''))).deep.eq([
+				'readyA'
+			]);
 		});
 
 		it('Should not set ready status after new instance A', () => {
@@ -149,7 +152,9 @@ describe('Decorators', () => {
 		it('Should run setStatus only for root constructor', () => {
 			const b = new DecoratedB(editor);
 			expect(b.componentStatus).eq('ready');
-			expect(statuses).deep.eq(['readyB']);
+			expect(statuses.map(n => n.replace(/\d+/g, ''))).deep.eq([
+				'readyB'
+			]);
 		});
 
 		it('Should run hooks(ready) for all children', () => {
@@ -160,7 +165,10 @@ describe('Decorators', () => {
 			);
 			const b = new DecoratedB(editor);
 			expect(b.componentStatus).eq('ready');
-			expect(statuses).deep.eq(['readyB', 'run hookB']);
+			expect(statuses.map(n => n.replace(/\d+/g, ''))).deep.eq([
+				'readyB',
+				'run hookB'
+			]);
 		});
 
 		describe('instanceof', () => {

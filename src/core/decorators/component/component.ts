@@ -50,6 +50,11 @@ export function component<T extends ComponentCompatible>(
 	}
 
 	const name = getClassName(constructorFunction.prototype);
+
+	if (componentRegistry.has(name)) {
+		throw new Error(`Component with name "${name}" is already registered`);
+	}
+
 	componentRegistry.set(name, newConstructorFunction);
 	return newConstructorFunction;
 }
