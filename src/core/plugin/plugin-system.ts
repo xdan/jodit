@@ -10,18 +10,23 @@
 
 import type {
 	CanUndef,
+	HTMLTagNames,
 	IDictionary,
 	IExtraPlugin,
 	IJodit,
 	IPluginSystem,
+	IViewBased,
+	IViewComponent,
 	Nullable,
 	PluginInstance,
 	PluginType
 } from 'jodit/types';
 import { IS_PROD } from 'jodit/core/constants';
-import { eventEmitter } from 'jodit/core/global';
-import { splitArray } from 'jodit/core/helpers/array';
-import { isArray, isDestructable, isString } from 'jodit/core/helpers/checker';
+import { eventEmitter } from 'jodit/core/event-emitter/global';
+import { splitArray } from 'jodit/core/helpers/array/split-array';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
+import { isDestructable } from 'jodit/core/helpers/checker/is-imp-interface';
+import { isString } from 'jodit/core/helpers/checker/is-string';
 import { init } from 'jodit/core/plugin/helpers/init-instance';
 import { loadExtras } from 'jodit/core/plugin/helpers/load';
 import { makeInstance } from 'jodit/core/plugin/helpers/make-instance';
@@ -42,6 +47,17 @@ import './interface';
  * ```
  */
 export class PluginSystem implements IPluginSystem {
+	constructor(
+		private readonly opts: {
+			getContainer<T extends HTMLTagNames = HTMLTagNames>(
+				jodit: IViewBased | IViewComponent,
+				classFunc?: Function | string,
+				tag?: T,
+				createInsideEditor?: boolean
+			): HTMLElementTagNameMap[T];
+		}
+	) {}
+
 	private __items = new Map<string, PluginType>();
 
 	get size(): number {
@@ -131,7 +147,15 @@ export class PluginSystem implements IPluginSystem {
 					return;
 				}
 
-				init(jodit, name, plugin, instance, doneList, waitingList);
+				init(
+					jodit,
+					name,
+					plugin,
+					instance,
+					doneList,
+					waitingList,
+					this.opts.getContainer
+				);
 
 				pluginsMap[name] = instance;
 			});

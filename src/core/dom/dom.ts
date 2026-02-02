@@ -24,29 +24,24 @@ import {
 	globalDocument,
 	INSEPARABLE_TAGS,
 	LIST_TAGS,
+	MARKER_CLASS,
 	NO_EMPTY_TAGS,
 	TEMP_ATTR
 } from 'jodit/core/constants';
 import { toArray } from 'jodit/core/helpers/array/to-array';
-import {
-	isArray,
-	isFunction,
-	isHTML,
-	isMarker,
-	isSet,
-	isString,
-	isVoid
-} from 'jodit/core/helpers/checker';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { isHTML } from 'jodit/core/helpers/checker/is-html';
+import { isSet } from 'jodit/core/helpers/checker/is-set';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { isVoid } from 'jodit/core/helpers/checker/is-void';
 import { trim } from 'jodit/core/helpers/string/trim';
-import {
-	$$,
-	assert,
-	attr,
-	call,
-	css,
-	dataBind,
-	error
-} from 'jodit/core/helpers/utils';
+import { assert } from 'jodit/core/helpers/utils/assert';
+import { attr } from 'jodit/core/helpers/utils/attr';
+import { css } from 'jodit/core/helpers/utils/css';
+import { dataBind } from 'jodit/core/helpers/utils/data-bind';
+import { error } from 'jodit/core/helpers/utils/error';
+import { call } from 'jodit/core/helpers/utils/utils';
 
 /**
  * Module for working with DOM
@@ -1222,7 +1217,18 @@ export class Dom {
 			return false;
 		}
 
-		return isMarker(element) || attr(element, TEMP_ATTR) === 'true';
+		return Dom.isMarker(element) || attr(element, TEMP_ATTR) === 'true';
+	}
+
+	/**
+	 * Define element is selection helper
+	 */
+	static isMarker(elm: Nullable<Node>): elm is HTMLElement {
+		return (
+			Dom.isNode(elm) &&
+			Dom.isTag(elm, 'span') &&
+			elm.hasAttribute('data-' + MARKER_CLASS)
+		);
 	}
 
 	/**
@@ -1237,8 +1243,9 @@ export class Dom {
 
 	/**
 	 * Get temporary list
+	 * @deprecated
 	 */
 	static temporaryList(root: HTMLElement): HTMLElement[] {
-		return $$(`[${TEMP_ATTR}]`, root);
+		return toArray(root.querySelectorAll(`[${TEMP_ATTR}]`));
 	}
 }

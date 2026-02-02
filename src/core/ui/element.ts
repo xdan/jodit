@@ -14,6 +14,7 @@ import type {
 	IViewBased,
 	Nullable
 } from 'jodit/types';
+import type { ComponentCompatible } from 'jodit/core/decorators/component/component';
 import { Component, ViewComponent } from 'jodit/core/component';
 import { derive } from 'jodit/core/decorators/derive/derive';
 import { Dom } from 'jodit/core/dom/dom';
@@ -68,6 +69,12 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	override get<T>(chain: string, obj?: IDictionary): Nullable<T> {
 		return super.get(chain, obj) || (this.getElm(chain) as unknown as T);
 	}
+
+	closest<T>(ctor: ComponentCompatible<T>): Nullable<T>;
+
+	closest<T extends UIElement | typeof UIElement>(
+		type: UIElement | Function
+	): Nullable<T extends typeof UIElement ? InstanceType<T> : T>;
 
 	/**
 	 * Find match parent

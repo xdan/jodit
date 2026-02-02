@@ -9,7 +9,7 @@
  */
 
 import type { CanUndef, IAsync, IDestructible, Nullable } from 'jodit/types';
-import { autobind } from 'jodit/core/decorators';
+import { autobind } from 'jodit/core/decorators/autobind/autobind';
 import { Dom } from 'jodit/core/dom/dom';
 import { Eventify } from 'jodit/core/event-emitter/eventify';
 

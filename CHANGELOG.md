@@ -9,6 +9,50 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.9.1
+
+#### :house: Internal
+
+feat: Bump version to 4.9.0 and add new dependency
+
+refactor: Enhance component decorators with component registry and retrieval functions
+
+refactor: Move getPropertyDescriptor utility to a shared location
+
+refactor: Improve DOM utility functions and introduce isMarker method in Dom class
+
+refactor: Update lazy-walker to use specific autobind decorator
+
+refactor: Refactor observable to use shared getPropertyDescriptor utility
+
+refactor: Update global event emitter to use a dedicated instance
+
+refactor: Deprecate isAbort in favor of isAbortError
+
+refactor: Clean up attribute utility imports
+
+refactor: Simplify error handling utilities
+
+refactor: Update selector utility imports for consistency
+
+refactor: Add getPropertyDescriptor utility to shared utils
+
+refactor: Enhance plugin system to accept a getContainer function
+
+refactor: Update selection style transactions to use new constants
+
+refactor: Refactor button component to utilize new component registry
+
+refactor: Update UI element to support closest method for component retrieval
+
+refactor: Clean up toolbar button and collection imports
+
+fix: Update about plugin to correctly display license information
+
+feat: Introduce global event emitter instance
+
+feat: Create utility functions for file browser builders
+
 ## 4.8.8
 
 #### :house: Internal

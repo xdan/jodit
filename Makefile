@@ -223,6 +223,7 @@ lint:
 	$(NODE_MODULES_BIN)/tsc --noemit --noErrorTruncation
 	$(NODE_MODULES_BIN)/eslint $(LINT_FOLDERS)
 	$(NODE_MODULES_BIN)/stylelint ./src/**/**.less
+	$(NODE_MODULES_BIN)/dpdm --circular src --no-warning --no-tree
 
 .PHONY: fix
 fix:

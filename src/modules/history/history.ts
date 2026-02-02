@@ -18,8 +18,8 @@ import type {
 	IStack,
 	SnapshotType
 } from 'jodit/types';
-import { ViewComponent } from 'jodit/core/component';
-import { debounce } from 'jodit/core/decorators';
+import { ViewComponent } from 'jodit/core/component/view-component';
+import { debounce } from 'jodit/core/decorators/debounce/debounce';
 import { Config } from 'jodit/config';
 
 import { Command } from './command';

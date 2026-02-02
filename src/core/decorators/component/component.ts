@@ -4,15 +4,20 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+import type { IComponent } from 'jodit/types';
+import { getClassName } from 'jodit/core/helpers/utils/get-class-name';
+
 /**
  * [[include:core/decorators/component/README.md]]
  * @packageDocumentation
  * @module decorators/component
  */
 
-interface ComponentCompatible {
-	new (...constructorArgs: any[]): any;
+export interface ComponentCompatible<T = IComponent> {
+	new (...constructorArgs: any[]): T;
 }
+
+const componentRegistry = new Map<string, ComponentCompatible>();
 
 /**
  * Decorate components and set status isReady after constructor
@@ -44,5 +49,13 @@ export function component<T extends ComponentCompatible>(
 		}
 	}
 
+	const name = getClassName(constructorFunction.prototype);
+	componentRegistry.set(name, newConstructorFunction);
 	return newConstructorFunction;
+}
+
+export function getComponentClass<T extends IComponent>(
+	name: string
+): ComponentCompatible<T> {
+	return componentRegistry.get(name) as ComponentCompatible<T>;
 }

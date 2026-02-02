@@ -17,17 +17,17 @@ import type {
 	IViewComponent,
 	IViewOptions
 } from 'jodit/types';
-import { css } from 'jodit/core/helpers';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isViewObject } from 'jodit/core/helpers/checker/is-view-object';
 import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
+import { css } from 'jodit/core/helpers/utils/css';
 import { getClassName } from 'jodit/core/helpers/utils/get-class-name';
 import { PluginSystem } from 'jodit/core/plugin/plugin-system';
 
+import { eventEmitter as globalEventEmitter } from './event-emitter/global';
 import { lang } from './constants';
 import { Dom } from './dom';
-import { EventEmitter } from './event-emitter';
 
 export const instances: IDictionary<IJodit> = {};
 
@@ -52,7 +52,9 @@ export function uniqueUid(): string {
 	return uid;
 }
 
-export const pluginSystem = new PluginSystem();
+export const pluginSystem = new PluginSystem({
+	getContainer
+});
 
 export const modules: IDictionary<Function> = {};
 
@@ -169,5 +171,6 @@ export function getPopupViewRoot(
 
 /**
  * Global event emitter
+ * @deprecated use `import { eventEmitter } from 'jodit/core/event-emitter/global';`
  */
-export const eventEmitter = new EventEmitter();
+export const eventEmitter = globalEventEmitter;

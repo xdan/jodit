@@ -110,7 +110,7 @@ export default [
 			'import/no-cycle': [
 				'error',
 				{
-					maxDepth: 3
+					maxDepth: Infinity
 				}
 			],
 

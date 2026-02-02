@@ -14,7 +14,8 @@ import { Dom } from 'jodit/core/dom/dom';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';
-import { attr, error } from 'jodit/core/helpers/utils';
+import { attr } from 'jodit/core/helpers/utils/attr';
+import { error } from 'jodit/core/helpers/utils/error';
 
 let temp = 1;
 

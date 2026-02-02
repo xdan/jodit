@@ -19,13 +19,9 @@ import type {
 	IViewBased,
 	Nullable
 } from 'jodit/types';
-import { isFunction, isJoditObject } from 'jodit/core/helpers';
-
-import { ToolbarButton } from './button/button';
-import { ToolbarContent } from './button/content';
-import { ToolbarSelect } from './button/select/select';
-import { ToolbarCollection } from './collection/collection';
-import { ToolbarEditorCollection } from './collection/editor-collection';
+import { getComponentClass } from 'jodit/core/decorators/component/component';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 
 /**
  * Collection factory
@@ -34,6 +30,13 @@ export function makeCollection(
 	jodit: IViewBased,
 	parentElement?: IUIElement
 ): IToolbarCollection {
+	const ToolbarCollection =
+		getComponentClass<IToolbarCollection>('ToolbarCollection');
+
+	const ToolbarEditorCollection = getComponentClass<IToolbarCollection>(
+		'ToolbarEditorCollection'
+	);
+
 	const collection = isJoditObject(jodit)
 		? new ToolbarEditorCollection(jodit)
 		: new ToolbarCollection(jodit);
@@ -62,6 +65,9 @@ export function makeButton(
 	target: Nullable<HTMLElement> = null
 ): IToolbarButton {
 	if (isFunction(control.getContent)) {
+		const ToolbarContent =
+			getComponentClass<IToolbarButton>('ToolbarContent')!;
+
 		return new ToolbarContent(
 			jodit,
 			control as IControlTypeContent,
@@ -69,6 +75,7 @@ export function makeButton(
 		);
 	}
 
+	const ToolbarButton = getComponentClass<IToolbarButton>('ToolbarButton')!;
 	const button = new ToolbarButton(jodit, control, target);
 
 	button.state.tabIndex = jodit.o.allowTabNavigation ? 0 : -1;
@@ -81,5 +88,6 @@ export function makeSelect(
 	control: IControlTypeStrong,
 	target: Nullable<HTMLElement> = null
 ): IToolbarButton {
+	const ToolbarSelect = getComponentClass<IToolbarButton>('ToolbarSelect')!;
 	return new ToolbarSelect(view, control, target);
 }

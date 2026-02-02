@@ -10,6 +10,7 @@
 
 import type {
 	CanPromise,
+	CanUndef,
 	IControlType,
 	IJodit,
 	IViewBased,
@@ -153,3 +154,17 @@ export const getDataTransfer = (
 		return null;
 	}
 };
+
+export function getPropertyDescriptor(
+	obj: unknown,
+	prop: string
+): CanUndef<PropertyDescriptor> {
+	let desc;
+
+	do {
+		desc = Object.getOwnPropertyDescriptor(obj, prop);
+		obj = Object.getPrototypeOf(obj);
+	} while (!desc && obj);
+
+	return desc;
+}

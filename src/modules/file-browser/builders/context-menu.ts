@@ -10,16 +10,17 @@
 
 import type { IDialog, IFileBrowser } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
-import { attr, error } from 'jodit/core/helpers/utils';
+import { attr } from 'jodit/core/helpers/utils/attr';
+import { error } from 'jodit/core/helpers/utils/error';
 import { Icon } from 'jodit/core/ui/icon';
 import { elementsMap } from 'jodit/modules/file-browser/builders/elements-map';
-import { makeContextMenu } from 'jodit/modules/file-browser/factories';
-import { deleteFile } from 'jodit/modules/file-browser/fetch/delete-file';
-import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
 import {
 	elementToItem,
 	getItem
-} from 'jodit/modules/file-browser/listeners/native-listeners';
+} from 'jodit/modules/file-browser/builders/utils';
+import { makeContextMenu } from 'jodit/modules/file-browser/factories';
+import { deleteFile } from 'jodit/modules/file-browser/fetch/delete-file';
+import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
 import { openImageEditor } from 'jodit/modules/image-editor/image-editor';
 
 const CLASS_PREVIEW = 'jodit-file-browser-preview',

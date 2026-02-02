@@ -18,3 +18,4 @@ examples/build/
 /blob-report/
 /playwright/.cache/
 stack.md
+sync.sh

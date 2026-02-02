@@ -9,16 +9,12 @@
  */
 
 import type { Nullable } from 'jodit/types';
-import { MARKER_CLASS } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 
 /**
  * Define element is selection helper
+ * @deprecated use Dom.isMarker instead
  */
 export function isMarker(elm: Nullable<Node>): elm is HTMLElement {
-	return (
-		Dom.isNode(elm) &&
-		Dom.isTag(elm, 'span') &&
-		elm.hasAttribute('data-' + MARKER_CLASS)
-	);
+	return Dom.isMarker(elm);
 }

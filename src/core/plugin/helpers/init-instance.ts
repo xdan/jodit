@@ -9,15 +9,17 @@
  */
 
 import type {
+	HTMLTagNames,
 	IJodit,
 	IPlugin,
+	IViewBased,
+	IViewComponent,
 	Nullable,
 	PluginInstance,
 	PluginType
 } from 'jodit/types';
 import { IS_PROD } from 'jodit/core/constants';
-import { getContainer } from 'jodit/core/global';
-import { isInitable } from 'jodit/core/helpers/checker';
+import { isInitable } from 'jodit/core/helpers/checker/is-imp-interface';
 
 import { loadStyle } from './load';
 
@@ -31,7 +33,13 @@ export function init(
 	plugin: PluginType,
 	instance: PluginInstance,
 	doneList: Map<string, Nullable<PluginInstance>>,
-	waitingList: Set<string>
+	waitingList: Set<string>,
+	getContainer: <T extends HTMLTagNames = HTMLTagNames>(
+		jodit: IViewBased | IViewComponent,
+		classFunc?: Function | string,
+		tag?: T,
+		createInsideEditor?: boolean
+	) => HTMLElementTagNameMap[T]
 ): void {
 	if (isInitable(instance)) {
 		try {

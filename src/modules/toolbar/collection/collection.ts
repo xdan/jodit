@@ -22,15 +22,13 @@ import type {
 	IViewWithToolbar,
 	Nullable
 } from 'jodit/types';
-import {
-	autobind,
-	component,
-	debounce,
-	hook,
-	watch
-} from 'jodit/core/decorators';
+import { debounce } from 'jodit/core/decorators';
+import { autobind } from 'jodit/core/decorators/autobind/autobind';
+import { component } from 'jodit/core/decorators/component/component';
+import { hook } from 'jodit/core/decorators/hook/hook';
+import { watch } from 'jodit/core/decorators/watch/watch';
 import { error } from 'jodit/core/helpers/utils/error/error';
-import { UIList } from 'jodit/core/ui';
+import { UIList } from 'jodit/core/ui/group/list';
 import { makeButton, makeSelect } from 'jodit/modules/toolbar/factory';
 
 import './collection.less';
@@ -40,7 +38,6 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 	extends UIList<T>
 	implements IToolbarCollection
 {
-	/** @override */
 	override className(): string {
 		return 'ToolbarCollection';
 	}

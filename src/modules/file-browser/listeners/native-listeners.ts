@@ -8,45 +8,16 @@
  * @module modules/file-browser
  */
 
-import type {
-	HTMLTagNames,
-	IDictionary,
-	IFileBrowser,
-	IFileBrowserItem,
-	Nullable
-} from 'jodit/types';
-import { Dom } from 'jodit/core/dom';
-import { attr, ctrlKey } from 'jodit/core/helpers';
+import type { IFileBrowser } from 'jodit/types';
+import { attr } from 'jodit/core/helpers/utils/attr';
+import { ctrlKey } from 'jodit/core/helpers/utils/ctrl-key';
 import contextMenu from 'jodit/modules/file-browser/builders/context-menu';
 import { elementsMap } from 'jodit/modules/file-browser/builders/elements-map';
+import {
+	elementToItem,
+	getItem
+} from 'jodit/modules/file-browser/builders/utils';
 import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
-
-/**
- * @private
- */
-export const getItem = (
-	node: Nullable<EventTarget>,
-	root: HTMLElement,
-	tag: HTMLTagNames = 'a'
-): Nullable<HTMLElement> =>
-	Dom.closest(node as Node, elm => Dom.isTag(elm, tag), root);
-
-/**
- * @private
- */
-export const elementToItem = (
-	elm: HTMLElement,
-	elementsMap: IDictionary<{
-		elm: HTMLElement;
-		item: IFileBrowserItem;
-	}>
-): IFileBrowserItem | void => {
-	const { key } = elm.dataset,
-		{ item } = elementsMap[key || ''];
-
-	return item;
-};
-
 /**
  * @private
  */

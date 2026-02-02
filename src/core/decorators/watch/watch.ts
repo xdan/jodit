@@ -24,20 +24,7 @@ import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isViewObject } from 'jodit/core/helpers/checker/is-view-object';
 import { error } from 'jodit/core/helpers/utils/error';
-
-export function getPropertyDescriptor(
-	obj: unknown,
-	prop: string
-): CanUndef<PropertyDescriptor> {
-	let desc;
-
-	do {
-		desc = Object.getOwnPropertyDescriptor(obj, prop);
-		obj = Object.getPrototypeOf(obj);
-	} while (!desc && obj);
-
-	return desc;
-}
+import { getPropertyDescriptor } from 'jodit/core/helpers/utils/utils';
 
 /**
  * Watch decorator. Added observer for some change in field value

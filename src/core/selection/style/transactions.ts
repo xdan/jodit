@@ -17,7 +17,6 @@ import type {
 import { LIST_TAGS } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { assert } from 'jodit/core/helpers/utils/assert';
-import { INITIAL, REPLACE, UNSET, UNWRAP, WRAP } from 'jodit/core/selection';
 import {
 	extractSelectedPart,
 	getSuitChild,
@@ -29,6 +28,13 @@ import {
 	unwrapChildren,
 	wrap
 } from 'jodit/core/selection/style/api';
+import {
+	INITIAL,
+	REPLACE,
+	UNSET,
+	UNWRAP,
+	WRAP
+} from 'jodit/core/selection/style/constants';
 
 export const states = {
 	START: 'START',

@@ -23,27 +23,30 @@ import type {
 	Nullable
 } from 'jodit/types';
 import { STATUSES } from 'jodit/core/component/statuses';
-import { autobind, cacheHTML, component, watch } from 'jodit/core/decorators';
-import { Dom } from 'jodit/core/dom';
+import { autobind } from 'jodit/core/decorators/autobind/autobind';
+import { cacheHTML } from 'jodit/core/decorators/cache/cache';
 import {
-	assert,
-	attr,
-	call,
-	camelCase,
-	isArray,
-	isFunction,
-	isJoditObject,
-	isPlainObject,
-	isString,
-	keys,
-	position
-} from 'jodit/core/helpers';
+	component,
+	getComponentClass
+} from 'jodit/core/decorators/component/component';
+import { watch } from 'jodit/core/decorators/watch/watch';
+import { Dom } from 'jodit/core/dom/dom';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
+import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
+import { isString } from 'jodit/core/helpers/checker/is-string';
+import { position } from 'jodit/core/helpers/size';
+import { camelCase } from 'jodit/core/helpers/string/camel-case';
+import { assert } from 'jodit/core/helpers/utils/assert';
+import { attr } from 'jodit/core/helpers/utils/attr';
+import { call, keys } from 'jodit/core/helpers/utils/utils';
 import { UIButton, UIButtonState } from 'jodit/core/ui/button';
 import { findControlType } from 'jodit/core/ui/helpers/get-control-type';
 import { Icon } from 'jodit/core/ui/icon';
 import { Popup } from 'jodit/core/ui/popup/popup';
-import { ToolbarCollection } from 'jodit/modules/toolbar/collection/collection';
-import { makeCollection } from 'jodit/modules/toolbar/factory';
+
+import { makeCollection } from '../factory';
 
 import './button.less';
 
@@ -52,7 +55,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	extends UIButton
 	implements IToolbarButton
 {
-	/** @override */
 	override className(): string {
 		return 'ToolbarButton';
 	}
@@ -70,13 +72,14 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	 * Get parent toolbar
 	 */
 	protected get toolbar(): Nullable<IToolbarCollection> {
-		return this.closest(ToolbarCollection) as Nullable<IToolbarCollection>;
+		const ToolbarCollection =
+			getComponentClass<IToolbarCollection>('ToolbarCollection');
+		return this.closest(ToolbarCollection);
 	}
 
-	/** @override **/
 	override update(): void {
-		const { control, state } = this,
-			tc = this.closest<ToolbarCollection>(ToolbarCollection);
+		const { control, state } = this;
+		const tc = this.toolbar;
 
 		if (!tc) {
 			return;
@@ -96,7 +99,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	/**
 	 * Calculates whether the button is active
 	 */
-	private __calculateActivatedStatus(tc?: ToolbarCollection): boolean {
+	private __calculateActivatedStatus(tc?: IToolbarCollection): boolean {
 		if (isJoditObject(this.j) && !this.j.editorIsActive) {
 			return false;
 		}
@@ -111,7 +114,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	/**
 	 * Calculates whether an element is blocked for the user
 	 */
-	private __calculateDisabledStatus(tc?: ToolbarCollection): boolean {
+	private __calculateDisabledStatus(tc?: IToolbarCollection): boolean {
 		if (this.j.o.disabled) {
 			return true;
 		}
@@ -131,13 +134,11 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		return Boolean(tc && tc.shouldBeDisabled(this));
 	}
 
-	/** @override */
 	protected override onChangeActivated(): void {
 		attr(this.button, 'aria-pressed', this.state.activated);
 		super.onChangeActivated();
 	}
 
-	/** @override */
 	protected override onChangeText(): void {
 		if (isFunction(this.control.template)) {
 			this.text.innerHTML = this.control.template(
@@ -152,7 +153,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		this.setMod('text-icons', Boolean(this.text.innerText.trim().length));
 	}
 
-	/** @override */
 	protected override onChangeTabIndex(): void {
 		attr(this.button, 'tabindex', this.state.tabIndex);
 	}
@@ -381,9 +381,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			getControl = (key: string): IControlTypeStrong | void =>
 				findControlType(key, controls);
 
-		const list = control.list,
-			menu = this.openPopup(),
-			toolbar = makeCollection(this.j);
+		const list = control.list;
+		const menu = this.openPopup();
+		const toolbar = makeCollection(this.j);
 
 		menu.parentElement = this;
 		toolbar.parentElement = menu;

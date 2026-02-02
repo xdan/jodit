@@ -36,7 +36,7 @@ Config.prototype.controls.about = {
 					<div>${i(
 						'License: %s',
 						!isLicense(editor.o.license)
-							? 'MIT'
+							? editor.o.license || 'MIT'
 							: normalizeLicense(editor.o.license)
 					)}</div>
 					<div>
@@ -49,7 +49,7 @@ Config.prototype.controls.about = {
 						${i('contains detailed help for using')}
 					</div>
 					<div>${i(
-						'Copyright © XDSoft.net - Chupurnov Valeriy. All rights reserved.'
+						'Copyright © XDSoft.net - Chupurnov Valerii. All rights reserved.'
 					)}</div>
 				</div>`
 			);

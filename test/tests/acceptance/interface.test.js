@@ -125,7 +125,7 @@ describe('Test interface', function () {
 
 			expect(dialog).is.not.null;
 
-			expect(dialog.textContent.match(/License:.*(MIT)/)).is.not.null;
+			expect(dialog.textContent.match(/License:.*(111)/)).is.not.null;
 		});
 
 		describe('Set license', function () {

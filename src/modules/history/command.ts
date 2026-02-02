@@ -8,9 +8,7 @@
  * @module modules/history
  */
 
-import type { SnapshotType } from 'jodit/types';
-
-import type { History } from './history';
+import type { IHistory, SnapshotType } from 'jodit/types';
 
 export class Command {
 	undo(): void {
@@ -24,7 +22,7 @@ export class Command {
 	constructor(
 		readonly oldValue: SnapshotType,
 		readonly newValue: SnapshotType,
-		private readonly history: History,
+		private readonly history: IHistory,
 		readonly tick: number
 	) {}
 }

@@ -19,7 +19,9 @@ import type {
 	Nullable
 } from 'jodit/types';
 import { Component } from 'jodit/core/component/component';
-import { component, hook, watch } from 'jodit/core/decorators';
+import { component } from 'jodit/core/decorators/component/component';
+import { hook } from 'jodit/core/decorators/hook/hook';
+import { watch } from 'jodit/core/decorators/watch/watch';
 import { splitArray } from 'jodit/core/helpers/array/split-array';
 import { UIButton } from 'jodit/core/ui/button/button/button';
 import { UIGroup } from 'jodit/core/ui/group/group';
@@ -49,10 +51,6 @@ export class UIList<T extends IViewBased = IViewBased>
 	@hook('ready')
 	protected __onChangeMode(): void {
 		this.setMod('mode', this.mode);
-	}
-
-	constructor(jodit: T) {
-		super(jodit);
 	}
 
 	/**

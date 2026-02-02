@@ -5,12 +5,12 @@
  */
 
 import type { ICommitStyle, IJodit } from 'jodit/types';
-import { Dom } from 'jodit/core/dom';
+import { Dom } from 'jodit/core/dom/dom';
 import {
 	elementsEqualAttributes,
-	isSameAttributes,
-	toggleAttributes
-} from 'jodit/core/selection/style/api';
+	isSameAttributes
+} from 'jodit/core/selection/style/api/is-same-attributes';
+import { toggleAttributes } from 'jodit/core/selection/style/api/toggle-attributes';
 import {
 	_PREFIX,
 	INITIAL,

@@ -124,7 +124,6 @@ describe('Jodit Editor', () => {
 				'i18n',
 				'innerWidth',
 				'inView',
-				'isAbort',
 				'isAbortError',
 				'isArray',
 				'isAtom',

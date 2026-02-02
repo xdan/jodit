@@ -9,11 +9,9 @@
  */
 
 import type { IDictionary } from 'jodit/types';
-import {
-	isFunction,
-	isPlainObject,
-	isString
-} from 'jodit/core/helpers/checker';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
+import { isString } from 'jodit/core/helpers/checker/is-string';
 import { CamelCaseToKebabCase } from 'jodit/core/helpers/string/kebab-case';
 
 import { css } from './css';

@@ -13,16 +13,22 @@ import type {
 	IUIButton,
 	IUIButtonState,
 	IUIButtonStatePartial,
+	IUIList,
 	IViewBased
 } from 'jodit/types';
 import { STATUSES } from 'jodit/core/component/statuses';
-import { cache, cacheHTML, component, watch } from 'jodit/core/decorators';
+import { cache, cacheHTML } from 'jodit/core/decorators/cache/cache';
+import {
+	component,
+	getComponentClass
+} from 'jodit/core/decorators/component/component';
+import { watch } from 'jodit/core/decorators/watch/watch';
 import { Dom } from 'jodit/core/dom/dom';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { isString } from 'jodit/core/helpers/checker/is-string';
-import { assert, attr } from 'jodit/core/helpers/utils';
+import { assert } from 'jodit/core/helpers/utils/assert';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { UIElement } from 'jodit/core/ui/element';
-import { UIList } from 'jodit/core/ui/group/list';
 import { Icon } from 'jodit/core/ui/icon';
 
 import './button.less';
@@ -115,7 +121,8 @@ export class UIButton extends UIElement implements IUIButton {
 	 */
 	@watch('parentElement')
 	protected updateSize(): void {
-		const pe = this.closest<UIList>(UIList);
+		const UIList = getComponentClass<IUIList>('UIList');
+		const pe = this.closest(UIList);
 
 		if (pe) {
 			this.state.size = pe.buttonSize;
