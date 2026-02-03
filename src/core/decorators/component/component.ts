@@ -5,6 +5,7 @@
  */
 
 import type { IComponent } from 'jodit/types';
+import { IS_PROD } from 'jodit/core/constants';
 import { getClassName } from 'jodit/core/helpers/utils/get-class-name';
 
 /**
@@ -51,7 +52,7 @@ export function component<T extends ComponentCompatible>(
 
 	const name = getClassName(constructorFunction.prototype);
 
-	if (componentRegistry.has(name)) {
+	if (componentRegistry.has(name) && !IS_PROD) {
 		throw new Error(`Component with name "${name}" is already registered`);
 	}
 
