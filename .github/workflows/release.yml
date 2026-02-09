@@ -6,6 +6,10 @@ on:
   push:
     tags: ["*"]
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   lint:
     name: Lint
@@ -110,6 +114,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
+      
+      - name: Update npm to latest
+        run: npm install -g npm@latest
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
@@ -118,7 +125,7 @@ jobs:
           path: build/
 
       - name: Publish
-        run: NPM_TOKEN=${{ secrets.NPM_TOKEN }} npm publish ./build --access public
+        run: npm publish ./build
 
       - name: Release
         uses: softprops/action-gh-release@v2

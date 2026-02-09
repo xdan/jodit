@@ -21,6 +21,23 @@ import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
 
 export function css(
 	element: HTMLElement,
+	key:
+		| 'left'
+		| 'top'
+		| 'bottom'
+		| 'right'
+		| 'width'
+		| 'min'
+		| 'max'
+		| 'height'
+		| 'margin'
+		| 'padding'
+		| 'fontsize'
+		| 'font-size'
+): number;
+
+export function css(
+	element: HTMLElement,
 	key: keyof CSSStyleDeclaration
 ): string | number;
 
@@ -91,9 +108,9 @@ export function css(
 		return '';
 	}
 
-	const key2: string = kebabCase(key as string) as string,
-		doc: Document = element.ownerDocument || document,
-		win = doc ? doc.defaultView || (doc as any).parentWindow : false;
+	const key2: string = kebabCase(key as string) as string;
+	const doc: Document = element.ownerDocument || document;
+	const win = doc ? doc.defaultView || (doc as any).parentWindow : false;
 
 	const currentValue: string | undefined = (element.style as any)[
 		key as string
