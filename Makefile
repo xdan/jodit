@@ -32,6 +32,7 @@ ACTIONS_URL := https://github.com/xdan/jodit/actions/
 BUILD_DTS := true
 BUILD_ESM := true
 UGLIFY_ESM := false
+OPEN_URL := ''
 LINT_FOLDERS := ./src/ ./test/ ./tools
 CHANGELOG_URL := https://github.com/xdan/jodit/blob/main/CHANGELOG.md
 NODE_MODULES_BIN := ./node_modules/.bin
@@ -62,6 +63,7 @@ start dev love:
 		--env excludePlugins=$(excludePlugins) \
 		--env isTest=$(isTest) \
 		--env useSWC=$(useSWC) \
+		--env open=$(OPEN_URL) \
 		--env fat=$(fat)
 
 .PHONY: build

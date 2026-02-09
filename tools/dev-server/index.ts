@@ -7,10 +7,14 @@
 import type { Variables } from '../variables';
 
 import * as path from 'path';
-import type { Configuration, Middleware } from 'webpack-dev-server';
+import type { Configuration } from 'webpack-dev-server';
 
-export const devServer = ({ port, dirname }: Variables): Configuration => ({
-	open: '/stand.html',
+export const devServer = ({
+	port,
+	dirname,
+	open
+}: Variables): Configuration => ({
+	open: open ? open : '/stand.html',
 	allowedHosts: 'all',
 	client: {
 		progress: true,

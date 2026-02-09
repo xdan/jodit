@@ -30,6 +30,7 @@ export type Argv = {
 	es?: ES_TARGET;
 	outputFolder?: string;
 	progressFunction?: () => void;
+	open?: string;
 };
 
 export type Variables = {
@@ -71,6 +72,9 @@ export type Variables = {
 	fat: boolean;
 	port: number;
 	useSWC: boolean;
+
+	// Open page after start dev server
+	open?: string;
 };
 
 export const variables = (argv: Argv, dir: string): Variables => {
@@ -146,6 +150,7 @@ export const variables = (argv: Argv, dir: string): Variables => {
 		ES,
 		ESModern,
 		ESNext,
-		useSWC: argv.useSWC ? Bool(argv.useSWC) : !Bool(argv.generateTypes)
+		useSWC: argv.useSWC ? Bool(argv.useSWC) : !Bool(argv.generateTypes),
+		open: argv.open
 	};
 };
