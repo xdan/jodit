@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.9.7
+
+#### :rocket: New Feature
+
+- feat: add aria-label handling to UIButton and corresponding tests
+
 ## 4.9.1
 
 #### :house: Internal
