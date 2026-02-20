@@ -585,6 +585,8 @@ typeof before === 'function' &&
 
 const i18nkeys = new Set();
 const excludeI18nKeys = new Set([
+	'Make text bold',
+	'Copyright © XDSoft.net - Chupurnov Valerii. All rights reserved.',
 	'symbols',
 	'символ',
 	'test',
