@@ -244,6 +244,27 @@ class Config implements IViewOptions {
 	 * Dictionary of named configuration presets. Each key is a preset name and the value
 	 * is a partial options object that will be merged into the editor config when
 	 * {@link Config.preset} matches the key.
+	 *
+	 * ```javascript
+	 * // Use a built-in preset
+	 * Jodit.make('#editor', {
+	 *     preset: 'inline'
+	 * });
+	 * ```
+	 *
+	 * ```javascript
+	 * // Define and use a custom preset
+	 * Jodit.defaultOptions.presets.myCompact = {
+	 *     toolbarButtonSize: 'small',
+	 *     showCharsCounter: false,
+	 *     showWordsCounter: false,
+	 *     showXPathInStatusbar: false
+	 * };
+	 *
+	 * Jodit.make('#editor', {
+	 *     preset: 'myCompact'
+	 * });
+	 * ```
 	 */
 	presets: IDictionary = {
 		inline: {
