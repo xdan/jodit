@@ -194,7 +194,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	constructor(
 		jodit: T,
 		elements?: Array<IUIElement | void | null | false>,
-		readonly options?: IDictionary
+		override readonly options?: IDictionary
 	) {
 		super(jodit, options);
 		elements?.forEach(elm => elm && this.append(elm));

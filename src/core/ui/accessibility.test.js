@@ -69,9 +69,8 @@ describe('Accessibility', () => {
 				buttons: ['bold', 'italic']
 			});
 
-			const groups = editor.toolbar.container.querySelectorAll(
-				'[role="group"]'
-			);
+			const groups =
+				editor.toolbar.container.querySelectorAll('[role="group"]');
 			expect(groups.length).to.be.above(0);
 		});
 	});

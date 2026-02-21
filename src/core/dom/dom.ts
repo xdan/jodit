@@ -1243,7 +1243,7 @@ export class Dom {
 
 	/**
 	 * Get temporary list
-	 * @deprecated
+	 * @deprecated Just do not use it, it is not needed anymore
 	 */
 	static temporaryList(root: HTMLElement): HTMLElement[] {
 		return toArray(root.querySelectorAll(`[${TEMP_ATTR}]`));
