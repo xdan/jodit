@@ -19,6 +19,9 @@ import tableIcon from './table.svg';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * Options for table insertion and behavior.
+		 */
 		table: {
 			splitBlockOnInsertTable: boolean;
 			selectionCellStyle: string;

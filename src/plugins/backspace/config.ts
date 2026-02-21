@@ -12,6 +12,9 @@ import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * Keyboard hotkey mappings for delete and backspace operations (character, word, sentence).
+		 */
 		delete: {
 			hotkeys: {
 				delete: string[];

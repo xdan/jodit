@@ -13,6 +13,10 @@ import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * Configuration for the image properties dialog (opened on double-click).
+		 * Controls which editing tabs are available: src, alt, title, link, size, margins, classes, styles, etc.
+		 */
 		image: ImagePropertiesOptions;
 	}
 }

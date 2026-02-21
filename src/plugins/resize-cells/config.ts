@@ -12,6 +12,9 @@ import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * Allow users to resize table cells by dragging the cell borders
+		 */
 		tableAllowCellResize: boolean;
 	}
 }

@@ -28,6 +28,10 @@ import * as thList from 'jodit/plugins/inline-popup/icons/th-list.svg';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * Element-specific popup toolbars. Keys are tag names (e.g. `img`, `a`, `cells`)
+		 * and values are button lists or factory functions that return them.
+		 */
 		popup: IDictionary<
 			| Array<IControlType | string>
 			| ((
@@ -37,9 +41,24 @@ declare module 'jodit/config' {
 			  ) => Array<IControlType | string> | HTMLElement | string)
 		>;
 
+		/**
+		 * List of button names to exclude from the inline toolbar
+		 */
 		toolbarInlineDisabledButtons: string[];
+
+		/**
+		 * Show an inline toolbar when the user clicks inside the editor area (e.g. near images, links)
+		 */
 		toolbarInline: boolean;
+
+		/**
+		 * Show an inline toolbar when the user selects text
+		 */
 		toolbarInlineForSelection: boolean;
+
+		/**
+		 * CSS selector or array of selectors for elements that should not trigger the inline toolbar
+		 */
 		toolbarInlineDisableFor: string | string[];
 	}
 }

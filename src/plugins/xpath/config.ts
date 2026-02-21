@@ -12,6 +12,9 @@ import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * Show the element breadcrumb path (e.g. `body > p > strong`) in the statusbar
+		 */
 		showXPathInStatusbar: boolean;
 	}
 }

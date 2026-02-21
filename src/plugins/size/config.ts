@@ -27,13 +27,12 @@ Config.prototype.maxWidth = '100%';
 /**
  * Editor's min-height
  *
- * @example
  * ```javascript
  * Jodit.make('.editor', {
  *    minHeight: '30%' //min-height: 30%
  * })
  * ```
- * @example
+ *
  * ```javascript
  * Jodit.make('.editor', {
  *    minHeight: 200 //min-height: 200px

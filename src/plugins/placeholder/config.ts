@@ -17,7 +17,7 @@ declare module 'jodit/config' {
 	interface Config {
 		/**
 		 * Show placeholder
-		 * @example
+		 *
 		 * ```javascript
 		 * const editor = Jodit.make('#editor', {
 		 *    showPlaceholder: false
@@ -28,7 +28,7 @@ declare module 'jodit/config' {
 
 		/**
 		 * Use a placeholder from original input field, if it was set
-		 * @example
+		 *
 		 * ```javascript
 		 * //<textarea id="editor" placeholder="start typing text ..." cols="30" rows="10"></textarea>
 		 * const editor = Jodit.make('#editor', {
@@ -40,7 +40,7 @@ declare module 'jodit/config' {
 
 		/**
 		 * Default placeholder
-		 * @example
+		 *
 		 * ```javascript
 		 * const editor = Jodit.make('#editor', {
 		 *    placeholder: 'start typing text ...'

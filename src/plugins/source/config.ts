@@ -17,18 +17,22 @@ import sourceIcon from './source.svg';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * Which source-code editor to use: `'area'` for a plain textarea, `'ace'` to load the Ace editor,
+		 * or a factory function that returns a custom source editor instance.
+		 */
 		sourceEditor: 'area' | 'ace' | ((jodit: IJodit) => ISourceEditor);
 
 		/**
 		 * Options for [ace](https://ace.c9.io/#config) editor
-		 * @example
+		 *
 		 * ```js
 		 * Jodit.make('#editor', {
 		 * 	showGutter: true,
 		 * 	theme: 'ace/theme/idle_fingers',
 		 * 	mode: 'ace/mode/html',
 		 * 	wrap: true,
-§		 * 	highlightActiveLine: true
+		 * 	highlightActiveLine: true
 		 * })
 		 * ```
 		 */

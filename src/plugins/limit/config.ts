@@ -13,17 +13,17 @@ import { Config } from 'jodit/config';
 declare module 'jodit/config' {
 	interface Config {
 		/**
-		 * limit words count
+		 * Maximum number of words allowed in the editor. Set to `false` to disable the limit.
 		 */
 		limitWords: false | number;
 
 		/**
-		 * limit chars count
+		 * Maximum number of characters allowed in the editor. Set to `false` to disable the limit.
 		 */
 		limitChars: false | number;
 
 		/**
-		 * limit html chars count
+		 * Maximum number of characters counted from the raw HTML source. Set to `false` to disable the limit.
 		 */
 		limitHTML: false;
 	}

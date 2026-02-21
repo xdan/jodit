@@ -139,7 +139,8 @@ class Config implements IViewOptions {
 	}
 
 	/**
-	 * Use cache for heavy methods
+	 * When enabled, the editor caches the results of expensive computations (e.g. toolbar rebuilds)
+	 * to improve performance. Disable for debugging or when options change frequently at runtime.
 	 */
 	cache: boolean = true;
 
@@ -148,6 +149,10 @@ class Config implements IViewOptions {
 	 */
 	defaultTimeout: number = 100;
 
+	/**
+	 * Prefix used for CSS class names and local-storage keys to avoid collisions
+	 * when multiple editor instances or applications share the same page.
+	 */
 	namespace: string = '';
 
 	/**
@@ -158,19 +163,16 @@ class Config implements IViewOptions {
 	/**
 	 * Editor's width
 	 *
-	 * @example
 	 * ```javascript
 	 * Jodit.make('.editor', {
 	 *    width: '100%',
 	 * })
 	 * ```
-	 * @example
 	 * ```javascript
 	 * Jodit.make('.editor', {
 	 *    width: 600, // equivalent for '600px'
 	 * })
 	 * ```
-	 * @example
 	 * ```javascript
 	 * Jodit.make('.editor', {
 	 *    width: 'auto', // autosize
@@ -182,19 +184,16 @@ class Config implements IViewOptions {
 	/**
 	 * Editor's height
 	 *
-	 * @example
 	 * ```javascript
 	 * Jodit.make('.editor', {
 	 *    height: '100%',
 	 * })
 	 * ```
-	 * @example
 	 * ```javascript
 	 * Jodit.make('.editor', {
 	 *    height: 600, // equivalent for '600px'
 	 * })
 	 * ```
-	 * @example
 	 * ```javascript
 	 * Jodit.make('.editor', {
 	 *    height: 'auto', // default - autosize
@@ -241,6 +240,11 @@ class Config implements IViewOptions {
 	 */
 	preset: string = 'custom';
 
+	/**
+	 * Dictionary of named configuration presets. Each key is a preset name and the value
+	 * is a partial options object that will be merged into the editor config when
+	 * {@link Config.preset} matches the key.
+	 */
 	presets: IDictionary = {
 		inline: {
 			inline: true,
@@ -254,6 +258,10 @@ class Config implements IViewOptions {
 		}
 	};
 
+	/**
+	 * The Document object the editor operates within. Defaults to the current `document`.
+	 * Override when the editor is created inside an iframe or a different browsing context.
+	 */
 	ownerDocument: Document = globalDocument;
 
 	/**
@@ -290,7 +298,9 @@ class Config implements IViewOptions {
 	shadowRoot: Nullable<ShadowRoot> = null;
 
 	/**
-	 * z-index For editor
+	 * Base CSS `z-index` for the editor UI (toolbar, popups, dialogs).
+	 * Set to a higher value when other page elements overlap the editor.
+	 * `0` means no explicit z-index is applied.
 	 */
 	zIndex: number = 0;
 
@@ -332,7 +342,6 @@ class Config implements IViewOptions {
 	/**
 	 * Size of icons in the toolbar (can be "small", "middle", "large")
 	 *
-	 * @example
 	 * ```javascript
 	 * const editor = Jodit.make(".dark_editor", {
 	 *      toolbarButtonSize: "small"
@@ -347,13 +356,15 @@ class Config implements IViewOptions {
 	allowTabNavigation: boolean = false;
 
 	/**
-	 * Inline editing mode
+	 * When enabled, the editor renders without its own container chrome (toolbar, borders, statusbar).
+	 * The editable area becomes the element itself. Typically combined with
+	 * `toolbarInline: true` so a floating toolbar appears on selection.
 	 */
 	inline: boolean = false;
 
 	/**
 	 * Theme (can be "dark")
-	 * @example
+	 *
 	 * ```javascript
 	 * const editor = Jodit.make(".dark_editor", {
 	 *      theme: "dark"
@@ -370,10 +381,9 @@ class Config implements IViewOptions {
 	/**
 	 * Class name that can be appended to the editable area
 	 *
-	 * @see [[Config.iframeCSSLinks]]
-	 * @see [[Config.iframeStyle]]
+	 * @see {@link Config.iframeCSSLinks}
+	 * @see {@link Config.iframeStyle}
 	 *
-	 * @example
 	 * ```javascript
 	 * Jodit.make('#editor', {
 	 *    editorClassName: 'some_my_class'
@@ -391,7 +401,7 @@ class Config implements IViewOptions {
 
 	/**
 	 * Class name that can be appended to the main editor container
-	 * @example
+	 *
 	 * ```javascript
 	 * const jodit = Jodit.make('#editor', {
 	 *    className: 'some_my_class'
@@ -413,7 +423,7 @@ class Config implements IViewOptions {
 	/**
 	 * The internal styles of the editable area. They are intended to change
 	 * not the appearance of the editor, but to change the appearance of the content.
-	 * @example
+	 *
 	 * ```javascript
 	 * Jodit.make('#editor', {
 	 * 		style: {
@@ -426,13 +436,14 @@ class Config implements IViewOptions {
 	style: false | IDictionary = false;
 
 	/**
+	 * Inline CSS styles applied to the outer editor container element.
+	 * Use this to style the editor wrapper (borders, background, etc.) without affecting content.
 	 *
-	 * @example
 	 * ```javascript
 	 * Jodit.make('#editor', {
-	 * 		editorStyle: {
-	 * 		 font: '12px Arial',
-	 * 		 color: '#0c0c0c'
+	 * 		containerStyle: {
+	 * 		 border: '1px solid #ccc',
+	 * 		 background: '#f9f9f9'
 	 * 		}
 	 * });
 	 * ```
@@ -443,7 +454,6 @@ class Config implements IViewOptions {
 	 * Dictionary of variable values in css, a complete list can be found here
 	 * https://github.com/xdan/jodit/blob/main/src/styles/variables.less#L25
 	 *
-	 * @example
 	 * ```js
 	 * const editor = Jodit.make('#editor', {
 	 *   styleValues: {
@@ -457,9 +467,9 @@ class Config implements IViewOptions {
 	styleValues: IDictionary = {};
 
 	/**
-	 * After all, changes in editors for textarea will call change trigger
+	 * When enabled, the editor dispatches a native `change` event on the original
+	 * `<textarea>` element whenever the content changes, so standard DOM listeners work.
 	 *
-	 * @example
 	 * ```javascript
 	 * const editor = Jodit.make('#editor');
 	 * document.getElementById('editor').addEventListener('change', function () {
@@ -475,7 +485,6 @@ class Config implements IViewOptions {
 	 * the page element direction. 'ltr' – Indicates a Left-To-Right text direction (like in English).
 	 * 'rtl' – Indicates a Right-To-Left text direction (like in Arabic).
 	 *
-	 * @example
 	 * ```javascript
 	 * Jodit.make('.editor', {
 	 *    direction: 'rtl'
@@ -489,7 +498,6 @@ class Config implements IViewOptions {
 	 * (navigator.language && navigator.language.substr(0, 2)) ||
 	 * (navigator.browserLanguage && navigator.browserLanguage.substr(0, 2)) || 'en'
 	 *
-	 * @example
 	 * ```html
 	 * <!-- include in you page lang file -->
 	 * <script src="jodit/lang/de.js"></script>
@@ -505,7 +513,6 @@ class Config implements IViewOptions {
 	/**
 	 * if true all Lang.i18n(key) return `{key}`
 	 *
-	 * @example
 	 * ```html
 	 * <script>
 	 * var editor = Jodit.make('.editor', {
@@ -521,7 +528,6 @@ class Config implements IViewOptions {
 	/**
 	 * Collection of language pack data `{en: {'Type something': 'Type something', ...}}`
 	 *
-	 * @example
 	 * ```javascript
 	 * const editor = Jodit.make('#editor', {
 	 *     language: 'ru',
@@ -565,13 +571,13 @@ class Config implements IViewOptions {
 	showTooltipDelay: number = 200;
 
 	/**
-	 * Instead of create custop tooltip - use native title tooltips
+	 * Instead of creating a custom tooltip, use the browser's native title tooltips
 	 */
 	useNativeTooltip: boolean = false;
 
 	/**
-	 * Default insert method
-	 * @default insert_as_html
+	 * How pasted content is inserted into the editor by default.
+	 * Possible values: `insert_as_html`, `insert_as_text`, `insert_only_text`, `insert_clear_html`.
 	 */
 	defaultActionOnPaste: InsertMode = INSERT_AS_HTML;
 
@@ -589,7 +595,6 @@ class Config implements IViewOptions {
 	/**
 	 * When this option is enabled, the editor's content will be placed in an iframe and isolated from the rest of the page.
 	 *
-	 * @example
 	 * ```javascript
 	 * Jodit.make('#editor', {
 	 *    iframe: true,
@@ -603,7 +608,7 @@ class Config implements IViewOptions {
 	/**
 	 * Allow editing the entire HTML document(html, head)
 	 * \> Works together with the iframe option.
-	 * @example
+	 *
 	 * ```js
 	 * const editor = Jodit.make('#editor', {
 	 *   iframe: true,
@@ -627,7 +632,7 @@ class Config implements IViewOptions {
 	/**
 	 * Jodit.MODE_WYSIWYG The HTML editor allows you to write like MSWord,
 	 * Jodit.MODE_SOURCE syntax highlighting source editor
-	 * @example
+	 *
 	 * ```javascript
 	 * var editor = Jodit.make('#editor', {
 	 *     defaultMode: Jodit.MODE_SPLIT
@@ -638,13 +643,13 @@ class Config implements IViewOptions {
 	defaultMode: number = consts.MODE_WYSIWYG;
 
 	/**
-	 * Use split mode
+	 * When enabled, the editor displays both the WYSIWYG view and the source-code view side by side.
 	 */
 	useSplitMode: boolean = false;
 
 	/**
 	 * The colors in HEX representation to select a color for the background and for the text in colorpicker
-	 * @example
+	 *
 	 * ```javascript
 	 *  Jodit.make('#editor', {
 	 *     colors: ['#ff0000', '#00ff00', '#0000ff']
@@ -742,7 +747,7 @@ class Config implements IViewOptions {
 
 	/**
 	 * The default tab color picker
-	 * @example
+	 *
 	 * ```javascript
 	 * Jodit.make('#editor2', {
 	 *     colorPickerDefaultTab: 'color'
@@ -752,13 +757,13 @@ class Config implements IViewOptions {
 	colorPickerDefaultTab: 'background' | 'color' = 'background';
 
 	/**
-	 * Image size defaults to a larger image
+	 * Default width (in pixels) applied to images inserted into the editor
 	 */
 	imageDefaultWidth: number = 300;
 
 	/**
 	 * Do not display these buttons that are on the list
-	 * @example
+	 *
 	 * ```javascript
 	 * Jodit.make('#editor2', {
 	 *     removeButtons: ['hr', 'source']
@@ -769,7 +774,7 @@ class Config implements IViewOptions {
 
 	/**
 	 * Do not init these plugins
-	 * @example
+	 *
 	 * ```typescript
 	 * var editor = Jodit.make('.editor', {
 	 *    disablePlugins: 'table,iframe'
@@ -784,7 +789,7 @@ class Config implements IViewOptions {
 
 	/**
 	 * Init and download extra plugins
-	 * @example
+	 *
 	 * ```typescript
 	 * var editor = Jodit.make('.editor', {
 	 *    extraPlugins: ['emoji']
@@ -800,7 +805,7 @@ class Config implements IViewOptions {
 	basePath?: string;
 
 	/**
-	 * These buttons list will be added to the option. Buttons
+	 * Additional buttons appended to the {@link Config.buttons} list
 	 */
 	extraButtons: Array<string | IControlType> = [];
 
@@ -809,7 +814,6 @@ class Config implements IViewOptions {
 	 * You can add your icon to the set using the `Jodit.modules.Icon.set (name, svg Code)` method.
 	 * But for a declarative declaration, you can use this option.
 	 *
-	 * @example
 	 * ```js
 	 * Jodit.modules.Icon.set('someIcon', '<svg><path.../></svg>');
 	 * const editor = Jodit.make({
@@ -818,8 +822,9 @@ class Config implements IViewOptions {
 	 *     icon: 'someIcon'
 	 *   }]
 	 * });
+	 * ```
 	 *
-	 * @example
+	 * ```js
 	 * const editor = Jodit.make({
 	 *   extraIcons: {
 	 *     someIcon: '<svg><path.../></svg>'
@@ -830,7 +835,7 @@ class Config implements IViewOptions {
 	 *   }]
 	 * });
 	 * ```
-	 * @example
+	 *
 	 * ```js
 	 * const editor = Jodit.make({
 	 *   extraButtons: [{
@@ -844,7 +849,7 @@ class Config implements IViewOptions {
 
 	/**
 	 * Default attributes for created inside editor elements
-	 * @example
+	 *
 	 * ```js
 	 * const editor2 = Jodit.make('#editor', {
 	 * 	createAttributes: {
@@ -864,7 +869,7 @@ class Config implements IViewOptions {
 	 * expect(ul.className).equals('ui-test');
 	 * ```
 	 * Or JSX in React
-	 * @example
+	 *
 	 * ```jsx
 	 * import React, {useState, useRef} from 'react';
 	 * import JoditEditor from "jodit-react";
@@ -904,7 +909,7 @@ class Config implements IViewOptions {
 	/**
 	 * The list of buttons that appear in the editor's toolbar on large places (≥ options.sizeLG).
 	 * Note - this is not the width of the device, the width of the editor
-	 * @example
+	 *
 	 * ```javascript
 	 * Jodit.make('#editor', {
 	 *     buttons: ['bold', 'italic', 'source'],
@@ -912,7 +917,7 @@ class Config implements IViewOptions {
 	 *     buttonsXS: ['bold', 'fullsize'],
 	 * });
 	 * ```
-	 * @example
+	 *
 	 * ```javascript
 	 * Jodit.make('#editor2', {
 	 *     buttons: [{
@@ -936,7 +941,7 @@ class Config implements IViewOptions {
 	 *     }]
 	 * });
 	 * ```
-	 * @example
+	 *
 	 * ```javascript
 	 * Jodit.make('#editor2', {
 	 *     buttons: Jodit.defaultOptions.buttons.concat([{
@@ -1034,7 +1039,8 @@ class Config implements IViewOptions {
 	];
 
 	/**
-	 * Behavior for buttons
+	 * Map of toolbar button names to their control definitions (icon, tooltip, exec handler, etc.).
+	 * Plugins extend this object with their own button definitions via `Config.prototype.controls`.
 	 */
 	controls!: Controls;
 
@@ -1066,7 +1072,7 @@ class Config implements IViewOptions {
 	events: IDictionary<(...args: any[]) => any> = {};
 
 	/**
-	 * Buttons in toolbat without SVG - only texts
+	 * Buttons in toolbar without SVG - only texts
 	 */
 	textIcons: boolean = false;
 

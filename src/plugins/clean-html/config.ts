@@ -63,7 +63,7 @@ declare module 'jodit/config' {
 			/**
 			 * The allowTags option defines which elements will remain in the
 			 * edited text when the editor saves. You can use this limit the returned HTML.
-			 * @example
+			 *
 			 * ```javascript
 			 * const jodit = new Jodit.make('#editor', {
 			 *    cleanHTML: {
@@ -71,7 +71,7 @@ declare module 'jodit/config' {
 			 *    }
 			 * });
 			 * ```
-			 * @example
+			 *
 			 * ```javascript
 			 * const editor = Jodit.make('#editor', {
 			 *     cleanHTML: {
@@ -84,7 +84,6 @@ declare module 'jodit/config' {
 			 * console.log(editor.value); //Sorry! <a href="https://xdsoft.net">Freeman</a>
 			 * ```
 			 *
-			 * @example
 			 * ```javascript
 			 * const editor = Jodit.make('#editor', {
 			 *     cleanHTML: {

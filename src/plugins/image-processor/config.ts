@@ -16,6 +16,9 @@ import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * Options for processing images inserted into the editor (e.g. converting base64 data URIs to Blob URLs).
+		 */
 		imageProcessor: {
 			replaceDataURIToBlobIdInView: boolean;
 		};

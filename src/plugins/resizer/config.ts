@@ -14,7 +14,7 @@ import { Config } from 'jodit/config';
 declare module 'jodit/config' {
 	interface Config {
 		/**
-		 * Use true frame for editing iframe size
+		 * Set of HTML tag names whose elements can be resized by the user via drag handles (e.g. images, iframes, tables)
 		 */
 		allowResizeTags: Set<HTMLTagNames>;
 

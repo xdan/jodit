@@ -25,7 +25,6 @@ declare module 'jodit/config' {
 
 			/**
 			 * Normalize selection after triple click
-			 * @example
 			 *
 			 * `<ul><li>|test</li><li>|pop</li></ul>` will be `<ul><li>|test|</li><li>pop</li</ul>|`
 			 */

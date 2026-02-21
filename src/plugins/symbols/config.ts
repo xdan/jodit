@@ -16,7 +16,14 @@ import symbolsIcon from './symbols.svg';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * Array of HTML entities or characters displayed in the special-characters picker
+		 */
 		specialCharacters: string[];
+
+		/**
+		 * When true, show the special-characters picker as a toolbar popup instead of a modal dialog
+		 */
 		usePopupForSpecialCharacters: boolean;
 	}
 }

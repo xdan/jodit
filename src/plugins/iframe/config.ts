@@ -15,7 +15,6 @@ declare module 'jodit/config' {
 		/**
 		 * You can redefine default page
 		 *
-		 * @example
 		 * ```javascript
 		 * Jodit.make('#editor', {
 		 *    iframe: true,
@@ -26,9 +25,8 @@ declare module 'jodit/config' {
 		iframeDefaultSrc: string;
 
 		/**
-		 * Base URL where the root directory for [[Config.iframe]] mode
+		 * Base URL where the root directory for {@link Config.iframe} mode
 		 *
-		 * @example
 		 * ```javascript
 		 * Jodit.make('#editor', {
 		 *    iframe: true,
@@ -50,7 +48,7 @@ declare module 'jodit/config' {
 
 		/**
 		 * Custom style to be used inside the iframe to display content.
-		 * @example
+		 *
 		 * ```javascript
 		 * Jodit.make('#editor', {
 		 *    iframe: true,
@@ -63,7 +61,6 @@ declare module 'jodit/config' {
 		/**
 		 * Custom stylesheet files to be used inside the iframe to display content.
 		 *
-		 * @example
 		 * ```javascript
 		 * Jodit.make('#editor', {
 		 *    iframe: true,

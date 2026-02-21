@@ -17,18 +17,19 @@ import enterIcon from './enter.svg';
 declare module 'jodit/config' {
 	interface Config {
 		/**
-		 * Create helper
+		 * Show a green "add paragraph" bar when the cursor hovers near the top or bottom
+		 * edge of certain block elements (tables, images, iframes, etc.)
 		 */
 		addNewLine: boolean;
 
 		/**
-		 * What kind of tags it will be impact
+		 * Block-level tag names near which the "add new line" bar will appear
 		 */
 		addNewLineTagsTriggers: HTMLTagNames[];
 
 		/**
 		 * On dbl click on empty space of editor it add new P element
-		 * @example
+		 *
 		 * ```js
 		 * Jodit.make('#editor', {
 		 *   addNewLineOnDBLClick: false // disable

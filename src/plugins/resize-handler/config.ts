@@ -12,7 +12,14 @@ import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * Allow the user to resize the editor horizontally by dragging the resize handle
+		 */
 		allowResizeX: boolean;
+
+		/**
+		 * Allow the user to resize the editor vertically by dragging the resize handle
+		 */
 		allowResizeY: boolean;
 	}
 }

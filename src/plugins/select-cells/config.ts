@@ -12,6 +12,9 @@ import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
 	interface Config {
+		/**
+		 * Allow users to select multiple table cells by clicking and dragging
+		 */
 		tableAllowCellSelection: boolean;
 	}
 }

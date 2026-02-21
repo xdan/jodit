@@ -16,7 +16,6 @@ declare module 'jodit/config' {
 		/**
 		 * You can redefine hotkeys for some command
 		 *
-		 * @example
 		 * ```js
 		 * const jodit = Jodit.make('#editor', {
 		 *  commandToHotkeys: {

@@ -13,7 +13,8 @@ import { Config } from 'jodit/config';
 declare module 'jodit/config' {
 	interface Config {
 		/**
-		 * @example
+		 * Keep the toolbar visible at the top of the viewport when scrolling past the editor
+		 *
 		 * ```javascript
 		 * var editor = Jodit.make('#someid', {
 		 *  toolbarSticky: false
@@ -22,13 +23,15 @@ declare module 'jodit/config' {
 		 */
 		toolbarSticky: boolean;
 
+		/**
+		 * Disable sticky toolbar on mobile devices to save screen space
+		 */
 		toolbarDisableStickyForMobile: boolean;
 
 		/**
 		 * For example, in Joomla, the top menu bar closes Jodit toolbar when scrolling. Therefore, it is necessary to
 		 * move the toolbar Jodit by this amount [more](https://xdsoft.net/jodit/docs/#2.5.57)
 		 *
-		 * @example
 		 * ```javascript
 		 * var editor = Jodit.make('#someid', {
 		 *  toolbarStickyOffset: 100
