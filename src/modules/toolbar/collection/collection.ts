@@ -42,6 +42,10 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 		return 'ToolbarCollection';
 	}
 
+	override getRole(): string {
+		return 'toolbar';
+	}
+
 	private readonly __listenEvents =
 		'updatePlugins updateToolbar changeStack mousedown mouseup keydown change readonly afterResize ' +
 		'selectionchange changeSelection focus afterSetMode touchstart focus blur';

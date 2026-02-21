@@ -138,7 +138,7 @@ export class UIButton extends UIElement implements IUIButton {
 	@watch('state.text', { immediately: false })
 	protected onChangeText(): void {
 		this.text.textContent = this.jodit.i18n(this.state.text);
-		this.__updateAriaLabel();
+		this.updateAriaLabel();
 	}
 
 	@watch('state.text', { immediately: false })
@@ -179,10 +179,10 @@ export class UIButton extends UIElement implements IUIButton {
 		}
 
 		attr(this.container, 'aria-label', i8nTooltip);
-		this.__updateAriaLabel();
+		this.updateAriaLabel();
 	}
 
-	private __updateAriaLabel(): void {
+	protected updateAriaLabel(): void {
 		const hasText = this.state.text.trim().length > 0;
 
 		const i8nTooltip = this.state.tooltip

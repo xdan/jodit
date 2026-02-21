@@ -38,9 +38,12 @@ export class UIList<T extends IViewBased = IViewBased>
 	extends UIGroup<T>
 	implements IUIList
 {
-	/** @override */
 	override className(): string {
 		return 'UIList';
+	}
+
+	override getRole(): string {
+		return 'list';
 	}
 
 	declare jodit: T;
@@ -56,8 +59,8 @@ export class UIList<T extends IViewBased = IViewBased>
 	/**
 	 * Make new group and append it in list of elements
 	 */
-	private makeGroup(): IUIGroup {
-		return new UIGroup(this.jodit);
+	private makeGroup(role?: string): IUIGroup {
+		return new UIGroup(this.jodit, [], role ? { role } : undefined);
 	}
 
 	/**
@@ -91,8 +94,7 @@ export class UIList<T extends IViewBased = IViewBased>
 		this.clear();
 
 		let lastBtnSeparator: boolean = false;
-
-		let line = this.makeGroup();
+		let line = this.makeGroup('group');
 		this.append(line);
 		line.setMod('line', true);
 
@@ -103,7 +105,7 @@ export class UIList<T extends IViewBased = IViewBased>
 
 			switch (control.name) {
 				case '\n':
-					line = this.makeGroup();
+					line = this.makeGroup('group');
 					line.setMod('line', true);
 					group = this.makeGroup();
 					line.append(group);

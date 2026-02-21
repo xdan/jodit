@@ -35,7 +35,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	name: string = '';
 
 	getRole(): string {
-		return '';
+		return this.options?.role || '';
 	}
 
 	private __parentElement: Nullable<IUIElement> = null;
@@ -183,8 +183,10 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		);
 	}
 
-	/** @override */
-	constructor(jodit: T, options?: IDictionary) {
+	constructor(
+		jodit: T,
+		protected options?: IDictionary
+	) {
 		super(jodit);
 
 		this.container = this.createContainer(options);

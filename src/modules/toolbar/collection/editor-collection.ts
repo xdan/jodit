@@ -159,6 +159,7 @@ export class ToolbarEditorCollection extends ToolbarCollection<IJodit> {
 	 */
 	private prependInvisibleInput(container: HTMLElement): void {
 		const input = this.j.create.element('input', {
+			name: 'jodit-toolbar-focus-helper_' + this.j.id,
 			tabIndex: -1,
 			disabled: true, // Because <label> can trigger click
 			style: 'width: 0; height:0; position: absolute; visibility: hidden;'

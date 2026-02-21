@@ -14,7 +14,9 @@ import type { IControlTypeStrong, IToolbarButton } from 'jodit/types';
 import { INVISIBLE_SPACE, MODE_WYSIWYG } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { attr, getXPathByElement, trim } from 'jodit/core/helpers';
+import { trim } from 'jodit/core/helpers/string/trim';
+import { attr } from 'jodit/core/helpers/utils/attr';
+import { getXPathByElement } from 'jodit/core/helpers/utils/selector';
 import { Plugin } from 'jodit/core/plugin';
 import { ContextMenu } from 'jodit/modules/context-menu/context-menu';
 import { makeButton } from 'jodit/modules/toolbar/factory';
@@ -191,6 +193,7 @@ class xpath extends Plugin {
 	protected afterInit(): void {
 		if (this.j.o.showXPathInStatusbar) {
 			this.container = this.j.c.div('jodit-xpath');
+			attr(this.container, 'role', 'list');
 
 			const init = (): void => {
 				if (!this.j.o.showXPathInStatusbar || !this.container) {
@@ -212,7 +215,7 @@ class xpath extends Plugin {
 			this.j.e
 				.off('.xpath')
 				.on(
-					'mouseup.xpath change.xpath keydown.xpath changeSelection.xpath',
+					'pointerup.xpath change.xpath keydown.xpath changeSelection.xpath',
 					this.calcPath
 				)
 				.on(

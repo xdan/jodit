@@ -72,6 +72,17 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 	protected trigger!: HTMLElement;
 
+	protected override updateAriaLabel(): void {
+		super.updateAriaLabel();
+
+		if (this.trigger) {
+			const i8nTooltip = this.state.tooltip
+				? this.jodit.i18n(this.state.tooltip)
+				: null;
+			attr(this.trigger, 'aria-label', i8nTooltip);
+		}
+	}
+
 	/**
 	 * Get parent toolbar
 	 */
@@ -177,7 +188,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		container.appendChild(button);
 
 		const trigger = this.j.c.fromHTML(
-			`<span role="trigger" class="${cn}__trigger">${Icon.get(
+			`<span role="button" aria-haspopup="true" aria-expanded="false" class="${cn}__trigger">${Icon.get(
 				'chevron'
 			)}</span>`
 		);
@@ -308,6 +319,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		}
 		const { control: ctr } = this;
 
+		attr(this.trigger, 'aria-expanded', true);
+
 		e.buffer = {
 			actionTrigger: this
 		};
@@ -319,6 +332,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		if (isFunction(ctr.popup)) {
 			const popup = this.openPopup();
 			popup.parentElement = this;
+
 			try {
 				if (
 					this.j.e.fire(
@@ -503,6 +517,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			this.openedPopup.close();
 			this.openedPopup.destruct();
 			this.openedPopup = null;
+			if (this.trigger) {
+				attr(this.trigger, 'aria-expanded', false);
+			}
 		}
 	}
 

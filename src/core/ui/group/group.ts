@@ -36,7 +36,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 	}
 
 	override getRole(): string {
-		return 'list';
+		return this.options?.role || 'list';
 	}
 
 	/**
