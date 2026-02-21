@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.9.12
+
+#### :rocket: New Feature
+
+- Enhance accessibility by adding role attributes to UI elements and updating related tests
+
 ## 4.9.11
 
 #### :rocket: New Feature
