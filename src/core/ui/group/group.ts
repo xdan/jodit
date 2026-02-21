@@ -35,6 +35,10 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		return 'UIGroup';
 	}
 
+	override getRole(): string {
+		return 'list';
+	}
+
 	/**
 	 * Synchronize mods to all children
 	 */

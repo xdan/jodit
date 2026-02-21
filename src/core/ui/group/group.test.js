@@ -196,6 +196,11 @@ describe('Test group ui', () => {
 					'You can not use index when append array of elements'
 				);
 			});
+
+			it('should have role', () => {
+				const group = new UIGroup(editor);
+				expect(group.container.getAttribute('role')).eq('list');
+			});
 		});
 	});
 });

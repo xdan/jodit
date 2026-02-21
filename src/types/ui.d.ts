@@ -26,6 +26,8 @@ export interface IUIElement
 	parentElement: Nullable<IUIElement>;
 	container: HTMLElement;
 	name: string;
+	
+	getRole(): string;
 
 	/**
 	 * Apply callback for all parents

@@ -19,6 +19,7 @@ import { Component, ViewComponent } from 'jodit/core/component';
 import { derive } from 'jodit/core/decorators/derive/derive';
 import { Dom } from 'jodit/core/dom/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { Elms } from 'jodit/core/traits/elms';
 import { Mods } from 'jodit/core/traits/mods';
 import { Icon } from 'jodit/core/ui/icon';
@@ -32,6 +33,10 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 {
 	container: HTMLElement;
 	name: string = '';
+
+	getRole(): string {
+		return '';
+	}
 
 	private __parentElement: Nullable<IUIElement> = null;
 
@@ -183,6 +188,9 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		super(jodit);
 
 		this.container = this.createContainer(options);
+
+		const role = this.getRole();
+		role && attr(this.container, 'role', role);
 
 		Object.defineProperty(this.container, 'component', {
 			value: this,

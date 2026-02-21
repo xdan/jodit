@@ -59,6 +59,10 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		return 'ToolbarButton';
 	}
 
+	override getRole(): string {
+		return 'listitem';
+	}
+
 	override readonly state = {
 		...UIButtonState(),
 		theme: 'toolbar',
@@ -162,8 +166,6 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		const cn = this.componentName;
 		const container = this.j.c.span(cn);
 		const button = super.createContainer();
-
-		attr(container, 'role', 'listitem');
 
 		button.classList.remove(cn);
 		button.classList.add(cn + '__button');
