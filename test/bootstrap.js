@@ -1135,7 +1135,12 @@ function getButton(buttonName, joditOrElement, role, last) {
 	const elm = joditOrElement.container || joditOrElement;
 
 	const classes = ['jodit-toolbar-button', 'jodit-ui-button'];
-	const roleSelector = role ? `[role="${role}"]` : '[role]';
+	let roleSelector = role ? `[role="${role}"]` : '[role]';
+
+	if (role === 'trigger') {
+		roleSelector = '[role][aria-haspopup="true"]';
+	}
+
 	let button;
 
 	if (!/\s/.test(buttonName)) {
