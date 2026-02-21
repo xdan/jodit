@@ -1,3 +1,13 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+/**
+ * @module storage
+ */
+
 import type { IAsyncStorage, IStorage, StorageValueType } from 'jodit/types';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';
 

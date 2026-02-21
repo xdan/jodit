@@ -4,15 +4,15 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { IComponent } from 'jodit/types';
-import { IS_PROD } from 'jodit/core/constants';
-import { getClassName } from 'jodit/core/helpers/utils/get-class-name';
-
 /**
  * [[include:core/decorators/component/README.md]]
  * @packageDocumentation
  * @module decorators/component
  */
+
+import type { IComponent } from 'jodit/types';
+import { IS_PROD } from 'jodit/core/constants';
+import { getClassName } from 'jodit/core/helpers/utils/get-class-name';
 
 export interface ComponentCompatible<T = IComponent> {
 	new (...constructorArgs: any[]): T;

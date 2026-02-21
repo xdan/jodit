@@ -4,13 +4,13 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { isFunction } from 'jodit/core/helpers/checker/is-function';
-
 /**
  * [[include:core/decorators/autobind/README.md]]
  * @packageDocumentation
  * @module decorators/autobind
  */
+
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
 
 /**
  * Decorator that automatically binds a method to its class instance.
