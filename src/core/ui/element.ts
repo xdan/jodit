@@ -34,6 +34,8 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	container: HTMLElement;
 	name: string = '';
 
+	protected options?: IDictionary;
+
 	getRole(): string {
 		return this.options?.role || '';
 	}
@@ -183,11 +185,9 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 		);
 	}
 
-	constructor(
-		jodit: T,
-		protected options?: IDictionary
-	) {
+	constructor(jodit: T, options?: IDictionary) {
 		super(jodit);
+		this.options = options;
 
 		this.container = this.createContainer(options);
 
