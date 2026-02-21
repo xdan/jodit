@@ -42,7 +42,96 @@ import type {
 let ConfigPrototype = {};
 
 /**
- * Default Editor's Configuration
+ * Default Editor's Configuration.
+ *
+ * This class holds all default option values for the Jodit editor.
+ * It uses a **private constructor** and a **lazy singleton** pattern — the single instance
+ * is created on the first access to {@link Config.defaultOptions} (also available as `Jodit.defaultOptions`).
+ *
+ * ## How options are resolved
+ *
+ * When you create an editor with `Jodit.make('#editor', userOptions)`, the library
+ * calls {@link ConfigProto}(userOptions, Config.defaultOptions). `ConfigProto` does
+ * **not** deep-clone the defaults. Instead it creates a new object whose JavaScript
+ * prototype is `Config.defaultOptions`:
+ *
+ * ```
+ * userOptions  ──[[Prototype]]──►  Config.defaultOptions
+ * ```
+ *
+ * Any key present in `userOptions` shadows the default;
+ * any key **not** present falls through to `Config.defaultOptions` via the prototype chain.
+ * Nested plain objects are recursively prototyped in the same way, so partial overrides
+ * of nested options work automatically:
+ *
+ * ```js
+ * // Only override `dialogWidth`; all other `image.*` defaults are still available
+ * Jodit.make('#editor', {
+ *   image: { dialogWidth: 500 }
+ * });
+ * ```
+ *
+ * ## How plugins extend the config
+ *
+ * Each plugin adds its own defaults by assigning to `Config.prototype` and augmenting
+ * the TypeScript type with `declare module`:
+ *
+ * ```ts
+ * // 1. Type augmentation (compile-time)
+ * declare module 'jodit/config' {
+ *   interface Config {
+ *     toolbarSticky: boolean;
+ *   }
+ * }
+ *
+ * // 2. Runtime default
+ * Config.prototype.toolbarSticky = true;
+ * ```
+ *
+ * Because the constructor runs `Object.assign(this, ConfigPrototype)` (where
+ * `ConfigPrototype` is captured as `Config.prototype` after the class definition),
+ * all prototype-level values — including those added by plugins — are materialized
+ * as own properties on the singleton. This means `Config.defaultOptions` always
+ * contains every registered option as an own, enumerable property.
+ *
+ * ## Changing global defaults
+ *
+ * You can modify `Jodit.defaultOptions` **before** creating editors to change
+ * defaults globally:
+ *
+ * ```js
+ * Jodit.defaultOptions.language = 'de';
+ * Jodit.defaultOptions.theme = 'dark';
+ *
+ * // Both editors inherit the new defaults
+ * Jodit.make('#editor1');
+ * Jodit.make('#editor2');
+ * ```
+ *
+ * ## `Jodit.atom` — preventing deep merge
+ *
+ * By default, `ConfigProto` deep-merges nested plain objects and arrays.
+ * Wrap a value with `Jodit.atom(value)` to make it **atomic** — it will completely
+ * replace the default instead of being merged:
+ *
+ * ```js
+ * Jodit.make('#editor', {
+ *   controls: {
+ *     fontsize: {
+ *       // Replace the entire list rather than merging with the default one
+ *       list: Jodit.atom([8, 9, 10])
+ *     }
+ *   }
+ * });
+ * ```
+ *
+ * `Jodit.atom` calls {@link markAsAtomic}, which sets a non-enumerable
+ * `isAtom` flag on the object. `ConfigProto` checks this flag and skips
+ * recursive merging when it is present. Note: top-level arrays (depth 0)
+ * are always treated as atomic — they replace rather than merge.
+ *
+ * @see {@link ConfigProto} for the full merge algorithm
+ * @see {@link markAsAtomic} / {@link isAtom} for the atom marker implementation
  */
 class Config implements IViewOptions {
 	private constructor() {
