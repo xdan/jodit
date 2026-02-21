@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.9.11
+
+#### :rocket: New Feature
+
+- The `getRole():string` method has been added to `UIElement`. This allows you to set container roles for accessibility.
+- The `UIGroup` role is set to list. 
+
 ## 4.9.7
 
 #### :rocket: New Feature
