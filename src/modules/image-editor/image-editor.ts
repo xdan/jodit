@@ -822,7 +822,7 @@ export function openImageEditor(
 	name: string,
 	path: string,
 	source: string,
-	onSuccess?: () => void,
+	onSuccess?: (newPath?: string) => void,
 	onFailed?: (error: Error) => void
 ): Promise<IDialog> {
 	return this.getInstance<ImageEditor>('ImageEditor', this.o).open(
@@ -843,12 +843,14 @@ export function openImageEditor(
 				newname,
 				box.box
 			)
-				.then(ok => {
-					if (ok) {
+				.then(result => {
+					if (result) {
 						success();
 
 						if (onSuccess) {
-							onSuccess();
+							onSuccess(
+								typeof result === 'string' ? result : undefined
+							);
 						}
 					}
 				})

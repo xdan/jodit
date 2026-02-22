@@ -328,13 +328,29 @@ function mockAjax() {
 						break;
 					}
 
-					case 'imageResize':
+					case 'imageCrop':
+					case 'imageResize': {
+						const reqData = ajax.options.data;
+						let newname = reqData.newname || reqData.name;
+
+						if (reqData.name && newname.indexOf('.') === -1) {
+							const ext = reqData.name.split('.').pop();
+							newname += '.' + ext;
+						}
+
 						resolve({
 							success: true,
 							time: '2020-08-04 19:03:23',
-							data: { code: 220 }
+							data: {
+								code: 220,
+								newPath:
+									'https://xdsoft.net/jodit/files/' +
+									(reqData.path || '') +
+									newname
+							}
 						});
 						break;
+					}
 					case 'folderRemove':
 					case 'folderRename': {
 						temp.folderName = ajax.options.data.newname;

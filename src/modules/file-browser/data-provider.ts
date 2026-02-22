@@ -543,7 +543,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		name: string,
 		newname: string | void,
 		box: ImageBox | void
-	): Promise<true> {
+	): Promise<boolean | string> {
 		if (!this.o[type]) {
 			this.o[type] = {
 				data: {}
@@ -568,8 +568,8 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		query.data.name = name;
 		query.data.source = source;
 
-		return this.get(type).then(() => {
-			return true;
+		return this.get(type).then(resp => {
+			return resp.data.newPath || true;
 		});
 	}
 
@@ -583,7 +583,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		name: string,
 		newname: string | void,
 		box: ImageBox | void
-	): Promise<boolean> {
+	): Promise<boolean | string> {
 		return this.__changeImage('crop', path, source, name, newname, box);
 	}
 
@@ -597,7 +597,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		name: string,
 		newname: string | void,
 		box: ImageBox | void
-	): Promise<boolean> {
+	): Promise<boolean | string> {
 		return this.__changeImage('resize', path, source, name, newname, box);
 	}
 

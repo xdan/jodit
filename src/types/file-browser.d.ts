@@ -62,6 +62,7 @@ export interface IFileBrowserAnswer {
 		title?: string;
 		source: string;
 		permissions?: IPermissions | null;
+		newPath?: string;
 	};
 }
 
@@ -262,7 +263,7 @@ export interface IFileBrowserDataProvider extends IDestructible {
 		name: string,
 		newname: string | void,
 		box: ImageBox | void
-	): Promise<boolean>;
+	): Promise<boolean | string>;
 
 	crop(
 		path: string,
@@ -270,7 +271,7 @@ export interface IFileBrowserDataProvider extends IDestructible {
 		name: string,
 		newname: string | void,
 		box: ImageBox | void
-	): Promise<boolean>;
+	): Promise<boolean | string>;
 
 	canI(action: string): boolean;
 

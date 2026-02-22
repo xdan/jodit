@@ -241,7 +241,7 @@ describe('Image editor', () => {
 
 	describe('Resize mode', () => {
 		describe('Save as', () => {
-			it('Should shoe prompt dialog', async () => {
+			it('Should shoe prompt dialog and update image src with new path from server', async () => {
 				const editor = getJodit({
 					uploader: {
 						url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
@@ -280,7 +280,69 @@ describe('Image editor', () => {
 				clickButton('ok', prompt);
 				await editor.async.requestIdlePromise();
 				expect(getOpenedDialog(editor)).eq(dialog);
+
+				// After Save As, the image-properties imageSrc field should contain the new path from server
+				const imageSrcInput = form.getElm('imageSrc');
+				expect(imageSrcInput.value).to.contain(
+					'https://xdsoft.net/jodit/files/new-name.jpg'
+				);
+
 				clickButton('ok', dialog);
+
+				// After OK in image-properties, the editor image src should be updated
+				const img = editor.editor.querySelector('img');
+				expect(img.getAttribute('src')).to.contain(
+					'https://xdsoft.net/jodit/files/new-name.jpg'
+				);
+			}).timeout(7000);
+
+			it('Should keep original src when server does not return newPath', async () => {
+				const editor = getJodit({
+					uploader: {
+						url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
+					},
+					filebrowser: {
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php'
+						}
+					}
+				});
+
+				// Simulate old server that does not return newPath
+				const originalResize = editor.filebrowser.dataProvider.resize;
+				editor.filebrowser.dataProvider.resize = function () {
+					return Promise.resolve(true);
+				};
+
+				editor.value =
+					'<p><img alt="artio" src="tests/artio.jpg"/></p>';
+
+				simulateEvent('dblclick', editor.editor.querySelector('img'));
+
+				const dialog = getOpenedDialog(editor);
+				const form = getForm(dialog);
+				simulateEvent('click', form.getElm('editImage'));
+				await new Promise(resolve =>
+					editor.filebrowser.events.one('afterImageEditor', resolve)
+				);
+
+				const imageEditor = getOpenedDialog(editor);
+
+				clickButton('save-as', imageEditor);
+				const prompt = getOpenedDialog(editor);
+				const input = prompt.querySelector('input');
+				input.value = 'new-name';
+				clickButton('ok', prompt);
+				await editor.async.requestIdlePromise();
+				expect(getOpenedDialog(editor)).eq(dialog);
+
+				// imageSrc should fallback to original url with cache-bust timestamp
+				const imageSrcInput = form.getElm('imageSrc');
+				expect(imageSrcInput.value).to.contain('tests/artio.jpg');
+				expect(imageSrcInput.value).to.contain('_tmp=');
+
+				clickButton('ok', dialog);
+				editor.filebrowser.dataProvider.resize = originalResize;
 			}).timeout(7000);
 		});
 

@@ -70,12 +70,13 @@ export function openImageEditorDialog(
 				resp.name,
 				resp.path,
 				resp.source,
-				() => {
+				(newPath?: string) => {
 					const timestamp: number = new Date().getTime();
+					const newUrl = newPath || url;
 
 					state.values.imageSrc =
-						url +
-						(url.indexOf('?') !== -1 ? '' : '?') +
+						newUrl +
+						(newUrl.indexOf('?') !== -1 ? '' : '?') +
 						'&_tmp=' +
 						timestamp.toString();
 				},
