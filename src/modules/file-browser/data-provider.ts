@@ -26,15 +26,13 @@ import type {
 	Nullable
 } from 'jodit/types';
 import { IS_PROD } from 'jodit/core/constants';
-import {
-	abort,
-	ConfigProto,
-	error,
-	isFunction,
-	normalizeRelativePath,
-	set
-} from 'jodit/core/helpers';
-import { Ajax } from 'jodit/core/request';
+import { autobind } from 'jodit/core/decorators/autobind/autobind';
+import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { normalizeRelativePath } from 'jodit/core/helpers/normalize/normalize-relative-path';
+import { ConfigProto } from 'jodit/core/helpers/utils/config-proto';
+import { abort, error } from 'jodit/core/helpers/utils/error';
+import { set } from 'jodit/core/helpers/utils/set';
+import { Ajax } from 'jodit/core/request/ajax';
 import { FileBrowserItem } from 'jodit/modules/file-browser/builders/item';
 
 export const DEFAULT_SOURCE_NAME = 'default';
@@ -127,6 +125,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 	private progressHandler = (ignore: number): void => {};
 
+	@autobind
 	onProgress(callback: (percentage: number) => void): void {
 		this.progressHandler = callback;
 	}
@@ -134,6 +133,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Load permissions for path and source
 	 */
+	@autobind
 	async permissions(
 		path: string,
 		source: string
@@ -182,6 +182,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return null;
 	}
 
+	@autobind
 	canI(action: string): boolean {
 		const rule: keyof IPermissions = 'allow' + action;
 
@@ -238,19 +239,21 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Load items list by path and source
 	 */
+	@autobind
 	items(
 		path: string,
 		source: string,
 		mods: IFileBrowserDataProviderItemsMods = {}
 	): Promise<IFileBrowserItem[]> {
 		return this.__items(path, source, mods, resp =>
-			this.generateItemsList(resp.data.sources, mods)
+			this.__generateItemsList(resp.data.sources, mods)
 		);
 	}
 
 	/**
 	 * Load items list by path and source
 	 */
+	@autobind
 	itemsEx(
 		path: string,
 		source: string,
@@ -260,12 +263,12 @@ export default class DataProvider implements IFileBrowserDataProvider {
 			sources.reduce((acc, source) => acc + source.files.length, 0);
 
 		return this.__items(path, source, mods, resp => ({
-			items: this.generateItemsList(resp.data.sources, mods),
+			items: this.__generateItemsList(resp.data.sources, mods),
 			loadedTotal: calcTotal(resp.data.sources)
 		}));
 	}
 
-	private generateItemsList(
+	private __generateItemsList(
 		sources: ISourcesFiles,
 		mods: IFileBrowserDataProviderItemsMods = {}
 	): IFileBrowserItem[] {
@@ -306,6 +309,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		return elements;
 	}
 
+	@autobind
 	async tree(path: string, source: string): Promise<ISourcesFiles> {
 		path = normalizeRelativePath(path);
 
@@ -338,6 +342,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Get path by url. You can use this method in another modules
 	 */
+	@autobind
 	getPathByUrl(url: string): Promise<any> {
 		set('options.getLocalFileByUrl.data.url', url, this);
 
@@ -357,6 +362,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param path - Relative directory in which you want create a folder
 	 * @param source - Server source key
 	 */
+	@autobind
 	createFolder(name: string, path: string, source: string): Promise<boolean> {
 		const { create } = this.o;
 
@@ -383,6 +389,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param filepath - The relative path to the file / folder source
 	 * @param path - Relative to the directory where you want to move the file / folder
 	 */
+	@autobind
 	move(
 		filepath: string,
 		path: string,
@@ -419,7 +426,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param file - The filename
 	 * @param source - Source
 	 */
-	private remove(
+	private __remove(
 		action: 'fileRemove' | 'folderRemove',
 		path: string,
 		file: string,
@@ -451,8 +458,9 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param file - The filename
 	 * @param source - Source
 	 */
+	@autobind
 	fileRemove(path: string, file: string, source: string): Promise<string> {
-		return this.remove('fileRemove', path, file, source);
+		return this.__remove('fileRemove', path, file, source);
 	}
 
 	/**
@@ -462,8 +470,9 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param file - The filename
 	 * @param source - Source
 	 */
+	@autobind
 	folderRemove(path: string, file: string, source: string): Promise<string> {
-		return this.remove('folderRemove', path, file, source);
+		return this.__remove('folderRemove', path, file, source);
 	}
 
 	/**
@@ -474,7 +483,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	 * @param newname - New name
 	 * @param source - Source
 	 */
-	private rename(
+	private __rename(
 		action: 'fileRename' | 'folderRename',
 		path: string,
 		name: string,
@@ -504,28 +513,30 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Rename folder
 	 */
+	@autobind
 	folderRename(
 		path: string,
 		name: string,
 		newname: string,
 		source: string
 	): Promise<string> {
-		return this.rename('folderRename', path, name, newname, source);
+		return this.__rename('folderRename', path, name, newname, source);
 	}
 
 	/**
 	 * Rename file
 	 */
+	@autobind
 	fileRename(
 		path: string,
 		name: string,
 		newname: string,
 		source: string
 	): Promise<string> {
-		return this.rename('fileRename', path, name, newname, source);
+		return this.__rename('fileRename', path, name, newname, source);
 	}
 
-	private changeImage(
+	private __changeImage(
 		type: 'resize' | 'crop',
 		path: string,
 		source: string,
@@ -565,6 +576,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 	/**
 	 * Send command to server to crop image
 	 */
+	@autobind
 	crop(
 		path: string,
 		source: string,
@@ -572,12 +584,13 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string | void,
 		box: ImageBox | void
 	): Promise<boolean> {
-		return this.changeImage('crop', path, source, name, newname, box);
+		return this.__changeImage('crop', path, source, name, newname, box);
 	}
 
 	/**
 	 * Send command to server to resize image
 	 */
+	@autobind
 	resize(
 		path: string,
 		source: string,
@@ -585,17 +598,20 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		newname: string | void,
 		box: ImageBox | void
 	): Promise<boolean> {
-		return this.changeImage('resize', path, source, name, newname, box);
+		return this.__changeImage('resize', path, source, name, newname, box);
 	}
 
+	@autobind
 	getMessage(resp: IFileBrowserAnswer): string {
 		return this.options.getMessage(resp);
 	}
 
+	@autobind
 	isSuccess(resp: IFileBrowserAnswer): boolean {
 		return this.options.isSuccess(resp);
 	}
 
+	@autobind
 	destruct(): any {
 		this.__ajaxInstances.forEach(a => a.destruct());
 		this.__ajaxInstances.clear();

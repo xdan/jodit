@@ -240,6 +240,50 @@ describe('Image editor', () => {
 	});
 
 	describe('Resize mode', () => {
+		describe('Save as', () => {
+			it('Should shoe prompt dialog', async () => {
+				const editor = getJodit({
+					uploader: {
+						url: 'https://xdsoft.net/jodit/connector/index.php?action=upload'
+					},
+					filebrowser: {
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php'
+						}
+					}
+				});
+
+				editor.value =
+					'<p><img alt="artio" src="tests/artio.jpg"/></p>';
+
+				simulateEvent('dblclick', editor.editor.querySelector('img'));
+
+				const dialog = getOpenedDialog(editor);
+
+				const form = getForm(dialog);
+				simulateEvent('click', form.getElm('editImage'));
+				await new Promise(resolve =>
+					editor.filebrowser.events.one('afterImageEditor', resolve)
+				);
+
+				const imageEditor = getOpenedDialog(editor);
+				expect(imageEditor).is.not.null;
+
+				clickButton('save-as', imageEditor);
+
+				const prompt = getOpenedDialog(editor);
+				expect(prompt).is.not.null;
+				expect(prompt).is.not.equals(dialog);
+				const input = prompt.querySelector('input');
+				expect(input).is.not.null;
+				input.value = 'new-name';
+				clickButton('ok', prompt);
+				await editor.async.requestIdlePromise();
+				expect(getOpenedDialog(editor)).eq(dialog);
+				clickButton('ok', dialog);
+			}).timeout(7000);
+		});
+
 		describe('Enable ratio', () => {
 			it('Should deny resize image without ratio', async () => {
 				const editor = getJodit({

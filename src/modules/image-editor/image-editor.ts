@@ -25,7 +25,12 @@ import type {
 import { ViewComponent } from 'jodit/core/component';
 import { autobind, component, debounce, throttle } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
-import { $$, attr, call, css, refs, toArray, trim } from 'jodit/core/helpers';
+import { toArray } from 'jodit/core/helpers/array/to-array';
+import { trim } from 'jodit/core/helpers/string/trim';
+import { attr } from 'jodit/core/helpers/utils/attr';
+import { css } from 'jodit/core/helpers/utils/css';
+import { $$, refs } from 'jodit/core/helpers/utils/selector';
+import { call } from 'jodit/core/helpers/utils/utils';
 import { Button } from 'jodit/core/ui/button';
 import { Config } from 'jodit/config';
 
@@ -738,7 +743,13 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 		this.buttons = {
 			reset: Button(this.j, 'update', 'Reset'),
 			save: Button(this.j, 'save', 'Save'),
-			saveas: Button(this.j, 'save', 'Save as ...')
+			saveas: Button(this.j, {
+				icon: {
+					name: 'save'
+				},
+				name: 'save-as',
+				text: 'Save as ...'
+			})
 		};
 
 		this.activeTab = o.resize ? TABS.resize : TABS.crop;

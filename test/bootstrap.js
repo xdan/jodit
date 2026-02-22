@@ -328,6 +328,13 @@ function mockAjax() {
 						break;
 					}
 
+					case 'imageResize':
+						resolve({
+							success: true,
+							time: '2020-08-04 19:03:23',
+							data: { code: 220 }
+						});
+						break;
 					case 'folderRemove':
 					case 'folderRename': {
 						temp.folderName = ajax.options.data.newname;
@@ -1144,8 +1151,14 @@ function getButton(buttonName, joditOrElement, role, last) {
 	let button;
 
 	if (!/\s/.test(buttonName)) {
-		for (const className of classes) {
-			const prefix = `.${className}.${className}_${buttonName}${last ? ':last-child' : ''}`;
+		const variants = classes
+			.map(c => [
+				`.${c}.${c}_${buttonName}`,
+				`.${c}.${c}_${buttonName.replace(/-/g, '_')}`
+			])
+			.flat();
+		for (const className of variants) {
+			const prefix = `${className}${last ? ':last-child' : ''}`;
 			button = elm.querySelector(`${prefix} ${roleSelector}`);
 
 			if (button) {

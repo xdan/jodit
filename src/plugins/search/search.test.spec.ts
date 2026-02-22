@@ -31,7 +31,7 @@ test.describe('Search screenshot testing', () => {
 
 		test.describe('Replace popup', () => {
 			test('works', async function ({ page }) {
-				await page.click('[data-ref="find"] [role="trigger"]');
+				await page.click('[data-ref="find"] [aria-haspopup="true"]');
 				await page.click('[data-ref="replace"]');
 				await page.evaluate(() => {
 					(document.activeElement as HTMLInputElement).blur();

@@ -41,6 +41,24 @@ export function call<T extends any[], R>(
 }
 
 /**
+ * Call function with parameters
+ *
+ * @example
+ * ```js
+ * const f = Math.random();
+ * Jodit.modules.Helpers.call(f > 0.5 ? Math.ceil : Math.floor, f);
+ * ```
+ */
+
+export function callThis<This, T extends any[], R>(
+	func: (this: This, ...args: T) => R,
+	thisArg: This,
+	...args: T
+): R {
+	return func.apply(thisArg, args);
+}
+
+/**
  * Mark element for debugging
  */
 export function markOwner(jodit: IViewBased, elm: HTMLElement): void {
