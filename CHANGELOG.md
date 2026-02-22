@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.9.14
+
+#### :bug: Bug Fix
+
+- Enhance image editor functionality with 'Save as' prompt and refactor button definitions
+
 ## 4.9.12
 
 #### :rocket: New Feature
