@@ -13,7 +13,7 @@
 
 #### :house: Internal
 
-
+- Downgrade Node.js version in .nvmrc to 22
 
 ## 4.9.15
 
