@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.9.15
+
+#### :bug: Bug Fix
+
+- Enhance image editor and file browser functionality with new path handling and update tests
+
 ## 4.9.14
 
 #### :bug: Bug Fix

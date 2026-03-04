@@ -109,7 +109,17 @@ export class inlinePopup extends Plugin {
 			}
 
 			if (isArray(content)) {
-				this.toolbar.build(content, target);
+				const disabled = this.j.o.toolbarInlineDisabledButtons;
+				this.toolbar.build(
+					disabled.length
+						? content.filter(item => {
+								const name = isString(item) ? item : item.name;
+								return !disabled.includes(name ?? '');
+							})
+						: content,
+					target
+				);
+
 				this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
 				content = this.toolbar.container;
 			}

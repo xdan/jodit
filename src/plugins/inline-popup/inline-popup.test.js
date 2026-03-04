@@ -658,6 +658,73 @@ describe('Text Inline Popup plugin', () => {
 		});
 	});
 
+	describe('toolbarInlineDisabledButtons', () => {
+		it('Should not show disabled buttons in inline popup for images', () => {
+			const editor = getJodit({
+				toolbarInlineDisabledButtons: ['pencil']
+			});
+
+			editor.value = '<img alt="" src="tests/artio.jpg"/>';
+			editor.s.focus();
+
+			simulateEvent('click', editor.editor.querySelector('img'));
+
+			const popup = getOpenedPopup(editor);
+
+			expect(popup).is.not.null;
+			expect(getButton('pencil', popup)).is.null;
+		});
+
+		it('Should not show disabled buttons in inline popup for links', () => {
+			const editor = getJodit({
+				toolbarInlineDisabledButtons: ['link']
+			});
+
+			editor.value = '<a href="../artio.jpg"/>test</a>';
+
+			simulateEvent('click', editor.editor.querySelector('a'));
+
+			const popup = getOpenedPopup(editor);
+
+			expect(popup).is.not.null;
+			expect(getButton('link', popup)).is.null;
+		});
+
+		describe('Disabled/Enabled buttons', () => {
+			it('Should still show buttons not in the disabled list', () => {
+				const editor = getJodit({
+					toolbarInlineDisabledButtons: ['pencil']
+				});
+
+				editor.value = '<img alt="" src="tests/artio.jpg"/>';
+				editor.s.focus();
+
+				simulateEvent('click', editor.editor.querySelector('img'));
+
+				const popup = getOpenedPopup(editor);
+
+				expect(popup).is.not.null;
+				expect(getButton('pencil', popup)).is.null;
+				expect(getButton('delete', popup)).is.not.null;
+			});
+
+			it('Should still show all buttons not in the disabled list', () => {
+				const editor = getJodit({});
+
+				editor.value = '<img alt="" src="tests/artio.jpg"/>';
+				editor.s.focus();
+
+				simulateEvent('click', editor.editor.querySelector('img'));
+
+				const popup = getOpenedPopup(editor);
+
+				expect(popup).is.not.null;
+				expect(getButton('pencil', popup)).is.not.null;
+				expect(getButton('delete', popup)).is.not.null;
+			});
+		});
+	});
+
 	describe('when a string is passed to the popup config', () => {
 		it('Should show the content of the string in the popup', () => {
 			it('Should Open inline popup', () => {

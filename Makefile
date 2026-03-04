@@ -365,3 +365,8 @@ append-config-types:
 replace-import-types:
 	@echo 'Replace import types ...'
 	@$(TS_NODE_BASE) $(cwd)tools/utils/convert-imports-to-types.ts --cwd=./build/types
+
+.PHONY: stat
+stat:
+	@echo 'Build stats ...'
+	@npx cloc . --include-lang=TypeScript --exclude-dir=node_modules,compose,dist && npx jscpd ./src | grep "│"
