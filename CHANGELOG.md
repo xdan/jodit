@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.9.17
+
+#### :bug: Bug Fix
+
+- Fix for https://github.com/jodit/jodit-react/issues/319
+
 ## 4.9.16
 
 #### :house: Internal
