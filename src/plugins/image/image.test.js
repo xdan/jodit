@@ -5,6 +5,43 @@
  */
 describe('Process Images plugins', function () {
 	describe('Toolbar', function () {
+		describe('Click on Image button with filebrowser', function () {
+			it('Should show Browse tab button without text clipping', function () {
+				const editor = getJodit({
+					filebrowser: {
+						ajax: {
+							url: 'https://example.com/filebrowser'
+						}
+					}
+				});
+
+				clickButton('image', editor);
+				const popup = getOpenedPopup(editor);
+				expect(popup).is.not.null;
+
+				const tabButtons = popup.querySelectorAll(
+					'.jodit-tabs__button'
+				);
+				expect(tabButtons.length).to.be.at.least(2);
+
+				const browseBtn = Array.from(tabButtons).find(
+					btn => btn.textContent.trim() === 'Browse'
+				);
+				expect(browseBtn).is.not.undefined;
+
+				const textEl = browseBtn.querySelector(
+					'.jodit-ui-button__text'
+				);
+				expect(textEl).is.not.null;
+
+				// The text element should not clip its content
+				expect(textEl.scrollWidth).to.be.at.most(
+					textEl.clientWidth,
+					'Browse button text is clipped (scrollWidth > clientWidth)'
+				);
+			});
+		});
+
 		describe('Click on Image button', function () {
 			it('Should open image dialog and insert image by url.', function () {
 				const editor = getJodit();

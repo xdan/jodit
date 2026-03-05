@@ -128,7 +128,7 @@ export const TabsWidget = (
 					: content
 			);
 		} else {
-			tab.appendChild(jodit.c.div('jodit-tab_empty'));
+			tab.classList.add('jodit-tab_empty');
 		}
 
 		tabBox.appendChild(tab);

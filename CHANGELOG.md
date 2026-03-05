@@ -14,6 +14,11 @@
 #### :bug: Bug Fix
 
 - Fix table column operations (insert before/after, delete) affecting wrong column when cells are merged [#1334](https://github.com/xdan/jodit/issues/1334)
+- Fix Browse button text clipped in image popup when filebrowser is configured [#1318](https://github.com/xdan/jodit/issues/1318)
+
+#### :nail_care: Polish
+
+- Make form inputs stretch to full width inside UIBlock (link popup, image popup)
 
 ## 4.9.17
 
