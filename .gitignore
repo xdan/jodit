@@ -19,3 +19,4 @@ examples/build/
 /playwright/.cache/
 stack.md
 sync.sh
+.claude

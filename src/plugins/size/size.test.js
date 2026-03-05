@@ -33,10 +33,16 @@
 					ul: { list: undefined }
 				},
 				buttons: [
-					'bold', 'italic', '|',
-					'ul', 'ol', '|',
-					'link', '|',
-					'paragraph', '|'
+					'bold',
+					'italic',
+					'|',
+					'ul',
+					'ol',
+					'|',
+					'link',
+					'|',
+					'paragraph',
+					'|'
 				],
 				height: 300,
 				showWordsCounter: false,

@@ -632,22 +632,18 @@ describe('Tables Jodit Editor Tests', () => {
 
 					editor
 						.getInstance(Jodit.modules.Table)
-						.appendColumn(
-							editor.editor.firstChild,
-							tds[1],
-							true
-						);
+						.appendColumn(editor.editor.firstChild, tds[1], true);
 
 					await waitingForEvent(editor, 'finishedCleanHTMLWorker');
 
 					// New column should be between C and D
 					expect(sortAttributes(editor.value)).equals(
 						'<table>' +
-						'<tbody>' +
-						'<tr><td colspan="2">AB</td><td>C</td><td><br></td><td>D</td></tr>' +
-						'<tr><td>E</td><td>F</td><td>G</td><td><br></td><td>H</td></tr>' +
-						'</tbody>' +
-						'</table>'
+							'<tbody>' +
+							'<tr><td colspan="2">AB</td><td>C</td><td><br></td><td>D</td></tr>' +
+							'<tr><td>E</td><td>F</td><td>G</td><td><br></td><td>H</td></tr>' +
+							'</tbody>' +
+							'</table>'
 					);
 				});
 
@@ -669,22 +665,18 @@ describe('Tables Jodit Editor Tests', () => {
 
 					editor
 						.getInstance(Jodit.modules.Table)
-						.appendColumn(
-							editor.editor.firstChild,
-							tds[2],
-							false
-						);
+						.appendColumn(editor.editor.firstChild, tds[2], false);
 
 					await waitingForEvent(editor, 'finishedCleanHTMLWorker');
 
 					// New column should be between C and D
 					expect(sortAttributes(editor.value)).equals(
 						'<table>' +
-						'<tbody>' +
-						'<tr><td colspan="2">AB</td><td>C</td><td><br></td><td>D</td></tr>' +
-						'<tr><td>E</td><td>F</td><td>G</td><td><br></td><td>H</td></tr>' +
-						'</tbody>' +
-						'</table>'
+							'<tbody>' +
+							'<tr><td colspan="2">AB</td><td>C</td><td><br></td><td>D</td></tr>' +
+							'<tr><td>E</td><td>F</td><td>G</td><td><br></td><td>H</td></tr>' +
+							'</tbody>' +
+							'</table>'
 					);
 				});
 
@@ -702,9 +694,7 @@ describe('Tables Jodit Editor Tests', () => {
 					const tds = editor.editor.querySelectorAll('td');
 					// tds[2] is "D" (cellIndex=2, formal column=3)
 
-					const tableModule = editor.getInstance(
-						Jodit.modules.Table
-					);
+					const tableModule = editor.getInstance(Jodit.modules.Table);
 					const [, col] = tableModule.formalCoordinate(
 						editor.editor.firstChild,
 						tds[2]
@@ -713,11 +703,11 @@ describe('Tables Jodit Editor Tests', () => {
 
 					expect(sortAttributes(editor.value)).equals(
 						'<table>' +
-						'<tbody>' +
-						'<tr><td colspan="2">AB</td><td>C</td></tr>' +
-						'<tr><td>E</td><td>F</td><td>G</td></tr>' +
-						'</tbody>' +
-						'</table>'
+							'<tbody>' +
+							'<tr><td colspan="2">AB</td><td>C</td></tr>' +
+							'<tr><td>E</td><td>F</td><td>G</td></tr>' +
+							'</tbody>' +
+							'</table>'
 					);
 				});
 			});

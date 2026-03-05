@@ -404,10 +404,7 @@ export class selectCells extends Plugin {
 							columns
 								.sort((a, b) => b - a)
 								.forEach(col => {
-									this.__tableModule.removeColumn(
-										table,
-										col
-									);
+									this.__tableModule.removeColumn(table, col);
 								});
 						}
 						break;
