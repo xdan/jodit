@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.9.18
+
+#### :bug: Bug Fix
+
+- Fix table column operations (insert before/after, delete) affecting wrong column when cells are merged [#1334](https://github.com/xdan/jodit/issues/1334)
+
 ## 4.9.17
 
 #### :bug: Bug Fix

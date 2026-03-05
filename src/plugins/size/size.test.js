@@ -19,6 +19,51 @@
 			).equals(1);
 		});
 
+		it('should show resize handler with custom buttons and counters disabled (issue #1335)', function () {
+			const editor = getJodit({
+				controls: {
+					paragraph: {
+						list: Jodit.atom({
+							p: 'normal',
+							h1: 'Heading 1',
+							h2: 'Heading 2'
+						})
+					},
+					ol: { list: undefined },
+					ul: { list: undefined }
+				},
+				buttons: [
+					'bold', 'italic', '|',
+					'ul', 'ol', '|',
+					'link', '|',
+					'paragraph', '|'
+				],
+				height: 300,
+				showWordsCounter: false,
+				showCharsCounter: false,
+				allowResizeY: true,
+				allowResizeX: true
+			});
+
+			const handle = editor.container.querySelector(
+				'.jodit-editor__resize'
+			);
+
+			expect(handle).is.not.null;
+
+			const style = editor.ownerWindow.getComputedStyle(handle);
+			expect(style.display).does.not.equal('none');
+
+			const svg = handle.querySelector('svg');
+			expect(svg).is.not.null;
+
+			const svgStyle = editor.ownerWindow.getComputedStyle(svg);
+			expect(svgStyle.display).does.not.equal('none');
+			expect(svgStyle.visibility).does.not.equal('hidden');
+			expect(parseInt(svgStyle.width)).to.be.above(0);
+			expect(parseInt(svgStyle.height)).to.be.above(0);
+		});
+
 		describe('Sizes', function () {
 			describe('Set calc expression as height', function () {
 				it('Should set editor height by option', function () {

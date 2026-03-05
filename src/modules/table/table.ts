@@ -416,9 +416,13 @@ export class Table extends ViewComponent<IJodit> {
 			);
 		}
 
-		const columnIndex = insertAfter
-			? selectedCell.cellIndex + ((selectedCell.colSpan || 1) - 1)
-			: selectedCell.cellIndex;
+		const [, formalCol] = Table.__formalCoordinate(
+			table,
+			selectedCell,
+			insertAfter
+		);
+
+		const columnIndex = formalCol;
 
 		const newColumnIndex = insertAfter ? columnIndex + 1 : columnIndex;
 

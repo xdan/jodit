@@ -610,6 +610,117 @@ describe('Tables Jodit Editor Tests', () => {
 					});
 				});
 			});
+
+			describe('With merged cells (issue #1334)', () => {
+				it('should insert column after C when A+B are merged and cursor is in C', async () => {
+					const editor = getJodit({
+						cleanHTML: { fillEmptyParagraph: true }
+					});
+
+					// | AB(colspan=2) | C | D |
+					// | E             | F | G | H |
+					editor.value =
+						'<table>' +
+						'<tbody>' +
+						'<tr><td colspan="2">AB</td><td>C</td><td>D</td></tr>' +
+						'<tr><td>E</td><td>F</td><td>G</td><td>H</td></tr>' +
+						'</tbody>' +
+						'</table>';
+
+					const tds = editor.editor.querySelectorAll('td');
+					// tds[1] is "C" (cellIndex=1, but formal column=2)
+
+					editor
+						.getInstance(Jodit.modules.Table)
+						.appendColumn(
+							editor.editor.firstChild,
+							tds[1],
+							true
+						);
+
+					await waitingForEvent(editor, 'finishedCleanHTMLWorker');
+
+					// New column should be between C and D
+					expect(sortAttributes(editor.value)).equals(
+						'<table>' +
+						'<tbody>' +
+						'<tr><td colspan="2">AB</td><td>C</td><td><br></td><td>D</td></tr>' +
+						'<tr><td>E</td><td>F</td><td>G</td><td><br></td><td>H</td></tr>' +
+						'</tbody>' +
+						'</table>'
+					);
+				});
+
+				it('should insert column before D when A+B are merged and cursor is in D', async () => {
+					const editor = getJodit({
+						cleanHTML: { fillEmptyParagraph: true }
+					});
+
+					editor.value =
+						'<table>' +
+						'<tbody>' +
+						'<tr><td colspan="2">AB</td><td>C</td><td>D</td></tr>' +
+						'<tr><td>E</td><td>F</td><td>G</td><td>H</td></tr>' +
+						'</tbody>' +
+						'</table>';
+
+					const tds = editor.editor.querySelectorAll('td');
+					// tds[2] is "D"
+
+					editor
+						.getInstance(Jodit.modules.Table)
+						.appendColumn(
+							editor.editor.firstChild,
+							tds[2],
+							false
+						);
+
+					await waitingForEvent(editor, 'finishedCleanHTMLWorker');
+
+					// New column should be between C and D
+					expect(sortAttributes(editor.value)).equals(
+						'<table>' +
+						'<tbody>' +
+						'<tr><td colspan="2">AB</td><td>C</td><td><br></td><td>D</td></tr>' +
+						'<tr><td>E</td><td>F</td><td>G</td><td><br></td><td>H</td></tr>' +
+						'</tbody>' +
+						'</table>'
+					);
+				});
+
+				it('should delete column D when A+B are merged and cursor is in D', () => {
+					const editor = getJodit();
+
+					editor.value =
+						'<table>' +
+						'<tbody>' +
+						'<tr><td colspan="2">AB</td><td>C</td><td>D</td></tr>' +
+						'<tr><td>E</td><td>F</td><td>G</td><td>H</td></tr>' +
+						'</tbody>' +
+						'</table>';
+
+					const tds = editor.editor.querySelectorAll('td');
+					// tds[2] is "D" (cellIndex=2, formal column=3)
+
+					const tableModule = editor.getInstance(
+						Jodit.modules.Table
+					);
+					const [, col] = tableModule.formalCoordinate(
+						editor.editor.firstChild,
+						tds[2]
+					);
+					tableModule.removeColumn(editor.editor.firstChild, col);
+
+					expect(sortAttributes(editor.value)).equals(
+						'<table>' +
+						'<tbody>' +
+						'<tr><td colspan="2">AB</td><td>C</td></tr>' +
+						'<tr><td>E</td><td>F</td><td>G</td></tr>' +
+						'</tbody>' +
+						'</table>'
+					);
+				});
+			});
 		});
 
 		describe('Remove row', () => {

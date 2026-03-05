@@ -385,25 +385,30 @@ export class selectCells extends Plugin {
 
 					case 'bincolumn':
 						{
-							const columnsSet = new Set<number>(),
-								columns = cells.reduce(
-									(acc, td) => {
-										if (!columnsSet.has(td.cellIndex)) {
-											acc.push(td);
-											columnsSet.add(td.cellIndex);
-										}
+							const columnsSet = new Set<number>();
+							const columns: number[] = [];
 
-										return acc;
-									},
-									<HTMLTableCellElement[]>[]
-								);
+							cells.forEach(td => {
+								const [, col] =
+									this.__tableModule.formalCoordinate(
+										table,
+										td
+									);
 
-							columns.forEach(td => {
-								this.__tableModule.removeColumn(
-									table,
-									td.cellIndex
-								);
+								if (!columnsSet.has(col)) {
+									columns.push(col);
+									columnsSet.add(col);
+								}
 							});
+
+							columns
+								.sort((a, b) => b - a)
+								.forEach(col => {
+									this.__tableModule.removeColumn(
+										table,
+										col
+									);
+								});
 						}
 						break;
 
