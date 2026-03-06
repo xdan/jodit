@@ -5,6 +5,99 @@
  */
 
 describe('Limit plugin', function () {
+	describe('limit.limit event', function () {
+		it('Should fire limit.limit when limitChars is reached via keydown', function (done) {
+			const editor = getJodit({
+				limitChars: 5,
+				history: {
+					timeout: 5
+				}
+			});
+
+			let fired = false;
+			editor.e.on('limit.limit', () => {
+				fired = true;
+			});
+
+			editor.value = '<p>12345</p>';
+			editor.s.setCursorAfter(editor.editor.firstChild.firstChild);
+
+			simulateEvent(['keydown', 'keyup'], 'a', editor.editor);
+
+			editor.async.setTimeout(() => {
+				expect(fired).is.true;
+				done();
+			}, 200);
+		});
+
+		it('Should fire limit.limit on change when content exceeds limit', function (done) {
+			const editor = getJodit({
+				limitChars: 5,
+				history: {
+					timeout: 5
+				}
+			});
+
+			let fired = false;
+			editor.e.on('limit.limit', () => {
+				fired = true;
+			});
+
+			editor.value = '<p>123456</p>';
+
+			editor.async.setTimeout(() => {
+				expect(fired).is.true;
+				done();
+			}, 200);
+		});
+
+		it('Should fire limit.limit when inserting via insertHTML exceeds limit', function (done) {
+			const editor = getJodit({
+				limitChars: 5,
+				history: {
+					timeout: 5
+				}
+			});
+
+			let fired = false;
+			editor.e.on('limit.limit', () => {
+				fired = true;
+			});
+
+			editor.value = '<p>1234</p>';
+			editor.s.setCursorAfter(editor.editor.firstChild.firstChild);
+
+			// Insert 2 chars to exceed limit of 5
+			editor.s.insertHTML('ab');
+
+			editor.async.setTimeout(() => {
+				expect(fired).is.true;
+				done();
+			}, 200);
+		});
+
+		it('Should fire limit.limit with limitWords', function (done) {
+			const editor = getJodit({
+				limitWords: 3,
+				history: {
+					timeout: 5
+				}
+			});
+
+			let fired = false;
+			editor.e.on('limit.limit', () => {
+				fired = true;
+			});
+
+			editor.value = '<p>one two three four</p>';
+
+			editor.async.setTimeout(() => {
+				expect(fired).is.true;
+				done();
+			}, 200);
+		});
+	});
+
 	describe('Keydown', function () {
 		describe('On keydown when editor already full', function () {
 			it('should deny insert any chars', function (done) {
