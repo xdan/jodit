@@ -457,7 +457,7 @@ describe('Text Inline Popup plugin', () => {
 
 				describe('Row', () => {
 					it('should remove it row', () => {
-						clickTrigger('delete', popup);
+						clickTrigger('deleteTable', popup);
 
 						const popupColor = getOpenedPopup(editor);
 						expect(
@@ -475,7 +475,7 @@ describe('Text Inline Popup plugin', () => {
 
 				describe('Column', () => {
 					it('should remove whole table', () => {
-						clickTrigger('delete', popup);
+						clickTrigger('deleteTable', popup);
 
 						const popupColor = getOpenedPopup(editor);
 
@@ -489,7 +489,7 @@ describe('Text Inline Popup plugin', () => {
 
 				describe('Table', () => {
 					it('should remove whole table', () => {
-						clickTrigger('delete', popup);
+						clickTrigger('deleteTable', popup);
 
 						const popupColor = getOpenedPopup(editor);
 
@@ -501,7 +501,7 @@ describe('Text Inline Popup plugin', () => {
 
 				describe('Click on the trash button', () => {
 					it('should just open trigger', () => {
-						clickButton('delete', popup);
+						clickButton('deleteTable', popup);
 
 						const popupColor = getOpenedPopup(editor);
 						expect(popupColor).does.not.eq(popup);
@@ -534,7 +534,7 @@ describe('Text Inline Popup plugin', () => {
 
 				expect(popup && popup.parentNode.parentNode != null).is.true;
 
-				clickTrigger('delete', popup);
+				clickTrigger('deleteTable', popup);
 
 				const popupColor = getOpenedPopup(editor);
 				expect(
@@ -757,7 +757,7 @@ describe('Text Inline Popup plugin', () => {
 						'merge',
 						'addcolumn',
 						'addrow',
-						'delete'
+						'deleteTable'
 					])
 				}
 			});
@@ -780,13 +780,13 @@ describe('Text Inline Popup plugin', () => {
 
 			const buttons = popup.querySelectorAll('.jodit-toolbar-button');
 
-			// Delete button should have an SVG icon (bin), not just text
+			// deleteTable button should have an SVG icon (bin), not just text
 			const deleteBtn = Array.from(buttons).find(
-				btn => btn.getAttribute('data-ref') === 'delete'
+				btn => btn.getAttribute('data-ref') === 'deleteTable'
 			);
 			expect(deleteBtn).is.not.undefined;
 			const svg = deleteBtn.querySelector('svg');
-			expect(svg, 'delete button should have SVG icon').is.not.null;
+			expect(svg, 'deleteTable button should have SVG icon').is.not.null;
 
 			// Valign button should exist and have a tooltip
 			const valignBtn = Array.from(buttons).find(

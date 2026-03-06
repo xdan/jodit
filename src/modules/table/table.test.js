@@ -1621,7 +1621,7 @@ describe('Tables Jodit Editor Tests', () => {
 
 					editor.async.requestIdleCallback(() => {
 						const popup = getOpenedPopup(editor);
-						clickTrigger('delete', popup);
+						clickTrigger('deleteTable', popup);
 
 						const list = getOpenedPopup(editor);
 						clickButton('tablebinrow', list);
@@ -1651,7 +1651,7 @@ describe('Tables Jodit Editor Tests', () => {
 
 					editor.async.requestIdleCallback(() => {
 						const popup = getOpenedPopup(editor);
-						clickTrigger('delete', popup);
+						clickTrigger('deleteTable', popup);
 
 						const list = getOpenedPopup(editor);
 						clickButton('tablebincolumn', list);

@@ -9,11 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
-## 4.9.20
+## 4.10.1
 
-#### :bug: Bug Fix
+#### :boom: Breaking Change
 
-- Fix custom cell popup buttons not working when referenced by string name (e.g. `popup: { cells: Jodit.atom(['valign', 'delete', ...]) }`) [#1328](https://github.com/xdan/jodit/issues/1328)
+- Fix custom cell popup buttons not working when referenced by string name (e.g. `popup: { cells: Jodit.atom(['valign', 'deleteTable', ...]) }`) [#1328](https://github.com/xdan/jodit/issues/1328)
+- Rename cell popup button `delete` → `deleteTable` to avoid conflict with `document.execCommand('delete')`
 
 ## 4.9.18
 

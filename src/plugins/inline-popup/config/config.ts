@@ -78,9 +78,10 @@ Icon.set('addcolumn', addcolumn.default)
 	.set('th-list', thList.default);
 
 // Register cell popup buttons as global controls so they can be
-// referenced by name in custom popup configurations
+// referenced by name in custom popup configurations.
+// Skip buttons that already exist in controls (e.g. 'align' from justify plugin).
 cells.forEach(item => {
-	if (!isString(item) && item.name) {
+	if (!isString(item) && item.name && !Config.prototype.controls[item.name]) {
 		Config.prototype.controls[item.name] = item;
 	}
 });

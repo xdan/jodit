@@ -101,7 +101,7 @@ export default [
 		tooltip: 'Add row'
 	},
 	{
-		name: 'delete',
+		name: 'deleteTable',
 		icon: 'bin',
 		list: {
 			tablebin: 'Delete table',
