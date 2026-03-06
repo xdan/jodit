@@ -122,7 +122,7 @@ export class inlinePopup extends Plugin {
 								return acc;
 							},
 							{} as Record<string, Buttons[number]>
-					  )
+						)
 					: {};
 				const normalizedContent = content.map(item =>
 					isString(item) && popupDefaultsByName[item]
