@@ -97,18 +97,21 @@ dts:
 	@$(TS_NODE_BASE) $(cwd)/tools/utils/copy-declaration-files-to-esm-build.ts $(pwd)/src/ $(pwd)/build/types ;
 
 
-	@if [ -d ./build/types/node_modules/jodit ]; then \
+	@if [ -d ./build/types/node_modules ]; then \
 		echo "Remove super types ..."; \
 		rm -rf ./build/types/node_modules/; \
 	fi;
+	
 	@if [ -d ./build/types/src ]; then \
 		echo "Normalize self types ..."; \
 		cp -R ./build/types/src/* ./build/types/; \
 		rm -rf ./build/types/src/; \
 	fi;
 
+	@echo 'Replace style imports ...'
 	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
 
+	@echo 'Resolve alias imports ...'
 	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --rootDir=$(pwd)  --cwd=./build/types --mode=dts --ver=$(version)
 
 	@if [ -d ./build/esm ]; then \

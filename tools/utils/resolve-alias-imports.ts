@@ -390,7 +390,7 @@ function resolveAlias(
 		}
 	}
 
-	throw `Alias ${pathWithAlias} not found`;
+	throw `Alias ${pathWithAlias} not found in ${dirPath}`;
 }
 
 function safeConcat(file: string, ext: string): string {
