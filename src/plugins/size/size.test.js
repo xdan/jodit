@@ -288,6 +288,24 @@
 
 		describe('Disable auto-height', function () {
 			describe('Resize handle', function () {
+				it('Should show resize handle when counters are hidden', function () {
+					const editor = getJodit({
+						height: 300,
+						allowResizeX: true,
+						allowResizeY: true,
+						showCharsCounter: false,
+						showWordsCounter: false,
+						showXPathInStatusbar: false
+					});
+
+					const handle = editor.container.querySelector(
+						'.jodit-editor__resize'
+					);
+
+					expect(handle).is.not.null;
+					expect(editor.statusbar.container.offsetHeight).is.above(0);
+				});
+
 				it('Should resize editor', function () {
 					const box = getBox();
 					box.style.width = 'auto';

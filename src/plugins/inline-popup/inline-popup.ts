@@ -36,6 +36,7 @@ import {
 import { Plugin } from 'jodit/core/plugin';
 import { UIElement } from 'jodit/core/ui';
 import { Popup } from 'jodit/core/ui/popup';
+import { Config } from 'jodit/config';
 import { makeCollection } from 'jodit/modules/toolbar/factory';
 
 import './config/config';
@@ -110,13 +111,32 @@ export class inlinePopup extends Plugin {
 
 			if (isArray(content)) {
 				const disabled = this.j.o.toolbarInlineDisabledButtons;
+				const defaultContent = Config.prototype.popup[type];
+				const popupDefaultsByName = isArray(defaultContent)
+					? defaultContent.reduce(
+							(acc, item) => {
+								if (!isString(item) && item.name) {
+									acc[item.name] = item;
+								}
+
+								return acc;
+							},
+							{} as Record<string, Buttons[number]>
+						)
+					: {};
+				const normalizedContent = content.map(item =>
+					isString(item) && popupDefaultsByName[item]
+						? popupDefaultsByName[item]
+						: item
+				);
+
 				this.toolbar.build(
 					disabled.length
-						? content.filter(item => {
+						? normalizedContent.filter(item => {
 								const name = isString(item) ? item : item.name;
 								return !disabled.includes(name ?? '');
 							})
-						: content,
+						: normalizedContent,
 					target
 				);
 
