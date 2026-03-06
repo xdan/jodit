@@ -25,7 +25,8 @@
 		padding: var(--padding-default);
 	}
 
-	&__imageView {
+	&__imageView,
+	.jodit-properties_image_view {
 		display: flex;
 		height: var(--width-default);
 		align-items: center;
@@ -40,7 +41,8 @@
 		}
 	}
 
-	&__imageSizes.jodit-form__group {
+	&__imageSizes.jodit-form__group,
+	.jodit-properties_image_sizes.jodit-form__group {
 		min-width: auto;
 		flex-direction: row;
 		align-items: center;
@@ -68,6 +70,10 @@
 		&__imageView {
 			background-color: var(--dark-background-color);
 		}
+	}
+
+	.jodit-properties_image_view {
+		background-color: var(--dark-background-color);
 	}
 }
 
