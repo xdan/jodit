@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.9.20
+
+#### :bug: Bug Fix
+
+- Fix custom cell popup buttons not working when referenced by string name (e.g. `popup: { cells: Jodit.atom(['valign', 'delete', ...]) }`) [#1328](https://github.com/xdan/jodit/issues/1328)
+
 ## 4.9.18
 
 #### :bug: Bug Fix

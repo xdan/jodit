@@ -9,6 +9,7 @@
  */
 
 import type { IControlType, IDictionary, IJodit } from 'jodit/types';
+import { isString } from 'jodit/core/helpers/checker';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
 
@@ -75,6 +76,14 @@ Icon.set('addcolumn', addcolumn.default)
 	.set('splitg', splitg.default)
 	.set('splitv', splitv.default)
 	.set('th-list', thList.default);
+
+// Register cell popup buttons as global controls so they can be
+// referenced by name in custom popup configurations
+cells.forEach(item => {
+	if (!isString(item) && item.name) {
+		Config.prototype.controls[item.name] = item;
+	}
+});
 
 Config.prototype.popup = {
 	a,

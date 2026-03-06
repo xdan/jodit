@@ -746,4 +746,53 @@ describe('Text Inline Popup plugin', () => {
 			});
 		});
 	});
+
+	describe('Custom cell popup buttons', () => {
+		it('Should resolve cell button names from controls when using string names in popup.cells', () => {
+			const editor = getJodit({
+				popup: {
+					cells: Jodit.atom([
+						'valign',
+						'splitv',
+						'merge',
+						'addcolumn',
+						'addrow',
+						'delete'
+					])
+				}
+			});
+
+			editor.value =
+				'<table><tr><td>test</td><td>test2</td></tr></table>';
+
+			const td = editor.editor.querySelector('td');
+			const pos = Jodit.modules.Helpers.position(td);
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top
+				});
+			});
+
+			const popup = getOpenedPopup(editor);
+			expect(popup).is.not.null;
+
+			const buttons = popup.querySelectorAll('.jodit-toolbar-button');
+
+			// Delete button should have an SVG icon (bin), not just text
+			const deleteBtn = Array.from(buttons).find(
+				btn => btn.getAttribute('data-ref') === 'delete'
+			);
+			expect(deleteBtn).is.not.undefined;
+			const svg = deleteBtn.querySelector('svg');
+			expect(svg, 'delete button should have SVG icon').is.not.null;
+
+			// Valign button should exist and have a tooltip
+			const valignBtn = Array.from(buttons).find(
+				btn => btn.getAttribute('data-ref') === 'valign'
+			);
+			expect(valignBtn).is.not.undefined;
+		});
+	});
 });
