@@ -129,6 +129,12 @@ export class cleanHtml extends Plugin {
 
 	@watch(':safeHTML')
 	protected onSafeHTML(sandBox: HTMLElement): void {
+		const sanitizer = this.j.o.cleanHTML.sanitizer;
+
+		if (sanitizer) {
+			sandBox.innerHTML = sanitizer(sandBox.innerHTML);
+		}
+
 		safeHTML(sandBox, this.j.o.cleanHTML);
 	}
 

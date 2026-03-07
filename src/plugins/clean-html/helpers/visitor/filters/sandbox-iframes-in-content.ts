@@ -10,30 +10,28 @@
 
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
-import { sanitizeHTMLElement } from 'jodit/core/helpers';
 
 /**
+ * Add `sandbox=""` attribute to all `<iframe>` elements in the editor content
  * @private
  */
-export function sanitizeAttributes(
+export function sandboxIframesInContent(
 	jodit: IJodit,
 	nodeElm: Node,
 	hadEffect: boolean
 ): boolean {
-	if (!Dom.isElement(nodeElm)) {
+	if (
+		!jodit.o.cleanHTML.sandboxIframesInContent ||
+		!Dom.isElement(nodeElm) ||
+		nodeElm.nodeName !== 'IFRAME'
+	) {
 		return hadEffect;
 	}
 
-	const opts = jodit.options.cleanHTML;
+	const elm = nodeElm as HTMLIFrameElement;
 
-	if (
-		sanitizeHTMLElement(nodeElm, {
-			safeJavaScriptLink: opts.safeJavaScriptLink,
-			removeOnError: opts.removeOnError,
-			removeEventAttributes: opts.removeEventAttributes,
-			safeLinksTarget: opts.safeLinksTarget
-		})
-	) {
+	if (!elm.hasAttribute('sandbox')) {
+		elm.setAttribute('sandbox', '');
 		return true;
 	}
 

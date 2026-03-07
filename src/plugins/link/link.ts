@@ -226,7 +226,9 @@ export class link extends Plugin {
 			}
 
 			if (noFollowCheckbox && nofollow_checkbox) {
-				nofollow_checkbox.checked = attr(link, 'rel') === 'nofollow';
+				nofollow_checkbox.checked = (attr(link, 'rel') || '')
+					.split(/\s+/)
+					.includes('nofollow');
 			}
 
 			insert.textContent = i18n('Update');
@@ -315,11 +317,18 @@ export class link extends Plugin {
 				}
 
 				if (noFollowCheckbox && nofollow_checkbox) {
-					attr(
-						a,
-						'rel',
-						nofollow_checkbox.checked ? 'nofollow' : null
-					);
+					const relParts = (attr(a, 'rel') || '')
+						.split(/\s+/)
+						.filter(Boolean);
+					const hasNofollow = relParts.includes('nofollow');
+
+					if (nofollow_checkbox.checked && !hasNofollow) {
+						relParts.push('nofollow');
+					} else if (!nofollow_checkbox.checked && hasNofollow) {
+						relParts.splice(relParts.indexOf('nofollow'), 1);
+					}
+
+					attr(a, 'rel', relParts.length ? relParts.join(' ') : null);
 				}
 
 				jodit.e.fire('applyLink', jodit, a, form);

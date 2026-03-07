@@ -9,6 +9,29 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.11.1
+
+#### :boom: Breaking Change
+
+- `cleanHTML.denyTags` default changed from `'script'` to `'script,iframe,object,embed'` — iframes, objects, and embeds are now blocked by default
+- `cleanHTML.removeOnError` is deprecated in favor of `cleanHTML.removeEventAttributes` — all `on*` event handler attributes (`onerror`, `onclick`, `onload`, `onmouseover`, etc.) are now removed by default, not just `onerror`
+- `cleanHTML.safeLinksTarget` is now `true` by default — links with `target="_blank"` automatically get `rel="noopener noreferrer"`
+- `cleanHTML.sandboxIframesInContent` is now `true` by default — all `<iframe>` elements in editor content get `sandbox=""` attribute
+- `cleanHTML.convertUnsafeEmbeds` is now `['object', 'embed']` by default — listed elements are converted to sandboxed `<iframe>`
+
+#### :rocket: New Feature
+
+- New option `cleanHTML.removeEventAttributes` — removes all `on*` event handler attributes for comprehensive XSS protection (onerror, onclick, onload, onmouseover, onfocus, etc.)
+- New option `cleanHTML.safeLinksTarget` — automatically adds `rel="noopener noreferrer"` to `target="_blank"` links to prevent `window.opener` attacks
+- New option `cleanHTML.allowedStyles` — whitelist of allowed CSS properties in `style` attributes, prevents CSS injection attacks (e.g. data exfiltration via `background-image: url(...)`)
+- New option `cleanHTML.sanitizer` — hook for external sanitizer integration (e.g. DOMPurify). Called before Jodit's built-in sanitization
+- New option `cleanHTML.sandboxIframesInContent` — adds `sandbox=""` to all `<iframe>` in editor content
+- New option `cleanHTML.convertUnsafeEmbeds` (`false | string[]`) — converts listed tags to sandboxed `<iframe>`, customizable list
+
+#### :memo: Documentation
+
+- New comprehensive security guide: `docs/security.md` covering XSS protection, CSP, Trusted Types, HTML Sanitizer API, server-side sanitization, and hardened configuration examples
+
 ## 4.10.1
 
 #### :boom: Breaking Change

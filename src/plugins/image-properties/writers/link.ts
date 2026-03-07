@@ -29,6 +29,13 @@ export function applyLink(
 
 		attr(link, 'href', imageLink);
 		attr(link, 'target', imageLinkOpenInNewTab ? '_blank' : null);
+
+		if (!imageLinkOpenInNewTab) {
+			const relParts = (attr(link, 'rel') || '')
+				.split(/\s+/)
+				.filter(p => p && p !== 'noopener' && p !== 'noreferrer');
+			attr(link, 'rel', relParts.length ? relParts.join(' ') : null);
+		}
 	} else {
 		if (link && link.parentNode) {
 			link.parentNode.replaceChild(image, link);

@@ -11,9 +11,11 @@
 import { Dom } from 'jodit/core/dom/dom';
 import { $$, attr } from 'jodit/core/helpers/utils';
 
-type safeOptions = {
+export type safeOptions = {
 	removeOnError: boolean;
 	safeJavaScriptLink: boolean;
+	removeEventAttributes?: boolean;
+	safeLinksTarget?: boolean;
 };
 
 /**
@@ -27,17 +29,64 @@ export function safeHTML(
 		return;
 	}
 
-	if (options.removeOnError) {
-		sanitizeHTMLElement(box);
+	const removeEvents = options.removeEventAttributes ?? options.removeOnError;
+
+	if (removeEvents) {
+		removeAllEventAttributes(box);
+		$$('*', box).forEach(elm => removeAllEventAttributes(elm));
+	} else if (options.removeOnError) {
+		sanitizeHTMLElement(box, options);
 		$$('[onerror]', box).forEach(elm => sanitizeHTMLElement(elm, options));
 	}
 
 	if (options.safeJavaScriptLink) {
-		sanitizeHTMLElement(box);
+		sanitizeHTMLElement(box, options);
 		$$<HTMLAnchorElement>('a[href^="javascript"]', box).forEach(elm =>
 			sanitizeHTMLElement(elm, options)
 		);
 	}
+
+	if (options.safeLinksTarget) {
+		$$<HTMLAnchorElement>('a[target="_blank"]', box).forEach(elm => {
+			const rel = elm.getAttribute('rel') || '';
+			const parts = rel.split(/\s+/).filter(Boolean);
+
+			if (!parts.includes('noopener')) {
+				parts.push('noopener');
+			}
+
+			if (!parts.includes('noreferrer')) {
+				parts.push('noreferrer');
+			}
+
+			attr(elm, 'rel', parts.join(' '));
+		});
+	}
+}
+
+/**
+ * Remove all on* event handler attributes from an element
+ */
+function removeAllEventAttributes(elm: Element | DocumentFragment): boolean {
+	if (!Dom.isElement(elm)) {
+		return false;
+	}
+
+	let effected = false;
+	const toRemove: string[] = [];
+
+	for (let i = 0; i < elm.attributes.length; i++) {
+		if (elm.attributes[i].name.toLowerCase().startsWith('on')) {
+			toRemove.push(elm.attributes[i].name);
+		}
+	}
+
+	for (const name of toRemove) {
+		elm.removeAttribute(name);
+		effected = true;
+	}
+
+	return effected;
 }
 
 export function sanitizeHTMLElement(

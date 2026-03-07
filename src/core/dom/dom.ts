@@ -264,6 +264,7 @@ export class Dom {
 		withAttributes?: boolean,
 		notMoveContent?: boolean
 	): T;
+	static replace<T extends Node>(elm: Node, newTagName: T): T;
 	static replace<T extends Node>(
 		elm: Node,
 		newTagName: T | string,

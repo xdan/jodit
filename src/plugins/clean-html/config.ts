@@ -51,14 +51,105 @@ declare module 'jodit/config' {
 			useIframeSandbox: boolean;
 
 			/**
+			 * @deprecated Use `removeEventAttributes` instead
 			 * Remove onError attributes
 			 */
 			removeOnError: boolean;
 
 			/**
+			 * Remove all `on*` event handler attributes (onerror, onclick, onload, onmouseover, etc.)
+			 * When enabled, this replaces the legacy `removeOnError` behavior with comprehensive protection.
+			 *
+			 * ```javascript
+			 * Jodit.make('#editor', {
+			 * 	 cleanHTML: {
+			 * 	 	 removeEventAttributes: true
+			 * 	 }
+			 * });
+			 * ```
+			 */
+			removeEventAttributes: boolean;
+
+			/**
 			 * Safe href="javascript:" links
 			 */
 			safeJavaScriptLink: boolean;
+
+			/**
+			 * Automatically add `rel="noopener noreferrer"` to links with `target="_blank"`
+			 *
+			 * ```javascript
+			 * Jodit.make('#editor', {
+			 * 	 cleanHTML: {
+			 * 	 	 safeLinksTarget: true
+			 * 	 }
+			 * });
+			 * ```
+			 */
+			safeLinksTarget: boolean;
+
+			/**
+			 * Whitelist of allowed CSS properties inside `style` attributes.
+			 * If set, all CSS properties not in the list will be removed.
+			 *
+			 * ```javascript
+			 * Jodit.make('#editor', {
+			 *     cleanHTML: {
+			 *         allowedStyles: {
+			 *             '*': ['color', 'background-color', 'font-size', 'text-align'],
+			 *             img: ['width', 'height']
+			 *         }
+			 *     }
+			 * });
+			 * ```
+			 */
+			allowedStyles: false | IDictionary<string[]>;
+
+			/**
+			 * Custom sanitizer function. Called after Jodit's built-in sanitization.
+			 * Use this to integrate DOMPurify or other external sanitizers.
+			 *
+			 * ```javascript
+			 * import DOMPurify from 'dompurify';
+			 *
+			 * Jodit.make('#editor', {
+			 *     cleanHTML: {
+			 *         sanitizer: (html) => DOMPurify.sanitize(html)
+			 *     }
+			 * });
+			 * ```
+			 */
+			sanitizer: false | ((value: string) => string);
+
+			/**
+			 * Automatically add `sandbox=""` attribute to all `<iframe>` elements in editor content.
+			 * Prevents embedded content from running scripts or accessing the parent page.
+			 *
+			 * ```javascript
+			 * Jodit.make('#editor', {
+			 *     cleanHTML: {
+			 *         sandboxIframesInContent: true
+			 *     }
+			 * });
+			 * ```
+			 */
+			sandboxIframesInContent: boolean;
+
+			/**
+			 * Convert unsafe embed elements to sandboxed `<iframe>`.
+			 * - `['object', 'embed']` — default
+			 * - `false` — disabled
+			 * - `string[]` — custom list of tag names to convert
+			 *
+			 * ```javascript
+			 * Jodit.make('#editor', {
+			 *     cleanHTML: {
+			 *         convertUnsafeEmbeds: Jodit.atom(['object', 'embed', 'applet'])
+			 *     }
+			 * });
+			 * ```
+			 */
+			convertUnsafeEmbeds: false | string[];
 
 			/**
 			 * The allowTags option defines which elements will remain in the
@@ -126,11 +217,17 @@ Config.prototype.cleanHTML = {
 		b: 'strong'
 	},
 	allowTags: false,
-	denyTags: 'script',
+	denyTags: 'script,iframe,object,embed',
 
 	useIframeSandbox: false,
 	removeOnError: true,
+	removeEventAttributes: true,
 	safeJavaScriptLink: true,
+	safeLinksTarget: true,
+	allowedStyles: false,
+	sanitizer: false,
+	sandboxIframesInContent: true,
+	convertUnsafeEmbeds: ['object', 'embed'],
 	disableCleanFilter: null
 };
 
