@@ -390,6 +390,11 @@ statoscope-validate:
 	@npx @statoscope/cli validate \
 		--input statoscope/reference.next.json \
 		--reference statoscope/reference.json
+	@npx @statoscope/cli generate \
+		--input statoscope/reference.next.json \
+		--reference statoscope/reference.json \
+		--output build/statoscope-diff.html \
+		--open
 
 .PHONY: stat
 stat:

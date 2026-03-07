@@ -28,13 +28,6 @@ jobs:
     - name: Build with Statoscope
       run: make build es=es2021 uglify=true fat=true statoscope=true
 
-    - name: Upload report
-      uses: actions/upload-artifact@v4
-      with:
-        name: statoscope-report
-        path: build/statoscope-report.html
-        retention-days: 30
-
     # On main: update reference.json
     - name: Update reference stats
       if: github.event_name == 'push'
@@ -46,17 +39,56 @@ jobs:
         git diff --cached --quiet && echo "No changes" || git commit -m "chore: update statoscope reference stats" && git push
 
     # On PR: compare against committed reference
-    - name: Validate against reference
+    - name: Generate size report
       if: github.event_name == 'pull_request'
-      id: compare
+      id: sizes
       run: |
-        set +e
         if [ ! -f statoscope/reference.json ]; then
-          echo "result=No reference stats yet. Will be created after merge to main." >> "$GITHUB_OUTPUT"
-          echo "exit_code=0" >> "$GITHUB_OUTPUT"
+          echo "has_reference=false" >> "$GITHUB_OUTPUT"
           exit 0
         fi
+        echo "has_reference=true" >> "$GITHUB_OUTPUT"
 
+        REF=$(npx @statoscope/cli query \
+          --input statoscope/reference.json \
+          --query '$[0].compilations.pick().assets.({name, size: info.size})')
+
+        NEXT=$(npx @statoscope/cli query \
+          --input statoscope/reference.next.json \
+          --query '$[0].compilations.pick().assets.({name, size: info.size})')
+
+        node -e "
+        const ref = JSON.parse(process.argv[1]);
+        const next = JSON.parse(process.argv[2]);
+        const fmt = (b) => (b / 1024).toFixed(2) + ' KB';
+        const fmtDiff = (d) => {
+          if (d === 0) return '—';
+          const kb = (d / 1024).toFixed(2);
+          return (d > 0 ? '+' : '') + kb + ' KB';
+        };
+        let table = '| Asset | Reference | Current | Diff |\n|---|--:|--:|--:|\n';
+        let totalRef = 0, totalNext = 0;
+        for (const n of next) {
+          const r = ref.find(x => x.name === n.name);
+          const rSize = r ? r.size : 0;
+          const diff = n.size - rSize;
+          totalRef += rSize;
+          totalNext += n.size;
+          const icon = diff > 0 ? '🔺' : diff < 0 ? '🟢' : '';
+          table += '| ' + n.name + ' | ' + fmt(rSize) + ' | ' + fmt(n.size) + ' | ' + icon + ' ' + fmtDiff(diff) + ' |\n';
+        }
+        const totalDiff = totalNext - totalRef;
+        const icon = totalDiff > 0 ? '🔺' : totalDiff < 0 ? '🟢' : '';
+        table += '| **Total** | **' + fmt(totalRef) + '** | **' + fmt(totalNext) + '** | ' + icon + ' **' + fmtDiff(totalDiff) + '** |\n';
+        const fs = require('fs');
+        fs.appendFileSync(process.env.GITHUB_OUTPUT, 'table<<SIZES_EOF\n' + table + 'SIZES_EOF\n');
+        " "$REF" "$NEXT"
+
+    - name: Validate rules
+      if: github.event_name == 'pull_request' && steps.sizes.outputs.has_reference == 'true'
+      id: validate
+      run: |
+        set +e
         OUTPUT=$(npx @statoscope/cli validate \
           --input statoscope/reference.next.json \
           --reference statoscope/reference.json 2>&1)
@@ -69,21 +101,49 @@ jobs:
         } >> "$GITHUB_OUTPUT"
         echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
 
-    - name: Comment PR
+    - name: Generate diff report
+      if: github.event_name == 'pull_request' && steps.sizes.outputs.has_reference == 'true'
+      run: |
+        npx @statoscope/cli generate \
+          --input statoscope/reference.next.json \
+          --reference statoscope/reference.json \
+          --output build/statoscope-diff.html
+
+    - name: Upload diff report
       if: github.event_name == 'pull_request'
+      uses: actions/upload-artifact@v4
+      with:
+        name: statoscope-diff
+        path: build/statoscope-diff.html
+        retention-days: 30
+
+    - name: Comment PR
+      if: github.event_name == 'pull_request' && steps.sizes.outputs.has_reference == 'true'
       uses: marocchino/sticky-pull-request-comment@v2
       with:
         header: statoscope
         message: |
-          ## 📊 Statoscope Build Report
+          ## 📊 Bundle Size
+
+          ${{ steps.sizes.outputs.table }}
 
           <details>
-          <summary>Validation results</summary>
+          <summary>Validation details</summary>
 
           ```
-          ${{ steps.compare.outputs.result }}
+          ${{ steps.validate.outputs.result }}
           ```
 
           </details>
 
-          ${{ steps.compare.outputs.exit_code == '0' && '✅ All checks passed' || '⚠️ Some checks failed — see details above' }}
+          ${{ steps.validate.outputs.exit_code == '0' && '✅ All checks passed' || '⚠️ Some checks failed' }} · [Full diff report →](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) (see Artifacts)
+
+    - name: Comment PR (no reference)
+      if: github.event_name == 'pull_request' && steps.sizes.outputs.has_reference != 'true'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: statoscope
+        message: |
+          ## 📊 Bundle Size
+
+          No reference stats in `main` yet. Comparison will be available after first merge.
