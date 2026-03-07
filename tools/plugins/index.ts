@@ -11,9 +11,9 @@ import define from './define';
 import extractCSS from './extract-css';
 import postBuild from './post-build';
 
+import StatoscopeWebpackPlugin from '@statoscope/webpack-plugin';
 import * as webpack from 'webpack';
 import type { WebpackConfiguration } from 'webpack-cli';
-import StatoscopeWebpackPlugin from '@statoscope/webpack-plugin';
 
 export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 	const {

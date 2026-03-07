@@ -9,7 +9,7 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
-## 4.11.1
+## 4.11.2
 
 #### :boom: Breaking Change
 

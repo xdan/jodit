@@ -9,7 +9,7 @@ on:
 
 jobs:
   statoscope:
-    if: ${{ !startsWith(github.event.head_commit.message, 'New version') && !startsWith(github.event.head_commit.message, 'chore: update statoscope') }}
+    if: "!startsWith(github.event.head_commit.message, 'New version') && !startsWith(github.event.head_commit.message, 'chore: update statoscope')"
     runs-on: ubuntu-latest
     permissions:
       contents: write
