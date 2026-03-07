@@ -185,7 +185,8 @@ export class dragAndDrop extends Plugin {
 
 				fragment = this.j.createInside.element(tagName);
 
-				fragment.setAttribute(
+				attr(
+					fragment,
 					field,
 					attr(this.draggable, 'data-src') ||
 						attr(this.draggable, 'src') ||

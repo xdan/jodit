@@ -66,8 +66,8 @@ export function iframe(editor: IJodit): void {
 					opt.iframeCSSLinks.forEach(href => {
 						const link = doc.createElement('link');
 
-						link.setAttribute('rel', 'stylesheet');
-						link.setAttribute('href', href);
+						attr(link, 'rel', 'stylesheet');
+						attr(link, 'href', href);
 
 						doc.head && doc.head.appendChild(link);
 					});
@@ -90,12 +90,14 @@ export function iframe(editor: IJodit): void {
 			iframe.style.display = 'block';
 			iframe.src = 'about:blank';
 			iframe.className = 'jodit-wysiwyg_iframe';
-			iframe.setAttribute('allowtransparency', 'true');
-			iframe.setAttribute('tabindex', opt.tabIndex.toString());
-			iframe.setAttribute('frameborder', '0');
+			attr(iframe, {
+				allowtransparency: 'true',
+				tabindex: opt.tabIndex.toString(),
+				frameborder: '0'
+			});
 
 			if (opt.iframeSandbox != null) {
-				iframe.setAttribute('sandbox', opt.iframeSandbox);
+				attr(iframe, 'sandbox', opt.iframeSandbox);
 			}
 
 			editor.workplace.appendChild(iframe);

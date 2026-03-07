@@ -455,8 +455,8 @@ export class resizer extends Plugin {
 				})
 				.off(element, 'changesize')
 				.on(element, 'changesize', () => {
-					iframe.setAttribute('width', element.offsetWidth + 'px');
-					iframe.setAttribute('height', element.offsetHeight + 'px');
+					attr(iframe, 'width', element.offsetWidth + 'px');
+					attr(iframe, 'height', element.offsetHeight + 'px');
 				});
 		}
 

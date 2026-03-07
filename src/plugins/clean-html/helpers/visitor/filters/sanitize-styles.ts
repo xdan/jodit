@@ -10,6 +10,7 @@
 
 import type { IDictionary, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
+import { attr } from 'jodit/core/helpers/utils/attr';
 
 /**
  * Filter CSS properties in style attributes based on allowedStyles whitelist
@@ -26,7 +27,8 @@ export function sanitizeStyles(
 		return hadEffect;
 	}
 
-	const style = (nodeElm as HTMLElement).getAttribute('style');
+	const elm = nodeElm as HTMLElement;
+	const style = attr(elm, 'style');
 
 	if (!style) {
 		return hadEffect;
@@ -42,12 +44,7 @@ export function sanitizeStyles(
 	const filtered = filterStyleProperties(style, allowed);
 
 	if (filtered !== style) {
-		if (filtered) {
-			(nodeElm as HTMLElement).setAttribute('style', filtered);
-		} else {
-			(nodeElm as HTMLElement).removeAttribute('style');
-		}
-
+		attr(elm, 'style', filtered || null);
 		return true;
 	}
 

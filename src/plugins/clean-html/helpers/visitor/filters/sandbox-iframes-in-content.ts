@@ -10,6 +10,7 @@
 
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
+import { attr } from 'jodit/core/helpers/utils/attr';
 
 /**
  * Add `sandbox=""` attribute to all `<iframe>` elements in the editor content
@@ -31,7 +32,7 @@ export function sandboxIframesInContent(
 	const elm = nodeElm as HTMLIFrameElement;
 
 	if (!elm.hasAttribute('sandbox')) {
-		elm.setAttribute('sandbox', '');
+		attr(elm, 'sandbox', '');
 		return true;
 	}
 

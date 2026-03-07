@@ -17,6 +17,7 @@ import type {
 } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { Config } from 'jodit/config';
 import { FileSelectorWidget } from 'jodit/modules/widget';
 
@@ -58,8 +59,8 @@ Config.prototype.controls.file = {
 				upload: true,
 				url: (url: string, text: string) => {
 					if (sourceAnchor) {
-						sourceAnchor.setAttribute('href', url);
-						sourceAnchor.setAttribute('title', text);
+						attr(sourceAnchor, 'href', url);
+						attr(sourceAnchor, 'title', text);
 					} else {
 						insert(url, text);
 					}

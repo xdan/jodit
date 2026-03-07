@@ -10,6 +10,7 @@
 
 import type { IJodit, ISourceEditor } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { css } from 'jodit/core/helpers/utils/css';
 
 import { SourceEditor } from 'jodit/plugins/source/editor/sourceEditor';
@@ -113,15 +114,11 @@ export class TextAreaEditor
 	}
 
 	setPlaceHolder(title: string): void {
-		this.instance.setAttribute('placeholder', title);
+		attr(this.instance, 'placeholder', title);
 	}
 
 	setReadOnly(isReadOnly: boolean): void {
-		if (isReadOnly) {
-			this.instance.setAttribute('readonly', 'true');
-		} else {
-			this.instance.removeAttribute('readonly');
-		}
+		attr(this.instance, 'readonly', isReadOnly ? 'true' : null);
 	}
 
 	selectAll(): void {

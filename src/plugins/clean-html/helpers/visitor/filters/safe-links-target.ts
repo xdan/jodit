@@ -10,6 +10,7 @@
 
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
+import { attr } from 'jodit/core/helpers/utils/attr';
 
 /**
  * Automatically add `rel="noopener noreferrer"` to links with `target="_blank"`
@@ -30,11 +31,11 @@ export function safeLinksTarget(
 
 	const elm = nodeElm as HTMLAnchorElement;
 
-	if (elm.getAttribute('target') !== '_blank') {
+	if (attr(elm, 'target') !== '_blank') {
 		return hadEffect;
 	}
 
-	const rel = elm.getAttribute('rel') || '';
+	const rel = attr(elm, 'rel') || '';
 	const parts = rel.split(/\s+/).filter(Boolean);
 	let changed = false;
 
@@ -49,7 +50,7 @@ export function safeLinksTarget(
 	}
 
 	if (changed) {
-		elm.setAttribute('rel', parts.join(' '));
+		attr(elm, 'rel', parts.join(' '));
 		return true;
 	}
 

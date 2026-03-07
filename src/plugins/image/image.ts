@@ -18,6 +18,7 @@ import type {
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { $$ } from 'jodit/core/helpers';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
 import { FileSelectorWidget } from 'jodit/modules/widget';
@@ -71,8 +72,8 @@ Config.prototype.controls.image = {
 					const image: HTMLImageElement =
 						sourceImage || editor.createInside.element('img');
 
-					image.setAttribute('src', url);
-					image.setAttribute('alt', text);
+					attr(image, 'src', url);
+					attr(image, 'alt', text);
 
 					if (!sourceImage) {
 						await editor.s.insertImage(

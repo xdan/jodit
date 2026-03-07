@@ -123,7 +123,7 @@ export class link extends Plugin {
 		if (jodit.s.isCollapsed()) {
 			const a = jodit.createInside.element('a');
 
-			a.setAttribute('href', html);
+			attr(a, 'href', html);
 			a.textContent = html;
 
 			jodit.e.fire('applyLink', jodit, a, null);

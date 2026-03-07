@@ -19,6 +19,10 @@
 - `cleanHTML.sandboxIframesInContent` is now `true` by default — all `<iframe>` elements in editor content get `sandbox=""` attribute
 - `cleanHTML.convertUnsafeEmbeds` is now `['object', 'embed']` by default — listed elements are converted to sandboxed `<iframe>`
 
+#### :house: Internal
+
+- refactor: replace setAttribute and removeAttribute with attr helper in multiple files
+
 #### :rocket: New Feature
 
 - New option `cleanHTML.removeEventAttributes` — removes all `on*` event handler attributes for comprehensive XSS protection (onerror, onclick, onload, onmouseover, onfocus, etc.)

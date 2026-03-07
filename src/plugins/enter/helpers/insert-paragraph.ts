@@ -10,6 +10,7 @@
 
 import type { HTMLTagNames, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { scrollIntoViewIfNeeded } from 'jodit/core/helpers/utils/scroll-into-view';
 
 /**
@@ -32,7 +33,7 @@ export function insertParagraph(
 	}
 
 	if (style && style.cssText) {
-		p.setAttribute('style', style.cssText);
+		attr(p, 'style', style.cssText);
 	}
 
 	Dom.after(fake, p);
