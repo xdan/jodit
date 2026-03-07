@@ -31,6 +31,7 @@ export type Argv = {
 	outputFolder?: string;
 	progressFunction?: () => void;
 	open?: string;
+	statoscope?: boolean;
 };
 
 export type Variables = {
@@ -75,6 +76,10 @@ export type Variables = {
 
 	// Open page after start dev server
 	open?: string;
+
+	statoscope: boolean;
+	statoscopeReportPath: string;
+	statoscopeStatsPath: string;
 };
 
 export const variables = (argv: Argv, dir: string): Variables => {
@@ -151,6 +156,9 @@ export const variables = (argv: Argv, dir: string): Variables => {
 		ESModern,
 		ESNext,
 		useSWC: argv.useSWC ? Bool(argv.useSWC) : !Bool(argv.generateTypes),
-		open: argv.open
+		open: argv.open,
+		statoscope: Bool(argv.statoscope),
+		statoscopeReportPath: path.join(dir, 'build/statoscope-report.html'),
+		statoscopeStatsPath: path.join(dir, 'statoscope/reference.next.json')
 	};
 };

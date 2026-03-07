@@ -108,6 +108,31 @@ Build without some languages:
 make build es=es2021 uglify=true excludeLanguages="ru,ar,cs_cz,de,es,fa,fi,fr,he,hu,id,it,ja,ko,nl,pl,pt_br,ru,tr,zh_cn,zh_tw"
 ```
 
+## Bundle Size Analysis (Statoscope)
+
+To analyze the bundle and generate an interactive report:
+
+```bash
+make statoscope
+```
+
+This builds the `es2021` fat bundle with [Statoscope](https://statoscope.tech/).
+
+If `statoscope/reference.json` already exists (committed baseline), the new stats go to `reference.next.json` for comparison.
+If not — it creates the initial `reference.json`.
+
+```bash
+# Compare against baseline
+make statoscope
+make statoscope-validate
+```
+
+- `statoscope/reference.json` — baseline (committed to git, updated on `make newversion`)
+- `build/statoscope-report.html` — interactive report (open in browser)
+
+Validation rules are configured in `statoscope.config.js`.
+In CI, Statoscope runs automatically on every push/PR and posts comparison results.
+
 ## Tests
 
 Before making any functional changes or fixing a bug, you need to create tests for them.

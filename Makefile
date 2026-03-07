@@ -79,7 +79,8 @@ build:
 		--env excludePlugins=$(excludePlugins) \
 		--env outputFolder=$(outputFolder) \
 		--env fat=$(fat) \
-		--env generateTypes=$(generateTypes)
+		--env generateTypes=$(generateTypes) \
+		$(if $(statoscope),--env statoscope=true,)
 
 .PHONY: clean
 clean:
@@ -307,6 +308,9 @@ screenshots-build-image:
 newversion:
 	npm version patch --no-git-tag-version
 	#npm version prerelease --preid=beta --no-git-tag-version
+	rm -f statoscope/reference.json statoscope/reference.next.json
+	make build es=es2021 uglify=true fat=true statoscope=true
+	mv statoscope/reference.next.json statoscope/reference.json
 	make newversion-git
 
 .PHONY: newversion-git
@@ -368,6 +372,24 @@ append-config-types:
 replace-import-types:
 	@echo 'Replace import types ...'
 	@$(TS_NODE_BASE) $(cwd)tools/utils/convert-imports-to-types.ts --cwd=./build/types
+
+.PHONY: statoscope
+statoscope:
+	@echo 'Building with Statoscope ...'
+	make build es=es2021 uglify=true fat=true statoscope=true
+	@if [ ! -f statoscope/reference.json ]; then \
+		mv statoscope/reference.next.json statoscope/reference.json; \
+		echo 'Created statoscope/reference.json'; \
+	else \
+		echo 'Created statoscope/reference.next.json'; \
+		echo 'Run: make statoscope-validate'; \
+	fi
+
+.PHONY: statoscope-validate
+statoscope-validate:
+	@npx @statoscope/cli validate \
+		--input statoscope/reference.next.json \
+		--reference statoscope/reference.json
 
 .PHONY: stat
 stat:

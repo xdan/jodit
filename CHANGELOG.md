@@ -21,6 +21,7 @@
 
 #### :house: Internal
 
+- Add Statoscope for webpack bundle size analysis and build comparison
 - refactor: replace setAttribute and removeAttribute with attr helper in multiple files
 
 #### :rocket: New Feature

@@ -1,0 +1,89 @@
+name: Statoscope
+
+on:
+  push:
+    branches: [ main ]
+    tags-ignore: [ '*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  statoscope:
+    if: ${{ !startsWith(github.event.head_commit.message, 'New version') && !startsWith(github.event.head_commit.message, 'chore: update statoscope') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci --legacy-peer-deps
+
+    - name: Build with Statoscope
+      run: make build es=es2021 uglify=true fat=true statoscope=true
+
+    - name: Upload report
+      uses: actions/upload-artifact@v4
+      with:
+        name: statoscope-report
+        path: build/statoscope-report.html
+        retention-days: 30
+
+    # On main: update reference.json
+    - name: Update reference stats
+      if: github.event_name == 'push'
+      run: |
+        mv statoscope/reference.next.json statoscope/reference.json
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add statoscope/reference.json
+        git diff --cached --quiet && echo "No changes" || git commit -m "chore: update statoscope reference stats" && git push
+
+    # On PR: compare against committed reference
+    - name: Validate against reference
+      if: github.event_name == 'pull_request'
+      id: compare
+      run: |
+        set +e
+        if [ ! -f statoscope/reference.json ]; then
+          echo "result=No reference stats yet. Will be created after merge to main." >> "$GITHUB_OUTPUT"
+          echo "exit_code=0" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        OUTPUT=$(npx @statoscope/cli validate \
+          --input statoscope/reference.next.json \
+          --reference statoscope/reference.json 2>&1)
+        EXIT_CODE=$?
+        echo "$OUTPUT"
+        {
+          echo "result<<STATOSCOPE_EOF"
+          echo "$OUTPUT"
+          echo "STATOSCOPE_EOF"
+        } >> "$GITHUB_OUTPUT"
+        echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
+
+    - name: Comment PR
+      if: github.event_name == 'pull_request'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: statoscope
+        message: |
+          ## 📊 Statoscope Build Report
+
+          <details>
+          <summary>Validation results</summary>
+
+          ```
+          ${{ steps.compare.outputs.result }}
+          ```
+
+          </details>
+
+          ${{ steps.compare.outputs.exit_code == '0' && '✅ All checks passed' || '⚠️ Some checks failed — see details above' }}

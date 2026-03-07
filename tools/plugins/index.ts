@@ -13,6 +13,7 @@ import postBuild from './post-build';
 
 import * as webpack from 'webpack';
 import type { WebpackConfiguration } from 'webpack-cli';
+import StatoscopeWebpackPlugin from '@statoscope/webpack-plugin';
 
 export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 	const {
@@ -47,6 +48,36 @@ export const plugins = (vars: Variables): WebpackConfiguration['plugins'] => {
 
 		if (!isTest && !ESModern && !onlyTS) {
 			plugins.push(postBuild(vars));
+		}
+
+		if (vars.statoscope) {
+			plugins.push(
+				new StatoscopeWebpackPlugin({
+					saveReportTo: vars.statoscopeReportPath,
+					saveStatsTo: vars.statoscopeStatsPath,
+					open: false,
+					statsOptions: {
+						all: false,
+						hash: true,
+						entrypoints: true,
+						chunks: true,
+						chunkModules: true,
+						reasons: false,
+						ids: true,
+						dependentModules: false,
+						chunkRelations: true,
+						cachedAssets: true,
+						nestedModules: true,
+						usedExports: false,
+						providedExports: false,
+						assets: true,
+						chunkOrigins: false,
+						builtAt: true,
+						timings: true,
+						performance: true
+					}
+				})
+			);
 		}
 	}
 
