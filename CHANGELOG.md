@@ -9,6 +9,16 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.11.5
+
+#### :rocket: New Feature
+
+- `ProgressBar.showFileUploadAnimation(from?, to?)` — animated file icon that flies from a given point and fades out. Coordinates are relative to the editor container. Both `from` and `to` are optional with sensible defaults. The animation is automatically cleaned up on `destruct()`.
+  ```js
+  const editor = Jodit.make('#editor')
+  jodit.progressbar.showFileUploadAnimation();
+  ```
+
 ## 4.11.4
 
 #### :boom: Breaking Change

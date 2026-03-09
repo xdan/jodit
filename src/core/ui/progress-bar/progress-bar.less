@@ -22,7 +22,7 @@
 
 .jodit-progress-bar {
 	position: absolute;
-	z-index: 2147483647;
+	z-index: var(--z-index-tooltip);
 	top: 0;
 	left: 0;
 	height: 2px;
@@ -61,6 +61,27 @@
 			right: 0;
 			width: 20px;
 			clip: rect(-6px, 22px, 14px, var(--padding-default));
+		}
+	}
+
+	&__file-animation {
+		position: fixed;
+		width: 32px;
+		height: 32px;
+		opacity: 0.8;
+		pointer-events: none;
+		z-index: 2147483647;
+		transform: scale(1);
+		transition:
+			left 800ms ease-in,
+			top 800ms ease-in,
+			opacity 800ms ease-in,
+			transform 800ms ease-in;
+
+		svg {
+			width: 100%;
+			height: 100%;
+			fill: var(--color-background-progress);
 		}
 	}
 }

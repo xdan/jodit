@@ -367,4 +367,12 @@ export interface IProgressBar extends IUIElement {
 	hide(): IProgressBar;
 
 	progress(percentage: number): IProgressBar;
+
+	/**
+	 * Show file upload animation - file icon flies from `from` to `to` and fades out
+	 */
+	showFileUploadAnimation(
+		from?: { x: number; y: number },
+		to?: { x: number; y: number }
+	): void;
 }
