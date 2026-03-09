@@ -274,6 +274,19 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 		state.name = ctr.name;
 
+		this.__initIconFromControl();
+
+		if (ctr.tooltip) {
+			state.tooltip = isFunction(ctr.tooltip)
+				? ctr.tooltip(this.j, ctr, this)
+				: ctr.tooltip;
+		}
+
+		state.hasTrigger = Boolean(ctr.list || (ctr.popup && ctr.exec));
+	}
+
+	private __initIconFromControl(): void {
+		const { control: ctr, state } = this;
 		const { textIcons } = this.j.o;
 
 		if (
@@ -283,29 +296,30 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		) {
 			state.icon = UIButtonState().icon;
 			state.text = ctr.text || ctr.name;
+			return;
+		}
+
+		if (!isString(ctr.icon) && ctr.icon != null) {
+			state.icon = {
+				name: ctr.icon.name || ctr.name,
+				iconURL: ctr.icon.iconURL || '',
+				fill: ctr.icon.fill || '',
+				scale: ctr.icon.scale
+			};
+			return;
+		}
+
+		if (ctr.iconURL) {
+			state.icon.iconURL = ctr.iconURL;
 		} else {
-			if (ctr.iconURL) {
-				state.icon.iconURL = ctr.iconURL;
-			} else {
-				const name = ctr.icon || ctr.name;
-				state.icon.name =
-					Icon.exists(name) || this.j.o.extraIcons?.[name]
-						? name
-						: '';
-			}
-
-			if (!ctr.iconURL && !state.icon.name) {
-				state.text = ctr.text || ctr.name;
-			}
+			const name = ctr.icon || ctr.name;
+			state.icon.name =
+				Icon.exists(name) || this.j.o.extraIcons?.[name] ? name : '';
 		}
 
-		if (ctr.tooltip) {
-			state.tooltip = isFunction(ctr.tooltip)
-				? ctr.tooltip(this.j, ctr, this)
-				: ctr.tooltip;
+		if (!ctr.iconURL && !state.icon.name) {
+			state.text = ctr.text || ctr.name;
 		}
-
-		state.hasTrigger = Boolean(ctr.list || (ctr.popup && ctr.exec));
 	}
 
 	/**

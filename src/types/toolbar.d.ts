@@ -10,7 +10,7 @@
 
 import type { IFileBrowser } from './file-browser';
 
-import type { IUIButton, IUIElement, IUIList } from './ui';
+import type { IUIButton, IUIElement, IUIIconState, IUIList } from './ui';
 import type { IViewBased } from './view';
 import type { IJodit } from './jodit';
 import type {
@@ -166,7 +166,7 @@ interface IControlType<
 	 * })
 	 * ```
 	 */
-	icon?: string;
+	icon?: string | IUIIconState;
 
 	/**
 	 * Use this property if you want set background image for the button. This icon can be 16 * 16 px in SVG or

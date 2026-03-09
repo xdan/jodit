@@ -112,7 +112,7 @@ Jodit.make('#editor', {
 ```javascript
 Jodit.make('#editor', {
     cleanHTML: {
-        allowTags: {
+        allowTags: Jodit.atom({
             p: true,                    // allow <p> with any attributes
             a: { href: true },          // allow <a> only with href
             strong: true,
@@ -127,17 +127,23 @@ Jodit.make('#editor', {
                 width: true,
                 height: true
             }
-        }
+        })
     }
 });
 ```
 
+{% note info %}
+
+Wrap object and array options with `Jodit.atom()`. Without it, Jodit deep-merges your value with the default config instead of replacing it. For example, `allowTags: { p: true }` without `Jodit.atom()` will be merged with the default value, not override it.
+
+{% endnote %}
+
 **Pin to an exact value:**
 
 ```javascript
-allowTags: {
+allowTags: Jodit.atom({
     img: { src: '/images/logo.png' }  // only src="/images/logo.png" survives
-}
+})
 ```
 
 ### denyTags -- blacklist mode
@@ -161,13 +167,19 @@ Inline `style` attributes can be used for CSS injection attacks (e.g., data exfi
 ```javascript
 Jodit.make('#editor', {
     cleanHTML: {
-        allowedStyles: {
+        allowedStyles: Jodit.atom({
             '*': ['color', 'background-color', 'font-size', 'text-align', 'font-weight'],
             img: ['width', 'height']
-        }
+        })
     }
 });
 ```
+
+{% note info %}
+
+Wrap `allowedStyles` with `Jodit.atom()` to replace the default value entirely. Without it, Jodit deep-merges your object with the defaults.
+
+{% endnote %}
 
 When set, any CSS property not in the whitelist is stripped. Supports global (`*`) and tag-specific rules.
 
@@ -206,10 +218,16 @@ You can disable individual filters if they conflict with your use case:
 ```javascript
 Jodit.make('#editor', {
     cleanHTML: {
-        disableCleanFilter: new Set(['replaceOldTags']) // keep <i> and <b> as-is
+        disableCleanFilter: Jodit.atom(new Set(['replaceOldTags'])) // keep <i> and <b> as-is
     }
 });
 ```
+
+{% note info %}
+
+Wrap `Set` and other collection options with `Jodit.atom()` so Jodit replaces the value instead of merging it with the default.
+
+{% endnote %}
 
 Available filter names: `tryRemoveNode`, `allowAttributes`, `sanitizeAttributes`, `sanitizeStyles`, `replaceOldTags`, `fillEmptyParagraph`, `removeEmptyTextNode`, `removeInvTextNodes`, `safeLinksTarget`, `sandboxIframesInContent`, `convertUnsafeEmbeds`.
 
@@ -242,16 +260,22 @@ Jodit.make('#editor', {
     defaultActionOnPaste: 'insert_as_html',
 
     // Tags preserved even in "insert only text" mode
-    pasteExcludeStripTags: ['br', 'hr'],
+    pasteExcludeStripTags: Jodit.atom(['br', 'hr']),
 
     // Available options in the paste dialog
-    pasteHTMLActionList: [
+    pasteHTMLActionList: Jodit.atom([
         { value: 'insert_as_html', text: 'Keep' },
         { value: 'insert_as_text', text: 'Insert as Text' },
         { value: 'insert_only_text', text: 'Insert only Text' }
-    ]
+    ])
 });
 ```
+
+{% note info %}
+
+Wrap array options like `pasteExcludeStripTags` and `pasteHTMLActionList` with `Jodit.atom()`. Without it, Jodit deep-merges your array with the default instead of replacing it.
+
+{% endnote %}
 
 ### For maximum safety on paste
 
@@ -288,11 +312,11 @@ Jodit.make('#editor', {
     // Default action for Word content
     defaultActionOnPasteFromWord: 'insert_as_text', // cleanFromWord
 
-    pasteFromWordActionList: [
+    pasteFromWordActionList: Jodit.atom([
         { value: 'insert_as_html', text: 'Keep' },
         { value: 'insert_as_text', text: 'Clean' },
         { value: 'insert_only_text', text: 'Insert only Text' }
-    ]
+    ])
 });
 ```
 
@@ -379,20 +403,26 @@ To avoid whitelisting external CDNs, host the libraries yourself and override th
 
 ```javascript
 Jodit.make('#editor', {
-    sourceEditorCDNUrlsJS: ['/vendor/ace/ace.js'],
-    beautifyHTMLCDNUrlsJS: [
+    sourceEditorCDNUrlsJS: Jodit.atom(['/vendor/ace/ace.js']),
+    beautifyHTMLCDNUrlsJS: Jodit.atom([
         '/vendor/js-beautify/beautify.min.js',
         '/vendor/js-beautify/beautify-html.min.js'
-    ],
+    ]),
     // Pro only: pasteCode plugin
     pasteCode: {
-        highlightLib: {
+        highlightLib: Jodit.atom({
             js: ['/vendor/prism/prism.min.js'],
             css: ['/vendor/prism/prism.min.css']
-        }
+        })
     }
 });
 ```
+
+{% note info %}
+
+Wrap array and object options with `Jodit.atom()` so Jodit replaces the default CDN URLs instead of merging with them.
+
+{% endnote %}
 
 Then your CSP needs only `'self'`:
 
@@ -413,7 +443,7 @@ Alternatively, disable these features entirely if you don't need them:
 Jodit.make('#editor', {
     sourceEditor: 'area',  // plain textarea instead of Ace
     beautifyHTML: false,
-    disablePlugins: ['pasteCode']  // Pro only
+    disablePlugins: Jodit.atom(['pasteCode'])  // Pro only
 });
 ```
 

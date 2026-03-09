@@ -75,7 +75,7 @@ export class Icon {
 
 		let iconElement: CanUndef<HTMLElement>;
 
-		const { name, iconURL, fill } = icon;
+		const { name, iconURL, fill, scale } = icon;
 		const clearName = name.replace(/[^a-zA-Z0-9]/g, '_');
 
 		let iconFromEvent: CanUndef<string>;
@@ -83,7 +83,7 @@ export class Icon {
 			iconFromEvent = jodit.o.getIcon?.(name, clearName);
 		}
 
-		const cacheKey = `${name}${iconURL}${fill}${iconFromEvent ?? ''}`;
+		const cacheKey = `${name}${iconURL}${fill}${scale ?? ''}${iconFromEvent ?? ''}`;
 
 		if (jodit.o.cache && this.__cache.has(cacheKey)) {
 			return this.__cache.get(cacheKey)?.cloneNode(true);
@@ -117,6 +117,11 @@ export class Icon {
 		if (iconElement) {
 			iconElement.classList.add('jodit-icon');
 			iconElement.style.fill = fill;
+
+			if (scale != null) {
+				iconElement.style.transform = `scale(${scale})`;
+			}
+
 			jodit.o.cache &&
 				this.__cache.set(
 					cacheKey,

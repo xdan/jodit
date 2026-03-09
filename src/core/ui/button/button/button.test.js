@@ -12,6 +12,62 @@ describe('Test UIButton', () => {
 		editor = getJodit();
 	});
 
+	describe('icon scale', () => {
+		it('should apply transform scale to icon SVG when scale is set', () => {
+			const button = new UIButton(editor);
+			button.state.icon = {
+				name: 'bold',
+				fill: '',
+				iconURL: '',
+				scale: 1.5
+			};
+
+			const svg = button.container.querySelector('.jodit-icon');
+			expect(svg).is.not.null;
+			expect(svg.style.transform).eq('scale(1.5)');
+		});
+
+		it('should not set transform when scale is undefined', () => {
+			const button = new UIButton(editor);
+			button.state.icon = {
+				name: 'bold',
+				fill: '',
+				iconURL: '',
+				scale: undefined
+			};
+
+			const svg = button.container.querySelector('.jodit-icon');
+			expect(svg).is.not.null;
+			expect(svg.style.transform).eq('');
+		});
+
+		it('should reactively update icon when scale changes', async () => {
+			const button = new UIButton(editor);
+			button.state.icon = {
+				name: 'bold',
+				fill: '',
+				iconURL: '',
+				scale: undefined
+			};
+
+			let svg = button.container.querySelector('.jodit-icon');
+			expect(svg.style.transform).eq('');
+
+			button.state.icon = {
+				name: 'bold',
+				fill: '',
+				iconURL: '',
+				scale: 2
+			};
+
+			await editor.async.requestIdlePromise();
+
+			svg = button.container.querySelector('.jodit-icon');
+			expect(svg).is.not.null;
+			expect(svg.style.transform).eq('scale(2)');
+		});
+	});
+
 	describe('aria-label', () => {
 		it('should set aria-label from tooltip when text is empty', () => {
 			const button = new UIButton(editor);

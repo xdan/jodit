@@ -46,6 +46,7 @@ export interface IUIIconState {
 	name: string;
 	iconURL: string;
 	fill: string;
+	scale: number | undefined;
 }
 
 export type ButtonVariant =

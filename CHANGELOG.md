@@ -9,6 +9,47 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.11.4
+
+#### :boom: Breaking Change
+
+- `.jodit-icon` `transform-origin` changed from `0 0 !important` to `var(--jd-icon-transform-origin)` (default `center`), and the `!important` flag was removed. If your layout depends on the old top-left origin, restore it via CSS:
+  ```css
+  :root {
+      --jd-icon-transform-origin: 0 0 !important;
+  }
+  ```
+
+#### :rocket: New Feature
+
+- `IUIIconState` now supports `scale` property — when set, applies `transform: scale(...)` to the SVG icon element, overriding the CSS variable
+- `IControlType.icon` now accepts `string | IUIIconState` — allows setting icon name, fill, iconURL, and scale directly from toolbar button config
+
+  Per-button scale example:
+  ```javascript
+  Jodit.make('#editor', {
+      buttons: Jodit.atom([
+          'bold',
+          {
+              name: 'big-italic',
+              icon: { name: 'italic', fill: '', iconURL: '', scale: 1.5 },
+              tooltip: 'Italic (large icon)'
+          },
+          'underline'
+      ])
+  });
+  ```
+
+- CSS custom properties `--jd-icon-transform-origin` and `--jd-icon-transform-scale` for global icon scaling. Override them to resize all editor icons at once. Per-button `scale` in `IUIIconState` takes priority over the CSS variable.
+
+  Global scale override via CSS:
+  ```css
+  :root {
+      --jd-icon-transform-scale: 1.3;
+      --jd-icon-transform-origin: center;
+  }
+  ```
+
 ## 4.11.2
 
 #### :boom: Breaking Change

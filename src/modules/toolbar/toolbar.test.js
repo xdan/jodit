@@ -75,6 +75,49 @@ describe('Toolbar', () => {
 		).equals(window.toolbarButtonsCount);
 	});
 
+	describe('Icon scale in toolbar', function () {
+		it('should apply transform scale to a button icon when icon is IUIIconState with scale', function () {
+			const editor = getJodit({
+				buttons: Jodit.atom([
+					'bold',
+					{
+						name: 'custom-scaled',
+						icon: {
+							name: 'bold',
+							fill: '',
+							iconURL: '',
+							scale: 1.8
+						},
+						tooltip: 'Scaled icon'
+					},
+					'italic'
+				]),
+				disablePlugins: ['speech-recognize']
+			});
+
+			const btn = editor.toolbar.container.querySelector(
+				'[data-ref="custom-scaled"] .jodit-icon'
+			);
+
+			expect(btn).is.not.null;
+			expect(btn.style.transform).eq('scale(1.8)');
+		});
+
+		it('should not apply transform scale to a regular string icon button', function () {
+			const editor = getJodit({
+				buttons: Jodit.atom(['bold']),
+				disablePlugins: ['speech-recognize']
+			});
+
+			const btn = editor.toolbar.container.querySelector(
+				'[data-ref="bold"] .jodit-icon'
+			);
+
+			expect(btn).is.not.null;
+			expect(btn.style.transform).eq('');
+		});
+	});
+
 	describe('Custom buttons', function () {
 		it('should create normal button in toolbar', function () {
 			const editor = getJodit({

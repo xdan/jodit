@@ -47,7 +47,8 @@ export const UIButtonState = (): IUIButtonState => ({
 	icon: {
 		name: 'empty',
 		fill: '',
-		iconURL: ''
+		iconURL: '',
+		scale: undefined
 	},
 
 	tooltip: '',
