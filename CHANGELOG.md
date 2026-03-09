@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.11.6
+
+#### :house: Internal
+
+- Release workflow now populates GitHub Release notes from CHANGELOG.md instead of relying on auto-generated notes
+
 ## 4.11.5
 
 #### :rocket: New Feature

@@ -128,11 +128,20 @@ jobs:
             - name: Publish
               run: npm publish ./build
 
+            - name: Extract changelog for version
+              id: changelog
+              run: |
+                  VERSION=$(node -p "require('./package.json').version")
+                  NOTES=$(awk "/^## ${VERSION}\$/{flag=1; next} /^## [0-9]/{flag=0} flag" CHANGELOG.md)
+                  echo "NOTES<<EOF" >> $GITHUB_OUTPUT
+                  echo "$NOTES" >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+
             - name: Release
               uses: softprops/action-gh-release@v2
               if: startsWith(github.ref, 'refs/tags/')
               with:
-                  generate_release_notes: true
+                  body: ${{ steps.changelog.outputs.NOTES }}
 
             - name: Get version
               id: get_version
