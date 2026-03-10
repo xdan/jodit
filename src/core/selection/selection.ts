@@ -290,8 +290,8 @@ export class Selection implements ISelect {
 		const markAttr = (start: boolean): string =>
 			`span[data-${consts.MARKER_CLASS}=${start ? 'start' : 'end'}]`;
 
-		const start = this.area.querySelector(markAttr(true)),
-			end = this.area.querySelector(markAttr(false));
+		const start = this.area.querySelector(markAttr(true));
+		const end = this.area.querySelector(markAttr(false));
 
 		if (!start) {
 			return;
@@ -1156,7 +1156,7 @@ export class Selection implements ISelect {
 	selectRange(range: Range, focus: boolean = true): this {
 		const sel = this.sel;
 
-		if (focus && !this.isFocused()) {
+		if (focus && !this.isFocused() && this.j.e.current !== 'focus') {
 			this.focus();
 		}
 
