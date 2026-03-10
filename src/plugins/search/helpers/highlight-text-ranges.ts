@@ -24,6 +24,33 @@ import { $$ } from 'jodit/core/helpers/utils/selector';
  */
 const TMP_ATTR = 'jd-tmp-selection';
 
+const HIGHLIGHT_CSS =
+	'background-color: var(--jd-color-background-selection); color: var(--jd-color-text-selection);';
+
+const injectedDocs = new WeakSet<Document>();
+
+function ensureHighlightStyle(doc: Document, useHighlightAPI: boolean): void {
+	if (injectedDocs.has(doc)) {
+		return;
+	}
+
+	injectedDocs.add(doc);
+
+	const rule = useHighlightAPI
+		? `::highlight(jodit-search-result) { ${HIGHLIGHT_CSS} }`
+		: `[${TMP_ATTR}] { ${HIGHLIGHT_CSS} }`;
+
+	try {
+		const sheet = new CSSStyleSheet();
+		sheet.insertRule(rule);
+		doc.adoptedStyleSheets = [...doc.adoptedStyleSheets, sheet];
+	} catch {
+		const style = doc.createElement('style');
+		style.textContent = rule;
+		doc.head.appendChild(style);
+	}
+}
+
 /**
  * @private
  */
@@ -44,6 +71,8 @@ export function highlightTextRanges(
 	if (checkNativeSelectionMethod(jodit, rng, restRanges)) {
 		return;
 	}
+
+	ensureHighlightStyle(jodit.ed, false);
 
 	const span = ci.element('span', {
 		[TMP_ATTR]: true
@@ -131,6 +160,8 @@ function checkNativeSelectionMethod(
 			range.setEnd(rng.endContainer, rng.endOffset);
 			return range;
 		});
+
+		ensureHighlightStyle(jodit.ed, true);
 
 		const searchHighlight = new Highlight(...ranges);
 		// @ts-ignore

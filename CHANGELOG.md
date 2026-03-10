@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.11.7
+
+#### :house: Internal
+
+- feat: implement custom highlight styling for search results and add tests
+Issue: https://github.com/xdan/jodit/issues/1343
+
 ## 4.11.6
 
 #### :house: Internal

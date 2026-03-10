@@ -505,6 +505,27 @@ describe('Search plugin', () => {
 	});
 
 	describe('Search highlight', () => {
+		it('Should apply background-color style to highlight spans', async () => {
+			const editor = getJodit({
+				defaultTimeout: 0,
+				search: {
+					useCustomHighlightAPI: false
+				}
+			});
+
+			editor.value = '<p>test</p>';
+
+			editor.events.fire('search', 't');
+			await editor.async.requestIdlePromise();
+
+			const span = editor.editor.querySelector('[jd-tmp-selection]');
+			expect(span).is.not.null;
+
+			const style = editor.ew.getComputedStyle(span);
+			expect(style.backgroundColor).does.not.equal('')
+			expect(style.backgroundColor).does.not.equal('rgba(0, 0, 0, 0)');
+		});
+
 		it('Should not put highlighting into history stack', async () => {
 			const editor = getJodit({
 				defaultTimeout: 0
