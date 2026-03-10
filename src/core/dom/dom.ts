@@ -536,6 +536,48 @@ export class Dom {
 	}
 
 	/**
+	 * Get first matched node inside root
+	 */
+	static first(
+		root: Nullable<Node>,
+		condition: NodeCondition
+	): Nullable<Node> {
+		let first = root?.firstChild as Nullable<Node>;
+
+		if (!first) {
+			return null;
+		}
+
+		do {
+			if (condition(first)) {
+				return first;
+			}
+
+			let next: Nullable<Node> = first.firstChild;
+
+			if (!next) {
+				next = first.nextSibling;
+			}
+
+			if (!next && first.parentNode !== root) {
+				do {
+					first = first.parentNode;
+				} while (
+					first &&
+					!first?.nextSibling &&
+					first.parentNode !== root
+				);
+
+				next = first?.nextSibling as Nullable<Node>;
+			}
+
+			first = next;
+		} while (first);
+
+		return null;
+	}
+
+	/**
 	 * Get last matched node inside root
 	 */
 	static last(

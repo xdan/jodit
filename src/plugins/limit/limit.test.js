@@ -187,7 +187,8 @@ describe('Limit plugin', function () {
 						}
 					});
 
-					editor.value = '1111';
+					editor.value = '<p>|1111</p>';
+					setCursorToChar(editor);
 
 					editor.s.insertHTML('a');
 					editor.s.insertHTML('a');
@@ -278,17 +279,18 @@ describe('Limit plugin', function () {
 					}
 				});
 
-				editor.value = '';
+				editor.value = '<p>1111|</p>';
+				setCursorToChar(editor);
 
 				simulateEvent('paste', editor.editor, () => ({
 					clipboardData: {
 						types: ['text/html'],
-						getData: () => '<p>11111</p>'
+						getData: () => '<span>2222</span>'
 					}
 				}));
 
 				editor.async.setTimeout(() => {
-					expect(editor.value).equals('<p>11111</p>');
+					expect(editor.value).equals('<p>1111</p>');
 					done();
 				}, 200);
 			});

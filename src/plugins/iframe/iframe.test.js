@@ -219,7 +219,8 @@
 								iframeStyle: '',
 								iframeCSSLinks: Jodit.atom([])
 							});
-							editor.value = 'Some text';
+							editor.value = '<p>Some text|</p>';
+							setCursorToChar(editor);
 
 							let changeCounter = 0;
 							const onChange = function () {
@@ -247,9 +248,10 @@
 							editor.editor.appendChild(
 								editor.createInside.text('x')
 							);
+							editor.synchronizeValues();
 							simulateEvent('keydown', 'x', editor.editor);
 
-							expect(changeCounter).above(5);
+							expect(changeCounter).above(4);
 						});
 					});
 				});

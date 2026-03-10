@@ -522,11 +522,11 @@ describe('Search plugin', () => {
 			expect(span).is.not.null;
 
 			const style = editor.ew.getComputedStyle(span);
-			expect(style.backgroundColor).does.not.equal('')
+			expect(style.backgroundColor).does.not.equal('');
 			expect(style.backgroundColor).does.not.equal('rgba(0, 0, 0, 0)');
 		});
 
-		it('Should not put highlighting into history stack', async () => {
+		it('Should not put highlig∏hting into history stack', async () => {
 			const editor = getJodit({
 				defaultTimeout: 0
 			});

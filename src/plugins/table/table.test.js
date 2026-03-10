@@ -7,8 +7,12 @@
 describe('Test table plugin', () => {
 	describe('Click button and click to some cell', () => {
 		it('should create and insert new table', () => {
-			const editor = getJodit();
-			editor.s.focus();
+			const editor = getJodit({
+				disablePlugins: ['wrapNodes']
+			});
+			editor.value = '<p>test|</p>';
+			editor.focus();
+			setCursorToChar(editor);
 
 			clickButton('table', editor);
 			const popup = getOpenedPopup(editor);
@@ -16,21 +20,30 @@ describe('Test table plugin', () => {
 				'mousedown',
 				popup.querySelector('span[data-index="6"]')
 			);
-			expect(sortAttributes(editor.value).replace(/[\n\t]/g, '')).eq(
+
+			const EXPECTED =
+				'<p>test</p>' +
 				'<table style="border-collapse:collapse;width:100%">' +
-					'<tbody>' +
-					'<tr>' +
-					'<td style="width:14.28%"><br></td>' +
-					'<td style="width:14.28%"><br></td>' +
-					'<td style="width:14.28%"><br></td>' +
-					'<td style="width:14.28%"><br></td>' +
-					'<td style="width:14.28%"><br></td>' +
-					'<td style="width:14.28%"><br></td>' +
-					'<td style="width:14.28%"><br></td>' +
-					'</tr>' +
-					'</tbody></table>'
-			);
-			expect(editor.editor.firstChild.nodeName).eq('TABLE');
+				'<tbody>' +
+				'<tr>' +
+				'<td style="width:14.28%"><br></td>' +
+				'<td style="width:14.28%"><br></td>' +
+				'<td style="width:14.28%"><br></td>' +
+				'<td style="width:14.28%"><br></td>' +
+				'<td style="width:14.28%"><br></td>' +
+				'<td style="width:14.28%"><br></td>' +
+				'<td style="width:14.28%"><br></td>' +
+				'</tr>' +
+				'</tbody></table><p><br></p>';
+
+			const VALUE = sortAttributes(editor.value).replace(/[\n\t]/g, '');
+
+			if (VALUE !== EXPECTED) {
+				strCompare(VALUE, EXPECTED);
+			}
+
+			expect(VALUE).eq(EXPECTED);
+			expect(editor.editor.firstChild.nodeName).eq('P');
 		});
 	});
 
@@ -43,15 +56,24 @@ describe('Test table plugin', () => {
 					}
 				}
 			});
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
 			clickButton('table', editor);
 			const popup = getOpenedPopup(editor);
 			simulateEvent(
 				'mousedown',
 				popup.querySelector('span[data-index="2"]')
 			);
-			expect(sortAttributes(editor.value)).eq(
-				'<table style="border-collapse:collapse;width:100%"><tbody>\n<tr>\n\t<td style="color:red;width:33.33%"><br></td>\n\t<td style="color:red;width:33.33%"><br></td>\n\t<td style="color:red;width:33.33%"><br></td></tr></tbody></table>'
-			);
+
+			const EXPECTED =
+				'<p>test</p><table style="border-collapse:collapse;width:100%"><tbody>\n<tr>\n\t<td style="color:red;width:33.33%"><br></td>\n\t<td style="color:red;width:33.33%"><br></td>\n\t<td style="color:red;width:33.33%"><br></td></tr></tbody></table><p><br></p>';
+			const VALUE = sortAttributes(editor.value);
+
+			if (VALUE !== EXPECTED) {
+				strCompare(VALUE, EXPECTED);
+			}
+
+			expect(VALUE).eq(EXPECTED);
 		});
 	});
 

@@ -9,6 +9,8 @@ describe('Link plugin', () => {
 		describe('Insert simple link', () => {
 			it('Should insert as simple link', () => {
 				const editor = getJodit();
+				editor.value = '<p>|</p>';
+				setCursorToChar(editor);
 
 				simulatePaste(
 					editor.editor,
@@ -48,6 +50,8 @@ describe('Link plugin', () => {
 								processPastedLink: false
 							}
 						});
+						editor.value = '<p>|</p>';
+						setCursorToChar(editor);
 
 						simulatePaste(editor.editor, 'https://www.youtube.com');
 						expect(editor.value).equal(
@@ -72,6 +76,8 @@ describe('Link plugin', () => {
 				describe('Insert link ' + lnk[0], () => {
 					it('Should insert iframe with video ' + lnk[1], () => {
 						const editor = getJodit();
+						editor.value = '<p>|</p>';
+						setCursorToChar(editor);
 
 						simulatePaste(editor.editor, lnk[0]);
 
@@ -95,6 +101,8 @@ describe('Link plugin', () => {
 								processVideoLink: false
 							}
 						});
+						editor.value = '<p>|</p>';
+						setCursorToChar(editor);
 
 						simulatePaste(
 							editor.editor,
@@ -113,7 +121,8 @@ describe('Link plugin', () => {
 								processVideoLink: false
 							}
 						});
-
+						editor.value = '<p>|</p>';
+						setCursorToChar(editor);
 						simulatePaste(
 							editor.editor,
 							'https://www.youtube.com/watch?v=8Qn_spdM5Zg'

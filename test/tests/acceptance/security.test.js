@@ -52,6 +52,8 @@ describe('Security test', () => {
 			describe('Set HTML with onerror JS', () => {
 				it('Should remove this unsafe attribute', () => {
 					const editor = getJodit();
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
 					const img = document.createElement('img');
 					img.setAttribute('onerror', 'alert(document.cookie);');
 					img.setAttribute('src', '');
@@ -68,6 +70,8 @@ describe('Security test', () => {
 			describe('Insert unsafe link', () => {
 				it('Should change this unsafe attribute to safe', () => {
 					const editor = getJodit();
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
 
 					const a = document.createElement('a');
 					a.setAttribute('href', 'javascript:alert(1111);');

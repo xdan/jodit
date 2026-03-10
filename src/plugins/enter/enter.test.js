@@ -245,8 +245,8 @@ describe('Enter behavior Tests', function () {
 			it('should be added 2 paragraph and cursor must be in second', function () {
 				const editor = getJodit();
 
-				editor.value = '<p><br></p>'; // empty
-				editor.s.focus();
+				editor.value = '<p>|<br></p>';
+				setCursorToChar(editor);
 
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
@@ -280,6 +280,8 @@ describe('Enter behavior Tests', function () {
 		describe('Content editor after pressing the Enter key', function () {
 			it('Should contain the specified tag settings', function () {
 				const editor = getJodit();
+				editor.value = '<p>|<br></p>';
+				setCursorToChar(editor);
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 				simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
@@ -315,53 +317,30 @@ describe('Enter behavior Tests', function () {
 			describe('In the middle of element', function () {
 				it('Should split paragraph', function () {
 					const editor = getJodit();
-
-					const p = editor.ed.createElement('p'),
-						node = editor.createInside.text('Split paragraph');
-
-					p.appendChild(node);
-
-					editor.s.insertNode(p);
-
-					const range = editor.s.createRange();
-
-					range.setStart(node, 6);
-					editor.s.sel.removeAllRanges();
-					editor.s.sel.addRange(range);
+					editor.value = '<p>Split| paragraph</p>';
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 					editor.s.insertNode(editor.createInside.text('a '));
 
 					expect(editor.value).equals(
-						'<p>Split </p><p>a paragraph</p>'
+						'<p>Split</p><p>a  paragraph</p>'
 					);
 				});
 
 				it('Should create new paragraph with same styles like as original', function () {
 					const editor = getJodit();
-
-					const p = editor.ed.createElement('p'),
-						node = editor.createInside.text('Split paragraph');
-
-					p.appendChild(node);
-					p.style.textAlign = 'right';
-					p.style.color = '#ff0000';
-
-					editor.s.insertNode(p);
-
-					const range = editor.s.createRange();
-
-					range.setStart(node, 6);
-					editor.s.sel.removeAllRanges();
-					editor.s.sel.addRange(range);
+					editor.value =
+						'<p style="color:#FF0000;text-align:right">Split| paragraph</p>';
+					setCursorToChar(editor);
 
 					simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
 
 					editor.s.insertNode(editor.createInside.text('a '));
 
 					expect(sortAttributes(editor.value)).equals(
-						'<p style="color:#FF0000;text-align:right">Split </p><p style="color:#FF0000;text-align:right">a paragraph</p>'
+						'<p style="color:#FF0000;text-align:right">Split</p><p style="color:#FF0000;text-align:right">a  paragraph</p>'
 					);
 				});
 			});

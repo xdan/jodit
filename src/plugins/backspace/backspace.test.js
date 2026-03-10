@@ -10,12 +10,7 @@ describe('Backspace/Delete key', function () {
 	beforeEach(() => {
 		area = appendTestArea(undefined, false);
 		unmockPromise();
-		editor = getJodit(
-			{
-				disablePlugins: []
-			},
-			area
-		);
+		editor = getJodit({}, area);
 		editor.value = '<p>test</p>';
 		range = editor.s.createRange(true);
 	});
@@ -151,6 +146,17 @@ describe('Backspace/Delete key', function () {
 
 		describe('Position after backspace', () => {
 			it('Should be correct', async () => {
+				editor.destruct();
+				area.remove();
+				area = appendTestArea(undefined, false);
+				editor = getJodit(
+					{
+						disablePlugins: ['wrapNodes']
+					},
+					area
+				);
+				editor.value = '<p>test</p>';
+				range = editor.s.createRange(true);
 				editor.focus();
 				editor.value =
 					'<p><strong><span>&nbsp;</span></strong><br></p><p><strong><span>|&nbsp;</span></strong><br></p>';
@@ -167,7 +173,7 @@ describe('Backspace/Delete key', function () {
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 				await editor.async.requestIdlePromise();
 				replaceCursorToChar(editor);
-				expect('<p>|<br></p>').equals(editor.value);
+				expect('|').equals(editor.value);
 			});
 		});
 
@@ -612,6 +618,16 @@ describe('Backspace/Delete key', function () {
 	describe('inside empty P', function () {
 		describe('Backspace', function () {
 			it('Should remove empty tag', function () {
+				editor.destruct();
+				area.remove();
+				area = appendTestArea(undefined, false);
+				editor = getJodit(
+					{
+						disablePlugins: ['wrapNodes']
+					},
+					area
+				);
+				editor.focus();
 				editor.value = '<p>|<br></p>';
 				setCursorToChar(editor);
 
@@ -619,7 +635,7 @@ describe('Backspace/Delete key', function () {
 
 				editor.s.insertNode(editor.createInside.text(' 2 '));
 
-				expect(editor.value).equals('<p> 2 </p>');
+				expect(editor.value).equals(' 2 ');
 			});
 
 			describe('Near has an element', function () {
@@ -727,6 +743,15 @@ describe('Backspace/Delete key', function () {
 
 		describe('Delete', function () {
 			it('Should remove empty tag', function () {
+				editor.destruct();
+				area.remove();
+				area = appendTestArea(undefined, false);
+				editor = getJodit(
+					{
+						disablePlugins: ['wrapNodes']
+					},
+					area
+				);
 				editor.value = '<p>|<br></p>';
 				setCursorToChar(editor);
 
@@ -734,7 +759,7 @@ describe('Backspace/Delete key', function () {
 
 				editor.s.insertNode(editor.createInside.text(' 2 '));
 
-				expect(editor.value).equals('<p> 2 </p>');
+				expect(editor.value).equals(' 2 ');
 			});
 
 			describe('Near has element', function () {

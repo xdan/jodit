@@ -10,7 +10,7 @@
  * @module plugins/focus
  */
 
-import type { IJodit } from 'jodit/types';
+import type { IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { Config } from 'jodit/config';
@@ -54,14 +54,22 @@ export function focus(editor: IJodit): void {
 	const focus = (): void => {
 		editor.s.focus();
 
-		if (editor.o.cursorAfterAutofocus === 'end') {
-			const lastTextNode = Dom.last(editor.editor, node =>
-				Dom.isText(node)
-			);
+		let textNode: Nullable<Node> = null;
 
-			if (lastTextNode) {
-				editor.s.setCursorIn(lastTextNode, false);
-			}
+		switch (editor.o.cursorAfterAutofocus) {
+			case 'start':
+				textNode = Dom.first(editor.editor, node => Dom.isText(node));
+				break;
+			case 'end':
+				textNode = Dom.last(editor.editor, node => Dom.isText(node));
+				break;
+		}
+
+		if (textNode) {
+			editor.s.setCursorIn(
+				textNode,
+				editor.o.cursorAfterAutofocus === 'start'
+			);
 		}
 	};
 

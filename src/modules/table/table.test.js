@@ -8,18 +8,16 @@ describe('Tables Jodit Editor Tests', () => {
 	describe('Methods', () => {
 		it('After init container must have one element .jodit-table-resizer', () => {
 			const editor = getJodit();
+			editor.focus();
 			expect(editor.editor.querySelector('.jodit-table-resizer')).equals(
 				null
 			);
 
-			const table1 = editor.createInside.fromHTML(
-				'<table><tr><td>1</td></tr></table>'
-			);
-			editor.s.insertNode(table1);
+			editor.value = '<table><tr><td>1</td></tr></table>';
+
 			simulateEvent(
 				'mousemove',
-				0,
-				table1.querySelector('td'),
+				editor.editor.querySelector('td'),
 				function (opt) {
 					opt.offsetX = 3;
 				}
@@ -51,8 +49,9 @@ describe('Tables Jodit Editor Tests', () => {
 				'<td>2</td>' +
 				'<td rowspan="2">3</td>' +
 				'</tr>' +
-				'<tr><td>4</td></tr>' +
+				'<tr><td>4|</td></tr>' +
 				'</table>';
+			setCursorToChar(editor);
 
 			selectCells(editor, [0, 1]);
 

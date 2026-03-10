@@ -834,13 +834,16 @@ describe('Test paste plugin', () => {
 								};
 							};
 
+							editor.value = '<p>|</p>';
+							setCursorToChar(editor);
+
 							simulateEvent(
 								'paste',
 								editor.editor,
 								emulatePasteEvent
 							);
 
-							expect(editor.value).equals('');
+							expect(editor.value).equals('<p></p>');
 							const dialog = getOpenedDialog(editor);
 							const button = getButton('custom', dialog);
 							expect(button).is.not.null;
@@ -877,6 +880,9 @@ describe('Test paste plugin', () => {
 								};
 							};
 
+							editor.value = '<p>|</p>';
+							setCursorToChar(editor);
+
 							simulateEvent(
 								'paste',
 								editor.editor,
@@ -911,6 +917,8 @@ describe('Test paste plugin', () => {
 				};
 			};
 
+			editor.value = '<p>|</p>';
+			setCursorToChar(editor);
 			simulateEvent('paste', editor.editor, emulatePasteEvent);
 
 			expect(editor.value).equals('<p>test</p>');
@@ -927,6 +935,8 @@ describe('Test paste plugin', () => {
 					});
 
 					const pastedText = 'test\ntest\ntest';
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
 
 					simulateEvent('paste', editor.editor, function (data) {
 						data.clipboardData = {
@@ -948,6 +958,9 @@ describe('Test paste plugin', () => {
 					});
 
 					const pastedText = 'test\ntest\ntest';
+
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
 
 					simulateEvent('paste', editor.editor, function (data) {
 						data.clipboardData = {
@@ -983,6 +996,8 @@ describe('Test paste plugin', () => {
 							};
 						};
 
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
 					simulateEvent('paste', editor.editor, emulatePasteEvent);
 
 					expect(editor.value).equals('<p>test</p>');
@@ -1041,6 +1056,8 @@ describe('Test paste plugin', () => {
 						};
 					};
 
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 					expect(editor.value).equals(
 						'<p>&lt;p&gt;test&lt;/p&gt;</p>'
@@ -1067,6 +1084,8 @@ describe('Test paste plugin', () => {
 						};
 					};
 
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
 					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
 					expect(editor.value).equals('<p>test</p>');
 				});
@@ -1092,7 +1111,9 @@ describe('Test paste plugin', () => {
 						};
 					};
 
-					simulateEvent('paste', 0, editor.editor, emulatePasteEvent);
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
+					simulateEvent('paste', editor.editor, emulatePasteEvent);
 					expect(editor.value).equals('<p>test</p>');
 				});
 			});
@@ -1111,10 +1132,12 @@ describe('Test paste plugin', () => {
 						};
 					};
 
+				editor.value = '<p>|</p>';
+				setCursorToChar(editor);
 				simulateEvent('paste', editor.editor, emulatePasteEvent);
 
 				expect(editor.value).equals(
-					'<p>test<br>test<br>test<br>test<br>test<br><br></p>'
+					'<p>test<br>test<br>test<br>test<br>test<br></p>'
 				);
 			});
 		});

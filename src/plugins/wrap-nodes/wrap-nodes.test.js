@@ -24,7 +24,8 @@ describe('WrapNodes plugin test', function () {
 				const editor = getJodit({
 					language: 'ja'
 				});
-				editor.value = '';
+				editor.value = '<p>|</p>';
+				setCursorToChar(editor);
 
 				editor.s.insertNode(editor.createInside.text('た'));
 				await editor.async.requestIdlePromise();

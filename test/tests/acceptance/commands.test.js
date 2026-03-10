@@ -100,7 +100,8 @@ describe('Commands Jodit Editor Tests', function () {
 		describe('Try exec the command "formatBlock" for several text nodes', function () {
 			it('should wrap all these nodes inside tag', function () {
 				const editor = getJodit();
-				editor.value = '';
+				editor.value = '<p>|</p>';
+				setCursorToChar(editor);
 
 				editor.s.insertNode(editor.createInside.text('test'));
 				editor.s.insertNode(editor.createInside.text(' test2'));
@@ -125,8 +126,8 @@ describe('Commands Jodit Editor Tests', function () {
 		describe('editor is empty', function () {
 			it('Should create empty element and set cursor into it', function () {
 				const editor = getJodit();
-				editor.value = '';
-				editor.s.focus();
+				editor.value = '<p>|</p>';
+				setCursorToChar(editor);
 
 				editor.execCommand('formatBlock', false, 'h1');
 				editor.s.insertHTML('test');
