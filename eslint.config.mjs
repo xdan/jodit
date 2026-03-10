@@ -3,7 +3,7 @@ import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import pluginHeader from 'eslint-plugin-header';
+import header from '@tony.ganchev/eslint-plugin-header';
 import _import from 'eslint-plugin-import';
 import mocha from 'eslint-plugin-mocha';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
@@ -11,8 +11,6 @@ import tsdoc from 'eslint-plugin-tsdoc';
 import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-
-pluginHeader.rules.header.meta.schema = false;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -44,7 +42,7 @@ export default [
 	{
 		plugins: {
 			'@typescript-eslint': typescriptEslint,
-			pluginHeader,
+			header,
 			mocha,
 			tsdoc,
 			'simple-import-sort': simpleImportSort,
@@ -161,8 +159,7 @@ export default [
 			],
 
 			'jsx-quotes': 'error',
-			// TODO https://github.com/Stuk/eslint-plugin-header/issues/57
-			// 'header/header': [2, 'src/header.js'],
+			'header/header': [2, 'src/header.js'],
 			'no-mixed-spaces-and-tabs': 'off',
 			'no-empty': 'off',
 			'@typescript-eslint/no-unsafe-function-type': 'off',
