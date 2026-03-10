@@ -1028,7 +1028,8 @@ describe('Toolbar', () => {
 
 			expect(button).is.not.null;
 
-			editor.value = '';
+			editor.value = '<p>|<br></p>';
+			setCursorToChar(editor);
 
 			simulateEvent('click', button);
 			expect(editor.value).equals('<p>Wed Mar 16 2016</p>');
@@ -1453,7 +1454,8 @@ describe('Toolbar', () => {
 						]
 					});
 
-					editor.value = '';
+					editor.value = '<p>|<br></p>';
+					setCursorToChar(editor);
 
 					expect(getButton('adddate', editor)).is.not.null;
 

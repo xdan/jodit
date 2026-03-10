@@ -10,7 +10,12 @@ describe('Backspace/Delete key', function () {
 	beforeEach(() => {
 		area = appendTestArea(undefined, false);
 		unmockPromise();
-		editor = getJodit({}, area);
+		editor = getJodit(
+			{
+				disablePlugins: []
+			},
+			area
+		);
 		editor.value = '<p>test</p>';
 		range = editor.s.createRange(true);
 	});
@@ -96,27 +101,34 @@ describe('Backspace/Delete key', function () {
 							);
 						}
 
+						jodit.focus();
 						jodit.value = key;
+
 						setCursorToChar(jodit);
 						simulateEvent(
 							'keydown',
 							button || Jodit.KEY_BACKSPACE,
 							jodit.editor
 						);
-
-						await jodit.async.requestIdlePromise();
+						// jodit.focus();
+						// await jodit.async.requestIdlePromise();
 
 						if (insert) {
 							jodit.s.insertNode(jodit.createInside.text(insert));
 						}
-
+						// jodit.focus();
 						replaceCursorToChar(jodit);
-						expect(
-							sortAttributes(jodit.value).replace(
-								/<span style="background-color:var\(--jd-color-background-default\)">([^<]+?)<\/span>/,
-								'$1'
-							)
-						).equals(value);
+
+						const EXPECTED = sortAttributes(jodit.value).replace(
+							/<span style="background-color:var\(--jd-color-background-default\)">([^<]+?)<\/span>/,
+							'$1'
+						);
+
+						if (EXPECTED !== value) {
+							strCompare(EXPECTED, value);
+						}
+
+						expect(EXPECTED).equals(value);
 					});
 				}
 			);

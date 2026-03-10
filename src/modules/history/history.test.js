@@ -58,9 +58,14 @@ describe('Undo/Redo behaviors', () => {
 
 				editor.execCommand('undo');
 
-				expect(editor.value).equals(
-					'<p>test</p><ul><li>test2</li><li>test3</li><li><a>test4</a></li></ul>'
-				);
+				const RESULT =
+					'<p>test</p><ul><li>test2</li><li>test3</li><li><a>test4</a></li></ul>';
+
+				if (editor.value !== RESULT) {
+					strCompare(editor.value, RESULT);
+				}
+
+				expect(editor.value).equals(RESULT);
 
 				const range = editor.s.createRange();
 				range.setStart(editor.editor.firstChild.firstChild, 0);
