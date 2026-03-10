@@ -166,7 +166,7 @@ interface IControlType<
 	 * })
 	 * ```
 	 */
-	icon?: string | IUIIconState;
+	icon?: string | Partial<IUIIconState>;
 
 	/**
 	 * Use this property if you want set background image for the button. This icon can be 16 * 16 px in SVG or
