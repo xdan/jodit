@@ -1342,6 +1342,7 @@ function setCursorToChar(editor, char = '|') {
 		}
 
 		editor.s.selectRange(r);
+		editor.synchronizeValues();
 
 		return true;
 	}
@@ -1567,23 +1568,45 @@ typeof before === 'function' &&
  * @param {string} textB
  * @return {boolean}
  */
-function strCompare(textA, textB, len = 30) {
-	for (let i = 0; i < Math.max(textA.length, textB.length); i += 1) {
-		if (textA[i] !== textB[i]) {
-			// eslint-disable-next-line no-console
-			console.log(
-				`textA: ${textA.substring(i - len, i)}|${textA.substring(i, i + len)}`
-			);
-			// eslint-disable-next-line no-console
-			console.log(
-				`textB: ${textB.substring(i - len, i)}|${textB.substring(i, i + len)}`
-			);
+function strCompare(textA, textB) {
+	if (textA === textB) return true;
 
-			return false;
-		}
+	const RESET = '\x1b[0m';
+	const RED_BG = '\x1b[41m';
+	const GREEN_BG = '\x1b[42m';
+	const DIM = '\x1b[2m';
+	const BOLD = '\x1b[1m';
+
+	// Find all differing indices
+	const maxLen = Math.max(textA.length, textB.length);
+	const diffIndices = new Set();
+	for (let i = 0; i < maxLen; i++) {
+		if (textA[i] !== textB[i]) diffIndices.add(i);
 	}
 
-	return true;
+	const highlight = (text, color) =>
+		text
+			.split('')
+			.map((char, i) =>
+				diffIndices.has(i)
+					? `${color}${char === ' ' ? '·' : char}${RESET}`
+					: char
+			)
+			.join('');
+
+	const labelA = `${BOLD}${DIM}- textA:${RESET} `;
+	const labelB = `${BOLD}${DIM}+ textB:${RESET} `;
+
+	// eslint-disable-next-line no-console
+	console.log(`\n${DIM}${'─'.repeat(60)}${RESET}`);
+	// eslint-disable-next-line no-console
+	console.log(`${labelA}${highlight(textA, RED_BG)}`);
+	// eslint-disable-next-line no-console
+	console.log(`${labelB}${highlight(textB, GREEN_BG)}`);
+	// eslint-disable-next-line no-console
+	console.log(`${DIM}${'─'.repeat(60)}${RESET}\n`);
+
+	return false;
 }
 
 function decorate(decorators, target, key) {
