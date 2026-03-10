@@ -211,9 +211,15 @@ describe('AI Assistant', () => {
 				);
 				clickButton('Insert', ui);
 				await editor.async.requestIdlePromise();
-				expect(editor.value).equals(
-					'<p>AI: Make longer to 1000 symbols HTML: test answer</p>'
-				);
+
+				const EXPECTED =
+					'<p>AI: Make longer to 1000 symbols HTML: test answertest</p>';
+
+				if (editor.value !== EXPECTED) {
+					strCompare(editor.value, EXPECTED);
+				}
+
+				expect(editor.value).equals(EXPECTED);
 			});
 		});
 	});
