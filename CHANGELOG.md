@@ -11,10 +11,20 @@
 
 ## 4.11.7
 
+#### :rocket: New Feature
+
+- Implement custom highlight styling for search results ([#1343](https://github.com/xdan/jodit/issues/1343))
+- Add `backSpaceAfterDelete` event triggered after backspace operations
+- Add `Dom.findFirstMatchedNode()` method for retrieving first matched node in DOM tree
+
+#### :nail_care: Polish
+
+- Improve cursor positioning in `wrapNodes` plugin after backspace
+- Improve readability of selection marker queries and add focus condition check
+
 #### :house: Internal
 
-- feat: implement custom highlight styling for search results and add tests
-Issue: https://github.com/xdan/jodit/issues/1343
+- Enhance test coverage for undo/redo, backspace, search, and other plugins
 
 ## 4.11.6
 
