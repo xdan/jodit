@@ -59,8 +59,8 @@ class wrapNodes extends Plugin {
 			return;
 		}
 
-		let child: Nullable<Node> = jodit.editor.firstChild,
-			isChanged: boolean = false;
+		let child: Nullable<Node> = jodit.editor.firstChild;
+		let isChanged: boolean = false;
 
 		while (child) {
 			child = checkAloneListLeaf(child, jodit);
@@ -142,7 +142,9 @@ class wrapNodes extends Plugin {
 		Dom.append(box, br);
 		Dom.append(jodit.editor, box);
 
-		jodit.s.isFocused() && jodit.s.setCursorBefore(br);
+		if (jodit.s.isFocused() || jodit.e.current === 'backSpaceAfterDelete') {
+			jodit.s.setCursorBefore(br);
+		}
 		jodit.e.fire('internalChange');
 	}
 }

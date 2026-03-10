@@ -87,6 +87,7 @@ export class backspace extends Plugin {
 		}
 
 		if (checkNotCollapsed(jodit)) {
+			jodit.e.fire('backSpaceAfterDelete', backspace);
 			return false;
 		}
 
