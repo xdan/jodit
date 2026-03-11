@@ -20,6 +20,7 @@
 - Fix pasting table into table cell creating invalid nesting and trailing empty paragraph ([#1314](https://github.com/xdan/jodit/issues/1314))
 - Fix font size module misbehavior in pt mode: duplicated unit display, incorrect active state, and wrong px/pt conversion ([#1197](https://github.com/xdan/jodit/issues/1197))
 - Fix focus competition between multiple editor instances in Source mode ([#1313](https://github.com/xdan/jodit/issues/1313))
+- Fix tooltip clipped by viewport when toolbar is near the bottom of the page ([#1150](https://github.com/xdan/jodit/issues/1150))
 
 ## 4.11.7
 

@@ -190,6 +190,7 @@ export class UITooltip extends UIElement {
 
 	private __show(getPoint: () => IPoint, content: string): void {
 		this.setMod('visible', true);
+		this.setMod('above', false);
 		this.getElm('content')!.innerHTML = content;
 		const point = getPoint();
 
@@ -197,6 +198,18 @@ export class UITooltip extends UIElement {
 			left: point.x,
 			top: point.y
 		});
+
+		const tooltipPos = position(this.container);
+		const viewHeight = this.j.ow.innerHeight;
+
+		// If tooltip overflows below viewport, show it above the target
+		if (tooltipPos.top + tooltipPos.height > viewHeight) {
+			const targetPos = position(this.__currentTarget!);
+			this.setMod('above', true);
+			css(this.container, {
+				top: targetPos.top - tooltipPos.height
+			});
+		}
 	}
 
 	@autobind

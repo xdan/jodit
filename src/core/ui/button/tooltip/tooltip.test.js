@@ -263,6 +263,65 @@
 				});
 			});
 
+			describe('Viewport overflow', () => {
+				it('Should show tooltip above button when near viewport bottom', () => {
+					editor.destruct();
+
+					// Move the box to the very bottom of the viewport
+					box.style.position = 'fixed';
+					box.style.bottom = '0';
+					box.style.left = '0';
+					box.style.right = '0';
+					box.style.minHeight = '60px';
+					box.style.padding = '0';
+
+					editor = getJodit({
+						...OPTIONS,
+						toolbarAdaptive: false
+					});
+
+					const boldBtn = getButton('bold', editor);
+					expect(boldBtn).is.not.null;
+
+					// Mock viewport height to simulate overflow
+					const ow = editor.ownerWindow;
+					const originalInnerHeight = Object.getOwnPropertyDescriptor(
+						HTMLElement.prototype,
+						'clientHeight'
+					);
+					const btnRect =
+						boldBtn.parentElement.getBoundingClientRect();
+					// Set viewport height so tooltip will overflow below it
+					Object.defineProperty(ow, 'innerHeight', {
+						value: Math.round(btnRect.bottom + 5),
+						configurable: true,
+						writable: true
+					});
+
+					simulateEvent('mouseenter', boldBtn.parentElement);
+					timers.delay(100);
+
+					const tooltip = getTooltipElm();
+					expect(tooltip).is.not.null;
+					expect(tooltip.textContent).equals('Bold');
+
+					const tooltipRect = tooltip.getBoundingClientRect();
+
+					// Tooltip should be above the button, not below
+					expect(tooltipRect.bottom).is.below(btnRect.top + 1);
+
+					simulateEvent('mouseleave', boldBtn.parentElement);
+					timers.delay(100);
+
+					// Restore
+					delete ow.innerHeight;
+					box.style.position = '';
+					box.style.bottom = '';
+					box.style.left = '';
+					box.style.right = '';
+				});
+			});
+
 			describe('Inside popup', () => {
 				describe('Hiding popup', () => {
 					it('should hide it tooltip', () => {
