@@ -212,6 +212,25 @@ describe('Backspace/Delete key', function () {
 					);
 				});
 			});
+
+			describe('Nested table inside TD with trailing empty paragraph', function () {
+				it('Should remove only the empty paragraph, not the nested table', function () {
+					editor.value =
+						'<table><tbody><tr><td><table><tbody><tr><td>nested</td></tr></tbody></table><p>|<br></p></td></tr></tbody></table>';
+
+					setCursorToChar(editor);
+
+					simulateEvent(
+						'keydown',
+						Jodit.KEY_BACKSPACE,
+						editor.editor
+					);
+
+					expect(sortAttributes(editor.value)).equals(
+						'<table><tbody><tr><td><table><tbody><tr><td>nested</td></tr></tbody></table></td></tr></tbody></table>'
+					);
+				});
+			});
 		});
 	});
 

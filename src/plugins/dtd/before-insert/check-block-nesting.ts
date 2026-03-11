@@ -23,13 +23,23 @@ export function checkBlockNesting(jodit: IJodit, node: Nullable<Node>): void {
 	}
 
 	if (jodit.o.dtd.checkBlockNesting && Dom.isBlock(node)) {
-		const parent = Dom.furthest(
-			jodit.s.current(),
-			Dom.isBlock,
-			jodit.editor
-		);
+		let parent: Nullable<Element> = null;
+		let current: Nullable<Element> =
+			jodit.s.current()?.parentElement ?? null;
 
-		if (parent && !jodit.o.dtd.blockLimits[parent.tagName.toLowerCase()]) {
+		while (current && current !== jodit.editor) {
+			if (Dom.isBlock(current)) {
+				if (jodit.o.dtd.blockLimits[current.nodeName.toLowerCase()]) {
+					break;
+				}
+
+				parent = current;
+			}
+
+			current = current.parentElement;
+		}
+
+		if (parent) {
 			jodit.s.setCursorAfter(parent);
 
 			if (Dom.isEmpty(parent)) {

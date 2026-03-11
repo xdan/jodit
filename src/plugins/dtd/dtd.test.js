@@ -75,6 +75,53 @@ describe('Test dtd plugin', () => {
 		});
 	});
 
+	describe('Insert table into table cell', () => {
+		describe('Cursor inside empty paragraph in a TD cell', () => {
+			it('should insert table directly into TD without extra paragraph', () => {
+				const editor = getJodit();
+				editor.value =
+					'<table><tbody><tr><td><p>|<br></p></td></tr></tbody></table>';
+				setCursorToChar(editor);
+				editor.s.insertHTML(
+					'<table><tbody><tr><td>nested</td></tr></tbody></table>'
+				);
+				expect(sortAttributes(editor.value)).eq(
+					'<table><tbody><tr><td><table><tbody><tr><td>nested</td></tr></tbody></table></td></tr></tbody></table>'
+				);
+			});
+		});
+
+		describe('Cursor inside non-empty paragraph in a TD cell', () => {
+			it('should insert table after paragraph in TD', () => {
+				const editor = getJodit();
+				editor.value =
+					'<table><tbody><tr><td><p>text|</p></td></tr></tbody></table>';
+				setCursorToChar(editor);
+				editor.s.insertHTML(
+					'<table><tbody><tr><td>nested</td></tr></tbody></table>'
+				);
+				expect(sortAttributes(editor.value)).eq(
+					'<table><tbody><tr><td><p>text</p><table><tbody><tr><td>nested</td></tr></tbody></table></td></tr></tbody></table>'
+				);
+			});
+		});
+
+		describe('Cursor directly in TD cell (no paragraph wrapper)', () => {
+			it('should insert table into TD without issues', () => {
+				const editor = getJodit();
+				editor.value =
+					'<table><tbody><tr><td>|<br></td></tr></tbody></table>';
+				setCursorToChar(editor);
+				editor.s.insertHTML(
+					'<table><tbody><tr><td>nested</td></tr></tbody></table>'
+				);
+				expect(sortAttributes(editor.value)).eq(
+					'<table><tbody><tr><td><table><tbody><tr><td>nested</td></tr></tbody></table><br></td></tr></tbody></table>'
+				);
+			});
+		});
+	});
+
 	describe('After insertNode', () => {
 		describe('Enable dtd.removeExtraBr', () => {
 			[
