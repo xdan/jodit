@@ -47,7 +47,9 @@ export function focus(editor: IJodit): void {
 				}
 			})
 			.on('focus', () => {
-				editor.s.restore();
+				if (editor.isEditorMode()) {
+					editor.s.restore();
+				}
 			});
 	}
 

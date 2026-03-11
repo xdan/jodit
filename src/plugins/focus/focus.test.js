@@ -112,4 +112,79 @@ describe('Focus test', () => {
 			});
 		});
 	});
+
+	describe('Multiple editors in source mode', () => {
+		it('Should not cause focus competition when switching between editors', () => {
+			const editor1 = getJodit({
+				defaultMode: Jodit.MODE_SOURCE,
+				history: { defaultTimeout: 0 }
+			});
+			const editor2 = getJodit({
+				defaultMode: Jodit.MODE_SOURCE,
+				history: { defaultTimeout: 0 }
+			});
+
+			const mirror1 = editor1.container.querySelector(
+				'textarea.jodit-source__mirror'
+			);
+			const mirror2 = editor2.container.querySelector(
+				'textarea.jodit-source__mirror'
+			);
+
+			expect(mirror1).is.not.null;
+			expect(mirror2).is.not.null;
+
+			// Focus editor 1
+			simulateEvent('focus', mirror1);
+			expect(editor1.editorIsActive).is.true;
+
+			// Focus editor 2 (should blur editor 1)
+			simulateEvent('blur', mirror1);
+			simulateEvent('focus', mirror2);
+
+			expect(editor2.editorIsActive).is.true;
+			expect(editor1.editorIsActive).is.false;
+		});
+
+		it('Should not call s.restore() when in source mode on focus', () => {
+			const editor = getJodit({
+				history: { defaultTimeout: 0 }
+			});
+
+			// Set some content and save selection in WYSIWYG mode
+			editor.value = '<p>test</p>';
+			editor.s.setCursorIn(editor.editor.firstChild);
+
+			// Switch to source mode
+			editor.setMode(Jodit.MODE_SOURCE);
+
+			// Manually insert markers into WYSIWYG area to simulate leftover state
+			const marker = editor.c.element('span', {
+				'data-jodit-selection_marker': 'start',
+				'data-jodit-temp': 'true',
+				style: 'display:none;line-height:0'
+			});
+			editor.editor.appendChild(marker);
+
+			expect(
+				editor.editor.querySelectorAll(
+					'span[data-jodit-selection_marker]'
+				).length
+			).eq(1);
+
+			const mirror = editor.container.querySelector(
+				'textarea.jodit-source__mirror'
+			);
+
+			// Focus the source textarea
+			simulateEvent('focus', mirror);
+
+			// Markers should still be in DOM (restore() was not called)
+			expect(
+				editor.editor.querySelectorAll(
+					'span[data-jodit-selection_marker]'
+				).length
+			).eq(1);
+		});
+	});
 });

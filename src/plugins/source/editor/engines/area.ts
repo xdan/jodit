@@ -51,7 +51,7 @@ export class TextAreaEditor
 				this.autosize
 			)
 			.on('afterSetMode.source', this.autosize)
-			.on(this.instance, 'mousedown focus', (e: Event) => {
+			.on(this.instance, 'mousedown focus blur', (e: Event) => {
 				editor.e.fire(e.type, e);
 			});
 
