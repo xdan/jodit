@@ -796,5 +796,5 @@ export class EventEmitter implements IEventEmitter {
 }
 
 function isDOMElement(subject: object): subject is HTMLElement {
-	return isFunction((subject as HTMLElement).addEventListener);
+	return subject && isFunction((subject as HTMLElement).addEventListener);
 }
