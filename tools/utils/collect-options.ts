@@ -173,7 +173,6 @@ async function writeNewConfigFile(
 				true,
 				undefined,
 				ts.factory.createNamedImports([
-					// Создаём именованный импорт
 					ts.factory.createImportSpecifier(
 						false,
 						undefined,
