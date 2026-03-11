@@ -53,6 +53,11 @@ declare module 'jodit/config' {
 			openInNewTabCheckbox: boolean;
 
 			/**
+			 * Default value for the `Open in new tab` checkbox when inserting a new link.
+			 */
+			openInNewTabCheckboxDefaultChecked: boolean;
+
+			/**
 			 * Use an input text to ask the classname or a select or not ask
 			 */
 			modeClassName: 'input' | 'select';
@@ -89,6 +94,7 @@ Config.prototype.link = {
 	processPastedLink: true,
 	noFollowCheckbox: true,
 	openInNewTabCheckbox: true,
+	openInNewTabCheckboxDefaultChecked: false,
 	modeClassName: 'input',
 	selectMultipleClassName: true,
 	preventReadOnlyNavigation: true,

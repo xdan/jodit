@@ -150,6 +150,7 @@ export class link extends Plugin {
 		const i18n = jodit.i18n.bind(jodit),
 			{
 				openInNewTabCheckbox,
+				openInNewTabCheckboxDefaultChecked,
 				noFollowCheckbox,
 				formTemplate,
 				formClassName,
@@ -234,6 +235,10 @@ export class link extends Plugin {
 			insert.textContent = i18n('Update');
 		} else {
 			Dom.hide(unlink);
+
+			if (openInNewTabCheckbox && target_checkbox) {
+				target_checkbox.checked = openInNewTabCheckboxDefaultChecked;
+			}
 		}
 
 		jodit.editor.normalize();

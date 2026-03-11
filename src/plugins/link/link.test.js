@@ -498,6 +498,69 @@ describe('Link plugin', () => {
 				});
 			});
 
+			describe('openInNewTabCheckboxDefaultChecked', () => {
+				it('Should check "Open in new tab" by default when option is true', () => {
+					const editor = getJodit({
+						link: {
+							openInNewTabCheckboxDefaultChecked: true
+						}
+					});
+
+					editor.value = '<p>|test</p>';
+					setCursorToChar(editor);
+
+					clickButton('link', editor);
+
+					const popup = getOpenedPopup(editor);
+					const target = popup.querySelector('[ref=target_checkbox]');
+
+					expect(target).is.not.null;
+					expect(target.checked).is.true;
+				});
+
+				it('Should not check "Open in new tab" by default when option is false', () => {
+					const editor = getJodit({
+						link: {
+							openInNewTabCheckboxDefaultChecked: false
+						}
+					});
+
+					editor.value = '<p>|test</p>';
+					setCursorToChar(editor);
+
+					clickButton('link', editor);
+
+					const popup = getOpenedPopup(editor);
+					const target = popup.querySelector('[ref=target_checkbox]');
+
+					expect(target).is.not.null;
+					expect(target.checked).is.false;
+				});
+
+				it('Should insert link with target="_blank" when default checked is true', () => {
+					const editor = getJodit({
+						link: {
+							openInNewTabCheckboxDefaultChecked: true
+						}
+					});
+
+					editor.value = '<p>|test</p>';
+					setCursorToChar(editor);
+
+					clickButton('link', editor);
+
+					const popup = getOpenedPopup(editor);
+					const url = popup.querySelector('[ref=url_input]');
+					url.value = 'https://xdsoft.net';
+
+					simulateEvent('submit', popup.querySelector('form'));
+
+					expect(editor.value).equals(
+						'<p><a href="https://xdsoft.net" target="_blank">https://xdsoft.net</a>test</p>'
+					);
+				});
+			});
+
 			describe('In dialog', () => {
 				describe('Edit exists link', () => {
 					describe('Content input was not changed', () => {

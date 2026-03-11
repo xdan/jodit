@@ -11,6 +11,10 @@
 
 ## 4.11.12
 
+#### :rocket: New Feature
+
+- Add `link.openInNewTabCheckboxDefaultChecked` option to set default state of "Open in new tab" checkbox when inserting a new link ([#1289](https://github.com/xdan/jodit/issues/1289))
+
 #### :bug: Bug Fix
 
 - Fix pasting table into table cell creating invalid nesting and trailing empty paragraph ([#1314](https://github.com/xdan/jodit/issues/1314))
