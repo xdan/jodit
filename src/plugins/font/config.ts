@@ -36,12 +36,8 @@ Config.prototype.controls.fontsize = {
 
 	data: {
 		cssRule: 'font-size',
-		normalise: (v: string, editor: IJodit): string => {
-			if (/pt$/i.test(v) && editor.o.defaultFontSizePoints === 'pt') {
-				return v.replace(/pt$/i, '');
-			}
-
-			return v;
+		normalize: (v: string): string => {
+			return v.toString().replace(/(px|pt)$/i, '');
 		}
 	},
 
@@ -70,6 +66,16 @@ Config.prototype.controls.fontsize = {
 		const control = button.control;
 		const cssKey = control.data?.cssRule || 'font-size';
 		const value = css(box, cssKey);
+
+		if (cssKey === 'font-size') {
+			const numValue = parseFloat(value.toString());
+
+			if (editor.o.defaultFontSizePoints === 'pt') {
+				return Math.round(numValue * 0.75).toString();
+			}
+
+			return Math.round(numValue).toString();
+		}
 
 		return value.toString();
 	},

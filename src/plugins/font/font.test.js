@@ -181,6 +181,49 @@ describe('Font test', function () {
 		});
 	});
 
+	describe('Font size with pt mode', function () {
+		it('Should apply font size in pt and show correct active state', function () {
+			const editor = getJodit({
+				defaultFontSizePoints: 'pt',
+				toolbarAdaptive: false,
+				history: {
+					timeout: 0
+				}
+			});
+
+			editor.value =
+				'<p>test<span style="font-size: 14pt">bold</span></p>';
+			editor.s.focus();
+
+			const p = editor.editor.firstChild;
+			const font = getButton('fontsize', editor);
+
+			expect(font).is.not.null;
+
+			editor.s.setCursorIn(p.lastChild);
+			simulateEvent('mousedown', p);
+
+			expect(font.getAttribute('aria-pressed')).equals('true');
+		});
+
+		it('Should apply font size with pt unit when selecting from list', function () {
+			const editor = getJodit({
+				defaultFontSizePoints: 'pt'
+			});
+
+			editor.value = '<p>|test|</p>';
+			setCursorToChar(editor);
+
+			clickTrigger('fontsize', editor);
+			const list = getOpenedPopup(editor);
+			clickButton('14', list);
+
+			expect(sortAttributes(editor.value)).equals(
+				'<p><span style="font-size:14pt">test</span></p>'
+			);
+		});
+	});
+
 	describe('Font family', function () {
 		describe('State', function () {
 			describe('First click on the button', function () {
