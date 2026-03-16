@@ -202,6 +202,130 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 		});
 	}
 
+	async *stream(): AsyncGenerator<string> {
+		this.__activated = true;
+
+		const { xhr, o } = this;
+		const request = this.prepareRequest();
+
+		let lastIndex = 0;
+		let buffer = '';
+		const queue: string[] = [];
+		let waitResolve: (() => void) | null = null;
+		let done = false;
+		let streamError: Error | null = null;
+
+		const notify = (): void => {
+			if (waitResolve) {
+				const r = waitResolve;
+				waitResolve = null;
+				r();
+			}
+		};
+
+		const processChunk = (final: boolean): void => {
+			const text = xhr.responseText;
+			buffer += text.substring(lastIndex);
+			lastIndex = text.length;
+
+			const events = buffer.split('\n\n');
+			buffer = final ? '' : (events.pop() ?? '');
+
+			for (const event of events) {
+				const trimmed = event.trim();
+				if (!trimmed) {
+					continue;
+				}
+
+				const dataLines: string[] = [];
+				for (const line of trimmed.split('\n')) {
+					if (line.startsWith('data: ')) {
+						dataLines.push(line.slice(6));
+					} else if (line.startsWith('data:')) {
+						dataLines.push(line.slice(5));
+					}
+				}
+
+				if (dataLines.length) {
+					queue.push(dataLines.join('\n'));
+				}
+			}
+
+			notify();
+		};
+
+		xhr.onprogress = (): void => processChunk(false);
+
+		xhr.onload = (): void => {
+			processChunk(true);
+			done = true;
+			this.__isFulfilled = true;
+			notify();
+		};
+
+		xhr.onerror = (): void => {
+			streamError = error.connection('Connection error');
+			done = true;
+			this.__isFulfilled = true;
+			notify();
+		};
+
+		xhr.onabort = (): void => {
+			streamError = error.abort('Abort connection');
+			done = true;
+			this.__isFulfilled = true;
+			notify();
+		};
+
+		xhr.withCredentials = o.withCredentials ?? false;
+
+		const { url, data, method } = request;
+
+		xhr.open(method, url, true);
+
+		if (o.contentType && xhr.setRequestHeader) {
+			xhr.setRequestHeader('Content-type', o.contentType);
+		}
+
+		let { headers } = o;
+		if (isFunction(headers)) {
+			headers = await headers.call(this);
+		}
+
+		if (headers && xhr.setRequestHeader) {
+			Object.keys(headers).forEach(key => {
+				xhr.setRequestHeader(
+					key,
+					(headers as IDictionary<string>)[key]
+				);
+			});
+		}
+
+		xhr.send(data ? this.__buildParams(data) : undefined);
+
+		try {
+			while (true) {
+				if (queue.length > 0) {
+					yield queue.shift()!;
+				} else if (done) {
+					break;
+				} else {
+					await new Promise<void>(r => {
+						waitResolve = r;
+					});
+				}
+			}
+		} finally {
+			if (!this.__isFulfilled) {
+				this.abort();
+			}
+		}
+
+		if (streamError) {
+			throw streamError;
+		}
+	}
+
 	prepareRequest(): IRequest {
 		if (!this.o.url) {
 			throw error.error('Need URL for AJAX request');

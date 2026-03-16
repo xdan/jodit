@@ -41,6 +41,16 @@ export interface IAjax<T> extends IDestructible {
 	abort(): IAjax<T>;
 	send(): Promise<IResponse<T>>;
 
+	/**
+	 * Send request and stream SSE (Server-Sent Events) data incrementally.
+	 * Uses XHR onprogress to read responseText as it grows,
+	 * parses SSE `data:` lines and yields each event's data as a string.
+	 *
+	 * Aborting the XHR (via abort/destruct) or breaking out of the loop
+	 * will properly terminate the stream.
+	 */
+	stream(): AsyncGenerator<string>;
+
 	prepareRequest(): IRequest;
 }
 

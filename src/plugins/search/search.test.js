@@ -514,6 +514,10 @@ describe('Search plugin', () => {
 			});
 
 			editor.value = '<p>test</p>';
+			const p = editor.editor.querySelector('p');
+			expect(p).is.not.null;
+			const styleP = editor.ew.getComputedStyle(p);
+			expect(styleP.backgroundColor).equals('rgba(0, 0, 0, 0)');
 
 			editor.events.fire('search', 't');
 			await editor.async.requestIdlePromise();
@@ -522,7 +526,6 @@ describe('Search plugin', () => {
 			expect(span).is.not.null;
 
 			const style = editor.ew.getComputedStyle(span);
-			expect(style.backgroundColor).does.not.equal('');
 			expect(style.backgroundColor).does.not.equal('rgba(0, 0, 0, 0)');
 		});
 

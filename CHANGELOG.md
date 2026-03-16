@@ -9,6 +9,34 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.11.14
+
+#### :rocket: New Feature
+
+- Add `stream()` method to `Ajax` class for SSE (Server-Sent Events) streaming over XMLHttpRequest. Returns an `AsyncGenerator<string>` that yields parsed `data:` fields incrementally via `onprogress`.
+
+  ```js
+  const ajax = new Jodit.modules.Ajax({
+    method: 'POST',
+    url: '/api/ai/stream',
+    contentType: 'application/json',
+    data: { prompt: 'Hello' }
+  });
+
+  try {
+    for await (const data of ajax.stream()) {
+      const event = JSON.parse(data);
+      editor.s.insertHTML(event.text);
+    }
+  } finally {
+    ajax.destruct();
+  }
+  ```
+
+#### :memo: Documentation
+
+- Rewrite `src/core/request/README.md` with full API reference, usage examples, SSE streaming guide, AbortController integration, and real-world patterns (FileBrowser, Uploader, plugins).
+
 ## 4.11.12
 
 #### :rocket: New Feature
