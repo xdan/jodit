@@ -223,9 +223,7 @@ describe('Ajax module', () => {
 		it('Should flush remaining buffer on connection close', async () => {
 			const ajax = new Jodit.modules.Ajax({
 				url: 'https://example.com/stream',
-				xhr: createStreamingMockXHR([
-					'data: first\n\ndata: last'
-				])
+				xhr: createStreamingMockXHR(['data: first\n\ndata: last'])
 			});
 
 			const results = [];
