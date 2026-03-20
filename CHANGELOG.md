@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.11.15
+
+#### :house: Internal
+
+- Add data-ref attributes to image buttons in UIImageMainTab
+
 ## 4.11.14
 
 #### :rocket: New Feature
