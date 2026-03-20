@@ -42,8 +42,8 @@ export class UIImageMainTab extends UIGroup<IJodit> {
 			<div class="jodit-input_group">
 				<input class="jodit-input &__imageSrc" type="text"/>
 				<div class="jodit-input_group-buttons &__fixImage">
-						<a class="jodit-button &__changeImage">*image*</a>
-						<a class="jodit-button &__editImage">*crop*</a>
+					<a class="jodit-button &__changeImage" data-ref="changeImage">*image*</a>
+					<a class="jodit-button &__editImage" data-ref="editImage">*crop*</a>
 				</div>
 			</div>
 		</div>
