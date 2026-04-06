@@ -11,6 +11,10 @@
 import type { IControlType, IJodit } from 'jodit/types';
 import { attr } from 'jodit/core/helpers/utils/attr';
 
+const isSafeHref = (href: string): boolean =>
+	/^(https?:|mailto:|tel:)/i.test(href.trim()) &&
+	!/^(javascript:|data:|vbscript:)/i.test(href.trim());
+
 export default [
 	{
 		name: 'eye',
@@ -18,7 +22,7 @@ export default [
 		exec: (editor: IJodit, current): void => {
 			const href = attr(current as HTMLElement, 'href');
 
-			if (current && href) {
+			if (current && href && isSafeHref(href)) {
 				editor.ow.open(href);
 			}
 		}
