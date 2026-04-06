@@ -12,5 +12,14 @@ import type { IJodit } from 'jodit/types';
 
 export function execSpellCommand(jodit: IJodit, commandSentence: string): void {
 	const [command, value] = commandSentence.split('::');
+
+	if (
+		command.toLowerCase() === 'open' &&
+		value &&
+		/^(javascript:|data:|vbscript:)/i.test(value.trim())
+	) {
+		return;
+	}
+
 	jodit.execCommand(command, null, value);
 }
