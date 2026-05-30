@@ -144,6 +144,90 @@ This is necessary for the history module to work correctly, since the editor doe
 
 If your plugin depends on other plugins, then it must be initialized after them.
 
+## Loading external plugins: `extraPlugins` and `basePath`
+
+There are two ways a plugin ends up available in an editor instance:
+
+1. **Statically registered** — the plugin's module was imported somewhere in your
+   bundle, so it called `Jodit.plugins.add('name', ...)` at import time. From then
+   on it lives in the global plugin registry and every editor instance can use it.
+2. **Dynamically loaded** via the [`extraPlugins`](https://xdsoft.net/jodit/docs/) option —
+   Jodit fetches the plugin file over the network when the editor initializes.
+
+### How `extraPlugins` resolves a URL
+
+For each name listed in `extraPlugins`, Jodit first checks the registry. If the
+plugin is **already registered, it is skipped** — no network request is made. Only
+names that are *not* registered are downloaded, from:
+
+```text
+<basePath>plugins/<name>/<name>(.min).js
+```
+
+So `extraPlugins: ['emoji']` tries to load `<basePath>plugins/emoji/emoji.js`
+(`.min.js` when [`minified`](https://xdsoft.net/jodit/docs/) is on).
+
+```js
+Jodit.make('#editor', {
+	buttons: ['emoji'],
+	extraPlugins: ['emoji'] // fetched from <basePath>plugins/emoji/emoji.js
+});
+```
+
+You can also bypass the path convention with an explicit URL:
+
+```js
+Jodit.make('#editor', {
+	extraPlugins: [{ name: 'emoji', url: 'https://cdn.example.com/emoji.js' }]
+});
+```
+
+### `basePath` and the bundler gotcha
+
+When `basePath` is not set, Jodit auto-detects it from `document.currentScript`,
+then the last `<script src>` on the page, then `location.href`. This works for
+classic `<script>` includes from a CDN or `/dist` folder.
+
+It **breaks under ESM bundlers and dev servers** (Vite, Webpack dev, etc.): there
+is no classic `<script>` tag for your application bundle, so the detection falls
+back to your entry module URL. The result is a malformed request such as:
+
+```text
+http://localhost:5173/src/main.tsx?t=1771195693825plugins/emoji/emoji.js
+```
+
+Set `basePath` explicitly to fix it. Copy the plugin files you need from the
+package (they ship under `node_modules/jodit/esm/plugins/<name>/`, or
+`node_modules/jodit-pro/esm/plugins/<name>/` for PRO) to a publicly served folder,
+then point Jodit at it (mind the trailing slash):
+
+```js
+Jodit.make('#editor', {
+	basePath: 'https://your-site.com/jodit-assets/',
+	buttons: ['emoji'],
+	extraPlugins: ['emoji']
+	// → loads https://your-site.com/jodit-assets/plugins/emoji/emoji.js
+});
+```
+
+### Prefer static registration in bundled apps
+
+In a bundled app (including React via `jodit-react` / `jodit-pro-react`) the
+cleanest approach is usually to avoid network loading altogether: import the
+plugin so it self-registers, then just add its button — drop `extraPlugins`.
+
+```js
+import 'jodit/esm/plugins/emoji/emoji'; // registers the plugin
+
+Jodit.make('#editor', {
+	buttons: ['emoji'] // no extraPlugins needed
+});
+```
+
+The `jodit-pro-react` wrapper already does this for **all** PRO plugins (it imports
+`jodit-pro/esm/plugins/all.js`), so inside React you can use plugins like `emoji`
+or `finder` directly via `buttons` without `extraPlugins` or `basePath`.
+
 ## Debug
 
 Since version `3.12.4` you can disable all Jodit plugins during development and work only with your own plugin.

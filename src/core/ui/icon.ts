@@ -15,6 +15,7 @@ import type {
 	IViewBased
 } from 'jodit/types';
 import { IS_PROD } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 import { camelCase, kebabCase } from 'jodit/core/helpers';
 import { css } from 'jodit/core/helpers/utils/css';
 
@@ -106,7 +107,7 @@ export class Icon {
 				jodit.o.extraIcons?.[name];
 
 			if (svg) {
-				iconElement = jodit.c.fromHTML(svg.trim());
+				iconElement = Icon.toIconElement(jodit, svg.trim());
 
 				if (!/^<svg/i.test(name)) {
 					iconElement.classList.add('jodit-icon_' + clearName);
@@ -130,5 +131,22 @@ export class Icon {
 		}
 
 		return iconElement;
+	}
+
+	/**
+	 * Turn a raw icon string into an element with a `classList`.
+	 *
+	 * A plain-text icon (e.g. an emoji/text glyph) makes `fromHTML` return a
+	 * Text node, which has no `classList`; wrap it in a span so classes/styles
+	 * can be applied and `makeIcon` never crashes on `iconElement.classList`.
+	 * Note: SVG icons are `SVGElement` (not `HTMLElement`) but are still Element
+	 * nodes with a `classList`, so we check `isElement`, not `isHTMLElement`.
+	 */
+	private static toIconElement(jodit: IViewBased, svg: string): HTMLElement {
+		const node = jodit.c.fromHTML(svg);
+
+		return Dom.isElement(node)
+			? (node as HTMLElement)
+			: jodit.c.span('jodit-icon_text', node);
 	}
 }

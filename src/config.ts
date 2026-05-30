@@ -809,19 +809,63 @@ class Config implements IViewOptions {
 	disablePlugins: string[] | string = [];
 
 	/**
-	 * Init and download extra plugins
+	 * Init and download extra plugins that are **not** already bundled/registered.
+	 *
+	 * For every name in this list that is not found in the plugin registry, Jodit
+	 * loads it **at runtime over the network** from:
+	 *
+	 * ```text
+	 * <basePath>plugins/<name>/<name>(.min).js
+	 * ```
+	 *
+	 * (see {@link Config.basePath} and {@link Config.minified}). If the plugin is
+	 * already registered — e.g. you imported it statically, or you use a bundle
+	 * that ships it (such as the `jodit-pro` / `jodit-pro-react` "all plugins"
+	 * build) — it is **skipped** and no request is made; in that case you don't
+	 * need `extraPlugins` at all, just add the plugin's button.
 	 *
 	 * ```typescript
-	 * var editor = Jodit.make('.editor', {
+	 * // Dynamic loading: fetches <basePath>plugins/emoji/emoji.js
+	 * const editor = Jodit.make('.editor', {
 	 *    extraPlugins: ['emoji']
 	 * });
 	 * ```
-	 * It will try load %SCRIPT_PATH%/plugins/emoji/emoji.js and after load will try init it
+	 *
+	 * You can also pass an explicit URL to bypass the `basePath` convention:
+	 *
+	 * ```typescript
+	 * const editor = Jodit.make('.editor', {
+	 *    extraPlugins: [{ name: 'emoji', url: 'https://cdn.example.com/emoji.js' }]
+	 * });
+	 * ```
+	 *
+	 * Note: if you see a request to a malformed URL (e.g. `.../src/main.tsx?t=...plugins/emoji/emoji.js`),
+	 * it means `basePath` was auto-detected incorrectly under your bundler — set
+	 * {@link Config.basePath} explicitly. See the Plugin System docs for details.
 	 */
 	extraPlugins: Array<string | IExtraPlugin> = [];
 
 	/**
-	 * Base path for download extra plugins
+	 * Base path used to build the URL for dynamically loaded {@link Config.extraPlugins}
+	 * (and their styles): `<basePath>plugins/<name>/<name>(.min).js`.
+	 *
+	 * When not set, Jodit auto-detects it from `document.currentScript`, then the
+	 * last `<script src>` on the page, then `location.href`. That detection works
+	 * for classic `<script>` includes, but **fails under ESM bundlers / dev
+	 * servers** (Vite, Webpack dev, etc.) where there is no script tag for the
+	 * bundle — it falls back to the entry module URL (e.g. `main.tsx`) and produces
+	 * a broken plugin URL.
+	 *
+	 * Fix: host the plugin files at a public location and point `basePath` there
+	 * (note the trailing slash):
+	 *
+	 * ```typescript
+	 * const editor = Jodit.make('.editor', {
+	 *    basePath: 'https://your-site.com/jodit-assets/',
+	 *    extraPlugins: ['emoji']
+	 *    // → loads https://your-site.com/jodit-assets/plugins/emoji/emoji.js
+	 * });
+	 * ```
 	 */
 	basePath?: string;
 
