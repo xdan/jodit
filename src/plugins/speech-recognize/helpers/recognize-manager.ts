@@ -16,7 +16,7 @@ import type {
 import { autobind } from 'jodit/core/decorators';
 import { Eventify } from 'jodit/core/event-emitter/eventify';
 
-import { sound } from './sound';
+import { closeSound, sound } from './sound';
 
 import { PII, WARN } from 'jodit/plugins/speech-recognize/constants';
 
@@ -72,6 +72,7 @@ export class RecognizeManager
 
 	override destruct(): void {
 		this.stop();
+		closeSound(this);
 		RecognizeManager._instances.delete(this);
 		super.destruct();
 	}
@@ -230,7 +231,7 @@ export class RecognizeManager
 
 	private _makeSound(frequency: number): void {
 		if (this.sound) {
-			sound({ frequency });
+			sound(this, { frequency });
 		}
 	}
 }

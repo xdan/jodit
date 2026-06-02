@@ -157,7 +157,10 @@ Config.prototype.controls.speechRecognize = {
 
 			api.on('error', (text: string): void => jodit.message.error(text));
 
-			button.hookStatus('beforeDestruct', () => {
+			// Tie cleanup to the editor lifecycle (not the button): the manager
+			// must survive toolbar rebuilds and be released — together with its
+			// AudioContext — only when the editor itself is destroyed.
+			jodit.hookStatus('beforeDestruct', () => {
 				dataBind(jodit, 'speech', null);
 				api.destruct();
 			});

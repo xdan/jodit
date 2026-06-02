@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.4
+
+#### :bug: Bug Fix
+
+- **Speech Recognize**: the recognition confirmation "beep" created a new `AudioContext` on every result and never closed it. During continuous dictation these piled up — leaking until the browser's per-page limit was hit and the overlapping audio turned into a "roar" that could crash the tab. The sound helper now reuses a single `AudioContext` per recognizer and releases it on `destruct`. Recognizer cleanup is also tied to the editor lifecycle (previously the toolbar button's `beforeDestruct`), so it survives toolbar rebuilds and is freed when the editor is destroyed.
+
 ## 4.12.0
 
 #### :rocket: New Feature
