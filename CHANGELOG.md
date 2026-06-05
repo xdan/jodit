@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.5
+
+#### :house: Internal
+
+- **Dependencies**: `npm ci` failed with an `ERESOLVE` error because `typescript@^6.0.2` clashed with the peer range of `@typescript-eslint/*@8.57` (`>=4.8.4 <6.0.0`). Bumped `@typescript-eslint/eslint-plugin` and `@typescript-eslint/parser` to `^8.60.1`, whose peer range (`>=4.8.4 <6.1.0`) allows TypeScript 6, and regenerated the lockfile so a clean `npm ci` install succeeds. Fixes [#1368](https://github.com/xdan/jodit/issues/1368).
+
 ## 4.12.4
 
 #### :bug: Bug Fix
