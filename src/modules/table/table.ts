@@ -365,11 +365,29 @@ export class Table extends ViewComponent<IJodit> {
 					);
 
 					if (nextRow) {
-						if (box[rowIndex + 1][nextCell]) {
-							nextRow.insertBefore(
-								cell,
-								box[rowIndex + 1][nextCell]
-							);
+						// `box[rowIndex + 1][nextCell]` is the cell that
+						// logically follows the moved cell in the next row, but
+						// it may physically belong to an earlier `<tr>` (when it
+						// spans down from a row above). Inserting before such a
+						// cell throws `NotFoundError`, so look for the first
+						// following cell that is actually a child of `nextRow`.
+						let referenceCell: HTMLTableCellElement | null = null;
+
+						for (
+							let nextColumn = nextCell;
+							nextColumn < box[rowIndex + 1].length;
+							nextColumn += 1
+						) {
+							const candidate = box[rowIndex + 1][nextColumn];
+
+							if (candidate && candidate.parentNode === nextRow) {
+								referenceCell = candidate;
+								break;
+							}
+						}
+
+						if (referenceCell) {
+							nextRow.insertBefore(cell, referenceCell);
 						} else {
 							nextRow.appendChild(cell);
 						}

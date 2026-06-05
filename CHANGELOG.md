@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.7
+
+#### :bug: Bug Fix
+
+- **Table**: deleting a row could throw `NotFoundError: Failed to execute 'insertBefore' on 'Node'` for tables with mixed rowspans (e.g. after inserting a column and repeatedly splitting/merging cells). When a row with a rowspan cell was removed, the cell was moved into the next row and inserted before the cell that logically follows it — but that reference cell can physically belong to an earlier `<tr>` (when it spans down from a row above), which is not a child of the target row. `__removeRow` now picks the first following cell that actually belongs to the next row (falling back to `appendChild`). Fixes [#1358](https://github.com/xdan/jodit/issues/1358).
+
 ## 4.12.6
 
 #### :house: Internal

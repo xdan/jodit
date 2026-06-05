@@ -897,6 +897,32 @@ describe('Tables Jodit Editor Tests', () => {
 					);
 				});
 			});
+
+			describe('Remove row whose moved rowspan cell is followed by a cell spanning from an earlier row (#1358)', () => {
+				it('should not throw NotFoundError and keep the table valid', () => {
+					const editor = getJodit();
+
+					editor.value =
+						'<table>' +
+						'<tr><td>a0</td><td rowspan="3">e</td><td>a2</td><td>a3</td></tr>' +
+						'<tr><td rowspan="2">c</td><td>b2</td><td>b3</td></tr>' +
+						'<tr><td>d2</td><td>d3</td></tr>' +
+						'</table>';
+
+					editor
+						.getInstance(Jodit.modules.Table)
+						.removeRow(editor.editor.firstChild, 1);
+
+					expect(editor.value.toLowerCase()).equals(
+						'<table>' +
+							'<tbody>' +
+							'<tr><td>a0</td><td rowspan="2">e</td><td>a2</td><td>a3</td></tr>' +
+							'<tr><td>c</td><td>d2</td><td>d3</td></tr>' +
+							'</tbody>' +
+							'</table>'
+					);
+				});
+			});
 		});
 
 		describe('Merge selected cells', () => {
