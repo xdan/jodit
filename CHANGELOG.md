@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.6
+
+#### :house: Internal
+
+- **CI / Screenshot tests**: the Playwright screenshot job started failing with `browserType.launch: Executable doesn't exist` after Playwright 1.60.0 was published. The screenshots Docker image was pinned to the `v1.58.0-jammy` base but installed `playwright` / `@playwright/test` **unpinned**, so the runner jumped to 1.60.0 while the image only shipped the 1.58 browser binaries. Bumped the base image to `v1.60.0-jammy`, pinned the install to `1.60.0`, and aligned `@playwright/test` in `package.json` to `^1.60.0` so the runner and the bundled browsers always match.
+
 ## 4.12.5
 
 #### :house: Internal
