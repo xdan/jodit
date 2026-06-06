@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.9
+
+#### :bug: Bug Fix
+
+- **Table / Cell selection**: dragging and dropping the contents of several table cells into another cell threw `TypeError: Cannot read properties of undefined (reading 'Infinity')`. When the drag left a stale selection anchor and the drop target was no longer part of the table's formal matrix, `getSelectedBound` returned its `Infinity` sentinel and `__onStopSelection` dereferenced an out-of-range matrix slot. It now bails out gracefully when the selected cells can't be resolved in the table. Fixes [#1357](https://github.com/xdan/jodit/issues/1357).
+
 ## 4.12.8
 
 #### :bug: Bug Fix

@@ -276,8 +276,18 @@ export class selectCells extends Plugin {
 			]),
 			box = this.__tableModule.formalMatrix(table);
 
-		const max = box[bound[1][0]][bound[1][1]],
-			min = box[bound[0][0]][bound[0][1]];
+		const max = box[bound[1][0]]?.[bound[1][1]],
+			min = box[bound[0][0]]?.[bound[0][1]];
+
+		// `getSelectedBound` keeps its `Infinity` sentinel when none of the
+		// selected cells belong to this table's matrix — e.g. after a
+		// drag-and-drop that moved/removed the cells, leaving a stale anchor and
+		// a drop target outside the table. Bail out instead of dereferencing an
+		// out-of-range matrix slot (which threw `Cannot read properties of
+		// undefined`).
+		if (!min || !max) {
+			return;
+		}
 
 		this.j.e.fire(
 			'showPopup',
