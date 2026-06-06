@@ -28,6 +28,7 @@ import { eventEmitter, getContainer } from 'jodit/core/global';
 import {
 	attr,
 	css,
+	getFixedPositionOffset,
 	isString,
 	kebabCase,
 	markOwner,
@@ -259,9 +260,14 @@ export class Popup extends UIGroup implements IPopup {
 
 		this.setMod('strategy', strategy);
 
+		// The popup is `position: fixed`; shift by the containing-block offset
+		// when it is rendered inside a transformed ancestor (e.g. a modal),
+		// otherwise `{0, 0}` keeps the viewport coordinates unchanged.
+		const offset = getFixedPositionOffset(this.container);
+
 		css(this.container, {
-			left: pos.left,
-			top: pos.top
+			left: pos.left - offset.x,
+			top: pos.top - offset.y
 		});
 
 		this.__childrenPopups.forEach(popup => popup.updatePosition());

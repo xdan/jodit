@@ -15,6 +15,7 @@ import { STATUSES } from 'jodit/core/component';
 import { autobind, component } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { getContainer } from 'jodit/core/global';
+import { getFixedPositionOffset } from 'jodit/core/helpers/size/get-fixed-position-offset';
 import { position } from 'jodit/core/helpers/size/position';
 import { attr, css } from 'jodit/core/helpers/utils';
 import { UIElement } from 'jodit/core/ui/element';
@@ -194,9 +195,15 @@ export class UITooltip extends UIElement {
 		this.getElm('content')!.innerHTML = content;
 		const point = getPoint();
 
+		// The tooltip is `position: fixed`. If it is rendered inside an ancestor
+		// with a `transform` (e.g. an editor placed in a modal/flyout), that
+		// ancestor becomes the containing block, so viewport coordinates must be
+		// shifted by its offset. Returns `{0, 0}` when there is no such ancestor.
+		const offset = getFixedPositionOffset(this.container);
+
 		css(this.container, {
-			left: point.x,
-			top: point.y
+			left: point.x - offset.x,
+			top: point.y - offset.y
 		});
 
 		const tooltipPos = position(this.container);
@@ -207,7 +214,7 @@ export class UITooltip extends UIElement {
 			const targetPos = position(this.__currentTarget!);
 			this.setMod('above', true);
 			css(this.container, {
-				top: targetPos.top - tooltipPos.height
+				top: targetPos.top - tooltipPos.height - offset.y
 			});
 		}
 	}

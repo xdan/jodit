@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.8
+
+#### :bug: Bug Fix
+
+- **Tooltip / Popup**: tooltips and dropdown popups were mis-positioned (offset away from their button) when the editor was placed inside an ancestor with a CSS `transform` — e.g. a modal/flyout. Both elements use `position: fixed`, and a transformed ancestor becomes their containing block, so the viewport coordinates were shifted by that ancestor's top-left corner. Added a `getFixedPositionOffset` helper that returns the containing-block offset (`{0, 0}` when there is no transformed ancestor, so normal usage is unaffected) and subtracted it when positioning the tooltip and popup. Fixes [#1350](https://github.com/xdan/jodit/issues/1350).
+
 ## 4.12.7
 
 #### :bug: Bug Fix

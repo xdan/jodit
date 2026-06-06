@@ -294,6 +294,49 @@
 				});
 			});
 
+			describe('Transformed parent (#1350)', () => {
+				it('Should center the tooltip on the button despite a transform on the parent', async () => {
+					const wrapper = document.createElement('div');
+					wrapper.style.cssText =
+						'position: fixed; top: 0; left: 0; transform: translate(150px, 90px);';
+					document.body.appendChild(wrapper);
+
+					const area = document.createElement('textarea');
+					wrapper.appendChild(area);
+
+					const local = Jodit.make(area, OPTIONS);
+					await local.async.requestIdlePromise();
+
+					const btn = getButton('bold', local);
+					expect(btn).is.not.null;
+
+					simulateEvent('mouseenter', btn.parentElement);
+					timers.delay(100);
+
+					const tooltip = wrapper.querySelector('.jodit-ui-tooltip');
+					expect(tooltip).is.not.null;
+					expect(tooltip.textContent).equals('Bold');
+
+					const btnRect = btn.parentElement.getBoundingClientRect();
+					const tipRect = tooltip.getBoundingClientRect();
+
+					const btnCenterX = btnRect.left + btnRect.width / 2;
+					const tipCenterX = tipRect.left + tipRect.width / 2;
+
+					// Without the fix the tooltip is shifted by the parent's
+					// 150x90 transform; with it the tooltip stays centered just
+					// below the button.
+					expect(Math.abs(tipCenterX - btnCenterX)).is.below(3);
+					expect(Math.abs(tipRect.top - btnRect.bottom)).is.below(14);
+
+					simulateEvent('mouseleave', btn.parentElement);
+					timers.delay(100);
+
+					local.destruct();
+					wrapper.remove();
+				});
+			});
+
 			describe('Inside popup', () => {
 				describe('Hiding popup', () => {
 					it('should hide it tooltip', () => {
