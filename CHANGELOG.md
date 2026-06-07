@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.11
+
+#### :bug: Bug Fix
+
+- **Color / Apply style**: applying the black font color (`#000000`) did nothing when the editor's default text color had been changed. The redundancy check in `toggleAttributes` measured the element's "native" value inside an isolated iframe, where the default text color is always the browser black — so black always matched and was skipped. The probe now inherits the editor's effective text color (the editor default is `#222`, not pure black), so an explicitly chosen color is applied correctly. Fixes [#1311](https://github.com/xdan/jodit/issues/1311). (Note: applying black to a link now keeps the anchor **and** sets the color, which matches the original intent of [#936](https://github.com/xdan/jodit/issues/936).)
+
 ## 4.12.9
 
 #### :bug: Bug Fix

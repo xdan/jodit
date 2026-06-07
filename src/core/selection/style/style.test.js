@@ -421,8 +421,11 @@ describe('Apply style', () => {
 									style: { color: '#000000' }
 								}
 							},
-							// https://github.com/xdan/jodit/issues/936
-							'<p><a href="https://xdsoft.net/jodit/">|https://xdsoft.net/jodit/|</a></p>'
+							// https://github.com/xdan/jodit/issues/936 — applying
+							// black keeps the anchor (no unwrap) and now actually
+							// applies the color, since the editor default is #222,
+							// not pure black (see #1311).
+							'<p><a href="https://xdsoft.net/jodit/" style="color:#000000">|https://xdsoft.net/jodit/|</a></p>'
 						],
 						[
 							'<p><a href="https://xdsoft.net/jodit/" style="color:#000001">|https://xdsoft.net/jodit/|</a></p>',

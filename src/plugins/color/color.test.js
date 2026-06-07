@@ -245,5 +245,29 @@
 				});
 			});
 		});
+
+		describe('Apply black after the default font color was changed (#1311)', () => {
+			it('Should apply color:#000000 to the selection', () => {
+				const editor = getJodit();
+
+				editor.value = '<p>test</p>';
+
+				// The editor default text color is changed (e.g. via CSS/config)
+				editor.editor.style.color = 'rgb(128, 128, 128)';
+
+				const range = editor.s.createRange();
+				range.selectNodeContents(editor.editor.querySelector('p'));
+				editor.s.selectRange(range);
+
+				editor.execCommand('forecolor', false, '#000000');
+
+				const span = editor.editor.querySelector('span');
+
+				expect(span).is.not.null;
+				expect(
+					Jodit.modules.Helpers.normalizeColor(span.style.color)
+				).equals('#000000');
+			});
+		});
 	}
 );

@@ -243,11 +243,21 @@ function getNativeCSSValue(
 	elm: HTMLElement,
 	key: string
 ): ReturnType<typeof css> {
+	const root = getShadowRoot(jodit);
+
+	// Reproduce the editor's inherited text color inside the isolated probe so
+	// that a value equal to the editor's *effective* default (not only the
+	// browser default black) is recognised. Without this, applying black after
+	// the default font color was changed was wrongly treated as a no-op (#1311).
+	const wrapper = jodit.create.element('div');
+	wrapper.style.color = css(jodit.editor, 'color') as string;
+
 	const newElm = jodit.create.element(elm.tagName.toLowerCase());
 	newElm.style.cssText = elm.style.cssText;
-	const root = getShadowRoot(jodit);
-	root.appendChild(newElm);
+
+	wrapper.appendChild(newElm);
+	root.appendChild(wrapper);
 	const result = css(newElm, key);
-	Dom.safeRemove(newElm);
+	Dom.safeRemove(wrapper);
 	return result;
 }
