@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.14
+
+#### :bug: Bug Fix
+
+- **Backspace / Lists**: pressing Backspace at the start of a nested list item deleted the last character of the parent item instead of removing the nesting. `checkRemoveChar` walked out of the nested `<li>`/list and removed a character from the parent item's text. It no longer crosses a list-item boundary, so the list cases handle the operation cleanly. Fixes [#1277](https://github.com/xdan/jodit/issues/1277).
+
 ## 4.12.13
 
 #### :bug: Bug Fix

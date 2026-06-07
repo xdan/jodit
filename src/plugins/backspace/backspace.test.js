@@ -75,6 +75,10 @@ describe('Backspace/Delete key', function () {
 			'<ol><li>ab</li></ol><p>|cd</p> => <ol><li>ab|cd</li></ol>',
 			'<p>ab</p><ol><li>|cd</li></ol> => <p>ab</p><p>|cd</p>',
 			'<ol><li>ab</li><li>|cd</li></ol> => <ol><li>ab|cd</li></ol>',
+			// #1277: backspace at the start of a nested list item must not delete
+			// a character from the parent item across the list boundary.
+			'<ol><li>power<ol><li>|child</li></ol></li></ol> => <ol><li>power<p>|child</p></li></ol>',
+			'<ul><li>power<ul><li>|child</li></ul></li></ul> => <ul><li>power<p>|child</p></li></ul>',
 			'test<br>|plot => test|plot =>  => {"enter": "br"}',
 			'test<br>|plot => testtext|plot =>  => {"enter": "br"}  => text',
 			'test<br>p|lot => test<br>|lot =>  => {"enter": "br"}',
