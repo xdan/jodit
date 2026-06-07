@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.15
+
+#### :bug: Bug Fix
+
+- **Table / Cell selection**: pressing Backspace or Delete with several table cells selected threw `HierarchyRequestError: ... insertNode ... #document` (the normal delete ran against a collapsed, document-level range). Backspace/Delete on a multi-cell selection now clears the content of the selected cells instead. Fixes [#1273](https://github.com/xdan/jodit/issues/1273).
+
 ## 4.12.14
 
 #### :bug: Bug Fix

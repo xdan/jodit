@@ -339,6 +339,27 @@ export class selectCells extends Plugin {
 	 */
 	@autobind
 	private onExecCommand(command: string): false | void {
+		// When several cells are selected, Backspace/Delete must clear the
+		// selected cells instead of running the normal delete (whose collapsed
+		// document-level range threw `insertNode ... #document`). See #1273.
+		if (
+			/^(delete|backspace)(word|sentence)?button$/.test(command) &&
+			this.__tableModule.getAllSelectedCells().length > 1
+		) {
+			const cells = this.__tableModule.getAllSelectedCells();
+
+			cells.forEach(td => {
+				Dom.detach(td);
+				td.appendChild(this.j.createInside.element('br'));
+			});
+
+			this.unselectCells();
+			this.j.s.setCursorIn(cells[0]);
+			this.j.synchronizeValues();
+
+			return false;
+		}
+
 		if (
 			/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(
 				command
