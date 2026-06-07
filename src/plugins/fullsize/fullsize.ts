@@ -41,19 +41,27 @@ export function fullsize(editor: IViewWithToolbar): void {
 			}
 
 			if (isEnabled) {
-				oldHeight = css(container, 'height', true) as number;
-				oldWidth = css(container, 'width', true) as number;
+				// Save the original size only once, when entering fullsize.
+				// Otherwise a window resize while in fullsize would overwrite it
+				// with the current (fullscreen) size, so exiting fullsize would
+				// restore the wrong dimensions (#1278).
+				if (!wasToggled) {
+					oldHeight = css(container, 'height', true) as number;
+					oldWidth = css(container, 'width', true) as number;
+					wasToggled = true;
+				}
+
 				css(container, {
 					height: editor.ow.innerHeight,
 					width: editor.ow.innerWidth
 				});
-
-				wasToggled = true;
 			} else if (wasToggled) {
 				css(container, {
 					height: oldHeight || 'auto',
 					width: oldWidth || 'auto'
 				});
+
+				wasToggled = false;
 			}
 		},
 		/**

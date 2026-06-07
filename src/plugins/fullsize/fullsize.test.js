@@ -5,6 +5,26 @@
  */
 
 describe('Fullsize plugin', function () {
+	describe('Resize window while in fullsize (#1278)', function () {
+		it('Should restore the original width after exiting fullsize', () => {
+			const editor = getJodit();
+
+			editor.container.style.width = '300px';
+			const originalWidth = editor.container.offsetWidth;
+
+			editor.toggleFullSize(true);
+
+			// The window is resized while the editor is in fullsize mode.
+			simulateEvent('resize', editor.ow);
+
+			editor.toggleFullSize(false);
+
+			expect(
+				Math.abs(editor.container.offsetWidth - originalWidth)
+			).is.below(3);
+		});
+	});
+
 	describe('Toggle fullsize', function () {
 		it('Should resize all boxes to first state', () => {
 			const editor = getJodit({

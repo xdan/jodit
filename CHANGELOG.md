@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.12
+
+#### :bug: Bug Fix
+
+- **Fullsize**: after entering fullsize mode, resizing the browser window, and then exiting fullsize, the editor kept the fullscreen width/height instead of returning to its original size. The `resize` handler (bound to `window.resize` when `globalFullSize` is on) re-saved the "original" size on every window resize, so it captured the fullscreen size. The original size is now stored only once when entering fullsize and restored on exit. Fixes [#1278](https://github.com/xdan/jodit/issues/1278).
+
 ## 4.12.11
 
 #### :bug: Bug Fix
