@@ -46,6 +46,10 @@ describe('Backspace/Delete key', function () {
 			'<p><span>|a|</span></p> => <p>|<br></p>',
 			'<p><strong>|a|</strong></p> => <p>|<br></p>',
 			'<p><em>italic</em><strong>|a|</strong></p> => <p><em>italic|</em></p>',
+			// #1282: backspace at the start of a styled run preceded by a <br>
+			// must remove only the line break, not the whole run.
+			'<p>text<br><br><em><strong><u>|Accident History!</u></strong></em></p> => <p>text<br><em><strong><u>|Accident History!</u></strong></em></p>',
+			'<p>a<br><strong>|b</strong></p> => <p>a<strong>|b</strong></p>',
 			'<p><em>ab</em><em>|cd</em></p> => <p><em>a|</em><em>cd</em></p>',
 			'<table><tbody><tr><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>|ab</td></tr></tbody></table>',
 			'<table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table>',

@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.13
+
+#### :bug: Bug Fix
+
+- **Backspace**: pressing Backspace at the start of a styled inline run (e.g. `<em><strong><u>…</u></strong></em>`) that was preceded by a `<br>` deleted the entire run instead of just the line break. `checkJoinNeighbors` walked up to the inline element and tried to merge its content into the preceding `<br>` (a void element), which removed the whole element. It now removes the `<br>` as a single unit. Fixes [#1282](https://github.com/xdan/jodit/issues/1282).
+
 ## 4.12.12
 
 #### :bug: Bug Fix

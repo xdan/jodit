@@ -45,6 +45,15 @@ export function checkJoinNeighbors(
 			backspace
 		) as Nullable<Element>;
 
+		// A line break before the cursor is a single unit: remove it instead of
+		// merging the current element into the (void) `<br>`, which used to move
+		// the whole element's content into the `<br>` and delete it (#1282).
+		if (Dom.isTag(sibling, 'br')) {
+			Dom.safeRemove(sibling);
+			jodit.s.setCursorBefore(fakeNode);
+			return true;
+		}
+
 		if (
 			sibling &&
 			(checkMoveListContent(jodit, mainClosestBox, sibling, backspace) ||
