@@ -171,5 +171,34 @@ describe('Test dtd plugin', () => {
 				});
 			});
 		});
+
+		describe('Cursor on an empty line (#1302)', () => {
+			['bold', 'underline'].forEach(cmd => {
+				it(`Should keep <br> line breaks when applying ${cmd}`, () => {
+					const editor = getJodit();
+
+					editor.value =
+						'<div><br>test jodit line break<br>line break</div>';
+
+					// Cursor on the leading empty line (before the first <br>)
+					const div = editor.editor.querySelector('div');
+					const range = editor.s.createRange();
+					range.setStart(div, 0);
+					range.collapse(true);
+					editor.s.selectRange(range);
+
+					editor.execCommand(cmd);
+
+					// Both line breaks and the text must survive (the leading
+					// <br> used to be removed).
+					expect(editor.editor.querySelectorAll('br').length).equals(
+						2
+					);
+					expect(editor.value).to.have.string(
+						'<br>test jodit line break<br>line break'
+					);
+				});
+			});
+		});
 	});
 });

@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.16
+
+#### :bug: Bug Fix
+
+- **DTD / Formatting**: applying an inline style (bold, underline, etc.) with the cursor on an empty line removed a `<br>` line break. The `removeExtraBr` cleanup (run after the style marker is inserted) deleted the following `<br>` even when real content followed it. It now only removes a *trailing* `<br>` (with nothing meaningful after it), so line breaks in the middle of a block are preserved. Fixes [#1302](https://github.com/xdan/jodit/issues/1302).
+
 ## 4.12.15
 
 #### :bug: Bug Fix

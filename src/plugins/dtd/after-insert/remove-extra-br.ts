@@ -40,6 +40,13 @@ export function removeExtraBr(jodit: IJodit, node: Node): void {
 			return;
 		}
 
+		// Only a trailing `<br>` is "extra". If meaningful content follows it,
+		// the `<br>` is a real line break and removing it would merge two lines
+		// (e.g. toggling a style on an empty line), so keep it (#1302).
+		if (Dom.findNotEmptySibling(br, false)) {
+			return;
+		}
+
 		jodit.s.setCursorBefore(br);
 		Dom.safeRemove(br);
 	}
