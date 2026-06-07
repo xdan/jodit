@@ -115,6 +115,46 @@ export class select extends Plugin {
 	}
 
 	/**
+	 * Fix caret position when clicking to the right of a list item that has a
+	 * nested list. Blink/WebKit place the caret at the start of the line instead
+	 * of the end (#1296); move it to the end of the item's own text.
+	 */
+	@watch([':click'])
+	protected onClickRightOfNestedListItem(e: MouseEvent): void {
+		const { s } = this.j;
+		const range = s.range;
+
+		if (
+			!range.collapsed ||
+			range.startOffset !== 0 ||
+			!Dom.isText(range.startContainer)
+		) {
+			return;
+		}
+
+		const text = range.startContainer;
+		const li = text.parentNode;
+
+		// The text must be the direct content of a list item that has a nested
+		// list (the last level has no nested list and behaves correctly).
+		if (
+			!Dom.isTag(li, 'li') ||
+			!(li.querySelector('ul') || li.querySelector('ol'))
+		) {
+			return;
+		}
+
+		const measure = this.j.ed.createRange();
+		measure.selectNodeContents(text);
+		const rect = measure.getBoundingClientRect();
+
+		// Only when the click happened to the right of the text.
+		if (e.clientX > rect.right) {
+			s.setCursorAfter(text);
+		}
+	}
+
+	/**
 	 * Normalize selection after triple click
 	 */
 	@watch([':click'])

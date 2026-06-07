@@ -42,4 +42,38 @@ describe('Test select plugin', () => {
 			});
 		});
 	});
+
+	describe('Click to the right of a nested list item (#1296)', () => {
+		it('Should put the cursor at the end of the line, not the start', () => {
+			const editor = getJodit();
+			editor.value =
+				'<ul><li>Level one text<ul><li>Level two text</li></ul></li></ul>';
+
+			const li = editor.editor.querySelector('li');
+			const text = li.firstChild;
+
+			// Emulate Blink placing the caret at the start of the line on click
+			const range = editor.s.createRange();
+			range.setStart(text, 0);
+			range.collapse(true);
+			editor.s.selectRange(range);
+
+			const measure = editor.s.createRange();
+			measure.selectNodeContents(text);
+			const rect = measure.getBoundingClientRect();
+
+			simulateEvent('click', li, e => {
+				Object.assign(e, {
+					clientX: rect.right + 50,
+					clientY: (rect.top + rect.bottom) / 2
+				});
+			});
+
+			editor.s.insertHTML('X');
+
+			expect(sortAttributes(editor.value)).equals(
+				'<ul><li>Level one textX<ul><li>Level two text</li></ul></li></ul>'
+			);
+		});
+	});
 });

@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.17
+
+#### :bug: Bug Fix
+
+- **Lists / Selection**: in a multi-level bulleted/numbered list, clicking to the right of an item that has a nested list put the caret at the **start** of the line instead of the end (a Blink/WebKit contenteditable quirk; Firefox was already correct). A `:click` handler now moves the caret to the end of the item's own text in that case. Fixes [#1296](https://github.com/xdan/jodit/issues/1296).
+
 ## 4.12.16
 
 #### :bug: Bug Fix
