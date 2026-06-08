@@ -9,6 +9,16 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.18
+
+#### :rocket: New Feature
+
+- **Drag and drop element**: added a `startDragElement` event so another plugin can begin dragging a specific element programmatically — e.g. from a dedicated drag handle/anchor shown next to a block. Fire `editor.e.fire('startDragElement', element, mouseEvent)`; the element does **not** need to be listed in `draggableTags` (the listener is registered even when that list is empty), so handles can move elements such as `<pre>` code blocks that are not auto-draggable.
+
+#### :nail_care: Polish
+
+- **Drag and drop element**: dropping a non-editable block (e.g. a `<pre>` code sample) no longer leaves an invisible filler text node (`﻿`) next to it. Previously this stray node showed up as an extra empty line until `clean-html` removed it later; it is now stripped in `onDrop` right after insertion.
+
 ## 4.12.17
 
 #### :bug: Bug Fix

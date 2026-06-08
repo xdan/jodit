@@ -52,11 +52,41 @@ export class dragAndDropElement extends Plugin {
 					.map(item => item.toLowerCase())
 			: [];
 
+		// Allow another plugin (e.g. a drag handle/anchor) to start dragging
+		// an element programmatically, regardless of the `draggableTags` list.
+		this.j.e.on('startDragElement', this.onStartDragElement);
+
 		if (!this.dragList.length) {
 			return;
 		}
 
 		this.j.e.on('mousedown dragstart', this.onDragStart);
+	}
+
+	/**
+	 * Start dragging a specific element programmatically.
+	 *
+	 * Allows a separate UI element (for example a drag handle/anchor shown next
+	 * to a block) to initiate the drag without the user pressing directly on the
+	 * draggable element itself.
+	 *
+	 * @example
+	 * ```js
+	 * handle.addEventListener('mousedown', e => {
+	 * 	editor.e.fire('startDragElement', preBlock, e);
+	 * });
+	 * ```
+	 */
+	@autobind
+	private onStartDragElement(
+		element: Nullable<HTMLElement>,
+		event: MouseEvent
+	): void {
+		if (this.isInDestruct || this.state > DragState.IDLE || !element) {
+			return;
+		}
+
+		this.startDragging(element, event);
 	}
 
 	/**
@@ -99,12 +129,21 @@ export class dragAndDropElement extends Plugin {
 			lastTarget = lastTarget.parentElement;
 		}
 
+		this.startDragging(lastTarget, event);
+	}
+
+	/**
+	 * Prepare the ghost element and switch to the waiting state.
+	 * Shared by the native mousedown handler and the programmatic
+	 * `startDragElement` event handler.
+	 */
+	private startDragging(target: HTMLElement, event: MouseEvent): void {
 		this.startX = event.clientX;
 		this.startY = event.clientY;
 
 		this.isCopyMode = ctrlKey(event); // we can move only element from editor
-		this.draggable = lastTarget.cloneNode(true) as HTMLElement;
-		dataBind(this.draggable, 'target', lastTarget);
+		this.draggable = target.cloneNode(true) as HTMLElement;
+		dataBind(this.draggable, 'target', target);
 
 		this.state = DragState.WAIT_DRAGGING;
 
@@ -209,6 +248,16 @@ export class dragAndDropElement extends Plugin {
 
 		this.j.s.insertNode(fragment, true, false);
 
+		// Dropping a non-editable block (e.g. a `<pre>` code sample) can leave an
+		// invisible filler text node beside it. Remove it so the drop does not
+		// introduce a stray empty line (which clean-html would otherwise strip
+		// later, causing a flash).
+		[fragment.previousSibling, fragment.nextSibling].forEach(node => {
+			if (Dom.isEmptyTextNode(node)) {
+				Dom.safeRemove(node);
+			}
+		});
+
 		if (
 			parentElement &&
 			Dom.isEmpty(parentElement) &&
@@ -248,7 +297,9 @@ export class dragAndDropElement extends Plugin {
 	protected beforeDestruct(): void {
 		this.onDragEnd();
 
-		this.j.e.off('mousedown dragstart', this.onDragStart);
+		this.j.e
+			.off('mousedown dragstart', this.onDragStart)
+			.off('startDragElement', this.onStartDragElement);
 
 		this.removeDragListeners();
 	}

@@ -164,10 +164,13 @@ if (Dom.isTag(lastTarget.parentElement, 'a') &&
 2. Gets original element via `dataBind(draggable, 'target')`
 3. If copy mode, clones the element
 4. Inserts element at cursor position
-5. If parent element is now empty (and not a table cell), removes it
-6. If element is `<img>`, fires `afterInsertImage` event
-7. Fires `synchro` event
-8. Cleans up drag state
+5. Removes the invisible filler text node that can be left next to a dropped
+   non-editable block (e.g. a `<pre>`), so the drop does not introduce a stray
+   empty line
+6. If parent element is now empty (and not a table cell), removes it
+7. If element is `<img>`, fires `afterInsertImage` event
+8. Fires `synchro` event
+9. Cleans up drag state
 
 ### Drag End (`onDragEnd`)
 
@@ -232,6 +235,32 @@ editor.e.on('synchro', () => {
 ### `hidePopup hideResizer`
 
 Fired during drag to hide any open popups or resizers.
+
+### `startDragElement` (incoming)
+
+Unlike the events above, this one is **listened to** by the plugin so other code
+can start a drag programmatically — for example from a dedicated drag handle /
+anchor shown next to a block.
+
+```typescript
+editor.e.fire('startDragElement', element, mouseEvent);
+```
+
+- `element` — the `HTMLElement` to drag (may be `null`, in which case nothing happens).
+- `mouseEvent` — the originating mouse event; its `clientX`/`clientY` seed the
+  drag threshold and `ctrlKey`/`metaKey` enables copy mode.
+
+The element does **not** need to be listed in [`draggableTags`](#draggabletags):
+firing the event explicitly opts that element into a drag, so a handle can move
+elements (such as `<pre>` code blocks) that are not auto-draggable. The plugin's
+listener is registered even when `draggableTags` is empty.
+
+```javascript
+// A drag handle that moves a block when grabbed
+handle.addEventListener('mousedown', e => {
+  editor.e.fire('startDragElement', block, e);
+});
+```
 
 ## Edge Cases Handled
 

@@ -146,6 +146,166 @@ describe('Drag and drop element inside Editor', function () {
 				});
 			});
 
+			describe('Programmatic drag via "startDragElement" event', function () {
+				it('Should drag an element that is NOT in draggableTags when started from a handle', function () {
+					const editor = getJodit({ disablePlugins: ['sticky'] });
+
+					editor.value =
+						'<p style="height: 24px;">1111</p>' +
+						'<p style="height: 24px;">2222</p>' +
+						'<pre style="height: 24px;">code</pre>' +
+						'<p style="height: 24px;">3333</p>';
+
+					const pre = editor.editor.querySelector('pre');
+
+					// A handle/anchor would fire this on mousedown
+					editor.e.fire('startDragElement', pre, {
+						clientX: 0,
+						clientY: 0
+					});
+
+					editor.editor.scrollIntoView();
+
+					// Drop it onto the very first paragraph (move it to the top)
+					const box = position(
+						editor.editor.querySelectorAll('p')[0],
+						editor
+					);
+
+					simulateEvent(events[1], editor.editor, options => {
+						options.clientX = box.left + 5;
+						options.clientY = box.top + 2;
+					});
+
+					simulateEvent(events[2], editor.editor, options => {
+						options.clientX = box.left + 5;
+						options.clientY = box.top + 2;
+					});
+
+					const value = editor.value;
+
+					// The pre survived (moved, not copied) ...
+					expect(value).contains('code');
+					expect(editor.editor.querySelectorAll('pre').length).equals(
+						1
+					);
+					// ... and was moved up: originally it sat after "2222",
+					// now it sits before it.
+					expect(value.indexOf('code')).is.below(
+						value.indexOf('2222')
+					);
+				});
+
+				it('Should work even when draggableTags is empty (auto-drag disabled)', function () {
+					const editor = getJodit({
+						disablePlugins: ['sticky'],
+						draggableTags: []
+					});
+
+					editor.value =
+						'<p style="height: 24px;">1111</p>' +
+						'<p style="height: 24px;">2222</p>' +
+						'<pre style="height: 24px;">code</pre>' +
+						'<p style="height: 24px;">3333</p>';
+
+					const pre = editor.editor.querySelector('pre');
+
+					editor.e.fire('startDragElement', pre, {
+						clientX: 0,
+						clientY: 0
+					});
+
+					editor.editor.scrollIntoView();
+
+					const box = position(
+						editor.editor.querySelectorAll('p')[0],
+						editor
+					);
+
+					simulateEvent(events[1], editor.editor, options => {
+						options.clientX = box.left + 5;
+						options.clientY = box.top + 2;
+					});
+
+					simulateEvent(events[2], editor.editor, options => {
+						options.clientX = box.left + 5;
+						options.clientY = box.top + 2;
+					});
+
+					const value = editor.value;
+
+					expect(value).contains('code');
+					expect(editor.editor.querySelectorAll('pre').length).equals(
+						1
+					);
+					expect(value.indexOf('code')).is.below(
+						value.indexOf('2222')
+					);
+				});
+
+				it('Should ignore a null element', function () {
+					const editor = getJodit({ disablePlugins: ['sticky'] });
+
+					editor.value = '<p>1111</p>';
+
+					expect(() =>
+						editor.e.fire('startDragElement', null, {
+							clientX: 0,
+							clientY: 0
+						})
+					).not.to.throw();
+
+					expect(editor.value).equals('<p>1111</p>');
+				});
+
+				it('Should not leave an empty filler text node next to a dropped non-editable block', function () {
+					const editor = getJodit({ disablePlugins: ['sticky'] });
+
+					editor.value =
+						'<p style="height: 24px;">1111</p>' +
+						'<p style="height: 24px;">2222</p>' +
+						'<pre contenteditable="false" style="height: 24px;">code</pre>' +
+						'<p style="height: 24px;">3333</p>';
+
+					const pre = editor.editor.querySelector('pre');
+
+					editor.e.fire('startDragElement', pre, {
+						clientX: 0,
+						clientY: 0
+					});
+
+					editor.editor.scrollIntoView();
+
+					const box = position(
+						editor.editor.querySelectorAll('p')[0],
+						editor
+					);
+
+					simulateEvent(events[1], editor.editor, options => {
+						options.clientX = box.left + 5;
+						options.clientY = box.top + 2;
+					});
+
+					simulateEvent(events[2], editor.editor, options => {
+						options.clientX = box.left + 5;
+						options.clientY = box.top + 2;
+					});
+
+					const moved = editor.editor.querySelector('pre');
+					const hasFiller = [
+						moved.previousSibling,
+						moved.nextSibling
+					].some(
+						node =>
+							node &&
+							node.nodeType === 3 &&
+							node.nodeValue.replace(/\uFEFF/g, '').trim() === ''
+					);
+
+					expect(hasFiller).is.false;
+				});
+			});
+
 			describe('Disable dragging', function () {
 				it('Should not move image', function () {
 					const editor = getJodit({
