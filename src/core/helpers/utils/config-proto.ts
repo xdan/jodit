@@ -19,6 +19,17 @@ import { isAtom } from './extend';
 import { keys } from './utils';
 
 /**
+ * Keys that must never be copied from a (potentially untrusted) config object —
+ * assigning them during a recursive merge can reach and mutate
+ * `Object.prototype` (prototype pollution, CWE-1321).
+ */
+const UNSAFE_PROTO_KEYS = ['__proto__', 'constructor', 'prototype'];
+
+function isUnsafeProtoKey(key: string): boolean {
+	return UNSAFE_PROTO_KEYS.indexOf(key) !== -1;
+}
+
+/**
  * @example
  * ```js
  * const defaultConfig = {
@@ -77,6 +88,10 @@ export function ConfigProto(
 	const newOpt: IDictionary = {};
 
 	Object.keys(options).forEach(key => {
+		if (isUnsafeProtoKey(key)) {
+			return;
+		}
+
 		const opt = options[key],
 			protoKey = proto ? proto[key] : null;
 
@@ -145,6 +160,10 @@ export function ConfigFlatten(obj: IDictionary): IDictionary {
  */
 export function ConfigMerge(target: IDictionary, source: IDictionary): void {
 	Object.keys(source).forEach(key => {
+		if (isUnsafeProtoKey(key)) {
+			return;
+		}
+
 		const srcVal = source[key];
 		const tgtVal = target[key];
 

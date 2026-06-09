@@ -18,6 +18,7 @@
 #### :bug: Bug Fix
 
 - **Formatting / Selection**: toggling Bold/Italic/Underline (etc.) on a collapsed cursor and then clicking in the editor lost one or more of the pending formats. The click placed the caret just before the empty marker elements, so `clean-html` removed them. The caret is now moved back into the innermost pending marker on click, and `clean-html` keeps empty inline elements that hold the live caret, so the next typed character keeps every format. Fixes [#1291](https://github.com/xdan/jodit/issues/1291).
+- **Security / Config (prototype pollution)**: `Jodit.configure()` — and the internal `ConfigMerge`/`ConfigProto` helpers — merged user-supplied options without filtering prototype-mutating keys, so a payload nested under an existing plain-object option such as `controls` (e.g. `{"controls":{"__proto__":{"polluted":"yes"}}}`) could reach and mutate `Object.prototype` (CWE-1321). Merging now rejects `__proto__`, `constructor`, and `prototype` at every nesting level. Responsibly reported by Junming Wu (Dremig).
 
 #### :nail_care: Polish
 

@@ -912,6 +912,35 @@ describe('Test helpers', () => {
 				expect(target.a.b.c.e).eq(2);
 				expect(target.a.b.f).eq(3);
 			});
+
+			it('Should not pollute Object.prototype via __proto__ key', () => {
+				delete Object.prototype.polluted;
+
+				const target = { controls: {} };
+				ConfigMerge(
+					target,
+					JSON.parse('{"controls":{"__proto__":{"polluted":"yes"}}}')
+				);
+
+				expect({}.polluted).eq(undefined);
+				expect(Object.prototype.polluted).eq(undefined);
+
+				delete Object.prototype.polluted;
+			});
+
+			it('Should ignore constructor / prototype keys', () => {
+				delete Object.prototype.pwned;
+
+				const target = {};
+				ConfigMerge(
+					target,
+					JSON.parse('{"constructor":{"prototype":{"pwned":"yes"}}}')
+				);
+
+				expect({}.pwned).eq(undefined);
+
+				delete Object.prototype.pwned;
+			});
 		});
 
 		describe('Jodit.configure', () => {
@@ -950,6 +979,19 @@ describe('Test helpers', () => {
 					Jodit.defaultOptions.controls.testConfigureBtn.command
 				).eq('selectall');
 				expect(Jodit.defaultOptions.controls.bold).eq(boldBefore);
+			});
+
+			it('Should not allow prototype pollution via configure()', () => {
+				delete Object.prototype.polluted;
+
+				Jodit.configure(
+					JSON.parse('{"controls":{"__proto__":{"polluted":"yes"}}}')
+				);
+
+				expect({}.polluted).eq(undefined);
+				expect(Object.prototype.polluted).eq(undefined);
+
+				delete Object.prototype.polluted;
 			});
 
 			it('Should partially update an existing control', () => {
