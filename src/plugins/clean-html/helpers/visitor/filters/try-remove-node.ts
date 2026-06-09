@@ -64,11 +64,19 @@ function isRemovableNode(
 		return false;
 	}
 
+	// Never drop an empty inline element that currently holds the caret — it is
+	// a pending-format marker the user is about to type into (#1291). `current`
+	// is captured before a click moves the caret, so also check the live caret.
+	const liveCaret = jodit.s.isCollapsed()
+		? jodit.s.range.startContainer
+		: null;
+
 	return (
 		Dom.isElement(node) &&
 		node.nodeName.match(IS_INLINE) != null &&
 		!Dom.isTemporary(node) &&
 		trimInv((node as Element).innerHTML).length === 0 &&
-		(current == null || !Dom.isOrContains(node, current))
+		(current == null || !Dom.isOrContains(node, current)) &&
+		(liveCaret == null || !Dom.isOrContains(node, liveCaret))
 	);
 }

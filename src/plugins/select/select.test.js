@@ -43,6 +43,33 @@ describe('Test select plugin', () => {
 		});
 	});
 
+	describe('Keep pending format after a click (#1291)', () => {
+		it('Should apply pending bold+italic+underline to text typed after a click', async () => {
+			const editor = getJodit({ cleanHTML: { timeout: 0 } });
+			editor.value = '<p>text<strong><em><u></u></em></strong></p>';
+
+			// A real click lands at the end of "text", just before the empty
+			// pending-format markers (verified via caretRangeFromPoint).
+			const t = editor.editor.querySelector('p').firstChild;
+			const range = editor.s.createRange();
+			range.setStart(t, t.nodeValue.length);
+			range.collapse(true);
+			editor.s.selectRange(range);
+
+			// Real click order: mousedown (clean-html) then click (correction).
+			simulateEvent('mousedown', editor.editor);
+			simulateEvent('click', editor.editor);
+			await editor.async.requestIdlePromise();
+			await editor.async.requestIdlePromise();
+
+			editor.s.insertHTML('X');
+
+			expect(sortAttributes(editor.value)).equals(
+				'<p>text<strong><em><u>X</u></em></strong></p>'
+			);
+		});
+	});
+
 	describe('Click to the right of a nested list item (#1296)', () => {
 		it('Should put the cursor at the end of the line, not the start', () => {
 			const editor = getJodit();

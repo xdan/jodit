@@ -11,6 +11,7 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
+import { IS_INLINE } from 'jodit/core/constants';
 import { autobind, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
@@ -152,6 +153,52 @@ export class select extends Plugin {
 		if (e.clientX > rect.right) {
 			s.setCursorAfter(text);
 		}
+	}
+
+	/**
+	 * Keep pending inline formatting after a click. Toggling Bold/Italic/etc. on
+	 * a collapsed cursor leaves empty marker elements with the caret inside; a
+	 * click puts the caret right before them (outside), so they get cleaned up
+	 * and the formatting is lost. Move the caret back into the innermost marker
+	 * so the next typed character keeps every pending format (#1291).
+	 */
+	@watch([':click'])
+	protected onClickKeepPendingFormat(): void {
+		const { s } = this.j;
+		const range = s.range;
+
+		if (!range.collapsed || !Dom.isText(range.startContainer)) {
+			return;
+		}
+
+		const text = range.startContainer;
+
+		// Caret must sit at the very end of the text, right before the markers.
+		if (range.startOffset !== (text.nodeValue?.length ?? 0)) {
+			return;
+		}
+
+		const marker = text.nextSibling;
+
+		if (
+			!Dom.isElement(marker) ||
+			!marker.nodeName.match(IS_INLINE) ||
+			!Dom.isEmpty(marker)
+		) {
+			return;
+		}
+
+		let inner: Element = marker;
+
+		// Descend into the innermost empty formatting marker.
+		while (
+			Dom.isElement(inner.firstElementChild) &&
+			inner.firstElementChild.nodeName.match(IS_INLINE)
+		) {
+			inner = inner.firstElementChild;
+		}
+
+		s.setCursorIn(inner);
 	}
 
 	/**
