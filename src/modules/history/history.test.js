@@ -267,4 +267,21 @@ describe('Undo/Redo behaviors', () => {
 			expect(editor.history.snapshot.isBlocked).is.false;
 		});
 	});
+
+	describe('Enter over a selection (#1292)', () => {
+		it('Should be undone in a single step', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = '<p>test</p>';
+			editor.s.focus();
+			editor.execCommand('selectall');
+			simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+
+			expect(editor.value).does.not.equal('<p>test</p>');
+
+			// A single undo must restore the original text, not an intermediate
+			// empty state.
+			editor.execCommand('undo');
+			expect(editor.value).equals('<p>test</p>');
+		});
+	});
 });

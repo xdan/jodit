@@ -67,14 +67,20 @@ export class enter extends Plugin {
 				return beforeEnter;
 			}
 
-			if (!editor.s.isCollapsed()) {
-				editor.execCommand('Delete');
-			}
+			// Delete-of-selection + new block must be a single history step,
+			// otherwise pressing Enter over a selection needs two Ctrl+Z to undo
+			// (the first only reverts to the intermediate empty state). #1292
+			editor.history.snapshot.transaction(() => {
+				if (!editor.s.isCollapsed()) {
+					editor.execCommand('Delete');
+				}
 
-			editor.s.focus();
+				editor.s.focus();
 
-			this.onEnter(event);
-			editor.e.fire('afterEnter', event);
+				this.onEnter(event);
+				editor.e.fire('afterEnter', event);
+			});
+
 			editor.synchronizeValues(); // fire change
 
 			return false;
