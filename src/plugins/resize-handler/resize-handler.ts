@@ -14,6 +14,7 @@ import type { IJodit, IPointBound } from 'jodit/types';
 import { autobind } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { offset } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { Icon } from 'jodit/core/ui';
 
@@ -99,12 +100,30 @@ export class resizeHandler extends Plugin {
 			return;
 		}
 
+		let { clientX, clientY } = e;
+
+		if (e.view === this.j.ew && this.j.ew !== this.j.ow) {
+			// the event was proxied from the editor's iframe — its client
+			// coordinates are relative to the iframe viewport, while the
+			// start point was captured on the host-document handle;
+			// shift them into the host coordinate space
+			const workplacePosition = offset(
+				this.j.workplace,
+				this.j,
+				this.j.od,
+				true
+			);
+
+			clientX += workplacePosition.left;
+			clientY += workplacePosition.top;
+		}
+
 		if (this.j.o.allowResizeY) {
-			this.j.e.fire('setHeight', this.start.h + e.clientY - this.start.y);
+			this.j.e.fire('setHeight', this.start.h + clientY - this.start.y);
 		}
 
 		if (this.j.o.allowResizeX) {
-			this.j.e.fire('setWidth', this.start.w + e.clientX - this.start.x);
+			this.j.e.fire('setWidth', this.start.w + clientX - this.start.x);
 		}
 
 		this.j.e.fire('resize');

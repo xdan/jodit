@@ -13,6 +13,7 @@
 
 #### :bug: Bug Fix
 
+- **Resize handler / Iframe**: resizing the **editor itself** by the statusbar handle was jerky in `iframe` mode — while dragging, the editor height jumped between two values. Same root cause as the image-resizer fix below: `mousemove` events proxied from the editor's iframe carry iframe-viewport coordinates and were mixed as-is with host-window ones; they are now shifted into the host coordinate space (checked via `e.view`). Fixes [#1287](https://github.com/xdan/jodit/issues/1287).
 - **Resizer / Iframe**: resizing an image (or table) by its handles was jerky in `iframe` mode (e.g. with `editHTMLDocumentMode`) — the size jumped while dragging, making it impossible to set precisely. During a drag, `mousemove` events arrive both from the host window (pointer over the resize frame) and proxied from the editor's iframe (pointer over the content), but the iframe-viewport coordinate correction was applied to **all** of them, so host-window events were shifted by the workplace offset. The correction is now applied only to events that originate from the iframe window (`e.view`). Fixes [#1264](https://github.com/xdan/jodit/issues/1264).
 
 #### :house: Internal
