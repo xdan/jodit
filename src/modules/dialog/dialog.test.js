@@ -4,6 +4,100 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 describe('Dialog system tests', function () {
+	describe('Resize dialog', function () {
+		// https://github.com/xdan/jodit/issues/1262
+		it('Should not shrink the dialog below its header and footer', function () {
+			const editor = getJodit();
+			const dialog = editor.alert('Hello world');
+
+			const panel = dialog.container.querySelector(
+				'.jodit-dialog__panel'
+			);
+			const resizer = dialog.container.querySelector(
+				'.jodit-dialog__resizer'
+			);
+			const header = dialog.container.querySelector(
+				'.jodit-dialog__header'
+			);
+			const footer = dialog.container.querySelector(
+				'.jodit-dialog__footer'
+			);
+
+			expect(panel).is.not.null;
+			expect(resizer).is.not.null;
+
+			const startWidth = panel.offsetWidth;
+			const startHeight = panel.offsetHeight;
+
+			simulateEvent('mousedown', resizer, data => {
+				data.clientX = 500;
+				data.clientY = 500;
+			});
+
+			// drag up so the panel would become 120px tall — smaller than
+			// header + content min-height + footer
+			simulateEvent('pointermove', editor.ow, data => {
+				data.clientX = 500 + (150 - startWidth);
+				data.clientY = 500 + (120 - startHeight);
+			});
+
+			simulateEvent('pointerup', editor.ow);
+
+			const panelRect = panel.getBoundingClientRect();
+			const footerRect = footer.getBoundingClientRect();
+
+			const content = dialog.container.querySelector(
+				'.jodit-dialog__content'
+			);
+			const contentMin =
+				parseFloat(
+					editor.ownerWindow.getComputedStyle(content).minHeight
+				) || 0;
+
+			expect(
+				panel.offsetHeight >=
+					header.offsetHeight + footer.offsetHeight + contentMin
+			).is.true;
+
+			// the footer with its buttons must stay inside the panel
+			expect(footerRect.bottom <= panelRect.bottom + 1).is.true;
+
+			dialog.close();
+		});
+
+		it('Should still allow normal resizing above the minimum', function () {
+			const editor = getJodit();
+			const dialog = editor.alert('Hello world');
+
+			const panel = dialog.container.querySelector(
+				'.jodit-dialog__panel'
+			);
+			const resizer = dialog.container.querySelector(
+				'.jodit-dialog__resizer'
+			);
+
+			const startWidth = panel.offsetWidth;
+			const startHeight = panel.offsetHeight;
+
+			simulateEvent('mousedown', resizer, data => {
+				data.clientX = 500;
+				data.clientY = 500;
+			});
+
+			simulateEvent('pointermove', editor.ow, data => {
+				data.clientX = 550;
+				data.clientY = 540;
+			});
+
+			simulateEvent('pointerup', editor.ow);
+
+			expect(panel.offsetWidth).equals(startWidth + 50);
+			expect(panel.offsetHeight).equals(startHeight + 40);
+
+			dialog.close();
+		});
+	});
+
 	describe('About dialog', function () {
 		it('Should be opened when use clicks on the About button', function () {
 			getBox().style.width = '100%';

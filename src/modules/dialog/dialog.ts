@@ -29,6 +29,7 @@ import {
 	isArray,
 	isBoolean,
 	isFunction,
+	isNumber,
 	isString,
 	isVoid
 } from 'jodit/core/helpers/checker';
@@ -246,8 +247,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		if (this.resizable && this.o.resizable) {
 			this.setSize(
-				this.startPoint.w + e.clientX - this.startX,
-				this.startPoint.h + e.clientY - this.startY
+				Math.max(
+					this.startPoint.w + e.clientX - this.startX,
+					this.minSize.w
+				),
+				Math.max(
+					this.startPoint.h + e.clientY - this.startY,
+					this.minSize.h
+				)
 			);
 
 			if (this.e) {
@@ -300,6 +307,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		}
 	};
 
+	/**
+	 * Minimal size the dialog can be resized to — the header and the footer
+	 * (with its buttons) must always stay inside the panel
+	 */
+	private minSize: { w: number; h: number } = { w: 0, h: 0 };
+
 	@autobind
 	private __onResizerMouseDown(e: MouseEvent): void {
 		this.resizable = true;
@@ -308,6 +321,27 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.startPoint.w = this.dialog.offsetWidth;
 		this.startPoint.h = this.dialog.offsetHeight;
+
+		const header = this.getElm('header');
+		const footer = this.getElm('footer');
+		const content = this.getElm('content');
+
+		// the content area does not shrink below its CSS `min-height`,
+		// so it is part of the smallest height the panel can take
+		const contentMinHeight = content
+			? parseFloat(this.ow.getComputedStyle(content).minHeight) || 0
+			: 0;
+
+		this.minSize.w = isNumber(this.o.minWidth)
+			? this.o.minWidth
+			: Math.max(100, footer?.scrollWidth ?? 0);
+
+		this.minSize.h = isNumber(this.o.minHeight)
+			? this.o.minHeight
+			: (header?.offsetHeight ?? 0) +
+				(footer?.offsetHeight ?? 0) +
+				contentMinHeight +
+				this.resizer.offsetHeight;
 
 		this.lockSelect();
 
