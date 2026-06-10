@@ -352,6 +352,35 @@ describe('Clean html plugin', function () {
 		});
 	});
 
+	describe('Allow tags: disallowed tag with attributes (#1224)', function () {
+		it('Should remove the tag and not throw', async function () {
+			const editor = getJodit({
+				cleanHTML: {
+					timeout: 0,
+					allowTags: {
+						p: true,
+						a: { href: true }
+					}
+				}
+			});
+
+			editor.value =
+				'<p>one</p>' +
+				'<meta charset="utf-8">' +
+				'<p>two <span style="color:red">drop</span></p>';
+
+			await waitingForEvent(editor, 'finishedCleanHTMLWorker');
+
+			// the disallowed tags (with their content — the established
+			// allowTags semantics) are removed instead of crashing the worker
+			expect(editor.value).does.not.include('meta');
+			expect(editor.value).does.not.include('span');
+			expect(editor.value).does.not.include('drop');
+			expect(editor.value).to.include('<p>one</p>');
+			expect(editor.value).to.include('two');
+		});
+	});
+
 	describe('Allow tags', function () {
 		describe('Parameter', function () {
 			[

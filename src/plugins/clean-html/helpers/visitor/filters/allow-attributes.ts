@@ -20,14 +20,24 @@ export function allowAttributes(
 	hadEffect: boolean,
 	allow: IDictionary | false
 ): boolean {
-	if (allow && Dom.isElement(nodeElm) && allow[nodeElm.nodeName] !== true) {
+	const allowedForTag =
+		allow && Dom.isElement(nodeElm) && allow[nodeElm.nodeName];
+
+	if (allow && Dom.isElement(nodeElm) && allowedForTag !== true) {
+		// the tag is not in the allow list at all — attributes do not matter,
+		// the element itself will be removed by the tags filter. Without this
+		// check `allow[nodeName][attr]` threw on e.g. `<meta charset>`. See #1224
+		if (!allowedForTag) {
+			return hadEffect;
+		}
+
 		const attrs: NamedNodeMap = (nodeElm as Element).attributes;
 
 		if (attrs && attrs.length) {
 			const removeAttrs: string[] = [];
 
 			for (let i = 0; i < attrs.length; i += 1) {
-				const attr = allow[nodeElm.nodeName][attrs[i].name];
+				const attr = allowedForTag[attrs[i].name];
 
 				if (!attr || (attr !== true && attr !== attrs[i].value)) {
 					removeAttrs.push(attrs[i].name);
