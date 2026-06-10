@@ -246,6 +246,54 @@
 			});
 		});
 
+		describe('Apply color over a selection that includes a table (#1221)', () => {
+			it('Should recolor the text inside every table cell', () => {
+				const editor = getJodit();
+
+				editor.value =
+					'<p><span style="color: red">before</span></p>' +
+					'<table><tbody>' +
+					'<tr><td><span style="color: blue">one</span></td>' +
+					'<td><p><span style="color: rgb(31,73,125)">two</span></p></td></tr>' +
+					'<tr><td style="color: red">three</td><td style="color: rgb(84,141,212)"><span style="color: green">four</span></td></tr>' +
+					'</tbody></table>' +
+					'<p><span style="color: purple">after</span></p>';
+
+				const range = editor.s.createRange();
+				range.selectNodeContents(editor.editor);
+				editor.s.selectRange(range);
+
+				editor.execCommand('forecolor', false, '#000000');
+
+				expect(editor.editor.textContent.replace(/[|\s]/g, '')).equals(
+					'beforeonetwothreefourafter'
+				);
+
+				editor.editor.querySelectorAll('td').forEach(td => {
+					const walker = editor.ed.createTreeWalker(
+						td,
+						NodeFilter.SHOW_TEXT
+					);
+
+					let textNode;
+					while ((textNode = walker.nextNode())) {
+						if (!textNode.nodeValue.trim()) {
+							continue;
+						}
+
+						const color = editor.ownerWindow.getComputedStyle(
+							textNode.parentElement
+						).color;
+
+						expect(
+							Jodit.modules.Helpers.normalizeColor(color),
+							'cell text: ' + textNode.nodeValue
+						).equals('#000000');
+					}
+				});
+			});
+		});
+
 		describe('Apply one color over text with several colors (#169)', () => {
 			it('Should recolor every part of the selection', () => {
 				const editor = getJodit();
