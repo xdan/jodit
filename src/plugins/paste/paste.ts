@@ -229,6 +229,12 @@ export class paste extends Plugin {
 
 				case INSERT_AS_TEXT:
 					html = htmlspecialchars(html);
+
+					// Keep the source line breaks instead of letting the raw
+					// newlines collapse into spaces when rendered. See #1093
+					if (this.j.o.nl2brInPlainText) {
+						html = nl2br(html);
+					}
 					break;
 
 				default: {

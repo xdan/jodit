@@ -134,6 +134,22 @@ describe('Hotkeys', () => {
 					'<ol><li>test<em> tes</em>t test</li></ol>'
 				);
 			});
+
+			// #1079: the default insertUnorderedList shortcut was a single
+			// comma-joined string, so it never matched a keypress.
+			it('Should toggle an unordered list with ctrl+shift+8', () => {
+				const editor = getJodit();
+
+				editor.value = '<p>one two three</p>';
+				editor.s.setCursorIn(editor.editor.firstChild);
+
+				simulateEvent('keydown', '8', editor.editor, data => {
+					data.shiftKey = true;
+					data.ctrlKey = true;
+				});
+
+				expect(editor.value).equals('<ul><li>one two three</li></ul>');
+			});
 		});
 	});
 

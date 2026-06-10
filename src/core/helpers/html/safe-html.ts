@@ -9,7 +9,7 @@
  */
 
 import { Dom } from 'jodit/core/dom/dom';
-import { $$, attr } from 'jodit/core/helpers/utils';
+import { attr } from 'jodit/core/helpers/utils';
 
 export type safeOptions = {
 	removeOnError: boolean;
@@ -31,24 +31,27 @@ export function safeHTML(
 
 	const removeEvents = options.removeEventAttributes ?? options.removeOnError;
 
-	if (removeEvents) {
-		removeAllEventAttributes(box);
-		$$('*', box).forEach(elm => removeAllEventAttributes(elm));
-	} else if (options.removeOnError) {
-		sanitizeHTMLElement(box, options);
-		$$('[onerror]', box).forEach(elm => sanitizeHTMLElement(elm, options));
-	}
+	// Single synchronous traversal of the subtree. Besides removing event
+	// handlers and `javascript:` links, `sanitizeHTMLElement` neutralises
+	// executable `iframe[srcdoc]`, `data:text/html` / SVG `data:` document
+	// sources and dangerous schemes in every URL-bearing attribute.
+	const process = (node: Node): void => {
+		if (!Dom.isElement(node)) {
+			return;
+		}
 
-	if (options.safeJavaScriptLink) {
-		sanitizeHTMLElement(box, options);
-		$$<HTMLAnchorElement>('a[href^="javascript"]', box).forEach(elm =>
-			sanitizeHTMLElement(elm, options)
-		);
-	}
+		if (removeEvents) {
+			removeAllEventAttributes(node);
+		}
 
-	if (options.safeLinksTarget) {
-		$$<HTMLAnchorElement>('a[target="_blank"]', box).forEach(elm => {
-			const rel = elm.getAttribute('rel') || '';
+		sanitizeHTMLElement(node, options);
+
+		if (
+			options.safeLinksTarget &&
+			node.nodeName === 'A' &&
+			node.getAttribute('target') === '_blank'
+		) {
+			const rel = node.getAttribute('rel') || '';
 			const parts = rel.split(/\s+/).filter(Boolean);
 
 			if (!parts.includes('noopener')) {
@@ -59,9 +62,12 @@ export function safeHTML(
 				parts.push('noreferrer');
 			}
 
-			attr(elm, 'rel', parts.join(' '));
-		});
-	}
+			attr(node, 'rel', parts.join(' '));
+		}
+	};
+
+	process(box);
+	Dom.each(box, process);
 }
 
 /**
@@ -89,6 +95,47 @@ function removeAllEventAttributes(elm: Element | DocumentFragment): boolean {
 	return effected;
 }
 
+/**
+ * URL-bearing attributes (besides `href`) that can load or execute content.
+ */
+const URL_ATTRIBUTES = [
+	'src',
+	'data',
+	'action',
+	'formaction',
+	'poster',
+	'background',
+	'xlink:href'
+];
+
+/**
+ * Tags that load their URL as a *document* (scripts inside run). An SVG data
+ * URL is only an XSS vector here — as an `<img>` source it renders inertly.
+ */
+const DOCUMENT_EMBED_TAGS = new Set(['iframe', 'frame', 'object', 'embed']);
+
+/**
+ * Detects executable / script-bearing URL schemes. The attribute value is
+ * already HTML-entity-decoded by `getAttribute`, so only whitespace and
+ * control characters (which browsers ignore inside a scheme) need stripping.
+ */
+function isDangerousUrl(value: string, tagName: string): boolean {
+	// eslint-disable-next-line no-control-regex
+	const normalized = value.replace(/[\u0000-\u0020]+/g, '').toLowerCase();
+
+	if (/^(?:javascript|vbscript|livescript|mocha):/.test(normalized)) {
+		return true;
+	}
+
+	if (/^data:(?:text\/html|application\/xhtml)/.test(normalized)) {
+		return true;
+	}
+
+	return (
+		/^data:image\/svg/.test(normalized) && DOCUMENT_EMBED_TAGS.has(tagName)
+	);
+}
+
 export function sanitizeHTMLElement(
 	elm: Element | DocumentFragment,
 	{ safeJavaScriptLink, removeOnError }: safeOptions = {
@@ -112,6 +159,26 @@ export function sanitizeHTMLElement(
 	if (safeJavaScriptLink && href && href.trim().indexOf('javascript') === 0) {
 		attr(elm, 'href', location.protocol + '//' + href);
 		effected = true;
+	}
+
+	if (safeJavaScriptLink) {
+		// `srcdoc` runs its content as a full HTML document — drop it entirely.
+		if (elm.hasAttribute('srcdoc')) {
+			attr(elm, 'srcdoc', null);
+			effected = true;
+		}
+
+		// Strip executable schemes from any other URL-bearing attribute.
+		const tagName = elm.nodeName.toLowerCase();
+
+		for (const name of URL_ATTRIBUTES) {
+			const value = elm.getAttribute(name);
+
+			if (value && isDangerousUrl(value, tagName)) {
+				attr(elm, name, null);
+				effected = true;
+			}
+		}
 	}
 
 	return effected;

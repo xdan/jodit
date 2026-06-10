@@ -32,6 +32,6 @@ declare module 'jodit/config' {
 Config.prototype.commandToHotkeys = {
 	removeFormat: ['ctrl+shift+m', 'cmd+shift+m'],
 	insertOrderedList: ['ctrl+shift+7', 'cmd+shift+7'],
-	insertUnorderedList: ['ctrl+shift+8, cmd+shift+8'],
+	insertUnorderedList: ['ctrl+shift+8', 'cmd+shift+8'],
 	selectall: ['ctrl+a', 'cmd+a']
 };

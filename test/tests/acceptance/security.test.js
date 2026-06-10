@@ -46,6 +46,51 @@ describe('Security test', () => {
 					);
 				});
 			});
+
+			describe('Executable iframe / dangerous URL content', () => {
+				it('Should drop iframe srcdoc', () => {
+					const editor = getJodit();
+					editor.value =
+						'<iframe srcdoc="<script>alert(1)</script>"></iframe>';
+
+					expect(sortAttributes(editor.value)).eq(
+						'<iframe></iframe>'
+					);
+				});
+
+				it('Should drop a data:text/html iframe src', () => {
+					const editor = getJodit();
+					editor.value =
+						'<iframe src="data:text/html,<script>alert(1)</script>"></iframe>';
+
+					expect(sortAttributes(editor.value)).eq(
+						'<iframe></iframe>'
+					);
+				});
+
+				it('Should drop javascript: in object/embed/form sources', () => {
+					const editor = getJodit();
+					editor.value =
+						'<object data="javascript:alert(1)"></object>' +
+						'<embed src="javascript:alert(1)">' +
+						'<form action="javascript:alert(1)"></form>';
+
+					expect(sortAttributes(editor.value)).eq(
+						'<object></object><p><embed></p><form></form>'
+					);
+				});
+
+				it('Should keep a safe data:image and an empty iframe', () => {
+					const editor = getJodit();
+					editor.value =
+						'<iframe></iframe>' +
+						'<img src="data:image/png;base64,iVBORw0KGgo=">';
+
+					expect(sortAttributes(editor.value)).eq(
+						'<iframe></iframe><p><img src="data:image/png;base64,iVBORw0KGgo="></p>'
+					);
+				});
+			});
 		});
 
 		describe('Insert ready Node', () => {

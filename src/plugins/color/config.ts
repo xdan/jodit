@@ -76,11 +76,13 @@ Config.prototype.controls.brush = {
 	update(editor: IJodit, button): void {
 		const color = dataBind(button, 'color');
 
-		const update = (key: string, value: string): void => {
+		const update = (key: string, value: string): boolean => {
 			if (value && value !== css(editor.editor, key).toString()) {
 				button.state.icon.fill = value;
-				return;
+				return true;
 			}
+
+			return false;
 		};
 
 		if (color) {
@@ -99,11 +101,23 @@ Config.prototype.controls.brush = {
 					editor.editor
 				) as HTMLElement) || editor.editor;
 
-			update('color', css(currentBpx, 'color').toString());
-			update(
+			// The icon's fill mirrors the current text/background color so the
+			// button reflects the formatting under the caret. Both calls run so
+			// that a background color (the second call) wins over the text color
+			// when both are set. Keep the computed fill instead of resetting it
+			// below. See #195, #182
+			const hasColor = update(
+				'color',
+				css(currentBpx, 'color').toString()
+			);
+			const hasBackground = update(
 				'background-color',
 				css(currentBpx, 'background-color').toString()
 			);
+
+			if (hasColor || hasBackground) {
+				return;
+			}
 		}
 
 		button.state.icon.fill = '';

@@ -299,5 +299,30 @@
 				).equals('#000000');
 			});
 		});
+
+		describe('Brush icon reflects the current color (#195, #182)', () => {
+			it('Should set the icon fill to the color under the caret', () => {
+				const editor = getJodit({ buttons: ['brush'] });
+				editor.value =
+					'<p><span style="color: rgb(255, 0, 0)">re|d</span></p>';
+				setCursorToChar(editor);
+				simulateEvent('mousedown', editor.editor);
+
+				expect(getButton('brush', editor).component.state.icon.fill).eq(
+					'#FF0000'
+				);
+			});
+
+			it('Should clear the icon fill when there is no color under the caret', () => {
+				const editor = getJodit({ buttons: ['brush'] });
+				editor.value = '<p>pl|ain</p>';
+				setCursorToChar(editor);
+				simulateEvent('mousedown', editor.editor);
+
+				expect(getButton('brush', editor).component.state.icon.fill).eq(
+					''
+				);
+			});
+		});
 	}
 );

@@ -67,11 +67,12 @@ export function applyStyles(html: string): string {
 			// They are display-only and must not be imported, otherwise
 			// the marker text leaks into the content. Drop them before any
 			// style normalization strips the `mso-list` hint. See #948
-			$$('*', iframeDoc.body).forEach((elm: HTMLElement) => {
+			Dom.each(iframeDoc.body, (node: Node) => {
 				if (
-					/mso-list:\s*ignore/i.test(elm.getAttribute('style') || '')
+					Dom.isElement(node) &&
+					/mso-list:\s*ignore/i.test(node.getAttribute('style') || '')
 				) {
-					Dom.safeRemove(elm);
+					Dom.safeRemove(node);
 				}
 			});
 

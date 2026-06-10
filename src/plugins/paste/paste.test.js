@@ -1132,6 +1132,29 @@ describe('Test paste plugin', () => {
 						'<p>&lt;p&gt;test&lt;/p&gt;</p>'
 					);
 				});
+
+				it('Should keep line breaks of multi-line text (#1093)', function () {
+					const editor = getJodit({
+						askBeforePasteHTML: false,
+						askBeforePasteFromWord: false,
+						defaultActionOnPaste: Jodit.INSERT_AS_TEXT
+					});
+
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
+					simulateEvent('paste', editor.editor, function (data) {
+						data.clipboardData = {
+							types: ['text/html'],
+							getData: function () {
+								return '<a>one</a>\n<b>two</b>';
+							}
+						};
+					});
+
+					expect(editor.value).equals(
+						'<p>&lt;a&gt;one&lt;/a&gt;<br>&lt;b&gt;two&lt;/b&gt;</p>'
+					);
+				});
 			});
 
 			describe('Insert as html', function () {
