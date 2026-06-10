@@ -11,6 +11,10 @@
 
 ## 4.12.22
 
+#### :bug: Bug Fix
+
+- **Resizer / Iframe**: resizing an image (or table) by its handles was jerky in `iframe` mode (e.g. with `editHTMLDocumentMode`) — the size jumped while dragging, making it impossible to set precisely. During a drag, `mousemove` events arrive both from the host window (pointer over the resize frame) and proxied from the editor's iframe (pointer over the content), but the iframe-viewport coordinate correction was applied to **all** of them, so host-window events were shifted by the workplace offset. The correction is now applied only to events that originate from the iframe window (`e.view`). Fixes [#1264](https://github.com/xdan/jodit/issues/1264).
+
 #### :house: Internal
 
 - **Popup tests**: added a regression test asserting that with `allowTabNavigation: true` an inner popup (a dropdown opened from a button inside another popup — e.g. the image *Horizontal align* list) is positioned next to its trigger button. With that option the inner popup is appended into the button inside the outer popup, whose CSS `transform` shifts `position: fixed` coordinates; covers [#1265](https://github.com/xdan/jodit/issues/1265) (already fixed in 4.12.8 by the `getFixedPositionOffset` containing-block compensation from [#1350](https://github.com/xdan/jodit/issues/1350)).

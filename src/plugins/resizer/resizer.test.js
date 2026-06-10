@@ -6,6 +6,72 @@
 
 describe('Resize plugin', () => {
 	describe('Iframe mode', () => {
+		// https://github.com/xdan/jodit/issues/1264
+		describe('Resize image', () => {
+			const makeEditorWithImage = () => {
+				const editor = getJodit({
+					iframe: true,
+					editHTMLDocumentMode: true,
+					history: { timeout: 0 }
+				});
+
+				// a non-zero workplace offset makes a wrongly applied
+				// iframe-coordinate correction visible
+				editor.container.style.marginLeft = '50px';
+
+				editor.value =
+					'<p><img alt="" src="tests/artio.jpg" style="width:100px;height:100px"/></p>';
+
+				const img = editor.editor.querySelector('img');
+				simulateEvent(['mousedown', 'mouseup', 'click'], img);
+
+				const resizer = document.querySelector(
+					'.jodit-resizer[data-editor_id=' + editor.id + ']'
+				);
+				expect(resizer).is.not.null;
+
+				// bottom-right handle
+				const handle = resizer.getElementsByTagName('div')[2];
+				const pos = offset(handle);
+
+				simulateEvent('mousedown', handle, data => {
+					data.clientX = pos.left;
+					data.clientY = pos.top;
+				});
+
+				return { editor, img, handle, pos };
+			};
+
+			it('Should use mousemove coordinates of the main window as is', () => {
+				const { editor, img, pos } = makeEditorWithImage();
+
+				simulateEvent('mousemove', editor.ow, data => {
+					data.clientX = pos.left + 10;
+					data.clientY = pos.top + 10;
+				});
+
+				simulateEvent('mouseup', editor.ow);
+
+				expect(img.offsetWidth).equals(110);
+			});
+
+			it('Should shift mousemove coordinates proxied from the iframe into the main window space', () => {
+				const { editor, img, pos } = makeEditorWithImage();
+
+				const workplace = offset(editor.workplace);
+
+				simulateEvent('mousemove', editor.ow, data => {
+					data.view = editor.ew;
+					data.clientX = pos.left + 10 - workplace.left;
+					data.clientY = pos.top + 10 - workplace.top;
+				});
+
+				simulateEvent('mouseup', editor.ow);
+
+				expect(img.offsetWidth).equals(110);
+			});
+		});
+
 		// https://github.com/xdan/jodit/issues/1266
 		it('Should hide resizer when the iframe content is scrolled', async () => {
 			const editor = getJodit({

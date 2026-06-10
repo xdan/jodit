@@ -233,7 +233,11 @@ export class resizer extends Plugin {
 
 			let diff_x, diff_y;
 
-			if (this.j.options.iframe) {
+			if (this.j.options.iframe && e.view === this.j.ew) {
+				// the event was proxied from the editor's iframe — its client
+				// coordinates are relative to the iframe viewport, while
+				// `startX/startY` were captured on a host-document handle;
+				// shift them into the host coordinate space
 				const workplacePosition = this.getWorkplacePosition();
 				diff_x = e.clientX + workplacePosition.left - this.startX;
 				diff_y = e.clientY + workplacePosition.top - this.startY;
