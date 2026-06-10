@@ -576,6 +576,43 @@ describe('Text Inline Popup plugin', () => {
 			});
 		});
 
+		describe('Click a button in the selection toolbar (#1238)', () => {
+			it('Should keep the toolbar open while the selection persists', async () => {
+				const editor = getJodit({
+					toolbarInlineForSelection: true
+				});
+
+				editor.value = '<p>|some text|</p>';
+
+				const p = editor.editor.querySelector('p');
+
+				simulateEvent('mousedown', p);
+				setCursorToChar(editor);
+				simulateEvent(['mouseup', 'selectionchange'], p);
+
+				const popup = getOpenedPopup(editor);
+				expect(popup && popup.parentNode.parentNode != null).is.true;
+
+				// the buttons live inside the popup — the browser fires
+				// mousedown there before the button click
+				const boldButton = getButton('bold', popup);
+				simulateEvent('mousedown', boldButton);
+				clickButton('bold', popup);
+
+				await delay(editor.defaultTimeout + 50);
+
+				expect(editor.value).equals(
+					'<p><strong>some text</strong></p>'
+				);
+
+				// the selection is still there — the toolbar must be reopened
+				expect(editor.s.isCollapsed()).is.false;
+				const popupAfter = getOpenedPopup(editor);
+				expect(popupAfter).is.not.null;
+				expect(getButton('italic', popupAfter)).is.not.null;
+			});
+		});
+
 		describe('Select text inside table cell', () => {
 			it('Should show popup for text selection', () => {
 				const editor = getJodit({

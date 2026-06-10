@@ -229,9 +229,60 @@ export class inlinePopup extends Plugin {
 					this.previousTarget = undefined;
 				}
 			})
-			.on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
+			.on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd)
+			.on(
+				[this.j.ew, this.j.ow],
+				'mousedown touchstart',
+				this.__onDocumentMouseDown
+			)
+			.on('closeAllPopups', this.__onCloseAllPopups);
 
 		this.addListenersForElements();
+	}
+
+	/**
+	 * The user pressed a button inside the selection toolbar — after the
+	 * command fires `closeAllPopups`, the toolbar should be shown again
+	 * while the selection is still there. See #1238
+	 */
+	private __reopenSelectionPopup = false;
+
+	@autobind
+	private __onDocumentMouseDown(e: MouseEvent): void {
+		if (
+			this.popup.isOpened &&
+			this.type === 'selection' &&
+			e.target &&
+			UIElement.closestElement(e.target as Node, Popup)
+		) {
+			this.__reopenSelectionPopup = true;
+		}
+	}
+
+	@autobind
+	private __onCloseAllPopups(): void {
+		if (!this.__reopenSelectionPopup) {
+			return;
+		}
+
+		this.__reopenSelectionPopup = false;
+
+		if (!this.j.o.toolbarInlineForSelection) {
+			return;
+		}
+
+		// a zero timeout would run synchronously — before the popup's own
+		// `closeAllPopups` handler closes it; defer to the next macrotask
+		this.j.async.setTimeout(() => {
+			const sel = this.j.s.sel;
+
+			if (sel && !sel.isCollapsed) {
+				this.showPopup(
+					() => this.j.s.range.getBoundingClientRect(),
+					'selection'
+				);
+			}
+		}, 1);
 	}
 
 	private snapRange: Nullable<Range> = null;
@@ -324,7 +375,13 @@ export class inlinePopup extends Plugin {
 	protected beforeDestruct(jodit: IJodit): void {
 		jodit.e
 			.off('showPopup')
-			.off([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
+			.off([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd)
+			.off(
+				[this.j.ew, this.j.ow],
+				'mousedown touchstart',
+				this.__onDocumentMouseDown
+			)
+			.off('closeAllPopups', this.__onCloseAllPopups);
 
 		this.removeListenersForElements();
 	}
