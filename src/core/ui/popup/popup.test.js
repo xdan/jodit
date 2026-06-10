@@ -214,6 +214,51 @@
 			});
 		});
 
+		describe('Inner popup with allowTabNavigation', () => {
+			// https://github.com/xdan/jodit/issues/1265
+			it('Should be positioned near its trigger button', () => {
+				const editor = getJodit({
+					allowTabNavigation: true,
+					history: { timeout: 0 }
+				});
+
+				editor.value = '<p><img alt="" src="tests/artio.jpg"/></p>';
+				editor.s.focus();
+
+				simulateEvent('click', editor.editor.querySelector('img'));
+
+				const popup = getOpenedPopup(editor);
+				expect(popup).is.not.null;
+
+				clickTrigger('left', popup);
+
+				const innerPopup = getOpenedPopup(editor);
+				expect(innerPopup).is.not.null;
+				expect(innerPopup).does.not.equal(popup);
+
+				// with allowTabNavigation the inner popup is appended into
+				// its trigger button inside the outer popup — the outer
+				// popup's `transform` must not shift the fixed coordinates
+				expect(popup.contains(innerPopup)).is.true;
+
+				const button = getButton('left', popup);
+				const btnRect = button.getBoundingClientRect();
+				const popRect = innerPopup.getBoundingClientRect();
+
+				// the list must open near the button (under or above it),
+				// not shifted away by the outer popup's transform
+				expect(Math.abs(popRect.left - btnRect.left)).to.be.below(
+					btnRect.width + 5
+				);
+
+				const distance = Math.min(
+					Math.abs(popRect.top - btnRect.bottom),
+					Math.abs(popRect.bottom - btnRect.top)
+				);
+				expect(distance).to.be.below(btnRect.height + 5);
+			});
+		});
+
 		describe('Popup inside <dialog>', () => {
 			it('Should show popup inside dialog', () => {
 				const dialog = document.createElement('dialog');
