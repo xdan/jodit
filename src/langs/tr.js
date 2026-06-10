@@ -85,7 +85,7 @@ module.exports = {
 	'Insert as Text': 'Yazı olarak ekle',
 	'Word Paste Detected': 'Word biçiminde yapıştırma algılandı',
 	'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?':
-		'Der Inhalt, den Sie einfügen, stammt aus einem Microsoft Word / Excel-Dokument. Möchten Sie das Format erhalten oder löschen?',
+		'Yapıştırılan içerik bir Microsoft Word/Excel belgesinden geliyor. Formatı korumak mı yoksa temizlemek mi istiyorsunuz?',
 	'Insert only Text': 'Sadece yazıyı ekle',
 	'File Browser': 'Dosya Listeleyici',
 	'Error on load list': 'Liste yüklenirken hata oluştu',

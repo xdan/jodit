@@ -9,6 +9,22 @@
 		describe('Helper 18n', function () {
 			const i18n = Jodit.modules.Helpers.i18n;
 
+			describe('Turkish translation of the Word paste prompt', function () {
+				// https://github.com/xdan/jodit/issues/1245
+				it('Should be Turkish, not German', function () {
+					const translated = i18n(
+						'The pasted content is coming from a Microsoft Word/Excel document. Do you want to keep the format or clean it up?',
+						[],
+						{ language: 'tr' },
+						true
+					);
+
+					expect(translated).equals(
+						'Yapıştırılan içerik bir Microsoft Word/Excel belgesinden geliyor. Formatı korumak mı yoksa temizlemek mi istiyorsunuz?'
+					);
+				});
+			});
+
 			describe('Put defined sentence', function () {
 				it('Should replace it on defined language', function () {
 					const values = [
