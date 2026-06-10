@@ -27,16 +27,33 @@ Config.prototype.controls.outdent = {
 	isDisabled: (editor: IJodit): boolean => {
 		const current = editor.s.current();
 
-		if (current) {
-			const currentBox = Dom.closest(current, Dom.isBlock, editor.editor);
+		if (!current) {
+			return true;
+		}
 
-			if (currentBox) {
-				const arrow = getKey(editor.o.direction, currentBox);
-				return (
-					!currentBox.style[arrow] ||
-					parseInt(currentBox.style[arrow], 10) <= 0
-				);
+		// A list item whose list is nested inside another list item can be
+		// outdented (un-nested) by the `tab` plugin, even without an inline
+		// indent margin. Keep the button enabled in that case. See #1247
+		if (editor.o.tab?.tabInsideLiInsertNewList) {
+			const li = Dom.closest(current, 'li', editor.editor);
+
+			if (li) {
+				const list = Dom.closest(li, ['ul', 'ol'], editor.editor);
+
+				if (list && Dom.closest(list, 'li', editor.editor)) {
+					return false;
+				}
 			}
+		}
+
+		const currentBox = Dom.closest(current, Dom.isBlock, editor.editor);
+
+		if (currentBox) {
+			const arrow = getKey(editor.o.direction, currentBox);
+			return (
+				!currentBox.style[arrow] ||
+				parseInt(currentBox.style[arrow], 10) <= 0
+			);
 		}
 
 		return true;

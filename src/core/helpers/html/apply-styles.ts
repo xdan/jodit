@@ -62,6 +62,19 @@ export function applyStyles(html: string): string {
 			iframeDoc.write(html);
 			iframeDoc.close();
 
+			// Word marks its auto-generated list markers (the literal
+			// bullet/number, e.g. `1.` or `·`) with `mso-list:Ignore`.
+			// They are display-only and must not be imported, otherwise
+			// the marker text leaks into the content. Drop them before any
+			// style normalization strips the `mso-list` hint. See #948
+			$$('*', iframeDoc.body).forEach((elm: HTMLElement) => {
+				if (
+					/mso-list:\s*ignore/i.test(elm.getAttribute('style') || '')
+				) {
+					Dom.safeRemove(elm);
+				}
+			});
+
 			try {
 				for (let i = 0; i < iframeDoc.styleSheets.length; i += 1) {
 					const rules: CSSStyleRule[] = (

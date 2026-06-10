@@ -44,6 +44,66 @@ describe('Test uploader module', function () {
 					});
 				});
 			});
+
+			describe('Drop SVG/BMP/WebP image like base64 (#1228)', function () {
+				[
+					{
+						name: 'logo.svg',
+						type: 'image/svg+xml',
+						dataURI: 'data:image/svg+xml;base64,PHN2Zy8+'
+					},
+					{
+						name: 'logo.bmp',
+						type: 'image/bmp',
+						dataURI: 'data:image/bmp;base64,Qk0='
+					},
+					{
+						name: 'logo.webp',
+						type: 'image/webp',
+						dataURI: 'data:image/webp;base64,UklGRg=='
+					}
+				].forEach(function (file) {
+					it(
+						'Should insert ' + file.type + ' image as base64',
+						function (done) {
+							const editor = getJodit({
+								imageProcessor: {
+									replaceDataURIToBlobIdInView: false
+								},
+								uploader: {
+									insertImageAsBase64URI: true
+								},
+								events: {
+									afterInsertImage: function (img) {
+										expect(img.src).equals(file.dataURI);
+										done();
+									}
+								}
+							});
+
+							editor.value = '<p>test|</p>';
+							setCursorToChar(editor);
+
+							simulateEvent(
+								'drop',
+								editor.editor,
+								function (data) {
+									fillXY(data, editor);
+									Object.defineProperty(
+										data,
+										'dataTransfer',
+										{
+											value: {
+												files: [file]
+											}
+										}
+									);
+								}
+							);
+						}
+					);
+				});
+			});
 		});
 
 		describe('Drop Image and upload on server', function () {

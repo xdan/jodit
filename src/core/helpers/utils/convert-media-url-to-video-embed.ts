@@ -31,8 +31,6 @@ export const convertMediaUrlToVideoEmbed = (
 	}
 
 	const parser: HTMLAnchorElement = globalDocument.createElement('a');
-	const pattern1: RegExp =
-		/(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
 
 	parser.href = url;
 
@@ -47,32 +45,59 @@ export const convertMediaUrlToVideoEmbed = (
 
 	switch (parser.hostname) {
 		case 'www.vimeo.com':
-		case 'vimeo.com':
-			return pattern1.test(url)
-				? url.replace(
-						pattern1,
-						'<iframe width="' +
-							width +
-							'" height="' +
-							height +
-							'" src="' +
-							protocol +
-							'//player.vimeo.com/video/$1" frameborder="0" allowfullscreen></iframe>'
-					)
-				: url;
-		case 'youtube.com':
-		case 'www.youtube.com':
-		case 'youtu.be':
-		case 'www.youtu.be': {
-			const query: any = parser.search
-				? parseQuery(parser.search)
-				: { v: parser.pathname.substring(1) };
+		case 'vimeo.com': {
+			// The numeric video id can be preceded by `channels/<name>/` or
+			// `groups/<name>/videos/` and followed by tracking params (e.g.
+			// `?share=copy`). Unlisted videos keep a hash right after the id
+			// (`vimeo.com/<id>/<hash>`). Extract the id (+ hash) from the path
+			// so all of those forms produce a valid embed. See #1209
+			const segments = parser.pathname.split('/').filter(Boolean);
+			const idIndex = segments.findIndex(s => /^\d+$/.test(s));
 
-			if (/^embed\/.*/.test(query.v)) {
-				query.v = query.v.substring(6);
+			if (idIndex === -1) {
+				return url;
 			}
 
-			return query.v
+			let path = segments[idIndex];
+			const hash = segments[idIndex + 1];
+
+			if (hash && idIndex === 0) {
+				path += '/' + hash;
+			}
+
+			return (
+				'<iframe width="' +
+				width +
+				'" height="' +
+				height +
+				'" src="' +
+				protocol +
+				'//player.vimeo.com/video/' +
+				path +
+				'" frameborder="0" allowfullscreen></iframe>'
+			);
+		}
+		case 'youtube.com':
+		case 'www.youtube.com':
+		case 'm.youtube.com':
+		case 'music.youtube.com':
+		case 'youtu.be':
+		case 'www.youtu.be': {
+			const query: any = parser.search ? parseQuery(parser.search) : {};
+
+			// `youtube.com/watch` keeps the video id in the `v` query
+			// parameter, while the short `youtu.be/<id>` links and the
+			// `/embed/`, `/shorts/`, `/live/` paths keep it in the pathname.
+			// Modern share urls add tracking params (e.g. `?si=`, `?t=`), so
+			// the pathname must still be used as a fallback when there is no
+			// `v`. See #1209
+			let v: string = query.v || parser.pathname.substring(1);
+
+			v = v
+				.replace(/^(watch|embed|shorts|live|v)\//, '')
+				.replace(/\/$/, '');
+
+			return v
 				? '<iframe width="' +
 						width +
 						'" height="' +
@@ -80,7 +105,7 @@ export const convertMediaUrlToVideoEmbed = (
 						'" src="' +
 						protocol +
 						'//www.youtube.com/embed/' +
-						query.v +
+						v +
 						'" frameborder="0" allowfullscreen></iframe>'
 				: url;
 		}

@@ -246,6 +246,36 @@
 			});
 		});
 
+		describe('Apply one color over text with several colors (#169)', () => {
+			it('Should recolor every part of the selection', () => {
+				const editor = getJodit();
+
+				editor.value =
+					'<p><span style="color: red">This is </span>' +
+					'<span style="color: blue">some test </span>' +
+					'<span style="color: purple">with color and some more color</span>' +
+					'<span style="color: green"> and</span>' +
+					'<span style="color: black"> things</span></p>';
+
+				const range = editor.s.createRange();
+				range.selectNodeContents(editor.editor.querySelector('p'));
+				editor.s.selectRange(range);
+
+				editor.execCommand('forecolor', false, 'rgb(0, 255, 255)');
+
+				// Every part of the text must use the newly chosen color and
+				// none of it should be left without a color.
+				expect(editor.editor.textContent).equals(
+					'This is some test with color and some more color and things'
+				);
+				editor.editor.querySelectorAll('p > *').forEach(node => {
+					expect(
+						Jodit.modules.Helpers.normalizeColor(node.style.color)
+					).equals('#00FFFF');
+				});
+			});
+		});
+
 		describe('Apply black after the default font color was changed (#1311)', () => {
 			it('Should apply color:#000000 to the selection', () => {
 				const editor = getJodit();

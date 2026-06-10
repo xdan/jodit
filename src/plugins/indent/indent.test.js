@@ -4,6 +4,47 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 describe('Test editor indent plugin', () => {
+	describe('Outdent button state for lists (#1247)', () => {
+		it('Should be enabled when the cursor is in a nested list item', () => {
+			const editor = getJodit({
+				buttons: ['indent', 'outdent']
+			});
+			editor.value = '<ul><li>parent<ul><li>child|</li></ul></li></ul>';
+			setCursorToChar(editor);
+			simulateEvent('mousedown', editor.editor);
+
+			expect(getButton('outdent', editor).hasAttribute('disabled')).is
+				.false;
+		});
+
+		it('Should stay disabled for a top-level list item without indent', () => {
+			const editor = getJodit({
+				buttons: ['indent', 'outdent']
+			});
+			editor.value = '<ul><li>top|</li></ul>';
+			setCursorToChar(editor);
+			simulateEvent('mousedown', editor.editor);
+
+			expect(getButton('outdent', editor).hasAttribute('disabled')).is
+				.true;
+		});
+
+		it('Should un-nest the sublist when the outdent button is clicked', () => {
+			const editor = getJodit({
+				buttons: ['indent', 'outdent']
+			});
+			editor.value = '<ul><li>parent<ul><li>child|</li></ul></li></ul>';
+			setCursorToChar(editor);
+			simulateEvent('mousedown', editor.editor);
+
+			clickButton('outdent', editor);
+
+			expect(sortAttributes(editor.value)).equals(
+				'<ul><li>parent</li><li>child</li></ul>'
+			);
+		});
+	});
+
 	describe('Indent', () => {
 		describe('Exec Indent command several times', () => {
 			it('Should increase margin-left', () => {

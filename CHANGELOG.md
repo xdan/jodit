@@ -9,6 +9,22 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.19
+
+#### :bug: Bug Fix
+
+- **Toolbar / Selection**: when a text selection was started inside the editor and the mouse button was released **outside** of the editable area (a drag-select that ends over the page), the editor never received the `mouseup` event, so the active state of toolbar buttons (Bold, Italic, etc.) was not recalculated and stayed stale. A document-level `mouseup` listener now re-fires `changeSelection` when the selection still belongs to the editor, so the toolbar updates correctly. Fixes [#1251](https://github.com/xdan/jodit/issues/1251).
+- **Media embed (YouTube & Vimeo)**: real-world share URLs were not converted to an embedded player. For YouTube, short links of the form `https://youtu.be/<id>?si=…` (the *Share* button format) and `?t=` timestamp links were inserted as plain text — the video id sits in the path but was only read when there was no query string — and `/shorts/<id>` / `/live/<id>` produced a broken `embed/shorts/<id>` src. For Vimeo, `?share=copy` tracking params and `channels/<name>/<id>` / `groups/<name>/videos/<id>` URLs produced a broken `video/channels/…` src. `convertMediaUrlToVideoEmbed` now extracts the video id (and the unlisted Vimeo hash) from the URL path, ignoring tracking params and channel/group/`embed`/`shorts`/`live` prefixes, and also recognises the `m.youtube.com` (mobile) and `music.youtube.com` hosts. Fixes [#1209](https://github.com/xdan/jodit/issues/1209).
+- **Indent / Lists**: the *Decrease Indent* (outdent) toolbar button stayed disabled when the cursor was inside a nested list item, even though `Shift+Tab` could un-nest it. The button's enabled state only considered an inline indent margin and ignored list nesting. It is now also enabled when the cursor sits in a list whose parent is another list item (matching the `tab` plugin's outdent behaviour). Fixes [#1247](https://github.com/xdan/jodit/issues/1247).
+- **Uploader (base64)**: with `uploader.insertImageAsBase64URI = true`, dropping or pasting images in formats outside the default `imagesExtensions` list — notably `.svg`, `.bmp`, `.webp` — failed with `Need Url for Ajax Request` instead of being inlined as a data URI (the file fell through to the server-upload path). The default `imagesExtensions` now also includes `webp`, `bmp`, `svg`, `tiff` and `avif`. Fixes [#1228](https://github.com/xdan/jodit/issues/1228).
+- **Paste (Insert only Text)**: pasting multi-paragraph HTML with the *Insert only Text* option collapsed everything into a single paragraph — block boundaries became spaces, so the text could no longer be split into list items or separate blocks. `stripTags` gained an opt-in `blockBr` mode and the *Insert only Text* path now uses it (gated on `nl2brInPlainText`), so paragraphs are separated by `<br>`. The default `stripTags` behaviour (space-joined single-line plain text) is unchanged. Fixes [#1232](https://github.com/xdan/jodit/issues/1232).
+- **Paste from Word**: list items pasted from Microsoft Word kept their auto-generated marker text — the bullet glyph or the literal item number (`1.`, `2.`, …) leaked into the content as plain text. Word emits these markers inside `<span style="mso-list:Ignore">` elements that are explicitly flagged as display-only; both paste paths now drop those spans entirely instead of just stripping their attributes — `cleanFromWord` (the *Clean* / *As text* options) and `applyStyles` (the *Keep* / insert-as-HTML option). Fixes [#948](https://github.com/xdan/jodit/issues/948).
+
+#### :house: Internal
+
+- **Accessibility tests**: added a regression test asserting that a toolbar button's `aria-label` is placed on the interactive `<button>` element (not only on the wrapper `<span>`), covering the toolbar-specific case of [#1261](https://github.com/xdan/jodit/issues/1261) (already fixed in 4.9.7).
+- **Color tests**: added a regression test for applying a single font color over a selection that already contains several different colors — every part of the text must be recolored, none left without a color, covering [#169](https://github.com/xdan/jodit/issues/169) (already fixed in the v4 style engine).
+
 ## 4.12.18
 
 #### :rocket: New Feature

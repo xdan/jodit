@@ -572,12 +572,67 @@ describe('Test helpers', () => {
 					'<iframe width="400" height="40" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>',
 					{ height: 40 }
 				],
+				// #1209: short link
+				[
+					'https://youtu.be/9bZkp7q19f0',
+					'<iframe width="400" height="345" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>'
+				],
+				// #1209: modern share link with tracking param
+				[
+					'https://youtu.be/9bZkp7q19f0?si=abcd1234',
+					'<iframe width="400" height="345" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>'
+				],
+				// #1209: short link with a timestamp
+				[
+					'https://youtu.be/9bZkp7q19f0?t=30',
+					'<iframe width="400" height="345" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>'
+				],
+				// #1209: shorts url
+				[
+					'https://www.youtube.com/shorts/9bZkp7q19f0',
+					'<iframe width="400" height="345" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>'
+				],
+				// #1209: live url
+				[
+					'https://www.youtube.com/live/9bZkp7q19f0',
+					'<iframe width="400" height="345" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>'
+				],
+				// #1209: mobile youtube url
+				[
+					'https://m.youtube.com/watch?v=9bZkp7q19f0',
+					'<iframe width="400" height="345" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>'
+				],
+				// #1209: youtube music url
+				[
+					'https://music.youtube.com/watch?v=9bZkp7q19f0',
+					'<iframe width="400" height="345" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0" allowfullscreen></iframe>'
+				],
 				[
 					'https://vimeo.com/55302365',
 					'<iframe width="400" height="345" src="https://player.vimeo.com/video/55302365" frameborder="0" allowfullscreen></iframe>'
 				],
 				[
 					'https://www.vimeo.com/55302365',
+					'<iframe width="400" height="345" src="https://player.vimeo.com/video/55302365" frameborder="0" allowfullscreen></iframe>'
+				],
+				// #1209: vimeo share link with a tracking param
+				[
+					'https://vimeo.com/55302365?share=copy',
+					'<iframe width="400" height="345" src="https://player.vimeo.com/video/55302365" frameborder="0" allowfullscreen></iframe>'
+				],
+				// #1209: unlisted vimeo video keeps its hash
+				[
+					'https://vimeo.com/55302365/abcdef0123',
+					'<iframe width="400" height="345" src="https://player.vimeo.com/video/55302365/abcdef0123" frameborder="0" allowfullscreen></iframe>'
+				],
+				// #1209: vimeo channel url
+				[
+					'https://www.vimeo.com/channels/staffpicks/55302365',
+					'<iframe width="400" height="345" src="https://player.vimeo.com/video/55302365" frameborder="0" allowfullscreen></iframe>'
+				],
+				// #1209: vimeo group url
+				[
+					'https://vimeo.com/groups/name/videos/55302365',
 					'<iframe width="400" height="345" src="https://player.vimeo.com/video/55302365" frameborder="0" allowfullscreen></iframe>'
 				]
 			].forEach(([url, result, size]) => {

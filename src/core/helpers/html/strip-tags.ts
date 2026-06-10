@@ -36,7 +36,8 @@ const ALONE_TAGS: Set<'br' | 'hr' | 'input'> = new Set(['br', 'hr', 'input']);
 export function stripTags(
 	html: string | Node,
 	doc: Document = document,
-	exclude: Nullable<Set<HTMLTagNames>> = null
+	exclude: Nullable<Set<HTMLTagNames>> = null,
+	blockBr: boolean = false
 ): string {
 	const tmp = doc.createElement('div');
 
@@ -58,7 +59,8 @@ export function stripTags(
 				? `%%%jodit-${tag}%%%${stripTags(
 						p.innerHTML,
 						doc,
-						exclude
+						exclude,
+						blockBr
 					)}%%%/jodit-${tag}%%%`
 				: `%%%jodit-single-${tag}%%%`;
 			Dom.before(p, doc.createTextNode(text));
@@ -82,7 +84,14 @@ export function stripTags(
 		}
 
 		if (nx) {
-			pr.insertBefore(doc.createTextNode(' '), nx);
+			// By default blocks are joined with a single space (single-line
+			// plain text). When `blockBr` is set, separate them with a line
+			// break instead, so paragraph structure survives — e.g. the
+			// "Insert only Text" paste option. See #1232
+			pr.insertBefore(
+				doc.createTextNode(blockBr ? '%%%jodit-single-br%%%' : ' '),
+				nx
+			);
 		}
 	});
 

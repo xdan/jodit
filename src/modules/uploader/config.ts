@@ -39,7 +39,17 @@ Config.prototype.uploader = {
 	url: '',
 
 	insertImageAsBase64URI: false,
-	imagesExtensions: ['jpg', 'png', 'jpeg', 'gif'],
+	imagesExtensions: [
+		'jpg',
+		'jpeg',
+		'png',
+		'gif',
+		'webp',
+		'bmp',
+		'svg',
+		'tiff',
+		'avif'
+	],
 	headers: null,
 	data: null,
 

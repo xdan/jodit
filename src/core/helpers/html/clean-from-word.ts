@@ -55,6 +55,22 @@ export function cleanFromWord(html: string): string {
 								break;
 
 							default:
+								// Word marks its auto-generated list markers
+								// (the literal bullet/number, e.g. `1.` or `·`)
+								// with `mso-list:Ignore`. They are display-only
+								// and must not be imported, otherwise the marker
+								// text leaks into the content. See #948
+								if (
+									/mso-list:\s*ignore/i.test(
+										(node as Element).getAttribute(
+											'style'
+										) || ''
+									)
+								) {
+									marks.push(node);
+									break;
+								}
+
 								toArray((node as Element).attributes).forEach(
 									(attr: Attr) => {
 										if (

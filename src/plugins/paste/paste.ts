@@ -222,7 +222,8 @@ export class paste extends Plugin {
 					html = stripTags(
 						html,
 						this.j.ed,
-						new Set(this.j.o.pasteExcludeStripTags)
+						new Set(this.j.o.pasteExcludeStripTags),
+						this.j.o.nl2brInPlainText
 					);
 					break;
 

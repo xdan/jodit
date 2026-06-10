@@ -1085,6 +1085,77 @@ describe('Toolbar', () => {
 			expect(italic.getAttribute('aria-pressed')).equals('false');
 		});
 
+		describe('When mouseup happens outside the editor (#1251)', function () {
+			it('Should recalculate the active state of buttons', function () {
+				const editor = getJodit({
+						history: {
+							timeout: 0 // disable delay
+						}
+					}),
+					bold = getButton('bold', editor);
+
+				editor.value = '<p>plain <strong>bold</strong></p>';
+
+				const p = editor.editor.firstChild;
+				const plain = p.firstChild;
+				const strong = p.querySelector('strong').firstChild;
+
+				// Start with the cursor in the plain text and force the
+				// toolbar to recalculate: the Bold button is inactive.
+				const startRange = editor.s.createRange();
+				startRange.setStart(plain, 0);
+				startRange.setEnd(plain, 1);
+				editor.s.selectRange(startRange);
+				simulateEvent('mousedown', editor.editor);
+				expect(bold.getAttribute('aria-pressed')).equals('false');
+
+				// Move the native selection into the STRONG tag directly,
+				// emulating a drag-selection. No event reaches the editable
+				// area, so the toolbar is still stale.
+				const range = editor.ownerDocument.createRange();
+				range.setStart(strong, 0);
+				range.setEnd(strong, strong.length);
+				const sel = editor.ownerWindow.getSelection();
+				sel.removeAllRanges();
+				sel.addRange(range);
+				expect(bold.getAttribute('aria-pressed')).equals('false');
+
+				// Drag-selection that ends outside the editor releases the
+				// mouse button over the document, not over the editor.
+				simulateEvent('mouseup', window);
+
+				expect(bold.getAttribute('aria-pressed')).equals('true');
+			});
+
+			it('Should not react when the selection is outside the editor', function () {
+				const editor = getJodit({
+						history: {
+							timeout: 0 // disable delay
+						}
+					}),
+					bold = getButton('bold', editor);
+
+				editor.value = '<p>plain text</p>';
+
+				// Move the selection outside of the editable area.
+				const outer = editor.ownerDocument.createElement('div');
+				outer.textContent = 'outside';
+				editor.ownerDocument.body.appendChild(outer);
+
+				const range = editor.ownerDocument.createRange();
+				range.selectNodeContents(outer);
+				const sel = editor.ownerWindow.getSelection();
+				sel.removeAllRanges();
+				sel.addRange(range);
+
+				simulateEvent('mouseup', window);
+
+				expect(bold.getAttribute('aria-pressed')).equals('false');
+
+				outer.remove();
+			});
+		});
+
 		describe('Disable for mode', function () {
 			it('Should disable buttons which can not be used in that mode', function () {
 				const editor = getJodit({

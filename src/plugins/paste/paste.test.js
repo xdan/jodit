@@ -484,6 +484,49 @@ const WORD_EXAMPLE =
 	'</html>\n';
 
 describe('Test paste plugin', () => {
+	describe('Clean from Word list markers (#948)', () => {
+		const { cleanFromWord } = Jodit.modules.Helpers;
+
+		it('Should drop the mso-list:Ignore marker spans (numbers)', () => {
+			const word =
+				'<p class=MsoListParagraphCxSpFirst style="mso-list:l0 level1 lfo1">' +
+				'<![if !supportLists]><span style="mso-list:Ignore">1.' +
+				'<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp; </span>' +
+				'</span><![endif]>First item</p>' +
+				'<p class=MsoListParagraphCxSpLast style="mso-list:l0 level1 lfo1">' +
+				'<![if !supportLists]><span style="mso-list:Ignore">2.' +
+				'<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp; </span>' +
+				'</span><![endif]>Second item</p>';
+
+			expect(cleanFromWord(word)).equals(
+				'<p>First item</p><p>Second item</p>'
+			);
+		});
+
+		it('Should drop the mso-list:Ignore marker spans (bullets)', () => {
+			const word =
+				'<p style="mso-list:l0 level1 lfo1">' +
+				'<span style="mso-list:Ignore">·' +
+				'<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp; </span>' +
+				'</span>Bulleted item</p>';
+
+			expect(cleanFromWord(word)).equals('<p>Bulleted item</p>');
+		});
+
+		it('Should drop the markers in the Keep / applyStyles path', () => {
+			const { applyStyles } = Jodit.modules.Helpers;
+			const word =
+				'<html xmlns:o="urn:schemas-microsoft-com:office:office">' +
+				'<head></head><body>' +
+				'<p style="mso-list:l0 level1 lfo1">' +
+				'<span style="mso-list:Ignore">1.' +
+				'<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span>' +
+				'</span>First item</p></body></html>';
+
+			expect(applyStyles(word)).equals('<p>First item</p>');
+		});
+	});
+
 	describe('Paste HTML', function () {
 		it('Should show paste html dialog', function () {
 			const editor = getJodit({
@@ -980,6 +1023,32 @@ describe('Test paste plugin', () => {
 	describe('Paste', function () {
 		describe('HTML text', function () {
 			describe('Insert only text', function () {
+				it('Should keep paragraph breaks as <br> (#1232)', function () {
+					const editor = getJodit({
+							askBeforePasteHTML: false,
+							askBeforePasteFromWord: false,
+							defaultActionOnPaste: Jodit.INSERT_ONLY_TEXT
+						}),
+						pastedText =
+							'<p>First paragraph</p><p>Second paragraph</p><p>GDPR</p>',
+						emulatePasteEvent = function (data) {
+							data.clipboardData = {
+								types: ['text/html'],
+								getData: function () {
+									return pastedText;
+								}
+							};
+						};
+
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
+					simulateEvent('paste', editor.editor, emulatePasteEvent);
+
+					expect(editor.value).equals(
+						'<p>First paragraph<br>Second paragraph<br>GDPR</p>'
+					);
+				});
+
 				it('Should insert only text from pasted html', function () {
 					const editor = getJodit({
 							askBeforePasteHTML: false,

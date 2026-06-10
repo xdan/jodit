@@ -1696,7 +1696,32 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 						this.synchronizeValues();
 					}
 				}
-			);
+			)
+			.on(this.ow, 'mouseup', (event: MouseEvent): void => {
+				if (this.o.readonly || this.__isSilentChange) {
+					return;
+				}
+
+				// When a selection is started inside the editor and the
+				// mouse button is released outside of it, the editable
+				// area never receives the `mouseup` event, so the toolbar
+				// state (active buttons) is not recalculated. Re-fire the
+				// event manually for that case while the selection still
+				// belongs to the editor. See #1251
+				const target = event.target as Node | null;
+				const insideEditor = Boolean(
+					target &&
+					isNumber((target as Node).nodeType) &&
+					editor.contains(target)
+				);
+
+				if (insideEditor || !this.s.isInsideArea) {
+					return;
+				}
+
+				this.e.fire('changeSelection');
+				this.synchronizeValues();
+			});
 	}
 
 	fetch<Response extends object = any>(

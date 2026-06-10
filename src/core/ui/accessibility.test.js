@@ -86,6 +86,21 @@ describe('Accessibility', () => {
 				'listitem'
 			);
 		});
+
+		describe('aria-label on interactive button (#1261)', () => {
+			it('should place aria-label on the inner <button> element, not only on the wrapper', () => {
+				const editor = getJodit({
+					language: 'en',
+					buttons: ['bold']
+				});
+
+				const button = getButton('bold', editor);
+
+				expect(button.tagName.toLowerCase()).equals('button');
+				expect(button.getAttribute('aria-label')).is.not.null;
+				expect(button.getAttribute('aria-label').length).to.be.above(0);
+			});
+		});
 	});
 
 	describe('Trigger button', () => {
