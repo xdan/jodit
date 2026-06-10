@@ -5,6 +5,37 @@
  */
 
 describe('Resize plugin', () => {
+	describe('Iframe mode', () => {
+		// https://github.com/xdan/jodit/issues/1266
+		it('Should hide resizer when the iframe content is scrolled', async () => {
+			const editor = getJodit({
+				iframe: true,
+				editHTMLDocumentMode: true,
+				height: 200,
+				history: { timeout: 0 }
+			});
+
+			editor.value =
+				'<p>line</p>'.repeat(20) +
+				'<p><img alt="" src="tests/artio.jpg" style="width:100px;height:100px"/></p>' +
+				'<p>line</p>'.repeat(20);
+
+			const img = editor.editor.querySelector('img');
+			simulateEvent('click', img);
+
+			const resizer = document.querySelector(
+				'.jodit-resizer[data-editor_id=' + editor.id + ']'
+			);
+			expect(resizer).is.not.null;
+			expect(resizer.parentNode).is.not.null;
+
+			editor.ew.scrollTo(0, 300);
+			await delay(100);
+
+			expect(resizer.parentNode).is.null;
+		});
+	});
+
 	describe('Resize box', () => {
 		describe('In relative object', () => {
 			it('should be in front of image', () => {

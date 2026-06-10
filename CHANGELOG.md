@@ -14,6 +14,7 @@
 #### :house: Internal
 
 - **Popup tests**: added a regression test asserting that with `allowTabNavigation: true` an inner popup (a dropdown opened from a button inside another popup — e.g. the image *Horizontal align* list) is positioned next to its trigger button. With that option the inner popup is appended into the button inside the outer popup, whose CSS `transform` shifts `position: fixed` coordinates; covers [#1265](https://github.com/xdan/jodit/issues/1265) (already fixed in 4.12.8 by the `getFixedPositionOffset` containing-block compensation from [#1350](https://github.com/xdan/jodit/issues/1350)).
+- **Resizer tests**: added a regression test asserting that in `iframe: true` + `editHTMLDocumentMode: true` mode the image resize frame is hidden when the iframe content is scrolled (the `iframe` plugin proxies the inner window's `scroll` event into the main window, where the `resizer` plugin listens). Covers the scenario from [#1266](https://github.com/xdan/jodit/issues/1266), which does not reproduce on the current version.
 
 ## 4.12.21
 
