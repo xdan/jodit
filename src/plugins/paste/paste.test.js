@@ -1020,6 +1020,45 @@ describe('Test paste plugin', () => {
 		});
 	});
 
+	describe('Paste from Word: spaces in separate spans', function () {
+		// Word puts inter-word spaces into their own spans
+		// (`<span style="letter-spacing:-.5pt"> </span>`) — they must
+		// survive every paste mode. https://github.com/xdan/jodit/issues/1230
+		const WORD_SPACES =
+			'<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta name=Generator content="Microsoft Word 15"></head><body><p class="MsoNormal"><span style="letter-spacing:-.1pt">Priame</span><span style="letter-spacing:-.5pt"> </span><span style="letter-spacing:-.1pt">ukladanie</span></p></body></html>';
+
+		['insert_as_html', 'insert_clear_html', 'insert_only_text'].forEach(
+			action => {
+				it(
+					'Should keep the spaces with action ' + action,
+					async function () {
+						const editor = getJodit({
+							askBeforePasteHTML: false,
+							askBeforePasteFromWord: false,
+							defaultActionOnPaste: action,
+							defaultActionOnPasteFromWord: action
+						});
+
+						simulateEvent('paste', editor.editor, function (data) {
+							data.clipboardData = {
+								types: ['text/html'],
+								getData: function () {
+									return WORD_SPACES;
+								}
+							};
+						});
+
+						await delay(300);
+
+						expect(editor.editor.innerText).to.include(
+							'Priame ukladanie'
+						);
+					}
+				);
+			}
+		);
+	});
+
 	describe('Paste plain text with special characters', function () {
 		// https://github.com/xdan/jodit/issues/1227
 		it('Should not lose the content after a stray < character', function () {
