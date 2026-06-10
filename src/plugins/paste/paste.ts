@@ -55,9 +55,7 @@ export class paste extends Plugin {
 				this.pasteStack.push(item)
 			);
 
-		if (jodit.o.nl2brInPlainText) {
-			this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
-		}
+		this.j.e.on('processPaste.paste', this.onProcessPasteReplaceNl2Br);
 	}
 
 	/** @override **/
@@ -256,7 +254,7 @@ export class paste extends Plugin {
 	}
 
 	/**
-	 * Replace all \\n chars in plain text to br
+	 * Escape plain text and replace all \\n chars with br
 	 */
 	@autobind
 	private onProcessPasteReplaceNl2Br(
@@ -265,7 +263,12 @@ export class paste extends Plugin {
 		type: string
 	): string | void {
 		if (type === TEXT_PLAIN + ';' && !isHTML(text)) {
-			return nl2br(text);
+			// the clipboard contains only plain text — escape special chars
+			// so a stray `<` is not parsed as an unclosed tag and does not
+			// swallow the rest of the string. See #1227
+			const escaped = htmlspecialchars(text);
+
+			return this.j.o.nl2brInPlainText ? nl2br(escaped) : escaped;
 		}
 	}
 }

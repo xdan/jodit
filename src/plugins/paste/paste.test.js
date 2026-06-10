@@ -1020,6 +1020,47 @@ describe('Test paste plugin', () => {
 		});
 	});
 
+	describe('Paste plain text with special characters', function () {
+		// https://github.com/xdan/jodit/issues/1227
+		it('Should not lose the content after a stray < character', function () {
+			const editor = getJodit();
+
+			const pastedText = 'TD}gy{<KMj3ScW1[efbi';
+			editor.value = '<p>|</p>';
+			setCursorToChar(editor);
+
+			simulateEvent('paste', editor.editor, function (data) {
+				data.clipboardData = {
+					types: ['text/plain'],
+					getData: function () {
+						return pastedText;
+					}
+				};
+			});
+
+			expect(editor.value).equals('<p>TD}gy{&lt;KMj3ScW1[efbi</p>');
+		});
+
+		it('Should keep angle brackets and ampersands as text', function () {
+			const editor = getJodit();
+
+			const pastedText = 'a < b > c & d';
+			editor.value = '<p>|</p>';
+			setCursorToChar(editor);
+
+			simulateEvent('paste', editor.editor, function (data) {
+				data.clipboardData = {
+					types: ['text/plain'],
+					getData: function () {
+						return pastedText;
+					}
+				};
+			});
+
+			expect(editor.value).equals('<p>a &lt; b &gt; c &amp; d</p>');
+		});
+	});
+
 	describe('Paste', function () {
 		describe('HTML text', function () {
 			describe('Insert only text', function () {
