@@ -36,6 +36,38 @@ describe('Select cells plugin', () => {
 		});
 	});
 
+	describe('Cells popup after drag-select (#1174)', () => {
+		it('Should keep the popup open when the selection changed right before mouseup', async () => {
+			const editor = getJodit();
+			editor.value =
+				'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr></tbody></table>';
+
+			const tds = editor.editor.querySelectorAll('td');
+
+			simulateEvent('mousedown', tds[0]);
+			// first move — the throttled handler runs immediately
+			simulateEvent('mousemove', tds[1]);
+			// let the trailing throttled move fire mid-drag (it also appends
+			// the temporary Firefox redraw-hack node into the cell)
+			await delay(editor.defaultTimeout);
+			// change the selection again and release right away, while the
+			// trailing throttled move is still pending
+			simulateEvent('mousemove', tds[2]);
+			simulateEvent('mouseup', tds[2]);
+			// mousedown and mouseup happened on different cells, so the
+			// browser dispatches the click on their common ancestor (TR)
+			simulateEvent('click', tds[2].parentNode);
+
+			expect(getOpenedPopup(editor)).is.not.null;
+
+			// the popup must survive the pending throttle timer, the redraw
+			// hack cleanup and the debounced history change events
+			await delay(1200);
+
+			expect(getOpenedPopup(editor)).is.not.null;
+		});
+	});
+
 	describe('Stop selection when the drop target is not part of the table (#1357)', () => {
 		it('Should not throw when the selected cells are no longer in the table matrix', () => {
 			const editor = getJodit();
