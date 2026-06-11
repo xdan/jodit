@@ -62,6 +62,42 @@
 			});
 		});
 
+		describe('Inline popup tooltips (#1141)', () => {
+			it('Should show a tooltip for buttons inside the table cell inline popup', () => {
+				const editor = getJodit({
+					...OPTIONS,
+					toolbarInline: true
+				});
+
+				editor.value =
+					'<table><tbody><tr><td>cell</td></tr></tbody></table>';
+
+				const td = editor.editor.querySelector('td');
+				const pos = Jodit.modules.Helpers.position(td);
+
+				simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+					Object.assign(e, {
+						clientX: pos.left,
+						clientY: pos.top
+					});
+				});
+
+				const popup = getOpenedPopup(editor);
+				expect(popup).is.not.null;
+
+				const button = getButton('brushCell', popup);
+				expect(button).is.not.null;
+
+				simulateEvent('mouseenter', button.parentElement);
+				timers.delay(100);
+
+				const tooltip =
+					editor.ownerDocument.querySelector('.jodit-ui-tooltip');
+				expect(tooltip).is.not.null;
+				expect(tooltip.textContent).equals('Background');
+			});
+		});
+
 		describe('Jodit tooltip', () => {
 			let editor, button1, button2, button3, button4;
 
