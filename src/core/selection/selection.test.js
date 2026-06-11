@@ -5,6 +5,34 @@
  */
 
 describe('Selection Module Tests', function () {
+	describe('insertHTML after the editor lost focus (#1239)', function () {
+		it('Should insert at the previous caret position, not at the start', function () {
+			const editor = getJodit();
+
+			editor.value = '<p>start|end</p>';
+			editor.s.focus();
+			setCursorToChar(editor);
+
+			// focus an external control — the editor blurs, like clicking
+			// a non-focusable <dt>/<a> element on the page
+			const input = document.createElement('input');
+			document.body.appendChild(input);
+
+			try {
+				input.focus();
+				simulateEvent('blur', editor.editor);
+
+				expect(editor.s.isFocused()).is.false;
+
+				editor.s.insertHTML('XXX');
+
+				expect(editor.value).equals('<p>startXXXend</p>');
+			} finally {
+				input.remove();
+			}
+		});
+	});
+
 	describe('Current method', function () {
 		describe('Cursor outside the editor', function () {
 			it('Should return false', function () {
