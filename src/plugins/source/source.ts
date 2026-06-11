@@ -172,6 +172,19 @@ export class source extends Plugin {
 	}
 
 	private setFocusToMirror(): void {
+		const active = this.j.od.activeElement;
+
+		// do not steal focus from another editor or control — e.g. when the
+		// mode is switched programmatically (a Vue/React wrapper re-render)
+		// while the user is already typing elsewhere. See #1356
+		if (
+			active &&
+			active !== this.j.od.body &&
+			!this.j.container.contains(active)
+		) {
+			return;
+		}
+
 		this.sourceEditor?.focus();
 	}
 

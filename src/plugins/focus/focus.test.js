@@ -114,6 +114,33 @@ describe('Focus test', () => {
 	});
 
 	describe('Multiple editors in source mode', () => {
+		// https://github.com/xdan/jodit/issues/1356
+		it('Should not steal focus when another editor switches to source mode programmatically', () => {
+			const editor1 = getJodit({
+				defaultMode: Jodit.MODE_SOURCE,
+				history: { defaultTimeout: 0 }
+			});
+			const editor2 = getJodit({
+				history: { defaultTimeout: 0 }
+			});
+
+			const mirror1 = editor1.container.querySelector(
+				'textarea.jodit-source__mirror'
+			);
+			expect(mirror1).is.not.null;
+
+			// the user works in the first editor's source area
+			mirror1.focus();
+			expect(document.activeElement).equals(mirror1);
+
+			// the second editor switches to source mode programmatically
+			// (e.g. a Vue/React wrapper re-render) — it must not pull
+			// the focus out of the first editor
+			editor2.setMode(Jodit.MODE_SOURCE);
+
+			expect(document.activeElement).equals(mirror1);
+		});
+
 		it('Should not cause focus competition when switching between editors', () => {
 			const editor1 = getJodit({
 				defaultMode: Jodit.MODE_SOURCE,
