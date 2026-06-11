@@ -477,9 +477,9 @@ export class Dom {
 			return false;
 		}
 
-		const win = node.ownerDocument?.defaultView;
-
-		return Boolean(win && node.nodeType === Node.ELEMENT_NODE);
+		// no `defaultView` requirement — nodes of an inert document
+		// (`DOMParser`, `implementation.createHTMLDocument`) are still elements
+		return node.nodeType === Node.ELEMENT_NODE;
 	}
 
 	/**
@@ -503,9 +503,11 @@ export class Dom {
 			return false;
 		}
 
+		// an inert document has no browsing context (`defaultView` is null),
+		// but its nodes are same-realm HTMLElements
 		const win = node.ownerDocument?.defaultView;
 
-		return Boolean(win && node instanceof win.HTMLElement);
+		return node instanceof (win ? win.HTMLElement : HTMLElement);
 	}
 
 	/**

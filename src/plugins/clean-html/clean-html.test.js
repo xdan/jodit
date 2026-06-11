@@ -352,6 +352,39 @@ describe('Clean html plugin', function () {
 		});
 	});
 
+	describe('Sanitize sandbox must not load resources (#1237)', function () {
+		it('Should parse the assigned value in an inert document', function () {
+			const editor = getJodit();
+
+			let sandBox = null;
+			editor.e.on('safeHTML', box => {
+				sandBox = box;
+			});
+
+			editor.value =
+				'<p>test <img alt="" src="tests/artio.jpg?inert-check"></p>';
+
+			expect(sandBox).is.not.null;
+			// an inert document has no browsing context, so the browser
+			// does not fetch images while the value is being sanitized
+			expect(sandBox.ownerDocument.defaultView).is.null;
+
+			expect(editor.value).equals(
+				'<p>test <img alt="" src="tests/artio.jpg?inert-check"></p>'
+			);
+		});
+
+		it('Should keep the iframe sandbox when useIframeSandbox is enabled', function () {
+			const editor = getJodit({
+				cleanHTML: { useIframeSandbox: true }
+			});
+
+			editor.value = '<p>test</p>';
+
+			expect(editor.value).equals('<p>test</p>');
+		});
+	});
+
 	describe('Allow tags: disallowed tag with attributes (#1224)', function () {
 		it('Should remove the tag and not throw', async function () {
 			const editor = getJodit({

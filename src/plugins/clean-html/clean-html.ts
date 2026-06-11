@@ -117,10 +117,16 @@ export class cleanHtml extends Plugin {
 	protected onBeforeSetNativeEditorValue(data: { value: string }): boolean {
 		const [sandBox, iframe] = this.j.o.cleanHTML.useIframeSandbox
 			? this.j.createInside.sandbox()
-			: [this.j.createInside.div()];
+			: [
+					// an inert document never loads sub-resources, so the
+					// images in the value are not re-requested from the
+					// server on every assignment (e.g. on each change in
+					// jodit-react). See #1237
+					this.j.od.implementation.createHTMLDocument('').body
+				];
 
 		sandBox.innerHTML = data.value;
-		this.onSafeHTML(sandBox);
+		this.j.e.fire('safeHTML', sandBox);
 		data.value = sandBox.innerHTML;
 		safeHTML(sandBox, { safeJavaScriptLink: true, removeOnError: true });
 		Dom.safeRemove(iframe);
