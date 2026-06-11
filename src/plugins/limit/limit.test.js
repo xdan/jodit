@@ -5,6 +5,53 @@
  */
 
 describe('Limit plugin', function () {
+	describe('limitChars with countTextSpaces (#1144)', function () {
+		it('Should count spaces toward the limit when countTextSpaces is on', function (done) {
+			const editor = getJodit({
+				limitChars: 6,
+				countTextSpaces: true,
+				history: {
+					timeout: 5
+				}
+			});
+
+			let fired = false;
+			editor.e.on('denyChars.limit', () => {
+				fired = true;
+			});
+
+			// 4 visible characters, but 7 including spaces
+			editor.value = '<p>1 2 3 4</p>';
+
+			editor.async.setTimeout(() => {
+				expect(fired).is.true;
+				done();
+			}, 200);
+		});
+
+		it('Should not count spaces by default', function (done) {
+			const editor = getJodit({
+				limitChars: 6,
+				history: {
+					timeout: 5
+				}
+			});
+
+			let fired = false;
+			editor.e.on('denyChars.limit', () => {
+				fired = true;
+			});
+
+			editor.value = '<p>1 2 3 4</p>';
+
+			editor.async.setTimeout(() => {
+				expect(fired).is.false;
+				expect(editor.value).equals('<p>1 2 3 4</p>');
+				done();
+			}, 200);
+		});
+	});
+
 	describe('limit.limit event', function () {
 		it('Should fire limit.limit when limitChars is reached via keydown', function (done) {
 			const editor = getJodit({

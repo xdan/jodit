@@ -79,8 +79,15 @@ export class limit extends Plugin {
 			return true;
 		}
 
+		// with `countTextSpaces` enabled the limiter counts characters the
+		// same way as the `stat` plugin's counter — including spaces. See #1144
+		const charsCount = jodit.o.countTextSpaces
+			? text.replace(INVISIBLE_SPACE_REG_EXP(), '').replace(/[\r\n]/g, '')
+					.length
+			: words.join('').length;
+
 		const should = Boolean(
-			limitChars && isGt(words.join('').length, limitChars, strict)
+			limitChars && isGt(charsCount, limitChars, strict)
 		);
 
 		if (should) {
