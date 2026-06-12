@@ -527,6 +527,74 @@ describe('Test paste plugin', () => {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/1078
+	describe('Word detection (#1078)', () => {
+		const emulate = pastedText => data => {
+			data.clipboardData = {
+				types: ['text/html'],
+				getData: () => pastedText
+			};
+		};
+
+		describe('Modern Word clipboard fragment (single-quoted mso styles, no meta generator, no font tags)', () => {
+			it('Should show the Word paste dialog', () => {
+				const editor = getJodit();
+
+				const word =
+					'<html xmlns:o="urn:schemas-microsoft-com:office:office" ' +
+					'xmlns:w="urn:schemas-microsoft-com:office:word">' +
+					'<body><!--StartFragment-->' +
+					"<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'>" +
+					'Hello<o:p></o:p></p>' +
+					'<!--EndFragment--></body></html>';
+
+				simulateEvent('paste', editor.editor, emulate(word));
+
+				const dialog = getOpenedDialog(editor);
+				expect(dialog).is.not.null;
+				expect(dialog.textContent).contains('Word Paste Detected');
+			});
+		});
+
+		describe('LibreOffice Writer clipboard fragment', () => {
+			it('Should show the Word paste dialog', () => {
+				const editor = getJodit();
+
+				const libre =
+					'<html><head>' +
+					'<meta http-equiv="content-type" content="text/html; charset=utf-8">' +
+					'<meta name="generator" content="LibreOffice 7.6.4.1 (Linux)">' +
+					'</head><body>' +
+					'<p style="margin-bottom: 0.1in; line-height: 115%">Hello</p>' +
+					'</body></html>';
+
+				simulateEvent('paste', editor.editor, emulate(libre));
+
+				const dialog = getOpenedDialog(editor);
+				expect(dialog).is.not.null;
+				expect(dialog.textContent).contains('Word Paste Detected');
+			});
+		});
+
+		describe('Plain site HTML', () => {
+			it('Should show the regular HTML dialog, not the Word one', () => {
+				const editor = getJodit();
+
+				simulateEvent(
+					'paste',
+					editor.editor,
+					emulate('<p>ordinary <strong>html</strong></p>')
+				);
+
+				const dialog = getOpenedDialog(editor);
+				expect(dialog).is.not.null;
+				expect(dialog.textContent).does.not.contain(
+					'Word Paste Detected'
+				);
+			});
+		});
+	});
+
 	describe('Paste HTML', function () {
 		it('Should show paste html dialog', function () {
 			const editor = getJodit({
