@@ -527,6 +527,80 @@ describe('Test paste plugin', () => {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/1061
+	describe('Paste toolbar button (#1061)', () => {
+		let clipboardMocked = false;
+
+		const mockClipboard = types => {
+			const item = {
+				types: Object.keys(types),
+				getType: type =>
+					Promise.resolve(new Blob([types[type]], { type }))
+			};
+
+			Object.defineProperty(navigator, 'clipboard', {
+				configurable: true,
+				value: {
+					read: () => Promise.resolve([item]),
+					readText: () => Promise.resolve(types['text/plain'] || '')
+				}
+			});
+			clipboardMocked = true;
+		};
+
+		afterEach(() => {
+			if (clipboardMocked) {
+				delete navigator.clipboard;
+				clipboardMocked = false;
+			}
+		});
+
+		it('Should paste HTML from the clipboard like Ctrl+V does, not only the plain text', async () => {
+			const editor = getJodit({
+				askBeforePasteHTML: false,
+				defaultActionOnPaste: Jodit.INSERT_AS_HTML,
+				history: { timeout: 0 }
+			});
+
+			mockClipboard({
+				'text/html': '<h1 style="color:tomato">Hello World</h1>',
+				'text/plain': 'Hello World'
+			});
+
+			editor.value = '<p>|<br></p>';
+			setCursorToChar(editor);
+
+			clickButton('paste', editor);
+			await editor.async.requestIdlePromise();
+			await delay(50);
+
+			expect(sortAttributes(editor.value)).equals(
+				'<h1 style="color:tomato">Hello World</h1>'
+			);
+		});
+
+		it('Should fall back to the plain text when clipboard has no HTML', async () => {
+			const editor = getJodit({
+				askBeforePasteHTML: false,
+				defaultActionOnPaste: Jodit.INSERT_AS_HTML,
+				history: { timeout: 0 }
+			});
+
+			mockClipboard({
+				'text/plain': 'plain only'
+			});
+
+			editor.value = '<p>|<br></p>';
+			setCursorToChar(editor);
+
+			clickButton('paste', editor);
+			await editor.async.requestIdlePromise();
+			await delay(50);
+
+			expect(editor.value).equals('<p>plain only</p>');
+		});
+	});
+
 	// https://github.com/xdan/jodit/issues/1078
 	describe('Word detection (#1078)', () => {
 		const emulate = pastedText => data => {

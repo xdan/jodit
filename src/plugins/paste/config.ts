@@ -20,6 +20,7 @@ import {
 	INSERT_AS_TEXT,
 	INSERT_ONLY_TEXT,
 	IS_PROD,
+	TEXT_HTML,
 	TEXT_PLAIN
 } from 'jodit/core/constants';
 import { Config } from 'jodit/config';
@@ -102,7 +103,17 @@ Config.prototype.controls.paste = {
 				const items = await (navigator.clipboard as any).read();
 
 				if (items && items.length) {
-					const textBlob = await items[0].getType(TEXT_PLAIN);
+					const item = items[0];
+
+					// Prefer the HTML flavor so the button behaves like the
+					// Ctrl+V shortcut (which receives text/html from the
+					// native paste event). See
+					// https://github.com/xdan/jodit/issues/1061
+					const type = item.types?.includes(TEXT_HTML)
+						? TEXT_HTML
+						: TEXT_PLAIN;
+
+					const textBlob = await item.getType(type);
 					text = await new Response(textBlob).text();
 				}
 
