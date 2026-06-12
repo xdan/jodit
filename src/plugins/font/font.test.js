@@ -4,6 +4,50 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 describe('Font test', function () {
+	// https://github.com/xdan/jodit/issues/1370
+	describe('font select button label (#1370)', () => {
+		const btnText = editor =>
+			(
+				editor.container.querySelector('[data-ref="font"]')
+					?.textContent || ''
+			).trim();
+
+		const make = () =>
+			getJodit({
+				history: { timeout: 0 },
+				toolbarAdaptive: false,
+				buttons: 'font',
+				controls: { font: { component: 'select' } }
+			});
+
+		it('Should show Default for unstyled text, not the raw font stack', async () => {
+			const editor = make();
+			editor.value = '<p>plain text</p>';
+			editor.s.focus();
+			editor.s.setCursorIn(editor.editor.querySelector('p').firstChild);
+			editor.e.fire('updateToolbar');
+			await delay(80);
+
+			expect(btnText(editor)).equals('Default');
+			editor.destruct();
+		});
+
+		it('Should show the font family for styled text', async () => {
+			const editor = make();
+			editor.value =
+				'<p><span style="font-family: Georgia, Palatino, serif">x</span></p>';
+			editor.s.focus();
+			editor.s.setCursorIn(
+				editor.editor.querySelector('span').firstChild
+			);
+			editor.e.fire('updateToolbar');
+			await delay(80);
+
+			expect(btnText(editor)).equals('Georgia');
+			editor.destruct();
+		});
+	});
+
 	describe('FontName', function () {
 		describe('Open fontname list and select some element', function () {
 			it('Should apply this font to current selection elements', function () {

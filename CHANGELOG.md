@@ -18,6 +18,10 @@
 - **Backspace/Delete**: new option `delete.disableCases` (a `Set<string>`) lets you turn off individual Backspace/Delete cleanup behaviors that the plugin applies after the native deletion — e.g. `delete: { disableCases: new Set(['join-neighbors']) }` stops Backspace at the start of a paragraph from merging it into the previous one. Available keys: `remove-unbreakable`, `remove-not-editable`, `remove-char`, `table-cell`, `remove-empty-parent`, `remove-empty-neighbor`, `join-two-lists`, `join-neighbors`, `unwrap-first-list-item`. Addresses [#1060](https://github.com/xdan/jodit/issues/1060).
 - **Clean HTML**: new opt-in option `cleanHTML.collapseEmptyValueToEmptyString` (default `false`). When the editor holds only a single empty block — e.g. `<p><br></p>` left in the DOM after the user deletes all content (contenteditable keeps that caret container) — `editor.value` and the synced source element now return an empty string `''` instead of `<p><br></p>`, which is what forms usually expect on submit. Real content (including a `<p><br></p>` followed by other blocks) is never collapsed. Addresses [#1149](https://github.com/xdan/jodit/issues/1149).
 
+#### :bug: Bug Fix
+
+- **Font select button**: with the font control rendered as a select (`controls: { font: { component: 'select' } }`), unstyled text showed the editor's raw default font stack (e.g. `-apple-system`) on the button instead of `Default`. The font control's `value` now returns an empty value when the computed font-family equals the editor's own default, so the button shows the `Default` list entry. Fixes [#1370](https://github.com/xdan/jodit/issues/1370).
+
 ## 4.12.23
 
 #### :bug: Bug Fix

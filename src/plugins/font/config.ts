@@ -161,5 +161,29 @@ Config.prototype.controls.font = {
 		}
 	},
 
+	// When no font is explicitly set, the computed font-family equals the
+	// editor's own default (e.g. `-apple-system, …`). Return '' so the
+	// button shows the `Default` list entry instead of that raw stack.
+	// See #1370
+	value: (editor: IJodit): string | undefined => {
+		const current = editor.s.current();
+		if (!current) {
+			return;
+		}
+
+		const box = Dom.closest(current, Dom.isElement, editor.editor);
+		if (!box) {
+			return;
+		}
+
+		const value = css(box, 'font-family').toString();
+
+		if (value === css(editor.editor, 'font-family').toString()) {
+			return '';
+		}
+
+		return value;
+	},
+
 	tooltip: 'Font family'
 } as IControlType<IJodit> as IControlType;
