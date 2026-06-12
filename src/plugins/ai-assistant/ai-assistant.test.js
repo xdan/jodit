@@ -122,6 +122,33 @@ describe('AI Assistant', () => {
 					});
 				});
 
+				describe('Call Insert After with several selected paragraphs', () => {
+					// https://github.com/xdan/jodit/issues/1263
+					it('Should insert the result after the whole selection, not after its first paragraph', async () => {
+						editor.value = '<p>|one</p><p>two</p><p>three|</p>';
+						setCursorToChar(editor, '|');
+
+						clickButton('ai_assistant', editor);
+						ui = getOpenedDialog(editor).querySelector(
+							'.jodit-ui-ai-assistant'
+						).component;
+
+						ui.promptInput.value = 'Hello';
+						clickButton('ai_assistant', ui);
+						await editor.async.requestIdlePromise();
+
+						clickButton('Insert After', ui);
+						await editor.async.requestIdlePromise();
+
+						expect(
+							editor.value.startsWith(
+								'<p>one</p><p>two</p><p>threeAI:'
+							),
+							editor.value
+						).is.true;
+					});
+				});
+
 				describe('Call Update', () => {
 					it('Should second time call aiCallback and show result', async () => {
 						clickButton('update', ui);

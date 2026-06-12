@@ -57,7 +57,15 @@ export class aiAssistant extends Plugin {
 		return new UiAiAssistant(jodit, {
 			onInsertAfter(html: string): void {
 				jodit.s.focus();
-				jodit.s.setCursorAfter(jodit.s.current()!);
+
+				// `current()` returns a node of the selection START, so with
+				// several selected paragraphs the result landed after the
+				// first one — collapse the range to the END of the selection
+				// instead. See https://github.com/xdan/jodit/issues/1263
+				const range = jodit.s.range;
+				range.collapse(false);
+				jodit.s.selectRange(range);
+
 				jodit.s.insertHTML(html);
 				__dialog.close();
 			},
