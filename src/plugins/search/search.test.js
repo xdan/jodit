@@ -70,6 +70,38 @@ describe('Search plugin', () => {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/918
+	describe('Enter inside the search input (#918)', function () {
+		it('Should prevent the default action synchronously so the parent form is not submitted', function () {
+			const editor = getJodit({
+				defaultTimeout: 100
+			});
+
+			editor.value = '<p>test test test</p>';
+
+			simulateEvent('keydown', 'f', editor.editor, function (options) {
+				options.ctrlKey = true;
+			});
+
+			const search = editor.container.querySelector('.jodit-ui-search');
+			expect(search).is.not.null;
+
+			const query = search.querySelector('[data-ref="query"]');
+			query.value = 'test';
+
+			// the browser decides about the form submit right after the
+			// synchronous dispatch — a debounced preventDefault is too late
+			const event = new KeyboardEvent('keydown', {
+				key: Jodit.KEY_ENTER,
+				bubbles: true,
+				cancelable: true
+			});
+			query.dispatchEvent(event);
+
+			expect(event.defaultPrevented).is.true;
+		});
+	});
+
 	describe('CTRL + H', function () {
 		it('Should show search and replace form and query field must have focus', function () {
 			const editor = getJodit({

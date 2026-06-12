@@ -138,22 +138,37 @@ export class UISearch extends UIElement<IJodit> {
 			.on(
 				this.queryInput,
 				'keydown',
-				this.j.async.debounce(async (e: KeyboardEvent) => {
-					switch (e.key) {
-						case consts.KEY_ENTER:
+				((): ((e: KeyboardEvent) => void) => {
+					const debounced = this.j.async.debounce(
+						async (e: KeyboardEvent) => {
+							switch (e.key) {
+								case consts.KEY_ENTER:
+									if (await jodit.e.fire('searchNext')) {
+										this.close();
+									}
+
+									break;
+
+								default:
+									jodit.e.fire(this, 'needUpdateCounters');
+									break;
+							}
+						},
+						this.j.defaultTimeout
+					);
+
+					return (e: KeyboardEvent): void => {
+						// Must be canceled synchronously — inside the debounced
+						// handler the browser has already submitted the parent
+						// form. See https://github.com/xdan/jodit/issues/918
+						if (e.key === consts.KEY_ENTER) {
 							e.preventDefault();
 							e.stopImmediatePropagation();
-							if (await jodit.e.fire('searchNext')) {
-								this.close();
-							}
+						}
 
-							break;
-
-						default:
-							jodit.e.fire(this, 'needUpdateCounters');
-							break;
-					}
-				}, this.j.defaultTimeout)
+						debounced(e);
+					};
+				})()
 			);
 	}
 
