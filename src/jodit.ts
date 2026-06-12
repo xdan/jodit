@@ -1503,6 +1503,16 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				(opt.uploader.url || opt.uploader.insertImageAsBase64URI)
 			) {
 				this.uploader.bind(this.editor);
+			} else if (!opt.enableDragAndDropFileToEditor) {
+				// Without a bound uploader nobody cancels a file drop, and
+				// Firefox inserts the dropped image natively — the option
+				// must mean "do nothing". See
+				// https://github.com/xdan/jodit/issues/1077
+				this.e.on(editor, 'drop', (e: DragEvent): void => {
+					if (e.dataTransfer?.files?.length) {
+						e.preventDefault();
+					}
+				});
 			}
 
 			// in initEditor - the editor could change
