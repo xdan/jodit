@@ -503,6 +503,11 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 									return false;
 								}
 
+								self.j.e.fire(
+									'afterImageEditorSave',
+									data,
+									name
+								);
 								self.onSave(
 									name,
 									data,
@@ -516,6 +521,10 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 						break;
 
 					case self.buttons.save:
+						// Notify listeners that a crop/resize was applied,
+						// passing the action box (action + box dimensions).
+						// See https://github.com/xdan/jodit/issues/820
+						self.j.e.fire('afterImageEditorSave', data);
 						self.onSave(undefined, data, self.hide, (e: Error) => {
 							self.j.alert(e.message);
 						});
