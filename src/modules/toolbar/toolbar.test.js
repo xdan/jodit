@@ -5,6 +5,61 @@
  */
 
 describe('Toolbar', () => {
+	// https://github.com/xdan/jodit/issues/1094
+	describe('Content control with isDisabled (#1094)', () => {
+		const makeEditor = disabled =>
+			getJodit({
+				buttons: [
+					{
+						name: 'customUpload',
+						isDisabled: () => disabled,
+						getContent: editor =>
+							editor.create.fromHTML(
+								'<span><input type="file" class="custom-upload-input"></span>'
+							)
+					}
+				],
+				defaultTimeout: 0,
+				history: { timeout: 0 }
+			});
+
+		it('Should disable the button and its nested inputs when isDisabled returns true', async () => {
+			const editor = makeEditor(true);
+			editor.e.fire('updateToolbar');
+			await delay(50);
+
+			const button = editor.container.querySelector(
+				'.jodit-toolbar-content_customUpload'
+			);
+			expect(button).is.not.null;
+
+			expect(button.hasAttribute('disabled')).is.true;
+			expect(
+				button
+					.querySelector('.custom-upload-input')
+					.hasAttribute('disabled')
+			).is.true;
+		});
+
+		it('Should keep the button enabled when isDisabled returns false', async () => {
+			const editor = makeEditor(false);
+			editor.e.fire('updateToolbar');
+			await delay(50);
+
+			const button = editor.container.querySelector(
+				'.jodit-toolbar-content_customUpload'
+			);
+			expect(button).is.not.null;
+
+			expect(button.hasAttribute('disabled')).is.false;
+			expect(
+				button
+					.querySelector('.custom-upload-input')
+					.hasAttribute('disabled')
+			).is.false;
+		});
+	});
+
 	describe('Update toolbar', () => {
 		describe('Call updateToolbar method', () => {
 			describe('With different events', () => {
