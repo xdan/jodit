@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.25
+
+#### :bug: Bug Fix
+
+- **Source mode / complex scripts (Thai, Arabic, Hindi, Hebrew, Persian)**: the ACE source editor was loaded from CDN at version **1.4.2 (2018)**, which predates working bidirectional-text and combining-character support — complex-script text rendered misaligned with the underlying code ("invisible characters" after lines), the caret/selection landed on the wrong characters and copying lost as many characters as there were combining marks. The default `sourceEditorCDNUrlsJS` now points to **ACE 1.43.3**, which ships an automatic per-line bidi handler and years of complex-script rendering fixes; all existing source-mode integration tests pass against the new build, plus new regression tests for the Thai round-trip and the bidi layer.
+
 ## 4.12.24
 
 #### :rocket: New Feature

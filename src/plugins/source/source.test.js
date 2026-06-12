@@ -82,6 +82,120 @@ describe('Source code test', function () {
 			}).timeout(6000);
 		});
 
+		describe('Complex scripts in ACE (Thai, Arabic, Hebrew…)', function () {
+			// https://xdsoft.net/jodit/pro/ tracker f6facc24: in old ACE
+			// builds complex-script text was rendered misaligned and
+			// selection/copy lost characters
+			it('Should keep a Thai value lossless through the source mode round-trip', function (done) {
+				unmockPromise();
+
+				const THAI = 'การแจ้งเตือนรหัสผ่านหมดอายุ';
+
+				const timeout = /*ok*/ setTimeout(function () {
+					done(new Error('Timeout error'));
+				}, 5000);
+
+				const editor = getJodit({
+					defaultMode: Jodit.MODE_SOURCE,
+					sourceEditor: 'ace',
+					beautifyHTML: false,
+					events: {
+						beforeDestruct: function () {
+							return false;
+						},
+						sourceEditorReady: function (editor) {
+							editor.async.setTimeout(() => {
+								try {
+									const ace =
+										editor.__plugins.source.sourceEditor;
+
+									// the model keeps every UTF-16 unit
+									expect(ace.getValue()).equals(
+										'<p>' + THAI + '</p>'
+									);
+
+									// select all inside ACE — the selection
+									// must cover the full string, nothing lost
+									ace.selectAll();
+									expect(
+										ace.getSelectionEnd() -
+											ace.getSelectionStart()
+									).equals(('<p>' + THAI + '</p>').length);
+
+									// and the value survives switching back
+									editor.setMode(Jodit.MODE_WYSIWYG);
+									expect(editor.value).equals(
+										'<p>' + THAI + '</p>'
+									);
+
+									done();
+								} catch (e) {
+									done(e);
+								} finally {
+									clearTimeout(timeout);
+								}
+							}, 300);
+						}
+					}
+				});
+
+				editor.value = '<p>' + THAI + '</p>';
+			}).timeout(6000);
+
+			it('Should have the automatic bidi handler active (modern ACE)', function (done) {
+				unmockPromise();
+
+				const timeout = /*ok*/ setTimeout(function () {
+					done(new Error('Timeout error'));
+				}, 5000);
+
+				getJodit({
+					defaultMode: Jodit.MODE_SOURCE,
+					sourceEditor: 'ace',
+					events: {
+						beforeDestruct: function () {
+							return false;
+						},
+						sourceEditorReady: function (editor) {
+							try {
+								// ace.edit() returns the existing instance
+								// attached to the element
+								const instance = editor.ownerWindow.ace.edit(
+									editor.container.querySelector(
+										'.jodit-source__mirror-fake'
+									)
+								);
+
+								// modern ACE processes RTL fragments
+								// (Arabic, Hebrew…) per line out of the box —
+								// the 1.4.x builds had no working bidi layer
+								expect(Boolean(instance.session.$bidiHandler))
+									.is.true;
+
+								done();
+							} catch (e) {
+								done(e);
+							} finally {
+								clearTimeout(timeout);
+							}
+						}
+					}
+				});
+			}).timeout(6000);
+
+			it('Should use a modern ACE build by default', function () {
+				const m = Jodit.defaultOptions.sourceEditorCDNUrlsJS[0].match(
+					/ace\/(\d+)\.(\d+)\.(\d+)\/ace\.js/
+				);
+
+				expect(m).is.not.null;
+				// 1.43+ — older builds (1.4.x) break complex scripts/bidi
+				expect(
+					parseInt(m[1], 10) * 10000 + parseInt(m[2], 10)
+				).is.above(10042);
+			});
+		});
+
 		describe('Split mode', function () {
 			it('Should shoe source and wysiwyg in same time', function () {
 				const editor = getJodit({
