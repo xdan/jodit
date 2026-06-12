@@ -5,6 +5,55 @@
  */
 
 describe('Link plugin', () => {
+	// https://github.com/xdan/jodit/issues/1204
+	describe('Aria label input (#1204)', () => {
+		it('Should not show the aria-label input by default', () => {
+			const editor = getJodit();
+			editor.value = '<p>|here|</p>';
+			setCursorToChar(editor);
+
+			clickButton('link', editor);
+			const popup = getOpenedPopup(editor);
+
+			expect(popup.querySelector('[ref=aria_label_input]')).is.null;
+		});
+
+		it('Should set aria-label on the link when the option is enabled', () => {
+			const editor = getJodit({ link: { ariaLabelInput: true } });
+			editor.value = '<p>|here|</p>';
+			setCursorToChar(editor);
+
+			clickButton('link', editor);
+			const popup = getOpenedPopup(editor);
+
+			const aria = popup.querySelector('[ref=aria_label_input]');
+			expect(aria).is.not.null;
+
+			popup.querySelector('[ref=url_input]').value = 'https://x.com';
+			aria.value = 'Go to X homepage';
+
+			simulateEvent('submit', popup.querySelector('form'));
+
+			expect(sortAttributes(editor.value)).equals(
+				'<p><a aria-label="Go to X homepage" href="https://x.com">here</a></p>'
+			);
+		});
+
+		it('Should read an existing aria-label when editing a link', () => {
+			const editor = getJodit({ link: { ariaLabelInput: true } });
+			editor.value =
+				'<p><a href="https://x.com" aria-label="Existing">here</a></p>';
+			editor.s.setCursorIn(editor.editor.querySelector('a').firstChild);
+
+			clickButton('link', editor);
+			const popup = getOpenedPopup(editor);
+
+			expect(popup.querySelector('[ref=aria_label_input]').value).equals(
+				'Existing'
+			);
+		});
+	});
+
 	describe('Insert link', () => {
 		describe('Insert simple link', () => {
 			it('Should insert as simple link', () => {

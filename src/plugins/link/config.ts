@@ -58,6 +58,13 @@ declare module 'jodit/config' {
 			openInNewTabCheckboxDefaultChecked: boolean;
 
 			/**
+			 * Show an `aria-label` text input in the link dialog so an
+			 * accessible name can be set on the `<a>` (useful when several
+			 * links share the same visible text, e.g. "here"). Default: false.
+			 */
+			ariaLabelInput: boolean;
+
+			/**
 			 * Use an input text to ask the classname or a select or not ask
 			 */
 			modeClassName: 'input' | 'select';
@@ -95,6 +102,7 @@ Config.prototype.link = {
 	noFollowCheckbox: true,
 	openInNewTabCheckbox: true,
 	openInNewTabCheckboxDefaultChecked: false,
+	ariaLabelInput: false,
 	modeClassName: 'input',
 	selectMultipleClassName: true,
 	preventReadOnlyNavigation: true,

@@ -176,7 +176,8 @@ export class link extends Plugin {
 		let { content_input } = elements as IDictionary<HTMLInputElement>;
 
 		const { className_input } = elements as IDictionary<HTMLInputElement>,
-			{ className_select } = elements as IDictionary<HTMLSelectElement>;
+			{ className_select } = elements as IDictionary<HTMLSelectElement>,
+			{ aria_label_input } = elements as IDictionary<HTMLInputElement>;
 
 		if (!content_input) {
 			content_input = jodit.c.element('input', {
@@ -208,6 +209,10 @@ export class link extends Plugin {
 
 		if (!isImageContent && current) {
 			content_input.value = getSelectionText();
+		}
+
+		if (aria_label_input) {
+			aria_label_input.value = link ? attr(link, 'aria-label') || '' : '';
 		}
 
 		if (link) {
@@ -334,6 +339,11 @@ export class link extends Plugin {
 					}
 
 					attr(a, 'rel', relParts.length ? relParts.join(' ') : null);
+				}
+
+				if (aria_label_input) {
+					const ariaLabel = aria_label_input.value.trim();
+					attr(a, 'aria-label', ariaLabel || null);
 				}
 
 				jodit.e.fire('applyLink', jodit, a, form);

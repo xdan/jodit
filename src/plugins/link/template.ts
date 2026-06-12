@@ -22,6 +22,7 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 	const {
 		openInNewTabCheckbox,
 		noFollowCheckbox,
+		ariaLabelInput,
 		modeClassName,
 		selectSizeClassName,
 		selectMultipleClassName,
@@ -39,6 +40,15 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 				required: true
 			})
 		]),
+		ariaLabelInput
+			? new UIBlock(editor, [
+					new UIInput(editor, {
+						name: 'ariaLabel',
+						ref: 'aria_label_input',
+						label: 'Aria label'
+					})
+				])
+			: null,
 		new UIBlock(
 			editor,
 			[
