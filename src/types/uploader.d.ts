@@ -102,6 +102,30 @@ export interface IUploaderOptions<T> {
 	pathVariableName: string;
 	withCredentials: boolean;
 
+	/**
+	 * Called with the list of files right before they are uploaded (or read as
+	 * base64). Return `false` to abort the whole upload — useful for client
+	 * side validation (size, type, count). Throwing an Error also aborts and
+	 * routes the message through the uploader error handler.
+	 *
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 	uploader: {
+	 * 		url: '...',
+	 * 		beforeUpload(files) {
+	 * 			for (const file of files) {
+	 * 				if (file.size > 2 * 1024 * 1024) {
+	 * 					this.jodit.message.error('Max 2MB');
+	 * 					return false;
+	 * 				}
+	 * 			}
+	 * 		}
+	 * 	}
+	 * });
+	 * ```
+	 */
+	beforeUpload?: (this: T, files: File[]) => boolean | void;
+
 	prepareData: (this: T, formData: FormData) => any;
 	buildData?: (this: T, formData: any) => BuildDataResult;
 	queryBuild?: (

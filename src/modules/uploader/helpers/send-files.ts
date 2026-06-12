@@ -39,6 +39,16 @@ export function sendFiles(
 		return Promise.reject(error('Need files'));
 	}
 
+	// Client-side validation hook — returning `false` aborts the upload.
+	// See https://github.com/xdan/jodit/issues/1329
+	if (isFunction(o.beforeUpload)) {
+		if (o.beforeUpload.call(uploader, fileList) === false) {
+			const err = error('Upload canceled');
+			(handlerError || o.defaultHandlerError).call(uploader, err);
+			return Promise.reject(err);
+		}
+	}
+
 	const promises: Array<Promise<unknown>> = [];
 
 	if (o.insertImageAsBase64URI) {
