@@ -42,6 +42,15 @@ export abstract class ViewComponent<T extends IViewBased = IViewBased>
 	setParentView(jodit: T): this {
 		this.jodit = jodit;
 
+		// Inherit the owner window from the parent view — for an editor
+		// created with a custom `ownerWindow` (e.g. inside an iframe) the
+		// component default (the global `window`) is wrong: outside-click
+		// handlers of dropdowns/popups listened to the wrong window. See
+		// https://github.com/xdan/jodit/issues/965
+		if (jodit.ow) {
+			this.ownerWindow = jodit.ow;
+		}
+
 		jodit.components.add(this);
 
 		return this;
