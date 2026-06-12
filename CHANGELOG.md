@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.24
+
+#### :rocket: New Feature
+
+- **Clean HTML**: new opt-in option `cleanHTML.collapseEmptyValueToEmptyString` (default `false`). When the editor holds only a single empty block — e.g. `<p><br></p>` left in the DOM after the user deletes all content (contenteditable keeps that caret container) — `editor.value` and the synced source element now return an empty string `''` instead of `<p><br></p>`, which is what forms usually expect on submit. Real content (including a `<p><br></p>` followed by other blocks) is never collapsed. Addresses [#1149](https://github.com/xdan/jodit/issues/1149).
+
 ## 4.12.23
 
 #### :bug: Bug Fix

@@ -31,6 +31,16 @@ declare module 'jodit/config' {
 			 * Remove empty elements
 			 */
 			removeEmptyElements: boolean;
+
+			/**
+			 * Return an empty string from `editor.value` (and the synced source
+			 * element) when the editor holds only a single empty block — e.g.
+			 * `<p><br></p>` left after the user deletes all the content.
+			 * `contenteditable` keeps that caret container in the DOM, so by
+			 * default the value getter returns it as-is; enable this to collapse
+			 * it to `''` for form submission.
+			 */
+			collapseEmptyValueToEmptyString: boolean;
 			/**
 			 * Replace old tags to new eg. <i> to <em>, <b> to <strong>
 			 */
@@ -211,6 +221,7 @@ Config.prototype.cleanHTML = {
 	timeout: 300,
 	removeEmptyElements: true,
 	fillEmptyParagraph: true,
+	collapseEmptyValueToEmptyString: false,
 	replaceNBSP: true,
 	replaceOldTags: {
 		i: 'em',

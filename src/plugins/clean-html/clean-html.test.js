@@ -5,6 +5,55 @@
  */
 
 describe('Clean html plugin', function () {
+	// https://github.com/xdan/jodit/issues/1149
+	describe('collapseEmptyValueToEmptyString option', () => {
+		it('By default an empty editor returns the caret container as-is', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.editor.innerHTML = '<p><br></p>';
+			expect(editor.value).equals('<p><br></p>');
+		});
+
+		it('With the option on, an empty editor returns an empty string', () => {
+			const editor = getJodit({
+				history: { timeout: 0 },
+				cleanHTML: { collapseEmptyValueToEmptyString: true }
+			});
+
+			editor.editor.innerHTML = '<p><br></p>';
+			expect(editor.value).equals('');
+
+			editor.editor.innerHTML = '<p></p>';
+			expect(editor.value).equals('');
+		});
+
+		it('With the option on and enter: div', () => {
+			const editor = getJodit({
+				history: { timeout: 0 },
+				enter: 'div',
+				cleanHTML: { collapseEmptyValueToEmptyString: true }
+			});
+
+			editor.editor.innerHTML = '<div><br></div>';
+			expect(editor.value).equals('');
+		});
+
+		it('With the option on, real content is untouched', () => {
+			const editor = getJodit({
+				history: { timeout: 0 },
+				cleanHTML: { collapseEmptyValueToEmptyString: true }
+			});
+
+			editor.value = '<p>real</p>';
+			expect(editor.value).equals('<p>real</p>');
+
+			editor.editor.innerHTML = '<p><br></p><p>x</p>';
+			expect(editor.value).equals('<p><br></p><p>x</p>');
+
+			editor.editor.innerHTML = '<p>hi<br></p>';
+			expect(editor.value).equals('<p>hi<br></p>');
+		});
+	});
+
 	describe('Exec bold for collapsed range and move cursor in another place', () => {
 		it('Should remove empty STRONG element', async () => {
 			const editor = getJodit({

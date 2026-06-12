@@ -133,6 +133,26 @@ export class cleanHtml extends Plugin {
 		return false;
 	}
 
+	/**
+	 * Collapse a value that holds only a single empty block (e.g.
+	 * `<p><br></p>` left after deleting all content) to an empty string —
+	 * opt-in via `cleanHTML.collapseEmptyValueToEmptyString`. See #1149
+	 */
+	@watch(':afterGetValueFromEditor')
+	protected onAfterGetValueFromEditor(data: { value: string }): void {
+		if (!this.j.o.cleanHTML.collapseEmptyValueToEmptyString) {
+			return;
+		}
+
+		if (
+			/^<([a-z][a-z0-9]*)\b[^>]*>(?:<br\/?>)?<\/\1>$/i.test(
+				data.value.trim()
+			)
+		) {
+			data.value = '';
+		}
+	}
+
 	@watch(':safeHTML')
 	protected onSafeHTML(sandBox: HTMLElement): void {
 		const sanitizer = this.j.o.cleanHTML.sanitizer;
