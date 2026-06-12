@@ -166,7 +166,12 @@ export class selectCells extends Plugin {
 			return;
 		}
 
-		const node = this.j.ed.elementFromPoint(e.clientX, e.clientY);
+		// Inside Shadow DOM `document.elementFromPoint` returns the shadow
+		// host, so the lookup must start from the shadow root
+		const node = (this.j.o.shadowRoot ?? this.j.ed).elementFromPoint(
+			e.clientX,
+			e.clientY
+		);
 
 		if (!node) {
 			return;
@@ -252,7 +257,12 @@ export class selectCells extends Plugin {
 
 		this.j.unlock();
 
-		const node = this.j.ed.elementFromPoint(e.clientX, e.clientY);
+		// Inside Shadow DOM `document.elementFromPoint` returns the shadow
+		// host, so the lookup must start from the shadow root
+		const node = (this.j.o.shadowRoot ?? this.j.ed).elementFromPoint(
+			e.clientX,
+			e.clientY
+		);
 
 		if (!node) {
 			return;

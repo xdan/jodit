@@ -213,7 +213,11 @@ export class addNewLine extends Plugin {
 	private __onMouseMove(e: MouseEvent): void {
 		const editor = this.j;
 
-		let currentElement = editor.ed.elementFromPoint(e.clientX, e.clientY);
+		// Inside Shadow DOM `document.elementFromPoint` returns the shadow
+		// host, so the lookup must start from the shadow root
+		let currentElement = (
+			editor.o.shadowRoot ?? editor.ed
+		).elementFromPoint(e.clientX, e.clientY);
 
 		if (
 			!Dom.isHTMLElement(currentElement) ||

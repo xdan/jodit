@@ -44,4 +44,26 @@ describe('Shadow DOM plugins', () => {
 
 		expect(getOpenedPopup(editor)).is.not.null;
 	});
+
+	// https://github.com/xdan/jodit/issues/1312
+	describe('Table cell popup', () => {
+		it('Should open the cell properties popup on cell click inside the shadow root', () => {
+			editor.value = '<table><tbody><tr><td>1</td></tr></tbody></table>';
+
+			const td = editor.editor.querySelector('td');
+			td.scrollIntoView({ block: 'center' });
+			const pos = Jodit.modules.Helpers.position(td);
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+				Object.assign(e, {
+					clientX: pos.left,
+					clientY: pos.top
+				});
+			});
+
+			const popup = getOpenedPopup(editor);
+			expect(popup).is.not.null;
+			expect(popup.querySelector('[data-ref="brushCell"]')).is.not.null;
+		});
+	});
 });

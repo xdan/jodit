@@ -216,10 +216,11 @@ export class Popup extends UIGroup implements IPopup {
 	 */
 	protected getKeepBound(getBound: getBoundFunc): getBoundFunc {
 		const oldBound = getBound();
-		const elmUnderCursor = this.od.elementFromPoint(
-			oldBound.left,
-			oldBound.top
-		);
+		// Inside Shadow DOM `document.elementFromPoint` returns the shadow
+		// host, so the lookup must start from the shadow root
+		const elmUnderCursor = (
+			this.j.o.shadowRoot ?? this.od
+		).elementFromPoint(oldBound.left, oldBound.top);
 
 		if (!elmUnderCursor) {
 			return getBound;
