@@ -4,6 +4,38 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+describe('Backspace/Delete next to a table (#1064)', () => {
+	describe('Backspace at the start of a paragraph after a table', () => {
+		it('Should merge the text into the last table cell, not into the <table> element', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value =
+				'<table><tbody><tr><td>x</td><td>y</td></tr></tbody></table><p>|tail</p>';
+			setCursorToChar(editor);
+
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+			expect(sortAttributes(editor.value)).equals(
+				'<table><tbody><tr><td>x</td><td>ytail</td></tr></tbody></table>'
+			);
+		});
+	});
+
+	describe('Delete at the end of a paragraph before a table', () => {
+		it('Should merge the text into the first table cell, not into the <table> element', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value =
+				'<p>head|</p><table><tbody><tr><td>x</td><td>y</td></tr></tbody></table>';
+			setCursorToChar(editor);
+
+			simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+
+			expect(sortAttributes(editor.value)).equals(
+				'<table><tbody><tr><td>headx</td><td>y</td></tr></tbody></table>'
+			);
+		});
+	});
+});
+
 describe('Backspace/Delete key', function () {
 	let editor, range, area;
 

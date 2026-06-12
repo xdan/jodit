@@ -60,7 +60,7 @@ export function checkJoinNeighbors(
 				moveContentAndRemoveEmpty(
 					jodit,
 					mainClosestBox,
-					sibling,
+					resolveTableSibling(sibling, backspace),
 					backspace
 				))
 		) {
@@ -70,6 +70,25 @@ export function checkJoinNeighbors(
 	}
 
 	return false;
+}
+
+/**
+ * Content cannot be merged into the `<table>` element itself — it would land
+ * between the table sections (after `</tbody>`), which is invalid HTML and
+ * gets foster-parented out of the table on the next parse. Merge into the
+ * edge cell instead. See https://github.com/xdan/jodit/issues/1064
+ * @private
+ */
+function resolveTableSibling(
+	sibling: Element,
+	backspace: boolean
+): Nullable<Element> {
+	if (!Dom.isTag(sibling, 'table')) {
+		return sibling;
+	}
+
+	const cells = sibling.querySelectorAll('td,th');
+	return cells.length ? cells[backspace ? cells.length - 1 : 0] : null;
 }
 
 function checkMoveListContent(
