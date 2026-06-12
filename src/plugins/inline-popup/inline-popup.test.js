@@ -576,6 +576,51 @@ describe('Text Inline Popup plugin', () => {
 			});
 		});
 
+		// https://github.com/xdan/jodit/issues/1058
+		describe('Selection toolbar in iframe mode (#1058)', () => {
+			it('Should open the popup next to the selection, not at the iframe-local coordinates', async () => {
+				// push the editor down so the iframe offset is significant —
+				// without the offset correction the popup opens at the
+				// iframe-local (small) coordinates far above the editor
+				const spacer = document.createElement('div');
+				spacer.style.height = '700px';
+				document.body.insertBefore(spacer, document.body.firstChild);
+
+				const editor = getJodit({
+					iframe: true,
+					toolbarInlineForSelection: true,
+					history: { timeout: 0 }
+				});
+
+				editor.value = '<p>|some selected text|</p>';
+				editor.container.scrollIntoView({ block: 'center' });
+
+				const p = editor.editor.querySelector('p');
+
+				simulateEvent('mousedown', p);
+				setCursorToChar(editor);
+				simulateEvent(['mouseup', 'selectionchange'], p);
+
+				await delay(editor.defaultTimeout + 50);
+
+				const popup = getOpenedPopup(editor);
+				expect(popup).is.not.null;
+
+				// position() compensates the iframe offset — the popup must
+				// sit within a sane distance of the paragraph in the host
+				// document coordinates
+				const pPos = Jodit.modules.Helpers.position(p, editor);
+				const popupRect = popup.getBoundingClientRect();
+
+				expect(
+					Math.abs(popupRect.top - pPos.top),
+					`popup.top=${popupRect.top} p.top=${pPos.top}`
+				).is.below(200);
+
+				spacer.remove();
+			});
+		});
+
 		describe('Click a button in the selection toolbar (#1238)', () => {
 			it('Should keep the toolbar open while the selection persists', async () => {
 				const editor = getJodit({

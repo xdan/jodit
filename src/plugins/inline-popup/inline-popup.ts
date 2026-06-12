@@ -277,12 +277,28 @@ export class inlinePopup extends Plugin {
 			const sel = this.j.s.sel;
 
 			if (sel && !sel.isCollapsed) {
-				this.showPopup(
-					() => this.j.s.range.getBoundingClientRect(),
-					'selection'
-				);
+				this.showPopup(() => this.__selectionBound(), 'selection');
 			}
 		}, 1);
+	}
+
+	/**
+	 * The selection rect comes from the editor document — in iframe mode its
+	 * coordinates are iframe-local, while the popup lives in the host
+	 * document, so the iframe offset must be added. See
+	 * https://github.com/xdan/jodit/issues/1058
+	 */
+	private __selectionBound(): IBound {
+		const rect = this.j.s.range.getBoundingClientRect();
+		let { left, top } = rect;
+
+		if (this.j.iframe) {
+			const offset = position(this.j.iframe, this.j, true);
+			left += offset.left;
+			top += offset.top;
+		}
+
+		return { left, top, width: rect.width, height: rect.height };
 	}
 
 	private snapRange: Nullable<Range> = null;
@@ -344,7 +360,7 @@ export class inlinePopup extends Plugin {
 			return;
 		}
 
-		this.showPopup(() => range.getBoundingClientRect(), type);
+		this.showPopup(() => this.__selectionBound(), type);
 	}
 
 	/**
