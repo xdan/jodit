@@ -11,6 +11,7 @@
  */
 
 import type { IJodit } from 'jodit/types';
+import type { Table } from 'jodit/modules';
 import { pluginSystem } from 'jodit/core/global';
 import { normalizeColor } from 'jodit/core/helpers/';
 
@@ -31,28 +32,30 @@ export function color(editor: IJodit): void {
 		third: string
 	): false | void => {
 		const colorHEX: string | false = normalizeColor(third);
+		const value = !colorHEX ? '' : (colorHEX as string);
 
-		switch (command) {
-			case 'background':
-				editor.s.commitStyle({
-					attributes: {
-						style: {
-							backgroundColor: !colorHEX
-								? ''
-								: (colorHEX as string)
-						}
-					}
-				});
-				break;
-			case 'forecolor':
-				editor.s.commitStyle({
-					attributes: {
-						style: {
-							color: !colorHEX ? '' : (colorHEX as string)
-						}
-					}
-				});
-				break;
+		const style =
+			command === 'background'
+				? { backgroundColor: value }
+				: { color: value };
+
+		// Cells selected with the `select-cells` plugin drop or collapse the
+		// native range, so `commitStyle` would paint a pending caret format
+		// outside the table instead of the selection the user sees. Apply the
+		// style to the content of every selected cell instead. See #1250
+		const selectedCells = editor
+			.getInstance<Table>('Table', editor.o)
+			.getAllSelectedCells();
+
+		if (selectedCells.length && editor.s.isCollapsed()) {
+			selectedCells.forEach(cell => {
+				editor.s.select(cell, true);
+				editor.s.commitStyle({ attributes: { style } });
+			});
+
+			editor.s.sel?.removeAllRanges();
+		} else {
+			editor.s.commitStyle({ attributes: { style } });
 		}
 
 		editor.synchronizeValues();

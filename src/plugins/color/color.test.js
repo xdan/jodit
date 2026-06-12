@@ -246,6 +246,65 @@
 			});
 		});
 
+		describe('Apply color to cells selected with select-cells (#1250)', () => {
+			it('Should recolor the text inside every selected cell', () => {
+				const editor = getJodit();
+
+				// Word-pasted tables carry their own inline colors on nested spans
+				editor.value =
+					'<table><tbody><tr>' +
+					'<td><span style="color: blue">one</span></td>' +
+					'<td>two</td>' +
+					'<td>three</td>' +
+					'</tr></tbody></table>';
+
+				const tds = editor.editor.querySelectorAll('td');
+
+				// Select two cells with the select-cells drag
+				simulateEvent('mousedown', tds[0]);
+				simulateEvent(['mousemove', 'mouseup'], tds[1]);
+
+				expect(
+					editor.getInstance('Table').getAllSelectedCells().length
+				).equals(2);
+
+				editor.execCommand('forecolor', false, '#FF0000');
+
+				[tds[0], tds[1]].forEach(td => {
+					const walker = editor.ed.createTreeWalker(
+						td,
+						NodeFilter.SHOW_TEXT
+					);
+
+					let textNode;
+					while ((textNode = walker.nextNode())) {
+						if (!textNode.nodeValue.trim()) {
+							continue;
+						}
+
+						const color = editor.ownerWindow.getComputedStyle(
+							textNode.parentElement
+						).color;
+
+						expect(
+							Jodit.modules.Helpers.normalizeColor(color),
+							'cell text: ' + textNode.nodeValue
+						).equals('#FF0000');
+					}
+				});
+
+				// the third cell was not selected and must keep its color
+				const thirdColor = editor.ownerWindow.getComputedStyle(
+					tds[2].firstChild.nodeType === 3
+						? tds[2]
+						: tds[2].firstChild
+				).color;
+				expect(
+					Jodit.modules.Helpers.normalizeColor(thirdColor)
+				).does.not.equal('#FF0000');
+			});
+		});
+
 		describe('Apply color over a selection that includes a table (#1221)', () => {
 			it('Should recolor the text inside every table cell', () => {
 				const editor = getJodit();
