@@ -5,6 +5,61 @@
  */
 
 describe('Select cells plugin', () => {
+	// https://github.com/xdan/jodit/issues/1163
+	describe('Ctrl/Cmd + click multi-cell selection (#1163)', () => {
+		const ctrlClick = td =>
+			simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+				e.ctrlKey = true;
+			});
+
+		it('Should accumulate non-contiguous cells', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value =
+				'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr></tbody></table>';
+			const tds = editor.editor.querySelectorAll('td');
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], tds[0]);
+			ctrlClick(tds[2]);
+
+			const selected = editor
+				.getInstance('Table')
+				.getAllSelectedCells()
+				.map(c => c.textContent)
+				.sort();
+			expect(selected).deep.equals(['1', '3']);
+		});
+
+		it('Should toggle a cell off on a second ctrl+click', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value =
+				'<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
+			const tds = editor.editor.querySelectorAll('td');
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], tds[0]);
+			ctrlClick(tds[1]);
+			expect(
+				editor.getInstance('Table').getAllSelectedCells().length
+			).equals(2);
+
+			ctrlClick(tds[1]);
+			expect(
+				editor.getInstance('Table').getAllSelectedCells().length
+			).equals(1);
+		});
+
+		it('Should show the cells popup after a ctrl+click selection', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value =
+				'<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
+			const tds = editor.editor.querySelectorAll('td');
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], tds[0]);
+			ctrlClick(tds[1]);
+
+			expect(getOpenedPopup(editor)).is.not.null;
+		});
+	});
+
 	describe('Delete content of several selected cells (#1273)', () => {
 		[
 			['backspace', Jodit.KEY_BACKSPACE],

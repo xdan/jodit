@@ -92,14 +92,11 @@ export class selectCells extends Plugin {
 	 * Mouse click inside the table
 	 */
 	@autobind
-	protected onStartSelection(cell: HTMLTableCellElement): void | false {
+	protected onStartSelection(
+		cell: HTMLTableCellElement,
+		event?: MouseEvent
+	): void | false {
 		if (this.j.o.readonly) {
-			return;
-		}
-
-		this.unselectCells();
-
-		if (cell === this.j.editor) {
 			return;
 		}
 
@@ -108,6 +105,47 @@ export class selectCells extends Plugin {
 			'table',
 			this.j.editor
 		) as HTMLTableElement;
+
+		// Ctrl/Cmd + click toggles a single cell into the existing selection
+		// instead of resetting it — non-contiguous multi-cell selection.
+		// See https://github.com/xdan/jodit/issues/1163
+		if (
+			(event?.ctrlKey || event?.metaKey) &&
+			cell !== this.j.editor &&
+			table &&
+			Dom.isCell(cell)
+		) {
+			if (this.__tableModule.getAllSelectedCells().includes(cell)) {
+				this.__tableModule.removeSelection(cell);
+			} else {
+				if (!cell.firstChild) {
+					cell.appendChild(this.j.createInside.element('br'));
+				}
+				this.__tableModule.addSelection(cell);
+			}
+
+			this.__selectedCell = cell;
+			this.j.s.sel?.removeAllRanges();
+
+			if (this.__tableModule.getAllSelectedCells().length) {
+				this.j.e.fire(
+					'showPopup',
+					table,
+					(): IBound => position(cell, this.j),
+					'cells'
+				);
+			} else {
+				this.j.e.fire('hidePopup', 'cells');
+			}
+
+			return false;
+		}
+
+		this.unselectCells();
+
+		if (cell === this.j.editor) {
+			return;
+		}
 
 		if (!cell || !table) {
 			return;
