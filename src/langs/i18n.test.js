@@ -9,6 +9,25 @@
 		describe('Helper 18n', function () {
 			const i18n = Jodit.modules.Helpers.i18n;
 
+			describe('List style items translations (#997)', function () {
+				// The master i18n key list was built only from ar.js — keys
+				// missing there (Lower Alpha etc.) were dropped from every
+				// language bundle even though the translations existed
+				it('Should translate ordered-list menu items to Portuguese', function () {
+					expect(
+						i18n('Lower Alpha', [], { language: 'pt_br' }, true)
+					).equals('Letra Minúscula');
+
+					expect(
+						i18n('Upper Roman', [], { language: 'pt_br' }, true)
+					).equals('Romano Maiúscula');
+
+					expect(
+						i18n('Lower Greek', [], { language: 'de' }, true)
+					).equals('Griechisch');
+				});
+			});
+
 			describe('Turkish translation of the Word paste prompt', function () {
 				// https://github.com/xdan/jodit/issues/1245
 				it('Should be Turkish, not German', function () {

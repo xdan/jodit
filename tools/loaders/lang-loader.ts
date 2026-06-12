@@ -25,11 +25,31 @@ export default function (this: LoaderContext<object>, source: string): string {
 	const lang = loadLangObject(source);
 
 	if (!keys.length && lang) {
-		keys = Object.keys(
-			loadLangObject(
-				fs.readFileSync(path.resolve(directory, 'ar.js'), 'utf-8')
-			)
-		);
+		// The master key list used to be `Object.keys(ar.js)` — any key
+		// missing from ar.js was silently dropped from EVERY language
+		// (e.g. the translated 'Lower Alpha'/'Upper Roman' list-style items
+		// never reached the bundle, https://github.com/xdan/jodit/issues/997).
+		// Build it as the union of the keys of all language files instead.
+		const all = new Set<string>();
+
+		fs.readdirSync(directory).forEach(file => {
+			if (
+				!file.endsWith('.js') ||
+				file.endsWith('.test.js') ||
+				file === 'keys.js' ||
+				file === 'index.js'
+			) {
+				return;
+			}
+
+			Object.keys(
+				loadLangObject(
+					fs.readFileSync(path.resolve(directory, file), 'utf-8')
+				)
+			).forEach(key => all.add(key));
+		});
+
+		keys = [...all].sort();
 	}
 
 	if (isKeys) {
