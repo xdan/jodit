@@ -7,6 +7,7 @@
 import type { HTMLTagNames, ICommitStyle, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { attr } from 'jodit/core/helpers/utils/attr';
+import { css } from 'jodit/core/helpers/utils/css';
 
 import { wrapList } from './list/wrap-list';
 import { wrapUnwrappedText } from './wrap-unwrapped-text';
@@ -22,9 +23,32 @@ export function wrap(
 ): HTMLElement {
 	const wrapper = findOrCreateWrapper(commitStyle, font, jodit);
 
-	return commitStyle.elementIsList
-		? wrapList(commitStyle, wrapper, jodit)
-		: Dom.replace(wrapper, commitStyle.element, jodit.createInside, true);
+	if (commitStyle.elementIsList) {
+		return wrapList(commitStyle, wrapper, jodit);
+	}
+
+	const newWrapper = Dom.replace(
+		wrapper,
+		commitStyle.element,
+		jodit.createInside,
+		true
+	);
+
+	if (commitStyle.elementIsBlock) {
+		// Inline font styles left over from pasted content visually override
+		// the new block format — e.g. an h2 with `font-weight: normal;
+		// font-size: 24px` does not look like a heading at all, so the
+		// command seems to do nothing. See
+		// https://github.com/xdan/jodit/issues/1063
+		css(newWrapper, 'fontSize', null);
+		css(newWrapper, 'fontWeight', null);
+
+		if (!attr(newWrapper, 'style')) {
+			attr(newWrapper, 'style', null);
+		}
+	}
+
+	return newWrapper;
 }
 
 const WRAP_NODES = new Set([
