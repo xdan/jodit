@@ -22,7 +22,7 @@ import './config';
 
 import type { DeleteMode } from './interface';
 import { checkNotCollapsed } from './cases/check-not-collapsed';
-import { cases } from './cases';
+import { casesMap } from './cases';
 
 export class backspace extends Plugin {
 	static override requires = ['hotkeys'];
@@ -107,14 +107,20 @@ export class backspace extends Plugin {
 
 			moveNodeInsideStart(jodit, fakeNode, backspace);
 
+			const disabled = jodit.o.delete.disableCases;
+
 			if (
-				cases.some((func): void | true => {
+				casesMap.some(([key, func]): void | true => {
+					if (disabled && disabled.has(key)) {
+						return;
+					}
+
 					if (
 						isFunction(func) &&
 						func(jodit, fakeNode, backspace, mode)
 					) {
 						if (!IS_PROD) {
-							console.info('Remove case:', func.name);
+							console.info('Remove case:', key);
 						}
 						return true;
 					}

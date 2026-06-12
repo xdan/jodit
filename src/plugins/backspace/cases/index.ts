@@ -8,6 +8,10 @@
  * @module plugins/backspace
  */
 
+import type { IJodit } from 'jodit/types';
+
+import type { DeleteMode } from '../interface';
+
 import { checkJoinNeighbors } from './check-join-neighbors';
 import { checkJoinTwoLists } from './check-join-two-lists';
 import { checkRemoveChar } from './check-remove-char';
@@ -18,17 +22,37 @@ import { checkRemoveUnbreakableElement } from './check-remove-unbreakable-elemen
 import { checkTableCell } from './check-table-cell';
 import { checkUnwrapFirstListItem } from './check-unwrap-first-list-item';
 
+// Individual cases narrow `fakeNode` to different node subtypes (Text,
+// Element, …); the dispatcher always passes a Node, so accept `any` here and
+// keep the strong typing inside each case implementation.
+type CaseFn = (
+	jodit: IJodit,
+
+	fakeNode: any,
+	backspace: boolean,
+	mode: DeleteMode
+) => void | boolean;
+
 /**
+ * Ordered delete/backspace cases with stable keys. The first one returning
+ * `true` wins. The keys are stable across minified builds (function names are
+ * mangled by terser) so they can be referenced by `delete.disableCases`.
  * @private
  */
-export const cases = [
-	checkRemoveUnbreakableElement,
-	checkRemoveContentNotEditable,
-	checkRemoveChar,
-	checkTableCell,
-	checkRemoveEmptyParent,
-	checkRemoveEmptyNeighbor,
-	checkJoinTwoLists,
-	checkJoinNeighbors,
-	checkUnwrapFirstListItem
+export const casesMap: ReadonlyArray<readonly [string, CaseFn]> = [
+	['remove-unbreakable', checkRemoveUnbreakableElement],
+	['remove-not-editable', checkRemoveContentNotEditable],
+	['remove-char', checkRemoveChar],
+	['table-cell', checkTableCell],
+	['remove-empty-parent', checkRemoveEmptyParent],
+	['remove-empty-neighbor', checkRemoveEmptyNeighbor],
+	['join-two-lists', checkJoinTwoLists],
+	['join-neighbors', checkJoinNeighbors],
+	['unwrap-first-list-item', checkUnwrapFirstListItem]
 ];
+
+/**
+ * @private
+ * @deprecated Use `casesMap` to also get the stable case keys.
+ */
+export const cases: CaseFn[] = casesMap.map(([, fn]) => fn);

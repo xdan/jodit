@@ -24,6 +24,22 @@ declare module 'jodit/config' {
 				backspaceWord: string[];
 				backspaceSentence: string[];
 			};
+
+			/**
+			 * Disable specific Backspace/Delete cleanup cases by their stable
+			 * key, so the plugin no longer applies that particular behavior.
+			 * Available keys: `remove-unbreakable`, `remove-not-editable`,
+			 * `remove-char`, `table-cell`, `remove-empty-parent`,
+			 * `remove-empty-neighbor`, `join-two-lists`, `join-neighbors`,
+			 * `unwrap-first-list-item`.
+			 *
+			 * ```javascript
+			 * Jodit.make('#editor', {
+			 * 	 delete: { disableCases: new Set(['remove-empty-parent']) }
+			 * });
+			 * ```
+			 */
+			disableCases?: Set<string>;
 		};
 	}
 }

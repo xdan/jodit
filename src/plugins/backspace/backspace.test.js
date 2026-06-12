@@ -4,6 +4,44 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+describe('Disable cases via delete.disableCases (#1060)', () => {
+	it('Should not merge paragraphs when join-neighbors is disabled', () => {
+		const editor = getJodit({
+			history: { timeout: 0 },
+			delete: { disableCases: new Set(['join-neighbors']) }
+		});
+
+		editor.value = '<p>one</p><p>|two</p>';
+		setCursorToChar(editor);
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+		expect(editor.value).equals('<p>one</p><p>two</p>');
+	});
+
+	it('Should still merge paragraphs by default', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+
+		editor.value = '<p>one</p><p>|two</p>';
+		setCursorToChar(editor);
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+		expect(editor.value).equals('<p>onetwo</p>');
+	});
+
+	it('Should still remove a character when an unrelated case is disabled', () => {
+		const editor = getJodit({
+			history: { timeout: 0 },
+			delete: { disableCases: new Set(['join-neighbors']) }
+		});
+
+		editor.value = '<p>ab|c</p>';
+		setCursorToChar(editor);
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+		expect(editor.value).equals('<p>ac</p>');
+	});
+});
+
 describe('Backspace/Delete next to a table (#1064)', () => {
 	describe('Backspace at the start of a paragraph after a table', () => {
 		it('Should merge the text into the last table cell, not into the <table> element', () => {
