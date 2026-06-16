@@ -16,18 +16,8 @@ import { isVoid } from 'jodit/core/helpers/checker/is-void';
 import { Config } from 'jodit/config';
 
 import { isAtom } from './extend';
+import { isUnsafeProtoKey } from './is-unsafe-proto-key';
 import { keys } from './utils';
-
-/**
- * Keys that must never be copied from a (potentially untrusted) config object —
- * assigning them during a recursive merge can reach and mutate
- * `Object.prototype` (prototype pollution, CWE-1321).
- */
-const UNSAFE_PROTO_KEYS = ['__proto__', 'constructor', 'prototype'];
-
-function isUnsafeProtoKey(key: string): boolean {
-	return UNSAFE_PROTO_KEYS.indexOf(key) !== -1;
-}
 
 /**
  * @example

@@ -14,6 +14,8 @@ import { isNumeric } from 'jodit/core/helpers/checker/is-numeric';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 
+import { isUnsafeProtoKey } from './is-unsafe-proto-key';
+
 /**
  * Safe access in tree object
  *
@@ -33,6 +35,10 @@ export function set<T>(chain: string, value: unknown, obj: IDictionary): void {
 	}
 
 	const parts = chain.split('.');
+
+	if (parts.some(isUnsafeProtoKey)) {
+		return;
+	}
 
 	let result = obj,
 		key = parts[0];

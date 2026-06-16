@@ -26,6 +26,7 @@ export * from './extend';
 export * from './get';
 export * from './get-class-name';
 export * from './human-size-to-bytes';
+export * from './is-unsafe-proto-key';
 export * from './mark-deprecated';
 export * from './parse-query';
 export * from './print';

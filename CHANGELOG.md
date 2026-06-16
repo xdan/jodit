@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.26
+
+#### :bug: Bug Fix
+
+- **Security / Helpers (prototype pollution)**: `Jodit.modules.Helpers.set(chain, value, obj)` walked the dot-separated `chain` and created/followed each segment without filtering prototype-mutating keys, so a chain such as `__proto__.polluted` (e.g. `set('__proto__.polluted', 'yes', {})`) could reach and mutate `Object.prototype` (CWE-1321). `set` now bails out when any segment is `__proto__`, `constructor`, or `prototype`, reusing the same guard added for `Jodit.configure()` in 4.12.18. Responsibly reported by Junming Wu.
+
 ## 4.12.25
 
 #### :bug: Bug Fix

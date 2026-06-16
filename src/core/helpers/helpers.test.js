@@ -495,6 +495,31 @@ describe('Test helpers', () => {
 					expect(obj).deep.eq(value[2]);
 				}
 			});
+
+			it('Should not pollute Object.prototype via __proto__ in the chain', () => {
+				delete Object.prototype.polluted;
+
+				Jodit.modules.Helpers.set('__proto__.polluted', 'yes', {});
+
+				expect({}.polluted).eq(undefined);
+				expect(Object.prototype.polluted).eq(undefined);
+
+				delete Object.prototype.polluted;
+			});
+
+			it('Should ignore chains with constructor / prototype keys', () => {
+				delete Object.prototype.pwned;
+
+				Jodit.modules.Helpers.set(
+					'constructor.prototype.pwned',
+					'yes',
+					{}
+				);
+
+				expect({}.pwned).eq(undefined);
+
+				delete Object.prototype.pwned;
+			});
 		});
 	});
 
