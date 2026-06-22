@@ -36,11 +36,18 @@ const HTML_INTEGRATION_POINTS = new Set([
  * MathML/SVG children and HTML below an integration point are kept.
  */
 function isSmuggledForeignHtml(elm: Element): boolean {
-	if (elm.namespaceURI !== HTML_NAMESPACE || elm.closest('math,svg') === null) {
+	if (
+		elm.namespaceURI !== HTML_NAMESPACE ||
+		elm.closest('math,svg') == null
+	) {
 		return false;
 	}
 
-	for (let parent = elm.parentElement; parent; parent = parent.parentElement) {
+	for (
+		let parent = elm.parentElement;
+		parent;
+		parent = parent.parentElement
+	) {
 		const name = parent.nodeName.toLowerCase();
 
 		if (name === 'math' || name === 'svg') {
