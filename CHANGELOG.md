@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.28
+
+#### :bug: Bug Fix
+
+- **Security / clean-html (mutation XSS, CWE-79)**: the HTML sanitizer (`safeHTML`) walked the parsed value as elements, but a handler smuggled as `<style>` rawtext inside a MathML/SVG foreign-content carrier (e.g. `math > mtext > table > mglyph > style` hiding an `<img onload=…>`) was never an element during that walk. A later serialize-reparse then hoisted the `<img>` out of `<style>` into a live HTML node with its `on*` handler intact, so an application that re-rendered `editor.value` could execute attacker script with no user interaction — a stored XSS in the default config affecting all 3.x/4.x through 4.12.27. The fix drops the smuggled HTML at the source: any HTML-namespace element the parser placed inside `<math>`/`<svg>` outside an integration point (`foreignObject`/`annotation-xml`/`desc`/`title`) is removed before the walk, which also covers carriers nested one level deeper without a re-parse loop. Legitimate MathML/SVG content and top-level `<style>`/`<script>` are preserved. Responsibly reported by Younghun Ko of AhnLab ([@koyokr](https://github.com/koyokr)) (GHSA-rxcw-mc6f-6hr3).
+
 ## 4.12.26
 
 #### :bug: Bug Fix
