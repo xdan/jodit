@@ -772,6 +772,52 @@ describe('Clean html plugin', function () {
 			});
 		});
 
+		describe('mXSS MathML/<style> rawtext carrier (regression)', function () {
+			const GIF =
+				'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+			const carrier = leaf =>
+				'<math><mtext><table><mglyph><style>' +
+				leaf +
+				'</style></mglyph></table></mtext></math>';
+			// Several handler types in one leaf: onload (fires on the gif), onfocus (auto-fires via
+			// autofocus), onerror. The carrier element and every one of them must be removed.
+			const payload =
+				'<img src="' +
+				GIF +
+				'" onload="window.__x = 1" onerror="window.__x = 1" onfocus="window.__x = 1" autofocus tabindex="0">';
+
+			it('Should not keep an on* handler hoisted out of a <style> rawtext carrier', async function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false, timeout: 0 }
+				});
+
+				// Positive control, same run: a plain handler must be stripped, proving the cleaner is active.
+				editor.value = '<p><img src="x" onerror="window.__pc = 1"></p>';
+				expect(editor.value).does.not.match(/on[a-z]+\s*=/i);
+
+				editor.value = carrier(payload);
+				await waitingForEvent(editor, 'finishedCleanHTMLWorker');
+
+				expect(editor.value).does.not.match(/onload|onfocus|onerror/i);
+				expect(editor.value).does.not.match(/\son[a-z]+\s*=/i);
+			});
+
+			it('Should not keep an on* handler hoisted out of a NESTED rawtext carrier', async function () {
+				const editor = getJodit({
+					disablePlugins: ['WrapNodes'],
+					cleanHTML: { useIframeSandbox: false, timeout: 0 }
+				});
+
+				// Nested carrier: the <img> surfaces only after several reparses, so one re-sanitize is not enough.
+				editor.value = carrier(carrier(payload));
+				await waitingForEvent(editor, 'finishedCleanHTMLWorker');
+
+				expect(editor.value).does.not.match(/onload|onfocus|onerror/i);
+				expect(editor.value).does.not.match(/\son[a-z]+\s*=/i);
+			});
+		});
+
 		describe('safeJavaScriptLink (default: true)', function () {
 			it('Should neutralize javascript: URIs', function () {
 				const editor = getJodit({

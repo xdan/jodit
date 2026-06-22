@@ -18,6 +18,43 @@ export type safeOptions = {
 	safeLinksTarget?: boolean;
 };
 
+const HTML_NAMESPACE = 'http://www.w3.org/1999/xhtml';
+
+/**
+ * Integration points where HTML is legitimately allowed inside MathML/SVG foreign content.
+ */
+const HTML_INTEGRATION_POINTS = new Set([
+	'foreignobject',
+	'annotation-xml',
+	'desc',
+	'title'
+]);
+
+/**
+ * True for an HTML element the parser placed inside MathML/SVG outside an integration point - smuggled
+ * HTML (e.g. `mglyph` / `style` under `<math>`) that a reparse can hoist into a live node. Legitimate
+ * MathML/SVG children and HTML below an integration point are kept.
+ */
+function isSmuggledForeignHtml(elm: Element): boolean {
+	if (elm.namespaceURI !== HTML_NAMESPACE || elm.closest('math,svg') === null) {
+		return false;
+	}
+
+	for (let parent = elm.parentElement; parent; parent = parent.parentElement) {
+		const name = parent.nodeName.toLowerCase();
+
+		if (name === 'math' || name === 'svg') {
+			break;
+		}
+
+		if (HTML_INTEGRATION_POINTS.has(name)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 /**
  * Removes dangerous constructs from HTML
  */
@@ -27,6 +64,16 @@ export function safeHTML(
 ): void {
 	if (!Dom.isElement(box) && !Dom.isFragment(box)) {
 		return;
+	}
+
+	// Drop HTML smuggled into MathML/SVG before the walk: a reparse would otherwise hoist its hidden
+	// markup into a live node.
+	const foreign = box.querySelectorAll('math *, svg *');
+
+	for (let i = 0; i < foreign.length; i++) {
+		if (foreign[i].isConnected && isSmuggledForeignHtml(foreign[i])) {
+			Dom.safeRemove(foreign[i]);
+		}
 	}
 
 	const removeEvents = options.removeEventAttributes ?? options.removeOnError;
