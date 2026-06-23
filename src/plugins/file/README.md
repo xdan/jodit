@@ -1,3 +1,9 @@
+---
+title: File Plugin
+description: Adds a toolbar button and popup for inserting file links into the editor via FileBrowser, upload, or manual URL input as anchor tags.
+keywords: jodit, file plugin, insert file link, filebrowser, file upload, anchor tag, fileselectorwidget
+---
+
 # File Plugin
 
 Provides a toolbar button and popup for inserting file links into the editor via FileBrowser or URL input.

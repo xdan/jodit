@@ -1,3 +1,9 @@
+---
+title: Image Plugin
+description: Adds a toolbar button with a popup to insert images by URL, file upload, or file browser, with default width and existing image editing.
+keywords: jodit, image plugin, insert image, image upload, imagedefaultwidth, filebrowser, fileselectorwidget
+---
+
 # Image Plugin
 
 Provides functionality to insert images into the Jodit editor. This plugin adds a toolbar button with a popup interface that supports multiple ways of adding images: by URL, file upload, and file browser integration.

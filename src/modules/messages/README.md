@@ -1,3 +1,9 @@
+---
+title: Messages Module
+description: The Jodit messages module that displays error, info, success and other variant notifications inside the editor with optional auto-hide timeouts.
+keywords: jodit, messages, notifications, alerts, info message, success message, editor message
+---
+
 # Show info messages
 
 Allow showing information messages inside the editor:

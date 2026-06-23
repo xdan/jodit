@@ -1,3 +1,9 @@
+---
+title: Tabs Widget
+description: A Jodit widget that builds a tabbed interface from a list of named panes, accepting HTML or DOM content for each tab including other widgets.
+keywords: jodit, tabs widget, tabswidget, tabbed interface, editor popup, jodit ui
+---
+
 # Tab widget
 
 ```javascript

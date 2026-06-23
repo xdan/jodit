@@ -1,3 +1,9 @@
+---
+title: Image Properties Plugin
+description: Opens a dialog on double-click to edit image source, dimensions, margins, alignment, links, classes, and styles with live preview.
+keywords: jodit, image properties, image dialog, aspect ratio lock, image alignment, alt text, border radius
+---
+
 # Image Properties Plugin
 
 Provides an image properties dialog for editing image attributes and styles. This plugin opens a comprehensive dialog when users double-click on images, allowing them to modify source, dimensions, margins, alignment, links, and other properties.

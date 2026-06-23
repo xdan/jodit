@@ -1,3 +1,9 @@
+---
+title: Create DOM Module
+description: The Jodit Create module builds DOM nodes using the right document for iframe or window modes and applies the createAttributes config to every element.
+keywords: jodit create, createinside, dom creation, iframe, createattributes, fromhtml
+---
+
 # Create DOM
 
 Every internal DOM node of both the editor interface and the editor content itself must be created through this module.

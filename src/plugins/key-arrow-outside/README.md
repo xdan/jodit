@@ -1,3 +1,9 @@
+---
+title: Key Arrow Outside Plugin
+description: Lets the cursor exit inline elements with the right arrow key by inserting a non-breaking space, preventing the caret from getting trapped.
+keywords: jodit, key arrow outside, arrow key navigation, inline elements, cursor escape, non-breaking space
+---
+
 # Key Arrow Outside Plugin
 
 Allows cursor to exit inline elements using the right arrow key. This plugin automatically inserts a non-breaking space after inline elements when pressing the right arrow key at the end of the element, enabling users to move outside and continue typing.

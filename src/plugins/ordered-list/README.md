@@ -1,3 +1,9 @@
+---
+title: Ordered List Plugin
+description: Adds UL and OL buttons with a list-style-type dropdown to create bulleted and numbered lists in styles like disc, square, alpha, and roman.
+keywords: jodit, ordered list plugin, unordered list, bullet list, numbered list, list-style-type, ul ol
+---
+
 # Ordered List Plugin
 
 Adds enhanced unordered list (UL) and ordered list (OL) buttons with list-style-type dropdown support. This plugin allows users to create lists with different bullet/numbering styles through an intuitive popup menu.

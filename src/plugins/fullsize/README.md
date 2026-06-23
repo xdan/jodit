@@ -1,3 +1,9 @@
+---
+title: Fullsize Plugin
+description: Provides a fullscreen mode that expands the editor to fill the browser window for distraction-free editing, with multi-instance support.
+keywords: jodit, fullsize plugin, fullscreen mode, togglefullsize, globalfullsize, distraction free, editor resize
+---
+
 # Fullsize Plugin
 
 Provides fullscreen mode functionality for the Jodit editor. This plugin allows users to expand the editor to fill the entire browser window, providing a distraction-free editing experience.

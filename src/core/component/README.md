@@ -1,3 +1,9 @@
+---
+title: Component System
+description: Every Jodit element extends the Component class, gaining a name, a lifecycle status and status hooks for reacting to init, ready and destruct phases.
+keywords: jodit component, lifecycle status, componentstatus, hookstatus, setstatus, icomponent
+---
+
 # Component system
 
 Every Jodit element inherits from [Component](https://xdsoft.net/jodit/docs/classes/component.Component.html), and implements the [IComponent](https://xdsoft.net/jodit/docs/interfaces/types.IComponent.html) interface accordingly.

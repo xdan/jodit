@@ -1,3 +1,9 @@
+---
+title: Video Plugin
+description: Adds a toolbar button with a tabbed dialog for embedding YouTube and Vimeo videos from a URL or custom iframe code, with configurable dimensions.
+keywords: jodit, video plugin, youtube, vimeo, iframe embed, insert video
+---
+
 # Video Plugin
 
 Adds toolbar button for inserting YouTube/Vimeo videos via URL or embed code. The plugin provides a tabbed dialog where users can paste video URLs or custom iframe embed code.

@@ -1,3 +1,9 @@
+---
+title: Context Menu Module
+description: The Jodit context menu module that shows a custom right-click menu with icons and actions, replacing the browser's default context menu.
+keywords: jodit, context menu, right click, contextmenu, custom menu, editor actions
+---
+
 # Context menu
 
 It's pretty easy to use:

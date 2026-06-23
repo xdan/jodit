@@ -1,3 +1,9 @@
+---
+title: Drag and Drop Plugin
+description: Handles dragging and dropping images, selected content fragments, and FileBrowser items within the editor, with move and copy modes.
+keywords: jodit, drag and drop, content fragment, filebrowser drag, image drop, copy mode, paste event
+---
+
 # Drag and Drop Plugin
 
 Handles drag and drop operations for images, content fragments, and FileBrowser items within the editor.

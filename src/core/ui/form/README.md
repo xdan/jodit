@@ -1,3 +1,9 @@
+---
+title: Form UI Element
+description: A UI component for building form interfaces in Jodit by composing inputs, blocks, and buttons through the UIForm, UIInput, and UIBlock elements.
+keywords: jodit, form, ui element, uiform, uiinput, form interface
+---
+
 # Form UI Element
 
 Component for creating form interfaces.

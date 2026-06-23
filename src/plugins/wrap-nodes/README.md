@@ -1,3 +1,9 @@
+---
+title: Wrap Nodes Plugin
+description: Automatically wraps loose text nodes and inline elements in block-level containers so editor content keeps a clean and consistent HTML structure.
+keywords: jodit, wrap nodes, block element, paragraph, html structure, enter tag
+---
+
 # Wrap Nodes Plugin
 
 Automatically wraps unwrapped text nodes and inline elements in block-level containers (paragraphs). This ensures editor content maintains proper HTML structure with block elements.

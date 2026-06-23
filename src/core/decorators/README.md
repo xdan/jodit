@@ -1,3 +1,9 @@
+---
+title: Decorators Overview
+description: An overview of Jodit decorators that simplify UI component work by wiring up event handlers, reactive state changes and component lifecycle status.
+keywords: jodit decorators, component, watch, hook, ui component, reactive state
+---
+
 # Decorators
 
 Decorators are designed to make it easier to work with UI components.

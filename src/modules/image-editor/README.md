@@ -1,3 +1,9 @@
+---
+title: Image Editor Module
+description: The Jodit image editor for cropping and resizing images, opened programmatically and configured through the ImageEditorOptions interface.
+keywords: jodit, image editor, crop image, resize image, photo editing, imageeditor
+---
+
 # Image editor
 
 Photo editing is configured through the interface [[ImageEditorOptions]]

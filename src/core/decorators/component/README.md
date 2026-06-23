@@ -1,3 +1,9 @@
+---
+title: Component Decorator
+description: The @component decorator automatically sets a UIElement status to ready after construction so other decorators only activate once the component is initialized.
+keywords: jodit component decorator, uielement, setstatus ready, componentstatus, lifecycle, decorators
+---
+
 # @component
 
 Every UI component that inherits from the `UIElement` class must have a component decorator.

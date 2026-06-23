@@ -1,3 +1,9 @@
+---
+title: Print Plugin
+description: Opens the browser's native print dialog for the editor content using a hidden iframe with critical CSS so colors and formatting print accurately.
+keywords: jodit, print plugin, print content, browser print, print to pdf, critical css
+---
+
 # Print Plugin
 
 Opens the browser's standard print dialog to print the editor's content. This plugin creates a temporary hidden iframe with formatted content and triggers the print function.

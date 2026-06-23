@@ -1,3 +1,9 @@
+---
+title: Resize Handler Plugin
+description: Adds a draggable handle in the editor's bottom-right corner to resize its width and height when a fixed dimension is set, with touch support.
+keywords: jodit, resize handler plugin, editor resize, drag handle, resize editor, allowresizex
+---
+
 # Resize Handler Plugin
 
 Adds a draggable resize handle in the bottom-right corner of the editor when it has a fixed height or width. This plugin allows users to resize the editor dimensions by dragging the handle.

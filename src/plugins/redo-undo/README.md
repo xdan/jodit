@@ -1,3 +1,9 @@
+---
+title: Redo-Undo Plugin
+description: Adds undo and redo toolbar buttons with cross-platform keyboard shortcuts, integrating with the editor history system to step through editing actions.
+keywords: jodit, redo undo plugin, undo redo, editor history, keyboard shortcuts, history snapshots
+---
+
 # Redo-Undo Plugin
 
 Provides redo and undo functionality with toolbar buttons and keyboard shortcuts. This plugin integrates with the editor's history system to allow users to step backward and forward through their editing actions.

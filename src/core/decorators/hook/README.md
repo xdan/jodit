@@ -1,3 +1,9 @@
+---
+title: Hook Decorator
+description: The @hook decorator registers a method as a handler that runs when a component reaches a given lifecycle status such as ready or beforeDestruct.
+keywords: jodit hook, decorator, lifecycle status, ready, component, status handler
+---
+
 # @hook
 
 Establishes a handler for modifying the status of the component.

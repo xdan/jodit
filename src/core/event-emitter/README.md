@@ -1,3 +1,9 @@
+---
+title: Event Emitter
+description: The core event system of Jodit for subscribing to, firing, and unsubscribing from custom events as well as native DOM and browser events.
+keywords: jodit, event emitter, events, on off fire, dom events, event handling
+---
+
 # Event Emitter
 
 This is the heart of Jodit. All processes inside Jodit mostly flow through events.

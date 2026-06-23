@@ -1,3 +1,9 @@
+---
+title: Spellcheck Plugin
+description: Adds a toolbar button that toggles the browser's native spell checking by setting the spellcheck attribute on the editor, underlining misspelled words.
+keywords: jodit, spellcheck plugin, spell check, browser spellcheck, spelling errors, spellcheck attribute
+---
+
 # Spellcheck Plugin
 
 Enables or disables browser's native spell checking for the editor. This plugin adds a toolbar button to toggle the `spellcheck` HTML attribute on the editor element, allowing users to control whether the browser highlights spelling errors.

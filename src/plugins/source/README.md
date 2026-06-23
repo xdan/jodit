@@ -1,3 +1,9 @@
+---
+title: Source Plugin
+description: Toggles between WYSIWYG and HTML source editing using Ace Editor, a plain textarea, or a custom editor, preserving cursor position and beautifying HTML.
+keywords: jodit, source plugin, html source mode, ace editor, code editing, beautify html
+---
+
 # Source Plugin
 
 Provides HTML source code editing mode using external code editors. This plugin allows users to switch between WYSIWYG and source code editing modes, with support for Ace Editor (default), plain textarea, or custom editor implementations.

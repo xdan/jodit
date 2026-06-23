@@ -1,3 +1,9 @@
+---
+title: Image Processor Plugin
+description: Manages images by handling clicks, selection, and load resizing, and converts data URI images to blob URLs in the view for better performance.
+keywords: jodit, image processor, data uri to blob, image selection, blob url, image load, performance
+---
+
 # Image Processor Plugin
 
 Handles image processing in the Jodit editor. This plugin automatically manages images in the document, including click handling, selection, load event handling, and conversion of data URIs to blob URLs for better performance.

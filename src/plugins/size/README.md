@@ -1,3 +1,9 @@
+---
+title: Size Plugin
+description: Manages editor height, width, and min/max constraints, calculates the workspace area around the toolbar and status bar, and can persist height in storage.
+keywords: jodit, size plugin, editor height, editor width, min max constraints, workspace size
+---
+
 # Size Plugin
 
 Manages editor dimensions including height, width, and their constraints. This plugin calculates workspace sizes, handles dimension changes, and optionally persists height in browser storage.

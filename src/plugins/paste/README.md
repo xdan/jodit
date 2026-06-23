@@ -1,3 +1,9 @@
+---
+title: Paste Plugin
+description: Handles clipboard paste with multiple insertion modes, user prompts for HTML method, choice memorization, HTML cleaning, and plain text conversion.
+keywords: jodit, paste plugin, clipboard, insert as text, paste html, askbeforepastehtml, paste handling
+---
+
 # Paste Plugin
 
 Handles pasting text and HTML fragments from the clipboard. This plugin provides extensive control over how pasted content is processed, with options for prompting users on paste method, cleaning HTML, converting plain text, and custom paste actions.

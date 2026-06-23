@@ -1,3 +1,9 @@
+---
+title: Wait Decorator
+description: The @wait decorator defers a method until a given condition function returns true, useful for delaying calls until a dependency like jQuery has loaded.
+keywords: jodit wait, decorator, condition, deferred call, dependency, async
+---
+
 # @wait
 
 Wrap function in wait wrapper, it will be called after `condition` returns `true`

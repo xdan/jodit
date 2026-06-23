@@ -1,3 +1,9 @@
+---
+title: Limit Plugin
+description: Restricts editor content by maximum word or character count, blocking keyboard input and reverting paste operations that exceed the limit.
+keywords: jodit, limit plugin, word limit, character limit, max length, content restriction, limitwords
+---
+
 # Limit Plugin
 
 Provides character and word count limits for the Jodit editor. This plugin restricts the amount of content users can enter by setting maximum word or character counts, with options to include or exclude HTML markup in the count.

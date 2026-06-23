@@ -1,3 +1,9 @@
+---
+title: Async Module
+description: The Jodit Async module manages timeouts, promises, debounce, throttle and scheduled tasks, auto-clearing them when the editor is destroyed to avoid errors.
+keywords: jodit async, settimeout, promise, debounce, throttle, schedule api, editor destruct
+---
+
 # Async
 
 The Async module is designed to handle asynchronous operations within the editor.

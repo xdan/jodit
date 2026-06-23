@@ -1,3 +1,9 @@
+---
+title: Plugin System
+description: How to extend Jodit with plugins as functions or classes, register buttons, declare dependencies, and load external plugins via extraPlugins and basePath.
+keywords: jodit, plugin system, extraplugins, basepath, custom plugin, plugin registration
+---
+
 # Plugin System
 
 Jodit plugins are designed to extend the basic functionality of the editor.

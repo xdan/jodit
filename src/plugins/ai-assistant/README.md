@@ -1,3 +1,9 @@
+---
+title: AI Assistant Plugin
+description: Integrates AI text actions into Jodit such as improving, shortening, summarizing, translating, and changing the tone of selected content via a callback.
+keywords: jodit, ai assistant plugin, ai text editing, openai, summarize, translate, change tone
+---
+
 # Jodit AI Assistant Plugin
 
 The Jodit AI Assistant plugin is a powerful tool that enhances your text editing capabilities with the help of AI. It provides various features like improving writing quality, making text shorter or longer, simplifying language, summarizing text, changing tone and style, and translating text to different languages.

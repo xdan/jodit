@@ -1,3 +1,9 @@
+---
+title: Media Plugin
+description: Wraps video and audio elements in non-editable, draggable containers so users can select and manipulate media without editing its inner content.
+keywords: jodit, media plugin, video, audio, contenteditable false, media wrapper, draggable
+---
+
 # Media Plugin
 
 Processes and decorates video and audio elements in the editor. This plugin wraps media elements (`<video>`, `<audio>`, and other configured tags) in a non-editable container to improve user experience when selecting and manipulating media content.

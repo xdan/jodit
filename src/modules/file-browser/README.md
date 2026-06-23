@@ -1,3 +1,9 @@
+---
+title: File Browser Module
+description: The Jodit file browser for managing remote files and images, letting users upload, delete, rename and move files through a configurable server backend.
+keywords: jodit, file browser, filebrowser, file manager, upload files, connector, remote images
+---
+
 # Filebrowser
 
 Module for working with remote images or just files. Allows you to upload / delete / rename files on the server.

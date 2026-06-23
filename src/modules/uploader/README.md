@@ -1,3 +1,9 @@
+---
+title: Uploader Module
+description: The Jodit uploader module for sending files to the server, configured via the uploader namespace with hooks for data, responses and file names.
+keywords: jodit, uploader, file upload, upload files, ajax upload, drag and drop, server upload
+---
+
 # File uploader module
 
 The module for uploading files to the server is configured via the `uploader` namespace and has [[IUploaderOptions]] options.

@@ -1,3 +1,9 @@
+---
+title: Paste From Word Plugin
+description: Detects HTML pasted from Microsoft Word and Excel, prompts for an insertion method, and cleans up Office-specific markup and styles.
+keywords: jodit, paste from word, microsoft word, excel paste, clean html, mso markup, paste cleanup
+---
+
 # Paste From Word Plugin
 
 Processes pasting HTML content from Microsoft Word and Excel documents. This plugin detects Word/Excel-formatted HTML, prompts user for insertion method, and cleans up Microsoft Office-specific markup and styles.

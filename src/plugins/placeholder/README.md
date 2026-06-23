@@ -1,3 +1,9 @@
+---
+title: Placeholder Plugin
+description: Shows placeholder text inside an empty editor that auto-hides on input and adapts its style and position to match the first editor element.
+keywords: jodit, placeholder plugin, empty editor, placeholder text, showplaceholder, hint text, rtl
+---
+
 # Placeholder Plugin
 
 Displays a placeholder text inside the editor when it's empty, similar to standard textarea placeholder behavior. The placeholder automatically shows/hides based on editor content and adapts its positioning and styling to match the editor's first element.

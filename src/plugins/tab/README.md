@@ -1,3 +1,9 @@
+---
+title: Tab Plugin
+description: Handles the Tab and Shift+Tab keys inside list items to indent and outdent them, creating or removing nested sublists while preserving the cursor.
+keywords: jodit, tab plugin, list indent, nested list, outdent, sublist
+---
+
 # Tab Plugin
 
 Handles Tab key behavior inside lists, allowing users to indent/outdent list items by pressing Tab/Shift+Tab, creating nested sublists.

@@ -1,3 +1,9 @@
+---
+title: View UI Component
+description: The base View component with its own event system and Async module, used by dialogs and components that run standalone without a Jodit editor instance.
+keywords: jodit, view, ui component, dialog, standalone component, viewbased
+---
+
 # View UI component
 
 Jodit components [Component] require the parent component [[IJodit]], or [[IViewBased]] to work.

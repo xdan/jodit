@@ -1,3 +1,9 @@
+---
+title: Focus Plugin
+description: Manages editor focus including autofocus on load, initial cursor positioning, and saving and restoring the selection on blur and focus.
+keywords: jodit, focus plugin, autofocus, cursor position, saveselectiononblur, selection persistence, empty block
+---
+
 # Focus Plugin
 
 Manages editor focus behavior including autofocus on load, cursor positioning, and selection persistence on blur.

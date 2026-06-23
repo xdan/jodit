@@ -1,3 +1,9 @@
+---
+title: Indent Plugin
+description: Adds indent and outdent toolbar buttons and keyboard shortcuts to increase or decrease block indentation, with RTL and table cell support.
+keywords: jodit, indent plugin, outdent, block indentation, margin, rtl, toolbar
+---
+
 # Indent Plugin
 
 Provides indent and outdent functionality for the Jodit editor. This plugin adds toolbar buttons and keyboard shortcuts to increase or decrease the indentation of block elements.

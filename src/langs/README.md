@@ -1,3 +1,9 @@
+---
+title: Internationalization Module
+description: The Jodit i18n module that translates the editor interface into many built-in languages and lets you add or override custom translations.
+keywords: jodit, internationalization, i18n, languages, localization, translation
+---
+
 Jodit internationalization module.
 
 In order for Jodit to show the interface in your language, you just need to enable it in the settings:

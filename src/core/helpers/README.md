@@ -1,3 +1,9 @@
+---
+title: Helpers Module
+description: A collection of small utility functions grouped into string, html, and checker subgroups for basic operations like case conversion and type checking.
+keywords: jodit, helpers, utility functions, string helpers, type checkers, html helpers
+---
+
 # Helpers
 
 Assistant functions are intended for small basic operations and are divided into subgroups.

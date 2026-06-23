@@ -1,3 +1,9 @@
+---
+title: Hotkeys Plugin
+description: Binds keyboard shortcuts to editor commands with modifier and cross-platform Ctrl/Cmd support, special keys, and event-based handling.
+keywords: jodit, hotkeys plugin, keyboard shortcuts, commandtohotkeys, modifier keys, ctrl cmd, escape key
+---
+
 # Hotkeys Plugin
 
 Provides keyboard shortcut functionality for the Jodit editor. This plugin allows users to bind keyboard combinations to editor commands and enables the execution of commands via customizable hotkeys.

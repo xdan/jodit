@@ -1,3 +1,9 @@
+---
+title: XPath Plugin
+description: Shows a clickable breadcrumb of the element hierarchy from the cursor to the root in the status bar, letting users select or remove ancestor elements.
+keywords: jodit, xpath, breadcrumb, status bar, element path, select element
+---
+
 # XPath Plugin
 
 Displays element hierarchy path in status bar showing breadcrumb trail from current cursor position to root. Clicking path items selects elements, right-click provides context menu.

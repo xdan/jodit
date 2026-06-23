@@ -1,3 +1,9 @@
+---
+title: Copy Format Plugin
+description: A format painter for Jodit that copies thirteen CSS properties from one element and applies them to another with a click-to-copy, click-to-paste flow.
+keywords: jodit, copy format plugin, format painter, copy styles, paint format, css formatting
+---
+
 # Copy Format Plugin
 
 Provides a "Format Painter" tool for copying and applying text/element formatting from one place to another.

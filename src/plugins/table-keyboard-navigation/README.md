@@ -1,3 +1,9 @@
+---
+title: Table Keyboard Navigation
+description: Enables moving between table cells with Tab and arrow keys, auto-creating rows on Tab past the last cell and handling merged cells like a spreadsheet.
+keywords: jodit, table navigation, keyboard, arrow keys, tab, table cells
+---
+
 # Table Keyboard Navigation Plugin
 
 Enables keyboard navigation between table cells using arrow keys and Tab. Users can move focus between cells without mouse, with automatic row creation when tabbing past last cell.

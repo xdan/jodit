@@ -1,3 +1,9 @@
+---
+title: Clean HTML Plugin
+description: Continuously sanitizes editor HTML to prevent XSS, filtering tags, attributes, and CSS while normalizing markup and removing empty elements.
+keywords: jodit, clean html plugin, xss protection, html sanitizer, tag filtering, remove format
+---
+
 # Clean HTML Plugin
 
 Automatically cleans and sanitizes HTML content to prevent XSS attacks and unwanted markup. Provides tag/attribute filtering, format removal, and HTML normalization.

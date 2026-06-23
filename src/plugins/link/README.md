@@ -1,3 +1,9 @@
+---
+title: Link Plugin
+description: Manages hyperlinks with a customizable create/edit dialog, unlink button, Ctrl+K shortcut, pasted URL conversion, and video embed detection.
+keywords: jodit, link plugin, hyperlink, unlink, insert link, nofollow, video embed
+---
+
 # Link Plugin
 
 Provides comprehensive link management functionality for the Jodit editor. This plugin adds toolbar buttons for creating, editing, and removing hyperlinks, with features like automatic URL conversion from pasted content, video embed detection, customizable link form with class name support, and link navigation control.

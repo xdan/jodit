@@ -1,3 +1,9 @@
+---
+title: Debug Plugin
+description: A developer tool for Jodit that renders a panel visualizing the DOM tree, current selection state, and a real-time log of editor events.
+keywords: jodit, debug plugin, dom tree, selection state, event log, developer tool
+---
+
 # Debug Plugin
 
 Developer tool for visualizing DOM tree structure, selection state, and real-time event monitoring.

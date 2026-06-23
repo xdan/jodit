@@ -1,3 +1,9 @@
+---
+title: About Plugin
+description: Adds an info button to the Jodit toolbar that opens a dialog showing the editor version, license type, copyright, and documentation links.
+keywords: jodit, about plugin, editor version, license info, about dialog, toolbar button
+---
+
 # About Plugin
 
 Adds an information button to the Jodit toolbar that displays editor details in a modal dialog.

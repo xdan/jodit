@@ -1,3 +1,9 @@
+---
+title: Bold Plugin
+description: Adds toolbar buttons and commands for bold, italic, underline, strikethrough, subscript, and superscript text formatting in Jodit.
+keywords: jodit, bold plugin, text formatting, italic, underline, strikethrough, subscript
+---
+
 # Bold Plugin
 
 Provides text formatting buttons and commands for bold, italic, underline, strikethrough, subscript, and superscript styles.

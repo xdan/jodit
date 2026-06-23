@@ -1,3 +1,9 @@
+---
+title: Drag and Drop Element Plugin
+description: Lets users drag and drop whole HTML elements such as images and media within the editor, with a ghost preview, copy mode, and smart cleanup.
+keywords: jodit, drag and drop element, move elements, draggabletags, image drag, copy mode, ghost element
+---
+
 # Drag and Drop Element Plugin
 
 Enables dragging and dropping specific HTML elements (images, media, custom elements) within the editor.

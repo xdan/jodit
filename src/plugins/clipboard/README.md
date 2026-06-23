@@ -1,3 +1,9 @@
+---
+title: Clipboard Plugin
+description: Provides copy, cut, paste, and select-all toolbar buttons and commands in Jodit, storing both HTML and plain text in an internal buffer.
+keywords: jodit, clipboard plugin, copy cut paste, select all, aftercopy event, clipboard buffer
+---
+
 # Clipboard Plugin
 
 Handles copy, cut, paste, and select all operations with toolbar buttons and keyboard shortcuts.

@@ -1,3 +1,9 @@
+---
+title: Inline Popup Plugin
+description: Displays context-sensitive inline popup toolbars near images, links, table cells, and text selections with customizable button sets.
+keywords: jodit, inline popup, inline toolbar, context toolbar, selection toolbar, image popup, link popup
+---
+
 # Inline Popup Plugin
 
 Provides context-sensitive inline popup toolbars for various elements in the editor. This plugin displays customizable toolbars when clicking on images, links, table cells, or selecting text.

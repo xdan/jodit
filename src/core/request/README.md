@@ -1,3 +1,9 @@
+---
+title: Request Module
+description: A promise-based Ajax wrapper around XMLHttpRequest with typed responses, progress tracking, SSE streaming, request aborting, and automatic cleanup.
+keywords: jodit, request, ajax, xmlhttprequest, sse streaming, http requests
+---
+
 # Request
 
 The module is responsible for sending HTTP requests over the network.

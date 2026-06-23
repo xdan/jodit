@@ -1,3 +1,9 @@
+---
+title: Watch Decorator
+description: The @watch decorator attaches handlers to component field changes and EventEmitter events, supporting context paths, BEM element names and event arrays.
+keywords: jodit watch, decorator, reactive, eventemitter, state change, event handler
+---
+
 # @watch
 
 The decorator allows you to hang handlers on changes to the internal fields of the component,

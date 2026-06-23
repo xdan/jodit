@@ -1,3 +1,9 @@
+---
+title: Color Plugin
+description: Adds a brush button with a color picker for setting text and background colors in Jodit, including dedicated color controls for table cells.
+keywords: jodit, color plugin, text color, background color, color picker, forecolor, table cell color
+---
+
 # Color Plugin
 
 Provides text color and background color selection with a visual color picker.

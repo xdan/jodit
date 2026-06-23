@@ -1,3 +1,9 @@
+---
+title: Backspace Plugin
+description: Handles Backspace and Delete key behavior in Jodit with smart deletion of characters, words, and sentences plus block merging and list handling.
+keywords: jodit, backspace plugin, delete key, word deletion, sentence deletion, block merging
+---
+
 # Backspace Plugin
 
 Handles proper behavior for Backspace and Delete keys with support for deleting characters, words, and sentences.

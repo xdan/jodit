@@ -1,3 +1,9 @@
+---
+title: Format Block Plugin
+description: Provides a paragraph control to convert block elements between headings, paragraphs, quotes, and code blocks while preserving their content.
+keywords: jodit, format block, formatblock command, headings, paragraph, blockquote, block formatting
+---
+
 # Format Block Plugin
 
 Provides block-level formatting controls for the Jodit editor. This plugin allows users to change the type of block elements (paragraphs, headings, quotes, code blocks, etc.) at the cursor position or for selected content.

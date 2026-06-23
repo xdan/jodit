@@ -1,3 +1,9 @@
+---
+title: Table Processor
+description: The Jodit table module for working with tables, including inserting and deleting rows and columns plus merging and splitting cells.
+keywords: jodit, table, table processor, rows, columns, merge cells, split cells
+---
+
 # Table processor
 
 Module for working with tables. Delete, insert, merger, division of cells,

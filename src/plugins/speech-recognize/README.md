@@ -1,3 +1,9 @@
+---
+title: Speech Recognize Plugin
+description: Adds voice dictation and customizable voice commands using the browser Web Speech Recognition API, with multi-language support and live progress feedback.
+keywords: jodit, speech recognize plugin, voice dictation, voice commands, speech recognition, web speech api
+---
+
 # Speech Recognize Plugin
 
 Provides voice dictation and voice command support using the browser's [Web Speech Recognition API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/). Users can dictate text and execute commands using voice instead of typing.

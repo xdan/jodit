@@ -1,3 +1,9 @@
+---
+title: Font Plugin
+description: Adds font family and font size toolbar controls that apply styles to selected text, with font previews and active state detection.
+keywords: jodit, font plugin, font family, font size, fontname command, fontsize command, text styling
+---
+
 # Font Plugin
 
 Provides font family and font size controls for the Jodit editor. This plugin registers two buttons (`font` and `fontsize`) that allow users to change the font family and font size of selected text.

@@ -1,3 +1,9 @@
+---
+title: Resize Cells Plugin
+description: Lets users resize table columns and whole tables by dragging visual handles near cell borders, with RTL support and proportional width calculations.
+keywords: jodit, resize cells plugin, table resize, column resize, drag handles, table width
+---
+
 # Resize Cells Plugin
 
 Enables interactive resizing of table columns and entire tables by dragging visual resize handles that appear near cell borders. This plugin provides intuitive drag-and-drop functionality for adjusting table dimensions.

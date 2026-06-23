@@ -1,3 +1,9 @@
+---
+title: Mobile Plugin
+description: Provides an adaptive toolbar that switches button sets by editor width with an overflow dots menu, plus tap emulation for touch devices.
+keywords: jodit, mobile plugin, adaptive toolbar, responsive toolbar, dots menu, touch, breakpoints
+---
+
 # Mobile Plugin
 
 Provides adaptive toolbar and mobile touch emulation for the Jodit editor. This plugin automatically adjusts the toolbar button set based on editor width, hiding overflow buttons under a "dots" menu, and emulates tap events for better mobile device support.

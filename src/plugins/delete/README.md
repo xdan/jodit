@@ -1,3 +1,9 @@
+---
+title: Delete Plugin
+description: Overrides the delete command in Jodit with smart block merging, empty element cleanup, list and table handling, and correct cursor positioning.
+keywords: jodit, delete plugin, delete command, block merging, empty block cleanup, cursor positioning
+---
+
 # Delete Plugin
 
 Provides custom implementation of the `delete` command with intelligent content merging, empty block cleanup, and cursor positioning.

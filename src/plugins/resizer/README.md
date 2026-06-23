@@ -1,3 +1,9 @@
+---
+title: Resizer Plugin
+description: Shows a resize frame with corner handles around images, iframes, and tables, supporting aspect ratio preservation and live size display while dragging.
+keywords: jodit, resizer plugin, image resize, iframe resize, aspect ratio, resize handles
+---
+
 # Resizer Plugin
 
 Adds interactive resizing capability for images, iframes, tables, and custom elements in the editor. This plugin displays a visual frame with corner handles around selected elements, allowing users to drag and resize them.

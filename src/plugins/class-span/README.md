@@ -1,3 +1,9 @@
+---
+title: Class Span Plugin
+description: Adds a dropdown button that applies a predefined CSS class to selected text by wrapping it in a span or applying it to the nearest element.
+keywords: jodit, class span plugin, css class, applyclassname, span wrapper, custom styles
+---
+
 # Class Span Plugin
 
 Adds a dropdown button that applies CSS class names to selected text or elements.

@@ -1,3 +1,9 @@
+---
+title: Line Height Plugin
+description: Adds a dropdown button to control line spacing of text blocks, with editor-wide default line height and toggle-off per-block customization.
+keywords: jodit, line height plugin, line spacing, leading, defaultlineheight, text blocks, toolbar
+---
+
 # Line Height Plugin
 
 Provides line height (line spacing) control for the Jodit editor. This plugin adds a toolbar button with dropdown to adjust line height of text blocks, with support for default editor-wide line height and per-block customization.

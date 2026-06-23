@@ -1,3 +1,9 @@
+---
+title: Selection Module
+description: A module for working with the cursor and text selections, inserting HTML, nodes, and images at the cursor, setting focus, and applying styles to selected text.
+keywords: jodit, selection, cursor, insert html, commit style, text selection
+---
+
 # Selection
 
 A module for working with the cursor, text selections, processing selections, inserting html in place of the cursor.

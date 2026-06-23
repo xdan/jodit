@@ -1,3 +1,9 @@
+---
+title: Stat Plugin
+description: Displays real-time character and word counters in the status bar with configurable modes for text, HTML, and whitespace, updating as the user types.
+keywords: jodit, stat plugin, character counter, word counter, status bar, content statistics
+---
+
 # Stat Plugin
 
 Displays real-time statistics in the status bar showing character count and word count. This plugin helps users track document length and stay within limits for content requirements.

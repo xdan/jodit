@@ -1,3 +1,9 @@
+---
+title: DOM Module
+description: A module of static DOM utility methods plus the LazyWalker class for traversing large element trees without blocking the main execution thread.
+keywords: jodit, dom module, lazywalker, dom traversal, static methods, dom manipulation
+---
+
 # DOM operation
 
 A module for working with the DOM. All of its methods are static.

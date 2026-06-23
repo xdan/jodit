@@ -1,3 +1,9 @@
+---
+title: Table Plugin
+description: Adds a toolbar button with a visual grid selector for inserting tables of chosen dimensions, with optional CSS class presets for styling.
+keywords: jodit, table plugin, insert table, grid selector, table classes, bootstrap
+---
+
 # Table Plugin
 
 Adds toolbar button for inserting tables with visual grid selector. Users can hover over a grid to select table dimensions, with optional CSS class presets for styling.

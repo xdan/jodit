@@ -1,3 +1,9 @@
+---
+title: Debounce and Throttle Decorators
+description: The @debounce and @throttle decorators wrap a component method in Async timing wrappers to reduce how often heavy handlers run on frequent events.
+keywords: jodit debounce, throttle, decorator, async, rate limiting, event handler
+---
+
 # @debounce and @throttle
 
 Wraps a component method in [[Async.debounce]]. This makes it possible to reduce the load on 'heavy' functions.

@@ -1,3 +1,9 @@
+---
+title: Sticky Plugin
+description: Keeps the Jodit toolbar fixed to the top of the viewport while scrolling long documents, with configurable offset and optional mobile disabling.
+keywords: jodit, sticky toolbar, toolbarsticky, fixed toolbar, scroll, toolbarstickyoffset
+---
+
 # Sticky Plugin
 
 Makes the toolbar "stick" to the top of the viewport when scrolling, keeping it visible and accessible at all times. This plugin is especially useful for editors with large content where users need constant access to formatting tools.

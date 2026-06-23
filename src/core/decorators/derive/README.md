@@ -1,3 +1,9 @@
+---
+title: Derive Decorator
+description: The @derive decorator implements a trait mechanism borrowed from V4Fire, copying methods from one or more traits into a class for multiple inheritance.
+keywords: jodit derive, trait, decorator, multiple inheritance, v4fire, mixin
+---
+
 # @derive
 
 Inspired by the great [V4Fire framework](https://github.com/V4Fire), we decided to add a trait mechanism to the editor.

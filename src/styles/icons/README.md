@@ -1,3 +1,9 @@
+---
+title: Icon System
+description: Explains how to get, set, and use Jodit's SVG icon set in toolbar buttons, plus replacing icons with image URLs or Font Awesome via getIcon.
+keywords: jodit, icons, svg, geticon, font awesome, toolbar buttons
+---
+
 # Icon system
 
 The Jodit icon system allows you to connect and use a ready-made set of icons in several places.

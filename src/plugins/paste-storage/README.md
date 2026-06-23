@@ -1,3 +1,9 @@
+---
+title: Paste Storage Plugin
+description: Keeps a history of the last five copied items and opens a dialog with Ctrl+Shift+V to preview and paste any earlier clipboard entry.
+keywords: jodit, paste storage, clipboard history, paste history, copy history, ctrl shift v, mru
+---
+
 # Paste Storage Plugin
 
 Maintains a history of copied/pasted content in the editor. This plugin stores the last 5 copied items and provides a dialog for selecting and pasting from history using Ctrl+Shift+V keyboard shortcut.

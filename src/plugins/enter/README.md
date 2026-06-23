@@ -1,3 +1,9 @@
+---
+title: Enter Plugin
+description: Normalizes Enter key behavior across browsers, inserting paragraphs, splitting blocks, handling lists, and adding line breaks with Shift+Enter.
+keywords: jodit, enter plugin, enter key, paragraph insertion, block splitting, shift enter, line break
+---
+
 # Enter Plugin
 
 Handles Enter key press behavior, ensuring consistent cross-browser insertion of paragraphs, line breaks, and block splitting.

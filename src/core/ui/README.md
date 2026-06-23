@@ -1,3 +1,9 @@
+---
+title: UI System
+description: The set of reactive UI components for building complex Jodit interfaces, where each element implements IUElement and extends the UIElement base class.
+keywords: jodit, ui system, uielement, ui components, reactive ui, interface design
+---
+
 # UI System
 
 For interface design, Jodit provides a set of components that allow you to build complex interfaces.

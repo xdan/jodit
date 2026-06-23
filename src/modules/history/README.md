@@ -1,3 +1,9 @@
+---
+title: History Module
+description: The Jodit history module that tracks editor state changes by snapshot comparison to power undo and redo, with manual synchronization and transactions.
+keywords: jodit, history, undo, redo, snapshot, editor state, change tracking
+---
+
 # History
 
 The history module is responsible for keeping track of the changes made to the editor and allowing the user to undo and redo them.

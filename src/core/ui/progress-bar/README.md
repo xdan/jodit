@@ -1,3 +1,9 @@
+---
+title: Progress Bar UI Element
+description: A UI element that shows a thin progress bar at the top of the editor workplace and animates a flying file icon for upload feedback.
+keywords: jodit, progress bar, ui element, file upload animation, progress, uploader
+---
+
 # Progress Bar UI element
 
 Displays a thin progress bar at the top of the editor workplace and provides a file upload animation.

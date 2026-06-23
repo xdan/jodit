@@ -1,3 +1,9 @@
+---
+title: Preview Plugin
+description: Adds a toolbar button that opens a modal dialog rendering the editor content as end users will see it, for read-only inspection before publishing.
+keywords: jodit, preview plugin, content preview, wysiwyg preview, modal dialog, jodit toolbar
+---
+
 # Preview Plugin
 
 Adds a preview button that opens a modal dialog displaying the editor's content as it would appear to end users. This plugin allows previewing the final output without leaving the editor.

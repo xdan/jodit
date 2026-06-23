@@ -1,3 +1,9 @@
+---
+title: DTD Plugin
+description: Enforces HTML document type definition rules by validating block element nesting and removing invalid extra br tags after node insertion.
+keywords: jodit, dtd, html validation, block nesting, blocklimits, removeextrabr, document type definition
+---
+
 # DTD Plugin
 
 Enforces HTML Document Type Definition (DTD) standards by validating block element nesting and removing invalid `<br>` elements.

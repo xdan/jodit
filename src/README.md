@@ -1,3 +1,9 @@
+---
+title: Jodit Constructor
+description: An introduction to creating a Jodit editor instance with Jodit.make, configuring it, and using its core EventEmitter and Select modules.
+keywords: jodit, jodit.make, constructor, configuration, eventemitter, select module
+---
+
 # Jodit constructor
 
 The Jodit editor consists of modules and plugins. Modules make up the permanent basis of the editor's work,

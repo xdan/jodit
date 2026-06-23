@@ -1,3 +1,9 @@
+---
+title: Search Plugin
+description: Provides a find and replace dialog with match highlighting, next/previous navigation, fuzzy search, and the CSS Custom Highlight API for large documents.
+keywords: jodit, search plugin, find and replace, text search, match highlighting, fuzzy search
+---
+
 # Search Plugin
 
 Provides find and replace functionality with a visual dialog interface. This plugin allows users to search for text in the editor, navigate between matches, and replace occurrences.

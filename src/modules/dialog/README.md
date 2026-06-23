@@ -1,3 +1,9 @@
+---
+title: Dialog System
+description: The Jodit dialog system for building modal windows with title, content and footer, including ready-made Alert, Confirm and Prompt wrappers.
+keywords: jodit, dialog, modal, alert, confirm, prompt, popup
+---
+
 # Dialog system
 
 The Jodit dialog system enables the creation of modals with a title, footer, and content.

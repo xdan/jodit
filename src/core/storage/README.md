@@ -1,3 +1,9 @@
+---
+title: Storage Module
+description: A persistent storage module that saves data to the user's local storage, falling back to an in-memory provider when persistent storage is not permitted.
+keywords: jodit, storage, persistent storage, local storage, memory storage, data persistence
+---
+
 # Persistent storage
 
 The module is designed to save information to the user's local storage.

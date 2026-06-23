@@ -1,3 +1,9 @@
+---
+title: HR Plugin
+description: Adds a toolbar button and command to insert horizontal rule separators, with cursor positioning and a following paragraph for continued typing.
+keywords: jodit, hr plugin, horizontal rule, inserthorizontalrule, separator line, divider, block cleanup
+---
+
 # HR Plugin
 
 Provides functionality to insert horizontal rule (`<hr>`) elements into the Jodit editor. This plugin adds a toolbar button and command for inserting horizontal lines that act as visual separators in content.

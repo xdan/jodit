@@ -1,3 +1,9 @@
+---
+title: Autobind Decorator
+description: The @autobind decorator binds a class method to its instance so it keeps the correct this context when passed as a callback, caching the bound function.
+keywords: jodit autobind, decorator, this binding, callback, class method, event handler
+---
+
 # @autobind
 
 This decorator is used to bind class methods to the class instance. This is useful when you want to pass class methods as callbacks and preserve the correct `this` context.

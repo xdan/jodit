@@ -1,3 +1,9 @@
+---
+title: Iframe Plugin
+description: Runs the editor inside an iframe for complete CSS isolation, with custom stylesheets, auto-height, sandboxing, and full HTML document editing.
+keywords: jodit, iframe plugin, css isolation, iframestyle, edithtmldocumentmode, auto height, sandbox
+---
+
 # Iframe Plugin
 
 Enables the Jodit editor to run inside an iframe instead of using a DIV element. This provides complete CSS isolation, allowing custom styles for the editor content without affecting or being affected by the host page's styles.

@@ -1,3 +1,9 @@
+---
+title: Select Cells Plugin
+description: Enables spreadsheet-style click-and-drag selection of multiple table cells, highlighting them and showing a context toolbar for bulk table operations.
+keywords: jodit, select cells plugin, table cell selection, drag select, table commands, cell toolbar
+---
+
 # Select Cells Plugin
 
 Enables click-and-drag selection of table cells. This plugin allows users to select multiple table cells by clicking on a cell and dragging to adjacent cells, similar to spreadsheet applications.

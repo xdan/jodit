@@ -1,3 +1,9 @@
+---
+title: Justify Plugin
+description: Adds an alignment dropdown button to align text left, center, right, or justify within block elements using the text-align CSS property.
+keywords: jodit, justify plugin, text alignment, align left, align center, align right, text-align
+---
+
 # Justify Plugin
 
 Provides text alignment functionality for the Jodit editor. This plugin adds an align button with dropdown options to align text left, center, right, or justify within block elements.

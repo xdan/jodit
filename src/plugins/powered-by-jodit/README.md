@@ -1,3 +1,9 @@
+---
+title: Powered By Jodit Plugin
+description: Adds a Powered by Jodit attribution link to the editor status bar when status bar features are enabled, and can be hidden via configuration.
+keywords: jodit, powered by jodit, status bar link, attribution, hidepoweredbyjodit, branding
+---
+
 # Powered By Jodit Plugin
 
 Displays a "Powered by Jodit" link in the editor's status bar. This plugin adds attribution to the Jodit project when status bar features are enabled.

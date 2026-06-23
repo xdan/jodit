@@ -1,3 +1,9 @@
+---
+title: Add New Line Plugin
+description: Shows a floating button near block elements like tables and images so users can insert a new paragraph before or after them in Jodit.
+keywords: jodit, add new line plugin, insert paragraph, floating button, block elements, addnewline
+---
+
 # Add New Line Plugin
 
 Creates a floating button that appears near block elements (tables, images, iframes, etc.) allowing users to insert new paragraphs before or after them.

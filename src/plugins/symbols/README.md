@@ -1,3 +1,9 @@
+---
+title: Symbols Plugin
+description: Adds a toolbar button and picker dialog for inserting special characters, Unicode symbols, and HTML entities not available on standard keyboards.
+keywords: jodit, symbols, special characters, unicode, html entities, character picker
+---
+
 # Symbols Plugin
 
 Provides a toolbar button and dialog for inserting special characters (Unicode symbols, HTML entities, currency symbols, etc.) that are not available on standard keyboards.

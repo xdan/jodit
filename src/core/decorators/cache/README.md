@@ -1,3 +1,9 @@
+---
+title: Cache Decorator
+description: The @cache and @cacheHTML decorators memoize a getter or method result per component instance, with cacheHTML returning a clone on each later call.
+keywords: jodit cache, cachehtml, decorator, getter memoization, ui component, performance
+---
+
 # @cache
 
 The decorator allows you to cache the result of executing any getter of the UI component.

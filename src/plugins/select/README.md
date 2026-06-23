@@ -1,3 +1,9 @@
+---
+title: Select Plugin
+description: Normalizes selection for copy, cut, and triple-click, fires element-specific DOM events like clickImg, and handles outside-click and select-all behavior.
+keywords: jodit, select plugin, selection normalization, event proxying, triple click, outside click
+---
+
 # Select Plugin
 
 A utility plugin that normalizes selection behavior and provides event proxying for DOM element interactions. This plugin handles selection normalization for copy/cut operations, triple-click selection, and fires element-specific events for easier event handling.
