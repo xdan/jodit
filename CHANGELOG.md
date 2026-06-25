@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.29
+
+#### :bug: Bug Fix
+
+- **Event emitter (memory hygiene in SPA / Shadow DOM)**: `EventEmitter` stores its per-subject handler namespaces under a `__JoditEventEmitterNamespaces<timestamp>` property, but on `off()`/`destruct()` it only set that property to `undefined` instead of removing it. On long-lived subjects such as `window`, repeatedly creating and destroying editors in a single-page application left a growing pile of leftover `undefined` keys on the object. The property is now `delete`d on cleanup, so nothing lingers after `destruct()`. Reported by Ralf Pichler (uniquare.com, Jodit OEM).
+
 ## 4.12.28
 
 #### :bug: Bug Fix

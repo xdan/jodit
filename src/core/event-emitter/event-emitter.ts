@@ -91,12 +91,12 @@ export class EventEmitter implements IEventEmitter {
 
 	private __removeStoreFromSubject(subject: any): void {
 		if (subject[this.__key] !== undefined) {
-			Object.defineProperty(subject, this.__key, {
-				enumerable: false,
-				configurable: true,
-				writable: true,
-				value: undefined
-			});
+			// Fully remove the namespaces store key instead of just setting it to
+			// `undefined`. On long-lived subjects — e.g. `window` in an SPA where
+			// editors are repeatedly created and destroyed — leftover `undefined`
+			// keys would otherwise pile up on the object. The property is defined
+			// as `configurable`, so `delete` removes it cleanly.
+			delete subject[this.__key];
 		}
 	}
 
