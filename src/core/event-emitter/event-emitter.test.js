@@ -1221,6 +1221,44 @@ describe('Jodit Events system Tests', function () {
 		});
 	});
 
+	describe('Namespaces store cleanup', function () {
+		it('should fully delete the store key from a subject on off (not leave it set to undefined)', function () {
+			const eventEmitter = new Jodit.modules.EventEmitter(),
+				subject = {};
+
+			eventEmitter.on(subject, 'click', function () {});
+
+			const keyAfterOn = Object.getOwnPropertyNames(subject).find(
+				name => name.indexOf('__JoditEventEmitterNamespaces') === 0
+			);
+			expect(keyAfterOn).is.not.undefined;
+
+			eventEmitter.off(subject);
+
+			const hasKeyAfterOff = Object.getOwnPropertyNames(subject).some(
+				name => name.indexOf('__JoditEventEmitterNamespaces') === 0
+			);
+			expect(hasKeyAfterOff).is.false;
+		});
+
+		it('should not leave undefined namespace keys on window after editor.destruct()', function () {
+			const countWindowKeys = function () {
+				return Object.getOwnPropertyNames(window).filter(
+					name => name.indexOf('__JoditEventEmitterNamespaces') === 0
+				).length;
+			};
+
+			const before = countWindowKeys();
+
+			const editor = getJodit();
+			editor.events.on(window, 'resize', function () {});
+
+			editor.destruct();
+
+			expect(countWindowKeys()).equals(before);
+		});
+	});
+
 	describe('Helpers', function () {
 		describe('dataBind', function () {
 			it('Should save value in object', function () {
