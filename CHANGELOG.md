@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.31
+
+#### :bug: Bug Fix
+
+- **Security / sanitizeHTMLElement (`javascript:` link XSS, CWE-79/83)**: the `href` safety check used a bare `href.trim().indexOf('javascript') === 0` — unlike the `isDangerousUrl` normalization applied to every other URL attribute, it was case-sensitive and did not strip control bytes, tabs or newlines. So a dangerous `href` survived sanitization (and persisted in the stored `editor.value`) when the scheme was upper/mixed-case (`JAVASCRIPT:`), prefixed by a C0 control byte (`\x01javascript:`), or split by an embedded tab/newline (`java\tscript:`) — all of which a browser still resolves to `javascript:` on click, executing attacker script in any page that renders the stored value. `href` is now routed through the same `isDangerousUrl` normalization (strips control characters and lowercases before matching the scheme), so these obfuscations are neutralized like every other URL attribute. Affected all versions through 4.12.30. Responsibly reported by Younghun Ko of AhnLab ([@koyokr](https://github.com/koyokr)) (GHSA-j839-gqq4-gf9j).
+
 ## 4.12.30
 
 #### :bug: Bug Fix

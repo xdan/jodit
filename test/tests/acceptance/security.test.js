@@ -47,6 +47,38 @@ describe('Security test', () => {
 				});
 			});
 
+			// https://github.com/xdan/jodit/security/advisories/GHSA-j839-gqq4-gf9j
+			describe('Obfuscated javascript: href (GHSA-j839-gqq4-gf9j)', () => {
+				const ctrl = String.fromCharCode(1); // leading C0 control byte
+
+				[
+					['uppercase scheme', 'JAVASCRIPT:alert(1)'],
+					['mixed case scheme', 'jaVaScRiPt:alert(1)'],
+					['leading control byte', ctrl + 'javascript:alert(1)'],
+					['tab inside scheme', 'java\tscript:alert(1)'],
+					['newline inside scheme', 'java\nscript:alert(1)']
+				].forEach(row => {
+					const name = row[0];
+					const payload = row[1];
+
+					it('Should neutralize an href with ' + name, () => {
+						const editor = getJodit();
+
+						editor.value =
+							'<p><a href="' + payload + '">link</a></p>';
+
+						const box = document.createElement('div');
+						box.innerHTML = editor.value;
+						const href =
+							box.querySelector('a').getAttribute('href') || '';
+
+						// Neutralized: prefixed with the page protocol, so the
+						// browser no longer resolves it to an executable scheme.
+						expect(href.indexOf('http://')).eq(0);
+					});
+				});
+			});
+
 			describe('Executable iframe / dangerous URL content', () => {
 				it('Should drop iframe srcdoc', () => {
 					const editor = getJodit();

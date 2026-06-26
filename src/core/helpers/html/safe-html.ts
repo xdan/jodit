@@ -208,9 +208,17 @@ export function sanitizeHTMLElement(
 		effected = true;
 	}
 
+	const tagName = elm.nodeName.toLowerCase();
 	const href = elm.getAttribute('href');
 
-	if (safeJavaScriptLink && href && href.trim().indexOf('javascript') === 0) {
+	// Neutralize executable-scheme `href`s with the same normalization used for
+	// every other URL attribute (`isDangerousUrl`), which strips control bytes,
+	// tabs and newlines and lowercases before matching the scheme. The previous
+	// bare `href.trim().indexOf('javascript') === 0` was case-sensitive and
+	// missed `JAVASCRIPT:`, a leading control byte, or a tab/newline inside the
+	// scheme (e.g. `java\tscript:`) — all of which the browser still resolves to
+	// `javascript:` on click. See GHSA-j839-gqq4-gf9j.
+	if (safeJavaScriptLink && href && isDangerousUrl(href, tagName)) {
 		attr(elm, 'href', location.protocol + '//' + href);
 		effected = true;
 	}
@@ -223,8 +231,6 @@ export function sanitizeHTMLElement(
 		}
 
 		// Strip executable schemes from any other URL-bearing attribute.
-		const tagName = elm.nodeName.toLowerCase();
-
 		for (const name of URL_ATTRIBUTES) {
 			const value = elm.getAttribute(name);
 
