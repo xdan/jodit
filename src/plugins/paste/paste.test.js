@@ -527,6 +527,34 @@ describe('Test paste plugin', () => {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/1362
+	describe('Keep formatting of Excel content with class-based <style> (#1362)', () => {
+		it('Should inline <style> class rules when the clipboard uses a bare <html> tag', () => {
+			const { applyStyles } = Jodit.modules.Helpers;
+
+			// Excel/Calc wrap the copied table in a bare `<html>` (no attributes)
+			// and style cells via classes in a `<style>` block — unlike Word's
+			// `<html xmlns:o=…>`. The class rules must be inlined onto the cells
+			// so the styling survives after the `<style>` block is stripped.
+			const excel =
+				"<meta charset='utf-8'>" +
+				"<div ccp_infra_version='3'>" +
+				'<html><head>' +
+				'<meta name=ProgId content=Excel.Sheet>' +
+				'<meta name=Generator content="Microsoft Excel 15">' +
+				'<style>.xl31 { background:#FCE4D6; font-weight:700; text-align:center; }</style>' +
+				'</head><body>' +
+				'<table><tbody><tr><td class="xl31">Cell</td></tr></tbody></table>' +
+				'</body></html>';
+
+			const result = applyStyles(excel).toLowerCase();
+
+			expect(result).to.match(/<td[^>]*style=/);
+			expect(result).to.match(/252,\s*228,\s*214|fce4d6/);
+			expect(result).to.not.match(/<style/);
+		});
+	});
+
 	// https://github.com/xdan/jodit/issues/1061
 	describe('Paste toolbar button (#1061)', () => {
 		let clipboardMocked = false;

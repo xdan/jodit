@@ -37,12 +37,26 @@ function normalizeCSS(s: string): string {
  * and then removes the selector styles, leaving only the inline ones.
  */
 export function applyStyles(html: string): string {
-	if (html.indexOf('<html ') === -1) {
+	// Match the opening <html> tag whether or not it carries attributes. MS
+	// Word emits `<html xmlns:o=…>` (note the trailing space), but Excel/Calc
+	// wrap the copied table in a bare `<html>`. The old `'<html '` check missed
+	// the bare tag, so for Excel clipboards the `<style>` rules (class-based
+	// cell backgrounds/borders, e.g. `.xl31 { background:#FCE4D6 }`) were never
+	// inlined and all styling was lost once the `<style>` block got stripped.
+	// See https://github.com/xdan/jodit/issues/1362
+	const openMatch = /<html(?:\s[^>]*)?>/i.exec(html);
+
+	if (!openMatch) {
 		return html;
 	}
 
-	html = html.substring(html.indexOf('<html '), html.length);
-	html = html.substring(0, html.lastIndexOf('</html>') + '</html>'.length);
+	html = html.substring(openMatch.index);
+
+	const closeIndex = html.toLowerCase().lastIndexOf('</html>');
+
+	if (closeIndex !== -1) {
+		html = html.substring(0, closeIndex + '</html>'.length);
+	}
 
 	const iframe = globalDocument.createElement('iframe');
 

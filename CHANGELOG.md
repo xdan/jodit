@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.30
+
+#### :bug: Bug Fix
+
+- **Paste from Excel / "Keep" formatting**: content copied from MS Excel (and other apps that wrap the clipboard in a bare `<html>` tag) lost all styling — table cells styled by class in a `<style>` block (e.g. `.xl31 { background:#FCE4D6 }`, the typical Excel export) came in with no background, fonts or alignment. `applyStyles` (the *Paste as HTML → Keep* path) only inlined `<style>` rules when the opening tag carried attributes (`<html …>`, as Word emits); Excel emits a bare `<html>`, so the rules were never inlined and were dropped together with the `<style>` block. The opening `<html>` tag is now matched with or without attributes, so class-based styling is inlined onto the cells and survives. Reported in [#1362](https://github.com/xdan/jodit/issues/1362).
+
 ## 4.12.29
 
 #### :bug: Bug Fix
