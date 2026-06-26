@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.12.32
+
+#### :bug: Bug Fix
+
+- **Editor size / external toolbar**: when the `toolbar` option points to an external element (the toolbar renders outside the editor container), the workplace height was still computed as `container height − toolbar height`, so the editing area was wrongly shrunk by the height of a toolbar that wasn't inside the container. The toolbar height is now subtracted only when the toolbar actually lives inside the container. Reported in [#920](https://github.com/xdan/jodit/discussions/920).
+
 ## 4.12.31
 
 #### :bug: Bug Fix

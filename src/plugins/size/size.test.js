@@ -19,6 +19,24 @@
 			).equals(1);
 		});
 
+		// https://github.com/xdan/jodit/discussions/920
+		it('should not subtract an external toolbar height from the workplace (#920)', function () {
+			const toolbarBox = appendTestDiv();
+			const editor = getJodit({
+				toolbar: toolbarBox,
+				height: 400
+			});
+
+			const statusbarH = editor.statusbar.getHeight();
+
+			// The toolbar lives outside the container, so the workplace should
+			// fill the container minus only the statusbar — it must not be
+			// shrunk by the (external) toolbar's height.
+			expect(editor.workplace.offsetHeight).is.least(
+				editor.container.offsetHeight - statusbarH - 5
+			);
+		});
+
 		it('should show resize handler with custom buttons and counters disabled (issue #1335)', function () {
 			const editor = getJodit({
 				controls: {

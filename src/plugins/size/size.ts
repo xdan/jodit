@@ -144,11 +144,18 @@ export class size extends Plugin {
 	 * Returns service spaces: toolbar + statusbar
 	 */
 	private __getNotWorkHeight(): number {
-		return (
-			(this.j.toolbarContainer?.offsetHeight || 0) +
-			(this.j.statusbar?.getHeight() || 0) +
-			2
-		);
+		// Only a toolbar that actually lives inside the editor container takes
+		// space away from the workplace. When the `toolbar` option points to an
+		// external element, the toolbar is rendered outside the container, so it
+		// must not be subtracted — otherwise the workplace is wrongly shrunk by
+		// the toolbar's height. See https://github.com/xdan/jodit/discussions/920
+		const toolbar = this.j.toolbarContainer;
+		const toolbarHeight =
+			toolbar && this.j.container.contains(toolbar)
+				? toolbar.offsetHeight
+				: 0;
+
+		return toolbarHeight + (this.j.statusbar?.getHeight() || 0) + 2;
 	}
 
 	/**
