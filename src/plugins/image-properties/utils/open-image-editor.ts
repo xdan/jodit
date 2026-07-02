@@ -47,8 +47,10 @@ export function openImageEditorDialog(
 								},
 								error => {
 									j.alert(
-										'There was an error loading %s',
-										error.message
+										j.i18n(
+											'There was an error loading %s',
+											error.message
+										)
 									);
 								}
 							);

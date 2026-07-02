@@ -76,7 +76,8 @@ const allowPackages = new Set([
 	'core-js/es/symbol',
 	'core-js/es/array/find-index',
 	'core-js/es/array/from',
-	'marked'
+	'marked',
+	'@jodit/image-editor'
 ]);
 
 const allowPluginsInESM = new Set(
