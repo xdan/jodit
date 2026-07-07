@@ -78,7 +78,7 @@ export function safeHTML(
 	const foreign = box.querySelectorAll('math *, svg *');
 
 	for (let i = 0; i < foreign.length; i++) {
-		if (foreign[i].isConnected && isSmuggledForeignHtml(foreign[i])) {
+		if (box.contains(foreign[i]) && isSmuggledForeignHtml(foreign[i])) {
 			Dom.safeRemove(foreign[i]);
 		}
 	}
@@ -219,7 +219,8 @@ export function sanitizeHTMLElement(
 	// scheme (e.g. `java\tscript:`) — all of which the browser still resolves to
 	// `javascript:` on click. See GHSA-j839-gqq4-gf9j.
 	if (safeJavaScriptLink && href && isDangerousUrl(href, tagName)) {
-		attr(elm, 'href', location.protocol + '//' + href);
+		const protocol = typeof location !== 'undefined' ? location.protocol : 'http:';
+		attr(elm, 'href', protocol + '//' + href);
 		effected = true;
 	}
 

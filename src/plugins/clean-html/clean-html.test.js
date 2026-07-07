@@ -832,6 +832,28 @@ describe('Clean html plugin', function () {
 			});
 		});
 
+		describe('smuggled HTML in MathML/SVG', function () {
+			it('Should remove HTML smuggled into MathML or SVG when parsed in disconnected fragment', function () {
+				const editor = getJodit({
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value = '<math><mglyph><html><body onload="alert(1)"></body></html></mglyph></math>';
+				expect(editor.value).does.not.contain('onload');
+				expect(editor.value).does.not.contain('body');
+			});
+		});
+
+		describe('smuggled HTML in MathML/SVG', function () {
+			it('Should remove HTML smuggled into MathML or SVG when parsed in disconnected fragment', function () {
+				const editor = getJodit({
+					cleanHTML: { useIframeSandbox: false }
+				});
+				editor.value = '<math><mglyph><html><body onload="alert(1)"></body></html></mglyph></math>';
+				expect(editor.value).does.not.contain('onload');
+				expect(editor.value).does.not.contain('body');
+			});
+		});
+
 		describe('denyTags (default: script,iframe,object,embed)', function () {
 			['script', 'iframe', 'object', 'embed'].forEach(function (tag) {
 				it('Should remove <' + tag + '> by default', function (done) {
