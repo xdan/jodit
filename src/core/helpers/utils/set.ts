@@ -36,15 +36,15 @@ export function set<T>(chain: string, value: unknown, obj: IDictionary): void {
 
 	const parts = chain.split('.');
 
-	if (parts.some(isUnsafeProtoKey)) {
-		return;
-	}
-
 	let result = obj,
 		key = parts[0];
 
 	for (let i = 0; i < parts.length - 1; i += 1) {
 		key = parts[i];
+
+		if (isUnsafeProtoKey(key)) {
+			return;
+		}
 
 		if (!isArray(result[key]) && !isPlainObject(result[key])) {
 			result[key] = isNumeric(parts[i + 1]) ? [] : {};
@@ -53,7 +53,7 @@ export function set<T>(chain: string, value: unknown, obj: IDictionary): void {
 		result = result[key];
 	}
 
-	if (result) {
+	if (result && !isUnsafeProtoKey(parts[parts.length - 1])) {
 		result[parts[parts.length - 1]] = value;
 	}
 }
