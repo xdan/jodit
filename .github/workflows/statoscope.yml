@@ -119,7 +119,7 @@ jobs:
 
     - name: Comment PR
       if: github.event_name == 'pull_request' && steps.sizes.outputs.has_reference == 'true'
-      uses: marocchino/sticky-pull-request-comment@773744901bac0e8cbb5a0dc842800d45e9b2b405 # v2
+      uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v2
       with:
         header: statoscope
         message: |
@@ -140,7 +140,7 @@ jobs:
 
     - name: Comment PR (no reference)
       if: github.event_name == 'pull_request' && steps.sizes.outputs.has_reference != 'true'
-      uses: marocchino/sticky-pull-request-comment@773744901bac0e8cbb5a0dc842800d45e9b2b405 # v2
+      uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v2
       with:
         header: statoscope
         message: |
