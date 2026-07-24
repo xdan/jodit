@@ -94,6 +94,7 @@ module.exports = {
 	'Enter Directory name': 'Escreva o nome da pasta',
 	'Create directory': 'Criar pasta',
 	'type name': 'Escreva seu nome',
+	'type dir name': 'Escreva seu nome',
 	'Drop image': 'Soltar imagem',
 	'Drop file': 'Soltar arquivo',
 	'or click': 'ou clique',

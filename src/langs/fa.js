@@ -95,6 +95,7 @@ module.exports = {
 	'Enter Directory name': 'نام مسیر را وارد کنید',
 	'Create directory': 'ساخت مسیر',
 	'type name': 'نام را وارد کنید',
+	'type dir name': 'نام را وارد کنید',
 	'Drop image': 'عکس را رها کنید',
 	'Drop file': 'فایل را رها کنید',
 	'or click': 'یا کلیک کنید',

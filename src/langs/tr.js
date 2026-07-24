@@ -94,6 +94,7 @@ module.exports = {
 	'Enter Directory name': 'Dizin yolu giriniz',
 	'Create directory': 'Dizin oluştur',
 	'type name': 'İsim yaz',
+	'type dir name': 'İsim yaz',
 	'Drop image': 'Resim bırak',
 	'Drop file': 'Dosya bırak',
 	'or click': 'veya tıkla',

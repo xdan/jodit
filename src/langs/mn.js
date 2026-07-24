@@ -96,6 +96,7 @@ module.exports = {
 	'Enter Directory name': 'Хавтсын нэр оруулах',
 	'Create directory': 'Хавтас үүсгэх',
 	'type name': 'Нэр бичих',
+	'type dir name': 'Нэр бичих',
 	'Drop image': 'Зураг буулгах',
 	'Drop file': 'Файл буулгах',
 	'or click': 'эсвэл товш',

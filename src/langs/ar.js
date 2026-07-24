@@ -85,6 +85,7 @@ module.exports = {
 	'Enter Directory name': 'أدخل اسم المجلد',
 	'Create directory': 'إنشاء مجلد',
 	'type name': 'أكتب إسم',
+	'type dir name': 'أكتب إسم',
 	'Drop image': 'إسقاط صورة',
 	'Drop file': 'إسقاط الملف',
 	'or click': 'أو أنقر',

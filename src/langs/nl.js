@@ -96,6 +96,7 @@ module.exports = {
 	'Enter Directory name': 'Geef de map een naam',
 	'Create directory': 'Map aanmaken',
 	'type name': 'Type naam',
+	'type dir name': 'Type naam',
 	'Drop image': 'Sleep hier een afbeelding naartoe',
 	'Drop file': 'Sleep hier een bestand naartoe',
 	'or click': 'of klik',

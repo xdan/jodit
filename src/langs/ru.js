@@ -94,6 +94,7 @@ module.exports = {
 	'Enter Directory name': 'Введите название директории',
 	'Create directory': 'Создать директорию',
 	'type name': 'введите название',
+	'type dir name': 'введите название',
 	'Drop image': 'Перетащите сюда изображение',
 	'Drop file': 'Перетащите сюда файл',
 	'or click': 'или нажмите',

@@ -93,6 +93,7 @@ module.exports = {
 	'Enter Directory name': 'Enter Directory name',
 	'Create directory': 'Create directory',
 	'type name': 'type name',
+	'type dir name': 'type name',
 	'Drop image': 'ここに画像をドロップ',
 	'Drop file': 'ここにファイルをドロップ',
 	'or click': 'or クリック',

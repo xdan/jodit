@@ -93,6 +93,7 @@ module.exports = {
 	'Enter Directory name': '디렉토리 이름 입력',
 	'Create directory': '디렉토리 생성',
 	'type name': '이름 입력',
+	'type dir name': '이름 입력',
 	'Drop image': '이미지 드래그',
 	'Drop file': '파일 드래그',
 	'or click': '혹은 클릭',

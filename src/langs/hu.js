@@ -96,6 +96,7 @@ module.exports = {
 	'Enter Directory name': 'Írjon be egy mappanevet',
 	'Create directory': 'Mappa létrehozása',
 	'type name': 'írjon be bevet',
+	'type dir name': 'írjon be bevet',
 	'Drop image': 'Húzza ide a képet',
 	'Drop file': 'Húzza ide a fájlt',
 	'or click': 'vagy kattintson',

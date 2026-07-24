@@ -96,6 +96,7 @@ module.exports = {
 	'Enter Directory name': 'Syötä hakemiston nimi',
 	'Create directory': 'Luo hakemisto',
 	'type name': 'Syötä nimi',
+	'type dir name': 'Syötä nimi',
 	'Drop image': 'Pudota kuva',
 	'Drop file': 'Pudota tiedosto',
 	'or click': 'tai klikkaa',

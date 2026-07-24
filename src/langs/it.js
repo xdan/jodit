@@ -95,6 +95,7 @@ module.exports = {
 	'Enter Directory name': 'Inserisci il nome della cartella',
 	'Create directory': 'Crea cartella',
 	'type name': 'Digita il nome',
+	'type dir name': 'Digita il nome',
 	'Drop image': 'Cancella immagine',
 	'Drop file': 'Cancella file',
 	'or click': 'o clicca',
