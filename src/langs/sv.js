@@ -226,6 +226,11 @@ module.exports = {
 	Edit: 'Redigera',
 	Sound: 'Ljud',
 	'Interim Results': 'Preliminära resultat',
+	Spellcheck: 'Stavningskontroll',
+	'Speech Recognize': 'Taligenkänning',
+	newline: 'ny rad',
+	delete: 'radera',
+	space: 'mellanslag',
 	'Embed code': 'Bädda in kod',
 	All: 'Välj alla',
 	'License: %s': 'Licens: %s'

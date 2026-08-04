@@ -9,6 +9,20 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.11
+
+#### :rocket: New Feature
+
+- **Languages**: Slovak (`sk`) localization — thanks [@KamikX](https://github.com/KamikX) ([#1412](https://github.com/xdan/jodit/pull/1412)). Also wired up the Persian (`fa`) and Swedish (`sv`) locales: both files have existed in `src/langs/` for years but were never registered in `src/languages.ts`, so `language: 'fa'` / `language: 'sv'` silently fell back to English. Swedish additionally got the missing `Spellcheck`/`Speech Recognize` plugin translations.
+
+#### :bug: Bug Fix
+
+- **File browser / i18n**: the "create directory" prompt reused the same `type name` translation key as file rename, so both prompts always showed the same text; it now uses its own `type dir name` key (translated in every locale). The French `type name` translation was also wrong — it read "type de fichier" ("file type") instead of a "enter the name" prompt. Thanks [@AntoineRoue](https://github.com/AntoineRoue) ([#1405](https://github.com/xdan/jodit/pull/1405)).
+
+#### :house: Internal
+
+- **Dependencies**: dev/build-only Dependabot bumps — `postcss` 8.5.25, `shell-quote`+`concurrently` (security), `http-proxy-middleware` 2.0.10 (security), `eslint-plugin-mocha` 11.3.0, `cssnano-preset-advanced` 8.0.2, `eslint-plugin-prettier` 5.5.6, `autoprefixer` 10.5.4, `@eslint/compat` 2.1.0, `@eslint/eslintrc` 3.3.6, `tsx` 4.23.1 (#1413, #1410, #1409, #1404, #1401, #1399, #1398, #1397, #1396, #1395); GitHub Actions bumps `setup-node` 7, `first-interaction` 3, `upload-pages-artifact` 5, `deploy-pages` 5, `sticky-pull-request-comment` 3 (#1390–#1394).
+
 ## 4.13.10
 
 #### :house: Internal

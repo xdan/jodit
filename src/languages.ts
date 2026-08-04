@@ -20,6 +20,7 @@ import cs_cz from 'jodit/langs/cs_cz';
 import de from 'jodit/langs/de';
 import en from 'jodit/langs/en';
 import es from 'jodit/langs/es';
+import fa from 'jodit/langs/fa';
 import fi from 'jodit/langs/fi';
 import fr from 'jodit/langs/fr';
 import he from 'jodit/langs/he';
@@ -36,6 +37,7 @@ import pl from 'jodit/langs/pl';
 import pt_br from 'jodit/langs/pt_br';
 import ru from 'jodit/langs/ru';
 import sk from 'jodit/langs/sk';
+import sv from 'jodit/langs/sv';
 import tr from 'jodit/langs/tr';
 import ua from 'jodit/langs/ua';
 import zh_cn from 'jodit/langs/zh_cn';
@@ -49,6 +51,7 @@ exp = {
 	de,
 	en,
 	es,
+	fa,
 	fi,
 	fr,
 	he,
@@ -64,6 +67,7 @@ exp = {
 	pt_br,
 	ru,
 	sk,
+	sv,
 	tr,
 	ua,
 	zh_cn,
