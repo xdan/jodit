@@ -324,8 +324,8 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 		return this.get('folder').then(resp => {
 			let process:
-				| ((resp: IFileBrowserAnswer) => IFileBrowserAnswer)
-				| undefined = (this.o.folder as any).process;
+				((resp: IFileBrowserAnswer) => IFileBrowserAnswer) | undefined =
+				(this.o.folder as any).process;
 
 			if (!process) {
 				process = this.o.ajax.process;

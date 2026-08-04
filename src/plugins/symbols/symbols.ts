@@ -68,7 +68,7 @@ export class symbols extends Plugin {
 			const body: HTMLTableSectionElement = table.tBodies[0];
 			const chars: HTMLAnchorElement[] = [];
 
-			for (let i: number = 0; i < jodit.o.specialCharacters.length; ) {
+			for (let i: number = 0; i < jodit.o.specialCharacters.length;) {
 				const tr = jodit.c.element('tr');
 
 				for (

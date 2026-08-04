@@ -33,10 +33,7 @@ export interface IDestructible {
 }
 
 export type ComponentStatus =
-	| 'beforeInit'
-	| 'ready'
-	| 'beforeDestruct'
-	| 'destructed';
+	'beforeInit' | 'ready' | 'beforeDestruct' | 'destructed';
 
 export interface IContainer {
 	container: HTMLElement;
@@ -179,8 +176,7 @@ export interface ICommandType<T, C extends string> {
 }
 
 export type CustomCommand<T, C extends string> =
-	| ICommandType<T, C>
-	| ExecCommandCallback<T, C>;
+	ICommandType<T, C> | ExecCommandCallback<T, C>;
 
 export interface IHasScroll {
 	clientTop: number;

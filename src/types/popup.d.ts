@@ -12,10 +12,7 @@ import type { IBound, IDestructible } from './types';
 import type { IUIElement } from './ui';
 
 export type PopupStrategy =
-	| 'leftBottom'
-	| 'rightBottom'
-	| 'leftTop'
-	| 'rightTop';
+	'leftBottom' | 'rightBottom' | 'leftTop' | 'rightTop';
 
 export interface IPopup extends IUIElement, IDestructible {
 	readonly container: HTMLElement;

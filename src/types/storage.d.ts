@@ -9,11 +9,7 @@
  */
 
 export type StorageValueType =
-	| string
-	| number
-	| boolean
-	| object
-	| StorageValueType[];
+	string | number | boolean | object | StorageValueType[];
 
 export interface IStorage<T = StorageValueType> {
 	set(key: string, value: T): this;

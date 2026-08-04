@@ -132,9 +132,7 @@ export interface IUIForm extends IUIGroup {
 
 export interface IUIInput extends IUIElement {
 	readonly nativeInput:
-		| HTMLInputElement
-		| HTMLSelectElement
-		| HTMLTextAreaElement;
+		HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
 	readonly state: {
 		className: string;

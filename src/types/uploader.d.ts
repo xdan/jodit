@@ -37,8 +37,7 @@ export type BuildDataResult =
 
 export interface IUploaderOptions<T> {
 	url:
-		| string
-		| ((request: FormData | IDictionary<string> | string) => string);
+		string | ((request: FormData | IDictionary<string> | string) => string);
 	insertImageAsBase64URI: boolean;
 
 	/**

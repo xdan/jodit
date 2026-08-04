@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.12
+
+#### :house: Internal
+
+- **Dependencies**: dev/build-only bumps — `webpack-dev-server` 6.0.0 ([#1400](https://github.com/xdan/jodit/pull/1400)), `fast-uri` 3.1.5 and `socket.io-parser` 4.2.7 (security, [#1416](https://github.com/xdan/jodit/pull/1416), [#1415](https://github.com/xdan/jodit/pull/1415)), `prettier` 3.9.6 with the repo reformatted to its new union-type wrapping (#1403), `terser-webpack-plugin` 5.6.1 (#1402) — the minimizer config now uses the `format` key instead of its deprecated `output` alias: the new plugin merges its own `format` on top of the user options, and passing both crashed the SWC minifier with ``duplicate field `format` ``. No runtime changes.
+
 ## 4.13.11
 
 #### :rocket: New Feature

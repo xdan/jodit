@@ -26,7 +26,7 @@ export function fuzzySearchIndex(
 		len = 0,
 		errorDistance = 0;
 
-	for (j = offset; i < needle.length && j < haystack.length; ) {
+	for (j = offset; i < needle.length && j < haystack.length;) {
 		if (needle[i].toLowerCase() === haystack[j].toLowerCase()) {
 			i++;
 			len++;

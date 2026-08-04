@@ -85,9 +85,4 @@ export interface ICommitStyle {
 }
 
 export type CommitMode =
-	| 'initial'
-	| 'wrap'
-	| 'unwrap'
-	| 'change'
-	| 'unset'
-	| 'replace';
+	'initial' | 'wrap' | 'unwrap' | 'change' | 'unset' | 'replace';

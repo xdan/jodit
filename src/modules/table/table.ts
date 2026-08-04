@@ -444,7 +444,7 @@ export class Table extends ViewComponent<IJodit> {
 
 		const newColumnIndex = insertAfter ? columnIndex + 1 : columnIndex;
 
-		for (let i = 0; i < box.length; ) {
+		for (let i = 0; i < box.length;) {
 			const cells = box[i];
 
 			if (

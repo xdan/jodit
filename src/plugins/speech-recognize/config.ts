@@ -168,9 +168,7 @@ Config.prototype.controls.speechRecognize = {
 
 		if (control.args) {
 			const key = control.args[0] as
-				| 'sound'
-				| 'continuous'
-				| 'interimResults';
+				'sound' | 'continuous' | 'interimResults';
 
 			if (isBoolean(api[key])) {
 				api[key] = !api[key];

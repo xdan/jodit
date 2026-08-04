@@ -61,8 +61,7 @@ export type Variables = {
 	excludePlugins: string[];
 	includePlugins: string[];
 	progressFunction:
-		| ((percentage: number, msg: string, ...args: string[]) => void)
-		| false;
+		((percentage: number, msg: string, ...args: string[]) => void) | false;
 	mode: 'production' | 'development';
 	ES: ES_TARGET;
 	ESNext: boolean;

@@ -25,11 +25,7 @@ import type {
 	Nullable
 } from './types';
 import type { Attributes, ICreate } from './create';
-import type {
-	IAsyncStorage,
-	IAsyncStorageOptions,
-	IStorage
-} from './storage';
+import type { IAsyncStorage, IAsyncStorageOptions, IStorage } from './storage';
 import type { IUIButtonState } from './ui';
 import type { IEventEmitter } from './events';
 import type { IPluginButton } from './plugin';

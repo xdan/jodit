@@ -24,9 +24,7 @@ export interface IDialogOptions extends IViewOptions {
 
 export type ContentItem = string | HTMLElement | IContainer;
 export type Content =
-	| ContentItem
-	| ContentItem[]
-	| Array<ContentItem | ContentItem[]>;
+	ContentItem | ContentItem[] | Array<ContentItem | ContentItem[]>;
 
 export interface IDialog extends IComponent, IContainer, IMods, IViewBased {
 	isOpened: boolean;

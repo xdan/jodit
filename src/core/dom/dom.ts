@@ -387,8 +387,7 @@ export class Dom {
 	static isEmpty(
 		node: Node,
 		condNoEmptyElement:
-			| ((elm: Element) => boolean)
-			| Set<string> = NO_EMPTY_TAGS
+			((elm: Element) => boolean) | Set<string> = NO_EMPTY_TAGS
 	): boolean {
 		if (!node) {
 			return true;
@@ -1002,10 +1001,7 @@ export class Dom {
 	static closest<T extends HTMLElement>(
 		node: Nullable<Node>,
 		tagsOrCondition:
-			| HTMLTagNames
-			| HTMLTagNames[]
-			| NodeCondition
-			| Set<HTMLTagNames>,
+			HTMLTagNames | HTMLTagNames[] | NodeCondition | Set<HTMLTagNames>,
 		root: HTMLElement
 	): Nullable<T> {
 		let condition: NodeCondition;

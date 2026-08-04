@@ -42,7 +42,7 @@ export default ({ ESNext, isTest, banner }: Variables): MinimizeJSPlugin => {
 				passes: 3
 			},
 
-			output: {
+			format: {
 				comments: false,
 				beautify: false,
 				preamble: banner

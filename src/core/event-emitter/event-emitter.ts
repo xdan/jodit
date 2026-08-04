@@ -240,8 +240,7 @@ export class EventEmitter implements IEventEmitter {
 
 	on(
 		eventsOrSubjects:
-			| CanArray<string>
-			| CanArray<HTMLElement | Window | object>,
+			CanArray<string> | CanArray<HTMLElement | Window | object>,
 		callbackOrEvents: CallbackFunction | CanArray<string>,
 		optionsOrCallback: IEventEmitterOnOptions | CallbackFunction | void,
 		opts?: IEventEmitterOnOptions
@@ -388,8 +387,7 @@ export class EventEmitter implements IEventEmitter {
 
 	one(
 		eventsOrSubjects:
-			| CanArray<string>
-			| CanArray<HTMLElement | Window | object>,
+			CanArray<string> | CanArray<HTMLElement | Window | object>,
 		callbackOrEvents: CallbackFunction | CanArray<string>,
 		optionsOrCallback: IEventEmitterOnOptions | CallbackFunction | void,
 		opts?: IEventEmitterOnOptions
@@ -462,8 +460,7 @@ export class EventEmitter implements IEventEmitter {
 
 	off(
 		eventsOrSubjects:
-			| CanArray<string>
-			| CanArray<Window | HTMLElement | object>,
+			CanArray<string> | CanArray<Window | HTMLElement | object>,
 		callbackOrEvents?: CallbackFunction | CanArray<string>,
 		handler?: CallbackFunction
 	): this {
