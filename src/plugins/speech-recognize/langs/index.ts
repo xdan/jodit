@@ -25,6 +25,7 @@ import * as no from './no.js';
 import * as pl from './pl.js';
 import * as pt_br from './pt_br.js';
 import * as ru from './ru.js';
+import * as sk from './sk.js';
 import * as tr from './tr.js';
 import * as ua from './ua.js';
 import * as zh_cn from './zh_cn.js';
@@ -50,6 +51,7 @@ export {
 	pl,
 	pt_br,
 	ru,
+	sk,
 	tr,
 	ua,
 	zh_cn,
