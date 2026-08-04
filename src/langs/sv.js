@@ -96,6 +96,7 @@ module.exports = {
 	'Enter Directory name': 'Ange mappnamn',
 	'Create directory': 'Skapa mapp',
 	'type name': 'skriv namn',
+	'type dir name': 'skriv namn',
 	'Drop image': 'Släpp bild',
 	'Drop file': 'Släpp fil',
 	'or click': 'eller klicka',

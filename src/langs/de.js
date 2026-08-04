@@ -96,6 +96,7 @@ module.exports = {
 	'Enter Directory name': 'Geben Sie den Verzeichnisnamen ein',
 	'Create directory': 'Verzeichnis erstellen',
 	'type name': 'Typname',
+	'type dir name': 'Typname',
 	'Drop image': 'Bild hier hinziehen',
 	'Drop file': 'Datei löschen',
 	'or click': 'oder hier klicken',

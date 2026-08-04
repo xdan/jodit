@@ -94,6 +94,7 @@ module.exports = {
 	'Enter Directory name': 'הכנס שם תקיה',
 	'Create directory': 'צור תקיה',
 	'type name': 'סוג הקובץ',
+	'type dir name': 'סוג הקובץ',
 	'Drop image': 'הסר תמונה',
 	'Drop file': 'הסר קובץ',
 	'or click': 'או לחץ',

@@ -95,6 +95,7 @@ module.exports = {
 	'Enter Directory name': 'Masukkan nama Direktori',
 	'Create directory': 'Buat direktori',
 	'type name': 'ketik nama',
+	'type dir name': 'ketik nama',
 	'Drop image': 'Letakkan gambar',
 	'Drop file': 'Letakkan berkas',
 	'or click': 'atau klik',

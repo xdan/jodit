@@ -96,6 +96,7 @@ module.exports = {
 	'Enter Directory name': 'Název složky',
 	'Create directory': 'Vytvořit složku',
 	'type name': 'název',
+	'type dir name': 'název',
 	'Drop image': 'Přetáhněte sem obrázek',
 	'Drop file': 'Přetáhněte sem soubor',
 	'or click': 'nebo klikněte',

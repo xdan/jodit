@@ -95,6 +95,7 @@ module.exports = {
 	'Enter Directory name': 'Skriv inn mappenavn',
 	'Create directory': 'Opprett mappe',
 	'type name': 'skriv navn',
+	'type dir name': 'skriv navn',
 	'Drop image': 'Slipp bilde',
 	'Drop file': 'Slipp fil',
 	'or click': 'eller klikk',

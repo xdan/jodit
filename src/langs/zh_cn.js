@@ -95,6 +95,7 @@ module.exports = {
 	'Enter Directory name': '输入路径',
 	'Create directory': '创建路径',
 	'type name': 'type name',
+	'type dir name': 'type name',
 	'Drop image': '拖动图片到此',
 	'Drop file': '拖动文件到此',
 	'or click': '或点击',

@@ -105,7 +105,7 @@ export function selfListeners(this: IFileBrowser): void {
 						.then(() => loadTree(self))
 						.catch(self.status);
 				},
-				'type name'
+				'type dir name'
 			);
 		})
 		.on('fileRemove.filebrowser', () => {
