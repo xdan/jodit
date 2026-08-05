@@ -39,4 +39,23 @@ describe('Delete plugin', () => {
 			});
 		});
 	});
+
+	describe('Remove selected image by keyboard', () => {
+		// https://github.com/jodit/jodit-react/issues/226
+		[Jodit.KEY_DELETE, Jodit.KEY_BACKSPACE].forEach(key => {
+			it(`Should remove the image without throwing on ${key}`, () => {
+				const editor = getJodit();
+				editor.value =
+					'<p>text <img src="tests/artio.jpg" alt=""> tail</p>';
+
+				const img = editor.editor.querySelector('img');
+				editor.s.select(img);
+
+				simulateEvent('keydown', key, editor.editor);
+
+				expect(editor.editor.querySelector('img')).is.null;
+				expect(editor.value.includes('text')).is.true;
+			});
+		});
+	});
 });
