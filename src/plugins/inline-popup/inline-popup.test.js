@@ -132,6 +132,50 @@ describe('Text Inline Popup plugin', () => {
 		});
 	});
 
+	describe('Nested popup position with allowTabNavigation', () => {
+		// https://github.com/jodit/jodit-react/issues/290
+		[true, false].forEach(allowTabNavigation => {
+			it(`Should open near its trigger button when allowTabNavigation=${allowTabNavigation}`, () => {
+				const editor = getJodit({ allowTabNavigation });
+
+				editor.value =
+					'<table><tbody><tr><td>cell</td></tr></tbody></table>';
+
+				const td = editor.editor.querySelector('td');
+				const pos = Jodit.modules.Helpers.position(td);
+
+				simulateEvent(['mousedown', 'mouseup', 'click'], 0, td, e => {
+					Object.assign(e, {
+						clientX: pos.left,
+						clientY: pos.top
+					});
+				});
+
+				const popup = getOpenedPopup(editor);
+				expect(popup).is.not.null;
+
+				const trigger = getButton('brushCell', popup);
+				expect(trigger).is.not.null;
+
+				simulateEvent('click', trigger);
+
+				const nested = getOpenedPopup(editor);
+				expect(nested).is.not.null;
+				expect(nested).does.not.equal(popup);
+
+				const btnRect = trigger.getBoundingClientRect();
+				const popRect = nested.getBoundingClientRect();
+
+				const distance = Math.min(
+					Math.abs(popRect.top - btnRect.bottom),
+					Math.abs(popRect.bottom - btnRect.top)
+				);
+
+				expect(distance).is.below(50);
+			});
+		});
+	});
+
 	describe('Table', () => {
 		describe('Table button', () => {
 			describe('Select table cell', () => {
