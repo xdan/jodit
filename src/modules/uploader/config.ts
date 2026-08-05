@@ -39,6 +39,7 @@ Config.prototype.uploader = {
 	url: '',
 
 	insertImageAsBase64URI: false,
+	showTabInFileSelector: true,
 	imagesExtensions: [
 		'jpg',
 		'jpeg',

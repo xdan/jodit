@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.15
+
+#### :rocket: New Feature
+
+- **Uploader / insert popup**: new option `uploader.showTabInFileSelector` (default `true`). Set it to `false` to hide the *Upload* (drag-and-drop) tab in the image/file insert popup while keeping the uploader configured for the file browser — previously any configured uploader forced the tab to appear. Fixes [#1406](https://github.com/xdan/jodit/issues/1406).
+
 ## 4.13.14
 
 #### :nail_care: Polish

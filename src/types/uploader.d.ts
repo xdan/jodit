@@ -41,6 +41,23 @@ export interface IUploaderOptions<T> {
 	insertImageAsBase64URI: boolean;
 
 	/**
+	 * Show the `Upload` tab in the image/file insert popup.
+	 * Set to `false` when the uploader is configured only for the
+	 * file browser and direct drag-and-drop upload should not be offered.
+	 * @default true
+	 * @example
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 	uploader: {
+	 * 		url: 'https://example.com/upload',
+	 * 		showTabInFileSelector: false
+	 * 	}
+	 * });
+	 * ```
+	 */
+	showTabInFileSelector: boolean;
+
+	/**
 	 * List of extensions for images
 	 * @default ['jpg', 'png', 'jpeg', 'gif']
 	 * @example

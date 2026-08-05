@@ -57,6 +57,7 @@ export const FileSelectorWidget = (
 
 	if (
 		callbacks.upload &&
+		options.showTabInFileSelector !== false &&
 		(options.url ||
 			options.insertImageAsBase64URI ||
 			options.customUploadFunction)

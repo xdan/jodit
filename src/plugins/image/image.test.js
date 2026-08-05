@@ -5,6 +5,55 @@
  */
 describe('Process Images plugins', function () {
 	describe('Toolbar', function () {
+		describe('uploader.showTabInFileSelector', function () {
+			// https://github.com/xdan/jodit/issues/1406
+			it('Should hide the Upload tab when disabled, keeping Browse and URL', function () {
+				const editor = getJodit({
+					uploader: {
+						url: 'https://example.com/upload',
+						showTabInFileSelector: false
+					},
+					filebrowser: {
+						ajax: {
+							url: 'https://example.com/filebrowser'
+						}
+					}
+				});
+
+				clickButton('image', editor);
+				const popup = getOpenedPopup(editor);
+				expect(popup).is.not.null;
+
+				const labels = Array.from(
+					popup.querySelectorAll('.jodit-tabs__button')
+				).map(b => b.textContent.trim());
+
+				expect(labels).to.deep.equal(['Browse', 'URL']);
+			});
+
+			it('Should show the Upload tab by default', function () {
+				const editor = getJodit({
+					uploader: {
+						url: 'https://example.com/upload'
+					},
+					filebrowser: {
+						ajax: {
+							url: 'https://example.com/filebrowser'
+						}
+					}
+				});
+
+				clickButton('image', editor);
+				const popup = getOpenedPopup(editor);
+
+				const labels = Array.from(
+					popup.querySelectorAll('.jodit-tabs__button')
+				).map(b => b.textContent.trim());
+
+				expect(labels).to.deep.equal(['Upload', 'Browse', 'URL']);
+			});
+		});
+
 		describe('Click on Image button with filebrowser', function () {
 			it('Should size the insert-image tabs to their labels without clipping long localized captions', function () {
 				// 3 tabs (Upload/Browse/URL) in Russian: 'Загрузка' is longer
