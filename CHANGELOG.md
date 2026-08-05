@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.14
+
+#### :nail_care: Polish
+
+- **Languages**: Slovak locale polish — consistent capitalization (`Premenovať`, `Ukážka`, `Stiahnuť`) and translations for the file-browser actions (`Upload file`, `Remove file`, `Update file list`, `Select file`, `Edit image`, `Tiles view`, `List view`). Thanks [@KamikX](https://github.com/KamikX) ([#1417](https://github.com/xdan/jodit/pull/1417)).
+
 ## 4.13.13
 
 #### :rocket: New Feature
