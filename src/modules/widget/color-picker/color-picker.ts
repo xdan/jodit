@@ -95,6 +95,49 @@ export const ColorPickerWidget = (
 
 	const { extra } = refs(form);
 
+	extra.appendChild(
+		editor.c.fromHTML(
+			`<div class="${cn}__hex"><input data-ref="hexInput" type="text" spellcheck="false" aria-label="HEX" placeholder="#FF0000" value="${
+				valueHex || ''
+			}"/></div>`
+		)
+	);
+
+	const { hexInput } = refs<HTMLInputElement>(form);
+
+	const applyHexInput = (): void => {
+		const raw = hexInput.value.trim();
+
+		const isHex = /^#?[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(raw);
+		const isRgb = /^rgba?\([\d\s.,%]+\)$/i.test(raw);
+
+		if (!isHex && !isRgb) {
+			return;
+		}
+
+		const color = normalizeColor(
+			isHex && !raw.startsWith('#') ? '#' + raw : raw
+		);
+
+		if (color && isFunction(callback)) {
+			callback(color);
+		}
+	};
+
+	editor.e
+		.on(hexInput, 'keydown', (e: KeyboardEvent) => {
+			e.stopPropagation();
+
+			if (e.key === 'Enter') {
+				e.preventDefault();
+				applyHexInput();
+			}
+		})
+		.on(hexInput, 'change', (e: Event) => {
+			e.stopPropagation();
+			applyHexInput();
+		});
+
 	if (editor.o.showBrowserColorPicker && hasBrowserColorPicker()) {
 		extra.appendChild(
 			editor.c.fromHTML(
@@ -107,7 +150,12 @@ export const ColorPickerWidget = (
 
 			const target = e.target as HTMLInputElement;
 
-			if (!target || !target.tagName || !Dom.isTag(target, 'input')) {
+			if (
+				!target ||
+				!target.tagName ||
+				!Dom.isTag(target, 'input') ||
+				target.type !== 'color'
+			) {
 				return;
 			}
 
@@ -122,6 +170,12 @@ export const ColorPickerWidget = (
 	}
 
 	editor.e.on(form, 'mousedown touchend', (e: MouseEvent) => {
+		// let the hex/native inputs receive focus and clicks
+		if (Dom.isTag(e.target as Node, 'input')) {
+			e.stopPropagation();
+			return;
+		}
+
 		e.stopPropagation();
 		e.preventDefault();
 

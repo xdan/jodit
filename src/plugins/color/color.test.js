@@ -46,6 +46,86 @@
 			expect(popup2).is.null;
 		});
 
+		describe('Hex input', function () {
+			// https://github.com/jodit/jodit-react/issues/310
+			it('Should apply pasted/typed hex color on Enter and on change', function () {
+				const editor = getJodit();
+
+				editor.value = 'text2text';
+
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild.firstChild, 3);
+				range.setEnd(editor.editor.firstChild.firstChild, 6);
+				editor.s.selectRange(range);
+
+				clickButton('brush', editor);
+
+				const popup = getOpenedPopup(editor);
+				const input = popup.querySelector(
+					'.jodit-color-picker__hex input'
+				);
+
+				expect(input).is.not.null;
+
+				input.value = '#FF0000';
+				simulateEvent('change', input);
+
+				expect(editor.value).equals(
+					'<p>tex<span style="background-color: rgb(255, 0, 0);">t2t</span>ext</p>'
+				);
+			});
+
+			it('Should accept a hex value without the leading hash', function () {
+				const editor = getJodit();
+
+				editor.value = 'text2text';
+
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild.firstChild, 3);
+				range.setEnd(editor.editor.firstChild.firstChild, 6);
+				editor.s.selectRange(range);
+
+				clickButton('brush', editor);
+
+				const popup = getOpenedPopup(editor);
+				const input = popup.querySelector(
+					'.jodit-color-picker__hex input'
+				);
+
+				input.value = '00FF00';
+				simulateEvent('keydown', input, e => {
+					e.key = 'Enter';
+				});
+
+				expect(editor.value).equals(
+					'<p>tex<span style="background-color: rgb(0, 255, 0);">t2t</span>ext</p>'
+				);
+			});
+
+			it('Should ignore an invalid value', function () {
+				const editor = getJodit();
+
+				editor.value = 'text2text';
+
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild.firstChild, 3);
+				range.setEnd(editor.editor.firstChild.firstChild, 6);
+				editor.s.selectRange(range);
+
+				clickButton('brush', editor);
+
+				const popup = getOpenedPopup(editor);
+				const input = popup.querySelector(
+					'.jodit-color-picker__hex input'
+				);
+
+				input.value = 'not-a-color';
+				simulateEvent('change', input);
+
+				expect(editor.value).equals('<p>text2text</p>');
+			});
+		});
+
 		describe('Show native color picker', function () {
 			describe('Enable', function () {
 				describe('Select all content by edges', function () {

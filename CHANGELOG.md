@@ -9,6 +9,16 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.13
+
+#### :rocket: New Feature
+
+- **Color picker**: the palette popup now has a text input for the color value — paste or type a hex code (`#FF0000`, `FF0000`, short `#F00`) or an `rgb()`/`rgba()` value and press Enter (or blur) to apply it. Previously the only way to pick a non-palette color was the native browser picker. Invalid values are ignored. Requested in [jodit-react#310](https://github.com/jodit/jodit-react/issues/310).
+
+#### :house: Internal
+
+- Regression tests: applying styles/commands (`color`, `fontsize`, `bold`) to a fully selected list hits every `<li>`, not just one (reported in [jodit-react#313](https://github.com/jodit/jodit-react/issues/313) against an older jodit; not reproducible on current code).
+
 ## 4.13.12
 
 #### :house: Internal

@@ -43,6 +43,23 @@
 		}
 	}
 
+	&__extra {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__hex {
+		input {
+			width: 80px;
+			padding: 2px 4px;
+			border: 1px solid var(--color-border);
+			border-radius: var(--border-radius-default);
+			font-family: monospace;
+			font-size: var(--font-size-small, 12px);
+		}
+	}
+
 	&__native {
 		svg {
 			display: inline-block;

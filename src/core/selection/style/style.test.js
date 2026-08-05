@@ -1032,6 +1032,58 @@ describe('Apply style', () => {
 				});
 			});
 
+			describe('For fully selected list', function () {
+				it('Should apply style to every list item', function () {
+					editor.value =
+						'<ul><li>one</li><li>two</li><li>three</li></ul>';
+					editor.execCommand('selectall');
+
+					const style = new Style({
+						attributes: {
+							style: {
+								color: 'yellow'
+							}
+						}
+					});
+
+					style.apply(editor);
+
+					expect(sortAttributes(editor.value)).equals(
+						'<ul>' +
+							'<li><span style="color:yellow">one</span></li>' +
+							'<li><span style="color:yellow">two</span></li>' +
+							'<li><span style="color:yellow">three</span></li>' +
+							'</ul>'
+					);
+				});
+
+				it('Should apply fontsize and bold commands to every list item', function () {
+					editor.value =
+						'<ul><li>one</li><li>two</li><li>three</li></ul>';
+					editor.execCommand('selectall');
+					editor.execCommand('fontsize', false, '24px');
+
+					expect(sortAttributes(editor.value)).equals(
+						'<ul>' +
+							'<li><span style="font-size:24px">one</span></li>' +
+							'<li><span style="font-size:24px">two</span></li>' +
+							'<li><span style="font-size:24px">three</span></li>' +
+							'</ul>'
+					);
+
+					editor.execCommand('selectall');
+					editor.execCommand('bold');
+
+					expect(sortAttributes(editor.value)).equals(
+						'<ul>' +
+							'<li><strong><span style="font-size:24px">one</span></strong></li>' +
+							'<li><strong><span style="font-size:24px">two</span></strong></li>' +
+							'<li><strong><span style="font-size:24px">three</span></strong></li>' +
+							'</ul>'
+					);
+				});
+			});
+
 			describe('For all content', function () {
 				it('Should apply style to all elements', function () {
 					editor.value = '<p><br></p><p>test</p>';
