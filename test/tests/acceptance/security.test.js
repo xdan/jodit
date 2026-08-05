@@ -7,6 +7,20 @@
 describe('Security test', () => {
 	describe('XSS', () => {
 		describe('From source', () => {
+			describe('Set iframe with javascript: src (CVE-2023-42399)', () => {
+				it('Should strip the unsafe src attribute', () => {
+					const editor = getJodit();
+
+					editor.value =
+						'<iframe src="JavaScript: alert(/xss/)"></iframe><p>ok</p>';
+
+					const iframe = editor.editor.querySelector('iframe');
+					const src = iframe && iframe.getAttribute('src');
+
+					expect(/javascript:/i.test(src || '')).is.false;
+				});
+			});
+
 			describe('Set HTML with onerror JS', () => {
 				it('Should remove this unsafe attribute', () => {
 					const editor = getJodit();
