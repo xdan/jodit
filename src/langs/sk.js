@@ -202,10 +202,10 @@ module.exports = {
 		'Obrázok bol úspešne nahraný na server!',
 	palette: 'paleta',
 	'There are no files': 'V tomto priečinku nie sú žiadne súbory.',
-	Rename: 'premenovať',
+	Rename: 'Premenovať',
 	'Enter new name': 'Zadajte nový názov',
-	preview: 'ukážka',
-	download: 'stiahnuť',
+	preview: 'Ukážka',
+	download: 'Stiahnuť',
 	'Paste from clipboard': 'Vložiť zo schránky',
 	"Your browser doesn't support direct access to the clipboard.":
 		'Váš prehliadač nepodporuje priamy prístup do schránky.',
@@ -224,5 +224,12 @@ module.exports = {
 	'Find Previous': 'Nájsť predchádzajúce',
 	'Find Next': 'Nájsť nasledujúce',
 	'Insert className': 'Vložte názov triedy',
-	'Press Alt for custom resizing': 'Stlačte Alt na vlastnú zmenu veľkosti'
+	'Press Alt for custom resizing': 'Stlačte Alt na vlastnú zmenu veľkosti',
+	'Upload file': 'Nahrať súbor',
+	'Remove file': 'Odstrániť súbor',
+	'Update file list': 'Aktualizovať zoznam súborov',
+	'Select file': 'Vybrať súbor',
+	'Edit image': 'Upraviť obrázok',
+	'Tiles view': 'Zobrazenie dlaždíc',
+	'List view': 'Zobrazenie zoznamu'
 };
