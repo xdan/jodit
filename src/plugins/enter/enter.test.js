@@ -32,6 +32,27 @@ describe('Enter behavior Tests', function () {
 			expect(area.scrollTop).is.above(0);
 		});
 
+		it('Should keep the new line fully visible when Enter is pressed while scrolled to the bottom', function () {
+			const editor = getJodit({ height: 150 });
+			fill(editor);
+
+			const area = editor.editor;
+			expect(area.scrollHeight).is.above(area.clientHeight);
+
+			// Real typing flow: the editor is scrolled all the way down and
+			// the caret sits at the end of the last visible line
+			area.scrollTop = area.scrollHeight;
+			editor.s.setCursorIn(area.querySelector('p:last-child'), false);
+
+			editor.execCommand('enter');
+
+			const newP = area.querySelector('p:last-child');
+			expect(newP.offsetTop + newP.offsetHeight).is.at.most(
+				area.scrollTop + area.clientHeight
+			);
+			expect(newP.offsetTop).is.at.least(area.scrollTop);
+		});
+
 		it('Should not scroll when the caret line is already visible', function () {
 			const editor = getJodit({ height: 150 });
 			fill(editor);

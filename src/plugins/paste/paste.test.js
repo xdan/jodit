@@ -1513,7 +1513,14 @@ describe('Test paste plugin', () => {
 
 				replaceCursorToChar(editor);
 
-				expect(editor.editor.scrollTop).above(500);
+				// The editor scrolls the minimal distance, so the pasted
+				// paragraph must be fully visible at the bottom
+				const area = editor.editor;
+				const pop = area.querySelector('p:last-child');
+				expect(area.scrollTop).above(0);
+				expect(pop.offsetTop + pop.offsetHeight).at.most(
+					area.scrollTop + area.clientHeight
+				);
 				expect(sortAttributes(editor.value)).eq(
 					'<p>test</p>\n'.repeat(20) + '<p>test</p>' + '<p>pop|</p>'
 				);

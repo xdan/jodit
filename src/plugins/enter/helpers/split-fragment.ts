@@ -50,7 +50,18 @@ export function splitFragment(
 		return;
 	}
 
-	const newP = sel.splitSelection(block, fake);
+	// Inserting the left half above the caret can trigger the browser's
+	// scroll anchoring and shift the visible area — keep it stable. See #1300
+	const { scrollTop } = jodit.editor;
 
-	scrollIntoViewIfNeeded(newP, jodit.editor, jodit.ed);
+	sel.splitSelection(block, fake);
+
+	if (jodit.editor.scrollTop !== scrollTop) {
+		jodit.editor.scrollTop = scrollTop;
+	}
+
+	// After the split the caret stays inside `block` (the right half) —
+	// `splitSelection` returns the left half, which is above the caret and
+	// usually already visible. Follow the caret, not the left half. See #1300
+	scrollIntoViewIfNeeded(block, jodit.editor, jodit.ed);
 }

@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.16
+
+#### :bug: Bug Fix
+
+- **Enter**: pressing Enter with the caret at the bottom of a fixed-height (scrollable) editor left the new line clipped below the visible area — the view only caught up once you started typing. Three stacked causes: after splitting a paragraph the scroll targeted the left (already visible) half instead of the block that keeps the caret; `inView` treated a line clipped by the container's bottom edge as visible; and Chrome's scroll anchoring shifted the scroll position during the split. The editor now keeps the scroll stable across the split and follows the caret, scrolling the minimal distance (new line aligned to the bottom edge instead of jumping to the top). Fixes [#1300](https://github.com/xdan/jodit/issues/1300).
+
 ## 4.13.15
 
 #### :rocket: New Feature

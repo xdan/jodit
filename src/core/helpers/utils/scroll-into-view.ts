@@ -33,7 +33,12 @@ export function inView(
 		el = el.parentNode as HTMLElement;
 		rect = el.getBoundingClientRect();
 
-		if (!(top <= rect.bottom)) {
+		// The element's bottom is clipped by the container's bottom edge: a
+		// caret sitting on that line is invisible, so the element is not in
+		// view even though its top still fits. The `top > rect.top` guard keeps
+		// elements taller than the container (which can never fully fit) from
+		// being treated as always out of view. See #1300
+		if (top + height > rect.bottom && top > rect.top) {
 			return false;
 		}
 
@@ -43,14 +48,15 @@ export function inView(
 		}
 	}
 
-	// Check it's within the document viewport: the element must not be below
-	// the viewport bottom, and (its bottom) must not be above the viewport top —
-	// the latter guard was missing, so an element scrolled above the top was
-	// wrongly reported as visible and never scrolled to. See #1279
+	// Check it's within the document viewport: the element must fit above the
+	// viewport bottom (same clipped-bottom rule as above), and its bottom must
+	// not be above the viewport top — the latter guard was missing, so an
+	// element scrolled above the top was wrongly reported as visible and never
+	// scrolled to. See #1279
 	const clientHeight =
 		(doc.documentElement && doc.documentElement.clientHeight) || 0;
 
-	return top <= clientHeight && top + height >= 0;
+	return (top + height <= clientHeight || top <= 0) && top + height >= 0;
 }
 
 /**
@@ -63,7 +69,14 @@ export function scrollIntoViewIfNeeded(
 ): void {
 	if (Dom.isHTMLElement(elm) && !inView(elm, root, doc)) {
 		if (root.clientHeight !== root.scrollHeight) {
-			root.scrollTop = elm.offsetTop;
+			// Scroll the minimal distance: when the element is below the
+			// visible area align it to the bottom (natural typing flow),
+			// otherwise align it to the top. See #1300
+			const alignBottom =
+				elm.offsetTop + elm.offsetHeight - root.clientHeight;
+
+			root.scrollTop =
+				root.scrollTop < alignBottom ? alignBottom : elm.offsetTop;
 		}
 
 		if (!inView(elm, root, doc)) {
