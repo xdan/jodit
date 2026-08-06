@@ -1,18 +1,16 @@
 name: Statoscope
 
+# PR-only: compares the PR build against statoscope/reference.json, which is
+# regenerated locally by `make newversion` on each release. The bot must not
+# push to main.
 on:
-  push:
-    branches: [ main ]
-    tags-ignore: [ '*' ]
   pull_request:
     branches: [ main ]
 
 jobs:
   statoscope:
-    if: "!startsWith(github.event.head_commit.message, 'New version') && !startsWith(github.event.head_commit.message, 'chore: update statoscope')"
     runs-on: ubuntu-latest
     permissions:
-      contents: write
       pull-requests: write
 
     steps:
@@ -28,19 +26,8 @@ jobs:
     - name: Build with Statoscope
       run: make build es=es2021 uglify=true fat=true statoscope=true
 
-    # On main: update reference.json
-    - name: Update reference stats
-      if: github.event_name == 'push'
-      run: |
-        mv statoscope/reference.next.json statoscope/reference.json
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add statoscope/reference.json
-        git diff --cached --quiet && echo "No changes" || git commit -m "chore: update statoscope reference stats" && git push
-
-    # On PR: compare against committed reference
+    # Compare against the committed reference
     - name: Generate size report
-      if: github.event_name == 'pull_request'
       id: sizes
       run: |
         if [ ! -f statoscope/reference.json ]; then
@@ -85,7 +72,7 @@ jobs:
         " "$REF" "$NEXT"
 
     - name: Validate rules
-      if: github.event_name == 'pull_request' && steps.sizes.outputs.has_reference == 'true'
+      if: steps.sizes.outputs.has_reference == 'true'
       id: validate
       run: |
         set +e
@@ -102,7 +89,7 @@ jobs:
         echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
 
     - name: Generate diff report
-      if: github.event_name == 'pull_request' && steps.sizes.outputs.has_reference == 'true'
+      if: steps.sizes.outputs.has_reference == 'true'
       run: |
         npx @statoscope/cli generate \
           --input statoscope/reference.next.json \
@@ -110,7 +97,7 @@ jobs:
           --output build/statoscope-diff.html
 
     - name: Upload diff report
-      if: github.event_name == 'pull_request'
+      if: steps.sizes.outputs.has_reference == 'true'
       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
       with:
         name: statoscope-diff
@@ -118,7 +105,7 @@ jobs:
         retention-days: 30
 
     - name: Comment PR
-      if: github.event_name == 'pull_request' && steps.sizes.outputs.has_reference == 'true'
+      if: steps.sizes.outputs.has_reference == 'true'
       uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v2
       with:
         header: statoscope
@@ -139,7 +126,7 @@ jobs:
           ${{ steps.validate.outputs.exit_code == '0' && '✅ All checks passed' || '⚠️ Some checks failed' }} · [Full diff report →](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) (see Artifacts)
 
     - name: Comment PR (no reference)
-      if: github.event_name == 'pull_request' && steps.sizes.outputs.has_reference != 'true'
+      if: steps.sizes.outputs.has_reference != 'true'
       uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v2
       with:
         header: statoscope
