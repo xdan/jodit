@@ -15,7 +15,7 @@ jobs:
     stale:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/stale@5bef64f19d7facfb25b37b414482c7164d639639 # v9
+            - uses: actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93 # v11.0.0
               with:
                   any-of-labels: 'the error is not reproduced,Need more information,need an error repetition algorithm'
                   exempt-issue-labels: 'pinned,security,fixed'
