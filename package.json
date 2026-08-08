@@ -53,7 +53,7 @@
 	"devDependencies": {
 		"@eslint/compat": "^2.0.2",
 		"@eslint/eslintrc": "^3.3.4",
-		"@eslint/js": "^9.39.2",
+		"@eslint/js": "^10.0.1",
 		"@playwright/test": "^1.60.0",
 		"@statoscope/cli": "^5.29.0",
 		"@statoscope/stats-validator-plugin-webpack": "^5.29.0",
