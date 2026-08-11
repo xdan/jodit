@@ -17,6 +17,7 @@ import type {
 } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { splitArray } from 'jodit/core/helpers';
+import { css } from 'jodit/core/helpers/utils/css';
 import { Config } from 'jodit/config';
 import { ToolbarCollection } from 'jodit/modules/toolbar/collection/collection';
 import { makeCollection } from 'jodit/modules/toolbar/factory';
@@ -197,8 +198,7 @@ Config.prototype.controls.dots = {
 								editor.toolbar?.firstButton?.container
 									.offsetWidth || 36;
 
-							store.toolbar.container.style.width =
-								(w + 4) * 3 + 'px';
+							css(store.toolbar.container, 'width', (w + 4) * 3);
 						}
 					}
 				}

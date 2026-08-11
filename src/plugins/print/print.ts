@@ -37,7 +37,7 @@ Config.prototype.controls.print = {
 			border: 0
 		});
 
-		getContainer(editor, Config).appendChild(iframe);
+		Dom.append(getContainer(editor, Config), iframe);
 
 		const afterFinishPrint = (): void => {
 			editor.e.off(editor.ow, 'mousemove', afterFinishPrint);
@@ -78,7 +78,7 @@ Config.prototype.controls.print = {
 					}
 			}`;
 
-			myWindow.document.head.appendChild(style);
+			Dom.append(myWindow.document.head, style);
 
 			myWindow.focus();
 			myWindow.print();

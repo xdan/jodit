@@ -29,5 +29,6 @@ export * from './traits';
 export * from './types';
 export * from './ui';
 export * from './uploader';
+export * from './vdom';
 export * from './view';
 export * from './messages';

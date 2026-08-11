@@ -36,7 +36,7 @@ export class ProgressBar extends UIElement implements IProgressBar {
 	 */
 	show(): IProgressBar {
 		const container = (this.j as IJodit).workplace || this.j.container;
-		container.appendChild(this.container);
+		Dom.append(container, this.container);
 		return this;
 	}
 
@@ -46,7 +46,7 @@ export class ProgressBar extends UIElement implements IProgressBar {
 	}
 
 	progress(percentage: number): IProgressBar {
-		this.container.style.width = percentage.toFixed(2) + '%';
+		css(this.container, 'width', percentage.toFixed(2) + '%');
 		return this;
 	}
 
@@ -83,11 +83,11 @@ export class ProgressBar extends UIElement implements IProgressBar {
 			top: pos.top + start.y
 		});
 
-		box.appendChild(el);
+		Dom.append(box, el);
 		this.__animationElement = el;
 
 		// Force reflow before starting transition
-		// eslint-disable-next-line no-unused-expressions
+
 		el.offsetWidth;
 
 		css(el, {

@@ -26,6 +26,9 @@ const map: IDictionary = {};
  */
 export function reset<T extends Function>(key: string): Nullable<T> {
 	if (!(key in map)) {
+		// Raw DOM API on purpose: this bootstrap helper is imported by
+		// `to-array`, which the `Dom` module itself depends on — importing
+		// `Dom` here would create a circular dependency
 		const iframe = globalDocument.createElement('iframe');
 
 		try {

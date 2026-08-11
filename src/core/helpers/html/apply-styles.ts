@@ -11,6 +11,8 @@
 import { globalDocument, IS_PROD } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { trim } from 'jodit/core/helpers/string/trim';
+import { attr } from 'jodit/core/helpers/utils/attr';
+import { css } from 'jodit/core/helpers/utils/css';
 import { $$ } from 'jodit/core/helpers/utils/selector';
 
 function normalizeCSS(s: string): string {
@@ -60,8 +62,8 @@ export function applyStyles(html: string): string {
 
 	const iframe = globalDocument.createElement('iframe');
 
-	iframe.style.display = 'none';
-	globalDocument.body.appendChild(iframe);
+	css(iframe, 'display', 'none');
+	Dom.append(globalDocument.body, iframe);
 
 	let convertedString: string = '',
 		collection: HTMLElement[] = [];
@@ -84,7 +86,7 @@ export function applyStyles(html: string): string {
 			Dom.each(iframeDoc.body, (node: Node) => {
 				if (
 					Dom.isElement(node) &&
-					/mso-list:\s*ignore/i.test(node.getAttribute('style') || '')
+					/mso-list:\s*ignore/i.test(attr(node, 'style') || '')
 				) {
 					Dom.safeRemove(node);
 				}
@@ -107,10 +109,14 @@ export function applyStyles(html: string): string {
 						);
 
 						collection.forEach((elm: HTMLElement) => {
-							elm.style.cssText = normalizeCSS(
-								rules[idx].style.cssText +
-									';' +
-									elm.style.cssText
+							attr(
+								elm,
+								'style',
+								normalizeCSS(
+									rules[idx].style.cssText +
+										';' +
+										(attr(elm, 'style') || '')
+								)
 							);
 						});
 					}
@@ -123,18 +129,14 @@ export function applyStyles(html: string): string {
 
 			Dom.each(iframeDoc.body, node => {
 				if (Dom.isElement(node)) {
-					const elm = node as HTMLElement;
-					const css = elm.getAttribute('style');
+					const cssText = attr(node, 'style');
 
-					if (css) {
-						elm.style.cssText = normalizeCSS(css);
+					if (cssText) {
+						attr(node, 'style', normalizeCSS(cssText));
 					}
 
-					if (
-						elm.hasAttribute('style') &&
-						!elm.getAttribute('style')
-					) {
-						elm.removeAttribute('style');
+					if (!attr(node, 'style')) {
+						attr(node, 'style', null);
 					}
 				}
 			});

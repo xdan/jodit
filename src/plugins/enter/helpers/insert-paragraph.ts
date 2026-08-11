@@ -29,7 +29,7 @@ export function insertParagraph(
 		br = createInside.element('br');
 
 	if (!isBR) {
-		p.appendChild(br);
+		Dom.append(p, br);
 	}
 
 	if (style && style.cssText) {

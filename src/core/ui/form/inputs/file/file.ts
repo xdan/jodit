@@ -10,6 +10,7 @@
 
 import type { IUIButton, IUIInput, IViewBased } from 'jodit/types';
 import { component } from 'jodit/core/decorators/component/component';
+import { Dom } from 'jodit/core/dom/dom';
 import { UIButton } from 'jodit/core/ui/button/button/button';
 import { UIInput } from 'jodit/core/ui/form/inputs/input/input';
 
@@ -53,7 +54,7 @@ export class UIFileInput extends UIInput {
 
 		nativeInput.classList.add(this.getFullElName('input'));
 		container.classList.add(this.componentName);
-		container.appendChild(nativeInput);
+		Dom.append(container, nativeInput);
 
 		return container;
 	}

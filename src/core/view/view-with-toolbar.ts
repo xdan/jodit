@@ -72,7 +72,7 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 		}
 
 		if (anchor !== box) {
-			this.container.insertBefore(box, anchor);
+			anchor ? Dom.before(anchor, box) : Dom.append(this.container, box);
 		}
 	}
 

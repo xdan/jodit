@@ -9,7 +9,7 @@
  */
 
 import type { IComponent, IContainer, IElms, Nullable } from 'jodit/types';
-import { toArray } from 'jodit/core/helpers/array/to-array';
+import { Dom } from 'jodit/core/dom/dom';
 
 export abstract class Elms implements IElms {
 	/**
@@ -19,8 +19,12 @@ export abstract class Elms implements IElms {
 		this: T,
 		elementName: string
 	): Nullable<HTMLElement> {
-		return this.container.querySelector(
-			`.${this.getFullElName(elementName)}`
+		const className = this.getFullElName(elementName);
+
+		return Dom.first(
+			this.container,
+			node =>
+				Dom.isHTMLElement(node) && node.classList.contains(className)
 		) as Nullable<HTMLElement>;
 	}
 
@@ -31,10 +35,15 @@ export abstract class Elms implements IElms {
 		this: T,
 		elementName: string
 	): HTMLElement[] {
-		return toArray(
-			this.container.querySelectorAll(
-				`.${this.getFullElName(elementName)}`
-			)
-		);
+		const className = this.getFullElName(elementName);
+		const result: HTMLElement[] = [];
+
+		Dom.each(this.container, node => {
+			if (Dom.isHTMLElement(node) && node.classList.contains(className)) {
+				result.push(node);
+			}
+		});
+
+		return result;
 	}
 }

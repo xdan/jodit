@@ -126,10 +126,7 @@ class xpath extends Plugin {
 		this.selectAllButton.state.size = 'tiny';
 
 		this.container &&
-			this.container.insertBefore(
-				this.selectAllButton.container,
-				this.container.firstChild
-			);
+			Dom.prepend(this.container, this.selectAllButton.container);
 	};
 
 	private calcPathImd = (): void => {
@@ -167,11 +164,7 @@ class xpath extends Plugin {
 							this.j.i18n('Select %s', name)
 						);
 
-						this.container &&
-							this.container.insertBefore(
-								li,
-								this.container.firstChild
-							);
+						this.container && Dom.prepend(this.container, li);
 					}
 				},
 				this.j.editor

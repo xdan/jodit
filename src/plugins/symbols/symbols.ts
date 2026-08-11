@@ -60,11 +60,16 @@ export class symbols extends Plugin {
 					</div>`
 			) as HTMLDivElement;
 
-			const preview = container.querySelector(
-				'.jodit-symbols__preview'
+			const preview = Dom.first(
+				container,
+				node =>
+					Dom.isHTMLElement(node) &&
+					node.classList.contains('jodit-symbols__preview')
 			) as HTMLDivElement;
 
-			const table = container.querySelector('table') as HTMLTableElement;
+			const table = Dom.first(container, node =>
+				Dom.isTag(node, 'table')
+			) as HTMLTableElement;
 			const body: HTMLTableSectionElement = table.tBodies[0];
 			const chars: HTMLAnchorElement[] = [];
 
@@ -88,11 +93,11 @@ export class symbols extends Plugin {
 						) as HTMLAnchorElement;
 
 					chars.push(a);
-					td.appendChild(a);
-					tr.appendChild(td);
+					Dom.append(td, a);
+					Dom.append(tr, td);
 				}
 
-				body.appendChild(tr);
+				Dom.append(body, tr);
 			}
 
 			const self: symbols = this;

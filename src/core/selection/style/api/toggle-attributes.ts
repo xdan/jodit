@@ -226,8 +226,8 @@ function getShadowRoot(jodit: IJodit): HTMLElement {
 		border: 0
 	});
 
-	iframe.src = 'about:blank';
-	container.appendChild(iframe);
+	attr(iframe, 'src', 'about:blank');
+	Dom.append(container, iframe);
 
 	const doc = iframe.contentWindow?.document;
 
@@ -252,13 +252,13 @@ function getNativeCSSValue(
 	// browser default black) is recognised. Without this, applying black after
 	// the default font color was changed was wrongly treated as a no-op (#1311).
 	const wrapper = jodit.create.element('div');
-	wrapper.style.color = css(jodit.editor, 'color') as string;
+	css(wrapper, 'color', css(jodit.editor, 'color') as string);
 
 	const newElm = jodit.create.element(elm.tagName.toLowerCase());
-	newElm.style.cssText = elm.style.cssText;
+	attr(newElm, 'style', attr(elm, 'style'));
 
-	wrapper.appendChild(newElm);
-	root.appendChild(wrapper);
+	Dom.append(wrapper, newElm);
+	Dom.append(root, wrapper);
 	const result = css(newElm, key);
 	Dom.safeRemove(wrapper);
 	return result;

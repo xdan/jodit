@@ -155,7 +155,7 @@ export class UIInput extends UIElement implements IUIInput {
 				value,
 				this.j.i18n(this.state.label || '')
 			);
-			this.container.appendChild(this.__errorBox);
+			Dom.append(this.container, this.__errorBox);
 		}
 	}
 
@@ -211,10 +211,10 @@ export class UIInput extends UIElement implements IUIInput {
 
 	private __markInputInvalid(): void {
 		if (this.error) {
-			this.nativeInput.setAttribute('aria-invalid', 'true');
+			attr(this.nativeInput, 'aria-invalid', 'true');
 			this.nativeInput.setCustomValidity?.(this.error);
 		} else {
-			this.nativeInput.removeAttribute('aria-invalid');
+			attr(this.nativeInput, 'aria-invalid', null);
 			this.nativeInput.setCustomValidity?.('');
 		}
 	}
@@ -235,8 +235,8 @@ export class UIInput extends UIElement implements IUIInput {
 
 		nativeInput.classList.add(this.getFullElName('input'));
 
-		this.wrapper.appendChild(nativeInput);
-		container.appendChild(this.wrapper);
+		Dom.append(this.wrapper, nativeInput);
+		Dom.append(container, this.wrapper);
 
 		attr(nativeInput, 'dir', this.j.o.direction || 'auto');
 

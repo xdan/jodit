@@ -120,10 +120,11 @@ export function stateListeners(this: IFileBrowser): void {
 
 				if (state.elements.length) {
 					state.elements.forEach(item => {
-						this.files.container.appendChild(getDomElement(item));
+						Dom.append(this.files.container, getDomElement(item));
 					});
 				} else {
-					files.container.appendChild(
+					Dom.append(
+						files.container,
 						create.div(
 							this.componentName + '_no-files_true',
 							this.i18n('There are no files')
@@ -142,7 +143,8 @@ export function stateListeners(this: IFileBrowser): void {
 					const sourceName = source.name;
 
 					if (sourceName && sourceName !== DEFAULT_SOURCE_NAME) {
-						this.tree.container.appendChild(
+						Dom.append(
+							this.tree.container,
 							create.div(
 								this.tree.getFullElName('source-title'),
 								sourceName
@@ -185,7 +187,7 @@ export function stateListeners(this: IFileBrowser): void {
 
 						this.e.on(folderElm, 'click', action('openFolder'));
 
-						this.tree.container.appendChild(folderElm);
+						Dom.append(this.tree.container, folderElm);
 
 						if (name === '..' || name === '.') {
 							return;
@@ -204,7 +206,7 @@ export function stateListeners(this: IFileBrowser): void {
 
 							btn.onAction(action('renameFolder'));
 
-							folderElm.appendChild(btn.container);
+							Dom.append(folderElm, btn.container);
 						}
 
 						if (
@@ -220,7 +222,7 @@ export function stateListeners(this: IFileBrowser): void {
 
 							btn.onAction(action('removeFolder'));
 
-							folderElm.appendChild(btn.container);
+							Dom.append(folderElm, btn.container);
 						}
 					});
 

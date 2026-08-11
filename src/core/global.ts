@@ -21,6 +21,7 @@ import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isViewObject } from 'jodit/core/helpers/checker/is-view-object';
 import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { css } from 'jodit/core/helpers/utils/css';
 import { getClassName } from 'jodit/core/helpers/utils/get-class-name';
 import { PluginSystem } from 'jodit/core/plugin/plugin-system';
@@ -117,12 +118,12 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 
 		// Let a strict CSP accept the injected <style>/<script> box
 		if (view.o.nonce && (tag === 'style' || tag === 'script')) {
-			box.setAttribute('nonce', view.o.nonce);
+			attr(box, 'nonce', view.o.nonce);
 		}
 
 		box.classList.add(`jodit_theme_${view.o.theme || 'default'}`);
 
-		body.appendChild(box);
+		Dom.append(body, box);
 
 		data[key] = box;
 

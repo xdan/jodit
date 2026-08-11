@@ -136,7 +136,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 									addLoadHandler = (src: string): void => {
 										const image = self.c.element('img');
 
-										image.setAttribute('src', src);
+										attr(image, 'src', src);
 
 										const onload = (): void => {
 											if (self.isInDestruct) {
@@ -156,7 +156,8 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 														)
 													)
 												) {
-													temp_content.appendChild(
+													Dom.append(
+														temp_content,
 														prev
 													);
 												}
@@ -169,17 +170,19 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 														)
 													)
 												) {
-													temp_content.appendChild(
+													Dom.append(
+														temp_content,
 														next
 													);
 												}
 											}
 
-											temp_content.appendChild(
+											Dom.append(
+												temp_content,
 												preview_box
 											);
 
-											preview_box.appendChild(image);
+											Dom.append(preview_box, image);
 
 											preview.setPosition();
 

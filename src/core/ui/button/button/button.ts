@@ -213,7 +213,7 @@ export class UIButton extends UIElement implements IUIButton {
 		Dom.detach(this.icon);
 
 		const iconElement = Icon.makeIcon(this.j, this.state.icon);
-		iconElement && this.icon.appendChild(iconElement);
+		iconElement && Dom.append(this.icon, iconElement);
 	}
 
 	/**
@@ -249,8 +249,8 @@ export class UIButton extends UIElement implements IUIButton {
 		const icon = this.j.c.span(cn + '__icon');
 		const text = this.j.c.span(cn + '__text');
 
-		button.appendChild(icon);
-		button.appendChild(text);
+		Dom.append(button, icon);
+		Dom.append(button, text);
 
 		return button;
 	}

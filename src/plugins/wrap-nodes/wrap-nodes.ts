@@ -77,7 +77,7 @@ class wrapNodes extends Plugin {
 
 				while (child && this.isSuitable(child)) {
 					const next: Nullable<Node> = child.nextSibling;
-					box.appendChild(child);
+					Dom.append(box, child);
 					child = next;
 				}
 
@@ -164,7 +164,7 @@ function checkAloneListLeaf(child: Node, jodit: IJodit): Node {
 				false
 			);
 			if (Dom.isTag(result, 'ul')) {
-				result.appendChild(next);
+				Dom.append(result, next);
 			} else {
 				result = Dom.wrap(next, 'ul', jodit.createInside);
 			}

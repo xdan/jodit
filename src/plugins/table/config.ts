@@ -98,13 +98,25 @@ Config.prototype.controls.table = {
 					'</label>' +
 					'</form>'
 			) as HTMLFormElement,
-			rows: HTMLSpanElement = form.querySelectorAll('span')[0],
-			cols: HTMLSpanElement = form.querySelectorAll('span')[1],
-			blocksContainer = form.querySelector(
-				'.jodit-form__container'
+			spans = ((): HTMLSpanElement[] => {
+				const list: HTMLSpanElement[] = [];
+				Dom.each(form, node => {
+					Dom.isTag(node, 'span') && list.push(node);
+				});
+				return list;
+			})(),
+			[rows, cols] = spans,
+			blocksContainer = Dom.first(
+				form,
+				node =>
+					Dom.isHTMLElement(node) &&
+					node.classList.contains('jodit-form__container')
 			) as HTMLDivElement,
-			options = form.querySelector(
-				'.jodit-form__options'
+			options = Dom.first(
+				form,
+				node =>
+					Dom.isHTMLElement(node) &&
+					node.classList.contains('jodit-form__options')
 			) as HTMLDivElement,
 			cells: HTMLElement[] = [];
 
@@ -164,7 +176,7 @@ Config.prototype.controls.table = {
 				tbody = crt.element('tbody'),
 				table = crt.element('table');
 
-			table.appendChild(tbody);
+			Dom.append(table, tbody);
 
 			let first_td: HTMLTableCellElement | null = null,
 				tr: HTMLTableRowElement,
@@ -182,14 +194,14 @@ Config.prototype.controls.table = {
 
 					css(td, 'width', (100 / cols_count).toFixed(4) + '%');
 
-					td.appendChild(crt.element('br'));
-					tr.appendChild(crt.text('\n'));
-					tr.appendChild(crt.text('\t'));
-					tr.appendChild(td);
+					Dom.append(td, crt.element('br'));
+					Dom.append(tr, crt.text('\n'));
+					Dom.append(tr, crt.text('\t'));
+					Dom.append(tr, td);
 				}
 
-				tbody.appendChild(crt.text('\n'));
-				tbody.appendChild(tr);
+				Dom.append(tbody, crt.text('\n'));
+				Dom.append(tbody, tr);
 			}
 
 			$$('input[type=checkbox]:checked', options).forEach(
@@ -327,10 +339,10 @@ Config.prototype.controls.table = {
 				attr(row, 'role', 'row');
 
 				for (let j = 0; j < default_cols_count; j += 1) {
-					row.appendChild(cells[i * default_cols_count + j]);
+					Dom.append(row, cells[i * default_cols_count + j]);
 				}
 
-				blocksContainer.appendChild(row);
+				Dom.append(blocksContainer, row);
 			}
 
 			if (cells[0]) {

@@ -38,7 +38,7 @@ export function applyLink(
 		}
 	} else {
 		if (link && link.parentNode) {
-			link.parentNode.replaceChild(image, link);
+			Dom.replace(link, image, undefined, false, true);
 		}
 	}
 }

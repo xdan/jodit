@@ -133,7 +133,7 @@ export class pasteStorage extends Plugin {
 			attr(a, 'data-index', index.toString());
 			attr(a, 'tab-index', '-1');
 
-			this.listBox && this.listBox.appendChild(a);
+			this.listBox && Dom.append(this.listBox, a);
 		});
 
 		this.dialog && this.dialog.open();
@@ -159,8 +159,8 @@ export class pasteStorage extends Plugin {
 		this.listBox = this.j.c.div();
 		this.previewBox = this.j.c.div();
 
-		this.container.appendChild(this.listBox);
-		this.container.appendChild(this.previewBox);
+		Dom.append(this.container, this.listBox);
+		Dom.append(this.container, this.previewBox);
 
 		this.dialog.setHeader(this.j.i18n('Choose Content to Paste'));
 		this.dialog.setContent(this.container);

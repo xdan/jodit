@@ -130,8 +130,8 @@ function appendNestedList(
 				)
 			);
 
-	newList.appendChild(li);
-	lastElm !== newList && previousLi.appendChild(newList);
+	Dom.append(newList, li);
+	lastElm !== newList && Dom.append(previousLi, newList);
 }
 
 function removeNestedList(

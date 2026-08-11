@@ -32,7 +32,7 @@ export function moveNodeInsideStart(
 		(!anotherSibling || !Dom.closest(node, Dom.isElement, j.editor))
 	) {
 		if (start || !sibling.firstChild) {
-			sibling.appendChild(node);
+			Dom.append(sibling, node);
 		} else {
 			Dom.before(sibling.firstChild, node);
 		}

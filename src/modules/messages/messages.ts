@@ -17,6 +17,7 @@ import type {
 	MessageVariant
 } from 'jodit/types';
 import { component } from 'jodit/core/decorators/component/component';
+import { Dom } from 'jodit/core/dom/dom';
 import { css } from 'jodit/core/helpers/utils/css';
 import { UIGroup } from 'jodit/core/ui/group/group';
 import { UIMessage } from 'jodit/modules/messages/message';
@@ -109,7 +110,7 @@ export class UIMessages extends UIGroup implements IMessages {
 			throw new Error('Container is not defined: ' + key);
 		}
 
-		this.__box.appendChild(this.container);
+		Dom.append(this.__box, this.container);
 
 		const msg = new UIMessage(this.j, { text, variant });
 		this.append(msg);

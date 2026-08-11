@@ -124,7 +124,7 @@ export class UIGroup<T extends IViewBased = IViewBased>
 			if (distElm == null) {
 				throw new Error('Element does not exist');
 			}
-			distElm.appendChild(elm.container);
+			Dom.append(distElm, elm.container);
 		} else {
 			this.appendChildToContainer(elm.container, index);
 		}
@@ -148,18 +148,15 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		childContainer: HTMLElement,
 		index?: number
 	): void {
-		if (
-			index === undefined ||
-			index < 0 ||
-			index > this.elements.length - 1 ||
-			this.container.children[index] == null
-		) {
-			this.container.appendChild(childContainer);
+		const ref =
+			index === undefined || index < 0 || index > this.elements.length - 1
+				? null
+				: this.container.children[index];
+
+		if (ref == null) {
+			Dom.append(this.container, childContainer);
 		} else {
-			this.container.insertBefore(
-				childContainer,
-				this.container.children[index]
-			);
+			Dom.before(ref, childContainer);
 		}
 	}
 

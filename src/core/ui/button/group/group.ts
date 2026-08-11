@@ -15,6 +15,7 @@ import type {
 	IViewBased
 } from 'jodit/types';
 import { component } from 'jodit/core/decorators/component/component';
+import { Dom } from 'jodit/core/dom/dom';
 import { assert } from 'jodit/core/helpers/utils/assert';
 import { UIButton } from 'jodit/core/ui/button/button/button';
 import { UIGroup } from 'jodit/core/ui/group/group';
@@ -44,7 +45,7 @@ export class UIButtonGroup extends UIGroup {
 	): void {
 		const options = this.getElm('options');
 		assert(options != null, 'Options does not exist');
-		options.appendChild(childContainer);
+		Dom.append(options, childContainer);
 	}
 
 	constructor(
