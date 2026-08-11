@@ -120,6 +120,42 @@ describe('Accessibility', () => {
 			expect(trigger.getAttribute('aria-expanded')).equals('false');
 		});
 
+		it('should be keyboard-accessible when tab navigation is enabled', () => {
+			const editor = getJodit({
+				allowTabNavigation: true,
+				toolbarAdaptive: false,
+				buttons: ['ol', 'ul', 'brush']
+			});
+
+			['ol', 'ul', 'brush'].forEach(name => {
+				const trigger = editor.toolbar.container.querySelector(
+					`[data-ref="${name}"] .jodit-toolbar-button__trigger`
+				);
+
+				expect(trigger.getAttribute('tabindex')).equals('0');
+			});
+
+			const orderedListTrigger = editor.toolbar.container.querySelector(
+				'[data-ref="ol"] .jodit-toolbar-button__trigger'
+			);
+
+			simulateEvent('keydown', Jodit.KEY_ENTER, orderedListTrigger);
+
+			expect(getOpenedPopup(editor)).is.not.null;
+			expect(orderedListTrigger.getAttribute('aria-expanded')).equals(
+				'true'
+			);
+
+			const colorTrigger = editor.toolbar.container.querySelector(
+				'[data-ref="brush"] .jodit-toolbar-button__trigger'
+			);
+
+			simulateEvent('keydown', ' ', colorTrigger);
+
+			expect(getOpenedPopup(editor)).is.not.null;
+			expect(colorTrigger.getAttribute('aria-expanded')).equals('true');
+		});
+
 		it('should set aria-expanded="true" when popup is opened', () => {
 			const editor = getJodit({
 				toolbarAdaptive: false,

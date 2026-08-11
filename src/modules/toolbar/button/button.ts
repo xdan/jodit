@@ -23,6 +23,7 @@ import type {
 	Nullable
 } from 'jodit/types';
 import { STATUSES } from 'jodit/core/component/statuses';
+import { KEY_ENTER, KEY_SPACE } from 'jodit/core/constants';
 import { autobind } from 'jodit/core/decorators/autobind/autobind';
 import { cacheHTML } from 'jodit/core/decorators/cache/cache';
 import {
@@ -170,6 +171,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 	protected override onChangeTabIndex(): void {
 		attr(this.button, 'tabindex', this.state.tabIndex);
+		attr(this.trigger, 'tabindex', this.state.tabIndex);
 	}
 
 	@cacheHTML
@@ -400,6 +402,19 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				popup.container
 			);
 		}
+	}
+
+	@watch('trigger:keydown')
+	protected onTriggerKeyDown(e: KeyboardEvent): void {
+		if (
+			this.state.disabled ||
+			![KEY_ENTER, KEY_SPACE, ' '].includes(e.key)
+		) {
+			return;
+		}
+
+		e.preventDefault();
+		this.trigger.click();
 	}
 
 	private openedPopup: Nullable<IPopup> = null;
