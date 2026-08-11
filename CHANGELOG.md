@@ -9,6 +9,18 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.19
+
+#### :bug: Bug Fix
+
+- **Accessibility / toolbar**: split-button dropdown triggers (list type, color, etc.) now participate in Tab navigation and open with Enter/Space, as their `role="button"` promises. Thanks [@Sakshamm-Goyal](https://github.com/Sakshamm-Goyal) ([#1420](https://github.com/xdan/jodit/pull/1420), fixes [#1419](https://github.com/xdan/jodit/issues/1419)).
+- **Accessibility / table**: the table-size picker is exposed as an ARIA grid with a single Tab stop — move the active cell with bounded arrow keys (the size preview stays in sync), insert the table with Enter, close the picker with Escape. Mouse and touch keep the same insertion path. Thanks [@Sakshamm-Goyal](https://github.com/Sakshamm-Goyal) ([#1421](https://github.com/xdan/jodit/pull/1421), fixes [#1418](https://github.com/xdan/jodit/issues/1418)).
+
+#### :house: Internal
+
+- **CI**: the greeting workflow failed on every new issue/PR — `actions/first-interaction` v3 renamed its inputs to snake_case (`issue_message`/`pr_message`/`repo_token`).
+- **Dependencies (dev/build only)**: `webpack-cli` 7.2.2, `less` 4.8.1, `@swc/core` 1.15.47, `@playwright/test` 1.62.1, `js-yaml` 4.3.1, `@tony.ganchev/eslint-plugin-header` 3.4.4, `mini-css-extract-plugin` 2.10.2, `axios` 1.19.0, `dotenv` 17.4.2, `serialize-javascript` 7.0.7 ([#1424](https://github.com/xdan/jodit/pull/1424)–[#1439](https://github.com/xdan/jodit/pull/1439)); GitHub Actions: `actions/checkout` v7, `actions/stale` v11, `actions/labeler` v7, `softprops/action-gh-release` v3. The `@eslint/js` 10 bump was declined — it pairs with ESLint 10 while the repo is on ESLint 9 ([#1432](https://github.com/xdan/jodit/pull/1432)).
+
 ## 4.13.18
 
 #### :bug: Bug Fix
