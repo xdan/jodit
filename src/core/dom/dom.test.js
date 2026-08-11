@@ -4,6 +4,8 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+/* eslint-disable max-classes-per-file -- the "Virtual DOM contract" suite defines a fake VNode implementation */
+
 describe('Test Dom module', function () {
 	const Dom = Jodit.modules.Dom;
 	const LazyWalker = Jodit.modules.LazyWalker;
@@ -877,6 +879,350 @@ describe('Test Dom module', function () {
 				// break the first pass in the middle, between two chunks
 				asyncM.setTimeout(() => walker.break(), 150);
 			});
+		});
+	});
+
+	describe('Virtual DOM contract', function () {
+		// A minimal hand-rolled implementation of the VNode interfaces from
+		// src/types/vdom.d.ts — NOT a browser node. Dom must work with it,
+		// this pins the "Dom relies only on the VNode subset" contract.
+		let vDocument;
+
+		class TestVNode {
+			constructor(nodeName, nodeType) {
+				this.nodeName = nodeName;
+				this.nodeType = nodeType;
+				this.nodeValue = null;
+				this.parentNode = null;
+				this.childNodes = [];
+				this.ownerDocument = null;
+			}
+
+			get parentElement() {
+				return this.parentNode && this.parentNode.nodeType === 1
+					? this.parentNode
+					: null;
+			}
+
+			get firstChild() {
+				return this.childNodes[0] || null;
+			}
+
+			get lastChild() {
+				return this.childNodes[this.childNodes.length - 1] || null;
+			}
+
+			get previousSibling() {
+				const p = this.parentNode;
+				return p
+					? p.childNodes[p.childNodes.indexOf(this) - 1] || null
+					: null;
+			}
+
+			get nextSibling() {
+				const p = this.parentNode;
+				return p
+					? p.childNodes[p.childNodes.indexOf(this) + 1] || null
+					: null;
+			}
+
+			get isConnected() {
+				return Boolean(this.parentNode);
+			}
+
+			get textContent() {
+				if (this.nodeType === 3) {
+					return this.nodeValue;
+				}
+
+				return this.childNodes.map(c => c.textContent).join('');
+			}
+
+			appendChild(node) {
+				return this.insertBefore(node, null);
+			}
+
+			insertBefore(node, child) {
+				if (node.nodeType === 11) {
+					node.childNodes
+						.slice()
+						.forEach(c => this.insertBefore(c, child));
+					return node;
+				}
+
+				if (node.parentNode) {
+					node.parentNode.removeChild(node);
+				}
+
+				const index = child ? this.childNodes.indexOf(child) : -1;
+				if (index === -1) {
+					this.childNodes.push(node);
+				} else {
+					this.childNodes.splice(index, 0, node);
+				}
+				node.parentNode = this;
+				return node;
+			}
+
+			removeChild(child) {
+				const index = this.childNodes.indexOf(child);
+				if (index !== -1) {
+					this.childNodes.splice(index, 1);
+					child.parentNode = null;
+				}
+				return child;
+			}
+
+			replaceChild(node, child) {
+				this.insertBefore(node, child);
+				this.removeChild(child);
+				return child;
+			}
+
+			cloneNode(deep) {
+				const clone = new this.constructor(
+					this.nodeName,
+					this.nodeType
+				);
+				clone.nodeValue = this.nodeValue;
+				clone.ownerDocument = this.ownerDocument;
+				if (deep) {
+					this.childNodes.forEach(c =>
+						clone.appendChild(c.cloneNode(true))
+					);
+				}
+				return clone;
+			}
+
+			contains(other) {
+				while (other) {
+					if (other === this) {
+						return true;
+					}
+					other = other.parentNode;
+				}
+				return false;
+			}
+		}
+
+		class TestVText extends TestVNode {
+			constructor(data) {
+				super('#text', 3);
+				this.nodeValue = data;
+			}
+
+			get data() {
+				return this.nodeValue;
+			}
+		}
+
+		class TestVElement extends TestVNode {
+			constructor(tagName) {
+				super(tagName.toUpperCase(), 1);
+				this.__attributes = new Map();
+				const styleProps = new Map();
+				this.style = {
+					get cssText() {
+						return [...styleProps]
+							.map(([k, v]) => `${k}: ${v};`)
+							.join(' ');
+					},
+					getPropertyValue: p => styleProps.get(p) || '',
+					setProperty: (p, v) =>
+						v == null
+							? styleProps.delete(p)
+							: styleProps.set(p, String(v)),
+					removeProperty: p => {
+						const old = styleProps.get(p) || '';
+						styleProps.delete(p);
+						return old;
+					}
+				};
+				this.classList = {
+					add: (...tokens) =>
+						tokens.forEach(t => this.__classes.add(t)),
+					remove: (...tokens) =>
+						tokens.forEach(t => this.__classes.delete(t)),
+					contains: t => this.__classes.has(t),
+					toggle: t => {
+						if (this.__classes.has(t)) {
+							this.__classes.delete(t);
+							return false;
+						}
+						this.__classes.add(t);
+						return true;
+					}
+				};
+				this.__classes = new Set();
+			}
+
+			get tagName() {
+				return this.nodeName;
+			}
+
+			get className() {
+				return [...this.__classes].join(' ');
+			}
+
+			get attributes() {
+				return [...this.__attributes].map(([name, value]) => ({
+					name,
+					value
+				}));
+			}
+
+			getAttribute(name) {
+				return this.__attributes.has(name)
+					? this.__attributes.get(name)
+					: null;
+			}
+
+			setAttribute(name, value) {
+				this.__attributes.set(name, String(value));
+			}
+
+			removeAttribute(name) {
+				this.__attributes.delete(name);
+			}
+
+			hasAttribute(name) {
+				return this.__attributes.has(name);
+			}
+		}
+
+		beforeEach(() => {
+			vDocument = {
+				createElement: tag => {
+					const elm = new TestVElement(tag);
+					elm.ownerDocument = vDocument;
+					return elm;
+				},
+				createTextNode: data => {
+					const text = new TestVText(data);
+					text.ownerDocument = vDocument;
+					return text;
+				},
+				createDocumentFragment: () => {
+					const fragment = new TestVNode('#document-fragment', 11);
+					fragment.ownerDocument = vDocument;
+					return fragment;
+				}
+			};
+		});
+
+		const tree = () => {
+			// <div><p>one</p><p>two</p></div>
+			const root = vDocument.createElement('div');
+			const p1 = vDocument.createElement('p');
+			const p2 = vDocument.createElement('p');
+			p1.appendChild(vDocument.createTextNode('one'));
+			p2.appendChild(vDocument.createTextNode('two'));
+			root.appendChild(p1);
+			root.appendChild(p2);
+			return { root, p1, p2 };
+		};
+
+		it('Dom.append/prepend/after/before/appendChildFirst should work on a non-browser VNode', function () {
+			const { root, p1, p2 } = tree();
+
+			const a = vDocument.createElement('a');
+			Dom.append(root, a);
+			expect(root.lastChild).eq(a);
+
+			const b = vDocument.createElement('b');
+			Dom.prepend(root, b);
+			expect(root.firstChild).eq(b);
+
+			const i = vDocument.createElement('i');
+			Dom.after(p1, i);
+			expect(p1.nextSibling).eq(i);
+
+			const u = vDocument.createElement('u');
+			Dom.before(p2, u);
+			expect(p2.previousSibling).eq(u);
+
+			const s = vDocument.createElement('s');
+			Dom.appendChildFirst(root, s);
+			expect(root.firstChild).eq(s);
+			Dom.appendChildFirst(root, s);
+			expect(root.firstChild).eq(s);
+
+			expect(root.childNodes.map(n => n.nodeName)).deep.eq([
+				'S',
+				'B',
+				'P',
+				'I',
+				'U',
+				'P',
+				'A'
+			]);
+		});
+
+		it('Dom.detach/unwrap/safeRemove should work on a non-browser VNode', function () {
+			const { root, p1, p2 } = tree();
+
+			Dom.unwrap(p1);
+			expect(root.childNodes[0].nodeValue).eq('one');
+
+			Dom.safeRemove(p2);
+			expect(p2.parentNode).is.null;
+			expect(root.childNodes.length).eq(1);
+
+			Dom.detach(root);
+			expect(root.childNodes.length).eq(0);
+		});
+
+		it('Dom.moveContent should work on a non-browser VNode', function () {
+			const { root, p1, p2 } = tree();
+			const target = vDocument.createElement('div');
+			target.appendChild(vDocument.createTextNode('base'));
+
+			Dom.moveContent(root, target, true);
+			expect(root.childNodes.length).eq(0);
+			expect(target.childNodes.map(n => n.nodeName)).deep.eq([
+				'P',
+				'P',
+				'#text'
+			]);
+			expect(target.firstChild).eq(p1);
+			expect(target.childNodes[1]).eq(p2);
+		});
+
+		it('Dom.first/last/each/sibling traversal should work on a non-browser VNode', function () {
+			const { root, p1, p2 } = tree();
+
+			expect(Dom.first(root, Dom.isText).nodeValue).eq('one');
+			expect(Dom.last(root, Dom.isText).nodeValue).eq('two');
+			expect(Dom.sibling(p1)).eq(p2);
+			expect(Dom.sibling(p2, true)).eq(p1);
+
+			const names = [];
+			Dom.each(root, n => {
+				names.push(n.nodeName);
+			});
+			expect(names).deep.eq(['P', '#text', 'P', '#text']);
+		});
+
+		it('Dom.isTag/isElement/isText/isEmpty should work on a non-browser VNode', function () {
+			const { root, p1 } = tree();
+
+			expect(Dom.isElement(p1)).is.true;
+			expect(Dom.isTag(p1, 'p')).is.true;
+			expect(Dom.isTag(root, 'div')).is.true;
+			expect(Dom.isText(p1.firstChild)).is.true;
+			expect(Dom.isEmpty(root)).is.false;
+			expect(Dom.isEmpty(vDocument.createElement('span'))).is.true;
+		});
+
+		it('Dom.hide/show should work on a non-browser VNode', function () {
+			const elm = vDocument.createElement('div');
+			elm.style.setProperty('display', 'flex');
+
+			Dom.hide(elm);
+			expect(elm.style.getPropertyValue('display')).eq('none');
+
+			Dom.show(elm);
+			expect(elm.style.getPropertyValue('display')).eq('flex');
 		});
 	});
 });

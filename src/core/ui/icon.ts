@@ -117,10 +117,10 @@ export class Icon {
 
 		if (iconElement) {
 			iconElement.classList.add('jodit-icon');
-			iconElement.style.fill = fill;
+			css(iconElement, 'fill', fill);
 
 			if (scale != null) {
-				iconElement.style.transform = `scale(${scale})`;
+				css(iconElement, 'transform', `scale(${scale})`);
 			}
 
 			jodit.o.cache &&

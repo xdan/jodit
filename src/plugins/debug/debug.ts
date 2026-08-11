@@ -27,17 +27,17 @@ export class Debug extends Plugin {
 		const events = jodit.create.div('jodit-debug__events');
 		const clear = jodit.create.div('jodit-debug__events-clear', ['x']);
 		const sel = jodit.create.div('jodit-debug__sel');
-		mirror.appendChild(tree);
-		mirror.appendChild(events);
-		events.appendChild(clear);
-		mirror.appendChild(sel);
+		Dom.append(mirror, tree);
+		Dom.append(mirror, events);
+		Dom.append(events, clear);
+		Dom.append(mirror, sel);
 
 		clear.addEventListener('click', () => {
 			events.innerHTML = '';
-			events.appendChild(clear);
+			Dom.append(events, clear);
 		});
 
-		jodit.workplace.appendChild(mirror);
+		Dom.append(jodit.workplace, mirror);
 
 		const allEvents: string[] = [
 			'activate',
@@ -91,11 +91,11 @@ export class Debug extends Plugin {
 			const event = jodit.e.current;
 			const div = jodit.create.div();
 			div.innerHTML = `<span>${new Date().toLocaleTimeString()}</span> ${renderEvent(event, e)}`;
-			events.appendChild(div);
+			Dom.append(events, div);
 			events.scrollTop = events.scrollHeight;
 			jodit.async.setTimeout(() => {
 				events.children.length > 100 &&
-					events.removeChild(events.children[0]);
+					Dom.safeRemove(events.children[0]);
 			}, 100);
 		}
 

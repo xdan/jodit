@@ -32,9 +32,11 @@ import * as consts from 'jodit/core/constants';
 import { IS_PROD } from 'jodit/core/constants';
 import { autobind, cache, cached, derive } from 'jodit/core/decorators';
 import { watch } from 'jodit/core/decorators/watch/watch';
+import { Dom } from 'jodit/core/dom/dom';
 import { observable } from 'jodit/core/event-emitter';
 import {
 	ConfigProto,
+	css,
 	error,
 	isAbortError,
 	isFunction,
@@ -175,7 +177,10 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	uploader!: IUploader;
 
 	get isOpened(): boolean {
-		return this._dialog.isOpened && this.browser.style.display !== 'none';
+		return (
+			this._dialog.isOpened &&
+			css(this.browser, 'display', true) !== 'none'
+		);
 	}
 
 	/**
@@ -369,11 +374,11 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 		self.container = self.browser;
 
 		if (self.o.showFoldersPanel) {
-			self.browser.appendChild(self.tree.container);
+			Dom.append(self.browser, self.tree.container);
 		}
 
-		self.browser.appendChild(self.files.container);
-		self.browser.appendChild(self.status_line);
+		Dom.append(self.browser, self.files.container);
+		Dom.append(self.browser, self.status_line);
 
 		selfListeners.call(self);
 		nativeListeners.call(self);

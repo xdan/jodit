@@ -71,7 +71,7 @@ export class Create implements ICreate {
 
 		if (children) {
 			asArray(children).forEach((child: string | Node) =>
-				elm.appendChild(isString(child) ? this.fromHTML(child) : child)
+				Dom.append(elm, isString(child) ? this.fromHTML(child) : child)
 			);
 		}
 
@@ -100,7 +100,7 @@ export class Create implements ICreate {
 
 	sandbox(): [HTMLElement, HTMLIFrameElement] {
 		const iframe = this.element('iframe', { sandbox: 'allow-same-origin' });
-		this.doc.body.appendChild(iframe);
+		Dom.append(this.doc.body, iframe);
 		const doc = iframe.contentWindow?.document;
 		assert(doc, 'iframe.contentWindow.document');
 

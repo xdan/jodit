@@ -21,6 +21,7 @@ import type {
 	IViewBased
 } from 'jodit/types';
 import 'jodit/core/request/config';
+import { Dom } from 'jodit/core/dom/dom';
 import { isArray, isString } from 'jodit/core/helpers/checker';
 import { humanSizeToBytes } from 'jodit/core/helpers/utils/human-size-to-bytes';
 import { UIFileInput } from 'jodit/core/ui/form/inputs/file/file';
@@ -413,7 +414,12 @@ Config.prototype.controls.filebrowser = {
 	filter: {
 		isInput: true,
 		getContent: (filebrowser: IFileBrowser, b): HTMLElement => {
-			const oldInput = b.container.querySelector('.jodit-input');
+			const oldInput = Dom.first(
+				b.container,
+				node =>
+					Dom.isHTMLElement(node) &&
+					node.classList.contains('jodit-input')
+			);
 
 			if (oldInput) {
 				return oldInput as HTMLElement;

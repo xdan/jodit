@@ -33,7 +33,7 @@ export function processOldBrowserDrag(
 			contenteditable: true
 		});
 
-		getContainer(self.j, self.constructor).appendChild(div);
+		Dom.append(getContainer(self.j, self.constructor), div);
 
 		const selection = isJoditObject(self.j) ? self.j.s.save() : null,
 			restore = (): void | null | boolean =>

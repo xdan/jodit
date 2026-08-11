@@ -172,7 +172,7 @@ Config.prototype.controls.brush = {
 				if (!currentElement) {
 					editor.execCommand('background', false, value);
 				} else {
-					currentElement.style.backgroundColor = value;
+					css(currentElement, 'backgroundColor', value);
 				}
 
 				dataBind(button, 'color', value);
@@ -189,7 +189,7 @@ Config.prototype.controls.brush = {
 				if (!currentElement) {
 					editor.execCommand('forecolor', false, value);
 				} else {
-					currentElement.style.color = value;
+					css(currentElement, 'color', value);
 				}
 
 				dataBind(button, 'color', value);
@@ -234,10 +234,10 @@ Config.prototype.controls.brush = {
 		) {
 			switch (mode) {
 				case 'color':
-					(current as HTMLElement).style.color = color;
+					css(current as HTMLElement, 'color', color);
 					break;
 				case 'background':
-					(current as HTMLElement).style.backgroundColor = color;
+					css(current as HTMLElement, 'backgroundColor', color);
 					break;
 			}
 		} else {

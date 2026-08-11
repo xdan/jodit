@@ -186,7 +186,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			configurable: true
 		});
 
-		container.appendChild(button);
+		Dom.append(container, button);
 
 		const trigger = this.j.c.fromHTML(
 			`<span role="button" aria-haspopup="true" aria-expanded="false" class="${cn}__trigger">${Icon.get(
@@ -195,20 +195,24 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		);
 
 		// For caching
-		button.appendChild(trigger);
+		Dom.append(button, trigger);
 
 		return container;
 	}
 
 	/** @override */
 	override focus(): void {
-		this.container.querySelector('button')?.focus();
+		(
+			Dom.first(this.container, node =>
+				Dom.isTag(node, 'button')
+			) as Nullable<HTMLButtonElement>
+		)?.focus();
 	}
 
 	@watch('state.hasTrigger', { immediately: false })
 	protected onChangeHasTrigger(): void {
 		if (this.state.hasTrigger) {
-			this.container.appendChild(this.trigger);
+			Dom.append(this.container, this.trigger);
 		} else {
 			Dom.safeRemove(this.trigger);
 		}

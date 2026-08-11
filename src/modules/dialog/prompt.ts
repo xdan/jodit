@@ -9,6 +9,7 @@
  */
 
 import type { IDialog } from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { Button } from 'jodit/core/ui/button/button/button';
@@ -65,10 +66,10 @@ export function Prompt(
 		attr(inputElement, 'placeholder', placeholder);
 	}
 
-	labelElement.appendChild(dialog.c.text(msg));
+	Dom.append(labelElement, dialog.c.text(msg));
 
-	form.appendChild(labelElement);
-	form.appendChild(inputElement);
+	Dom.append(form, labelElement);
+	Dom.append(form, inputElement);
 
 	cancelButton.onAction(dialog.close);
 

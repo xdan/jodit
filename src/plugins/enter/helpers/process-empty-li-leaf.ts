@@ -58,12 +58,12 @@ export function processEmptyLILeaf(
 		listInsideLeaf ? 'li' : jodit.o.enter
 	);
 
-	if (!rightPart.querySelector('li')) {
+	if (!Dom.first(rightPart, node => Dom.isTag(node, 'li'))) {
 		return;
 	}
 
 	if (listInsideLeaf) {
-		newLi.appendChild(rightPart);
+		Dom.append(newLi, rightPart);
 	} else {
 		Dom.after(newLi, rightPart);
 	}

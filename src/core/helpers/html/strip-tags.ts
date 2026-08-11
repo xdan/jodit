@@ -12,7 +12,6 @@ import type { HTMLTagNames, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { trim } from 'jodit/core/helpers/string/trim';
-import { $$ } from 'jodit/core/helpers/utils';
 
 const NEW_LINE_TAGS: Set<HTMLTagNames> = new Set([
 	'div',
@@ -44,10 +43,18 @@ export function stripTags(
 	if (isString(html)) {
 		tmp.innerHTML = html;
 	} else {
-		tmp.appendChild(html);
+		Dom.append(tmp, html);
 	}
 
-	$$('*', tmp).forEach(p => {
+	// Snapshot of all elements (like `querySelectorAll('*')` did) — the loop
+	// below removes and unwraps nodes while iterating
+	const all: Element[] = [];
+
+	Dom.each(tmp, node => {
+		Dom.isElement(node) && all.push(node);
+	});
+
+	all.forEach(p => {
 		const pr = p.parentNode;
 		if (!pr) {
 			return;
@@ -88,9 +95,9 @@ export function stripTags(
 			// plain text). When `blockBr` is set, separate them with a line
 			// break instead, so paragraph structure survives — e.g. the
 			// "Insert only Text" paste option. See #1232
-			pr.insertBefore(
-				doc.createTextNode(blockBr ? '%%%jodit-single-br%%%' : ' '),
-				nx
+			Dom.before(
+				nx,
+				doc.createTextNode(blockBr ? '%%%jodit-single-br%%%' : ' ')
 			);
 		}
 	});

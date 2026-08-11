@@ -82,8 +82,10 @@ export class placeholder extends Plugin {
 		);
 
 		if (editor.o.direction === 'rtl') {
-			this.placeholderElm.style.right = '0px';
-			this.placeholderElm.style.direction = 'rtl';
+			css(this.placeholderElm, {
+				right: 0,
+				direction: 'rtl'
+			});
 		}
 
 		editor.e
@@ -155,7 +157,7 @@ export class placeholder extends Plugin {
 		const style = editor.ew.getComputedStyle(wrapper);
 		const styleEditor = editor.ew.getComputedStyle(editor.editor);
 
-		editor.workplace.appendChild(this.placeholderElm);
+		Dom.append(editor.workplace, this.placeholderElm);
 
 		const { firstChild } = editor.editor;
 
@@ -165,17 +167,15 @@ export class placeholder extends Plugin {
 			marginTop = parseInt(style2.getPropertyValue('margin-top'), 10);
 			marginLeft = parseInt(style2.getPropertyValue('margin-left'), 10);
 
-			this.placeholderElm.style.fontSize =
-				parseInt(style2.getPropertyValue('font-size'), 10) + 'px';
-
-			this.placeholderElm.style.lineHeight =
-				style2.getPropertyValue('line-height');
+			css(this.placeholderElm, {
+				fontSize: parseInt(style2.getPropertyValue('font-size'), 10),
+				lineHeight: style2.getPropertyValue('line-height')
+			});
 		} else {
-			this.placeholderElm.style.fontSize =
-				parseInt(style.getPropertyValue('font-size'), 10) + 'px';
-
-			this.placeholderElm.style.lineHeight =
-				style.getPropertyValue('line-height');
+			css(this.placeholderElm, {
+				fontSize: parseInt(style.getPropertyValue('font-size'), 10),
+				lineHeight: style.getPropertyValue('line-height')
+			});
 		}
 
 		css(this.placeholderElm, {

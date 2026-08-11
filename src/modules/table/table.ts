@@ -17,8 +17,8 @@ import { debounce } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { getContainer } from 'jodit/core/global';
 import {
-	$$,
 	attr,
+	css,
 	cssPath,
 	isNumber,
 	toArray,
@@ -288,12 +288,12 @@ export class Table extends ViewComponent<IJodit> {
 			row = create.element('tr');
 
 			for (let j: number = 0; j < columnsCount; j += 1) {
-				row.appendChild(create.element('td'));
+				Dom.append(row, create.element('td'));
 			}
 		} else {
 			row = line.cloneNode(true) as HTMLTableRowElement;
 
-			$$('td,th', line).forEach(cell => {
+			toArray(line.cells).forEach(cell => {
 				const rowspan = attr(cell, 'rowspan');
 
 				if (rowspan && parseInt(rowspan, 10) > 1) {
@@ -302,20 +302,17 @@ export class Table extends ViewComponent<IJodit> {
 				}
 			});
 
-			$$('td,th', row).forEach(cell => {
+			toArray(row.cells).forEach(cell => {
 				cell.innerHTML = '';
 			});
 		}
 
 		if (after && line && line.nextSibling) {
-			line.parentNode &&
-				line.parentNode.insertBefore(row, line.nextSibling);
+			Dom.after(line, row);
 		} else if (!after && line) {
-			line.parentNode && line.parentNode.insertBefore(row, line);
+			Dom.before(line, row);
 		} else {
-			(table.getElementsByTagName('tbody')?.[0] || table).appendChild(
-				row
-			);
+			Dom.append(table.tBodies[0] || table, row);
 		}
 	}
 
@@ -387,9 +384,9 @@ export class Table extends ViewComponent<IJodit> {
 						}
 
 						if (referenceCell) {
-							nextRow.insertBefore(cell, referenceCell);
+							Dom.before(referenceCell, cell);
 						} else {
-							nextRow.appendChild(cell);
+							Dom.append(nextRow, cell);
 						}
 					}
 				}
@@ -735,7 +732,10 @@ export class Table extends ViewComponent<IJodit> {
 
 							alreadyMerged.add(td);
 
-							if (i === bound[0][0] && td.style.width) {
+							if (
+								i === bound[0][0] &&
+								td.style.getPropertyValue('width')
+							) {
 								w += td.offsetWidth;
 							}
 
@@ -839,7 +839,7 @@ export class Table extends ViewComponent<IJodit> {
 		Table.__getSelectedCellsByTable(table).forEach(
 			(cell: HTMLTableCellElement) => {
 				td = jodit.createInside.element('td');
-				td.appendChild(jodit.createInside.element('br'));
+				Dom.append(td, jodit.createInside.element('br'));
 				tr = jodit.createInside.element('tr');
 
 				coord = Table.__formalCoordinate(table, cell);
@@ -865,7 +865,7 @@ export class Table extends ViewComponent<IJodit> {
 						tr
 					);
 
-					tr.appendChild(td);
+					Dom.append(tr, td);
 				} else {
 					Table.__mark(cell, 'rowspan', cell.rowSpan - 1, __marked);
 
@@ -890,7 +890,7 @@ export class Table extends ViewComponent<IJodit> {
 					if (after) {
 						Dom.after(after, td);
 					} else {
-						parent.insertBefore(td, parent.firstChild);
+						Dom.prepend(parent, td);
 					}
 				}
 
@@ -940,7 +940,7 @@ export class Table extends ViewComponent<IJodit> {
 			}
 
 			td = jodit.createInside.element('td');
-			td.appendChild(jodit.createInside.element('br'));
+			Dom.append(td, jodit.createInside.element('br'));
 
 			if (cell.rowSpan > 1) {
 				Table.__mark(td, 'rowspan', cell.rowSpan, __marked);
@@ -1091,7 +1091,7 @@ export class Table extends ViewComponent<IJodit> {
 									attr(cell, 'style', null);
 								}
 							} else {
-								cell.style.width = value.toString();
+								css(cell, 'width', value.toString());
 							}
 
 							break;

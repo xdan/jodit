@@ -47,7 +47,7 @@ function ensureHighlightStyle(doc: Document, useHighlightAPI: boolean): void {
 	} catch {
 		const style = doc.createElement('style');
 		style.textContent = rule;
-		doc.head.appendChild(style);
+		Dom.append(doc.head, style);
 	}
 }
 

@@ -194,7 +194,9 @@ export class dragAndDropElement extends Plugin {
 				height: target?.offsetHeight ?? 100
 			});
 
-			getContainer(this.j, dragAndDropElement).appendChild(
+			Dom.append(
+				getContainer(this.j, dragAndDropElement),
+
 				this.draggable
 			);
 		}

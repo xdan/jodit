@@ -12,6 +12,7 @@
 
 import type { IJodit } from 'jodit/types';
 import { MODE_SOURCE } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { error } from 'jodit/core/helpers';
 import { attr, callPromise, css, defaultLanguage } from 'jodit/core/helpers/';
@@ -69,14 +70,14 @@ export function iframe(editor: IJodit): void {
 						attr(link, 'rel', 'stylesheet');
 						attr(link, 'href', href);
 
-						doc.head && doc.head.appendChild(link);
+						doc.head && Dom.append(doc.head, link);
 					});
 				}
 
 				if (opt.iframeStyle) {
 					const style = doc.createElement('style');
 					style.innerHTML = opt.iframeStyle;
-					doc.head && doc.head.appendChild(style);
+					doc.head && Dom.append(doc.head, style);
 				}
 			}
 		)
@@ -87,7 +88,7 @@ export function iframe(editor: IJodit): void {
 
 			const iframe = editor.c.element('iframe');
 
-			iframe.style.display = 'block';
+			css(iframe, 'display', 'block');
 			iframe.src = 'about:blank';
 			iframe.className = 'jodit-wysiwyg_iframe';
 			attr(iframe, {
@@ -100,7 +101,7 @@ export function iframe(editor: IJodit): void {
 				attr(iframe, 'sandbox', opt.iframeSandbox);
 			}
 
-			editor.workplace.appendChild(iframe);
+			Dom.append(editor.workplace, iframe);
 			editor.iframe = iframe;
 
 			const result = editor.e.fire(
@@ -240,7 +241,7 @@ export function iframe(editor: IJodit): void {
 
 				if (opt.height === 'auto') {
 					doc.documentElement &&
-						(doc.documentElement.style.overflowY = 'hidden');
+						css(doc.documentElement, 'overflowY', 'hidden');
 
 					const resizeIframe = editor.async.throttle((...args) => {
 						editor.async.requestAnimationFrame(() => {

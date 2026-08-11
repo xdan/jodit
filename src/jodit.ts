@@ -1405,14 +1405,13 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		// actual for inline mode
 		if (element !== container) {
 			// hide source element
-			if (element.style.display) {
-				element.setAttribute(
-					__defaultStyleDisplayKey,
-					element.style.display
-				);
+			const display = element.style.getPropertyValue('display');
+
+			if (display) {
+				attr(element, __defaultStyleDisplayKey, display);
 			}
 
-			element.style.display = 'none';
+			css(element, 'display', 'none');
 		}
 
 		const SLOT = 'workplace-slot';
@@ -1421,12 +1420,12 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		// The `data-jodit-above-toolbar` attribute tells ViewWithToolbar to keep
 		// the toolbar box below it when (re)attaching the toolbar container.
 		const aboveSlot = this.c.div(this.getFullElName(SLOT, 'above'), NOEDIT);
-		aboveSlot.setAttribute('data-jodit-above-toolbar', '');
+		attr(aboveSlot, 'data-jodit-above-toolbar', '');
 		Dom.appendChildFirst(container, aboveSlot);
 
 		const topSlot = this.c.div(this.getFullElName(SLOT, 'top'), NOEDIT);
 
-		container.appendChild(topSlot);
+		Dom.append(container, topSlot);
 
 		const centerSlot = this.c.div(
 			this.getFullElName(SLOT, 'center'),
@@ -1438,21 +1437,21 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		const leftSlot = this.c.div(this.getFullElName(SLOT, 'left'), NOEDIT);
 		const rightSlot = this.c.div(this.getFullElName(SLOT, 'right'), NOEDIT);
 
-		centerSlot.appendChild(leftSlot);
-		centerSlot.appendChild(workplace);
-		centerSlot.appendChild(rightSlot);
+		Dom.append(centerSlot, leftSlot);
+		Dom.append(centerSlot, workplace);
+		Dom.append(centerSlot, rightSlot);
 
-		container.appendChild(centerSlot);
+		Dom.append(container, centerSlot);
 
 		const bottomPanel = this.c.div(
 			this.getFullElName(SLOT, 'bottom'),
 			NOEDIT
 		);
 
-		container.appendChild(bottomPanel);
+		Dom.append(container, bottomPanel);
 
 		if (element.parentNode && element !== container) {
-			element.parentNode.insertBefore(container, element);
+			Dom.before(element, container);
 		}
 
 		Object.defineProperty(element, 'component', {
@@ -1467,7 +1466,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			tabindex: this.o.tabIndex
 		});
 
-		workplace.appendChild(editor);
+		Dom.append(workplace, editor);
 
 		const currentPlace: IWorkPlace = {
 			editor,
@@ -1535,7 +1534,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	}
 
 	protected override addDisclaimer(elm: HTMLElement): void {
-		this.workplace.appendChild(elm);
+		Dom.append(this.workplace, elm);
 	}
 
 	/**
@@ -1670,11 +1669,11 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			const direction =
 				this.o.direction.toLowerCase() === 'rtl' ? 'rtl' : 'ltr';
 
-			this.editor.style.direction = direction;
-			this.editor.setAttribute('dir', direction);
+			css(this.editor, 'direction', direction);
+			attr(this.editor, 'dir', direction);
 
-			this.container.style.direction = direction;
-			this.container.setAttribute('dir', direction);
+			css(this.container, 'direction', direction);
+			attr(this.container, 'dir', direction);
 
 			this.toolbar.setDirection(direction);
 		}
@@ -1813,11 +1812,11 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 						const display = attr(element, __defaultStyleDisplayKey);
 
 						if (display) {
-							element.style.display = display;
-							element.removeAttribute(__defaultStyleDisplayKey);
+							css(element, 'display', display);
+							attr(element, __defaultStyleDisplayKey, null);
 						}
 					} else {
-						element.style.display = '';
+						css(element, 'display', '');
 					}
 				} else {
 					if (element.hasAttribute(__defaultClassesKey)) {

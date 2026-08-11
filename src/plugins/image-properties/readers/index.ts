@@ -30,7 +30,8 @@ export async function readValuesFromImage(
 	readAlign(image, values);
 
 	// Border radius
-	values.borderRadius = parseInt(image.style.borderRadius || '0', 10) || 0;
+	values.borderRadius =
+		parseInt(image.style.getPropertyValue('border-radius') || '0', 10) || 0;
 
 	// Id
 	values.id = attr(image, 'id') || '';

@@ -39,7 +39,8 @@ export class ToolbarContent<T extends IViewBased = IViewBased>
 		if (isString(content) || content.parentNode !== this.container) {
 			Dom.detach(this.container);
 
-			this.container.appendChild(
+			Dom.append(
+				this.container,
 				isString(content) ? this.j.create.fromHTML(content) : content
 			);
 		}
@@ -69,9 +70,16 @@ export class ToolbarContent<T extends IViewBased = IViewBased>
 	protected override onChangeDisabled(): void {
 		super.onChangeDisabled();
 
-		this.container
-			.querySelectorAll('input,button,select,textarea')
-			.forEach(elm => attr(elm, 'disabled', this.state.disabled || null));
+		Dom.each(this.container, elm => {
+			if (
+				Dom.isTag(
+					elm,
+					new Set(['input', 'button', 'select', 'textarea'] as const)
+				)
+			) {
+				attr(elm, 'disabled', this.state.disabled || null);
+			}
+		});
 	}
 
 	/** @override */

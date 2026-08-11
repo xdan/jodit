@@ -64,7 +64,7 @@ export class Popup extends UIGroup implements IPopup {
 	): void {
 		const content = this.getElm('content');
 		assert(content, 'Content element should exist');
-		content.appendChild(childContainer);
+		Dom.append(content, childContainer);
 	}
 
 	viewBound: () => IBound = (): IBound => ({
@@ -142,12 +142,12 @@ export class Popup extends UIGroup implements IPopup {
 			: this.getKeepBound(getBound);
 
 		if (parentContainer) {
-			parentContainer.appendChild(this.container);
+			Dom.append(parentContainer, this.container);
 		} else {
 			const popupContainer = getContainer(this.jodit, Popup);
 
 			if (parentContainer !== this.container.parentElement) {
-				popupContainer.appendChild(this.container);
+				Dom.append(popupContainer, this.container);
 			}
 		}
 
@@ -160,12 +160,12 @@ export class Popup extends UIGroup implements IPopup {
 	}
 
 	private __calculateZIndex(): void {
-		if (this.container.style.zIndex) {
+		if (css(this.container, 'zIndex', true)) {
 			return;
 		}
 
 		const checkView = (view: IViewBased): boolean => {
-			const zIndex = view.container.style.zIndex || view.o.zIndex;
+			const zIndex = css(view.container, 'zIndex', true) || view.o.zIndex;
 
 			if (zIndex) {
 				this.setZIndex(1 + parseInt(zIndex.toString(), 10));
@@ -188,10 +188,10 @@ export class Popup extends UIGroup implements IPopup {
 				return;
 			}
 
-			if (pe.container.style.zIndex) {
-				this.setZIndex(
-					1 + parseInt(pe.container.style.zIndex.toString(), 10)
-				);
+			const parentZIndex = css(pe.container, 'zIndex', true);
+
+			if (parentZIndex) {
+				this.setZIndex(1 + parseInt(parentZIndex.toString(), 10));
 				return;
 			}
 
@@ -466,7 +466,7 @@ export class Popup extends UIGroup implements IPopup {
 	 * Set ZIndex
 	 */
 	setZIndex(index: number | string): void {
-		this.container.style.zIndex = index.toString();
+		css(this.container, 'zIndex', index.toString());
 	}
 
 	constructor(

@@ -20,16 +20,16 @@ import type {
 	ImageEditorActionBox,
 	ImageEditorOptions,
 	IUIButton,
-	IViewWithToolbar
+	IViewWithToolbar,
+	Nullable
 } from 'jodit/types';
 import { ViewComponent } from 'jodit/core/component';
 import { autobind, component, debounce, throttle } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
-import { toArray } from 'jodit/core/helpers/array/to-array';
 import { trim } from 'jodit/core/helpers/string/trim';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { css } from 'jodit/core/helpers/utils/css';
-import { $$, refs } from 'jodit/core/helpers/utils/selector';
+import { refs } from 'jodit/core/helpers/utils/selector';
 import { call } from 'jodit/core/helpers/utils/utils';
 import { Button } from 'jodit/core/ui/button';
 import { Config } from 'jodit/config';
@@ -65,6 +65,34 @@ interface onSave {
 }
 
 const jie = 'jodit-image-editor';
+
+const hasClass =
+	(className: string) =>
+	(elm: HTMLElement): boolean =>
+		elm.classList.contains(className);
+
+function findFirst(
+	root: HTMLElement,
+	cond: (elm: HTMLElement) => boolean
+): Nullable<HTMLElement> {
+	return Dom.first(
+		root,
+		n => Dom.isHTMLElement(n) && cond(n)
+	) as Nullable<HTMLElement>;
+}
+
+function findAll(
+	root: HTMLElement,
+	cond: (elm: HTMLElement) => boolean
+): HTMLElement[] {
+	const result: HTMLElement[] = [];
+
+	Dom.each(root, n => {
+		Dom.isHTMLElement(n) && cond(n) && result.push(n);
+	});
+
+	return result;
+}
 
 const TABS = {
 	resize: 'resize' as ImageAction,
@@ -133,21 +161,23 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 
 			this.image = this.j.c.element('img');
 
-			$$('img,.jodit-icon_loader', this.resize_box).forEach(
-				Dom.safeRemove
-			);
+			const isTrash = (elm: HTMLElement): boolean =>
+				Dom.isTag(elm, 'img') || hasClass('jodit-icon_loader')(elm);
 
-			$$('img,.jodit-icon_loader', this.crop_box).forEach(Dom.safeRemove);
+			findAll(this.resize_box, isTrash).forEach(Dom.safeRemove);
+			findAll(this.crop_box, isTrash).forEach(Dom.safeRemove);
 
 			css(this.cropHandler, 'background', 'transparent');
 
 			this.onSave = save;
 
-			this.resize_box.appendChild(
+			Dom.append(
+				this.resize_box,
 				this.j.c.element('i', { class: 'jodit-icon_loader' })
 			);
 
-			this.crop_box.appendChild(
+			Dom.append(
+				this.crop_box,
 				this.j.c.element('i', { class: 'jodit-icon_loader' })
 			);
 
@@ -157,7 +187,7 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 				url += '?_tst=' + timestamp;
 			}
 
-			this.image.setAttribute('src', url);
+			attr(this.image, 'src', url);
 
 			this._dialog.open();
 
@@ -179,15 +209,15 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 
 				this.ratio = this.naturalWidth / this.naturalHeight;
 
-				this.resize_box.appendChild(this.image);
+				Dom.append(this.resize_box, this.image);
 
 				this.cropImage = this.image.cloneNode(true) as HTMLImageElement;
 
-				this.crop_box.appendChild(this.cropImage);
+				Dom.append(this.crop_box, this.cropImage);
 
 				Dom.safeRemove.apply(
 					null,
-					$$('.jodit-icon_loader', this.editor)
+					findAll(this.editor, hasClass('jodit-icon_loader'))
 				);
 
 				if (this.activeTab === TABS.crop) {
@@ -381,7 +411,7 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 		self.j.e
 			.on(
 				[
-					self.editor.querySelector('.jodit_bottomright'),
+					findFirst(self.editor, hasClass('jodit_bottomright')),
 					self.cropHandler
 				],
 				`mousedown.${jie}`,
@@ -396,7 +426,7 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 
 		self.j.e
 			.on(
-				toArray(this.editor.querySelectorAll(`.${jie}__slider-title`)),
+				findAll(this.editor, hasClass(`${jie}__slider-title`)),
 				'click',
 				this.onTitleModeClick
 			)
@@ -562,15 +592,20 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 			return;
 		}
 
-		$$(`.${jie}__slider,.${jie}__area`, self.editor).forEach(elm =>
-			elm.classList.remove(`${jie}_active`)
-		);
+		findAll(
+			self.editor,
+			elm =>
+				hasClass(`${jie}__slider`)(elm) || hasClass(`${jie}__area`)(elm)
+		).forEach(elm => elm.classList.remove(`${jie}_active`));
 
 		slide.classList.add(`${jie}_active`);
 		this.activeTab = (attr(slide, '-area') as ImageAction) || TABS.resize;
 
-		const tab = self.editor.querySelector(
-			`.${jie}__area.${jie}__area_` + self.activeTab
+		const tab = findFirst(
+			self.editor,
+			elm =>
+				hasClass(`${jie}__area`)(elm) &&
+				hasClass(`${jie}__area_` + self.activeTab)(elm)
 		);
 
 		if (tab) {
@@ -770,16 +805,29 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 		this.resize_box = resizeBox;
 		this.crop_box = cropBox;
 
-		this.sizes = this.editor.querySelector(
-			`.${jie}__area.${jie}__area_crop .jodit-image-editor__sizes`
+		this.sizes = findFirst(
+			this.editor,
+			elm =>
+				hasClass(`${jie}__sizes`)(elm) &&
+				Boolean(
+					Dom.closest(
+						elm,
+						p =>
+							Dom.isHTMLElement(p) &&
+							hasClass(`${jie}__area_crop`)(p),
+						this.editor
+					)
+				)
 		) as HTMLElement;
 
-		this.resizeHandler = this.editor.querySelector(
-			`.${jie}__resizer`
+		this.resizeHandler = findFirst(
+			this.editor,
+			hasClass(`${jie}__resizer`)
 		) as HTMLElement;
 
-		this.cropHandler = this.editor.querySelector(
-			`.${jie}__croper`
+		this.cropHandler = findFirst(
+			this.editor,
+			hasClass(`${jie}__croper`)
 		) as HTMLElement;
 
 		this._dialog = this.j.dlg({

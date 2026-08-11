@@ -8,6 +8,7 @@
  * @module helpers/html
  */
 
+import type { Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { attr } from 'jodit/core/helpers/utils';
 
@@ -35,10 +36,13 @@ const HTML_INTEGRATION_POINTS = new Set([
  * HTML (e.g. `mglyph` / `style` under `<math>`) that a reparse can hoist into a live node. Legitimate
  * MathML/SVG children and HTML below an integration point are kept.
  */
+const isMathOrSvg = (node: Nullable<Node>): boolean =>
+	Boolean(node && /^(math|svg)$/i.test(node.nodeName));
+
 function isSmuggledForeignHtml(elm: Element): boolean {
 	if (
 		elm.namespaceURI !== HTML_NAMESPACE ||
-		elm.closest('math,svg') == null
+		Dom.up(elm, isMathOrSvg) == null
 	) {
 		return false;
 	}
@@ -74,12 +78,19 @@ export function safeHTML(
 	}
 
 	// Drop HTML smuggled into MathML/SVG before the walk: a reparse would otherwise hoist its hidden
-	// markup into a live node.
-	const foreign = box.querySelectorAll('math *, svg *');
+	// markup into a live node. Collect the candidates first (like the static
+	// `querySelectorAll` snapshot did) so removals don't affect the traversal.
+	const foreign: Element[] = [];
 
-	for (let i = 0; i < foreign.length; i++) {
-		if (box.contains(foreign[i]) && isSmuggledForeignHtml(foreign[i])) {
-			Dom.safeRemove(foreign[i]);
+	Dom.each(box, node => {
+		if (Dom.isElement(node) && Dom.up(node.parentNode, isMathOrSvg)) {
+			foreign.push(node);
+		}
+	});
+
+	for (const elm of foreign) {
+		if (Dom.isOrContains(box, elm) && isSmuggledForeignHtml(elm)) {
+			Dom.safeRemove(elm);
 		}
 	}
 
@@ -103,9 +114,9 @@ export function safeHTML(
 		if (
 			options.safeLinksTarget &&
 			node.nodeName === 'A' &&
-			node.getAttribute('target') === '_blank'
+			attr(node, 'target') === '_blank'
 		) {
-			const rel = node.getAttribute('rel') || '';
+			const rel = attr(node, 'rel') || '';
 			const parts = rel.split(/\s+/).filter(Boolean);
 
 			if (!parts.includes('noopener')) {
@@ -142,6 +153,8 @@ function removeAllEventAttributes(elm: Element | DocumentFragment): boolean {
 	}
 
 	for (const name of toRemove) {
+		// raw `removeAttribute` on purpose: `attr()` kebab-cases the key
+		// (`onLoad` → `on-load`), which must not happen in a sanitizer
 		elm.removeAttribute(name);
 		effected = true;
 	}
@@ -209,7 +222,7 @@ export function sanitizeHTMLElement(
 	}
 
 	const tagName = elm.nodeName.toLowerCase();
-	const href = elm.getAttribute('href');
+	const href = attr(elm, 'href');
 
 	// Neutralize executable-scheme `href`s with the same normalization used for
 	// every other URL attribute (`isDangerousUrl`), which strips control bytes,
@@ -233,6 +246,8 @@ export function sanitizeHTMLElement(
 		}
 
 		// Strip executable schemes from any other URL-bearing attribute.
+		// Raw `getAttribute`: the list contains `xlink:href` and the
+		// sanitizer must read exactly the attribute it will remove.
 		for (const name of URL_ATTRIBUTES) {
 			const value = elm.getAttribute(name);
 

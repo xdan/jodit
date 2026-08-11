@@ -362,7 +362,7 @@ export class resizer extends Plugin {
 			attr(element, key, value);
 		}
 
-		if (!changeAttrs || element.style[key]) {
+		if (!changeAttrs || css(element, key, true)) {
 			css(element, key, value);
 		}
 	}
@@ -433,7 +433,8 @@ export class resizer extends Plugin {
 
 				css(wrapper, {
 					display:
-						element.style.display === 'inline-block'
+						element.style.getPropertyValue('display') ===
+						'inline-block'
 							? 'inline-block'
 							: 'block',
 					width: element.offsetWidth,
@@ -441,10 +442,10 @@ export class resizer extends Plugin {
 				});
 
 				if (element.parentNode) {
-					element.parentNode.insertBefore(wrapper, element);
+					Dom.before(element, wrapper);
 				}
 
-				wrapper.appendChild(element);
+				Dom.append(wrapper, element);
 				this.j.e.on(wrapper, 'click', () => {
 					attr(wrapper, 'data-jodit-wrapper_active', true);
 				});
@@ -501,8 +502,14 @@ export class resizer extends Plugin {
 			const workplacePosition = this.getWorkplacePosition();
 
 			const pos = offset(this.element, this.j, this.j.ed),
-				left = parseInt(this.rect.style.left || '0', 10),
-				top = parseInt(this.rect.style.top || '0', 10),
+				left = parseInt(
+					this.rect.style.getPropertyValue('left') || '0',
+					10
+				),
+				top = parseInt(
+					this.rect.style.getPropertyValue('top') || '0',
+					10
+				),
 				w = this.rect.offsetWidth,
 				h = this.rect.offsetHeight;
 
@@ -547,7 +554,7 @@ export class resizer extends Plugin {
 			return;
 		}
 
-		this.sizeViewer.style.opacity = '1';
+		css(this.sizeViewer, 'opacity', '1');
 		this.sizeViewer.textContent = `${w} x ${h}`;
 
 		this.j.async.setTimeout(this.hideSizeViewer, {
@@ -568,11 +575,15 @@ export class resizer extends Plugin {
 
 		if (!this.rect.parentNode) {
 			markOwner(this.j, this.rect);
-			this.j.workplace.appendChild(this.rect);
+			Dom.append(this.j.workplace, this.rect);
 		}
 
 		if (this.j.isFullSize) {
-			this.rect.style.zIndex = css(this.j.container, 'zIndex').toString();
+			css(
+				this.rect,
+				'zIndex',
+				css(this.j.container, 'zIndex').toString()
+			);
 		}
 
 		this.updateSize();
@@ -596,7 +607,7 @@ export class resizer extends Plugin {
 	}
 
 	private hideSizeViewer = (): void => {
-		this.sizeViewer.style.opacity = '0';
+		css(this.sizeViewer, 'opacity', '0');
 	};
 
 	protected beforeDestruct(jodit: IJodit): void {

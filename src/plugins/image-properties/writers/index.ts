@@ -11,6 +11,7 @@
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { attr, hAlignElement } from 'jodit/core/helpers/utils';
+import { css } from 'jodit/core/helpers/utils/css';
 
 import type { ImagePropertiesState } from '../interface';
 
@@ -62,7 +63,7 @@ export function applyValuesToImage(
 	}
 
 	// Border radius
-	image.style.borderRadius = borderRadius ? borderRadius + 'px' : '';
+	css(image, 'borderRadius', borderRadius ? borderRadius + 'px' : '');
 
 	// Title
 	attr(image, 'title', imageTitle || null);

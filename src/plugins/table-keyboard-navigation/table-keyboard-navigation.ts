@@ -66,8 +66,8 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 								table,
 								!isPrev
 									? false
-									: (table.querySelector(
-											'tr'
+									: (Dom.first(table, node =>
+											Dom.isTag(node, 'tr')
 										) as HTMLTableRowElement),
 								!isPrev
 							);
@@ -105,7 +105,7 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 
 				if (!next.firstChild) {
 					const first = editor.createInside.element('br');
-					next.appendChild(first);
+					Dom.append(next, first);
 					editor.s.setCursorBefore(first);
 				} else {
 					if (key === consts.KEY_TAB) {

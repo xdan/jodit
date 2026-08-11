@@ -143,7 +143,7 @@ export abstract class UIElement<T extends IViewBased = IViewBased>
 	 * Append container to element
 	 */
 	appendTo(element: HTMLElement): this {
-		element.appendChild(this.container);
+		Dom.append(element, this.container);
 		return this;
 	}
 

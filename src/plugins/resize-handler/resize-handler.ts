@@ -15,6 +15,7 @@ import { autobind } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { offset } from 'jodit/core/helpers';
+import { css } from 'jodit/core/helpers/utils/css';
 import { Plugin } from 'jodit/core/plugin';
 import { Icon } from 'jodit/core/ui';
 
@@ -42,9 +43,11 @@ export class resizeHandler extends Plugin {
 
 			editor.e
 				.on('toggleFullSize.resizeHandler', () => {
-					this.handle.style.display = editor.isFullSize
-						? 'none'
-						: 'block';
+					css(
+						this.handle,
+						'display',
+						editor.isFullSize ? 'none' : 'block'
+					);
 				})
 				.on(
 					this.handle,
@@ -53,7 +56,7 @@ export class resizeHandler extends Plugin {
 				)
 				.on(editor.ow, 'mouseup touchend', this.onHandleResizeEnd);
 
-			editor.container.appendChild(this.handle);
+			Dom.append(editor.container, this.handle);
 		}
 	}
 

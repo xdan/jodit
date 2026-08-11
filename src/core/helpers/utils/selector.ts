@@ -133,16 +133,23 @@ export const refs = <T extends HTMLElement>(
 		root = root.container;
 	}
 
-	return $$('[ref],[data-ref]', <HTMLElement>root).reduce((def, child) => {
-		const key = attr(child, '-ref');
+	const def = {} as IDictionary<T>;
 
-		if (key && isString(key)) {
-			def[camelCase(key)] = child as T;
-			def[key] = child as T;
+	Dom.each(root as HTMLElement, child => {
+		if (
+			Dom.isElement(child) &&
+			(child.hasAttribute('ref') || child.hasAttribute('data-ref'))
+		) {
+			const key = attr(child, '-ref');
+
+			if (key && isString(key)) {
+				def[camelCase(key)] = child as T;
+				def[key] = child as T;
+			}
 		}
+	});
 
-		return def;
-	}, {} as IDictionary<T>);
+	return def;
 };
 
 /**

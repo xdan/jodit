@@ -9,8 +9,10 @@
  */
 
 import type { IViewBased } from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 
+import { attr } from './attr';
 import { completeUrl } from './complete-url';
 
 export type Loader = (jodit: IViewBased, url: string) => Promise<any>;
@@ -50,11 +52,11 @@ export const appendScriptAsync = cacheLoaders(
 			});
 
 			if (jodit.o.nonce) {
-				script.setAttribute('nonce', jodit.o.nonce);
+				attr(script, 'nonce', jodit.o.nonce);
 			}
 
 			jodit.e.one(script, 'error', reject).one(script, 'load', resolve);
-			jodit.od.body.appendChild(script);
+			Dom.append(jodit.od.body, script);
 		});
 	}
 );
@@ -69,14 +71,14 @@ export const appendStyleAsync = cacheLoaders(
 				return reject();
 			}
 
-			const link = jodit.c.element('link');
-
-			link.rel = 'stylesheet';
-			link.media = 'all';
-			link.crossOrigin = 'anonymous';
+			const link = jodit.c.element('link', {
+				rel: 'stylesheet',
+				media: 'all',
+				crossorigin: 'anonymous'
+			});
 
 			if (jodit.o.nonce) {
-				link.setAttribute('nonce', jodit.o.nonce);
+				attr(link, 'nonce', jodit.o.nonce);
 			}
 
 			const callback = (): void => resolve(link);
@@ -84,12 +86,12 @@ export const appendStyleAsync = cacheLoaders(
 			!jodit.isInDestruct &&
 				jodit.e.on(link, 'load', callback).on(link, 'error', reject);
 
-			link.href = completeUrl(url);
+			attr(link, 'href', completeUrl(url));
 
 			if (jodit.o.shadowRoot) {
-				jodit.o.shadowRoot.appendChild(link);
+				Dom.append(jodit.o.shadowRoot, link);
 			} else {
-				jodit.od.body.appendChild(link);
+				Dom.append(jodit.od.body, link);
 			}
 		});
 	}

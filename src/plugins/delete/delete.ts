@@ -58,7 +58,12 @@ export class deleteCommand extends Plugin {
 
 		if (
 			!trim(jodit.editor.textContent || '') &&
-			!jodit.editor.querySelector('img,table,jodit,iframe,hr') &&
+			!Dom.first(jodit.editor, node =>
+				Dom.isTag(
+					node,
+					new Set(['img', 'table', 'jodit', 'iframe', 'hr'] as const)
+				)
+			) &&
 			(!current || !Dom.closest(current, 'table', jodit.editor))
 		) {
 			jodit.editor.innerHTML = '';
