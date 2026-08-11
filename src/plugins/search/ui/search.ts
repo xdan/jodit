@@ -106,11 +106,33 @@ export class UISearch extends UIElement<IJodit> {
 		this.currentBox = current as HTMLSpanElement;
 		this.countBox = count as HTMLSpanElement;
 
+		const closeAction = (): void => this.close();
+		const replaceAction = (): void =>
+			void jodit.e.fire(this, 'pressReplaceButton');
+		const nextAction = (): void => void jodit.e.fire('searchNext');
+		const prevAction = (): void => void jodit.e.fire('searchPrevious');
+
+		// Pointer activation is handled on `pointerdown` (returning `false`
+		// there keeps the focus and selection intact), but activating a
+		// native button from the keyboard (Enter/Space) fires only `click`
+		// with `detail === 0` — handle that path separately. Pointer clicks
+		// arrive with `detail >= 1`, so the action does not run twice.
+		// See https://github.com/xdan/jodit/issues/1440
+		const onKeyboardActivate =
+			(action: () => void) =>
+			(e: MouseEvent): void => {
+				if (!e.detail) {
+					e.preventDefault();
+					action();
+				}
+			};
+
 		jodit.e
-			.on(this.closeButton, 'pointerdown', () => {
-				this.close();
+			.on(this.closeButton, 'pointerdown', (): false => {
+				closeAction();
 				return false;
 			})
+			.on(this.closeButton, 'click', onKeyboardActivate(closeAction))
 			.on(this.queryInput, 'input', () => {
 				this.currentIndex = 0;
 			})
@@ -120,18 +142,21 @@ export class UISearch extends UIElement<IJodit> {
 					this.selInfo = jodit.s.save();
 				}
 			})
-			.on(this.replaceButton, 'pointerdown', () => {
-				jodit.e.fire(this, 'pressReplaceButton');
+			.on(this.replaceButton, 'pointerdown', (): false => {
+				replaceAction();
 				return false;
 			})
+			.on(this.replaceButton, 'click', onKeyboardActivate(replaceAction))
 			.on(next, 'pointerdown', (): false => {
-				void jodit.e.fire('searchNext');
+				nextAction();
 				return false;
 			})
+			.on(next, 'click', onKeyboardActivate(nextAction))
 			.on(prev, 'pointerdown', (): false => {
-				jodit.e.fire('searchPrevious');
+				prevAction();
 				return false;
 			})
+			.on(prev, 'click', onKeyboardActivate(prevAction))
 			.on(this.queryInput, 'input', () => {
 				this.setMod('empty-query', !trim(this.queryInput.value).length);
 			})

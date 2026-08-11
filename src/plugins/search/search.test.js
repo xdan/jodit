@@ -631,6 +631,43 @@ describe('Search plugin', () => {
 			});
 		});
 
+		describe('Keyboard activation of the search buttons', () => {
+			// Activating a focused native button with Enter/Space fires a
+			// `click` with `detail === 0` (there is no `pointerdown`)
+			// https://github.com/xdan/jodit/issues/1440
+			it('Should search next and close on a keyboard click', async () => {
+				const editor = getJodit({
+					defaultTimeout: 0,
+					search: {
+						useCustomHighlightAPI: false
+					}
+				});
+
+				editor.value = '<p>test</p>';
+
+				clickTrigger('find', editor);
+				clickButton('find', getOpenedPopup(editor));
+
+				await editor.async.requestIdlePromise();
+				const inputs = getSearchInputs(editor);
+				inputs.query.value = 't';
+
+				simulateEvent('click', inputs.nextButton);
+				await editor.async.requestIdlePromise();
+
+				expect(sortAttributes(editor.getNativeEditorValue())).equals(
+					'<p><span data-jodit-temp="true" jd-tmp-selection="true">t</span>es<span data-jodit-temp="true" jd-tmp-selection="true">t</span></p>'
+				);
+
+				simulateEvent('click', inputs.closeButton);
+				await editor.async.requestIdlePromise();
+
+				expect(editor.getNativeEditorValue()).equals('<p>test</p>');
+				expect(editor.container.querySelector('.jodit-ui-search')).is
+					.null;
+			});
+		});
+
 		describe('After close', () => {
 			let editor, search, inputs;
 

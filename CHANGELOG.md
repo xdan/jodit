@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.20
+
+#### :bug: Bug Fix
+
+- **Search**: the next/previous/close/replace buttons of the search bar could be reached with Tab but did nothing on Enter/Space — the handlers listened only to `pointerdown`, while keyboard activation of a native button fires `click`. Keyboard-initiated clicks (`detail === 0`, which also covers screen readers) are now handled; pointer behaviour is unchanged. Fixes [#1440](https://github.com/xdan/jodit/issues/1440).
+
 ## 4.13.19
 
 #### :bug: Bug Fix
