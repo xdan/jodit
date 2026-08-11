@@ -9,6 +9,14 @@
  */
 
 import type { IControlType, IDictionary, IJodit } from 'jodit/types';
+import {
+	KEY_DOWN,
+	KEY_ENTER,
+	KEY_ESC,
+	KEY_LEFT,
+	KEY_RIGHT,
+	KEY_UP
+} from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { $$, css, scrollIntoViewIfNeeded } from 'jodit/core/helpers';
 import { attr } from 'jodit/core/helpers/utils';
@@ -102,27 +110,31 @@ Config.prototype.controls.table = {
 
 		const cnt = default_rows_count * default_cols_count;
 
+		attr(blocksContainer, {
+			role: 'grid',
+			ariaLabel: 'Table size',
+			ariaRowcount: default_rows_count,
+			ariaColcount: default_cols_count
+		});
+
 		for (let i = 0; i < cnt; i += 1) {
 			if (!cells[i]) {
+				const row = Math.floor(i / default_cols_count) + 1,
+					col = (i % default_cols_count) + 1;
+
 				cells.push(
 					editor.c.element('span', {
-						dataIndex: i
+						dataIndex: i,
+						role: 'gridcell',
+						tabindex: i === 0 ? 0 : -1,
+						ariaLabel: `${row} by ${col}`
 					})
 				);
 			}
 		}
 
-		const mouseenter = (e: MouseEvent, index?: number): void => {
-			const dv = e.target;
-
-			if (!Dom.isTag(dv, 'span')) {
-				return;
-			}
-
-			const k =
-				index === undefined || isNaN(index)
-					? parseInt(attr(dv, '-index') || '0', 10)
-					: index || 0;
+		const highlightCell = (cell: HTMLElement): void => {
+			const k = parseInt(attr(cell, '-index') || '0', 10);
 
 			const rows_count = Math.ceil((k + 1) / default_cols_count),
 				cols_count = (k % default_cols_count) + 1;
@@ -142,118 +154,177 @@ Config.prototype.controls.table = {
 			rows.textContent = rows_count.toString();
 		};
 
+		const insertTable = (cell: HTMLElement): void => {
+			const k = parseInt(attr(cell, '-index') || '0', 10);
+
+			const rows_count = Math.ceil((k + 1) / default_cols_count),
+				cols_count = (k % default_cols_count) + 1;
+
+			const crt = editor.createInside,
+				tbody = crt.element('tbody'),
+				table = crt.element('table');
+
+			table.appendChild(tbody);
+
+			let first_td: HTMLTableCellElement | null = null,
+				tr: HTMLTableRowElement,
+				td: HTMLTableCellElement;
+
+			for (let i = 1; i <= rows_count; i += 1) {
+				tr = crt.element('tr');
+
+				for (let j = 1; j <= cols_count; j += 1) {
+					td = crt.element('td');
+
+					if (!first_td) {
+						first_td = td;
+					}
+
+					css(td, 'width', (100 / cols_count).toFixed(4) + '%');
+
+					td.appendChild(crt.element('br'));
+					tr.appendChild(crt.text('\n'));
+					tr.appendChild(crt.text('\t'));
+					tr.appendChild(td);
+				}
+
+				tbody.appendChild(crt.text('\n'));
+				tbody.appendChild(tr);
+			}
+
+			$$('input[type=checkbox]:checked', options).forEach(
+				(input: HTMLElement) => {
+					(input as HTMLInputElement).value
+						.split(/[\s]+/)
+						.forEach((className: string) => {
+							table.classList.add(className);
+						});
+				}
+			);
+
+			editor.s.restore();
+			editor.s.removeMarkers();
+			editor.editor.normalize();
+			editor.history.snapshot.restore(snapshot);
+
+			const block = Dom.furthest(
+				editor.s.current(),
+				Dom.isBlock,
+				editor.editor
+			);
+
+			if (block && Dom.isEmpty(block)) {
+				Dom.replace(block, table, undefined, false, true);
+			} else {
+				if (block) {
+					const fake = crt.text('\n');
+					if (!editor.o.table.splitBlockOnInsertTable) {
+						Dom.after(block, fake);
+						Dom.after(fake, table);
+					} else {
+						const range = editor.s.range;
+						range.collapse(false);
+						range.insertNode(fake);
+						range.collapse(false);
+						editor.s.selectRange(range);
+
+						const firstPart = editor.s.splitSelection(block, fake);
+
+						if (firstPart) {
+							Dom.after(firstPart, table);
+						} else {
+							Dom.after(block, table);
+						}
+					}
+				} else {
+					editor.s.insertNode(table, false);
+				}
+			}
+
+			if (first_td) {
+				editor.s.setCursorIn(first_td);
+				scrollIntoViewIfNeeded(first_td, editor.editor, editor.ed);
+			}
+
+			close();
+		};
+
 		editor.e
-			.on(blocksContainer, 'mousemove', mouseenter)
+			.on(blocksContainer, 'mousemove', (e: MouseEvent) => {
+				if (Dom.isTag(e.target, 'span')) {
+					highlightCell(e.target);
+				}
+			})
 			.on(blocksContainer, 'touchstart mousedown', (e: MouseEvent) => {
-				const dv = e.target;
+				if (!Dom.isTag(e.target, 'span')) {
+					return;
+				}
+
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				insertTable(e.target);
+			})
+			.on(blocksContainer, 'keydown', (e: KeyboardEvent) => {
+				if (!Dom.isTag(e.target, 'span')) {
+					return;
+				}
+
+				if (e.key === KEY_ENTER) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					insertTable(e.target);
+					return;
+				}
+
+				if (e.key === KEY_ESC) {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					close();
+					return;
+				}
+
+				const index = parseInt(attr(e.target, '-index') || '0', 10),
+					row = Math.floor(index / default_cols_count),
+					col = index % default_cols_count;
+				let nextIndex = index;
+
+				switch (e.key) {
+					case KEY_LEFT:
+						nextIndex = col > 0 ? index - 1 : index;
+						break;
+					case KEY_RIGHT:
+						nextIndex =
+							col < default_cols_count - 1 ? index + 1 : index;
+						break;
+					case KEY_UP:
+						nextIndex =
+							row > 0 ? index - default_cols_count : index;
+						break;
+					case KEY_DOWN:
+						nextIndex =
+							row < default_rows_count - 1
+								? index + default_cols_count
+								: index;
+						break;
+					default:
+						return;
+				}
 
 				e.preventDefault();
 				e.stopImmediatePropagation();
 
-				if (!Dom.isTag(dv, 'span')) {
-					return;
+				if (nextIndex !== index) {
+					cells[index].tabIndex = -1;
+					cells[nextIndex].tabIndex = 0;
+					cells[nextIndex].focus();
+					highlightCell(cells[nextIndex]);
 				}
-
-				const k = parseInt(attr(dv, '-index') || '0', 10);
-
-				const rows_count = Math.ceil((k + 1) / default_cols_count),
-					cols_count = (k % default_cols_count) + 1;
-
-				const crt = editor.createInside,
-					tbody = crt.element('tbody'),
-					table = crt.element('table');
-
-				table.appendChild(tbody);
-
-				let first_td: HTMLTableCellElement | null = null,
-					tr: HTMLTableRowElement,
-					td: HTMLTableCellElement;
-
-				for (let i = 1; i <= rows_count; i += 1) {
-					tr = crt.element('tr');
-
-					for (let j = 1; j <= cols_count; j += 1) {
-						td = crt.element('td');
-
-						if (!first_td) {
-							first_td = td;
-						}
-
-						css(td, 'width', (100 / cols_count).toFixed(4) + '%');
-
-						td.appendChild(crt.element('br'));
-						tr.appendChild(crt.text('\n'));
-						tr.appendChild(crt.text('\t'));
-						tr.appendChild(td);
-					}
-
-					tbody.appendChild(crt.text('\n'));
-					tbody.appendChild(tr);
-				}
-
-				$$('input[type=checkbox]:checked', options).forEach(
-					(input: HTMLElement) => {
-						(input as HTMLInputElement).value
-							.split(/[\s]+/)
-							.forEach((className: string) => {
-								table.classList.add(className);
-							});
-					}
-				);
-
-				editor.s.restore();
-				editor.s.removeMarkers();
-				editor.editor.normalize();
-				editor.history.snapshot.restore(snapshot);
-
-				const block = Dom.furthest(
-					editor.s.current(),
-					Dom.isBlock,
-					editor.editor
-				);
-
-				if (block && Dom.isEmpty(block)) {
-					Dom.replace(block, table, undefined, false, true);
-				} else {
-					if (block) {
-						const fake = crt.text('\n');
-						if (!editor.o.table.splitBlockOnInsertTable) {
-							Dom.after(block, fake);
-							Dom.after(fake, table);
-						} else {
-							const range = editor.s.range;
-							range.collapse(false);
-							range.insertNode(fake);
-							range.collapse(false);
-							editor.s.selectRange(range);
-
-							const firstPart = editor.s.splitSelection(
-								block,
-								fake
-							);
-
-							if (firstPart) {
-								Dom.after(firstPart, table);
-							} else {
-								Dom.after(block, table);
-							}
-						}
-					} else {
-						editor.s.insertNode(table, false);
-					}
-				}
-
-				if (first_td) {
-					editor.s.setCursorIn(first_td);
-					scrollIntoViewIfNeeded(first_td, editor.editor, editor.ed);
-				}
-
-				close();
 			});
 
 		if (button && button.parentElement) {
 			for (let i = 0; i < default_rows_count; i += 1) {
 				const row = editor.c.div();
+				attr(row, 'role', 'row');
 
 				for (let j = 0; j < default_cols_count; j += 1) {
 					row.appendChild(cells[i * default_cols_count + j]);
