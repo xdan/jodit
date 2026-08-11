@@ -270,8 +270,8 @@ const editor = Jodit.make('#editor', {
 
 ## Star History
 
-<a href="https://star-history.com/#xdan/jodit&Date">
-  <img src="https://api.star-history.com/svg?repos=xdan/jodit&type=Date" alt="Star History Chart" width="640">
+<a href="https://star-history.dera.page/#xdan/jodit&Date">
+  <img src="https://star-history.dera.page/svg?repos=xdan/jodit&type=Date" alt="Star History Chart" width="640">
 </a>
 
 ## License
