@@ -16,6 +16,16 @@ import { Dom } from 'jodit/core/dom/dom';
  */
 
 /**
+ * `getBoundingClientRect` returns fractional values while `scrollTop`,
+ * `offsetTop` and `clientHeight` are rounded to integers, so a container
+ * scrolled right up to its limit can still appear to clip the element by a
+ * fraction of a pixel. Treat anything clipped by less than a pixel as
+ * visible — otherwise `scrollIntoViewIfNeeded` falls through to
+ * `elm.scrollIntoView()` and needlessly scrolls the whole page.
+ */
+const SUBPIXEL_TOLERANCE = 1;
+
+/**
  * Check if element is in view
  */
 export function inView(
@@ -38,7 +48,7 @@ export function inView(
 		// view even though its top still fits. The `top > rect.top` guard keeps
 		// elements taller than the container (which can never fully fit) from
 		// being treated as always out of view. See #1300
-		if (top + height > rect.bottom && top > rect.top) {
+		if (top + height > rect.bottom + SUBPIXEL_TOLERANCE && top > rect.top) {
 			return false;
 		}
 
@@ -56,7 +66,10 @@ export function inView(
 	const clientHeight =
 		(doc.documentElement && doc.documentElement.clientHeight) || 0;
 
-	return (top + height <= clientHeight || top <= 0) && top + height >= 0;
+	return (
+		(top + height <= clientHeight + SUBPIXEL_TOLERANCE || top <= 0) &&
+		top + height >= 0
+	);
 }
 
 /**

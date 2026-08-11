@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.18
+
+#### :bug: Bug Fix
+
+- **Helpers/`inView`**: `getBoundingClientRect` returns fractional values while scroll offsets are integers, so a container scrolled right up to its limit could still appear to clip the element by a fraction of a pixel — `scrollIntoViewIfNeeded` then needlessly fell through to `elm.scrollIntoView()` and scrolled the whole page (breaking e.g. Perfect Scrollbar integrations). Elements clipped by less than a pixel are now treated as visible. Reported by Ralf Pichler (Uniquare, Jodit OEM).
+
 ## 4.13.17
 
 #### :bug: Bug Fix
