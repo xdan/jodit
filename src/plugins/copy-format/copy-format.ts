@@ -110,7 +110,7 @@ Config.prototype.controls.copyformat = {
 
 			const ideal = editor.createInside.span();
 
-			editor.editor.appendChild(ideal);
+			Dom.append(editor.editor, ideal);
 
 			copyStyles.forEach((key: string) => {
 				defaultStyles[key] = css(ideal, key);

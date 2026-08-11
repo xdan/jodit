@@ -49,6 +49,9 @@ export function allowAttributes(
 			}
 
 			removeAttrs.forEach(attr => {
+				// raw `removeAttribute` on purpose: the sanitizer must remove
+				// exactly the attribute name from the live list, without the
+				// `attr()` helper name normalization
 				(nodeElm as Element).removeAttribute(attr);
 			});
 		}

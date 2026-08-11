@@ -11,6 +11,7 @@
  */
 
 import type { IViewWithToolbar } from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 import { css } from 'jodit/core/helpers/utils/css';
@@ -90,7 +91,10 @@ export function fullsize(editor: IViewWithToolbar): void {
 
 			if (editor.toolbar) {
 				isJoditObject(editor) &&
-					editor.toolbarContainer?.appendChild(
+					editor.toolbarContainer &&
+					Dom.append(
+						editor.toolbarContainer,
+
 						editor.toolbar.container
 					);
 

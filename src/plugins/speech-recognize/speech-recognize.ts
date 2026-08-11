@@ -76,7 +76,7 @@ export class SpeechRecognizeNative extends Plugin implements IPlugin {
 			);
 		}
 
-		this.j.workplace.appendChild(this.messagePopup);
+		Dom.append(this.j.workplace, this.messagePopup);
 		this.j.async.clearTimeout(this.__hidePopupTimeout);
 		this.__hidePopupTimeout = this.j.async.setTimeout(() => {
 			Dom.safeRemove(this.messagePopup);

@@ -21,8 +21,8 @@ export class TextAreaEditor
 {
 	private autosize = this.j.async.debounce(
 		() => {
-			this.instance.style.height = 'auto';
-			this.instance.style.height = this.instance.scrollHeight + 'px';
+			css(this.instance, 'height', 'auto');
+			css(this.instance, 'height', this.instance.scrollHeight);
 		},
 		this.j.defaultTimeout,
 		true
@@ -34,7 +34,7 @@ export class TextAreaEditor
 			dir: editor.o.direction === 'rtl' ? 'rtl' : undefined
 		});
 
-		this.container.appendChild(this.instance);
+		Dom.append(this.container, this.instance);
 
 		editor.e
 			.on(

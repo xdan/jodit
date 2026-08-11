@@ -33,7 +33,7 @@ export function wrapText(fake: Text, jodit: IJodit): HTMLElement {
 
 	if (Dom.isEmpty(currentBox)) {
 		const br = jodit.createInside.element('br');
-		currentBox.appendChild(br);
+		Dom.append(currentBox, br);
 		Dom.before(br, fake);
 	}
 

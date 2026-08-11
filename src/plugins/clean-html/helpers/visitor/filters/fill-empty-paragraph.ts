@@ -35,7 +35,7 @@ export function fillEmptyParagraph(
 		!Dom.isTag(nodeElm, TABLE_CONTAINER_TAGS)
 	) {
 		const br = jodit.createInside.element('br');
-		nodeElm.appendChild(br);
+		Dom.append(nodeElm, br);
 		return true;
 	}
 

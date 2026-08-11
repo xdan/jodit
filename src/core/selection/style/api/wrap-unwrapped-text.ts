@@ -58,7 +58,7 @@ export function wrapUnwrappedText(
 	const fragment = range.extractContents();
 
 	const wrapper = ci.element(style.element);
-	wrapper.appendChild(fragment);
+	Dom.append(wrapper, fragment);
 	Dom.safeInsertNode(range, wrapper);
 
 	if (style.elementIsBlock) {
@@ -66,7 +66,7 @@ export function wrapUnwrappedText(
 			Dom.isEmpty(wrapper) &&
 			!Dom.isTag(wrapper.firstElementChild, 'br')
 		) {
-			wrapper.appendChild(ci.element('br'));
+			Dom.append(wrapper, ci.element('br'));
 		}
 	}
 

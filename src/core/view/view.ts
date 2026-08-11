@@ -370,7 +370,7 @@ export abstract class View extends Component implements IViewBased, Mods, Elms {
 
 	/** Add some element to box */
 	protected addDisclaimer(elm: HTMLElement): void {
-		this.container.appendChild(elm);
+		Dom.append(this.container, elm);
 	}
 
 	/**

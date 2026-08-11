@@ -10,6 +10,7 @@
 
 import type { IJodit, ISourceEditor } from 'jodit/types';
 import * as constants from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 import { isString, loadNext } from 'jodit/core/helpers';
 
 import { SourceEditor } from 'jodit/plugins/source/editor/sourceEditor';
@@ -109,7 +110,7 @@ export class AceEditor
 
 			const fakeMirror = this.j.c.div('jodit-source__mirror-fake');
 
-			this.container.appendChild(fakeMirror);
+			Dom.append(this.container, fakeMirror);
 
 			const ace = (editor.ow as any).ace as AceAjax.Ace;
 

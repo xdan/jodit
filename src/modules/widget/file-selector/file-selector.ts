@@ -10,7 +10,7 @@
  * @module modules/widget/file-selector
  */
 
-import type { IFileBrowserCallBackData, IJodit } from 'jodit/types';
+import type { IFileBrowserCallBackData, IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { $$, attr, isFunction } from 'jodit/core/helpers';
 import { UIBlock, UIButton, UIForm, UIInput } from 'jodit/core/ui';
@@ -148,14 +148,14 @@ export const FileSelectorWidget = (
 			(Dom.isTag(elm, 'img') || $$('img', elm).length)
 		) {
 			currentImage = elm.tagName === 'IMG' ? elm : $$('img', elm)[0];
-			val(form.container, 'input[name=url]', attr(currentImage, 'src'));
-			val(form.container, 'input[name=text]', attr(currentImage, 'alt'));
+			val(form.container, 'url', attr(currentImage, 'src'));
+			val(form.container, 'text', attr(currentImage, 'alt'));
 			button.state.text = 'Update';
 		}
 
 		if (elm && Dom.isTag(elm, 'a')) {
-			val(form.container, 'input[name=url]', attr(elm, 'href'));
-			val(form.container, 'input[name=text]', attr(elm, 'title'));
+			val(form.container, 'url', attr(elm, 'href'));
+			val(form.container, 'text', attr(elm, 'title'));
 			button.state.text = 'Update';
 		}
 
@@ -183,12 +183,11 @@ export const FileSelectorWidget = (
 	return box;
 };
 
-function val(
-	elm: HTMLElement,
-	selector: string,
-	value?: string | null
-): string {
-	const child = elm.querySelector<HTMLInputElement>(selector);
+function val(elm: HTMLElement, name: string, value?: string | null): string {
+	const child = Dom.first(
+		elm,
+		node => Dom.isTag(node, 'input') && attr(node, 'name') === name
+	) as Nullable<HTMLInputElement>;
 
 	if (!child) {
 		return '';

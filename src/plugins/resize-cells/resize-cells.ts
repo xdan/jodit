@@ -22,6 +22,7 @@ import {
 	getContentWidth,
 	offset
 } from 'jodit/core/helpers';
+import { css } from 'jodit/core/helpers/utils/css';
 import { Plugin, Table } from 'jodit/modules';
 
 import './config';
@@ -55,7 +56,7 @@ export class resizeCells extends Plugin {
 
 	private showResizeHandle(): void {
 		this.j.async.clearTimeout(this.hideTimeout);
-		this.j.workplace.appendChild(this.resizeHandler);
+		Dom.append(this.j.workplace, this.resizeHandler);
 	}
 
 	private hideResizeHandle(): void {
@@ -200,8 +201,11 @@ export class resizeCells extends Plugin {
 		this.resizeDelta =
 			x - this.startX + (!this.j.o.iframe ? 0 : workplacePosition.left);
 
-		this.resizeHandler.style.left =
-			x - (this.j.o.iframe ? 0 : workplacePosition.left) + 'px';
+		css(
+			this.resizeHandler,
+			'left',
+			x - (this.j.o.iframe ? 0 : workplacePosition.left)
+		);
 
 		const sel = this.j.s.sel;
 
@@ -301,8 +305,11 @@ export class resizeCells extends Plugin {
 
 		// right side
 		if (needChangeWidth) {
-			this.workTable.style.width =
-				((width + delta) / parentWidth) * 100 + '%';
+			css(
+				this.workTable,
+				'width',
+				((width + delta) / parentWidth) * 100 + '%'
+			);
 		} else {
 			const side = this.isRTL ? 'marginRight' : 'marginLeft';
 
@@ -311,11 +318,10 @@ export class resizeCells extends Plugin {
 				10
 			);
 
-			this.workTable.style.width =
-				((width - delta) / parentWidth) * 100 + '%';
-
-			this.workTable.style[side] =
-				((margin + delta) / parentWidth) * 100 + '%';
+			css(this.workTable, {
+				width: ((width - delta) / parentWidth) * 100 + '%',
+				[side]: ((margin + delta) / parentWidth) * 100 + '%'
+			});
 		}
 	}
 
@@ -364,11 +370,13 @@ export class resizeCells extends Plugin {
 			),
 			parentBox: IBound = offset(table, this.j, this.j.ed);
 
-		this.resizeHandler.style.left =
+		css(
+			this.resizeHandler,
+			'left',
 			(offsetX <= consts.NEARBY ? box.left : box.left + box.width) -
-			workplacePosition.left +
-			delta +
-			'px';
+				workplacePosition.left +
+				delta
+		);
 
 		Object.assign(this.resizeHandler.style, {
 			height: parentBox.height + 'px',
@@ -426,7 +434,7 @@ export class resizeCells extends Plugin {
 
 				if (parent) {
 					const parentBox = parent.getBoundingClientRect();
-					this.resizeHandler.style.top = parentBox.top + 'px';
+					css(this.resizeHandler, 'top', parentBox.top);
 				}
 			})
 			.on('beforeSetMode.resize-cells', () => {

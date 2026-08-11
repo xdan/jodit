@@ -19,6 +19,7 @@ import {
 	position,
 	scrollIntoViewIfNeeded
 } from 'jodit/core/helpers';
+import { css } from 'jodit/core/helpers/utils/css';
 import { Dom, Icon, Plugin } from 'jodit/modules';
 
 import './config';
@@ -64,8 +65,8 @@ export class addNewLine extends Plugin {
 
 		this.__isShown = true;
 
-		this.j.container.appendChild(this.__line);
-		this.__line.style.width = this.j.container.clientWidth + 'px';
+		Dom.append(this.j.container, this.__line);
+		css(this.__line, 'width', this.j.container.clientWidth);
 	}
 
 	private __hideForce = (): void => {
@@ -160,10 +161,10 @@ export class addNewLine extends Plugin {
 			if (this.__current === editor.editor) {
 				Dom.prepend(editor.editor, p);
 			} else {
-				this.__current.parentNode.insertBefore(p, this.__current);
+				Dom.before(this.__current, p);
 			}
 		} else {
-			editor.editor.appendChild(p);
+			Dom.append(editor.editor, p);
 		}
 
 		editor.s.setCursorIn(p);
@@ -196,9 +197,9 @@ export class addNewLine extends Plugin {
 					Math.abs(top - (editorBound.height + editorBound.top)) &&
 				editor.editor.firstChild
 			) {
-				editor.editor.insertBefore(p, editor.editor.firstChild);
+				Dom.prepend(editor.editor, p);
 			} else {
-				editor.editor.appendChild(p);
+				Dom.append(editor.editor, p);
 			}
 
 			editor.s.setCursorIn(p);
@@ -289,7 +290,7 @@ export class addNewLine extends Plugin {
 						editor.editor
 					)))
 		) {
-			this.__line.style.top = top + 'px';
+			css(this.__line, 'top', top);
 			this.__current = currentElement as HTMLElement;
 			this.__show();
 			this.__line.style.setProperty(

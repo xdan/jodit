@@ -87,7 +87,11 @@ function resolveTableSibling(
 		return sibling;
 	}
 
-	const cells = sibling.querySelectorAll('td,th');
+	const cells: HTMLTableCellElement[] = [];
+
+	Dom.each(sibling, node => {
+		Dom.isCell(node) && cells.push(node);
+	});
 	return cells.length ? cells[backspace ? cells.length - 1 : 0] : null;
 }
 

@@ -17,6 +17,7 @@ import type {
 } from 'jodit/types';
 import { debounce, hook, watch } from 'jodit/core/decorators';
 import { component } from 'jodit/core/decorators/component/component';
+import { Dom } from 'jodit/core/dom/dom';
 import { attr, css, isNumeric } from 'jodit/core/helpers';
 import { UIGroup } from 'jodit/core/ui/group/group';
 import { Icon } from 'jodit/core/ui/icon';
@@ -75,7 +76,9 @@ export class UIImagePropertiesForm extends UIGroup<IJodit> {
 	) {
 		super(jodit);
 
-		this.getElm('tabsBox')!.appendChild(
+		Dom.append(
+			this.getElm('tabsBox')!,
+
 			TabsWidget(
 				jodit,
 				[

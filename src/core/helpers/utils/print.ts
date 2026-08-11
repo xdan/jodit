@@ -14,7 +14,6 @@ import { isString } from 'jodit/core/helpers/checker/is-string';
 
 import { attr } from './attr';
 import { css } from './css';
-import { $$ } from './selector';
 
 /**
  * Fixes image sizes and sets absolute paths to images
@@ -25,12 +24,18 @@ function fixedAssetsSizeAndAbsoluteLinks(
 ): Function[] {
 	const restoreAttributes: Function[] = [];
 
+	const images: HTMLImageElement[] = [];
+
+	Dom.each(editor.editor, node => {
+		Dom.isTag(node, 'img') && images.push(node);
+	});
+
 	try {
-		$$('img', editor.editor).forEach(item => {
+		images.forEach(item => {
 			const previousAttrs = [
 				attr(item, 'width'),
 				attr(item, 'height'),
-				item.src
+				attr(item, 'src')
 			];
 
 			attr(item, {
@@ -39,15 +44,15 @@ function fixedAssetsSizeAndAbsoluteLinks(
 			});
 
 			const a = editor.createInside.a();
-			editor.ed.body.appendChild(a);
-			a.href = item.src;
-			item.src = a.href;
+			Dom.append(editor.ed.body, a);
+			attr(a, 'href', attr(item, 'src') || '');
+			// reading the `href` property resolves the URL to an absolute one
+			attr(item, 'src', a.href);
 			Dom.safeRemove(a);
 
 			restoreAttributes.push(() => {
-				item.src = previousAttrs[2] ?? '';
-
 				attr(item, {
+					src: previousAttrs[2] || null,
 					width: previousAttrs[0] || null,
 					height: previousAttrs[1] || null
 				});
@@ -86,7 +91,7 @@ export function previewBox(
 
 		let div: HTMLElement = editor.c.div('jodit__preview-box jodit-context');
 		if (container) {
-			container.appendChild(div);
+			Dom.append(container, div);
 		}
 
 		css(div, {
@@ -109,7 +114,7 @@ export function previewBox(
 				border: 0
 			});
 
-			div.appendChild(iframe);
+			Dom.append(div, iframe);
 
 			const myWindow = iframe.contentWindow;
 
@@ -129,7 +134,7 @@ export function previewBox(
 					const resizeObserver = new ResizeObserver(
 						editor.async.debounce((): void => {
 							resizeObserver.unobserve(elm);
-							iframe.style.height = `${elm.offsetHeight + 20}px`;
+							css(iframe, 'height', elm.offsetHeight + 20);
 							editor.async.requestAnimationFrame(() => {
 								!destructed && resizeObserver.observe(elm);
 							});
@@ -172,8 +177,8 @@ export function previewBox(
 					for (let j = 0; j < c.attributes.length; j += 1) {
 						attr(
 							newNode,
-							c.attributes[j].nodeName,
-							c.attributes[j].nodeValue
+							c.attributes[j].name,
+							c.attributes[j].value
 						);
 					}
 
@@ -196,11 +201,11 @@ export function previewBox(
 					}
 
 					try {
-						box.appendChild(newNode);
+						Dom.append(box, newNode);
 					} catch {}
 				} else {
 					try {
-						box.appendChild(c.cloneNode(true));
+						Dom.append(box, c.cloneNode(true));
 					} catch {}
 				}
 			}

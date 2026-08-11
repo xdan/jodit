@@ -17,11 +17,14 @@ import type {
 	IUploader,
 	IUploaderData,
 	IUploaderOptions,
-	IViewBased
+	IViewBased,
+	Nullable
 } from 'jodit/types';
 import { STATUSES, ViewComponent } from 'jodit/core/component/';
 import { IS_ES_NEXT, IS_IE } from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 import {
+	attr,
 	ConfigProto,
 	error,
 	isFunction,
@@ -232,8 +235,10 @@ export class Uploader extends ViewComponent implements IUploader {
 				}
 			});
 
-		const inputFile: HTMLInputElement | null =
-			form.querySelector('input[type=file]');
+		const inputFile: HTMLInputElement | null = Dom.first(
+			form,
+			node => Dom.isTag(node, 'input') && attr(node, 'type') === 'file'
+		) as Nullable<HTMLInputElement>;
 
 		if (inputFile) {
 			self.j.e.on(inputFile, 'change', () => {

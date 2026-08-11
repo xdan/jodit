@@ -119,7 +119,7 @@ export class selectCells extends Plugin {
 				this.__tableModule.removeSelection(cell);
 			} else {
 				if (!cell.firstChild) {
-					cell.appendChild(this.j.createInside.element('br'));
+					Dom.append(cell, this.j.createInside.element('br'));
 				}
 				this.__tableModule.addSelection(cell);
 			}
@@ -152,7 +152,7 @@ export class selectCells extends Plugin {
 		}
 
 		if (!cell.firstChild) {
-			cell.appendChild(this.j.createInside.element('br'));
+			Dom.append(cell, this.j.createInside.element('br'));
 		}
 
 		this.__isSelectionMode = true;
@@ -254,10 +254,10 @@ export class selectCells extends Plugin {
 				'<div style="color:rgba(0,0,0,0.01);width:0;height:0">&nbsp;</div>'
 			);
 
-			cell.appendChild(n);
+			Dom.append(cell, n);
 
 			this.j.async.setTimeout(() => {
-				n.parentNode?.removeChild(n);
+				Dom.safeRemove(n);
 			}, this.j.defaultTimeout / 5);
 		})();
 	}
@@ -398,7 +398,7 @@ export class selectCells extends Plugin {
 
 			cells.forEach(td => {
 				Dom.detach(td);
-				td.appendChild(this.j.createInside.element('br'));
+				Dom.append(td, this.j.createInside.element('br'));
 			});
 
 			this.unselectCells();

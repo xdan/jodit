@@ -27,6 +27,8 @@ import { autobind } from 'jodit/core/decorators/autobind/autobind';
 import { component } from 'jodit/core/decorators/component/component';
 import { hook } from 'jodit/core/decorators/hook/hook';
 import { watch } from 'jodit/core/decorators/watch/watch';
+import { attr } from 'jodit/core/helpers/utils/attr';
+import { css } from 'jodit/core/helpers/utils/css';
 import { error } from 'jodit/core/helpers/utils/error/error';
 import { UIList } from 'jodit/core/ui/group/list';
 import { makeButton, makeSelect } from 'jodit/modules/toolbar/factory';
@@ -114,8 +116,8 @@ export class ToolbarCollection<T extends IViewWithToolbar = IViewWithToolbar>
 	 * Set direction
 	 */
 	setDirection(direction: 'rtl' | 'ltr'): void {
-		this.container.style.direction = direction;
-		this.container.setAttribute('dir', direction);
+		css(this.container, 'direction', direction);
+		attr(this.container, 'dir', direction);
 	}
 
 	constructor(jodit: IViewBased) {

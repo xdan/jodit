@@ -10,6 +10,7 @@
 
 import type { ImageHAlign } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { clearCenterAlign, css } from 'jodit/core/helpers/utils/css';
 
 /**
@@ -48,11 +49,11 @@ export function hAlignElement(image: HTMLElement, align: ImageHAlign): void {
 export function clearAlign(node: Node): void {
 	Dom.each(node, elm => {
 		if (Dom.isHTMLElement(elm)) {
-			if (elm.style.textAlign) {
-				elm.style.textAlign = '';
+			if (css(elm, 'textAlign', true)) {
+				css(elm, 'textAlign', '');
 
-				if (!elm.style.cssText.trim().length) {
-					elm.removeAttribute('style');
+				if (!(attr(elm, 'style') || '').trim().length) {
+					attr(elm, 'style', null);
 				}
 			}
 		}
@@ -66,22 +67,15 @@ export function alignElement(command: string, box: HTMLElement): void {
 	if (Dom.isNode(box) && Dom.isElement(box)) {
 		clearAlign(box);
 
-		switch (command.toLowerCase()) {
-			case 'justifyfull':
-				box.style.textAlign = 'justify';
-				break;
+		const align = {
+			justifyfull: 'justify',
+			justifyright: 'right',
+			justifyleft: 'left',
+			justifycenter: 'center'
+		}[command.toLowerCase()];
 
-			case 'justifyright':
-				box.style.textAlign = 'right';
-				break;
-
-			case 'justifyleft':
-				box.style.textAlign = 'left';
-				break;
-
-			case 'justifycenter':
-				box.style.textAlign = 'center';
-				break;
+		if (align) {
+			css(box, 'textAlign', align);
 		}
 	}
 }

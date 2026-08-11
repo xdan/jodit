@@ -9,6 +9,7 @@
  */
 
 import type { IDialog } from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { Button } from 'jodit/core/ui/button/button/button';
 import { Dialog } from 'jodit/modules/dialog/dialog';
@@ -47,8 +48,8 @@ export function Confirm(
 		title = undefined;
 	}
 
-	$label.appendChild(dialog.c.fromHTML(msg));
-	$div.appendChild($label);
+	Dom.append($label, dialog.c.fromHTML(msg));
+	Dom.append($div, $label);
 
 	const action = (yes: boolean) => (): void => {
 		if (!callback || callback(yes) !== false) {

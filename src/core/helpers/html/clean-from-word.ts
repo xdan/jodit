@@ -12,6 +12,7 @@ import { globalDocument } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 import { trim } from 'jodit/core/helpers/string/trim';
+import { attr } from 'jodit/core/helpers/utils/attr';
 
 /**
  * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant
@@ -62,9 +63,7 @@ export function cleanFromWord(html: string): string {
 								// text leaks into the content. See #948
 								if (
 									/mso-list:\s*ignore/i.test(
-										(node as Element).getAttribute(
-											'style'
-										) || ''
+										attr(node as Element, 'style') || ''
 									)
 								) {
 									marks.push(node);
@@ -72,7 +71,7 @@ export function cleanFromWord(html: string): string {
 								}
 
 								toArray((node as Element).attributes).forEach(
-									(attr: Attr) => {
+									(attribute: Attr) => {
 										if (
 											[
 												'src',
@@ -80,11 +79,13 @@ export function cleanFromWord(html: string): string {
 												'rel',
 												'content'
 											].indexOf(
-												attr.name.toLowerCase()
+												attribute.name.toLowerCase()
 											) === -1
 										) {
-											(node as Element).removeAttribute(
-												attr.name
+											attr(
+												node as Element,
+												attribute.name,
+												null
 											);
 										}
 									}

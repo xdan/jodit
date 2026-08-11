@@ -74,7 +74,9 @@ export class dragAndDrop extends Plugin {
 		this.startDragPoint.y = event.clientY;
 
 		if (isFileBrowserFilesItem(target)) {
-			target = target.querySelector('img') as HTMLElement;
+			target = Dom.first(target, node =>
+				Dom.isTag(node, 'img')
+			) as HTMLElement;
 		}
 
 		if (Dom.isTag(target, 'img')) {

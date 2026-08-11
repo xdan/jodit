@@ -49,7 +49,8 @@ export function Alert(
 		okButton = Button(dialog, 'ok', 'Ok');
 
 	asArray(msg).forEach(oneMessage => {
-		container.appendChild(
+		Dom.append(
+			container,
 			Dom.isNode(oneMessage) ? oneMessage : dialog.c.fromHTML(oneMessage)
 		);
 	});

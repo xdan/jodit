@@ -31,7 +31,7 @@ export class sticky extends Plugin {
 	private __createDummy = (toolbar: HTMLElement): void => {
 		this.__dummyBox = this.j.c.div();
 		this.__dummyBox.classList.add('jodit_sticky-dummy_toolbar');
-		this.j.container.insertBefore(this.__dummyBox, toolbar);
+		Dom.before(toolbar, this.__dummyBox);
 	};
 
 	/**

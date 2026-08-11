@@ -16,6 +16,7 @@ import type {
 } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
+import { attr } from 'jodit/core/helpers/utils/attr';
 import { Config } from 'jodit/config';
 
 declare module 'jodit/config' {
@@ -112,14 +113,14 @@ Config.prototype.uploader = {
 
 		if (resp.files && resp.files.length) {
 			resp.files.forEach((filename, index: number) => {
-				const [tagName, attr]: string[] =
+				const [tagName, attrName]: string[] =
 					resp.isImages && resp.isImages[index]
 						? ['img', 'src']
 						: ['a', 'href'];
 
 				const elm = j.createInside.element(tagName);
 
-				elm.setAttribute(attr, resp.baseurl + filename);
+				attr(elm, attrName, resp.baseurl + filename);
 
 				if (tagName === 'a') {
 					elm.textContent = j.o.uploader.getDisplayName.call(

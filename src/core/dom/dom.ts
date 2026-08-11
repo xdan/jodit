@@ -17,7 +17,11 @@ import type {
 	IDictionary,
 	IJodit,
 	NodeCondition,
-	Nullable
+	Nullable,
+	VDocument,
+	VFragment,
+	VHTMLElement,
+	VNode
 } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import {
@@ -59,7 +63,7 @@ export class Dom {
 	/**
 	 * Remove all content from element
 	 */
-	static detach(node: Nullable<Node>): void {
+	static detach(node: Nullable<VNode>): void {
 		while (node && node.firstChild) {
 			node.removeChild(node.firstChild);
 		}
@@ -204,7 +208,7 @@ export class Dom {
 	/**
 	 * Remove parent of node and insert this node instead that parent
 	 */
-	static unwrap(node: Node): void {
+	static unwrap(node: VNode): void {
 		const parent = node.parentNode;
 
 		if (parent) {
@@ -573,39 +577,7 @@ export class Dom {
 		root: Nullable<Node>,
 		condition: NodeCondition
 	): Nullable<Node> {
-		let first = root?.firstChild as Nullable<Node>;
-
-		if (!first) {
-			return null;
-		}
-
-		do {
-			if (condition(first)) {
-				return first;
-			}
-
-			let next: Nullable<Node> = first.firstChild;
-
-			if (!next) {
-				next = first.nextSibling;
-			}
-
-			if (!next && first.parentNode !== root) {
-				do {
-					first = first.parentNode;
-				} while (
-					first &&
-					!first?.nextSibling &&
-					first.parentNode !== root
-				);
-
-				next = first?.nextSibling as Nullable<Node>;
-			}
-
-			first = next;
-		} while (first);
-
-		return null;
+		return Dom.__deepMost(root, condition, false);
 	}
 
 	/**
@@ -615,37 +587,48 @@ export class Dom {
 		root: Nullable<Node>,
 		condition: NodeCondition
 	): Nullable<Node> {
-		let last = root?.lastChild as Nullable<Node>;
+		return Dom.__deepMost(root, condition, true);
+	}
 
-		if (!last) {
+	/**
+	 * Depth-first search for the first matched node inside root:
+	 * in document order (`reverse = false`) or in reverse order
+	 */
+	private static __deepMost(
+		root: Nullable<Node>,
+		condition: NodeCondition,
+		reverse: boolean
+	): Nullable<Node> {
+		const child = reverse ? 'lastChild' : 'firstChild',
+			sibling = reverse ? 'previousSibling' : 'nextSibling';
+
+		let current = root?.[child] as Nullable<Node>;
+
+		if (!current) {
 			return null;
 		}
 
 		do {
-			if (condition(last)) {
-				return last;
+			if (condition(current)) {
+				return current;
 			}
 
-			let next: Nullable<Node> = last.lastChild;
+			let next: Nullable<Node> = current[child] || current[sibling];
 
-			if (!next) {
-				next = last.previousSibling;
-			}
-
-			if (!next && last.parentNode !== root) {
+			if (!next && current.parentNode !== root) {
 				do {
-					last = last.parentNode;
+					current = current.parentNode;
 				} while (
-					last &&
-					!last?.previousSibling &&
-					last.parentNode !== root
+					current &&
+					!current[sibling] &&
+					current.parentNode !== root
 				);
 
-				next = last?.previousSibling as Nullable<Node>;
+				next = current?.[sibling] as Nullable<Node>;
 			}
 
-			last = next;
-		} while (last);
+			current = next;
+		} while (current);
 
 		return null;
 	}
@@ -678,22 +661,23 @@ export class Dom {
 		node: HTMLElement,
 		className: string
 	): Nullable<HTMLElement> {
-		return Dom.prev(
-			node,
-			node => {
-				return (
-					Dom.isElement(node) && node.classList.contains(className)
-				);
-			},
-			node.parentNode as HTMLElement
-		) as HTMLElement | null;
+		return Dom.__siblingWithClass(node, className, true);
 	}
 
 	static nextWithClass(
 		node: HTMLElement,
 		className: string
 	): Nullable<HTMLElement> {
-		return Dom.next(
+		return Dom.__siblingWithClass(node, className, false);
+	}
+
+	private static __siblingWithClass(
+		node: HTMLElement,
+		className: string,
+		left: boolean
+	): Nullable<HTMLElement> {
+		return call(
+			left ? Dom.prev : Dom.next,
 			node,
 			elm => Dom.isElement(elm) && elm.classList.contains(className),
 			node.parentNode as HTMLElement
@@ -923,7 +907,9 @@ export class Dom {
 	/**
 	 * Returns the previous (`left = true`) or next sibling of the node
 	 */
-	static sibling(node: Node, left?: boolean): Nullable<Node> {
+	static sibling(node: Node, left?: boolean): Nullable<Node>;
+	static sibling(node: VNode, left?: boolean): Nullable<VNode>;
+	static sibling(node: VNode, left?: boolean): Nullable<VNode> {
 		return left ? node.previousSibling : node.nextSibling;
 	}
 
@@ -1049,72 +1035,42 @@ export class Dom {
 	/**
 	 * Append new element in the start of root
 	 */
-	static appendChildFirst(
-		root: HTMLElement,
-		newElement: HTMLElement | DocumentFragment
-	): void {
-		const child = root.firstChild;
-
-		if (child) {
-			if (child !== newElement) {
-				root.insertBefore(newElement, child);
-			}
-		} else {
-			root.appendChild(newElement);
+	static appendChildFirst(root: VNode, newElement: VNode): void {
+		if (root.firstChild !== newElement) {
+			Dom.prepend(root, newElement);
 		}
 	}
 
 	/**
 	 * Insert newElement after element
 	 */
-	static after(elm: Node, newElement: Node | DocumentFragment): void {
-		const { parentNode } = elm;
-
-		if (!parentNode) {
-			return;
-		}
-
-		if (parentNode.lastChild === elm) {
-			parentNode.appendChild(newElement);
-		} else {
-			parentNode.insertBefore(newElement, elm.nextSibling);
-		}
+	static after(elm: VNode, newElement: VNode): void {
+		// `insertBefore` with a `null` reference appends to the end
+		elm.parentNode?.insertBefore(newElement, elm.nextSibling);
 	}
 
 	/**
 	 * Insert newElement before element
 	 */
-	static before(elm: Node, newElement: Node | DocumentFragment): void {
-		const { parentNode } = elm;
-
-		if (!parentNode) {
-			return;
-		}
-
-		parentNode.insertBefore(newElement, elm);
+	static before(elm: VNode, newElement: VNode): void {
+		elm.parentNode?.insertBefore(newElement, elm);
 	}
 
 	/**
 	 * Insert newElement as first child inside element
 	 */
-	static prepend(root: Node, newElement: Node | DocumentFragment): void {
+	static prepend(root: VNode, newElement: VNode): void {
 		root.insertBefore(newElement, root.firstChild);
 	}
 
 	/**
 	 * Insert newElement as last child inside element
 	 */
-	static append(
-		root: Node,
-		newElements: Array<Node | DocumentFragment>
-	): void;
+	static append(root: VNode, newElements: VNode[]): void;
 
-	static append(root: Node, newElement: Node | DocumentFragment): void;
+	static append(root: VNode, newElement: VNode): void;
 
-	static append(
-		root: Node,
-		newElement: Node | DocumentFragment | Array<Node | DocumentFragment>
-	): void {
+	static append(root: VNode, newElement: VNode | VNode[]): void {
 		if (isArray(newElement)) {
 			newElement.forEach(node => {
 				this.append(root, node);
@@ -1130,11 +1086,26 @@ export class Dom {
 	static moveContent(
 		from: Node,
 		to: Node,
+		inStart?: boolean,
+		filter?: (node: Node) => boolean
+	): void;
+
+	static moveContent(
+		from: VNode,
+		to: VNode,
+		inStart?: boolean,
+		filter?: (node: VNode) => boolean
+	): void;
+
+	static moveContent(
+		from: VNode,
+		to: VNode,
 		inStart: boolean = false,
-		filter: (node: Node) => boolean = (): boolean => true
+
+		filter: (node: any) => boolean = (): boolean => true
 	): void {
-		const fragment: DocumentFragment = (
-			from.ownerDocument || globalDocument
+		const fragment: VFragment = (
+			from.ownerDocument || (globalDocument as VDocument)
 		).createDocumentFragment();
 
 		toArray(from.childNodes)
@@ -1146,15 +1117,12 @@ export class Dom {
 				Dom.safeRemove(elm);
 				return false;
 			})
-			.forEach((node: Node) => {
+			.forEach(node => {
 				fragment.appendChild(node);
 			});
 
-		if (!inStart || !to.firstChild) {
-			to.appendChild(fragment);
-		} else {
-			to.insertBefore(fragment, to.firstChild);
-		}
+		// `appendChild`/`insertBefore` with a `null` reference append to the end
+		to.insertBefore(fragment, inStart ? to.firstChild : null);
 	}
 
 	/**
@@ -1220,27 +1188,27 @@ export class Dom {
 	/**
 	 * Hide element
 	 */
-	static hide(node: Nullable<HTMLElement>): void {
+	static hide(node: Nullable<VHTMLElement>): void {
 		if (!node) {
 			return;
 		}
 
-		dataBind(node, '__old_display', node.style.display);
-		node.style.display = 'none';
+		dataBind(node, '__old_display', node.style.getPropertyValue('display'));
+		node.style.setProperty('display', 'none');
 	}
 
 	/**
 	 * Show element
 	 */
-	static show(node: Nullable<HTMLElement>): void {
+	static show(node: Nullable<VHTMLElement>): void {
 		if (!node) {
 			return;
 		}
 
 		const display = dataBind(node, '__old_display');
 
-		if (node.style.display === 'none') {
-			node.style.display = display || '';
+		if (node.style.getPropertyValue('display') === 'none') {
+			node.style.setProperty('display', display || null);
 		}
 	}
 
@@ -1329,6 +1297,14 @@ export class Dom {
 	 * @deprecated Just do not use it, it is not needed anymore
 	 */
 	static temporaryList(root: HTMLElement): HTMLElement[] {
-		return toArray(root.querySelectorAll(`[${TEMP_ATTR}]`));
+		const result: HTMLElement[] = [];
+
+		Dom.each(root, node => {
+			if (Dom.isHTMLElement(node) && node.hasAttribute(TEMP_ATTR)) {
+				result.push(node);
+			}
+		});
+
+		return result;
 	}
 }

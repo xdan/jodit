@@ -12,8 +12,10 @@
 
 import type { IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
+import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { $$, attr, dataBind } from 'jodit/core/helpers/utils';
+import { css } from 'jodit/core/helpers/utils/css';
 
 import './config';
 
@@ -41,18 +43,20 @@ export function media(editor: IJodit): void {
 
 			attr(wrapper, 'style', attr(element, 'style'));
 
-			wrapper.style.display =
-				element.style.display === 'inline-block'
-					? 'inline-block'
-					: 'block';
-			wrapper.style.width = element.offsetWidth + 'px';
-			wrapper.style.height = element.offsetHeight + 'px';
+			css(wrapper, {
+				display:
+					element.style.getPropertyValue('display') === 'inline-block'
+						? 'inline-block'
+						: 'block',
+				width: element.offsetWidth,
+				height: element.offsetHeight
+			});
 
 			if (element.parentNode) {
-				element.parentNode.insertBefore(wrapper, element);
+				Dom.before(element, wrapper);
 			}
 
-			wrapper.appendChild(element);
+			Dom.append(wrapper, element);
 
 			element = wrapper;
 		}

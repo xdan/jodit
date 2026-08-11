@@ -118,12 +118,12 @@ export class UiAiAssistant extends UIElement<IJodit> {
 			this.__buttons.classList.remove(hideMod);
 
 			Dom.detach(this.__results);
-			this.__results.appendChild(this.__spinner);
+			Dom.append(this.__results, this.__spinner);
 			this.__insertButton.focus();
 		});
 
-		this.__buttons.appendChild(buttonsBLock.container);
-		this.__body.appendChild(this.__formAiAssistant.container);
+		Dom.append(this.__buttons, buttonsBLock.container);
+		Dom.append(this.__body, this.__formAiAssistant.container);
 
 		this.onChangePromptValue();
 	}
@@ -177,7 +177,7 @@ export class UiAiAssistant extends UIElement<IJodit> {
 		this.setMod('loading', false);
 		Dom.detach(this.__results);
 		this.__aiResult = result;
-		this.__results.appendChild(this.jodit.c.fromHTML(result));
+		Dom.append(this.__results, this.jodit.c.fromHTML(result));
 
 		this.__toggleSubmitButton(false);
 		this.__toggleInsertButton(false);

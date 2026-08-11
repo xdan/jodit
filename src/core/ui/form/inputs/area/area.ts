@@ -11,6 +11,7 @@
 import type { IUIInput, IUITextArea, IViewBased } from 'jodit/types';
 import { watch } from 'jodit/core/decorators';
 import { component } from 'jodit/core/decorators/component/component';
+import { css } from 'jodit/core/helpers/utils/css';
 import { UIInput } from 'jodit/core/ui/form/inputs/input/input';
 
 import './area.less';
@@ -46,7 +47,7 @@ export class UITextArea extends UIInput implements IUITextArea {
 		Object.assign(this.state, state);
 
 		if (this.state.resizable === false) {
-			this.nativeInput.style.resize = 'none';
+			css(this.nativeInput, 'resize', 'none');
 		}
 	}
 
@@ -54,7 +55,7 @@ export class UITextArea extends UIInput implements IUITextArea {
 	protected onChangeStateSize(): void {
 		const { size, resizable } = this.state;
 
-		this.nativeInput.style.resize = resizable ? 'auto' : 'none';
+		css(this.nativeInput, 'resize', resizable ? 'auto' : 'none');
 		this.nativeInput.rows = size ?? 5;
 	}
 }

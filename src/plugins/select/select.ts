@@ -140,7 +140,9 @@ export class select extends Plugin {
 		// list (the last level has no nested list and behaves correctly).
 		if (
 			!Dom.isTag(li, 'li') ||
-			!(li.querySelector('ul') || li.querySelector('ol'))
+			!Dom.first(li, node =>
+				Dom.isTag(node, new Set(['ul', 'ol'] as const))
+			)
 		) {
 			return;
 		}

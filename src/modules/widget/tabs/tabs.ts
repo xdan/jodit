@@ -76,8 +76,8 @@ export const TabsWidget = (
 
 	let firstTab: string = '';
 
-	box.appendChild(buttons);
-	box.appendChild(tabBox);
+	Dom.append(box, buttons);
+	Dom.append(box, tabBox);
 
 	const setActive = (tab: string): void => {
 		if (!nameToTab[tab]) {
@@ -114,7 +114,7 @@ export const TabsWidget = (
 			firstTab = name;
 		}
 
-		buttons.appendChild(button.container);
+		Dom.append(buttons, button.container);
 		buttonList.push(button);
 
 		button.container.classList.add(
@@ -123,7 +123,8 @@ export const TabsWidget = (
 		);
 
 		if (!isFunction(content)) {
-			tab.appendChild(
+			Dom.append(
+				tab,
 				Component.isInstanceOf(content, UIElement)
 					? content.container
 					: content
@@ -132,7 +133,7 @@ export const TabsWidget = (
 			tab.classList.add('jodit-tab_empty');
 		}
 
-		tabBox.appendChild(tab);
+		Dom.append(tabBox, tab);
 
 		button.onAction(() => {
 			setActive(name);

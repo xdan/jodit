@@ -206,7 +206,7 @@ export class UISearch extends UIElement<IJodit> {
 		searchAndReplace: boolean = false
 	): void {
 		if (!this.isOpened) {
-			this.j.workplace.appendChild(this.container);
+			Dom.append(this.j.workplace, this.container);
 			this.isOpened = true;
 		}
 

@@ -315,10 +315,10 @@ export class source extends Plugin {
 	/** @override */
 	afterInit(editor: IJodit): void {
 		this.mirrorContainer = editor.c.div('jodit-source');
-		editor.workplace.appendChild(this.mirrorContainer);
+		Dom.append(editor.workplace, this.mirrorContainer);
 
 		editor.e.on('afterAddPlace changePlace afterInit', () => {
-			editor.workplace.appendChild(this.mirrorContainer);
+			Dom.append(editor.workplace, this.mirrorContainer);
 		});
 
 		this.sourceEditor = createSourceEditor(

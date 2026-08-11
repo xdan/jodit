@@ -8,7 +8,8 @@
  * @module plugins/symbols
  */
 
-import type { IControlType, IJodit } from 'jodit/types';
+import type { IControlType, IJodit, Nullable } from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
 
@@ -258,7 +259,7 @@ Config.prototype.controls.symbols = {
 				const box = editor.c.div();
 
 				box.classList.add('jodit-symbols');
-				box.appendChild(container);
+				Dom.append(box, container);
 				editor.e.on(container, 'close_dialog', close);
 				return box;
 			}
@@ -272,7 +273,9 @@ Config.prototype.controls.symbols = {
 				)
 				.bindDestruct(editor);
 
-			const a = container.querySelector('a');
+			const a = Dom.first(container, node =>
+				Dom.isTag(node, 'a')
+			) as Nullable<HTMLAnchorElement>;
 
 			a && a.focus();
 		}

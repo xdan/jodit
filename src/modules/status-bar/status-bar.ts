@@ -90,9 +90,9 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 			wrapper.classList.add(this.getFullElName('item-right'));
 		}
 
-		wrapper.appendChild(child);
+		Dom.append(wrapper, child);
 
-		this.container?.appendChild(wrapper);
+		this.container && Dom.append(this.container, wrapper);
 
 		if (this.j.o.statusbar) {
 			this.show();
@@ -109,7 +109,7 @@ export class StatusBar extends ViewComponent<IJodit> implements IStatusBar {
 
 		this.container = jodit.c.div('jodit-status-bar');
 
-		target.appendChild(this.container);
+		Dom.append(target, this.container);
 		this.hide();
 	}
 

@@ -71,7 +71,7 @@ export class UITooltip extends UIElement {
 
 	private __onAttach(container: HTMLElement): void {
 		// TODO Move it inside __show method. Now it is here because testcase failed with capturing
-		getContainer(this.j, UITooltip).appendChild(this.container);
+		Dom.append(getContainer(this.j, UITooltip), this.container);
 
 		this.__attachedContainers.add(container);
 		this.__attachedContainers.add(this.j.container);

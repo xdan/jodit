@@ -47,6 +47,8 @@ export function elementsEqualAttributes(
 	return (
 		elm1.attributes.length === elm2.attributes.length &&
 		Array.from(elm1.attributes).every(
+			// raw `getAttribute` on purpose: the comparison must use the exact
+			// attribute name from the live list, without `attr()` name mangling
 			attr =>
 				elm2.hasAttribute(attr.name) &&
 				elm2.getAttribute(attr.name) === attr.value

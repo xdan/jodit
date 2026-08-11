@@ -256,13 +256,15 @@ export class Selection implements ISelect {
 			'_' +
 			String(Math.random()).slice(2);
 
-		marker.style.lineHeight = '0';
-		marker.style.display = 'none';
+		css(marker, {
+			lineHeight: '0',
+			display: 'none'
+		});
 
 		Dom.markTemporary(marker);
 		attr(marker, 'data-' + consts.MARKER_CLASS, atStart ? 'start' : 'end');
 
-		marker.appendChild(this.j.createInside.text(consts.INVISIBLE_SPACE));
+		Dom.append(marker, this.j.createInside.text(consts.INVISIBLE_SPACE));
 
 		if (newRange) {
 			if (
@@ -287,11 +289,15 @@ export class Selection implements ISelect {
 	restore(): void {
 		let range: Range | false = false;
 
-		const markAttr = (start: boolean): string =>
-			`span[data-${consts.MARKER_CLASS}=${start ? 'start' : 'end'}]`;
+		const markerFilter =
+			(start: boolean) =>
+			(node: Nullable<Node>): boolean =>
+				Dom.isMarker(node) &&
+				attr(node, 'data-' + consts.MARKER_CLASS) ===
+					(start ? 'start' : 'end');
 
-		const start = this.area.querySelector(markAttr(true));
-		const end = this.area.querySelector(markAttr(false));
+		const start = Dom.first(this.area, markerFilter(true));
+		const end = Dom.first(this.area, markerFilter(false));
 
 		if (!start) {
 			return;
@@ -638,7 +644,7 @@ export class Selection implements ISelect {
 				) {
 					Dom.safeInsertNode(range, node);
 				} else {
-					this.area.appendChild(node);
+					Dom.append(this.area, node);
 				}
 
 				[
@@ -655,7 +661,7 @@ export class Selection implements ISelect {
 					}
 				});
 			} else {
-				this.area.appendChild(node);
+				Dom.append(this.area, node);
 			}
 
 			const setCursor = (node: Node): void => {
@@ -723,7 +729,7 @@ export class Selection implements ISelect {
 		if (!Dom.isNode(html)) {
 			node.innerHTML = html.toString();
 		} else {
-			node.appendChild(html);
+			Dom.append(node, html);
 		}
 
 		if (
@@ -737,9 +743,7 @@ export class Selection implements ISelect {
 			return;
 		}
 
-		while (node.firstChild) {
-			fragment.appendChild(node.firstChild);
-		}
+		Dom.moveContent(node, fragment);
 
 		this.insertNode(fragment, insertCursorAfter, false);
 
@@ -762,7 +766,7 @@ export class Selection implements ISelect {
 		const image = isString(url) ? this.j.createInside.element('img') : url;
 
 		if (isString(url)) {
-			image.setAttribute('src', url);
+			attr(image, 'src', url);
 		}
 
 		if (defaultWidth != null) {
@@ -789,8 +793,10 @@ export class Selection implements ISelect {
 				image.naturalHeight < image.offsetHeight ||
 				image.naturalWidth < image.offsetWidth
 			) {
-				image.style.width = '';
-				image.style.height = '';
+				css(image, {
+					width: '',
+					height: ''
+				});
 			}
 
 			image.removeEventListener('load', onload);
@@ -916,7 +922,7 @@ export class Selection implements ISelect {
 				} else {
 					const currentB = this.j.createInside.text(INVISIBLE_SPACE);
 
-					current.appendChild(currentB);
+					Dom.append(current, currentB);
 					current = currentB;
 				}
 			}
@@ -1132,7 +1138,7 @@ export class Selection implements ISelect {
 			const fakeNode = this.j.createInside.text(consts.INVISIBLE_SPACE);
 
 			if (!Dom.isTag(last, INSEPARABLE_TAGS)) {
-				last.appendChild(fakeNode);
+				Dom.append(last, fakeNode);
 				last = fakeNode;
 			} else {
 				start = last;
@@ -1225,7 +1231,7 @@ export class Selection implements ISelect {
 			const clonedSelection = range.cloneContents();
 			const div = this.j.createInside.div();
 
-			div.appendChild(clonedSelection);
+			Dom.append(div, clonedSelection);
 
 			return div.innerHTML;
 		}
@@ -1410,9 +1416,9 @@ export class Selection implements ISelect {
 		const font = this.j.createInside.element('font');
 		const [first] = run;
 
-		first.parentNode?.insertBefore(font, first);
+		Dom.before(first, font);
 
-		run.forEach(node => font.appendChild(node));
+		run.forEach(node => Dom.append(font, node));
 
 		return font;
 	}
@@ -1430,7 +1436,7 @@ export class Selection implements ISelect {
 			this.insertNode(font, false, false);
 
 			if (fakes && fakes[0]) {
-				font.appendChild(fakes[0]);
+				Dom.append(font, fakes[0]);
 			}
 
 			yield font;
@@ -1613,7 +1619,7 @@ export class Selection implements ISelect {
 			try {
 				clearEmpties(fragment);
 				clearEmpties(currentBox);
-				currentBox.parentNode.insertBefore(fragment, currentBox);
+				Dom.before(currentBox, fragment);
 
 				if (!edge && cursorOnTheRight && br?.parentNode) {
 					const range = this.createRange();
@@ -1628,10 +1634,10 @@ export class Selection implements ISelect {
 
 			// After splitting some part can be empty
 			const fillFakeParent = (fake: Node): void => {
-				if (
-					fake?.parentNode?.firstChild === fake?.parentNode?.lastChild
-				) {
-					fake?.parentNode?.appendChild(br.cloneNode());
+				const parent = fake?.parentNode;
+
+				if (parent && parent.firstChild === parent.lastChild) {
+					Dom.append(parent, br.cloneNode());
 				}
 			};
 

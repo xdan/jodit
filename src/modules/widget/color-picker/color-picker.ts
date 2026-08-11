@@ -83,19 +83,22 @@ export const ColorPickerWidget = (
 			return stack.join('');
 		};
 
-	form.appendChild(
+	Dom.append(
+		form,
 		editor.c.fromHTML(
 			`<div class="${cn}__groups">${eachColor(editor.o.colors)}</div>`
 		)
 	);
 
-	form.appendChild(
+	Dom.append(
+		form,
 		editor.c.fromHTML(`<div data-ref="extra" class="${cn}__extra"></div>`)
 	);
 
 	const { extra } = refs(form);
 
-	extra.appendChild(
+	Dom.append(
+		extra,
 		editor.c.fromHTML(
 			`<div class="${cn}__hex"><input data-ref="hexInput" type="text" spellcheck="false" aria-label="HEX" placeholder="#FF0000" value="${
 				valueHex || ''
@@ -139,7 +142,8 @@ export const ColorPickerWidget = (
 		});
 
 	if (editor.o.showBrowserColorPicker && hasBrowserColorPicker()) {
-		extra.appendChild(
+		Dom.append(
+			extra,
 			editor.c.fromHTML(
 				`<div class="${cn}__native">${iconPalette}<input type="color" value="#ffffff"/></div>`
 			)

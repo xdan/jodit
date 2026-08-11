@@ -135,7 +135,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 					const div = this.c.div(this.getFullElName('column'));
 
 					elements_list.push(div);
-					root.appendChild(div);
+					Dom.append(root, div);
 
 					return this.setElements(div, elm);
 				}
@@ -151,14 +151,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 				elements_list.push(element);
 
 				if (element.parentNode !== root) {
-					root.appendChild(element);
+					Dom.append(root, element);
 				}
 			}
 		);
 
 		toArray(root.childNodes).forEach((elm: ChildNode) => {
 			if (elements_list.indexOf(elm as HTMLElement) === -1) {
-				root.removeChild(elm);
+				Dom.safeRemove(elm);
 			}
 		});
 	}
@@ -443,8 +443,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			this.moved = Math.abs(x - left) > 100 || Math.abs(y - top) > 100;
 		}
 
-		this.dialog.style.left = (x || left) + 'px';
-		this.dialog.style.top = (y || top) + 'px';
+		css(this.dialog, {
+			left: x || left,
+			top: y || top
+		});
 
 		return this;
 	}
@@ -548,12 +550,17 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		let maxZIndex: number = 20000004,
 			zIndex: number = 0;
 
-		$$('.jodit-dialog', this.destination).forEach(dialog => {
-			zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
-			maxZIndex = Math.max(isNaN(zIndex) ? 0 : zIndex, maxZIndex);
+		Dom.each(this.destination, elm => {
+			if (
+				Dom.isHTMLElement(elm) &&
+				elm.classList.contains('jodit-dialog')
+			) {
+				zIndex = parseInt(css(elm, 'zIndex') as string, 10);
+				maxZIndex = Math.max(isNaN(zIndex) ? 0 : zIndex, maxZIndex);
+			}
 		});
 
-		this.container.style.zIndex = (maxZIndex + 1).toString();
+		css(this.container, 'zIndex', (maxZIndex + 1).toString());
 	}
 
 	/**
@@ -630,13 +637,13 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.setModal(modal);
 
-		this.destination.appendChild(this.container);
+		Dom.append(this.destination, this.container);
 
 		if (this.getMod('static') !== true) {
 			this.setPosition(this.offsetX, this.offsetY);
 			this.setMaxZIndex();
 		} else {
-			this.container.style.removeProperty('z-index');
+			css(this.container, 'zIndex', null);
 		}
 
 		if (this.o.fullsize) {
@@ -778,12 +785,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		) as HTMLDivElement;
 
 		if (self.options.direction === 'rtl') {
-			self.container.style.direction = 'rtl';
-			self.container.setAttribute('dir', 'rtl');
+			css(self.container, 'direction', 'rtl');
+			attr(self.container, 'dir', 'rtl');
 		}
 
 		if (this.o.zIndex) {
-			this.container.style.zIndex = this.o.zIndex.toString();
+			css(this.container, 'zIndex', this.o.zIndex.toString());
 		}
 
 		attr(self.container, 'role', 'dialog');
