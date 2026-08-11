@@ -4,7 +4,7 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import { exec } from 'child_process';
+import { execFile } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -45,7 +45,7 @@ export const readLangs = function readLangs(
 
 async function prettier(fileName: string): Promise<void> {
 	return new Promise((resolve, reject) => {
-		exec(`prettier --write ${fileName}`, error => {
+		execFile('prettier', ['--write', fileName], error => {
 			if (error != null) {
 				reject(error);
 				return;
