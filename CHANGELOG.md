@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.17
+
+#### :bug: Bug Fix
+
+- **Uploader**: with `uploader.insertImageAsBase64URI: true` the `filesWereUploaded` event was never fired — images read as data-URI skip the server branch of `sendFiles`, which was the only place emitting the event. Now it also fires once all dropped/pasted images have been read and inserted as base64. Reported by Ralf Pichler (Uniquare, Jodit OEM).
+
 ## 4.13.16
 
 #### :bug: Bug Fix

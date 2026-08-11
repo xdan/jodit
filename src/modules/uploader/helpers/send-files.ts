@@ -163,6 +163,7 @@ function readImagesWithReader(
 	handlerSuccess: ((resp: IUploaderData) => void) | undefined,
 	defaultHandlerSuccess: (resp: IUploaderData) => void
 ): void {
+	const readerPromises: Array<Promise<unknown>> = [];
 	let file: File, i: number;
 
 	for (i = 0; i < fileList.length; i += 1) {
@@ -179,8 +180,8 @@ function readImagesWithReader(
 
 			const reader = new FileReader();
 
-			promises.push(
-				uploader.j.async.promise((resolve, reject) => {
+			const readerPromise = uploader.j.async.promise<IUploaderData>(
+				(resolve, reject) => {
 					reader.onerror = reject;
 					reader.onloadend = (): void => {
 						const resp = {
@@ -199,10 +200,25 @@ function readImagesWithReader(
 					};
 
 					reader.readAsDataURL(file);
-				})
+				}
 			);
+
+			readerPromises.push(readerPromise);
+			promises.push(readerPromise);
 
 			(fileList[i] as any) = null;
 		}
+	}
+
+	// Images inserted as base64 never reach the server branch in `sendFiles`,
+	// which is the only other place that fires `filesWereUploaded`
+	if (readerPromises.length) {
+		Promise.all(readerPromises)
+			.then(() => {
+				uploader.j.events && uploader.j.e.fire('filesWereUploaded');
+			})
+			.catch(() => {
+				// Read errors are propagated to the caller via `promises`
+			});
 	}
 }

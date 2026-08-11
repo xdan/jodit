@@ -45,6 +45,34 @@ describe('Test uploader module', function () {
 				});
 			});
 
+			describe('Fire filesWereUploaded', function () {
+				it('Should fire filesWereUploaded when all images have been read as base64', function (done) {
+					const file = new FileImage(),
+						editor = getJodit({
+							uploader: {
+								insertImageAsBase64URI: true
+							},
+							events: {
+								filesWereUploaded: function () {
+									done();
+								}
+							}
+						});
+
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
+
+					simulateEvent('drop', editor.editor, function (data) {
+						fillXY(data, editor);
+						Object.defineProperty(data, 'dataTransfer', {
+							value: {
+								files: [file]
+							}
+						});
+					});
+				});
+			});
+
 			describe('Drop SVG/BMP/WebP image like base64 (#1228)', function () {
 				[
 					{
