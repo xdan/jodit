@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.22
+
+#### :bug: Bug Fix
+
+- **Image processor**: an image with a percent-encoded data URI (`<img src="data:image/svg+xml,%3Csvg...">`) made `dataURItoBlob` call `atob` on a payload that is not base64, so the editor threw `InvalidCharacterError` out of the change handler — on every change while such an image was in the content. Percent-encoded payloads are now decoded as well, and a data URI that still cannot be decoded leaves the image untouched instead of breaking the editor. The plugin's private copy of the helper is gone; both paths share `modules/uploader/helpers/data-uri-to-blob`.
+
 ## 4.13.21
 
 #### :bug: Bug Fix
