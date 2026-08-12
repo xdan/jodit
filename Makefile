@@ -19,7 +19,7 @@ fat ?= false
 push ?= true
 useSWC ?= true
 outputFolder ?= ''
-version = $(shell cat package.json | ./node_modules/node-jq/bin/jq -r '.version')
+version = $(shell node -p "require('./package.json').version")
 
 ifneq ("$(wildcard .env)","")
 		include .env
