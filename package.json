@@ -107,7 +107,6 @@
 		"mime-types": "^3.0.2",
 		"mini-css-extract-plugin": "^2.10.0",
 		"mocha": "^11.7.5",
-		"node-jq": "^6.3.1",
 		"open": "^11.0.0",
 		"postcss": ">=8.5.8",
 		"postcss-css-variables": "^0.19.0",
