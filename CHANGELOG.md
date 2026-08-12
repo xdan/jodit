@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.21
+
+#### :bug: Bug Fix
+
+- **Helpers**: when the caret line can only be revealed by scrolling the page itself (e.g. the editor is half-visible in a small viewport), `scrollIntoViewIfNeeded` fell back to `scrollIntoView()` with the default `block: 'start'` — the element was aligned to the viewport top and the page jumped as if PageDown was pressed on every Enter. The fallback now uses `block: 'nearest'` and scrolls the minimal distance, one line at a time, like a native textarea. Reported by Ralf Pichler (Uniquare, Jodit OEM).
+
 ## 4.13.20
 
 #### :bug: Bug Fix

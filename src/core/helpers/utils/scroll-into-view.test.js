@@ -109,4 +109,38 @@ describe('Helper inView', () => {
 			}
 		});
 	});
+
+	// When only the page itself can reveal the element, the fallback must
+	// scroll the minimal distance (block: nearest) — the default aligns the
+	// element to the viewport top and the page jumps like PageDown was
+	// pressed while typing at the bottom edge of a half-visible editor
+	describe('Page-level fallback', () => {
+		it('Should call scrollIntoView with block: nearest', () => {
+			const { scrollIntoViewIfNeeded } = Jodit.modules.Helpers;
+
+			// a non-scrollable box below the viewport: the container branch
+			// cannot help, only the page can be scrolled
+			const box = document.createElement('div');
+			box.style.cssText = `position:absolute;left:0;top:${
+				document.documentElement.clientHeight + 500
+			}px;width:100px;height:100px;`;
+
+			const child = document.createElement('p');
+			child.style.cssText = 'height:100px;margin:0;';
+			box.appendChild(child);
+			document.body.appendChild(box);
+
+			let options;
+			child.scrollIntoView = opt => {
+				options = opt;
+			};
+
+			try {
+				scrollIntoViewIfNeeded(child, box, document);
+				expect(options).deep.equals({ block: 'nearest' });
+			} finally {
+				box.remove();
+			}
+		});
+	});
 });

@@ -93,7 +93,11 @@ export function scrollIntoViewIfNeeded(
 		}
 
 		if (!inView(elm, root, doc)) {
-			elm.scrollIntoView();
+			// `block: 'nearest'` scrolls the page the minimal distance (one
+			// line while typing), while the default `block: 'start'` aligns
+			// the element to the viewport top and the page jumps like
+			// PageDown was pressed
+			elm.scrollIntoView({ block: 'nearest' });
 		}
 	}
 }
