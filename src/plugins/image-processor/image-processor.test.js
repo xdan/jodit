@@ -86,4 +86,41 @@ describe('Image processor plugin', () => {
 			expect(area.value).does.not.include('blob:');
 		});
 	});
+
+	describe('Percent-encoded data URI', () => {
+		const SVG_URI =
+			'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221%22%20height%3D%221%22%3E%3C%2Fsvg%3E';
+
+		it('Should convert it to a blob: URL without throwing on atob', async () => {
+			const editor = getJodit({
+				history: { timeout: 0 }
+			});
+
+			editor.value = '<p><img alt="" src="' + SVG_URI + '"></p>';
+			editor.e.fire('change', editor.value, '');
+			await delay(150);
+
+			expect(editor.editor.querySelector('img').src).to.match(/^blob:/);
+			expect(editor.value).to.include(SVG_URI);
+
+			editor.destruct();
+		});
+
+		it('Should keep an undecodable data URI as is', async () => {
+			const editor = getJodit({
+				history: { timeout: 0 }
+			});
+
+			const broken = 'data:image/svg+xml,%%%';
+
+			editor.value = '<p><img alt="" src="' + broken + '"></p>';
+			editor.e.fire('change', editor.value, '');
+			await delay(150);
+
+			expect(editor.editor.querySelector('img').src).to.include('%%%');
+			expect(editor.value).to.include(broken);
+
+			editor.destruct();
+		});
+	});
 });

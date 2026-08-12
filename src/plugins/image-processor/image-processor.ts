@@ -16,6 +16,7 @@ import { cached, debounce, watch } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
 import { $$, dataBind } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
+import { dataURItoBlob } from 'jodit/modules/uploader/helpers/data-uri-to-blob';
 
 import './config';
 
@@ -116,8 +117,17 @@ function replaceDataURIToBlobUUID(editor: IJodit, elm: HTMLImageElement): void {
 		return;
 	}
 
-	const dataUri = elm.src,
+	const dataUri = elm.src;
+
+	let blob: Blob;
+
+	try {
 		blob = dataURItoBlob(dataUri);
+	} catch {
+		// A data URI the browser accepts but we cannot decode is not worth
+		// breaking the editor over — keep the image as it is
+		return;
+	}
 
 	elm.src = URL.createObjectURL(blob);
 	editor.e.fire('internalUpdate');
@@ -130,30 +140,6 @@ function replaceDataURIToBlobUUID(editor: IJodit, elm: HTMLImageElement): void {
 	list[elm.src] = dataUri;
 
 	editor.buffer.set(JODIT_IMAGE_BLOB_ID, list);
-}
-
-// https://stackoverflow.com/a/12300351
-function dataURItoBlob(dataURI: string): Blob {
-	// convert base64 to raw binary data held in a string
-	// doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-	const byteString = atob(dataURI.split(',')[1]);
-
-	// separate out the mime component
-	const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-	// write the bytes of the string to an ArrayBuffer
-	const ab = new ArrayBuffer(byteString.length);
-
-	// create a view into the buffer
-	const ia = new Uint8Array(ab);
-
-	// set the bytes of the buffer to the correct values
-	for (let i = 0; i < byteString.length; i++) {
-		ia[i] = byteString.charCodeAt(i);
-	}
-
-	// write the ArrayBuffer to a blob, and you're done
-	return new Blob([ab], { type: mimeString });
 }
 
 pluginSystem.add('imageProcessor', imageProcessor);

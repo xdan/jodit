@@ -9,16 +9,17 @@
  */
 
 /**
- * Convert dataURI to Blob
+ * Convert dataURI to Blob. Both base64 and percent-encoded payloads are
+ * supported — `data:image/svg+xml,%3Csvg...` is as valid as
+ * `data:image/png;base64,...`
  */
 export function dataURItoBlob(dataURI: string): Blob {
-	// convert base64 to raw binary data held in a string
-	// doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-
-	const byteString: string = atob(dataURI.split(',')[1]),
-		// separate out the mime component
-		mimeString: string = dataURI.split(',')[0].split(':')[1].split(';')[0],
-		// write the bytes of the string to an ArrayBuffer
+	const [header, ...rest] = dataURI.split(','),
+		payload = rest.join(','),
+		mimeString: string = header.split(':')[1]?.split(';')[0] ?? '',
+		byteString: string = /;base64/i.test(header)
+			? atob(payload)
+			: decodeURIComponent(payload),
 		ab: ArrayBuffer = new ArrayBuffer(byteString.length),
 		ia: Uint8Array = new Uint8Array(ab);
 
