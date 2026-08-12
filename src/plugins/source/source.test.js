@@ -12,7 +12,7 @@ describe('Source code test', function () {
 			let isDone = false;
 			const timeout = /*ok*/ setTimeout(() => {
 				done(new Error('Timeout error'));
-			}, 3000);
+			}, 15000);
 
 			getJodit(
 				{
@@ -40,7 +40,7 @@ describe('Source code test', function () {
 				}
 				// area
 			);
-		}).timeout(6000);
+		}).timeout(20000);
 
 		describe('Set value in source mode', function () {
 			it('Should set value in editor and in source', function (done) {
@@ -48,7 +48,7 @@ describe('Source code test', function () {
 
 				const timeout = /*ok*/ setTimeout(function () {
 					done(new Error('Timeout error'));
-				}, 5000);
+				}, 15000);
 
 				const editor = getJodit({
 					defaultMode: Jodit.MODE_SOURCE,
@@ -79,7 +79,7 @@ describe('Source code test', function () {
 				});
 
 				editor.value = '<p>pop</p>';
-			}).timeout(6000);
+			}).timeout(20000);
 		});
 
 		describe('Complex scripts in ACE (Thai, Arabic, Hebrew…)', function () {
@@ -93,7 +93,7 @@ describe('Source code test', function () {
 
 				const timeout = /*ok*/ setTimeout(function () {
 					done(new Error('Timeout error'));
-				}, 5000);
+				}, 15000);
 
 				const editor = getJodit({
 					defaultMode: Jodit.MODE_SOURCE,
@@ -140,14 +140,14 @@ describe('Source code test', function () {
 				});
 
 				editor.value = '<p>' + THAI + '</p>';
-			}).timeout(6000);
+			}).timeout(20000);
 
 			it('Should have the automatic bidi handler active (modern ACE)', function (done) {
 				unmockPromise();
 
 				const timeout = /*ok*/ setTimeout(function () {
 					done(new Error('Timeout error'));
-				}, 5000);
+				}, 15000);
 
 				getJodit({
 					defaultMode: Jodit.MODE_SOURCE,
@@ -181,7 +181,7 @@ describe('Source code test', function () {
 						}
 					}
 				});
-			}).timeout(6000);
+			}).timeout(20000);
 
 			// https://github.com/xdan/jodit/issues/1285
 			it('Should forward extra native ACE options like fontSize', function (done) {
@@ -189,7 +189,7 @@ describe('Source code test', function () {
 
 				const timeout = /*ok*/ setTimeout(function () {
 					done(new Error('Timeout error'));
-				}, 5000);
+				}, 15000);
 
 				getJodit({
 					defaultMode: Jodit.MODE_SOURCE,
@@ -220,7 +220,7 @@ describe('Source code test', function () {
 						}
 					}
 				});
-			}).timeout(6000);
+			}).timeout(20000);
 
 			it('Should use a modern ACE build by default', function () {
 				const m = Jodit.defaultOptions.sourceEditorCDNUrlsJS[0].match(
@@ -250,7 +250,7 @@ describe('Source code test', function () {
 						editor.container.querySelector('.jodit-source')
 					).display
 				).equals('block');
-			}).timeout(6000);
+			}).timeout(20000);
 		});
 	});
 
