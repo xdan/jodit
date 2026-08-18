@@ -695,6 +695,50 @@ describe('Clean html plugin', function () {
 		});
 	});
 
+	describe('Async walker and focus', function () {
+		// The walker runs asynchronously: by the time it removes an empty
+		// text node left near the caret, the user may have already moved
+		// focus outside the editor (e.g. Shift+Tab to a toolbar/button).
+		// Restoring the caret in that state re-focused the editor and stole
+		// focus back from the element the user navigated to.
+		it('Should not steal focus from an outside element while cleaning', function (done) {
+			const editor = getJodit();
+
+			const button = document.createElement('button');
+			button.textContent = 'outside';
+			document.body.appendChild(button);
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			const empty = editor.createInside.text('');
+			editor.s.insertNode(empty, false, false);
+
+			// Put the caret inside the empty text node and let the plugin
+			// capture it as the current selection node — exactly what the
+			// Shift+Tab keydown does right before focus leaves the editor.
+			const range = editor.ed.createRange();
+			range.setStart(empty, 0);
+			range.collapse(true);
+			editor.s.selectRange(range);
+			simulateEvent('keydown', editor.editor);
+
+			editor.e.on('finishedCleanHTMLWorker', () => {
+				try {
+					expect(document.activeElement).eq(button);
+					expect(editor.s.isFocused()).is.false;
+					done();
+				} catch (e) {
+					done(e);
+				} finally {
+					document.body.removeChild(button);
+				}
+			});
+
+			button.focus();
+		});
+	});
+
 	describe('Security features', function () {
 		describe('removeEventAttributes (default: true)', function () {
 			it('Should remove onerror attribute', function () {

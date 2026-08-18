@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.23
+
+#### :bug: Bug Fix
+
+- **Clean HTML**: the plugin's asynchronous walker stole focus back from an element the user had navigated to. Shift+Tab moved focus out of the editor, but when the walker then removed an empty text node left near the old caret position, it restored the selection — and selecting re-focuses the editor, yanking focus away from the target element a fraction of a second later. The caret is now only restored while the editor still owns focus; cleaning is unchanged. Reported by Ralf Pichler (Uniquare, Jodit OEM).
+
 ## 4.13.22
 
 #### :bug: Bug Fix

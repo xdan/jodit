@@ -23,7 +23,15 @@ export function removeEmptyTextNode(
 	currentNode: Nullable<Node>
 ): boolean {
 	if (Dom.isText(node) && !node.nodeValue) {
-		if (node === currentNode && jodit.s.isCollapsed()) {
+		// Restore the caret only while the editor owns focus. The walker runs
+		// asynchronously, so the user may have already tabbed away — moving the
+		// selection here would call `focus()` and steal focus back from the
+		// element the user navigated to (e.g. Shift+Tab accessibility flow).
+		if (
+			node === currentNode &&
+			jodit.s.isFocused() &&
+			jodit.s.isCollapsed()
+		) {
 			jodit.s.setCursorAfter(node);
 		}
 

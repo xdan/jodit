@@ -39,7 +39,10 @@ export function removeInvTextNodes(
 
 	node.nodeValue = node.nodeValue.replace(INV_REG(), '');
 
-	if (node === currentNode && jodit.s.isCollapsed()) {
+	// Same guard as in `removeEmptyTextNode`: the walker is asynchronous, so
+	// never move the selection (it re-focuses the editor) once the user has
+	// moved focus elsewhere.
+	if (node === currentNode && jodit.s.isFocused() && jodit.s.isCollapsed()) {
 		jodit.s.setCursorAfter(node);
 	}
 
