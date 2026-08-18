@@ -87,7 +87,7 @@
 		"dpdm": "^4.0.1",
 		"es6-promise": "^4.2.8",
 		"esbuild": "^0.28.1",
-		"eslint": "^9.39.2",
+		"eslint": "^10.8.1",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-import": "^2.32.0",
 		"eslint-plugin-mocha": "^11.2.0",
