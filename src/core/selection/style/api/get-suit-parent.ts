@@ -43,6 +43,18 @@ export function getSuitParent(
 		return getSuitParent(style, parentNode, root);
 	}
 
+	// <li>|test|</li> => apply the CSS style to the <li> itself, so the
+	// list marker (bullet/number) gets the same color and size as the text.
+	// Only for pure style commits: bold/italic keep wrapping the content.
+	// See #1460
+	if (
+		Dom.isTag(parentNode, 'li') &&
+		!style.isElementCommit &&
+		style.options.attributes?.style
+	) {
+		return parentNode;
+	}
+
 	if (
 		isSuitElement(style, parentNode, false) &&
 		(!Dom.isBlock(parentNode) || style.elementIsBlock)

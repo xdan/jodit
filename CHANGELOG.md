@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.27
+
+#### :rocket: New Feature
+
+- **Formatting / Lists**: applying a CSS style (text color, background, font size, font family) to a fully selected list item now puts the style on the `<li>` itself instead of wrapping the content in a `<span>`, so the bullet or number gets the same color and size as the text. Partially selected items, items with a nested list and element formats such as bold/italic keep wrapping the content as before; applying the same style again toggles it off the item. [#1460](https://github.com/xdan/jodit/issues/1460)
+
 ## 4.13.26
 
 #### :bug: Bug Fix

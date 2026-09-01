@@ -1097,8 +1097,9 @@ describe('Apply style', () => {
 				});
 			});
 
+			// https://github.com/xdan/jodit/issues/1460
 			describe('For fully selected list', function () {
-				it('Should apply style to every list item', function () {
+				it('Should apply style to every list item itself so the marker follows it', function () {
 					editor.value =
 						'<ul><li>one</li><li>two</li><li>three</li></ul>';
 					editor.execCommand('selectall');
@@ -1115,14 +1116,14 @@ describe('Apply style', () => {
 
 					expect(sortAttributes(editor.value)).equals(
 						'<ul>' +
-							'<li><span style="color:yellow">one</span></li>' +
-							'<li><span style="color:yellow">two</span></li>' +
-							'<li><span style="color:yellow">three</span></li>' +
+							'<li style="color:yellow">one</li>' +
+							'<li style="color:yellow">two</li>' +
+							'<li style="color:yellow">three</li>' +
 							'</ul>'
 					);
 				});
 
-				it('Should apply fontsize and bold commands to every list item', function () {
+				it('Should apply fontsize to the items and bold to their content', function () {
 					editor.value =
 						'<ul><li>one</li><li>two</li><li>three</li></ul>';
 					editor.execCommand('selectall');
@@ -1130,9 +1131,9 @@ describe('Apply style', () => {
 
 					expect(sortAttributes(editor.value)).equals(
 						'<ul>' +
-							'<li><span style="font-size:24px">one</span></li>' +
-							'<li><span style="font-size:24px">two</span></li>' +
-							'<li><span style="font-size:24px">three</span></li>' +
+							'<li style="font-size:24px">one</li>' +
+							'<li style="font-size:24px">two</li>' +
+							'<li style="font-size:24px">three</li>' +
 							'</ul>'
 					);
 
@@ -1141,10 +1142,62 @@ describe('Apply style', () => {
 
 					expect(sortAttributes(editor.value)).equals(
 						'<ul>' +
-							'<li><strong><span style="font-size:24px">one</span></strong></li>' +
-							'<li><strong><span style="font-size:24px">two</span></strong></li>' +
-							'<li><strong><span style="font-size:24px">three</span></strong></li>' +
+							'<li style="font-size:24px"><strong>one</strong></li>' +
+							'<li style="font-size:24px"><strong>two</strong></li>' +
+							'<li style="font-size:24px"><strong>three</strong></li>' +
 							'</ul>'
+					);
+				});
+
+				it('Should toggle the style off the list item when it is applied again', function () {
+					editor.value =
+						'<ul><li style="color:#FFFF00">one</li><li style="color:#FFFF00">two</li></ul>';
+					editor.execCommand('selectall');
+					editor.execCommand('forecolor', false, '#FFFF00');
+
+					expect(sortAttributes(editor.value)).equals(
+						'<ul><li>one</li><li>two</li></ul>'
+					);
+				});
+
+				it('Should replace the style on the list item when another color is applied', function () {
+					editor.value =
+						'<ul><li style="color:#FFFF00">one</li></ul>';
+					editor.execCommand('selectall');
+					editor.execCommand('forecolor', false, '#FF0000');
+
+					expect(sortAttributes(editor.value)).equals(
+						'<ul><li style="color:#FF0000">one</li></ul>'
+					);
+				});
+
+				it('Should wrap a partially selected item in a span', function () {
+					editor.value = '<ul><li>one two</li></ul>';
+					const text = editor.editor.querySelector('li').firstChild;
+					const range = editor.s.createRange();
+					range.setStart(text, 0);
+					range.setEnd(text, 3);
+					editor.s.selectRange(range);
+
+					editor.execCommand('forecolor', false, '#FFFF00');
+
+					expect(sortAttributes(editor.value)).equals(
+						'<ul><li><span style="color:#FFFF00">one</span> two</li></ul>'
+					);
+				});
+
+				it('Should wrap the own text of an item with a nested list in a span', function () {
+					editor.value = '<ul><li>one<ul><li>sub</li></ul></li></ul>';
+					const text = editor.editor.querySelector('li').firstChild;
+					const range = editor.s.createRange();
+					range.setStart(text, 0);
+					range.setEnd(text, 3);
+					editor.s.selectRange(range);
+
+					editor.execCommand('forecolor', false, '#FFFF00');
+
+					expect(sortAttributes(editor.value)).equals(
+						'<ul><li><span style="color:#FFFF00">one</span><ul><li>sub</li></ul></li></ul>'
 					);
 				});
 			});
