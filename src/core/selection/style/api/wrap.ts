@@ -51,7 +51,7 @@ export function wrap(
 	return newWrapper;
 }
 
-const WRAP_NODES = new Set([
+export const WRAP_NODES = new Set([
 	'td',
 	'th',
 	'tr',
@@ -74,7 +74,10 @@ function findOrCreateWrapper(
 	if (commitStyle.elementIsBlock) {
 		const box = Dom.up(
 			font,
-			node => Dom.isBlock(node) && !Dom.isTag(node, WRAP_NODES),
+			node =>
+				Dom.isBlock(node) &&
+				!Dom.isTag(node, WRAP_NODES) &&
+				!hasBlockChildren(node),
 			jodit.editor
 		);
 
@@ -88,4 +91,13 @@ function findOrCreateWrapper(
 	attr(font, 'size', null);
 
 	return font;
+}
+
+/**
+ * A block that itself contains block-level children is a layout container:
+ * replacing it wholesale would merge all its blocks into the new element,
+ * so the selection must be wrapped in a new block inside it instead.
+ */
+function hasBlockChildren(node: Node): boolean {
+	return Array.from(node.childNodes).some(child => Dom.isBlock(child));
 }

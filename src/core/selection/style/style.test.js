@@ -578,6 +578,71 @@ describe('Apply style', () => {
 					]
 				],
 				[
+					'Blocks inside containers',
+					[
+						[
+							'<div><h3>|test</h3></div>',
+							{ element: 'h2' },
+							'<div><h2>|test</h2></div>'
+						],
+						[
+							'<div><h3>|test</h3><p>pop</p></div>',
+							{ element: 'h2' },
+							'<div><h2>|test</h2><p>pop</p></div>'
+						],
+						[
+							'<div><h3>|test|</h3><p>pop</p></div>',
+							{ element: 'h2' },
+							'<div><h2>|test|</h2><p>pop</p></div>'
+						],
+						[
+							'<div>|free text<p>pop</p></div>',
+							{ element: 'h2' },
+							'<div><h2>|free text</h2><p>pop</p></div>'
+						],
+						[
+							'<div>text<p>pop</p>tail|</div>',
+							{ element: 'h2' },
+							'<div>text<p>pop</p><h2>tail|</h2></div>'
+						],
+						[
+							'<blockquote>|quote<p>pop</p></blockquote>',
+							{ element: 'h2' },
+							'<blockquote><h2>|quote</h2><p>pop</p></blockquote>'
+						],
+						[
+							'<div>|test</div>',
+							{ element: 'h2' },
+							'<h2>|test</h2>'
+						],
+						[
+							'<div><div>|test</div></div>',
+							{ element: 'h2' },
+							'<div><h2>|test</h2></div>'
+						],
+						[
+							'<div><h3>|test</h3></div>',
+							{ element: 'h3' },
+							'<div><p>|test</p></div>'
+						],
+						[
+							'<div><blockquote><h3>|test</h3></blockquote></div>',
+							{ element: 'h3' },
+							'<div><blockquote><p>|test</p></blockquote></div>'
+						],
+						[
+							'<ul><li><h3>|test</h3></li></ul>',
+							{ element: 'h3' },
+							'<ul><li>|test</li></ul>'
+						],
+						[
+							'<table><tbody><tr><td><h3>|test</h3></td></tr></tbody></table>',
+							{ element: 'h3' },
+							'<table><tbody><tr><td>|test</td></tr></tbody></table>'
+						]
+					]
+				],
+				[
 					'Classname',
 					[
 						[

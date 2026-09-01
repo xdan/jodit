@@ -26,7 +26,8 @@ import {
 	toggleAttributes,
 	toggleOrderedList,
 	unwrapChildren,
-	wrap
+	wrap,
+	WRAP_NODES
 } from 'jodit/core/selection/style/api';
 import {
 	INITIAL,
@@ -254,14 +255,33 @@ export const transactions: IStyleTransactions = {
 
 	[states.UNWRAP]: {
 		exec(value) {
+			const { element, style, jodit } = value;
+
 			if (
-				value.element.attributes.length &&
-				Dom.isTag(value.element, value.style.element)
+				element.attributes.length &&
+				Dom.isTag(element, style.element)
 			) {
 				return { ...value, next: states.REPLACE_DEFAULT };
 			}
 
-			Dom.unwrap(value.element);
+			// Unwrapping a block inside a container (e.g. an h3 inside a div)
+			// leaves bare inline content there: the wrapNodes plugin restores
+			// paragraphs only at the editor root. Replace such a block with
+			// the default tag instead.
+			const parent = element.parentElement;
+
+			if (
+				style.elementIsBlock &&
+				!style.elementIsDefault &&
+				parent &&
+				parent !== jodit.editor &&
+				Dom.isBlock(parent) &&
+				!Dom.isTag(parent, WRAP_NODES)
+			) {
+				return { ...value, next: states.REPLACE_DEFAULT };
+			}
+
+			Dom.unwrap(element);
 			return { ...value, mode: UNWRAP, next: states.END };
 		}
 	},

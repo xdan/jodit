@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.24
+
+#### :bug: Bug Fix
+
+- **Selection**: applying a block format while the selection sat in bare text inside a container block (e.g. a `<div>` that also holds paragraphs) replaced the whole container with the new element, merging all its blocks into one heading. The nearest-block search now skips container blocks that have block-level children and wraps the selected text island in a new block inside the container instead. Additionally, toggling a block format off inside a container (an `<h3>` inside a `<div>`) used to bare-unwrap the element, leaving orphan inline text that the `wrapNodes` plugin only restores at the editor root; such a block is now replaced with the default paragraph tag. Reported by Kevin Sormann (li-life web+it, Jodit PRO).
+
 ## 4.13.23
 
 #### :bug: Bug Fix
