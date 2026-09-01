@@ -21,6 +21,13 @@ import { UIButton } from 'jodit/core/ui/button';
 
 import './content.less';
 
+const FORM_CONTROL_TAGS = new Set([
+	'input',
+	'button',
+	'select',
+	'textarea'
+] as const);
+
 @component
 export class ToolbarContent<T extends IViewBased = IViewBased>
 	extends UIButton
@@ -71,12 +78,7 @@ export class ToolbarContent<T extends IViewBased = IViewBased>
 		super.onChangeDisabled();
 
 		Dom.each(this.container, elm => {
-			if (
-				Dom.isTag(
-					elm,
-					new Set(['input', 'button', 'select', 'textarea'] as const)
-				)
-			) {
+			if (Dom.isTag(elm, FORM_CONTROL_TAGS)) {
 				attr(elm, 'disabled', this.state.disabled || null);
 			}
 		});

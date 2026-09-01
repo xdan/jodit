@@ -11,6 +11,7 @@
 import type { Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { attr } from 'jodit/core/helpers/utils';
+import { attrRaw } from 'jodit/core/helpers/utils/attr';
 
 export type safeOptions = {
 	removeOnError: boolean;
@@ -153,9 +154,9 @@ function removeAllEventAttributes(elm: Element | DocumentFragment): boolean {
 	}
 
 	for (const name of toRemove) {
-		// raw `removeAttribute` on purpose: `attr()` kebab-cases the key
+		// `attrRaw` on purpose: `attr()` kebab-cases the key
 		// (`onLoad` → `on-load`), which must not happen in a sanitizer
-		elm.removeAttribute(name);
+		attrRaw(elm, name, null);
 		effected = true;
 	}
 
@@ -246,10 +247,10 @@ export function sanitizeHTMLElement(
 		}
 
 		// Strip executable schemes from any other URL-bearing attribute.
-		// Raw `getAttribute`: the list contains `xlink:href` and the
-		// sanitizer must read exactly the attribute it will remove.
+		// `attrRaw`: the list contains `xlink:href` and the sanitizer must
+		// read exactly the attribute it will remove.
 		for (const name of URL_ATTRIBUTES) {
-			const value = elm.getAttribute(name);
+			const value = attrRaw(elm, name);
 
 			if (value && isDangerousUrl(value, tagName)) {
 				attr(elm, name, null);

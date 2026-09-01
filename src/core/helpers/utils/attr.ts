@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import type { IDictionary } from 'jodit/types';
+import type { IDictionary, VElement } from 'jodit/types';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isString } from 'jodit/core/helpers/checker/is-string';
@@ -104,4 +104,38 @@ export function attr(
 	}
 
 	return elm.getAttribute(key);
+}
+
+export function attrRaw(elm: VElement, name: string): null | string;
+
+export function attrRaw(
+	elm: VElement,
+	name: string,
+	value: string | null
+): void;
+
+/**
+ * Exact-name attribute access: no camelCase → kebab-case conversion, no
+ * `data-` fallback and no `px` stripping. Use it where the attribute name must
+ * be taken verbatim — sanitizers and attribute comparison (`onLoad`, `viewBox`,
+ * `xlink:href`). `null` removes the attribute.
+ */
+export function attrRaw(
+	elm: VElement,
+	name: string,
+	value?: string | null
+): null | string | void {
+	if (value === undefined) {
+		return elm.getAttribute(name);
+	}
+
+	if (value == null) {
+		if (elm.hasAttribute(name)) {
+			elm.removeAttribute(name);
+		}
+
+		return;
+	}
+
+	elm.setAttribute(name, value);
 }

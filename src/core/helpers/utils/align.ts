@@ -11,7 +11,7 @@
 import type { ImageHAlign } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { attr } from 'jodit/core/helpers/utils/attr';
-import { clearCenterAlign, css } from 'jodit/core/helpers/utils/css';
+import { clearCenterAlign, css, cssInline } from 'jodit/core/helpers/utils/css';
 
 /**
  * Align image
@@ -49,7 +49,7 @@ export function hAlignElement(image: HTMLElement, align: ImageHAlign): void {
 export function clearAlign(node: Node): void {
 	Dom.each(node, elm => {
 		if (Dom.isHTMLElement(elm)) {
-			if (css(elm, 'textAlign', true)) {
+			if (cssInline(elm, 'textAlign')) {
 				css(elm, 'textAlign', '');
 
 				if (!(attr(elm, 'style') || '').trim().length) {
@@ -63,16 +63,18 @@ export function clearAlign(node: Node): void {
 /**
  * Apply align for element
  */
+const ALIGN_BY_COMMAND: ReadonlyMap<string, string> = new Map([
+	['justifyfull', 'justify'],
+	['justifyright', 'right'],
+	['justifyleft', 'left'],
+	['justifycenter', 'center']
+]);
+
 export function alignElement(command: string, box: HTMLElement): void {
 	if (Dom.isNode(box) && Dom.isElement(box)) {
 		clearAlign(box);
 
-		const align = {
-			justifyfull: 'justify',
-			justifyright: 'right',
-			justifyleft: 'left',
-			justifycenter: 'center'
-		}[command.toLowerCase()];
+		const align = ALIGN_BY_COMMAND.get(command.toLowerCase());
 
 		if (align) {
 			css(box, 'textAlign', align);

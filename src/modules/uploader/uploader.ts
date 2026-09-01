@@ -237,7 +237,9 @@ export class Uploader extends ViewComponent implements IUploader {
 
 		const inputFile: HTMLInputElement | null = Dom.first(
 			form,
-			node => Dom.isTag(node, 'input') && attr(node, 'type') === 'file'
+			node =>
+				Dom.isTag(node, 'input') &&
+				attr(node, 'type')?.toLowerCase() === 'file'
 		) as Nullable<HTMLInputElement>;
 
 		if (inputFile) {

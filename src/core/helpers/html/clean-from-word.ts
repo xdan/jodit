@@ -12,7 +12,7 @@ import { globalDocument } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 import { trim } from 'jodit/core/helpers/string/trim';
-import { attr } from 'jodit/core/helpers/utils/attr';
+import { attr, attrRaw } from 'jodit/core/helpers/utils/attr';
 
 /**
  * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant
@@ -82,7 +82,10 @@ export function cleanFromWord(html: string): string {
 												attribute.name.toLowerCase()
 											) === -1
 										) {
-											attr(
+											// `attrRaw`: SVG keeps camelCase names
+											// (`viewBox`), `attr()` would kebab-case
+											// them and silently skip the removal
+											attrRaw(
 												node as Element,
 												attribute.name,
 												null

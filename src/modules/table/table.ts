@@ -24,6 +24,7 @@ import {
 	toArray,
 	trim
 } from 'jodit/core/helpers/';
+import { cssInline } from 'jodit/core/helpers/utils/css';
 
 const markedValue = new WeakMap<
 	HTMLElement,
@@ -293,7 +294,11 @@ export class Table extends ViewComponent<IJodit> {
 		} else {
 			row = line.cloneNode(true) as HTMLTableRowElement;
 
-			toArray(line.cells).forEach(cell => {
+			Dom.each(line, cell => {
+				if (!Dom.isCell(cell)) {
+					return;
+				}
+
 				const rowspan = attr(cell, 'rowspan');
 
 				if (rowspan && parseInt(rowspan, 10) > 1) {
@@ -302,8 +307,10 @@ export class Table extends ViewComponent<IJodit> {
 				}
 			});
 
-			toArray(row.cells).forEach(cell => {
-				cell.innerHTML = '';
+			Dom.each(row, cell => {
+				if (Dom.isCell(cell)) {
+					Dom.detach(cell);
+				}
 			});
 		}
 
@@ -312,7 +319,10 @@ export class Table extends ViewComponent<IJodit> {
 		} else if (!after && line) {
 			Dom.before(line, row);
 		} else {
-			Dom.append(table.tBodies[0] || table, row);
+			Dom.append(
+				Dom.first(table, node => Dom.isTag(node, 'tbody')) || table,
+				row
+			);
 		}
 	}
 
@@ -732,10 +742,7 @@ export class Table extends ViewComponent<IJodit> {
 
 							alreadyMerged.add(td);
 
-							if (
-								i === bound[0][0] &&
-								td.style.getPropertyValue('width')
-							) {
+							if (i === bound[0][0] && cssInline(td, 'width')) {
 								w += td.offsetWidth;
 							}
 

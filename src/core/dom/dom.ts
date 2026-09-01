@@ -18,8 +18,6 @@ import type {
 	IJodit,
 	NodeCondition,
 	Nullable,
-	VDocument,
-	VFragment,
 	VHTMLElement,
 	VNode
 } from 'jodit/types';
@@ -676,11 +674,14 @@ export class Dom {
 		className: string,
 		left: boolean
 	): Nullable<HTMLElement> {
-		return call(
-			left ? Dom.prev : Dom.next,
-			node,
-			elm => Dom.isElement(elm) && elm.classList.contains(className),
-			node.parentNode as HTMLElement
+		const condition = (elm: Nullable<Node>): boolean =>
+			Dom.isElement(elm) && elm.classList.contains(className);
+		const parent = node.parentNode as HTMLElement;
+
+		return (
+			left
+				? Dom.prev(node, condition, parent)
+				: Dom.next(node, condition, parent)
 		) as Nullable<HTMLElement>;
 	}
 
@@ -1102,10 +1103,12 @@ export class Dom {
 		to: VNode,
 		inStart: boolean = false,
 
+		// `any` reconciles the browser `Node` overload with the `VNode` one:
+		// a callback typed for one is not assignable to the other
 		filter: (node: any) => boolean = (): boolean => true
 	): void {
-		const fragment: VFragment = (
-			from.ownerDocument || (globalDocument as VDocument)
+		const fragment: VNode = (
+			from.ownerDocument || globalDocument
 		).createDocumentFragment();
 
 		toArray(from.childNodes)
@@ -1293,8 +1296,8 @@ export class Dom {
 	}
 
 	/**
-	 * Get temporary list
-	 * @deprecated Just do not use it, it is not needed anymore
+	 * Collect the temporary elements (`data-jodit-temp`) inside the root.
+	 * A plain tree walk on purpose: no selector engine, works on VNode.
 	 */
 	static temporaryList(root: HTMLElement): HTMLElement[] {
 		const result: HTMLElement[] = [];

@@ -950,6 +950,16 @@ describe('Test Dom module', function () {
 					return node;
 				}
 
+				// browser semantics: the reference must be a child, and
+				// inserting a node before itself is a no-op
+				if (child === node) {
+					return node;
+				}
+
+				if (child && this.childNodes.indexOf(child) === -1) {
+					throw new Error('NotFoundError: reference is not a child');
+				}
+
 				if (node.parentNode) {
 					node.parentNode.removeChild(node);
 				}

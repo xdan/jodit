@@ -94,7 +94,6 @@ export function fullsize(editor: IViewWithToolbar): void {
 					editor.toolbarContainer &&
 					Dom.append(
 						editor.toolbarContainer,
-
 						editor.toolbar.container
 					);
 

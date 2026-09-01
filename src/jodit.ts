@@ -71,6 +71,7 @@ import {
 	toArray,
 	ucfirst
 } from 'jodit/core/helpers';
+import { cssInline } from 'jodit/core/helpers/utils/css';
 import { Ajax } from 'jodit/core/request';
 import { Dlgs } from 'jodit/core/traits/dlgs';
 import { Config } from 'jodit/config';
@@ -1150,7 +1151,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		this.__wasReadOnly = readOnly;
 
 		if (this.editor) {
-			this.editor.setAttribute('aria-disabled', isDisabled.toString());
+			attr(this.editor, 'aria-disabled', isDisabled);
 			this.container.classList.toggle('jodit_disabled', isDisabled);
 			this.e.fire('disabled', isDisabled);
 		}
@@ -1178,9 +1179,9 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		this.o.readonly = isReadOnly;
 
 		if (isReadOnly) {
-			this.editor && this.editor.removeAttribute('contenteditable');
+			this.editor && attr(this.editor, 'contenteditable', null);
 		} else {
-			this.editor && this.editor.setAttribute('contenteditable', 'true');
+			this.editor && attr(this.editor, 'contenteditable', true);
 		}
 
 		this.e && this.e.fire('readonly', isReadOnly);
@@ -1381,21 +1382,22 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			container.style.setProperty(`--jd-${property}`, styleValues[key]);
 		});
 
-		container.setAttribute('contenteditable', 'false');
+		attr(container, 'contenteditable', false);
 
 		let buffer: null | string = null;
 
 		if (this.o.inline) {
 			if (['TEXTAREA', 'INPUT'].indexOf(element.nodeName) === -1) {
 				container = element as HTMLDivElement;
-				element.setAttribute(
+				attr(
+					element,
 					__defaultClassesKey,
 					element.className.toString()
 				);
 
 				buffer = container.innerHTML;
 
-				container.innerHTML = '';
+				Dom.detach(container);
 			}
 
 			container.classList.add('jodit_inline');
@@ -1405,7 +1407,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		// actual for inline mode
 		if (element !== container) {
 			// hide source element
-			const display = element.style.getPropertyValue('display');
+			const display = cssInline(element, 'display');
 
 			if (display) {
 				attr(element, __defaultStyleDisplayKey, display);
@@ -1822,12 +1824,12 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 					if (element.hasAttribute(__defaultClassesKey)) {
 						element.className =
 							attr(element, __defaultClassesKey) || '';
-						element.removeAttribute(__defaultClassesKey);
+						attr(element, __defaultClassesKey, null);
 					}
 				}
 
 				if (element.hasAttribute('style') && !attr(element, 'style')) {
-					element.removeAttribute('style');
+					attr(element, 'style', null);
 				}
 
 				statusbar.destruct();

@@ -39,13 +39,11 @@ export interface VNode {
 	readonly nextSibling: VNode | null;
 	readonly childNodes: ArrayLike<VNode>;
 	readonly ownerDocument: VDocument | null;
-	readonly isConnected: boolean;
 
 	appendChild(node: VNode): VNode;
 	insertBefore(node: VNode, child: VNode | null): VNode;
 	removeChild(child: VNode): VNode;
 	replaceChild(node: VNode, child: VNode): VNode;
-	cloneNode(deep?: boolean): VNode;
 	contains(other: VNode | null): boolean;
 }
 
@@ -61,6 +59,7 @@ export interface VAttr {
  * Minimal subset of the browser `DOMTokenList`
  */
 export interface VTokenList {
+	readonly length: number;
 	add(...tokens: string[]): void;
 	remove(...tokens: string[]): void;
 	contains(token: string): boolean;
@@ -86,7 +85,6 @@ export interface VElement extends VNode {
  * Minimal subset of the browser `CSSStyleDeclaration`
  */
 export interface VStyle {
-	cssText: string;
 	getPropertyValue(property: string): string;
 	setProperty(property: string, value: string | null): void;
 	removeProperty(property: string): string;
@@ -100,24 +98,11 @@ export interface VHTMLElement extends VElement {
 }
 
 /**
- * Minimal subset of the browser `Text`
- */
-export interface VText extends VNode {
-	data: string;
-}
-
-/**
- * Minimal subset of the browser `DocumentFragment`.
- * Structurally it adds nothing to `VNode` — it exists to keep the
- * signatures self-describing.
- */
-export interface VFragment extends VNode {}
-
-/**
- * Minimal subset of the browser `Document`
+ * Minimal subset of the browser `Document`. Text nodes and fragments add
+ * nothing to `VNode` structurally, so they are typed as `VNode`.
  */
 export interface VDocument {
 	createElement(tagName: string): VHTMLElement;
-	createTextNode(data: string): VText;
-	createDocumentFragment(): VFragment;
+	createTextNode(data: string): VNode;
+	createDocumentFragment(): VNode;
 }

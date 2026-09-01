@@ -15,7 +15,7 @@ import * as consts from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { $$, attr, dataBind } from 'jodit/core/helpers/utils';
-import { css } from 'jodit/core/helpers/utils/css';
+import { css, cssInline } from 'jodit/core/helpers/utils/css';
 
 import './config';
 
@@ -45,7 +45,7 @@ export function media(editor: IJodit): void {
 
 			css(wrapper, {
 				display:
-					element.style.getPropertyValue('display') === 'inline-block'
+					cssInline(element, 'display') === 'inline-block'
 						? 'inline-block'
 						: 'block',
 				width: element.offsetWidth,

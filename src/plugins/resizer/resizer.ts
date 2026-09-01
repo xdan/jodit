@@ -25,6 +25,7 @@ import {
 	markOwner,
 	offset
 } from 'jodit/core/helpers';
+import { cssInline } from 'jodit/core/helpers/utils/css';
 import { Plugin } from 'jodit/core/plugin/plugin';
 
 import './config';
@@ -130,7 +131,7 @@ export class resizer extends Plugin {
 		}
 
 		const width = attr(image, 'width');
-		if (width && !css(image, 'width', true)) {
+		if (width && !cssInline(image, 'width')) {
 			css(image, 'width', width);
 			attr(image, 'width', null);
 		}
@@ -362,7 +363,7 @@ export class resizer extends Plugin {
 			attr(element, key, value);
 		}
 
-		if (!changeAttrs || css(element, key, true)) {
+		if (!changeAttrs || cssInline(element, key)) {
 			css(element, key, value);
 		}
 	}
@@ -433,8 +434,7 @@ export class resizer extends Plugin {
 
 				css(wrapper, {
 					display:
-						element.style.getPropertyValue('display') ===
-						'inline-block'
+						cssInline(element, 'display') === 'inline-block'
 							? 'inline-block'
 							: 'block',
 					width: element.offsetWidth,
@@ -502,14 +502,8 @@ export class resizer extends Plugin {
 			const workplacePosition = this.getWorkplacePosition();
 
 			const pos = offset(this.element, this.j, this.j.ed),
-				left = parseInt(
-					this.rect.style.getPropertyValue('left') || '0',
-					10
-				),
-				top = parseInt(
-					this.rect.style.getPropertyValue('top') || '0',
-					10
-				),
+				left = parseInt(cssInline(this.rect, 'left') || '0', 10),
+				top = parseInt(cssInline(this.rect, 'top') || '0', 10),
 				w = this.rect.offsetWidth,
 				h = this.rect.offsetHeight;
 

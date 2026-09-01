@@ -108,15 +108,14 @@ export function applyStyles(html: string): string {
 							iframeDoc.body
 						);
 
+						// `style.cssText` on purpose: the CSSOM parses the text,
+						// drops invalid declarations and re-serializes it. The raw
+						// `style` attribute would keep Word-only junk verbatim
 						collection.forEach((elm: HTMLElement) => {
-							attr(
-								elm,
-								'style',
-								normalizeCSS(
-									rules[idx].style.cssText +
-										';' +
-										(attr(elm, 'style') || '')
-								)
+							elm.style.cssText = normalizeCSS(
+								rules[idx].style.cssText +
+									';' +
+									elm.style.cssText
 							);
 						});
 					}
@@ -132,7 +131,8 @@ export function applyStyles(html: string): string {
 					const cssText = attr(node, 'style');
 
 					if (cssText) {
-						attr(node, 'style', normalizeCSS(cssText));
+						(node as HTMLElement).style.cssText =
+							normalizeCSS(cssText);
 					}
 
 					if (!attr(node, 'style')) {

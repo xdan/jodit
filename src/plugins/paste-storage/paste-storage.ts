@@ -115,11 +115,11 @@ export class pasteStorage extends Plugin {
 		this.dialog || this.createDialog();
 
 		if (this.listBox) {
-			this.listBox.innerHTML = '';
+			Dom.detach(this.listBox);
 		}
 
 		if (this.previewBox) {
-			this.previewBox.innerHTML = '';
+			Dom.detach(this.previewBox);
 		}
 
 		this.list.forEach((html: string, index: number) => {

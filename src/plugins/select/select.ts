@@ -11,7 +11,7 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { IS_INLINE } from 'jodit/core/constants';
+import { IS_INLINE, LIST_TAGS } from 'jodit/core/constants';
 import { autobind, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
@@ -140,9 +140,7 @@ export class select extends Plugin {
 		// list (the last level has no nested list and behaves correctly).
 		if (
 			!Dom.isTag(li, 'li') ||
-			!Dom.first(li, node =>
-				Dom.isTag(node, new Set(['ul', 'ol'] as const))
-			)
+			!Dom.first(li, node => Dom.isTag(node, LIST_TAGS))
 		) {
 			return;
 		}

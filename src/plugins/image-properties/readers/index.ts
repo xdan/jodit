@@ -10,6 +10,7 @@
 
 import type { IJodit } from 'jodit/types';
 import { attr } from 'jodit/core/helpers/utils/attr';
+import { cssInline } from 'jodit/core/helpers/utils/css';
 
 import type { ImagePropertiesState } from '../interface';
 
@@ -31,7 +32,7 @@ export async function readValuesFromImage(
 
 	// Border radius
 	values.borderRadius =
-		parseInt(image.style.getPropertyValue('border-radius') || '0', 10) || 0;
+		parseInt(cssInline(image, 'border-radius') || '0', 10) || 0;
 
 	// Id
 	values.id = attr(image, 'id') || '';

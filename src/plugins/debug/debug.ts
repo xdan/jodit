@@ -33,7 +33,7 @@ export class Debug extends Plugin {
 		Dom.append(mirror, sel);
 
 		clear.addEventListener('click', () => {
-			events.innerHTML = '';
+			Dom.detach(events);
 			Dom.append(events, clear);
 		});
 

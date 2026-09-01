@@ -228,7 +228,7 @@ export class UITooltip extends UIElement {
 		if (this.__isOpened) {
 			this.__isOpened = false;
 			this.setMod('visible', false);
-			this.getElm('content')!.innerHTML = '';
+			Dom.detach(this.getElm('content'));
 			css(this.container, {
 				left: -5000
 			});

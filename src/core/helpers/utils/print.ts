@@ -52,7 +52,7 @@ function fixedAssetsSizeAndAbsoluteLinks(
 
 			restoreAttributes.push(() => {
 				attr(item, {
-					src: previousAttrs[2] || null,
+					src: previousAttrs[2],
 					width: previousAttrs[0] || null,
 					height: previousAttrs[1] || null
 				});

@@ -9,6 +9,33 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.14.0
+
+#### :house: Internal
+
+- **DOM access goes through the `Dom` module only.** Groundwork for virtual-DOM editing, no public API changes: parameter types are widened, return types untouched. New `src/types/vdom.d.ts` describes the structural subset of the browser DOM the editor relies on (`VNode`, `VElement`, `VHTMLElement`, `VStyle`, `VDocument`); browser nodes satisfy it, so existing call sites compile unchanged. The `Dom` mutation/structural core (`append`, `prepend`, `after`, `before`, `appendChildFirst`, `detach`, `unwrap`, `moveContent`, `sibling`, `hide`/`show`) is typed against that subset and deduplicated (`first`/`last` share one traversal, `prevWithClass`/`nextWithClass` share one helper). A new *Virtual DOM contract* suite in `dom.test.js` runs `Dom` against a non-browser VNode implementation, pinning the invariant at runtime. Across `core`, `modules`, `plugins` and `jodit.ts`: no direct `appendChild`/`insertBefore`/`removeChild`/`replaceChild` left outside `Dom` (was ~207 call sites), `.style.x =` → `css()`/`VStyle`, `get`/`setAttribute` → `attr()`, `querySelector` reduced to the sanctioned boundaries (user-supplied selectors in `selector.ts`, pasted stylesheet selectors in `apply-styles.ts`, the `BASE_PATH` bootstrap in `constants.ts`, the sanitizers). [#1441](https://github.com/xdan/jodit/pull/1441)
+- **Dialog**: open dialogs are tracked in a static registry; `setMaxZIndex`/`getMaxZIndexDialog` read it instead of scanning the whole `destination` subtree (usually `document.body`) on every open and mousedown.
+
+#### :rocket: New Feature
+
+- **`cssInline(element, key)`**: exact inline read of a CSS property (the `style` attribute) — no computed style, no layout access, no number/color normalization. `css(element, key, true)` still works but is deprecated: its result goes through `normalizeCssValue` (`'0px'` → `0`, `bold` → `700`), which made it unusable for exact comparisons and save/restore. Internal call sites (popup/dialog z-index, indent, resizer, media, image properties readers, table widths) migrated.
+- **`attrRaw(element, name, value?)`**: attribute access with the name taken verbatim — no camelCase → kebab-case conversion, no `data-` fallback, no `px` stripping. Used by the sanitizers (`safeHTML`, `cleanHTML.allowTags`, `cleanFromWord`) and attribute comparison, where `attr()`'s name normalization must never apply (`onLoad`, `viewBox`, `xlink:href`).
+- **`VTokenList.length`** added to the VNode subset.
+
+#### :bug: Bug Fix
+
+- **Paste from Word**: attribute cleanup on inline SVG (`viewBox`, `preserveAspectRatio`, …) silently skipped those attributes because the removal went through `attr()`, which kebab-cased the names. Uses `attrRaw` now.
+- **Uploader**: `bind(form)` matches `<input type="FILE">` again (attribute selectors are case-insensitive, the `attr()` comparison was not).
+- **Dialog / Resize cells**: dialog position and the cell resize handle keep fractional pixels; the numeric `css()` setter truncated them to integers.
+- **Resizer**: an image with an inline `width: 0px` is treated as having an inline size again (`cssInline` keeps the raw `'0px'` where `css(..., true)` returned `0`).
+
+#### :nail_care: Polish
+
+- `Dom.temporaryList` is no longer deprecated: it is the history snapshot cleanup and is a plain tree walk (no selector engine, works on `VNode`).
+- `alignElement` looks the command up in a `Map` instead of a plain object (no prototype keys).
+- Toolbar/plugin tag sets (`Dom.isTag(node, Set)`) hoisted to module constants instead of being allocated per visited node.
+- `element.innerHTML = ''` clears replaced with `Dom.detach(element)` (table rows, tooltip, paste storage, delete, debug, inline container).
+
 ## 4.13.27
 
 #### :rocket: New Feature

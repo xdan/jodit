@@ -196,7 +196,6 @@ export class dragAndDropElement extends Plugin {
 
 			Dom.append(
 				getContainer(this.j, dragAndDropElement),
-
 				this.draggable
 			);
 		}

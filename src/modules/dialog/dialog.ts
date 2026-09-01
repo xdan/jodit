@@ -33,7 +33,7 @@ import {
 	isString,
 	isVoid
 } from 'jodit/core/helpers/checker';
-import { $$, attr, ConfigProto, css } from 'jodit/core/helpers/utils';
+import { attr, ConfigProto, css } from 'jodit/core/helpers/utils';
 import { assert } from 'jodit/core/helpers/utils/assert';
 import { Icon } from 'jodit/core/ui';
 import { View } from 'jodit/core/view/view';
@@ -443,9 +443,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 			this.moved = Math.abs(x - left) > 100 || Math.abs(y - top) > 100;
 		}
 
+		// strings on purpose: `css()` would truncate fractional pixels
 		css(this.dialog, {
-			left: x || left,
-			top: y || top
+			left: (x || left) + 'px',
+			top: (y || top) + 'px'
 		});
 
 		return this;
@@ -513,6 +514,24 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	}
 
 	/**
+	 * Registry of the currently opened dialogs. Replaces a DOM scan of the
+	 * whole `destination` (usually `document.body`) for every z-index update.
+	 */
+	private static readonly __opened: Set<Dialog> = new Set();
+
+	private __openedSiblings(): Dialog[] {
+		const result: Dialog[] = [];
+
+		Dialog.__opened.forEach(dialog => {
+			if (dialog.destination === this.destination) {
+				result.push(dialog);
+			}
+		});
+
+		return result;
+	}
+
+	/**
 	 * Get zIndex from dialog
 	 */
 	getZIndex(): number {
@@ -524,16 +543,13 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 */
 	getMaxZIndexDialog(): IDialog {
 		let maxZi: number = 0,
-			dlg: IDialog,
-			zIndex: number,
 			res: IDialog = this;
 
-		$$('.jodit-dialog', this.destination).forEach((dialog: HTMLElement) => {
-			dlg = (dialog as any).component as Dialog;
-			zIndex = parseInt(css(dialog, 'zIndex') as string, 10);
+		this.__openedSiblings().forEach(dialog => {
+			const zIndex = dialog.getZIndex();
 
-			if (dlg.isOpened && !isNaN(zIndex) && zIndex > maxZi) {
-				res = dlg;
+			if (zIndex > maxZi) {
+				res = dialog;
 				maxZi = zIndex;
 			}
 		});
@@ -547,17 +563,10 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	setMaxZIndex(): void {
 		if (this.getMod('static')) return;
 
-		let maxZIndex: number = 20000004,
-			zIndex: number = 0;
+		let maxZIndex: number = 20000004;
 
-		Dom.each(this.destination, elm => {
-			if (
-				Dom.isHTMLElement(elm) &&
-				elm.classList.contains('jodit-dialog')
-			) {
-				zIndex = parseInt(css(elm, 'zIndex') as string, 10);
-				maxZIndex = Math.max(isNaN(zIndex) ? 0 : zIndex, maxZIndex);
-			}
+		this.__openedSiblings().forEach(dialog => {
+			maxZIndex = Math.max(dialog.getZIndex(), maxZIndex);
 		});
 
 		css(this.container, 'zIndex', (maxZIndex + 1).toString());
@@ -634,6 +643,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.setMod('active', true);
 		this.isOpened = true;
+		Dialog.__opened.add(this);
 
 		this.setModal(modal);
 
@@ -720,6 +730,7 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		this.setMod('active', false);
 
 		this.isOpened = false;
+		Dialog.__opened.delete(this);
 
 		if (this.isFullSize) {
 			this.toggleFullSize(false);
@@ -893,6 +904,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		if (this.isOpened) {
 			this.close();
 		}
+
+		Dialog.__opened.delete(this);
 
 		if (this.events) {
 			this.__removeGlobalResizeListeners();

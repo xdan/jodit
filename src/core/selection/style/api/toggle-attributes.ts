@@ -16,9 +16,8 @@ import {
 } from 'jodit/core/helpers/checker';
 import { normalizeCssValue } from 'jodit/core/helpers/normalize/normalize-css-value';
 import { size } from 'jodit/core/helpers/size/object-size';
-import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
 import { assert, attr } from 'jodit/core/helpers/utils';
-import { css } from 'jodit/core/helpers/utils/css';
+import { css, cssInline } from 'jodit/core/helpers/utils/css';
 import { dataBind } from 'jodit/core/helpers/utils/data-bind';
 import {
 	_PREFIX,
@@ -91,7 +90,7 @@ function toggleStyle(
 	assert(isPlainObject(style) && size(style), 'Style must be an object');
 
 	Object.keys(style).forEach((rule: string) => {
-		const inlineValue = elm.style.getPropertyValue(kebabCase(rule));
+		const inlineValue = cssInline(elm, rule);
 		const newValue = style[rule];
 
 		if (inlineValue === '' && newValue == null) {

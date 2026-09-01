@@ -19,6 +19,14 @@ import { Plugin } from 'jodit/core/plugin';
 
 import './interface';
 
+const NOT_EMPTY_CONTENT_TAGS = new Set([
+	'img',
+	'table',
+	'jodit',
+	'iframe',
+	'hr'
+] as const);
+
 export class deleteCommand extends Plugin {
 	static override requires = ['backspace'];
 
@@ -59,14 +67,11 @@ export class deleteCommand extends Plugin {
 		if (
 			!trim(jodit.editor.textContent || '') &&
 			!Dom.first(jodit.editor, node =>
-				Dom.isTag(
-					node,
-					new Set(['img', 'table', 'jodit', 'iframe', 'hr'] as const)
-				)
+				Dom.isTag(node, NOT_EMPTY_CONTENT_TAGS)
 			) &&
 			(!current || !Dom.closest(current, 'table', jodit.editor))
 		) {
-			jodit.editor.innerHTML = '';
+			Dom.detach(jodit.editor);
 
 			const node = jodit.s.setCursorIn(jodit.editor);
 

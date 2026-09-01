@@ -36,13 +36,13 @@ import { Dom } from 'jodit/core/dom/dom';
 import { observable } from 'jodit/core/event-emitter';
 import {
 	ConfigProto,
-	css,
 	error,
 	isAbortError,
 	isFunction,
 	isString,
 	trim
 } from 'jodit/core/helpers';
+import { cssInline } from 'jodit/core/helpers/utils/css';
 import { Storage } from 'jodit/core/storage';
 import { Dlgs } from 'jodit/core/traits/dlgs';
 import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
@@ -179,7 +179,7 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	get isOpened(): boolean {
 		return (
 			this._dialog.isOpened &&
-			css(this.browser, 'display', true) !== 'none'
+			cssInline(this.browser, 'display') !== 'none'
 		);
 	}
 

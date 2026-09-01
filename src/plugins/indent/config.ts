@@ -10,7 +10,7 @@
 
 import type { IControlType, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
-import { css } from 'jodit/core/helpers/utils/css';
+import { cssInline } from 'jodit/core/helpers/utils/css';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
 
@@ -51,9 +51,9 @@ Config.prototype.controls.outdent = {
 
 		if (currentBox) {
 			const arrow = getKey(editor.o.direction, currentBox);
-			const value = css(currentBox, arrow, true);
+			const value = cssInline(currentBox, arrow);
 
-			return !value || parseInt(value.toString(), 10) <= 0;
+			return !value || parseInt(value, 10) <= 0;
 		}
 
 		return true;

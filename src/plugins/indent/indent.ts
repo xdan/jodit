@@ -15,7 +15,7 @@ import { BR } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { attr, call } from 'jodit/core/helpers/utils';
-import { css } from 'jodit/core/helpers/utils/css';
+import { css, cssInline } from 'jodit/core/helpers/utils/css';
 
 import './config';
 
@@ -39,8 +39,8 @@ const applyIndentToBox = (
 
 	processedElements.add(currentBox);
 
-	const current = css(currentBox, key, true);
-	let value = current ? parseInt(current.toString(), 10) : 0;
+	const current = cssInline(currentBox, key);
+	let value = current ? parseInt(current, 10) : 0;
 
 	value += editor.o.indentMargin * (command === 'outdent' ? -1 : 1);
 

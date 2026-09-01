@@ -78,7 +78,6 @@ export class UIImagePropertiesForm extends UIGroup<IJodit> {
 
 		Dom.append(
 			this.getElm('tabsBox')!,
-
 			TabsWidget(
 				jodit,
 				[

@@ -8,6 +8,7 @@ import type { IDictionary, IStyle } from 'jodit/types';
 import { size } from 'jodit/core/helpers/size/object-size';
 import { attr } from 'jodit/core/helpers/utils';
 import { assert } from 'jodit/core/helpers/utils/assert';
+import { attrRaw } from 'jodit/core/helpers/utils/attr';
 
 import { hasSameStyle } from './has-same-style';
 
@@ -47,11 +48,9 @@ export function elementsEqualAttributes(
 	return (
 		elm1.attributes.length === elm2.attributes.length &&
 		Array.from(elm1.attributes).every(
-			// raw `getAttribute` on purpose: the comparison must use the exact
+			// `attrRaw` on purpose: the comparison must use the exact
 			// attribute name from the live list, without `attr()` name mangling
-			attr =>
-				elm2.hasAttribute(attr.name) &&
-				elm2.getAttribute(attr.name) === attr.value
+			attr => attrRaw(elm2, attr.name) === attr.value
 		)
 	);
 }

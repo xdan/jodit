@@ -10,6 +10,7 @@
 
 import type { IDictionary, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
+import { attrRaw } from 'jodit/core/helpers/utils/attr';
 
 /**
  * @private
@@ -49,10 +50,10 @@ export function allowAttributes(
 			}
 
 			removeAttrs.forEach(attr => {
-				// raw `removeAttribute` on purpose: the sanitizer must remove
-				// exactly the attribute name from the live list, without the
-				// `attr()` helper name normalization
-				(nodeElm as Element).removeAttribute(attr);
+				// `attrRaw` on purpose: the sanitizer must remove exactly the
+				// attribute name from the live list, without the `attr()`
+				// helper name normalization
+				attrRaw(nodeElm as Element, attr, null);
 			});
 		}
 	}

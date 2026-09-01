@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import type { IStyle, StyleValue } from 'jodit/types';
+import type { IStyle, StyleValue, VHTMLElement } from 'jodit/types';
 import { isBoolean } from 'jodit/core/helpers/checker/is-boolean';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import {
@@ -52,6 +52,10 @@ export function css(
 	value: StyleValue
 ): string | number;
 
+/**
+ * @deprecated Use `cssInline(element, key)` for an exact inline read.
+ * The boolean mode still normalizes the value (`'0px'` → `0`, `bold` → `700`).
+ */
 export function css(
 	element: HTMLElement,
 	key: string | IStyle,
@@ -137,6 +141,22 @@ export function css(
 /**
  * Clear center align
  */
+/**
+ * Read the exact inline value of a CSS property (the `style` attribute).
+ * Unlike `css()` it never touches computed styles (no layout access) and does
+ * not normalize the result, so it is safe for exact string comparisons and
+ * save/restore. Returns an empty string when the property is not set inline.
+ *
+ * @example
+ * ```js
+ * cssInline(elm, 'zIndex'); // '' or '100'
+ * cssInline(elm, 'width'); // '0px' (css(elm, 'width', true) would return 0)
+ * ```
+ */
+export function cssInline(element: VHTMLElement, key: string): string {
+	return element.style.getPropertyValue(kebabCase(key));
+}
+
 export const clearCenterAlign = (image: HTMLElement): void => {
 	if (css(image, 'display') === 'block') {
 		css(image, 'display', '');

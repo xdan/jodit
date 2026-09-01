@@ -204,7 +204,7 @@ export class resizeCells extends Plugin {
 		css(
 			this.resizeHandler,
 			'left',
-			x - (this.j.o.iframe ? 0 : workplacePosition.left)
+			x - (this.j.o.iframe ? 0 : workplacePosition.left) + 'px'
 		);
 
 		const sel = this.j.s.sel;
@@ -375,7 +375,8 @@ export class resizeCells extends Plugin {
 			'left',
 			(offsetX <= consts.NEARBY ? box.left : box.left + box.width) -
 				workplacePosition.left +
-				delta
+				delta +
+				'px'
 		);
 
 		Object.assign(this.resizeHandler.style, {
@@ -434,7 +435,7 @@ export class resizeCells extends Plugin {
 
 				if (parent) {
 					const parentBox = parent.getBoundingClientRect();
-					css(this.resizeHandler, 'top', parentBox.top);
+					css(this.resizeHandler, 'top', parentBox.top + 'px');
 				}
 			})
 			.on('beforeSetMode.resize-cells', () => {

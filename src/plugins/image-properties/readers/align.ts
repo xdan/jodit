@@ -9,7 +9,7 @@
  */
 
 import type { ImageHAlign } from 'jodit/types';
-import { css } from 'jodit/core/helpers/utils/css';
+import { css, cssInline } from 'jodit/core/helpers/utils/css';
 
 import type { EditValues } from '../interface';
 
@@ -19,17 +19,16 @@ import type { EditValues } from '../interface';
 export function readAlign(image: HTMLImageElement, values: EditValues): void {
 	// Align
 	if (
-		image.style.getPropertyValue('float') &&
-		['left', 'right'].indexOf(
-			image.style.getPropertyValue('float').toLowerCase()
-		) !== -1
+		cssInline(image, 'float') &&
+		['left', 'right'].indexOf(cssInline(image, 'float').toLowerCase()) !==
+			-1
 	) {
 		values.align = css(image, 'float') as ImageHAlign;
 	} else {
 		if (
 			(css(image, 'display') as string) === 'block' &&
-			image.style.getPropertyValue('margin-left') === 'auto' &&
-			image.style.getPropertyValue('margin-right') === 'auto'
+			cssInline(image, 'margin-left') === 'auto' &&
+			cssInline(image, 'margin-right') === 'auto'
 		) {
 			values.align = 'center';
 		} else {

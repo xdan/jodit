@@ -37,6 +37,7 @@ import {
 	ucfirst
 } from 'jodit/core/helpers';
 import { assert } from 'jodit/core/helpers/utils/assert';
+import { cssInline } from 'jodit/core/helpers/utils/css';
 import { UIElement } from 'jodit/core/ui/element';
 import { UIGroup } from 'jodit/core/ui/group/group';
 
@@ -161,12 +162,12 @@ export class Popup extends UIGroup implements IPopup {
 	}
 
 	private __calculateZIndex(): void {
-		if (css(this.container, 'zIndex', true)) {
+		if (cssInline(this.container, 'zIndex')) {
 			return;
 		}
 
 		const checkView = (view: IViewBased): boolean => {
-			const zIndex = css(view.container, 'zIndex', true) || view.o.zIndex;
+			const zIndex = cssInline(view.container, 'zIndex') || view.o.zIndex;
 
 			if (zIndex) {
 				this.setZIndex(1 + parseInt(zIndex.toString(), 10));
@@ -189,7 +190,7 @@ export class Popup extends UIGroup implements IPopup {
 				return;
 			}
 
-			const parentZIndex = css(pe.container, 'zIndex', true);
+			const parentZIndex = cssInline(pe.container, 'zIndex');
 
 			if (parentZIndex) {
 				this.setZIndex(1 + parseInt(parentZIndex.toString(), 10));
