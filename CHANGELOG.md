@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.26
+
+#### :bug: Bug Fix
+
+- **Color picker**: pressing Enter in the hex input applied the color and closed the popup, but Chrome then fired `change` on the removed, still-focused input, so the same color was applied a second time and toggled off again. The widget now applies a typed value only once. [#1459](https://github.com/xdan/jodit/issues/1459)
+- **Toolbar**: closing a button popup by clicking outside while the hex input had focus threw `NotFoundError: Failed to execute 'removeChild'`. Chrome fires `blur`/`change` in the middle of `removeChild`, the color callback re-entered the button's close routine, and it destructed the popup while the outer removal was still running. `ToolbarButton` now detaches the popup before closing it so a re-entrant close is a no-op, and `Popup.close()` blurs a focused control before removing the container so that Chrome and Firefox both run those handlers while the popup is still in the DOM (Firefox never fired them for a removed element, so the typed color was silently dropped there). [#1458](https://github.com/xdan/jodit/issues/1458)
+
 ## 4.13.25
 
 #### :bug: Bug Fix

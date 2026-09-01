@@ -102,6 +102,95 @@
 				);
 			});
 
+			// Chrome fires `blur` and then `change` on a focused input that
+			// is being removed from the DOM. Karma sets the value
+			// programmatically, so `change` has to be emulated. Headless
+			// Firefox does not dispatch focus events at all while its window
+			// is not focused, so the emulation reports whether it ran
+			function chromeLikeChangeOnBlur(input) {
+				const state = { fired: false };
+
+				input.addEventListener('blur', () => {
+					state.fired = true;
+					simulateEvent('change', input);
+				});
+
+				return state;
+			}
+
+			// https://github.com/xdan/jodit/issues/1459
+			it('Should apply the color once when Enter closes the popup and the removed input fires change', function () {
+				const editor = getJodit();
+
+				editor.value = 'text2text';
+
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild.firstChild, 3);
+				range.setEnd(editor.editor.firstChild.firstChild, 6);
+				editor.s.selectRange(range);
+				editor.s.focus();
+
+				clickButton('brush', editor);
+
+				const popup = getOpenedPopup(editor);
+				const input = popup.querySelector(
+					'.jodit-color-picker__hex input'
+				);
+
+				input.focus();
+				input.value = '#FF0000';
+				chromeLikeChangeOnBlur(input);
+
+				simulateEvent('keydown', input, e => {
+					e.key = 'Enter';
+				});
+
+				expect(getOpenedPopup(editor)).is.null;
+				expect(editor.value).equals(
+					'<p>tex<span style="background-color: rgb(255, 0, 0);">t2t</span>ext</p>'
+				);
+			});
+
+			// https://github.com/xdan/jodit/issues/1458
+			it('Should not throw when the popup is closed by an outside click while the input is focused', function () {
+				const editor = getJodit();
+
+				editor.value = 'text2text';
+
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild.firstChild, 3);
+				range.setEnd(editor.editor.firstChild.firstChild, 6);
+				editor.s.selectRange(range);
+				editor.s.focus();
+
+				clickButton('brush', editor);
+
+				const popup = getOpenedPopup(editor);
+				const input = popup.querySelector(
+					'.jodit-color-picker__hex input'
+				);
+
+				input.focus();
+				input.value = '#FF0000';
+				const change = chromeLikeChangeOnBlur(input);
+
+				expect(() => {
+					simulateEvent('mousedown', document.body);
+				}).does.not.throw();
+
+				expect(getOpenedPopup(editor)).is.null;
+
+				if (!change.fired) {
+					// headless Firefox: no blur event, the value is applied
+					// through the plain `change` path instead
+					simulateEvent('change', input);
+				}
+
+				expect(editor.value).equals(
+					'<p>tex<span style="background-color: rgb(255, 0, 0);">t2t</span>ext</p>'
+				);
+			});
+
 			it('Should ignore an invalid value', function () {
 				const editor = getJodit();
 

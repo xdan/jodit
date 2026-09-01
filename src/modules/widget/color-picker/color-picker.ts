@@ -105,8 +105,17 @@ export const ColorPickerWidget = (
 
 	const { hexInput } = refs<HTMLInputElement>(form);
 
+	// Enter applies the value and closes the popup; removing the focused
+	// input then makes Chrome fire `change` on it, which would apply the
+	// same color a second time and toggle it off again. See #1459
+	let appliedHexValue: string | null = null;
+
 	const applyHexInput = (): void => {
 		const raw = hexInput.value.trim();
+
+		if (raw === appliedHexValue) {
+			return;
+		}
 
 		const isHex = /^#?[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test(raw);
 		const isRgb = /^rgba?\([\d\s.,%]+\)$/i.test(raw);
@@ -120,6 +129,7 @@ export const ColorPickerWidget = (
 		);
 
 		if (color && isFunction(callback)) {
+			appliedHexValue = raw;
 			callback(color);
 		}
 	};

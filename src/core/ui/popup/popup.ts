@@ -29,6 +29,7 @@ import {
 	attr,
 	css,
 	getFixedPositionOffset,
+	isFunction,
 	isString,
 	kebabCase,
 	markOwner,
@@ -383,6 +384,23 @@ export class Popup extends UIGroup implements IPopup {
 		this.j.e.fire('beforePopupClose', this);
 
 		this.__removeGlobalListeners();
+
+		// Blur a focused control (e.g. the color picker hex input) before
+		// the container goes away. Chrome fires `blur`/`change` for a
+		// removed focused element in the middle of `removeChild`, Firefox
+		// does not fire them at all. Blurring first makes both browsers
+		// run those handlers while the popup is still in the DOM. See #1458
+		const { activeElement } = this.od;
+
+		if (
+			activeElement &&
+			activeElement !== this.container &&
+			Dom.isOrContains(this.container, activeElement) &&
+			isFunction((activeElement as HTMLElement).blur)
+		) {
+			(activeElement as HTMLElement).blur();
+		}
+
 		Dom.safeRemove(this.container);
 
 		return this;

@@ -538,18 +538,30 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 	@autobind
 	private __closePopup(): void {
-		if (this.openedPopup) {
-			this.j.e
-				.off(this.ow, 'mousedown touchstart', this.onOutsideClick)
-				.off('escape closeAllPopups', this.onOutsideClick);
+		const popup = this.openedPopup;
 
-			this.state.activated = false;
-			this.openedPopup.close();
-			this.openedPopup.destruct();
-			this.openedPopup = null;
-			if (this.trigger) {
-				attr(this.trigger, 'aria-expanded', false);
-			}
+		if (!popup) {
+			return;
+		}
+
+		// Detach first: removing a popup that holds the focused element
+		// makes Chrome fire `blur`/`change` on it synchronously, and a
+		// handler there may call the popup's `close` callback again.
+		// A re-entrant call must be a no-op, otherwise it destructs the
+		// popup while the outer `removeChild` is still running and Chrome
+		// throws NotFoundError. See #1458
+		this.openedPopup = null;
+
+		this.j.e
+			.off(this.ow, 'mousedown touchstart', this.onOutsideClick)
+			.off('escape closeAllPopups', this.onOutsideClick);
+
+		this.state.activated = false;
+		popup.close();
+		popup.destruct();
+
+		if (this.trigger) {
+			attr(this.trigger, 'aria-expanded', false);
 		}
 	}
 
