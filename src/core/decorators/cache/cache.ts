@@ -162,6 +162,11 @@ export function cache<T, R>(
 	};
 }
 
+function getOwnerDocument(component: unknown): Document {
+	const od = (component as { od?: Document }).od;
+	return od ?? document;
+}
+
 export function cacheHTML<T extends Function, R>(
 	target: IDictionary,
 	_: string,
@@ -174,17 +179,31 @@ export function cacheHTML<T extends Function, R>(
 
 	let useCache = true;
 
-	const cached: WeakMap<Function, Element> = new WeakMap();
+	/**
+	 * The cache is keyed by the owner document first and only then by the
+	 * component class. A page can create editors inside different documents
+	 * (iframes) and destroy those documents later: a template cached from a
+	 * dead document would otherwise be cloned for every subsequent editor,
+	 * whose buttons then never react to clicks.
+	 */
+	const cached: WeakMap<Document, WeakMap<Function, Element>> = new WeakMap();
 
 	descriptor.value = function (this: T, ...attrs: unknown[]): R {
-		if (useCache && cached.has(this.constructor)) {
-			return cached.get(this.constructor)?.cloneNode(true) as R;
+		const doc = getOwnerDocument(this);
+		const docCache = cached.get(doc);
+
+		if (useCache && docCache?.has(this.constructor)) {
+			return docCache.get(this.constructor)?.cloneNode(true) as R;
 		}
 
 		const value = fn.apply(this, attrs);
 
 		if (useCache && Dom.isElement(value)) {
-			cached.set(this.constructor, value);
+			if (docCache) {
+				docCache.set(this.constructor, value);
+			} else {
+				cached.set(doc, new WeakMap([[this.constructor, value]]));
+			}
 		}
 
 		return useCache ? (value.cloneNode(true) as R) : value;

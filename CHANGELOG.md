@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.13.25
+
+#### :bug: Bug Fix
+
+- **Decorators**: `@cacheHTML` (used by `UIButton.createContainer` and `ToolbarButton.createContainer`) kept a single template element per class for the whole page lifetime, keyed only by the constructor. When an editor was created inside an iframe (`ownerDocument`/`ownerWindow` options) and that iframe was later removed, every subsequent editor received `cloneNode` copies of a template that belonged to the destroyed document, and its toolbar buttons rendered but never reacted to clicks. The cache is now keyed by the owner document first and only then by the class, so each document builds its own templates. [#1457](https://github.com/xdan/jodit/issues/1457)
+
 ## 4.13.24
 
 #### :bug: Bug Fix
