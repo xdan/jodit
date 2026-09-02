@@ -170,16 +170,19 @@ jobs:
               run: |
                   curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/xdan/jodit-pro-home/dispatches --data '{"event_type": "opened" }'
 
-            - name: Trigger release React package
-              run: |
-                  echo "Trigger release React package" >> $GITHUB_STEP_SUMMARY
-                  curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/jodit/jodit-react/dispatches --data '{"event_type": "newversion" }'
+            # TEMPORARILY DISABLED for the 4.14.0 minor rollout: jodit-react and
+            # jodit-pro get a manual minor bump first, then the next core release
+            # re-enables these triggers so the bots publish patch versions on top.
+            # - name: Trigger release React package
+            #   run: |
+            #       echo "Trigger release React package" >> $GITHUB_STEP_SUMMARY
+            #       curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/jodit/jodit-react/dispatches --data '{"event_type": "newversion" }'
 
             - name: Trigger startup update version
               run: |
                   curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/xdan/jodit-startup-service/dispatches --data '{"event_type": "newversion" }'
 
-            - name: Trigger update PRO version
-              run: |
-                  echo "Trigger update PRO version" >> $GITHUB_STEP_SUMMARY
-                  curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/jodit/jodit-pro/dispatches --data '{"event_type": "newversion" }'
+            # - name: Trigger update PRO version
+            #   run: |
+            #       echo "Trigger update PRO version" >> $GITHUB_STEP_SUMMARY
+            #       curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/jodit/jodit-pro/dispatches --data '{"event_type": "newversion" }'
