@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.14.1
+
+#### :house: Internal
+
+- Release pipeline: the `jodit-react` and `jodit-pro` release triggers, paused for the 4.14.0 rollout, are back on. Both wrappers were bumped to a new minor by hand (`jodit-react` 5.5.0, `jodit-pro` 4.14.0, `jodit-pro-react` 5.6.0); this release lets the bots publish their first builds on top of it.
+
 ## 4.14.0
 
 #### :house: Internal
