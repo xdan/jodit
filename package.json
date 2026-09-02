@@ -131,7 +131,7 @@
 		"typescript": "^6.0.2",
 		"webpack": "5.105.4",
 		"webpack-cli": "^7.2.2",
-		"webpack-dev-middleware": "^7.4.5",
+		"webpack-dev-middleware": "^8.1.1",
 		"webpack-dev-server": "^6.0.0",
 		"webpack-hot-middleware": "^2.26.1",
 		"yargs": "^18.0.0"
