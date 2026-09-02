@@ -9,8 +9,8 @@
  */
 
 import type { IJodit, MarkerInfo, Nullable } from 'jodit/types';
-import { MODE_WYSIWYG } from 'jodit/core/constants';
 import * as consts from 'jodit/core/constants';
+import { MODE_WYSIWYG } from 'jodit/core/constants';
 import { autobind, component, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { css, position, refs, trim } from 'jodit/core/helpers';

@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.14.2
+
+#### :house: Internal
+
+- Dev dependencies: webpack 5.109.2, less-loader 13, webpack-dev-middleware 8, eslint-plugin-simple-import-sort 14 (imports re-sorted), @types/node 26, synchronous-promise 2.0.18, cssnano-preset-advanced 8.0.10 ([#1446](https://github.com/xdan/jodit/pull/1446), [#1447](https://github.com/xdan/jodit/pull/1447), [#1448](https://github.com/xdan/jodit/pull/1448), [#1450](https://github.com/xdan/jodit/pull/1450), [#1452](https://github.com/xdan/jodit/pull/1452), [#1454](https://github.com/xdan/jodit/pull/1454), [#1456](https://github.com/xdan/jodit/pull/1456)). eslint 10 / eslint-plugin-mocha 12 stay on hold until `eslint-plugin-import` allows eslint 10; TypeScript 7 needs a tsconfig migration first.
+
 ## 4.14.1
 
 #### :house: Internal
