@@ -18,6 +18,7 @@ List of available languages:
 
 ```
 ar,
+az,
 cs_cz,
 de,
 en,

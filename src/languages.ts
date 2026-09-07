@@ -16,6 +16,7 @@ import type { IDictionary } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 
 import ar from 'jodit/langs/ar';
+import az from 'jodit/langs/az';
 import cs_cz from 'jodit/langs/cs_cz';
 import de from 'jodit/langs/de';
 import en from 'jodit/langs/en';
@@ -47,6 +48,7 @@ let exp: IDictionary<IDictionary<string>> = {};
 
 exp = {
 	ar,
+	az,
 	cs_cz,
 	de,
 	en,
