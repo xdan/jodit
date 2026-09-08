@@ -6,8 +6,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-// @ts-ignore
-import replace from 'replace';
+import { replaceInFileSync } from 'replace-in-file';
 
 const cwd = path.resolve(process.argv[2]);
 if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
@@ -82,10 +81,8 @@ const copyRecursiveSync = (src: string, dest: string): void => {
 	);
 });
 
-replace({
-	regex: '../build/',
-	replacement: './',
-	paths: [path.resolve(cwd, './build/examples')],
-	recursive: true,
-	silent: false
+replaceInFileSync({
+	files: path.resolve(cwd, './build/examples/**/*.html'),
+	from: /\.\.\/build\//g,
+	to: './'
 });

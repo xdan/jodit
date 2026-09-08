@@ -26,7 +26,6 @@ export function replaceOldTags(
 	);
 
 	if (nodeElm !== newNodeElm) {
-		nodeElm = newNodeElm;
 		return true;
 	}
 

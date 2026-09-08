@@ -55,7 +55,7 @@ export class SentenceFinder {
 		const results: ISelectionRange[] = [];
 
 		let index = position,
-			len = 0,
+			len: number,
 			startQueueIndex = 0;
 
 		// Find all ranges in substring

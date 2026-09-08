@@ -249,8 +249,7 @@ export class resizer extends Plugin {
 
 			const className = this.handle.className;
 
-			let new_w = 0,
-				new_h = 0;
+			let new_w: number, new_h: number;
 
 			const uar = this.j.o.resizer.useAspectRatio;
 

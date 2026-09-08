@@ -324,7 +324,7 @@ export class Popup extends UIGroup implements IPopup {
 		};
 
 		const getMatchStrategy = (inBox: IBound): Nullable<PopupStrategy> => {
-			let strategy: Nullable<PopupStrategy> = null;
+			let strategy: Nullable<PopupStrategy>;
 
 			if (Popup.boxInView(getPointByStrategy(defaultStrategy), inBox)) {
 				strategy = defaultStrategy;

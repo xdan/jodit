@@ -91,7 +91,7 @@ export function getContainer<T extends HTMLTagNames = HTMLTagNames>(
 
 	const view = isViewObject(jodit) ? jodit : jodit.j;
 
-	let body: HTMLElement | ShadowRoot | null = null;
+	let body: HTMLElement | ShadowRoot | null;
 
 	if (!data[key]) {
 		let c = view.c;

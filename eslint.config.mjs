@@ -1,10 +1,9 @@
-import { fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import header from '@tony.ganchev/eslint-plugin-header';
-import _import from 'eslint-plugin-import';
+import importX from 'eslint-plugin-import-x';
 import mocha from 'eslint-plugin-mocha';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import tsdoc from 'eslint-plugin-tsdoc';
@@ -46,7 +45,7 @@ export default [
 			mocha,
 			tsdoc,
 			'simple-import-sort': simpleImportSort,
-			import: fixupPluginRules(_import)
+			import: importX
 		},
 
 		languageOptions: {

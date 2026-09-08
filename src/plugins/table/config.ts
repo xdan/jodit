@@ -298,7 +298,7 @@ Config.prototype.controls.table = {
 				const index = parseInt(attr(e.target, '-index') || '0', 10),
 					row = Math.floor(index / default_cols_count),
 					col = index % default_cols_count;
-				let nextIndex = index;
+				let nextIndex: number;
 
 				switch (e.key) {
 					case KEY_LEFT:

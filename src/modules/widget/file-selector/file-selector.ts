@@ -139,8 +139,6 @@ export const FileSelectorWidget = (
 			new UIBlock(editor, [button])
 		]);
 
-		currentImage = null;
-
 		if (
 			elm &&
 			!Dom.isText(elm) &&

@@ -105,7 +105,6 @@ export function checkRemoveChar(
 
 	if (removeNeighbor) {
 		Dom.safeRemove(removeNeighbor);
-		removeNeighbor = null;
 	}
 
 	if (charRemoved) {

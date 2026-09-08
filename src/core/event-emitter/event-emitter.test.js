@@ -673,7 +673,7 @@ describe('Jodit Events system Tests', function () {
 				const eventEmitter = new Jodit.modules.EventEmitter(),
 					simpleObject = {};
 
-				let clicked = 0;
+				let clicked;
 
 				eventEmitter.on(simpleObject, 'click', function () {
 					return 50;

@@ -320,8 +320,7 @@ export class ImageEditor extends ViewComponent<IViewWithToolbar & IDlgs> {
 			w = node.offsetWidth * 0.8,
 			h = node.offsetHeight * 0.8;
 
-		let wn: number = w,
-			hn: number = h;
+		let wn: number, hn: number;
 
 		const { naturalWidth: nw, naturalHeight: nh } = this;
 

@@ -21,7 +21,7 @@ export function fuzzySearchIndex(
 	maxDistance: number = 1
 ): [number, number] {
 	let i = 0,
-		j = 0,
+		j: number,
 		startIndex = -1,
 		len = 0,
 		errorDistance = 0;

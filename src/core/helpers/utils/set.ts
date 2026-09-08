@@ -40,11 +40,10 @@ export function set<T>(chain: string, value: unknown, obj: IDictionary): void {
 		return;
 	}
 
-	let result = obj,
-		key = parts[0];
+	let result = obj;
 
 	for (let i = 0; i < parts.length - 1; i += 1) {
-		key = parts[i];
+		const key = parts[i];
 
 		if (!isArray(result[key]) && !isPlainObject(result[key])) {
 			result[key] = isNumeric(parts[i + 1]) ? [] : {};

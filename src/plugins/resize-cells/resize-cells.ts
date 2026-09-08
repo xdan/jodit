@@ -124,14 +124,13 @@ export class resizeCells extends Plugin {
 		this.j.lock(key);
 		this.resizeHandler.classList.add('jodit-table-resizer_moved');
 
-		let box: ClientRect,
-			tableBox = this.workTable.getBoundingClientRect();
+		let box: ClientRect;
 
 		this.minX = 0;
 		this.maxX = 1000000;
 
 		if (this.wholeTable != null) {
-			tableBox = (
+			const tableBox = (
 				this.workTable.parentNode as HTMLElement
 			).getBoundingClientRect();
 

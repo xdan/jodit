@@ -1516,7 +1516,9 @@ function fillXY(data, editor) {
 					childNode = childNode.nextSibling;
 				}
 			} catch (e) {
-				throw new Error('Error parsing XML string' + e.toString());
+				throw new Error('Error parsing XML string' + e.toString(), {
+					cause: e
+				});
 			}
 		}
 	});

@@ -51,9 +51,8 @@
 		"url": "https://xdsoft.net/jodit/pro/"
 	},
 	"devDependencies": {
-		"@eslint/compat": "^2.1.1",
 		"@eslint/eslintrc": "^3.3.7",
-		"@eslint/js": "^9.39.5",
+		"@eslint/js": "^10.0.1",
 		"@playwright/test": "^1.63.0",
 		"@statoscope/cli": "^5.29.0",
 		"@statoscope/stats-validator-plugin-webpack": "^5.29.0",
@@ -87,10 +86,10 @@
 		"dpdm": "^4.3.0",
 		"es6-promise": "^4.2.8",
 		"esbuild": "^0.28.2",
-		"eslint": "^9.39.5",
+		"eslint": "^10.10.0",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-import": "^2.32.0",
-		"eslint-plugin-mocha": "^11.3.0",
+		"eslint-plugin-import-x": "^4.17.1",
+		"eslint-plugin-mocha": "^12.0.2",
 		"eslint-plugin-prettier": "^5.5.6",
 		"eslint-plugin-simple-import-sort": "^14.0.0",
 		"eslint-plugin-tsdoc": "^0.5.2",
@@ -107,7 +106,7 @@
 		"merge-stream": "^2.0.0",
 		"mime-types": "^3.0.2",
 		"mini-css-extract-plugin": "^2.10.2",
-		"mocha": "^11.8.0",
+		"mocha": "^12.0.0",
 		"open": "^11.0.2",
 		"postcss": ">=8.5.28",
 		"postcss-css-variables": "^0.19.0",
@@ -115,7 +114,7 @@
 		"postcss-loader": "^8.2.1",
 		"prettier": "^3.9.6",
 		"raw-loader": "^4.0.2",
-		"replace": "^1.2.2",
+		"replace-in-file": "^9.0.0",
 		"serialize-javascript": "^7.1.1",
 		"style-loader": "^4.0.0",
 		"stylelint": "^17.15.0",
@@ -135,5 +134,8 @@
 		"webpack-dev-server": "^6.0.0",
 		"webpack-hot-middleware": "^2.26.1",
 		"yargs": "^18.1.0"
+	},
+	"overrides": {
+		"qs": "6.16.0"
 	}
 }

@@ -66,7 +66,7 @@ export function applyStyles(html: string): string {
 	Dom.append(globalDocument.body, iframe);
 
 	let convertedString: string = '',
-		collection: HTMLElement[] = [];
+		collection: HTMLElement[];
 
 	try {
 		const iframeDoc: Document | null =

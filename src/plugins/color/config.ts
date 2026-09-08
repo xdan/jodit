@@ -132,7 +132,7 @@ Config.prototype.controls.brush = {
 	) => {
 		let colorHEX: string = '',
 			bg_color: string = '',
-			tabs: TabOption[] = [],
+			tabs: TabOption[],
 			currentElement: HTMLElement | null = null;
 
 		if (current && current !== editor.editor && Dom.isNode(current)) {

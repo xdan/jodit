@@ -9,6 +9,15 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.14.5
+
+#### :house: Internal
+
+- Upgraded ESLint 9 to 10 and `@eslint/js` 9 to 10. Replaced the unmaintained `eslint-plugin-import` with ESLint 10-compatible `eslint-plugin-import-x` 4, removed the obsolete compatibility wrapper, and upgraded `eslint-plugin-mocha` to 12 and Mocha to 12.
+- Migrated the release/build scripts from the vulnerable `replace` package to `replace-in-file` 9. ESLint 10's new checks removed redundant assignments and test errors now preserve their original `cause`.
+- Updated the screenshot-test image and its packages to Playwright 1.63.0 and refreshed affected browser snapshots. Fixed the Make target so `updateTests=false` no longer enables snapshot updates. Forced the patched `qs` 6.16.0 for Karma's server dependencies; `npm audit` now reports no known vulnerabilities.
+- Kept TypeScript at 6.0.3 because typescript-eslint does not yet support TypeScript 7 and the project build tools use the compiler API removed from TypeScript 7. Kept `cssnano-preset-advanced` at 8.0.10 because version 9 fails while loading its `caniuse-api` dependency under the TypeScript Webpack configuration.
+
 ## 4.14.4
 
 #### :house: Internal

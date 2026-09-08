@@ -251,8 +251,7 @@ export class source extends Plugin {
 		}
 
 		let value: string = this.getMirrorValue();
-		let selectionStart: number = 0,
-			selectionEnd: number = 0;
+		let selectionStart: number, selectionEnd: number;
 
 		try {
 			value = value

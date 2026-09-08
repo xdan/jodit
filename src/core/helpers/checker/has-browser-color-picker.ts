@@ -14,7 +14,7 @@ import { globalDocument } from 'jodit/core/constants';
  * Check if browser has a color picker (a new HTML5 attribute for input tag)
  */
 export function hasBrowserColorPicker(): boolean {
-	let supportsColor = true;
+	let supportsColor: boolean;
 
 	try {
 		const a = globalDocument.createElement('input');

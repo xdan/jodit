@@ -660,8 +660,8 @@ export class Table extends ViewComponent<IJodit> {
 		box: HTMLTableCellElement[][],
 		marked: HTMLTableCellElement[]
 	): void {
-		let i: number = 0;
-		let j: number = 0;
+		let i: number;
+		let j: number;
 
 		for (i = 0; i < box.length; i += 1) {
 			let min = 1000000;

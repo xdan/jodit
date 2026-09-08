@@ -109,7 +109,7 @@ dts:
 	fi;
 
 	@echo 'Replace style imports ...'
-	@$(NODE_MODULES_BIN)/replace "import .+.(less|svg)('|\");" '' ./build/types -r --include='*.d.ts' --silent
+	@$(NODE_MODULES_BIN)/replace-in-file "/import .+\\.(less|svg)('|\");/g" '' './build/types/**/*.d.ts' --quiet
 
 	@echo 'Resolve alias imports ...'
 	@$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --rootDir=$(pwd)  --cwd=./build/types --mode=dts --ver=$(version)
@@ -138,20 +138,20 @@ esm:
 	$(NODE_MODULES_BIN)/tsc -p $(pwd)/tsconfig.esm.json --rootDir $(pwd)/src --importHelpers false --allowJs true --checkJs false --excludeDirectories $(pwd)/node_modules --removeComments false --sourceMap false --outDir $(pwd)/build/esm
 
 	@echo 'Remove style imports ...'
-	@$(NODE_MODULES_BIN)/replace "import .+\.(less|css)('|\");" '' $(pwd)/build/esm -r --silent
+	@$(NODE_MODULES_BIN)/replace-in-file "/import .+\\.(less|css)('|\");/g" '' '$(pwd)/build/esm/**/*.js' --quiet
 
 	@echo 'Copy icons ...'
 	@$(TS_NODE_BASE) $(cwd)/tools/utils/copy-icons-in-esm.ts $(pwd)/src/ $(pwd)/build/esm
 
 	@echo 'Resolve alias imports ...'
 	@cp -R $(pwd)/build/esm/plugins/index.js $(pwd)/build/esm/plugins/all.js
-	@npx replace "JODIT-SECTION-" "JODIT-" $(pwd)/build/esm/plugins/all.js --silent
+	@$(NODE_MODULES_BIN)/replace-in-file "/JODIT-SECTION-/g" "JODIT-" $(pwd)/build/esm/plugins/all.js --quiet
 	$(TS_NODE_BASE) $(cwd)tools/utils/resolve-alias-imports.ts --rootDir=$(pwd) --cwd=$(pwd)/build/esm --mode=esm --ver=$(version)
 
 	@if [ -d "$(pwd)/src/langs" ]; then\
 			echo 'Copy langs ...'; \
 			rsync -r --exclude '*.test.js' $(pwd)/src/langs/*.js $(pwd)/build/esm/langs ;\
-			$(NODE_MODULES_BIN)/replace "module.exports = " "export default " $(pwd)/build/esm/ -r --silent; \
+			$(NODE_MODULES_BIN)/replace-in-file "/module.exports = /g" "export default " '$(pwd)/build/esm/langs/**/*.js' --quiet; \
 	fi
 
 	@if [ "$(UGLIFY_ESM)" = "true" ]; then \
@@ -185,7 +185,7 @@ build-all:
 	make clean
 	@mkdir -p $(pwd)/build/
 	@$(TS_NODE_BASE) $(cwd)tools/utils/prepare-publish.ts $(pwd)
-	@$(NODE_MODULES_BIN)/replace "4\.0\.1\.\d+" "$(version)" $(pwd)/build/README.md --silent
+	@$(NODE_MODULES_BIN)/replace-in-file "/4\\.0\\.1\\.\\d+/g" "$(version)" $(pwd)/build/README.md --quiet
 
 	@echo 'Build esm ...'
 	make esm
@@ -296,7 +296,7 @@ screenshots-test:
 		-e MIN=$(uglify) \
 		-e FAT=$(fat) \
 		jodit-screenshots \
-		npx playwright test $(if $(updateTests),--update-snapshots)
+		npx playwright test $(if $(filter true,$(updateTests)),--update-snapshots)
 
 .PHONY: screenshots-build-image
 screenshots-build-image:
@@ -343,7 +343,7 @@ examples:
 	@if [ -d ./examples/build ]; then rm -rf ./examples/build; fi;
 	@mkdir -p ./examples/build
 	@cp -R ./build/* ./examples/build
-	@$(NODE_MODULES_BIN)/replace '../build' './build' ./examples -r --include='*.html'
+	@$(NODE_MODULES_BIN)/replace-in-file "/\.\.\/build/g" './build' './examples/**/*.html' --quiet
 
 .PHONY: esm-t
 esm-t:

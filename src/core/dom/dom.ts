@@ -81,7 +81,7 @@ export class Dom {
 
 		editor.s.save();
 
-		let needFindNext: boolean = false;
+		let needFindNext: boolean;
 
 		do {
 			needFindNext = false;
@@ -140,7 +140,7 @@ export class Dom {
 
 		editor.s.save();
 
-		let needFindNext: boolean = false;
+		let needFindNext: boolean;
 
 		do {
 			needFindNext = false;

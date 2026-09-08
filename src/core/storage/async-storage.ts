@@ -89,8 +89,6 @@ export class AsyncStorage<T = StorageValueType> implements IAsyncStorage<T> {
 			| IStorage
 			| IAsyncStorage = undefined;
 
-		let storage: AsyncStorage | null = null;
-
 		// An explicit `defaultProvider` overrides the strategy-based selection
 		// below and decides which provider backs the storage.
 		const defaultProvider = options?.defaultProvider;
@@ -138,8 +136,6 @@ export class AsyncStorage<T = StorageValueType> implements IAsyncStorage<T> {
 			provider = new MemoryStorageProvider();
 		}
 
-		storage = new AsyncStorage(Promise.resolve(provider), suffix);
-
-		return storage;
+		return new AsyncStorage(Promise.resolve(provider), suffix);
 	}
 }
