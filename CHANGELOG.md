@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.14.4
+
+#### :house: Internal
+
+- Updated development dependencies within their existing version ranges and refreshed transitive dependencies in `package-lock.json`. Highlights: Playwright 1.63.0, SWC 1.16.2, TypeScript 6.0.3, typescript-eslint 8.70.0, Less 4.9.1, PostCSS 8.5.28, Stylelint 17.15.0 and Webpack 5.110.3.
+- Major upgrades are handled separately: ESLint remains on 9, Mocha on 11 and cssnano-preset-advanced on 8 in this release.
+
 ## 4.14.3
 
 #### :bug: Bug Fix
