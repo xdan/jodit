@@ -173,6 +173,35 @@ export function iframe(editor: IJodit): void {
 					return html;
 				};
 
+				/**
+				 * Replace the whole iframe document with the given HTML.
+				 *
+				 * The markup is parsed in an inert document first (no browsing
+				 * context: scripts do not run, sub-resources are not fetched),
+				 * sanitized there via `safeHTML`, and only then moved into the
+				 * live document. `document.write` on the live document would
+				 * execute inline scripts and event handlers while parsing,
+				 * before the sanitizer had a chance to strip them, and the
+				 * iframe is same-origin with the host page by default.
+				 * A `<script>` the cleaner is configured to keep still never
+				 * executes: nodes coming from an inert parser are flagged
+				 * "already started", exactly like `innerHTML`.
+				 * See GHSA-w3xv-x3fm-59ph.
+				 */
+				const replaceDocument = (html: string): void => {
+					const inert = new DOMParser().parseFromString(
+						html,
+						'text/html'
+					);
+
+					editor.e.fire('safeHTML', inert.documentElement);
+
+					doc.replaceChild(
+						doc.adoptNode(inert.documentElement),
+						doc.documentElement
+					);
+				};
+
 				if (docMode) {
 					const tag = editor.element.tagName;
 
@@ -203,17 +232,8 @@ export function iframe(editor: IJodit): void {
 										clearMarkers(old) !==
 										clearMarkers(value)
 									) {
-										doc.open();
-										doc.write(
-											editor.o.iframeDoctype +
-												clearMarkers(value)
-										);
-										doc.close();
+										replaceDocument(clearMarkers(value));
 										editor.editor = doc.body;
-										editor.e.fire(
-											'safeHTML',
-											editor.editor
-										);
 
 										toggleEditable();
 										editor.e.fire('prepareWYSIWYGEditor');
@@ -222,11 +242,16 @@ export function iframe(editor: IJodit): void {
 											'beforeSetNativeEditorValue'
 										);
 									}
-								} else {
-									doc.body.innerHTML = value;
+
+									return true;
 								}
 
-								return true;
+								// A partial value goes through the regular
+								// path: `clean-html` sanitizes it and the
+								// editor assigns it to `doc.body` via
+								// `innerHTML`. Writing the raw value here
+								// would fire its event handlers first.
+								return false;
 							},
 							{ top: true }
 						);

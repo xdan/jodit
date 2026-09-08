@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.14.6
+
+#### :bug: Bug Fix
+
+- **Security / iframe (`editHTMLDocumentMode`, stored XSS, CWE-79)**: with `iframe: true` and `editHTMLDocumentMode: true` a full HTML document assigned to `editor.value` was written straight into the live iframe document with `document.write()`, and `safeHTML` was only applied afterwards. Inline `<script>` elements and `on*` handlers therefore executed while the document was being parsed — before the sanitizer could remove them — in an iframe that is same-origin with the host page by default (`iframeSandbox: null`), so an attacker-supplied document could run script in the host application's origin as soon as another user opened it. The document is now parsed in an inert `DOMParser` document (no browsing context: nothing executes, no sub-resources are fetched), sanitized there via the `safeHTML` event, and only then adopted into the live iframe document; nodes coming from an inert parser are flagged "already started", so even a `<script>` the cleaner is configured to keep never executes — the same guarantee `innerHTML` gives in the regular mode. A partial value (no `<html>`/`<body>`) in that mode was also assigned to `doc.body.innerHTML` unsanitized before `clean-html` ran, which fired e.g. `<img onerror>`; it now goes through the regular sanitized path. Affected all versions with `editHTMLDocumentMode` through 4.14.5. Responsibly reported by [@bp0lr](https://github.com/bp0lr) (GHSA-w3xv-x3fm-59ph).
+
 ## 4.14.5
 
 #### :house: Internal

@@ -190,6 +190,97 @@
 					});
 				});
 
+				describe('Security', function () {
+					const opt = {
+						iframe: true,
+						editHTMLDocumentMode: true,
+						iframeStyle: '',
+						iframeCSSLinks: []
+					};
+
+					beforeEach(function () {
+						window.__joditXssProbe = false;
+					});
+
+					afterEach(function () {
+						delete window.__joditXssProbe;
+					});
+
+					it('Should not execute inline scripts of a full document (GHSA-w3xv-x3fm-59ph)', async function () {
+						const editor = Jodit.make(appendTestArea(), opt);
+
+						editor.value =
+							'<!DOCTYPE html><html><head><title>Attacker</title>' +
+							'<script>parent.__joditXssProbe = true;</script></head>' +
+							'<body><script>parent.__joditXssProbe = true;</script>' +
+							'<p>Attacker-controlled document</p></body></html>';
+
+						await delay(300);
+
+						expect(window.__joditXssProbe).is.false;
+						// the body script is dropped by `denyTags` afterwards
+						expect(editor.editor.querySelector('script')).is.null;
+						expect(editor.value).includes(
+							'<p>Attacker-controlled document</p>'
+						);
+					});
+
+					it('Should strip event handlers of a full document before it reaches the live iframe', async function () {
+						const editor = Jodit.make(appendTestArea(), opt);
+
+						editor.value =
+							'<html><head></head><body onload="parent.__joditXssProbe = true">' +
+							'<img src="/does-not-exist.png" onerror="parent.__joditXssProbe = true">' +
+							'<svg onload="parent.__joditXssProbe = true"></svg>' +
+							'<p>text</p></body></html>';
+
+						await delay(300);
+
+						expect(window.__joditXssProbe).is.false;
+						expect(editor.value).does.not.include(
+							'__joditXssProbe'
+						);
+						expect(editor.value).includes('<p>text</p>');
+					});
+
+					it('Should sanitize a partial value before it is assigned to the document body', async function () {
+						const editor = Jodit.make(appendTestArea(), opt);
+
+						editor.value =
+							'<img src="/does-not-exist.png" onerror="parent.__joditXssProbe = true"><p>text</p>';
+
+						await delay(300);
+
+						expect(window.__joditXssProbe).is.false;
+						expect(editor.value).does.not.include('onerror');
+						expect(editor.value).includes('<p>text</p>');
+					});
+
+					it('Should keep the document attributes and content', function () {
+						const editor = Jodit.make(appendTestArea(), opt);
+
+						editor.value =
+							'<!DOCTYPE html><html lang="de" dir="rtl"><head><title>Doc</title></head>' +
+							'<body><h1>Title</h1><p>Body</p></body></html>';
+
+						const doc = editor.iframe.contentWindow.document;
+						expect(doc.documentElement.getAttribute('lang')).equals(
+							'de'
+						);
+						expect(doc.documentElement.getAttribute('dir')).equals(
+							'rtl'
+						);
+						expect(doc.title).equals('Doc');
+						expect(editor.editor).equals(doc.body);
+						expect(
+							editor.editor.querySelector('h1').textContent
+						).equals('Title');
+						expect(editor.value).includes(
+							'<h1>Title</h1><p>Body</p>'
+						);
+					});
+				});
+
 				describe('Change event', function () {
 					it('should work like in usual case', function () {
 						const editor = getJodit({
