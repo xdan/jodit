@@ -31,7 +31,9 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	static equal(first: SnapshotType, second: SnapshotType): boolean {
 		return (
 			first.html === second.html &&
-			JSON.stringify(first.range) === JSON.stringify(second.range)
+			JSON.stringify(first.range) === JSON.stringify(second.range) &&
+			JSON.stringify(first.ranges) === JSON.stringify(second.ranges) &&
+			Boolean(first.backward) === Boolean(second.backward)
 		);
 	}
 
@@ -165,38 +167,56 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 		const sel = this.j.s.sel;
 
 		if (sel && sel.rangeCount) {
-			const range = sel.getRangeAt(0);
-			const startContainer = this.calcHierarchyLadder(
-				range.startContainer
-			);
-			const endContainer = this.calcHierarchyLadder(range.endContainer);
-
-			let startOffset = Snapshot.strokeOffset(
-					range.startContainer,
-					range.startOffset
-				),
-				endOffset = Snapshot.strokeOffset(
-					range.endContainer,
-					range.endOffset
+			const ranges: SnapshotType['range'][] = [];
+			for (let i = 0; i < sel.rangeCount; i += 1) {
+				const range = sel.getRangeAt(i);
+				const startContainer = this.calcHierarchyLadder(
+					range.startContainer
+				);
+				const endContainer = this.calcHierarchyLadder(
+					range.endContainer
 				);
 
-			if (
-				!startContainer.length &&
-				range.startContainer !== this.j.editor
+				let startOffset = Snapshot.strokeOffset(
+						range.startContainer,
+						range.startOffset
+					),
+					endOffset = Snapshot.strokeOffset(
+						range.endContainer,
+						range.endOffset
+					);
+
+				if (
+					!startContainer.length &&
+					range.startContainer !== this.j.editor
+				) {
+					startOffset = 0;
+				}
+
+				if (
+					!endContainer.length &&
+					range.endContainer !== this.j.editor
+				) {
+					endOffset = 0;
+				}
+
+				ranges.push({
+					startContainer,
+					startOffset,
+					endContainer,
+					endOffset
+				});
+			}
+			snapshot.range = ranges[0];
+			if (ranges.length > 1) {
+				snapshot.ranges = ranges;
+			} else if (
+				!sel.isCollapsed &&
+				sel.anchorNode === sel.getRangeAt(0).endContainer &&
+				sel.anchorOffset === sel.getRangeAt(0).endOffset
 			) {
-				startOffset = 0;
+				snapshot.backward = true;
 			}
-
-			if (!endContainer.length && range.endContainer !== this.j.editor) {
-				endOffset = 0;
-			}
-
-			snapshot.range = {
-				startContainer,
-				startOffset,
-				endContainer,
-				endOffset
-			};
 		}
 
 		return snapshot;
@@ -244,19 +264,32 @@ export class Snapshot extends ViewComponent<IJodit> implements ISnapshot {
 	restoreOnlySelection(snapshot: SnapshotType): void {
 		try {
 			if (snapshot.range) {
-				const range = this.j.ed.createRange();
-
-				range.setStart(
-					this.getElementByLadder(snapshot.range.startContainer),
-					snapshot.range.startOffset
+				const ranges = (snapshot.ranges ?? [snapshot.range]).map(
+					saved => {
+						const range = this.j.ed.createRange();
+						range.setStart(
+							this.getElementByLadder(saved.startContainer),
+							saved.startOffset
+						);
+						range.setEnd(
+							this.getElementByLadder(saved.endContainer),
+							saved.endOffset
+						);
+						return range;
+					}
 				);
-
-				range.setEnd(
-					this.getElementByLadder(snapshot.range.endContainer),
-					snapshot.range.endOffset
-				);
-
-				this.j.s.selectRange(range);
+				this.j.s.selectRange(ranges[0]);
+				const sel = this.j.s.sel;
+				ranges.slice(1).forEach(range => sel?.addRange(range));
+				if (snapshot.backward && ranges.length === 1) {
+					const range = ranges[0];
+					sel?.setBaseAndExtent(
+						range.endContainer,
+						range.endOffset,
+						range.startContainer,
+						range.startOffset
+					);
+				}
 			}
 		} catch (__ignore) {
 			this.j.editor.lastChild &&

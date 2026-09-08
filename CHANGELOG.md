@@ -9,6 +9,27 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.14.3
+
+#### :bug: Bug Fix
+
+- **Selection**: `save()`, `fakes()`, `remove()` and `wrapInTag()` leave selections crossing the editor boundary untouched. `isInsideArea` checks both boundaries, and `restoreFakes()` ignores nodes moved outside the editor.
+- **Selection / caret**: `current()` resolves the last text descendant when the caret follows a nested element and no longer returns a `<br>` outside the editor. Edge checks use the correct selection endpoint, including selections across blocks.
+- **Selection / ranges and history**: preserve backward selections through save/restore, formatting, expansion and undo/redo, including iframe editors. Restore and format all native disjoint ranges in Firefox; selected HTML and node iteration include all ranges without duplicate callbacks. Existing history snapshots remain supported.
+- **Selection / insertion**: invalid or unsupported cursor point lookups preserve the selection. Selecting the editor root selects its contents; positioning a cursor outside the root is rejected. Splitting validates the block, caret and optional edge before changing DOM. An empty sanitized fragment no longer deletes selected content, and insertion uses the surviving final child after hooks.
+- **Selection / Shadow DOM**: `save()` finds markers inside the editor's shadow tree and keeps the saved selection active.
+- **Formatting**: splitting a text node preserves live element offsets, so mixed text/element selection boundaries no longer omit part of the selected content. Temporary wrappers are cleaned up when callbacks throw or iteration stops early; `ApplyStyle` also restores the selection after a hook throws. Removed fragments are skipped when hooks replace or delete DOM, and formatting stops safely when a hook destroys the editor.
+- **Formatting / CSS**: explicit property resets such as `color: null` no longer throw. Wrapper cleanup runs after all attributes have been applied, preserving subsequent CSS rules, classes and unrelated attributes. Applying styles across nested elements overrides overlapping properties without discarding other styles. Formatting skips `contenteditable="false"` blocks and preserves styles inside protected inline content.
+- **Formatting / links**: extracting selected text no longer removes links from adjacent, unselected images by treating image-only fragments as empty.
+- **Formatting / classes and lists**: `class` and `className` accept multiple class tokens. Adjacent lists are matched correctly with multiple classes and numeric or boolean attributes. Removing a class fires `afterToggleAttribute` even when other classes remain.
+- **TypeScript**: corrected the declared argument order of `beforeToggleList` and the modes/return type of `beforeUnwrapList` to match existing runtime behavior. Runtime hook signatures are unchanged.
+- **Languages**: added missing Azerbaijani translations for `Line height`, `Spellcheck`, `Speech Recognize` and `newline`.
+
+#### :house: Internal
+
+- Simplified style iteration with `for…of` and guaranteed selection cleanup, removed intermediate array copies from caret edge checks, reused CSS reset rules across nested elements, and reused one scratch DOM Range during containment traversal instead of allocating one per node.
+- Added 92 selection and style regression/edge-case tests, including Shadow DOM, iframe, undo/redo, disjoint and backward selections, hook mutations, protected content, nested lists, CSS/attribute combinations and documents up to 3000 paragraphs. Browser suites verified in Chrome and Firefox; Chromium skips native multi-range cases it does not support.
+
 ## 4.14.2
 
 #### :house: Internal

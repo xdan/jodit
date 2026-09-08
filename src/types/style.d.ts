@@ -35,14 +35,14 @@ export interface IStyleOptions {
 		): void;
 		beforeToggleList?(
 			mode: CommitMode,
-			list: HTMLElement,
-			style: ICommitStyle
+			style: ICommitStyle,
+			list: HTMLElement
 		): void | CommitMode;
 		beforeUnwrapList?(
-			mode: 'unwrap',
+			mode: 'unwrap' | 'replace',
 			list: HTMLElement,
 			style: ICommitStyle
-		): void | CommitMode;
+		): void | HTMLElement;
 		afterToggleList?(
 			mode: CommitMode,
 			list: HTMLElement,

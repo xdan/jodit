@@ -30,14 +30,16 @@ export function isSameAttributes(
 
 	return Object.keys(attrs).every(key => {
 		if (key === 'class' || key === 'className') {
-			return elm.classList.contains(attrs[key]);
+			const classes = String(attrs[key]).match(/[^\t\n\f\r ]+/g) ?? [];
+			return classes.every(name => elm.classList.contains(name));
 		}
 
 		if (key === 'style') {
 			return hasSameStyle(elm, attrs[key] as IStyle);
 		}
 
-		return attr(elm, key) === attrs[key];
+		const value = attrs[key];
+		return attr(elm, key) === (value == null ? value : String(value));
 	});
 }
 

@@ -5,6 +5,231 @@
  */
 
 describe('Selection Module Tests', function () {
+	describe('Selection boundary regressions', () => {
+		['<p>ab|cd</p>', '<p>a|bc|d</p>', '<p>a|b</p><p>c|d</p>'].forEach(
+			source => {
+				['markers', 'fakes'].forEach(strategy => {
+					it(`Should round-trip ${strategy} for ${source}`, () => {
+						const editor = getJodit();
+						editor.value = source;
+						setCursorToChar(editor);
+						const collapsed = editor.s.isCollapsed();
+						const selected = editor.s.sel.toString();
+
+						if (strategy === 'markers') {
+							editor.s.save();
+							editor.s.restore();
+						} else {
+							const fakes = editor.s.fakes();
+							expect(fakes.length).equals(collapsed ? 1 : 2);
+							editor.s.restoreFakes(fakes);
+							expect(fakes.every(node => !node.isConnected)).is
+								.true;
+						}
+
+						expect(editor.s.isCollapsed()).equals(collapsed);
+						expect(editor.s.sel.toString()).equals(selected);
+						expect(editor.s.hasMarkers).is.false;
+						replaceCursorToChar(editor);
+						expect(editor.value).equals(source);
+					});
+				});
+			}
+		);
+
+		[true, false].forEach(collapsed => {
+			it(`Should keep a saved selection active in Shadow DOM (collapsed: ${collapsed})`, () => {
+				const root = appendTestDiv().attachShadow({ mode: 'open' });
+				root.innerHTML = '<div></div>';
+				const editor = getJodit(
+					{ shadowRoot: root, globalFullSize: false },
+					root.firstChild
+				);
+				editor.value = '<p>abcd</p>';
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild.firstChild, 1);
+				range.setEnd(
+					editor.editor.firstChild.firstChild,
+					collapsed ? 1 : 3
+				);
+				editor.s.selectRange(range);
+
+				const saved = editor.s.save();
+
+				expect(saved.length).equals(1);
+				expect(editor.s.sel.rangeCount).equals(1);
+				expect(editor.s.isInsideArea).is.true;
+				editor.s.restore();
+				expect(editor.s.sel.toString()).equals(collapsed ? '' : 'bc');
+				expect(editor.s.isCollapsed()).equals(collapsed);
+				expect(editor.s.hasMarkers).is.false;
+			});
+		});
+
+		it('Should ignore fake nodes moved outside the editor', () => {
+			const editor = getJodit();
+			editor.value = '<p>ab|cd</p>';
+			setCursorToChar(editor);
+			const fakes = editor.s.fakes();
+			const outside = appendTestDiv();
+			outside.appendChild(fakes[0]);
+			editor.s.setCursorIn(editor.editor.firstChild, true);
+			const range = editor.s.range.cloneRange();
+
+			editor.s.restoreFakes(fakes);
+
+			expect(editor.s.range.startContainer).equals(range.startContainer);
+			expect(editor.s.range.startOffset).equals(range.startOffset);
+			expect(outside.firstChild).equals(fakes[0]);
+		});
+
+		it('Should clean up temporary wrappers when iteration stops early', () => {
+			const editor = getJodit();
+			editor.value = '<p>|one</p><p>two|</p>';
+			setCursorToChar(editor);
+			const gen = editor.s.wrapInTagGen();
+			expect(gen.next().value.tagName).equals('FONT');
+			gen.return();
+
+			expect(editor.editor.querySelector('font')).is.null;
+			expect(editor.value).equals('<p>one</p><p>two</p>');
+		});
+
+		it('Should resolve the last text descendant after a nested element', () => {
+			const editor = getJodit();
+			editor.value = '<p><b>first</b><i>last</i></p>';
+			const range = editor.s.createRange();
+			range.setStart(editor.editor, 1);
+			range.collapse(true);
+			editor.s.selectRange(range);
+
+			expect(editor.s.current()).equals(
+				editor.editor.querySelector('i').firstChild
+			);
+		});
+
+		it('Should check the end container of a selection across blocks', () => {
+			const editor = getJodit();
+			editor.value = '<p>o|ne</p><p>two|</p>';
+			setCursorToChar(editor);
+
+			expect(editor.s.cursorOnTheRight(editor.editor.lastChild)).is.true;
+			expect(editor.s.cursorOnTheRight(editor.editor.firstChild)).is.null;
+			expect(editor.s.cursorOnTheLeft(editor.editor.firstChild)).is.false;
+		});
+
+		it('Should check only siblings after the selected end', () => {
+			const editor = getJodit();
+			editor.value = '<p><b>o|ne</b><i>two|</i></p>';
+			setCursorToChar(editor);
+
+			expect(editor.s.cursorOnTheRight(editor.editor.firstChild)).is.true;
+		});
+
+		[0, 1].forEach(offset => {
+			it(`Should recognize an element boundary at offset ${offset}`, () => {
+				const editor = getJodit();
+				editor.value = '<p><b>one</b></p>';
+				const block = editor.editor.firstChild;
+				const range = editor.s.createRange();
+				range.setStart(block, offset);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				expect(editor.s.cursorOnTheLeft(block)).equals(offset === 0);
+				expect(editor.s.cursorOnTheRight(block)).equals(offset === 1);
+			});
+		});
+
+		[false, true].forEach(includeSibling => {
+			it(`Should preserve an element end offset when splitting the start text (${includeSibling})`, () => {
+				const editor = getJodit();
+				editor.value = '<p>abcd<i>ef</i>gh</p>';
+				const block = editor.editor.firstChild;
+				const range = editor.s.createRange();
+				range.setStart(block.firstChild, 2);
+				range.setEnd(block, includeSibling ? 2 : 1);
+				editor.s.selectRange(range);
+
+				editor.s.wrapInTag('span');
+
+				expect(editor.value).equals(
+					includeSibling
+						? '<p>ab<span>cd<i>ef</i></span>gh</p>'
+						: '<p>ab<span>cd</span><i>ef</i>gh</p>'
+				);
+			});
+		});
+
+		it('Should remove all temporary wrappers when a callback throws', () => {
+			const editor = getJodit();
+			editor.value = '<p>|one</p><p>two|</p>';
+			setCursorToChar(editor);
+			const failure = new Error('Callback failed');
+
+			expect(() =>
+				editor.s.wrapInTag(() => {
+					throw failure;
+				})
+			).to.throw(failure);
+			expect(editor.editor.querySelector('font')).is.null;
+			expect(editor.value).equals('<p>one</p><p>two</p>');
+		});
+
+		['save', 'fakes', 'remove', 'wrapInTag'].forEach(method => {
+			it(`Should leave a selection crossing the editor boundary untouched in ${method}`, () => {
+				const editor = getJodit();
+				editor.value = '<p>inside</p>';
+				const outside = appendTestDiv();
+				outside.textContent = 'outside';
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild.firstChild, 2);
+				range.setEnd(outside.firstChild, 3);
+				const sel = editor.s.sel;
+				sel.removeAllRanges();
+				sel.addRange(range);
+				const selected = sel.toString();
+
+				if (method === 'wrapInTag') {
+					editor.s.wrapInTag('span');
+				} else {
+					editor.s[method]();
+				}
+
+				expect(editor.editor.innerHTML).equals('<p>inside</p>');
+				expect(outside.innerHTML).equals('outside');
+				expect(sel.toString()).equals(selected);
+			});
+		});
+
+		it('Should require both selection boundaries to be inside the editor', () => {
+			const editor = getJodit();
+			editor.value = '<p>inside</p>';
+			const outside = appendTestDiv();
+			outside.textContent = 'outside';
+			const range = editor.s.createRange();
+			range.setStart(editor.editor.firstChild.firstChild, 0);
+			range.setEnd(outside.firstChild, 1);
+			editor.s.sel.removeAllRanges();
+			editor.s.sel.addRange(range);
+
+			expect(editor.s.isInsideArea).is.false;
+		});
+
+		it('Should not return a BR outside the editor as current', () => {
+			const editor = getJodit();
+			const outside = appendTestDiv();
+			outside.innerHTML = '<br>';
+			const range = editor.s.createRange();
+			range.setStart(outside.firstChild, 0);
+			range.collapse(true);
+			editor.s.sel.removeAllRanges();
+			editor.s.sel.addRange(range);
+
+			expect(editor.s.current()).is.null;
+		});
+	});
+
 	describe('insertHTML after the editor lost focus (#1239)', function () {
 		it('Should insert at the previous caret position, not at the start', function () {
 			const editor = getJodit();

@@ -103,6 +103,10 @@ export class CommitStyle implements ICommitStyle {
 			this.__applyMap = new WeakMap();
 		}
 
+		if (jodit.isInDestruct) {
+			return;
+		}
+
 		jodit.synchronizeValues();
 		jodit.e.fire('afterCommitStyle', this);
 	}

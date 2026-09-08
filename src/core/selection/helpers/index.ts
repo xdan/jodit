@@ -60,14 +60,18 @@ export function findCorrectCurrentNode(
 		if (!rightMode && Dom.isText(node.previousSibling)) {
 			node = node.previousSibling;
 		} else if (checkChild) {
-			let current: Node | null = child(node);
+			// The fallback to the previous child changes the traversal direction
+			// before the caller receives the updated rightMode.
+			const nextChild = (nd: Node): Node | null =>
+				rightMode ? nd.lastChild : child(nd);
+			let current: Node | null = nextChild(node);
 
 			while (current) {
 				if (current && Dom.isText(current)) {
 					node = current;
 					break;
 				}
-				current = child(current);
+				current = nextChild(current);
 			}
 		}
 	}

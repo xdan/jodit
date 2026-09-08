@@ -7,7 +7,6 @@
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { isMarker } from 'jodit/core/helpers/checker/is-marker';
-import { trim } from 'jodit/core/helpers/string/trim';
 import { call } from 'jodit/core/helpers/utils/utils';
 
 /**
@@ -63,10 +62,7 @@ function extractAndMove(
 ): void {
 	const fragment = range.extractContents();
 
-	if (
-		(!fragment.textContent || !trim(fragment.textContent).length) &&
-		fragment.firstChild
-	) {
+	if (Dom.isEmpty(fragment) && fragment.firstChild) {
 		Dom.unwrap(fragment.firstChild);
 	}
 

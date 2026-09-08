@@ -195,6 +195,9 @@ export interface RangeType {
 export interface SnapshotType {
 	html: string;
 	range: RangeType;
+	/** Additional native ranges, including the first, when supported. */
+	ranges?: RangeType[];
+	backward?: boolean;
 }
 
 export interface ImageEditorOptions {

@@ -4,12 +4,12 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
-import type { ICommitStyle, IDictionary, IStyle } from 'jodit/types';
+import type { ICommitStyle, IStyle } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { attr, css } from 'jodit/core/helpers/utils';
 import { hasSameStyleKeys } from 'jodit/core/selection/style/api/has-same-style';
 
-import { isSameStyleChild, isSuitElement } from './is-suit-element';
+import { isSuitElement } from './is-suit-element';
 
 /**
  * Unwrap all suit elements inside
@@ -20,64 +20,59 @@ export function unwrapChildren(
 	font: HTMLElement
 ): boolean {
 	const needUnwrap: Node[] = [];
-	const needChangeStyle: any[] = [];
+	const needChangeStyle: Array<() => void> = [];
 
 	let firstElementSuit: boolean | undefined;
 
 	const cssStyle = style.options.attributes?.style as IStyle;
+	const styleKeys = Object.keys(cssStyle ?? {});
+	const clearedStyle: IStyle = {};
+	styleKeys.forEach(key => {
+		clearedStyle[key] = null;
+	});
 
-	if (font.firstChild) {
-		const gen = Dom.eachGen(font);
+	const clearStyle = (elm: HTMLElement): void => {
+		css(elm, clearedStyle);
+		if (!attr(elm, 'style')) {
+			attr(elm, 'style', null);
+		}
+		if (!elm.attributes.length && Dom.isTag(elm, style.element)) {
+			needUnwrap.push(elm);
+		}
+	};
 
-		let item = gen.next();
+	for (const elm of Dom.eachGen(font)) {
+		if (!Dom.isContentEditable(elm, font)) {
+			continue;
+		}
 
-		while (!item.done) {
-			const elm = item.value;
-
-			if (
-				isSuitElement(style, elm as HTMLElement, true) &&
-				(!cssStyle || hasSameStyleKeys(elm, cssStyle))
-			) {
-				if (firstElementSuit === undefined) {
-					firstElementSuit = true;
-				}
-
-				needUnwrap.push(elm);
-			} else if (cssStyle && isSameStyleChild(style, elm)) {
-				if (firstElementSuit === undefined) {
-					firstElementSuit = false;
-				}
-
-				needChangeStyle.push(() => {
-					css(
-						elm,
-						Object.keys(cssStyle).reduce(
-							(acc, key) => {
-								acc[key] = null;
-								return acc;
-							},
-							<IDictionary>{}
-						)
-					);
-
-					if (!attr(elm, 'style')) {
-						attr(elm, 'style', null);
-					}
-
-					if (
-						!attr(elm, 'style') &&
-						elm.nodeName.toLowerCase() === style.element
-					) {
-						needUnwrap.push(elm);
-					}
-				});
-			} else if (!Dom.isEmptyTextNode(elm)) {
-				if (firstElementSuit === undefined) {
-					firstElementSuit = false;
-				}
+		if (
+			isSuitElement(style, elm as HTMLElement, true) &&
+			(!cssStyle || hasSameStyleKeys(elm, cssStyle))
+		) {
+			if (firstElementSuit === undefined) {
+				firstElementSuit = true;
 			}
 
-			item = gen.next();
+			if (cssStyle) {
+				needChangeStyle.push(() => clearStyle(elm as HTMLElement));
+			} else {
+				needUnwrap.push(elm);
+			}
+		} else if (
+			cssStyle &&
+			Dom.isHTMLElement(elm) &&
+			styleKeys.some(key => css(elm, key, true) !== '')
+		) {
+			if (firstElementSuit === undefined) {
+				firstElementSuit = false;
+			}
+
+			needChangeStyle.push(() => clearStyle(elm));
+		} else if (!Dom.isEmptyTextNode(elm)) {
+			if (firstElementSuit === undefined) {
+				firstElementSuit = false;
+			}
 		}
 	}
 

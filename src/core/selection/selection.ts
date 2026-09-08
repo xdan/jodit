@@ -118,9 +118,20 @@ export class Selection implements ISelect {
 	 */
 	get isInsideArea(): boolean {
 		const { sel } = this;
-		const range = sel?.rangeCount ? sel.getRangeAt(0) : null;
-
-		return !(!range || !Dom.isOrContains(this.area, range.startContainer));
+		if (!sel?.rangeCount) {
+			return false;
+		}
+		for (let i = 0; i < sel.rangeCount; i += 1) {
+			if (
+				!Dom.isOrContains(
+					this.area,
+					sel.getRangeAt(i).commonAncestorContainer
+				)
+			) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -147,8 +158,13 @@ export class Selection implements ISelect {
 
 		if (sel && current) {
 			for (let i = 0; i < sel.rangeCount; i += 1) {
-				sel.getRangeAt(i).deleteContents();
-				sel.getRangeAt(i).collapse(true);
+				const range = sel.getRangeAt(i);
+				if (
+					Dom.isOrContains(this.area, range.commonAncestorContainer)
+				) {
+					range.deleteContents();
+					range.collapse(true);
+				}
 			}
 		}
 	}
@@ -184,34 +200,27 @@ export class Selection implements ISelect {
 	 * @returns false - Something went wrong
 	 */
 	insertCursorAtPoint(x: number, y: number): boolean {
-		this.removeMarkers();
-
 		try {
-			const rng = this.createRange();
-
-			((): void => {
-				if (this.doc.caretPositionFromPoint) {
-					const caret = this.doc.caretPositionFromPoint(x, y);
-
-					if (caret) {
-						rng.setStart(caret.offsetNode, caret.offset);
-						return;
-					}
-				}
-
-				if (this.doc.caretRangeFromPoint) {
-					const caret = this.doc.caretRangeFromPoint(x, y);
-					assert(caret, 'Incorrect caretRangeFromPoint behaviour');
-					rng.setStart(caret.startContainer, caret.startOffset);
-				}
-			})();
-
-			rng.collapse(true);
-			this.selectRange(rng);
-
+			const range = this.createRange();
+			const position = this.doc.caretPositionFromPoint?.(x, y);
+			const caret = position
+				? null
+				: this.doc.caretRangeFromPoint?.(x, y);
+			if (position) {
+				range.setStart(position.offsetNode, position.offset);
+			} else if (caret) {
+				range.setStart(caret.startContainer, caret.startOffset);
+			} else {
+				return false;
+			}
+			if (!Dom.isOrContains(this.area, range.startContainer)) {
+				return false;
+			}
+			range.collapse(true);
+			this.removeMarkers();
+			this.selectRange(range);
 			return true;
 		} catch {}
-
 		return false;
 	}
 
@@ -287,117 +296,145 @@ export class Selection implements ISelect {
 	 * Restores user selections using marker invisible elements in the DOM.
 	 */
 	restore(): void {
-		let range: Range | false = false;
+		const markers = this.markers;
+		const byId = new Map(markers.map(marker => [marker.id, marker]));
+		const ranges: Range[] = [];
+		let backward = false;
 
-		const markerFilter =
-			(start: boolean) =>
-			(node: Nullable<Node>): boolean =>
-				Dom.isMarker(node) &&
-				attr(node, 'data-' + consts.MARKER_CLASS) ===
-					(start ? 'start' : 'end');
-
-		const start = Dom.first(this.area, markerFilter(true));
-		const end = Dom.first(this.area, markerFilter(false));
-
-		if (!start) {
-			return;
-		}
-
-		range = this.createRange();
-
-		if (!end) {
-			const previousNode: Node | null = start.previousSibling;
-
-			if (Dom.isText(previousNode)) {
-				range.setStart(
-					previousNode,
-					previousNode.nodeValue ? previousNode.nodeValue.length : 0
-				);
-			} else {
-				range.setStartBefore(start);
+		for (let i = 0; i < markers.length; i += 1) {
+			const start = markers[i];
+			if (attr(start, 'data-' + consts.MARKER_CLASS) !== 'start') {
+				continue;
 			}
-
-			Dom.safeRemove(start);
-
-			range.collapse(true);
-		} else {
-			range.setStartAfter(start);
-			Dom.safeRemove(start);
-
-			range.setEndBefore(end);
-			Dom.safeRemove(end);
+			backward ||= attr(start, 'data-selection-backward') === 'true';
+			const endId = attr(start, 'data-selection-end');
+			let end = endId ? byId.get(endId) : undefined;
+			if (
+				!endId &&
+				markers[i + 1] &&
+				attr(markers[i + 1], 'data-' + consts.MARKER_CLASS) === 'end'
+			) {
+				end = markers[i + 1];
+			}
+			const range = this.createRange();
+			if (end) {
+				range.setStartAfter(start);
+				range.setEndBefore(end);
+			} else {
+				const previous = start.previousSibling;
+				if (Dom.isText(previous)) {
+					range.setStart(previous, previous.nodeValue?.length ?? 0);
+				} else {
+					range.setStartBefore(start);
+				}
+				range.collapse(true);
+			}
+			ranges.push(range);
 		}
-
-		if (range) {
-			this.selectRange(range);
+		Dom.safeRemove(...markers);
+		if (ranges.length) {
+			this.__selectRanges(ranges, backward);
 		}
+	}
+
+	private __fakeSelections = new WeakMap<
+		Node,
+		{ pairs: Node[][]; backward: boolean }
+	>();
+
+	private __isBackward(): boolean {
+		const sel = this.sel;
+		return Boolean(
+			sel &&
+			sel.rangeCount === 1 &&
+			!sel.isCollapsed &&
+			sel.anchorNode === sel.getRangeAt(0).endContainer &&
+			sel.anchorOffset === sel.getRangeAt(0).endOffset
+		);
+	}
+
+	private __ranges(): Range[] {
+		const sel = this.sel;
+		return sel
+			? Array.from({ length: sel.rangeCount }, (_, i) =>
+					sel.getRangeAt(i).cloneRange()
+				)
+			: [];
 	}
 
 	/**
 	 * Inserts invisible fake nodes on the boundaries of the current selection
-	 * and returns them. Unlike [[Select.save]] the selection stays valid while
+	 * and returns the first pair as a restoration handle for all ranges. Unlike [[Select.save]] the selection stays valid while
 	 * the DOM around it is being modified. Restore it later with [[Select.restoreFakes]].
 	 */
 	fakes(): [] | [Node] | [Node, Node] {
-		const sel = this.sel;
-		if (!sel || !sel.rangeCount) {
+		if (!this.isInsideArea) {
 			return [];
 		}
-
-		const range = sel.getRangeAt(0);
-		assert(range, 'Range is null');
-
-		const left = range.cloneRange();
-		left.collapse(true);
-		const fakeLeft = this.j.createInside.fake();
-		Dom.safeInsertNode(left, fakeLeft);
-		range.setStartBefore(fakeLeft);
-
-		const result = [fakeLeft];
-
-		if (!range.collapsed) {
-			const right = range.cloneRange();
-			right.collapse(false);
-			const fakeRight = this.j.createInside.fake();
-			Dom.safeInsertNode(right, fakeRight);
-			range.setEndAfter(fakeRight);
-			result.push(fakeRight);
-		}
-
-		this.selectRange(range);
-
-		return result as [Node, Node] | [Node] | [];
+		const backward = this.__isBackward();
+		const ranges = this.__ranges();
+		const pairs = ranges.map(range => {
+			const collapsed = range.collapsed;
+			const left = range.cloneRange();
+			left.collapse(true);
+			const fakeLeft = this.j.createInside.fake();
+			Dom.safeInsertNode(left, fakeLeft);
+			range.setStartBefore(fakeLeft);
+			const pair: Node[] = [fakeLeft];
+			if (!collapsed) {
+				const right = range.cloneRange();
+				right.collapse(false);
+				const fakeRight = this.j.createInside.fake();
+				Dom.safeInsertNode(right, fakeRight);
+				range.setEndAfter(fakeRight);
+				pair.push(fakeRight);
+			} else {
+				range.collapse(true);
+			}
+			return pair;
+		});
+		this.__fakeSelections.set(pairs[0][0], { pairs, backward });
+		this.__selectRanges(ranges, backward);
+		return pairs[0] as [Node] | [Node, Node];
 	}
 
-	/**
-	 * Restores the selection previously saved with [[Select.fakes]]
-	 * and removes the fake nodes (disconnected fakes are ignored).
-	 */
+	/** Restore all ranges associated with the returned fake pair. */
 	restoreFakes(fakes: [] | [Node] | [Node, Node]): void {
-		const nodes = fakes.filter(n => n.isConnected);
-		if (!nodes.length) {
+		if (!fakes.length) {
 			return;
 		}
-
-		const [fakeLeft, fakeRight] = nodes;
-		const range = this.createRange();
-		range.setStartAfter(fakeLeft);
-		if (fakeRight) {
-			range.setEndBefore(fakeRight);
+		const saved = this.__fakeSelections.get(fakes[0]);
+		this.__fakeSelections.delete(fakes[0]);
+		if (this.j.isInDestruct) {
+			return;
 		}
-		this.selectRange(range);
-
-		if (
-			fakeLeft.parentNode?.firstChild !== fakeLeft.parentNode?.lastChild
-		) {
-			Dom.safeRemove(fakeLeft);
+		const ranges: Range[] = [];
+		for (const pair of saved?.pairs ?? [fakes]) {
+			const nodes = pair.filter(
+				n => n.isConnected && Dom.isOrContains(this.area, n, true)
+			);
+			if (!nodes.length) {
+				continue;
+			}
+			const [left, right] = nodes;
+			const range = this.createRange();
+			range.setStartAfter(left);
+			if (right) {
+				range.setEndBefore(right);
+			} else {
+				range.collapse(true);
+			}
+			for (const node of nodes) {
+				if (
+					node.parentNode?.firstChild !== node.parentNode?.lastChild
+				) {
+					Dom.safeRemove(node);
+				}
+			}
+			ranges.push(range);
 		}
-
-		if (
-			fakeRight?.parentNode?.firstChild !==
-			fakeRight?.parentNode?.lastChild
-		) {
-			Dom.safeRemove(fakeRight);
+		if (ranges.length) {
+			this.__selectRanges(ranges, saved?.backward);
 		}
 	}
 
@@ -416,13 +453,21 @@ export class Selection implements ISelect {
 			return [];
 		}
 
+		const backward = this.__isBackward();
 		const info: MarkerInfo[] = [],
 			length: number = sel.rangeCount,
 			ranges: Range[] = [];
 
 		for (let i = 0; i < length; i += 1) {
 			ranges[i] = sel.getRangeAt(i);
+			if (
+				!Dom.isOrContains(this.area, ranges[i].commonAncestorContainer)
+			) {
+				return [];
+			}
+		}
 
+		for (let i = 0; i < length; i += 1) {
 			if (ranges[i].collapsed) {
 				const start = this.marker(true, ranges[i]);
 
@@ -434,6 +479,12 @@ export class Selection implements ISelect {
 			} else {
 				const start = this.marker(true, ranges[i]);
 				const end = this.marker(false, ranges[i]);
+				if (length > 1) {
+					attr(start, 'data-selection-end', end.id);
+				}
+				if (backward) {
+					attr(start, 'data-selection-backward', 'true');
+				}
 
 				info[i] = {
 					startId: start.id,
@@ -449,7 +500,7 @@ export class Selection implements ISelect {
 			sel.removeAllRanges();
 
 			for (let i = length - 1; i >= 0; --i) {
-				const startElm = this.doc.getElementById(info[i].startId);
+				const startElm = this.area.querySelector('#' + info[i].startId);
 
 				if (!startElm) {
 					continue;
@@ -462,8 +513,8 @@ export class Selection implements ISelect {
 					ranges[i].setStartBefore(startElm);
 
 					if (info[i].endId) {
-						const endElm = this.doc.getElementById(
-							info[i].endId as string
+						const endElm = this.area.querySelector(
+							'#' + info[i].endId
 						);
 
 						if (endElm) {
@@ -573,6 +624,10 @@ export class Selection implements ISelect {
 		let node = range.startContainer;
 		let rightMode: boolean = false;
 
+		if (!Dom.isOrContains(this.area, node)) {
+			return null;
+		}
+
 		const child = (nd: Node): Node | null =>
 			rightMode ? nd.lastChild : nd.firstChild;
 
@@ -616,9 +671,12 @@ export class Selection implements ISelect {
 	): void {
 		this.errorNode(node);
 
-		const child = Dom.isFragment(node) ? node.lastChild : node;
-
 		this.j.e.fire('safeHTML', node);
+
+		let child = Dom.isFragment(node) ? node.lastChild : node;
+		if (!child || this.j.isInDestruct) {
+			return;
+		}
 
 		if (!this.isFocused() && this.j.isEditorMode()) {
 			this.focus();
@@ -633,6 +691,10 @@ export class Selection implements ISelect {
 			}
 
 			this.j.e.fire('beforeInsertNode', node);
+			child = Dom.isFragment(node) ? node.lastChild : node;
+			if (!child || this.j.isInDestruct) {
+				return;
+			}
 
 			if (sel && sel.rangeCount) {
 				const range = sel.getRangeAt(0);
@@ -827,16 +889,22 @@ export class Selection implements ISelect {
 	/**
 	 * Call callback for all selection node
 	 */
-	// eslint-disable-next-line complexity
 	eachSelection(callback: (current: Node) => void): void {
-		const sel = this.sel;
-
-		if (!sel || !sel.rangeCount) {
-			return;
+		const seen = new Set<Node>();
+		for (const range of this.__ranges()) {
+			if (!Dom.isOrContains(this.area, range.commonAncestorContainer)) {
+				continue;
+			}
+			this.__eachRange(range, node => {
+				if (!seen.has(node)) {
+					seen.add(node);
+					callback(node);
+				}
+			});
 		}
+	}
 
-		const range = sel.getRangeAt(0);
-
+	private __eachRange(range: Range, callback: (current: Node) => void): void {
 		let root = range.commonAncestorContainer;
 
 		if (!Dom.isHTMLElement(root)) {
@@ -962,14 +1030,20 @@ export class Selection implements ISelect {
 			sel = this.sel,
 			range = sel?.rangeCount ? sel.getRangeAt(0) : null;
 
-		fake ??= this.current(false);
-
-		if (!range || !fake || !Dom.isOrContains(parentBlock, fake, true)) {
+		if (!range) {
 			return null;
 		}
 
 		const container = start ? range.startContainer : range.endContainer;
 		const offset = start ? range.startOffset : range.endOffset;
+		fake ??= container;
+
+		if (
+			!Dom.isOrContains(parentBlock, container) ||
+			!Dom.isOrContains(parentBlock, fake)
+		) {
+			return null;
+		}
 
 		const isSignificant = (elm: Node | null): boolean =>
 			Boolean(
@@ -989,14 +1063,10 @@ export class Selection implements ISelect {
 				return false;
 			}
 		} else {
-			const children = toArray(container.childNodes);
-
-			if (end) {
-				if (children.slice(offset).some(isSignificant)) {
-					return false;
-				}
-			} else {
-				if (children.slice(0, offset).some(isSignificant)) {
+			const children = container.childNodes;
+			const limit = end ? children.length : offset;
+			for (let i = end ? offset : 0; i < limit; i += 1) {
+				if (isSignificant(children[i])) {
 					return false;
 				}
 			}
@@ -1012,7 +1082,7 @@ export class Selection implements ISelect {
 			}
 			next = nextOne;
 
-			if (next && isSignificant(next)) {
+			if (isSignificant(next)) {
 				return false;
 			}
 		}
@@ -1064,14 +1134,7 @@ export class Selection implements ISelect {
 	private setCursorNearWith(node: Node, inStart: boolean): Nullable<Text> {
 		this.errorNode(node);
 
-		if (
-			!Dom.up(
-				node,
-				(elm: Node | null) =>
-					elm === this.area || (elm && elm.parentNode === this.area),
-				this.area
-			)
-		) {
+		if (!Dom.isOrContains(this.area, node, true)) {
 			throw error('Node element must be in editor');
 		}
 
@@ -1166,6 +1229,14 @@ export class Selection implements ISelect {
 	 * Set range selection
 	 */
 	selectRange(range: Range, focus: boolean = true): this {
+		return this.__selectRanges([range], false, focus);
+	}
+
+	private __selectRanges(
+		ranges: Range[],
+		backward = false,
+		focus = true
+	): this {
 		const sel = this.sel;
 
 		if (focus && !this.isFocused() && this.j.e.current !== 'focus') {
@@ -1174,7 +1245,16 @@ export class Selection implements ISelect {
 
 		if (sel) {
 			sel.removeAllRanges();
-			sel.addRange(range);
+			ranges.forEach(range => sel.addRange(range));
+			if (backward && ranges.length === 1) {
+				const range = ranges[0];
+				sel.setBaseAndExtent(
+					range.endContainer,
+					range.endOffset,
+					range.startContainer,
+					range.startOffset
+				);
+			}
 		}
 
 		/**
@@ -1209,7 +1289,9 @@ export class Selection implements ISelect {
 
 		const range = this.createRange();
 
-		range[inward ? 'selectNodeContents' : 'selectNode'](node);
+		range[
+			inward || node === this.area ? 'selectNodeContents' : 'selectNode'
+		](node);
 
 		return this.selectRange(range);
 	}
@@ -1227,11 +1309,11 @@ export class Selection implements ISelect {
 		const sel = this.sel;
 
 		if (sel && sel.rangeCount > 0) {
-			const range = sel.getRangeAt(0);
-			const clonedSelection = range.cloneContents();
 			const div = this.j.createInside.div();
 
-			Dom.append(div, clonedSelection);
+			this.__ranges().forEach(range =>
+				Dom.append(div, range.cloneContents())
+			);
 
 			return div.innerHTML;
 		}
@@ -1248,9 +1330,7 @@ export class Selection implements ISelect {
 	 * `nativeExecCommand('fontsize', false, '7')` trick which relied on the
 	 * browser to split the selection into `<font size="7">` fragments.
 	 */
-	private __wrapSelectionFragments(): HTMLElement[] {
-		const range = this.range;
-
+	private __wrapSelectionFragments(range: Range): HTMLElement[] {
 		this.__splitSelectionBoundaries(range);
 
 		let root: Nullable<Node> = range.commonAncestorContainer;
@@ -1274,8 +1354,7 @@ export class Selection implements ISelect {
 	 * fully (not partially) selected.
 	 */
 	private __splitSelectionBoundaries(range: Range): void {
-		let { startContainer, endContainer } = range;
-		let { startOffset, endOffset } = range;
+		const { endContainer, endOffset } = range;
 
 		if (
 			Dom.isText(endContainer) &&
@@ -1283,8 +1362,9 @@ export class Selection implements ISelect {
 			endOffset < (endContainer.nodeValue?.length ?? 0)
 		) {
 			endContainer.splitText(endOffset);
-			endOffset = endContainer.nodeValue?.length ?? endOffset;
 		}
+
+		const { startContainer, startOffset } = range;
 
 		if (
 			Dom.isText(startContainer) &&
@@ -1292,20 +1372,10 @@ export class Selection implements ISelect {
 			startOffset < (startContainer.nodeValue?.length ?? 0)
 		) {
 			const middle = startContainer.splitText(startOffset);
-
-			// Selection located inside a single text node - the tail we just
-			// cut off is the actual selected fragment.
-			if (startContainer === endContainer) {
-				endContainer = middle;
-				endOffset = middle.nodeValue?.length ?? 0;
-			}
-
-			startContainer = middle;
-			startOffset = 0;
+			// splitText updates the live range, including element end offsets.
+			// Only the start at the split point needs to move to the new node.
+			range.setStart(middle, 0);
 		}
-
-		range.setStart(startContainer, startOffset);
-		range.setEnd(endContainer, endOffset);
 
 		// Normalize text-edge boundaries (e.g. `(text, 0)` or `(text, length)`)
 		// to the element level so that containment checks based on
@@ -1339,22 +1409,31 @@ export class Selection implements ISelect {
 	 * Collects the highest-level nodes that are completely inside the range,
 	 * descending into nodes that are only partially selected.
 	 */
-	private __collectContainedNodes(root: Node, range: Range): Node[] {
+	private __collectContainedNodes(
+		root: Node,
+		range: Range,
+		scratch = this.createRange()
+	): Node[] {
 		const result: Node[] = [];
 
 		toArray(root.childNodes).forEach(child => {
-			if (this.__isFullyContained(range, child)) {
+			if (this.__isFullyContained(range, child, scratch)) {
 				result.push(child);
 			} else if (child.childNodes.length && range.intersectsNode(child)) {
-				result.push(...this.__collectContainedNodes(child, range));
+				result.push(
+					...this.__collectContainedNodes(child, range, scratch)
+				);
 			}
 		});
 
 		return result;
 	}
 
-	private __isFullyContained(range: Range, node: Node): boolean {
-		const nodeRange = this.createRange();
+	private __isFullyContained(
+		range: Range,
+		node: Node,
+		nodeRange: Range
+	): boolean {
 		nodeRange.selectNode(node);
 
 		return (
@@ -1427,6 +1506,10 @@ export class Selection implements ISelect {
 	 * Wrap all selected fragments inside Tag or apply some callback
 	 */
 	*wrapInTagGen(fakes?: Node[]): Generator<HTMLElement, undefined> {
+		if (this.sel?.rangeCount && !this.isInsideArea) {
+			return;
+		}
+
 		if (this.isCollapsed()) {
 			const font = this.jodit.createInside.element(
 				'font',
@@ -1439,36 +1522,53 @@ export class Selection implements ISelect {
 				Dom.append(font, fakes[0]);
 			}
 
-			yield font;
-			Dom.unwrap(font);
+			try {
+				yield font;
+			} finally {
+				Dom.unwrap(font);
+			}
 
 			return;
 		}
 
-		const elms = this.__wrapSelectionFragments();
+		const elms = this.__ranges().flatMap(range =>
+			this.__wrapSelectionFragments(range)
+		);
 
-		for (const font of elms) {
-			const { firstChild, lastChild } = font;
+		try {
+			for (const font of elms) {
+				if (
+					this.j.isInDestruct ||
+					!Dom.isOrContains(this.area, font, true)
+				) {
+					continue;
+				}
+				const { firstChild, lastChild } = font;
 
-			if (
-				firstChild &&
-				firstChild === lastChild &&
-				isMarker(firstChild)
-			) {
+				if (
+					firstChild &&
+					firstChild === lastChild &&
+					isMarker(firstChild)
+				) {
+					Dom.unwrap(font);
+					continue;
+				}
+
+				if (firstChild && isMarker(firstChild)) {
+					Dom.before(font, firstChild);
+				}
+
+				if (lastChild && isMarker(lastChild)) {
+					Dom.after(font, lastChild);
+				}
+
+				yield font;
 				Dom.unwrap(font);
-				continue;
 			}
-
-			if (firstChild && isMarker(firstChild)) {
-				Dom.before(font, firstChild);
-			}
-
-			if (lastChild && isMarker(lastChild)) {
-				Dom.after(font, lastChild);
-			}
-
-			yield font;
-			Dom.unwrap(font);
+		} finally {
+			// A callback can throw or stop iteration before later wrappers
+			// have been visited. None of the temporary fonts should survive.
+			elms.forEach(font => Dom.unwrap(font));
 		}
 
 		return;
@@ -1543,7 +1643,13 @@ export class Selection implements ISelect {
 	 * Split selection on two parts: left and right
 	 */
 	splitSelection(currentBox: HTMLElement, edge?: Node): Nullable<Element> {
-		if (!this.isCollapsed()) {
+		if (
+			!this.isCollapsed() ||
+			!this.isInsideArea ||
+			!Dom.isOrContains(this.area, currentBox, true) ||
+			!Dom.isOrContains(currentBox, this.range.startContainer) ||
+			(edge && !Dom.isOrContains(currentBox, edge, true))
+		) {
 			return null;
 		}
 
@@ -1657,11 +1763,16 @@ export class Selection implements ISelect {
 	 * becomes `<p>|<b>test</b>|</p>`)
 	 */
 	expandSelection(): this {
-		if (this.isCollapsed()) {
+		if (this.isCollapsed() || !this.isInsideArea) {
 			return this;
 		}
+		const backward = this.__isBackward();
+		const ranges = this.__ranges().map(range => this.__expandRange(range));
+		this.__selectRanges(ranges, backward);
+		return this;
+	}
 
-		const { range } = this;
+	private __expandRange(range: Range): Range {
 		const c = range.cloneRange();
 
 		if (
@@ -1671,7 +1782,7 @@ export class Selection implements ISelect {
 				true
 			)
 		) {
-			return this;
+			return range;
 		}
 
 		const moveMaxEdgeFake = (start: boolean): Node => {
@@ -1734,14 +1845,12 @@ export class Selection implements ISelect {
 			}
 		}
 
-		this.selectRange(c);
-
 		Dom.safeRemove(leftFake, rightFake);
 
-		if (this.isCollapsed()) {
+		if (c.collapsed) {
 			throw error('Selection is collapsed');
 		}
 
-		return this;
+		return c;
 	}
 }

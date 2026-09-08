@@ -53,14 +53,7 @@ export function toggleAttributes(
 
 			switch (key) {
 				case 'style': {
-					mode = toggleStyle(
-						commitStyle,
-						jodit,
-						value,
-						elm,
-						dry,
-						mode
-					);
+					mode = toggleStyle(jodit, value, elm, dry, mode);
 
 					break;
 				}
@@ -76,11 +69,14 @@ export function toggleAttributes(
 		});
 	}
 
-	return mode;
+	// Cleanup belongs to the complete attribute transaction. Removing a
+	// wrapper between CSS rules would apply the remaining rules to a detached node.
+	return !dry && attributes?.style
+		? removeExtraStyleAttribute(commitStyle, elm, mode)
+		: mode;
 }
 
 function toggleStyle(
-	commitStyle: ICommitStyle,
 	jodit: IJodit,
 	style: IStyle | string | number | boolean | null,
 	elm: HTMLElement,
@@ -97,6 +93,16 @@ function toggleStyle(
 			return;
 		}
 
+		if (newValue == null || newValue === '') {
+			if (inlineValue) {
+				!dry && css(elm, rule, null);
+				// An explicit reset changes a style; it is not a toggle of
+				// the owning element (notably when resetting list-style-type).
+				mode = CHANGE;
+			}
+			return;
+		}
+
 		if (
 			getNativeCSSValue(jodit, elm, rule) ===
 			normalizeCssValue(rule, newValue as string)
@@ -107,7 +113,6 @@ function toggleStyle(
 
 			!dry && css(elm, rule, null);
 			mode = UNSET;
-			mode = removeExtraStyleAttribute(commitStyle, elm, mode);
 			return;
 		}
 
@@ -115,7 +120,6 @@ function toggleStyle(
 
 		if (!dry) {
 			css(elm, rule, newValue);
-			mode = removeExtraStyleAttribute(commitStyle, elm, mode);
 		}
 	});
 
@@ -130,22 +134,26 @@ function toggleClass(
 	dry: boolean
 ): CommitMode {
 	assert(isString(value), 'Class name must be a string');
+	const classes = value.match(/[^\t\n\f\r ]+/g) ?? [];
+	if (!classes.length) {
+		return mode;
+	}
 
 	const hook = jodit.e.fire.bind(jodit.e, `${_PREFIX}AfterToggleAttribute`);
 
-	if (elm.classList.contains(value.toString())) {
+	if (classes.every(name => elm.classList.contains(name))) {
 		mode = UNSET;
 		if (!dry) {
-			elm.classList.remove(value);
+			elm.classList.remove(...classes);
 			if (elm.classList.length === 0) {
 				attr(elm, 'class', null);
-				hook(mode, elm, 'class', null);
 			}
+			hook(mode, elm, 'class', attr(elm, 'class'));
 		}
 	} else {
 		mode = CHANGE;
 		if (!dry) {
-			elm.classList.add(value);
+			elm.classList.add(...classes);
 			hook(mode, elm, 'class', value);
 		}
 	}
@@ -198,7 +206,10 @@ function removeExtraStyleAttribute(
 	if (!attr(elm, 'style')) {
 		attr(elm, 'style', null);
 
-		if (elm.tagName.toLowerCase() === commitStyle.defaultTag) {
+		if (
+			!elm.attributes.length &&
+			elm.tagName.toLowerCase() === commitStyle.defaultTag
+		) {
 			Dom.unwrap(elm);
 			mode = UNWRAP;
 		}

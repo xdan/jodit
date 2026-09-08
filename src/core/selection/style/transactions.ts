@@ -71,6 +71,7 @@ export const transactions: IStyleTransactions = {
 			const { element, jodit, style, mode, collapsed } = value;
 
 			if (
+				!Dom.isContentEditable(element, jodit.editor) ||
 				isInsideInvisibleElement(element, jodit.editor) ||
 				(!collapsed && Dom.isEmptyContent(element))
 			) {
