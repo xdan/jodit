@@ -250,7 +250,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 						}
 					: false,
 				{
-					icon: 'upload',
+					icon: 'download',
 					title: 'Download',
 					exec: (): void => {
 						const url = ga('href');

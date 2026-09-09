@@ -1422,6 +1422,53 @@
 					expect(context).is.not.null;
 				});
 
+				describe('Download item', () => {
+					// https://github.com/xdan/jodit/issues/1472
+					it('Should show a download icon, not the upload one', async () => {
+						const editor = getJodit({
+							filebrowser: {
+								ajax: {
+									url: 'https://xdsoft.net/jodit/connector/index.php'
+								}
+							}
+						});
+
+						const filebrowser = editor.filebrowser;
+
+						await filebrowser.open(() => {});
+
+						const files = filebrowser.files.container;
+
+						const item = files.querySelector(
+								'.' +
+									filebrowser.files.getFullElName('item') +
+									'[data-is-file="1"]'
+							),
+							pos = Jodit.modules.Helpers.position(item);
+
+						simulateEvent('contextmenu', item, o => {
+							Object.assign(o, {
+								clientX: pos.left + 10,
+								clientY: pos.top + 10
+							});
+						});
+
+						const context = getOpenedPopup(filebrowser);
+						const download = Array.from(
+							context.querySelectorAll('button')
+						).find(btn => btn.textContent.trim() === 'Download');
+
+						expect(download).is.not.undefined;
+						expect(download.querySelector('.jodit-icon_download'))
+							.is.not.null;
+						expect(download.querySelector('.jodit-icon_upload')).is
+							.null;
+						expect(
+							Jodit.modules.Icon.get('download')
+						).does.not.equal(Jodit.modules.Icon.get('upload'));
+					});
+				});
+
 				describe('Second time', () => {
 					// https://github.com/xdan/jodit/issues/1059
 					it('Should not double content ', async () => {

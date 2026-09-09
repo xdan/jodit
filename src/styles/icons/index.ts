@@ -20,6 +20,7 @@ import center from './center.svg';
 import check from './check.svg';
 import chevron from './chevron.svg';
 import dots from './dots.svg';
+import download from './download.svg';
 import eye from './eye.svg';
 import file from './file.svg';
 import folder from './folder.svg';
@@ -49,6 +50,7 @@ export {
 	check,
 	chevron,
 	dots,
+	download,
 	eye,
 	file,
 	folder,

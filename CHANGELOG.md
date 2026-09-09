@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.14.7
+
+#### :bug: Bug Fix
+
+- **File browser**: the **Download** item of the file context menu showed the *upload* icon (arrow pointing up into a tray). Added a dedicated `download` icon (arrow pointing down, same Font Awesome style as the rest of the set — also available via `Jodit.modules.Icon.get('download')`) and used it for that item. Fixes [#1472](https://github.com/xdan/jodit/issues/1472).
+
 ## 4.14.6
 
 #### :bug: Bug Fix
