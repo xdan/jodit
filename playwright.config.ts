@@ -32,6 +32,9 @@ export default defineConfig({
 	/* Opt out of parallel tests on CI. */
 	workers: process.env.CI ? 1 : undefined,
 	testMatch: '**/*.spec.ts',
+	/* `jodit-env` is the mounted Jodit repo when the tests run for a project
+	 * which reuses this config (e.g. Jodit PRO): its own specs must be skipped */
+	testIgnore: ['**/node_modules/**', '**/jodit-env/**'],
 
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: [['html', { open: 'never' }]],

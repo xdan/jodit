@@ -18,9 +18,13 @@ if (!args.build) {
 	throw new Error('Build type is not defined');
 }
 
+/**
+ * Playwright is started from the root of the project under test
+ * (`/app` inside the docker image), so the build is resolved relative to it.
+ */
 const jsFile = path.resolve(
-	__dirname,
-	'../../build',
+	process.cwd(),
+	'build',
 	args.build,
 	'jodit.' + (args.fat ? 'fat.' : '') + (args.min ? 'min.' : '') + 'js'
 );
