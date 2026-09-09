@@ -305,7 +305,7 @@ screenshots-build-image:
 
 .PHONY: newversion
 newversion:
-	npm version patch --no-git-tag-version
+	npm version $(or $(releaseVersion),patch) --no-git-tag-version $(if $(releaseVersion),--allow-same-version,)
 	#npm version prerelease --preid=beta --no-git-tag-version
 	rm -f statoscope/reference.json statoscope/reference.next.json
 	make build es=es2021 uglify=true fat=true statoscope=true

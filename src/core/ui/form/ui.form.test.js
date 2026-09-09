@@ -79,7 +79,12 @@ describe('Create UI Form', () => {
 					.join('')}`
 			];
 
-			Array.from(t.children).map(c => result.push(...snapshot(c)));
+			// The form snapshot should not depend on the icon's SVG geometry.
+			if (t.tagName.toLowerCase() !== 'svg') {
+				Array.from(t.children).forEach(c =>
+					result.push(...snapshot(c))
+				);
+			}
 
 			return result;
 		}
@@ -90,7 +95,6 @@ describe('Create UI Form', () => {
 			'button[type=button]',
 			'span',
 			'svg',
-			'path',
 			'span',
 			'input[name=][type=file][accept=image/*][dir=auto]',
 			'label',
@@ -113,9 +117,7 @@ describe('Create UI Form', () => {
 			'input[name=caption][type=number][dir=auto]'
 		];
 
-		for (let i = 0; i < result.length; i++) {
-			expect(result[i]).equals(expected[i]);
-		}
+		expect(result).deep.equals(expected);
 	});
 
 	describe('onChange', () => {

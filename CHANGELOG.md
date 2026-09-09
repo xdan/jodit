@@ -9,6 +9,18 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.0
+
+#### :nail_care: Polish
+
+- Redrew the 82 built-in toolbar, dialog and image-editor icons as a consistent, compact SVG family with balanced strokes and rounded corners.
+- Improved small-size readability of lists, alignment and line-height controls; distinguished row and column insertion, clarified cell merging and splitting, and restored spacing in font-size and source-code icons.
+- Preserved theme colors and the text-color indicator, enlarged dropdown chevrons and refined the assistant icon. Updated visual regression snapshots for the new icon family.
+
+#### :house: Internal
+
+- Allow an explicit release version through `make newversion releaseVersion=4.15.0`; the default remains a patch increment.
+
 ## 4.14.7
 
 #### :bug: Bug Fix
