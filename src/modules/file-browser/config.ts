@@ -451,22 +451,22 @@ Config.prototype.controls.filebrowser = {
 				'<select class="jodit-input jodit-select">' +
 					`<option value="changed-asc">${fb.i18n(
 						'Sort by changed'
-					)} (⬆)</option>` +
+					)} (↑)</option>` +
 					`<option value="changed-desc">${fb.i18n(
 						'Sort by changed'
-					)} (⬇)</option>` +
+					)} (↓)</option>` +
 					`<option value="name-asc">${fb.i18n(
 						'Sort by name'
-					)} (⬆)</option>` +
+					)} (↑)</option>` +
 					`<option value="name-desc">${fb.i18n(
 						'Sort by name'
-					)} (⬇)</option>` +
+					)} (↓)</option>` +
 					`<option value="size-asc">${fb.i18n(
 						'Sort by size'
-					)} (⬆)</option>` +
+					)} (↑)</option>` +
 					`<option value="size-desc">${fb.i18n(
 						'Sort by size'
-					)} (⬇)</option>` +
+					)} (↓)</option>` +
 					'</select>'
 			) as HTMLSelectElement;
 

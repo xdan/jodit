@@ -108,6 +108,18 @@
 		border-color: #66afe9;
 		outline: 0;
 	}
+
+	// Must live inside `.jodit` so it beats the `padding` shorthand from
+	// `.jodit-input-mx()` above; otherwise the caret is painted over the text.
+	.jodit-select {
+		padding-right: calc(var(--padding-default) * 3);
+		// stylelint-disable-next-line function-no-unknown
+		background-image: data-uri('./icons/pins.svg');
+		background-position: right calc(var(--padding-default) / 2) center;
+		background-repeat: no-repeat;
+		background-size: var(--icon-middle-size) var(--icon-middle-size);
+		text-overflow: ellipsis;
+	}
 }
 
 .jodit-checkbox {
@@ -120,14 +132,6 @@
 	margin: 0 calc(var(--padding-default) / 2) 0 0;
 	cursor: pointer;
 	outline: none;
-}
-
-.jodit-select {
-	padding-right: calc(var(--padding-default) * 2);
-	// stylelint-disable-next-line function-no-unknown
-	background-image: data-uri('./icons/pins.svg');
-	background-position: 98% 50%;
-	background-repeat: no-repeat;
 }
 
 .jodit-textarea {

@@ -720,6 +720,43 @@
 					filebrowser.close();
 					filebrowser.destruct();
 				});
+
+				it('Should leave room for the caret and use text arrows in options', async () => {
+					const filebrowser = new Jodit.modules.FileBrowser({
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php'
+						}
+					});
+
+					await filebrowser.open(function () {});
+
+					const select =
+						filebrowser._dialog.dialogbox_header.querySelector(
+							'.jodit-toolbar-content_sort select'
+						);
+
+					expect(select).is.not.null;
+
+					const style = window.getComputedStyle(select);
+					const caretWidth = parseFloat(style.backgroundSize);
+
+					// The caret is painted in the right padding, so the padding must
+					// be wider than the icon, otherwise the option text is drawn
+					// under the caret
+					expect(caretWidth).is.greaterThan(0);
+					expect(parseFloat(style.paddingRight)).is.greaterThan(
+						caretWidth
+					);
+
+					Array.from(select.options).forEach(option => {
+						// U+2B06/U+2B07 are rendered as colour emoji on macOS
+						expect(option.text).does.not.match(/[\u2B06\u2B07]/);
+						expect(option.text).matches(/\((↑|↓)\)$/);
+					});
+
+					filebrowser.close();
+					filebrowser.destruct();
+				});
 			});
 
 			describe('Select button', function () {

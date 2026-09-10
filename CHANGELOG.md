@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.1
+
+#### :bug: Bug Fix
+
+- File browser: the "Sort by" select painted its dropdown caret over the option text. The `.jodit-select` caret rule was overridden by the more specific `.jodit .jodit-input` padding, so there was no room for the icon; the rule now lives inside `.jodit`, the caret is sized like a regular icon and the option labels use plain `↑`/`↓` instead of `⬆`/`⬇`, which macOS renders as colour emoji.
+
 ## 4.15.0
 
 #### :nail_care: Polish
