@@ -218,7 +218,10 @@ const editor = Jodit.make('#editor', {
 Conditions for inserting `<br>` instead of splitting:
 - `enter: 'br'` option is set
 - Shift key is pressed
-- Inside `<td>`, `<th>`, `<blockquote>`
+- Inside `<blockquote>`
+- Inside `<td>` or `<th>` **when the cell has no inner block**. A cell cannot be
+  split into two cells, so bare cell content gets a `<br>`. If the cell already
+  contains a block (`<p>`, `<h3>`, ...), that block is split as usual.
 
 ### Block Splitting (`splitFragment`)
 
@@ -370,6 +373,22 @@ editor.e.on('enterIsEmptyListLeaf', (li) => {
 <td>Text<br>|</td>
 ```
 
+When the cell already holds a block, the block is split instead:
+
+```html
+<!-- Before -->
+<td><p>Text|</p></td>
+
+<!-- After Enter -->
+<td><p>Text</p><p>|</p></td>
+
+<!-- Before -->
+<td><h3>Title|</h3></td>
+
+<!-- After Enter -->
+<td><h3>Title</h3><p>|</p></td>
+```
+
 ### 7. Shift+Enter (Always BR)
 ```html
 <!-- Before (any mode) -->
@@ -390,6 +409,6 @@ editor.e.on('enterIsEmptyListLeaf', (li) => {
 - Shift+Enter always inserts `<br>` regardless of mode
 - Empty list items trigger `enterIsEmptyListLeaf` event
 - Special tags (`<a>`) trigger cursor repositioning
-- Unsplittable boxes (`<td>`, `<th>`, `<blockquote>`) insert `<br>`
+- Unsplittable boxes (`<blockquote>`, and `<td>`/`<th>` without an inner block) insert `<br>`
 - Uses helper functions from `./helpers` directory
 - Returns `false` to prevent default browser behavior

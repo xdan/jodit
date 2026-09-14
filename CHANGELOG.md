@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.2
+
+#### :bug: Bug Fix
+
+- Enter inside a table cell always inserted a `<br>`, even when the cell already contained a block. The cell check in the Enter plugin walked all the way up to the `<td>`/`<th>` and ignored any `<p>` or heading in between, so every line of a cell stayed inside one block and applying a block style restyled all of them at once. A cell that holds a real block is now split like anywhere else, while bare cell content keeps inserting a `<br>` (a cell cannot be split into two cells) and Shift+Enter still inserts a `<br>` everywhere. Reported by Kevin Sormann (li-life web+it, Jodit OEM).
+
 ## 4.15.1
 
 #### :bug: Bug Fix

@@ -104,7 +104,7 @@ export class enter extends Plugin {
 			// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
 			if (
 				(!isLi || event?.shiftKey) &&
-				checkBR(fake, jodit, event?.shiftKey)
+				checkBR(fake, jodit, event?.shiftKey, block)
 			) {
 				return false;
 			}

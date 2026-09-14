@@ -121,6 +121,85 @@ describe('Enter behavior Tests', function () {
 						);
 					});
 				});
+
+				describe('When the cell already contains a block', function () {
+					it('Should split the paragraph instead of inserting BR', function () {
+						const editor = getJodit();
+
+						editor.value =
+							'<table><tbody><tr><td><p>test|</p></td></tr></tbody></table>';
+						setCursorToChar(editor);
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor
+						);
+						replaceCursorToChar(editor);
+
+						expect(sortAttributes(editor.value)).equals(
+							'<table><tbody><tr><td><p>test</p><p>|<br></p></td></tr></tbody></table>'
+						);
+					});
+
+					it('Should split the paragraph in the middle of the text', function () {
+						const editor = getJodit();
+
+						editor.value =
+							'<table><tbody><tr><td><p>split |text</p></td></tr></tbody></table>';
+						setCursorToChar(editor);
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor
+						);
+						replaceCursorToChar(editor);
+
+						expect(sortAttributes(editor.value)).equals(
+							'<table><tbody><tr><td><p>split </p><p>|text</p></td></tr></tbody></table>'
+						);
+					});
+
+					it('Should create a paragraph after a heading', function () {
+						const editor = getJodit();
+
+						editor.value =
+							'<table><tbody><tr><td><h3>test|</h3></td></tr></tbody></table>';
+						setCursorToChar(editor);
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor
+						);
+						replaceCursorToChar(editor);
+
+						expect(sortAttributes(editor.value)).equals(
+							'<table><tbody><tr><td><h3>test</h3><p>|<br></p></td></tr></tbody></table>'
+						);
+					});
+
+					describe('With SHIFT button', function () {
+						it('Should still insert BR inside the block', function () {
+							const editor = getJodit();
+
+							editor.value =
+								'<table><tbody><tr><td><p>test|</p></td></tr></tbody></table>';
+							setCursorToChar(editor);
+							simulateEvent(
+								'keydown',
+								Jodit.KEY_ENTER,
+								editor.editor,
+								options => {
+									options.shiftKey = true;
+								}
+							);
+							replaceCursorToChar(editor);
+
+							expect(sortAttributes(editor.value)).equals(
+								'<table><tbody><tr><td><p>test<br>|<br></p></td></tr></tbody></table>'
+							);
+						});
+					});
+				});
 			});
 		});
 

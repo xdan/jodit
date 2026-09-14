@@ -8,7 +8,7 @@
  * @module plugins/enter
  */
 
-import type { IJodit } from 'jodit/types';
+import type { IJodit, Nullable } from 'jodit/types';
 import { BR } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { scrollIntoViewIfNeeded } from 'jodit/core/helpers/utils/scroll-into-view';
@@ -20,13 +20,22 @@ import { scrollIntoViewIfNeeded } from 'jodit/core/helpers/utils/scroll-into-vie
 export function checkBR(
 	fake: Text,
 	jodit: IJodit,
-	shiftKeyPressed?: boolean
+	shiftKeyPressed?: boolean,
+	block?: Nullable<HTMLElement>
 ): boolean {
 	const isMultiLineBlock = Boolean(
 		Dom.closest(fake, ['pre', 'blockquote'], jodit.editor)
 	);
+
+	// A cell itself can't be split into two cells, so bare cell content gets
+	// a BR. But when the cell already holds a real block (<p>, <h3>, ...) that
+	// block is split like anywhere else, otherwise every line of the cell
+	// stays inside one block and block styles apply to all of them at once.
 	const isCell =
-		!isMultiLineBlock && Dom.closest(fake, ['td', 'th'], jodit.editor);
+		!isMultiLineBlock &&
+		(block
+			? Dom.isCell(block)
+			: Boolean(Dom.closest(fake, ['td', 'th'], jodit.editor)));
 
 	const isBRMode = jodit.o.enter.toLowerCase() === BR.toLowerCase();
 
