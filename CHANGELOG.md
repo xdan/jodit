@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.3
+
+#### :bug: Bug Fix
+
+- [#1474](https://github.com/xdan/jodit/issues/1474) An iframe lost its box when the editor was created inside a hidden container. The resizer wraps every iframe in a `<jodit>` element and copied `offsetWidth`/`offsetHeight` into it, but both are `0` while an ancestor has `display:none`, so the wrapper was pinned to `0x0` and never corrected once the container became visible. The following content then painted over the video. The wrapper now falls back to the iframe's own `width`/`height` attributes when the element cannot be measured, and is left to size itself when there is nothing to fall back to. Relative values such as `width="100%"` are not turned into a fixed pixel box.
+
 ## 4.15.2
 
 #### :bug: Bug Fix

@@ -615,6 +615,79 @@ describe('Resize plugin', () => {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/1474
+	describe('For iframes inside a hidden container', () => {
+		const makeHiddenEditor = value => {
+			const host = document.createElement('div');
+			host.style.cssText = 'display:none;width:800px;';
+			document.body.appendChild(host);
+
+			const area = document.createElement('textarea');
+			host.appendChild(area);
+
+			const editor = getJodit({}, area);
+			editor.value = value;
+
+			return { editor, host };
+		};
+
+		it('Should not collapse the iframe wrapper to zero size', () => {
+			const { editor, host } = makeHiddenEditor(
+				'<iframe src="about:blank" width="560" height="315"></iframe>' +
+					'<p>Text after the video</p>'
+			);
+
+			host.style.display = 'block';
+
+			const wrapper = editor.editor.querySelector(
+				'[data-jodit_iframe_wrapper]'
+			);
+
+			expect(wrapper).is.not.null;
+
+			expect(wrapper.offsetWidth).is.above(0);
+			expect(wrapper.offsetHeight).is.above(0);
+
+			host.parentNode.removeChild(host);
+		});
+
+		it('Should keep the following text below the iframe', () => {
+			const { editor, host } = makeHiddenEditor(
+				'<iframe src="about:blank" width="560" height="315"></iframe>' +
+					'<p>Text after the video</p>'
+			);
+
+			host.style.display = 'block';
+
+			const iframe = editor.editor.querySelector('iframe');
+			const paragraph = editor.editor.querySelector('p');
+
+			const overlaps =
+				paragraph.getBoundingClientRect().top <
+				iframe.getBoundingClientRect().bottom;
+
+			expect(overlaps).is.false;
+
+			host.parentNode.removeChild(host);
+		});
+
+		it('Should not turn a percentage width into pixels', () => {
+			const { editor, host } = makeHiddenEditor(
+				'<iframe src="about:blank" width="100%" height="500"></iframe>'
+			);
+
+			host.style.display = 'block';
+
+			const wrapper = editor.editor.querySelector(
+				'[data-jodit_iframe_wrapper]'
+			);
+
+			expect(wrapper.style.width).does.not.equal('100px');
+
+			host.parentNode.removeChild(host);
+		});
+	});
+
 	describe('For iframes', () => {
 		it('should wrap these iframes inside JODIT tag', () => {
 			const editor = getJodit();

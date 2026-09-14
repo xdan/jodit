@@ -35,6 +35,21 @@ import './resizer.less';
 const keyBInd = '__jodit-resizer_binded';
 
 /**
+ * Reads a plain pixel value out of a `width`/`height` attribute.
+ * Relative values such as `100%` are ignored — they cannot be turned into a
+ * fixed pixel box for the wrapper.
+ */
+function attrPixelSize(element: HTMLElement, key: 'width' | 'height'): number {
+	const value = attr(element, key)?.trim();
+
+	if (!value || !/^\d+(\.\d+)?(px)?$/i.test(value)) {
+		return 0;
+	}
+
+	return parseFloat(value);
+}
+
+/**
  * The module creates a supporting frame for resizing of the elements img and table
  */
 export class resizer extends Plugin {
@@ -431,14 +446,31 @@ export class resizer extends Plugin {
 
 				attr(wrapper, 'style', attr(element, 'style'));
 
+				// Inside a hidden container (`display:none` on any ancestor)
+				// offsetWidth/offsetHeight are 0. Writing that into the wrapper
+				// collapsed it to 0x0, the following content painted over the
+				// iframe, and nothing corrected it once the container was shown.
+				// Fall back to the iframe's own size attributes and, when there
+				// is nothing measurable at all, let the wrapper size itself.
+				const width =
+					element.offsetWidth || attrPixelSize(element, 'width');
+				const height =
+					element.offsetHeight || attrPixelSize(element, 'height');
+
 				css(wrapper, {
 					display:
 						cssInline(element, 'display') === 'inline-block'
 							? 'inline-block'
-							: 'block',
-					width: element.offsetWidth,
-					height: element.offsetHeight
+							: 'block'
 				});
+
+				if (width) {
+					css(wrapper, 'width', width);
+				}
+
+				if (height) {
+					css(wrapper, 'height', height);
+				}
 
 				if (element.parentNode) {
 					Dom.before(element, wrapper);
