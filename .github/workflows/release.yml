@@ -143,6 +143,8 @@ jobs:
         name: Publish to NPM
         runs-on: ubuntu-latest
         needs: [test, screenshots]
+        outputs:
+            version: ${{ steps.get_version.outputs.version }}
 
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -202,6 +204,36 @@ jobs:
         needs: publish
 
         steps:
+            # `npm publish` returns before the version is actually resolvable:
+            # npm answers "your package is being processed and may take a few
+            # minutes to become available". Dispatching downstream immediately
+            # made those repos install the *previous* core release while running
+            # the new tests, which failed the build for no real reason. Wait for
+            # the registry to catch up before triggering anything.
+            - name: Wait until the new version is resolvable on npm
+              run: |
+                  VERSION="${{ needs.publish.outputs.version }}"
+
+                  if [ -z "$VERSION" ]; then
+                    echo "::error::No version was passed from the publish job"
+                    exit 1
+                  fi
+
+                  echo "Waiting for jodit@$VERSION to appear on the registry..."
+
+                  for i in $(seq 1 60); do
+                    if npm view "jodit@$VERSION" version --prefer-online > /dev/null 2>&1; then
+                      echo "jodit@$VERSION is available (after $i attempt(s))."
+                      exit 0
+                    fi
+
+                    echo "attempt $i: not published yet, retrying in 15s"
+                    sleep 15
+                  done
+
+                  echo "::error::jodit@$VERSION did not become available on npm within 15 minutes"
+                  exit 1
+
             - name: Trigger generate site hook
               run: |
                   curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/xdan/jodit-pro-home/dispatches --data '{"event_type": "opened" }'
