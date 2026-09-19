@@ -128,7 +128,7 @@
 		"tslib": "^2.8.1",
 		"tsx": "^4.23.13",
 		"typescript": "^6.0.3",
-		"webpack": "5.110.3",
+		"webpack": "5.111.0",
 		"webpack-cli": "^7.2.3",
 		"webpack-dev-middleware": "^8.3.0",
 		"webpack-dev-server": "^6.0.0",
