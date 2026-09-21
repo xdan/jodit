@@ -692,9 +692,23 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	}
 
 	/**
+	 * In inline mode the source element is the editor container, so its
+	 * `innerHTML` is the editor's own markup rather than the value. Keep the
+	 * value last synchronised to it here instead.
+	 */
+	private __inlineElementValue: string | undefined;
+
+	/**
 	 * Return source element value
 	 */
 	getElementValue(): string {
+		if (
+			this.element === this.container &&
+			this.__inlineElementValue !== undefined
+		) {
+			return this.__inlineElementValue;
+		}
+
 		return (this.element as HTMLInputElement).value !== undefined
 			? (this.element as HTMLInputElement).value
 			: this.element.innerHTML;
@@ -705,10 +719,12 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			throw error('value must be string');
 		}
 
-		if (
-			this.element !== this.container &&
-			value !== this.getElementValue()
-		) {
+		if (this.element === this.container) {
+			this.__inlineElementValue = value;
+			return;
+		}
+
+		if (value !== this.getElementValue()) {
 			const data = { value };
 
 			const res = this.e.fire('beforeSetElementValue', data);
