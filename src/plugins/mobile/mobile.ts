@@ -16,8 +16,10 @@ import type {
 	IJodit,
 	IToolbarCollection
 } from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { splitArray, toArray } from 'jodit/core/helpers/';
+import { isString } from 'jodit/core/helpers/checker/is-string';
 import { flatButtonsSet, isButtonGroup } from 'jodit/core/ui/helpers/buttons';
 
 import './config';
@@ -101,6 +103,25 @@ function fitToButtons(list: ButtonsGroups, editor: IJodit): ButtonsGroups {
 }
 
 /**
+ * The width that decides which breakpoint set the toolbar uses. A toolbar
+ * rendered into an external container (`toolbar` set to an element or a
+ * selector) lays out in that container, so its width is what matters there.
+ */
+function adaptiveWidth(editor: IJodit): number {
+	const { toolbar } = editor.o;
+
+	if (isString(toolbar) || Dom.isHTMLElement(toolbar)) {
+		const width = editor.toolbarContainer.offsetWidth;
+
+		if (width) {
+			return width;
+		}
+	}
+
+	return (editor.container.parentElement ?? editor.container).offsetWidth;
+}
+
+/**
  * Rebuild toolbar in depends on editor's width
  */
 export function mobile(editor: IJodit): void {
@@ -155,12 +176,14 @@ export function mobile(editor: IJodit): void {
 						return;
 					}
 
-					const width = (
-						editor.container.parentElement ?? editor.container
-					).offsetWidth;
-
 					const newStore = ((): ButtonsGroups => {
-						if (editor.isFullSize || width >= editor.o.sizeLG) {
+						if (editor.isFullSize) {
+							return splitArray(editor.o.buttons);
+						}
+
+						const width = adaptiveWidth(editor);
+
+						if (width >= editor.o.sizeLG) {
 							return splitArray(editor.o.buttons);
 						}
 
