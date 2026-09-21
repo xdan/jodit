@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.8
+
+#### :bug: Bug Fix
+
+- [#1482](https://github.com/xdan/jodit/issues/1482) `cleanHTML.removeEmptyElements` removed empty `<a name>` anchors and empty elements with an `id`, silently breaking in-page (`#fragment`) links in existing content on the first clean pass. Those fragment targets are now kept; other empty inline elements are still removed. Thanks to [@brendon](https://github.com/brendon) ([#1484](https://github.com/xdan/jodit/pull/1484)).
+- [#1481](https://github.com/xdan/jodit/issues/1481) The adaptive toolbar chose its button set (`buttons`/`buttonsMD`/`buttonsSM`/`buttonsXS`) by the editor's width even when `toolbar` pointed at an external container, so a wide toolbar above a narrow editor showed the smallest set. It now uses that container's width and falls back to the editor's parent when the container has no width. Thanks to [@brendon](https://github.com/brendon) ([#1483](https://github.com/xdan/jodit/pull/1483)).
+
 ## 4.15.7
 
 #### :bug: Bug Fix
