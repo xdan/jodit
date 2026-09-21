@@ -222,11 +222,62 @@ const response = {
 
 Opening the browser fires these requests (all inherit `url` / `method` / `headers` from `filebrowser.ajax`):
 
-| Option                    | `action` sent | Must return                                               |
-| ------------------------- | ------------- | --------------------------------------------------------- |
-| `filebrowser.items`       | `files`       | `data.sources[]`, each with `name`, `path`, `baseurl`, `files[]`   |
+| Option                    | `action` sent | Must return                                                            |
+| ------------------------- | ------------- | ---------------------------------------------------------------------- |
+| `filebrowser.items`       | `files`       | `data.sources[]`, each with `name`, `path`, `baseurl`, `files[]`       |
 | `filebrowser.permissions` | `permissions` | `data.permissions` object (optional, only if `permissions.url` is set) |
-| `filebrowser.folder`      | `folders`     | `data.sources[]`, each with `name`, `path`, `baseurl`, `folders[]` |
+| `filebrowser.folder`      | `folders`     | `data.sources[]`, each with `name`, `path`, `baseurl`, `folders[]`     |
+
+The `permissions` answer tells the browser which actions to offer. Every rule is optional — a rule that is left out
+counts as allowed, so `{ "success": true, "data": { "permissions": {} } }` allows everything; set a rule to `false`
+to hide that action:
+
+```json
+{
+	"success": true,
+	"data": {
+		"code": 220,
+		"permissions": {
+			"allowFiles": true,
+			"allowFileMove": true,
+			"allowFileUpload": true,
+			"allowFileUploadRemote": true,
+			"allowFileRemove": true,
+			"allowFileRename": true,
+			"allowFolders": true,
+			"allowFolderMove": true,
+			"allowFolderCreate": true,
+			"allowFolderRemove": true,
+			"allowFolderRename": true,
+			"allowImageResize": true,
+			"allowImageCrop": true
+		}
+	}
+}
+```
+
+The `folders` answer has the same shape as `files`, with a `folders` list of names instead of `files`:
+
+```json
+{
+	"success": true,
+	"data": {
+		"code": 220,
+		"sources": [
+			{
+				"name": "default",
+				"path": "/",
+				"baseurl": "https://example.com/uploads/",
+				"folders": ["images", "documents"]
+			}
+		]
+	}
+}
+```
+
+Every other action (`fileUpload`, `fileRemove`, `fileRename`, `fileMove`, `folderCreate`, `imageResize`, `imageCrop`, …)
+follows the same request/answer pattern; the PHP connector README documents the JSON of each one:
+https://github.com/xdan/jodit-connectors#api
 
 - filebrowser.ajax.url='' Address entry point on the server for AJAX connection
 - filebrowser.ajax.data={} Default data to send to the server
@@ -268,7 +319,9 @@ const options = {
 		return resp.success;
 	},
 	getMessage: function (resp) {
-		return Array.isArray(resp.data.messages) ? resp.data.messages.join(' ') : '';
+		return Array.isArray(resp.data.messages)
+			? resp.data.messages.join(' ')
+			: '';
 	},
 	ajax: {
 		url: '',
