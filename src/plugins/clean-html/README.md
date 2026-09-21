@@ -66,7 +66,7 @@ const editor = Jodit.make('#editor', {
 ### `cleanHTML.removeEmptyElements`
 - **Type**: `boolean`
 - **Default**: `true`
-- **Description**: Remove all empty elements
+- **Description**: Remove empty inline elements. Elements that in-page links can point at (anything with an `id`, and `<a>` with a `name`) are kept.
 
 ### `cleanHTML.replaceOldTags`
 - **Type**: `IDictionary<HTMLTagNames> | false`

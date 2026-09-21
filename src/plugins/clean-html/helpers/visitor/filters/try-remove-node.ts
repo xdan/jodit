@@ -94,8 +94,21 @@ function isRemovableNode(
 		Dom.isElement(node) &&
 		node.nodeName.match(IS_INLINE) != null &&
 		!Dom.isTemporary(node) &&
+		!isFragmentTarget(node as Element) &&
 		trimInv((node as Element).innerHTML).length === 0 &&
 		(current == null || !Dom.isOrContains(node, current)) &&
 		(liveCaret == null || !Dom.isOrContains(node, liveCaret))
+	);
+}
+
+/**
+ * An element with an `id`, or an `<a>` with a `name`, is where an in-page link
+ * (`#fragment`) lands. It is usually empty (`<a name="top"></a>`), and removing
+ * it silently breaks every link that points at it.
+ */
+function isFragmentTarget(element: Element): boolean {
+	return (
+		element.hasAttribute('id') ||
+		(element.nodeName === 'A' && element.hasAttribute('name'))
 	);
 }
