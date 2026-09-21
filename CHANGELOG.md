@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.4
+
+#### :bug: Bug Fix
+
+- File browser: a connector answer without a `data.sources` array (or with `sources` as an object keyed by source name, as the old PHP connector README showed) crashed the browser with a bare `TypeError: Cannot read properties of undefined (reading 'forEach')` and no hint about which of the three requests was at fault. The `files` and `folders` answers are now validated as soon as they arrive: a malformed answer fails with a message that names the action, the `filebrowser.*` option and the missing field, sources without a `files` / `folders` list are treated as empty, and a `permissions` answer without a `data` object no longer throws. The module README and the PHP connector README now document the real answer format (`data.sources` is an array) instead of the legacy Jodit 2 `{files, path, baseurl, error, msg}` shape.
+
 ## 4.15.3
 
 #### :bug: Bug Fix

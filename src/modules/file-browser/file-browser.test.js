@@ -1666,5 +1666,129 @@
 				});
 			});
 		});
+
+		describe('Malformed connector answer', function () {
+			function makeFileBrowser(answer) {
+				const filebrowser = new Jodit.modules.FileBrowser({
+					ajax: {
+						url: 'https://xdsoft.net/jodit/connector/index.php'
+					}
+				});
+
+				// Bypass the network: every action gets the same canned answer.
+				filebrowser.dataProvider.get = function () {
+					return Promise.resolve(answer);
+				};
+
+				return filebrowser;
+			}
+
+			async function rejectionMessage(promise) {
+				try {
+					await promise;
+				} catch (e) {
+					return e.message;
+				}
+
+				throw new Error('Expected the promise to be rejected');
+			}
+
+			it('Should reject the files request with a message naming the action and option when data.sources is missing', async function () {
+				const filebrowser = makeFileBrowser({
+					success: true,
+					data: { code: 220 }
+				});
+
+				try {
+					const message = await rejectionMessage(
+						filebrowser.dataProvider.items('/', 'default')
+					);
+
+					expect(message).to.include('action "files"');
+					expect(message).to.include('filebrowser.items');
+					expect(message).to.include('data.sources');
+					expect(message).to.not.include('forEach');
+				} finally {
+					filebrowser.destruct();
+				}
+			});
+
+			it('Should explain that sources must be an array when the connector returns an object keyed by source name', async function () {
+				const filebrowser = makeFileBrowser({
+					success: true,
+					data: {
+						sources: {
+							default: { path: '', baseurl: '/', folders: [] }
+						}
+					}
+				});
+
+				try {
+					const message = await rejectionMessage(
+						filebrowser.dataProvider.tree('/', 'default')
+					);
+
+					expect(message).to.include('action "folders"');
+					expect(message).to.include('filebrowser.folder');
+					expect(message).to.include(
+						'an object keyed by source name'
+					);
+				} finally {
+					filebrowser.destruct();
+				}
+			});
+
+			it('Should treat a source without files/folders lists as empty instead of throwing', async function () {
+				const filebrowser = makeFileBrowser({
+					success: true,
+					data: {
+						sources: [{ name: 'default', path: '', baseurl: '/' }]
+					}
+				});
+
+				try {
+					const items = await filebrowser.dataProvider.items(
+						'/',
+						'default'
+					);
+					expect(items).deep.equals([]);
+
+					const tree = await filebrowser.dataProvider.tree(
+						'/',
+						'default'
+					);
+					expect(tree[0].folders).deep.equals([]);
+				} finally {
+					filebrowser.destruct();
+				}
+			});
+
+			it('Should show the readable message in the status bar when the browser opens', async function () {
+				const filebrowser = makeFileBrowser({
+					success: true,
+					data: {}
+				});
+
+				try {
+					await filebrowser
+						.open(function () {})
+						.catch(function () {});
+					await delay(100);
+
+					const message =
+						filebrowser.container.querySelector(
+							'.jodit-ui-message'
+						) || document.querySelector('.jodit-ui-message');
+					expect(message).is.not.null;
+					expect(message.textContent).to.include(
+						'the connector answer for action "'
+					);
+					expect(message.textContent).to.include('filebrowser.');
+					expect(message.textContent).to.not.include('forEach');
+				} finally {
+					filebrowser.destruct();
+				}
+			});
+		});
 	}
 );

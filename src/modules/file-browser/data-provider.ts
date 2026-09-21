@@ -27,7 +27,9 @@ import type {
 } from 'jodit/types';
 import { IS_PROD } from 'jodit/core/constants';
 import { autobind } from 'jodit/core/decorators/autobind/autobind';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
+import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { normalizeRelativePath } from 'jodit/core/helpers/normalize/normalize-relative-path';
 import { ConfigProto } from 'jodit/core/helpers/utils/config-proto';
 import { abort, error } from 'jodit/core/helpers/utils/error';
@@ -52,6 +54,62 @@ const possibleRules = new Set([
 	'allowImageResize',
 	'allowImageCrop'
 ]);
+
+const DOCS_URL = 'https://xdsoft.net/jodit/docs/modules/file_browser.html';
+
+/**
+ * Validate the connector answer for the `files` / `folders` actions and
+ * normalise it. A hand-written backend that returns the wrong shape used to
+ * crash deep inside the UI with a bare `TypeError: ... reading 'forEach'`;
+ * now it fails right here with a message that names the action, the option
+ * and the missing field. Missing `files` / `folders` lists are treated as
+ * empty instead of throwing.
+ */
+export function assertSourcesAnswer(
+	resp: unknown,
+	action: 'files' | 'folders',
+	option: 'items' | 'folder'
+): IFileBrowserAnswer {
+	const fail = (what: string): never => {
+		throw new Error(
+			`File browser: the connector answer for action "${action}" (option "filebrowser.${option}") ${what}. See ${DOCS_URL}`
+		);
+	};
+
+	if (!isPlainObject(resp) || !isPlainObject(resp.data)) {
+		return fail('has no "data" object');
+	}
+
+	const { sources } = resp.data as { sources?: unknown };
+
+	if (!isArray(sources)) {
+		return fail(
+			sources === undefined
+				? 'has no "data.sources" array'
+				: `must contain "data.sources" as an array of sources, got ${
+						isPlainObject(sources)
+							? 'an object keyed by source name'
+							: typeof sources
+					}`
+		);
+	}
+
+	sources.forEach((source: unknown, index) => {
+		if (!isPlainObject(source)) {
+			return fail(`has a non-object entry at "data.sources[${index}]"`);
+		}
+
+		if (!isArray(source.files)) {
+			source.files = [];
+		}
+
+		if (!isArray(source.folders)) {
+			source.folders = [];
+		}
+	});
+
+	return resp as unknown as IFileBrowserAnswer;
+}
 
 export default class DataProvider implements IFileBrowserDataProvider {
 	private __currentPermissions: Nullable<IPermissions> = null;
@@ -164,7 +222,9 @@ export default class DataProvider implements IFileBrowserDataProvider {
 						resp
 					) as IFileBrowserAnswer;
 
-					if (respData.data.permissions) {
+					// The permissions answer is optional and may come back without
+					// a `data` object at all from a minimal backend.
+					if (respData?.data?.permissions) {
 						this.parent.events.fire(
 							this,
 							'changePermissions',
@@ -232,7 +292,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 				resp = process.call(self, resp);
 			}
 
-			return onResult(resp);
+			return onResult(assertSourcesAnswer(resp, 'files', 'items'));
 		});
 	}
 
@@ -335,7 +395,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 				resp = process.call(self, resp) as IFileBrowserAnswer;
 			}
 
-			return resp.data.sources;
+			return assertSourcesAnswer(resp, 'folders', 'folder').data.sources;
 		});
 	}
 

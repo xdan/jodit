@@ -196,18 +196,37 @@ Jodit.make('#editor', {
 - filebrowser.ajax.prepareData Method of preparation
   of data to be sent to the server
 - filebrowser.ajax.process The method of processing the
-  data obtained after administration of the server. Must return this PlainObject format
+  data obtained from the server. Must return the answer in the standard format described
+  above: an object with `success` and `data.sources` — an **array** of sources, each with
+  `name`, `path`, `baseurl` and a `files` (for `action=files`) or `folders`
+  (for `action=folders`) array. If the answer has no `data.sources` array, the file browser
+  reports a readable error naming the action and the option instead of loading anything.
 
 ```js
 const response = {
-	files: resp.files || [], // {array} The names of files or folders,
-	// files canbe ['image.jpg', 'image.jpg2', 'image3.jpg' ...] and [{file: 'image.jpg', thumb: '_thumbs/image.jpg'}, {file: 'image2.jpg', thumb: '_thumbs/image2.jpg'} ...]
-	path: resp.path, // {string} Real relative path
-	baseurl: resp.baseurl, // {string} Base url for filebrowser
-	error: resp.error, // {int}
-	msg: resp.msg // {string}
+	success: true,
+	data: {
+		sources: [
+			{
+				name: 'default',
+				path: resp.path, // {string} relative path inside the source
+				baseurl: resp.baseurl, // {string} base url for the files
+				files: resp.files || [], // {array} [{ name: 'image.jpg', type: 'image', thumb: '_thumbs/image.jpg' }, ...]
+				folders: resp.folders || [] // {array} ['folder1', 'folder2']
+			}
+		],
+		messages: resp.error ? [resp.msg] : []
+	}
 };
 ```
+
+Opening the browser fires these requests (all inherit `url` / `method` / `headers` from `filebrowser.ajax`):
+
+| Option                    | `action` sent | Must return                                               |
+| ------------------------- | ------------- | --------------------------------------------------------- |
+| `filebrowser.items`       | `files`       | `data.sources[]`, each with `name`, `path`, `baseurl`, `files[]`   |
+| `filebrowser.permissions` | `permissions` | `data.permissions` object (optional, only if `permissions.url` is set) |
+| `filebrowser.folder`      | `folders`     | `data.sources[]`, each with `name`, `path`, `baseurl`, `folders[]` |
 
 - filebrowser.ajax.url='' Address entry point on the server for AJAX connection
 - filebrowser.ajax.data={} Default data to send to the server
@@ -246,10 +265,10 @@ Example:
 // default values
 const options = {
 	isSuccess: function (resp) {
-		return !resp.error;
+		return resp.success;
 	},
 	getMessage: function (resp) {
-		return resp.msg;
+		return Array.isArray(resp.data.messages) ? resp.data.messages.join(' ') : '';
 	},
 	ajax: {
 		url: '',
@@ -264,13 +283,7 @@ const options = {
 			return data;
 		},
 		process: function (resp) {
-			return {
-				files: resp.files || [],
-				path: resp.path,
-				baseurl: resp.baseurl,
-				error: resp.error,
-				msg: resp.msg
-			};
+			return resp; // the answer is already in the standard format
 		}
 	},
 	resize: {
