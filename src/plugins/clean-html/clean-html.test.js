@@ -192,6 +192,37 @@ describe('Clean html plugin', function () {
 		});
 	});
 
+	describe('Remove empty elements', () => {
+		it('Should keep empty elements that are the targets of in-page links', async () => {
+			const editor = getJodit({ cleanHTML: { timeout: 0 } });
+
+			const html =
+				'<p><a name="term1"></a>Term 1</p>' +
+				'<p><a id="term2"></a>Term 2</p>' +
+				'<p><span id="term3"></span>Term 3</p>' +
+				'<p><a href="#term1">Jump</a></p>';
+
+			editor.value = html;
+
+			simulateEvent('mousedown', editor.editor);
+			await editor.async.requestIdlePromise();
+
+			expect(editor.value).equals(html);
+		});
+
+		it('Should still remove other empty inline elements', async () => {
+			const editor = getJodit({ cleanHTML: { timeout: 0 } });
+
+			editor.value =
+				'<p><a href="#x"></a><span style="color: red;"></span><strong></strong>Text</p>';
+
+			simulateEvent('mousedown', editor.editor);
+			await editor.async.requestIdlePromise();
+
+			expect(editor.value).equals('<p>Text</p>');
+		});
+	});
+
 	describe('Click remove format button', function () {
 		[true, false].forEach(useIframeSandbox => {
 			describe(`State useIframeSandbox: ${useIframeSandbox}`, () => {

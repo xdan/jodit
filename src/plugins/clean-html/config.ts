@@ -28,7 +28,8 @@ declare module 'jodit/config' {
 			 */
 			fillEmptyParagraph: boolean;
 			/**
-			 * Remove empty elements
+			 * Remove empty inline elements. Elements that in-page links can point
+			 * at (anything with an `id`, and `<a>` with a `name`) are kept.
 			 */
 			removeEmptyElements: boolean;
 
