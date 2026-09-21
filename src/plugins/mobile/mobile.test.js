@@ -166,6 +166,53 @@ describe('Test mobile mode', function () {
 			});
 		});
 
+		describe('When the toolbar is rendered into an external container', function () {
+			let toolbarBox;
+
+			beforeEach(() => {
+				toolbarBox = document.createElement('div');
+				document.body.appendChild(toolbarBox);
+			});
+
+			afterEach(() => {
+				toolbarBox.remove();
+			});
+
+			it('Should choose the buttons by the width of that container', function () {
+				getBox().style.width = '390px';
+				toolbarBox.style.width = '1000px';
+
+				const editor = getJodit({
+					toolbar: toolbarBox,
+					buttons: 'source,about,print,bold',
+					buttonsMD: 'source,about,print',
+					buttonsSM: 'source,about',
+					buttonsXS: 'source'
+				});
+
+				const count = () =>
+					toolbarBox.querySelectorAll('.jodit-toolbar-button').length;
+
+				expect(editor.container.contains(toolbarBox)).is.false;
+				expect(count()).equals(4);
+
+				toolbarBox.style.width = '790px';
+				simulateEvent('resize', window);
+
+				expect(count()).equals(3);
+
+				toolbarBox.style.width = '690px';
+				simulateEvent('resize', window);
+
+				expect(count()).equals(2);
+
+				toolbarBox.style.width = '390px';
+				simulateEvent('resize', window);
+
+				expect(count()).equals(1);
+			});
+		});
+
 		describe('With toolbarAdaptive false', function () {
 			it('Should not change toolbar', function () {
 				getBox().style.width = '500px';

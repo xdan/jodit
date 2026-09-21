@@ -28,7 +28,7 @@ Provides adaptive toolbar and mobile touch emulation for the Jodit editor. This 
 
 **Default:** `true`
 
-Enables adaptive toolbar that changes button sets based on editor width. When `true`, the toolbar automatically switches between `buttonsXS`, `buttonsSM`, `buttonsMD`, and `buttons` based on the editor's container width.
+Enables adaptive toolbar that changes button sets based on editor width. When `true`, the toolbar automatically switches between `buttonsXS`, `buttonsSM`, `buttonsMD`, and `buttons` based on the editor's container width, or on the toolbar container's width when the toolbar is [rendered externally](#external-toolbar).
 
 **Example:**
 ```typescript
@@ -172,6 +172,23 @@ const editor = Jodit.make('#editor', {
 On a narrow editor this still shows just those four buttons. Previously the
 editor fell back to the default `buttonsMD`/`buttonsSM`/`buttonsXS` groups and
 displayed many more buttons than were requested.
+
+### External toolbar
+
+When `toolbar` is set to an element or a selector, the toolbar lays out in that
+container rather than inside the editor, so the width of that container decides
+which breakpoint set is shown:
+
+```typescript
+const editor = Jodit.make('#editor', {
+    inline: true,
+    // a full-width bar fixed to the top of the page
+    toolbar: '#toolbar'
+});
+```
+
+A wide toolbar above a narrow editor keeps the full `buttons` set, and a narrow
+toolbar steps down through `buttonsMD`/`buttonsSM`/`buttonsXS` as usual.
 
 If you actually want a *different* set at some breakpoint, set that breakpoint
 option explicitly (its buttons should be a subset of `buttons`):
