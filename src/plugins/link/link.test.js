@@ -123,6 +123,50 @@ describe('Link plugin', () => {
 		});
 	});
 
+	// https://xdsoft.net/jodit/pro/cab/issues/ce9fd55c-8c26-4105-a9c7-f694f617923a
+	describe('Caret after inserting a new link from a collapsed caret', () => {
+		it('Should put the caret after the link instead of selecting it, so Enter starts a new line', () => {
+			const editor = getJodit();
+			editor.value = '<p>test |</p>';
+			setCursorToChar(editor);
+
+			clickButton('link', editor);
+			const popup = getOpenedPopup(editor);
+			popup.querySelector('[ref=url_input]').value = 'https://x.com';
+			simulateEvent('submit', popup.querySelector('form'));
+
+			expect(editor.value).to.include('<a href="https://x.com">');
+			expect(editor.s.isCollapsed()).is.true;
+
+			const link = editor.editor.querySelector('a');
+			expect(Jodit.modules.Dom.isOrContains(link, editor.s.current())).is
+				.false;
+
+			simulateEvent('keydown', Jodit.KEY_ENTER, editor.editor);
+
+			expect(editor.editor.querySelector('a')).is.not.null;
+			expect(editor.value).equals(
+				'<p>test <a href="https://x.com">https://x.com</a></p><p><br></p>'
+			);
+		});
+
+		it('Should keep the wrapped text selected when a link is made from a selection', () => {
+			const editor = getJodit();
+			editor.value = '<p>|test|</p>';
+			setCursorToChar(editor);
+
+			clickButton('link', editor);
+			const popup = getOpenedPopup(editor);
+			popup.querySelector('[ref=url_input]').value = 'https://x.com';
+			simulateEvent('submit', popup.querySelector('form'));
+
+			expect(editor.value).equals(
+				'<p><a href="https://x.com">test</a></p>'
+			);
+			expect(editor.s.isCollapsed()).is.false;
+		});
+	});
+
 	describe('Insert link', () => {
 		describe('Insert simple link', () => {
 			it('Should insert as simple link', () => {

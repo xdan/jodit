@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.6
+
+#### :bug: Bug Fix
+
+- Link dialog: a brand-new link inserted at a collapsed caret was left *selected* after the dialog closed. Safari does not paint that selection, so the link looked plain and the next Enter silently replaced it instead of starting a new line (Chrome/Firefox showed the same selection, just visibly). The caret is now placed right after the freshly inserted link; making a link out of a text selection keeps the selection as before. Reported by an OEM customer via the support tracker.
+
 ## 4.15.5
 
 #### :bug: Bug Fix

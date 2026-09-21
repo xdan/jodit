@@ -292,6 +292,7 @@ export class link extends Plugin {
 				getSelectionText() !== content_input.value.trim();
 
 			const ci = jodit.createInside;
+			let caretAfter: HTMLAnchorElement | null = null;
 
 			if (!link || !Dom.isOrContains(jodit.editor, link)) {
 				if (!jodit.s.isCollapsed()) {
@@ -306,6 +307,7 @@ export class link extends Plugin {
 					const a = ci.element('a');
 					jodit.s.insertNode(a, false, false);
 					links = [a];
+					caretAfter = a;
 				}
 
 				links.forEach(link => jodit.s.select(link));
@@ -357,6 +359,14 @@ export class link extends Plugin {
 
 				jodit.e.fire('applyLink', jodit, a, form);
 			});
+
+			// A brand-new link inserted at a collapsed caret used to stay
+			// *selected*. Safari does not paint that selection, so the next
+			// Enter silently replaced the link instead of starting a new line.
+			// Put the caret right after the link instead.
+			if (caretAfter) {
+				jodit.s.setCursorAfter(caretAfter);
+			}
 
 			jodit.synchronizeValues();
 
