@@ -140,6 +140,8 @@ export class cleanHtml extends Plugin {
 	 */
 	@watch(':afterGetValueFromEditor')
 	protected onAfterGetValueFromEditor(data: { value: string }): void {
+		this.__singleQuotesInFontFamily(data);
+
 		if (!this.j.o.cleanHTML.collapseEmptyValueToEmptyString) {
 			return;
 		}
@@ -151,6 +153,44 @@ export class cleanHtml extends Plugin {
 		) {
 			data.value = '';
 		}
+	}
+
+	/**
+	 * Rewrite double-quoted font names inside `style` attributes with single
+	 * quotes. The DOM always serialises them as `&quot;…&quot;`, and back ends
+	 * that HTML-decode the value before storing it then produce
+	 * `style="font-family: "Open Sans", …"` — broken markup. Single quotes
+	 * survive that round trip. Names that already contain an apostrophe are
+	 * left alone.
+	 */
+	private __singleQuotesInFontFamily(data: { value: string }): void {
+		if (
+			!this.j.o.cleanHTML.singleQuotesInFontFamily ||
+			!data.value.includes('&quot;')
+		) {
+			return;
+		}
+
+		data.value = data.value.replace(
+			/\sstyle="([^"]*)"/gi,
+			(attribute: string, css: string): string => {
+				if (!css.includes('&quot;') || !/font-family/i.test(css)) {
+					return attribute;
+				}
+
+				const normalized = css.replace(
+					// `&quot;` itself ends with `;`, so the entity has to be
+					// consumed as a unit or the declaration stops inside it.
+					/font-family\s*:(?:&quot;|[^;])*/gi,
+					(declaration: string): string =>
+						declaration.includes("'")
+							? declaration
+							: declaration.replace(/&quot;/g, "'")
+				);
+
+				return attribute.replace(css, normalized);
+			}
+		);
 	}
 
 	@watch(':safeHTML')

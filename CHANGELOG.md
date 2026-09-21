@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.5
+
+#### :bug: Bug Fix
+
+- Quoted font names in inline styles came out of the editor with double quotes (`style="font-family: &quot;Open Sans&quot;, sans-serif"`), which is how the DOM serialises them. Back ends that HTML-decode the value before storing it turned that into `style="font-family: "Open Sans", sans-serif"` — broken markup that the editor could no longer read back. The value getter now rewrites such names with single quotes (`font-family: 'Open Sans', sans-serif`), which survive the round trip; names that already contain an apostrophe are left untouched. Controlled by the new `cleanHTML.singleQuotesInFontFamily` option (default `true`). Reported by Gavin Foley (Educa, Jodit OEM).
+
 ## 4.15.4
 
 #### :bug: Bug Fix

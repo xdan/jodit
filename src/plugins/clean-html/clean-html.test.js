@@ -5,6 +5,61 @@
  */
 
 describe('Clean html plugin', function () {
+	describe('singleQuotesInFontFamily option', () => {
+		it('By default double-quoted font names come out with single quotes', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value =
+				'<p><span style="font-family: &quot;Luckiest Guy&quot;, Impact, cursive;">test</span></p>';
+			expect(editor.value).equals(
+				'<p><span style="font-family: \'Luckiest Guy\', Impact, cursive;">test</span></p>'
+			);
+		});
+
+		it('Applying a font from the toolbar list also comes out with single quotes', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = '<p>test</p>';
+			editor.s.select(editor.editor.firstChild.firstChild);
+			editor.execCommand(
+				'fontname',
+				false,
+				'"Cherry Cream Soda", Impact, cursive'
+			);
+			expect(editor.value).equals(
+				'<p><span style="font-family: \'Cherry Cream Soda\', Impact, cursive;">test</span></p>'
+			);
+		});
+
+		it('Other quoted style values and the rest of the markup are untouched', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value =
+				'<p><span style="background: url(&quot;a.png&quot;); font-family: &quot;Lora&quot;, serif;" data-x="&quot;q&quot;">test</span></p>';
+			expect(editor.value).equals(
+				'<p><span style="background: url(&quot;a.png&quot;); font-family: \'Lora\', serif;" data-x="&quot;q&quot;">test</span></p>'
+			);
+		});
+
+		it('A font name that already contains an apostrophe is left alone', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value =
+				'<p><span style="font-family: &quot;O\'Neil&quot;, serif;">test</span></p>';
+			expect(editor.value).equals(
+				'<p><span style="font-family: &quot;O\'Neil&quot;, serif;">test</span></p>'
+			);
+		});
+
+		it('With the option off the browser serialisation is kept', () => {
+			const editor = getJodit({
+				history: { timeout: 0 },
+				cleanHTML: { singleQuotesInFontFamily: false }
+			});
+			editor.value =
+				'<p><span style="font-family: &quot;Luckiest Guy&quot;, Impact, cursive;">test</span></p>';
+			expect(editor.value).equals(
+				'<p><span style="font-family: &quot;Luckiest Guy&quot;, Impact, cursive;">test</span></p>'
+			);
+		});
+	});
+
 	// https://github.com/xdan/jodit/issues/1149
 	describe('collapseEmptyValueToEmptyString option', () => {
 		it('By default an empty editor returns the caret container as-is', () => {

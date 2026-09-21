@@ -42,6 +42,15 @@ declare module 'jodit/config' {
 			 */
 			collapseEmptyValueToEmptyString: boolean;
 			/**
+			 * Browsers serialise quoted font names in a `style` attribute with
+			 * double quotes, which end up as `&quot;` in the editor value
+			 * (`font-family: &quot;Open Sans&quot;, sans-serif`). Some back ends
+			 * HTML-decode the value before storing it and turn that into invalid
+			 * markup. With this option (default) the value getter rewrites such
+			 * names with single quotes: `font-family: 'Open Sans', sans-serif`.
+			 */
+			singleQuotesInFontFamily: boolean;
+			/**
 			 * Replace old tags to new eg. <i> to <em>, <b> to <strong>
 			 */
 			replaceOldTags: IDictionary<HTMLTagNames> | false;
@@ -222,6 +231,7 @@ Config.prototype.cleanHTML = {
 	removeEmptyElements: true,
 	fillEmptyParagraph: true,
 	collapseEmptyValueToEmptyString: false,
+	singleQuotesInFontFamily: true,
 	replaceNBSP: true,
 	replaceOldTags: {
 		i: 'em',
