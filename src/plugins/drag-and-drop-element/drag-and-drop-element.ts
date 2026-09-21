@@ -178,6 +178,12 @@ export class dragAndDropElement extends Plugin {
 
 		this.j.e.fire('hidePopup hideResizer');
 
+		// The ghost lives in the top document (position: fixed), but the
+		// mousemove comes from the editor document. In iframe mode those are
+		// different viewports, so the iframe's own offset has to be added or
+		// the ghost trails the pointer by exactly that distance (#1455).
+		const offset = this.__ghostOffset();
+
 		if (!this.draggable.parentNode) {
 			const target = dataBind(this.draggable, 'target');
 
@@ -188,8 +194,8 @@ export class dragAndDropElement extends Plugin {
 				position: 'fixed',
 				opacity: 0.7,
 				display: 'inline-block',
-				left: event.clientX,
-				top: event.clientY,
+				left: event.clientX + offset.left,
+				top: event.clientY + offset.top,
 				width: target?.offsetWidth ?? 100,
 				height: target?.offsetHeight ?? 100
 			});
@@ -201,11 +207,25 @@ export class dragAndDropElement extends Plugin {
 		}
 
 		css(this.draggable, {
-			left: event.clientX,
-			top: event.clientY
+			left: event.clientX + offset.left,
+			top: event.clientY + offset.top
 		});
 
+		// The caret goes into the editor document, so it keeps the raw
+		// (iframe-relative) coordinates.
 		this.j.s.insertCursorAtPoint(event.clientX, event.clientY);
+	}
+
+	private __ghostOffset(): { left: number; top: number } {
+		const iframe = this.j.iframe;
+
+		if (!iframe) {
+			return { left: 0, top: 0 };
+		}
+
+		const rect = iframe.getBoundingClientRect();
+
+		return { left: rect.left, top: rect.top };
 	}
 
 	/**

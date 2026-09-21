@@ -51,6 +51,16 @@ declare module 'jodit/config' {
 			 */
 			singleQuotesInFontFamily: boolean;
 			/**
+			 * Browsers keep a trailing `<br>` inside a block after you type into an
+			 * empty one (`<p>test<br></p>`), and the same `<br>` ends up in the
+			 * editor value. It renders nothing, but confuses consumers that compare
+			 * or post-process the HTML. With this option the value getter drops a
+			 * `<br>` that is the last node of a block (or of the whole value)
+			 * and follows other content. `<p><br></p>` and `text<br><br>` — an empty
+			 * line — are kept.
+			 */
+			removeTrailingBr: boolean;
+			/**
 			 * Replace old tags to new eg. <i> to <em>, <b> to <strong>
 			 */
 			replaceOldTags: IDictionary<HTMLTagNames> | false;
@@ -232,6 +242,7 @@ Config.prototype.cleanHTML = {
 	fillEmptyParagraph: true,
 	collapseEmptyValueToEmptyString: false,
 	singleQuotesInFontFamily: true,
+	removeTrailingBr: false,
 	replaceNBSP: true,
 	replaceOldTags: {
 		i: 'em',

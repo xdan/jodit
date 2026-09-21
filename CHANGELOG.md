@@ -9,6 +9,16 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.7
+
+#### :bug: Bug Fix
+
+- [#1455](https://github.com/xdan/jodit/issues/1455) Dragging an element inside an `iframe` editor showed the drag ghost far away from the pointer. The ghost is a `position: fixed` clone in the top document, but the `mousemove` coordinates come from the iframe document, so the ghost trailed the pointer by exactly the iframe's offset on the page. The iframe's position is now added to the ghost coordinates; the caret still uses the iframe-relative point.
+
+#### :rocket: New Feature
+
+- [#1438](https://github.com/xdan/jodit/issues/1438) New `cleanHTML.removeTrailingBr` option (default `false`). Browsers keep a trailing `<br>` inside a block after typing into an empty one (`<p>test<br></p>`) and it ends up in the value. With the option on, the value getter drops a `<br>` that is the last node of a block — or of the whole value in `enter: 'br'` mode — and follows other content; empty blocks (`<p><br></p>`) and deliberate empty lines (`text<br><br>`) are kept.
+
 ## 4.15.6
 
 #### :bug: Bug Fix

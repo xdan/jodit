@@ -5,6 +5,73 @@
  */
 
 describe('Drag and drop element inside Editor', function () {
+	// https://github.com/xdan/jodit/issues/1455
+	describe('Ghost position in iframe mode', function () {
+		it('Should keep the ghost under the pointer by adding the iframe offset', function () {
+			const editor = getJodit({
+				iframe: true,
+				disablePlugins: ['sticky']
+			});
+			editor.value =
+				'<p>1111</p><p><img alt="" src="tests/artio.jpg" style="height:50px;width:50px"></p><p>3333</p>';
+
+			const img = editor.editor.querySelector('img');
+			simulateEvent('mousedown', img);
+
+			const frame = editor.iframe.getBoundingClientRect();
+			expect(frame.left + frame.top).is.above(0);
+
+			[
+				[10, 10],
+				[120, 60]
+			].forEach(([x, y]) => {
+				simulateEvent('mousemove', editor.editor, options => {
+					options.clientX = x;
+					options.clientY = y;
+				});
+			});
+
+			const ghost = document.querySelector(
+				'img[style*="position: fixed"]'
+			);
+			expect(ghost).is.not.null;
+			expect(parseInt(ghost.style.left, 10)).equals(
+				Math.round(120 + frame.left)
+			);
+			expect(parseInt(ghost.style.top, 10)).equals(
+				Math.round(60 + frame.top)
+			);
+
+			simulateEvent('mouseup', editor.editor);
+		});
+
+		it('Should not add any offset without iframe', function () {
+			const editor = getJodit({ disablePlugins: ['sticky'] });
+			editor.value =
+				'<p>1111</p><p><img alt="" src="tests/artio.jpg" style="height:50px;width:50px"></p><p>3333</p>';
+
+			simulateEvent('mousedown', editor.editor.querySelector('img'));
+			[
+				[10, 10],
+				[120, 60]
+			].forEach(([x, y]) => {
+				simulateEvent('mousemove', editor.editor, options => {
+					options.clientX = x;
+					options.clientY = y;
+				});
+			});
+
+			const ghost = document.querySelector(
+				'img[style*="position: fixed"]'
+			);
+			expect(ghost).is.not.null;
+			expect(parseInt(ghost.style.left, 10)).equals(120);
+			expect(parseInt(ghost.style.top, 10)).equals(60);
+
+			simulateEvent('mouseup', editor.editor);
+		});
+	});
+
 	const { position } = Jodit.modules.Helpers;
 
 	['mousedown|mousemove|mouseup']

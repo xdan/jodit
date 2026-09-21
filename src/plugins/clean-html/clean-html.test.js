@@ -5,6 +5,58 @@
  */
 
 describe('Clean html plugin', function () {
+	// https://github.com/xdan/jodit/issues/1438
+	describe('removeTrailingBr option', () => {
+		it('By default the trailing <br> left by the browser is kept', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = '<p>test<br></p>';
+			expect(editor.value).equals('<p>test<br></p>');
+		});
+
+		it('With the option on, a <br> that ends a block with content is dropped', () => {
+			const editor = getJodit({
+				history: { timeout: 0 },
+				cleanHTML: { removeTrailingBr: true }
+			});
+			editor.value = '<p>test<br></p>';
+			expect(editor.value).equals('<p>test</p>');
+
+			editor.value =
+				'<div>a<br></div><ul><li>b<br></li></ul><h2><b>c</b><br></h2>';
+			expect(editor.value).equals(
+				'<div>a</div><ul><li>b</li></ul><h2><b>c</b></h2>'
+			);
+		});
+
+		it('With the option on, empty blocks and deliberate empty lines are kept', () => {
+			const editor = getJodit({
+				history: { timeout: 0 },
+				cleanHTML: { removeTrailingBr: true }
+			});
+			editor.value = '<p>test</p><p><br></p>';
+			expect(editor.value).equals('<p>test</p><p><br></p>');
+
+			editor.value = '<p>test<br><br></p>';
+			expect(editor.value).equals('<p>test<br><br></p>');
+
+			editor.value = '<p>a<br>b</p>';
+			expect(editor.value).equals('<p>a<br>b</p>');
+		});
+
+		it('With the option on and enter: br, the trailing <br> of the value is dropped too', () => {
+			const editor = getJodit({
+				history: { timeout: 0 },
+				enter: 'br',
+				cleanHTML: { removeTrailingBr: true }
+			});
+			editor.value = 'test<br>';
+			expect(editor.value).equals('test');
+
+			editor.value = 'test<br><br>';
+			expect(editor.value).equals('test<br><br>');
+		});
+	});
+
 	describe('singleQuotesInFontFamily option', () => {
 		it('By default double-quoted font names come out with single quotes', () => {
 			const editor = getJodit({ history: { timeout: 0 } });

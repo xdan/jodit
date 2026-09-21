@@ -30,6 +30,9 @@ import {
 /**
  * Clean HTML after removeFormat and insertHorizontalRule command
  */
+const TRAILING_BR_BLOCKS =
+	'p, div, li, td, th, h1, h2, h3, h4, h5, h6, blockquote';
+
 export class cleanHtml extends Plugin {
 	/** @override */
 	override buttons: Plugin['buttons'] = [
@@ -141,6 +144,7 @@ export class cleanHtml extends Plugin {
 	@watch(':afterGetValueFromEditor')
 	protected onAfterGetValueFromEditor(data: { value: string }): void {
 		this.__singleQuotesInFontFamily(data);
+		this.__removeTrailingBr(data);
 
 		if (!this.j.o.cleanHTML.collapseEmptyValueToEmptyString) {
 			return;
@@ -163,6 +167,52 @@ export class cleanHtml extends Plugin {
 	 * survive that round trip. Names that already contain an apostrophe are
 	 * left alone.
 	 */
+	/**
+	 * Drop a `<br>` that is the last node of a block (or of the value) and
+	 * follows other content — the caret placeholder browsers leave behind
+	 * after typing into an empty block. An empty block (`<p><br></p>`) and a
+	 * deliberate empty line (`text<br><br>`) are kept.
+	 */
+	private __removeTrailingBr(data: { value: string }): void {
+		if (!this.j.o.cleanHTML.removeTrailingBr || !/<br/i.test(data.value)) {
+			return;
+		}
+
+		const box = this.j.c.div();
+		box.innerHTML = data.value;
+
+		const blocks: Element[] = [
+			box,
+			...box.querySelectorAll(TRAILING_BR_BLOCKS)
+		];
+
+		blocks.forEach(block => {
+			const last = block.lastChild;
+
+			if (!Dom.isTag(last, 'br')) {
+				return;
+			}
+
+			const prev = last.previousSibling;
+
+			if (!prev || Dom.isTag(prev, 'br')) {
+				return;
+			}
+
+			if (
+				Dom.isText(prev) &&
+				!prev.nodeValue?.trim() &&
+				!prev.previousSibling
+			) {
+				return;
+			}
+
+			Dom.safeRemove(last);
+		});
+
+		data.value = box.innerHTML;
+	}
+
 	private __singleQuotesInFontFamily(data: { value: string }): void {
 		if (
 			!this.j.o.cleanHTML.singleQuotesInFontFamily ||
