@@ -231,8 +231,12 @@ jobs:
                     sleep 15
                   done
 
-                  echo "::error::jodit@$VERSION did not become available on npm within 15 minutes"
-                  exit 1
+                  # The registry sometimes takes longer than this to process a
+                  # release; the publish itself has already succeeded, so keep
+                  # going and let the downstream builds resolve the version
+                  # themselves rather than silently skipping the whole cascade.
+                  echo "::warning::jodit@$VERSION did not become available on npm within 15 minutes, triggering downstream anyway"
+                  exit 0
 
             - name: Trigger generate site hook
               run: |
