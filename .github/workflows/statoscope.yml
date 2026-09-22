@@ -96,6 +96,19 @@ jobs:
           --reference statoscope/reference.json \
           --output build/statoscope-diff.html
 
+    - name: Job summary
+      if: steps.sizes.outputs.has_reference == 'true'
+      run: |
+        {
+          echo "## 📊 Bundle Size"
+          echo
+          echo "${{ steps.sizes.outputs.table }}"
+          echo
+          echo '```'
+          echo "${{ steps.validate.outputs.result }}"
+          echo '```'
+        } >> "$GITHUB_STEP_SUMMARY"
+
     - name: Upload diff report
       if: steps.sizes.outputs.has_reference == 'true'
       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
@@ -104,8 +117,12 @@ jobs:
         path: build/statoscope-diff.html
         retention-days: 30
 
+    # A pull_request run from a fork gets a read-only token whatever the
+    # `permissions:` block says, so commenting is best-effort. The size budget
+    # is enforced by the `Enforce size budget` step below instead.
     - name: Comment PR
       if: steps.sizes.outputs.has_reference == 'true'
+      continue-on-error: true
       uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v2
       with:
         header: statoscope
@@ -127,6 +144,7 @@ jobs:
 
     - name: Comment PR (no reference)
       if: steps.sizes.outputs.has_reference != 'true'
+      continue-on-error: true
       uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v2
       with:
         header: statoscope
@@ -134,3 +152,10 @@ jobs:
           ## 📊 Bundle Size
 
           No reference stats in `main` yet. Comparison will be available after first merge.
+
+    - name: Enforce size budget
+      if: steps.sizes.outputs.has_reference == 'true' && steps.validate.outputs.exit_code != '0'
+      run: |
+        echo "::error::Statoscope rules failed"
+        echo "${{ steps.validate.outputs.result }}"
+        exit 1
