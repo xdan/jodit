@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.9
+
+#### :bug: Bug Fix
+
+- [#1485](https://github.com/xdan/jodit/issues/1485) In inline mode the `change` event fired on every value synchronisation, even when nothing had changed: the source element is the editor container there, so the editor compared the value with its own markup and the difference never went away. Among other effects, clicking a button in the table cells popup closed the popup (`select-cells` hides it on `change`) before the button's click arrived. The value last synchronised to an inline container is now tracked separately, so `change` fires only on a real change; standard mode is unchanged. Thanks to [@brendon](https://github.com/brendon) ([#1486](https://github.com/xdan/jodit/pull/1486)).
+
 ## 4.15.8
 
 #### :bug: Bug Fix
