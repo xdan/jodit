@@ -1287,13 +1287,45 @@ export class Selection implements ISelect {
 			throw error('Node element must be in editor');
 		}
 
+		const target = (!inward && this.__closestNotEditable(node)) || node;
+
 		const range = this.createRange();
 
 		range[
-			inward || node === this.area ? 'selectNodeContents' : 'selectNode'
-		](node);
+			inward || target === this.area ? 'selectNodeContents' : 'selectNode'
+		](target);
 
 		return this.selectRange(range);
+	}
+
+	/**
+	 * The outermost `contenteditable="false"` ancestor of the node inside the
+	 * editable area, if there is one.
+	 *
+	 * A range can be put inside such an island (e.g. on an `<img>` wrapped in a
+	 * `<picture contenteditable="false">`), but the browser cannot place a caret
+	 * there: the arrow keys then have nothing to move from and the selection
+	 * cannot be escaped. Selecting the island itself keeps the range in editable
+	 * content, so the caret can step over it. See #1184
+	 */
+	private __closestNotEditable(node: Node): Nullable<HTMLElement> {
+		const { area } = this;
+
+		let result: Nullable<HTMLElement> = null,
+			elm: Nullable<Node> = node.parentNode;
+
+		while (elm && elm !== area && area.contains(elm)) {
+			if (
+				Dom.isElement(elm) &&
+				elm.getAttribute('contenteditable') === 'false'
+			) {
+				result = elm as HTMLElement;
+			}
+
+			elm = elm.parentNode;
+		}
+
+		return result;
 	}
 
 	/**

@@ -5,6 +5,32 @@
  */
 
 describe('Image processor plugin', () => {
+	// https://github.com/xdan/jodit/issues/1184
+	describe('Click an image inside a contenteditable="false" wrapper', function () {
+		it('Should not trap the selection inside the wrapper', function () {
+			const editor = getJodit();
+			editor.value =
+				'<p><picture contenteditable="false"><img src="tests/artio.jpg"></picture>This is the text after the image</p>';
+
+			const img = editor.editor.querySelector('img'),
+				picture = editor.editor.querySelector('picture'),
+				p = editor.editor.querySelector('p');
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], img);
+
+			const range = editor.s.range;
+
+			expect(picture.contains(range.commonAncestorContainer)).is.false;
+			expect(range.commonAncestorContainer).equals(p);
+			expect(
+				Jodit.modules.Dom.isContentEditable(
+					range.commonAncestorContainer,
+					editor.editor
+				)
+			).is.true;
+		});
+	});
+
 	const DATA_URI =
 		'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 

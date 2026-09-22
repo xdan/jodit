@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.10
+
+#### :bug: Bug Fix
+
+- [#1184](https://github.com/xdan/jodit/issues/1184) Clicking an image wrapped in a `contenteditable="false"` element (for example `<picture contenteditable="false"><img></picture>`) left the caret stuck: the arrow keys could not move it past the image. Selecting a node put the range inside that non-editable island — the browser cannot place a caret there, so there was nothing for the arrow keys to move. `select()` now selects the outermost non-editable ancestor instead, so the range stays in editable content and the caret steps over the element as usual. Selecting an editable node, and `select(node, true)`, are unchanged.
+
 ## 4.15.9
 
 #### :bug: Bug Fix

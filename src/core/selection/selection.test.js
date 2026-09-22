@@ -5,6 +5,83 @@
  */
 
 describe('Selection Module Tests', function () {
+	// https://github.com/xdan/jodit/issues/1184
+	describe('Select a node inside a contenteditable="false" island', function () {
+		it('Should select the island itself, not the node inside it', function () {
+			const editor = getJodit();
+			editor.value =
+				'<p><picture contenteditable="false"><img src="tests/artio.jpg"></picture>text</p>';
+
+			const img = editor.editor.querySelector('img'),
+				picture = editor.editor.querySelector('picture'),
+				p = editor.editor.querySelector('p');
+
+			editor.s.select(img);
+
+			const range = editor.s.range;
+
+			expect(range.startContainer).equals(p);
+			expect(range.endContainer).equals(p);
+			expect(range.startOffset).equals(0);
+			expect(range.endOffset).equals(1);
+			expect(
+				Jodit.modules.Dom.isContentEditable(
+					range.commonAncestorContainer,
+					editor.editor
+				)
+			).is.true;
+			expect(picture.contains(range.commonAncestorContainer)).is.false;
+		});
+
+		it('Should select the outermost island when they are nested', function () {
+			const editor = getJodit();
+			editor.value =
+				'<p><span contenteditable="false"><picture contenteditable="false"><img src="tests/artio.jpg"></picture></span>text</p>';
+
+			const img = editor.editor.querySelector('img'),
+				span = editor.editor.querySelector('span'),
+				p = editor.editor.querySelector('p');
+
+			editor.s.select(img);
+
+			const range = editor.s.range;
+
+			expect(range.startContainer).equals(p);
+			expect(range.endContainer).equals(p);
+			expect(range.commonAncestorContainer).equals(p);
+			expect(span.contains(range.commonAncestorContainer)).is.false;
+		});
+
+		it('Should not change the selection for an editable node', function () {
+			const editor = getJodit();
+			editor.value = '<p><img src="tests/artio.jpg">text</p>';
+
+			const img = editor.editor.querySelector('img'),
+				p = editor.editor.querySelector('p');
+
+			editor.s.select(img);
+
+			const range = editor.s.range;
+
+			expect(range.startContainer).equals(p);
+			expect(range.startOffset).equals(0);
+			expect(range.endOffset).equals(1);
+			expect(editor.s.html).equals('<img src="tests/artio.jpg">');
+		});
+
+		it('Should keep selecting the contents with inward=true', function () {
+			const editor = getJodit();
+			editor.value =
+				'<p><picture contenteditable="false"><img src="tests/artio.jpg"></picture>text</p>';
+
+			const picture = editor.editor.querySelector('picture');
+
+			editor.s.select(picture, true);
+
+			expect(editor.s.range.startContainer).equals(picture);
+		});
+	});
+
 	describe('Selection boundary regressions', () => {
 		['<p>ab|cd</p>', '<p>a|bc|d</p>', '<p>a|b</p><p>c|d</p>'].forEach(
 			source => {
