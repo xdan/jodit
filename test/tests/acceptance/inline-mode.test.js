@@ -84,6 +84,58 @@ describe('Test Inline mode', function () {
 		});
 	});
 
+	describe('Synchronising an unchanged value', function () {
+		it('Should not fire the change event', function () {
+			const div = appendTestDiv();
+			div.innerHTML = '<p>HTML</p>';
+
+			const editor = Jodit.make(div, {
+				inline: true,
+				history: {
+					timeout: 0
+				}
+			});
+
+			let changes = 0;
+			editor.e.on('change', () => {
+				changes += 1;
+			});
+
+			editor.setEditorValue();
+			editor.setEditorValue();
+
+			expect(changes).equals(0);
+
+			editor.value = '<p>Changed</p>';
+
+			expect(changes).equals(1);
+			expect(editor.getElementValue()).equals('<p>Changed</p>');
+		});
+
+		it('Should keep the table cells popup open', function () {
+			const editor = Jodit.make(appendTestDiv(), {
+				inline: true,
+				history: {
+					timeout: 0
+				}
+			});
+
+			editor.value =
+				'<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
+
+			simulateEvent(
+				['mousedown', 'mouseup', 'click'],
+				editor.editor.querySelector('td')
+			);
+
+			expect(getOpenedPopup(editor)).is.not.null;
+
+			editor.setEditorValue();
+
+			expect(getOpenedPopup(editor)).is.not.null;
+		});
+	});
+
 	describe('Destruct Jodit', function () {
 		describe('For TEXTAREA', function () {
 			it('Should show textarea like standart mode', function () {
