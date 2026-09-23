@@ -23,7 +23,13 @@ import type {
 	Nullable
 } from 'jodit/types';
 import { STATUSES } from 'jodit/core/component/statuses';
-import { KEY_ENTER, KEY_SPACE } from 'jodit/core/constants';
+import {
+	KEY_DOWN,
+	KEY_ENTER,
+	KEY_ESC,
+	KEY_SPACE,
+	KEY_UP
+} from 'jodit/core/constants';
 import { autobind } from 'jodit/core/decorators/autobind/autobind';
 import { cacheHTML } from 'jodit/core/decorators/cache/cache';
 import {
@@ -50,6 +56,17 @@ import { Popup } from 'jodit/core/ui/popup/popup';
 import { makeCollection } from '../factory';
 
 import './button.less';
+
+const INPUT_TAGS = new Set(['input', 'textarea', 'select'] as const);
+
+const FOCUSABLE_SELECTOR = [
+	'button:not([disabled])',
+	'a[href]',
+	'input:not([disabled]):not([type="hidden"])',
+	'select:not([disabled])',
+	'textarea:not([disabled])',
+	'[tabindex]:not([tabindex="-1"])'
+].join(',');
 
 @component
 export class ToolbarButton<T extends IViewBased = IViewBased>
@@ -410,15 +427,112 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 	@watch('trigger:keydown')
 	protected onTriggerKeyDown(e: KeyboardEvent): void {
-		if (
-			this.state.disabled ||
-			![KEY_ENTER, KEY_SPACE, ' '].includes(e.key)
-		) {
+		if (this.state.disabled) {
+			return;
+		}
+
+		if (e.key === KEY_DOWN) {
+			this.onButtonKeyDown(e);
+			return;
+		}
+
+		if (![KEY_ENTER, KEY_SPACE, ' '].includes(e.key)) {
 			return;
 		}
 
 		e.preventDefault();
 		this.trigger.click();
+	}
+
+	/**
+	 * `ArrowDown` on a button with a trigger opens its dropdown and moves the
+	 * focus into it, like the WAI-ARIA menu button pattern
+	 */
+	@watch('button:keydown')
+	protected onButtonKeyDown(e: KeyboardEvent): void {
+		if (
+			e.key !== KEY_DOWN ||
+			this.state.disabled ||
+			!this.state.hasTrigger ||
+			e.altKey ||
+			e.ctrlKey ||
+			e.metaKey
+		) {
+			return;
+		}
+
+		e.preventDefault();
+		e.stopPropagation();
+
+		if (!this.openedPopup) {
+			this.trigger.click();
+		}
+
+		this.__popupFocusables()[0]?.focus();
+	}
+
+	/**
+	 * Inside the dropdown: `ArrowDown`/`ArrowUp` walk the items, `Escape` and
+	 * `ArrowUp` on the first item close it and give the focus back to the button
+	 */
+	@autobind
+	private __onPopupKeyDown(e: KeyboardEvent): void {
+		if (!this.openedPopup || e.altKey || e.ctrlKey || e.metaKey) {
+			return;
+		}
+
+		const target = e.target as HTMLElement;
+
+		// A text field keeps the arrow keys for itself
+		if (Dom.isTag(target, INPUT_TAGS) && e.key !== KEY_ESC) {
+			return;
+		}
+
+		const items = this.__popupFocusables(),
+			index = items.indexOf(target);
+
+		switch (e.key) {
+			case KEY_ESC:
+				this.__closePopup();
+				break;
+
+			case KEY_UP:
+				if (index <= 0) {
+					this.__closePopup();
+				} else {
+					items[index - 1].focus();
+				}
+				break;
+
+			case KEY_DOWN:
+				if (!items.length) {
+					return;
+				}
+
+				items[(index + 1) % items.length].focus();
+				break;
+
+			default:
+				return;
+		}
+
+		e.preventDefault();
+		e.stopPropagation();
+	}
+
+	/**
+	 * Visible controls of the opened dropdown that can take the focus
+	 */
+	private __popupFocusables(): HTMLElement[] {
+		const popup = this.openedPopup;
+
+		if (!popup) {
+			return [];
+		}
+
+		return Array.from(
+			popup.container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+		).filter(elm => Boolean(elm.offsetParent));
 	}
 
 	private openedPopup: Nullable<IPopup> = null;
@@ -535,7 +649,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		this.openedPopup = new Popup(this.j, false);
 		this.j.e
 			.on(this.ow, 'mousedown touchstart', this.onOutsideClick)
-			.on('escape closeAllPopups', this.onOutsideClick);
+			.on('escape closeAllPopups', this.onOutsideClick)
+			.on(this.openedPopup.container, 'keydown', this.__onPopupKeyDown);
 
 		return this.openedPopup;
 	}
@@ -560,12 +675,23 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			.off(this.ow, 'mousedown touchstart', this.onOutsideClick)
 			.off('escape closeAllPopups', this.onOutsideClick);
 
+		// The keyboard brought the focus into the dropdown: give it back to
+		// the button, otherwise it would fall out to the document
+		const { activeElement } = this.od,
+			hadFocus =
+				activeElement &&
+				Dom.isOrContains(popup.container, activeElement);
+
 		this.state.activated = false;
 		popup.close();
 		popup.destruct();
 
 		if (this.trigger) {
 			attr(this.trigger, 'aria-expanded', false);
+		}
+
+		if (hadFocus) {
+			this.focus();
 		}
 	}
 

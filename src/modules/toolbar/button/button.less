@@ -20,6 +20,19 @@
 	}
 }
 
+// The mouse never focuses a toolbar button (`mousedown` is prevented to keep
+// the selection), so any focus here came from the keyboard or a script and
+// must be visible. `:focus-visible` alone is not enough: after a mouse click
+// Chrome stays in "mouse" modality on a modifier shortcut such as `Alt+F10`,
+// and the focused button would show nothing. See #1423
+.jodit-toolbar-button-keyboard-focus() {
+	&:focus:not([disabled]) {
+		background-color: var(--color-button-background-hover);
+		opacity: 1;
+		outline: 0;
+	}
+}
+
 .jodit-toolbar-button {
 	display: flex;
 	overflow: hidden;
@@ -41,9 +54,12 @@
 		.jodit-ui-button-interaction();
 		.jodit-ui-button_clear();
 		.jodit-ui-button-style();
+		.jodit-toolbar-button-keyboard-focus();
 	}
 
 	&__trigger {
+		.jodit-toolbar-button-keyboard-focus();
+
 		display: flex;
 		height: 100%;
 		align-items: center;

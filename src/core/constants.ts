@@ -81,6 +81,9 @@ export const KEY_ENTER = 'Enter';
 export const KEY_ESC = 'Escape';
 export const KEY_ALT = 'Alt';
 
+export const KEY_HOME = 'Home';
+export const KEY_END = 'End';
+
 export const KEY_LEFT = 'ArrowLeft';
 export const KEY_UP = 'ArrowUp';
 export const KEY_RIGHT = 'ArrowRight';

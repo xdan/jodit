@@ -2010,3 +2010,91 @@ describe('Toolbar', () => {
 		});
 	});
 });
+
+// https://github.com/xdan/jodit/issues/1423
+describe('Toolbar dropdown keyboard', () => {
+	let editor;
+
+	const make = () =>
+		getJodit({
+			toolbarAdaptive: false,
+			buttons: 'bold,ul,italic'
+		});
+
+	const press = key => simulateEvent('keydown', key, document.activeElement);
+
+	const focusedIn = elm => elm.contains(document.activeElement);
+
+	afterEach(() => {
+		editor && editor.destruct();
+		editor = null;
+	});
+
+	it('Should open the dropdown on ArrowDown and focus its first item', () => {
+		editor = make();
+		const ul = editor.toolbar.buttons[1];
+		expect(ul.state.hasTrigger).is.true;
+
+		ul.focus();
+		expect(getOpenedPopup(editor)).is.null;
+
+		press('ArrowDown');
+
+		const popup = getOpenedPopup(editor);
+		expect(popup).is.not.null;
+		expect(focusedIn(popup)).is.true;
+		expect(
+			popup.querySelector('button:not([disabled])') ===
+				document.activeElement
+		).is.true;
+	});
+
+	it('Should not open anything on ArrowDown for a button without a trigger', () => {
+		editor = make();
+		editor.toolbar.buttons[0].focus();
+
+		press('ArrowDown');
+
+		expect(getOpenedPopup(editor)).is.null;
+		expect(focusedIn(editor.toolbar.buttons[0].container)).is.true;
+	});
+
+	it('Should walk the items with ArrowDown/ArrowUp and close on ArrowUp from the first one', () => {
+		editor = make();
+		const ul = editor.toolbar.buttons[1];
+		ul.focus();
+		press('ArrowDown');
+
+		const popup = getOpenedPopup(editor);
+		const items = popup.querySelectorAll('button:not([disabled])');
+		expect(items.length).is.above(1);
+
+		press('ArrowDown');
+		expect(document.activeElement).equals(items[1]);
+
+		press('ArrowUp');
+		expect(document.activeElement).equals(items[0]);
+
+		press('ArrowUp');
+		expect(getOpenedPopup(editor)).is.null;
+		expect(focusedIn(ul.container)).is.true;
+	});
+
+	it('Should close the dropdown on Escape and give the focus back to the button', () => {
+		editor = make();
+		const ul = editor.toolbar.buttons[1];
+		ul.focus();
+		press('ArrowDown');
+		expect(getOpenedPopup(editor)).is.not.null;
+
+		press('Escape');
+
+		expect(getOpenedPopup(editor)).is.null;
+		expect(focusedIn(ul.container)).is.true;
+		expect(
+			ul.container
+				.querySelector('[aria-expanded]')
+				.getAttribute('aria-expanded')
+		).equals('false');
+	});
+});

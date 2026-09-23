@@ -7,6 +7,13 @@
 &nbsp;
 <a href="https://xdsoft.net/jodit/pro/"><img src="https://img.shields.io/badge/Get%20Jodit%20PRO%20%E2%86%92-F5A623?style=for-the-badge" height="34" alt="Get Jodit PRO"></a>
 </p>
+<p>
+<a href="https://www.npmjs.com/package/jodit"><img src="https://img.shields.io/npm/v/jodit?style=flat-square&labelColor=1F2937&color=4B5563" alt="npm version"></a>
+<a href="https://www.npmjs.com/package/jodit"><img src="https://img.shields.io/npm/dm/jodit?style=flat-square&label=jodit&labelColor=1F2937&color=4B5563" alt="jodit downloads per month"></a>
+<a href="https://www.npmjs.com/package/jodit-react"><img src="https://img.shields.io/npm/dm/jodit-react?style=flat-square&label=jodit-react&labelColor=1F2937&color=4B5563" alt="jodit-react downloads per month"></a>
+<a href="https://github.com/xdan/jodit/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/xdan/jodit/tests.yml?branch=main&style=flat-square&label=tests&labelColor=1F2937" alt="Tests"></a>
+<a href="https://github.com/xdan/jodit/blob/main/LICENSE.txt"><img src="https://img.shields.io/npm/l/jodit?style=flat-square&labelColor=1F2937&color=4B5563" alt="MIT license"></a>
+</p>
 </div>
 
 <br>

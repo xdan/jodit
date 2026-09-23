@@ -7,3 +7,7 @@ keywords: jodit, toolbar, editor toolbar, buttons, formatting controls, ui
 # Toolbar
 
 This module provides a toolbar for the application.
+
+## Keyboard navigation
+
+See the [[plugins/toolbar-navigation]] plugin.

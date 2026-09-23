@@ -103,6 +103,7 @@ const allowPluginsInESM = new Set(
 		'size',
 		'stat',
 		'table',
+		'toolbar-navigation',
 		'wrap-nodes'
 	]
 		.map(p => `jodit/plugins/${p}/${p}`)

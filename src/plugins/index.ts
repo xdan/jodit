@@ -69,6 +69,7 @@ import 'jodit/plugins/ai-assistant/ai-assistant';
 import 'jodit/plugins/tab/tab';
 import 'jodit/plugins/table/table';
 import 'jodit/plugins/table-keyboard-navigation/table-keyboard-navigation';
+import 'jodit/plugins/toolbar-navigation/toolbar-navigation';
 import 'jodit/plugins/video/video';
 import 'jodit/plugins/wrap-nodes/wrap-nodes';
 import 'jodit/plugins/dtd/dtd';

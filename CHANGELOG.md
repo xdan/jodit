@@ -9,6 +9,16 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.11
+
+#### :rocket: New Feature
+
+- [#1423](https://github.com/xdan/jodit/issues/1423) New `toolbar-navigation` plugin: the toolbar is now reachable from the keyboard. `Alt+F10` moves the focus from the editable area into the toolbar, the arrow keys walk the buttons (wrapping at the ends, reversed in RTL), `Home`/`End` jump to the ends, `Enter`/`Space` activate a button and `Escape` gives the focus back to the editor; disabled buttons are skipped. This follows the WAI-ARIA authoring practices for a `role="toolbar"` widget, and the focus is moved programmatically, so it also works with the default `allowTabNavigation: false`, where the buttons take no part in the page tab order. On a button with a dropdown, `ArrowDown` opens it and focuses the first item, `ArrowDown`/`ArrowUp` walk the items, and `Escape` or `ArrowUp` on the first item close it and return to the button. Reaching the toolbar is the regular `focusToolbar` command, so it can be remapped like any other (`commandToHotkeys: { focusToolbar: 'alt+0' }`) or called with `execCommand`. Requested by [@cut2run](https://github.com/cut2run).
+
+#### :bug: Bug Fix
+
+- A toolbar button focused from the keyboard right after a mouse click showed no highlight in Chrome: a modifier shortcut such as `Alt+F10` does not switch the browser to keyboard modality, so `:focus-visible` never matched. Toolbar buttons are never focused by the mouse (`mousedown` is prevented to keep the selection), so they now highlight plain `:focus`.
+
 ## 4.15.10
 
 #### :bug: Bug Fix
