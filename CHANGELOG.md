@@ -9,6 +9,17 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.14
+
+#### :rocket: New Feature
+
+- [#1488](https://github.com/xdan/jodit/issues/1488) The color picker has a button that removes the text or background color, or a table cell's color. It calls the picker's callback with an empty string. Thanks [@brendon](https://github.com/brendon).
+- [#1491](https://github.com/xdan/jodit/issues/1491) The number of color picker columns can be set with the `--jd-color-picker-columns` CSS variable (10 by default), alongside `--jd-color-picker-cell-size`. Thanks [@brendon](https://github.com/brendon).
+
+#### :bug: Bug Fix
+
+- [#1487](https://github.com/xdan/jodit/issues/1487) A flat `colors` array now wraps into rows in the color picker, like a named group, instead of putting every color on its own line. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.15.13
 
 #### :rocket: New Feature
