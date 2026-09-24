@@ -47,6 +47,26 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		gap: calc(var(--padding-default) / 2);
+	}
+
+	&__remove {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 2px;
+		margin-left: auto;
+		border: 1px solid transparent;
+		cursor: pointer;
+
+		&:hover {
+			border-color: #000;
+		}
+
+		svg {
+			width: 16px;
+			height: 16px;
+		}
 	}
 
 	&__hex {

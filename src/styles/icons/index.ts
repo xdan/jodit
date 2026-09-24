@@ -21,6 +21,7 @@ import check from './check.svg';
 import chevron from './chevron.svg';
 import dots from './dots.svg';
 import download from './download.svg';
+import eraser from './eraser.svg';
 import eye from './eye.svg';
 import file from './file.svg';
 import folder from './folder.svg';
@@ -51,6 +52,7 @@ export {
 	chevron,
 	dots,
 	download,
+	eraser,
 	eye,
 	file,
 	folder,
