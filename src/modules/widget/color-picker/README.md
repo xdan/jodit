@@ -27,3 +27,5 @@ const tabs = Jodit.modules.TabsWidget(editor, {
 	)
 });
 ```
+
+Next to the hex input there is a button that removes the color. It calls the callback with an empty string, so a callback that sets a style to the value it receives removes that style.

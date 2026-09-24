@@ -32,7 +32,7 @@ Icon.set('palette', paletteIcon);
 /**
  * Build color picker
  *
- * @param callback - Callback 'function (color) \{\}'
+ * @param callback - Callback 'function (color) \{\}'. The remove button calls it with an empty string
  * @param coldColor - Color value ex. #fff or rgb(123, 123, 123) or rgba(123, 123, 123, 1)
  * @example
  * ```javascript
@@ -155,6 +155,15 @@ export const ColorPickerWidget = (
 			applyHexInput();
 		});
 
+	Dom.append(
+		extra,
+		editor.c.fromHTML(
+			`<span class="${cn}__remove" data-color="" title="${editor.i18n('Remove')}">${
+				editor.o.textIcons ? editor.i18n('Remove') : Icon.get('eraser')
+			}</span>`
+		)
+	);
+
 	if (editor.o.showBrowserColorPicker && hasBrowserColorPicker()) {
 		Dom.append(
 			extra,
@@ -215,7 +224,8 @@ export const ColorPickerWidget = (
 
 		if (
 			!Dom.isTag(target, 'span') ||
-			!target.classList.contains(cn + '__color-item')
+			(!target.classList.contains(cn + '__color-item') &&
+				!target.classList.contains(cn + '__remove'))
 		) {
 			return;
 		}

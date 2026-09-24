@@ -321,6 +321,87 @@
 			});
 		});
 
+		// https://github.com/xdan/jodit/issues/1488
+		describe('Remove color', function () {
+			function clickRemove(popup) {
+				const remove = Array.from(
+					popup.querySelectorAll('.jodit-color-picker__remove')
+				).find(button => button.offsetParent);
+
+				expect(remove).is.not.undefined;
+
+				simulateEvent('mousedown', remove);
+			}
+
+			function selectSpan(editor) {
+				const range = editor.s.createRange();
+				range.selectNodeContents(editor.editor.querySelector('span'));
+				editor.s.selectRange(range);
+			}
+
+			it('Should remove the background color of the selection', function () {
+				const editor = getJodit();
+
+				editor.value =
+					'<p>tex<span style="background-color: rgb(249, 203, 156);">t2t</span>ext</p>';
+				selectSpan(editor);
+
+				clickTrigger('brush', editor);
+				clickRemove(getOpenedPopup(editor));
+
+				expect(editor.value).equals('<p>text2text</p>');
+				expect(getOpenedPopup(editor)).is.null;
+			});
+
+			it('Should remove the text color of the selection', function () {
+				const editor = getJodit({ colorPickerDefaultTab: 'color' });
+
+				editor.value =
+					'<p>tex<span style="color: rgb(249, 203, 156);">t2t</span>ext</p>';
+				selectSpan(editor);
+
+				clickTrigger('brush', editor);
+				clickRemove(getOpenedPopup(editor));
+
+				expect(editor.value).equals('<p>text2text</p>');
+			});
+
+			it('Should remove the background color of a table cell', function () {
+				const editor = getJodit();
+
+				editor.value =
+					'<table><tbody><tr><td style="background-color: rgb(249, 203, 156);">one</td><td>two</td></tr></tbody></table>';
+
+				const td = editor.editor.querySelector('td');
+				const pos = Jodit.modules.Helpers.position(td);
+
+				simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+					Object.assign(e, {
+						clientX: pos.left,
+						clientY: pos.top
+					});
+				});
+
+				clickButton('brushCell', getOpenedPopup(editor));
+				clickRemove(getOpenedPopup(editor));
+
+				expect(td.style.backgroundColor).equals('');
+			});
+
+			it('Should show text instead of an icon with textIcons', function () {
+				const editor = getJodit({ textIcons: true });
+
+				clickTrigger('brush', editor);
+
+				const remove = getOpenedPopup(editor).querySelector(
+					'.jodit-color-picker__remove'
+				);
+
+				expect(remove.querySelector('svg')).is.null;
+				expect(remove.textContent).equals('Remove');
+			});
+		});
+
 		describe('Buttons', function () {
 			describe('In brush popup', function () {
 				it('Should be also only text', function () {
