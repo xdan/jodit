@@ -707,7 +707,8 @@ class Config implements IViewOptions {
 	useSplitMode: boolean = false;
 
 	/**
-	 * The colors in HEX representation to select a color for the background and for the text in colorpicker
+	 * The colors in HEX representation to select a color for the background and for the text in colorpicker.
+	 * Each group is laid out in rows of `--jd-color-picker-columns` colors (10 by default).
 	 *
 	 * ```javascript
 	 *  Jodit.make('#editor', {
