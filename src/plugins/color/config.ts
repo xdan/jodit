@@ -11,7 +11,7 @@
 import type { HTMLTagNames, IControlType, IJodit } from 'jodit/types';
 import type { Table } from 'jodit/modules';
 import { Dom } from 'jodit/core/dom/dom';
-import { css, dataBind, isJoditObject } from 'jodit/core/helpers/';
+import { attr, css, dataBind, isJoditObject } from 'jodit/core/helpers/';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
 import {
@@ -23,6 +23,18 @@ import {
 import brushIcon from './brush.svg';
 
 Icon.set('brush', brushIcon);
+
+/**
+ * Set a color style; an empty value removes it, and with it the `style`
+ * attribute once nothing else is left in it
+ */
+function setColorStyle(elm: HTMLElement, key: string, value: string): void {
+	css(elm, key, value);
+
+	if (!attr(elm, 'style')) {
+		attr(elm, 'style', null);
+	}
+}
 
 Config.prototype.controls.brushCell = {
 	isVisible: (editor: IJodit): boolean => {
@@ -46,7 +58,7 @@ Config.prototype.controls.brushCell = {
 				editor,
 				(value: string) => {
 					selected.forEach(cell => {
-						css(cell, key, value);
+						setColorStyle(cell, key, value);
 					});
 
 					editor.lock();
@@ -172,7 +184,7 @@ Config.prototype.controls.brush = {
 				if (!currentElement) {
 					editor.execCommand('background', false, value);
 				} else {
-					css(currentElement, 'backgroundColor', value);
+					setColorStyle(currentElement, 'backgroundColor', value);
 				}
 
 				dataBind(button, 'color', value);
@@ -189,7 +201,7 @@ Config.prototype.controls.brush = {
 				if (!currentElement) {
 					editor.execCommand('forecolor', false, value);
 				} else {
-					css(currentElement, 'color', value);
+					setColorStyle(currentElement, 'color', value);
 				}
 
 				dataBind(button, 'color', value);
@@ -234,10 +246,14 @@ Config.prototype.controls.brush = {
 		) {
 			switch (mode) {
 				case 'color':
-					css(current as HTMLElement, 'color', color);
+					setColorStyle(current as HTMLElement, 'color', color);
 					break;
 				case 'background':
-					css(current as HTMLElement, 'backgroundColor', color);
+					setColorStyle(
+						current as HTMLElement,
+						'backgroundColor',
+						color
+					);
 					break;
 			}
 		} else {

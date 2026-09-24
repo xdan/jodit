@@ -366,26 +366,92 @@
 				expect(editor.value).equals('<p>text2text</p>');
 			});
 
-			it('Should remove the background color of a table cell', function () {
-				const editor = getJodit();
+			// https://github.com/xdan/jodit/issues/1493
+			describe('Table cell', function () {
+				function removeCellBackground(editor) {
+					const td = editor.editor.querySelector('td');
+					const pos = Jodit.modules.Helpers.position(td);
 
-				editor.value =
-					'<table><tbody><tr><td style="background-color: rgb(249, 203, 156);">one</td><td>two</td></tr></tbody></table>';
-
-				const td = editor.editor.querySelector('td');
-				const pos = Jodit.modules.Helpers.position(td);
-
-				simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
-					Object.assign(e, {
-						clientX: pos.left,
-						clientY: pos.top
+					simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+						Object.assign(e, {
+							clientX: pos.left,
+							clientY: pos.top
+						});
 					});
+
+					clickButton('brushCell', getOpenedPopup(editor));
+					clickRemove(getOpenedPopup(editor));
+				}
+
+				it('Should remove the background color of a table cell', function () {
+					const editor = getJodit();
+
+					editor.value =
+						'<table><tbody><tr><td style="background-color: rgb(249, 203, 156);">one</td><td>two</td></tr></tbody></table>';
+
+					removeCellBackground(editor);
+
+					expect(editor.value).equals(
+						'<table><tbody><tr><td>one</td><td>two</td></tr></tbody></table>'
+					);
 				});
 
-				clickButton('brushCell', getOpenedPopup(editor));
-				clickRemove(getOpenedPopup(editor));
+				it('Should keep the other styles of the cell', function () {
+					const editor = getJodit();
 
-				expect(td.style.backgroundColor).equals('');
+					editor.value =
+						'<table><tbody><tr><td style="background-color: rgb(249, 203, 156); text-align: center;">one</td><td>two</td></tr></tbody></table>';
+
+					removeCellBackground(editor);
+
+					expect(editor.value).equals(
+						'<table><tbody><tr><td style="text-align: center;">one</td><td>two</td></tr></tbody></table>'
+					);
+				});
+			});
+
+			// https://github.com/xdan/jodit/issues/1493
+			describe('Element at the caret', function () {
+				const img =
+					'<img src="tests/artio.jpg" style="background-color: rgb(249, 203, 156);">';
+
+				function caretBefore(editor, index) {
+					const range = editor.s.createRange();
+					range.setStart(editor.editor.firstChild, index);
+					range.collapse(true);
+					editor.s.selectRange(range);
+				}
+
+				it('Should remove its background color', function () {
+					const editor = getJodit();
+
+					editor.value = '<p>' + img + '</p>';
+					caretBefore(editor, 0);
+
+					clickTrigger('brush', editor);
+					clickRemove(getOpenedPopup(editor));
+
+					expect(editor.value).equals(
+						'<p><img src="tests/artio.jpg"></p>'
+					);
+				});
+
+				it('Should remove the next one with the button, repeating the choice', function () {
+					const editor = getJodit();
+
+					editor.value = '<p>' + img + img + '</p>';
+					caretBefore(editor, 0);
+
+					clickTrigger('brush', editor);
+					clickRemove(getOpenedPopup(editor));
+
+					caretBefore(editor, 1);
+					clickButton('brush', editor);
+
+					expect(editor.value).equals(
+						'<p><img src="tests/artio.jpg"><img src="tests/artio.jpg"></p>'
+					);
+				});
 			});
 
 			it('Should show text instead of an icon with textIcons', function () {
