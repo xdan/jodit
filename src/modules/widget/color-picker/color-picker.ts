@@ -83,11 +83,15 @@ export const ColorPickerWidget = (
 			return stack.join('');
 		};
 
+	// The group wrapper lays the colors out in rows, so a flat list needs one
+	// too. See #1487
+	const groups = isArray(editor.o.colors)
+		? `<div class="${cn}__group">${eachColor(editor.o.colors)}</div>`
+		: eachColor(editor.o.colors);
+
 	Dom.append(
 		form,
-		editor.c.fromHTML(
-			`<div class="${cn}__groups">${eachColor(editor.o.colors)}</div>`
-		)
+		editor.c.fromHTML(`<div class="${cn}__groups">${groups}</div>`)
 	);
 
 	Dom.append(

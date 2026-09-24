@@ -215,6 +215,44 @@
 			});
 		});
 
+		describe('Flat list of colors', function () {
+			// https://github.com/xdan/jodit/issues/1487
+			it('Should lay the colors out in rows, like a group', function () {
+				const colors = [
+					'#000000',
+					'#111111',
+					'#222222',
+					'#333333',
+					'#444444',
+					'#555555',
+					'#666666',
+					'#777777',
+					'#888888',
+					'#999999',
+					'#AAAAAA',
+					'#BBBBBB'
+				];
+
+				const editor = getJodit({ colors });
+
+				clickButton('brush', editor);
+
+				const popup = getOpenedPopup(editor);
+				const items = Array.from(
+					popup.querySelectorAll('.jodit-color-picker__color-item')
+				).filter(item => item.offsetParent);
+
+				expect(items.length).equals(colors.length);
+
+				const rows = new Set(items.map(item => item.offsetTop));
+				expect(rows.size).equals(2);
+
+				items.slice(1, 10).forEach(item => {
+					expect(item.offsetTop).equals(items[0].offsetTop);
+				});
+			});
+		});
+
 		describe('Show native color picker', function () {
 			describe('Enable', function () {
 				describe('Select all content by edges', function () {
