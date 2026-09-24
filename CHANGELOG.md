@@ -20,6 +20,10 @@
 
 - [#1487](https://github.com/xdan/jodit/issues/1487) A flat `colors` array now wraps into rows in the color picker, like a named group, instead of putting every color on its own line. Thanks [@brendon](https://github.com/brendon).
 
+#### :nail_care: Polish
+
+- The hover border of the color picker swatches and of the remove-color button follows the theme text color instead of a hardcoded black, so it is visible in the dark theme too.
+
 ## 4.15.13
 
 #### :rocket: New Feature
