@@ -8,6 +8,15 @@ keywords: jodit, color picker, colorpicker widget, palette, color selection, wid
 
 Color picker widget is a simple widget that allows you to select a color from the palette.
 
+The palette is laid out in rows of `--jd-color-picker-columns` colors (10 by default), and each color is a `--jd-color-picker-cell-size` square (24px by default). Override them to fit your palette:
+
+```css
+:root {
+	--jd-color-picker-columns: 17;
+	--jd-color-picker-cell-size: 20px;
+}
+```
+
 ```javascript
 const editor = Jodit.make('#editor');
 const tabs = Jodit.modules.TabsWidget(editor, {

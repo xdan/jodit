@@ -357,6 +357,65 @@
 			});
 		});
 
+		// https://github.com/xdan/jodit/issues/1491
+		describe('Number of columns', function () {
+			const colors = {
+				test: [
+					'#000000',
+					'#111111',
+					'#222222',
+					'#333333',
+					'#444444',
+					'#555555',
+					'#666666',
+					'#777777',
+					'#888888',
+					'#999999',
+					'#AAAAAA',
+					'#BBBBBB'
+				]
+			};
+
+			afterEach(() => {
+				document.documentElement.style.removeProperty(
+					'--jd-color-picker-columns'
+				);
+			});
+
+			function rowLengths(editor) {
+				clickButton('brush', editor);
+
+				const items = Array.from(
+					getOpenedPopup(editor).querySelectorAll(
+						'.jodit-color-picker__color-item'
+					)
+				).filter(item => item.offsetParent);
+
+				const rows = new Map();
+				items.forEach(item => {
+					rows.set(
+						item.offsetTop,
+						(rows.get(item.offsetTop) || 0) + 1
+					);
+				});
+
+				return Array.from(rows.values());
+			}
+
+			it('Should lay out ten colors per row by default', function () {
+				expect(rowLengths(getJodit({ colors }))).deep.equals([10, 2]);
+			});
+
+			it('Should follow --jd-color-picker-columns', function () {
+				document.documentElement.style.setProperty(
+					'--jd-color-picker-columns',
+					'5'
+				);
+
+				expect(rowLengths(getJodit({ colors }))).deep.equals([5, 5, 2]);
+			});
+		});
+
 		describe('Disable/Enable plugin', () => {
 			describe('Disable', () => {
 				let editor;
