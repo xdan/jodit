@@ -32,8 +32,10 @@ declare module 'jodit/config' {
 
 			/**
 			 * Return an empty string from `editor.value` (and the synced source
-			 * element) when the editor holds only a single empty block — e.g.
-			 * `<p><br></p>` left after the user deletes all the content.
+			 * element) when the editor holds only a single empty text block
+			 * (`p`, `div`, a heading, `blockquote` or `pre`) — e.g.
+			 * `<p><br></p>` left after the user deletes all the content. A lone
+			 * video, iframe or other element that is content in itself is kept.
 			 * `contenteditable` keeps that caret container in the DOM, so by
 			 * default the value getter returns it as-is; enable this to collapse
 			 * it to `''` for form submission.
