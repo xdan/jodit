@@ -159,6 +159,42 @@ describe('Clean html plugin', function () {
 			editor.editor.innerHTML = '<p>hi<br></p>';
 			expect(editor.value).equals('<p>hi<br></p>');
 		});
+
+		// https://github.com/xdan/jodit/issues/1496
+		describe('A lone element', () => {
+			function makeEditor() {
+				return getJodit({
+					history: { timeout: 0 },
+					cleanHTML: { collapseEmptyValueToEmptyString: true }
+				});
+			}
+
+			it('Should return an empty string for an empty heading or quote', () => {
+				const editor = makeEditor();
+
+				['<h2><br></h2>', '<blockquote><br></blockquote>'].forEach(
+					html => {
+						editor.editor.innerHTML = html;
+						expect(editor.value, html).equals('');
+					}
+				);
+			});
+
+			it('Should keep an element that is content in itself', () => {
+				const editor = makeEditor();
+
+				[
+					'<video controls src="movie.mp4"></video>',
+					'<audio controls src="sound.mp3"></audio>',
+					'<iframe src="https://example.com/"></iframe>',
+					'<object data="file.pdf"></object>',
+					'<i class="icon"></i>'
+				].forEach(html => {
+					editor.editor.innerHTML = html;
+					expect(editor.value, html).does.not.equal('');
+				});
+			});
+		});
 	});
 
 	describe('Exec bold for collapsed range and move cursor in another place', () => {
