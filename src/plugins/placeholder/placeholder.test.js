@@ -134,6 +134,25 @@ describe('Placeholder plugin', function () {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/1495
+	describe('Empty block added after init', function () {
+		it('Should take the margin of that block', function () {
+			applyGlobalStyle('.jodit-wysiwyg p { margin-top: 20px; }');
+
+			const editor = getJodit({
+				wrapNodes: { emptyBlockAfterInit: true }
+			});
+
+			expect(editor.editor.innerHTML).equals('<p><br></p>');
+
+			const placeholder = editor.container.querySelector(
+				'[data-ref="placeholder"]'
+			);
+
+			expect(placeholder.style.marginTop).equals('20px');
+		});
+	});
+
 	describe('ReadOnly', function () {
 		it('Should hide placeholder', function () {
 			const table_editor_interface = appendTestArea();
