@@ -150,11 +150,13 @@ export class cleanHtml extends Plugin {
 			return;
 		}
 
-		if (
-			/^<([a-z][a-z0-9]*)\b[^>]*>(?:<br\/?>)?<\/\1>$/i.test(
-				data.value.trim()
-			)
-		) {
+		// Only a text block can be an empty caret container; a lone video,
+		// iframe or icon has no children but is content in itself
+		const lone = /^<([a-z][a-z0-9]*)\b[^>]*>(?:<br\/?>)?<\/\1>$/i.exec(
+			data.value.trim()
+		);
+
+		if (lone && /^(p|div|h[1-6]|blockquote|pre)$/i.test(lone[1])) {
 			data.value = '';
 		}
 	}
