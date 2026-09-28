@@ -9,6 +9,14 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.16
+
+#### :bug: Bug Fix
+
+- [#1493](https://github.com/xdan/jodit/issues/1493) Removing a color from a table cell, or from the element at the caret, no longer leaves an empty `style=""` attribute behind. Thanks [@brendon](https://github.com/brendon).
+- [#1495](https://github.com/xdan/jodit/issues/1495) The placeholder no longer moves down shortly after the editor appears when paragraphs have a top margin; it is placed by the empty paragraph added after init. Thanks [@brendon](https://github.com/brendon).
+- [#1496](https://github.com/xdan/jodit/issues/1496) With `cleanHTML.collapseEmptyValueToEmptyString`, a value holding only a video, audio, object or other element that is content in itself is no longer collapsed to an empty string; only an empty text block is. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.15.15
 
 #### :rocket: New Feature
