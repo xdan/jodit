@@ -129,7 +129,8 @@ export class placeholder extends Plugin {
 			.on('changePlace.placeholder', this.addNativeListeners)
 			.on(
 				'change.placeholder focus.placeholder keyup.placeholder mouseup.placeholder keydown.placeholder ' +
-					'mousedown.placeholder afterSetMode.placeholder changePlace.placeholder',
+					'mousedown.placeholder afterSetMode.placeholder changePlace.placeholder ' +
+					'internalChange.placeholder',
 				this.toggle
 			)
 			.on(window, 'load', this.toggle);
