@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.15
+
+#### :rocket: New Feature
+
+- The paste dialog ("Keep / Insert as text / Insert only text") now fires `beforeClosePasteDialog` and `afterClosePasteDialog` on the editor, with the dialog as the argument, next to the existing `beforeOpenPasteDialog` / `afterOpenPasteDialog`. Requested by Ralf Pichler (Jodit OEM).
+
 ## 4.15.14
 
 #### :rocket: New Feature

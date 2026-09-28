@@ -979,6 +979,67 @@ describe('Test paste plugin', () => {
 				expect(dialog).is.null;
 			});
 
+			describe('Close dialog events', function () {
+				function make(calls) {
+					return getJodit({
+						events: {
+							beforeClosePasteDialog: dialog =>
+								calls.push(['before', dialog]),
+							afterClosePasteDialog: dialog =>
+								calls.push(['after', dialog])
+						}
+					});
+				}
+
+				function pasteHTML(editor) {
+					simulateEvent('paste', 0, editor.editor, data => {
+						data.clipboardData = {
+							types: ['text/html'],
+							getData: () => '<p>test</p>'
+						};
+					});
+				}
+
+				it('Should fire beforeClosePasteDialog and afterClosePasteDialog when an action is chosen', function () {
+					const calls = [];
+					const editor = make(calls);
+
+					pasteHTML(editor);
+
+					const dialog = getOpenedDialog(editor);
+					expect(dialog).is.not.null;
+					expect(calls.length).equals(0);
+
+					simulateEvent('click', getButton('keep', dialog));
+
+					expect(getOpenedDialog(editor)).is.null;
+					expect(calls.map(c => c[0])).deep.equals([
+						'before',
+						'after'
+					]);
+					expect(calls[0][1].container).equals(dialog);
+					expect(calls[1][1]).equals(calls[0][1]);
+					expect(editor.value).does.include('<p>test</p>');
+				});
+
+				it('Should fire them on Cancel too', function () {
+					const calls = [];
+					const editor = make(calls);
+
+					pasteHTML(editor);
+
+					const dialog = getOpenedDialog(editor);
+					simulateEvent('click', getButton('cancel', dialog));
+
+					expect(getOpenedDialog(editor)).is.null;
+					expect(calls.map(c => c[0])).deep.equals([
+						'before',
+						'after'
+					]);
+					expect(editor.value).does.not.include('test');
+				});
+			});
+
 			describe('Change dialog in afterOpenPasteDialog', function () {
 				it('Should change dialog', function () {
 					const editor = getJodit({

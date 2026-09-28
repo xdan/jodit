@@ -153,11 +153,17 @@ export function askInsertTypeDialog(
 		})
 	);
 
-	dialog.e.one(dialog, 'afterClose', () => {
-		if (!jodit.s.isFocused()) {
-			jodit.s.focus();
-		}
-	});
+	dialog.e
+		.on(dialog, 'beforeClose', () => {
+			jodit.e.fire('beforeClosePasteDialog', dialog);
+		})
+		.one(dialog, 'afterClose', () => {
+			if (!jodit.s.isFocused()) {
+				jodit.s.focus();
+			}
+
+			jodit.e.fire('afterClosePasteDialog', dialog);
+		});
 
 	const cancel = Button(jodit, {
 		text: 'Cancel',

@@ -331,6 +331,24 @@ Custom actions are handled via `onCustomPasteHTMLOption` event:
 4. **Return Value**: Handler returns processed HTML string
 5. **Insertion**: Processed HTML is inserted into editor
 
+### Dialog Events
+
+The prompt that asks how to insert HTML fires four events on the editor, so you can watch or adjust it:
+
+- `beforeOpenPasteDialog(msg, title, callback, buttonList)` — return `false` to suppress the dialog
+- `afterOpenPasteDialog(dialog, msg, title, callback, buttonList)` — the dialog is open; e.g. move or restyle it
+- `beforeClosePasteDialog(dialog)` — fired right before the dialog closes, whichever button was pressed
+- `afterClosePasteDialog(dialog)` — the dialog is closed and the focus is back in the editor
+
+```javascript
+const editor = Jodit.make('#editor', {
+    events: {
+        afterOpenPasteDialog: dialog => console.log('paste dialog opened', dialog),
+        beforeClosePasteDialog: dialog => console.log('paste dialog closing', dialog)
+    }
+});
+```
+
 ### Paste Choice Memorization
 
 When `memorizeChoiceWhenPasteFragment` is `true`:
