@@ -31,6 +31,33 @@ describe('Image processor plugin', () => {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/1512
+	describe('Click an image just inserted', () => {
+		it('Should remove the invisible text left after it and select only the image', async () => {
+			const editor = getJodit();
+			editor.value = '<p>test</p>';
+			editor.s.setCursorIn(editor.editor.firstChild);
+			editor.s.insertImage('tests/artio.jpg', null, null);
+			editor.e.fire('change', editor.value, '');
+			await delay(150);
+
+			const img = editor.editor.querySelector('img'),
+				p = editor.editor.querySelector('p');
+
+			expect(p.textContent).equals('test\uFEFF');
+
+			simulateEvent('mousedown', img);
+
+			expect(p.innerHTML).equals('test<img src="tests/artio.jpg">');
+
+			const range = editor.s.range;
+			expect(range.startContainer).equals(p);
+			expect(range.startOffset).equals(1);
+			expect(range.endContainer).equals(p);
+			expect(range.endOffset).equals(2);
+		});
+	});
+
 	const DATA_URI =
 		'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
