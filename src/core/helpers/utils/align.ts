@@ -44,6 +44,27 @@ export function hAlignElement(image: HTMLElement, align: ImageHAlign): void {
 }
 
 /**
+ * The alignment `hAlignElement` has set on an element
+ */
+export function getHAlign(elm: HTMLElement): ImageHAlign {
+	const float = cssInline(elm, 'float').toLowerCase();
+
+	if (float === 'left' || float === 'right') {
+		return float;
+	}
+
+	if (
+		css(elm, 'display') === 'block' &&
+		cssInline(elm, 'margin-left') === 'auto' &&
+		cssInline(elm, 'margin-right') === 'auto'
+	) {
+		return 'center';
+	}
+
+	return 'normal';
+}
+
+/**
  * Remove text-align style for all selected children
  */
 export function clearAlign(node: Node): void {
