@@ -95,6 +95,41 @@ describe('Focus test', () => {
 			});
 		});
 
+		// https://github.com/xdan/jodit/issues/1514
+		describe('Focus coming back', () => {
+			it('Should keep the caret where a click put it', () => {
+				const editor = getJodit();
+				editor.value = '<p>t|es|t</p><p>second</p>';
+				setCursorToChar(editor);
+				simulateEvent('blur', editor);
+
+				const second = editor.editor.lastChild;
+
+				// Chrome places the caret for the click before focus fires
+				simulateEvent('mousedown', second);
+				editor.s.setCursorIn(second.firstChild);
+				simulateEvent('focus', editor);
+
+				expect(
+					editor.editor.querySelectorAll(
+						'span[data-jodit-selection_marker]'
+					).length
+				).eq(0);
+				expect(editor.s.range.startContainer).eq(second.firstChild);
+				expect(editor.s.range.collapsed).is.true;
+			});
+
+			it('Should restore the selection when it comes back without a click', () => {
+				const editor = getJodit();
+				editor.value = '<p>t|es|t</p><p>second</p>';
+				setCursorToChar(editor);
+				simulateEvent('blur', editor);
+				simulateEvent('focus', editor);
+
+				expect(editor.s.sel.toString()).eq('es');
+			});
+		});
+
 		describe('Disable', () => {
 			it('Should not append special markers on selection range', () => {
 				const editor = getJodit({
