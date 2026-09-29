@@ -9,6 +9,15 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.17
+
+#### :bug: Bug Fix
+
+- [#1510](https://github.com/xdan/jodit/issues/1510) The image properties dialog no longer overwrites a margin set by a stylesheet with `margin: 0px` when the margins are left unchanged. Thanks [@brendon](https://github.com/brendon).
+- [#1512](https://github.com/xdan/jodit/issues/1512) Clicking an image just after inserting it no longer leaves Safari highlighting the rest of the image's line. Thanks [@brendon](https://github.com/brendon).
+- [#1514](https://github.com/xdan/jodit/issues/1514) Clicking back into the editor after it lost focus puts the caret where you clicked in Chrome, instead of restoring the previous selection. Thanks [@brendon](https://github.com/brendon).
+- [#1516](https://github.com/xdan/jodit/issues/1516) The image popup's vertical align button is disabled for a floated or block image, where `vertical-align` has no effect. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.15.16
 
 #### :bug: Bug Fix

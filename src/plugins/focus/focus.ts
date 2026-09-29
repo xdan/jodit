@@ -47,6 +47,10 @@ export function focus(editor: IJodit): void {
 
 		editor.e
 			.on('blur', () => {
+				// A press that never brought the focus back must not decide
+				// what the next focus does
+				focusByPointer = false;
+
 				if (editor.isEditorMode()) {
 					editor.s.save(true);
 				}
