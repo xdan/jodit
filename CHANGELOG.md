@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.15.18
+
+#### :rocket: New Feature
+
+- [#1518](https://github.com/xdan/jodit/issues/1518) New `imageAlignClasses` option aligns images with class names instead of an inline `float` or margins, in the image popup and the image properties dialog, and new `imageDefaultAlign` aligns newly inserted images. Thanks [@brendon](https://github.com/brendon).
+- [#1517](https://github.com/xdan/jodit/issues/1517) The image popup's align button shows the image's current alignment, and its list marks it. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.15.17
 
 #### :bug: Bug Fix
