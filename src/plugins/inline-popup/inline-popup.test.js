@@ -6,6 +6,69 @@
 
 describe('Text Inline Popup plugin', () => {
 	describe('Image', () => {
+		// https://github.com/xdan/jodit/issues/1517
+		describe('Horizontal align button', () => {
+			const icon = button =>
+				button.querySelector('svg').getAttribute('class');
+
+			it("Should show the image's alignment and mark it in the list", async () => {
+				const editor = getJodit({ defaultTimeout: 0 });
+
+				editor.value =
+					'<p>text <img alt="" src="tests/artio.jpg" style="float: right">' +
+					' text <img alt="" src="tests/artio.jpg"> text</p>';
+
+				const [right, normal] = editor.editor.querySelectorAll('img');
+				editor.s.focus();
+
+				simulateEvent('click', right);
+				await editor.async.requestIdlePromise();
+				const popup = getOpenedPopup(editor);
+				const button = getButton('left', popup);
+
+				expect(icon(button)).contains('jodit-icon_right');
+				expect(button.getAttribute('aria-pressed')).eq('true');
+
+				clickTrigger('left', popup);
+				const list = getOpenedPopup(editor);
+
+				expect(
+					getButton('Right', list).getAttribute('aria-pressed')
+				).eq('true');
+				expect(getButton('Left', list).getAttribute('aria-pressed')).eq(
+					'false'
+				);
+
+				simulateEvent('click', normal);
+				await editor.async.requestIdlePromise();
+				const normalButton = getButton('left', getOpenedPopup(editor));
+
+				expect(icon(normalButton)).contains('jodit-icon_left');
+				expect(normalButton.getAttribute('aria-pressed')).eq('false');
+			});
+
+			it('Should follow a change of alignment', async () => {
+				const editor = getJodit({ defaultTimeout: 0 });
+
+				editor.value =
+					'<p>text <img alt="" src="tests/artio.jpg"> text</p>';
+
+				const img = editor.editor.querySelector('img');
+				editor.s.focus();
+
+				simulateEvent('click', img);
+				const popup = getOpenedPopup(editor);
+				clickTrigger('left', popup);
+				clickButton('Center', getOpenedPopup(editor));
+				await editor.async.requestIdlePromise();
+
+				expect(img.style.display).eq('block');
+				expect(icon(getButton('left', popup))).contains(
+					'jodit-icon_center'
+				);
+			});
+		});
+
 		describe('Click on the image', () => {
 			it('Should Open inline popup', () => {
 				const editor = getJodit();

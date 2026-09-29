@@ -8,8 +8,7 @@
  * @module plugins/image-properties
  */
 
-import type { ImageHAlign } from 'jodit/types';
-import { css, cssInline } from 'jodit/core/helpers/utils/css';
+import { getHAlign } from 'jodit/core/helpers/utils/align';
 
 import type { EditValues } from '../interface';
 
@@ -17,22 +16,6 @@ import type { EditValues } from '../interface';
  * @private
  */
 export function readAlign(image: HTMLImageElement, values: EditValues): void {
-	// Align
-	if (
-		cssInline(image, 'float') &&
-		['left', 'right'].indexOf(cssInline(image, 'float').toLowerCase()) !==
-			-1
-	) {
-		values.align = css(image, 'float') as ImageHAlign;
-	} else {
-		if (
-			(css(image, 'display') as string) === 'block' &&
-			cssInline(image, 'margin-left') === 'auto' &&
-			cssInline(image, 'margin-right') === 'auto'
-		) {
-			values.align = 'center';
-		} else {
-			values.align = '';
-		}
-	}
+	const align = getHAlign(image);
+	values.align = align === 'normal' ? '' : align;
 }

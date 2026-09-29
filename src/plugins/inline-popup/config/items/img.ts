@@ -12,17 +12,35 @@ import type {
 	HTMLTagNames,
 	IControlType,
 	IJodit,
-	ImageHAlign
+	ImageHAlign,
+	Nullable
 } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
-import { hAlignElement } from 'jodit/core/helpers/utils/align';
+import { getHAlign, hAlignElement } from 'jodit/core/helpers/utils/align';
 import { css } from 'jodit/core/helpers/utils/css';
+
+const currentAlign = (elm: Nullable<HTMLElement>): ImageHAlign =>
+	elm ? getHAlign(elm) : 'normal';
 
 export const align: IControlType<IJodit> = {
 	name: 'left',
 	childTemplate: (_, __, value: string) => value,
 	list: ['Left', 'Right', 'Center', 'Normal'],
+	update: (editor: IJodit, button): void => {
+		const current = currentAlign(button.target);
+		button.state.icon.name = current === 'normal' ? 'left' : current;
+	},
+	isActive: (editor: IJodit, button): boolean =>
+		currentAlign(button.target) !== 'normal',
+	isChildActive: (editor: IJodit, button): boolean => {
+		const [value] = button.control.args ?? [];
+
+		return (
+			isString(value) &&
+			currentAlign(button.target) === value.toLowerCase()
+		);
+	},
 	exec: (editor: IJodit, elm, { control }): void | false => {
 		if (
 			!Dom.isTag(
