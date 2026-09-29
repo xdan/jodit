@@ -40,16 +40,30 @@ Config.prototype.saveSelectionOnBlur = true;
 
 export function focus(editor: IJodit): void {
 	if (editor.o.saveSelectionOnBlur) {
+		// A click that brings focus back places the caret itself, and Chrome
+		// has already placed it when focus fires, so restoring would move it
+		// back to the old selection. The saved markers are dropped instead.
+		let focusByPointer = false;
+
 		editor.e
 			.on('blur', () => {
 				if (editor.isEditorMode()) {
 					editor.s.save(true);
 				}
 			})
+			.on('mousedown touchstart', () => {
+				focusByPointer = !editor.editorIsActive;
+			})
 			.on('focus', () => {
 				if (editor.isEditorMode()) {
-					editor.s.restore();
+					if (focusByPointer) {
+						editor.s.removeMarkers();
+					} else {
+						editor.s.restore();
+					}
 				}
+
+				focusByPointer = false;
 			});
 	}
 
