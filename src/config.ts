@@ -33,6 +33,8 @@ import type {
 	IControlType,
 	IDictionary,
 	IExtraPlugin,
+	ImageAlignClasses,
+	ImageHAlign,
 	InsertMode,
 	IUIButtonState,
 	IViewOptions,
@@ -820,6 +822,29 @@ class Config implements IViewOptions {
 	 * Default width (in pixels) applied to images inserted into the editor
 	 */
 	imageDefaultWidth: number = 300;
+
+	/**
+	 * Alignment given to images inserted into the editor. `'normal'` leaves
+	 * them unaligned
+	 */
+	imageDefaultAlign: ImageHAlign = 'normal';
+
+	/**
+	 * Class names to align images with, instead of an inline `float` or
+	 * `margin`. Aligning an image removes every class listed here and adds the
+	 * chosen alignment's, which can be several separated by spaces.
+	 *
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 *   imageAlignClasses: {
+	 *     left: 'align-left',
+	 *     right: 'align-right',
+	 *     center: 'align-center'
+	 *   }
+	 * });
+	 * ```
+	 */
+	imageAlignClasses: Nullable<ImageAlignClasses> = null;
 
 	/**
 	 * Do not display these buttons that are on the list

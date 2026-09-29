@@ -28,7 +28,7 @@ export async function readValuesFromImage(
 	state: ImagePropertiesState
 ): Promise<void> {
 	const { sourceImage: image, values } = state;
-	readAlign(image, values);
+	readAlign(image, values, j.o.imageAlignClasses);
 
 	// Border radius
 	values.borderRadius =

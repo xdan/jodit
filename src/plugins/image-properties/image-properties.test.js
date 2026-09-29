@@ -393,6 +393,37 @@ describe('Edit image tests', () => {
 				});
 			});
 
+			// https://github.com/xdan/jodit/issues/1518
+			describe('With imageAlignClasses', () => {
+				it('should read and write the classes', async () => {
+					const refs = await openImagePropertiesDialog(
+						'<p><img alt="111" class="align-right" style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>',
+						{
+							imageAlignClasses: {
+								left: 'align-left',
+								right: 'align-right',
+								center: 'align-center'
+							}
+						}
+					);
+
+					clickButton('Advanced', refs.dialog, 'tab');
+
+					const input = refs.form.getElm('align');
+					expect(input.value.toString()).equals('right');
+
+					input.value = 'left';
+					simulateEvent('change', input);
+
+					await refs.editor.async.requestIdlePromise();
+					clickButton('ok', refs.dialog);
+
+					expect(sortAttributes(refs.editor.value)).equals(
+						'<p><img alt="111" class="align-left" src="tests/artio.jpg" style="height:100px;width:100px"></p>'
+					);
+				});
+			});
+
 			describe('Clear align', () => {
 				it('should clear some align', async () => {
 					const refs = await openImagePropertiesDialog(

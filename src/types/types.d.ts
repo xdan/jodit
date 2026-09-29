@@ -264,6 +264,13 @@ export type InsertMode =
 export type ImageAction = 'resize' | 'crop';
 export type ImageHAlign = 'normal' | 'left' | 'right' | 'center' | '';
 
+/**
+ * Class names for each image alignment, see `imageAlignClasses`
+ */
+export type ImageAlignClasses = Partial<
+	Record<Exclude<ImageHAlign, ''>, string>
+>;
+
 export interface ImageBox {
 	w: number;
 	h: number;

@@ -1314,6 +1314,40 @@ describe('Selection Module Tests', function () {
 			);
 		});
 
+		// https://github.com/xdan/jodit/issues/1518
+		describe('imageDefaultAlign', () => {
+			it('Should align a new image', () => {
+				const editor = getJodit({ imageDefaultAlign: 'center' });
+				editor.value = '<p>|</p>';
+				setCursorToChar(editor);
+				editor.s.insertImage(
+					'https://xdsoft.net/jodit/images/artio.jpg',
+					null,
+					null
+				);
+				expect(sortAttributes(editor.value)).equals(
+					'<p><img src="https://xdsoft.net/jodit/images/artio.jpg" style="display:block;margin-left:auto;margin-right:auto"></p>'
+				);
+			});
+
+			it('Should align it with imageAlignClasses when they are set', () => {
+				const editor = getJodit({
+					imageDefaultAlign: 'center',
+					imageAlignClasses: { center: 'align-center' }
+				});
+				editor.value = '<p>|</p>';
+				setCursorToChar(editor);
+				editor.s.insertImage(
+					'https://xdsoft.net/jodit/images/artio.jpg',
+					null,
+					null
+				);
+				expect(sortAttributes(editor.value)).equals(
+					'<p><img class="align-center" src="https://xdsoft.net/jodit/images/artio.jpg"></p>'
+				);
+			});
+		});
+
 		describe('Disable forImageChangeAttributes', () => {
 			it('Should insert image element with style', function () {
 				const editor = getJodit({

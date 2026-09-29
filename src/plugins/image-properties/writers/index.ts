@@ -99,6 +99,6 @@ export function applyValuesToImage(
 	}
 
 	if (opt.image.editAlign) {
-		hAlignElement(image, align);
+		hAlignElement(image, align, j.o.imageAlignClasses);
 	}
 }

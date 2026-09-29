@@ -93,6 +93,69 @@ describe('Text Inline Popup plugin', () => {
 			});
 		});
 
+		// https://github.com/xdan/jodit/issues/1518
+		describe('Horizontal align with imageAlignClasses', () => {
+			const imageAlignClasses = {
+				left: 'align-left',
+				right: 'align-right',
+				center: 'align-center block',
+				normal: 'in-line'
+			};
+
+			it('Should swap the classes instead of setting float and margins', () => {
+				const editor = getJodit({
+					defaultTimeout: 0,
+					imageAlignClasses
+				});
+
+				editor.value =
+					'<p>text <img alt="" src="tests/artio.jpg" style="float: left"> text</p>';
+				editor.s.focus();
+
+				const img = editor.editor.querySelector('img');
+				const align = label => {
+					simulateEvent('click', img);
+					clickTrigger('left', getOpenedPopup(editor));
+					clickButton(label, getOpenedPopup(editor));
+				};
+
+				align('Right');
+				expect(sortAttributes(editor.value)).eq(
+					'<p>text <img alt="" class="align-right" src="tests/artio.jpg"> text</p>'
+				);
+
+				align('Center');
+				expect(sortAttributes(editor.value)).eq(
+					'<p>text <img alt="" class="align-center block" src="tests/artio.jpg"> text</p>'
+				);
+
+				align('Normal');
+				expect(sortAttributes(editor.value)).eq(
+					'<p>text <img alt="" class="in-line" src="tests/artio.jpg"> text</p>'
+				);
+			});
+
+			it('Should read the alignment from the classes', async () => {
+				const editor = getJodit({
+					defaultTimeout: 0,
+					imageAlignClasses
+				});
+
+				editor.value =
+					'<p>text <img alt="" class="block align-center" src="tests/artio.jpg"> text</p>';
+				editor.s.focus();
+
+				simulateEvent('click', editor.editor.querySelector('img'));
+				await editor.async.requestIdlePromise();
+
+				expect(
+					getButton('left', getOpenedPopup(editor))
+						.querySelector('svg')
+						.getAttribute('class')
+				).contains('jodit-icon_center');
+			});
+		});
+
 		describe('Click on the image', () => {
 			it('Should Open inline popup', () => {
 				const editor = getJodit();

@@ -37,6 +37,34 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+### `imageDefaultAlign`
+
+**Type:** `'normal' | 'left' | 'right' | 'center'`
+
+**Default:** `'normal'`
+
+Alignment given to images inserted into the editor. `'normal'` leaves them unaligned.
+
+### `imageAlignClasses`
+
+**Type:** `{ left?: string; right?: string; center?: string; normal?: string } | null`
+
+**Default:** `null`
+
+Class names to align images with, instead of an inline `float` or `margin`. The image popup's align list, the image properties dialog and `imageDefaultAlign` all use them. Aligning an image removes every class listed here and adds the chosen alignment's, which can be several separated by spaces. The popup's align button shows the alignment read from the classes.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    imageDefaultAlign: 'center',
+    imageAlignClasses: {
+        left: 'align-left',
+        right: 'align-right',
+        center: 'align-center'
+    }
+});
+```
+
 ## Usage Examples
 
 ### Basic Usage
