@@ -497,6 +497,29 @@ describe('Edit image tests', () => {
 					);
 				});
 			});
+
+			describe('Margin from a stylesheet', () => {
+				it('should not be overwritten when the margins are left unchanged', async () => {
+					const style = document.createElement('style');
+					style.textContent =
+						'.jodit-wysiwyg img.floated { float: left; margin: 0 30px 30px 0 }';
+					document.head.appendChild(style);
+
+					try {
+						const refs = await openImagePropertiesDialog(
+							'<p><img alt="111" class="floated" style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>'
+						);
+
+						clickButton('ok', refs.dialog);
+
+						expect(sortAttributes(refs.editor.value)).equals(
+							'<p><img alt="111" class="floated" src="tests/artio.jpg" style="height:100px;width:100px"></p>'
+						);
+					} finally {
+						style.remove();
+					}
+				});
+			});
 		});
 
 		describe('Change title', () => {

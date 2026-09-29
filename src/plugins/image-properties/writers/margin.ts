@@ -9,7 +9,7 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { css } from 'jodit/core/helpers/utils/css';
+import { css, cssInline } from 'jodit/core/helpers/utils/css';
 
 import { normalSizeToString } from '../utils/utils';
 
@@ -25,10 +25,12 @@ export function applyMargin(
 ): void {
 	const margins = [marginTop, marginRight, marginBottom, marginLeft];
 
+	// Compared with the inline value, which is what `readMargins` showed, so a
+	// margin from a stylesheet is not overwritten when the field is unchanged
 	const applyMargin = (key: string, value: number | string): void => {
-		const oldValue = css(image, key);
+		const oldValue = normalSizeToString(cssInline(image, key) || 0);
 		const v = normalSizeToString(value);
-		if (oldValue.toString() !== v.toString()) {
+		if (oldValue !== v) {
 			css(image, key, v);
 		}
 	};
