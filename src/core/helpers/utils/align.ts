@@ -8,15 +8,40 @@
  * @module helpers/utils
  */
 
-import type { ImageHAlign } from 'jodit/types';
+import type { ImageAlignClasses, ImageHAlign, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { clearCenterAlign, css, cssInline } from 'jodit/core/helpers/utils/css';
 
+const classNames = (value?: string): string[] =>
+	(value ?? '').split(/\s+/).filter(Boolean);
+
 /**
- * Align image
+ * Align image, with `classes` (see `imageAlignClasses`) instead of inline
+ * styles when they are given
  */
-export function hAlignElement(image: HTMLElement, align: ImageHAlign): void {
+export function hAlignElement(
+	image: HTMLElement,
+	align: ImageHAlign,
+	classes?: Nullable<ImageAlignClasses>
+): void {
+	if (classes) {
+		hAlignElement(image, 'normal');
+
+		Object.values(classes).forEach(value =>
+			image.classList.remove(...classNames(value))
+		);
+		image.classList.add(...classNames(classes[align || 'normal']));
+
+		['class', 'style'].forEach(name => {
+			if (!attr(image, name)?.trim()) {
+				attr(image, name, null);
+			}
+		});
+
+		return;
+	}
+
 	if (align && align !== 'normal') {
 		if (align !== 'center') {
 			css(image, 'float', align);
@@ -46,7 +71,23 @@ export function hAlignElement(image: HTMLElement, align: ImageHAlign): void {
 /**
  * The alignment `hAlignElement` has set on an element
  */
-export function getHAlign(elm: HTMLElement): ImageHAlign {
+export function getHAlign(
+	elm: HTMLElement,
+	classes?: Nullable<ImageAlignClasses>
+): ImageHAlign {
+	if (classes) {
+		for (const align of ['left', 'right', 'center', 'normal'] as const) {
+			const names = classNames(classes[align]);
+
+			if (
+				names.length &&
+				names.every(name => elm.classList.contains(name))
+			) {
+				return align;
+			}
+		}
+	}
+
 	const float = cssInline(elm, 'float').toLowerCase();
 
 	if (float === 'left' || float === 'right') {

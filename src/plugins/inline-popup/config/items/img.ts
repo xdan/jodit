@@ -12,6 +12,7 @@ import type {
 	HTMLTagNames,
 	IControlType,
 	IJodit,
+	ImageAlignClasses,
 	ImageHAlign,
 	Nullable
 } from 'jodit/types';
@@ -20,25 +21,35 @@ import { isString } from 'jodit/core/helpers/checker/is-string';
 import { getHAlign, hAlignElement } from 'jodit/core/helpers/utils/align';
 import { css } from 'jodit/core/helpers/utils/css';
 
-const currentAlign = (elm: Nullable<HTMLElement>): ImageHAlign =>
-	elm ? getHAlign(elm) : 'normal';
+// Images align with `imageAlignClasses`; the wrappers of iframes and media
+// keep inline styles
+const alignClasses = (
+	editor: IJodit,
+	elm: Nullable<HTMLElement>
+): Nullable<ImageAlignClasses> =>
+	Dom.isTag(elm, 'img') ? editor.o.imageAlignClasses : null;
+
+const currentAlign = (
+	editor: IJodit,
+	elm: Nullable<HTMLElement>
+): ImageHAlign => (elm ? getHAlign(elm, alignClasses(editor, elm)) : 'normal');
 
 export const align: IControlType<IJodit> = {
 	name: 'left',
 	childTemplate: (_, __, value: string) => value,
 	list: ['Left', 'Right', 'Center', 'Normal'],
 	update: (editor: IJodit, button): void => {
-		const current = currentAlign(button.target);
+		const current = currentAlign(editor, button.target);
 		button.state.icon.name = current === 'normal' ? 'left' : current;
 	},
 	isActive: (editor: IJodit, button): boolean =>
-		currentAlign(button.target) !== 'normal',
+		currentAlign(editor, button.target) !== 'normal',
 	isChildActive: (editor: IJodit, button): boolean => {
 		const [value] = button.control.args ?? [];
 
 		return (
 			isString(value) &&
-			currentAlign(button.target) === value.toLowerCase()
+			currentAlign(editor, button.target) === value.toLowerCase()
 		);
 	},
 	exec: (editor: IJodit, elm, { control }): void | false => {
@@ -60,7 +71,7 @@ export const align: IControlType<IJodit> = {
 			return false;
 		}
 
-		hAlignElement(elm, command as ImageHAlign);
+		hAlignElement(elm, command as ImageHAlign, alignClasses(editor, elm));
 
 		if (
 			Dom.isTag(
