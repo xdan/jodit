@@ -59,8 +59,8 @@ export class UIList<T extends IViewBased = IViewBased>
 	/**
 	 * Make new group and append it in list of elements
 	 */
-	private makeGroup(role?: string): IUIGroup {
-		return new UIGroup(this.jodit, [], role ? { role } : undefined);
+	private makeGroup(role: string = 'list'): IUIGroup {
+		return new UIGroup(this.jodit, [], { role });
 	}
 
 	/**

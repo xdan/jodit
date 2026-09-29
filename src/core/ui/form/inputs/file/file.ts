@@ -65,6 +65,7 @@ export class UIFileInput extends UIInput {
 		return this.j.create.fromHTML(`<input
 			type="file"
 			accept="${options.onlyImages ? 'image/*' : '*'}"
+			aria-label="${this.j.i18n(options.tooltip || 'Upload')}"
 			tabindex="-1"
 			dir="auto"
 			multiple=""

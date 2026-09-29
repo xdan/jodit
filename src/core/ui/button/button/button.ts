@@ -167,6 +167,7 @@ export class UIButton extends UIElement implements IUIButton {
 
 		attr(this.container, 'data-ref', this.state.name);
 		attr(this.container, 'ref', this.state.name);
+		this.updateAriaLabel();
 	}
 
 	@watch('state.tooltip', { immediately: false })
@@ -186,12 +187,17 @@ export class UIButton extends UIElement implements IUIButton {
 	protected updateAriaLabel(): void {
 		const hasText = this.state.text.trim().length > 0;
 
-		const i8nTooltip = this.state.tooltip
+		// An icon-only button without a tooltip would have no accessible
+		// name at all — fall back to its raw name (not translated: control
+		// names are identifiers, not i18n keys).
+		const label = this.state.tooltip
 			? this.jodit.i18n(this.state.tooltip)
-			: null;
+			: !hasText && this.state.name
+				? this.state.name
+				: null;
 
-		attr(this.container, 'aria-label', i8nTooltip);
-		attr(this.button, 'aria-label', !hasText ? i8nTooltip : null);
+		attr(this.container, 'aria-label', label);
+		attr(this.button, 'aria-label', !hasText ? label : null);
 	}
 
 	@watch('state.tabIndex', { immediately: false })

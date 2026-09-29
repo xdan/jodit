@@ -35,8 +35,12 @@ export class UIGroup<T extends IViewBased = IViewBased>
 		return 'UIGroup';
 	}
 
+	/**
+	 * A generic container: `group` allows any children. Toolbar button groups
+	 * are lists of `listitem`s and get `role="list"` explicitly from `UIList`.
+	 */
 	override getRole(): string {
-		return this.options?.role || 'list';
+		return this.options?.role || 'group';
 	}
 
 	/**

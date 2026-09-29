@@ -38,6 +38,17 @@ export class ToolbarContent<T extends IViewBased = IViewBased>
 		return 'ToolbarContent';
 	}
 
+	/** A toolbar item like `ToolbarButton`: the parent group is a `list`. */
+	override getRole(): string {
+		return 'listitem';
+	}
+
+	/**
+	 * Arbitrary content is not a toggle button — `aria-pressed` is not
+	 * allowed on a `listitem`.
+	 */
+	protected override onChangeActivated(): void {}
+
 	/** @override */
 	override update(): void {
 		const { control } = this;
@@ -99,7 +110,5 @@ export class ToolbarContent<T extends IViewBased = IViewBased>
 		this.container.classList.add(
 			`${this.componentName}_${this.clearName(control.name)}`
 		);
-
-		attr(this.container, 'role', 'content');
 	}
 }

@@ -363,10 +363,35 @@ export class source extends Plugin {
 			};
 
 			if (!addEventListener()) {
-				loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(
-					addEventListener,
-					() => null
-				);
+				// js-beautify is only needed once the source view is shown —
+				// do not download it for a page that stays in WYSIWYG.
+				let loading = false;
+
+				const loadBeautify = (): void => {
+					if (
+						loading ||
+						(editor.getMode() !== MODE_SOURCE &&
+							editor.getMode() !== MODE_SPLIT)
+					) {
+						return;
+					}
+
+					loading = true;
+
+					loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(
+						() => {
+							// The source view was filled before the
+							// beautifier arrived — format it now.
+							if (addEventListener()) {
+								this.syncValueFromWYSIWYG(true);
+							}
+						},
+						() => null
+					);
+				};
+
+				editor.e.on('afterSetMode.source', loadBeautify);
+				loadBeautify();
 			}
 		}
 

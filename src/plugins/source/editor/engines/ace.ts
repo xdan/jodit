@@ -193,12 +193,28 @@ export class AceEditor
 			this.onReady();
 		};
 
+		let loading = false;
+
 		const initAceEditor = (): void => {
 			if (
 				editor.isInDestruct ||
 				(editor.getRealMode() !== constants.MODE_SOURCE &&
 					editor.getMode() !== constants.MODE_SPLIT)
 			) {
+				return;
+			}
+
+			// ACE (~400 KiB from the CDN) is only needed once the source view
+			// is actually shown — a page that stays in WYSIWYG must not
+			// download it.
+			if (!this.aceExists()) {
+				if (!loading) {
+					loading = true;
+					loadNext(editor, editor.o.sourceEditorCDNUrlsJS)
+						.then(initAceEditor)
+						.catch(() => null);
+				}
+
 				return;
 			}
 
@@ -209,13 +225,6 @@ export class AceEditor
 		editor.e.on('afterSetMode', initAceEditor);
 
 		initAceEditor();
-
-		// global add ace editor in browser
-		if (!this.aceExists()) {
-			loadNext(editor, editor.o.sourceEditorCDNUrlsJS)
-				.then(initAceEditor)
-				.catch(() => null);
-		}
 	}
 
 	destruct(): any {

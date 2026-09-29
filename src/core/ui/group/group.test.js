@@ -199,7 +199,7 @@ describe('Test group ui', () => {
 
 			it('should have role', () => {
 				const group = new UIGroup(editor);
-				expect(group.container.getAttribute('role')).eq('list');
+				expect(group.container.getAttribute('role')).eq('group');
 			});
 		});
 	});

@@ -5,6 +5,44 @@
  */
 
 describe('Source code test', function () {
+	describe('Lazy ACE', function () {
+		it('should not initialize ACE in WYSIWYG mode until the source view is opened', function (done) {
+			unmockPromise();
+
+			const timeout = /*ok*/ setTimeout(() => {
+				done(new Error('Timeout error'));
+			}, 15000);
+
+			const editor = getJodit({
+				sourceEditor: 'ace',
+				events: {
+					sourceEditorReady: function (jodit) {
+						try {
+							expect(
+								jodit.container.querySelectorAll(
+									'.jodit-source__mirror-fake'
+								).length
+							).equals(1);
+							expect(jodit.getMode()).equals(Jodit.MODE_SOURCE);
+							done();
+						} catch (e) {
+							done(e);
+						} finally {
+							clearTimeout(timeout);
+						}
+					}
+				}
+			});
+
+			expect(
+				editor.container.querySelectorAll('.jodit-source__mirror-fake')
+					.length
+			).equals(0);
+
+			editor.setMode(Jodit.MODE_SOURCE);
+		}).timeout(20000);
+	});
+
 	describe('Init', function () {
 		it('After init container must has source editor container', function (done) {
 			unmockPromise();

@@ -33,6 +33,7 @@ import {
 	isString,
 	isVoid
 } from 'jodit/core/helpers/checker';
+import { stripTags } from 'jodit/core/helpers/html/strip-tags';
 import { attr, ConfigProto, css } from 'jodit/core/helpers/utils';
 import { assert } from 'jodit/core/helpers/utils/assert';
 import { Icon } from 'jodit/core/ui';
@@ -467,6 +468,14 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	 */
 	setHeader(content: Content): this {
 		this.setElements(this.dialogbox_header, content);
+
+		// `role="dialog"` needs an accessible name; a text title is the
+		// natural one (element titles are left to the caller).
+		if (isString(content)) {
+			const name = stripTags(content, this.od).trim();
+			attr(this.container, 'aria-label', name || null);
+		}
+
 		return this;
 	}
 

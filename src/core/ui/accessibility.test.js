@@ -31,10 +31,41 @@ describe('Accessibility', () => {
 			editor = getJodit();
 		});
 
-		it('should have default role="list"', () => {
+		it('should have default role="group" (any children allowed)', () => {
 			const group = new UIGroup(editor);
-			expect(group.container.getAttribute('role')).eq('list');
-			expect(group.getRole()).eq('list');
+			expect(group.container.getAttribute('role')).eq('group');
+			expect(group.getRole()).eq('group');
+		});
+
+		it('should give toolbar button groups role="list" with only listitems inside', () => {
+			const jodit = getJodit({
+				buttons: [
+					'bold',
+					{
+						name: 'custom-content',
+						getContent: () => '<span>content</span>'
+					}
+				]
+			});
+
+			const lists = jodit.toolbar.container.querySelectorAll(
+				'.jodit-ui-group[role="list"]'
+			);
+			expect(lists.length).to.be.above(0);
+
+			lists.forEach(list => {
+				Array.from(list.children).forEach(child => {
+					if (child.hasAttribute('role')) {
+						expect(child.getAttribute('role')).eq('listitem');
+					}
+				});
+			});
+
+			const content = jodit.toolbar.container.querySelector(
+				'.jodit-toolbar-content'
+			);
+			expect(content.getAttribute('role')).eq('listitem');
+			expect(content.hasAttribute('aria-pressed')).is.false;
 		});
 
 		it('should use custom role from options', () => {
@@ -227,6 +258,60 @@ describe('Accessibility', () => {
 
 			expect(xpath).is.not.null;
 			expect(xpath.getAttribute('role')).equals('list');
+		});
+	});
+
+	describe('Accessible names', () => {
+		let editor;
+		beforeEach(() => {
+			editor = getJodit({ language: 'en' });
+		});
+
+		it('should fall back to the button name when there is no tooltip and no text', () => {
+			const button = new UIButton(editor, {
+				name: 'sort-by',
+				icon: { name: 'plus' }
+			});
+
+			expect(button.container.getAttribute('aria-label')).eq('sort-by');
+
+			button.setState({ tooltip: 'Upload' });
+			expect(button.container.getAttribute('aria-label')).eq('Upload');
+		});
+
+		it('should label the native file input of UIFileInput', () => {
+			const input = new Jodit.modules.UIFileInput(editor, {
+				onlyImages: false
+			});
+
+			expect(
+				input.container
+					.querySelector('input[type="file"]')
+					.getAttribute('aria-label')
+			).eq('Upload');
+
+			const named = new Jodit.modules.UIFileInput(editor, {
+				tooltip: 'Bold'
+			});
+
+			expect(
+				named.container
+					.querySelector('input[type="file"]')
+					.getAttribute('aria-label')
+			).eq('Bold');
+		});
+
+		it('should name the dialog after its text header', () => {
+			const dialog = new Jodit.modules.Dialog({ language: 'en' });
+			expect(dialog.container.getAttribute('role')).eq('dialog');
+			expect(dialog.container.getAttribute('aria-label')).is.null;
+
+			dialog.setHeader('Insert <b>image</b>');
+			expect(dialog.container.getAttribute('aria-label')).eq(
+				'Insert image'
+			);
+
+			dialog.destruct();
 		});
 	});
 });

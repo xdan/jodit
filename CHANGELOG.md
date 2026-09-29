@@ -9,6 +9,17 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.16.0
+
+#### :boom: Breaking Change
+
+- The ACE source editor (`sourceEditor: 'ace'`) and js-beautify (`beautifyHTML: true`) CDN scripts are no longer downloaded when the editor starts in WYSIWYG mode. They are fetched the first time the source (or split) view is opened, so a page that only ever shows WYSIWYG no longer loads ~500 KiB of third-party JavaScript. Consequently `sourceEditorReady` fires when the source view is first opened, not right after `new Jodit()`, and `window.ace` is not defined until then. Code that relied on either has to open the source mode first (or use `defaultMode: Jodit.MODE_SOURCE`).
+- ARIA roles: `UIGroup` containers default to `role="group"` instead of `role="list"` (toolbar button groups created by `UIList` keep `role="list"`); `ToolbarContent` items use `role="listitem"` instead of the invalid `role="content"` and no longer carry `aria-pressed`. Selectors relying on `[role="list"]` for generic groups or on `[role="content"]` have to be updated.
+
+#### :nail_care: Polish
+
+- Accessibility: an icon-only button without a tooltip gets an `aria-label` from its name, the native `<input type="file">` of the upload button is labelled, and a dialog opened with a text title gets an `aria-label`. Together with the role changes this clears the Lighthouse `aria-roles`, `aria-allowed-attr`, `aria-required-children`, `button-name`, `label` and `aria-dialog-name` audits for the editor and the file browser.
+
 ## 4.15.18
 
 #### :rocket: New Feature
