@@ -11,8 +11,9 @@
  */
 
 import type { IDictionary, IJodit, IStorage } from 'jodit/types';
-import { SOURCE_CONSUMER } from 'jodit/core/constants';
+import { INVISIBLE_SPACE_REG_EXP, SOURCE_CONSUMER } from 'jodit/core/constants';
 import { cached, debounce, watch } from 'jodit/core/decorators';
+import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { $$, dataBind } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
@@ -101,10 +102,31 @@ export class imageProcessor extends Plugin {
 				}
 
 				editor.e.on(elm, 'mousedown touchstart', () => {
+					removeCaretText(elm);
 					editor.s.select(elm);
 				});
 			}
 		});
+	}
+}
+
+/**
+ * Remove the invisible-space text beside an image, which only held a caret.
+ * Selecting the image replaces the caret, and with the text still after a
+ * block image, Safari highlights the rest of the image's line. See #1512
+ */
+function removeCaretText(elm: HTMLImageElement): void {
+	for (const side of ['previousSibling', 'nextSibling'] as const) {
+		let node = elm[side];
+
+		while (
+			Dom.isText(node) &&
+			!node.nodeValue?.replace(INVISIBLE_SPACE_REG_EXP(), '')
+		) {
+			const next: ChildNode | null = node[side];
+			Dom.safeRemove(node);
+			node = next;
+		}
 	}
 }
 
