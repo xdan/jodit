@@ -6,6 +6,30 @@
 
 describe('Text Inline Popup plugin', () => {
 	describe('Image', () => {
+		// https://github.com/xdan/jodit/issues/1516
+		describe('Vertical align', () => {
+			it('Should be disabled for a floated or block image, and enabled for one in the line', () => {
+				const editor = getJodit();
+
+				editor.value =
+					'<p>text <img alt="" src="tests/artio.jpg" style="float: left">' +
+					' text <img alt="" src="tests/artio.jpg" style="display: block; margin-left: auto; margin-right: auto">' +
+					' text <img alt="" src="tests/artio.jpg"> text</p>';
+
+				const valign = img => {
+					simulateEvent('click', img);
+					return getButton('valign', getOpenedPopup(editor));
+				};
+
+				const [floated, block, inline] =
+					editor.editor.querySelectorAll('img');
+
+				expect(valign(floated).hasAttribute('disabled')).is.true;
+				expect(valign(block).hasAttribute('disabled')).is.true;
+				expect(valign(inline).hasAttribute('disabled')).is.false;
+			});
+		});
+
 		describe('Click on the image', () => {
 			it('Should Open inline popup', () => {
 				const editor = getJodit();

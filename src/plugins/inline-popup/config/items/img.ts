@@ -88,6 +88,16 @@ export default [
 		name: 'valign',
 		list: ['Top', 'Middle', 'Bottom', 'Normal'],
 		tooltip: 'Vertical align',
+		// `vertical-align` only moves an image in the line, not a floated or block one
+		isDisabled: (editor: IJodit, button): boolean => {
+			const image = button.target;
+
+			return Boolean(
+				image &&
+				(['left', 'right'].includes(css(image, 'float') as string) ||
+					css(image, 'display') === 'block')
+			);
+		},
 		exec: (editor: IJodit, image, { control }): void | false => {
 			if (!Dom.isTag(image, 'img')) {
 				return;
