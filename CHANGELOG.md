@@ -9,6 +9,21 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.17.0
+
+#### :boom: Breaking Change
+
+- [#1523](https://github.com/xdan/jodit/issues/1523) The file popup's Upload tab inserts every uploaded file as a link — an image too, since the file button was chosen over the image button. Before, an uploaded image went in as `<img>` through `uploader.defaultHandlerSuccess`. The new `file.defaultHandlerSuccess` option replaces what the tab inserts; to keep the old behaviour: `file: { defaultHandlerSuccess(data) { this.o.uploader.defaultHandlerSuccess.call(this, data); } }`. Thanks [@brendon](https://github.com/brendon).
+
+#### :rocket: New Feature
+
+- [#1509](https://github.com/xdan/jodit/issues/1509) The video popup has an Upload tab when an uploader is configured (`uploader.url` or `uploader.customUploadFunction`, unless `uploader.showTabInFileSelector` is `false`). Each uploaded file goes in as `<video controls src>`, and the new `video.defaultHandlerSuccess` option replaces that insertion. The tab is built by the new `UploadTab` helper, which the image and file popups use as well. Thanks [@brendon](https://github.com/brendon).
+- [#1531](https://github.com/xdan/jodit/issues/1531) The image popup's align button shows the alignment of the image's line for an image with no alignment of its own, instead of always the left icon. Thanks [@brendon](https://github.com/brendon).
+
+#### :bug: Bug Fix
+
+- Opening the source view before ACE has loaded shows a plain textarea; when ACE arrives it now takes over that textarea's text, selection and focus as they are. Before, it was refilled from the WYSIWYG value, which dropped what had been typed since the last sync and normalised half-typed markup. Likewise js-beautify, arriving after the source view opened, formats the view right away when nothing has been typed into it, and leaves it alone otherwise.
+
 ## 4.16.1
 
 #### :bug: Bug Fix

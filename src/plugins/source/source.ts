@@ -50,6 +50,12 @@ export class source extends Plugin {
 	private __lock = false;
 	private __oldMirrorValue = '';
 
+	/**
+	 * What the source view was last filled with from WYSIWYG, read back from
+	 * the editor; while the view still holds it, nothing has been typed there
+	 */
+	private __filledValue = '';
+
 	private tempMarkerStart = '{start-jodit-selection}';
 	private tempMarkerStartReg = /{start-jodit-selection}/g;
 	private tempMarkerEnd = '{end-jodit-selection}';
@@ -77,6 +83,7 @@ export class source extends Plugin {
 				this.setMirrorValue(new_value);
 			}
 
+			this.__filledValue = this.getMirrorValue();
 			this.__lock = false;
 		}
 	}
@@ -378,10 +385,10 @@ export class source extends Plugin {
 
 					loading = true;
 
-					// It formats the source view from the next time it opens:
-					// filling it again now would replace what was typed there
 					loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(
-						addEventListener,
+						() => {
+							addEventListener() && this.beautifyUntouched();
+						},
 						() => null
 					);
 				};
@@ -418,9 +425,7 @@ export class source extends Plugin {
 			);
 
 			sourceEditor.onReadyAlways(() => {
-				this.sourceEditor?.destruct();
-				this.sourceEditor = sourceEditor;
-				this.syncValueFromWYSIWYG(true);
+				this.takeOver(sourceEditor);
 				editor.events?.fire('sourceEditorReady', editor);
 			});
 		} else {
@@ -428,6 +433,70 @@ export class source extends Plugin {
 				this.syncValueFromWYSIWYG(true);
 				editor.events?.fire('sourceEditorReady', editor);
 			});
+		}
+	}
+
+	/**
+	 * Replaces the source editor (the textarea shown while ACE loads) with
+	 * the one that just became ready, carrying its text, selection and focus
+	 * over. Filling the new editor from WYSIWYG instead would drop what was
+	 * typed since the last, debounced, sync and normalise half-typed markup.
+	 */
+	private takeOver(sourceEditor: ISourceEditor): void {
+		const previous = this.sourceEditor;
+
+		if (!previous || previous === sourceEditor) {
+			this.sourceEditor = sourceEditor;
+			this.syncValueFromWYSIWYG(true);
+			return;
+		}
+
+		const value = previous.getValue(),
+			start = previous.getSelectionStart(),
+			end = previous.getSelectionEnd(),
+			focused = previous.isFocused,
+			untouched = value === this.__filledValue;
+
+		previous.destruct();
+		this.sourceEditor = sourceEditor;
+
+		if (untouched) {
+			this.syncValueFromWYSIWYG(true);
+		} else {
+			sourceEditor.setValue(value);
+			this.toWYSIWYG();
+		}
+
+		if (start >= 0) {
+			sourceEditor.setSelectionRange(start, end);
+		}
+
+		focused && sourceEditor.focus();
+	}
+
+	/**
+	 * The beautifier arrived after the source view was opened: format the
+	 * view if nothing has been typed into it, otherwise leave the typing alone
+	 */
+	private beautifyUntouched(): void {
+		const value = this.getMirrorValue();
+
+		if (
+			this.j.o.editHTMLDocumentMode ||
+			!value ||
+			value !== this.__filledValue
+		) {
+			return;
+		}
+
+		const html = this.j.e.fire('beautifyHTML', value);
+
+		if (isString(html) && html !== value) {
+			const focused = this.sourceEditor?.isFocused;
+
+			this.setMirrorValue(html);
+			this.__filledValue = this.getMirrorValue();
+			focused && this.sourceEditor?.focus();
 		}
 	}
 

@@ -217,8 +217,8 @@ export class AceEditor
 
 				return;
 			}
-
-			this.fromWYSIWYG();
+			// The source plugin carries the fallback editor's text over when this
+			// one is ready; refilling from WYSIWYG here would drop unsynced typing
 			tryInitAceEditor();
 		};
 

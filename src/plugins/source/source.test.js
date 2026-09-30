@@ -36,14 +36,12 @@ describe('Source code test', function () {
 			delete window.html_beautify;
 		});
 
-		it('should format the source view from the next time it opens', async function () {
+		it('should format the untouched source view as soon as it arrives', async function () {
 			const editor = openWithBeautifier(
 				"html => '<!-- formatted -->' + html"
 			);
 
 			await beautifierLoaded();
-			editor.setMode(Jodit.MODE_WYSIWYG);
-			editor.setMode(Jodit.MODE_SOURCE);
 
 			expect(
 				editor.container.querySelector('.jodit-source__mirror').value
@@ -66,6 +64,101 @@ describe('Source code test', function () {
 	});
 
 	describe('Lazy ACE', function () {
+		// The textarea shown while ACE loads hands its text over: what was
+		// typed there — synced or not, complete markup or not — is what ACE
+		// shows, with the caret where it was
+		it('should hand what was typed into the textarea over to ACE', function (done) {
+			unmockPromise();
+
+			const timeout = /*ok*/ setTimeout(() => {
+				done(new Error('Timeout error'));
+			}, 15000);
+
+			let hadFocus = false;
+
+			const editor = getJodit({
+				sourceEditor: 'ace',
+				beautifyHTML: false,
+				events: {
+					sourceEditorReady: function (jodit) {
+						try {
+							expect(
+								jodit.container.querySelector(
+									'.jodit-source__mirror-fake'
+								)
+							).is.not.null;
+							expect(
+								jodit.container.querySelector(
+									'textarea.jodit-source__mirror'
+								)
+							).is.null;
+
+							const ace = jodit.ow.ace.edit(
+								jodit.container.querySelector(
+									'.jodit-source__mirror-fake'
+								)
+							);
+							expect(ace.getValue()).equals(
+								'<p>Old text</p><p>Typed while loading <b'
+							);
+							expect(
+								ace
+									.getSession()
+									.doc.positionToIndex(
+										ace.getCursorPosition()
+									)
+							).equals(
+								'<p>Old text</p><p>Typed while loading <b'
+									.length
+							);
+							// Headless Firefox does not always give the
+							// textarea focus in the first place, and ACE
+							// reports its own focus a tick later
+							/*ok*/ setTimeout(() => {
+								try {
+									// ACE's own `isFocused()` lags behind in
+									// headless Firefox; the document knows
+									if (hadFocus) {
+										expect(
+											jodit.container
+												.querySelector(
+													'.jodit-source__mirror-fake'
+												)
+												.contains(
+													document.activeElement
+												)
+										).is.true;
+									}
+									done();
+								} catch (e) {
+									done(e);
+								} finally {
+									clearTimeout(timeout);
+								}
+							}, 100);
+						} catch (e) {
+							clearTimeout(timeout);
+							done(e);
+						}
+					}
+				}
+			});
+
+			editor.value = '<p>Old text</p>';
+			editor.setMode(Jodit.MODE_SOURCE);
+
+			const area = editor.container.querySelector(
+				'textarea.jodit-source__mirror'
+			);
+			expect(area).is.not.null;
+
+			area.focus();
+			hadFocus = document.activeElement === area;
+			area.value = '<p>Old text</p><p>Typed while loading <b';
+			area.setSelectionRange(area.value.length, area.value.length);
+			simulateEvent('input', area);
+		}).timeout(20000);
+
 		it('should not initialize ACE in WYSIWYG mode until the source view is opened', function (done) {
 			unmockPromise();
 
