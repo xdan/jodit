@@ -12,7 +12,7 @@
 
 import type { IDictionary, IJodit, IStorage } from 'jodit/types';
 import { INVISIBLE_SPACE_REG_EXP, SOURCE_CONSUMER } from 'jodit/core/constants';
-import { cached, debounce, watch } from 'jodit/core/decorators';
+import { autobind, cached, debounce, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { $$, dataBind } from 'jodit/core/helpers';
@@ -21,16 +21,24 @@ import { dataURItoBlob } from 'jodit/modules/uploader/helpers/data-uri-to-blob';
 
 import './config';
 
+import './image-processor.less';
+
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 const JODIT_IMAGE_BLOB_ID = JODIT_IMAGE_PROCESSOR_BINDED + 'blob-id';
+const IMAGE_SELECTED = 'jodit-wysiwyg_image-selected';
 
 /**
  * Change editor's size after load all images
  */
 export class imageProcessor extends Plugin {
-	protected afterInit(jodit: IJodit): void {}
+	protected afterInit(jodit: IJodit): void {
+		jodit.e.on(jodit.ed, 'selectionchange', this.onSelectionChange);
+	}
 
 	protected beforeDestruct(jodit: IJodit): void {
+		jodit.e.off(jodit.ed, 'selectionchange', this.onSelectionChange);
+		jodit.editor.classList.remove(IMAGE_SELECTED);
+
 		const buffer = cached<IStorage>(jodit, 'buffer');
 		const list = buffer?.get<IDictionary>(JODIT_IMAGE_BLOB_ID);
 
@@ -76,6 +84,17 @@ export class imageProcessor extends Plugin {
 		}
 	}
 
+	/**
+	 * While the selection is an image, only the image is highlighted: Safari
+	 * paints the rest of a block image's line with its parent's highlight. See #1528
+	 */
+	@autobind
+	private onSelectionChange(): void {
+		const { jodit } = this;
+
+		jodit.editor.classList.toggle(IMAGE_SELECTED, isImageSelected(jodit));
+	}
+
 	@watch([':change', ':afterInit', ':changePlace'])
 	@debounce()
 	protected async afterChange(data: { value: string }): Promise<void> {
@@ -108,6 +127,24 @@ export class imageProcessor extends Plugin {
 			}
 		});
 	}
+}
+
+function isImageSelected(jodit: IJodit): boolean {
+	const { sel } = jodit.s;
+
+	if (!sel || !sel.rangeCount) {
+		return false;
+	}
+
+	const { startContainer, startOffset, endContainer, endOffset } =
+		sel.getRangeAt(0);
+
+	return (
+		startContainer === endContainer &&
+		endOffset === startOffset + 1 &&
+		Dom.isTag(startContainer.childNodes[startOffset], 'img') &&
+		Dom.isOrContains(jodit.editor, startContainer)
+	);
 }
 
 /**

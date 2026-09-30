@@ -58,6 +58,55 @@ describe('Image processor plugin', () => {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/1528
+	describe('Browser highlight while an image is selected', () => {
+		const transparent = 'rgba(0, 0, 0, 0)';
+
+		function highlight(editor, selector = 'p') {
+			const elm = editor.editor.querySelector(selector);
+			return elm.ownerDocument.defaultView.getComputedStyle(
+				elm,
+				'::selection'
+			).backgroundColor;
+		}
+
+		[false, true].forEach(iframe => {
+			describe(iframe ? 'In iframe mode' : 'In the editor', () => {
+				it("Should only show the image's while the selection is an image, as Safari paints the rest of a block image's line with its parent's", async () => {
+					const editor = getJodit({
+						iframe,
+						iframeStyle:
+							Jodit.defaultOptions.iframeStyle +
+							'p::selection,img::selection{background:rgb(1, 2, 3)}'
+					});
+					editor.value =
+						'<p><img src="tests/artio.jpg" style="display:block">Text after it</p>';
+					editor.e.fire('change', editor.value, '');
+					await delay(150);
+
+					const shown = highlight(editor);
+					expect(shown).does.not.equal(transparent);
+
+					simulateEvent(
+						'mousedown',
+						editor.editor.querySelector('img')
+					);
+					await delay(50);
+
+					expect(highlight(editor)).equals(transparent);
+					expect(highlight(editor, 'img')).equals(shown);
+
+					editor.s.setCursorIn(
+						editor.editor.querySelector('p').lastChild
+					);
+					await delay(50);
+
+					expect(highlight(editor)).equals(shown);
+				});
+			});
+		});
+	});
+
 	const DATA_URI =
 		'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
