@@ -29,6 +29,29 @@ const alignClasses = (
 ): Nullable<ImageAlignClasses> =>
 	Dom.isTag(elm, 'img') ? editor.o.imageAlignClasses : null;
 
+// A Normal image sits where the text of its line is aligned (#1531)
+const lineAlign = (editor: IJodit, elm: Nullable<HTMLElement>): string => {
+	const block =
+		(elm && Dom.closest(elm, Dom.isBlock, editor.editor)) || editor.editor;
+	const rtl = css(block, 'direction') === 'rtl';
+
+	switch (css(block, 'text-align')) {
+		case 'center':
+		case '-webkit-center':
+			return 'center';
+		case 'justify':
+			return 'justify';
+		case 'right':
+			return 'right';
+		case 'end':
+			return rtl ? 'left' : 'right';
+		case 'start':
+			return rtl ? 'right' : 'left';
+		default:
+			return 'left';
+	}
+};
+
 const currentAlign = (
 	editor: IJodit,
 	elm: Nullable<HTMLElement>
@@ -40,7 +63,8 @@ export const align: IControlType<IJodit> = {
 	list: ['Left', 'Right', 'Center', 'Normal'],
 	update: (editor: IJodit, button): void => {
 		const current = currentAlign(editor, button.target);
-		button.state.icon.name = current === 'normal' ? 'left' : current;
+		button.state.icon.name =
+			current === 'normal' ? lineAlign(editor, button.target) : current;
 	},
 	isActive: (editor: IJodit, button): boolean =>
 		currentAlign(editor, button.target) !== 'normal',
