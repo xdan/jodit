@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.16.1
+
+#### :bug: Bug Fix
+
+- [#1526](https://github.com/xdan/jodit/issues/1526) Text typed into the source view is no longer replaced when js-beautify finishes loading after the source view opens; the beautifier formats the source view from the next time it opens. Thanks [@brendon](https://github.com/brendon).
+- [#1528](https://github.com/xdan/jodit/issues/1528) In Safari, selecting a block image with text after it no longer highlights the rest of the image's line, and no highlight is left behind after changing the image's alignment. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.16.0
 
 #### :boom: Breaking Change
