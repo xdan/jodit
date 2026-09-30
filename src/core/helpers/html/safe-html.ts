@@ -206,7 +206,11 @@ function isDangerousUrl(value: string, tagName: string): boolean {
 
 export function sanitizeHTMLElement(
 	elm: Element | DocumentFragment,
-	{ safeJavaScriptLink, removeOnError }: safeOptions = {
+	{
+		safeJavaScriptLink,
+		removeOnError,
+		removeEventAttributes
+	}: safeOptions = {
 		safeJavaScriptLink: true,
 		removeOnError: true
 	}
@@ -216,6 +220,14 @@ export function sanitizeHTMLElement(
 	}
 
 	let effected = false;
+
+	// Every `on*` handler, not only `onerror`: the clean-html background
+	// pass calls this directly, and markup that reached the editable area
+	// without `safeHTML` (a drop, a script) kept its handlers otherwise.
+	// See GHSA-jhhp-r3r7-v2cg
+	if (removeEventAttributes && removeAllEventAttributes(elm)) {
+		effected = true;
+	}
 
 	if (removeOnError && elm.hasAttribute('onerror')) {
 		attr(elm, 'onerror', null);

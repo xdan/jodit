@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.17.1
+
+#### :bug: Bug Fix
+
+- [GHSA-jhhp-r3r7-v2cg](https://github.com/xdan/jodit/security/advisories/GHSA-jhhp-r3r7-v2cg) Security: `cleanHTML.removeEventAttributes` was not enforced by the background sanitizing pass — `sanitizeHTMLElement()` only stripped `onerror`, so any other `on*` handler survived on markup that reached the editable area without `safeHTML`, and a drop from another window was inserted by the browser natively, unsanitized, because the drop handler was only armed after a `dragstart` seen in the same window. The background pass now strips every `on*` attribute, and drops always go through the paste plugin's sanitizing path. Reported by David Vieira Kurz (HiSolutions AG).
+
 ## 4.17.0
 
 #### :boom: Breaking Change

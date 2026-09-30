@@ -37,11 +37,17 @@ export class dragAndDrop extends Plugin {
 
 	/** @override */
 	afterInit(): void {
-		this.j.e.on(
-			[window, this.j.ed, this.j.editor],
-			'dragstart.DragAndDrop',
-			this.onDragStart
-		);
+		this.j.e
+			.on(
+				[window, this.j.ed, this.j.editor],
+				'dragstart.DragAndDrop',
+				this.onDragStart
+			)
+			// Always, not only after a `dragstart` seen in this window: a drop
+			// from another window or application never produces one here, and
+			// the browser then inserted its HTML natively, unsanitized. Routed
+			// through the paste plugin instead. See GHSA-jhhp-r3r7-v2cg
+			.on('drop.DragAndDrop', this.onDrop);
 	}
 
 	@autobind
@@ -90,7 +96,6 @@ export class dragAndDrop extends Plugin {
 	private addDragListeners(): void {
 		this.j.e
 			.on('dragover', this.onDrag)
-			.on('drop.DragAndDrop', this.onDrop)
 			.on(
 				window,
 				'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop',
@@ -101,7 +106,6 @@ export class dragAndDrop extends Plugin {
 	private removeDragListeners(): void {
 		this.j.e
 			.off('dragover', this.onDrag)
-			.off('drop.DragAndDrop', this.onDrop)
 			.off(
 				window,
 				'dragend.DragAndDrop drop.DragAndDrop mouseup.DragAndDrop',
@@ -201,9 +205,16 @@ export class dragAndDrop extends Plugin {
 				fragment = dataBind(this.draggable, 'target');
 			}
 		} else if (this.getText(event)) {
-			fragment = this.j.createInside.fromHTML(
-				this.getText(event) as string
-			);
+			// Dropped markup takes the same sanitizing pass as pasted and
+			// assigned content. See GHSA-jhhp-r3r7-v2cg
+			const box = this.j.createInside.div();
+			box.innerHTML = this.getText(event) as string;
+			this.j.e.fire('safeHTML', box);
+
+			fragment =
+				box.firstChild !== box.lastChild || !box.firstChild
+					? box
+					: (box.firstChild as HTMLElement);
 		}
 
 		return fragment;

@@ -5,6 +5,45 @@
  */
 
 describe('Clean html plugin', function () {
+	// GHSA-jhhp-r3r7-v2cg
+	describe('Event handler attributes that reached the DOM without safeHTML', function () {
+		it('sanitizeHTMLElement should strip every on* attribute when removeEventAttributes is set', function () {
+			const p = document.createElement('p');
+			p.setAttribute('onmouseover', 'alert(1)');
+			p.setAttribute('onclick', 'alert(2)');
+			p.setAttribute('onerror', 'alert(3)');
+			p.setAttribute('data-keep', 'yes');
+
+			const effected = Jodit.modules.Helpers.sanitizeHTMLElement(p, {
+				safeJavaScriptLink: true,
+				removeOnError: true,
+				removeEventAttributes: true
+			});
+
+			expect(effected).is.true;
+			expect(p.hasAttribute('onmouseover')).is.false;
+			expect(p.hasAttribute('onclick')).is.false;
+			expect(p.hasAttribute('onerror')).is.false;
+			expect(p.getAttribute('data-keep')).equals('yes');
+		});
+
+		it('The background pass should strip them from markup written straight into the editable area', async function () {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = '<p>text</p>';
+
+			editor.editor.innerHTML +=
+				'<p id="payload" onmouseover="alert(1)" onclick="alert(2)">Dave</p>';
+			simulateEvent('mousedown', editor.editor);
+
+			await delay(600);
+
+			const payload = editor.editor.querySelector('#payload');
+			expect(payload.hasAttribute('onmouseover')).is.false;
+			expect(payload.hasAttribute('onclick')).is.false;
+			expect(editor.value).does.not.include('onmouseover');
+		});
+	});
+
 	// https://github.com/xdan/jodit/issues/1438
 	describe('removeTrailingBr option', () => {
 		it('By default the trailing <br> left by the browser is kept', () => {
