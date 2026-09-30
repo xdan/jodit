@@ -91,6 +91,44 @@ describe('Text Inline Popup plugin', () => {
 					'jodit-icon_center'
 				);
 			});
+
+			// https://github.com/xdan/jodit/issues/1531
+			it("Should show the alignment of a Normal image's line, without marking it", async () => {
+				const editor = getJodit({ defaultTimeout: 0 });
+
+				editor.value = [
+					'',
+					' style="text-align: center"',
+					' style="text-align: right"',
+					' style="text-align: justify"',
+					' dir="rtl"'
+				]
+					.map(
+						attrs =>
+							`<p${attrs}><img alt="" src="tests/artio.jpg"> text</p>`
+					)
+					.join('');
+				editor.s.focus();
+
+				const icons = [];
+
+				for (const img of editor.editor.querySelectorAll('img')) {
+					simulateEvent('click', img);
+					await editor.async.requestIdlePromise();
+					const button = getButton('left', getOpenedPopup(editor));
+
+					icons.push(icon(button).match(/jodit-icon_(\w+)/)[1]);
+					expect(button.getAttribute('aria-pressed')).eq('false');
+				}
+
+				expect(icons).deep.equals([
+					'left',
+					'center',
+					'right',
+					'justify',
+					'right'
+				]);
+			});
 		});
 
 		// https://github.com/xdan/jodit/issues/1518
