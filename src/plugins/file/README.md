@@ -107,7 +107,7 @@ The popup provides three methods to insert/update files:
 
 **2. Upload**
 - User uploads file from computer
-- After upload, calls `url` callback
+- After upload, calls `file.defaultHandlerSuccess`, which by default inserts each file as a link, an image as well
 
 **3. FileBrowser**
 - User browses files on server
@@ -166,7 +166,7 @@ FileSelectorWidget(
   editor,
   {
     filebrowser: (data) => { /* handle FileBrowser selection */ },
-    upload: true, // Enable upload tab
+    upload: (data) => { /* file.defaultHandlerSuccess */ },
     url: (url, text) => { /* handle URL input */ }
   },
   sourceAnchor, // Existing anchor or null
@@ -177,7 +177,33 @@ FileSelectorWidget(
 
 ## Configuration
 
-This plugin has no specific configuration options. It uses:
+### `file.defaultHandlerSuccess`
+
+**Type:** `(this: IJodit, data: IUploaderData) => void`
+
+**Default:** inserts each uploaded file as `<a href="…">…</a>`, the way `uploader.defaultHandlerSuccess` inserts a file that isn't an image
+
+Inserts the files uploaded from the popup's Upload tab. An uploaded image goes in as a link too, since the file button was chosen over the image button.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    uploader: {
+        url: '/upload'
+    },
+    file: {
+        defaultHandlerSuccess(data) {
+            data.files.forEach(file => {
+                this.s.insertHTML(
+                    `<a class="file" href="${data.baseurl + file}">${file}</a>`
+                );
+            });
+        }
+    }
+});
+```
+
+It also uses:
 - `filebrowser` configuration for FileBrowser functionality
 - Standard button configuration
 
