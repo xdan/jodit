@@ -5,6 +5,66 @@
  */
 
 describe('Source code test', function () {
+	// https://github.com/xdan/jodit/issues/1526
+	describe('HTML beautifier loaded when the source view opens', function () {
+		function openWithBeautifier(beautify) {
+			unmockPromise();
+
+			const editor = getJodit({
+				sourceEditor: 'area',
+				beautifyHTML: true,
+				beautifyHTMLCDNUrlsJS: [
+					`data:text/javascript,window.html_beautify=${encodeURIComponent(beautify)}`
+				]
+			});
+
+			editor.value = '<p>Old text</p>';
+			editor.setMode(Jodit.MODE_SOURCE);
+
+			return editor;
+		}
+
+		async function beautifierLoaded() {
+			while (typeof window.html_beautify !== 'function') {
+				await delay(10);
+			}
+
+			await delay(10);
+		}
+
+		afterEach(() => {
+			delete window.html_beautify;
+		});
+
+		it('should format the source view from the next time it opens', async function () {
+			const editor = openWithBeautifier(
+				"html => '<!-- formatted -->' + html"
+			);
+
+			await beautifierLoaded();
+			editor.setMode(Jodit.MODE_WYSIWYG);
+			editor.setMode(Jodit.MODE_SOURCE);
+
+			expect(
+				editor.container.querySelector('.jodit-source__mirror').value
+			).equals('<!-- formatted --><p>Old text</p>');
+		});
+
+		it('should not replace what was typed into the source view before it arrived', async function () {
+			const editor = openWithBeautifier('html => html');
+			const mirror = editor.container.querySelector(
+				'.jodit-source__mirror'
+			);
+
+			mirror.value = '<p>Typed before the beautifier arrived</p>';
+			await beautifierLoaded();
+
+			expect(mirror.value).equals(
+				'<p>Typed before the beautifier arrived</p>'
+			);
+		});
+	});
+
 	describe('Lazy ACE', function () {
 		it('should not initialize ACE in WYSIWYG mode until the source view is opened', function (done) {
 			unmockPromise();
