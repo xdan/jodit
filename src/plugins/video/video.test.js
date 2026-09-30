@@ -157,6 +157,143 @@ describe('video plugin', () => {
 		});
 	});
 
+	describe('Upload tab (#1509)', () => {
+		const url =
+			'https://xdsoft.net/jodit/connector/index.php?action=fileUpload';
+
+		function FileVideo() {
+			return {
+				name: 'movie.mp4',
+				type: 'video/mp4'
+			};
+		}
+
+		function openPopup(jodit) {
+			simulateEvent('click', getButton('video', jodit));
+			return getOpenedPopup(jodit);
+		}
+
+		function tabNames(popup) {
+			return Array.from(
+				popup.querySelectorAll('.jodit-tabs__button')
+			).map(button => button.textContent.trim());
+		}
+
+		function dropVideo(jodit, popup) {
+			// Choosing the file takes the selection out of the editor
+			jodit.ow.getSelection().removeAllRanges();
+
+			simulateEvent(
+				'drop',
+				popup.querySelector('.jodit-drag-and-drop__file-box'),
+				data => {
+					Object.defineProperty(data, 'dataTransfer', {
+						value: {
+							files: [new FileVideo()]
+						}
+					});
+				}
+			);
+		}
+
+		it('should come first when the uploader has a url', () => {
+			const popup = openPopup(getJodit({ uploader: { url } }));
+
+			expect(tabNames(popup)).deep.equals(['Upload', 'Link', 'Code']);
+
+			const input = popup.querySelector(
+				'.jodit-drag-and-drop__file-box input[type=file]'
+			);
+			expect(input.getAttribute('accept')).equals('video/*');
+		});
+
+		it('should come first with a custom upload function', () => {
+			const popup = openPopup(
+				getJodit({
+					uploader: { customUploadFunction: () => {} }
+				})
+			);
+
+			expect(tabNames(popup)).deep.equals(['Upload', 'Link', 'Code']);
+		});
+
+		it('should not be shown without an uploader', () => {
+			expect(tabNames(openPopup(getJodit()))).deep.equals([
+				'Link',
+				'Code'
+			]);
+		});
+
+		it('should not be shown for base64 images alone', () => {
+			const popup = openPopup(
+				getJodit({ uploader: { insertImageAsBase64URI: true } })
+			);
+
+			expect(tabNames(popup)).deep.equals(['Link', 'Code']);
+		});
+
+		it('should not be shown when showTabInFileSelector is false', () => {
+			const popup = openPopup(
+				getJodit({ uploader: { url, showTabInFileSelector: false } })
+			);
+
+			expect(tabNames(popup)).deep.equals(['Link', 'Code']);
+		});
+
+		it('should insert an uploaded video with controls after the paragraph with the cursor', done => {
+			const jodit = getJodit({
+				uploader: { url },
+				events: {
+					afterInsertNode: () => {
+						try {
+							expect(sortAttributes(jodit.value)).equals(
+								'<p>one</p><video controls="" src="https://xdsoft.net/jodit/files/movie.mp4"></video><p>two</p>'
+							);
+							done();
+						} catch (e) {
+							done(e);
+						}
+					}
+				}
+			});
+
+			jodit.value = '<p>one|</p><p>two</p>';
+			setCursorToChar(jodit);
+
+			dropVideo(jodit, openPopup(jodit));
+		});
+
+		it('should let video.defaultHandlerSuccess insert it instead', done => {
+			const jodit = getJodit({
+				uploader: { url },
+				video: {
+					defaultHandlerSuccess(data) {
+						try {
+							expect(this).equals(jodit);
+							expect(data.files).deep.equals(['movie.mp4']);
+
+							this.s.insertHTML(
+								`<video controls poster="poster.jpg" src="${data.baseurl}${data.files[0]}"></video>`
+							);
+
+							expect(sortAttributes(jodit.value)).equals(
+								'<p>one</p><video controls="" poster="poster.jpg" src="https://xdsoft.net/jodit/files/movie.mp4"></video><p>two</p>'
+							);
+							done();
+						} catch (e) {
+							done(e);
+						}
+					}
+				}
+			});
+
+			jodit.value = '<p>one|</p><p>two</p>';
+			setCursorToChar(jodit);
+
+			dropVideo(jodit, openPopup(jodit));
+		});
+	});
+
 	describe('Own video url parser', () => {
 		it('should parse url by own handler', () => {
 			const jodit = getJodit({
