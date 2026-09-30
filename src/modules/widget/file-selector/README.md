@@ -31,3 +31,23 @@ FileSelectorWidget(
 	true
 );
 ```
+
+## Upload tab
+
+`UploadTab` builds the Upload tab on its own, for a popup that has other tabs: a box that uploads the files dropped on it or chosen in its file input, passes the uploader's answer to a callback and closes the popup. The video popup uses it.
+
+```javascript
+const tabs = [
+	UploadTab(
+		jodit,
+		data => {
+			data.files.forEach(file =>
+				jodit.s.insertHTML(
+					`<video controls src="${data.baseurl + file}"></video>`
+				)
+			);
+		},
+		{ label: 'Drop file', accept: 'video/*' }
+	)
+];
+```

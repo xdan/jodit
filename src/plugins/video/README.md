@@ -11,8 +11,9 @@ Adds toolbar button for inserting YouTube/Vimeo videos via URL or embed code. Th
 ## Features
 
 - Insert videos from YouTube/Vimeo URLs
+- Upload video files when an uploader is configured
 - Insert custom video embed code
-- Tabbed interface (Link/Code tabs)
+- Tabbed interface (Upload/Link/Code tabs)
 - Automatic URL to embed conversion
 - Configurable default video dimensions
 - Custom URL parser support
@@ -75,6 +76,32 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+### `video.defaultHandlerSuccess`
+
+**Type:** `(this: IJodit, data: IUploaderData) => void`
+
+**Default:** inserts each uploaded file as `<video controls src="…">`
+
+Inserts the videos uploaded from the popup's Upload tab. The tab comes first in the popup, and is shown under the same conditions as the image and file popups' Upload tab: `uploader.url` or `uploader.customUploadFunction` is set, and `uploader.showTabInFileSelector` isn't `false`. `uploader.insertImageAsBase64URI` alone doesn't show it. The selection is restored before the handler is called.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    uploader: {
+        url: '/upload'
+    },
+    video: {
+        defaultHandlerSuccess(data) {
+            data.files.forEach(file => {
+                this.s.insertHTML(
+                    `<video controls preload="metadata" src="${data.baseurl + file}"></video>`
+                );
+            });
+        }
+    }
+});
+```
+
 ## Controls
 
 ### `video` Control
@@ -87,7 +114,7 @@ const editor = Jodit.make('#editor', {
 
 **Tags:** `['iframe']`
 
-Opens tabbed dialog with Link and Code input options.
+Opens tabbed dialog with Link and Code input options, and an Upload tab when an uploader is configured.
 
 ## Usage Examples
 

@@ -10,7 +10,12 @@
  * @module modules/widget/file-selector
  */
 
-import type { IFileBrowserCallBackData, IJodit, Nullable } from 'jodit/types';
+import type {
+	IFileBrowserCallBackData,
+	IJodit,
+	IUploaderData,
+	Nullable
+} from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { $$, attr, isFunction } from 'jodit/core/helpers';
 import { UIBlock, UIButton, UIForm, UIInput } from 'jodit/core/ui';
@@ -62,43 +67,25 @@ export const FileSelectorWidget = (
 			options.insertImageAsBase64URI ||
 			options.customUploadFunction)
 	) {
-		const dragBox = editor.c.fromHTML(
-			'<div class="jodit-drag-and-drop__file-box">' +
-				`<strong>${editor.i18n(
-					isImage ? 'Drop image' : 'Drop file'
-				)}</strong>` +
-				`<span><br>${editor.i18n('or click')}</span>` +
-				`<input type="file" accept="${
-					isImage ? 'image/*' : '*'
-				}" tabindex="-1" dir="auto" multiple=""/>` +
-				'</div>'
+		const { upload } = callbacks;
+
+		tabs.push(
+			UploadTab(
+				editor,
+				resp => {
+					const handler = isFunction(upload)
+						? upload
+						: options.defaultHandlerSuccess;
+
+					if (isFunction(handler)) {
+						handler.call(editor, resp);
+					}
+				},
+				isImage
+					? { label: 'Drop image', accept: 'image/*' }
+					: { label: 'Drop file', accept: '*' }
+			)
 		);
-
-		editor.uploader.bind(
-			dragBox,
-			resp => {
-				const handler = isFunction(callbacks.upload)
-					? callbacks.upload
-					: options.defaultHandlerSuccess;
-
-				if (isFunction(handler)) {
-					handler.call(editor, resp);
-				}
-
-				editor.e.fire('closeAllPopups');
-			},
-			error => {
-				editor.message.error(error.message);
-
-				editor.e.fire('closeAllPopups');
-			}
-		);
-
-		tabs.push({
-			icon: 'upload',
-			name: 'Upload',
-			content: dragBox
-		});
 	}
 
 	if (callbacks.filebrowser) {
@@ -179,6 +166,44 @@ export const FileSelectorWidget = (
 	box.classList.add('jodit-file-selector');
 
 	return box;
+};
+
+/**
+ * The Upload tab: a box that uploads the files dropped on it or chosen in its
+ * file input, then passes the uploader's answer to `onSuccess` and closes the popup
+ */
+export const UploadTab = (
+	editor: IJodit,
+	onSuccess: (this: IJodit, data: IUploaderData) => void,
+	{ label, accept }: { label: string; accept: string }
+): TabOption => {
+	const dragBox = editor.c.fromHTML(
+		'<div class="jodit-drag-and-drop__file-box">' +
+			`<strong>${editor.i18n(label)}</strong>` +
+			`<span><br>${editor.i18n('or click')}</span>` +
+			`<input type="file" accept="${accept}" tabindex="-1" dir="auto" multiple=""/>` +
+			'</div>'
+	);
+
+	editor.uploader.bind(
+		dragBox,
+		resp => {
+			onSuccess.call(editor, resp);
+
+			editor.e.fire('closeAllPopups');
+		},
+		error => {
+			editor.message.error(error.message);
+
+			editor.e.fire('closeAllPopups');
+		}
+	);
+
+	return {
+		icon: 'upload',
+		name: 'Upload',
+		content: dragBox
+	};
 };
 
 function val(elm: HTMLElement, name: string, value?: string | null): string {
