@@ -378,14 +378,10 @@ export class source extends Plugin {
 
 					loading = true;
 
+					// It formats the source view from the next time it opens:
+					// filling it again now would replace what was typed there
 					loadNext(editor, editor.o.beautifyHTMLCDNUrlsJS).then(
-						() => {
-							// The source view was filled before the
-							// beautifier arrived — format it now.
-							if (addEventListener()) {
-								this.syncValueFromWYSIWYG(true);
-							}
-						},
+						addEventListener,
 						() => null
 					);
 				};
