@@ -147,6 +147,10 @@ Config.prototype.iframeStyle =
 	'display: block;' +
 	'background: rgba(0, 0, 0, 0);' +
 	'} ' +
+	'.jodit-wysiwyg_image-selected::selection,' +
+	'.jodit-wysiwyg_image-selected *:not(img)::selection{' +
+	'background:transparent' +
+	'}' +
 	'.jodit_disabled{' +
 	'user-select: none;' +
 	'-o-user-select: none;' +

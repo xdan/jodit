@@ -1,0 +1,14 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+// Over the highlight in `styles/reset.less`. The image keeps its own, and the
+// iframe mode's document gets the same rule from `iframeStyle`
+.jodit-wysiwyg.jodit-wysiwyg_image-selected {
+	&::selection,
+	*:not(img)::selection {
+		background: transparent;
+	}
+}
