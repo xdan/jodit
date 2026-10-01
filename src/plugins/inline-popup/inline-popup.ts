@@ -25,6 +25,7 @@ import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import {
 	camelCase,
+	getMediaWrapper,
 	isArray,
 	isFunction,
 	isString,
@@ -63,16 +64,20 @@ export class inlinePopup extends Plugin {
 	@autobind
 	private onClick(node: Node): void | false {
 		const elements = this.elmsList as HTMLTagNames[],
-			target = Dom.isTag(node, 'img')
-				? node
-				: Dom.closest(node, elements, this.j.editor);
+			mediaWrapper = getMediaWrapper(this.j, node),
+			target =
+				mediaWrapper ??
+				(Dom.isTag(node, 'img')
+					? node
+					: Dom.closest(node, elements, this.j.editor));
 
-		if (target && this.canShowPopupForType(target.nodeName.toLowerCase())) {
-			this.showPopup(
-				() => position(target, this.j),
-				target.nodeName.toLowerCase(),
-				target
-			);
+		// A media wrapper kept in the content gets the media popup
+		const type = mediaWrapper
+			? 'jodit-media'
+			: target?.nodeName.toLowerCase();
+
+		if (target && type && this.canShowPopupForType(type)) {
+			this.showPopup(() => position(target, this.j), type, target);
 
 			return false;
 		}
@@ -407,7 +412,11 @@ export class inlinePopup extends Plugin {
 	);
 
 	private _eventsList(): string {
-		const el = this.elmsList;
+		// Clicks on a media wrapper kept in the content (`mediaWrappers`)
+		const wrapperTags = Object.values(this.j.o.mediaWrappers ?? {}).map(
+			({ tag }) => tag.toLowerCase()
+		);
+		const el = [...new Set(this.elmsList.concat(wrapperTags))];
 		return el
 			.map(e => camelCase(`click_${e}`))
 			.concat(el.map(e => camelCase(`touchstart_${e}`)))
