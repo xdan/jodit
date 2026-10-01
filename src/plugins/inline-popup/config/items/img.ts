@@ -12,22 +12,18 @@ import type {
 	HTMLTagNames,
 	IControlType,
 	IJodit,
-	ImageAlignClasses,
 	ImageHAlign,
 	Nullable
 } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
-import { getHAlign, hAlignElement } from 'jodit/core/helpers/utils/align';
+import {
+	getAlignClasses,
+	getHAlign,
+	hAlignElement
+} from 'jodit/core/helpers/utils/align';
 import { css } from 'jodit/core/helpers/utils/css';
-
-// Images align with `imageAlignClasses`; the wrappers of iframes and media
-// keep inline styles
-const alignClasses = (
-	editor: IJodit,
-	elm: Nullable<HTMLElement>
-): Nullable<ImageAlignClasses> =>
-	Dom.isTag(elm, 'img') ? editor.o.imageAlignClasses : null;
+import { getMediaWrapper } from 'jodit/core/helpers/utils/media-wrapper';
 
 // A Normal image sits where the text of its line is aligned (#1531)
 const lineAlign = (editor: IJodit, elm: Nullable<HTMLElement>): string => {
@@ -55,7 +51,8 @@ const lineAlign = (editor: IJodit, elm: Nullable<HTMLElement>): string => {
 const currentAlign = (
 	editor: IJodit,
 	elm: Nullable<HTMLElement>
-): ImageHAlign => (elm ? getHAlign(elm, alignClasses(editor, elm)) : 'normal');
+): ImageHAlign =>
+	elm ? getHAlign(elm, getAlignClasses(editor, elm)) : 'normal';
 
 export const align: IControlType<IJodit> = {
 	name: 'left',
@@ -77,11 +74,14 @@ export const align: IControlType<IJodit> = {
 		);
 	},
 	exec: (editor: IJodit, elm, { control }): void | false => {
+		// A media wrapper kept in the content (`mediaWrappers`) is aligned itself
 		if (
-			!Dom.isTag(
+			!Dom.isHTMLElement(elm) ||
+			(!Dom.isTag(
 				elm,
 				new Set(['img', 'jodit', 'jodit-media'] as HTMLTagNames[])
-			)
+			) &&
+				getMediaWrapper(editor, elm) !== elm)
 		) {
 			return;
 		}
@@ -95,7 +95,11 @@ export const align: IControlType<IJodit> = {
 			return false;
 		}
 
-		hAlignElement(elm, command as ImageHAlign, alignClasses(editor, elm));
+		hAlignElement(
+			elm,
+			command as ImageHAlign,
+			getAlignClasses(editor, elm)
+		);
 
 		if (
 			Dom.isTag(
@@ -104,9 +108,12 @@ export const align: IControlType<IJodit> = {
 			) &&
 			elm.firstElementChild
 		) {
+			const media = elm.firstElementChild as HTMLElement;
+
 			hAlignElement(
-				elm.firstElementChild as HTMLElement,
-				command as ImageHAlign
+				media,
+				command as ImageHAlign,
+				getAlignClasses(editor, media)
 			);
 		}
 

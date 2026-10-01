@@ -38,7 +38,7 @@ import {
 	toArray
 } from 'jodit/core/helpers';
 import { isFunction, isMarker, isString } from 'jodit/core/helpers/checker';
-import { hAlignElement } from 'jodit/core/helpers/utils/align';
+import { getAlignClasses, hAlignElement } from 'jodit/core/helpers/utils/align';
 import { assert } from 'jodit/core/helpers/utils/assert';
 import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers/move-the-node-along-the-edge-outward';
 
@@ -851,10 +851,14 @@ export class Selection implements ISelect {
 			css(image, styles);
 		}
 
-		const { imageDefaultAlign, imageAlignClasses } = this.j.o;
+		const { imageDefaultAlign } = this.j.o;
 
 		if (imageDefaultAlign && imageDefaultAlign !== 'normal') {
-			hAlignElement(image, imageDefaultAlign, imageAlignClasses);
+			hAlignElement(
+				image,
+				imageDefaultAlign,
+				getAlignClasses(this.j, image)
+			);
 		}
 
 		const onload = (): void => {

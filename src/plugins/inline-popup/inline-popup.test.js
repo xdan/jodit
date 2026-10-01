@@ -132,6 +132,70 @@ describe('Text Inline Popup plugin', () => {
 		});
 
 		// https://github.com/xdan/jodit/issues/1518
+		// https://github.com/xdan/jodit/issues/1530
+		describe('Horizontal align with several class sets', () => {
+			const icon = button =>
+				button.querySelector('svg').getAttribute('class');
+
+			const froalaImages = {
+				left: 'fr-fil fr-dii',
+				right: 'fr-fir fr-dii',
+				center: ['fr-fic fr-dib', 'fr-dib'],
+				normal: 'fr-fic fr-dii'
+			};
+
+			function alignImage(editor, label) {
+				simulateEvent('click', editor.editor.querySelector('img'));
+				clickTrigger('left', getOpenedPopup(editor));
+				clickButton(label, getOpenedPopup(editor));
+			}
+
+			it("Should recognise any of an alignment's class sets, and write the first", async () => {
+				const editor = getJodit({
+					defaultTimeout: 0,
+					imageAlignClasses: froalaImages
+				});
+
+				editor.value =
+					'<p>text <img alt="" class="fr-dib" src="tests/artio.jpg"> text</p>';
+				editor.s.focus();
+
+				simulateEvent('click', editor.editor.querySelector('img'));
+				await editor.async.requestIdlePromise();
+				const button = getButton('left', getOpenedPopup(editor));
+
+				expect(icon(button)).contains('jodit-icon_center');
+				expect(button.getAttribute('aria-pressed')).eq('true');
+
+				alignImage(editor, 'Left');
+				expect(sortAttributes(editor.value)).eq(
+					'<p>text <img alt="" class="fr-fil fr-dii" src="tests/artio.jpg"> text</p>'
+				);
+
+				alignImage(editor, 'Center');
+				expect(sortAttributes(editor.value)).eq(
+					'<p>text <img alt="" class="fr-fic fr-dib" src="tests/artio.jpg"> text</p>'
+				);
+			});
+
+			it('Should take alignClasses.img over imageAlignClasses', () => {
+				const editor = getJodit({
+					defaultTimeout: 0,
+					imageAlignClasses: { left: 'old-left' },
+					alignClasses: { img: froalaImages }
+				});
+
+				editor.value =
+					'<p>text <img alt="" src="tests/artio.jpg"> text</p>';
+				editor.s.focus();
+
+				alignImage(editor, 'Right');
+				expect(sortAttributes(editor.value)).eq(
+					'<p>text <img alt="" class="fr-fir fr-dii" src="tests/artio.jpg"> text</p>'
+				);
+			});
+		});
+
 		describe('Horizontal align with imageAlignClasses', () => {
 			const imageAlignClasses = {
 				left: 'align-left',
