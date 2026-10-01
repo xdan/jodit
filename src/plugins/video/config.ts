@@ -18,6 +18,8 @@ import type {
 import {
 	call,
 	convertMediaUrlToVideoEmbed,
+	getAlignClasses,
+	hAlignElement,
 	wrapMedia
 } from 'jodit/core/helpers';
 import { Button } from 'jodit/core/ui/button';
@@ -81,10 +83,23 @@ declare module 'jodit/config' {
 	}
 }
 
+// Media the popup inserts go in their wrapper (see `mediaWrappers`), aligned
+// with `mediaDefaultAlign`
+function prepareMedia(jodit: IJodit, element: HTMLElement): HTMLElement {
+	const media = wrapMedia(jodit, element);
+	const { mediaDefaultAlign } = jodit.o;
+
+	if (mediaDefaultAlign && mediaDefaultAlign !== 'normal') {
+		hAlignElement(media, mediaDefaultAlign, getAlignClasses(jodit, media));
+	}
+
+	return media;
+}
+
 function insertVideos(this: IJodit, data: IUploaderData): void {
 	data.files?.forEach(file => {
 		this.s.insertNode(
-			wrapMedia(
+			prepareMedia(
 				this,
 				this.createInside.element('video', {
 					controls: '',
@@ -95,21 +110,17 @@ function insertVideos(this: IJodit, data: IUploaderData): void {
 	});
 }
 
-// Embed code that is one element goes in inside the wrapper for its type, if
-// there is one (see `mediaWrappers`)
-function wrapEmbedCode(jodit: IJodit, code: string): string | HTMLElement {
+// Embed code that is one element is prepared as media; other code goes in as
+// it is
+function prepareEmbedCode(jodit: IJodit, code: string): string | HTMLElement {
 	const box = jodit.createInside.div();
 	box.innerHTML = code.trim();
 
 	const element = box.firstElementChild as Nullable<HTMLElement>;
 
-	if (!element || box.childNodes.length !== 1) {
-		return code;
-	}
-
-	const wrapper = wrapMedia(jodit, element);
-
-	return wrapper === element ? code : wrapper;
+	return element && box.childNodes.length === 1
+		? prepareMedia(jodit, element)
+		: code;
 }
 
 Config.prototype.video = {
@@ -156,7 +167,7 @@ Config.prototype.controls.video = {
 			tabs: TabOption[] = [],
 			insertCode = (code: string): void => {
 				jodit.s.restore();
-				jodit.s.insertHTML(wrapEmbedCode(jodit, code));
+				jodit.s.insertHTML(prepareEmbedCode(jodit, code));
 				close();
 			};
 

@@ -265,11 +265,17 @@ export type ImageAction = 'resize' | 'crop';
 export type ImageHAlign = 'normal' | 'left' | 'right' | 'center' | '';
 
 /**
+ * Class names for each alignment, see `alignClasses`. An alignment can list
+ * several sets of class names to recognise; aligning writes the first
+ */
+export type HAlignClasses = Partial<
+	Record<Exclude<ImageHAlign, ''>, string | string[]>
+>;
+
+/**
  * Class names for each image alignment, see `imageAlignClasses`
  */
-export type ImageAlignClasses = Partial<
-	Record<Exclude<ImageHAlign, ''>, string>
->;
+export type ImageAlignClasses = HAlignClasses;
 
 /**
  * A wrapper that media keep in the content, see `mediaWrappers`

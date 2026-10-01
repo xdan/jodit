@@ -47,11 +47,11 @@ Alignment given to images inserted into the editor. `'normal'` leaves them unali
 
 ### `imageAlignClasses`
 
-**Type:** `{ left?: string; right?: string; center?: string; normal?: string } | null`
+**Type:** `{ left?: string | string[]; right?: string | string[]; center?: string | string[]; normal?: string | string[] } | null`
 
 **Default:** `null`
 
-Class names to align images with, instead of an inline `float` or `margin`. The image popup's align list, the image properties dialog and `imageDefaultAlign` all use them. Aligning an image removes every class listed here and adds the chosen alignment's, which can be several separated by spaces. The popup's align button shows the alignment read from the classes, or for an image with no alignment, the alignment of its line's text.
+Class names to align images with, instead of an inline `float` or `margin`. The image popup's align list, the image properties dialog and `imageDefaultAlign` all use them. Aligning an image removes every class listed here and adds the chosen alignment's, which can be several separated by spaces. An alignment can also list several such sets, to recognise each of them, and aligning writes the first: `center: ['align-center block', 'block']` reads an image with only `block` as centred. The popup's align button shows the alignment read from the classes, or for an image with no alignment, the alignment of its line's text. `alignClasses.img` takes its place when set (see `alignClasses` in the media plugin).
 
 **Example:**
 ```typescript

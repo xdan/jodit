@@ -237,4 +237,105 @@ describe('Media plugin', () => {
 			});
 		});
 	});
+
+	// https://github.com/xdan/jodit/issues/1530
+	describe('alignClasses', () => {
+		const frVideo = { tag: 'span', className: 'fr-video' };
+		const mediaWrappers = { video: frVideo, iframe: frVideo };
+		const froalaMedia = {
+			left: 'fr-fvl fr-dvi',
+			right: 'fr-fvr fr-dvi',
+			center: ['fr-fvc fr-dvb', 'fr-dvb'],
+			normal: 'fr-fvc fr-dvi'
+		};
+		const alignClasses = { video: froalaMedia, iframe: froalaMedia };
+		const icon = button =>
+			button.querySelector('svg').getAttribute('class');
+
+		function alignClicked(editor, target, label) {
+			simulateEvent('click', target);
+			clickTrigger('left', getOpenedPopup(editor));
+			clickButton(label, getOpenedPopup(editor));
+		}
+
+		it('should align a media wrapper with the classes for its media', async () => {
+			const editor = getJodit({
+				defaultTimeout: 0,
+				mediaWrappers,
+				alignClasses
+			});
+
+			editor.value =
+				'<p><span class="fr-video fr-dvb" contenteditable="false" draggable="true"><video controls="" src="movie.mp4"></video></span></p>';
+			await delay(100);
+
+			const span = editor.editor.querySelector('span.fr-video');
+			const video = span.querySelector('video');
+
+			simulateEvent('click', video);
+			await editor.async.requestIdlePromise();
+			expect(icon(getButton('left', getOpenedPopup(editor)))).contains(
+				'jodit-icon_center'
+			);
+
+			alignClicked(editor, video, 'Left');
+
+			expect(sortAttributes(editor.value)).equals(
+				'<p><span class="fr-video fr-fvl fr-dvi" contenteditable="false" draggable="true"><video controls="" src="movie.mp4"></video></span></p>'
+			);
+		});
+
+		it("should align an embed's wrapper with the iframe's classes", async () => {
+			const editor = getJodit({ mediaWrappers, alignClasses });
+
+			editor.value =
+				'<p><span class="fr-video"><iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ"></iframe></span></p>';
+			await delay(100);
+
+			const span = editor.editor.querySelector('span.fr-video');
+			alignClicked(
+				editor,
+				span.querySelector('[data-jodit_iframe_wrapper]'),
+				'Right'
+			);
+
+			expect(span.className).equals('fr-video fr-fvr fr-dvi');
+			expect(span.getAttribute('style')).is.null;
+		});
+
+		it('should put the classes on a video without a wrapper', async () => {
+			const editor = getJodit({ alignClasses });
+
+			editor.value = '<p><video controls="" src="movie.mp4"></video></p>';
+			await delay(100);
+
+			alignClicked(editor, editor.editor.querySelector('video'), 'Right');
+
+			expect(sortAttributes(editor.value)).equals(
+				'<p><video class="fr-fvr fr-dvi" controls="" src="movie.mp4"></video></p>'
+			);
+		});
+
+		it('should align media the video popup inserts with mediaDefaultAlign', () => {
+			const editor = getJodit({
+				mediaWrappers,
+				alignClasses,
+				mediaDefaultAlign: 'center',
+				video: { defaultWidth: 200, defaultHeight: 100 }
+			});
+
+			editor.value = '<p>|<br></p>';
+			setCursorToChar(editor);
+
+			simulateEvent('click', getButton('video', editor));
+			const popup = getOpenedPopup(editor);
+			popup.querySelector('[ref="url"]').value =
+				'https://www.youtube.com/watch?v=3JZ_D3ELwOQ';
+			clickButton('Insert', popup);
+
+			expect(sortAttributes(editor.value)).equals(
+				'<p><span class="fr-video fr-fvc fr-dvb" contenteditable="false" draggable="true"><iframe allowfullscreen="" frameborder="0" height="100" src="https://www.youtube.com/embed/3JZ_D3ELwOQ" width="200"></iframe></span></p>'
+			);
+		});
+	});
 });
