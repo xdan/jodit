@@ -67,6 +67,29 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+### `mediaWrappers`
+
+**Type:** `{ [tag: string]: { tag: string; className: string } }`
+
+**Default:** `{}`
+
+Wrappers that media keep in the content, by the media's tag name, for content that holds its media in one, such as Froala's `<span class="fr-video">` around video, audio and embeds. The keys are tag names, as in `mediaBlocks` and the `popup` option. An element with a wrapper for its tag:
+
+- Is wrapped in it instead of the editor-only `mediaFakeTag` when its tag is one of `mediaBlocks`, or left in it when it's already in one. Other elements, such as iframes by default, are only wrapped when the video popup inserts them.
+- Goes in inside it when the video popup inserts it: an uploaded video, the embed for a link, or embed code that is one element.
+- Opens the `jodit-media` popup for its wrapper when clicked, whose Align and Delete act on the wrapper rather than on the media inside it.
+
+A wrapper is given `contenteditable="false"` and `draggable="true"`, which stay in the value.
+
+**Example:**
+```typescript
+const frVideo = { tag: 'span', className: 'fr-video' };
+
+const editor = Jodit.make('#editor', {
+    mediaWrappers: { video: frVideo, audio: frVideo, iframe: frVideo }
+});
+```
+
 ## Usage Examples
 
 ### Basic Usage

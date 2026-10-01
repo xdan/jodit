@@ -14,7 +14,13 @@ import type { IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { $$, attr, dataBind } from 'jodit/core/helpers/utils';
+import {
+	$$,
+	attr,
+	dataBind,
+	getMediaWrapper,
+	wrapMedia
+} from 'jodit/core/helpers/utils';
 import { css, cssInline } from 'jodit/core/helpers/utils/css';
 
 import './config';
@@ -25,7 +31,8 @@ import './config';
 export function media(editor: IJodit): void {
 	const keyFake: string = 'jodit_fake_wrapper';
 
-	const { mediaFakeTag, mediaBlocks, mediaInFakeBlock } = editor.options;
+	const { mediaFakeTag, mediaBlocks, mediaInFakeBlock, mediaWrappers } =
+		editor.options;
 
 	const wrap = (element: HTMLElement): void => {
 		if (
@@ -33,7 +40,10 @@ export function media(editor: IJodit): void {
 			attr(element.parentNode as HTMLElement, 'data-jodit_iframe_wrapper')
 		) {
 			element = element.parentNode as HTMLElement;
-		} else {
+		} else if (mediaWrappers[element.nodeName.toLowerCase()]) {
+			element =
+				getMediaWrapper(editor, element) ?? wrapMedia(editor, element);
+		} else if (mediaInFakeBlock) {
 			const wrapper = editor.createInside.element(mediaFakeTag, {
 				'data-jodit-temp': 1,
 				contenteditable: false,
@@ -59,6 +69,8 @@ export function media(editor: IJodit): void {
 			Dom.append(wrapper, element);
 
 			element = wrapper;
+		} else {
+			return;
 		}
 
 		editor.e
@@ -68,7 +80,7 @@ export function media(editor: IJodit): void {
 			});
 	};
 
-	if (mediaInFakeBlock) {
+	if (mediaInFakeBlock || Object.keys(mediaWrappers).length) {
 		editor.e
 			.on('afterGetValueFromEditor', (data: { value: string }) => {
 				const rxp = new RegExp(
