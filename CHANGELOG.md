@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.17.2
+
+#### :bug: Bug Fix
+
+- Safari: with the editor inside a shadow root, Backspace threw `HierarchyRequestError: The operation would yield an incorrect node tree.` and Enter did nothing. `Selection.sel` reached into the shadow tree only through `ShadowRoot.getSelection()`, a non-standard method WebKit never implemented, and fell back to `window.getSelection()`, which stops at the shadow boundary and reports the host. The selection layer now resolves the caret through the standard `Selection.getComposedRanges()` when that happens, including the argument shape Safari shipped first, and answers `anchorNode` / `focusNode` from it so the editor no longer decides it has lost focus and resets the caret after an edit. Browsers whose window selection already sees into the shadow tree, such as Firefox, keep the previous path. Reported by Ralf Pichler (Jodit OEM).
+
 ## 4.17.1
 
 #### :bug: Bug Fix

@@ -45,7 +45,17 @@ import { moveTheNodeAlongTheEdgeOutward } from 'jodit/core/selection/helpers/mov
 import './interface';
 
 import { CommitStyle } from './style/commit-style';
-import { cursorInTheEdgeOfString, findCorrectCurrentNode } from './helpers';
+import {
+	composedRanges,
+	cursorInTheEdgeOfString,
+	findCorrectCurrentNode
+} from './helpers';
+
+/**
+ * The DOM `Selection`. The class below is called `Selection` too, so the global
+ * one cannot be named directly in this file.
+ */
+type DomSelection = NonNullable<ReturnType<Window['getSelection']>>;
 
 export class Selection implements ISelect {
 	constructor(readonly jodit: IJodit) {
@@ -95,14 +105,105 @@ export class Selection implements ISelect {
 	 * Return current selection object
 	 */
 	get sel(): ISelect['sel'] {
-		if (
-			this.j.o.shadowRoot &&
-			isFunction(this.j.o.shadowRoot.getSelection)
-		) {
-			return this.j.o.shadowRoot.getSelection();
+		const { shadowRoot } = this.j.o;
+
+		if (shadowRoot) {
+			if (isFunction(shadowRoot.getSelection)) {
+				return shadowRoot.getSelection();
+			}
+
+			const composed = this.__composedSelection(shadowRoot);
+
+			if (composed) {
+				return composed;
+			}
 		}
 
 		return this.win.getSelection();
+	}
+
+	/**
+	 * Selection of a shadow tree in a browser without `ShadowRoot.getSelection`.
+	 *
+	 * `ShadowRoot.getSelection()` is a non-standard method that WebKit never
+	 * implemented, and `window.getSelection()` stops at the shadow boundary: for
+	 * a caret inside the shadow tree it reports the host, or the document
+	 * itself. Everything downstream then works on the wrong tree, which is why
+	 * Backspace used to throw `HierarchyRequestError` and Enter did nothing when
+	 * the editor lived in a shadow root in Safari.
+	 *
+	 * The standard replacement is `Selection.getComposedRanges()`, which does
+	 * reach into a shadow tree it is given. It hands back `StaticRange`s, and
+	 * the editor mutates ranges constantly, so they are turned into live ones.
+	 *
+	 * Reads are answered from those ranges; everything else, including the
+	 * writes (`addRange`, `removeAllRanges`, `setBaseAndExtent`), goes to the
+	 * real selection, which does accept nodes inside a shadow tree. Reading is
+	 * the only side the browser blocks.
+	 *
+	 * @returns `null` when the browser offers neither API, so the caller falls
+	 * back to the plain window selection.
+	 */
+	private __composedSelection(
+		shadowRoot: ShadowRoot
+	): Nullable<DomSelection> {
+		const selection = this.win.getSelection();
+
+		if (!selection) {
+			return null;
+		}
+
+		// Firefox has no `ShadowRoot.getSelection` either, but its window
+		// selection does see into a shadow tree. Where the plain selection
+		// already points at the right node there is nothing to work around, and
+		// taking it over would change behaviour that works today.
+		const { anchorNode } = selection;
+
+		if (anchorNode && Dom.isOrContains(shadowRoot, anchorNode)) {
+			return null;
+		}
+
+		const ranges = composedRanges(selection, shadowRoot);
+
+		if (!ranges) {
+			return null;
+		}
+
+		const live = ranges.map(staticRange => {
+			const range = this.createRange();
+			range.setStart(staticRange.startContainer, staticRange.startOffset);
+			range.setEnd(staticRange.endContainer, staticRange.endOffset);
+			return range;
+		});
+
+		const first = live[0];
+
+		const overrides: IDictionary<unknown> = {
+			rangeCount: live.length,
+			getRangeAt: (index: number): Range | undefined => live[index],
+			isCollapsed: live.every(range => range.collapsed),
+			// Without these the editor asks the window selection where the
+			// caret is, is told "outside the editable area", and resets the
+			// caret to the start of it — which is the focus loss that shows up
+			// right after a successful Backspace.
+			anchorNode: first ? first.startContainer : null,
+			anchorOffset: first ? first.startOffset : 0,
+			focusNode: first ? first.endContainer : null,
+			focusOffset: first ? first.endOffset : 0,
+			toString: (): string => live.map(range => range.toString()).join('')
+		};
+
+		return new Proxy(selection, {
+			get(target: DomSelection, property: string | symbol): unknown {
+				if (isString(property) && property in overrides) {
+					return overrides[property];
+				}
+
+				const value = Reflect.get(target, property, target);
+
+				return isFunction(value) ? value.bind(target) : value;
+			}
+		});
 	}
 
 	/**

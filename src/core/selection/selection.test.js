@@ -1462,3 +1462,171 @@ describe('Selection Module Tests', function () {
 		});
 	});
 });
+
+describe('Selection in a Shadow DOM without ShadowRoot.getSelection', function () {
+	// WebKit never implemented the non-standard `ShadowRoot.getSelection()`, and
+	// its `window.getSelection()` stops at the shadow boundary and reports the
+	// host. Chrome does implement it, so the Safari path is reproduced here by
+	// hiding the method and standing in a selection that only answers through
+	// `getComposedRanges`.
+	let root, editor, text, restoreWindowSelection;
+
+	function safariSelection(getComposedRanges) {
+		return {
+			rangeCount: 0,
+			isCollapsed: true,
+			// What WebKit actually reports for a caret inside a shadow tree.
+			anchorNode: root.host,
+			anchorOffset: 0,
+			focusNode: root.host,
+			focusOffset: 0,
+			getRangeAt() {
+				throw new Error('no ranges outside the shadow tree');
+			},
+			removeAllRanges() {},
+			addRange() {},
+			toString() {
+				return '';
+			},
+			...(getComposedRanges ? { getComposedRanges } : {})
+		};
+	}
+
+	function pretendSafari(getComposedRanges) {
+		const selection = safariSelection(getComposedRanges);
+		const original = window.getSelection;
+
+		root.getSelection = undefined;
+		window.getSelection = () => selection;
+
+		restoreWindowSelection = () => {
+			window.getSelection = original;
+		};
+	}
+
+	function composed() {
+		return [
+			{
+				startContainer: text,
+				startOffset: 1,
+				endContainer: text,
+				endOffset: 3
+			}
+		];
+	}
+
+	beforeEach(function () {
+		root = appendTestDiv().attachShadow({ mode: 'open' });
+		root.innerHTML = '<div></div>';
+		editor = getJodit(
+			{ shadowRoot: root, globalFullSize: false },
+			root.firstChild
+		);
+		editor.value = '<p>abcd</p>';
+		text = editor.editor.firstChild.firstChild;
+		restoreWindowSelection = null;
+	});
+
+	afterEach(function () {
+		restoreWindowSelection && restoreWindowSelection();
+	});
+
+	it('Should read the caret through the standard getComposedRanges', function () {
+		let seen = null;
+
+		pretendSafari(function (options) {
+			seen = options;
+			return composed();
+		});
+
+		expect(seen).is.null;
+		expect(editor.s.sel.rangeCount).equals(1);
+		expect(seen.shadowRoots[0]).equals(root);
+
+		const range = editor.s.sel.getRangeAt(0);
+
+		expect(range.startContainer).equals(text);
+		expect(range.startOffset).equals(1);
+		expect(editor.s.sel.toString()).equals('bc');
+		expect(editor.s.sel.isCollapsed).is.false;
+	});
+
+	it('Should fall back to the argument shape Safari shipped first', function () {
+		let seenRoot = null;
+
+		pretendSafari(function (arg) {
+			if (!(arg instanceof ShadowRoot)) {
+				throw new TypeError('expects a ShadowRoot');
+			}
+
+			seenRoot = arg;
+			return composed();
+		});
+
+		expect(editor.s.sel.rangeCount).equals(1);
+		expect(seenRoot).equals(root);
+		expect(editor.s.sel.getRangeAt(0).startContainer).equals(text);
+	});
+
+	it('Should report the caret node inside the editor, not the host', function () {
+		// The editor asks the selection where the caret is before it decides
+		// whether it still has focus; answering with the host made it reset the
+		// caret to the start of the editable area after every edit.
+		pretendSafari(() => composed());
+
+		expect(editor.s.sel.anchorNode).equals(text);
+		expect(editor.s.sel.anchorOffset).equals(1);
+		expect(editor.s.sel.focusNode).equals(text);
+		expect(editor.s.sel.focusOffset).equals(3);
+		expect(
+			Jodit.modules.Dom.isOrContains(
+				editor.editor,
+				editor.s.sel.anchorNode
+			)
+		).is.true;
+	});
+
+	it('Should keep the window selection when the browser has neither API', function () {
+		pretendSafari(null);
+
+		expect(editor.s.sel.rangeCount).equals(0);
+		expect(editor.s.sel.anchorNode).equals(root.host);
+	});
+
+	it('Should leave a shadow-aware window selection alone', function () {
+		// Firefox has no `ShadowRoot.getSelection` either, but its window
+		// selection already reports the node inside the shadow tree. Taking it
+		// over there would change behaviour that works, so the composed path
+		// must stay out of the way.
+		let asked = false;
+
+		const selection = safariSelection(function () {
+			asked = true;
+			return composed();
+		});
+
+		selection.anchorNode = text;
+		selection.rangeCount = 7;
+
+		const original = window.getSelection;
+		root.getSelection = undefined;
+		window.getSelection = () => selection;
+		restoreWindowSelection = () => {
+			window.getSelection = original;
+		};
+
+		expect(editor.s.sel.rangeCount).equals(7);
+		expect(asked).is.false;
+	});
+
+	it('Should keep using ShadowRoot.getSelection where it exists', function () {
+		// Chrome: the original path must not change.
+		const range = editor.s.createRange();
+		range.setStart(text, 1);
+		range.setEnd(text, 3);
+		editor.s.selectRange(range);
+
+		expect(editor.s.sel.rangeCount).equals(1);
+		expect(editor.s.sel.toString()).equals('bc');
+	});
+});
