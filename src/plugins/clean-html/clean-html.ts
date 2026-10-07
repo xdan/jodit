@@ -114,6 +114,18 @@ export class cleanHtml extends Plugin {
 	}
 
 	/**
+	 * The value was sanitized in an inert document and has just been re-parsed
+	 * into the live editor with scripting on. Where the two parsers disagree
+	 * (`<noscript>`, raw-text elements), markup that was inert text a moment
+	 * ago is a real element now, so the live tree is sanitized once more, in
+	 * the same call stack, before any handler it might carry can fire.
+	 */
+	@watch(':afterSetNativeEditorValue')
+	protected onAfterSetNativeEditorValue(): void {
+		safeHTML(this.j.editor, this.j.o.cleanHTML);
+	}
+
+	/**
 	 * Event handler when manually assigning a value to the HTML editor.
 	 */
 	@watch(':beforeSetNativeEditorValue')

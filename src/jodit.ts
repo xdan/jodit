@@ -511,6 +511,11 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 		if (this.editor) {
 			this.editor.innerHTML = data.value;
+			// Fired synchronously, before any task can run: the value was
+			// sanitized in an inert document and re-parsed here with scripting
+			// on, and the two parsers do not always agree. Listeners get to
+			// look at the tree that actually exists.
+			this.e.fire('afterSetNativeEditorValue');
 		}
 	}
 

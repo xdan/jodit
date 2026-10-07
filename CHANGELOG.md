@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.17.3
+
+#### :bug: Bug Fix
+
+- Security: mutation XSS on value assignment through a `<noscript>` carrier. The value is sanitized in an inert document, where scripting is off and `<noscript>` content is parsed as markup, then serialized and assigned to the live editor, where scripting is on and the same bytes are parsed as raw text ending at the first `</noscript>`. An `<img onerror>` hidden as inert text inside `<noscript><style>` therefore passed the sanitizer unchanged and became a live element whose handler fired as soon as the content loaded. `safeHTML` now removes `<noscript>` outright, and the editor fires a new synchronous `afterSetNativeEditorValue` event right after the assignment, on which `cleanHTML` sanitizes the live tree once more before any task can run, so other parse-context differences cannot leave a live handler either. Reported by Tan-JunWei.
+
 ## 4.17.2
 
 #### :bug: Bug Fix

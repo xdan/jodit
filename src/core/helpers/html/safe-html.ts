@@ -95,6 +95,24 @@ export function safeHTML(
 		}
 	}
 
+	// `<noscript>` is parsed as markup in a document with scripting off (the
+	// inert document the value is sanitized in) and as raw text in one with
+	// scripting on (the live editor). The same serialized bytes therefore
+	// describe two different trees, and markup hidden as inert text in the
+	// first comes alive as elements in the second. The element has no use in
+	// editor content, so it goes, together with everything it carried.
+	const noscript: Element[] = [];
+
+	Dom.each(box, node => {
+		if (Dom.isElement(node) && node.nodeName === 'NOSCRIPT') {
+			noscript.push(node);
+		}
+	});
+
+	for (const elm of noscript) {
+		Dom.safeRemove(elm);
+	}
+
 	const removeEvents = options.removeEventAttributes ?? options.removeOnError;
 
 	// Single synchronous traversal of the subtree. Besides removing event
