@@ -43,12 +43,17 @@ describe('Mutation XSS through a noscript carrier on value set', function () {
 		expect(window.__joditMxssFired).is.undefined;
 	});
 
-	it('Should keep the harmless paragraphs around the carrier', function () {
+	it('Should keep the harmless content around the carrier', function () {
 		const editor = getJodit();
 		editor.value = payload;
 
-		expect(editor.editor.querySelectorAll('p').length).equals(2);
+		// Browsers parse the carrier differently even in the inert document
+		// (Firefox materialises the image and wraps it in its own paragraph),
+		// so the exact element count is not the point: the surrounding text
+		// stays, the carrier is gone, and whatever survived carries no handler.
 		expect(editor.editor.textContent).contains('a');
 		expect(editor.editor.textContent).contains('b');
+		expect(editor.editor.querySelector('noscript')).is.null;
+		expect(editor.editor.querySelector('[onerror]')).is.null;
 	});
 });
