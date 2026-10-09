@@ -67,6 +67,62 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+### `mediaWrappers`
+
+**Type:** `{ [tag: string]: { tag: string; className: string } }`
+
+**Default:** `{}`
+
+Wrappers that media keep in the content, by the media's tag name, for content that holds its media in one, such as Froala's `<span class="fr-video">` around video, audio and embeds. The keys are tag names, as in `mediaBlocks` and the `popup` option. An element with a wrapper for its tag:
+
+- Is wrapped in it instead of the editor-only `mediaFakeTag` when its tag is one of `mediaBlocks`, or left in it when it's already in one. Other elements, such as iframes by default, are only wrapped when the video popup inserts them.
+- Goes in inside it when the video popup inserts it: an uploaded video, the embed for a link, or embed code that is one element.
+- Opens the `jodit-media` popup for its wrapper when clicked, whose Align and Delete act on the wrapper rather than on the media inside it.
+
+A wrapper is given `contenteditable="false"` and `draggable="true"`, which stay in the value.
+
+**Example:**
+```typescript
+const frVideo = { tag: 'span', className: 'fr-video' };
+
+const editor = Jodit.make('#editor', {
+    mediaWrappers: { video: frVideo, audio: frVideo, iframe: frVideo }
+});
+```
+
+### `alignClasses`
+
+**Type:** `{ [tag: string]: { left?: string | string[]; right?: string | string[]; center?: string | string[]; normal?: string | string[] } }`
+
+**Default:** `{}`
+
+Class names to align elements with, by tag name, as `imageAlignClasses` does for images: `img`, and `video`, `audio` and `iframe` in the media popup. A media wrapper (see `mediaWrappers`), and Jodit's own `jodit` and `jodit-media` wrappers, are aligned with the classes for the media in them. Without a wrapper from `mediaWrappers`, the classes go on the media element. As with `imageAlignClasses`, an alignment can list several sets of classes to recognise, and aligning writes the first.
+
+### `mediaDefaultAlign`
+
+**Type:** `'normal' | 'left' | 'right' | 'center'`
+
+**Default:** `'normal'`
+
+Alignment given to the media the video popup inserts, with `alignClasses` when they're set for the media's type.
+
+**Example:**
+```typescript
+const frVideo = { tag: 'span', className: 'fr-video' };
+const froalaMedia = {
+    left: 'fr-fvl fr-dvi',
+    right: 'fr-fvr fr-dvi',
+    center: ['fr-fvc fr-dvb', 'fr-dvb'],
+    normal: 'fr-fvc fr-dvi'
+};
+
+const editor = Jodit.make('#editor', {
+    mediaWrappers: { video: frVideo, audio: frVideo, iframe: frVideo },
+    alignClasses: { video: froalaMedia, audio: froalaMedia, iframe: froalaMedia },
+    mediaDefaultAlign: 'center'
+});
+```
+
 ## Usage Examples
 
 ### Basic Usage
