@@ -111,6 +111,18 @@ export function assertSourcesAnswer(
 	return resp as unknown as IFileBrowserAnswer;
 }
 
+/**
+ * Actions that only read from the connector. A newer request for one of them
+ * makes the older one pointless, so it is aborted; every other action changes
+ * server state and must be allowed to finish.
+ */
+const REPLACEABLE_ACTIONS: ReadonlySet<string> = new Set([
+	'items',
+	'folder',
+	'permissions',
+	'getLocalFileByUrl'
+]);
+
 export default class DataProvider implements IFileBrowserDataProvider {
 	private __currentPermissions: Nullable<IPermissions> = null;
 
@@ -128,15 +140,27 @@ export default class DataProvider implements IFileBrowserDataProvider {
 
 	private __ajaxInstances: Map<string, IAjax<IFileBrowserAnswer>> = new Map();
 
+	private __requestSerial = 0;
+
 	protected get<T extends IFileBrowserAnswer = IFileBrowserAnswer>(
 		name: keyof IFileBrowserOptions
 	): Promise<T> {
 		const instances = this.__ajaxInstances;
 
-		if (instances.has(name)) {
-			const ajax = instances.get(name);
+		// A listing asked for again supersedes the one still loading, so the
+		// earlier request is aborted. That must never happen to a request
+		// that changes something on the server: aborting it does not undo it,
+		// the caller just never hears the result. Removing several files at
+		// once used to send one `fileRemove` per file and abort all but the
+		// last, so only the last one was ever removed. Mutating requests get a
+		// key of their own and run side by side.
+		const replaceable = REPLACEABLE_ACTIONS.has(name);
+		const key = replaceable ? name : `${name}#${++this.__requestSerial}`;
+
+		if (replaceable && instances.has(key)) {
+			const ajax = instances.get(key);
 			ajax?.abort();
-			instances.delete(name);
+			instances.delete(key);
 		}
 
 		const opts = <IFileBrowserAjaxOptions>ConfigProto(
@@ -157,14 +181,14 @@ export default class DataProvider implements IFileBrowserDataProvider {
 		}
 
 		const ajax = new Ajax<T>(opts);
-		instances.set(name, ajax);
+		instances.set(key, ajax);
 
 		const promise = ajax.send();
 
 		promise
 			.finally(() => {
 				ajax.destruct();
-				instances.delete(name);
+				instances.delete(key);
 
 				this.progressHandler(100);
 			})
