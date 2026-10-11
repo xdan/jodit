@@ -13,7 +13,7 @@
 
 #### :bug: Bug Fix
 
-- File browser: removing several selected files sent one `fileRemove` per file and the data provider aborted every request but the last, because it keeps a single in-flight request per action and replaces it when the same action is asked for again. Aborting a request that changes server state does not undo it, the caller just never learns the result, so only the last file was ever removed. The replace-on-repeat behaviour now applies only to listings (`items`, `folder`, `permissions`, `getLocalFileByUrl`); every other action runs side by side and finishes. Reported by an OEM customer through the FileBrowserPro delete flow (fixed on the PRO side in jodit-pro 4.17.4 as well).
+- File browser: removing several selected files sent one `fileRemove` per file and the data provider aborted every request but the last, because it keeps a single in-flight request per action and replaces it when the same action is asked for again. Aborting a request that changes server state does not undo it, the caller just never learns the result, so only the last file was ever removed. The replace-on-repeat behaviour now applies only to listings (`items`, `folder`, `permissions`, `getLocalFileByUrl`); every other action runs side by side and finishes. Reported by an OEM customer through the FileBrowserPro delete flow (fixed on the PRO side in jodit-pro 4.17.5 as well).
 
 ## 4.17.3
 
