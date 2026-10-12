@@ -2098,3 +2098,75 @@ describe('Toolbar dropdown keyboard', () => {
 		).equals('false');
 	});
 });
+
+describe('Toolbar select width', () => {
+	let editor;
+
+	const make = async (variables = {}) => {
+		editor = getJodit({
+			toolbarAdaptive: false,
+			buttons: 'font,fontsize',
+			controls: {
+				font: { component: 'select' },
+				fontsize: { component: 'select' }
+			}
+		});
+
+		Object.keys(variables).forEach(name =>
+			editor.container.style.setProperty(name, variables[name])
+		);
+
+		editor.value =
+			'<p><span style="font-family: \'Noto Sans Egyptian Hieroglyphs\', sans-serif">a</span></p>';
+		editor.s.focus();
+		editor.s.setCursorIn(editor.editor.querySelector('span').firstChild);
+		editor.e.fire('updateToolbar');
+		await delay(80);
+	};
+
+	const select = name =>
+		editor.toolbar.container.querySelector(`.jodit-toolbar-select_${name}`);
+
+	const width = name =>
+		Math.round(select(name).getBoundingClientRect().width);
+
+	const shortened = name => {
+		const text = select(name).querySelector('.jodit-toolbar-select__text');
+		return text.scrollWidth > text.clientWidth;
+	};
+
+	afterEach(() => {
+		editor && editor.destruct();
+		editor = null;
+	});
+
+	it('Should fit its value while no width is set', async () => {
+		await make();
+
+		expect(select('font').textContent.trim()).equals(
+			'Noto Sans Egyptian Hieroglyphs'
+		);
+		expect(width('font')).is.above(150);
+		expect(shortened('font')).is.false;
+		expect(width('fontsize')).equals(100);
+	});
+
+	it('Should take the width set for every select, and shorten a long value', async () => {
+		await make({ '--jd-toolbar-select-width': '120px' });
+
+		expect(width('font')).equals(120);
+		expect(shortened('font')).is.true;
+		expect(width('fontsize')).equals(120);
+		expect(shortened('fontsize')).is.false;
+	});
+
+	it('Should take its own width before the one set for every select', async () => {
+		await make({
+			'--jd-toolbar-select-width': '80px',
+			'--jd-toolbar-select-font-width': '160px'
+		});
+
+		expect(width('font')).equals(160);
+		expect(width('fontsize')).equals(80);
+	});
+});

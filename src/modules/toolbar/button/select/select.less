@@ -6,18 +6,47 @@
 	--color-button-background-hover-opacity40: rgba(220, 220, 220, 0.2);
 	--color-button-background-hover-opacity60: rgba(220, 220, 220, 0.1);
 
+	// The width set for this select, or for every select. Unset, the select
+	// fits its value
+	--toolbar-select-own-width: var(--toolbar-select-width);
+
 	.jodit-toolbar-button();
 	justify-content: space-between;
 
 	.jodit-ui-button-interaction();
 
+	&_font {
+		--toolbar-select-own-width: var(
+			--toolbar-select-font-width,
+			var(--toolbar-select-width)
+		);
+	}
+
+	&_fontsize {
+		--toolbar-select-own-width: var(
+			--toolbar-select-fontsize-width,
+			var(--toolbar-select-width)
+		);
+	}
+
+	&_paragraph {
+		--toolbar-select-own-width: var(
+			--toolbar-select-paragraph-width,
+			var(--toolbar-select-width)
+		);
+	}
+
 	&__text:not(:empty) {
-		justify-content: left;
+		display: block;
+		text-align: left;
+		white-space: nowrap;
 	}
 
 	&__button {
 		flex: 1;
+		min-width: 0;
 	}
 
-	min-width: 100px;
+	min-width: var(--toolbar-select-own-width, 100px);
+	max-width: var(--toolbar-select-own-width, none);
 }
