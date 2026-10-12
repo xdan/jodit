@@ -16,6 +16,8 @@ import { normalizeSize } from 'jodit/core/helpers/';
 
 import './config';
 
+import { GoogleFonts } from './google-fonts';
+
 /**
  * Process commands `fontsize` and `fontname`
  */
@@ -29,6 +31,29 @@ export function font(editor: IJodit): void {
 			name: 'fontsize',
 			group: 'font'
 		});
+
+	if (editor.o.font.googleFonts.url) {
+		const googleFonts = editor.getInstance<GoogleFonts>(GoogleFonts),
+			loadUsed = editor.async.debounce(
+				() => googleFonts.loadUsed(),
+				editor.defaultTimeout
+			);
+
+		googleFonts.ready.then(loadUsed);
+		editor.e.on('afterInit afterSetMode change', loadUsed);
+	}
+
+	// An iframe's stylesheets can arrive after the toolbar first shows the
+	// editor's font
+	editor.e.on('afterInit', () => {
+		editor.iframe &&
+			editor.e.on(
+				editor.ed,
+				'load',
+				() => editor.e.fire('updateToolbar'),
+				{ capture: true }
+			);
+	});
 
 	const callback = (
 		command: string,

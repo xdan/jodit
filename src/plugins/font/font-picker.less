@@ -1,0 +1,50 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../styles/variables';
+@import (reference) '../../styles/mixins';
+@import (reference) 'jodit/core/ui/button/button/button';
+
+.jodit-ui-font-picker {
+	width: 240px;
+
+	&__group + &__group {
+		margin-top: var(--padding-default);
+	}
+
+	&__heading {
+		padding: var(--padding-default) var(--padding-default)
+			calc(var(--padding-default) / 4);
+		color: var(--color-label);
+		font-size: var(--font-size-small);
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+	&__item {
+		.jodit-ui-button-clear();
+		.jodit-ui-button-interaction();
+		.font();
+
+		display: block;
+		overflow: hidden;
+		width: 100%;
+		min-height: var(--button-size);
+		padding: 0 var(--padding-default);
+		margin: var(--margin-v) 0;
+		border-radius: var(--border-radius-default);
+		color: var(--color-text);
+		text-align: start;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		// The mouse never focuses an item, see `.jodit-toolbar-button`
+		&:focus:not([disabled]) {
+			background-color: var(--color-button-background-hover);
+			outline: 0;
+		}
+	}
+}

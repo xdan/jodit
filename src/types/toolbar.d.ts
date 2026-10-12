@@ -246,6 +246,8 @@ interface IControlType<
 
 	/**
 	 * After click on the button it will show popup element which consist value that this function returned
+	 * For a control with a `list`, the returned content replaces the list's buttons in its dropdown,
+	 * and `false` keeps them
 	 * @example
 	 * ```javascript
 	 * var editor = Jodit.make('.editor', {

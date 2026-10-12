@@ -19,6 +19,7 @@ import type {
 	IPopup,
 	IToolbarButton,
 	IToolbarCollection,
+	IUIElement,
 	IViewBased,
 	Nullable
 } from 'jodit/types';
@@ -547,9 +548,21 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 		const list = control.list;
 		const menu = this.openPopup();
-		const toolbar = makeCollection(this.j);
 
 		menu.parentElement = this;
+
+		const content = control.popup?.(
+			this.j,
+			this.toolbar?.getTarget(this) ?? this.target ?? null,
+			this.__closePopup,
+			this
+		);
+
+		if (content) {
+			return this.__openMenu(menu, content);
+		}
+
+		const toolbar = makeCollection(this.j);
 		toolbar.parentElement = menu;
 
 		toolbar.mode = 'vertical';
@@ -619,7 +632,14 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			this.target
 		);
 
-		menu.setContent(toolbar).open(
+		this.__openMenu(menu, toolbar);
+	}
+
+	private __openMenu(
+		menu: IPopup,
+		content: IUIElement | HTMLElement | string
+	): void {
+		menu.setContent(content).open(
 			() => position(this.container),
 			false,
 			this.j.o.allowTabNavigation ? this.container : undefined
