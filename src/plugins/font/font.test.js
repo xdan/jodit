@@ -716,8 +716,10 @@ describe('Google Fonts', () => {
 
 		simulateEvent('click', roboto);
 
-		expect(editor.value).equals(
-			'<p><span style="font-family: Roboto, sans-serif;">test</span></p>'
+		expect(sortAttributes(editor.value)).equals(
+			sortAttributes(
+				'<p><span style="font-family: Roboto, sans-serif;">test</span></p>'
+			)
 		);
 		expect(getOpenedPopup(editor)).is.null;
 		expect(fontLinks()).contains(
@@ -740,8 +742,10 @@ describe('Google Fonts', () => {
 
 		simulateEvent('click', pacifico);
 
-		expect(editor.value).equals(
-			'<p><span style="font-family: Pacifico, sans-serif;">test</span></p>'
+		expect(sortAttributes(editor.value)).equals(
+			sortAttributes(
+				'<p><span style="font-family: Pacifico, sans-serif;">test</span></p>'
+			)
 		);
 	});
 
@@ -768,7 +772,9 @@ describe('Google Fonts', () => {
 			popup.querySelectorAll('.jodit-ui-font-picker__item')
 		).find(item => item.textContent === 'ABeeZee');
 
-		expect(abeezee.style.fontFamily).equals('ABeeZee, sans-serif');
+		expect(abeezee.style.fontFamily.replace(/["']/g, '')).equals(
+			'ABeeZee, sans-serif'
+		);
 		expect(fontLinks().find(link => link.includes('&text='))).matches(
 			/[?&]family=ABeeZee&.*&text=AB[^&]*&display=swap$/
 		);
