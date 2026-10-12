@@ -2188,6 +2188,34 @@ describe('Toolbar dropdown type-ahead', () => {
 		expect(focused()).equals('Code');
 	});
 
+	it('Should search an open list with what is typed in the editor', () => {
+		editor = getJodit({ toolbarAdaptive: false, buttons: 'paragraph' });
+		editor.value = '<p>test</p>';
+		editor.s.focus();
+
+		const type = key => {
+			const event = new KeyboardEvent('keydown', {
+				key,
+				bubbles: true,
+				cancelable: true
+			});
+			editor.editor.dispatchEvent(event);
+			return event;
+		};
+
+		clickTrigger('paragraph', editor);
+		expect(getOpenedPopup(editor)).is.not.null;
+
+		expect(type('q').defaultPrevented).is.true;
+		expect(focused()).equals('Quote');
+
+		simulateEvent('keydown', 'Escape', document.activeElement);
+		expect(getOpenedPopup(editor)).is.null;
+
+		editor.s.focus();
+		expect(type('q').defaultPrevented).is.false;
+	});
+
 	it('Should leave a space to the focused item until something is typed', () => {
 		open();
 		press('ArrowDown');

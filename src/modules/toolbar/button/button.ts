@@ -527,6 +527,28 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		e.stopPropagation();
 	}
 
+	/**
+	 * The mouse opens a dropdown without taking the focus out of the editor.
+	 * While a dropdown list is open, typing there searches the list, as in an
+	 * open `<select>`, instead of writing into the content
+	 */
+	@autobind
+	private __onEditorKeyDown(e: KeyboardEvent): false | void {
+		if (
+			!this.openedPopup ||
+			!this.control.list ||
+			e.altKey ||
+			e.ctrlKey ||
+			e.metaKey ||
+			!this.__typeAhead(e.key, this.__popupFocusables(), -1)
+		) {
+			return;
+		}
+
+		e.preventDefault();
+		return false;
+	}
+
 	private __typed: string = '';
 	private __typedAt: number = 0;
 	private __typedTo: Nullable<HTMLElement> = null;
@@ -715,6 +737,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		this.j.e
 			.on(this.ow, 'mousedown touchstart', this.onOutsideClick)
 			.on('escape closeAllPopups', this.onOutsideClick)
+			.on('keydown', this.__onEditorKeyDown)
 			.on(this.openedPopup.container, 'keydown', this.__onPopupKeyDown);
 
 		return this.openedPopup;
@@ -738,7 +761,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 		this.j.e
 			.off(this.ow, 'mousedown touchstart', this.onOutsideClick)
-			.off('escape closeAllPopups', this.onOutsideClick);
+			.off('escape closeAllPopups', this.onOutsideClick)
+			.off('keydown', this.__onEditorKeyDown);
 
 		// The keyboard brought the focus into the dropdown: give it back to
 		// the button, otherwise it would fall out to the document
