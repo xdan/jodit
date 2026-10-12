@@ -2102,8 +2102,9 @@ describe('Toolbar dropdown keyboard', () => {
 describe('Toolbar select width', () => {
 	let editor;
 
-	const make = async (variables = {}) => {
+	const make = async (variables = {}, options = {}) => {
 		editor = getJodit({
+			...options,
 			toolbarAdaptive: false,
 			buttons: 'font,fontsize',
 			controls: {
@@ -2158,6 +2159,21 @@ describe('Toolbar select width', () => {
 		expect(shortened('font')).is.true;
 		expect(width('fontsize')).equals(120);
 		expect(shortened('fontsize')).is.false;
+	});
+
+	it('Should put its value at the start in a right-to-left editor', async () => {
+		await make({}, { direction: 'rtl' });
+
+		const box = select('fontsize').getBoundingClientRect(),
+			range = document.createRange();
+
+		range.selectNodeContents(
+			select('fontsize').querySelector('.jodit-toolbar-select__text')
+		);
+
+		const text = range.getBoundingClientRect();
+
+		expect(box.right - text.right).is.below(text.left - box.left);
 	});
 
 	it('Should take its own width before the one set for every select', async () => {
