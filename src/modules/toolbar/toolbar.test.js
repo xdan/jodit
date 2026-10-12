@@ -2098,3 +2098,107 @@ describe('Toolbar dropdown keyboard', () => {
 		).equals('false');
 	});
 });
+
+describe('Toolbar dropdown type-ahead', () => {
+	let editor;
+
+	const press = key => simulateEvent('keydown', key, document.activeElement);
+
+	const type = text => text.split('').forEach(press);
+
+	const focused = () => document.activeElement.textContent.trim();
+
+	const open = () => {
+		editor = getJodit({ toolbarAdaptive: false, buttons: 'paragraph' });
+		editor.toolbar.buttons[0].focus();
+		press('ArrowDown');
+	};
+
+	afterEach(() => {
+		editor && editor.destruct();
+		editor = null;
+	});
+
+	it('Should focus the item that starts with the typed text', () => {
+		open();
+		expect(focused()).equals('Paragraph');
+
+		type('heading 3');
+		expect(focused()).equals('Heading 3');
+
+		expect(getOpenedPopup(editor)).is.not.null;
+	});
+
+	it('Should cycle through the items that start with a repeated letter', () => {
+		open();
+
+		press('h');
+		expect(focused()).equals('Heading 1');
+
+		press('h');
+		expect(focused()).equals('Heading 2');
+
+		press('H');
+		expect(focused()).equals('Heading 3');
+	});
+
+	it('Should match whatever the case and accents', () => {
+		editor = getJodit({
+			toolbarAdaptive: false,
+			buttons: [{ name: 'words', list: ['Arial', 'Élan', 'Überschrift'] }]
+		});
+		editor.toolbar.buttons[0].focus();
+		press('ArrowDown');
+
+		press('u');
+		expect(focused()).equals('Überschrift');
+
+		press('ArrowUp');
+		press('ArrowUp');
+		expect(focused()).equals('Arial');
+
+		press('E');
+		expect(focused()).equals('Élan');
+	});
+
+	it('Should start the typed text again after a pause', () => {
+		open();
+		type('he');
+		expect(focused()).equals('Heading 1');
+
+		const now = Date.now;
+		Date.now = () => now() + 1500;
+
+		try {
+			press('q');
+		} finally {
+			Date.now = now;
+		}
+
+		expect(focused()).equals('Quote');
+	});
+
+	it('Should start the typed text again once the focus moves', () => {
+		open();
+		type('he');
+		press('ArrowDown');
+		expect(focused()).equals('Heading 2');
+
+		press('c');
+		expect(focused()).equals('Code');
+	});
+
+	it('Should leave a space to the focused item until something is typed', () => {
+		open();
+		press('ArrowDown');
+
+		const event = new KeyboardEvent('keydown', {
+			key: ' ',
+			bubbles: true,
+			cancelable: true
+		});
+		document.activeElement.dispatchEvent(event);
+
+		expect(event.defaultPrevented).is.false;
+	});
+});

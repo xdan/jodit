@@ -26,6 +26,7 @@ On a button with a dropdown (a list or a popup):
 | `Arrow Down` / `Arrow Up`    | Move between the items                                           |
 | `Arrow Up` on the first item | Close the dropdown and go back to the button                     |
 | `Escape`                     | Close the dropdown and go back to the button                     |
+| Typing, in a list            | Move to the next item whose label starts with what was typed     |
 
 Disabled buttons are skipped. The focus is moved programmatically, so this works regardless of
 [[Config.allowTabNavigation]] — that option only controls whether the buttons also take part in
