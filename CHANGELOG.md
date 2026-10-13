@@ -9,6 +9,16 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.0
+
+#### :rocket: New Feature
+
+- [#1559](https://github.com/xdan/jodit/issues/1559) Typing in a toolbar dropdown list moves the focus to the item whose label starts with what was typed, as in an open `<select>`: case and accents do not matter, repeating one letter cycles through the items that start with it, and the typed text starts again after a second. While a dropdown list opened with the mouse is open, typing in the editor searches the list as well instead of writing into the content. Thanks [@brendon](https://github.com/brendon).
+- [#1562](https://github.com/xdan/jodit/issues/1562) Toolbar selects can be given a fixed width with the `--jd-toolbar-select-width` CSS variable, or per control with `--jd-toolbar-select-font-width`, `--jd-toolbar-select-fontsize-width` and `--jd-toolbar-select-paragraph-width`, and shorten a longer value with an ellipsis. Without the variables a select keeps its previous sizing. Thanks [@brendon](https://github.com/brendon).
+- [#1561](https://github.com/xdan/jodit/issues/1561) The font family dropdown can offer the Google Fonts library, with the theme's fonts and the fonts the content uses at the top, through the new `font.googleFonts.url` option (the Google Fonts Developer API, or a proxy of it). The fonts the content uses are loaded into the editing document. For that, a list control whose `popup` returns content now shows that content in its dropdown in place of the list's buttons. Thanks [@brendon](https://github.com/brendon).
+- [#1530](https://github.com/xdan/jodit/issues/1530) New `mediaWrappers` option keeps video, audio and embeds in a wrapper from the content, by tag name, such as Froala's `<span class="fr-video">`, in place of the editor-only `jodit-media`; the media popup's Align and Delete act on the wrapper. Thanks [@brendon](https://github.com/brendon).
+- [#1530](https://github.com/xdan/jodit/issues/1530) New `alignClasses` option aligns elements with class names by tag (`img`, `video`, `audio`, `iframe`), including media wrappers, and `mediaDefaultAlign` aligns the media the video popup inserts. An alignment in it or in `imageAlignClasses` can list several class sets to recognise, writing the first. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.17.6
 
 #### :bug: Bug Fix
