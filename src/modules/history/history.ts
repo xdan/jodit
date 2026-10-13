@@ -195,27 +195,37 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	private updateStack(replace: boolean = false): void {
 		const newValue = this.snapshot.make();
 
-		if (!Snapshot.equal(newValue, this.startValue)) {
-			const newCommand = new Command(
-				this.startValue,
-				newValue,
-				this,
-				this.updateTick
-			);
-
-			if (replace) {
-				const command = this.__stack.current();
-
-				if (command && this.updateTick === command.tick) {
-					this.__stack.replace(newCommand);
-				}
-			} else {
-				this.__stack.push(newCommand);
-			}
-
-			this.startValue = newValue;
-			this.fireChangeStack();
+		if (Snapshot.equal(newValue, this.startValue)) {
+			return;
 		}
+
+		// Only the selection moved, for example when the selection markers
+		// went in before a switch to the source view. There is nothing to
+		// undo, but the next change has to start from this selection.
+		if (newValue.html === this.startValue.html) {
+			this.startValue = newValue;
+			return;
+		}
+
+		const newCommand = new Command(
+			this.startValue,
+			newValue,
+			this,
+			this.updateTick
+		);
+
+		if (replace) {
+			const command = this.__stack.current();
+
+			if (command && this.updateTick === command.tick) {
+				this.__stack.replace(newCommand);
+			}
+		} else {
+			this.__stack.push(newCommand);
+		}
+
+		this.startValue = newValue;
+		this.fireChangeStack();
 	}
 
 	private fireChangeStack(): void {

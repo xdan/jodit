@@ -52,6 +52,17 @@ import {
 } from './helpers';
 
 /**
+ * A text node that is empty or holds only invisible caret placeholders.
+ */
+function isBlankTextNode(node: Node): boolean {
+	return (
+		Dom.isText(node) &&
+		(node.nodeValue ?? '').replace(consts.INVISIBLE_SPACE_REG_EXP(), '')
+			.length === 0
+	);
+}
+
+/**
  * The DOM `Selection`. The class below is called `Selection` too, so the global
  * one cannot be named directly in this file.
  */
@@ -849,7 +860,9 @@ export class Selection implements ISelect {
 						firstChild?.previousSibling?.lastChild
 				].forEach(getChildNode => {
 					const childNode = getChildNode();
-					if (childNode && Dom.isEmptyTextNode(childNode)) {
+					// Only a text node left with nothing in it by the split
+					// goes; one holding a space is content (`<b>a</b> |`).
+					if (childNode && isBlankTextNode(childNode)) {
 						Dom.safeRemove(childNode);
 					}
 				});

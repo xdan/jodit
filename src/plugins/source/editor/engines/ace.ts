@@ -151,7 +151,7 @@ export class AceEditor
 
 			this.instance.$blockScrolling = Infinity;
 
-			this.instance.on('change', this.toWYSIWYG as any);
+			this.instance.on('change', this.__onChange as any);
 			this.instance.on('focus', this.proxyOnFocus);
 			this.instance.on('mousedown', this.proxyOnMouseDown);
 			this.instance.on('blur', this.proxyOnBlur);
@@ -228,7 +228,7 @@ export class AceEditor
 	}
 
 	destruct(): any {
-		this.instance.off('change', this.toWYSIWYG);
+		this.instance.off('change', this.__onChange);
 		this.instance.off('focus', this.proxyOnFocus);
 		this.instance.off('mousedown', this.proxyOnMouseDown);
 		this.instance.destroy();
@@ -245,10 +245,30 @@ export class AceEditor
 			}
 		}
 
-		this.instance.setValue(value);
+		// ACE reports its own `setValue` as two changes, the removal of the
+		// old text and the insertion of the new one. Fed back into the
+		// editor they became two history entries, `content -> ''` and
+		// `'' -> content`, so the first undo after a switch to the source
+		// view and back emptied the editor. The text came from the editor
+		// in the first place, so there is nothing to send back.
+		this.__settingValue = true;
+
+		try {
+			this.instance.setValue(value);
+		} finally {
+			this.__settingValue = false;
+		}
 
 		this.instance.clearSelection();
 	}
+
+	private __settingValue = false;
+
+	private __onChange = (): void => {
+		if (!this.__settingValue) {
+			this.toWYSIWYG();
+		}
+	};
 
 	getValue(): string {
 		return this.instance.getValue();
