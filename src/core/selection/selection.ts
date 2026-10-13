@@ -207,6 +207,20 @@ export class Selection implements ISelect {
 	}
 
 	/**
+	 * How many ranges the browser's own selection holds right now, as opposed
+	 * to the composed view that [[sel]] may answer from.
+	 */
+	private __nativeRangeCount(): number {
+		const { shadowRoot } = this.j.o;
+
+		if (shadowRoot && isFunction(shadowRoot.getSelection)) {
+			return shadowRoot.getSelection()?.rangeCount ?? 0;
+		}
+
+		return this.win.getSelection()?.rangeCount ?? 0;
+	}
+
+	/**
 	 * Return first selected range or create new
 	 */
 	get range(): Range {
@@ -1354,6 +1368,7 @@ export class Selection implements ISelect {
 		if (sel) {
 			sel.removeAllRanges();
 			ranges.forEach(range => sel.addRange(range));
+
 			if (backward && ranges.length === 1) {
 				const range = ranges[0];
 				sel.setBaseAndExtent(
@@ -1361,6 +1376,25 @@ export class Selection implements ISelect {
 					range.endOffset,
 					range.startContainer,
 					range.startOffset
+				);
+			} else if (
+				ranges.length === 1 &&
+				!this.__nativeRangeCount() &&
+				isFunction(sel.setBaseAndExtent)
+			) {
+				// `addRange` is specified to ignore a range whose root is not
+				// the document, which is every range inside a shadow tree.
+				// Chrome's `ShadowRoot.getSelection()` takes them anyway, but
+				// Safari has only the window selection, so after
+				// `removeAllRanges` the caret is simply gone: a character was
+				// deleted and nothing was left to type into. `setBaseAndExtent`
+				// does accept nodes inside a shadow tree.
+				const range = ranges[0];
+				sel.setBaseAndExtent(
+					range.startContainer,
+					range.startOffset,
+					range.endContainer,
+					range.endOffset
 				);
 			}
 		}

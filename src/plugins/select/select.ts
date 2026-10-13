@@ -76,13 +76,34 @@ export class select extends Plugin {
 	}
 
 	/**
+	 * Where the last press started. Chrome reports a drag that begins in one
+	 * element and ends in another as a `click` on their common ancestor, so a
+	 * press inside a popup is remembered to tell such a drag from a real click.
+	 */
+	private __pressTarget: Nullable<Node> = null;
+
+	@watch(['ow:mousedown', 'ow:touchstart'])
+	protected onOutsidePress(e: Event): void {
+		this.__pressTarget = e.target as Nullable<Node>;
+	}
+
+	/**
 	 * @event outsideClick(e) - when user clicked on the outside of editor
 	 */
 	@watch('ow:click')
 	protected onOutsideClick(e: MouseEvent): void {
-		const node = e.target as Node;
+		const node = e.target as Node,
+			pressed = this.__pressTarget;
+
+		this.__pressTarget = null;
 
 		if (Dom.up(node, elm => elm === this.j.editor)) {
+			return;
+		}
+
+		// Selecting the text of a popup input with the mouse and releasing
+		// the button past the popup's edge is not a click outside of it.
+		if (pressed && UIElement.closestElement(pressed, Popup)) {
 			return;
 		}
 

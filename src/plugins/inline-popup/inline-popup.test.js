@@ -1110,3 +1110,39 @@ describe('Text Inline Popup plugin', () => {
 		});
 	});
 });
+
+describe('Drag that starts inside the inline link popup', () => {
+	// Chrome and Edge report a drag that begins in one element and ends in
+	// another as a `click` on their common ancestor. Selecting the whole URL
+	// in the link form by dragging past the popup's edge therefore produced a
+	// click on the body, which looked like a click outside the editor.
+	let editor, linkEditor, input;
+
+	beforeEach(() => {
+		editor = getJodit();
+		editor.value =
+			'<p>some <a href="https://xdsoft.net/">link</a> text</p>';
+		simulateEvent('click', editor.editor.querySelector('a'));
+		clickButton('link', getOpenedPopup(editor));
+		linkEditor = getOpenedPopup(editor);
+		input = linkEditor.querySelector('[data-ref="url_input"]');
+		expect(input).is.not.null;
+	});
+
+	it('Should keep the popup open when the mouse is released outside of it', () => {
+		simulateEvent('mousedown', input);
+		simulateEvent('mouseup', document.body);
+		simulateEvent('click', document.body);
+
+		expect(getOpenedPopup(editor)).equals(linkEditor);
+		expect(document.body.contains(input)).is.true;
+	});
+
+	it('Should still close the popup on a click that starts outside of it', () => {
+		simulateEvent('mousedown', document.body);
+		simulateEvent('mouseup', document.body);
+		simulateEvent('click', document.body);
+
+		expect(getOpenedPopup(editor)).is.null;
+	});
+});

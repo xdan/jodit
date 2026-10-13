@@ -1619,6 +1619,103 @@ describe('Selection in a Shadow DOM without ShadowRoot.getSelection', function (
 		expect(asked).is.false;
 	});
 
+	describe('Writing the selection', function () {
+		// By spec `addRange` ignores a range whose root is not the document,
+		// which is every range inside a shadow tree, so after
+		// `removeAllRanges` Safari is left with no selection at all: a
+		// Backspace deleted its character and the caret was gone. The stub
+		// below behaves the same way and only accepts `setBaseAndExtent`.
+		let caret, calls;
+
+		function liveSafari() {
+			caret = null;
+			calls = [];
+
+			const selection = {
+				get rangeCount() {
+					return caret ? 1 : 0;
+				},
+				get isCollapsed() {
+					return !caret || caret.collapsed;
+				},
+				anchorNode: root.host,
+				anchorOffset: 0,
+				focusNode: root.host,
+				focusOffset: 0,
+				getRangeAt() {
+					throw new Error('no ranges outside the shadow tree');
+				},
+				removeAllRanges() {
+					caret = null;
+				},
+				addRange() {},
+				setBaseAndExtent(aNode, aOffset, fNode, fOffset) {
+					const range = document.createRange();
+					range.setStart(aNode, aOffset);
+					range.setEnd(fNode, fOffset);
+					caret = range;
+					calls.push([aNode, aOffset, fNode, fOffset]);
+				},
+				getComposedRanges() {
+					return caret
+						? [
+								{
+									startContainer: caret.startContainer,
+									startOffset: caret.startOffset,
+									endContainer: caret.endContainer,
+									endOffset: caret.endOffset
+								}
+							]
+						: [];
+				},
+				toString() {
+					return caret ? caret.toString() : '';
+				}
+			};
+
+			const original = window.getSelection;
+			root.getSelection = undefined;
+			window.getSelection = () => selection;
+			restoreWindowSelection = () => {
+				window.getSelection = original;
+			};
+		}
+
+		it('Should fall back to setBaseAndExtent when addRange was ignored', function () {
+			liveSafari();
+
+			const range = editor.s.createRange();
+			range.setStart(text, 1);
+			range.setEnd(text, 3);
+			editor.s.selectRange(range);
+
+			// `focus()` places a caret first, the requested range comes last.
+			expect(calls.length).is.above(0);
+			expect(calls[calls.length - 1]).deep.equals([text, 1, text, 3]);
+			expect(editor.s.sel.toString()).equals('bc');
+		});
+
+		it('Should keep the caret after Backspace, and accept the next one', function () {
+			liveSafari();
+			editor.s.setCursorAfter(text);
+
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+			expect(editor.value).equals('<p>abc</p>');
+			expect(editor.s.sel.rangeCount).equals(1);
+			expect(
+				Jodit.modules.Dom.isOrContains(
+					editor.editor,
+					editor.s.sel.anchorNode
+				)
+			).is.true;
+
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+			expect(editor.value).equals('<p>ab</p>');
+		});
+	});
+
 	it('Should keep using ShadowRoot.getSelection where it exists', function () {
 		// Chrome: the original path must not change.
 		const range = editor.s.createRange();

@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.17.5
+
+#### :bug: Bug Fix
+
+- Safari, editor inside a shadow root: Backspace deleted the character but the caret vanished, and the next Backspace threw `HierarchyRequestError: The operation would yield an incorrect node tree.`. By specification `Selection.addRange()` ignores a range whose root is not the document, which is every range inside a shadow tree; Chrome takes them through its non-standard `ShadowRoot.getSelection()`, but Safari only has the window selection, so `removeAllRanges()` followed by the ignored `addRange()` left no selection at all. When the browser's own selection is empty after `addRange()`, the range is now applied with `setBaseAndExtent()`, which does accept nodes inside a shadow tree. Follow-up to 4.17.2. Reported by Ralf Pichler (Jodit OEM).
+- Chrome and Edge: selecting the URL in the link editing popup by dragging the mouse and releasing it just outside the popup closed the popup together with the inline toolbar. Chrome reports a drag that starts in one element and ends in another as a `click` on their common ancestor, and the `select` plugin took that click on the page body for a click outside the editor and fired `outsideClick`. A click whose press started inside a popup no longer counts as one. Reported by Ralf Pichler (Jodit OEM).
+
 ## 4.17.4
 
 #### :bug: Bug Fix
