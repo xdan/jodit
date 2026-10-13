@@ -130,7 +130,7 @@ export class placeholder extends Plugin {
 			.on(
 				'change.placeholder focus.placeholder keyup.placeholder mouseup.placeholder keydown.placeholder ' +
 					'mousedown.placeholder afterSetMode.placeholder changePlace.placeholder ' +
-					'internalChange.placeholder',
+					'internalChange.placeholder afterCommand.placeholder',
 				this.toggle
 			)
 			.on(window, 'load', this.toggle);
