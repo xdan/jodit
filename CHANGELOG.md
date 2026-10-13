@@ -15,6 +15,9 @@
 
 - [#1546](https://github.com/xdan/jodit/issues/1546) Pasting after a space that follows a tag (`<b>test</b> |`) dropped the space: after inserting a node the selection removed the text nodes around it that it took for empty, and a node holding only a space counted as empty. Only a text node with nothing in it, apart from invisible caret placeholders, is removed now.
 - [#1537](https://github.com/xdan/jodit/issues/1537) After switching to the source view and back, the first undo emptied the editor and the next one restored it, and redo did the same in reverse. ACE reports its own `setValue` as two changes, the removal of the old text and the insertion of the new one, and both were fed back into the editor as `content -> ''` and `'' -> content`. The ACE engine no longer sends its own `setValue` back. The switch itself also added a step that changed nothing but the selection (the selection markers put in before it), so undo appeared to do nothing once; a change that moves only the selection is no longer a history step, the next step just starts from that selection.
+- [#1569](https://github.com/xdan/jodit/issues/1569) Saving the selection at the edge of a text node no longer leaves an empty text node, which made Safari leave an old highlight on screen after a blur and start a selection at the end of the first line after a line height. Thanks [@brendon](https://github.com/brendon).
+- [#1565](https://github.com/xdan/jodit/issues/1565) Setting the line height of an empty paragraph no longer replaces its `<br>` with an invisible character, which put Safari's caret over the last letter typed. Thanks [@brendon](https://github.com/brendon).
+- [#1566](https://github.com/xdan/jodit/issues/1566) The placeholder follows a line height or block format applied to an empty editor when `cleanHTML.collapseEmptyValueToEmptyString` is on. Thanks [@brendon](https://github.com/brendon).
 
 ## 4.17.5
 
