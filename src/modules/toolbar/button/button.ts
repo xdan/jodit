@@ -59,6 +59,8 @@ import './button.less';
 
 const INPUT_TAGS = new Set(['input', 'textarea', 'select'] as const);
 
+const TYPE_AHEAD_TIMEOUT = 1000;
+
 const FOCUSABLE_SELECTOR = [
 	'button:not([disabled])',
 	'a[href]',
@@ -513,11 +515,96 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				break;
 
 			default:
-				return;
+				if (
+					!this.control.list ||
+					!this.__typeAhead(e.key, items, index)
+				) {
+					return;
+				}
 		}
 
 		e.preventDefault();
 		e.stopPropagation();
+	}
+
+	/**
+	 * The mouse opens a dropdown without taking the focus out of the editor.
+	 * While a dropdown list is open, typing there searches the list, as in an
+	 * open `<select>`, instead of writing into the content
+	 */
+	@autobind
+	private __onEditorKeyDown(e: KeyboardEvent): false | void {
+		if (
+			!this.openedPopup ||
+			!this.control.list ||
+			e.altKey ||
+			e.ctrlKey ||
+			e.metaKey ||
+			!this.__typeAhead(e.key, this.__popupFocusables(), -1)
+		) {
+			return;
+		}
+
+		e.preventDefault();
+		return false;
+	}
+
+	private __typed: string = '';
+	private __typedAt: number = 0;
+	private __typedTo: Nullable<HTMLElement> = null;
+
+	/**
+	 * Typing in a dropdown list focuses the next item whose label starts with
+	 * the typed text, whatever their case and accents, and repeating one letter
+	 * cycles through the items that start with it, like the WAI-ARIA menu
+	 * pattern's type-ahead. The typed text starts again after a pause, or once
+	 * the focus has moved on
+	 */
+	private __typeAhead(
+		key: string,
+		items: HTMLElement[],
+		index: number
+	): boolean {
+		const now = Date.now();
+
+		if (
+			now - this.__typedAt > TYPE_AHEAD_TIMEOUT ||
+			items[index] !== this.__typedTo
+		) {
+			this.__typed = '';
+		}
+
+		if (key.length !== 1 || (key === ' ' && !this.__typed)) {
+			return false;
+		}
+
+		this.__typedAt = now;
+		this.__typed += key;
+		this.__typedTo = items[index];
+
+		const { compare } = new Intl.Collator(undefined, {
+				usage: 'search',
+				sensitivity: 'base'
+			}),
+			typed = this.__typed,
+			cycle = Array.from(typed).every(
+				char => compare(char, typed[0]) === 0
+			),
+			prefix = cycle ? typed[0] : typed,
+			start = cycle ? index + 1 : Math.max(index, 0);
+
+		for (let i = 0; i < items.length; i += 1) {
+			const item = items[(start + i) % items.length],
+				label = item.textContent?.trim() ?? '';
+
+			if (compare(label.slice(0, prefix.length), prefix) === 0) {
+				item.focus();
+				this.__typedTo = item;
+				break;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -650,6 +737,7 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		this.j.e
 			.on(this.ow, 'mousedown touchstart', this.onOutsideClick)
 			.on('escape closeAllPopups', this.onOutsideClick)
+			.on('keydown', this.__onEditorKeyDown)
 			.on(this.openedPopup.container, 'keydown', this.__onPopupKeyDown);
 
 		return this.openedPopup;
@@ -673,7 +761,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 
 		this.j.e
 			.off(this.ow, 'mousedown touchstart', this.onOutsideClick)
-			.off('escape closeAllPopups', this.onOutsideClick);
+			.off('escape closeAllPopups', this.onOutsideClick)
+			.off('keydown', this.__onEditorKeyDown);
 
 		// The keyboard brought the focus into the dropdown: give it back to
 		// the button, otherwise it would fall out to the document
