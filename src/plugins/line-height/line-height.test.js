@@ -115,6 +115,20 @@ describe('LineHeight plugin test', () => {
 		});
 	});
 
+	describe('Collapsed selection in an empty paragraph', () => {
+		it('Should keep the paragraph open without leaving an invisible character', () => {
+			const jodit = getJodit();
+			jodit.value = '<p>|<br></p>';
+			setCursorToChar(jodit);
+
+			jodit.execCommand('applyLineHeight', null, 2);
+
+			expect(jodit.editor.innerHTML).eq(
+				'<p style="line-height: 2;"><br></p>'
+			);
+		});
+	});
+
 	describe('Exec command applyLineHeight', () => {
 		[
 			['<p>test|</p>', 1.2, '<p style="line-height:1.2">test|</p>'],
