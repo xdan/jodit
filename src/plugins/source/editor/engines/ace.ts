@@ -10,6 +10,7 @@
 
 import type { IJodit, ISourceEditor } from 'jodit/types';
 import * as constants from 'jodit/core/constants';
+import { autobind } from 'jodit/core/decorators/autobind/autobind';
 import { Dom } from 'jodit/core/dom/dom';
 import { isString, loadNext } from 'jodit/core/helpers';
 
@@ -264,11 +265,12 @@ export class AceEditor
 
 	private __settingValue = false;
 
-	private __onChange = (): void => {
+	@autobind
+	private __onChange(): void {
 		if (!this.__settingValue) {
 			this.toWYSIWYG();
 		}
-	};
+	}
 
 	getValue(): string {
 		return this.instance.getValue();

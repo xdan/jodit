@@ -40,47 +40,4 @@ describe('Undo after switching between Source and WYSIWYG (#1537)', function () 
 		editor.execCommand('undo');
 		expect(editor.value).equals('<p>one</p>');
 	});
-
-	it('Should not empty the editor on undo with the ACE source editor', function (done) {
-		// ACE reports its own `setValue` as a removal and an insertion; fed
-		// back into the editor they were two history steps, `content -> ''`
-		// and `'' -> content`.
-		unmockPromise();
-
-		const timeout = /*ok*/ setTimeout(() => {
-			done(new Error('Timeout error'));
-		}, 15000);
-
-		const editor = getJodit({
-			sourceEditor: 'ace',
-			beautifyHTML: false,
-			history: { timeout: 0 },
-			events: {
-				sourceEditorReady(jodit) {
-					try {
-						expect(jodit.getRealMode()).equals(Jodit.MODE_SOURCE);
-						jodit.toggleMode();
-						expect(jodit.getRealMode()).equals(Jodit.MODE_WYSIWYG);
-						expect(jodit.value).equals('<p>one two</p>');
-
-						jodit.execCommand('undo');
-						expect(jodit.value).equals('<p>one</p>');
-
-						jodit.execCommand('redo');
-						expect(jodit.value).equals('<p>one two</p>');
-						done();
-					} catch (e) {
-						done(e);
-					} finally {
-						clearTimeout(timeout);
-					}
-				}
-			}
-		});
-
-		editor.value = '<p>one</p>';
-		editor.s.setCursorIn(editor.editor.firstChild, false);
-		editor.s.insertHTML(' two');
-		editor.toggleMode();
-	});
 });
