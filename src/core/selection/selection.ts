@@ -398,10 +398,25 @@ export class Selection implements ISelect {
 					atStart ? newRange.startContainer : newRange.endContainer
 				)
 			) {
-				// Here need do unsafe inserting
-				// Deny Dom.safeInsertNode(newRange, marker);
-				// Apply style -> Test Style module -> Base apply -> For selection <p><strong>|test|</strong></p> apply style {"element":"em","style":{"fontStyle":"italic"}}
-				newRange.insertNode(marker);
+				const { startContainer: node, startOffset: offset } = newRange;
+
+				// At either end of a text node the marker goes beside it. Splitting
+				// the node there would leave the selection's boundary in an empty
+				// text node, and WebKit neither repaints a selection that leaves one
+				// nor moves a selection that follows one when it's removed.
+				if (Dom.isText(node) && offset === 0) {
+					Dom.before(node, marker);
+				} else if (
+					Dom.isText(node) &&
+					offset === node.nodeValue?.length
+				) {
+					Dom.after(node, marker);
+				} else {
+					// Here need do unsafe inserting
+					// Deny Dom.safeInsertNode(newRange, marker);
+					// Apply style -> Test Style module -> Base apply -> For selection <p><strong>|test|</strong></p> apply style {"element":"em","style":{"fontStyle":"italic"}}
+					newRange.insertNode(marker);
+				}
 			}
 		}
 

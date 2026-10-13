@@ -114,6 +114,48 @@ describe('Selection Module Tests', function () {
 			}
 		);
 
+		[
+			'<p>|ab</p><p>cd|</p>',
+			'<p>|abcd|</p>',
+			'<p>ab|</p><p>|cd</p>'
+		].forEach(source => {
+			it(`Should save ${source} beside the text, not split off an empty text node`, () => {
+				const editor = getJodit();
+				editor.value = source;
+				setCursorToChar(editor);
+				const sel = editor.s.sel;
+				const texts = [
+					sel.anchorNode.nodeValue,
+					sel.focusNode.nodeValue
+				];
+				const selected = sel.toString();
+				const emptyTexts = () => {
+					const walker = editor.ed.createTreeWalker(
+						editor.editor,
+						NodeFilter.SHOW_TEXT
+					);
+					let count = 0;
+					while (walker.nextNode()) {
+						count += walker.currentNode.nodeValue ? 0 : 1;
+					}
+					return count;
+				};
+
+				editor.s.save(true);
+				expect([
+					sel.anchorNode.nodeValue,
+					sel.focusNode.nodeValue
+				]).deep.equals(texts);
+				expect(emptyTexts()).equals(0);
+
+				editor.s.restore();
+				expect(emptyTexts()).equals(0);
+				expect(sel.toString()).equals(selected);
+				replaceCursorToChar(editor);
+				expect(editor.value).equals(source);
+			});
+		});
+
 		[true, false].forEach(collapsed => {
 			it(`Should keep a saved selection active in Shadow DOM (collapsed: ${collapsed})`, () => {
 				const root = appendTestDiv().attachShadow({ mode: 'open' });
