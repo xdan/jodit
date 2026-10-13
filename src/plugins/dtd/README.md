@@ -72,13 +72,14 @@ const editor = Jodit.make('#editor', {
 - If not in list, moves cursor after parent
 - Removes parent if it's empty
 - With `enter: 'DIV'`, an empty `<div>` holding the cursor counts as a line, like an empty `<p>`, so it's replaced
+- A list inserted into a list item adds its items to that item's list: they replace an empty item, or go after the item
 
 ### `dtd.blockLimits`
 
 List of elements that can contain other blocks.
 
 - **Type**: `IDictionary<1>`
-- **Default**: 26 container elements
+- **Default**: 30 container elements
 
 ```javascript
 const editor = Jodit.make('#editor', {
@@ -89,10 +90,12 @@ const editor = Jodit.make('#editor', {
       audio: 1,
       body: 1,
       caption: 1,
+      dd: 1,
       details: 1,
       dir: 1,
       div: 1,
       dl: 1,
+      dt: 1,
       fieldset: 1,
       figcaption: 1,
       figure: 1,
@@ -100,6 +103,7 @@ const editor = Jodit.make('#editor', {
       form: 1,
       header: 1,
       hgroup: 1,
+      li: 1,
       main: 1,
       menu: 1,
       nav: 1,
@@ -214,6 +218,9 @@ Watches `:beforeInsertNode` event and runs validation cases:
 5. If not in dictionary, or it's the cursor's own empty block of the `enter` tag:
    - Move cursor after parent
    - If parent is empty, remove it
+6. If the node is a list, it's all of the inserted content, and the cursor's block limit is an `<li>`:
+   - Unwrap the list, so its items are inserted
+   - Move cursor after the `<li>`, removing it if it's empty
 
 ```javascript
 // Example: Inserting <table> inside <p>
@@ -308,7 +315,17 @@ editor.e.fire(':afterInsertNode', node);
 <table>...</table>
 ```
 
-### 5. Nested DIVs (Valid)
+### 5. List Pasted into a List Item
+```html
+<!-- Before: cursor inside empty <li> -->
+<ul><li>One</li><li>|</li></ul>
+
+<!-- Paste <ul><li>Two</li><li>Three</li></ul> -->
+<!-- Result: the items join the list, replacing the empty <li> -->
+<ul><li>One</li><li>Two</li><li>Three</li></ul>
+```
+
+### 6. Nested DIVs (Valid)
 ```html
 <!-- DIV is in blockLimits -->
 <div>
@@ -333,10 +350,12 @@ const editor = Jodit.make('#editor', {
       audio: 1,
       body: 1,
       caption: 1,
+      dd: 1,
       details: 1,
       dir: 1,
       div: 1,
       dl: 1,
+      dt: 1,
       fieldset: 1,
       figcaption: 1,
       figure: 1,
@@ -344,6 +363,7 @@ const editor = Jodit.make('#editor', {
       form: 1,
       header: 1,
       hgroup: 1,
+      li: 1,
       main: 1,
       menu: 1,
       nav: 1,

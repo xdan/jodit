@@ -103,6 +103,104 @@ describe('Test dtd plugin', () => {
 		});
 	});
 
+	describe('Insert blocks into a list item (#1573)', () => {
+		[
+			[
+				'<ul><li>|<br></li></ul>',
+				'<p>one</p><p>two</p>',
+				'<ul><li><p>one</p><p>two</p></li></ul>'
+			],
+			[
+				'<ul><li>item|</li></ul>',
+				'<p>one</p>',
+				'<ul><li>item<p>one</p></li></ul>'
+			],
+			[
+				'<ol><li>|<br></li></ol>',
+				'<h2>one</h2>',
+				'<ol><li><h2>one</h2></li></ol>'
+			],
+			[
+				'<dl><dt>term</dt><dd>|<br></dd></dl>',
+				'<p>one</p><p>two</p>',
+				'<dl><dt>term</dt><dd><p>one</p><p>two</p></dd></dl>'
+			],
+			[
+				'<ul><li>|<br></li></ul>',
+				'<p>intro</p><ul><li>x</li></ul>',
+				'<ul><li><p>intro</p><ul><li>x</li></ul></li></ul>'
+			]
+		].forEach(([value, insert, result]) => {
+			it(`should keep ${insert} inside the item of ${value}`, () => {
+				const editor = getJodit();
+				editor.value = value;
+				setCursorToChar(editor);
+				editor.s.insertHTML(insert);
+				expect(sortAttributes(editor.value)).eq(result);
+			});
+		});
+
+		describe('A list', () => {
+			[
+				[
+					'<ul><li>|<br></li></ul>',
+					'<ul><li>x</li><li>y</li></ul>',
+					'<ul><li>x</li><li>y</li></ul>'
+				],
+				[
+					'<ul><li>a</li><li>|<br></li><li>b</li></ul>',
+					'<ol><li>x</li><li>y</li></ol>',
+					'<ul><li>a</li><li>x</li><li>y</li><li>b</li></ul>'
+				],
+				[
+					'<ul><li>item|</li></ul>',
+					'<ul><li>x</li></ul>',
+					'<ul><li>item</li><li>x</li></ul>'
+				],
+				[
+					'<ul><li><p>|<br></p></li></ul>',
+					'<ul><li>x</li></ul>',
+					'<ul><li>x</li></ul>'
+				],
+				[
+					'<ul><li>a<ul><li>|<br></li></ul></li></ul>',
+					'<ul><li>x</li></ul>',
+					'<ul><li>a<ul><li>x</li></ul></li></ul>'
+				]
+			].forEach(([value, insert, result]) => {
+				it(`should add the items of ${insert} to the list of ${value}`, () => {
+					const editor = getJodit();
+					editor.value = value;
+					setCursorToChar(editor);
+					editor.s.insertHTML(insert);
+					expect(sortAttributes(editor.value)).eq(result);
+				});
+			});
+
+			it('should leave the caret at the end of the last item', () => {
+				const editor = getJodit();
+				editor.value = '<ul><li>|<br></li></ul>';
+				setCursorToChar(editor);
+				editor.s.insertHTML('<ul><li>x</li><li>y</li></ul>');
+
+				const { range } = editor.s;
+				expect(range.startContainer.nodeValue).eq('y');
+				expect(range.startOffset).eq(1);
+			});
+
+			it('should stay a list inside a table cell in the item', () => {
+				const editor = getJodit();
+				editor.value =
+					'<ul><li><table><tbody><tr><td>|<br></td></tr></tbody></table></li></ul>';
+				setCursorToChar(editor);
+				editor.s.insertHTML('<ul><li>x</li></ul>');
+				expect(sortAttributes(editor.value)).eq(
+					'<ul><li><table><tbody><tr><td><ul><li>x</li></ul></td></tr></tbody></table></li></ul>'
+				);
+			});
+		});
+	});
+
 	describe('Insert table into table cell', () => {
 		describe('Cursor inside empty paragraph in a TD cell', () => {
 			it('should insert table directly into TD without extra paragraph', () => {
