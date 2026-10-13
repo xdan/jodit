@@ -271,6 +271,14 @@ export type ImageAlignClasses = Partial<
 	Record<Exclude<ImageHAlign, ''>, string>
 >;
 
+/**
+ * A wrapper that media keep in the content, see `mediaWrappers`
+ */
+export interface MediaWrapper {
+	tag: string;
+	className: string;
+}
+
 export interface ImageBox {
 	w: number;
 	h: number;

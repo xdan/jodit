@@ -8,8 +8,18 @@
  * @module plugins/video
  */
 
-import type { IControlType, IJodit, IUIForm, IUploaderData } from 'jodit/types';
-import { call, convertMediaUrlToVideoEmbed } from 'jodit/core/helpers';
+import type {
+	IControlType,
+	IJodit,
+	IUIForm,
+	IUploaderData,
+	Nullable
+} from 'jodit/types';
+import {
+	call,
+	convertMediaUrlToVideoEmbed,
+	wrapMedia
+} from 'jodit/core/helpers';
 import { Button } from 'jodit/core/ui/button';
 import { UIBlock, UIForm, UIInput, UITextArea } from 'jodit/core/ui/form';
 import { Icon } from 'jodit/core/ui/icon';
@@ -74,12 +84,32 @@ declare module 'jodit/config' {
 function insertVideos(this: IJodit, data: IUploaderData): void {
 	data.files?.forEach(file => {
 		this.s.insertNode(
-			this.createInside.element('video', {
-				controls: '',
-				src: data.baseurl + file
-			})
+			wrapMedia(
+				this,
+				this.createInside.element('video', {
+					controls: '',
+					src: data.baseurl + file
+				})
+			)
 		);
 	});
+}
+
+// Embed code that is one element goes in inside the wrapper for its type, if
+// there is one (see `mediaWrappers`)
+function wrapEmbedCode(jodit: IJodit, code: string): string | HTMLElement {
+	const box = jodit.createInside.div();
+	box.innerHTML = code.trim();
+
+	const element = box.firstElementChild as Nullable<HTMLElement>;
+
+	if (!element || box.childNodes.length !== 1) {
+		return code;
+	}
+
+	const wrapper = wrapMedia(jodit, element);
+
+	return wrapper === element ? code : wrapper;
 }
 
 Config.prototype.video = {
@@ -126,7 +156,7 @@ Config.prototype.controls.video = {
 			tabs: TabOption[] = [],
 			insertCode = (code: string): void => {
 				jodit.s.restore();
-				jodit.s.insertHTML(code);
+				jodit.s.insertHTML(wrapEmbedCode(jodit, code));
 				close();
 			};
 

@@ -28,6 +28,7 @@ export * from './get-class-name';
 export * from './human-size-to-bytes';
 export * from './is-unsafe-proto-key';
 export * from './mark-deprecated';
+export * from './media-wrapper';
 export * from './parse-query';
 export * from './print';
 export * from './reset';

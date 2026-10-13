@@ -20,6 +20,7 @@ import { Dom } from 'jodit/core/dom';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { getHAlign, hAlignElement } from 'jodit/core/helpers/utils/align';
 import { css } from 'jodit/core/helpers/utils/css';
+import { getMediaWrapper } from 'jodit/core/helpers/utils/media-wrapper';
 
 // Images align with `imageAlignClasses`; the wrappers of iframes and media
 // keep inline styles
@@ -77,11 +78,14 @@ export const align: IControlType<IJodit> = {
 		);
 	},
 	exec: (editor: IJodit, elm, { control }): void | false => {
+		// A media wrapper kept in the content (`mediaWrappers`) is aligned itself
 		if (
-			!Dom.isTag(
+			!Dom.isHTMLElement(elm) ||
+			(!Dom.isTag(
 				elm,
 				new Set(['img', 'jodit', 'jodit-media'] as HTMLTagNames[])
-			)
+			) &&
+				getMediaWrapper(editor, elm) !== elm)
 		) {
 			return;
 		}
