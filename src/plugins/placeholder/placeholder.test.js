@@ -153,6 +153,28 @@ describe('Placeholder plugin', function () {
 		});
 	});
 
+	describe('Command on an empty editor whose value stays empty', function () {
+		it("Should take the block's new line height", function () {
+			const editor = getJodit({
+				cleanHTML: { collapseEmptyValueToEmptyString: true }
+			});
+
+			editor.value = '<p>|<br></p>';
+			setCursorToChar(editor);
+
+			editor.execCommand('applyLineHeight', null, 2);
+
+			const placeholder = editor.container.querySelector(
+				'[data-ref="placeholder"]'
+			);
+
+			expect(placeholder.style.lineHeight).equals(
+				editor.ew.getComputedStyle(editor.editor.firstElementChild)
+					.lineHeight
+			);
+		});
+	});
+
 	describe('ReadOnly', function () {
 		it('Should hide placeholder', function () {
 			const table_editor_interface = appendTestArea();
