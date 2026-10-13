@@ -8,8 +8,9 @@
  * @module plugins/font
  */
 
-import type { IControlType, IJodit } from 'jodit/types';
+import type { IControlType, IJodit, IToolbarButton } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { trimChars } from 'jodit/core/helpers/string/trim';
 import { css } from 'jodit/core/helpers/utils/css';
 import { Icon } from 'jodit/core/ui/icon';
@@ -17,10 +18,24 @@ import { Config } from 'jodit/config';
 
 import fontIcon from './icons/font.svg';
 import fontsizeIcon from './icons/fontsize.svg';
+import { UIFontPicker } from './font-picker';
 
 declare module 'jodit/config' {
 	interface Config {
 		defaultFontSizePoints: 'px' | 'pt';
+
+		font: {
+			googleFonts: {
+				/**
+				 * Adds the Google Fonts library to the font family dropdown, which then
+				 * also lists the theme's fonts and the fonts the content uses. The
+				 * address answers with the JSON of the Google Fonts Developer API:
+				 * the API itself (`https://www.googleapis.com/webfonts/v1/webfonts?key=…`)
+				 * or a proxy of it. Empty leaves the dropdown as it is
+				 */
+				url: string;
+			};
+		};
 	}
 }
 
@@ -28,6 +43,12 @@ declare module 'jodit/config' {
  * Default font-size points
  */
 Config.prototype.defaultFontSizePoints = 'px';
+
+Config.prototype.font = {
+	googleFonts: {
+		url: ''
+	}
+};
 
 Icon.set('font', fontIcon).set('fontsize', fontsizeIcon);
 
@@ -113,6 +134,8 @@ Config.prototype.controls.fontsize = {
 	}
 } as IControlType<IJodit> as IControlType;
 
+const hadSelection = new WeakSet<IToolbarButton>();
+
 Config.prototype.controls.font = {
 	...Config.prototype.controls.fontsize,
 	command: 'fontname',
@@ -151,6 +174,11 @@ Config.prototype.controls.font = {
 		}">${value}</span>`;
 	},
 
+	popup: (editor: IJodit, current, close, button) =>
+		editor.o.font.googleFonts.url
+			? new UIFontPicker(editor, button, close)
+			: false,
+
 	data: {
 		cssRule: 'font-family',
 		normalize: (v: string): string => {
@@ -163,22 +191,29 @@ Config.prototype.controls.font = {
 
 	// When no font is explicitly set, the computed font-family equals the
 	// editor's own default (e.g. `-apple-system, …`). Return '' so the
-	// button shows the `Default` list entry instead of that raw stack.
-	// See #1370
-	value: (editor: IJodit): string | undefined => {
-		const current = editor.s.current();
-		if (!current) {
+	// button shows the list's `Default` entry, when it has one, instead of
+	// that raw stack. See #1370
+	value: (editor: IJodit, button): string | undefined => {
+		const current = editor.s.current(),
+			box = current && Dom.closest(current, Dom.isElement, editor.editor);
+
+		// Until there is a selection the button shows the editor's own font,
+		// and afterwards the font of the last one
+		if (box) {
+			hadSelection.add(button);
+		} else if (hadSelection.has(button)) {
 			return;
 		}
 
-		const box = Dom.closest(current, Dom.isElement, editor.editor);
-		if (!box) {
-			return;
-		}
+		const value = css(box || editor.editor, 'font-family').toString(),
+			{ list } = button.control;
 
-		const value = css(box, 'font-family').toString();
-
-		if (value === css(editor.editor, 'font-family').toString()) {
+		if (
+			value === css(editor.editor, 'font-family').toString() &&
+			(isArray(list)
+				? (list as Array<string | number>).includes('')
+				: '' in (list ?? {}))
+		) {
 			return '';
 		}
 

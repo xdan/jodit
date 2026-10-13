@@ -18,6 +18,7 @@ Provides font family and font size controls for the Jodit editor. This plugin re
 - Automatic font availability detection
 - Normalizes font size values to px or pt
 - Highlights active font family/size in dropdown
+- Optional Google Fonts library in the font family dropdown
 
 ## Configuration Options
 
@@ -33,6 +34,36 @@ Specifies the unit for font size values. Can be either pixels (`'px'`) or points
 ```typescript
 const editor = Jodit.make('#editor', {
     defaultFontSizePoints: 'pt'
+});
+```
+
+### `font.googleFonts.url`
+
+**Type:** `string`
+
+**Default:** `''`
+
+Adds the [Google Fonts](https://fonts.google.com) library to the font family dropdown. The address answers with the JSON of the [Google Fonts Developer API](https://developers.google.com/fonts/docs/developer_api): the API itself with your key, or a proxy of it on your server that keeps the key private. Restrict a key used in the browser to your site in the Google Cloud console.
+
+With it set, the dropdown lists under their own headings:
+
+- **Theme fonts**: the fonts the editor's styles give text and headings
+- **Used fonts**: the fonts the content uses
+- **System fonts**: the control's `list`
+- **Google Fonts**: the library, each name in its own font once it scrolls into view
+
+Used fonts are listed when they are in `list` or the library. Choosing the font the text has without a font of its own, such as the theme's body font in a paragraph, takes the text's font off instead of writing it. Without a `Default` entry in `list`, the button names the font of unstyled text.
+
+The editor loads each Google font the content uses into the editing document, with its regular, italic, bold and bold italic styles, from `fonts.googleapis.com`. The page that shows the content has to load them too.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    font: {
+        googleFonts: {
+            url: 'https://www.googleapis.com/webfonts/v1/webfonts?key=YOUR_API_KEY'
+        }
+    }
 });
 ```
 
