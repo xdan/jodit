@@ -9,6 +9,7 @@
  */
 
 import type { IJodit } from 'jodit/types';
+import { getAlignClasses } from 'jodit/core/helpers/utils/align';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { cssInline } from 'jodit/core/helpers/utils/css';
 
@@ -28,7 +29,7 @@ export async function readValuesFromImage(
 	state: ImagePropertiesState
 ): Promise<void> {
 	const { sourceImage: image, values } = state;
-	readAlign(image, values, j.o.imageAlignClasses);
+	readAlign(image, values, getAlignClasses(j, image));
 
 	// Border radius
 	values.borderRadius =

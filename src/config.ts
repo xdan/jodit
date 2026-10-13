@@ -29,6 +29,7 @@ import type {
 	Attributes,
 	ButtonsOption,
 	Controls,
+	HAlignClasses,
 	IAsyncStorageOptions,
 	IControlType,
 	IDictionary,
@@ -832,19 +833,48 @@ class Config implements IViewOptions {
 	/**
 	 * Class names to align images with, instead of an inline `float` or
 	 * `margin`. Aligning an image removes every class listed here and adds the
-	 * chosen alignment's, which can be several separated by spaces.
+	 * chosen alignment's, which can be several separated by spaces. An
+	 * alignment can also list several such sets, to recognise each of them;
+	 * aligning writes the first. `alignClasses.img` takes its place when set.
 	 *
 	 * ```javascript
 	 * Jodit.make('#editor', {
 	 *   imageAlignClasses: {
 	 *     left: 'align-left',
 	 *     right: 'align-right',
-	 *     center: 'align-center'
+	 *     center: ['align-center', 'centered']
 	 *   }
 	 * });
 	 * ```
 	 */
 	imageAlignClasses: Nullable<ImageAlignClasses> = null;
+
+	/**
+	 * Class names to align elements with, by tag name, as `imageAlignClasses`
+	 * does for images: `img`, and `video`, `audio` and `iframe` in the media
+	 * popup. A media wrapper (see `mediaWrappers`), and Jodit's own `jodit` and
+	 * `jodit-media` wrappers, are aligned with the classes for the media in
+	 * them.
+	 *
+	 * ```javascript
+	 * const media = {
+	 *   left: 'media-left',
+	 *   right: 'media-right',
+	 *   center: 'media-center'
+	 * };
+	 *
+	 * Jodit.make('#editor', {
+	 *   alignClasses: { video: media, iframe: media }
+	 * });
+	 * ```
+	 */
+	alignClasses: IDictionary<HAlignClasses> = {};
+
+	/**
+	 * Alignment given to the media the video popup inserts. `'normal'` leaves
+	 * them unaligned
+	 */
+	mediaDefaultAlign: ImageHAlign = 'normal';
 
 	/**
 	 * Do not display these buttons that are on the list

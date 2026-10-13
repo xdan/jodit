@@ -17,27 +17,37 @@ const isWrapper = (node: Nullable<Node>, wrapper: MediaWrapper): boolean =>
 	node.classList.contains(wrapper.className);
 
 /**
+ * The media in `elm` when `elm` is a wrapper media keep in the content (see
+ * `mediaWrappers`): an element of a type `elm` is the wrapper for
+ */
+export function getWrappedMedia(
+	jodit: IJodit,
+	elm: Nullable<Node>
+): Nullable<HTMLElement> {
+	for (const [tag, wrapper] of Object.entries(jodit.o.mediaWrappers ?? {})) {
+		if (isWrapper(elm, wrapper)) {
+			const media = (elm as HTMLElement).querySelector<HTMLElement>(tag);
+
+			if (media) {
+				return media;
+			}
+		}
+	}
+
+	return null;
+}
+
+/**
  * The wrapper media keep in the content (see `mediaWrappers`) that is or
- * holds `node`: one that holds an element whose type it's the wrapper for
+ * holds `node`
  */
 export function getMediaWrapper(
 	jodit: IJodit,
 	node: Nullable<Node>
 ): Nullable<HTMLElement> {
-	const wrappers = Object.entries(jodit.o.mediaWrappers ?? {});
-
-	if (!wrappers.length) {
-		return null;
-	}
-
 	return Dom.closest(
 		node,
-		elm =>
-			wrappers.some(
-				([tag, wrapper]) =>
-					isWrapper(elm, wrapper) &&
-					Boolean((elm as HTMLElement).querySelector(tag))
-			),
+		elm => Boolean(getWrappedMedia(jodit, elm)),
 		jodit.editor
 	);
 }

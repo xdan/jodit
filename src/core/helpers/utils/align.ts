@@ -8,30 +8,61 @@
  * @module helpers/utils
  */
 
-import type { ImageAlignClasses, ImageHAlign, Nullable } from 'jodit/types';
+import type { HAlignClasses, IJodit, ImageHAlign, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
+import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { clearCenterAlign, css, cssInline } from 'jodit/core/helpers/utils/css';
+import { getWrappedMedia } from 'jodit/core/helpers/utils/media-wrapper';
 
-const classNames = (value?: string): string[] =>
-	(value ?? '').split(/\s+/).filter(Boolean);
+// The sets of class names an alignment lists, the first being the one to write
+const classSets = (value?: string | string[]): string[][] =>
+	(isArray(value) ? value : [value ?? ''])
+		.map(set => set.split(/\s+/).filter(Boolean))
+		.filter(set => set.length);
 
 /**
- * Align image, with `classes` (see `imageAlignClasses`) instead of inline
- * styles when they are given
+ * The class names to align `elm` with: `alignClasses` for its tag, or for the
+ * media in it when it wraps media (a `mediaWrappers` wrapper, `jodit` or
+ * `jodit-media`), falling back to `imageAlignClasses` for an image
+ */
+export function getAlignClasses(
+	jodit: IJodit,
+	elm: Nullable<HTMLElement>
+): Nullable<HAlignClasses> {
+	if (!elm) {
+		return null;
+	}
+
+	const media = Dom.isTag(elm, new Set(['jodit', 'jodit-media'] as const))
+		? elm.firstElementChild
+		: getWrappedMedia(jodit, elm);
+	const tag = (media ?? elm).nodeName.toLowerCase();
+
+	return (
+		jodit.o.alignClasses?.[tag] ??
+		(tag === 'img' ? jodit.o.imageAlignClasses : null)
+	);
+}
+
+/**
+ * Align image, with `classes` (see `alignClasses`) instead of inline styles
+ * when they are given
  */
 export function hAlignElement(
 	image: HTMLElement,
 	align: ImageHAlign,
-	classes?: Nullable<ImageAlignClasses>
+	classes?: Nullable<HAlignClasses>
 ): void {
 	if (classes) {
 		hAlignElement(image, 'normal');
 
 		Object.values(classes).forEach(value =>
-			image.classList.remove(...classNames(value))
+			classSets(value).forEach(set => image.classList.remove(...set))
 		);
-		image.classList.add(...classNames(classes[align || 'normal']));
+		image.classList.add(
+			...(classSets(classes[align || 'normal'])[0] ?? [])
+		);
 
 		['class', 'style'].forEach(name => {
 			if (!attr(image, name)?.trim()) {
@@ -73,15 +104,14 @@ export function hAlignElement(
  */
 export function getHAlign(
 	elm: HTMLElement,
-	classes?: Nullable<ImageAlignClasses>
+	classes?: Nullable<HAlignClasses>
 ): ImageHAlign {
 	if (classes) {
 		for (const align of ['left', 'right', 'center', 'normal'] as const) {
-			const names = classNames(classes[align]);
-
 			if (
-				names.length &&
-				names.every(name => elm.classList.contains(name))
+				classSets(classes[align]).some(set =>
+					set.every(name => elm.classList.contains(name))
+				)
 			) {
 				return align;
 			}

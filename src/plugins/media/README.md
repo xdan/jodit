@@ -90,6 +90,39 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+### `alignClasses`
+
+**Type:** `{ [tag: string]: { left?: string | string[]; right?: string | string[]; center?: string | string[]; normal?: string | string[] } }`
+
+**Default:** `{}`
+
+Class names to align elements with, by tag name, as `imageAlignClasses` does for images: `img`, and `video`, `audio` and `iframe` in the media popup. A media wrapper (see `mediaWrappers`), and Jodit's own `jodit` and `jodit-media` wrappers, are aligned with the classes for the media in them. Without a wrapper from `mediaWrappers`, the classes go on the media element. As with `imageAlignClasses`, an alignment can list several sets of classes to recognise, and aligning writes the first.
+
+### `mediaDefaultAlign`
+
+**Type:** `'normal' | 'left' | 'right' | 'center'`
+
+**Default:** `'normal'`
+
+Alignment given to the media the video popup inserts, with `alignClasses` when they're set for the media's type.
+
+**Example:**
+```typescript
+const frVideo = { tag: 'span', className: 'fr-video' };
+const froalaMedia = {
+    left: 'fr-fvl fr-dvi',
+    right: 'fr-fvr fr-dvi',
+    center: ['fr-fvc fr-dvb', 'fr-dvb'],
+    normal: 'fr-fvc fr-dvi'
+};
+
+const editor = Jodit.make('#editor', {
+    mediaWrappers: { video: frVideo, audio: frVideo, iframe: frVideo },
+    alignClasses: { video: froalaMedia, audio: froalaMedia, iframe: froalaMedia },
+    mediaDefaultAlign: 'center'
+});
+```
+
 ## Usage Examples
 
 ### Basic Usage
