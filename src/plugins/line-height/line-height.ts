@@ -72,7 +72,7 @@ export class lineHeight extends Plugin {
 		try {
 			if (s.isCollapsed()) {
 				const fake = c.fake();
-				s.insertNode(fake, false, false);
+				Dom.safeInsertNode(s.range, fake);
 				apply(fake);
 				Dom.safeRemove(fake);
 			} else {
