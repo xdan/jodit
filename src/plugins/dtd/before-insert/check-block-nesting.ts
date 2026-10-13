@@ -29,7 +29,17 @@ export function checkBlockNesting(jodit: IJodit, node: Nullable<Node>): void {
 
 		while (current && current !== jodit.editor) {
 			if (Dom.isBlock(current)) {
-				if (jodit.o.dtd.blockLimits[current.nodeName.toLowerCase()]) {
+				// In DIV mode the caret's own empty block is a line, like
+				// `<p><br></p>`, not a container to insert into (#1315)
+				const isEmptyLine =
+					!parent &&
+					Dom.isTag(current, jodit.o.enter) &&
+					Dom.isEmpty(current);
+
+				if (
+					jodit.o.dtd.blockLimits[current.nodeName.toLowerCase()] &&
+					!isEmptyLine
+				) {
 					break;
 				}
 

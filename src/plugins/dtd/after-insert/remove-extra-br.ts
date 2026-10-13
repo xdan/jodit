@@ -47,7 +47,13 @@ export function removeExtraBr(jodit: IJodit, node: Node): void {
 			return;
 		}
 
-		jodit.s.setCursorBefore(br);
+		// After a block is inserted the caret is already at the end of its
+		// text; moving it before the `<br>` would put it on a line of its own
+		// below the block (#1315)
+		if (!Dom.isOrContains(node, jodit.s.range.startContainer)) {
+			jodit.s.setCursorBefore(br);
+		}
+
 		Dom.safeRemove(br);
 	}
 }

@@ -34,6 +34,34 @@ describe('Test dtd plugin', () => {
 					);
 				});
 			});
+
+			describe('Empty line in DIV mode (#1315)', () => {
+				it('should replace the line, as an empty paragraph is replaced', () => {
+					const editor = getJodit({ enter: 'DIV' });
+					editor.value = '<div>|<br></div>';
+					setCursorToChar(editor);
+					editor.s.insertHTML(
+						'<div>tamdm:10,000</div><div>tamdm:100,000</div>'
+					);
+					expect(editor.editor.innerHTML).eq(
+						'<div>tamdm:10,000</div><div>tamdm:100,000</div>'
+					);
+
+					const { range } = editor.s;
+					expect(range.startContainer.nodeValue).eq('tamdm:100,000');
+					expect(range.startOffset).eq(13);
+				});
+
+				it('should keep a container that holds the empty line', () => {
+					const editor = getJodit({ enter: 'DIV' });
+					editor.value = '<div class="box"><div>|<br></div></div>';
+					setCursorToChar(editor);
+					editor.s.insertHTML('<div>one</div><div>two</div>');
+					expect(sortAttributes(editor.value)).eq(
+						'<div class="box"><div>one</div><div>two</div></div>'
+					);
+				});
+			});
 		});
 
 		describe('Disable dtd.checkBlockNesting', () => {
@@ -169,6 +197,22 @@ describe('Test dtd plugin', () => {
 						});
 					});
 				});
+			});
+		});
+
+		describe('Blocks inserted into an empty container (#1315)', () => {
+			it('should leave the caret at the end of the inserted blocks', () => {
+				const editor = getJodit();
+				editor.value = '<div class="box">|<br></div>';
+				setCursorToChar(editor);
+				editor.s.insertHTML('<p>one</p><p>two</p>');
+				expect(editor.editor.innerHTML).eq(
+					'<div class="box"><p>one</p><p>two</p></div>'
+				);
+
+				const { range } = editor.s;
+				expect(range.startContainer.nodeValue).eq('two');
+				expect(range.startOffset).eq(3);
 			});
 		});
 
