@@ -127,7 +127,7 @@ Jodit.make('#editor', {
 1. **Click Detection**: Listens for clicks on configured element types
 2. **Popup Display**: Shows popup near clicked element with appropriate toolbar
 3. **Selection Handling**: Optionally shows toolbar for text selections
-4. **Auto-Positioning**: Positions popup relative to target element bounds
+4. **Auto-Positioning**: Positions popup relative to target element bounds, leaving room for the resizer's handles round an element in `allowResizeTags` or a media wrapper, so the popup doesn't cover them
 5. **Auto-Hide**: Closes on outside click, editor changes, or explicit close events
 
 ## Events
