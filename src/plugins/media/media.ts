@@ -44,6 +44,7 @@ export function media(editor: IJodit): void {
 			element =
 				getMediaWrapper(editor, element) ?? wrapMedia(editor, element);
 		} else if (mediaInFakeBlock) {
+			const media = element;
 			const wrapper = editor.createInside.element(mediaFakeTag, {
 				'data-jodit-temp': 1,
 				contenteditable: false,
@@ -53,14 +54,23 @@ export function media(editor: IJodit): void {
 
 			attr(wrapper, 'style', attr(element, 'style'));
 
-			css(wrapper, {
-				display:
-					cssInline(element, 'display') === 'inline-block'
-						? 'inline-block'
-						: 'block',
-				width: element.offsetWidth,
-				height: element.offsetHeight
-			});
+			// The wrapper fits the media, whose size changes as its metadata loads
+			// and as it's resized. A percentage width is of the line, so it takes that
+			const fit = (): void => {
+				css(wrapper, {
+					display:
+						cssInline(media, 'display') === 'inline-block'
+							? 'inline-block'
+							: 'block',
+					width: cssInline(media, 'width').endsWith('%')
+						? ''
+						: 'fit-content',
+					height: ''
+				});
+			};
+
+			fit();
+			editor.e.on(media, 'changesize', fit);
 
 			if (element.parentNode) {
 				Dom.before(element, wrapper);

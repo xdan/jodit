@@ -224,8 +224,8 @@ When a media element is detected:
 3. **Style Preservation**: Copies `style` attribute from original element
 4. **Dimension Setting**:
    - Display mode: Preserves `inline-block` or uses `block`
-   - Width: Sets to `element.offsetWidth`
-   - Height: Sets to `element.offsetHeight`
+   - Width: `fit-content`, so it takes the media's width as its metadata loads and as it's resized, or the whole line when the media's width is a percentage
+   - Height: follows the media
 5. **DOM Insertion**: Inserts wrapper before original element and moves element inside
 6. **Event Binding**: Adds click/touch handlers to place cursor after element
 
@@ -274,7 +274,7 @@ Uses `dataBind(elm, 'jodit_fake_wrapper', true)` to:
 
 5. **Display Mode**: Wrapper respects original element's display mode (inline-block vs block)
 
-6. **Dimensions**: Wrapper dimensions match original element's rendered size
+6. **Dimensions**: Wrapper dimensions follow the media's rendered size, before and after its metadata loads and when it's resized
 
 7. **Nested Wrappers**: Plugin checks for existing wrappers to prevent nesting
 

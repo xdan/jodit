@@ -338,4 +338,48 @@ describe('Media plugin', () => {
 			);
 		});
 	});
+
+	// https://github.com/xdan/jodit/issues/1530
+	describe('mediaInFakeBlock', () => {
+		// One 32x18 frame
+		const clip =
+			'data:video/webm;base64,GkXfo59ChoEBQveBAULygQRC84EIQoKEd2VibUKHgQJChYECGFOAZwEAAAAAAAHWEU2bdLpNu4tTq4QVSalmU6yBoU27i1OrhBZUrmtTrIHGTbuMU6uEElTDZ1OsggEiTbuMU6uEHFO7a1OsggHA7AEAAAAAAABZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVSalmoCrXsYMPQkBNgIRMYXZmV0GETGF2ZkSJiECPQAAAAAAAFlSua9euAQAAAAAAAE7XgQFzxYgAAAAAAAAAAZyBACK1nIN1bmSIgQCGhVZfVlA4g4EBI+ODhDuaygDgkLCBILqBEpqBAlWwhFW5gQFV7oEA7AEAAAAAAAACAAASVMNn0HNzzWPAi2PFiAAAAAAAAAABZ8iYRaOHRU5DT0RFUkSHi0xhdmMgbGlidnB4Z8ihRaOIRFVSQVRJT05Eh5MwMDowMDowMS4wMDAwMDAwMDAAH0O2dcTngQCjv4EAAIAQAwCdASogABIAAkcIhYWImYSIDIICdbokgH8AQWxuICwA/vEKj/+QTYEPAH/8ZU8ZU8ZU/4vsPupnMBxTu2uRu4+zgQC3iveBAfGCAXfwgQM=';
+
+		const metadata = video =>
+			new Promise(resolve =>
+				video.addEventListener('loadedmetadata', resolve, {
+					once: true
+				})
+			);
+
+		it('should keep jodit-media to the size of a video that loads after it was wrapped', async () => {
+			const editor = getJodit();
+
+			editor.value = '<p><video style="width:320px"></video></p>';
+			await delay(100);
+
+			const video = editor.editor.querySelector('video');
+			const wrapper = editor.editor.querySelector('jodit-media');
+
+			video.src = clip;
+			await metadata(video);
+
+			expect(video.offsetHeight).equals(180);
+			expect(wrapper.offsetWidth).equals(320);
+			expect(wrapper.offsetHeight).is.at.least(180);
+		});
+
+		it('should leave a video with a percentage width that much of its line', async () => {
+			const editor = getJodit();
+
+			editor.value = `<p><video src="${clip}" style="width:50%"></video></p>`;
+			await delay(100);
+
+			const video = editor.editor.querySelector('video');
+
+			expect(editor.editor.querySelector('jodit-media')).is.not.null;
+			const line = editor.editor.querySelector('p').offsetWidth;
+			expect(Math.abs(video.offsetWidth - line / 2)).is.below(1);
+		});
+	});
 });

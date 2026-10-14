@@ -14,7 +14,7 @@ import { Config } from 'jodit/config';
 declare module 'jodit/config' {
 	interface Config {
 		/**
-		 * Set of HTML tag names whose elements can be resized by the user via drag handles (e.g. images, iframes, tables)
+		 * Set of HTML tag names whose elements can be resized by the user via drag handles (e.g. images, iframes, tables, videos)
 		 */
 		allowResizeTags: Set<HTMLTagNames>;
 
@@ -29,14 +29,16 @@ declare module 'jodit/config' {
 			 * Save width and height proportions when resizing
 			 * ```js
 			 * Jodit.make('#editor', {
-			 *   allowResizeTags: ['img', 'iframe', 'table', 'jodit'],
+			 *   allowResizeTags: new Set(['img', 'iframe', 'table', 'jodit', 'video']),
 			 *   resizer: {
 			 *     useAspectRatio: false, // don't save,
-			 *     useAspectRatio: ['img'], // save only for images (default value)
+			 *     useAspectRatio: new Set(['img']), // save only for images
 			 *     useAspectRatio: true // save for all
 			 *   }
 			 * });
 			 * ```
+			 * Images and videos keep it by default. A video with no height of its
+			 * own keeps it by being given only a width.
 			 */
 			useAspectRatio: boolean | Set<HTMLTagNames>;
 
@@ -58,7 +60,13 @@ declare module 'jodit/config' {
 	}
 }
 
-Config.prototype.allowResizeTags = new Set(['img', 'iframe', 'table', 'jodit']);
+Config.prototype.allowResizeTags = new Set([
+	'img',
+	'iframe',
+	'table',
+	'jodit',
+	'video'
+]);
 
 Config.prototype.resizer = {
 	showSize: true,
@@ -66,5 +74,5 @@ Config.prototype.resizer = {
 	forImageChangeAttributes: true,
 	min_width: 10,
 	min_height: 10,
-	useAspectRatio: new Set(['img'])
+	useAspectRatio: new Set(['img', 'video'])
 };

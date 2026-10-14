@@ -21,6 +21,7 @@ import {
 	attr,
 	css,
 	dataBind,
+	getWrappedMedia,
 	innerWidth,
 	markOwner,
 	offset
@@ -47,6 +48,18 @@ function attrPixelSize(element: HTMLElement, key: 'width' | 'height'): number {
 	}
 
 	return parseFloat(value);
+}
+
+/**
+ * A video with no height of its own takes it from its width and its ratio,
+ * so resizing it keeps the ratio without setting a height.
+ */
+function heightFollowsWidth(element: HTMLElement): boolean {
+	return (
+		Dom.isTag(element, 'video') &&
+		!attr(element, 'height') &&
+		!cssInline(element, 'height')
+	);
 }
 
 /**
@@ -129,14 +142,38 @@ export class resizer extends Plugin {
 		} = this.j;
 
 		while (node && node !== editor) {
-			if (Dom.isTag(node, allowResizeTags)) {
-				this.__bind(node);
-				this.onClickElement(node);
+			const element = this.__resizable(node);
+
+			if (Dom.isTag(element, allowResizeTags)) {
+				this.__bind(element);
+				this.onClickElement(element);
 				return;
 			}
 
 			node = node.parentNode;
 		}
+	}
+
+	/**
+	 * What a click on `node` resizes: the media in it when it's a media
+	 * wrapper (`jodit-media`, or one from `mediaWrappers`), or `node` itself
+	 */
+	private __resizable(node: Node): Node {
+		const media =
+			getWrappedMedia(this.j, node) ??
+			(Dom.isHTMLElement(node) && attr(node, 'data-jodit_fake_wrapper')
+				? node.firstElementChild
+				: null);
+
+		if (!media) {
+			return node;
+		}
+
+		// An embed is resized through its own wrapper
+		return Dom.isHTMLElement(media.parentNode) &&
+			attr(media.parentNode, 'data-jodit_iframe_wrapper')
+			? media.parentNode
+			: media;
 	}
 
 	@watch(':afterInsertImage')
@@ -189,7 +226,7 @@ export class resizer extends Plugin {
 		resizeHandle: HTMLElement,
 		e: MouseEvent
 	): false | void {
-		if (!this.element || !this.element.parentNode) {
+		if (!this.element || !this.isElementInEditor) {
 			this.hide();
 			return false;
 		}
@@ -267,11 +304,11 @@ export class resizer extends Plugin {
 			let new_w: number, new_h: number;
 
 			const uar = this.j.o.resizer.useAspectRatio;
-
-			if (
+			const keepRatio =
 				!this.isAltMode &&
-				(uar === true || (uar && Dom.isTag(this.element, uar)))
-			) {
+				(uar === true || Boolean(uar && Dom.isTag(this.element, uar)));
+
+			if (keepRatio) {
 				if (diff_x) {
 					new_w =
 						this.width +
@@ -303,7 +340,10 @@ export class resizer extends Plugin {
 				}
 			}
 
-			if (new_h > this.j.o.resizer.min_height) {
+			if (
+				new_h > this.j.o.resizer.min_height &&
+				!(keepRatio && heightFollowsWidth(this.element))
+			) {
 				this.applySize(this.element, 'height', new_h);
 			}
 
@@ -382,8 +422,20 @@ export class resizer extends Plugin {
 		}
 	}
 
+	/**
+	 * The framed element can go with a wrapper round it, keeping its parent
+	 */
+	private get isElementInEditor(): boolean {
+		return Boolean(this.element && this.j.editor.contains(this.element));
+	}
+
 	private onDelete(e: KeyboardEvent): void {
 		if (!this.element) {
+			return;
+		}
+
+		if (!this.isElementInEditor) {
+			this.hide();
 			return;
 		}
 
@@ -399,7 +451,7 @@ export class resizer extends Plugin {
 	@watch(':change')
 	private __onChangeEditor(): void {
 		if (this.isShown) {
-			if (!this.element || !this.element.parentNode) {
+			if (!this.isElementInEditor) {
 				this.hide();
 			} else {
 				this.updateSize();
@@ -520,6 +572,13 @@ export class resizer extends Plugin {
 
 			if (Dom.isTag(this.element, 'img') && !this.element.complete) {
 				this.j.e.one(this.element, 'load', this.updateSize);
+			}
+
+			if (
+				Dom.isTag(this.element, 'video') &&
+				this.element.readyState < HTMLMediaElement.HAVE_METADATA
+			) {
+				this.j.e.one(this.element, 'loadedmetadata', this.updateSize);
 			}
 		}
 	};
