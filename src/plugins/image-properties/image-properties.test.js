@@ -394,15 +394,17 @@ describe('Edit image tests', () => {
 			});
 
 			// https://github.com/xdan/jodit/issues/1518
-			describe('With imageAlignClasses', () => {
+			describe('With alignClasses.img', () => {
 				it('should read and write the classes', async () => {
 					const refs = await openImagePropertiesDialog(
 						'<p><img alt="111" class="align-right" style="width:100px; height: 100px;" src="tests/artio.jpg"/></p>',
 						{
-							imageAlignClasses: {
-								left: 'align-left',
-								right: 'align-right',
-								center: 'align-center'
+							alignClasses: {
+								img: {
+									left: 'align-left',
+									right: 'align-right',
+									center: 'align-center'
+								}
 							}
 						}
 					);

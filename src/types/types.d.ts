@@ -273,7 +273,7 @@ export type HAlignClasses = Partial<
 >;
 
 /**
- * Class names for each image alignment, see `imageAlignClasses`
+ * @deprecated Use `HAlignClasses`
  */
 export type ImageAlignClasses = HAlignClasses;
 

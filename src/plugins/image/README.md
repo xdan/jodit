@@ -45,25 +45,31 @@ const editor = Jodit.make('#editor', {
 
 Alignment given to images inserted into the editor. `'normal'` leaves them unaligned.
 
-### `imageAlignClasses`
+### `alignClasses.img`
 
-**Type:** `{ left?: string | string[]; right?: string | string[]; center?: string | string[]; normal?: string | string[] } | null`
+**Type:** `{ left?: string | string[]; right?: string | string[]; center?: string | string[]; normal?: string | string[] }`
 
-**Default:** `null`
+**Default:** unset
 
-Class names to align images with, instead of an inline `float` or `margin`. The image popup's align list, the image properties dialog and `imageDefaultAlign` all use them. Aligning an image removes every class listed here and adds the chosen alignment's, which can be several separated by spaces. An alignment can also list several such sets, to recognise each of them, and aligning writes the first: `center: ['align-center block', 'block']` reads an image with only `block` as centred. The popup's align button shows the alignment read from the classes, or for an image with no alignment, the alignment of its line's text. `alignClasses.img` takes its place when set (see `alignClasses` in the media plugin).
+Class names to align images with, instead of an inline `float` or `margin` (see `alignClasses` in the media plugin, which takes them for other elements by tag name too). The image popup's align list, the image properties dialog and `imageDefaultAlign` all use them. Aligning an image removes every class listed here and adds the chosen alignment's, which can be several separated by spaces. An alignment can also list several such sets, to recognise each of them, and aligning writes the first: `center: ['align-center block', 'block']` reads an image with only `block` as centred. The popup's align button shows the alignment read from the classes, or for an image with no alignment, the alignment of its line's text.
 
 **Example:**
 ```typescript
 const editor = Jodit.make('#editor', {
     imageDefaultAlign: 'center',
-    imageAlignClasses: {
-        left: 'align-left',
-        right: 'align-right',
-        center: 'align-center'
+    alignClasses: {
+        img: {
+            left: 'align-left',
+            right: 'align-right',
+            center: 'align-center'
+        }
     }
 });
 ```
+
+### `imageAlignClasses` (deprecated)
+
+Use `alignClasses.img`, which takes the same value. When `alignClasses.img` isn't set, the editor copies `imageAlignClasses` into it.
 
 ## Usage Examples
 

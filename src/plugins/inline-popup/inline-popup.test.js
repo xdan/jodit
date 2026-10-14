@@ -181,7 +181,7 @@ describe('Text Inline Popup plugin', () => {
 			it("Should recognise any of an alignment's class sets, and write the first", async () => {
 				const editor = getJodit({
 					defaultTimeout: 0,
-					imageAlignClasses: froalaImages
+					alignClasses: { img: froalaImages }
 				});
 
 				editor.value =
@@ -205,27 +205,10 @@ describe('Text Inline Popup plugin', () => {
 					'<p>text <img alt="" class="fr-fic fr-dib" src="tests/artio.jpg"> text</p>'
 				);
 			});
-
-			it('Should take alignClasses.img over imageAlignClasses', () => {
-				const editor = getJodit({
-					defaultTimeout: 0,
-					imageAlignClasses: { left: 'old-left' },
-					alignClasses: { img: froalaImages }
-				});
-
-				editor.value =
-					'<p>text <img alt="" src="tests/artio.jpg"> text</p>';
-				editor.s.focus();
-
-				alignImage(editor, 'Right');
-				expect(sortAttributes(editor.value)).eq(
-					'<p>text <img alt="" class="fr-fir fr-dii" src="tests/artio.jpg"> text</p>'
-				);
-			});
 		});
 
-		describe('Horizontal align with imageAlignClasses', () => {
-			const imageAlignClasses = {
+		describe('Horizontal align with alignClasses.img', () => {
+			const classes = {
 				left: 'align-left',
 				right: 'align-right',
 				center: 'align-center block',
@@ -235,7 +218,7 @@ describe('Text Inline Popup plugin', () => {
 			it('Should swap the classes instead of setting float and margins', () => {
 				const editor = getJodit({
 					defaultTimeout: 0,
-					imageAlignClasses
+					alignClasses: { img: classes }
 				});
 
 				editor.value =
@@ -268,7 +251,7 @@ describe('Text Inline Popup plugin', () => {
 			it('Should read the alignment from the classes', async () => {
 				const editor = getJodit({
 					defaultTimeout: 0,
-					imageAlignClasses
+					alignClasses: { img: classes }
 				});
 
 				editor.value =
@@ -283,6 +266,67 @@ describe('Text Inline Popup plugin', () => {
 						.querySelector('svg')
 						.getAttribute('class')
 				).contains('jodit-icon_center');
+			});
+		});
+
+		describe('Horizontal align with the deprecated imageAlignClasses', () => {
+			const classes = { left: 'old-left', right: 'old-right' };
+
+			function alignRight(editor) {
+				editor.value =
+					'<p>text <img alt="" src="tests/artio.jpg"> text</p>';
+				editor.s.focus();
+
+				simulateEvent('click', editor.editor.querySelector('img'));
+				clickTrigger('left', getOpenedPopup(editor));
+				clickButton('Right', getOpenedPopup(editor));
+			}
+
+			it('Should align with them as alignClasses.img', () => {
+				const editor = getJodit({
+					defaultTimeout: 0,
+					imageAlignClasses: classes
+				});
+
+				alignRight(editor);
+				expect(sortAttributes(editor.value)).eq(
+					'<p>text <img alt="" class="old-right" src="tests/artio.jpg"> text</p>'
+				);
+				expect(editor.o.alignClasses.img).equals(classes);
+				expect(Jodit.defaultOptions.alignClasses.img).is.undefined;
+			});
+
+			it('Should keep the alignClasses of other tags', () => {
+				const media = { left: 'media-left' };
+				const editor = getJodit({
+					imageAlignClasses: classes,
+					alignClasses: { video: media }
+				});
+
+				expect(editor.o.alignClasses.img).equals(classes);
+				expect(editor.o.alignClasses.video).equals(media);
+			});
+
+			it('Should take alignClasses.img over them', () => {
+				const editor = getJodit({
+					defaultTimeout: 0,
+					imageAlignClasses: classes,
+					alignClasses: { img: { right: 'new-right' } }
+				});
+
+				alignRight(editor);
+				expect(sortAttributes(editor.value)).eq(
+					'<p>text <img alt="" class="new-right" src="tests/artio.jpg"> text</p>'
+				);
+			});
+
+			it('Should copy them for a place added later', () => {
+				const editor = getJodit();
+
+				editor.addPlace(appendTestDiv(), {
+					imageAlignClasses: classes
+				});
+				expect(editor.o.alignClasses.img).equals(classes);
 			});
 		});
 

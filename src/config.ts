@@ -34,7 +34,6 @@ import type {
 	IControlType,
 	IDictionary,
 	IExtraPlugin,
-	ImageAlignClasses,
 	ImageHAlign,
 	InsertMode,
 	IUIButtonState,
@@ -831,30 +830,20 @@ class Config implements IViewOptions {
 	imageDefaultAlign: ImageHAlign = 'normal';
 
 	/**
-	 * Class names to align images with, instead of an inline `float` or
-	 * `margin`. Aligning an image removes every class listed here and adds the
-	 * chosen alignment's, which can be several separated by spaces. An
-	 * alignment can also list several such sets, to recognise each of them;
-	 * aligning writes the first. `alignClasses.img` takes its place when set.
-	 *
-	 * ```javascript
-	 * Jodit.make('#editor', {
-	 *   imageAlignClasses: {
-	 *     left: 'align-left',
-	 *     right: 'align-right',
-	 *     center: ['align-center', 'centered']
-	 *   }
-	 * });
-	 * ```
+	 * @deprecated Use `alignClasses.img`, which takes the same value. When
+	 * `alignClasses.img` isn't set, the editor copies this into it.
 	 */
-	imageAlignClasses: Nullable<ImageAlignClasses> = null;
+	imageAlignClasses: Nullable<HAlignClasses> = null;
 
 	/**
-	 * Class names to align elements with, by tag name, as `imageAlignClasses`
-	 * does for images: `img`, and `video`, `audio` and `iframe` in the media
-	 * popup. A media wrapper (see `mediaWrappers`), and Jodit's own `jodit` and
-	 * `jodit-media` wrappers, are aligned with the classes for the media in
-	 * them.
+	 * Class names to align elements with, by tag name, instead of an inline
+	 * `float` or `margin`: `img`, and `video`, `audio` and `iframe` in the
+	 * media popup. Aligning an element removes every class listed for its tag
+	 * and adds the chosen alignment's, which can be several separated by
+	 * spaces. An alignment can also list several such sets, to recognise each
+	 * of them; aligning writes the first. A media wrapper (see
+	 * `mediaWrappers`), and Jodit's own `jodit` and `jodit-media` wrappers,
+	 * are aligned with the classes for the media in them.
 	 *
 	 * ```javascript
 	 * const media = {
@@ -864,7 +853,15 @@ class Config implements IViewOptions {
 	 * };
 	 *
 	 * Jodit.make('#editor', {
-	 *   alignClasses: { video: media, iframe: media }
+	 *   alignClasses: {
+	 *     img: {
+	 *       left: 'align-left',
+	 *       right: 'align-right',
+	 *       center: ['align-center', 'centered']
+	 *     },
+	 *     video: media,
+	 *     iframe: media
+	 *   }
 	 * });
 	 * ```
 	 */

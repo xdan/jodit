@@ -93,6 +93,23 @@ const NOEDIT = {
 };
 
 /**
+ * The editor's options, with the deprecated `imageAlignClasses` copied into
+ * `alignClasses.img` when that isn't set
+ */
+function makeOptions(options?: object): Config {
+	const opt = <Config>ConfigProto(options || {}, Config.defaultOptions);
+
+	if (opt.imageAlignClasses && !opt.alignClasses?.img) {
+		opt.alignClasses = ConfigProto(
+			{ img: opt.imageAlignClasses },
+			opt.alignClasses
+		);
+	}
+
+	return opt;
+}
+
+/**
  * Class Jodit. Main class
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -1241,9 +1258,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 
 	/** @override **/
 	protected override initOptions(options?: object): void {
-		this.options = <Config>(
-			ConfigProto(options || {}, Config.defaultOptions)
-		);
+		this.options = makeOptions(options);
 	}
 
 	/** @override **/
@@ -1505,12 +1520,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				right: rightSlot
 			},
 			statusbar: new StatusBar(this, container),
-			options: this.isReady
-				? (ConfigProto(
-						options || {},
-						Config.defaultOptions
-					) as IWorkPlace['options'])
-				: this.options,
+			options: this.isReady ? makeOptions(options) : this.options,
 			history: new History(this),
 			editorWindow: this.ow
 		};

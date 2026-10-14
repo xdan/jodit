@@ -97,7 +97,7 @@ const editor = Jodit.make('#editor', {
 
 **Default:** `{}`
 
-Class names to align elements with, by tag name, as `imageAlignClasses` does for images: `img`, and `video`, `audio` and `iframe` in the media popup. A media wrapper (see `mediaWrappers`), and Jodit's own `jodit` and `jodit-media` wrappers, are aligned with the classes for the media in them. Without a wrapper from `mediaWrappers`, the classes go on the media element. As with `imageAlignClasses`, an alignment can list several sets of classes to recognise, and aligning writes the first.
+Class names to align elements with, by tag name, instead of an inline `float` or `margin`: `img` (see `alignClasses.img` in the image plugin), and `video`, `audio` and `iframe` in the media popup. A media wrapper (see `mediaWrappers`), and Jodit's own `jodit` and `jodit-media` wrappers, are aligned with the classes for the media in them. Without a wrapper from `mediaWrappers`, the classes go on the media element. An alignment can list several sets of classes to recognise, and aligning writes the first.
 
 ### `mediaDefaultAlign`
 

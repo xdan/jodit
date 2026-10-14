@@ -1372,10 +1372,10 @@ describe('Selection Module Tests', function () {
 				);
 			});
 
-			it('Should align it with imageAlignClasses when they are set', () => {
+			it('Should align it with alignClasses.img when they are set', () => {
 				const editor = getJodit({
 					imageDefaultAlign: 'center',
-					imageAlignClasses: { center: 'align-center' }
+					alignClasses: { img: { center: 'align-center' } }
 				});
 				editor.value = '<p>|</p>';
 				setCursorToChar(editor);
