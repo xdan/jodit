@@ -86,6 +86,11 @@ export class backspace extends Plugin {
 			sel.focus();
 		}
 
+		// Focused with no range, as WebKit leaves it after a click on an embed
+		if (!sel.isInsideArea) {
+			return;
+		}
+
 		if (checkNotCollapsed(jodit)) {
 			jodit.e.fire('backSpaceAfterDelete', backspace);
 			return false;
