@@ -491,8 +491,12 @@ export class resizer extends Plugin {
 				})
 				.off(element, 'changesize')
 				.on(element, 'changesize', () => {
-					attr(iframe, 'width', element.offsetWidth + 'px');
-					attr(iframe, 'height', element.offsetHeight + 'px');
+					// Only a resize sets the embed's size, and as the plain numbers
+					// the attributes take, so a click leaves `width="100%"` alone
+					if (this.isResizeMode) {
+						attr(iframe, 'width', element.offsetWidth);
+						attr(iframe, 'height', element.offsetHeight);
+					}
 				});
 		}
 

@@ -375,7 +375,7 @@ Iframes receive special treatment:
 2. **Attributes**: Sets `data-jodit_iframe_wrapper="1"`, `contenteditable="false"`, `draggable="true"`
 3. **Style Copy**: Copies iframe styles to wrapper
 4. **Resize Target**: Resizes wrapper instead of iframe directly
-5. **Sync Dimensions**: Updates iframe width/height attributes when wrapper resizes
+5. **Sync Dimensions**: Writes the iframe's `width` and `height` attributes, as plain numbers, while the wrapper is being resized; a click alone leaves them as they were, so `width="100%"` stays
 6. **Cleanup**: Removes wrapper from HTML output via `afterGetValueFromEditor` event
 
 ### Image Size Handling
