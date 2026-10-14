@@ -49,7 +49,7 @@ const editor = Jodit.make('#editor', {
 **What it does:**
 - After inserting a node, checks if there's an extra `<br>` sibling
 - If found in a block element (not `<table>`, `<pre>`, `<blockquote>`, `<code>`), removes it
-- Repositions cursor before the removed `<br>`
+- Repositions cursor before the removed `<br>`, unless the cursor is already inside the inserted node
 
 ### `dtd.checkBlockNesting`
 
@@ -71,6 +71,7 @@ const editor = Jodit.make('#editor', {
 - Checks if parent is in `blockLimits` list
 - If not in list, moves cursor after parent
 - Removes parent if it's empty
+- With `enter: 'DIV'`, an empty `<div>` holding the cursor counts as a line, like an empty `<p>`, so it's replaced
 
 ### `dtd.blockLimits`
 
@@ -210,7 +211,7 @@ Watches `:beforeInsertNode` event and runs validation cases:
 2. If node is not a block element, skip
 3. Find furthest parent block element
 4. Check if parent is in `blockLimits` dictionary
-5. If not in dictionary:
+5. If not in dictionary, or it's the cursor's own empty block of the `enter` tag:
    - Move cursor after parent
    - If parent is empty, remove it
 
@@ -239,7 +240,7 @@ Watches `:afterInsertNode` event and runs cleanup cases:
 4. If parent is `<table>`, `<pre>`, `<blockquote>`, or `<code>`, skip
 5. Find next non-empty sibling
 6. If sibling is `<br>`:
-   - Move cursor before `<br>`
+   - Move cursor before `<br>`, unless it's inside the inserted node
    - Remove `<br>`
 
 **BR boxes (excluded from cleanup):**
