@@ -73,10 +73,11 @@ export function media(editor: IJodit): void {
 			return;
 		}
 
+		// Selected, as an image is, so Delete and Backspace remove it
 		editor.e
 			.off(element, 'mousedown.select touchstart.select')
 			.on(element, 'mousedown.select touchstart.select', () => {
-				editor.s.setCursorAfter(element);
+				editor.s.select(element);
 			});
 	};
 

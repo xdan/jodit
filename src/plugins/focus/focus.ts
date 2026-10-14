@@ -11,6 +11,7 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
+import { INSEPARABLE_TAGS } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { Config } from 'jodit/config';
@@ -107,10 +108,12 @@ export function focus(editor: IJodit): void {
 		editor.e
 			.off(editor.editor, 'mousedown.autofocus')
 			.on(editor.editor, 'mousedown.autofocus', (e: MouseEvent) => {
+				// An empty block takes the caret, but a video, say, can't hold one
 				if (
 					editor.isEditorMode() &&
 					e.target &&
 					Dom.isBlock(e.target) &&
+					!Dom.isTag(e.target, INSEPARABLE_TAGS) &&
 					!(e.target as HTMLElement).childNodes.length
 				) {
 					if (editor.editor === e.target) {
