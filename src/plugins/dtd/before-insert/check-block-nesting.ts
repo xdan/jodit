@@ -49,6 +49,18 @@ export function checkBlockNesting(jodit: IJodit, node: Nullable<Node>): void {
 			current = current.parentElement;
 		}
 
+		// A list that is all of the inserted content adds its items to the
+		// list of the item it goes into, as the browsers' own paste does
+		if (
+			Dom.isLeaf(current) &&
+			Dom.isList(node) &&
+			Dom.isFragment(node.parentNode) &&
+			!Dom.findNotEmptySibling(node, false)
+		) {
+			Dom.unwrap(node);
+			parent = current;
+		}
+
 		if (parent) {
 			jodit.s.setCursorAfter(parent);
 
