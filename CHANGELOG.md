@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.1
+
+#### :bug: Bug Fix
+
+- [#1315](https://github.com/xdan/jodit/issues/1315) Pasting blocks into an empty line no longer leaves the caret on a line of its own below them, and with `enter: 'DIV'` the pasted blocks replace the empty line instead of going inside it. Thanks [@brendon](https://github.com/brendon).
+- [#1573](https://github.com/xdan/jodit/issues/1573) Blocks pasted into a list item stay inside it instead of landing directly in the list (`li`, `dd` and `dt` joined `dtd.blockLimits`), and a pasted list adds its items to the list it is pasted into. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.18.0
 
 #### :rocket: New Feature
