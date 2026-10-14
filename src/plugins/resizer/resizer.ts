@@ -78,6 +78,9 @@ export class resizer extends Plugin {
 			</div>`
 	);
 
+	// Clips the frame to the workplace, without the frame making it scroll
+	private layer = this.j.c.div('jodit-resizer-layer');
+
 	private sizeViewer: HTMLSpanElement =
 		this.rect.getElementsByTagName('span')[0];
 
@@ -170,11 +173,9 @@ export class resizer extends Plugin {
 			})
 			.on(editor.ow, 'resize.resizer', this.updateSize)
 			.on('resize.resizer', this.updateSize)
-			.on([editor.ow, editor.editor], 'scroll.resizer', () => {
-				if (this.isShown && !this.isResizeMode) {
-					this.hide();
-				}
-			})
+			// The frame is outside the content, so it's moved to follow the
+			// element as the content scrolls
+			.on([editor.ow, editor.editor], 'scroll.resizer', this.updateSize)
 			.on(editor.ow, 'keydown.resizer', this.onKeyDown)
 			.on(editor.ow, 'keyup.resizer', this.onKeyUp)
 			.on(
@@ -598,9 +599,14 @@ export class resizer extends Plugin {
 
 		this.isShown = true;
 
+		if (this.layer.parentNode !== this.j.workplace) {
+			markOwner(this.j, this.layer);
+			Dom.append(this.j.workplace, this.layer);
+		}
+
 		if (!this.rect.parentNode) {
 			markOwner(this.j, this.rect);
-			Dom.append(this.j.workplace, this.rect);
+			Dom.append(this.layer, this.rect);
 		}
 
 		if (this.j.isFullSize) {
@@ -637,6 +643,7 @@ export class resizer extends Plugin {
 
 	protected beforeDestruct(jodit: IJodit): void {
 		this.hide();
+		Dom.safeRemove(this.layer);
 
 		eventEmitter.off('hideHelpers', this.hide);
 
