@@ -15,7 +15,7 @@ import { KEY_TAB } from 'jodit/core/constants';
 import { autobind, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { $$, alignElement, position } from 'jodit/core/helpers';
+import { $$, alignElement, position, toArray } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { Table } from 'jodit/modules/table/table';
 
@@ -452,14 +452,29 @@ export class selectCells extends Plugin {
 						break;
 
 					case 'binrow':
-						new Set(
-							cells.map(
-								td => td.parentNode as HTMLTableRowElement
-							)
-						).forEach(row => {
-							this.__tableModule.removeRow(table, row.rowIndex);
-						});
+						{
+							const rows = new Set(
+								cells.map(
+									td => td.parentNode as HTMLTableRowElement
+								)
+							);
 
+							const next = this.__nearestCell(
+								table,
+								cell,
+								toArray(rows).map(row => row.rowIndex),
+								true
+							);
+
+							rows.forEach(row => {
+								this.__tableModule.removeRow(
+									table,
+									row.rowIndex
+								);
+							});
+
+							next && this.j.s.setCursorIn(next);
+						}
 						break;
 
 					case 'bincolumn':
@@ -480,11 +495,20 @@ export class selectCells extends Plugin {
 								}
 							});
 
+							const next = this.__nearestCell(
+								table,
+								cell,
+								columns,
+								false
+							);
+
 							columns
 								.sort((a, b) => b - a)
 								.forEach(col => {
 									this.__tableModule.removeColumn(table, col);
 								});
+
+							next && this.j.s.setCursorIn(next);
 						}
 						break;
 
@@ -510,6 +534,44 @@ export class selectCells extends Plugin {
 
 			return false;
 		}
+	}
+
+	/**
+	 * The cell that takes the caret when rows or columns are deleted: the next
+	 * one in the same column (or row) that is not deleted, else the previous one
+	 */
+	private __nearestCell(
+		table: HTMLTableElement,
+		cell: HTMLTableCellElement,
+		deleted: number[],
+		isRow: boolean
+	): Nullable<HTMLTableCellElement> {
+		const box = this.__tableModule.formalMatrix(table);
+		const [row, column] = this.__tableModule.formalCoordinate(table, cell);
+		const start = isRow ? row : column;
+		const count = isRow ? box.length : box[row].length;
+
+		const find = (i: number): Nullable<HTMLTableCellElement> =>
+			(!deleted.includes(i) && (isRow ? box[i][column] : box[row][i])) ||
+			null;
+
+		for (let i = start + 1; i < count; i += 1) {
+			const next = find(i);
+
+			if (next) {
+				return next;
+			}
+		}
+
+		for (let i = start - 1; i >= 0; i -= 1) {
+			const prev = find(i);
+
+			if (prev) {
+				return prev;
+			}
+		}
+
+		return null;
 	}
 
 	/**

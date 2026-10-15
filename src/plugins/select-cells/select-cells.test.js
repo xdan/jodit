@@ -123,6 +123,100 @@ describe('Select cells plugin', () => {
 		});
 	});
 
+	describe('Caret after Delete row or Delete column (#1595)', () => {
+		const grid =
+			'<tr><td>a1</td><td>b1</td><td>c1</td></tr>' +
+			'<tr><td>a2</td><td>b2</td><td>c2</td></tr>' +
+			'<tr><td>a3</td><td>b3</td><td>c3</td></tr>';
+
+		[
+			[
+				'the next row',
+				'tablebinrow',
+				grid,
+				'b2',
+				'<tr><td>a1</td><td>b1</td><td>c1</td></tr>' +
+					'<tr><td>a3</td><td>b3|</td><td>c3</td></tr>'
+			],
+			[
+				'the previous row when the last row is deleted',
+				'tablebinrow',
+				grid,
+				'b3',
+				'<tr><td>a1</td><td>b1</td><td>c1</td></tr>' +
+					'<tr><td>a2</td><td>b2|</td><td>c2</td></tr>'
+			],
+			[
+				'the next column',
+				'tablebincolumn',
+				grid,
+				'b2',
+				'<tr><td>a1</td><td>c1</td></tr>' +
+					'<tr><td>a2</td><td>c2|</td></tr>' +
+					'<tr><td>a3</td><td>c3</td></tr>'
+			],
+			[
+				'the previous column when the last column is deleted',
+				'tablebincolumn',
+				grid,
+				'c2',
+				'<tr><td>a1</td><td>b1</td></tr>' +
+					'<tr><td>a2</td><td>b2|</td></tr>' +
+					'<tr><td>a3</td><td>b3</td></tr>'
+			],
+			[
+				'the next row when the row holds the start of a rowspan',
+				'tablebinrow',
+				'<tr><td rowspan="2">a12</td><td>b1</td></tr>' +
+					'<tr><td>b2</td></tr>' +
+					'<tr><td>a3</td><td>b3</td></tr>',
+				'b1',
+				'<tr><td>a12</td><td>b2|</td></tr>' +
+					'<tr><td>a3</td><td>b3</td></tr>'
+			],
+			[
+				'the next row when the row is inside a rowspan',
+				'tablebinrow',
+				'<tr><td rowspan="2">a12</td><td>b1</td></tr>' +
+					'<tr><td>b2</td></tr>' +
+					'<tr><td>a3</td><td>b3</td></tr>',
+				'b2',
+				'<tr><td>a12</td><td>b1</td></tr>' +
+					'<tr><td>a3</td><td>b3|</td></tr>'
+			],
+			[
+				'the next column when the column runs through a colspan',
+				'tablebincolumn',
+				'<tr><td colspan="2">ab1</td><td>c1</td></tr>' +
+					'<tr><td>a2</td><td>b2</td><td>c2</td></tr>',
+				'b2',
+				'<tr><td>ab1</td><td>c1</td></tr>' +
+					'<tr><td>a2</td><td>c2|</td></tr>'
+			]
+		].forEach(([name, command, rows, text, result]) => {
+			it(`Should put the caret in ${name} on ${command}`, () => {
+				const editor = getJodit();
+
+				editor.value = '<table><tbody>' + rows + '</tbody></table>';
+
+				const cell = Array.from(
+					editor.editor.querySelectorAll('td')
+				).find(td => td.textContent === text);
+
+				editor.s.setCursorIn(cell);
+				editor.getInstance('Table', editor.o).addSelection(cell);
+
+				editor.execCommand(command);
+
+				replaceCursorToChar(editor);
+
+				expect(editor.value).equals(
+					'<table><tbody>' + result + '</tbody></table>'
+				);
+			});
+		});
+	});
+
 	describe('Stop selection when the drop target is not part of the table (#1357)', () => {
 		it('Should not throw when the selected cells are no longer in the table matrix', () => {
 			const editor = getJodit();

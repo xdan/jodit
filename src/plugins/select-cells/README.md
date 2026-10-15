@@ -112,8 +112,8 @@ Plugin intercepts table commands when cells selected:
 - `tablemerge` - Merge selected cells
 - `tableempty` - Empty selected cells
 - `tablebin` - Delete table
-- `tablebinrow` - Delete rows containing selected cells
-- `tablebincolumn` - Delete columns containing selected cells
+- `tablebinrow` - Delete rows containing selected cells, and put the cursor in the next row (or the previous one)
+- `tablebincolumn` - Delete columns containing selected cells, and put the cursor in the next column (or the previous one)
 - `tableaddcolumnafter/before` - Add column
 - `tableaddrowafter/before` - Add row
 
