@@ -19,7 +19,6 @@ import type {
 	SnapshotType
 } from 'jodit/types';
 import { ViewComponent } from 'jodit/core/component/view-component';
-import { debounce } from 'jodit/core/decorators/debounce/debounce';
 import { Config } from 'jodit/config';
 
 import { Command } from './command';
@@ -37,7 +36,8 @@ declare module 'jodit/config' {
 			maxHistoryLength: number;
 
 			/**
-			 * Delay on every change
+			 * How long a step stays open after its first change, in
+			 * milliseconds. The changes made in that time are undone together.
 			 */
 			timeout: number;
 		};
@@ -63,6 +63,8 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	 * Return state of the WYSIWYG editor to step back
 	 */
 	redo(): void {
+		this.__processPendingChanges();
+
 		if (this.__stack.redo()) {
 			this.startValue = this.snapshot.make();
 			this.fireChangeStack();
@@ -70,13 +72,15 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	}
 
 	canRedo(): boolean {
-		return this.__stack.canRedo();
+		return !this.__hasPendingChanges && this.__stack.canRedo();
 	}
 
 	/**
 	 * Return the state of the WYSIWYG editor to step forward
 	 */
 	undo(): void {
+		this.__processPendingChanges();
+
 		if (this.__stack.undo()) {
 			this.startValue = this.snapshot.make();
 			this.fireChangeStack();
@@ -84,11 +88,13 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	}
 
 	canUndo(): boolean {
-		return this.__stack.canUndo();
+		return this.__hasPendingChanges || this.__stack.canUndo();
 	}
 
 	clear(): void {
 		this.startValue = this.snapshot.make();
+		this.async.clearTimeout(this.__timer);
+		this.__hasPendingChanges = false;
 		this.__stack.clear();
 		this.fireChangeStack();
 	}
@@ -131,6 +137,7 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 				editor.events
 					// save selection
 					.on('internalChange internalUpdate', () => {
+						this.__processPendingChanges();
 						this.startValue = this.snapshot.make();
 					})
 					.on(
@@ -155,12 +162,22 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 							}
 						}
 					)
-					.on(this, 'change.history', this.onChange);
+					.on(this, 'change.history', () => this.onChange());
 			});
 		}
 	}
 
 	private updateTick: number = 0;
+
+	/**
+	 * A step is open: changes have come in that are not in the stack yet
+	 */
+	private __hasPendingChanges: boolean = false;
+
+	/**
+	 * Records the open step `history.timeout` after its first change
+	 */
+	private __timer: number = 0;
 
 	/**
 	 * Update change counter
@@ -171,11 +188,37 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 	}
 
 	/**
-	 * Push new command in stack on some changes
+	 * Push new command in stack on some changes. The first change opens a
+	 * step, and later ones join it until `history.timeout` has passed,
+	 * however close together they come.
 	 */
-	@debounce()
 	private onChange(): void {
-		this.__processChanges();
+		// A transaction is over by the time the step is recorded, so it is
+		// checked now
+		if (this.snapshot.isBlocked || this.__hasPendingChanges) {
+			return;
+		}
+
+		this.__hasPendingChanges = true;
+		this.__timer = this.async.setTimeout(
+			() => this.__processPendingChanges(),
+			this.j.o.history.timeout
+		);
+
+		// With a timeout of 0 the step is already recorded. Otherwise
+		// canUndo and canRedo count it from now
+		if (this.__hasPendingChanges) {
+			this.fireChangeStack();
+		}
+	}
+
+	/**
+	 * Push the open step's changes now
+	 */
+	private __processPendingChanges(): void {
+		if (this.__hasPendingChanges) {
+			this.__processChanges();
+		}
 	}
 
 	/**
@@ -186,6 +229,8 @@ export class History extends ViewComponent<IJodit> implements IHistory {
 			return;
 		}
 
+		this.async.clearTimeout(this.__timer);
+		this.__hasPendingChanges = false;
 		this.updateStack();
 	}
 

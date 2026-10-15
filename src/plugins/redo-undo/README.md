@@ -67,13 +67,13 @@ const editor = Jodit.make('#editor', {
 
 **Default:** `1000` (milliseconds)
 
-Delay (in milliseconds) before creating a new history snapshot after a change. Prevents creating snapshots on every keystroke.
+How long a history step stays open after its first change, in milliseconds. The changes made in that time are undone together, so typing isn't undone a keystroke at a time, and a long run of typing is undone a `timeout` at a time.
 
 **Example:**
 ```typescript
 const editor = Jodit.make('#editor', {
     history: {
-        timeout: 500  // Create snapshots every 500ms of inactivity
+        timeout: 500  // A step holds up to 500ms of changes
     }
 });
 ```
@@ -175,7 +175,7 @@ const editor = Jodit.make('#editor', {
     history: {
         enable: true,
         maxHistoryLength: 50,  // Keep last 50 changes
-        timeout: 2000          // Create snapshot after 2s of inactivity
+        timeout: 2000          // A step holds up to 2s of changes
     }
 });
 
@@ -292,7 +292,7 @@ The plugin delegates to the editor's history system:
 ### Snapshot Creation
 
 History snapshots are created:
-1. After `timeout` milliseconds of inactivity (default 1000ms)
+1. `timeout` milliseconds after the first change of a step (default 1000ms)
 2. On selection changes, mouse events, keyboard events
 3. Automatically managed by core History module
 4. Stored in Stack with configurable max length
@@ -395,7 +395,7 @@ editor.e.on('internalChange', () => {
 
 3. **History Limit**: When `maxHistoryLength` exceeded, oldest snapshots discarded
 
-4. **Rapid Changes**: Snapshot creation is debounced by `timeout` to prevent excessive snapshots
+4. **Rapid Changes**: Changes made within `timeout` of a step's first change join that step instead of each becoming a snapshot
 
 5. **Selection Only**: Selection changes create snapshots to restore cursor position
 
@@ -421,7 +421,7 @@ editor.e.on('internalChange', () => {
 - History module uses `Stack` class for snapshot storage
 - History module uses `Snapshot` class for capturing editor state
 - Snapshots include content and selection information
-- The `timeout` option uses debouncing to batch rapid changes
+- The `timeout` option groups rapid changes into steps of up to `timeout` milliseconds
 - History is per-editor instance (each editor has separate history)
 - No persistence between page reloads (history is in-memory)
 - The plugin has minimal code - mainly registers buttons and commands

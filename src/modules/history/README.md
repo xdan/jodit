@@ -42,10 +42,26 @@ editor.editor.appendChild(editor.createInside.text('Hello world!'));
 editor.synchronizeValues();
 ```
 
-Now the story has changed:
+Now the story has changed, once `history.timeout` has passed:
 
 ```js
-console.log(editor.history.length); // 2
+setTimeout(() => {
+	console.log(editor.history.length); // 2
+}, editor.o.history.timeout);
+```
+
+## Grouping changes
+
+The first change after a step opens a new one, and the step goes into the history `history.timeout` milliseconds (1000 by default) later, with every change made in that time. Steady typing is undone a second or so at a time, and changes more than `history.timeout` apart are never undone together.
+
+Until the step is recorded it is open: `canUndo()` and `canRedo()` already count it, and `undo()` and `redo()` record it before they move. Setting `editor.value` records it straight away.
+
+```js
+const editor = Jodit.make('#editor', {
+	history: {
+		timeout: 500
+	}
+});
 ```
 
 To clear the history, you can call the method:
