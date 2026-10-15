@@ -17,6 +17,7 @@ import type {
 } from 'jodit/types';
 import { TEXT_PLAIN } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
+import { toArray } from 'jodit/core/helpers/array/to-array';
 import {
 	isArray,
 	isNumber,
@@ -47,6 +48,28 @@ function removeExtraFragments(html: string): string {
 	}
 
 	return html;
+}
+
+/**
+ * Google Docs wraps the copied content in
+ * `<b style="font-weight:normal;" id="docs-internal-guid-…">`. Kept, the
+ * wrapper holds the pasted blocks, and without its style it makes the whole
+ * paste bold
+ * @private
+ */
+export function removeGoogleDocsWrapper(html: string): string {
+	if (!/<b\s[^>]*docs-internal-guid-/i.test(html)) {
+		return html;
+	}
+
+	// An inert document: images don't load and handlers don't run
+	const { body } = new DOMParser().parseFromString(html, 'text/html');
+
+	toArray(body.querySelectorAll('b[id^="docs-internal-guid-"]')).forEach(
+		Dom.unwrap
+	);
+
+	return body.innerHTML;
 }
 
 /**
@@ -83,7 +106,7 @@ export function pasteInsertHtml(
 	}
 
 	if (isString(html)) {
-		html = removeExtraFragments(html);
+		html = removeExtraFragments(removeGoogleDocsWrapper(html));
 	}
 
 	editor.s.insertHTML(html);

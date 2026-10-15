@@ -39,7 +39,12 @@ import { Plugin } from 'jodit/core/plugin/plugin';
 import './config';
 
 import type { PastedValue, PasteEvent } from './interface';
-import { askInsertTypeDialog, getAllTypes, pasteInsertHtml } from './helpers';
+import {
+	askInsertTypeDialog,
+	getAllTypes,
+	pasteInsertHtml,
+	removeGoogleDocsWrapper
+} from './helpers';
 
 /**
  * Ask before paste HTML source
@@ -213,7 +218,7 @@ export class paste extends Plugin {
 
 			switch (action) {
 				case INSERT_CLEAR_HTML:
-					html = cleanFromWord(html);
+					html = cleanFromWord(removeGoogleDocsWrapper(html));
 					break;
 
 				case INSERT_ONLY_TEXT:
