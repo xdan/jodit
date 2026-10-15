@@ -156,4 +156,107 @@ describe('Select cells plugin', () => {
 			editor.ed.elementFromPoint = original;
 		});
 	});
+
+	describe('Delete the last row or column (#1597)', () => {
+		[
+			[
+				'the only row',
+				'tablebinrow',
+				'<p>Before</p>' +
+					'<table><tbody><tr><td>a1</td><td>b1</td></tr></tbody></table>' +
+					'<p>After</p>',
+				['a1'],
+				'<p>Before</p><p>|After</p>'
+			],
+			[
+				'the only column',
+				'tablebincolumn',
+				'<p>Before</p>' +
+					'<table><tbody><tr><td>a1</td></tr><tr><td>a2</td></tr></tbody></table>' +
+					'<p>After</p>',
+				['a2'],
+				'<p>Before</p><p>|After</p>'
+			],
+			[
+				'every row at once',
+				'tablebinrow',
+				'<p>Before</p>' +
+					'<table><tbody>' +
+					'<tr><td>a1</td><td>b1</td></tr>' +
+					'<tr><td>a2</td><td>b2</td></tr>' +
+					'</tbody></table>' +
+					'<p>After</p>',
+				['a1', 'b1', 'a2', 'b2'],
+				'<p>Before</p><p>|After</p>'
+			],
+			[
+				'the only row of a table at the end',
+				'tablebinrow',
+				'<p>Before</p>' +
+					'<table><tbody><tr><td>a1</td><td>b1</td></tr></tbody></table>',
+				['b1'],
+				'<p>Before|</p>'
+			],
+			[
+				'the only row of a table in a cell',
+				'tablebinrow',
+				'<table><tbody><tr>' +
+					'<td>x<table><tbody><tr><td>n1</td></tr></tbody></table></td>' +
+					'<td>b1</td>' +
+					'</tr></tbody></table>',
+				['n1'],
+				'<table><tbody><tr><td>x|</td><td>b1</td></tr></tbody></table>'
+			]
+		].forEach(([name, command, html, texts, result]) => {
+			it(`Should remove the table and put the caret where it was after deleting ${name}`, () => {
+				const editor = getJodit();
+
+				editor.value = html;
+
+				const cells = texts.map(text =>
+					Array.from(editor.editor.querySelectorAll('td')).find(
+						td => td.textContent === text
+					)
+				);
+
+				editor.s.setCursorIn(cells[0]);
+				cells.forEach(cell =>
+					editor.getInstance('Table', editor.o).addSelection(cell)
+				);
+
+				if (cells.length > 1) {
+					editor.s.sel.removeAllRanges();
+				}
+
+				editor.execCommand(command);
+
+				replaceCursorToChar(editor);
+
+				expect(editor.value).equals(result);
+			});
+		});
+
+		it('Should put the caret where the table was after Delete table with several cells selected', () => {
+			const editor = getJodit();
+
+			editor.value =
+				'<p>Before</p>' +
+				'<table><tbody><tr><td>a1</td><td>b1</td></tr></tbody></table>' +
+				'<p>After</p>';
+
+			const tds = editor.editor.querySelectorAll('td');
+
+			editor.s.setCursorIn(tds[0]);
+			tds.forEach(td =>
+				editor.getInstance('Table', editor.o).addSelection(td)
+			);
+			editor.s.sel.removeAllRanges();
+
+			editor.execCommand('tablebin');
+
+			replaceCursorToChar(editor);
+
+			expect(editor.value).equals('<p>Before</p><p>|After</p>');
+		});
+	});
 });

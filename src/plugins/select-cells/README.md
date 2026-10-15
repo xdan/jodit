@@ -117,6 +117,8 @@ Plugin intercepts table commands when cells selected:
 - `tableaddcolumnafter/before` - Add column
 - `tableaddrowafter/before` - Add row
 
+Deleting the last row or column deletes the table. A deleted table leaves the cursor at the start of what followed it, or at the end of what preceded it.
+
 ### Justify Commands
 
 Handles justify commands for selected cells:
