@@ -30,6 +30,7 @@ export * from './is-unsafe-proto-key';
 export * from './mark-deprecated';
 export * from './media-wrapper';
 export * from './parse-query';
+export * from './prepare-media';
 export * from './print';
 export * from './reset';
 export * from './scroll-into-view';

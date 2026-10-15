@@ -35,7 +35,8 @@ declare module 'jodit/config' {
 		 * - is wrapped in it instead of the editor-only `mediaFakeTag` when its tag
 		 * is one of `mediaBlocks`, or left in it when it's already in one
 		 * - goes in inside it when the video popup inserts it, as an upload, a
-		 * link's embed or embed code that is one element
+		 * link's embed or embed code that is one element, and when a pasted
+		 * video link is turned into its embed
 		 * - opens the media popup for its wrapper when clicked, whose Align and
 		 * Delete act on the wrapper
 		 *

@@ -21,6 +21,7 @@ import {
 	convertMediaUrlToVideoEmbed,
 	isString,
 	isURL,
+	prepareEmbedCode,
 	refs,
 	stripTags
 } from 'jodit/core/helpers';
@@ -95,7 +96,7 @@ export class link extends Plugin {
 	private onProcessPasteLink(
 		ignore: ClipboardEvent,
 		html: string
-	): HTMLAnchorElement | void | true {
+	): HTMLElement | void | true {
 		const { jodit } = this;
 
 		if (!isURL(html) || !jodit.o.link.processPastedLink) {
@@ -116,7 +117,10 @@ export class link extends Plugin {
 			);
 
 			if (embed !== html) {
-				return jodit.createInside.fromHTML(embed) as HTMLAnchorElement;
+				const media = prepareEmbedCode(jodit, embed);
+				return isString(media)
+					? jodit.createInside.fromHTML(media)
+					: media;
 			}
 		}
 
