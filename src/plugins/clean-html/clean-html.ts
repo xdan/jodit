@@ -11,7 +11,7 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { hook, watch } from 'jodit/core/decorators';
+import { autobind, hook, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { LazyWalker } from 'jodit/core/dom/lazy-walker';
 import { pluginSystem } from 'jodit/core/global';
@@ -42,8 +42,26 @@ export class cleanHtml extends Plugin {
 		}
 	];
 
+	constructor(jodit: IJodit) {
+		super(jodit);
+
+		// `@watch` binds once the plugin is ready, which is after the initial
+		// value has already gone into the editor. The handlers that keep
+		// markup out of the live tree have to be there from the start, or
+		// event handlers in a textarea's content run before anything
+		// sanitises them.
+		jodit.e
+			.on('safeHTML', this.onSafeHTML)
+			.on('beforeSetNativeEditorValue', this.onBeforeSetNativeEditorValue)
+			.on('afterSetNativeEditorValue', this.onAfterSetNativeEditorValue);
+	}
+
 	/** @override */
-	protected override afterInit(jodit: IJodit): void {}
+	protected override afterInit(): void {
+		// The walker's own `:afterInit` watcher is bound on that very event,
+		// so without this the first pass waited for the first key or click
+		this.onChangeCleanHTML();
+	}
 
 	private get isEditMode(): boolean {
 		return !(
@@ -120,7 +138,7 @@ export class cleanHtml extends Plugin {
 	 * ago is a real element now, so the live tree is sanitized once more, in
 	 * the same call stack, before any handler it might carry can fire.
 	 */
-	@watch(':afterSetNativeEditorValue')
+	@autobind
 	protected onAfterSetNativeEditorValue(): void {
 		safeHTML(this.j.editor, this.j.o.cleanHTML);
 	}
@@ -128,7 +146,7 @@ export class cleanHtml extends Plugin {
 	/**
 	 * Event handler when manually assigning a value to the HTML editor.
 	 */
-	@watch(':beforeSetNativeEditorValue')
+	@autobind
 	protected onBeforeSetNativeEditorValue(data: { value: string }): boolean {
 		const [sandBox, iframe] = this.j.o.cleanHTML.useIframeSandbox
 			? this.j.createInside.sandbox()
@@ -257,7 +275,7 @@ export class cleanHtml extends Plugin {
 		);
 	}
 
-	@watch(':safeHTML')
+	@autobind
 	protected onSafeHTML(sandBox: HTMLElement): void {
 		const sanitizer = this.j.o.cleanHTML.sanitizer;
 
@@ -270,6 +288,14 @@ export class cleanHtml extends Plugin {
 
 	/** @override */
 	protected override beforeDestruct(): void {
+		this.j.e
+			.off('safeHTML', this.onSafeHTML)
+			.off(
+				'beforeSetNativeEditorValue',
+				this.onBeforeSetNativeEditorValue
+			)
+			.off('afterSetNativeEditorValue', this.onAfterSetNativeEditorValue);
+
 		this.walker.destruct();
 	}
 }

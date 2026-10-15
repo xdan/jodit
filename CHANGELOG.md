@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.2
+
+#### :lock: Security
+
+- Stored XSS through the initial value of a `<textarea>`: the content the editor is created on went into the live editing area before the clean-html plugin had attached its handlers (they were bound with `@watch`, which attaches once the plugin is ready, after `afterInit`), so an event handler such as `<img onerror>` in stored HTML ran in the editing user's browser, in iframe mode as well, and stayed in the value until the background pass removed it. Values set later through `editor.value` were not affected. The plugin now binds its `safeHTML`, `beforeSetNativeEditorValue` and `afterSetNativeEditorValue` handlers in its constructor, before the editor reads the element, and the background pass starts at `afterInit` instead of waiting for the first key or click. Reported by Brendon Muir ([@brendon](https://github.com/brendon)).
+
 ## 4.18.1
 
 #### :bug: Bug Fix
