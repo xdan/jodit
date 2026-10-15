@@ -71,7 +71,7 @@ const editor = Jodit.make('#editor', {
 ### `cleanHTML.replaceOldTags`
 - **Type**: `IDictionary<HTMLTagNames> | false`
 - **Default**: `{ i: 'em', b: 'strong' }`
-- **Description**: Replace deprecated tags with modern equivalents
+- **Description**: Replace deprecated tags with modern equivalents. A value set with `editor.value` or `setEditorValue()`, which includes Undo, Redo and the source view, is converted straight away. Tags that come in later, for example in pasted content, are converted by the background cleaner, and a caret inside them stays where it is.
 
 ```javascript
 const editor = Jodit.make('#editor', {

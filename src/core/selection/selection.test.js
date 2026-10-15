@@ -216,14 +216,14 @@ describe('Selection Module Tests', function () {
 
 		it('Should resolve the last text descendant after a nested element', () => {
 			const editor = getJodit();
-			editor.value = '<p><b>first</b><i>last</i></p>';
+			editor.value = '<p><strong>first</strong><em>last</em></p>';
 			const range = editor.s.createRange();
 			range.setStart(editor.editor, 1);
 			range.collapse(true);
 			editor.s.selectRange(range);
 
 			expect(editor.s.current()).equals(
-				editor.editor.querySelector('i').firstChild
+				editor.editor.querySelector('em').firstChild
 			);
 		});
 
@@ -263,7 +263,7 @@ describe('Selection Module Tests', function () {
 		[false, true].forEach(includeSibling => {
 			it(`Should preserve an element end offset when splitting the start text (${includeSibling})`, () => {
 				const editor = getJodit();
-				editor.value = '<p>abcd<i>ef</i>gh</p>';
+				editor.value = '<p>abcd<em>ef</em>gh</p>';
 				const block = editor.editor.firstChild;
 				const range = editor.s.createRange();
 				range.setStart(block.firstChild, 2);
@@ -274,8 +274,8 @@ describe('Selection Module Tests', function () {
 
 				expect(editor.value).equals(
 					includeSibling
-						? '<p>ab<span>cd<i>ef</i></span>gh</p>'
-						: '<p>ab<span>cd</span><i>ef</i>gh</p>'
+						? '<p>ab<span>cd<em>ef</em></span>gh</p>'
+						: '<p>ab<span>cd</span><em>ef</em>gh</p>'
 				);
 			});
 		});

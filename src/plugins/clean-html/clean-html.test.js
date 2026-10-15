@@ -61,9 +61,9 @@ describe('Clean html plugin', function () {
 			expect(editor.value).equals('<p>test</p>');
 
 			editor.value =
-				'<div>a<br></div><ul><li>b<br></li></ul><h2><b>c</b><br></h2>';
+				'<div>a<br></div><ul><li>b<br></li></ul><h2><strong>c</strong><br></h2>';
 			expect(editor.value).equals(
-				'<div>a</div><ul><li>b</li></ul><h2><b>c</b></h2>'
+				'<div>a</div><ul><li>b</li></ul><h2><strong>c</strong></h2>'
 			);
 		});
 
@@ -535,6 +535,180 @@ describe('Clean html plugin', function () {
 						'<p>test <strong>old</strong> test</p>'
 					);
 					done();
+				});
+			});
+
+			describe('In an assigned value (#1587)', function () {
+				it('Should replace them straight away', function () {
+					const editor = getJodit();
+
+					editor.value = '<p><b>one</b> <i>two</i></p>';
+
+					expect(editor.value).equals(
+						'<p><strong>one</strong> <em>two</em></p>'
+					);
+				});
+
+				it('Should let Bold remove bold from old bold text', function () {
+					const editor = getJodit();
+
+					editor.value = '<p>one <b>|two| three</b> four</p>';
+					setCursorToChar(editor);
+					editor.execCommand('bold');
+
+					expect(editor.value).equals(
+						'<p>one two<strong> three</strong> four</p>'
+					);
+				});
+
+				it('Should keep old tags with replaceOldTags: false', function () {
+					const editor = getJodit({
+						cleanHTML: {
+							replaceOldTags: false
+						}
+					});
+
+					editor.value = '<p><b>one</b> <i>two</i></p>';
+
+					expect(editor.value).equals('<p><b>one</b> <i>two</i></p>');
+				});
+
+				it('Should keep old tags when the filter is disabled', function () {
+					const editor = getJodit({
+						cleanHTML: {
+							disableCleanFilter: new Set(['replaceOldTags'])
+						}
+					});
+
+					editor.value = '<p><b>one</b> <i>two</i></p>';
+
+					expect(editor.value).equals('<p><b>one</b> <i>two</i></p>');
+				});
+			});
+
+			describe('Selection inside a tag the walker replaces (#1587)', function () {
+				// An assigned value is converted at once, so the old tag comes in
+				// the way a paste brings it, and the walker replaces it later
+				function insertOldTag(editor, html) {
+					editor.value = '<p>test | test</p>';
+					setCursorToChar(editor);
+					editor.s.insertHTML(html);
+					expect(editor.value).equals(`<p>test ${html} test</p>`);
+				}
+
+				it('Should keep the caret where it was', async function () {
+					const editor = getJodit({
+						cleanHTML: {
+							timeout: 0
+						}
+					});
+
+					insertOldTag(editor, '<b>old</b>');
+
+					const range = editor.s.createRange();
+					range.setStart(
+						editor.editor.querySelector('b').firstChild,
+						2
+					);
+					range.collapse(true);
+					editor.s.selectRange(range);
+
+					await editor.async.promise(resolve =>
+						editor.e.one('finishedCleanHTMLWorker', resolve)
+					);
+
+					editor.s.insertHTML('x');
+
+					expect(editor.value).equals(
+						'<p>test <strong>olxd</strong> test</p>'
+					);
+				});
+
+				it('Should keep a caret set between the children of the tag', async function () {
+					const editor = getJodit({
+						cleanHTML: {
+							timeout: 0
+						}
+					});
+
+					insertOldTag(editor, '<b>old</b>');
+
+					const range = editor.s.createRange();
+					range.setStart(editor.editor.querySelector('b'), 1);
+					range.collapse(true);
+					editor.s.selectRange(range);
+
+					await editor.async.promise(resolve =>
+						editor.e.one('finishedCleanHTMLWorker', resolve)
+					);
+
+					editor.s.insertHTML('x');
+
+					expect(editor.value).equals(
+						'<p>test <strong>oldx</strong> test</p>'
+					);
+				});
+
+				it('Should keep a selection that ends inside the tag', async function () {
+					const editor = getJodit({
+						cleanHTML: {
+							timeout: 0
+						}
+					});
+
+					insertOldTag(editor, '<i>old</i>');
+
+					const range = editor.s.createRange();
+					range.setStart(editor.editor.firstChild.firstChild, 2);
+					range.setEnd(
+						editor.editor.querySelector('i').firstChild,
+						2
+					);
+					editor.s.selectRange(range);
+
+					await editor.async.promise(resolve =>
+						editor.e.one('finishedCleanHTMLWorker', resolve)
+					);
+
+					expect(editor.value).equals(
+						'<p>test <em>old</em> test</p>'
+					);
+					expect(editor.s.range.toString()).equals('st ol');
+				});
+
+				it('Should not steal focus from an outside element', async function () {
+					const editor = getJodit({
+						cleanHTML: {
+							timeout: 0
+						}
+					});
+
+					const button = document.createElement('button');
+					document.body.appendChild(button);
+
+					try {
+						insertOldTag(editor, '<b>old</b>');
+
+						const range = editor.s.createRange();
+						range.setStart(
+							editor.editor.querySelector('b').firstChild,
+							2
+						);
+						range.collapse(true);
+						editor.s.selectRange(range);
+						button.focus();
+
+						await editor.async.promise(resolve =>
+							editor.e.one('finishedCleanHTMLWorker', resolve)
+						);
+
+						expect(editor.value).equals(
+							'<p>test <strong>old</strong> test</p>'
+						);
+						expect(document.activeElement).eq(button);
+					} finally {
+						document.body.removeChild(button);
+					}
 				});
 			});
 		});
