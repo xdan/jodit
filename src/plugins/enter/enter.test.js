@@ -1177,6 +1177,14 @@ describe('Enter behavior Tests', function () {
 					'<p><a href="#index">test</a></p><p>|<br></p>'
 				],
 				[
+					'<p>See <a href="#index">test|</a> today</p>',
+					'<p>See <a href="#index">test</a></p><p>| today</p>'
+				],
+				[
+					'<p>See <a href="#index">|test</a> today</p>',
+					'<p>See </p><p>|<a href="#index">test</a> today</p>'
+				],
+				[
 					'test<a href="#index">test|</a>',
 					'test<a href="#index">test</a><br>|<br>',
 					{ enter: 'br' }
@@ -1239,6 +1247,51 @@ describe('Enter behavior Tests', function () {
 							mod
 						);
 						replaceCursorToChar(editor);
+						expect(editor.value).eq(result);
+					});
+				});
+			});
+		});
+
+		describe('Enter at the start or end of a link (#1591)', () => {
+			[
+				[
+					'<p>See <a href="#index">test|</a>, today</p>',
+					'<p>See <a href="#index">test</a></p><p>text, today</p>'
+				],
+				[
+					'<p>See <a href="#index">|test</a> today</p>',
+					'<p>See </p><p>text<a href="#index">test</a> today</p>'
+				],
+				[
+					'<p>See <a href="#index">test|</a></p>',
+					'<p>See <a href="#index">test</a></p><p>text</p>'
+				],
+				[
+					'<p>See <a href="#index">test|</a></p><p>next</p>',
+					'<p>See <a href="#index">test</a></p><p>text</p><p>next</p>'
+				],
+				[
+					'<ul><li>See <a href="#index">test|</a></li></ul>',
+					'<ul><li>See <a href="#index">test</a></li><li>text</li></ul>'
+				]
+			].forEach(([source, result]) => {
+				describe('For source: ' + source, () => {
+					it('Should type at the start of the new line, outside the link', () => {
+						const editor = getJodit();
+						editor.value = source;
+						setCursorToChar(editor);
+						simulateEvent(
+							'keydown',
+							Jodit.KEY_ENTER,
+							editor.editor
+						);
+
+						expect(editor.s.sel.isCollapsed).is.true;
+
+						// Typing goes through the browser's own selection, which
+						// in Safari can differ from getRangeAt(0)
+						editor.ed.execCommand('insertText', false, 'text');
 						expect(editor.value).eq(result);
 					});
 				});
