@@ -125,7 +125,7 @@ describe('Tables Jodit Editor Tests', () => {
 					.appendRow(editor.editor.firstChild, false, true);
 
 				expect(editor.value).equals(
-					'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td></td><td></td><td></td></tr></tbody></table>'
+					'<table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td><br></td><td><br></td><td><br></td></tr></tbody></table>'
 				);
 			});
 
@@ -150,7 +150,7 @@ describe('Tables Jodit Editor Tests', () => {
 					expect(editor.value).equals(
 						'<table><tbody>' +
 							'<tr><td>1</td><td>2</td><td>3</td></tr>' +
-							'<tr><td></td><td></td><td></td></tr>' +
+							'<tr><td><br></td><td><br></td><td><br></td></tr>' +
 							'<tr><td>2</td><td>3</td><td>4</td></tr>' +
 							'</tbody></table>'
 					);
@@ -177,7 +177,7 @@ describe('Tables Jodit Editor Tests', () => {
 						expect(editor.value).equals(
 							'<table><tbody>' +
 								'<tr><td>1</td><td>2</td><td>3</td></tr>' +
-								'<tr><td rowspan="2"></td><td></td><td></td></tr>' +
+								'<tr><td rowspan="2"><br></td><td><br></td><td><br></td></tr>' +
 								'<tr><td>3</td><td>4</td></tr>' +
 								'</tbody></table>'
 						);
@@ -205,7 +205,7 @@ describe('Tables Jodit Editor Tests', () => {
 						expect(sortAttributes(editor.value)).equals(
 							'<table><tbody>' +
 								'<tr><td style="color:red">1</td><td class="blue">2</td><td>3</td></tr>' +
-								'<tr><td style="color:red"></td><td class="blue"></td><td></td></tr>' +
+								'<tr><td style="color:red"><br></td><td class="blue"><br></td><td><br></td></tr>' +
 								'<tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
 						);
 					});
@@ -231,7 +231,7 @@ describe('Tables Jodit Editor Tests', () => {
 						);
 
 					expect(editor.value).equals(
-						'<table><tbody><tr><td></td><td></td><td></td></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
+						'<table><tbody><tr><td><br></td><td><br></td><td><br></td></tr><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>2</td><td>3</td><td>4</td></tr></tbody></table>'
 					);
 				});
 			});
@@ -1397,6 +1397,146 @@ describe('Tables Jodit Editor Tests', () => {
 			);
 		});
 
+		describe('Cells added or emptied by table commands (#1593)', () => {
+			// The tests run with `cleanHTML.fillEmptyParagraph` off,
+			// so only the command itself can give the cell its `<br>`
+			[
+				[
+					'tableaddrowafter',
+					'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td><br></td><td><br></td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>'
+				],
+				[
+					'tableaddrowbefore',
+					'<tr><td><br></td><td><br></td></tr>' +
+						'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>'
+				],
+				[
+					'tableaddcolumnafter',
+					'<tr><td>1</td><td><br></td><td>2</td></tr>' +
+						'<tr><td>3</td><td><br></td><td>4</td></tr>'
+				],
+				[
+					'tableaddcolumnbefore',
+					'<tr><td><br></td><td>1</td><td>2</td></tr>' +
+						'<tr><td><br></td><td>3</td><td>4</td></tr>'
+				],
+				[
+					'tableempty',
+					'<tr><td><br></td><td>2</td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>'
+				]
+			].forEach(([command, result]) => {
+				it(`Should put a <br> in each new or emptied cell on ${command}`, () => {
+					const editor = getJodit();
+
+					editor.value =
+						'<table><tbody>' +
+						'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>' +
+						'</tbody></table>';
+
+					selectCells(editor, [0]);
+					editor.execCommand(command);
+
+					expect(editor.value).equals(
+						'<table><tbody>' + result + '</tbody></table>'
+					);
+				});
+			});
+
+			it('Should put a <br> in the cell made by merging empty cells', () => {
+				const editor = getJodit();
+
+				editor.value =
+					'<table><tbody>' +
+					'<tr><td><br></td><td><br></td></tr>' +
+					'<tr><td>3</td><td>4</td></tr>' +
+					'</tbody></table>';
+
+				selectCells(editor, [0, 1]);
+				editor.execCommand('tablemerge');
+
+				expect(editor.value).equals(
+					'<table><tbody>' +
+						'<tr><td colspan="2"><br></td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>' +
+						'</tbody></table>'
+				);
+			});
+
+			[
+				[
+					'Tab in the last cell',
+					3,
+					false,
+					'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>' +
+						'<tr><td><br></td><td><br></td></tr>'
+				],
+				[
+					'Shift+Tab in the first cell',
+					0,
+					true,
+					'<tr><td><br></td><td><br></td></tr>' +
+						'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>'
+				]
+			].forEach(([name, cell, shiftKey, result]) => {
+				it(`Should put a <br> in each cell of the row added by ${name}`, () => {
+					const editor = getJodit();
+
+					editor.value =
+						'<table><tbody>' +
+						'<tr><td>1</td><td>2</td></tr>' +
+						'<tr><td>3</td><td>4</td></tr>' +
+						'</tbody></table>';
+
+					editor.s.setCursorIn(
+						editor.editor.querySelectorAll('td')[cell]
+					);
+
+					simulateEvent(
+						'keydown',
+						Jodit.KEY_TAB,
+						editor.editor,
+						e => {
+							e.shiftKey = shiftKey;
+						}
+					);
+
+					expect(editor.value).equals(
+						'<table><tbody>' + result + '</tbody></table>'
+					);
+				});
+			});
+
+			it('Should put the caret in an empty cell on Tab, not select its <br>', () => {
+				const editor = getJodit();
+
+				editor.value =
+					'<table><tbody>' +
+					'<tr><td>1</td><td><br></td></tr>' +
+					'</tbody></table>';
+
+				editor.s.setCursorIn(editor.editor.querySelector('td'));
+
+				simulateEvent('keydown', Jodit.KEY_TAB, editor.editor);
+
+				expect(editor.s.range.collapsed).is.true;
+
+				editor.s.insertNode(editor.createInside.text('test'), false);
+
+				expect(editor.value).equals(
+					'<table><tbody>' +
+						'<tr><td>1</td><td>test<br></td></tr>' +
+						'</tbody></table>'
+				);
+			});
+		});
+
 		describe('After press Tab button cursor', () => {
 			it('should move cursor in next cell in table', () => {
 				const editor = getJodit();
@@ -1612,7 +1752,7 @@ describe('Tables Jodit Editor Tests', () => {
 					'</tr>' +
 					'<tr>' +
 					'<td>test<br></td>' +
-					'<td></td>' +
+					'<td><br></td>' +
 					'</tr>' +
 					'</tbody></table>'
 			);

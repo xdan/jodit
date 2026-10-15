@@ -94,7 +94,7 @@ On `keydown` event:
 2. If no next cell:
    - Calls `table.appendRow()` to add row at end/start
    - Gets newly created cell
-3. Selects entire cell content
+3. Selects entire cell content, or puts the cursor in an empty cell
 4. Fires `hidePopup` and `hideResizer` events
 
 ### Arrow Navigation
@@ -118,7 +118,7 @@ If target cell empty:
 
 ### Cursor Position
 
-For Tab: Selects entire cell content
+For Tab: Selects entire cell content (an empty cell gets the cursor)
 For arrows: Sets cursor at start/end based on direction
 
 ## Edge Cases

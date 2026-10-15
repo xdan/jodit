@@ -702,7 +702,7 @@ describe('Text Inline Popup plugin', () => {
 						clickButton('Insert column before', popupColor);
 
 						expect(sortAttributes(editor.value)).equals(
-							'<table><tbody><tr><td></td><td>3</td></tr></tbody></table>'
+							'<table><tbody><tr><td><br></td><td>3</td></tr></tbody></table>'
 						);
 					});
 				});
@@ -716,7 +716,7 @@ describe('Text Inline Popup plugin', () => {
 						clickButton('Insert row above', popupColor);
 
 						expect(sortAttributes(editor.value)).equals(
-							'<table><tbody><tr><td></td></tr><tr><td>3</td></tr></tbody></table>'
+							'<table><tbody><tr><td><br></td></tr><tr><td>3</td></tr></tbody></table>'
 						);
 					});
 				});

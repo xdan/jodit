@@ -444,7 +444,10 @@ export class selectCells extends Plugin {
 						break;
 
 					case 'empty':
-						cells.forEach(td => Dom.detach(td));
+						cells.forEach(td => {
+							Dom.detach(td);
+							Dom.append(td, this.j.createInside.element('br'));
+						});
 						break;
 
 					case 'bin':

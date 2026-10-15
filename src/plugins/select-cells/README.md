@@ -110,7 +110,7 @@ Plugin intercepts table commands when cells selected:
 - `tablesplitv` - Split cells vertically
 - `tablesplitg` - Split cells horizontally (горизонтально)
 - `tablemerge` - Merge selected cells
-- `tableempty` - Empty selected cells
+- `tableempty` - Empty selected cells, leaving a `<br>` in each
 - `tablebin` - Delete table
 - `tablebinrow` - Delete rows containing selected cells
 - `tablebincolumn` - Delete columns containing selected cells

@@ -108,7 +108,7 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 					Dom.append(next, first);
 					editor.s.setCursorBefore(first);
 				} else {
-					if (key === consts.KEY_TAB) {
+					if (key === consts.KEY_TAB && !Dom.isEmpty(next)) {
 						editor.s.select(next, true);
 					} else {
 						editor.s.setCursorIn(
