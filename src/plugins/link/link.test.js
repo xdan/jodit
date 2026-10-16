@@ -254,6 +254,55 @@ describe('Link plugin', () => {
 				});
 			});
 
+			describe('With mediaWrappers and mediaDefaultAlign (#1599)', () => {
+				it('should wrap and align the embed as the video popup does', () => {
+					const editor = getJodit({
+						mediaWrappers: {
+							iframe: { tag: 'span', className: 'fr-video' }
+						},
+						alignClasses: {
+							iframe: {
+								left: 'fr-fvl fr-dvi',
+								right: 'fr-fvr fr-dvi',
+								center: 'fr-fvc fr-dvb',
+								normal: 'fr-fvc fr-dvi'
+							}
+						},
+						mediaDefaultAlign: 'center'
+					});
+
+					editor.value = '<p>Hello |world</p>';
+					setCursorToChar(editor);
+
+					simulatePaste(
+						editor.editor,
+						'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
+					);
+
+					expect(sortAttributes(editor.value)).equal(
+						'<p>Hello <span class="fr-video fr-fvc fr-dvb" contenteditable="false" draggable="true"><iframe allowfullscreen="" frameborder="0" height="345" src="https://www.youtube.com/embed/8Qn_spdM5Zg" width="400"></iframe></span>world</p>'
+					);
+				});
+
+				it('should align an unwrapped embed with mediaDefaultAlign', () => {
+					const editor = getJodit({ mediaDefaultAlign: 'center' });
+
+					editor.value = '<p>|</p>';
+					setCursorToChar(editor);
+
+					simulatePaste(
+						editor.editor,
+						'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
+					);
+
+					expect(sortAttributes(editor.value)).equal(
+						sortAttributes(
+							'<iframe allowfullscreen="" frameborder="0" height="345" src="https://www.youtube.com/embed/8Qn_spdM5Zg" style="display:block;margin-left:auto;margin-right:auto" width="400"></iframe>'
+						)
+					);
+				});
+			});
+
 			describe('Disable', () => {
 				describe('Disable any convert', () => {
 					it('Should not change source link', () => {

@@ -8,19 +8,12 @@
  * @module plugins/video
  */
 
-import type {
-	IControlType,
-	IJodit,
-	IUIForm,
-	IUploaderData,
-	Nullable
-} from 'jodit/types';
+import type { IControlType, IJodit, IUIForm, IUploaderData } from 'jodit/types';
 import {
 	call,
 	convertMediaUrlToVideoEmbed,
-	getAlignClasses,
-	hAlignElement,
-	wrapMedia
+	prepareEmbedCode,
+	prepareMedia
 } from 'jodit/core/helpers';
 import { Button } from 'jodit/core/ui/button';
 import { UIBlock, UIForm, UIInput, UITextArea } from 'jodit/core/ui/form';
@@ -83,19 +76,6 @@ declare module 'jodit/config' {
 	}
 }
 
-// Media the popup inserts go in their wrapper (see `mediaWrappers`), aligned
-// with `mediaDefaultAlign`
-function prepareMedia(jodit: IJodit, element: HTMLElement): HTMLElement {
-	const media = wrapMedia(jodit, element);
-	const { mediaDefaultAlign } = jodit.o;
-
-	if (mediaDefaultAlign && mediaDefaultAlign !== 'normal') {
-		hAlignElement(media, mediaDefaultAlign, getAlignClasses(jodit, media));
-	}
-
-	return media;
-}
-
 function insertVideos(this: IJodit, data: IUploaderData): void {
 	data.files?.forEach(file => {
 		this.s.insertNode(
@@ -108,19 +88,6 @@ function insertVideos(this: IJodit, data: IUploaderData): void {
 			)
 		);
 	});
-}
-
-// Embed code that is one element is prepared as media; other code goes in as
-// it is
-function prepareEmbedCode(jodit: IJodit, code: string): string | HTMLElement {
-	const box = jodit.createInside.div();
-	box.innerHTML = code.trim();
-
-	const element = box.firstElementChild as Nullable<HTMLElement>;
-
-	return element && box.childNodes.length === 1
-		? prepareMedia(jodit, element)
-		: code;
 }
 
 Config.prototype.video = {

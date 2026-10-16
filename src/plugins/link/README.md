@@ -77,7 +77,7 @@ const editor = Jodit.make('#editor', {
 
 **Default:** `true`
 
-When `true`, automatically converts video URLs (YouTube, Vimeo, etc.) to embed codes when pasted.
+When `true`, automatically converts video URLs (YouTube, Vimeo, etc.) to embed codes when pasted. As with the video popup's, an embed that is one element goes in its wrapper from `mediaWrappers` and is aligned with `mediaDefaultAlign`.
 
 **Example:**
 ```typescript
