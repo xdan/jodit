@@ -723,6 +723,61 @@ describe('Resize plugin', () => {
 			expect(editor.value).equals('<p>one</p><p></p><p>two</p>');
 		});
 
+		// https://github.com/xdan/jodit/issues/1584
+		describe('Size attributes', () => {
+			const src = 'https://www.youtube.com/embed/3JZ_D3ELwOQ';
+
+			function framed(attrs) {
+				const editor = getJodit({ history: { timeout: 0 } });
+
+				editor.value = `<p><iframe ${attrs} src="${src}"></iframe></p>`;
+
+				simulateEvent(
+					['mousedown', 'mouseup', 'click'],
+					editor.editor.querySelector('[data-jodit_iframe_wrapper]')
+				);
+
+				const resizer = document.querySelector(
+					'.jodit-resizer[data-editor_id=' + editor.id + ']'
+				);
+				expect(resizer).is.not.null;
+
+				return { editor, resizer };
+			}
+
+			it('should leave them alone when the embed is only clicked', () => {
+				const { editor } = framed('width="100%" height="315"');
+
+				expect(sortAttributes(editor.value)).equals(
+					`<p><iframe height="315" src="${src}" width="100%"></iframe></p>`
+				);
+			});
+
+			it('should write the new size as numbers when it is resized', () => {
+				const { editor, resizer } = framed('width="320" height="180"');
+
+				// bottom-right handle
+				const handle = resizer.getElementsByTagName('div')[2];
+				const pos = offset(handle);
+
+				simulateEvent('mousedown', handle, data => {
+					data.clientX = pos.left;
+					data.clientY = pos.top;
+				});
+
+				simulateEvent('mousemove', editor.ow, data => {
+					data.clientX = pos.left + 20;
+					data.clientY = pos.top + 10;
+				});
+
+				simulateEvent('mouseup', editor.ow);
+
+				expect(sortAttributes(editor.value)).equals(
+					`<p><iframe height="190" src="${src}" width="340"></iframe></p>`
+				);
+			});
+		});
+
 		describe('Output HTML', () => {
 			it('should not contains JODIT tag', () => {
 				const editor = getJodit();
