@@ -22,7 +22,7 @@ Adds interactive resizing capability for images, iframes, tables, and custom ele
 - Touch event support
 - Read-only mode handling
 - Fullscreen compatibility
-- Auto-hide on scroll
+- Follows the element as the content scrolls
 - Keyboard controls
 
 ## Configuration Options
@@ -317,7 +317,7 @@ The frame HTML structure:
 
 - 4 corner handles for dragging
 - Center span for size display
-- Positioned absolutely over element
+- Positioned absolutely over element, inside a `.jodit-resizer-layer` that fills the workplace, so the frame is cut off at the editor's edges without making the workplace scroll
 
 ### Resize Operation
 
@@ -475,7 +475,7 @@ editor.e.on('afterInsertImage', (image) => {
 
 1. **Read-Only Mode**: Resize frame doesn't appear when editor is read-only
 
-2. **Scroll During Display**: Frame hides when user scrolls (unless actively resizing)
+2. **Scroll During Display**: Frame moves with the element as the content or the page scrolls
 
 3. **Missing Parent**: Frame hides if element is removed from DOM
 

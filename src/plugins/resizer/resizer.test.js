@@ -73,7 +73,8 @@ describe('Resize plugin', () => {
 		});
 
 		// https://github.com/xdan/jodit/issues/1266
-		it('Should hide resizer when the iframe content is scrolled', async () => {
+		// https://github.com/xdan/jodit/issues/1577
+		it('Should keep the frame on the image when the iframe content is scrolled', async () => {
 			const editor = getJodit({
 				iframe: true,
 				editHTMLDocumentMode: true,
@@ -93,12 +94,17 @@ describe('Resize plugin', () => {
 				'.jodit-resizer[data-editor_id=' + editor.id + ']'
 			);
 			expect(resizer).is.not.null;
-			expect(resizer.parentNode).is.not.null;
 
 			editor.ew.scrollTo(0, 300);
 			await delay(100);
 
-			expect(resizer.parentNode).is.null;
+			expect(resizer.parentNode).is.not.null;
+			expect(
+				Math.round(
+					img.getBoundingClientRect().top +
+						editor.iframe.getBoundingClientRect().top
+				)
+			).equals(Math.round(resizer.getBoundingClientRect().top));
 		});
 	});
 
@@ -792,6 +798,74 @@ describe('Resize plugin', () => {
 					'<iframe frameborder="0" height="500" src="https://www.google.com/maps/embed" style="border:0px currentColor" width="100%"></iframe><iframe frameborder="0" height="500" src="https://www.google.com/maps/embed" style="border:0px currentColor" width="100%"></iframe>'
 				);
 			});
+		});
+	});
+
+	// https://github.com/xdan/jodit/issues/1577
+	describe('Scrolling', () => {
+		function framed(options) {
+			const editor = getJodit({ history: { timeout: 0 }, ...options });
+
+			editor.value =
+				'<p>line</p>'.repeat(3) +
+				'<p><img alt="" src="tests/artio.jpg" style="width:100px;height:100px"/></p>' +
+				'<p>line</p>'.repeat(30);
+
+			const img = editor.editor.querySelector('img');
+			simulateEvent('click', img);
+
+			const resizer = document.querySelector(
+				'.jodit-resizer[data-editor_id=' + editor.id + ']'
+			);
+			expect(resizer).is.not.null;
+
+			return { editor, img, resizer };
+		}
+
+		const top = element => Math.round(element.getBoundingClientRect().top);
+
+		it('should move the frame with the image as the content scrolls', async () => {
+			const { editor, img, resizer } = framed({ height: 300 });
+
+			editor.editor.scrollTop = 40;
+			await delay(100);
+
+			expect(resizer.parentNode).is.not.null;
+			expect(top(resizer)).equals(top(img));
+		});
+
+		it('should not make the editor scrollable when the frame runs past its bottom', async () => {
+			const { editor, img, resizer } = framed({ height: 300 });
+			const { workplace } = editor;
+
+			// Clicked while scrolled down, then scrolled back up
+			editor.editor.scrollTop = 100;
+			await delay(100);
+			simulateEvent('click', img);
+			editor.editor.scrollTop = 0;
+			img.style.height = '1000px';
+			editor.e.fire('resize');
+			await delay(100);
+
+			expect(resizer.parentNode).is.not.null;
+			expect(top(resizer)).equals(top(img));
+			expect(workplace.scrollHeight).equals(workplace.clientHeight);
+		});
+
+		it('should keep the frame on the image as the page scrolls', async () => {
+			const { img, resizer } = framed({ inline: true });
+			const spacer = document.createElement('div');
+			spacer.style.height = '3000px';
+			document.body.appendChild(spacer);
+
+			window.scrollBy(0, 50);
+			await delay(100);
+
+			expect(resizer.parentNode).is.not.null;
+			expect(top(resizer)).equals(top(img));
+
+			window.scrollTo(0, 0);
+			spacer.remove();
 		});
 	});
 });
