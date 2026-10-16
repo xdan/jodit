@@ -7,11 +7,24 @@
 /**
  * @module plugins/inline-popup
  */
-import type { IJodit } from 'jodit/types';
+import type { IJodit, Nullable } from 'jodit/types';
 
 import { align } from './img';
 
 export default [
+	{
+		name: 'replace',
+		icon: 'video',
+		tooltip: 'Replace',
+		popup: (
+			editor: IJodit,
+			target: Nullable<Node>,
+			close: () => void
+		): HTMLElement | void =>
+			target
+				? editor.e.fire('generateReplaceVideoTabs', target, close)
+				: undefined
+	},
 	{
 		name: 'bin',
 		tooltip: 'Delete',

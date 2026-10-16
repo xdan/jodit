@@ -84,6 +84,8 @@ const editor = Jodit.make('#editor', {
 
 Inserts the videos uploaded from the popup's Upload tab. The tab comes first in the popup, and is shown under the same conditions as the image and file popups' Upload tab: `uploader.url` or `uploader.customUploadFunction` is set, and `uploader.showTabInFileSelector` isn't `false`. `uploader.insertImageAsBase64URI` alone doesn't show it. The selection is restored before the handler is called.
 
+The media popup's Replace uses the same tabs and handler, with the cursor after the media it replaces, and the first thing the handler inserts takes that media's place (see the video properties plugin). So the handler should insert straight away, with `this.s.insertNode` or `this.s.insertHTML`.
+
 **Example:**
 ```typescript
 const editor = Jodit.make('#editor', {

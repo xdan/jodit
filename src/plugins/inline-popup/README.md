@@ -120,7 +120,7 @@ Jodit.make('#editor', {
 - **`cells`** (table cells): Table modification tools
 - **`selection`**: Bold, italic, underline, lists, alignment, etc.
 - **`toolbar`**: General inline toolbar
-- **`iframe`/`jodit-media`**: Media element tools: Delete, Edit (the video properties dialog) and Align
+- **`iframe`/`jodit-media`**: Media element tools: Replace (the video popup's tabs), Delete, Edit (the video properties dialog) and Align
 
 ## How It Works
 
