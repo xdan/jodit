@@ -398,4 +398,91 @@ describe('Media plugin', () => {
 			);
 		});
 	});
+
+	// https://github.com/xdan/jodit/issues/1576
+	describe('Delete after a click', () => {
+		const frVideo = { tag: 'span', className: 'fr-video' };
+
+		function click(target) {
+			simulateEvent(['mousedown', 'mouseup', 'click'], target);
+		}
+
+		function clickAndPress(editor, target, key = 'Delete') {
+			click(target);
+			simulateEvent('keydown', key, editor.editor);
+		}
+
+		it('should delete a video in jodit-media, not join the next line to it', async () => {
+			const editor = getJodit();
+
+			editor.value =
+				'<p>one</p><p><video src="movie.mp4"></video></p><p>two</p>';
+			await delay(100);
+
+			clickAndPress(editor, editor.editor.querySelector('jodit-media'));
+
+			expect(editor.value).equals('<p>one</p><p><br></p><p>two</p>');
+		});
+
+		it('should delete it with Backspace too', async () => {
+			const editor = getJodit();
+
+			editor.value =
+				'<p>one</p><p><video src="movie.mp4"></video></p><p>two</p>';
+			await delay(100);
+
+			clickAndPress(
+				editor,
+				editor.editor.querySelector('jodit-media'),
+				'Backspace'
+			);
+
+			expect(editor.value).equals('<p>one</p><p><br></p><p>two</p>');
+		});
+
+		it('should delete a video with its wrapper from mediaWrappers', async () => {
+			const editor = getJodit({ mediaWrappers: { video: frVideo } });
+
+			editor.value =
+				'<p>one</p><p><video src="movie.mp4"></video></p><p>two</p>';
+			await delay(100);
+
+			clickAndPress(editor, editor.editor.querySelector('video'));
+
+			expect(editor.value).equals('<p>one</p><p><br></p><p>two</p>');
+		});
+
+		it('should delete an embed with its wrapper from mediaWrappers', () => {
+			const editor = getJodit({ mediaWrappers: { iframe: frVideo } });
+
+			editor.value =
+				'<p>one</p><p><span class="fr-video"><iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ"></iframe></span></p><p>two</p>';
+
+			clickAndPress(
+				editor,
+				editor.editor.querySelector('[data-jodit_iframe_wrapper]')
+			);
+
+			expect(editor.value).equals('<p>one</p><p><br></p><p>two</p>');
+		});
+
+		it('should show the media popup rather than the selection popup', async () => {
+			const editor = getJodit({
+				mediaWrappers: { video: frVideo },
+				toolbarInlineForSelection: true
+			});
+
+			editor.value =
+				'<p>one</p><p><video src="movie.mp4"></video></p><p>two</p>';
+			await delay(100);
+
+			click(editor.editor.querySelector('video'));
+			await delay(editor.defaultTimeout * 2);
+
+			const popup = getOpenedPopup(editor);
+
+			expect(getButton('bin', popup)).is.not.null;
+			expect(getButton('bold', popup)).is.null;
+		});
+	});
 });

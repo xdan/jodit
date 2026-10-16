@@ -228,7 +228,7 @@ When a media element is detected:
    - Width: Sets to `element.offsetWidth`
    - Height: Sets to `element.offsetHeight`
 5. **DOM Insertion**: Inserts wrapper before original element and moves element inside
-6. **Event Binding**: Adds click/touch handlers to place cursor after element
+6. **Event Binding**: Adds mousedown/touch handlers that select the wrapper
 
 ### Value Extraction Cleanup
 
@@ -246,8 +246,7 @@ When getting editor value (`afterGetValueFromEditor` event):
 When user clicks/touches a wrapped media element:
 
 1. **Event Trigger**: `mousedown.select` or `touchstart.select` event fires
-2. **Cursor Positioning**: Calls `editor.s.setCursorAfter(element)`
-3. **Selection**: Places cursor immediately after the media element
+2. **Selection**: Calls `editor.s.select(element)`, selecting the wrapper as a pressed image is selected, so Delete and Backspace remove the media and typing replaces it
 
 ### Debounced Processing
 
