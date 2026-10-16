@@ -868,4 +868,161 @@ describe('Resize plugin', () => {
 			spacer.remove();
 		});
 	});
+
+	// https://github.com/xdan/jodit/issues/1530
+	describe('For video', () => {
+		// One 32x18 frame
+		const clip =
+			'data:video/webm;base64,GkXfo59ChoEBQveBAULygQRC84EIQoKEd2VibUKHgQJChYECGFOAZwEAAAAAAAHWEU2bdLpNu4tTq4QVSalmU6yBoU27i1OrhBZUrmtTrIHGTbuMU6uEElTDZ1OsggEiTbuMU6uEHFO7a1OsggHA7AEAAAAAAABZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVSalmoCrXsYMPQkBNgIRMYXZmV0GETGF2ZkSJiECPQAAAAAAAFlSua9euAQAAAAAAAE7XgQFzxYgAAAAAAAAAAZyBACK1nIN1bmSIgQCGhVZfVlA4g4EBI+ODhDuaygDgkLCBILqBEpqBAlWwhFW5gQFV7oEA7AEAAAAAAAACAAASVMNn0HNzzWPAi2PFiAAAAAAAAAABZ8iYRaOHRU5DT0RFUkSHi0xhdmMgbGlidnB4Z8ihRaOIRFVSQVRJT05Eh5MwMDowMDowMS4wMDAwMDAwMDAAH0O2dcTngQCjv4EAAIAQAwCdASogABIAAkcIhYWImYSIDIICdbokgH8AQWxuICwA/vEKj/+QTYEPAH/8ZU8ZU8ZU/4vsPupnMBxTu2uRu4+zgQC3iveBAfGCAXfwgQM=';
+		const frVideo = { tag: 'span', className: 'fr-video' };
+
+		async function loaded(editor) {
+			const video = editor.editor.querySelector('video');
+
+			if (video.readyState < 1) {
+				await new Promise(resolve =>
+					video.addEventListener('loadedmetadata', resolve, {
+						once: true
+					})
+				);
+			}
+
+			// The media plugin wraps it after a delay
+			await delay(100);
+
+			return video;
+		}
+
+		function resize(editor, target, dx) {
+			simulateEvent(['mousedown', 'mouseup', 'click'], target);
+
+			const resizer = document.querySelector(
+				'.jodit-resizer[data-editor_id=' + editor.id + ']'
+			);
+			expect(resizer).is.not.null;
+
+			// bottom-right handle
+			const handle = resizer.getElementsByTagName('div')[2];
+			const pos = offset(handle);
+
+			simulateEvent('mousedown', handle, data => {
+				data.clientX = pos.left;
+				data.clientY = pos.top;
+			});
+
+			simulateEvent('mousemove', editor.ow, data => {
+				data.clientX = pos.left + dx;
+				data.clientY = pos.top;
+			});
+
+			simulateEvent('mouseup', editor.ow);
+
+			return resizer;
+		}
+
+		it('should resize it by its width alone, keeping its ratio', async () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+
+			editor.value = `<p><video src="${clip}" style="width:320px"></video></p>`;
+			const video = await loaded(editor);
+			const wrapper = video.parentElement;
+
+			expect(wrapper.tagName).equals('JODIT-MEDIA');
+
+			// A click lands on the wrapper, which covers the video
+			const resizer = resize(editor, wrapper, 20);
+
+			expect(sortAttributes(editor.value)).equals(
+				`<p><video src="${clip}" style="width:340px"></video></p>`
+			);
+			expect(video.offsetHeight).equals(191);
+			expect(resizer.offsetWidth).equals(340);
+			expect(wrapper.offsetWidth).equals(340);
+		});
+
+		it('should keep the height of a video that has one in step with its width', async () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+
+			editor.value = `<p><video src="${clip}" style="width:320px;height:180px"></video></p>`;
+			const video = await loaded(editor);
+
+			resize(editor, video.parentElement, 20);
+
+			expect(sortAttributes(editor.value)).equals(
+				`<p><video src="${clip}" style="height:191px;width:340px"></video></p>`
+			);
+		});
+
+		it('should give it a height when resized freely with Alt', async () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+
+			editor.value = `<p><video src="${clip}" style="width:320px"></video></p>`;
+			const video = await loaded(editor);
+
+			simulateEvent('keydown', 'Alt', editor.ew);
+			resize(editor, video.parentElement, 20);
+
+			expect(sortAttributes(editor.value)).equals(
+				`<p><video src="${clip}" style="height:180px;width:340px"></video></p>`
+			);
+		});
+
+		it('should resize the video in a wrapper from mediaWrappers', async () => {
+			const editor = getJodit({
+				history: { timeout: 0 },
+				mediaWrappers: { video: frVideo }
+			});
+
+			editor.value = `<p><video src="${clip}" style="width:320px"></video></p>`;
+			const video = await loaded(editor);
+
+			resize(editor, editor.editor.querySelector('span.fr-video'), 20);
+
+			expect(sortAttributes(editor.value)).equals(
+				`<p><span class="fr-video" contenteditable="false" draggable="true"><video src="${clip}" style="width:340px"></video></span></p>`
+			);
+			expect(video.offsetHeight).equals(191);
+		});
+
+		it('should hide the frame when the video goes with its wrapper', async () => {
+			const editor = getJodit({
+				history: { timeout: 0 },
+				mediaWrappers: { video: frVideo }
+			});
+
+			editor.value = `<p>one</p><p><video src="${clip}" style="width:320px"></video></p><p>two</p>`;
+			const video = await loaded(editor);
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], video);
+
+			const resizer = document.querySelector(
+				'.jodit-resizer[data-editor_id=' + editor.id + ']'
+			);
+			expect(resizer.parentNode).is.not.null;
+
+			// As Delete does with the wrapper selected
+			editor.s.removeNode(video.parentElement);
+			simulateEvent('keydown', 'Delete', editor.editor);
+
+			expect(resizer.parentNode).is.null;
+		});
+
+		it('should resize an embed through its own wrapper when its mediaWrappers wrapper is clicked', () => {
+			const editor = getJodit({
+				history: { timeout: 0 },
+				mediaWrappers: { iframe: frVideo }
+			});
+
+			editor.value =
+				'<p><span class="fr-video"><iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ" width="320" height="180"></iframe></span></p>';
+
+			const span = editor.editor.querySelector('span.fr-video');
+			const resizer = resize(editor, span, 20);
+			const iframe = span.querySelector('iframe');
+
+			expect(resizer.offsetWidth).equals(340);
+			expect(iframe.getAttribute('width')).equals('340');
+			expect(iframe.getAttribute('height')).equals('180');
+		});
+	});
 });

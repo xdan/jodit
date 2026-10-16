@@ -1,17 +1,17 @@
 ---
 title: Resizer Plugin
-description: Shows a resize frame with corner handles around images, iframes, and tables, supporting aspect ratio preservation and live size display while dragging.
-keywords: jodit, resizer plugin, image resize, iframe resize, aspect ratio, resize handles
+description: Shows a resize frame with corner handles around images, iframes, videos and tables, supporting aspect ratio preservation and live size display while dragging.
+keywords: jodit, resizer plugin, image resize, iframe resize, video resize, aspect ratio, resize handles
 ---
 
 # Resizer Plugin
 
-Adds interactive resizing capability for images, iframes, tables, and custom elements in the editor. This plugin displays a visual frame with corner handles around selected elements, allowing users to drag and resize them.
+Adds interactive resizing capability for images, iframes, videos, tables, and custom elements in the editor. This plugin displays a visual frame with corner handles around selected elements, allowing users to drag and resize them.
 
 ## Features
 
 - Visual resize frame with 4 corner handles
-- Drag-to-resize support for images, iframes, tables
+- Drag-to-resize support for images, iframes, videos, tables
 - Aspect ratio preservation (configurable)
 - Alt key for custom aspect ratio override
 - Size display during resize
@@ -31,9 +31,9 @@ Adds interactive resizing capability for images, iframes, tables, and custom ele
 
 **Type:** `Set<HTMLTagNames>`
 
-**Default:** `new Set(['img', 'iframe', 'table', 'jodit'])`
+**Default:** `new Set(['img', 'iframe', 'table', 'jodit', 'video'])`
 
-Set of HTML tag names that can be resized by the plugin.
+Set of HTML tag names that can be resized by the plugin. Clicking a media wrapper (`jodit-media`, or one from `mediaWrappers`) resizes the media in it.
 
 **Example:**
 ```typescript
@@ -80,7 +80,7 @@ const editor = Jodit.make('#editor', {
 
 **Type:** `boolean | Set<HTMLTagNames>`
 
-**Default:** `new Set(['img'])`
+**Default:** `new Set(['img', 'video'])`
 
 Controls whether aspect ratio is preserved during resize. Can be:
 - `false`: Never preserve aspect ratio
@@ -89,7 +89,7 @@ Controls whether aspect ratio is preserved during resize. Can be:
 
 **Example:**
 ```typescript
-// Preserve aspect ratio for images only (default)
+// Preserve aspect ratio for images only
 const editor1 = Jodit.make('#editor1', {
     resizer: {
         useAspectRatio: new Set(['img'])
@@ -297,7 +297,7 @@ const editor2 = Jodit.make('#editor2', {
 When user clicks in editor:
 
 1. **Traverse DOM**: Walks up from click target to editor root
-2. **Check Tag**: Tests if element matches `allowResizeTags`
+2. **Check Tag**: Tests if element matches `allowResizeTags`, taking the media in a media wrapper in its place
 3. **Bind Element**: Calls `__bind()` to prepare element for resizing
 4. **Show Frame**: Displays resize frame around element
 
@@ -391,6 +391,16 @@ Two modes for images:
 - Sets CSS `width` and `height` styles
 - On image insert, converts attributes to styles
 - Result: `<img style="width: 200px; height: 150px">`
+
+### Video Size Handling
+
+A video gets CSS sizes. One with no height of its own (no `height` attribute or style) is given only a width while its aspect ratio is kept, so its height still follows from its width:
+
+- Result: `<video style="width: 400px">`
+
+A video that has a height, or one resized freely (Alt, or `useAspectRatio` leaving it out), gets both:
+
+- Result: `<video style="width: 400px; height: 225px">`
 
 ### Delete Key Handling
 
