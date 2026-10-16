@@ -2,6 +2,8 @@
 
 Jodit Editor works with raw HTML, which means every piece of content entering or leaving the editor is a potential XSS vector. This guide covers Jodit's built-in defenses, how to configure them, and best practices for building secure applications.
 
+> Published advisories (CVE / GHSA) with the release that fixes each, and how to report a vulnerability: [xdsoft.net/jodit/security](https://xdsoft.net/jodit/security/)
+
 > See also: [clean-html plugin reference](https://xdsoft.net/jodit/docs/modules/plugins_clean_html.html) | [paste plugin reference](https://xdsoft.net/jodit/docs/modules/plugins_paste.html) | [iframe plugin reference](https://xdsoft.net/jodit/docs/modules/plugins_iframe.html)
 
 ## Table of Contents
