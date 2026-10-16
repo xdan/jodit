@@ -78,6 +78,7 @@ Wrappers that media keep in the content, by the media's tag name, for content th
 - Is wrapped in it instead of the editor-only `mediaFakeTag` when its tag is one of `mediaBlocks`, or left in it when it's already in one. Other elements, such as iframes by default, are only wrapped when the video popup inserts them.
 - Goes in inside it when the video popup inserts it: an uploaded video, the embed for a link, or embed code that is one element.
 - Opens the `jodit-media` popup for its wrapper when clicked, whose Align and Delete act on the wrapper rather than on the media inside it.
+- Takes the clicks on a video or audio in it while editing, as `jodit-media` covers its media, so a click selects the media and opens the popup rather than playing it. An inline wrapper, such as a `span`, is shown as an inline-block while editing, unless its classes or style give it a display of their own.
 
 A wrapper is given `contenteditable="false"` and `draggable="true"`, which stay in the value.
 

@@ -10,10 +10,10 @@
  * @module plugins/media
  */
 
-import type { IJodit } from 'jodit/types';
+import type { IJodit, MediaWrapper } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
-import { pluginSystem } from 'jodit/core/global';
+import { getContainer, pluginSystem } from 'jodit/core/global';
 import {
 	$$,
 	attr,
@@ -79,6 +79,36 @@ export function media(editor: IJodit): void {
 				editor.s.setCursorAfter(element);
 			});
 	};
+
+	// Media in a wrapper kept in the content let clicks through to it, as
+	// jodit-media covers its media, so a click selects the media rather than
+	// playing it. An inline wrapper holds it as an inline-block, unless its
+	// classes or style give it a display of their own
+	const wrappers = Object.values(mediaWrappers);
+
+	if (wrappers.length) {
+		editor.e.on('afterInit', () => {
+			const selectors = (list: string[]): string =>
+				[...new Set(list)].join(',');
+			const scoped = ({ tag, className }: MediaWrapper): string =>
+				`.jodit-wysiwyg ${tag}.${className}`;
+
+			const inline = selectors(
+				wrappers
+					.filter(({ tag }) => consts.IS_INLINE.test(tag))
+					.map(scoped)
+			);
+			const media = selectors(
+				wrappers.flatMap(wrapper =>
+					mediaBlocks.map(tag => `${scoped(wrapper)}>${tag}`)
+				)
+			);
+
+			getContainer(editor, 'media-wrappers', 'style', true).innerHTML =
+				(inline ? `:where(${inline}){display:inline-block}` : '') +
+				`${media}{pointer-events:none}`;
+		});
+	}
 
 	if (mediaInFakeBlock || Object.keys(mediaWrappers).length) {
 		editor.e
