@@ -20,6 +20,7 @@ import { Plugin } from 'jodit/core/plugin/plugin';
 
 import './config';
 
+import { replaceOldTags } from './helpers/visitor/filters/replace-old-tags';
 import {
 	getHash,
 	removeFormatForCollapsedSelection,
@@ -160,10 +161,29 @@ export class cleanHtml extends Plugin {
 
 		sandBox.innerHTML = data.value;
 		this.j.e.fire('safeHTML', sandBox);
+		this.__replaceOldTags(sandBox);
 		data.value = sandBox.innerHTML;
 		safeHTML(sandBox, { safeJavaScriptLink: true, removeOnError: true });
 		Dom.safeRemove(iframe);
 		return false;
+	}
+
+	/**
+	 * Replace old tags (`<b>` with `<strong>`, `<i>` with `<em>`) in an
+	 * assigned value straight away. The walker would get to them only after
+	 * every node before them, seconds later on a long document, and until
+	 * then Bold does not treat `<b>` as bold, and the swap can move the caret.
+	 */
+	private __replaceOldTags(box: HTMLElement): void {
+		const { replaceOldTags: list, disableCleanFilter } = this.j.o.cleanHTML;
+
+		if (!list || disableCleanFilter?.has('replaceOldTags')) {
+			return;
+		}
+
+		Dom.each(box, node => {
+			replaceOldTags(this.j, node, false);
+		});
 	}
 
 	/**

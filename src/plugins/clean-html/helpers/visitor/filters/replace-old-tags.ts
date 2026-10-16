@@ -49,14 +49,57 @@ function replaceIfMatched(
 		list[oldParent.nodeName.toLowerCase()] || list[oldParent.nodeName];
 
 	if (tagName) {
-		return Dom.replace(
+		const restoreSelection = keepSelection(jodit, oldParent);
+
+		const newParent = Dom.replace(
 			oldParent as HTMLElement,
 			tagName as HTMLTagNames,
 			jodit.createInside,
 			true,
 			false
 		);
+
+		restoreSelection?.(newParent);
+
+		return newParent;
 	}
 
 	return oldParent;
+}
+
+/**
+ * Moving the children out of an element collapses a selection inside them to
+ * where the element was, so the caret jumps to the start of the text being
+ * typed. Returns a callback that puts the selection back on the same nodes.
+ *
+ * Like `removeEmptyTextNode`, it leaves the selection alone once focus has
+ * left the editor, because selecting would take focus back.
+ */
+function keepSelection(
+	jodit: IJodit,
+	elm: Node
+): ((newElm: Node) => void) | null {
+	const { sel } = jodit.s;
+
+	if (!sel?.anchorNode || !sel.focusNode || !jodit.s.isFocused()) {
+		return null;
+	}
+
+	const { anchorNode, anchorOffset, focusNode, focusOffset } = sel;
+
+	if (
+		!Dom.isOrContains(elm, anchorNode) &&
+		!Dom.isOrContains(elm, focusNode)
+	) {
+		return null;
+	}
+
+	return (newElm: Node): void => {
+		sel.setBaseAndExtent(
+			anchorNode === elm ? newElm : anchorNode,
+			anchorOffset,
+			focusNode === elm ? newElm : focusNode,
+			focusOffset
+		);
+	};
 }
