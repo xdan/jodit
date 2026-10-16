@@ -8,7 +8,7 @@
  * @module plugins/table
  */
 
-import type { IControlType, IDictionary, IJodit } from 'jodit/types';
+import type { IControlType, IDictionary, IJodit, Nullable } from 'jodit/types';
 import {
 	KEY_DOWN,
 	KEY_ENTER,
@@ -45,6 +45,60 @@ Config.prototype.table = {
 };
 
 Icon.set('table', tableIcon);
+
+/**
+ * Elements in `dtd.blockLimits` that hold only rows, cells or list items, so
+ * a table can't go directly inside them
+ */
+const ROW_AND_ITEM_HOLDERS = new Set([
+	'table',
+	'thead',
+	'tbody',
+	'tfoot',
+	'tr',
+	'ul',
+	'ol',
+	'dl'
+]);
+
+/**
+ * The nearest block around the cursor that can hold the new table: an element
+ * in `dtd.blockLimits`, such as a table cell, a list item or a `<div>`. The
+ * cursor's own block of the `enter` tag is a line, not a container, as in the
+ * dtd plugin's `checkBlockNesting`
+ */
+function findTableContainer(
+	editor: IJodit,
+	current: Nullable<Node>
+): Nullable<HTMLElement> {
+	const line = Dom.closest(current, Dom.isBlock, editor.editor);
+
+	const container = Dom.closest<HTMLElement>(
+		current,
+		node => {
+			if (
+				!Dom.isElement(node) ||
+				(node === line && Dom.isTag(node, editor.o.enter))
+			) {
+				return false;
+			}
+
+			const tag = node.nodeName.toLowerCase();
+
+			return (
+				Boolean(editor.o.dtd?.blockLimits[tag]) &&
+				!ROW_AND_ITEM_HOLDERS.has(tag)
+			);
+		},
+		editor.editor
+	);
+
+	// With the cursor between two rows, `current` is the next row's text
+	return container &&
+		Dom.isOrContains(container, editor.s.range.startContainer)
+		? container
+		: null;
+}
 
 Config.prototype.controls.table = {
 	data: {
@@ -219,11 +273,19 @@ Config.prototype.controls.table = {
 			editor.editor.normalize();
 			editor.history.snapshot.restore(snapshot);
 
-			const block = Dom.furthest(
-				editor.s.current(),
-				Dom.isBlock,
-				editor.editor
-			);
+			const current = editor.s.current();
+
+			// The table goes into the cell, list item or box holding the
+			// cursor, and only a block inside it is split
+			const container = findTableContainer(editor, current);
+			const block =
+				container === current
+					? null
+					: Dom.furthest(
+							current,
+							Dom.isBlock,
+							container ?? editor.editor
+						);
 
 			if (block && Dom.isEmpty(block)) {
 				Dom.replace(block, table, undefined, false, true);
@@ -248,6 +310,13 @@ Config.prototype.controls.table = {
 							Dom.after(block, table);
 						}
 					}
+				} else if (
+					container &&
+					!Dom.isEmpty(container) &&
+					!editor.o.table.splitBlockOnInsertTable
+				) {
+					// With no block to go after, the table goes after the text
+					Dom.append(container, table);
 				} else {
 					editor.s.insertNode(table, false);
 				}

@@ -164,6 +164,107 @@ describe('Test table plugin', () => {
 					'<p>Hello \n</p><table style="border-collapse:collapse;width: 100%;"><tbody>\n<tr>\n\t<td style="width: 100%;"><br></td></tr></tbody></table><p>world</p>'
 				);
 			});
+
+			describe('Caret in a block that holds other blocks (#1603)', () => {
+				const inserted =
+					'<table style="border-collapse:collapse;width:100%"><tbody><tr><td style="width:100%"><br></td></tr></tbody></table>';
+
+				[
+					[
+						'<table><tbody><tr><td>a|1</td><td>b1</td></tr></tbody></table>',
+						`<table><tbody><tr><td>a${inserted}1</td><td>b1</td></tr></tbody></table>`
+					],
+					[
+						'<table><tbody><tr><td><p>a|1</p></td><td>b1</td></tr></tbody></table>',
+						`<table><tbody><tr><td><p>a</p>${inserted}<p>1</p></td><td>b1</td></tr></tbody></table>`
+					],
+					[
+						'<table><tbody><tr><td>|<br></td><td>b1</td></tr></tbody></table>',
+						`<table><tbody><tr><td>${inserted}<br></td><td>b1</td></tr></tbody></table>`
+					],
+					[
+						'<ul><li>On|e</li><li>Two</li></ul>',
+						`<ul><li>On${inserted}e</li><li>Two</li></ul>`
+					],
+					[
+						'<ul><li><p>On|e</p></li></ul>',
+						`<ul><li><p>On</p>${inserted}<p>e</p></li></ul>`
+					],
+					[
+						'<div class="box"><p>Te|xt</p></div>',
+						`<div class="box"><p>Te</p>${inserted}<p>xt</p></div>`
+					],
+					[
+						'<div class="box"><table><tbody><tr><td>a|1</td></tr></tbody></table></div>',
+						`<div class="box"><table><tbody><tr><td>a${inserted}1</td></tr></tbody></table></div>`
+					],
+					['<p>Te|xt</p>', `<p>Te</p>${inserted}<p>xt</p>`],
+					[
+						'<div>Te|xt</div>',
+						`<div>Te</div>${inserted}<div>xt</div>`,
+						{ enter: 'DIV' }
+					],
+					[
+						'<div class="box"><div>Te|xt</div></div>',
+						`<div class="box"><div>Te</div>${inserted}<div>xt</div></div>`,
+						{ enter: 'DIV' }
+					],
+					[
+						'<blockquote><p>Te|xt</p></blockquote>',
+						`<blockquote><p>Te</p>${inserted}<p>xt</p></blockquote>`,
+						{ dtd: { blockLimits: { blockquote: 1 } } }
+					],
+					[
+						'<ul><li>On|e</li></ul>',
+						`<ul><li>On</li></ul>${inserted}<ul><li>e</li></ul>`,
+						{ dtd: { blockLimits: Jodit.atom({ div: 1, td: 1 }) } }
+					]
+				].forEach(([value, result, options = {}]) => {
+					it(`should turn ${value} into ${result} with ${JSON.stringify(options)}`, () => {
+						const editor = getJodit(options);
+						editor.value = value;
+						setCursorToChar(editor);
+
+						clickButton('table', editor);
+						const popup = getOpenedPopup(editor);
+						simulateEvent(
+							'mousedown',
+							popup.querySelector('span[data-index="0"]')
+						);
+
+						expect(
+							sortAttributes(editor.value).replace(/[\n\t]/g, '')
+						).eq(result);
+
+						expect(editor.s.range.startContainer).eq(
+							editor.editor.querySelector('table[style] td')
+						);
+					});
+				});
+
+				it('should still split a table at a cursor between two rows', () => {
+					const editor = getJodit();
+					editor.value =
+						'<table><tbody><tr><td>a</td></tr><tr><td>b</td></tr></tbody></table>';
+
+					const range = editor.s.createRange();
+					range.setStart(editor.editor.querySelector('tbody'), 1);
+					editor.s.selectRange(range);
+
+					clickButton('table', editor);
+					const popup = getOpenedPopup(editor);
+					simulateEvent(
+						'mousedown',
+						popup.querySelector('span[data-index="0"]')
+					);
+
+					expect(
+						sortAttributes(editor.value).replace(/[\n\t]/g, '')
+					).eq(
+						`<table><tbody><tr><td>a</td></tr></tbody></table>${inserted}<table><tbody><tr><td>b</td></tr></tbody></table>`
+					);
+				});
+			});
 		});
 
 		describe('When splitBlockOnInsertTable is false', () => {
@@ -189,6 +290,28 @@ describe('Test table plugin', () => {
 				expect(editor.editor.firstChild.nodeName).eq('P');
 				expect(editor.editor.firstChild.nextElementSibling.nodeName).eq(
 					'TABLE'
+				);
+			});
+
+			it('should insert table after the text of a list item without splitting it', () => {
+				const editor = getJodit({
+					table: {
+						splitBlockOnInsertTable: false
+					}
+				});
+				editor.value = '<ul><li>On|e</li><li>Two</li></ul>';
+				setCursorToChar(editor);
+
+				clickButton('table', editor);
+				const popup = getOpenedPopup(editor);
+
+				simulateEvent(
+					'mousedown',
+					popup.querySelector('span[data-index="0"]')
+				);
+
+				expect(sortAttributes(editor.value).replace(/[\n\t]/g, '')).eq(
+					'<ul><li>One<table style="border-collapse:collapse;width:100%"><tbody><tr><td style="width:100%"><br></td></tr></tbody></table></li><li>Two</li></ul>'
 				);
 			});
 		});
