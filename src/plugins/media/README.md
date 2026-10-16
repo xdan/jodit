@@ -77,7 +77,7 @@ Wrappers that media keep in the content, by the media's tag name, for content th
 
 - Is wrapped in it instead of the editor-only `mediaFakeTag` when its tag is one of `mediaBlocks`, or left in it when it's already in one. Other elements, such as iframes by default, are only wrapped when the video popup inserts them.
 - Goes in inside it when the video popup inserts it: an uploaded video, the embed for a link, or embed code that is one element.
-- Opens the `jodit-media` popup for its wrapper when clicked, whose Align and Delete act on the wrapper rather than on the media inside it.
+- Opens the `jodit-media` popup for its wrapper when clicked, beside the media in it, whose Align and Delete act on the wrapper rather than on the media inside it.
 
 A wrapper is given `contenteditable="false"` and `draggable="true"`, which stay in the value.
 

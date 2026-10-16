@@ -109,6 +109,27 @@ describe('Media plugin', () => {
 				expect(editor.value).equals('<p>text</p><p></p>');
 			});
 
+			it('should open beside the media in a wrapper that fills the line', async () => {
+				const editor = getJodit({ mediaWrappers });
+
+				editor.value =
+					'<p><span class="fr-video" style="display:block;text-align:center"><video controls="" src="movie.mp4" style="height:100px;width:200px"></video></span></p>';
+				await delay(100);
+
+				const video = editor.editor.querySelector('video');
+				simulateEvent('click', video);
+
+				const left =
+					getOpenedPopup(editor).getBoundingClientRect().left;
+				const media = video.getBoundingClientRect();
+
+				expect(
+					media.left -
+						video.parentElement.getBoundingClientRect().left
+				).to.be.above(100);
+				expect(left).to.be.within(media.left - 1, media.left + 1);
+			});
+
 			it('should act on the wrapper of a clicked iframe embed', async () => {
 				const editor = getJodit({ mediaWrappers });
 
