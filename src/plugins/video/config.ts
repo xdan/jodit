@@ -99,108 +99,127 @@ Config.prototype.video = {
 
 Icon.set('video', videoIcon);
 
-Config.prototype.controls.video = {
-	popup: (jodit: IJodit, current, close) => {
-		const formLink: IUIForm = new UIForm(jodit, [
-				new UIBlock(jodit, [
-					new UIInput(jodit, {
-						name: 'url',
-						required: true,
-						label: 'URL',
-						placeholder: 'https://',
-						validators: ['url']
-					})
-				]),
-				new UIBlock(jodit, [
-					Button(jodit, '', 'Insert', 'primary').onAction(() =>
-						formLink.submit()
-					)
-				])
-			]),
-			formCode: IUIForm = new UIForm(jodit, [
-				new UIBlock(jodit, [
-					new UITextArea(jodit, {
-						name: 'code',
-						required: true,
-						label: 'Embed code'
-					})
-				]),
-				new UIBlock(jodit, [
-					Button(jodit, '', 'Insert', 'primary').onAction(() =>
-						formCode.submit()
-					)
-				])
-			]),
-			tabs: TabOption[] = [],
-			insertCode = (code: string): void => {
-				jodit.s.restore();
-				jodit.s.insertHTML(prepareEmbedCode(jodit, code));
-				close();
-			};
+/**
+ * The video popup's tabs: Upload, when the uploader is configured, then Link
+ * and Code. `insert` runs what a tab inserts, which by default goes in at the
+ * selection the popup was opened with.
+ */
+export function videoTabs(
+	jodit: IJodit,
+	close: () => void,
+	insert?: (run: () => void) => void
+): HTMLElement {
+	const run =
+		insert ??
+		((fn: () => void): void => {
+			jodit.s.restore();
+			fn();
+		});
 
+	const formLink: IUIForm = new UIForm(jodit, [
+			new UIBlock(jodit, [
+				new UIInput(jodit, {
+					name: 'url',
+					required: true,
+					label: 'URL',
+					placeholder: 'https://',
+					validators: ['url']
+				})
+			]),
+			new UIBlock(jodit, [
+				Button(jodit, '', 'Insert', 'primary').onAction(() =>
+					formLink.submit()
+				)
+			])
+		]),
+		formCode: IUIForm = new UIForm(jodit, [
+			new UIBlock(jodit, [
+				new UITextArea(jodit, {
+					name: 'code',
+					required: true,
+					label: 'Embed code'
+				})
+			]),
+			new UIBlock(jodit, [
+				Button(jodit, '', 'Insert', 'primary').onAction(() =>
+					formCode.submit()
+				)
+			])
+		]),
+		tabs: TabOption[] = [],
+		insertCode = (code: string): void => {
+			run(() => jodit.s.insertHTML(prepareEmbedCode(jodit, code)));
+			close();
+		};
+
+	if (!insert) {
 		jodit.s.save();
+	}
 
-		const { uploader } = jodit.o;
+	const { uploader } = jodit.o;
 
-		// Base64 alone would put whole video files into the content
-		if (
-			uploader.showTabInFileSelector !== false &&
-			(uploader.url || uploader.customUploadFunction)
-		) {
-			tabs.push(
-				UploadTab(
-					jodit,
-					data => {
-						jodit.s.restore();
+	// Base64 alone would put whole video files into the content
+	if (
+		uploader.showTabInFileSelector !== false &&
+		(uploader.url || uploader.customUploadFunction)
+	) {
+		tabs.push(
+			UploadTab(
+				jodit,
+				data => {
+					run(() =>
 						(
 							jodit.o.video?.defaultHandlerSuccess ?? insertVideos
-						).call(jodit, data);
-					},
-					{ label: 'Drop file', accept: 'video/*' }
-				)
-			);
-		}
-
-		tabs.push(
-			{
-				icon: 'link',
-				name: 'Link',
-				content: formLink.container
-			},
-			{
-				icon: 'source',
-				name: 'Code',
-				content: formCode.container
-			}
+						).call(jodit, data)
+					);
+				},
+				{ label: 'Drop file', accept: 'video/*' }
+			)
 		);
+	}
 
-		formLink.onSubmit(data => {
-			insertCode(
-				call(
-					jodit.o.video?.parseUrlToVideoEmbed ??
-						convertMediaUrlToVideoEmbed,
-					data.url,
-					{
-						width: jodit.o.video?.defaultWidth,
-						height: jodit.o.video?.defaultHeight
-					}
-				)
-			);
-		});
+	tabs.push(
+		{
+			icon: 'link',
+			name: 'Link',
+			content: formLink.container
+		},
+		{
+			icon: 'source',
+			name: 'Code',
+			content: formCode.container
+		}
+	);
 
-		formCode.onSubmit(data => {
-			insertCode(data.code);
-		});
+	formLink.onSubmit(data => {
+		insertCode(
+			call(
+				jodit.o.video?.parseUrlToVideoEmbed ??
+					convertMediaUrlToVideoEmbed,
+				data.url,
+				{
+					width: jodit.o.video?.defaultWidth,
+					height: jodit.o.video?.defaultHeight
+				}
+			)
+		);
+	});
 
-		const box = TabsWidget(jodit, tabs);
+	formCode.onSubmit(data => {
+		insertCode(data.code);
+	});
 
-		// Its tabs are sized to their labels, as the file selector's are, since
-		// "Upload" doesn't fit a third of the popup
-		box.classList.add('jodit-file-selector');
+	const box = TabsWidget(jodit, tabs);
 
-		return box;
-	},
+	// Its tabs are sized to their labels, as the file selector's are, since
+	// "Upload" doesn't fit a third of the popup
+	box.classList.add('jodit-file-selector');
 
+	return box;
+}
+
+Config.prototype.controls.video = {
+	popup: (jodit: IJodit, current, close) => videoTabs(jodit, close),
 	tags: ['iframe'],
 	tooltip: 'Insert youtube/vimeo video'
 } as IControlType;

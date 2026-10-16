@@ -30,7 +30,10 @@ import { FileSelectorWidget } from 'jodit/modules/widget/file-selector/file-sele
 import type { VideoPropertiesState } from './interface';
 import { UIVideoPropertiesForm } from './ui/ui-video-form';
 import { editedMedia, readValues } from './readers';
+import { replaceMedia } from './replace';
 import { applyValues } from './writers';
+
+import { videoTabs } from 'jodit/plugins/video/config';
 
 /**
  * Show a dialog with the size, poster and playback settings of a video, an
@@ -139,6 +142,20 @@ export class videoProperties extends Plugin {
 			)
 		);
 		this.dialog.open().setModal(true).setPosition();
+	}
+
+	/**
+	 * The video popup's tabs for the media popup's Replace: what they insert
+	 * takes the place of the media `target` is, or is the wrapper of
+	 */
+	@watch(':generateReplaceVideoTabs')
+	protected onGenerateReplaceVideoTabs(
+		target: HTMLElement,
+		close: () => void
+	): HTMLElement {
+		return videoTabs(this.j, close, insert =>
+			replaceMedia(this.j, target, insert)
+		);
 	}
 
 	private __openPosterPopup(button: HTMLElement): void {

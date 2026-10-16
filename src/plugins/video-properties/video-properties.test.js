@@ -84,7 +84,7 @@ describe('Video properties plugin', () => {
 	}
 
 	describe('Media popup', () => {
-		it('should have Delete, Edit and Align buttons', async () => {
+		it('should have Replace, Delete, Edit and Align buttons', async () => {
 			const editor = getJodit({ mediaWrappers });
 
 			editor.value = span(`<video controls="" src="${clip}"></video>`);
@@ -94,6 +94,7 @@ describe('Video properties plugin', () => {
 
 			const popup = getOpenedPopup(editor);
 
+			expect(getButton('replace', popup)).is.not.null;
 			expect(getButton('bin', popup)).is.not.null;
 			expect(getButton('pencil', popup)).is.not.null;
 			expect(getButton('left', popup)).is.not.null;
@@ -510,6 +511,156 @@ describe('Video properties plugin', () => {
 			expect(value()).equals(
 				sound('autoplay="" controls="" loop="" muted="" ')
 			);
+		});
+	});
+
+	describe('Replace', () => {
+		const embed = (width, height, src = youtube) =>
+			`<iframe allowfullscreen="" frameborder="0" height="${height}" src="${src}" width="${width}"></iframe>`;
+
+		async function openReplace(value, options = {}) {
+			const editor = getJodit({
+				history: { timeout: 0 },
+				mediaWrappers,
+				...options
+			});
+
+			editor.value = value;
+			await delay(100);
+
+			const media = editor.editor.querySelector('video, audio, iframe');
+
+			simulateEvent(
+				'click',
+				media.closest('[data-jodit_iframe_wrapper]') ?? media
+			);
+			clickButton('replace', getOpenedPopup(editor));
+
+			return { editor, popup: getOpenedPopup(editor) };
+		}
+
+		function tabNames(popup) {
+			return Array.from(
+				popup.querySelectorAll('.jodit-tabs__button')
+			).map(button => button.textContent.trim());
+		}
+
+		function insertLink(popup, url = youtube) {
+			popup.querySelector('[ref="url"]').value = url;
+			clickButton('Insert', popup);
+		}
+
+		function insertCode(popup, code) {
+			simulateEvent('click', getButton('source', popup));
+			popup.querySelector('[ref="code"]').value = code;
+			clickButton('Insert', popup.querySelector('.jodit-tab_active'));
+		}
+
+		function dropVideo(popup) {
+			simulateEvent(
+				'drop',
+				popup.querySelector('.jodit-drag-and-drop__file-box'),
+				data => {
+					Object.defineProperty(data, 'dataTransfer', {
+						value: {
+							files: [{ name: 'movie.mp4', type: 'video/mp4' }]
+						}
+					});
+				}
+			);
+		}
+
+		it('should open the video popup tabs', async () => {
+			const { popup } = await openReplace(
+				span(`<video controls="" src="${clip}"></video>`),
+				{ uploader: { url: uploaderUrl } }
+			);
+
+			expect(tabNames(popup)).deep.equals(['Upload', 'Link', 'Code']);
+		});
+
+		it('should put an embed in place of a video, keeping its classes and size', async () => {
+			const { editor, popup } = await openReplace(
+				`<p>one</p><p><span class="fr-video fr-dvi fr-fvl" contenteditable="false" draggable="true"><video controls="" src="${clip}" style="width:320px"></video></span>two</p>`
+			);
+
+			insertLink(popup);
+
+			expect(sortAttributes(editor.value)).equals(
+				`<p>one</p><p><span class="fr-video fr-dvi fr-fvl" contenteditable="false" draggable="true">${embed(320, 180)}</span>two</p>`
+			);
+		});
+
+		it('should keep the size of an embed it replaces', async () => {
+			const { editor, popup } = await openReplace(span(embed(560, 315)));
+
+			insertCode(
+				popup,
+				embed(640, 360, 'https://player.vimeo.com/video/76979871')
+			);
+
+			expect(sortAttributes(editor.value)).equals(
+				span(embed(560, 315, 'https://player.vimeo.com/video/76979871'))
+			);
+		});
+
+		it('should give an uploaded video the settings of the one it replaces, with its own source and poster', async () => {
+			const { editor, popup } = await openReplace(
+				`<p><span class="fr-video fr-dvb fr-fvc" contenteditable="false" draggable="true"><video autoplay="" loop="" muted="" playsinline="" poster="old.jpg" src="${clip}" style="width:320px"></video></span></p>`,
+				{
+					uploader: { url: uploaderUrl },
+					video: {
+						defaultHandlerSuccess(data) {
+							const { wrapMedia } = Jodit.modules.Helpers;
+
+							this.s.insertNode(
+								wrapMedia(
+									this,
+									this.createInside.element('video', {
+										controls: '',
+										poster: 'new.jpg',
+										src: data.baseurl + data.files[0]
+									})
+								)
+							);
+						}
+					}
+				}
+			);
+
+			dropVideo(popup);
+			await waitForCondition(() => editor.value.includes('movie.mp4'));
+
+			expect(sortAttributes(editor.value)).equals(
+				'<p><span class="fr-video fr-dvb fr-fvc" contenteditable="false" draggable="true"><video autoplay="" loop="" muted="" playsinline="" poster="new.jpg" src="https://xdsoft.net/jodit/files/movie.mp4" style="width:320px"></video></span></p>'
+			);
+		});
+
+		it('should replace a video in jodit-media', async () => {
+			const { editor, popup } = await openReplace(
+				`<p>one</p><p><video controls="" src="${clip}" style="width:320px"></video></p>`,
+				{ mediaWrappers: {} }
+			);
+
+			insertLink(popup);
+
+			expect(sortAttributes(editor.value)).equals(
+				`<p>one</p><p>${embed(320, 180)}</p>`
+			);
+		});
+
+		it('should be undone in one step', async () => {
+			const value = span(
+				`<video controls="" src="${clip}" style="width:320px"></video>`
+			);
+			const { editor, popup } = await openReplace(value);
+
+			insertLink(popup);
+			expect(sortAttributes(editor.value)).does.not.equal(value);
+
+			editor.execCommand('undo');
+
+			expect(sortAttributes(editor.value)).equals(value);
 		});
 	});
 });
