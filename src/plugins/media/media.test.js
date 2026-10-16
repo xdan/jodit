@@ -79,6 +79,66 @@ describe('Media plugin', () => {
 			);
 		});
 
+		describe('Cover', () => {
+			// What a click in the middle of the media lands on
+			function hit(editor, media) {
+				media.scrollIntoView();
+				const rect = media.getBoundingClientRect();
+
+				return editor.ed.elementFromPoint(
+					rect.left + rect.width / 2,
+					rect.top + rect.height / 2
+				);
+			}
+
+			const value = `<p>${wrapped(
+				'<video controls="" src="movie.mp4" style="height:100px;width:200px"></video>'
+			)}</p><p>${wrapped('<audio controls="" src="song.mp3"></audio>')}</p>`;
+
+			it('should cover video and audio in their wrapper, so a click selects them rather than playing them', async () => {
+				const editor = getJodit({ mediaWrappers });
+
+				editor.value = value;
+				await delay(100);
+
+				editor.editor
+					.querySelectorAll('video, audio')
+					.forEach(media => {
+						expect(hit(editor, media)).equals(media.parentElement);
+					});
+
+				expect(sortAttributes(editor.value)).equals(value);
+			});
+
+			it('should leave the display a wrapper has of its own', async () => {
+				const editor = getJodit({ mediaWrappers });
+
+				editor.value =
+					'<p><span class="fr-video" style="display:block;text-align:center"><audio controls="" src="song.mp3"></audio></span></p>';
+				await delay(100);
+
+				const audio = editor.editor.querySelector('audio');
+
+				expect(getComputedStyle(audio.parentElement).display).equals(
+					'block'
+				);
+				expect(hit(editor, audio)).equals(audio.parentElement);
+			});
+
+			it('should cover them in iframe mode', async () => {
+				const editor = getJodit({ mediaWrappers, iframe: true });
+
+				editor.value = value;
+				await delay(100);
+
+				editor.editor
+					.querySelectorAll('video, audio')
+					.forEach(media => {
+						expect(hit(editor, media)).equals(media.parentElement);
+					});
+			});
+		});
+
 		describe('Media popup', () => {
 			function clickAlign(editor, popup, label) {
 				clickTrigger('left', popup);
