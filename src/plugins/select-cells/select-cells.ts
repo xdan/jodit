@@ -451,7 +451,7 @@ export class selectCells extends Plugin {
 						break;
 
 					case 'bin':
-						Dom.safeRemove(table);
+						this.__removeTable(table);
 						break;
 
 					case 'binrow':
@@ -533,6 +533,13 @@ export class selectCells extends Plugin {
 						);
 						break;
 				}
+
+				if (
+					/^bin(row|column)$/.test(command) &&
+					!this.__tableModule.getColumnsCount(table)
+				) {
+					this.__removeTable(table);
+				}
 			}
 
 			return false;
@@ -587,6 +594,20 @@ export class selectCells extends Plugin {
 				.getAllSelectedCells()
 				.forEach(elm => alignElement(command, elm));
 		}
+	}
+
+	/**
+	 * Remove the table and put the caret where it stood: at the start of what
+	 * follows it, else at the end of what precedes it
+	 */
+	private __removeTable(table: HTMLTableElement): void {
+		const parent = table.parentNode as Node,
+			next = Dom.findNotEmptySibling(table, false),
+			prev = Dom.findNotEmptySibling(table, true);
+
+		Dom.safeRemove(table);
+
+		this.j.s.setCursorIn(next || prev || parent, Boolean(next));
 	}
 
 	/** @override */
