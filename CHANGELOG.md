@@ -9,6 +9,30 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.3
+
+#### :bug: Bug Fix
+
+- [#1601](https://github.com/xdan/jodit/issues/1601) `history.timeout` now groups changes into undo steps. A step holds the changes made within `history.timeout` (1000ms by default) of its first change, so typing is undone about a second at a time instead of a letter or two. The option had had no effect since 3.4.1. Thanks [@brendon](https://github.com/brendon).
+- [#1605](https://github.com/xdan/jodit/issues/1605) Blocks pasted or inserted in the middle of a paragraph or heading now split it at the caret instead of going after it, and ([#1606](https://github.com/xdan/jodit/issues/1606)) a horizontal line inserted in a list item or table cell stays in it, with the caret right after it. Thanks [@brendon](https://github.com/brendon).
+- [#1603](https://github.com/xdan/jodit/issues/1603) Inserting a table from the toolbar in a table cell, a list item or a `<div>` now puts the new table inside it, instead of splitting the table, list or `<div>` in two. Thanks [@brendon](https://github.com/brendon).
+- [#1608](https://github.com/xdan/jodit/issues/1608) A heading, quote or list made in an empty table cell no longer gets an empty second line. Thanks [@brendon](https://github.com/brendon).
+- [#1593](https://github.com/xdan/jodit/issues/1593) Cells added by Insert row, Insert column and Tab, a cell merged from empty cells and an emptied cell now hold a `<br>`, so they keep their height when `cleanHTML.fillEmptyParagraph` is off. Tab into an empty cell puts the caret in it. Thanks [@brendon](https://github.com/brendon).
+- [#1595](https://github.com/xdan/jodit/issues/1595) After Delete row or Delete column, the caret moves to the nearest remaining cell. It was left between rows, where Safari typed into the table's markup. Thanks [@brendon](https://github.com/brendon).
+- [#1597](https://github.com/xdan/jodit/issues/1597) Deleting a table's last row or column deletes the table instead of leaving an empty one, and deleting a table puts the caret where it was. Thanks [@brendon](https://github.com/brendon).
+- [#1591](https://github.com/xdan/jodit/issues/1591) Enter at the start or end of a link no longer leaves an empty link on one of the lines, and in Safari the text typed next goes on the new line. Thanks [@brendon](https://github.com/brendon).
+- [#1589](https://github.com/xdan/jodit/issues/1589) Pasting from Google Docs no longer puts the pasted blocks inside a `<strong>`, and a cleaned paste (`INSERT_CLEAR_HTML`) of Docs content is no longer all bold. Thanks [@brendon](https://github.com/brendon).
+- [#1587](https://github.com/xdan/jodit/issues/1587) `<b>` and `<i>` in a value set with `editor.value` are now replaced with `<strong>` and `<em>` straight away, so Bold and Italic recognise them. When the background cleaner replaces old tags that arrive later, as in pasted content, the caret stays where it was. Thanks [@brendon](https://github.com/brendon).
+- [#1583](https://github.com/xdan/jodit/issues/1583) In Safari, Backspace removes a clicked embed, and Delete and Backspace no longer throw when the editor has focus but no selection. Thanks [@brendon](https://github.com/brendon).
+- [#1584](https://github.com/xdan/jodit/issues/1584) Clicking an embed no longer rewrites its `width` and `height` attributes, which became pixel values with `px`; resizing it writes plain numbers. Thanks [@brendon](https://github.com/brendon).
+- [#1576](https://github.com/xdan/jodit/issues/1576) Delete and Backspace remove a clicked video with its wrapper, instead of joining the next line to it. A clicked media wrapper is now selected, as a clicked image is. Thanks [@brendon](https://github.com/brendon).
+- [#1575](https://github.com/xdan/jodit/issues/1575) The inline popup for an image, embed or video opens clear of the resize frame's handles, which it used to cover. Thanks [@brendon](https://github.com/brendon).
+- [#1610](https://github.com/xdan/jodit/issues/1610) In iframe mode a click on an embedded video selects it, as it does without `iframe: true`, instead of going to the player. Thanks [@brendon](https://github.com/brendon).
+- [#1599](https://github.com/xdan/jodit/issues/1599) A YouTube or Vimeo link pasted as an embed now goes in its `mediaWrappers` wrapper and is aligned with `mediaDefaultAlign`, as the video popup's embed is. Thanks [@brendon](https://github.com/brendon).
+- [#1612](https://github.com/xdan/jodit/issues/1612) A click on a video or audio in a `mediaWrappers` wrapper selects it and opens the media popup, as one in `jodit-media` does, rather than playing it. Thanks [@brendon](https://github.com/brendon).
+- [#1613](https://github.com/xdan/jodit/issues/1613) The media popup opens beside the media in a `mediaWrappers` wrapper, not at the edge of a wrapper that fills the line. Thanks [@brendon](https://github.com/brendon).
+- [#1614](https://github.com/xdan/jodit/issues/1614) The video popup's Upload tab label is no longer cut off. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.18.2
 
 #### :lock: Security
