@@ -6,6 +6,34 @@
 
 describe('Text Inline Popup plugin', () => {
 	describe('Image', () => {
+		// https://github.com/xdan/jodit/issues/1575
+		it('Should open clear of the resize handles', async () => {
+			const editor = getJodit();
+
+			editor.value =
+				'<p>text <img src="tests/artio.jpg" style="width:100px"> text</p><p>more text</p>';
+			const img = editor.editor.querySelector('img');
+			await onLoadImage(img);
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], img);
+
+			const popup = getOpenedPopup(editor);
+			const handle = document.querySelector(
+				'.jodit-resizer[data-editor_id=' +
+					editor.id +
+					'] .jodit-resizer__bottom-right'
+			);
+			const box = handle.getBoundingClientRect();
+
+			expect(popup).is.not.null;
+			expect(
+				document.elementFromPoint(
+					box.left + box.width / 2,
+					box.bottom - 1
+				)
+			).equals(handle);
+		});
+
 		// https://github.com/xdan/jodit/issues/1516
 		describe('Vertical align', () => {
 			it('Should be disabled for a floated or block image, and enabled for one in the line', () => {

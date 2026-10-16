@@ -77,10 +77,38 @@ export class inlinePopup extends Plugin {
 			: target?.nodeName.toLowerCase();
 
 		if (target && type && this.canShowPopupForType(type)) {
-			this.showPopup(() => position(target, this.j), type, target);
+			const isMedia = type === 'jodit-media';
+			this.showPopup(() => this.__bound(target, isMedia), type, target);
 
 			return false;
 		}
+	}
+
+	/**
+	 * The box the popup opens beside: the target's, with room for the
+	 * resizer's handles when the target gets them, so it doesn't cover them
+	 */
+	private __bound(target: HTMLElement, isMedia: boolean): IBound {
+		const bound = position(target, this.j);
+		const resizable = this.j.o.allowResizeTags;
+
+		if (!isMedia && !(resizable && Dom.isTag(target, resizable))) {
+			return bound;
+		}
+
+		const room =
+			parseInt(
+				this.j.ow
+					.getComputedStyle(this.j.container)
+					.getPropertyValue('--jd-resizer-handle-size'),
+				10
+			) / 2 || 0;
+
+		return {
+			...bound,
+			top: bound.top - room,
+			height: bound.height + room * 2
+		};
 	}
 
 	/**
