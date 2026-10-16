@@ -225,5 +225,12 @@ module.exports = {
 	'Find Next': 'Volgende Zoeken',
 	'Insert className': 'Voeg de klassenaam in',
 	'Press Alt for custom resizing': 'Druk op Alt voor aangepaste grootte',
-	'License: %s': 'Licentie: %s'
+	'License: %s': 'Licentie: %s',
+	'Video properties': 'Video-eigenschappen',
+	'Audio properties': 'Audio-eigenschappen',
+	Poster: 'Voorbeeldafbeelding',
+	Autoplay: 'Automatisch afspelen',
+	Loop: 'Herhalen',
+	Muted: 'Gedempt',
+	Controls: 'Bedieningselementen'
 };

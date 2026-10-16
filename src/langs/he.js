@@ -223,5 +223,12 @@ module.exports = {
 	'Find Next': 'חפש את הבא',
 	'Insert className': 'הכנס את שם הכיתה',
 	'Press Alt for custom resizing': 'לחץ על אלט לשינוי גודל מותאם אישית',
-	'License: %s': 'רישיון: %s'
+	'License: %s': 'רישיון: %s',
+	'Video properties': 'מאפייני וידאו',
+	'Audio properties': 'מאפייני שמע',
+	Poster: 'תמונת תצוגה מקדימה',
+	Autoplay: 'ניגון אוטומטי',
+	Loop: 'הפעלה חוזרת',
+	Muted: 'מושתק',
+	Controls: 'פקדים'
 };

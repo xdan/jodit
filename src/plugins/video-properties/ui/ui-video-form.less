@@ -1,0 +1,68 @@
+/*!
+ * Jodit Editor (https://xdsoft.net/jodit/)
+ * Released under MIT see LICENSE.txt in the project root for license information.
+ * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
+ */
+
+@import (reference) '../../../styles/variables';
+
+.jodit-ui-video-properties-form {
+	padding-top: var(--padding-default);
+
+	// The first group can be hidden, so the form keeps the space above them all
+	.jodit-form__group:first-child {
+		margin-top: 0;
+	}
+
+	&__preview {
+		display: block;
+		width: 100%;
+		height: var(--width-default);
+		background-color: var(--color-background-light-gray);
+		object-fit: contain;
+	}
+
+	&__sizes.jodit-form__group {
+		min-width: auto;
+		flex-direction: row;
+		align-items: center;
+
+		// Sharing the line rather than widening the dialog to their own width
+		input {
+			width: 0;
+			flex: 1;
+		}
+	}
+
+	&__lockSize {
+		display: inline-block;
+		cursor: pointer;
+
+		> svg {
+			display: inline-block;
+			overflow: hidden;
+			width: var(--icon-middle-size);
+			height: var(--icon-middle-size);
+			fill: var(--color-dark);
+			line-height: var(--icon-middle-size);
+			transform-origin: 0 0 !important;
+			vertical-align: middle;
+		}
+	}
+
+	&__playback.jodit-form__group {
+		flex-flow: row wrap;
+		gap: calc(var(--padding-default) / 2) calc(var(--padding-default) * 2);
+
+		label {
+			margin: 0;
+		}
+	}
+}
+
+.jodit-dialog_theme_dark,
+.jodit_theme_dark {
+	.jodit-ui-video-properties-form__preview {
+		background-color: var(--dark-background-color);
+	}
+}

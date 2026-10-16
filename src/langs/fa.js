@@ -224,5 +224,12 @@ module.exports = {
 	'Find Next': 'پیدا کردن بعدی',
 	'Insert className': 'Insertar nombre de clase',
 	'Press Alt for custom resizing': 'برای تغییر اندازه سفارشی فشار دهید',
-	'License: %s': 'مجوز: %s'
+	'License: %s': 'مجوز: %s',
+	'Video properties': 'ویژگی‌های ویدیو',
+	'Audio properties': 'ویژگی‌های صدا',
+	Poster: 'تصویر پیش‌نمایش',
+	Autoplay: 'پخش خودکار',
+	Loop: 'تکرار',
+	Muted: 'بی‌صدا',
+	Controls: 'کنترل‌ها'
 };

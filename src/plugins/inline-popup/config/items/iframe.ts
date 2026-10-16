@@ -19,5 +19,12 @@ export default [
 			image && editor.s.removeNode(image);
 		}
 	},
+	{
+		name: 'pencil',
+		tooltip: 'Edit',
+		exec: (editor: IJodit, target: HTMLElement): void => {
+			target && editor.e.fire('openVideoProperties', target);
+		}
+	},
 	align
 ];

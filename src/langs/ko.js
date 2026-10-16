@@ -223,5 +223,12 @@ module.exports = {
 	'Find Next': '다음 찾기',
 	'Insert className': 'className 입력',
 	'Press Alt for custom resizing':
-		'사용자 지정 크기 조정에 대 한 고도 누르십시오'
+		'사용자 지정 크기 조정에 대 한 고도 누르십시오',
+	'Video properties': '동영상 속성',
+	'Audio properties': '오디오 속성',
+	Poster: '포스터 이미지',
+	Autoplay: '자동 재생',
+	Loop: '반복 재생',
+	Muted: '음소거',
+	Controls: '컨트롤'
 };

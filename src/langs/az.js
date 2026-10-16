@@ -236,5 +236,12 @@ module.exports = {
 	'Insert className': 'className (CSS) əlavə et',
 	'Press Alt for custom resizing':
 		'Fərdi ölçüləndirmə üçün Alt düyməsini basın',
-	'License: %s': 'Lisenziya: %s'
+	'License: %s': 'Lisenziya: %s',
+	'Video properties': 'Video xassələri',
+	'Audio properties': 'Audio xassələri',
+	Poster: 'Örtük şəkli',
+	Autoplay: 'Avtomatik oynatma',
+	Loop: 'Təkrarla',
+	Muted: 'Səssiz',
+	Controls: 'İdarəetmə elementləri'
 };

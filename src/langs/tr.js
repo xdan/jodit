@@ -224,5 +224,12 @@ module.exports = {
 	'Insert className': 'Sınıf adı girin',
 	'Press Alt for custom resizing':
 		'Özel yeniden boyutlandırma için Alt tuşuna basın',
-	'License: %s': 'Lisans: %s'
+	'License: %s': 'Lisans: %s',
+	'Video properties': 'Video özellikleri',
+	'Audio properties': 'Ses özellikleri',
+	Poster: 'Kapak resmi',
+	Autoplay: 'Otomatik oynat',
+	Loop: 'Döngü',
+	Muted: 'Sessiz',
+	Controls: 'Kontroller'
 };

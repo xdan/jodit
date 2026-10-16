@@ -223,5 +223,12 @@ module.exports = {
 	'Find Next': '查找下一个',
 	'Insert className': '插入班级名称',
 	'Press Alt for custom resizing': '按Alt自定义调整大小',
-	'License: %s': '许可证: %s'
+	'License: %s': '许可证: %s',
+	'Video properties': '视频属性',
+	'Audio properties': '音频属性',
+	Poster: '封面图',
+	Autoplay: '自动播放',
+	Loop: '循环播放',
+	Muted: '静音',
+	Controls: '播放控件'
 };
