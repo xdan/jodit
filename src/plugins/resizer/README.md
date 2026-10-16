@@ -18,7 +18,7 @@ Adds interactive resizing capability for images, iframes, tables, and custom ele
 - Minimum width/height constraints
 - Image attribute vs style width/height
 - Iframe wrapper for proper resizing
-- Delete key support for selected elements
+- Delete and Backspace support for selected elements
 - Touch event support
 - Read-only mode handling
 - Fullscreen compatibility
@@ -267,7 +267,7 @@ editor.e.on('changesize', (element) => {
 const editor = Jodit.make('#editor');
 
 // Click on an image to show resize frame
-// Press Delete key to remove the element
+// Press Delete or Backspace to remove the element
 ```
 
 ### Style vs Attribute for Images
@@ -394,7 +394,7 @@ Two modes for images:
 
 ### Delete Key Handling
 
-When element is selected and Delete key pressed:
+When element is selected and Delete or Backspace key pressed:
 
 - **Non-table elements**: Selects element (browser then deletes)
 - **Jodit wrapper**: Directly removes element and hides frame
@@ -526,7 +526,7 @@ editor.e.on('afterInsertImage', (image) => {
 - The `afterGetValueFromEditor` event cleans up iframe wrappers from output
 - Wrapper active state tracked via `data-jodit-wrapper_active` attribute
 - The plugin properly cleans up all event listeners on destruction
-- Delete key only works for non-table elements
+- Delete and Backspace only work for non-table elements
 - Frame position uses `offset()` helper for accurate coordinates
 - Resize constraints check both minimum and parent width
 - Aspect ratio recalculated when Alt key released

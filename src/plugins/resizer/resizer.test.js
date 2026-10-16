@@ -701,6 +701,28 @@ describe('Resize plugin', () => {
 			).equals('IFRAME');
 		});
 
+		// https://github.com/xdan/jodit/issues/1583
+		it('should delete a clicked embed with Backspace, as with Delete', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+
+			editor.value =
+				'<p>one</p><p><iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ" width="320" height="180"></iframe></p><p>two</p>';
+
+			simulateEvent(
+				['mousedown', 'mouseup', 'click'],
+				editor.editor.querySelector('[data-jodit_iframe_wrapper]')
+			);
+
+			// WebKit drops the selection after the click, and the editor keeps its focus
+			editor.s.isFocused = () => true;
+			editor.s.sel.removeAllRanges();
+
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+			expect(editor.editor.querySelector('iframe')).is.null;
+			expect(editor.value).equals('<p>one</p><p></p><p>two</p>');
+		});
+
 		describe('Output HTML', () => {
 			it('should not contains JODIT tag', () => {
 				const editor = getJodit();

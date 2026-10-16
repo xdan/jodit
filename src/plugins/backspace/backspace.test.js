@@ -4,6 +4,25 @@
  * Copyright (c) 2013-2026 Valerii Chupurnov. All rights reserved. https://xdsoft.net
  */
 
+// https://github.com/xdan/jodit/issues/1583
+describe('Delete and Backspace without a selection in the editor', () => {
+	it('Should leave the content alone', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+
+		editor.value = '<p>one</p><p>two</p>';
+		editor.s.focus();
+
+		// As WebKit leaves it after a click on an embed: focused, with no range
+		editor.s.isFocused = () => true;
+		editor.s.sel.removeAllRanges();
+
+		simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+
+		expect(editor.value).equals('<p>one</p><p>two</p>');
+	});
+});
+
 describe('Disable cases via delete.disableCases (#1060)', () => {
 	it('Should not merge paragraphs when join-neighbors is disabled', () => {
 		const editor = getJodit({
