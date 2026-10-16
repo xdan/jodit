@@ -129,13 +129,15 @@ Config.prototype.iframeStyle =
 	'p{' +
 	'margin-top:0;' +
 	'}' +
-	'.jodit_editor .jodit_iframe_wrapper{' +
+	'[data-jodit_iframe_wrapper]{' +
 	'display: block;' +
-	'clear: both;' +
 	'user-select: none;' +
 	'position: relative;' +
 	'}' +
-	'.jodit_editor .jodit_iframe_wrapper:after {' +
+	'[data-jodit_iframe_wrapper] iframe{' +
+	'position: relative;' +
+	'}' +
+	'[data-jodit_iframe_wrapper]:after {' +
 	'position:absolute;' +
 	'content:"";' +
 	'z-index:1;' +
@@ -147,6 +149,9 @@ Config.prototype.iframeStyle =
 	'display: block;' +
 	'background: rgba(0, 0, 0, 0);' +
 	'} ' +
+	'[data-jodit_iframe_wrapper][data-jodit-wrapper_active=true] iframe{' +
+	'z-index: 2;' +
+	'}' +
 	'.jodit-wysiwyg_image-selected::selection,' +
 	'.jodit-wysiwyg_image-selected *:not(img)::selection{' +
 	'background:transparent' +

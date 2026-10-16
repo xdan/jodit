@@ -92,6 +92,47 @@
 				});
 			});
 
+			describe('Click on an embedded iframe', function () {
+				let editor, wrapper;
+
+				const hit = () => {
+					const rect = wrapper.getBoundingClientRect();
+
+					return editor.ed.elementFromPoint(
+						rect.left + rect.width / 2,
+						rect.top + rect.height / 2
+					);
+				};
+
+				beforeEach(function () {
+					editor = getJodit({
+						iframe: true,
+						height: 400
+					});
+
+					editor.value =
+						'<p>Before</p>' +
+						'<iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ" width="200" height="100"></iframe>' +
+						'<p>After</p>';
+
+					wrapper = editor.ed.querySelector(
+						'[data-jodit_iframe_wrapper]'
+					);
+				});
+
+				it('Should land on its wrapper, not on the embed', function () {
+					expect(hit()).equals(wrapper);
+				});
+
+				describe('Once the wrapper is active', function () {
+					it('Should reach the embed', function () {
+						simulateEvent('click', wrapper);
+
+						expect(hit()).equals(wrapper.firstChild);
+					});
+				});
+			});
+
 			describe('Enable editHTMLDocumentMode', function () {
 				describe('With DIV source element', function () {
 					it('Should throw error', function () {
