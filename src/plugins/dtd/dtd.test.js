@@ -35,6 +35,81 @@ describe('Test dtd plugin', () => {
 				});
 			});
 
+			describe('Caret inside the text of the parent block (#1605)', () => {
+				[
+					[
+						'<p>Hello |world</p>',
+						'<p>one</p><p>two</p>',
+						'<p>Hello </p><p>one</p><p>two</p><p>world</p>'
+					],
+					[
+						'<h2>Head|ing</h2>',
+						'<p>one</p>',
+						'<h2>Head</h2><p>one</p><h2>ing</h2>'
+					],
+					[
+						'<p>Hello |world</p>',
+						'<table><tbody><tr><td>1</td></tr></tbody></table>',
+						'<p>Hello </p><table><tbody><tr><td>1</td></tr></tbody></table><p>world</p>'
+					],
+					[
+						'<p><strong>Hel|lo</strong> world</p>',
+						'<p>one</p>',
+						'<p><strong>Hel</strong></p><p>one</p><p><strong>lo</strong> world</p>'
+					],
+					[
+						'<blockquote><p>Hel|lo</p></blockquote>',
+						'<p>one</p>',
+						'<blockquote><p>Hel</p></blockquote><p>one</p><blockquote><p>lo</p></blockquote>'
+					],
+					[
+						'<div class="box"><p>Hel|lo</p></div>',
+						'<p>one</p>',
+						'<div class="box"><p>Hel</p><p>one</p><p>lo</p></div>'
+					],
+					['<p>|Hello</p>', '<p>one</p>', '<p>one</p><p>Hello</p>'],
+					[
+						'<ul><li>On|e</li></ul>',
+						'<ul><li>x</li></ul>',
+						'<ul><li>On</li><li>x</li><li>e</li></ul>'
+					]
+				].forEach(([value, insert, result]) => {
+					it(`should split ${value} at the caret to insert ${insert}`, () => {
+						const editor = getJodit();
+						editor.value = value;
+						setCursorToChar(editor);
+						editor.s.insertHTML(insert);
+						expect(sortAttributes(editor.value)).eq(result);
+					});
+				});
+
+				it('should leave the caret at the end of the inserted blocks', () => {
+					const editor = getJodit();
+					editor.value = '<p>Hello |world</p>';
+					setCursorToChar(editor);
+					editor.s.insertHTML('<p>one</p><p>two</p>');
+
+					const { range } = editor.s;
+					expect(range.startContainer.nodeValue).eq('two');
+					expect(range.startOffset).eq(3);
+				});
+
+				it('should split it for a pasted video link', () => {
+					const editor = getJodit();
+					editor.value = '<p>Hello |world</p>';
+					setCursorToChar(editor);
+					simulatePaste(
+						editor.editor,
+						'https://www.youtube.com/watch?v=8Qn_spdM5Zg'
+					);
+					expect(sortAttributes(editor.value)).eq(
+						sortAttributes(
+							'<p>Hello </p><iframe width="400" height="345" src="https://www.youtube.com/embed/8Qn_spdM5Zg" frameborder="0" allowfullscreen=""></iframe><p>world</p>'
+						)
+					);
+				});
+			});
+
 			describe('Empty line in DIV mode (#1315)', () => {
 				it('should replace the line, as an empty paragraph is replaced', () => {
 					const editor = getJodit({ enter: 'DIV' });

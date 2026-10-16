@@ -130,27 +130,29 @@ When the `insertHorizontalRule` command is executed:
 
 3. **Block Cleanup**: Checks if the HR was inserted inside an empty block element:
    - Finds the nearest block parent of the HR
-   - If the block is empty and not the editor root
+   - If the block is empty, not the editor root, and can't hold other blocks (not in `dtd.blockLimits`, so not a list item, a table cell or a `<div>`)
    - Moves the HR after the block
    - Removes the empty block
 
-4. **Following Paragraph**: Ensures there's a block element after the HR:
-   - Searches for the next block element after the HR
-   - If no block exists, creates a new paragraph element
-   - Uses `editor.o.enter` configuration for the element type
-   - Inserts the paragraph after the HR
+4. **Cursor Positioning**: Places the cursor right after the HR:
+   - If a block follows the HR, at the start of that block
+   - If text follows the HR, or the HR is in a line of text in a list item or table cell, after the HR, so the text goes on after the line
+   - Otherwise creates a new element of the `editor.o.enter` type after the HR and places the cursor in it
 
-5. **Cursor Positioning**: Places the cursor inside the following paragraph
-
-6. **Return Value**: Returns `false` to prevent default browser behavior
+5. **Return Value**: Returns `false` to prevent default browser behavior
 
 ### Empty Block Detection
 
 The plugin checks for empty blocks:
 
 ```typescript
-if (block && Dom.isEmpty(block) && block !== editor.editor) {
-    // Block is empty and not the editor root
+if (
+    block &&
+    Dom.isEmpty(block) &&
+    block !== editor.editor &&
+    !editor.o.dtd?.blockLimits[block.nodeName.toLowerCase()]
+) {
+    // Block is empty, not the editor root, and can't hold other blocks
     Dom.after(block, elm);  // Move HR after block
     Dom.safeRemove(block);  // Remove empty block
 }
@@ -158,13 +160,12 @@ if (block && Dom.isEmpty(block) && block !== editor.editor) {
 
 ### Paragraph Creation
 
-If no block follows the HR:
+If nothing follows the HR, and it isn't in a line of text in a list item or table cell:
 
 ```typescript
-if (!p) {
-    p = editor.createInside.element(editor.o.enter);
-    Dom.after(elm, p);
-}
+const p = editor.createInside.element(editor.o.enter);
+Dom.after(elm, p);
+editor.s.setCursorIn(p);
 ```
 
 This ensures users can continue typing after inserting an HR.
@@ -197,7 +198,7 @@ editor.execCommand('insertHorizontalRule');
 
 1. **Empty Block**: If the cursor is in an empty block (e.g., empty `<p>`), the plugin removes the empty block and inserts the HR
 
-2. **No Following Block**: If there's no block element after the HR, the plugin creates a new paragraph so the user can continue typing
+2. **No Following Block**: If nothing follows the HR, the plugin creates a new paragraph so the user can continue typing. In a list item or table cell, the cursor goes after the HR instead
 
 3. **End of Document**: When inserting at the end of the document, a new paragraph is automatically created after the HR
 
@@ -209,17 +210,17 @@ editor.execCommand('insertHorizontalRule');
 
 7. **Selection**: If text is selected when the command executes, the selection is replaced with the HR
 
-8. **Nested Blocks**: The plugin correctly handles HRs inside complex nested block structures
+8. **Nested Blocks**: In a list item or table cell the HR stays in it, at the cursor, as the browsers' own `insertHorizontalRule` places it (`<li>One<hr>|</li>`)
 
 ## Notes
 
 - The plugin uses `editor.o.enter` to determine what type of block element to create after the HR (usually `<p>` or `<div>`)
 - Horizontal rules are self-closing elements and cannot contain content
-- The cursor is always positioned in the block following the HR, allowing immediate typing
+- The cursor is always positioned right after the HR, allowing immediate typing
 - Empty blocks are removed to maintain clean HTML structure
 - The plugin uses `Dom.safeRemove()` to safely remove elements without breaking the DOM
 - The `insertNode` method is called with `false, false` parameters to avoid splitting the current node
-- The plugin searches for the next block using `Dom.next()` with `Dom.isBlock` filter
+- The plugin looks for the next block among the HR's own siblings, so the cursor doesn't leave the list item or table cell
 - HR elements are created using `createInside` to ensure they belong to the editor's document context
 - The command returns `false` to prevent any default browser insertion behavior
 - The button is assigned to the `insert` group in the toolbar

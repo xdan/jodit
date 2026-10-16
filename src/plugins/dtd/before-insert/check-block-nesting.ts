@@ -13,8 +13,36 @@ import type { IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 
 /**
+ * Moves the cursor out of a block that can't hold the inserted block: before
+ * or after it when the cursor is at its edge, or between its two halves when
+ * the cursor is inside its content. An empty block is removed
+ */
+function moveCursorOutOf(jodit: IJodit, parent: HTMLElement): void {
+	const { s } = jodit;
+
+	if (Dom.isEmpty(parent)) {
+		s.setCursorAfter(parent);
+		Dom.safeRemove(parent);
+		return;
+	}
+
+	if (s.cursorOnTheRight(parent)) {
+		s.setCursorAfter(parent);
+		return;
+	}
+
+	if (s.cursorOnTheLeft(parent)) {
+		s.setCursorBefore(parent);
+		return;
+	}
+
+	s.setCursorAfter(s.splitSelection(parent) ?? parent);
+}
+
+/**
  * Checks whether the insertion of an element at the current location is allowed,
- * if it is not allowed, it deletes an empty block element or moves the cursor after it
+ * if it is not allowed, it deletes an empty block element, moves the cursor
+ * before or after it, or splits it at the cursor
  * @internal
  */
 export function checkBlockNesting(jodit: IJodit, node: Nullable<Node>): void {
@@ -23,8 +51,8 @@ export function checkBlockNesting(jodit: IJodit, node: Nullable<Node>): void {
 	}
 
 	if (jodit.o.dtd.checkBlockNesting && Dom.isBlock(node)) {
-		let parent: Nullable<Element> = null;
-		let current: Nullable<Element> =
+		let parent: Nullable<HTMLElement> = null;
+		let current: Nullable<HTMLElement> =
 			jodit.s.current()?.parentElement ?? null;
 
 		while (current && current !== jodit.editor) {
@@ -62,11 +90,7 @@ export function checkBlockNesting(jodit: IJodit, node: Nullable<Node>): void {
 		}
 
 		if (parent) {
-			jodit.s.setCursorAfter(parent);
-
-			if (Dom.isEmpty(parent)) {
-				Dom.safeRemove(parent);
-			}
+			moveCursorOutOf(jodit, parent);
 		}
 	}
 }
