@@ -15,7 +15,7 @@ import { INVISIBLE_SPACE_REG_EXP, SOURCE_CONSUMER } from 'jodit/core/constants';
 import { autobind, cached, debounce, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { $$, dataBind } from 'jodit/core/helpers';
+import { $$, dataBind, getWrappedMedia } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { dataURItoBlob } from 'jodit/modules/uploader/helpers/data-uri-to-blob';
 
@@ -26,6 +26,7 @@ import './image-processor.less';
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 const JODIT_IMAGE_BLOB_ID = JODIT_IMAGE_PROCESSOR_BINDED + 'blob-id';
 const IMAGE_SELECTED = 'jodit-wysiwyg_image-selected';
+const SELECTED_TAGS = new Set(['img', 'jodit', 'jodit-media'] as const);
 
 /**
  * Change editor's size after load all images
@@ -86,7 +87,10 @@ export class imageProcessor extends Plugin {
 
 	/**
 	 * While the selection is an image, only the image is highlighted: Safari
-	 * paints the rest of a block image's line with its parent's highlight. See #1528
+	 * paints the rest of a block image's line with its parent's highlight. See #1528.
+	 * Media in a wrapper (`jodit-media`, the resizer's `jodit` for an embed, or
+	 * one from `mediaWrappers`) isn't highlighted either, as Safari paints its
+	 * wrapper's whole line, and its resize frame shows it's selected
 	 */
 	@autobind
 	private onSelectionChange(): void {
@@ -139,10 +143,13 @@ function isImageSelected(jodit: IJodit): boolean {
 	const { startContainer, startOffset, endContainer, endOffset } =
 		sel.getRangeAt(0);
 
+	const node = startContainer.childNodes[startOffset];
+
 	return (
 		startContainer === endContainer &&
 		endOffset === startOffset + 1 &&
-		Dom.isTag(startContainer.childNodes[startOffset], 'img') &&
+		(Dom.isTag(node, SELECTED_TAGS) ||
+			Boolean(getWrappedMedia(jodit, node))) &&
 		Dom.isOrContains(jodit.editor, startContainer)
 	);
 }

@@ -12,6 +12,7 @@ Handles image processing in the Jodit editor. This plugin automatically manages 
 
 - Automatic click handler attachment to all images
 - Image selection on click/touch
+- While an image is selected only it is highlighted, and selected media in a wrapper (`jodit-media`, the resizer's `jodit`, or one from `mediaWrappers`) isn't highlighted, since Safari paints the rest of the line (the `jodit-wysiwyg_image-selected` class on the editor)
 - Automatic editor resize on image load
 - Data URI to Blob URL conversion for performance optimization
 - Blob URL lifecycle management

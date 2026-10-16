@@ -107,6 +107,70 @@ describe('Image processor plugin', () => {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/1530
+	describe('Browser highlight while media is selected', () => {
+		const transparent = 'rgba(0, 0, 0, 0)';
+		const embed =
+			'<iframe height="180" src="https://www.youtube.com/embed/3JZ_D3ELwOQ" width="320"></iframe>';
+
+		function highlight(editor) {
+			const p = editor.editor.querySelector('p');
+			return p.ownerDocument.defaultView.getComputedStyle(
+				p,
+				'::selection'
+			).backgroundColor;
+		}
+
+		[false, true].forEach(iframe => {
+			describe(iframe ? 'In iframe mode' : 'In the editor', () => {
+				[
+					[
+						'a mediaWrappers wrapper',
+						`<p><span class="fr-video" style="display:block">${embed}</span>Text after it</p>`
+					],
+					["the resizer's wrapper", `<p>${embed}Text after it</p>`]
+				].forEach(([name, value]) => {
+					it(`Should hide it while an embed in ${name} is selected, as Safari paints the line with it`, async () => {
+						const editor = getJodit({
+							iframe,
+							mediaWrappers: {
+								iframe: { tag: 'span', className: 'fr-video' }
+							},
+							iframeStyle:
+								Jodit.defaultOptions.iframeStyle +
+								'p::selection{background:rgb(1, 2, 3)}'
+						});
+						editor.value = value;
+						editor.e.fire('change', editor.value, '');
+						await delay(150);
+
+						const shown = highlight(editor);
+						expect(shown).does.not.equal(transparent);
+
+						// Where a click on the embed lands
+						simulateEvent(
+							'mousedown',
+							editor.editor.querySelector(
+								'[data-jodit_iframe_wrapper]'
+							)
+						);
+						await delay(50);
+
+						expect(editor.s.range.collapsed).is.false;
+						expect(highlight(editor)).equals(transparent);
+
+						editor.s.setCursorIn(
+							editor.editor.querySelector('p').lastChild
+						);
+						await delay(50);
+
+						expect(highlight(editor)).equals(shown);
+					});
+				});
+			});
+		});
+	});
+
 	const DATA_URI =
 		'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
