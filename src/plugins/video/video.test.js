@@ -207,6 +207,18 @@ describe('video plugin', () => {
 			expect(input.getAttribute('accept')).equals('video/*');
 		});
 
+		it('should size the tabs to their labels, so none is cut off', () => {
+			const popup = openPopup(getJodit({ uploader: { url } }));
+			const labels = popup.querySelectorAll(
+				'.jodit-tabs__button .jodit-ui-button__text'
+			);
+
+			expect(labels.length).equals(3);
+			labels.forEach(label => {
+				expect(label.scrollWidth).to.be.at.most(label.clientWidth);
+			});
+		});
+
 		it('should come first with a custom upload function', () => {
 			const popup = openPopup(
 				getJodit({

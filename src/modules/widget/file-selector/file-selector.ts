@@ -161,8 +161,8 @@ export const FileSelectorWidget = (
 
 	// Marks this popup so its tabs auto-size to their labels (see
 	// `.jodit-file-selector` in tabs.less) — long localized tab captions are no
-	// longer clipped — while leaving other tab popups (link, video …)
-	// untouched.
+	// longer clipped — while leaving other tab popups (link …) untouched. The
+	// video popup, which has an Upload tab too, uses it as well.
 	box.classList.add('jodit-file-selector');
 
 	return box;

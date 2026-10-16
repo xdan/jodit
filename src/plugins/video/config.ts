@@ -192,7 +192,13 @@ Config.prototype.controls.video = {
 			insertCode(data.code);
 		});
 
-		return TabsWidget(jodit, tabs);
+		const box = TabsWidget(jodit, tabs);
+
+		// Its tabs are sized to their labels, as the file selector's are, since
+		// "Upload" doesn't fit a third of the popup
+		box.classList.add('jodit-file-selector');
+
+		return box;
 	},
 
 	tags: ['iframe'],
