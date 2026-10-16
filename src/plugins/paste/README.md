@@ -435,6 +435,8 @@ editor.e.on('afterPaste', () => {
 
 10. **Processing Toggle**: `processPasteHTML: false` bypasses all HTML cleaning
 
+11. **Google Docs**: Docs wraps the HTML it copies in `<b style="font-weight:normal;" id="docs-internal-guid-…">`. The wrapper is removed before the HTML is cleaned or inserted, so it doesn't end up around the pasted blocks or make a cleaned paste bold
+
 ## Notes
 
 - Plugin handles all paste operations in the editor

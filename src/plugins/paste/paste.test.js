@@ -627,6 +627,33 @@ describe('Test paste plugin', () => {
 
 			expect(editor.value).equals('<p>plain only</p>');
 		});
+
+		it('Should drop the Google Docs wrapper, as Ctrl+V does', async () => {
+			const editor = getJodit({
+				askBeforePasteHTML: false,
+				defaultActionOnPaste: Jodit.INSERT_AS_HTML,
+				history: { timeout: 0 }
+			});
+
+			mockClipboard({
+				'text/html':
+					'<meta charset="utf-8"><b style="font-weight:normal;" ' +
+					'id="docs-internal-guid-1a2b3c4d-7fff-1234-5678-9abcdef01234">' +
+					'<span style="font-weight:400;">two</span></b>',
+				'text/plain': 'two'
+			});
+
+			editor.value = '<p>one |</p>';
+			setCursorToChar(editor);
+
+			clickButton('paste', editor);
+			await editor.async.requestIdlePromise();
+			await delay(50);
+
+			expect(editor.value).equals(
+				'<p>one <span style="font-weight:400;">two</span></p>'
+			);
+		});
 	});
 
 	// https://github.com/xdan/jodit/issues/1078
@@ -692,6 +719,104 @@ describe('Test paste plugin', () => {
 				expect(dialog).is.not.null;
 				expect(dialog.textContent).does.not.contain(
 					'Word Paste Detected'
+				);
+			});
+		});
+	});
+
+	describe('Google Docs clipboard wrapper (#1589)', () => {
+		// Docs wraps what it copies in a <b> that font-weight:normal unbolds,
+		// and marks bold text with font-weight:700 on a span
+		const fromDocs = html =>
+			'<meta charset="utf-8"><b style="font-weight:normal;" ' +
+			'id="docs-internal-guid-1a2b3c4d-7fff-1234-5678-9abcdef01234">' +
+			html +
+			'</b>';
+
+		const blocks = fromDocs(
+			'<h2 dir="ltr"><span style="font-weight:400;">Sports day</span></h2>' +
+				'<p dir="ltr"><span style="font-weight:400;">Please bring a </span>' +
+				'<span style="font-weight:700;">hat</span></p>'
+		);
+
+		const inline = fromDocs('<span style="font-weight:400;">two</span>');
+
+		describe('Keep', () => {
+			it('Should insert the blocks without the wrapper', () => {
+				const editor = getJodit();
+
+				editor.value = '<p>|<br></p>';
+				setCursorToChar(editor);
+				simulatePaste(editor.editor, blocks);
+				clickButton('keep', getOpenedDialog(editor));
+
+				expect(editor.value).equals(
+					'<h2 dir="ltr"><span style="font-weight:400;">Sports day</span></h2>' +
+						'<p dir="ltr"><span style="font-weight:400;">Please bring a </span>' +
+						'<span style="font-weight:700;">hat</span></p>'
+				);
+			});
+
+			it('Should not make inline text strong', () => {
+				const editor = getJodit({
+					askBeforePasteHTML: false,
+					defaultActionOnPaste: Jodit.INSERT_AS_HTML
+				});
+
+				editor.value = '<p>one |</p>';
+				setCursorToChar(editor);
+				simulatePaste(editor.editor, inline);
+
+				expect(editor.value).equals(
+					'<p>one <span style="font-weight:400;">two</span></p>'
+				);
+			});
+		});
+
+		describe('Clean', () => {
+			it('Should insert the blocks without the wrapper', () => {
+				const editor = getJodit({
+					askBeforePasteHTML: false,
+					defaultActionOnPaste: Jodit.INSERT_CLEAR_HTML
+				});
+
+				editor.value = '<p>|<br></p>';
+				setCursorToChar(editor);
+				simulatePaste(editor.editor, blocks);
+
+				expect(editor.value).equals(
+					'<h2><span>Sports day</span></h2>' +
+						'<p><span>Please bring a </span><span>hat</span></p>'
+				);
+			});
+
+			it('Should not make inline text bold', () => {
+				const editor = getJodit({
+					askBeforePasteHTML: false,
+					defaultActionOnPaste: Jodit.INSERT_CLEAR_HTML
+				});
+
+				editor.value = '<p>one |</p>';
+				setCursorToChar(editor);
+				simulatePaste(editor.editor, inline);
+
+				expect(editor.value).equals('<p>one <span>two</span></p>');
+			});
+		});
+
+		describe('Insert only Text', () => {
+			it('Should insert the text', () => {
+				const editor = getJodit({
+					askBeforePasteHTML: false,
+					defaultActionOnPaste: Jodit.INSERT_ONLY_TEXT
+				});
+
+				editor.value = '<p>|<br></p>';
+				setCursorToChar(editor);
+				simulatePaste(editor.editor, blocks);
+
+				expect(editor.value).equals(
+					'<p>Sports day<br>Please bring a hat</p>'
 				);
 			});
 		});
