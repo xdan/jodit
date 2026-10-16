@@ -284,4 +284,158 @@ describe('Undo/Redo behaviors', () => {
 			expect(editor.value).equals('<p>test</p>');
 		});
 	});
+
+	describe('history.timeout (#1601)', () => {
+		// What typing does: the text changes and an input event follows
+		const type = (editor, text) => {
+			editor.editor.firstChild.firstChild.nodeValue += text;
+			simulateEvent('input', editor.editor);
+		};
+
+		// Types a word every 50ms for `duration` ms, and returns the value
+		// at each step that went into the history meanwhile
+		const typeSteadily = async (editor, duration) => {
+			const steps = [];
+			editor.e.on('changeStack', () => {
+				if (editor.history.length > steps.length) {
+					steps.push(editor.value);
+				}
+			});
+
+			const start = Date.now();
+			for (let i = 1; Date.now() - start < duration; i += 1) {
+				type(editor, ' ' + i);
+				await delay(50);
+			}
+
+			return steps;
+		};
+
+		it('Should not record the first change of a step on its own', async () => {
+			const editor = getJodit({ history: { timeout: 300 } });
+			editor.value = '<p>one</p>';
+			editor.history.clear();
+
+			type(editor, ' t');
+			await delay(50);
+			type(editor, 'wo');
+			expect(editor.history.length).equals(0);
+
+			await delay(400);
+			expect(editor.history.length).equals(1);
+
+			editor.execCommand('undo');
+			expect(editor.value).equals('<p>one</p>');
+		});
+
+		it('Should record steady typing as a step every timeout', async () => {
+			const editor = getJodit({ history: { timeout: 300 } });
+			editor.value = '<p>one</p>';
+			editor.history.clear();
+
+			await typeSteadily(editor, 750);
+			await delay(400);
+			expect(editor.history.length).equals(3);
+		});
+
+		it('Should undo only the open step straight after typing', async () => {
+			const editor = getJodit({ history: { timeout: 300 } });
+			editor.value = '<p>one</p>';
+			editor.history.clear();
+
+			const steps = await typeSteadily(editor, 750);
+			expect(steps.length).equals(2);
+
+			editor.execCommand('undo');
+			expect(editor.value).equals(steps[1]);
+
+			editor.execCommand('undo');
+			expect(editor.value).equals(steps[0]);
+
+			editor.execCommand('undo');
+			expect(editor.value).equals('<p>one</p>');
+		});
+
+		it('Should start a new step after a pause longer than the timeout', async () => {
+			const editor = getJodit({ history: { timeout: 200 } });
+			editor.value = '<p>one</p>';
+			editor.history.clear();
+
+			type(editor, ' two');
+			await delay(300);
+			type(editor, ' three');
+			await delay(300);
+			expect(editor.history.length).equals(2);
+
+			editor.execCommand('undo');
+			expect(editor.value).equals('<p>one two</p>');
+		});
+
+		it('Should undo and redo a change that is still within the timeout', () => {
+			const editor = getJodit({ history: { timeout: 10000 } });
+			editor.value = '<p>one</p>';
+			editor.history.clear();
+
+			type(editor, ' two');
+			expect(editor.history.canUndo()).is.true;
+
+			editor.execCommand('undo');
+			expect(editor.value).equals('<p>one</p>');
+
+			editor.execCommand('redo');
+			expect(editor.value).equals('<p>one two</p>');
+		});
+
+		it('Should drop the redo steps as soon as a change comes in after Undo', () => {
+			const editor = getJodit({
+				toolbarAdaptive: false,
+				history: { timeout: 10000 }
+			});
+			editor.value = '<p>one</p>';
+			editor.history.clear();
+
+			const redo = getButton('redo', editor);
+
+			type(editor, ' two');
+			editor.execCommand('undo');
+			expect(editor.history.canRedo()).is.true;
+			expect(redo.hasAttribute('disabled')).is.false;
+
+			type(editor, ' three');
+			expect(editor.history.canRedo()).is.false;
+			expect(redo.hasAttribute('disabled')).is.true;
+
+			editor.execCommand('redo');
+			expect(editor.value).equals('<p>one three</p>');
+
+			editor.execCommand('undo');
+			expect(editor.value).equals('<p>one</p>');
+		});
+
+		it('Should keep a change within the timeout when an internal change follows it', () => {
+			const editor = getJodit({ history: { timeout: 10000 } });
+			editor.value = '<p>one</p>';
+			editor.history.clear();
+
+			type(editor, ' two');
+			editor.e.fire('internalChange');
+
+			editor.execCommand('undo');
+			expect(editor.value).equals('<p>one</p>');
+		});
+
+		it('Should not add a step for a transaction once the timeout runs out', async () => {
+			const editor = getJodit({ history: { timeout: 100 } });
+			editor.value = '<p>one</p>';
+			editor.history.clear();
+
+			editor.history.snapshot.transaction(() => {
+				type(editor, ' two');
+			});
+
+			await delay(200);
+			expect(editor.history.length).equals(0);
+			expect(editor.value).equals('<p>one two</p>');
+		});
+	});
 });
