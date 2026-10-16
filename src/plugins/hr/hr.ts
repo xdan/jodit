@@ -42,18 +42,38 @@ export function hr(editor: IJodit): void {
 			editor.editor
 		);
 
-		if (block && Dom.isEmpty(block) && block !== editor.editor) {
+		// A block that holds other blocks, such as a list item or a table
+		// cell, keeps the line
+		if (
+			block &&
+			Dom.isEmpty(block) &&
+			block !== editor.editor &&
+			!editor.o.dtd?.blockLimits[block.nodeName.toLowerCase()]
+		) {
 			Dom.after(block, elm);
 			Dom.safeRemove(block);
 		}
 
-		let p = Dom.next(elm, Dom.isBlock, editor.editor, false);
+		const next = Dom.findNotEmptySibling(elm, false);
 
-		if (!p) {
-			p = editor.createInside.element(editor.o.enter);
-			Dom.after(elm, p);
+		if (Dom.isBlock(next)) {
+			editor.s.setCursorIn(next, true);
+			return false;
 		}
 
+		// In a list item or a table cell the text goes on after the line, as
+		// it does with the browsers' own command
+		if (
+			next ||
+			(elm.parentNode !== editor.editor &&
+				!Dom.isBlock(Dom.findNotEmptySibling(elm, true)))
+		) {
+			editor.s.setCursorAfter(elm);
+			return false;
+		}
+
+		const p = editor.createInside.element(editor.o.enter);
+		Dom.after(elm, p);
 		editor.s.setCursorIn(p);
 
 		return false;

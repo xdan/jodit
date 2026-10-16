@@ -69,10 +69,11 @@ const editor = Jodit.make('#editor', {
 **What it does:**
 - Before inserting a block element, finds the parent block
 - Checks if parent is in `blockLimits` list
-- If not in list, moves cursor after parent
+- If not in list, moves cursor after parent, or before it when the cursor is at its start
+- Splits the parent at the cursor when the cursor is inside its content, so the block goes between the two halves
 - Removes parent if it's empty
 - With `enter: 'DIV'`, an empty `<div>` holding the cursor counts as a line, like an empty `<p>`, so it's replaced
-- A list inserted into a list item adds its items to that item's list: they replace an empty item, or go after the item
+- A list inserted into a list item adds its items to that item's list: they replace an empty item, or go before, after or between the halves of the item
 
 ### `dtd.blockLimits`
 
@@ -216,11 +217,12 @@ Watches `:beforeInsertNode` event and runs validation cases:
 3. Find furthest parent block element
 4. Check if parent is in `blockLimits` dictionary
 5. If not in dictionary, or it's the cursor's own empty block of the `enter` tag:
-   - Move cursor after parent
-   - If parent is empty, remove it
+   - If parent is empty, move cursor after it and remove it
+   - If the cursor is at the end or the start of parent, move cursor after or before it
+   - Otherwise split parent at the cursor and move cursor between the two halves
 6. If the node is a list, it's all of the inserted content, and the cursor's block limit is an `<li>`:
    - Unwrap the list, so its items are inserted
-   - Move cursor after the `<li>`, removing it if it's empty
+   - Move cursor out of the `<li>` as in step 5, so the items replace an empty `<li>`, or go before, after or between its halves
 
 ```javascript
 // Example: Inserting <table> inside <p>
@@ -315,7 +317,17 @@ editor.e.fire(':afterInsertNode', node);
 <table>...</table>
 ```
 
-### 5. List Pasted into a List Item
+### 5. Block Inserted in the Middle of a Paragraph
+```html
+<!-- Before: cursor inside the text -->
+<p>Hello |world</p>
+
+<!-- Insert <table> -->
+<!-- Result: the paragraph is split at the cursor -->
+<p>Hello </p><table>...</table><p>world</p>
+```
+
+### 6. List Pasted into a List Item
 ```html
 <!-- Before: cursor inside empty <li> -->
 <ul><li>One</li><li>|</li></ul>
@@ -325,7 +337,7 @@ editor.e.fire(':afterInsertNode', node);
 <ul><li>One</li><li>Two</li><li>Three</li></ul>
 ```
 
-### 6. Nested DIVs (Valid)
+### 7. Nested DIVs (Valid)
 ```html
 <!-- DIV is in blockLimits -->
 <div>
