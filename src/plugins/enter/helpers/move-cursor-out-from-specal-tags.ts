@@ -29,6 +29,14 @@ export function moveCursorOutFromSpecialTags(
 			Dom.after(link, fake);
 		} else if (s.cursorOnTheLeft(link, fake)) {
 			Dom.before(link, fake);
+		} else {
+			return;
 		}
+
+		// The block is split at the caret, so the caret leaves the link too:
+		// beside the fake, since Safari mislays a caret inside a removed node
+		const range = s.createRange();
+		range.setStartBefore(fake);
+		s.selectRange(range);
 	}
 }
