@@ -9,6 +9,23 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.4
+
+#### :rocket: New Feature
+
+- [#1530](https://github.com/xdan/jodit/issues/1530) The media popup has an Edit button that opens a video properties dialog: the size, poster, Autoplay, Loop, Muted and Controls of a video, the size of an embed and the playback settings of audio. Autoplay also mutes the video and lets it play inline, and Controls can only be turned off while Autoplay is on. New `videoProperties` plugin, opened with `editor.events.fire('openVideoProperties', media)`. Thanks [@brendon](https://github.com/brendon).
+- [#1530](https://github.com/xdan/jodit/issues/1530) The media popup has a Replace button that opens the video popup's Upload, Link and Code tabs. What's inserted takes the old media's place and keeps its classes, size and playback settings, in one undo step. Thanks [@brendon](https://github.com/brendon).
+- [#1530](https://github.com/xdan/jodit/issues/1530) Videos can be resized with the resize frame: `allowResizeTags` and `resizer.useAspectRatio` now include `video`. A video with no height of its own is given only a width, so it keeps its ratio. Media in `jodit-media` or in a `mediaWrappers` wrapper is resized through its wrapper, and an embed through its own `jodit` wrapper. Thanks [@brendon](https://github.com/brendon).
+
+#### :bug: Bug Fix
+
+- [#1577](https://github.com/xdan/jodit/issues/1577) The resize frame stays on its image, table or embed while the editor's content or the page scrolls, clipped at the edge of the editing area, instead of being hidden on the first scroll. Thanks [@brendon](https://github.com/brendon).
+- [#1620](https://github.com/xdan/jodit/issues/1620) Pressing on an embed or a video in a wrapper no longer paints its whole line with the selection highlight in Safari. Thanks [@brendon](https://github.com/brendon).
+
+#### :house: Internal
+
+- `imageAlignClasses` is deprecated in favour of `alignClasses.img`, which takes the same value; when `alignClasses.img` isn't set the editor copies `imageAlignClasses` into it, so existing configs keep working. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.18.3
 
 #### :bug: Bug Fix
