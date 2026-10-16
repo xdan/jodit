@@ -27,7 +27,7 @@ Jodit Editor works with raw HTML, which means every piece of content entering or
 Jodit's security model consists of multiple layers:
 
 ```
-User input / paste / API (.value =)
+Initial content of the element / paste / drag-and-drop / API (.value =)
         |
         v
 +---------------------------+
@@ -58,6 +58,8 @@ User input / paste / API (.value =)
 |  4. iframe sandbox       |  <-- optional: isolates editor DOM
 +--------------------------+
 ```
+
+**When the layers run.** Content assigned through `.value =` (and the element's initial content when the editor is created, since 4.18.2) is sanitized twice: first in an inert document (`beforeSetNativeEditorValue`), then once more synchronously in the live editing area right after the assignment (`afterSetNativeEditorValue`, since 4.17.3), before any script can run. `<noscript>` is removed outright, because its parsing depends on whether scripting is enabled and that differs between the two documents. Pasted and dropped HTML goes through the paste plugin and `safeHTML` before insertion. On top of that, the `LazyWalker` background pass re-checks the whole editing area after every change, so attributes that arrive through other DOM paths are stripped as well.
 
 **Key principle:** Jodit's client-side sanitization is a defense-in-depth measure. It should never be your only line of defense. Always sanitize on the server before storing or rendering user content.
 
@@ -923,7 +925,7 @@ const editor = Jodit.make('#editor', {
 <object data="https://evil.com/malware.swf" type="application/x-shockwave-flash"></object>
 <embed src="https://evil.com/exploit.swf">
 
-<!-- Defense: convertUnsafeEmbeds (default: true) converts to sandboxed iframe -->
+<!-- Defense: convertUnsafeEmbeds (default: ['object', 'embed']) converts to sandboxed iframe -->
 <!-- Defense: denyTags (default) blocks object and embed -->
 ```
 
@@ -950,12 +952,44 @@ const editor = Jodit.make('#editor', {
 
 ### 9. Mutation XSS (mXSS)
 
-Some HTML, when parsed and re-serialized, produces different (malicious) DOM. Jodit mitigates this with:
+Some HTML, when parsed and re-serialized, produces different (malicious) DOM: a handler hidden as raw text inside `<style>`, a MathML/SVG carrier, or `<noscript>`, whose content is parsed differently with scripting on and off. Jodit mitigates this with:
+- a second, synchronous sanitizing pass in the live editing area right after every value assignment (since 4.17.3), so what the live parser produced is checked, not only what the inert document produced
+- removal of `<noscript>` and of raw-text carriers inside foreign content (4.12.28, 4.13.4, 4.17.3)
 - `useIframeSandbox: true` -- parses in an isolated context
-- The continuous `LazyWalker` re-checks DOM after mutations
-- `sanitizer` hook -- use DOMPurify which specifically handles mXSS vectors
+- the continuous `LazyWalker` re-check after mutations
+- the `sanitizer` hook -- use DOMPurify which specifically handles mXSS vectors
 
 For maximum protection against mXSS, use DOMPurify on the server.
+
+### 10. Stored HTML in the element the editor is created on
+
+```html
+<!-- Attack: stored HTML rendered into the textarea by the server -->
+<textarea id="editor">&lt;p&gt;text &lt;img src="data:," onerror="alert(1)"&gt;&lt;/p&gt;</textarea>
+
+<!-- Defense: since 4.18.2 the initial content goes through the same two passes as .value = -->
+<!-- Before 4.18.2 (GHSA-7pxg-rf9q-fg33) the handler ran once; sanitize on the server or create the editor on an empty element and assign .value -->
+```
+
+### 11. Full HTML documents in `editHTMLDocumentMode`
+
+```html
+<!-- Attack: a whole document with a <script> or handlers, assigned with iframe: true and editHTMLDocumentMode: true -->
+
+<!-- Defense: since 4.14.6 the document is sanitized before it is written into the iframe (GHSA-w3xv-x3fm-59ph) -->
+```
+
+### 12. Prototype pollution through options
+
+```javascript
+// Attack: user-controlled options with __proto__ / constructor.prototype keys
+Jodit.make('#editor', JSON.parse(untrustedJson));
+
+// Defense: Jodit.configure() / ConfigMerge (4.12.18) and Helpers.set() (4.12.26) refuse prototype-mutating keys.
+// Still: never pass untrusted JSON as editor options.
+```
+
+Every published advisory, with the release that fixes it, is listed at [xdsoft.net/jodit/security](https://xdsoft.net/jodit/security/).
 
 ---
 
