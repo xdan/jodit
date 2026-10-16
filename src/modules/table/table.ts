@@ -289,7 +289,9 @@ export class Table extends ViewComponent<IJodit> {
 			row = create.element('tr');
 
 			for (let j: number = 0; j < columnsCount; j += 1) {
-				Dom.append(row, create.element('td'));
+				const cell = create.element('td');
+				Dom.append(cell, create.element('br'));
+				Dom.append(row, cell);
 			}
 		} else {
 			row = line.cloneNode(true) as HTMLTableRowElement;
@@ -310,6 +312,7 @@ export class Table extends ViewComponent<IJodit> {
 			Dom.each(row, cell => {
 				if (Dom.isCell(cell)) {
 					Dom.detach(cell);
+					Dom.append(cell, create.element('br'));
 				}
 			});
 		}
@@ -459,6 +462,7 @@ export class Table extends ViewComponent<IJodit> {
 				columnIndex === newColumnIndex
 			) {
 				const cell = this.j.createInside.element('td');
+				Dom.append(cell, this.j.createInside.element('br'));
 				if (insertAfter) {
 					Dom.after(cells[columnIndex], cell);
 				} else {
@@ -806,7 +810,8 @@ export class Table extends ViewComponent<IJodit> {
 					}
 				}
 
-				(first as HTMLTableCellElement).innerHTML = html.join('<br/>');
+				(first as HTMLTableCellElement).innerHTML =
+					html.join('<br/>') || '<br/>';
 				instance(jodit).addSelection(first);
 
 				alreadyMerged.delete(first);
