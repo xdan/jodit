@@ -26,6 +26,7 @@ import { pluginSystem } from 'jodit/core/global';
 import {
 	camelCase,
 	getMediaWrapper,
+	getWrappedMedia,
 	isArray,
 	isFunction,
 	isString,
@@ -78,7 +79,14 @@ export class inlinePopup extends Plugin {
 
 		if (target && type && this.canShowPopupForType(type)) {
 			const isMedia = type === 'jodit-media';
-			this.showPopup(() => this.__bound(target, isMedia), type, target);
+
+			// Beside the media in a wrapper kept in the content, which can fill
+			// the line
+			const bound =
+				(mediaWrapper && getWrappedMedia(this.j, mediaWrapper)) ||
+				target;
+
+			this.showPopup(() => this.__bound(bound, isMedia), type, target);
 
 			return false;
 		}
