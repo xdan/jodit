@@ -8,7 +8,7 @@
  * @module plugins/image-properties
  */
 
-import type { ImageAlignClasses, Nullable } from 'jodit/types';
+import type { HAlignClasses, Nullable } from 'jodit/types';
 import { getHAlign } from 'jodit/core/helpers/utils/align';
 
 import type { EditValues } from '../interface';
@@ -19,7 +19,7 @@ import type { EditValues } from '../interface';
 export function readAlign(
 	image: HTMLImageElement,
 	values: EditValues,
-	classes?: Nullable<ImageAlignClasses>
+	classes?: Nullable<HAlignClasses>
 ): void {
 	const align = getHAlign(image, classes);
 	values.align = align === 'normal' ? '' : align;

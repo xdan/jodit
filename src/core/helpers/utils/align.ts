@@ -24,7 +24,7 @@ const classSets = (value?: string | string[]): string[][] =>
 /**
  * The class names to align `elm` with: `alignClasses` for its tag, or for the
  * media in it when it wraps media (a `mediaWrappers` wrapper, `jodit` or
- * `jodit-media`), falling back to `imageAlignClasses` for an image
+ * `jodit-media`)
  */
 export function getAlignClasses(
 	jodit: IJodit,
@@ -37,11 +37,9 @@ export function getAlignClasses(
 	const media = Dom.isTag(elm, new Set(['jodit', 'jodit-media'] as const))
 		? elm.firstElementChild
 		: getWrappedMedia(jodit, elm);
-	const tag = (media ?? elm).nodeName.toLowerCase();
 
 	return (
-		jodit.o.alignClasses?.[tag] ??
-		(tag === 'img' ? jodit.o.imageAlignClasses : null)
+		jodit.o.alignClasses?.[(media ?? elm).nodeName.toLowerCase()] ?? null
 	);
 }
 
