@@ -225,5 +225,12 @@ module.exports = {
 	'Find Next': 'Znajdź Dalej',
 	'Insert className': 'Wstaw nazwę zajęć',
 	'Press Alt for custom resizing': 'Naciśnij Alt, aby zmienić rozmiar',
-	'License: %s': 'Licencja: %s'
+	'License: %s': 'Licencja: %s',
+	'Video properties': 'Właściwości filmu',
+	'Audio properties': 'Właściwości dźwięku',
+	Poster: 'Obraz podglądu',
+	Autoplay: 'Autoodtwarzanie',
+	Loop: 'Zapętlenie',
+	Muted: 'Wyciszony',
+	Controls: 'Elementy sterujące'
 };

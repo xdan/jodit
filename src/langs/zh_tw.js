@@ -222,5 +222,12 @@ module.exports = {
 	'Insert className': '插入 class 名稱',
 	'Press Alt for custom resizing': '按住 Alt 以調整自訂大小',
 	Edit: '編輯',
-	'License: %s': '許可證: %s'
+	'License: %s': '許可證: %s',
+	'Video properties': '影片屬性',
+	'Audio properties': '音訊屬性',
+	Poster: '封面圖片',
+	Autoplay: '自動播放',
+	Loop: '循環播放',
+	Muted: '靜音',
+	Controls: '播放控制項'
 };

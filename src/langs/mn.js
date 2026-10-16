@@ -226,5 +226,12 @@ module.exports = {
 	'Insert className': 'Бүлгийн нэрээ оруулна уу',
 	'Press Alt for custom resizing':
 		'Хэмжээсийг шинээр өөчрлөхийн тулд Alt товчин дээр дарна уу',
-	'License: %s': 'Лиценз: %s'
+	'License: %s': 'Лиценз: %s',
+	'Video properties': 'Видеоны үзүүлэлт',
+	'Audio properties': 'Аудионы үзүүлэлт',
+	Poster: 'Нүүр зураг',
+	Autoplay: 'Автоматаар тоглуулах',
+	Loop: 'Давтах',
+	Muted: 'Дуугүй',
+	Controls: 'Удирдлага'
 };

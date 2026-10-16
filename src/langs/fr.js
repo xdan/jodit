@@ -225,5 +225,12 @@ module.exports = {
 	'Embed code': "Code d'intégration",
 	Edit: 'Modifier',
 	All: 'Tout sélectionner',
-	'License: %s': 'Licence: %s'
+	'License: %s': 'Licence: %s',
+	'Video properties': 'Propriétés de la vidéo',
+	'Audio properties': "Propriétés de l'audio",
+	Poster: "Image d'aperçu",
+	Autoplay: 'Lecture automatique',
+	Loop: 'Lecture en boucle',
+	Muted: 'Muet',
+	Controls: 'Commandes'
 };

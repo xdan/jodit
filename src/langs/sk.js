@@ -231,5 +231,12 @@ module.exports = {
 	'Select file': 'Vybrať súbor',
 	'Edit image': 'Upraviť obrázok',
 	'Tiles view': 'Zobrazenie dlaždíc',
-	'List view': 'Zobrazenie zoznamu'
+	'List view': 'Zobrazenie zoznamu',
+	'Video properties': 'Vlastnosti videa',
+	'Audio properties': 'Vlastnosti zvuku',
+	Poster: 'Náhľadový obrázok',
+	Autoplay: 'Automatické prehrávanie',
+	Loop: 'Opakovať',
+	Muted: 'Stlmené',
+	Controls: 'Ovládacie prvky'
 };

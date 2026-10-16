@@ -225,5 +225,12 @@ module.exports = {
 	'Find Next': 'Következő Keresése',
 	'Insert className': 'Helyezze be az osztály nevét',
 	'Press Alt for custom resizing': 'Nyomja meg az Alt egyéni átméretezés',
-	'License: %s': 'Licenc: %s'
+	'License: %s': 'Licenc: %s',
+	'Video properties': 'Videó tulajdonságai',
+	'Audio properties': 'Hang tulajdonságai',
+	Poster: 'Előnézeti kép',
+	Autoplay: 'Automatikus lejátszás',
+	Loop: 'Ismétlés',
+	Muted: 'Némítva',
+	Controls: 'Vezérlők'
 };

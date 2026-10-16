@@ -233,5 +233,12 @@ module.exports = {
 	space: 'mellanslag',
 	'Embed code': 'Bädda in kod',
 	All: 'Välj alla',
-	'License: %s': 'Licens: %s'
+	'License: %s': 'Licens: %s',
+	'Video properties': 'Videoegenskaper',
+	'Audio properties': 'Ljudegenskaper',
+	Poster: 'Affischbild',
+	Autoplay: 'Automatisk uppspelning',
+	Loop: 'Upprepa',
+	Muted: 'Ljudlös',
+	Controls: 'Kontroller'
 };

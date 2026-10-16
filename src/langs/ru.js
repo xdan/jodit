@@ -224,5 +224,12 @@ module.exports = {
 	'Find Next': 'Найти Далее',
 	'Insert className': 'Вставить название класса',
 	'Press Alt for custom resizing':
-		'Нажмите Alt для изменения пользовательского размера'
+		'Нажмите Alt для изменения пользовательского размера',
+	'Video properties': 'Свойства видео',
+	'Audio properties': 'Свойства аудио',
+	Poster: 'Обложка',
+	Autoplay: 'Автовоспроизведение',
+	Loop: 'Повтор',
+	Muted: 'Без звука',
+	Controls: 'Элементы управления'
 };

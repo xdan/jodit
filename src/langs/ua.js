@@ -223,5 +223,12 @@ module.exports = {
 	'Find Previous': 'Знайти попередні',
 	'Find Next': 'Знайти наступні',
 	'Insert className': 'Вставити клас',
-	'Press Alt for custom resizing': 'Натисніть Alt для зміни розміру'
+	'Press Alt for custom resizing': 'Натисніть Alt для зміни розміру',
+	'Video properties': 'Властивості відео',
+	'Audio properties': 'Властивості аудіо',
+	Poster: 'Обкладинка',
+	Autoplay: 'Автовідтворення',
+	Loop: 'Повтор',
+	Muted: 'Без звуку',
+	Controls: 'Елементи керування'
 };

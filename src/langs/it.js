@@ -230,5 +230,12 @@ module.exports = {
 	'Insert className': 'Inserisci il nome della classe',
 	'Press Alt for custom resizing':
 		'Premere Alt per il ridimensionamento personalizzato',
-	'License: %s': 'Licenza: %s'
+	'License: %s': 'Licenza: %s',
+	'Video properties': 'Proprietà del video',
+	'Audio properties': "Proprietà dell'audio",
+	Poster: 'Immagine di anteprima',
+	Autoplay: 'Riproduzione automatica',
+	Loop: 'Ripeti',
+	Muted: 'Muto',
+	Controls: 'Controlli'
 };

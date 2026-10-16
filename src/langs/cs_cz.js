@@ -225,5 +225,13 @@ module.exports = {
 	'Find Previous': 'Najít Předchozí',
 	'Find Next': 'Najít Další',
 	'Insert className': 'Vložte název třídy',
-	'Press Alt for custom resizing': 'Stiskněte Alt pro vlastní změnu velikosti'
+	'Press Alt for custom resizing':
+		'Stiskněte Alt pro vlastní změnu velikosti',
+	'Video properties': 'Vlastnosti videa',
+	'Audio properties': 'Vlastnosti zvuku',
+	Poster: 'Náhledový obrázek',
+	Autoplay: 'Automatické přehrávání',
+	Loop: 'Opakovat',
+	Muted: 'Ztlumeno',
+	Controls: 'Ovládací prvky'
 };

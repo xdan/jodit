@@ -230,5 +230,12 @@ module.exports = {
 	'Insert className': 'Lisää luokkanimi',
 	'Press Alt for custom resizing': 'Paina Alt muokattuun koon muuttamiseen',
 	'Class name': 'Luokan nimi',
-	'License: %s': 'Lisenssi: %s'
+	'License: %s': 'Lisenssi: %s',
+	'Video properties': 'Videon ominaisuudet',
+	'Audio properties': 'Äänen ominaisuudet',
+	Poster: 'Kansikuva',
+	Autoplay: 'Automaattinen toisto',
+	Loop: 'Toista uudelleen',
+	Muted: 'Mykistetty',
+	Controls: 'Säätimet'
 };

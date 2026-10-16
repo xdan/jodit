@@ -227,5 +227,12 @@ module.exports = {
 	'Line height': 'ارتفاع الخط',
 	spellcheck: 'التدقيق الإملائي',
 	'Speech Recognize': 'التعرف على الكلام',
-	All: 'تحديد الكل'
+	All: 'تحديد الكل',
+	'Video properties': 'خصائص الفيديو',
+	'Audio properties': 'خصائص الصوت',
+	Poster: 'صورة الغلاف',
+	Autoplay: 'تشغيل تلقائي',
+	Loop: 'تكرار',
+	Muted: 'مكتوم الصوت',
+	Controls: 'عناصر التحكم'
 };

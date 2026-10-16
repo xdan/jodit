@@ -232,5 +232,12 @@ module.exports = {
 	Dot: 'Prikk',
 	Quadrate: 'Firkant',
 	'Find Previous': 'Finn forrige',
-	'Find Next': 'Finn neste'
+	'Find Next': 'Finn neste',
+	'Video properties': 'Videoegenskaper',
+	'Audio properties': 'Lydegenskaper',
+	Poster: 'Forsidebilde',
+	Autoplay: 'Automatisk avspilling',
+	Loop: 'Gjenta',
+	Muted: 'Dempet',
+	Controls: 'Kontroller'
 };

@@ -224,5 +224,12 @@ module.exports = {
 	'Find Previous': 'Menemukan Sebelumnya',
 	'Find Next': 'Menemukan Berikutnya',
 	'Insert className': 'Masukkan nama kelas',
-	'Press Alt for custom resizing': 'Tekan Alt untuk mengubah ukuran kustom'
+	'Press Alt for custom resizing': 'Tekan Alt untuk mengubah ukuran kustom',
+	'Video properties': 'Properti video',
+	'Audio properties': 'Properti audio',
+	Poster: 'Gambar sampul',
+	Autoplay: 'Putar otomatis',
+	Loop: 'Ulangi',
+	Muted: 'Dibisukan',
+	Controls: 'Kontrol'
 };
