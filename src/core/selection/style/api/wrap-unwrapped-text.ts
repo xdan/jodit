@@ -62,10 +62,9 @@ export function wrapUnwrappedText(
 	Dom.safeInsertNode(range, wrapper);
 
 	if (style.elementIsBlock) {
-		if (
-			Dom.isEmpty(wrapper) &&
-			!Dom.isTag(wrapper.firstElementChild, 'br')
-		) {
+		// The wrapped content can bring its own `<br>` (an empty table
+		// cell's), after or inside the temporary `<font>` around the selection
+		if (Dom.isEmpty(wrapper) && !wrapper.querySelector('br')) {
 			Dom.append(wrapper, ci.element('br'));
 		}
 	}

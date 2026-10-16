@@ -50,4 +50,59 @@ describe('Format block plugin', () => {
 			});
 		});
 	});
+
+	describe('Apply a heading in an empty table cell (#1608)', () => {
+		const CELL = '<table><tbody><tr><td><br></td></tr></tbody></table>';
+		const HEADING =
+			'<table><tbody><tr><td><h1><br></h1></td></tr></tbody></table>';
+
+		[
+			[CELL, HEADING],
+			['<table><tbody><tr><td></td></tr></tbody></table>', HEADING],
+			['<ul><li><br></li></ul>', '<ul><li><h1><br></h1></li></ul>']
+		].forEach(([value, expected]) => {
+			describe(`With the cursor in ${value}`, () => {
+				it('Should give the heading one BR', () => {
+					const editor = getJodit({ history: { timeout: 0 } });
+					editor.value = value;
+					editor.s.setCursorIn(editor.editor.querySelector('td, li'));
+
+					editor.execCommand('formatblock', false, 'h1');
+
+					expect(editor.value).equals(expected);
+				});
+			});
+		});
+
+		describe('With the contents of the cell selected', () => {
+			it('Should give the heading one BR', () => {
+				const editor = getJodit({ history: { timeout: 0 } });
+				editor.value = CELL;
+				editor.s.select(editor.editor.querySelector('td'), true);
+
+				editor.execCommand('formatblock', false, 'h1');
+
+				expect(editor.value).equals(HEADING);
+			});
+		});
+
+		describe('With a list button', () => {
+			[
+				['insertUnorderedList', 'ul'],
+				['insertOrderedList', 'ol']
+			].forEach(([command, tag]) => {
+				it(`Should give the list item one BR after ${command}`, () => {
+					const editor = getJodit({ history: { timeout: 0 } });
+					editor.value = CELL;
+					editor.s.setCursorIn(editor.editor.querySelector('td'));
+
+					editor.execCommand(command);
+
+					expect(editor.value).equals(
+						`<table><tbody><tr><td><${tag}><li><br></li></${tag}></td></tr></tbody></table>`
+					);
+				});
+			});
+		});
+	});
 });
