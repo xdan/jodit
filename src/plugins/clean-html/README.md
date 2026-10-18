@@ -28,6 +28,7 @@ This plugin continuously monitors and cleans HTML content in the editor. It remo
 - **Auto-cleaning**: Cleans HTML on change, paste, and mode switch
 - **Tag Normalization**: Replace old tags (`<i>` → `<em>`, `<b>` → `<strong>`)
 - **Empty Element Removal**: Removes unnecessary empty tags
+- **Placeholder `<br>` Removal**: Drops the `<br>` of an empty block once text is typed into it, as the browser does
 - **Sandbox Mode**: Optional iframe sandbox for extra security during HTML parsing
 
 ## Configuration Options

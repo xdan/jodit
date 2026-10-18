@@ -25,6 +25,7 @@ import {
 	getHash,
 	removeFormatForCollapsedSelection,
 	removeFormatForSelection,
+	removePlaceholderBr,
 	visitNodeWalker
 } from './helpers';
 
@@ -88,6 +89,29 @@ export class cleanHtml extends Plugin {
 	}
 
 	private currentSelectionNode: Nullable<Node> = null;
+
+	/**
+	 * Typing into an empty block (`<p><br></p>`) replaces its `<br>`, but the
+	 * browser keeps the `<br>` when the caret is in an invisible-space text
+	 * node in front of it, as Jodit leaves the caret in many of the empty
+	 * blocks it makes (a cleared editor, a heading in an empty table cell).
+	 * See #1632
+	 */
+	@watch([':input', 'jodit.editor:compositionend'])
+	protected onInputRemovePlaceholderBr(
+		event: InputEvent | CompositionEvent
+	): void {
+		if (
+			!this.isEditMode ||
+			(event.type === 'input' &&
+				((event as InputEvent).isComposing ||
+					!(event as InputEvent).inputType?.startsWith('insert')))
+		) {
+			return;
+		}
+
+		removePlaceholderBr(this.j);
+	}
 
 	private walker: LazyWalker = new LazyWalker(this.j.async, {
 		timeout: this.j.o.cleanHTML.timeout
