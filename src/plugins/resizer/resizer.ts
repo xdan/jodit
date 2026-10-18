@@ -15,7 +15,7 @@ import * as consts from 'jodit/core/constants';
 import { IS_ES_NEXT, IS_IE, KEY_ALT } from 'jodit/core/constants';
 import { autobind, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
-import { eventEmitter, pluginSystem } from 'jodit/core/global';
+import { eventEmitter, getContainer, pluginSystem } from 'jodit/core/global';
 import {
 	$$,
 	attr,
@@ -62,6 +62,20 @@ function heightFollowsWidth(element: HTMLElement): boolean {
 	);
 }
 
+const IFRAME_WRAPPER = '[data-jodit_iframe_wrapper]';
+
+/**
+ * A click on an embed lands on its wrapper, so it selects the embed, until the
+ * wrapper is active. While the editor is locked, as during resizing, the
+ * wrapper takes the mouse again.
+ */
+const EMBED_WRAPPER_STYLE =
+	`${IFRAME_WRAPPER}{position:relative;display:block;user-select:none}` +
+	`${IFRAME_WRAPPER} iframe{position:relative}` +
+	`${IFRAME_WRAPPER}::after{position:absolute;z-index:1;display:block;background:transparent;content:'';cursor:pointer;inset:0}` +
+	`${IFRAME_WRAPPER}[data-jodit-wrapper_active=true] iframe{z-index:2}` +
+	`.jodit_lock ${IFRAME_WRAPPER}[data-jodit-wrapper_active=true] iframe{z-index:1}`;
+
 /**
  * The module creates a supporting frame for resizing of the elements img and table
  */
@@ -99,6 +113,10 @@ export class resizer extends Plugin {
 
 	/** @override */
 	protected afterInit(editor: IJodit): void {
+		// It goes in the editing document, so iframe mode has it whatever `iframeStyle` holds
+		getContainer(editor, 'resizer', 'style', true).textContent =
+			EMBED_WRAPPER_STYLE;
+
 		$$('div', this.rect).forEach((resizeHandle: HTMLElement) => {
 			editor.e.on(
 				resizeHandle,

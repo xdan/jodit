@@ -15,7 +15,13 @@ import { MODE_SOURCE } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { error } from 'jodit/core/helpers';
-import { attr, callPromise, css, defaultLanguage } from 'jodit/core/helpers/';
+import {
+	$$,
+	attr,
+	callPromise,
+	css,
+	defaultLanguage
+} from 'jodit/core/helpers/';
 
 import './config';
 
@@ -131,6 +137,12 @@ export function iframe(editor: IJodit): void {
 				};
 
 				const clearMarkers = (html: string): string => {
+					// The plugins' own styles, from `getContainer`, aren't part of the value
+					html = html.replace(
+						/<style[^>]+jodit-box[^>]*>[\s\S]*?<\/style>/gi,
+						''
+					);
+
 					const bodyReg = /<body.*<\/body>/im,
 						bodyMarker = '{%%BODY%%}',
 						body = bodyReg.exec(html);
@@ -196,10 +208,15 @@ export function iframe(editor: IJodit): void {
 
 					editor.e.fire('safeHTML', inert.documentElement);
 
+					// The plugins' own styles stay, as the value leaves them out
+					const styles = $$('style.jodit-box', doc.head);
+
 					doc.replaceChild(
 						doc.adoptNode(inert.documentElement),
 						doc.documentElement
 					);
+
+					styles.forEach(style => Dom.append(doc.head, style));
 				};
 
 				if (docMode) {

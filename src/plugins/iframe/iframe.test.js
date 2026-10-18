@@ -104,10 +104,11 @@
 					);
 				};
 
-				beforeEach(function () {
+				const make = options => {
 					editor = getJodit({
 						iframe: true,
-						height: 400
+						height: 400,
+						...options
 					});
 
 					editor.value =
@@ -118,6 +119,10 @@
 					wrapper = editor.ed.querySelector(
 						'[data-jodit_iframe_wrapper]'
 					);
+				};
+
+				beforeEach(function () {
+					make({});
 				});
 
 				it('Should land on its wrapper, not on the embed', function () {
@@ -129,6 +134,16 @@
 						simulateEvent('click', wrapper);
 
 						expect(hit()).equals(wrapper.firstChild);
+					});
+				});
+
+				describe('With iframeStyle of its own', function () {
+					beforeEach(function () {
+						make({ iframeStyle: 'body{color:#333}' });
+					});
+
+					it('Should land on its wrapper too', function () {
+						expect(hit()).equals(wrapper);
 					});
 				});
 			});
@@ -208,6 +223,24 @@
 						});
 
 						describe('Set entire HTML', function () {
+							it("Should keep the plugins' own styles, outside the value", function () {
+								const editor = Jodit.make(
+									appendTestArea(),
+									opt
+								);
+								editor.value =
+									'<!DOCTYPE html><html lang="en"><head><title>Hi</title></head><body><strong>Test1</strong></body></html>';
+
+								expect(
+									editor.ed.head.querySelector(
+										'style.jodit-resizer-container'
+									)
+								).is.not.null;
+								expect(editor.value).does.not.contain(
+									'jodit-box'
+								);
+							});
+
 							it('Should replace entire document', function () {
 								const editor = Jodit.make(
 									appendTestArea(),
