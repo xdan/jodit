@@ -61,7 +61,9 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 					case consts.KEY_LEFT: {
 						next = getNextCell();
 
-						if (!next) {
+						// Left in the first cell leaves the table, as Up in the
+						// top row does
+						if (!next && key === consts.KEY_TAB) {
 							tableModule.appendRow(
 								table,
 								!isPrev

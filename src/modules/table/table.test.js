@@ -1648,6 +1648,32 @@ describe('Tables Jodit Editor Tests', () => {
 			);
 		});
 
+		describe('Left arrow at the start of the first cell (#1636)', () => {
+			[
+				['a cell with text', '<td>1</td>'],
+				['an empty cell', '<td><br></td>']
+			].forEach(([name, cell]) => {
+				it(`Should leave the caret to the browser and not add a row, in ${name}`, () => {
+					const editor = getJodit();
+					const html =
+						'<p>Before</p><table><tbody><tr>' +
+						cell +
+						'<td>2</td></tr></tbody></table>';
+
+					editor.value = html;
+					editor.s.setCursorIn(
+						editor.editor.querySelector('td'),
+						true
+					);
+
+					expect(
+						simulateEvent('keydown', Jodit.KEY_LEFT, editor.editor)
+					).is.true;
+					expect(editor.value).equals(html);
+				});
+			});
+		});
+
 		it("After press Top arrow in the first cell's line cursor should move into top cell", () => {
 			const editor = getJodit();
 
