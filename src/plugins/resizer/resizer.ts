@@ -28,6 +28,8 @@ import {
 } from 'jodit/core/helpers';
 import { cssInline } from 'jodit/core/helpers/utils/css';
 import { Plugin } from 'jodit/core/plugin/plugin';
+import { UIElement } from 'jodit/core/ui';
+import { Popup } from 'jodit/core/ui/popup';
 
 import './config';
 
@@ -391,6 +393,15 @@ export class resizer extends Plugin {
 		}
 
 		if (!this.isResizeMode) {
+			// A click in the element's popup, or in a list it opens, works on
+			// the element, so it keeps its frame
+			if (
+				e?.target &&
+				UIElement.closestElement(e.target as Node, Popup)
+			) {
+				return;
+			}
+
 			return this.hide();
 		}
 
