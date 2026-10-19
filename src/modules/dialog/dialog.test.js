@@ -65,6 +65,60 @@ describe('Dialog system tests', function () {
 			dialog.close();
 		});
 
+		it('Should not let the resize handle start a text selection (#1645)', function () {
+			const editor = getJodit();
+			const dialog = editor.alert('Hello world');
+
+			const resizer = dialog.container.querySelector(
+				'.jodit-dialog__resizer'
+			);
+
+			// `false` when the mousedown's default action was prevented
+			expect(
+				simulateEvent('mousedown', resizer, data => {
+					data.clientX = 500;
+					data.clientY = 500;
+				})
+			).is.false;
+
+			simulateEvent('pointerup', editor.ow);
+			dialog.close();
+		});
+
+		it('Should let a wider dialog be made narrower again (#1646)', function () {
+			const editor = getJodit();
+			const dialog = editor.alert('Hello world');
+
+			const panel = dialog.container.querySelector(
+				'.jodit-dialog__panel'
+			);
+			const resizer = dialog.container.querySelector(
+				'.jodit-dialog__resizer'
+			);
+
+			const startWidth = panel.offsetWidth;
+
+			const drag = dx => {
+				simulateEvent('mousedown', resizer, data => {
+					data.clientX = 500;
+					data.clientY = 500;
+				});
+				simulateEvent('pointermove', editor.ow, data => {
+					data.clientX = 500 + dx;
+					data.clientY = 500;
+				});
+				simulateEvent('pointerup', editor.ow);
+			};
+
+			drag(200);
+			expect(panel.offsetWidth).equals(startWidth + 200);
+
+			drag(-150);
+			expect(panel.offsetWidth).equals(startWidth + 50);
+
+			dialog.close();
+		});
+
 		it('Should still allow normal resizing above the minimum', function () {
 			const editor = getJodit();
 			const dialog = editor.alert('Hello world');

@@ -316,6 +316,12 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 	@autobind
 	private __onResizerMouseDown(e: MouseEvent): void {
+		// As for the header: otherwise Safari selects the dialog's text as
+		// the pointer moves
+		if (e.cancelable) {
+			e.preventDefault();
+		}
+
 		this.resizable = true;
 		this.startX = e.clientX;
 		this.startY = e.clientY;
@@ -335,7 +341,11 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		this.minSize.w = isNumber(this.o.minWidth)
 			? this.o.minWidth
-			: Math.max(100, footer?.scrollWidth ?? 0);
+			: Math.max(
+					100,
+					header ? this.__contentWidth(header) : 0,
+					footer ? this.__contentWidth(footer) : 0
+				);
 
 		this.minSize.h = isNumber(this.o.minHeight)
 			? this.o.minHeight
@@ -356,6 +366,22 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		}
 	}
 
+	/**
+	 * The width `box` takes with its content on one line. The header and
+	 * footer are flex rows as wide as the dialog, so the footer's
+	 * `scrollWidth` was the dialog's width and kept it from getting any
+	 * narrower
+	 */
+	private __contentWidth(box: HTMLElement): number {
+		const { width } = box.style;
+
+		box.style.width = 'max-content';
+		const contentWidth = box.offsetWidth;
+		box.style.width = width;
+
+		return contentWidth;
+	}
+
 	private __addGlobalResizeListeners(): void {
 		const self = this;
 
@@ -368,8 +394,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		const self = this;
 
 		self.e
-			.off(self.ow, 'mousemove pointermove', self.__onMouseMove)
-			.off(self.ow, 'mouseup pointerup', self.__onMouseUp);
+			.off(self.ow, 'pointermove touchmove', self.__onMouseMove)
+			.off(self.ow, 'pointerup touchend', self.__onMouseUp);
 	}
 
 	declare OPTIONS: IDialogOptions;
