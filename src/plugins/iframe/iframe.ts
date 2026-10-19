@@ -71,6 +71,9 @@ export function iframe(editor: IJodit): void {
 						attr(link, 'href', href);
 
 						doc.head && Dom.append(doc.head, link);
+
+						// What plugins measured in the editing document changes once it's styled
+						jodit.e.on(link, 'load', () => jodit.e.fire('resize'));
 					});
 				}
 

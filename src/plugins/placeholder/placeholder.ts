@@ -130,7 +130,7 @@ export class placeholder extends Plugin {
 			.on(
 				'change.placeholder focus.placeholder keyup.placeholder mouseup.placeholder keydown.placeholder ' +
 					'mousedown.placeholder afterSetMode.placeholder changePlace.placeholder ' +
-					'internalChange.placeholder afterCommand.placeholder',
+					'internalChange.placeholder afterCommand.placeholder resize.placeholder',
 				this.toggle
 			)
 			.on(window, 'load', this.toggle);
@@ -169,11 +169,13 @@ export class placeholder extends Plugin {
 			marginLeft = parseInt(style2.getPropertyValue('margin-left'), 10);
 
 			css(this.placeholderElm, {
+				fontFamily: style2.getPropertyValue('font-family'),
 				fontSize: parseInt(style2.getPropertyValue('font-size'), 10),
 				lineHeight: style2.getPropertyValue('line-height')
 			});
 		} else {
 			css(this.placeholderElm, {
+				fontFamily: style.getPropertyValue('font-family'),
 				fontSize: parseInt(style.getPropertyValue('font-size'), 10),
 				lineHeight: style.getPropertyValue('line-height')
 			});
