@@ -23,7 +23,7 @@ This plugin handles three focus-related features:
 - **Selection Saving**: Preserves selection when editor loses focus
 - **Selection Restoring**: Restores saved selection when editor regains focus
 - **Empty Block Handling**: Sets cursor in empty block elements when clicked
-- **Timeout Support**: Delays autofocus by 300ms if `defaultTimeout` is set
+- **Timeout Support**: Delays autofocus by 300ms if `defaultTimeout` is set, unless the user clicks or types in the editor first
 
 ## Configuration Options
 
@@ -135,6 +135,8 @@ const editor = Jodit.make('#editor', {
 
 // Autofocus happens after 300ms delay
 // Useful to avoid race conditions with other scripts
+// A click or key in the editor during the delay cancels it,
+// so the caret stays where the user put it
 ```
 
 ### Disable Autofocus
@@ -167,7 +169,7 @@ const editor2 = Jodit.make('#editor2', {
 
 1. Plugin listens to `afterInit` event
 2. Checks if `autofocus` option is `true`
-3. If `defaultTimeout` exists, delays focus by 300ms
+3. If `defaultTimeout` exists, delays focus by 300ms, and cancels it if the user clicks, touches or presses a key in the editor first
 4. Otherwise, focuses immediately
 5. Calls internal `focus()` function
 
