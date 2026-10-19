@@ -499,7 +499,7 @@ describe('Test paste plugin', () => {
 				'</span><![endif]>Second item</p>';
 
 			expect(cleanFromWord(word)).equals(
-				'<p>First item</p><p>Second item</p>'
+				'<ol><li>First item</li><li>Second item</li></ol>'
 			);
 		});
 
@@ -510,7 +510,9 @@ describe('Test paste plugin', () => {
 				'<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp; </span>' +
 				'</span>Bulleted item</p>';
 
-			expect(cleanFromWord(word)).equals('<p>Bulleted item</p>');
+			expect(cleanFromWord(word)).equals(
+				'<ul><li>Bulleted item</li></ul>'
+			);
 		});
 
 		it('Should drop the markers in the Keep / applyStyles path', () => {
@@ -523,7 +525,7 @@ describe('Test paste plugin', () => {
 				'<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span>' +
 				'</span>First item</p></body></html>';
 
-			expect(applyStyles(word)).equals('<p>First item</p>');
+			expect(applyStyles(word)).equals('<ol><li>First item</li></ol>');
 		});
 	});
 

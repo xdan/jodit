@@ -232,7 +232,7 @@ The `cleanFromWord()` function:
 - Cleans up mso-* CSS properties
 - Normalizes whitespace
 - Removes empty elements
-- Converts Word list markup to standard HTML lists
+- Converts Word list markup to standard HTML lists (see Word Lists below)
 - Strips proprietary Word attributes
 
 ### Style Application
@@ -243,6 +243,15 @@ The `applyStyles()` function:
 - Simplifies color values
 - Removes redundant properties
 - Preserves meaningful formatting
+
+### Word Lists
+
+Word doesn't put lists on the clipboard as `<ul>`/`<ol>`. Each item is a paragraph styled `mso-list:l<list> level<n> lfo<override>`, starting with the bullet or number as text in a `mso-list:Ignore` span. Both `cleanFromWord()` and `applyStyles()` turn runs of these paragraphs into lists:
+- Consecutive list paragraphs become one list, nested by their level. A paragraph from another list (`l`/`lfo`) at the same level starts a new list
+- The marker text sets the list type: digits give `<ol>`, letters `<ol style="list-style-type: lower-alpha">` (or `upper-alpha`), roman numerals `lower-roman`/`upper-roman`, and anything else (`·`, `o`, `§`, Wingdings glyphs, picture bullets) `<ul>`
+- An `<ol>` whose first item isn't numbered 1 gets `start`, so a list split by a paragraph keeps its numbering
+- The marker and the spans it leaves empty are removed
+- With Keep, each `<li>` keeps the paragraph's styles except Word's hanging indent (`margin-left`, `text-indent`) and its `MsoListParagraph` class
 
 ### Beautify HTML Event
 
@@ -298,7 +307,7 @@ Internal event watched by plugin via `@watch(':processHTML')` decorator. Fired b
 
 7. **Dialog Cancellation**: If user cancels Word paste dialog, content is not inserted
 
-8. **Nested Lists**: Word lists are converted to standard HTML lists during cleaning
+8. **Nested Lists**: Word lists are converted to nested HTML lists, with Keep and with Clean
 
 9. **Inline Styles**: Word inline styles are either preserved (INSERT_AS_HTML) or removed (INSERT_AS_TEXT)
 

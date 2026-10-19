@@ -23,9 +23,13 @@ const NEW_LINE_TAGS: Set<HTMLTagNames> = new Set([
 	'h4',
 	'h5',
 	'h6',
-	'hr'
+	'hr',
+	'ul',
+	'ol',
+	'li'
 ]);
 
+const LIST_TAGS: Set<'ul' | 'ol'> = new Set(['ul', 'ol']);
 const INVISIBLE_TAGS: Set<'script' | 'style'> = new Set(['script', 'style']);
 const ALONE_TAGS: Set<'br' | 'hr' | 'input'> = new Set(['br', 'hr', 'input']);
 
@@ -53,6 +57,19 @@ export function stripTags(
 	Dom.each(tmp, node => {
 		Dom.isElement(node) && all.push(node);
 	});
+
+	// By default blocks are joined with a single space (single-line
+	// plain text). When `blockBr` is set, separate them with a line
+	// break instead, so paragraph structure survives — e.g. the
+	// "Insert only Text" paste option. See #1232
+	const separators: Set<Node> = new Set();
+	const separator = (): Text => {
+		const text = doc.createTextNode(
+			blockBr ? '%%%jodit-single-br%%%' : ' '
+		);
+		separators.add(text);
+		return text;
+	};
 
 	all.forEach(p => {
 		const pr = p.parentNode;
@@ -84,6 +101,18 @@ export function stripTags(
 			return;
 		}
 
+		const pv = p.previousSibling;
+
+		// A nested list starts on a new line after its item's own text
+		if (
+			Dom.isTag(p, LIST_TAGS) &&
+			pv &&
+			!separators.has(pv) &&
+			!(Dom.isText(pv) && /\s$/.test(pv.nodeValue || ''))
+		) {
+			Dom.before(p, separator());
+		}
+
 		const nx = p.nextSibling;
 
 		if (Dom.isText(nx) && /^\s/.test(nx.nodeValue || '')) {
@@ -91,14 +120,7 @@ export function stripTags(
 		}
 
 		if (nx) {
-			// By default blocks are joined with a single space (single-line
-			// plain text). When `blockBr` is set, separate them with a line
-			// break instead, so paragraph structure survives — e.g. the
-			// "Insert only Text" paste option. See #1232
-			Dom.before(
-				nx,
-				doc.createTextNode(blockBr ? '%%%jodit-single-br%%%' : ' ')
-			);
+			Dom.before(nx, separator());
 		}
 	});
 
