@@ -17,6 +17,7 @@ import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { $$, alignElement, position, toArray } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
+import { isMoved } from 'jodit/core/selection/helpers';
 import { Table } from 'jodit/modules/table/table';
 
 import './config';
@@ -40,6 +41,9 @@ export class selectCells extends Plugin {
 		}
 
 		jodit.e
+			// Handlers without a namespace run first, ahead of those that
+			// move the caret, as table-keyboard-navigation's do
+			.on('keydown', this.__onKeyDown, { top: true })
 			.on('keydown.select-cells', (event: KeyboardEvent) => {
 				if (event.key === KEY_TAB) {
 					this.unselectCells();
@@ -76,6 +80,100 @@ export class selectCells extends Plugin {
 					return false;
 				}
 			});
+	}
+
+	/**
+	 * The cell with the caret, and the selection, when a key went down
+	 */
+	private __keyDownCell: Nullable<HTMLTableCellElement> = null;
+	private __keyDownRange: Nullable<Range> = null;
+
+	@autobind
+	private __onKeyDown(event?: KeyboardEvent): void {
+		// A key held down moves the caret on every repeat, with one keyup
+		if (event?.repeat) {
+			this.__followCaret();
+		}
+
+		this.__keyDownCell = this.__caretCell();
+		this.__keyDownRange = this.j.s.range.cloneRange();
+		this.__keyDownInLink = this.__isInLink();
+	}
+
+	/**
+	 * A link's popup replaces the cell's while the caret is in the link
+	 */
+	private __keyDownInLink: boolean = false;
+
+	private __isInLink(): boolean {
+		return Boolean(
+			Dom.closest(this.j.s.range.startContainer, 'a', this.j.editor)
+		);
+	}
+
+	/**
+	 * Where the selection starts rather than `s.current()`, which finds the
+	 * first cell when the caret is just before the table
+	 */
+	private __caretCell(): Nullable<HTMLTableCellElement> {
+		return Dom.closest<HTMLTableCellElement>(
+			this.j.s.range.startContainer,
+			Dom.isCell,
+			this.j.editor
+		);
+	}
+
+	/**
+	 * A key that moves the caret into a cell, from another cell or from
+	 * outside the table, marks that cell and opens its popup, as a click on
+	 * it does. One that moves the caret out of the table unmarks the cells
+	 */
+	@watch(':keyup')
+	protected onKeyUp(): void {
+		this.__followCaret();
+	}
+
+	private __followCaret(): void {
+		const before = this.__keyDownRange;
+		this.__keyDownRange = null;
+
+		if (this.j.o.readonly || !isMoved(this.j, before)) {
+			return;
+		}
+
+		const cell = this.__caretCell();
+		const hasLeftLink = this.__keyDownInLink && !this.__isInLink();
+
+		if (cell === this.__keyDownCell && !(cell && hasLeftLink)) {
+			return;
+		}
+
+		const hadMarked = this.__tableModule.getAllSelectedCells().length > 0;
+		this.unselectCells();
+
+		if (!cell) {
+			if (hadMarked) {
+				this.j.e.fire('hidePopup', 'cells');
+			}
+
+			return;
+		}
+
+		const table = Dom.closest(cell, 'table', this.j.editor);
+
+		if (!table) {
+			return;
+		}
+
+		// As after a click, the first change to the cell keeps the mark
+		this.__selectedCell = cell;
+		this.__tableModule.addSelection(cell);
+		this.j.e.fire(
+			'showPopup',
+			table,
+			(): IBound => position(cell, this.j),
+			'cells'
+		);
 	}
 
 	/**
@@ -614,7 +712,7 @@ export class selectCells extends Plugin {
 	protected beforeDestruct(jodit: IJodit): void {
 		this.__onRemoveSelection();
 
-		jodit.e.off('.select-cells');
+		jodit.e.off('.select-cells').off('keydown', this.__onKeyDown);
 	}
 }
 

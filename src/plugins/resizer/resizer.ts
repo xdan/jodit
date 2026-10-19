@@ -28,6 +28,7 @@ import {
 } from 'jodit/core/helpers';
 import { cssInline } from 'jodit/core/helpers/utils/css';
 import { Plugin } from 'jodit/core/plugin/plugin';
+import { isMoved } from 'jodit/core/selection/helpers';
 
 import './config';
 
@@ -116,6 +117,9 @@ export class resizer extends Plugin {
 				}
 			})
 			.on('afterInit changePlace', this.addEventListeners.bind(this))
+			// Handlers without a namespace run first, ahead of those that
+			// move the caret, as table-keyboard-navigation's do
+			.on('keydown', this.onEditorKeyDown, { top: true })
 			.on(
 				'afterGetValueFromEditor.resizer',
 				(data: { value: string }) => {
@@ -357,6 +361,65 @@ export class resizer extends Plugin {
 			);
 
 			e.stopImmediatePropagation();
+		}
+	}
+
+	private __keyDownRange: Nullable<Range> = null;
+	private __keyDownTable: Nullable<HTMLTableElement> = null;
+
+	@autobind
+	private onEditorKeyDown(event?: KeyboardEvent): void {
+		// A key held down moves the caret on every repeat, with one keyup
+		if (event?.repeat) {
+			this.__followCaret();
+		}
+
+		this.__keyDownRange = this.j.s.range.cloneRange();
+		this.__keyDownTable = this.__caretTable();
+	}
+
+	private __caretTable(): Nullable<HTMLTableElement> {
+		return Dom.closest(
+			this.j.s.range.startContainer,
+			'table',
+			this.j.editor
+		);
+	}
+
+	/**
+	 * Hide the frame once a key has moved the caret off its element, and
+	 * frame a table the caret has moved into, as clicks do
+	 */
+	@watch(':keyup')
+	protected onEditorKeyUp(): void {
+		this.__followCaret();
+	}
+
+	private __followCaret(): void {
+		const before = this.__keyDownRange;
+		this.__keyDownRange = null;
+
+		if (!isMoved(this.j, before)) {
+			return;
+		}
+
+		if (
+			this.isShown &&
+			this.element &&
+			!this.j.s.range.intersectsNode(this.element)
+		) {
+			this.hide();
+		}
+
+		const table = this.__caretTable();
+
+		if (
+			table &&
+			table !== this.__keyDownTable &&
+			this.j.o.allowResizeTags.has('table')
+		) {
+			this.__bind(table);
+			this.onClickElement(table);
 		}
 	}
 
@@ -711,7 +774,10 @@ export class resizer extends Plugin {
 
 		eventEmitter.off('hideHelpers', this.hide);
 
-		jodit.e.off(this.j.ow, '.resizer').off('.resizer');
+		jodit.e
+			.off(this.j.ow, '.resizer')
+			.off('.resizer')
+			.off('keydown', this.onEditorKeyDown);
 	}
 }
 

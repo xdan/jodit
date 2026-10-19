@@ -1025,4 +1025,72 @@ describe('Resize plugin', () => {
 			expect(iframe.getAttribute('height')).equals('180');
 		});
 	});
+	describe('A key that moves the caret off the element (#1643)', () => {
+		function pressKey(editor, key, moveCaret) {
+			simulateEvent('keydown', key, editor.editor);
+			moveCaret && moveCaret();
+			simulateEvent('keyup', key, editor.editor);
+		}
+
+		const frame = editor =>
+			editor.ownerDocument.querySelector(
+				'.jodit-resizer[data-editor_id=' + editor.id + ']'
+			);
+
+		it("Should hide an image's frame once the caret has left the image", () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>One <img src="tests/artio.jpg" style="width:100px;height:100px"> two</p><p>Next line</p>';
+
+			const img = editor.editor.querySelector('img');
+			simulateEvent(['mousedown', 'mouseup', 'click'], img);
+			editor.s.select(img);
+			expect(frame(editor)).is.not.null;
+
+			pressKey(editor, 'Shift');
+			expect(frame(editor)).is.not.null;
+
+			pressKey(editor, Jodit.KEY_DOWN, () =>
+				editor.s.setCursorIn(editor.editor.querySelectorAll('p')[1])
+			);
+			expect(frame(editor)).is.null;
+		});
+
+		it("Should hide a table's frame once the caret has left the table, and show it when it comes back", () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>Before</p><table><tbody>' +
+				'<tr><td>1</td><td>2</td></tr>' +
+				'<tr><td>3</td><td>4</td></tr>' +
+				'</tbody></table>';
+
+			const tds = editor.editor.querySelectorAll('td');
+			editor.s.setCursorIn(tds[0]);
+			simulateEvent(['mousedown', 'mouseup', 'click'], tds[0]);
+			expect(frame(editor)).is.not.null;
+
+			pressKey(editor, Jodit.KEY_RIGHT, () =>
+				editor.s.setCursorIn(tds[1], true)
+			);
+			expect(frame(editor)).is.not.null;
+
+			// table-keyboard-navigation moves the caret to the cell below
+			pressKey(editor, Jodit.KEY_DOWN);
+			expect(editor.s.current().parentNode).equals(tds[3]);
+			expect(frame(editor)).is.not.null;
+
+			pressKey(editor, Jodit.KEY_UP);
+			expect(frame(editor)).is.not.null;
+
+			pressKey(editor, Jodit.KEY_UP, () =>
+				editor.s.setCursorIn(editor.editor.querySelector('p'))
+			);
+			expect(frame(editor)).is.null;
+
+			pressKey(editor, Jodit.KEY_DOWN, () =>
+				editor.s.setCursorIn(tds[0], true)
+			);
+			expect(frame(editor)).is.not.null;
+		});
+	});
 });

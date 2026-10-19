@@ -15,7 +15,7 @@ Enables keyboard navigation between table cells using arrow keys and Tab. Users 
 - Auto-creates new row when Tab on last cell
 - Wraps to first/last cell at edges
 - Handles merged cells (colspan/rowspan)
-- Hides popup/resizer during navigation
+- Keeps the table's popup and resize frame on the cell the caret moves to (see `select-cells` and `resizer`)
 - Auto-inserts `<br>` in empty cells
 - Select all cell content on Tab
 
@@ -95,7 +95,6 @@ On `keydown` event:
    - Calls `table.appendRow()` to add row at end/start
    - Gets newly created cell
 3. Selects entire cell content, or puts the cursor in an empty cell
-4. Fires `hidePopup` and `hideResizer` events
 
 ### Arrow Navigation
 

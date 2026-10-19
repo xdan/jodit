@@ -489,29 +489,31 @@ editor.e.on('afterInsertImage', (image) => {
 
 3. **Missing Parent**: Frame hides if element is removed from DOM
 
-4. **100% Width**: If resized width exceeds parent, sets to "100%"
+4. **Caret Moved Off**: Frame hides when a key moves the caret off the element, as a click elsewhere hides it
 
-5. **Alt Key Toggle**: Can press/release Alt during resize to change mode mid-drag
+5. **100% Width**: If resized width exceeds parent, sets to "100%"
 
-6. **Minimum Constraints**: Resize stops if dimensions would go below min_width/min_height
+6. **Alt Key Toggle**: Can press/release Alt during resize to change mode mid-drag
 
-7. **Image Loading**: Waits for image load before showing frame for incomplete images
+7. **Minimum Constraints**: Resize stops if dimensions would go below min_width/min_height
 
-8. **Iframe Wrapper**: Special wrapper removed from HTML output automatically
+8. **Image Loading**: Waits for image load before showing frame for incomplete images
 
-9. **Multiple Tables**: Each table can be resized independently
+9. **Iframe Wrapper**: Special wrapper removed from HTML output automatically
 
-10. **Touch Events**: Full support for touchstart/touchmove/touchend
+10. **Multiple Tables**: Each table can be resized independently
 
-11. **IE Compatibility**: Prevents native IE image resizer with preventDefault
+11. **Touch Events**: Full support for touchstart/touchmove/touchend
 
-12. **Fullscreen Mode**: Frame z-index adjusted to appear above fullscreen editor
+12. **IE Compatibility**: Prevents native IE image resizer with preventDefault
+
+13. **Fullscreen Mode**: Frame z-index adjusted to appear above fullscreen editor
 
 ## Notes
 
 - Plugin is class-based, extends `Plugin` base class
 - Uses `@autobind` decorator for event handlers
-- Uses `@watch` decorators for `:click`, `:afterInsertImage`, `:change`, `:hideResizer` events
+- Uses `@watch` decorators for `:click`, `:keydown`, `:keyup`, `:afterInsertImage`, `:change`, `:hideResizer` events
 - Resize frame has class `jodit-resizer`
 - Corner handles have classes like `jodit-resizer__top-left`
 - Lock key is `'resizer'` for editor locking

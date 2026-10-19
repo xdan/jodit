@@ -1245,6 +1245,69 @@ describe('Text Inline Popup plugin', () => {
 			expect(valignBtn).is.not.undefined;
 		});
 	});
+	describe('A key that moves the caret off the element (#1643)', () => {
+		// The browser moves the caret between keydown and keyup
+		function pressKey(editor, key, moveCaret) {
+			simulateEvent('keydown', key, editor.editor);
+			moveCaret && moveCaret();
+			simulateEvent('keyup', key, editor.editor);
+		}
+
+		it("Should close a link's popup once the caret has left the link", () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>Text <a href="#">a link</a> here</p><p>Next line</p>';
+
+			const link = editor.editor.querySelector('a');
+			editor.s.setCursorIn(link);
+			simulateEvent('click', link);
+			expect(getOpenedPopup(editor)).is.not.null;
+
+			pressKey(editor, 'Shift');
+			expect(getOpenedPopup(editor)).is.not.null;
+
+			pressKey(editor, Jodit.KEY_LEFT, () =>
+				editor.s.setCursorIn(link, true)
+			);
+			expect(getOpenedPopup(editor)).is.not.null;
+
+			pressKey(editor, Jodit.KEY_DOWN, () =>
+				editor.s.setCursorIn(editor.editor.querySelectorAll('p')[1])
+			);
+			expect(getOpenedPopup(editor)).is.null;
+		});
+
+		it("Should open a link's popup when a key moves the caret into the link", () => {
+			const editor = getJodit();
+			editor.value = '<p>Text <a href="#">a link</a> here</p>';
+
+			const link = editor.editor.querySelector('a');
+			editor.s.setCursorIn(editor.editor.querySelector('p'), true);
+			expect(getOpenedPopup(editor)).is.null;
+
+			pressKey(editor, Jodit.KEY_RIGHT, () =>
+				editor.s.setCursorIn(link, true)
+			);
+			expect(getOpenedPopup(editor)).is.not.null;
+		});
+
+		it("Should keep a table's popup when selecting cells has removed the selection", () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>Before</p><table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
+
+			const td = editor.editor.querySelector('td'),
+				pos = Jodit.modules.Helpers.position(td);
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+				Object.assign(e, { clientX: pos.left, clientY: pos.top });
+			});
+			expect(getOpenedPopup(editor)).is.not.null;
+
+			pressKey(editor, 'Meta', () => editor.s.sel.removeAllRanges());
+			expect(getOpenedPopup(editor)).is.not.null;
+		});
+	});
 });
 
 describe('Drag that starts inside the inline link popup', () => {
