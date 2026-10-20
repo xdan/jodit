@@ -10,6 +10,10 @@
 
 import { globalDocument, IS_PROD } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
+import {
+	readWordListItems,
+	wrapWordListItems
+} from 'jodit/core/helpers/html/word-lists';
 import { trim } from 'jodit/core/helpers/string/trim';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { css } from 'jodit/core/helpers/utils/css';
@@ -78,6 +82,8 @@ export function applyStyles(html: string): string {
 			iframeDoc.write(html);
 			iframeDoc.close();
 
+			const listItems = readWordListItems(iframeDoc.body);
+
 			// Word marks its auto-generated list markers (the literal
 			// bullet/number, e.g. `1.` or `·`) with `mso-list:Ignore`.
 			// They are display-only and must not be imported, otherwise
@@ -125,6 +131,8 @@ export function applyStyles(html: string): string {
 					throw e;
 				}
 			}
+
+			wrapWordListItems(listItems);
 
 			Dom.each(iframeDoc.body, node => {
 				if (Dom.isElement(node)) {

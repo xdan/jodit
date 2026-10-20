@@ -11,6 +11,10 @@
 import { globalDocument } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { toArray } from 'jodit/core/helpers/array/to-array';
+import {
+	readWordListItems,
+	wrapWordListItems
+} from 'jodit/core/helpers/html/word-lists';
 import { trim } from 'jodit/core/helpers/string/trim';
 import { attr, attrRaw } from 'jodit/core/helpers/utils/attr';
 
@@ -34,6 +38,7 @@ export function cleanFromWord(html: string): string {
 		div.innerHTML = html;
 
 		const marks: Node[] = [];
+		const listItems = readWordListItems(div);
 
 		if (div.firstChild) {
 			Dom.each(div, node => {
@@ -104,6 +109,7 @@ export function cleanFromWord(html: string): string {
 		}
 
 		Dom.safeRemove.apply(null, marks);
+		wrapWordListItems(listItems);
 
 		convertedString = div.innerHTML;
 	} catch (e) {}
