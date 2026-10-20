@@ -1673,21 +1673,37 @@ if (typeof afterEach === 'function') {
 }
 
 if (typeof before === 'function') {
+	// Mocha can't fail a test that has already passed, so an error landing
+	// between a test and its hooks aborted the run, and Karma reported the
+	// tests run so far as a success. Collect such errors and fail the run
+	// at the end instead.
+	const uncaughtErrors = [];
+
 	// ignore ResizeObserver loop limit exceeded
 	// this is ok in several scenarios according to
 	// https://github.com/WICG/resize-observer/issues/38
 	before(() => {
 		// called before any tests are run
-		const e = window.onerror;
-		window.onerror = function (err, ...args) {
+		window.onerror = function (err) {
 			if (err === 'ResizeObserver loop limit exceeded') {
 				console.warn('Ignored: ResizeObserver loop limit exceeded');
 				return true;
-			} else {
-				console.warn(new Error(err).stack);
-				return e.call(window, err, ...args);
 			}
+
+			console.warn(new Error(err).stack);
+			uncaughtErrors.push(
+				`${err} (in or after "${window.mochaTestName}")`
+			);
+			return true;
 		};
+	});
+
+	after(() => {
+		if (uncaughtErrors.length) {
+			throw new Error(
+				`Uncaught errors during the run:\n${uncaughtErrors.join('\n')}`
+			);
+		}
 	});
 }
 
