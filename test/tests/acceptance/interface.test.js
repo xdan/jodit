@@ -61,6 +61,26 @@ describe('Test interface', function () {
 		});
 	});
 
+	describe('Dropdown arrow of a toolbar button', function () {
+		it("Should be drawn in the icons' colour, not in the colour of the text round it", () => {
+			const editor = getJodit({
+				containerStyle: {
+					color: '#ffffff'
+				}
+			});
+
+			const stroke = selector =>
+				getComputedStyle(editor.container.querySelector(selector))
+					.stroke;
+
+			expect(
+				stroke(
+					'.jodit-toolbar-button_paragraph .jodit-toolbar-button__trigger svg'
+				)
+			).equals(stroke('.jodit-toolbar-button_bold svg'));
+		});
+	});
+
 	describe('className', function () {
 		it('Should apply className to the main container area', () => {
 			const editor = getJodit({
