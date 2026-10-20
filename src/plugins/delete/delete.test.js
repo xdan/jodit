@@ -180,6 +180,47 @@ describe('Delete plugin', () => {
 		});
 	});
 
+	describe('Selection that ends in a list', () => {
+		[
+			[
+				'<p>Be|fore</p><ul><li>On|e</li><li>Two</li></ul>',
+				'<p>Be|e</p><ul><li>Two</li></ul>'
+			],
+			[
+				'<ul><li>O|ne</li></ul><p>Mid</p><ol><li>Tw|o</li></ol>',
+				'<ul><li>O|o</li></ul>'
+			],
+			[
+				'<ul><li>O|ne</li><li>Two</li></ul><p>Mid</p><ol><li>Tw|o</li><li>Three</li></ol>',
+				'<ul><li>O|o</li></ul><ol><li>Three</li></ol>'
+			],
+			[
+				'<p>Be|fore</p><ul><li>On|e<ul><li>Sub</li></ul></li></ul>',
+				'<p>Be|e</p><ul><li><ul><li>Sub</li></ul></li></ul>'
+			],
+			[
+				'<p>Be|fore</p><ul><li>One|</li><li>Two</li></ul>',
+				'<p>Be|</p><ul><li>Two</li></ul>'
+			],
+			[
+				'<p>Be|fore</p><ul><li>On|e</li><li>Two</li></ul>',
+				'<p>Be|e</p><ul><li>Two</li></ul>',
+				Jodit.KEY_DELETE
+			]
+		].forEach(([input, result, key = Jodit.KEY_BACKSPACE]) => {
+			it(`Should join what is left of the first item: ${input} => ${result} on ${key}`, () => {
+				const editor = getJodit({ history: { timeout: 0 } });
+				editor.value = input;
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', key, editor.editor);
+				replaceCursorToChar(editor);
+
+				expect(sortAttributes(editor.value)).equals(result);
+			});
+		});
+	});
+
 	describe('Remove selected image by keyboard', () => {
 		// https://github.com/jodit/jodit-react/issues/226
 		[Jodit.KEY_DELETE, Jodit.KEY_BACKSPACE].forEach(key => {
