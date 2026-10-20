@@ -13,7 +13,7 @@ Enables keyboard navigation between table cells using arrow keys and Tab. Users 
 - Tab/Shift+Tab: Navigate forward/backward through cells
 - Arrow keys: Navigate up/down/left/right in table
 - Auto-creates new row when Tab on last cell
-- Wraps to first/last cell at edges
+- Leaves the table at its edges, where there's no cell to move to
 - Handles merged cells (colspan/rowspan)
 - Hides popup/resizer during navigation
 - Auto-inserts `<br>` in empty cells
@@ -23,10 +23,12 @@ Enables keyboard navigation between table cells using arrow keys and Tab. Users 
 
 - **Tab**: Next cell (creates row if needed)
 - **Shift+Tab**: Previous cell (creates row before if needed)
-- **Left Arrow**: Previous cell (wraps to last)
-- **Right Arrow**: Next cell (wraps to first)
+- **Left Arrow**: Previous cell, from the start of a cell
+- **Right Arrow**: Next cell, from the end of a cell
 - **Up Arrow**: Cell above (same column)
 - **Down Arrow**: Cell below (same column)
+
+With no cell in that direction, the arrow keys leave the caret to the browser, which moves it out of the table.
 
 ## Usage Examples
 
@@ -56,24 +58,20 @@ const editor = Jodit.make('#editor');
 // Press Up → moves back to Cell 2
 ```
 
-### Wrapped Navigation
-
-```typescript
-// Cursor in Cell 4 (last cell):
-// Press Right → wraps to Cell 1 (first cell)
-
-// Cursor in Cell 1 (first cell):
-// Press Left → wraps to Cell 4 (last cell)
-```
-
 ### Edge Navigation
 
 ```typescript
-// Cursor in first column, top row:
-// Press Up → stays in current cell (no cell above)
+// Cursor at the start of Cell 1 (first cell):
+// Press Left → moves out of the table, before it
 
-// Cursor in last column, bottom row:
-// Press Down → stays in current cell (no cell below)
+// Cursor at the end of Cell 4 (last cell):
+// Press Right → moves out of the table, after it
+
+// Cursor in the top row:
+// Press Up → moves out of the table, above it
+
+// Cursor in the bottom row:
+// Press Down → moves out of the table, below it
 ```
 
 ## How It Works
@@ -101,7 +99,7 @@ On `keydown` event:
 
 **Left/Right:**
 - Gets next/previous cell in DOM order
-- Wraps to last/first cell if at edge
+- At the first or last cell, leaves the key to the browser
 
 **Up/Down:**
 - Builds formal table matrix (handles colspan/rowspan)
