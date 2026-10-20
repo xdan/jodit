@@ -286,7 +286,7 @@ const editor = Jodit.make('#editor', {
 
 The plugin monitors editor width and switches button sets at breakpoints:
 
-1. **Width Detection**: Measures `editor.container.parentElement.offsetWidth`
+1. **Width Detection**: Measures the editor's own width, `editor.container.offsetWidth`, or its parent's while the editor has none yet (for example while hidden at init). With an [external toolbar](#external-toolbar), the toolbar container's width
 2. **Breakpoint Evaluation**:
    - Fullsize or ≥ `sizeLG`: Uses `buttons` (default full set)
    - ≥ `sizeMD`: Uses `buttonsMD`
@@ -402,7 +402,7 @@ Shows a popup toolbar containing buttons that don't fit in the current adaptive 
 
 8. **Timeout Window**: Tap must occur between `mobileTapTimeout` and `mobileTapTimeout * 1.5` after previous tap
 
-9. **Parent Width**: Uses parent element width if available, falls back to container width
+9. **Editor Width**: Uses the editor's own width, so a label or other content beside it in the same parent doesn't count; falls back to the parent's width while the editor has none
 
 10. **Empty Button Groups**: Default button configs use empty `buttons: []` arrays (filled with group defaults)
 
