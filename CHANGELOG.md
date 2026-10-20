@@ -9,6 +9,33 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.5
+
+#### :rocket: New Feature
+
+- [#1657](https://github.com/xdan/jodit/issues/1657) Lists pasted from Word, with Keep or Clean, are now `<ul>`/`<ol>` lists, nested by level and keeping lettered and roman numbering and a `start` number, instead of paragraphs without their bullets or numbers. `stripTags` (Insert only Text, the plain-text copy) now puts every list item on its own line. Thanks [@brendon](https://github.com/brendon).
+- [#1661](https://github.com/xdan/jodit/issues/1661) The numbered list dropdown has "Start at...", which sets the number of the list's first item. Thanks [@brendon](https://github.com/brendon).
+
+#### :bug: Bug Fix
+
+- [#1643](https://github.com/xdan/jodit/issues/1643) Moving the caret with the keyboard now does what a click there would: the table's marked cell, popup and resize frame follow it from cell to cell and come back when the caret returns to the table, a link's popup opens when the caret moves into the link, and all of them close when the caret leaves. Thanks [@brendon](https://github.com/brendon).
+- [#1648](https://github.com/xdan/jodit/issues/1648) Choosing an alignment from an image's or media's popup keeps the popup open beside the element, and ([#1650](https://github.com/xdan/jodit/issues/1650)) the resize frame stays on the element while its popup is used. Thanks [@brendon](https://github.com/brendon).
+- [#1659](https://github.com/xdan/jodit/issues/1659) Choosing a list style from the `ol`/`ul` dropdown restyles the whole list in place, keeping its items and its `start`, instead of moving the caret's item into a new list. Thanks [@brendon](https://github.com/brendon).
+- [#1665](https://github.com/xdan/jodit/issues/1665) Backspace or Delete next to a paragraph inside a `<div>` or `<blockquote>` joins the two paragraphs instead of putting one inside the other, and a paragraph at the start of a table cell is no longer joined with the cell before it. Thanks [@brendon](https://github.com/brendon).
+- [#1666](https://github.com/xdan/jodit/issues/1666) Backspace or Delete over a selection from one table cell into another clears the selected text and keeps the cells, and ([#1667](https://github.com/xdan/jodit/issues/1667)) a selection that starts or ends in a table keeps the table's cells and the rest of the paragraph after it, instead of moving it into the `<table>` element. Thanks [@brendon](https://github.com/brendon).
+- [#1668](https://github.com/xdan/jodit/issues/1668) Backspace at the start of a paragraph after a table no longer moves the paragraph into the last cell. Thanks [@brendon](https://github.com/brendon).
+- [#1669](https://github.com/xdan/jodit/issues/1669) Delete at the end of a list's last item joins the next line to the item, and Delete at the end of a paragraph before a list joins the first item's text to the paragraph, as the browsers do. Thanks [@brendon](https://github.com/brendon).
+- [#1670](https://github.com/xdan/jodit/issues/1670) Deleting a selection that ends inside a list item joins the rest of the item to the line where the selection started. Thanks [@brendon](https://github.com/brendon).
+- [#1632](https://github.com/xdan/jodit/issues/1632) Typing into an empty block no longer leaves its `<br>` after the text (`<p>test<br></p>`), for example in a cleared editor or in a heading made in an empty table cell. Thanks [@brendon](https://github.com/brendon).
+- [#1634](https://github.com/xdan/jodit/issues/1634) In iframe mode, the cover that lets a click select an embed and the highlight of a selected image no longer depend on `iframeStyle`, so a custom `iframeStyle` keeps them. Thanks [@brendon](https://github.com/brendon).
+- [#1636](https://github.com/xdan/jodit/issues/1636) The Left arrow at the start of a table's first cell moves the caret out of the table instead of adding a row above it. Thanks [@brendon](https://github.com/brendon).
+- [#1638](https://github.com/xdan/jodit/issues/1638) In iframe mode the placeholder measures the content again once the `iframeCSSLinks` stylesheets load, and takes the content's font. Thanks [@brendon](https://github.com/brendon).
+- [#1640](https://github.com/xdan/jodit/issues/1640) A toolbar button's dropdown arrow is drawn in the icons' colour, so it no longer disappears when the text round the editor is light. Thanks [@brendon](https://github.com/brendon).
+- [#1645](https://github.com/xdan/jodit/issues/1645) Resizing a dialog in Safari no longer selects the text inside it, and ([#1646](https://github.com/xdan/jodit/issues/1646)) a resized dialog can be made narrower again, down to the width its header and buttons need. Thanks [@brendon](https://github.com/brendon).
+- [#1652](https://github.com/xdan/jodit/issues/1652) Selecting cells by dragging across a large table no longer stalls the page. Thanks [@brendon](https://github.com/brendon).
+- [#1654](https://github.com/xdan/jodit/issues/1654) With `autofocus`, a click or key in the editor before the delayed autofocus runs keeps its caret instead of having it moved to the start or end. Thanks [@brendon](https://github.com/brendon).
+- [#1663](https://github.com/xdan/jodit/issues/1663) The `singleQuotesInFontFamily` test accepts Firefox 158's unquoted font name. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.18.4
 
 #### :rocket: New Feature
