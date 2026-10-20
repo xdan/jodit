@@ -104,6 +104,82 @@ describe('Delete plugin', () => {
 		});
 	});
 
+	describe('Selection from a table cell to outside the table', () => {
+		const table = rows =>
+			'<table><tbody>' +
+			rows
+				.map(
+					row =>
+						'<tr>' +
+						row.map(cell => '<td>' + cell + '</td>').join('') +
+						'</tr>'
+				)
+				.join('') +
+			'</tbody></table>';
+
+		[
+			[
+				table([
+					['a1', 'b1'],
+					['a2', 'b|2']
+				]) + '<p>Af|ter</p>',
+				table([
+					['a1', 'b1'],
+					['a2', 'b|']
+				]) + '<p>ter</p>'
+			],
+			[
+				table([
+					['a|1', 'b1'],
+					['a2', 'b2']
+				]) + '<p>Af|ter</p>',
+				table([
+					['a|', '<br>'],
+					['<br>', '<br>']
+				]) + '<p>ter</p>'
+			],
+			[table([['a1', 'b|1']]) + '<p>After|</p>', table([['a1', 'b|']])],
+			[
+				'<p>Be|fore</p>' +
+					table([
+						['a1', 'b|1'],
+						['a2', 'b2']
+					]),
+				'<p>Be|</p>' +
+					table([
+						['<br>', '1'],
+						['a2', 'b2']
+					])
+			],
+			[
+				table([['a|1']]) + '<p>Mid</p>' + table([['b|1']]),
+				table([['a|']]) + table([['1']])
+			],
+			[
+				table([
+					['a1', 'b1'],
+					['a2', 'b|2']
+				]) + '<p>Af|ter</p>',
+				table([
+					['a1', 'b1'],
+					['a2', 'b|']
+				]) + '<p>ter</p>',
+				Jodit.KEY_DELETE
+			]
+		].forEach(([input, result, key = Jodit.KEY_BACKSPACE]) => {
+			it(`Should keep the cells and the block outside: ${input} => ${result} on ${key}`, () => {
+				const editor = getJodit({ history: { timeout: 0 } });
+				editor.value = input;
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', key, editor.editor);
+				replaceCursorToChar(editor);
+
+				expect(sortAttributes(editor.value)).equals(result);
+			});
+		});
+	});
+
 	describe('Remove selected image by keyboard', () => {
 		// https://github.com/jodit/jodit-react/issues/226
 		[Jodit.KEY_DELETE, Jodit.KEY_BACKSPACE].forEach(key => {

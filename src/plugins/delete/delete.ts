@@ -13,7 +13,7 @@
 import type { IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { $$, toArray } from 'jodit/core/helpers';
+import { toArray } from 'jodit/core/helpers';
 import { trim } from 'jodit/core/helpers/string/trim';
 import { Plugin } from 'jodit/core/plugin';
 
@@ -89,9 +89,10 @@ export class deleteCommand extends Plugin {
 		jodit.s.expandSelection();
 
 		const range = jodit.s.range;
+		const caret = this.__clearSelectedCells(range);
 
-		if (this.__clearSelectedCells(range)) {
-			jodit.s.selectRange(range);
+		if (caret && range.collapsed) {
+			jodit.s.selectRange(caret);
 			return false;
 		}
 
@@ -109,54 +110,74 @@ export class deleteCommand extends Plugin {
 		range.collapse(true);
 
 		this.__moveCursorInEditableSibling(jodit, leftSibling, fake, range);
-		this.__addBrInEmptyBlock(fake, rightSibling, range);
+		this.__addBrInEmptyBlock(fake, range);
 
 		Dom.safeRemove(fake);
-		jodit.s.selectRange(range);
+		jodit.s.selectRange(caret ?? range);
 
 		return false;
 	}
 
 	/**
-	 * A selection from one table cell into another clears the selected part
-	 * of each cell and keeps the cells, as the browsers do. `deleteContents`
-	 * would remove the cells it fully covers, and the cells it splits would
-	 * then be merged as blocks.
+	 * A selection that starts or ends in a table cell clears the selected part
+	 * of each cell it covers and keeps the cells, as the browsers do.
+	 * `deleteContents` would remove the cells it fully covers, and the cells
+	 * it cuts would then be merged as blocks. The range is moved out of those
+	 * tables, so only the content between them is left to delete.
+	 *
+	 * Returns where the caret goes, or null when no table is involved
 	 */
-	private __clearSelectedCells(range: Range): boolean {
+	private __clearSelectedCells(range: Range): Nullable<Range> {
 		const { editor, createInside } = this.j;
 
 		const startCell = Dom.closest(range.startContainer, Dom.isCell, editor);
 		const endCell = Dom.closest(range.endContainer, Dom.isCell, editor);
-		const table = startCell && Dom.closest(startCell, 'table', editor);
 
-		if (
-			!table ||
-			!endCell ||
-			startCell === endCell ||
-			Dom.closest(endCell, 'table', editor) !== table
-		) {
-			return false;
+		if (startCell === endCell) {
+			return null;
 		}
 
-		const parts = toArray(table.rows)
-			.flatMap(row => toArray(row.cells))
-			.filter(cell => range.intersectsNode(cell))
-			.map(cell => {
-				const part = range.cloneRange();
+		const startTable = Dom.closest(startCell, 'table', editor);
+		const endTable = Dom.closest(endCell, 'table', editor);
 
-				if (!Dom.isOrContains(cell, range.startContainer)) {
-					part.setStart(cell, 0);
-				}
+		const caret = range.cloneRange();
+		caret.collapse(true);
 
-				if (!Dom.isOrContains(cell, range.endContainer)) {
-					part.setEnd(cell, cell.childNodes.length);
-				}
+		const parts: Array<[HTMLTableCellElement, Range]> = [];
 
-				return [cell, part] as const;
-			});
+		const addParts = (table: HTMLTableElement): void => {
+			toArray(table.rows)
+				.flatMap(row => toArray(row.cells))
+				.filter(cell => range.intersectsNode(cell))
+				.forEach(cell => {
+					const part = range.cloneRange();
 
-		range.collapse(true);
+					if (!Dom.isOrContains(cell, range.startContainer)) {
+						part.setStart(cell, 0);
+					}
+
+					if (!Dom.isOrContains(cell, range.endContainer)) {
+						part.setEnd(cell, cell.childNodes.length);
+					}
+
+					parts.push([cell, part]);
+				});
+		};
+
+		if (startTable) {
+			addParts(startTable);
+
+			if (startTable === endTable) {
+				range.collapse(true);
+			} else {
+				range.setStartAfter(startTable);
+			}
+		}
+
+		if (endTable && endTable !== startTable) {
+			addParts(endTable);
+			range.setEndBefore(endTable);
+		}
 
 		parts.forEach(([cell, part]) => {
 			part.deleteContents();
@@ -167,7 +188,7 @@ export class deleteCommand extends Plugin {
 			}
 		});
 
-		return true;
+		return startTable ? caret : null;
 	}
 
 	private __moveContentInLeftSibling(
@@ -176,6 +197,15 @@ export class deleteCommand extends Plugin {
 		rightSibling: Nullable<Node>
 	): void {
 		leftSibling = this.__defineRightLeftBox(leftSibling);
+
+		// Nothing is moved into a table, and a block left empty after it goes
+		if (Dom.isTag(leftSibling, 'table')) {
+			if (Dom.isBlock(rightSibling) && Dom.isEmpty(rightSibling)) {
+				Dom.safeRemove(rightSibling);
+			}
+
+			return;
+		}
 
 		if (
 			!Dom.isList(rightSibling) &&
@@ -216,13 +246,9 @@ export class deleteCommand extends Plugin {
 	}
 
 	/**
-	 * Add BR in empty blocks left and right(for table cell)
+	 * Add BR in the empty block left at the caret
 	 */
-	private __addBrInEmptyBlock(
-		fake: Text,
-		rightSibling: Nullable<Node>,
-		range: Range
-	): void {
+	private __addBrInEmptyBlock(fake: Text, range: Range): void {
 		const jodit = this.j;
 
 		if (
@@ -235,14 +261,6 @@ export class deleteCommand extends Plugin {
 			Dom.after(fake, br);
 			range.setStartBefore(br);
 			range.collapse(true);
-		}
-
-		// Add BR in the right empty table cell
-		if (Dom.isTag(rightSibling, 'table')) {
-			const firstCell = $$('td,th', rightSibling).shift();
-			if (Dom.isCell(firstCell) && Dom.isEmpty(firstCell)) {
-				Dom.append(firstCell, jodit.createInside.element('br'));
-			}
 		}
 	}
 
