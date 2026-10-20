@@ -63,7 +63,8 @@ export function checkJoinNeighbors(
 
 		if (
 			sibling &&
-			(checkMoveListContent(jodit, box, sibling, backspace) ||
+			(checkPullNextLine(jodit, fakeNode, box, sibling, backspace) ||
+				checkMoveListContent(jodit, box, sibling, backspace) ||
 				moveContentAndRemoveEmpty(
 					jodit,
 					box,
@@ -156,6 +157,69 @@ function resolveTableSibling(
 		Dom.isCell(node) && cells.push(node);
 	});
 	return cells.length ? cells[backspace ? cells.length - 1 : 0] : null;
+}
+
+/**
+ * Delete at the edge of a list pulls the next line up to the caret, as the
+ * browsers do, instead of moving the caret's line into the next block:
+ * `<ul><li>one|</li></ul><p>two</p>` gives `<ul><li>one|two</li></ul>`, and
+ * `<p>one|</p><ul><li>two</li></ul>` gives `<p>one|two</p>`
+ * @private
+ */
+function checkPullNextLine(
+	jodit: IJodit,
+	fakeNode: Node,
+	box: Element,
+	sibling: Element,
+	backspace: boolean
+): boolean {
+	if (backspace || !(Dom.isList(box) || Dom.isList(sibling))) {
+		return false;
+	}
+
+	const target = Dom.up(fakeNode, Dom.isBlock, box, true);
+	const source = Dom.isList(sibling) ? sibling.firstElementChild : sibling;
+
+	if (
+		!target ||
+		!source ||
+		Dom.isTag(source, INSEPARABLE_TAGS) ||
+		Dom.isTag(source, 'table')
+	) {
+		return false;
+	}
+
+	if (!Dom.isEmpty(source)) {
+		const line: Node[] = [];
+
+		for (
+			let node = source.firstChild;
+			node && !Dom.isBlock(node);
+			node = node.nextSibling
+		) {
+			line.push(node);
+		}
+
+		if (!line.length) {
+			return false;
+		}
+
+		const filter = getMoveFilter(jodit);
+
+		line.forEach(node =>
+			filter(node) ? Dom.append(target, node) : Dom.safeRemove(node)
+		);
+	}
+
+	let remove: Nullable<Node> = source;
+
+	while (remove && remove !== jodit.editor && Dom.isEmpty(remove)) {
+		const parent: Nullable<Node> = remove.parentElement;
+		Dom.safeRemove(remove);
+		remove = parent;
+	}
+
+	return true;
 }
 
 function checkMoveListContent(
