@@ -22,6 +22,10 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - 'dependencies'
+    ignore:
+      # 10.x needs a newer cssnano: the build fails on the caniuse-api import
+      - dependency-name: 'cssnano-preset-advanced'
+        update-types: ['version-update:semver-major']
     groups:
       npm:
         applies-to: version-updates
