@@ -302,6 +302,42 @@ describe('Test orderedList plugin', () => {
 				});
 			});
 
+			describe('when the cursor is in an item of a list (#1659)', () => {
+				it('should change the style of the whole list and keep its start', () => {
+					const editor = getJodit();
+
+					editor.value =
+						'<ol start="3"><li>Three</li><li>Fo|ur</li><li>Five</li></ol>';
+					setCursorToChar(editor);
+
+					clickTrigger('ol', editor);
+					clickButton('lower-roman', getOpenedPopup(editor));
+
+					replaceCursorToChar(editor);
+					expect(sortAttributes(editor.value)).equals(
+						'<ol start="3" style="list-style-type:lower-roman"><li>Three</li><li>Fo|ur</li><li>Five</li></ol>'
+					);
+				});
+
+				describe('click on default', () => {
+					it('should remove the style from the whole list', () => {
+						const editor = getJodit();
+
+						editor.value =
+							'<ol style="list-style-type: upper-roman;"><li>One</li><li>Tw|o</li><li>Three</li></ol>';
+						setCursorToChar(editor);
+
+						clickTrigger('ol', editor);
+						clickButton('default', getOpenedPopup(editor));
+
+						replaceCursorToChar(editor);
+						expect(sortAttributes(editor.value)).equals(
+							'<ol><li>One</li><li>Tw|o</li><li>Three</li></ol>'
+						);
+					});
+				});
+			});
+
 			describe('Click on same element inside popup two times', () => {
 				it('should return ul to first state', () => {
 					const editor = getJodit();

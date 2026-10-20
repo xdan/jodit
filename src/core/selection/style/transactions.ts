@@ -30,6 +30,7 @@ import {
 	WRAP_NODES
 } from 'jodit/core/selection/style/api';
 import {
+	CHANGE,
 	INITIAL,
 	REPLACE,
 	UNSET,
@@ -110,7 +111,12 @@ export const transactions: IStyleTransactions = {
 		exec(value) {
 			const { element, jodit, mode } = value;
 
-			if (mode !== INITIAL && mode !== UNWRAP && mode !== REPLACE) {
+			if (
+				mode !== INITIAL &&
+				mode !== UNWRAP &&
+				mode !== REPLACE &&
+				mode !== CHANGE
+			) {
 				return { ...value, next: states.END };
 			}
 
