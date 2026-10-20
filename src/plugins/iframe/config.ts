@@ -48,6 +48,9 @@ declare module 'jodit/config' {
 
 		/**
 		 * Custom style to be used inside the iframe to display content.
+		 * It goes in after `iframeCSSLinks`. The rules Jodit's own plugins need
+		 * in the editing document are added apart from it, so a value of your
+		 * own doesn't have to repeat them.
 		 *
 		 * ```javascript
 		 * Jodit.make('#editor', {
@@ -128,33 +131,6 @@ Config.prototype.iframeStyle =
 	'}' +
 	'p{' +
 	'margin-top:0;' +
-	'}' +
-	'[data-jodit_iframe_wrapper]{' +
-	'display: block;' +
-	'user-select: none;' +
-	'position: relative;' +
-	'}' +
-	'[data-jodit_iframe_wrapper] iframe{' +
-	'position: relative;' +
-	'}' +
-	'[data-jodit_iframe_wrapper]:after {' +
-	'position:absolute;' +
-	'content:"";' +
-	'z-index:1;' +
-	'top:0;' +
-	'left:0;' +
-	'right: 0;' +
-	'bottom: 0;' +
-	'cursor: pointer;' +
-	'display: block;' +
-	'background: rgba(0, 0, 0, 0);' +
-	'} ' +
-	'[data-jodit_iframe_wrapper][data-jodit-wrapper_active=true] iframe{' +
-	'z-index: 2;' +
-	'}' +
-	'.jodit-wysiwyg_image-selected::selection,' +
-	'.jodit-wysiwyg_image-selected *:not(img)::selection{' +
-	'background:transparent' +
 	'}' +
 	'.jodit_disabled{' +
 	'user-select: none;' +

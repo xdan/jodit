@@ -377,6 +377,7 @@ Iframes receive special treatment:
 4. **Resize Target**: Resizes wrapper instead of iframe directly
 5. **Sync Dimensions**: Writes the iframe's `width` and `height` attributes, as plain numbers, while the wrapper is being resized; a click alone leaves them as they were, so `width="100%"` stays
 6. **Cleanup**: Removes wrapper from HTML output via `afterGetValueFromEditor` event
+7. **Click Cover**: A `<style>` in the editing document, the iframe's in iframe mode, covers the wrapper, so a click selects the embed until the wrapper is active
 
 ### Image Size Handling
 

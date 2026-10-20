@@ -92,7 +92,9 @@ const editor = Jodit.make('#editor', {
 
 **Default:** (see notes)
 
-Custom inline CSS to be injected into the iframe document. The default includes basic styling for html, body, tables, paragraphs, and disabled states.
+Custom inline CSS to be injected into the iframe document, after the `iframeCSSLinks` stylesheets. The default includes basic styling for html, body, tables, paragraphs, and disabled states.
+
+The rules Jodit's own plugins need in the editing document, such as the cover that lets a click on an embed select it and the selected image's highlight, are added apart from `iframeStyle`, so a value of your own doesn't have to repeat them.
 
 **Default value:**
 ```css

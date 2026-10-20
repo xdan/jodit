@@ -14,14 +14,12 @@ import type { IDictionary, IJodit, IStorage } from 'jodit/types';
 import { INVISIBLE_SPACE_REG_EXP, SOURCE_CONSUMER } from 'jodit/core/constants';
 import { autobind, cached, debounce, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
-import { pluginSystem } from 'jodit/core/global';
+import { getContainer, pluginSystem } from 'jodit/core/global';
 import { $$, dataBind, getWrappedMedia } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { dataURItoBlob } from 'jodit/modules/uploader/helpers/data-uri-to-blob';
 
 import './config';
-
-import './image-processor.less';
 
 const JODIT_IMAGE_PROCESSOR_BINDED = '__jodit_imageprocessor_binded';
 const JODIT_IMAGE_BLOB_ID = JODIT_IMAGE_PROCESSOR_BINDED + 'blob-id';
@@ -34,6 +32,12 @@ const SELECTED_TAGS = new Set(['img', 'jodit', 'jodit-media'] as const);
 export class imageProcessor extends Plugin {
 	protected afterInit(jodit: IJodit): void {
 		jodit.e.on(jodit.ed, 'selectionchange', this.onSelectionChange);
+
+		// Over the highlight in `styles/reset.less`; the image keeps its own. It goes
+		// in the editing document, so iframe mode has it whatever `iframeStyle` holds
+		getContainer(jodit, 'image-processor', 'style', true).textContent =
+			`.jodit-wysiwyg.${IMAGE_SELECTED}::selection,` +
+			`.jodit-wysiwyg.${IMAGE_SELECTED} *:not(img)::selection{background:transparent}`;
 	}
 
 	protected beforeDestruct(jodit: IJodit): void {

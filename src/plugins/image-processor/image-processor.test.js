@@ -70,15 +70,25 @@ describe('Image processor plugin', () => {
 			).backgroundColor;
 		}
 
-		[false, true].forEach(iframe => {
-			describe(iframe ? 'In iframe mode' : 'In the editor', () => {
+		const colour = 'p::selection,img::selection{background:rgb(1, 2, 3)}';
+
+		[
+			['In the editor', { iframe: false }],
+			[
+				'In iframe mode',
+				{
+					iframe: true,
+					iframeStyle: Jodit.defaultOptions.iframeStyle + colour
+				}
+			],
+			[
+				'In iframe mode with iframeStyle of its own',
+				{ iframe: true, iframeStyle: colour }
+			]
+		].forEach(([name, options]) => {
+			describe(name, () => {
 				it("Should only show the image's while the selection is an image, as Safari paints the rest of a block image's line with its parent's", async () => {
-					const editor = getJodit({
-						iframe,
-						iframeStyle:
-							Jodit.defaultOptions.iframeStyle +
-							'p::selection,img::selection{background:rgb(1, 2, 3)}'
-					});
+					const editor = getJodit(options);
 					editor.value =
 						'<p><img src="tests/artio.jpg" style="display:block">Text after it</p>';
 					editor.e.fire('change', editor.value, '');
