@@ -81,7 +81,7 @@
 		"cross-env": "^10.1.0",
 		"css-loader": "^7.1.5",
 		"css-minimizer-webpack-plugin": "^8.0.0",
-		"cssnano-preset-advanced": "^8.0.10",
+		"cssnano-preset-advanced": "^10.0.0",
 		"dotenv": "^18.0.3",
 		"dpdm": "^4.3.0",
 		"es6-promise": "^4.2.8",
