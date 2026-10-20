@@ -2001,7 +2001,7 @@ describe('Tables Jodit Editor Tests', () => {
 			});
 
 			describe('Set custom selected border color', () => {
-				it('Should add css rule in document for selected css', () => {
+				it('Should add css rule in document for selected css', async () => {
 					const editor = getJodit({
 						table: {
 							selectionCellStyle:
@@ -2023,6 +2023,8 @@ describe('Tables Jodit Editor Tests', () => {
 					td = editor.editor.querySelectorAll('td')[3];
 
 					simulateEvent(['mousemove', 'mouseup', 'click'], td);
+					// The style is written once the selecting is done
+					await delay(0);
 
 					expect(
 						Jodit.modules.Helpers.normalizeColor(
@@ -2031,8 +2033,60 @@ describe('Tables Jodit Editor Tests', () => {
 					).equals('#FF0000');
 				});
 
+				it('Should write the style once for the cells selected in one go (#1652)', async () => {
+					const editor = getJodit({
+						table: {
+							selectionCellStyle:
+								'border: 1px double red !important;'
+						}
+					});
+
+					editor.value =
+						'<table><tbody>' +
+						'<tr><td>1</td><td>2</td><td>3</td></tr>' +
+						'<tr><td>4</td><td>5</td><td>6</td></tr>' +
+						'</tbody></table>';
+
+					const table = editor.getInstance('Table', editor.o);
+					const cells = editor.editor.querySelectorAll('td');
+
+					table.addSelection(cells[0]);
+					await delay(0);
+
+					const style = Array.from(
+						editor.od.querySelectorAll('style')
+					).find(elm => elm.innerHTML.includes('double red'));
+
+					expect(style).is.not.undefined;
+
+					let writes = 0;
+					const innerHTML = Object.getOwnPropertyDescriptor(
+						Element.prototype,
+						'innerHTML'
+					);
+
+					Object.defineProperty(style, 'innerHTML', {
+						configurable: true,
+						get() {
+							return innerHTML.get.call(this);
+						},
+						set(value) {
+							writes += 1;
+							innerHTML.set.call(this, value);
+						}
+					});
+
+					cells.forEach(td => table.addSelection(td));
+					await delay(0);
+
+					expect(writes).equals(1);
+					expect(style.innerHTML.split(',').length).equals(
+						cells.length
+					);
+				});
+
 				describe('For iframe mode', () => {
-					it('Should add css rule in editor document for selected css', () => {
+					it('Should add css rule in editor document for selected css', async () => {
 						const editor = getJodit({
 							iframe: true,
 							table: {
@@ -2055,6 +2109,7 @@ describe('Tables Jodit Editor Tests', () => {
 						td = editor.editor.querySelectorAll('td')[3];
 
 						simulateEvent(['mousemove', 'mouseup', 'click'], td);
+						await delay(0);
 
 						expect(
 							Jodit.modules.Helpers.normalizeColor(

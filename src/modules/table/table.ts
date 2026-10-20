@@ -13,7 +13,6 @@
 import type { ICreate, IDictionary, IJodit, Prettify } from 'jodit/types';
 import { ViewComponent } from 'jodit/core/component';
 import * as consts from 'jodit/core/constants';
-import { debounce } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { getContainer } from 'jodit/core/global';
 import {
@@ -44,10 +43,14 @@ export class Table extends ViewComponent<IJodit> {
 		Set<HTMLTableCellElement>
 	> = new WeakMap();
 
-	@debounce()
-	private __recalculateStyles(): void {
+	/**
+	 * Rewrite the `<style>` that marks the selected cells once for all the
+	 * cells (un)selected in one go: a drag over a block of cells unmarks and
+	 * marks every one of them on each move. `@debounce()` was never applied,
+	 * as a Table never reaches `ready`
+	 */
+	private __recalculateStyles = this.async.microDebounce((): void => {
 		const style = getContainer(this.j, Table, 'style', true);
-
 		const selectors: string[] = [];
 
 		this.selected.forEach(td => {
@@ -59,7 +62,7 @@ export class Table extends ViewComponent<IJodit> {
 			? selectors.join(',') +
 				`{${(this.jodit.options as any).table.selectionCellStyle}}`
 			: '';
-	}
+	});
 
 	addSelection(td: HTMLTableCellElement): void {
 		this.selected.add(td);
