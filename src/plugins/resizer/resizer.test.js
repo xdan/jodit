@@ -1025,4 +1025,29 @@ describe('Resize plugin', () => {
 			expect(iframe.getAttribute('height')).equals('180');
 		});
 	});
+	describe('A click in the popup of the framed element (#1650)', () => {
+		it('Should keep the frame, and hide it for a click in the text', () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>One <img src="tests/artio.jpg" style="width:100px;height:100px"> two</p>';
+
+			const img = editor.editor.querySelector('img');
+			const frame = () =>
+				editor.ownerDocument.querySelector(
+					'.jodit-resizer[data-editor_id=' + editor.id + ']'
+				);
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], img);
+			expect(frame()).is.not.null;
+
+			const popup = getOpenedPopup(editor);
+			expect(popup).is.not.null;
+
+			simulateEvent('mouseup', getButton('left', popup));
+			expect(frame()).is.not.null;
+
+			simulateEvent('mouseup', editor.editor.querySelector('p'));
+			expect(frame()).is.null;
+		});
+	});
 });
