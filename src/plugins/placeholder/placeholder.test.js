@@ -134,6 +134,45 @@ describe('Placeholder plugin', function () {
 		});
 	});
 
+	describe('In iframe mode', function () {
+		const stylesheet = css => 'data:text/css,' + encodeURIComponent(css);
+
+		const placeholderOf = editor =>
+			editor.container.querySelector('[data-ref="placeholder"]');
+
+		it('Should measure again once a stylesheet of the editing document loads', async () => {
+			const editor = getJodit({
+				iframe: true,
+				iframeStyle: '',
+				iframeCSSLinks: [stylesheet('body{}')]
+			});
+
+			await delay(300);
+			expect(placeholderOf(editor).style.paddingTop).equals('0px');
+
+			// As a stylesheet does that arrives after the placeholder is shown
+			editor.ed.querySelector('link').href =
+				stylesheet('body{padding:40px}');
+			await delay(300);
+
+			expect(placeholderOf(editor).style.paddingTop).equals('40px');
+		});
+
+		it('Should take the font of the editing document', async () => {
+			const editor = getJodit({
+				iframe: true,
+				iframeStyle: '',
+				iframeCSSLinks: [stylesheet('body{font-family:monospace}')]
+			});
+
+			await delay(300);
+
+			expect(
+				editor.ow.getComputedStyle(placeholderOf(editor)).fontFamily
+			).equals('monospace');
+		});
+	});
+
 	// https://github.com/xdan/jodit/issues/1495
 	describe('Empty block added after init', function () {
 		it('Should take the margin of that block', function () {
