@@ -353,4 +353,132 @@ describe('Select cells plugin', () => {
 			expect(editor.value).equals('<p>Before</p><p>|After</p>');
 		});
 	});
+	describe('A key that moves the caret to another cell (#1643)', () => {
+		// The browser moves the caret between keydown and keyup, unless
+		// table-keyboard-navigation does it on keydown
+		function pressKey(editor, key, moveCaret) {
+			simulateEvent('keydown', key, editor.editor);
+			moveCaret && moveCaret();
+			simulateEvent('keyup', key, editor.editor);
+		}
+
+		function clickCell(editor, td) {
+			const pos = Jodit.modules.Helpers.position(td);
+
+			editor.s.setCursorIn(td);
+			simulateEvent(['mousedown', 'mouseup', 'click'], td, e => {
+				Object.assign(e, { clientX: pos.left, clientY: pos.top });
+			});
+		}
+
+		const marked = editor =>
+			editor.getInstance('Table').getAllSelectedCells();
+
+		it('Should mark the cell the caret moved into, as a click on it does', () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>Before</p><table><tbody>' +
+				'<tr><td>1</td><td>2</td></tr>' +
+				'<tr><td>3</td><td>4</td></tr>' +
+				'</tbody></table>';
+
+			const tds = editor.editor.querySelectorAll('td');
+			clickCell(editor, tds[0]);
+			expect(marked(editor)).deep.equals([tds[0]]);
+
+			pressKey(editor, Jodit.KEY_RIGHT, () =>
+				editor.s.setCursorIn(tds[1], true)
+			);
+			expect(marked(editor)).deep.equals([tds[1]]);
+			expect(getOpenedPopup(editor)).is.not.null;
+
+			pressKey(editor, Jodit.KEY_DOWN);
+			expect(marked(editor)).deep.equals([tds[3]]);
+			expect(getOpenedPopup(editor)).is.not.null;
+
+			pressKey(editor, 'Shift');
+			expect(marked(editor)).deep.equals([tds[3]]);
+		});
+
+		it('Should unmark the cells once the caret has left the table', () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>Before</p><table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
+
+			const td = editor.editor.querySelector('td');
+			clickCell(editor, td);
+			expect(marked(editor)).deep.equals([td]);
+
+			pressKey(editor, Jodit.KEY_UP, () =>
+				editor.s.setCursorIn(editor.editor.querySelector('p'))
+			);
+			expect(marked(editor)).deep.equals([]);
+			expect(getOpenedPopup(editor)).is.null;
+		});
+
+		it("Should bring the cell's popup back when the caret leaves a link in the cell", () => {
+			const editor = getJodit();
+			editor.value =
+				'<table><tbody><tr><td>One <a href="#">link</a> two</td></tr></tbody></table>';
+
+			const td = editor.editor.querySelector('td');
+			const link = td.querySelector('a');
+			const isCellPopup = () =>
+				Boolean(
+					getOpenedPopup(editor)?.querySelector(
+						'.jodit-toolbar-button_splitv'
+					)
+				);
+
+			clickCell(editor, td);
+			editor.s.setCursorIn(td.firstChild, true);
+			expect(isCellPopup()).is.true;
+
+			pressKey(editor, Jodit.KEY_RIGHT, () =>
+				editor.s.setCursorIn(link, true)
+			);
+			expect(getOpenedPopup(editor)).is.not.null;
+			expect(isCellPopup()).is.false;
+
+			pressKey(editor, Jodit.KEY_RIGHT, () =>
+				editor.s.setCursorIn(td.lastChild)
+			);
+			expect(isCellPopup()).is.true;
+			expect(marked(editor)).deep.equals([td]);
+		});
+
+		it('Should follow the caret while a key is held down', () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>Before</p><table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
+
+			const td = editor.editor.querySelector('td');
+			editor.s.setCursorIn(editor.editor.querySelector('p'));
+
+			// A held key sends keydown again for each repeat, and one keyup
+			simulateEvent('keydown', Jodit.KEY_DOWN, editor.editor);
+			editor.s.setCursorIn(td, true);
+			simulateEvent('keydown', Jodit.KEY_DOWN, editor.editor, e => {
+				e.repeat = true;
+			});
+
+			expect(marked(editor)).deep.equals([td]);
+			expect(getOpenedPopup(editor)).is.not.null;
+		});
+
+		it('Should mark the cell when the caret comes into the table', () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>Before</p><table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
+
+			const td = editor.editor.querySelector('td');
+			editor.s.setCursorIn(editor.editor.querySelector('p'));
+
+			pressKey(editor, Jodit.KEY_DOWN, () =>
+				editor.s.setCursorIn(td, true)
+			);
+			expect(marked(editor)).deep.equals([td]);
+			expect(getOpenedPopup(editor)).is.not.null;
+		});
+	});
 });

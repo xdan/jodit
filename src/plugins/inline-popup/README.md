@@ -18,7 +18,8 @@ Provides context-sensitive inline popup toolbars for various elements in the edi
 - Disable specific buttons in inline toolbar
 - Function-based dynamic content
 - Mobile-optimized with extra buttons
-- Auto-hide on click outside or editor changes
+- Auto-hide on click outside, editor changes, or when a key moves the caret off the element
+- A key that moves the caret into a link opens its popup, as a click does
 
 ## Configuration Options
 
@@ -128,7 +129,7 @@ Jodit.make('#editor', {
 2. **Popup Display**: Shows popup near clicked element with appropriate toolbar
 3. **Selection Handling**: Optionally shows toolbar for text selections
 4. **Auto-Positioning**: Positions popup relative to target element bounds, leaving room for the resizer's handles round an element in `allowResizeTags` or a media wrapper, so the popup doesn't cover them
-5. **Auto-Hide**: Closes on outside click, editor changes, or explicit close events
+5. **Auto-Hide**: Closes on outside click, editor changes, a key that moves the caret off the element, or explicit close events
 
 ## Events
 

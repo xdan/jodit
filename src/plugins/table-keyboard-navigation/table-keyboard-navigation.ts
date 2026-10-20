@@ -103,8 +103,6 @@ export function tableKeyboardNavigation(editor: IJodit): void {
 					return;
 				}
 
-				editor.e.fire('hidePopup hideResizer');
-
 				if (!next.firstChild) {
 					const first = editor.createInside.element('br');
 					Dom.append(next, first);

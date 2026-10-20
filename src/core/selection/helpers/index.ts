@@ -15,6 +15,7 @@ import {
 import { Dom } from 'jodit/core/dom/dom';
 
 export * from './composed-ranges';
+export * from './is-moved';
 export * from './move-node-inside-start';
 export * from './move-the-node-along-the-edge-outward';
 

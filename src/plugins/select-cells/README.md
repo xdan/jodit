@@ -13,7 +13,7 @@ Enables click-and-drag selection of table cells. This plugin allows users to sel
 - Click and drag to select multiple cells
 - Visual selection highlighting
 - Popup toolbar for selected cells
-- Keyboard navigation (Tab to deselect)
+- Keyboard navigation: a key that moves the caret into a cell selects it, as a click does
 - Table commands work on selected cells
 - Touch event support
 - Nested table handling
@@ -178,7 +178,7 @@ Plugin intercepts these commands when cells are selected:
 
 ## Edge Cases
 
-1. **Tab Key**: Pressing Tab deselects all cells
+1. **Keyboard**: A key that moves the caret into another cell, or into the table from outside, selects that cell and opens its popup, as a click does. One that moves the caret out of the table deselects the cells
 2. **Outside Click**: Clicking outside deselects cells
 3. **Nested Tables**: Only selects cells from same table level
 4. **Empty Cells**: Adds `<br>` to empty cells on selection start

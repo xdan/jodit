@@ -175,8 +175,7 @@ describe('Delete at the end of a block next to a list', () => {
 		[
 			'<p>Before|</p><ul><li>One<ul><li>Sub</li></ul></li></ul>',
 			'<p>Before|One</p><ul><li><ul><li>Sub</li></ul></li></ul>'
-		]
-,
+		],
 		[
 			'<div class="box"><ul><li>One|</li></ul></div><p>Two</p>',
 			'<div class="box"><ul><li>One|Two</li></ul></div>'

@@ -36,6 +36,7 @@ import {
 	toArray
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
+import { isMoved } from 'jodit/core/selection/helpers';
 import { UIElement } from 'jodit/core/ui';
 import { Popup } from 'jodit/core/ui/popup';
 import { makeCollection } from 'jodit/modules/toolbar/factory';
@@ -190,6 +191,52 @@ export class inlinePopup extends Plugin {
 	@watch(':outsideClick')
 	protected onOutsideClick(): void {
 		this.popup.close();
+	}
+
+	/**
+	 * A key that moves the caret off an element closes its popup, and one
+	 * that moves the caret into an element with a popup (a link) opens it,
+	 * as clicks do
+	 */
+	@watch(':keyup')
+	protected onKeyUp(): void {
+		this.__followCaret();
+	}
+
+	private __followCaret(): void {
+		if (!isMoved(this.j, this.snapRange)) {
+			return;
+		}
+
+		const { range } = this.j.s;
+		const target = this.previousTarget;
+
+		if (
+			this.popup.isOpened &&
+			this.type !== 'selection' &&
+			target &&
+			!range.intersectsNode(target)
+		) {
+			this.popup.close();
+		}
+
+		const node = range.startContainer;
+		const element = this.__elementAt(node);
+
+		if (range.collapsed && element && element !== this.__keyDownElement) {
+			this.onClick(node);
+		}
+	}
+
+	/**
+	 * The element with a popup that holds `node`
+	 */
+	private __elementAt(node: Node): Nullable<HTMLElement> {
+		return Dom.closest(
+			node,
+			this.elmsList as HTMLTagNames[],
+			this.j.editor
+		);
 	}
 
 	/**
@@ -378,9 +425,17 @@ export class inlinePopup extends Plugin {
 	private snapRange: Nullable<Range> = null;
 
 	@autobind
-	private onSelectionStart(): void {
+	private onSelectionStart(event?: Event): void {
+		// A key held down moves the caret on every repeat, with one keyup
+		if ((event as KeyboardEvent)?.repeat) {
+			this.__followCaret();
+		}
+
 		this.snapRange = this.j.s.range.cloneRange();
+		this.__keyDownElement = this.__elementAt(this.snapRange.startContainer);
 	}
+
+	private __keyDownElement: Nullable<HTMLElement> = null;
 
 	@autobind
 	private onSelectionEnd(e: MouseEvent): void {
