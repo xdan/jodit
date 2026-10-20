@@ -288,8 +288,28 @@ export class inlinePopup extends Plugin {
 	 */
 	private __reopenSelectionPopup = false;
 
+	/**
+	 * The alignment controls fire `recalcPositionPopup` once they have moved
+	 * the element, and their button then fires `closeAllPopups`. The popup
+	 * opens again beside the element, as the selection toolbar does
+	 */
+	private __reopenFor: Nullable<HTMLElement> = null;
+
+	@watch(':recalcPositionPopup')
+	protected onRecalcPositionPopup(): void {
+		if (
+			this.popup.isOpened &&
+			this.type !== 'selection' &&
+			this.previousTarget
+		) {
+			this.__reopenFor = this.previousTarget;
+		}
+	}
+
 	@autobind
 	private __onDocumentMouseDown(e: MouseEvent): void {
+		this.__reopenFor = null;
+
 		if (
 			this.popup.isOpened &&
 			this.type === 'selection' &&
@@ -302,6 +322,19 @@ export class inlinePopup extends Plugin {
 
 	@autobind
 	private __onCloseAllPopups(): void {
+		const target = this.__reopenFor;
+
+		if (target) {
+			this.__reopenFor = null;
+
+			// After the popup's own `closeAllPopups` handler, as below
+			this.j.async.setTimeout(() => {
+				if (this.j.editor.contains(target)) {
+					this.onClick(target);
+				}
+			}, 1);
+		}
+
 		if (!this.__reopenSelectionPopup) {
 			return;
 		}

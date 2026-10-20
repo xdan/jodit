@@ -120,6 +120,51 @@ describe('Text Inline Popup plugin', () => {
 				);
 			});
 
+			it('Should keep the popup open after an alignment is chosen (#1648)', async () => {
+				const editor = getJodit({ defaultTimeout: 0 });
+
+				editor.value =
+					'<p>text <img alt="" src="tests/artio.jpg"> text</p>';
+
+				const img = editor.editor.querySelector('img');
+				editor.s.focus();
+
+				simulateEvent('click', img);
+				clickTrigger('left', getOpenedPopup(editor));
+				clickButton('Left', getOpenedPopup(editor));
+				await delay(20);
+
+				expect(img.style.float).eq('left');
+
+				const popup = getOpenedPopup(editor);
+				expect(popup).is.not.null;
+				expect(icon(getButton('left', popup))).contains(
+					'jodit-icon_left'
+				);
+			});
+
+			it('Should keep the popup open after aligning media in a mediaWrappers wrapper (#1648)', async () => {
+				const editor = getJodit({
+					defaultTimeout: 0,
+					mediaWrappers: {
+						video: { tag: 'span', className: 'fr-video' }
+					}
+				});
+
+				editor.value =
+					'<p><span class="fr-video"><video width="320" height="180"></video></span></p>';
+
+				const wrapper = editor.editor.querySelector('.fr-video');
+
+				simulateEvent('click', wrapper);
+				clickTrigger('left', getOpenedPopup(editor));
+				clickButton('Right', getOpenedPopup(editor));
+				await delay(20);
+
+				expect(wrapper.style.float).eq('right');
+				expect(getOpenedPopup(editor)).is.not.null;
+			});
+
 			// https://github.com/xdan/jodit/issues/1531
 			it("Should show the alignment of a Normal image's line, without marking it", async () => {
 				const editor = getJodit({ defaultTimeout: 0 });
