@@ -9,7 +9,7 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { LIST_TAGS } from 'jodit/core/constants';
+import { INSEPARABLE_TAGS, LIST_TAGS } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 
 import { getMoveFilter } from 'jodit/plugins/backspace/helpers';
@@ -40,6 +40,11 @@ export function checkJoinNeighbors(
 		Dom.isElement(mainClosestBox) &&
 		Dom.isContentEditable(mainClosestBox, jodit.editor)
 	) {
+		// A table cell is never joined with its neighbour
+		if (Dom.up(fakeNode, Dom.isCell, mainClosestBox, true)) {
+			return false;
+		}
+
 		const sibling = Dom.findNotEmptySibling(
 			mainClosestBox,
 			backspace
@@ -54,13 +59,19 @@ export function checkJoinNeighbors(
 			return true;
 		}
 
+		const box = findCaretBox(fakeNode, mainClosestBox);
+
 		if (
 			sibling &&
-			(checkMoveListContent(jodit, mainClosestBox, sibling, backspace) ||
+			(checkMoveListContent(jodit, box, sibling, backspace) ||
 				moveContentAndRemoveEmpty(
 					jodit,
-					mainClosestBox,
-					resolveTableSibling(sibling, backspace),
+					box,
+					findEdgeBlock(
+						resolveTableSibling(sibling, backspace),
+						backspace,
+						jodit.editor
+					),
 					backspace
 				))
 		) {
@@ -70,6 +81,58 @@ export function checkJoinNeighbors(
 	}
 
 	return false;
+}
+
+/**
+ * The block holding the caret inside the box that has the sibling, so
+ * `<p>one</p><div><p>|two</p></div>` joins the two paragraphs instead of
+ * moving the whole `<div>` into the first one. For a list item that is its
+ * list, which the list cases handle.
+ */
+function findCaretBox(fakeNode: Node, mainClosestBox: Element): Element {
+	const block = Dom.up(fakeNode, Dom.isBlock, mainClosestBox);
+
+	if (!block) {
+		return mainClosestBox;
+	}
+
+	return Dom.isLeaf(block) && block.parentElement
+		? block.parentElement
+		: block;
+}
+
+/**
+ * The innermost block on the sibling's edge facing the caret, so the
+ * content is joined to text: `<div><p>one</p></div><p>|two</p>` gives
+ * `<div><p>one|two</p></div>`
+ */
+function findEdgeBlock(
+	sibling: Nullable<Element>,
+	backspace: boolean,
+	root: HTMLElement
+): Nullable<Element> {
+	let block = sibling;
+
+	while (block) {
+		const edge = backspace ? block.lastChild : block.firstChild;
+		const child =
+			edge && Dom.isEmptyTextNode(edge)
+				? Dom.findNotEmptySibling(edge, backspace)
+				: edge;
+
+		if (
+			!Dom.isBlock(child) ||
+			Dom.isTag(child, INSEPARABLE_TAGS) ||
+			Dom.isTag(child, 'table') ||
+			!Dom.isContentEditable(child, root)
+		) {
+			return block;
+		}
+
+		block = child;
+	}
+
+	return block;
 }
 
 /**

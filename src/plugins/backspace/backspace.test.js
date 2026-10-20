@@ -93,6 +93,59 @@ describe('Backspace/Delete next to a table (#1064)', () => {
 	});
 });
 
+describe('Backspace/Delete at the edge of a block nested in another block', () => {
+	[
+		['<p>One</p><div class="box"><p>|Two</p></div>', '<p>One|Two</p>'],
+		[
+			'<p>One</p><div class="box"><p>|Two</p><p>Three</p></div>',
+			'<p>One|Two</p><div class="box"><p>Three</p></div>'
+		],
+		['<p>One</p><blockquote><p>|Two</p></blockquote>', '<p>One|Two</p>'],
+		[
+			'<div class="box"><p>One</p></div><p>|Two</p>',
+			'<div class="box"><p>One|Two</p></div>'
+		],
+		[
+			'<div class="box"><p>One</p></div><div class="box"><p>|Two</p></div>',
+			'<div class="box"><p>One|Two</p></div>'
+		],
+		[
+			'<div class="box"><ul><li>One</li></ul></div><p>|Two</p>',
+			'<div class="box"><ul><li>One|Two</li></ul></div>'
+		],
+		[
+			'<table><tbody><tr><td>One</td><td><p>|Two</p></td></tr></tbody></table>',
+			'<table><tbody><tr><td>One</td><td><p>|Two</p></td></tr></tbody></table>'
+		],
+		[
+			'<p>One|</p><div class="box"><p>Two</p></div>',
+			'<div class="box"><p>One|Two</p></div>',
+			Jodit.KEY_DELETE
+		],
+		[
+			'<div class="box"><p>One|</p></div><p>Two</p>',
+			'<p>One|Two</p>',
+			Jodit.KEY_DELETE
+		],
+		[
+			'<table><tbody><tr><td><p>One|</p></td><td>Two</td></tr></tbody></table>',
+			'<table><tbody><tr><td><p>One|</p></td><td>Two</td></tr></tbody></table>',
+			Jodit.KEY_DELETE
+		]
+	].forEach(([source, result, key = Jodit.KEY_BACKSPACE]) => {
+		it(`Should turn ${source} into ${result} on ${key}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent('keydown', key, editor.editor);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(result);
+		});
+	});
+});
+
 describe('Backspace/Delete key', function () {
 	let editor, range, area;
 
