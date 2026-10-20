@@ -9,8 +9,12 @@ updates:
     labels:
       - 'dependencies'
       - 'ci'
+    groups:
+      actions:
+        patterns:
+          - '*'
 
-  # npm dev/runtime dependencies.
+  # npm dev/runtime dependencies, one PR per week for all of them.
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
@@ -18,3 +22,12 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - 'dependencies'
+    groups:
+      npm:
+        applies-to: version-updates
+        patterns:
+          - '*'
+      npm-security:
+        applies-to: security-updates
+        patterns:
+          - '*'
