@@ -248,6 +248,67 @@ describe('Apply style', () => {
 							{ element: 'ul', attributes: { class: 'test' } },
 							'<ul><li>test</li></ul><ul class="test"><li>unor|der|ed</li></ul><ul><li>list</li></ul>'
 						],
+						// A list style changes the whole list (#1659)
+						[
+							'<ul><li>test</li><li>unor|der|ed</li><li>list</li></ul>',
+							{
+								element: 'ul',
+								attributes: {
+									style: { listStyleType: 'square' }
+								}
+							},
+							'<ul style="list-style-type:square"><li>test</li><li>unor|der|ed</li><li>list</li></ul>'
+						],
+						[
+							'<ol><li>o|ne</li><li>tw|o</li><li>three</li></ol>',
+							{
+								element: 'ol',
+								attributes: {
+									style: { listStyleType: 'lower-alpha' }
+								}
+							},
+							'<ol style="list-style-type:lower-alpha"><li>o|ne</li><li>tw|o</li><li>three</li></ol>'
+						],
+						[
+							'<ul><li>a<ul><li>b|</li><li>c</li></ul></li><li>d</li></ul>',
+							{
+								element: 'ul',
+								attributes: {
+									style: { listStyleType: 'square' }
+								}
+							},
+							'<ul><li>a<ul style="list-style-type:square"><li>b|</li><li>c</li></ul></li><li>d</li></ul>'
+						],
+						[
+							'<ul><li>a|<ul><li>b</li></ul></li><li>d</li></ul>',
+							{
+								element: 'ul',
+								attributes: {
+									style: { listStyleType: 'square' }
+								}
+							},
+							'<ul style="list-style-type:square"><li>a|<ul><li>b</li></ul></li><li>d</li></ul>'
+						],
+						[
+							'<ol><li>o|ne<ol><li>inn|er</li></ol></li><li>two</li></ol>',
+							{
+								element: 'ol',
+								attributes: {
+									style: { listStyleType: 'lower-alpha' }
+								}
+							},
+							'<ol style="list-style-type:lower-alpha"><li>o|ne<ol style="list-style-type:lower-alpha"><li>inn|er</li></ol></li><li>two</li></ol>'
+						],
+						[
+							'<ol><li>o|ne</li></ol><ol style="list-style-type:upper-alpha"><li>tw|o</li></ol>',
+							{
+								element: 'ol',
+								attributes: {
+									style: { listStyleType: 'lower-roman' }
+								}
+							},
+							'<ol style="list-style-type:lower-roman"><li>o|ne</li><li>tw|o</li></ol>'
+						],
 						[
 							'<ul><li>|test</li><li>unordered</li><li>list|</li></ul>',
 							{

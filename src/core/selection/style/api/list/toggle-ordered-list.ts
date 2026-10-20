@@ -6,8 +6,10 @@
 
 import type { CommitMode, ICommitStyle, IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
+import { size } from 'jodit/core/helpers/size/object-size';
 import { assert } from 'jodit/core/helpers/utils/assert';
 import { extractSelectedPart } from 'jodit/core/selection/style/api/extract';
+import { elementsEqualAttributes } from 'jodit/core/selection/style/api/is-same-attributes';
 import { toggleAttributes } from 'jodit/core/selection/style/api/toggle-attributes';
 import {
 	_PREFIX,
@@ -61,12 +63,28 @@ export function toggleOrderedList(
 				true
 			) === CHANGE;
 
-		// ul => ol, ol => ul or ul => ul.class1
+		const isSameList = Dom.isTag(list, commitStyle.element);
+
+		// ol => ol[style="list-style-type: lower-roman"]: a list's style
+		// belongs to the whole list, so it is changed without splitting it
 		if (
-			mode === REPLACE ||
-			isChangeMode ||
-			list.tagName.toLowerCase() !== commitStyle.element
+			isSameList &&
+			isChangeMode &&
+			mode !== REPLACE &&
+			changesStyleOnly(commitStyle)
 		) {
+			toggleAttributes(commitStyle, list, jodit, CHANGE);
+			hook(CHANGE, joinPrevious(commitStyle, list, mode), commitStyle);
+			return CHANGE;
+		}
+
+		// Restyled already, for an earlier part of the selection
+		if (isSameList && mode === CHANGE) {
+			return CHANGE;
+		}
+
+		// ul => ol, ol => ul or ul => ul.class1
+		if (mode === REPLACE || isChangeMode || !isSameList) {
 			const wrapper = unwrapList(REPLACE, list, li, jodit, commitStyle);
 			const newList = wrapList(commitStyle, wrapper, jodit);
 			hook(REPLACE, newList, commitStyle);
@@ -78,6 +96,39 @@ export function toggleOrderedList(
 	hook(UNWRAP, wrapper, commitStyle);
 
 	return UNWRAP;
+}
+
+/**
+ * Other attributes, such as a class, still move the items into a new list,
+ * where the `beforeWrapList` hook can add markup to each of them
+ */
+function changesStyleOnly({ options: { attributes } }: ICommitStyle): boolean {
+	return Boolean(attributes?.style) && size(attributes!) === 1;
+}
+
+/**
+ * Joins a restyled list to the list before it, when the selection runs on
+ * from that list and the two now match
+ */
+function joinPrevious(
+	commitStyle: ICommitStyle,
+	list: HTMLElement,
+	mode: CommitMode
+): HTMLElement {
+	const prev = Dom.findSibling(list, true);
+
+	if (
+		mode !== CHANGE ||
+		!Dom.isTag(prev, commitStyle.element) ||
+		!elementsEqualAttributes(prev, list)
+	) {
+		return list;
+	}
+
+	Dom.append(prev, Array.from(list.childNodes));
+	Dom.safeRemove(list);
+
+	return prev;
 }
 
 function unwrapList(

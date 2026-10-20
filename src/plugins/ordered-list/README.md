@@ -15,6 +15,7 @@ Adds enhanced unordered list (UL) and ordered list (OL) buttons with list-style-
 - Remembers last selected list style per button
 - Custom command handlers for list insertion
 - Style application via `list-style-type` CSS property
+- Restyles an existing list as a whole, keeping attributes such as `start`
 - Tag-based button activation (highlights when cursor in list)
 - Customizable list style options
 - Style synchronization with editor value
@@ -279,15 +280,17 @@ editor.execCommand('insertOrderedList', false, 'upper-roman');
 
 3. **Nested Lists**: Plugin works with nested lists; style applies to current list level
 
-4. **Toggle Behavior**: Executing command on existing list toggles it off if same type
+4. **Existing Lists**: In a list of the same type, a new style changes the whole list rather than splitting it, and the list keeps its other attributes, such as `start`
 
-5. **Case Insensitive**: Command name comparison uses lowercase (`insertunorderedlist`)
+5. **Toggle Behavior**: Executing command on existing list toggles it off if same type
 
-6. **No Type Parameter**: If type is `null` or undefined, removes `list-style-type` style
+6. **Case Insensitive**: Command name comparison uses lowercase (`insertunorderedlist`)
 
-7. **Selection Context**: Works with both collapsed cursor and text selections
+7. **No Type Parameter**: If type is `null` or undefined, removes `list-style-type` style
 
-8. **Mixed Lists**: Creating different list type converts existing list to new type
+8. **Selection Context**: Works with both collapsed cursor and text selections
+
+9. **Mixed Lists**: Creating different list type converts existing list to new type
 
 ## Notes
 
