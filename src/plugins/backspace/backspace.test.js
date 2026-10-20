@@ -62,18 +62,28 @@ describe('Disable cases via delete.disableCases (#1060)', () => {
 });
 
 describe('Backspace/Delete next to a table (#1064)', () => {
-	describe('Backspace at the start of a paragraph after a table', () => {
-		it('Should merge the text into the last table cell, not into the <table> element', () => {
-			const editor = getJodit({ history: { timeout: 0 } });
-			editor.value =
-				'<table><tbody><tr><td>x</td><td>y</td></tr></tbody></table><p>|tail</p>';
-			setCursorToChar(editor);
+	describe('Backspace at the start of a block after a table (#1668)', () => {
+		const table =
+			'<table><tbody><tr><td>x</td><td>y</td></tr></tbody></table>';
 
-			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+		[
+			[table + '<p>|tail</p>', table + '<p>|tail</p>'],
+			[table + '<h2>|Title</h2>', table + '<h2>|Title</h2>'],
+			[
+				table + '<p>|<br></p><p>tail</p>',
+				table.replace('<td>y<', '<td>y|<') + '<p>tail</p>'
+			]
+		].forEach(([source, result]) => {
+			it(`Should keep the text out of the table: ${source} => ${result}`, () => {
+				const editor = getJodit({ history: { timeout: 0 } });
+				editor.value = source;
+				setCursorToChar(editor);
 
-			expect(sortAttributes(editor.value)).equals(
-				'<table><tbody><tr><td>x</td><td>ytail</td></tr></tbody></table>'
-			);
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+				replaceCursorToChar(editor);
+
+				expect(sortAttributes(editor.value)).equals(result);
+			});
 		});
 	});
 
