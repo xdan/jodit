@@ -129,13 +129,30 @@ export class deleteCommand extends Plugin {
 			Dom.safeRemove(rightSibling);
 		}
 
-		// Remove empty right LI
 		if (
 			Dom.isList(rightSibling) &&
-			Dom.isLeaf(rightSibling.firstElementChild) &&
-			Dom.isEmpty(rightSibling.firstElementChild)
+			Dom.isLeaf(rightSibling.firstElementChild)
 		) {
-			Dom.safeRemove(rightSibling.firstElementChild);
+			const item = rightSibling.firstElementChild;
+
+			// What's left of the right list's first item joins the left block,
+			// up to a list nested in the item
+			if (!Dom.isEmpty(item) && Dom.isBlock(leftSibling)) {
+				Dom.append(leftSibling, fake);
+
+				while (item.firstChild && !Dom.isBlock(item.firstChild)) {
+					Dom.append(leftSibling, item.firstChild);
+				}
+			}
+
+			// Remove empty right LI
+			if (Dom.isEmpty(item)) {
+				Dom.safeRemove(item);
+			}
+
+			if (Dom.isEmpty(rightSibling)) {
+				Dom.safeRemove(rightSibling);
+			}
 		}
 	}
 
