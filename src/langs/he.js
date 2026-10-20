@@ -230,5 +230,8 @@ module.exports = {
 	Autoplay: 'ניגון אוטומטי',
 	Loop: 'הפעלה חוזרת',
 	Muted: 'מושתק',
-	Controls: 'פקדים'
+	Controls: 'פקדים',
+	'Start at...': 'התחל מ...',
+	'Start numbering at': 'התחל מספור מ',
+	'Number for the first item': 'מספר הפריט הראשון'
 };

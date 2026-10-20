@@ -243,5 +243,8 @@ module.exports = {
 	Autoplay: 'Avtomatik oynatma',
 	Loop: 'Təkrarla',
 	Muted: 'Səssiz',
-	Controls: 'İdarəetmə elementləri'
+	Controls: 'İdarəetmə elementləri',
+	'Start at...': 'Başlanğıc nömrəsi...',
+	'Start numbering at': 'Nömrələmənin başlanğıcı',
+	'Number for the first item': 'Birinci bəndin nömrəsi'
 };

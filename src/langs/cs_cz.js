@@ -233,5 +233,8 @@ module.exports = {
 	Autoplay: 'Automatické přehrávání',
 	Loop: 'Opakovat',
 	Muted: 'Ztlumeno',
-	Controls: 'Ovládací prvky'
+	Controls: 'Ovládací prvky',
+	'Start at...': 'Začít od...',
+	'Start numbering at': 'Začít číslování od',
+	'Number for the first item': 'Číslo první položky'
 };

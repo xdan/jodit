@@ -238,5 +238,8 @@ module.exports = {
 	Autoplay: 'Automatische Wiedergabe',
 	Loop: 'Wiederholen',
 	Muted: 'Stumm',
-	Controls: 'Steuerelemente'
+	Controls: 'Steuerelemente',
+	'Start at...': 'Beginnen bei...',
+	'Start numbering at': 'Nummerierung beginnen bei',
+	'Number for the first item': 'Nummer des ersten Eintrags'
 };

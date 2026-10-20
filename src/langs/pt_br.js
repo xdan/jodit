@@ -236,5 +236,8 @@ module.exports = {
 	Autoplay: 'Reprodução automática',
 	Loop: 'Repetir',
 	Muted: 'Sem som',
-	Controls: 'Controles'
+	Controls: 'Controles',
+	'Start at...': 'Começar em...',
+	'Start numbering at': 'Começar a numeração em',
+	'Number for the first item': 'Número do primeiro item'
 };

@@ -15,6 +15,12 @@ import { Config } from 'jodit/config';
 
 import olIcon from './icons/ol.svg';
 import ulIcon from './icons/ul.svg';
+import { closestOrderedList, openStartDialog } from './start-dialog';
+
+/**
+ * The `ol` dropdown item that asks for the list's start number
+ */
+const START = 'start';
 
 const memoExec: IControlType<IJodit>['exec'] = (
 	jodit,
@@ -24,6 +30,11 @@ const memoExec: IControlType<IJodit>['exec'] = (
 	const key = `button${control.command}`;
 
 	const value = (control.args && control.args[0]) ?? dataBind(jodit, key);
+
+	if (value === START) {
+		openStartDialog(jodit);
+		return;
+	}
 
 	dataBind(jodit, key, value);
 
@@ -61,7 +72,10 @@ Config.prototype.controls.ol = {
 		'lower-greek': 'Lower Greek',
 		'lower-roman': 'Lower Roman',
 		'upper-alpha': 'Upper Alpha',
-		'upper-roman': 'Upper Roman'
+		'upper-roman': 'Upper Roman',
+		[START]: 'Start at...'
 	},
-	exec: memoExec
+	exec: memoExec,
+	isChildDisabled: (jodit: IJodit, button): boolean =>
+		button.control.args?.[0] === START && !closestOrderedList(jodit)
 } as IControlType;

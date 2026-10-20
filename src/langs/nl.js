@@ -232,5 +232,8 @@ module.exports = {
 	Autoplay: 'Automatisch afspelen',
 	Loop: 'Herhalen',
 	Muted: 'Gedempt',
-	Controls: 'Bedieningselementen'
+	Controls: 'Bedieningselementen',
+	'Start at...': 'Beginnen bij...',
+	'Start numbering at': 'Nummering beginnen bij',
+	'Number for the first item': 'Nummer van het eerste item'
 };

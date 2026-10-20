@@ -231,5 +231,8 @@ module.exports = {
 	Autoplay: 'پخش خودکار',
 	Loop: 'تکرار',
 	Muted: 'بی‌صدا',
-	Controls: 'کنترل‌ها'
+	Controls: 'کنترل‌ها',
+	'Start at...': 'شروع از...',
+	'Start numbering at': 'شروع شماره‌گذاری از',
+	'Number for the first item': 'شماره‌ی نخستین مورد'
 };
