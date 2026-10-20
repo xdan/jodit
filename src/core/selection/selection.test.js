@@ -1569,9 +1569,18 @@ describe('Selection in a Shadow DOM without ShadowRoot.getSelection', function (
 		restoreWindowSelection = null;
 	});
 
-	afterEach(function () {
-		restoreWindowSelection && restoreWindowSelection();
-	});
+	// The stubs replace window.getSelection, and their getRangeAt throws.
+	// Mocha runs afterEach in a later task, so an editor timer landing in
+	// between (clean-html's walker calls isCollapsed) threw outside any test
+	// and ended the whole run early. Put the real one back before returning.
+	const it = (title, fn) =>
+		globalThis.it(title, function () {
+			try {
+				fn.call(this);
+			} finally {
+				restoreWindowSelection && restoreWindowSelection();
+			}
+		});
 
 	it('Should read the caret through the standard getComposedRanges', function () {
 		let seen = null;
