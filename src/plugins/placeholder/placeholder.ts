@@ -36,6 +36,11 @@ export function isEditorEmpty(root: HTMLElement): boolean {
 
 	const first = root.firstChild;
 
+	// Firefox pads an empty editable body with a bare <br>
+	if (Dom.isTag(first, 'br') && !Dom.next(first, Boolean, root)) {
+		return true;
+	}
+
 	if (
 		INSEPARABLE_TAGS.has(first.nodeName?.toLowerCase() as HTMLTagNames) ||
 		/^(TABLE)$/i.test(first.nodeName)

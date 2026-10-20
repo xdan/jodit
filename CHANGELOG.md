@@ -9,6 +9,14 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.6
+
+> 4.18.5 was tagged but not published to npm: its release run failed on the Firefox jobs. Everything listed under 4.18.5 ships in this version.
+
+#### :bug: Bug Fix
+
+- In iframe mode the placeholder is now shown in Firefox. Firefox pads an empty editable body with a bare `<br>`, which the placeholder took for content.
+
 ## 4.18.5
 
 #### :rocket: New Feature

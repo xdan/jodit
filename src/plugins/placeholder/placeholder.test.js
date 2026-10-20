@@ -52,6 +52,17 @@ describe('Placeholder plugin', function () {
 					.null;
 			});
 		});
+		describe('Bare BR, as Firefox pads an empty editable body', function () {
+			it('Should show placeholder', function () {
+				const area = appendTestArea();
+				area.value = '<br>';
+				const editor = Jodit.make(area, { enter: 'br' });
+
+				expect(editor.editor.innerHTML).equals('<br>');
+				expect(editor.container.querySelector('.jodit-placeholder')).is
+					.not.null;
+			});
+		});
 	});
 
 	describe('Add text inside editor', function () {
