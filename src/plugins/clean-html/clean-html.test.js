@@ -44,6 +44,108 @@ describe('Clean html plugin', function () {
 		});
 	});
 
+	describe('Typing into an empty block (#1632)', () => {
+		// As the browser does: text goes into the text node at the caret, or
+		// into a new one, and an `input` event follows
+		function type(editor, text, isComposing = false) {
+			const range = editor.s.range;
+			const { startContainer, startOffset } = range;
+
+			if (startContainer.nodeType === Node.TEXT_NODE) {
+				startContainer.insertData(startOffset, text);
+				range.setStart(startContainer, startOffset + text.length);
+			} else {
+				const node = editor.ed.createTextNode(text);
+				range.insertNode(node);
+				range.setStartAfter(node);
+			}
+
+			range.collapse(true);
+			editor.s.selectRange(range);
+
+			simulateEvent('input', editor.editor, () => ({
+				inputType: isComposing ? 'insertCompositionText' : 'insertText',
+				data: text,
+				isComposing
+			}));
+		}
+
+		it('Should drop the <br> of a cleared editor once text is typed into it', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = '<p>One</p><p>Two</p>';
+			editor.s.select(editor.editor, true);
+			simulateEvent('keydown', 'Backspace', editor.editor);
+
+			type(editor, 'test');
+			expect(editor.value).equals('<p>test</p>');
+		});
+
+		it('Should drop the <br> of a heading made in an empty table cell', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value =
+				'<table><tbody><tr><td><br></td></tr></tbody></table>';
+			editor.s.setCursorIn(editor.editor.querySelector('td'));
+			editor.execCommand('formatBlock', false, 'h1');
+
+			type(editor, 'The heading');
+			expect(editor.value).equals(
+				'<table><tbody><tr><td><h1>The heading</h1></td></tr></tbody></table>'
+			);
+		});
+
+		it('Should drop the <br> after bold text in an empty table cell', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value =
+				'<table><tbody><tr><td><br></td></tr></tbody></table>';
+			editor.s.setCursorIn(editor.editor.querySelector('td'));
+			editor.execCommand('bold');
+
+			type(editor, 'Two');
+			expect(editor.value).equals(
+				'<table><tbody><tr><td><strong>Two</strong></td></tr></tbody></table>'
+			);
+		});
+
+		it('Should leave the other blocks alone', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = '<p>One<br></p><p><br></p>';
+			editor.s.setCursorIn(editor.editor.querySelectorAll('p')[1]);
+
+			type(editor, 'Two');
+			expect(editor.value).equals('<p>One<br></p><p>Two</p>');
+		});
+
+		it('Should keep a <br> that ends an empty line, or comes after an image', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = '<p>One<br><br></p>';
+			editor.s.setCursorIn(editor.editor.querySelector('p'), true);
+
+			type(editor, 'Zero ');
+			expect(editor.value).equals('<p>Zero One<br><br></p>');
+
+			editor.value =
+				'<p><img src="tests/artio.jpg" style="width:20px"><br></p>';
+			editor.s.setCursorBefore(editor.editor.querySelector('img'));
+
+			type(editor, 'One ');
+			expect(editor.value).equals(
+				'<p>One <img src="tests/artio.jpg" style="width:20px"><br></p>'
+			);
+		});
+
+		it('Should wait for the end of an IME composition', () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = '<p><br></p>';
+			editor.s.setCursorIn(editor.editor.querySelector('p'));
+
+			type(editor, '日本', true);
+			expect(editor.value).equals('<p>日本<br></p>');
+
+			simulateEvent('compositionend', editor.editor);
+			expect(editor.value).equals('<p>日本</p>');
+		});
+	});
+
 	// https://github.com/xdan/jodit/issues/1438
 	describe('removeTrailingBr option', () => {
 		it('By default the trailing <br> left by the browser is kept', () => {
