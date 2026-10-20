@@ -97,7 +97,21 @@ export function focus(editor: IJodit): void {
 	editor.e.on('afterInit', () => {
 		if (editor.o.autofocus) {
 			if (editor.defaultTimeout) {
-				editor.async.setTimeout(focus, 300);
+				// A click or key in the editor during the delay has put the
+				// caret where the user wants it, so autofocus leaves it there
+				const userInput = 'mousedown touchstart keydown';
+
+				const cancel = (): void => {
+					editor.async.clearTimeout(timeout);
+					editor.e.off(userInput, cancel);
+				};
+
+				const timeout = editor.async.setTimeout(() => {
+					editor.e.off(userInput, cancel);
+					focus();
+				}, 300);
+
+				editor.e.on(userInput, cancel);
 			} else {
 				focus();
 			}

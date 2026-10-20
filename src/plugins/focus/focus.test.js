@@ -64,6 +64,92 @@ describe('Focus test', () => {
 				});
 			});
 		});
+
+		// https://github.com/xdan/jodit/issues/1654
+		describe('With a delay', () => {
+			let timers;
+
+			beforeEach(() => {
+				timers = mockTimers();
+			});
+
+			afterEach(() => {
+				timers.cleanup();
+			});
+
+			const getDelayedJodit = value => {
+				const area = appendTestArea();
+				area.value = value;
+
+				return getJodit({ autofocus: true, defaultTimeout: 100 }, area);
+			};
+
+			it('Should set cursor after content once the delay has passed', () => {
+				const editor = getDelayedJodit('<p>first</p><p>second</p>');
+
+				timers.delay(300);
+				editor.s.insertHTML('pop');
+
+				expect(editor.value).eq('<p>first</p><p>secondpop</p>');
+			});
+
+			it('Should keep the caret where a click put it during the delay', () => {
+				const editor = getDelayedJodit('<p>fi|rst</p><p>second</p>');
+
+				simulateEvent('mousedown', editor.editor.firstChild);
+				setCursorToChar(editor);
+				timers.delay(300);
+				editor.s.insertHTML('pop');
+
+				expect(editor.value).eq('<p>fipoprst</p><p>second</p>');
+			});
+
+			it('Should keep a selection made with the keyboard during the delay', () => {
+				const editor = getDelayedJodit('<p>f|irs|t</p><p>second</p>');
+
+				simulateEvent(
+					'keydown',
+					Jodit.KEY_LEFT,
+					editor.editor,
+					options => {
+						options.shiftKey = true;
+					}
+				);
+				setCursorToChar(editor);
+				timers.delay(300);
+
+				expect(editor.s.sel.toString()).eq('irs');
+			});
+		});
+
+		// https://github.com/xdan/jodit/issues/1654
+		describe('With a delay in iframe mode', () => {
+			it('Should keep the caret where a click put it during the delay', async () => {
+				unmockPromise();
+
+				const area = appendTestArea();
+				area.value = '<p>fi|rst</p><p>second</p>';
+
+				const editor = await new Promise(resolve => {
+					getJodit(
+						{
+							autofocus: true,
+							defaultTimeout: 100,
+							iframe: true,
+							events: { afterConstructor: resolve }
+						},
+						area
+					);
+				});
+
+				simulateEvent('mousedown', editor.editor.firstChild);
+				setCursorToChar(editor);
+				await delay(400);
+				editor.s.insertHTML('pop');
+
+				expect(editor.value).eq('<p>fipoprst</p><p>second</p>');
+			});
+		});
 	});
 
 	describe('Save cursor position after blur', () => {
