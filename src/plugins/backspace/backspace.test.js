@@ -93,6 +93,40 @@ describe('Backspace/Delete next to a table (#1064)', () => {
 	});
 });
 
+describe('Delete at the end of a block next to a list', () => {
+	[
+		['<ul><li>One|</li></ul><p>After</p>', '<ul><li>One|After</li></ul>'],
+		[
+			'<p>Before|</p><ul><li>One</li><li>Two</li></ul>',
+			'<p>Before|One</p><ul><li>Two</li></ul>'
+		],
+		['<p>Before|</p><ul><li>One</li></ul>', '<p>Before|One</p>'],
+		[
+			'<ul><li>One|</li></ul><ol><li>Two</li><li>Three</li></ol>',
+			'<ul><li>One|Two</li></ul><ol><li>Three</li></ol>'
+		],
+		[
+			'<ul><li>a<ul><li>b|</li></ul></li></ul><p>c</p>',
+			'<ul><li>a<ul><li>b|c</li></ul></li></ul>'
+		],
+		[
+			'<p>Before|</p><ul><li>One<ul><li>Sub</li></ul></li></ul>',
+			'<p>Before|One</p><ul><li><ul><li>Sub</li></ul></li></ul>'
+		]
+	].forEach(([source, result]) => {
+		it(`Should pull the next line up: ${source} => ${result}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(result);
+		});
+	});
+});
+
 describe('Backspace/Delete key', function () {
 	let editor, range, area;
 
@@ -1418,13 +1452,13 @@ describe('Backspace/Delete key', function () {
 					simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
 
 					expect(sortAttributes(editor.value)).equals(
-						'<p>Test</p><ul><li>Some text</li></ul>'
+						'<ul><li>TestSome text</li></ul>'
 					);
 
 					editor.s.insertNode(editor.createInside.text(' a '));
 
 					expect(sortAttributes(editor.value)).equals(
-						'<p>Test a </p><ul><li>Some text</li></ul>'
+						'<ul><li>Test a Some text</li></ul>'
 					);
 				});
 			});
