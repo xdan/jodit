@@ -40,6 +40,70 @@ describe('Delete plugin', () => {
 		});
 	});
 
+	describe('Selection from one table cell into another', () => {
+		const table = rows =>
+			'<table><tbody>' +
+			rows
+				.map(
+					row =>
+						'<tr>' +
+						row.map(cell => '<td>' + cell + '</td>').join('') +
+						'</tr>'
+				)
+				.join('') +
+			'</tbody></table>';
+
+		[
+			[
+				table([
+					['a|1', 'b|1'],
+					['a2', 'b2']
+				]),
+				table([
+					['a|', '1'],
+					['a2', 'b2']
+				])
+			],
+			[
+				table([
+					['a|1', 'b1'],
+					['a2', 'b|2']
+				]),
+				table([
+					['a|', '<br>'],
+					['<br>', '2']
+				])
+			],
+			[table([['|a1', 'b1|']]), table([['|<br>', '<br>']])],
+			[
+				table([['<p>a|1</p>', '<p>b|1</p>']]),
+				table([['<p>a|</p>', '<p>1</p>']])
+			],
+			[
+				table([
+					['a|1', 'b|1'],
+					['a2', 'b2']
+				]),
+				table([
+					['a|', '1'],
+					['a2', 'b2']
+				]),
+				Jodit.KEY_DELETE
+			]
+		].forEach(([input, result, key = Jodit.KEY_BACKSPACE]) => {
+			it(`Should clear the selected text and keep the cells: ${input} => ${result} on ${key}`, () => {
+				const editor = getJodit({ history: { timeout: 0 } });
+				editor.value = input;
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', key, editor.editor);
+				replaceCursorToChar(editor);
+
+				expect(sortAttributes(editor.value)).equals(result);
+			});
+		});
+	});
+
 	describe('Remove selected image by keyboard', () => {
 		// https://github.com/jodit/jodit-react/issues/226
 		[Jodit.KEY_DELETE, Jodit.KEY_BACKSPACE].forEach(key => {

@@ -13,7 +13,7 @@
 import type { IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { $$ } from 'jodit/core/helpers';
+import { $$, toArray } from 'jodit/core/helpers';
 import { trim } from 'jodit/core/helpers/string/trim';
 import { Plugin } from 'jodit/core/plugin';
 
@@ -89,6 +89,12 @@ export class deleteCommand extends Plugin {
 		jodit.s.expandSelection();
 
 		const range = jodit.s.range;
+
+		if (this.__clearSelectedCells(range)) {
+			jodit.s.selectRange(range);
+			return false;
+		}
+
 		range.deleteContents();
 
 		const fake = jodit.createInside.fake();
@@ -109,6 +115,59 @@ export class deleteCommand extends Plugin {
 		jodit.s.selectRange(range);
 
 		return false;
+	}
+
+	/**
+	 * A selection from one table cell into another clears the selected part
+	 * of each cell and keeps the cells, as the browsers do. `deleteContents`
+	 * would remove the cells it fully covers, and the cells it splits would
+	 * then be merged as blocks.
+	 */
+	private __clearSelectedCells(range: Range): boolean {
+		const { editor, createInside } = this.j;
+
+		const startCell = Dom.closest(range.startContainer, Dom.isCell, editor);
+		const endCell = Dom.closest(range.endContainer, Dom.isCell, editor);
+		const table = startCell && Dom.closest(startCell, 'table', editor);
+
+		if (
+			!table ||
+			!endCell ||
+			startCell === endCell ||
+			Dom.closest(endCell, 'table', editor) !== table
+		) {
+			return false;
+		}
+
+		const parts = toArray(table.rows)
+			.flatMap(row => toArray(row.cells))
+			.filter(cell => range.intersectsNode(cell))
+			.map(cell => {
+				const part = range.cloneRange();
+
+				if (!Dom.isOrContains(cell, range.startContainer)) {
+					part.setStart(cell, 0);
+				}
+
+				if (!Dom.isOrContains(cell, range.endContainer)) {
+					part.setEnd(cell, cell.childNodes.length);
+				}
+
+				return [cell, part] as const;
+			});
+
+		range.collapse(true);
+
+		parts.forEach(([cell, part]) => {
+			part.deleteContents();
+
+			if (Dom.isEmpty(cell)) {
+				Dom.detach(cell);
+				Dom.append(cell, createInside.element('br'));
+			}
+		});
+
+		return true;
 	}
 
 	private __moveContentInLeftSibling(
