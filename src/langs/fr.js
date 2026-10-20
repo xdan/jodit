@@ -232,5 +232,8 @@ module.exports = {
 	Autoplay: 'Lecture automatique',
 	Loop: 'Lecture en boucle',
 	Muted: 'Muet',
-	Controls: 'Commandes'
+	Controls: 'Commandes',
+	'Start at...': 'Commencer à...',
+	'Start numbering at': 'Commencer la numérotation à',
+	'Number for the first item': 'Numéro du premier élément'
 };

@@ -233,5 +233,8 @@ module.exports = {
 	Autoplay: 'Автоматаар тоглуулах',
 	Loop: 'Давтах',
 	Muted: 'Дуугүй',
-	Controls: 'Удирдлага'
+	Controls: 'Удирдлага',
+	'Start at...': 'Эхлэх дугаар...',
+	'Start numbering at': 'Дугаарлалт эхлэх',
+	'Number for the first item': 'Эхний зүйлийн дугаар'
 };

@@ -240,5 +240,8 @@ module.exports = {
 	Autoplay: 'Automatisk uppspelning',
 	Loop: 'Upprepa',
 	Muted: 'Ljudlös',
-	Controls: 'Kontroller'
+	Controls: 'Kontroller',
+	'Start at...': 'Börja på...',
+	'Start numbering at': 'Börja numreringen på',
+	'Number for the first item': 'Nummer för första punkten'
 };

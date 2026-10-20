@@ -363,5 +363,92 @@ describe('Test orderedList plugin', () => {
 				});
 			});
 		});
+
+		describe('Start at... (#1661)', () => {
+			const openStartDialog = editor => {
+				clickTrigger('ol', editor);
+				clickButton('start', getOpenedPopup(editor));
+				return getOpenedDialog(editor);
+			};
+
+			it('should set the start number of the list and put the cursor back', () => {
+				const editor = getJodit();
+				editor.value =
+					'<ol start="3"><li>Three</li><li>Four|</li><li>Five</li></ol>';
+				setCursorToChar(editor);
+
+				const dialog = openStartDialog(editor);
+				const input = dialog.querySelector('input');
+				expect(input.value).equals('3');
+
+				input.value = '7';
+				clickButton('ok', dialog);
+				expect(getOpenedDialog(editor)).is.null;
+
+				replaceCursorToChar(editor);
+				expect(editor.value).equals(
+					'<ol start="7"><li>Three</li><li>Four|</li><li>Five</li></ol>'
+				);
+			});
+
+			['1', ''].forEach(value => {
+				it(`should remove the start number for "${value}"`, () => {
+					const editor = getJodit();
+					editor.value = '<ol start="3"><li>Three|</li></ol>';
+					setCursorToChar(editor);
+
+					const dialog = openStartDialog(editor);
+					dialog.querySelector('input').value = value;
+					clickButton('ok', dialog);
+
+					expect(editor.value).equals('<ol><li>Three</li></ol>');
+				});
+			});
+
+			it('should leave the list as it was on Cancel and put the cursor back', () => {
+				const editor = getJodit();
+				editor.value = '<ol start="3"><li>Th|ree</li></ol>';
+				setCursorToChar(editor);
+
+				const dialog = openStartDialog(editor);
+				dialog.querySelector('input').value = '9';
+				clickButton('cancel', dialog);
+				expect(getOpenedDialog(editor)).is.null;
+
+				replaceCursorToChar(editor);
+				expect(editor.value).equals(
+					'<ol start="3"><li>Th|ree</li></ol>'
+				);
+			});
+
+			it('should set the start number of the nested list the cursor is in', () => {
+				const editor = getJodit();
+				editor.value =
+					'<ol><li>One<ol><li>Inner|</li></ol></li><li>Two</li></ol>';
+				setCursorToChar(editor);
+
+				const dialog = openStartDialog(editor);
+				dialog.querySelector('input').value = '5';
+				clickButton('ok', dialog);
+
+				expect(editor.value).equals(
+					'<ol><li>One<ol start="5"><li>Inner</li></ol></li><li>Two</li></ol>'
+				);
+			});
+
+			['<ul><li>Bullet|</li></ul>', '<p>Text|</p>'].forEach(html => {
+				it(`should be disabled in ${html}`, () => {
+					const editor = getJodit();
+					editor.value = html;
+					setCursorToChar(editor);
+
+					clickTrigger('ol', editor);
+					const popup = getOpenedPopup(editor);
+
+					expect(getButton('start', popup).disabled).is.true;
+					expect(getButton('lower-roman', popup).disabled).is.false;
+				});
+			});
+		});
 	});
 });

@@ -12,6 +12,7 @@ Adds enhanced unordered list (UL) and ordered list (OL) buttons with list-style-
 
 - UL button with style-type dropdown (default, circle, disc, square)
 - OL button with style-type dropdown (default, lower-alpha, lower-greek, lower-roman, upper-alpha, upper-roman)
+- "Start at..." in the OL dropdown sets the number of a numbered list's first item
 - Remembers last selected list style per button
 - Custom command handlers for list insertion
 - Style application via `list-style-type` CSS property
@@ -57,8 +58,25 @@ Creates unordered (bullet) lists with selectable bullet styles.
 - `lower-roman`: Lower Roman (i, ii, iii...)
 - `upper-alpha`: Upper Alpha (A, B, C...)
 - `upper-roman`: Upper Roman (I, II, III...)
+- `start`: Start at... (asks for the number of the first item)
 
 Creates ordered (numbered) lists with selectable numbering styles.
+
+**Start at...** opens a dialog for the number of the first item of the numbered list the cursor is in, and sets the list's `start` attribute. An empty value or 1 removes the attribute. The item is disabled outside a numbered list. When the dialog closes, the cursor goes back to where it was. A `list` in the options is merged with the default one, so to leave the item out, wrap the list in `Jodit.atom()` to replace the default instead:
+
+```typescript
+Jodit.make('#editor', {
+    controls: {
+        ol: {
+            list: Jodit.atom({
+                default: 'Default',
+                'lower-alpha': 'Lower Alpha',
+                'lower-roman': 'Lower Roman'
+            })
+        }
+    }
+});
+```
 
 ## Usage Examples
 
@@ -189,6 +207,7 @@ The `memoExec` function:
 2. **Value Retrieval**: Gets value from:
    - `control.args[0]` (if provided), or
    - Previously stored value via `dataBind(jodit, key)`
+   - For `start`, opens the Start at... dialog instead, without storing it
 3. **Value Storage**: Saves value using `dataBind(jodit, key, value)`
 4. **Command Execution**: Executes command with:
    - Value as-is if not 'default'

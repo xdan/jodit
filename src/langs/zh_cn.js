@@ -230,5 +230,8 @@ module.exports = {
 	Autoplay: '自动播放',
 	Loop: '循环播放',
 	Muted: '静音',
-	Controls: '播放控件'
+	Controls: '播放控件',
+	'Start at...': '起始于...',
+	'Start numbering at': '编号起始值',
+	'Number for the first item': '第一项的编号'
 };

@@ -239,5 +239,8 @@ module.exports = {
 	Autoplay: 'Automatisk avspilling',
 	Loop: 'Gjenta',
 	Muted: 'Dempet',
-	Controls: 'Kontroller'
+	Controls: 'Kontroller',
+	'Start at...': 'Start på...',
+	'Start numbering at': 'Start nummereringen på',
+	'Number for the first item': 'Nummer for første punkt'
 };

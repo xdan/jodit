@@ -235,5 +235,8 @@ module.exports = {
 	Autoplay: '自動再生',
 	Loop: 'ループ再生',
 	Muted: 'ミュート',
-	Controls: 'コントロール'
+	Controls: 'コントロール',
+	'Start at...': '開始番号...',
+	'Start numbering at': '番号の開始値',
+	'Number for the first item': '最初の項目の番号'
 };

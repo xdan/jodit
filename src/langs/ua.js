@@ -230,5 +230,8 @@ module.exports = {
 	Autoplay: 'Автовідтворення',
 	Loop: 'Повтор',
 	Muted: 'Без звуку',
-	Controls: 'Елементи керування'
+	Controls: 'Елементи керування',
+	'Start at...': 'Почати з...',
+	'Start numbering at': 'Почати нумерацію з',
+	'Number for the first item': 'Номер першого пункту'
 };

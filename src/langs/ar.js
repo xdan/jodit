@@ -234,5 +234,8 @@ module.exports = {
 	Autoplay: 'تشغيل تلقائي',
 	Loop: 'تكرار',
 	Muted: 'مكتوم الصوت',
-	Controls: 'عناصر التحكم'
+	Controls: 'عناصر التحكم',
+	'Start at...': 'البدء من...',
+	'Start numbering at': 'بدء الترقيم من',
+	'Number for the first item': 'رقم العنصر الأول'
 };

@@ -230,5 +230,8 @@ module.exports = {
 	Autoplay: '자동 재생',
 	Loop: '반복 재생',
 	Muted: '음소거',
-	Controls: '컨트롤'
+	Controls: '컨트롤',
+	'Start at...': '시작 번호...',
+	'Start numbering at': '번호 매기기 시작 값',
+	'Number for the first item': '첫 번째 항목의 번호'
 };

@@ -231,5 +231,8 @@ module.exports = {
 	Autoplay: 'Putar otomatis',
 	Loop: 'Ulangi',
 	Muted: 'Dibisukan',
-	Controls: 'Kontrol'
+	Controls: 'Kontrol',
+	'Start at...': 'Mulai dari...',
+	'Start numbering at': 'Mulai penomoran dari',
+	'Number for the first item': 'Nomor untuk item pertama'
 };

@@ -237,5 +237,8 @@ module.exports = {
 	Autoplay: 'Automaattinen toisto',
 	Loop: 'Toista uudelleen',
 	Muted: 'Mykistetty',
-	Controls: 'Säätimet'
+	Controls: 'Säätimet',
+	'Start at...': 'Aloita numerosta...',
+	'Start numbering at': 'Aloita numerointi numerosta',
+	'Number for the first item': 'Ensimmäisen kohdan numero'
 };

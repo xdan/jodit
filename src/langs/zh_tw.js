@@ -229,5 +229,8 @@ module.exports = {
 	Autoplay: '自動播放',
 	Loop: '循環播放',
 	Muted: '靜音',
-	Controls: '播放控制項'
+	Controls: '播放控制項',
+	'Start at...': '起始於...',
+	'Start numbering at': '編號起始值',
+	'Number for the first item': '第一項的編號'
 };

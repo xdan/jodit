@@ -17,6 +17,8 @@ import { Plugin } from 'jodit/core/plugin';
 
 import './config';
 
+import './ordered-list.less';
+
 /**
  * Process commands insertOrderedList and insertUnOrderedList
  */

@@ -231,5 +231,8 @@ module.exports = {
 	Autoplay: 'Otomatik oynat',
 	Loop: 'Döngü',
 	Muted: 'Sessiz',
-	Controls: 'Kontroller'
+	Controls: 'Kontroller',
+	'Start at...': 'Başlangıç numarası...',
+	'Start numbering at': 'Numaralandırma başlangıcı',
+	'Number for the first item': 'İlk öğenin numarası'
 };

@@ -232,5 +232,8 @@ module.exports = {
 	Autoplay: 'Automatikus lejátszás',
 	Loop: 'Ismétlés',
 	Muted: 'Némítva',
-	Controls: 'Vezérlők'
+	Controls: 'Vezérlők',
+	'Start at...': 'Kezdőszám...',
+	'Start numbering at': 'Számozás kezdőértéke',
+	'Number for the first item': 'Az első elem száma'
 };
