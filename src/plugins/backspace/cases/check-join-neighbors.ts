@@ -54,6 +54,13 @@ export function checkJoinNeighbors(
 			return true;
 		}
 
+		// Backspace leaves a block after a table alone, as Word does, rather
+		// than moving its text into the last cell
+		if (backspace && Dom.isTag(sibling, 'table')) {
+			jodit.s.setCursorBefore(fakeNode);
+			return true;
+		}
+
 		if (
 			sibling &&
 			(checkMoveListContent(jodit, mainClosestBox, sibling, backspace) ||
