@@ -836,6 +836,11 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		commandName: string,
 		shouldStop: boolean = true
 	): void {
+		// An empty list (e.g. `commandToHotkeys: { cmd: [] }`) turns the key off
+		if (!hotkeys || !hotkeys.length) {
+			return;
+		}
+
 		const shortcuts: string = asArray(hotkeys)
 			.map(normalizeKeyAliases)
 			.map(hotkey => hotkey + '.hotkey')

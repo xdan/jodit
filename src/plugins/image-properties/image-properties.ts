@@ -142,7 +142,7 @@ export class imageProperties extends Plugin {
 		dialog.e.on(dialog, 'afterClose', () => {
 			const { sourceImage } = this.state;
 
-			if (!Dom.isOrContains(j.editor, sourceImage)) {
+			if (j.isInDestruct || !Dom.isOrContains(j.editor, sourceImage)) {
 				return;
 			}
 
