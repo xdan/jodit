@@ -14,7 +14,12 @@ import type { IDestructible, IDialog, IJodit, IUIButton } from 'jodit/types';
 import { cache, cached, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { isAbortError, isNumeric, markOwner } from 'jodit/core/helpers';
+import {
+	isAbortError,
+	isNumeric,
+	markOwner,
+	toArray
+} from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { Button } from 'jodit/core/ui/button';
 
@@ -114,8 +119,13 @@ export class imageProperties extends Plugin {
 		});
 
 		buttons.remove.onAction(() => {
+			const caret = j.s.createRange();
+			caret.setStartBefore(this.state.sourceImage);
+			caret.collapse(true);
+
 			j.s.removeNode(this.state.sourceImage);
 			dialog.close();
+			j.s.selectRange(caret);
 		});
 
 		buttons.cancel.onAction(() => {
@@ -128,13 +138,23 @@ export class imageProperties extends Plugin {
 
 		dialog.setFooter([[buttons.cancel, buttons.remove], buttons.check]);
 
-		j.e.on(dialog, 'afterClose', () => {
-			if (
-				this.state.image.parentNode &&
-				j.o.image.selectImageAfterClose
-			) {
-				j.s.select(this.state.sourceImage);
+		// The dialog fires `afterClose` on its own emitter, not the editor's
+		dialog.e.on(dialog, 'afterClose', () => {
+			const { sourceImage } = this.state;
+
+			if (!Dom.isOrContains(j.editor, sourceImage)) {
+				return;
 			}
+
+			if (j.o.image.selectImageAfterClose) {
+				j.s.select(sourceImage);
+				return;
+			}
+
+			const caret = j.s.createRange();
+			caret.setStartAfter(sourceImage);
+			caret.collapse(true);
+			j.s.selectRange(caret);
 		});
 
 		dialog.setSize(j.o.image.dialogWidth);
@@ -174,6 +194,8 @@ export class imageProperties extends Plugin {
 		this.__lock();
 		this.dialog.open().setModal(true).setPosition();
 
+		this.__focusFirstField();
+
 		this.async
 			.promise((resolve, reject) =>
 				readValuesFromImage(this.j, this.state).then(resolve, reject)
@@ -186,6 +208,22 @@ export class imageProperties extends Plugin {
 			.finally(() => this.__unlock());
 
 		return false;
+	}
+
+	/**
+	 * Keys typed while the dialog is open must not reach the editor behind it,
+	 * so focus the active tab's first field, or else the first field shown
+	 */
+	private __focusFirstField(): void {
+		const fields = (box: HTMLElement): HTMLElement[] =>
+			toArray(
+				box.querySelectorAll<HTMLElement>('input, select, textarea')
+			);
+
+		fields(this.form.getElm('tabsBox')!)
+			.concat(fields(this.form.container))
+			.find(field => field.offsetParent != null)
+			?.focus();
 	}
 
 	private __lock(): void {

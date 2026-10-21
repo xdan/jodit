@@ -191,6 +191,89 @@ describe('Edit image tests', () => {
 			});
 		});
 
+		describe('Focus (#1689)', () => {
+			const LINE =
+				'<p>One <img alt="artio" src="tests/artio.jpg"> two</p>';
+
+			[false, true].forEach(iframe => {
+				describe(iframe ? 'In iframe mode' : 'In normal mode', () => {
+					it('Should move into the Src field when the dialog opens', async () => {
+						const { form } = await openImagePropertiesDialog(LINE, {
+							iframe
+						});
+
+						expect(document.activeElement).equals(
+							form.getElm('imageSrc')
+						);
+					});
+
+					[
+						['Apply', dialog => clickButton('Apply', dialog)],
+						['Cancel', dialog => clickButton('Cancel', dialog)],
+						['×', dialog => clickButton('close', dialog)],
+						[
+							'Escape',
+							() =>
+								simulateEvent(
+									'keydown',
+									Jodit.KEY_ESC,
+									document.activeElement
+								)
+						]
+					].forEach(([name, close]) => {
+						it(`Should select the image and focus the editor after ${name}`, async () => {
+							const { editor, dialog } =
+								await openImagePropertiesDialog(LINE, {
+									iframe
+								});
+
+							close(dialog);
+
+							expect(getOpenedDialog(editor)).is.null;
+							expect(editor.s.isFocused()).is.true;
+
+							const { range } = editor.s;
+							expect(
+								range.startContainer.childNodes[
+									range.startOffset
+								]
+							).equals(editor.editor.querySelector('img'));
+							expect(range.endOffset).equals(
+								range.startOffset + 1
+							);
+						});
+					});
+
+					it('Should put the caret after the image when image.selectImageAfterClose is false', async () => {
+						const { editor, dialog } =
+							await openImagePropertiesDialog(LINE, {
+								iframe,
+								image: { selectImageAfterClose: false }
+							});
+
+						clickButton('Cancel', dialog);
+
+						expect(editor.s.isFocused()).is.true;
+						editor.s.insertHTML('|');
+						expect(sortAttributes(editor.value)).equals(
+							'<p>One <img alt="artio" src="tests/artio.jpg">| two</p>'
+						);
+					});
+
+					it('Should put the caret where the image was after Delete', async () => {
+						const { editor, dialog } =
+							await openImagePropertiesDialog(LINE, { iframe });
+
+						clickButton('Delete', dialog);
+
+						expect(editor.s.isFocused()).is.true;
+						editor.s.insertHTML('|');
+						expect(editor.value).equals('<p>One | two</p>');
+					});
+				});
+			});
+		});
+
 		describe('Main tab', () => {
 			it('should be opened first', async () => {
 				const refs = await openImagePropertiesDialog();
