@@ -331,7 +331,7 @@ const editor = Jodit.make('#editor', {
 
 **Default:** `true`
 
-Automatically selects the image after closing the properties dialog.
+Automatically selects the image after closing the properties dialog. With `false`, the caret goes just after the image. Either way the editor gets focus back. After **Delete**, the caret goes where the image was.
 
 **Example:**
 ```typescript
