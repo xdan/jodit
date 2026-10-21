@@ -103,9 +103,11 @@ function fitToButtons(list: ButtonsGroups, editor: IJodit): ButtonsGroups {
 }
 
 /**
- * The width that decides which breakpoint set the toolbar uses. A toolbar
- * rendered into an external container (`toolbar` set to an element or a
- * selector) lays out in that container, so its width is what matters there.
+ * The width that decides which breakpoint set the toolbar uses: the editor's
+ * own width, or its parent's while the editor has none yet (for example
+ * while hidden at init). A toolbar rendered into an external container
+ * (`toolbar` set to an element or a selector) lays out in that container, so
+ * its width is what matters there.
  */
 function adaptiveWidth(editor: IJodit): number {
 	const { toolbar } = editor.o;
@@ -118,7 +120,10 @@ function adaptiveWidth(editor: IJodit): number {
 		}
 	}
 
-	return (editor.container.parentElement ?? editor.container).offsetWidth;
+	return (
+		editor.container.offsetWidth ||
+		(editor.container.parentElement ?? editor.container).offsetWidth
+	);
 }
 
 /**

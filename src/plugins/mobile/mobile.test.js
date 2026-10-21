@@ -213,6 +213,46 @@ describe('Test mobile mode', function () {
 			});
 		});
 
+		describe('When the editor is narrower than its parent (#1656)', function () {
+			const sets = {
+				buttons: 'source,about,print,bold',
+				buttonsMD: 'source,about,print',
+				buttonsSM: 'source,about',
+				buttonsXS: 'source'
+			};
+
+			const count = editor =>
+				editor.container.querySelectorAll(
+					'.jodit-toolbar__box .jodit-toolbar-button'
+				).length;
+
+			it("Should choose the buttons by the editor's own width", function () {
+				// A form row, with the label beside the editor
+				getBox().style.width = '1000px';
+				getBox().style.display = 'flex';
+				appendTestDiv().style.flex = '0 0 300px';
+
+				const editor = getJodit(sets);
+				editor.container.style.flex = '1';
+				simulateEvent('resize', window);
+
+				expect(editor.container.offsetWidth).equals(700);
+				expect(count(editor)).equals(3);
+			});
+
+			it("Should use the parent's width while the editor has none", function () {
+				getBox().style.width = '390px';
+				const editor = getJodit(sets);
+				expect(count(editor)).equals(1);
+
+				editor.container.style.display = 'none';
+				getBox().style.width = '1000px';
+				simulateEvent('resize', window);
+
+				expect(count(editor)).equals(4);
+			});
+		});
+
 		describe('With toolbarAdaptive false', function () {
 			it('Should not change toolbar', function () {
 				getBox().style.width = '500px';
