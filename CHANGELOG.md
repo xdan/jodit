@@ -9,6 +9,16 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.7
+
+#### :bug: Bug Fix
+
+- [#1656](https://github.com/xdan/jodit/issues/1656) The adaptive toolbar chooses its buttons by the editor's own width, not its parent's, so an editor beside a label gets the set that fits it. Thanks [@brendon](https://github.com/brendon).
+- [#1683](https://github.com/xdan/jodit/issues/1683) On macOS, Cmd+Backspace, Ctrl+Backspace, Ctrl+Option+Backspace and Cmd+Option+Backspace are no longer bound by default, so they do what macOS binds them to: Cmd+Backspace deletes to the start of the line instead of the next character. An empty hotkey list (`Jodit.atom([])`, or `commandToHotkeys: { cmd: [] }`) turns the key off instead of throwing. Thanks [@brendon](https://github.com/brendon).
+- [#1685](https://github.com/xdan/jodit/issues/1685) Popups update their position at most once per 10ms while the page scrolls, as intended, where before they did it several times for each wheel event. Thanks [@brendon](https://github.com/brendon).
+- [#1687](https://github.com/xdan/jodit/issues/1687) Ctrl+Backspace keeps the space before the deleted word, as the browsers do on Windows, and with the caret after a space it deletes the word before it instead of only the space. Thanks [@brendon](https://github.com/brendon).
+- [#1689](https://github.com/xdan/jodit/issues/1689) The image properties dialog takes focus when it opens, and closing it reselects the image and gives the editor focus back. Escape now closes it in iframe mode. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.18.6
 
 > 4.18.5 was tagged but not published to npm: its release run failed on the Firefox jobs. Everything listed under 4.18.5 ships in this version.
