@@ -552,7 +552,7 @@ describe('Backspace/Delete key', function () {
 						}
 					);
 
-					expect(editor.value).equals('<p>Hello world</p>');
+					expect(editor.value).equals('<p>Hello&nbsp; world</p>');
 				});
 
 				describe('Delete`', function () {
@@ -1672,6 +1672,61 @@ describe('Backspace/Delete key', function () {
 					'<ul><li>Test</li><li>Some text</li></ul>'
 				);
 			});
+		});
+	});
+});
+
+// https://github.com/xdan/jodit/issues/1687
+describe('Delete by word, as the browsers do on Windows', () => {
+	[
+		[
+			'backspaceWordButton',
+			'<p>One two |three four</p>',
+			'<p>One |three four</p>'
+		],
+		[
+			'backspaceWordButton',
+			'<p>One two thr|ee four</p>',
+			'<p>One two |ee four</p>'
+		],
+		[
+			'backspaceWordButton',
+			'<p>One two| three four</p>',
+			'<p>One | three four</p>'
+		],
+		['backspaceWordButton', '<p>Hello, world|</p>', '<p>Hello, |</p>'],
+		[
+			'backspaceWordButton',
+			'<p>One two&nbsp; |three</p>',
+			'<p>One |three</p>'
+		],
+		['backspaceWordButton', '<p>Two|</p>', '<p>|<br></p>'],
+		['backspaceWordButton', '<p>One</p><p>|Two</p>', '<p>One|Two</p>'],
+		[
+			'deleteWordButton',
+			'<p>One two |three four</p>',
+			'<p>One two |four</p>'
+		],
+		[
+			'deleteWordButton',
+			'<p>One two thr|ee four</p>',
+			'<p>One two thr|four</p>'
+		],
+		[
+			'deleteWordButton',
+			'<p>One two| three four</p>',
+			'<p>One two|three four</p>'
+		]
+	].forEach(([command, source, result]) => {
+		it(`Should turn ${source} into ${result} with ${command}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			editor.execCommand(command);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(result);
 		});
 	});
 });

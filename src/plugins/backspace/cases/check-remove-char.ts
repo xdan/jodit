@@ -27,6 +27,7 @@ import { findMostNestedNeighbor } from 'jodit/plugins/backspace/helpers';
  * ```html
  * t|st
  * ```
+ * With `stopBeforeSpace`, nothing is removed when the next char is a space.
  * @private
  */
 // eslint-disable-next-line complexity
@@ -34,7 +35,8 @@ export function checkRemoveChar(
 	jodit: IJodit,
 	fakeNode: Node,
 	backspace: boolean,
-	mode: DeleteMode
+	mode: DeleteMode,
+	stopBeforeSpace: boolean = false
 ): boolean {
 	const step = backspace ? -1 : 1;
 	const anotherSibling = Dom.sibling(fakeNode, !backspace);
@@ -61,6 +63,13 @@ export function checkRemoveChar(
 		}
 
 		if (sibling.nodeValue?.length) {
+			if (
+				stopBeforeSpace &&
+				isSpace(nextChar(sibling.nodeValue, backspace))
+			) {
+				break;
+			}
+
 			removed = tryRemoveChar(sibling, backspace, step, anotherSibling);
 
 			if (
@@ -259,10 +268,35 @@ function checkRepeatRemoveCharAction(
 ): void {
 	call(backspace ? Dom.after : Dom.before, sibling, fakeNode);
 
-	if (
-		mode === 'sentence' ||
-		(mode === 'word' && removed !== ' ' && removed !== NBSP_SPACE)
-	) {
-		checkRemoveChar(jodit, fakeNode, backspace, mode);
+	const wordChar = mode === 'word' && !isSpace(removed);
+
+	// Backspace by word removes the spaces before the caret, then the word, and keeps the space in front of it
+	if (mode === 'sentence' || wordChar || (mode === 'word' && backspace)) {
+		checkRemoveChar(
+			jodit,
+			fakeNode,
+			backspace,
+			mode,
+			wordChar && backspace
+		);
 	}
+}
+
+/**
+ * The char tryRemoveChar would remove next
+ */
+function nextChar(value: string, backspace: boolean): CanUndef<string> {
+	const chars = toArray(value);
+	const step = backspace ? -1 : 1;
+	let index = backspace ? chars.length - 1 : 0;
+
+	while (chars[index] === INVISIBLE_SPACE) {
+		index += step;
+	}
+
+	return chars[index];
+}
+
+function isSpace(char: CanUndef<string>): boolean {
+	return char === ' ' || char === NBSP_SPACE;
 }
