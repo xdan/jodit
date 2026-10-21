@@ -224,7 +224,8 @@ describe('Backspace with modifiers that macOS binds itself', () => {
 	it('Should accept an empty list to leave a key to the browser', () => {
 		const editor = getJodit({
 			history: { timeout: 0 },
-			delete: { hotkeys: { backspaceWord: [] } }
+			// A plain [] would be merged with the default list
+			delete: { hotkeys: { backspaceWord: Jodit.atom([]) } }
 		});
 		editor.value = '<p>One two thr|ee four</p>';
 		setCursorToChar(editor);
