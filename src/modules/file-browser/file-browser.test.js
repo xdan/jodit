@@ -34,6 +34,19 @@
 
 					filebrowser.destruct();
 				});
+
+				it('Should have its tree and files panels ready (#1685)', function () {
+					const filebrowser = new Jodit.modules.FileBrowser({
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php'
+						}
+					});
+
+					expect(filebrowser.tree.isReady).is.true;
+					expect(filebrowser.files.isReady).is.true;
+
+					filebrowser.destruct();
+				});
 			});
 
 			it('Should create dialog and load files', function () {

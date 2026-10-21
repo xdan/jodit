@@ -19,6 +19,8 @@ export interface ComponentCompatible<T = IComponent> {
 }
 
 const componentRegistry = new Map<string, ComponentCompatible>();
+const decoratedClasses = new WeakSet<Function>();
+const warnedClasses = new WeakSet<Function>();
 
 /**
  * Decorate components and set status isReady after constructor
@@ -46,9 +48,23 @@ export function component<T extends ComponentCompatible>(
 				}
 
 				this.setStatus('ready');
+			} else if (
+				!IS_PROD &&
+				!decoratedClasses.has(this.constructor) &&
+				!warnedClasses.has(this.constructor)
+			) {
+				// Only the outermost class's decorator sets `ready`, so a subclass
+				// without its own decorator stays in `beforeInit`. See #1685
+				warnedClasses.add(this.constructor);
+				console.warn(
+					`Component "${this.constructor.name || getClassName(this)}" extends a @component class without being decorated itself, so it never becomes ready and its @watch, @debounce, @throttle and @hook handlers never run`
+				);
 			}
 		}
 	}
+
+	decoratedClasses.add(constructorFunction);
+	decoratedClasses.add(newConstructorFunction);
 
 	const name = getClassName(constructorFunction.prototype);
 
