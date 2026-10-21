@@ -22,7 +22,7 @@ import type {
 	PopupStrategy
 } from 'jodit/types';
 import { Component } from 'jodit/core/component/component';
-import { autobind, throttle } from 'jodit/core/decorators';
+import { autobind, component, throttle } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { eventEmitter, getContainer } from 'jodit/core/global';
 import {
@@ -53,6 +53,7 @@ const EVENTS_FOR_AUTOCLOSE = [
 	'beforeCommandDelete'
 ];
 
+@component
 export class Popup extends UIGroup implements IPopup {
 	override className(): string {
 		return 'Popup';

@@ -10,6 +10,11 @@ Every UI component that inherits from the `UIElement` class must have a componen
 This decorator is responsible for calling `setStatus('ready')` after the `new UI()` operation.
 Other decorators will only start their work when the component is ready to function.
 
+A subclass of a decorated class needs its own decorator too. Only the decorator of the class
+you construct sets the status, so `new UIWidth()` below would stay in `beforeInit` without it,
+and its `@watch` and those inherited from `UIHeight` would never run.
+Development builds warn about such a subclass in the console.
+
 ```typescript
 @component
 class UIHeight extends UIElement {

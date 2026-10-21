@@ -259,6 +259,45 @@
 			});
 		});
 
+		describe('Position updates on scroll (#1685)', () => {
+			let editor, popup, calls;
+
+			beforeEach(() => {
+				editor = getJodit();
+				popup = new Jodit.modules.Popup(editor);
+				popup
+					.setContent('<div>Popup</div>')
+					.open(() => position(editor.editor, editor));
+
+				calls = 0;
+				const { viewBound } = popup;
+				popup.viewBound = () => {
+					calls += 1;
+					return viewBound();
+				};
+			});
+
+			afterEach(() => {
+				popup.destruct();
+			});
+
+			it('Should be ready after construction', () => {
+				expect(popup.isReady).is.true;
+			});
+
+			it('Should update its position at most once per 10ms', async () => {
+				for (let i = 0; i < 5; i += 1) {
+					simulateEvent('scroll', window);
+				}
+
+				expect(calls).equals(1);
+
+				await delay(50);
+
+				expect(calls).equals(2);
+			});
+		});
+
 		describe('Popup inside <dialog>', () => {
 			it('Should show popup inside dialog', () => {
 				const dialog = document.createElement('dialog');
