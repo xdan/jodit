@@ -292,24 +292,32 @@ describe('Undo/Redo behaviors', () => {
 			simulateEvent('input', editor.editor);
 		};
 
-		// Types a word every 50ms for `duration` ms, and returns the value
-		// at each step that went into the history meanwhile
-		const typeSteadily = async (editor, duration) => {
+		// Types `count` words in a row. Timers are mocked, so
+		// `timers.delay(timeout)` stands for the time passing: the step
+		// timer fires, however slow the machine is
+		const typeWords = (editor, count) => {
+			for (let i = 1; i <= count; i += 1) {
+				type(editor, ' ' + i);
+			}
+		};
+
+		// The value at each step that goes into the history from now on
+		const watchSteps = editor => {
 			const steps = [];
 			editor.e.on('changeStack', () => {
 				if (editor.history.length > steps.length) {
 					steps.push(editor.value);
 				}
 			});
-
-			const start = Date.now();
-			for (let i = 1; Date.now() - start < duration; i += 1) {
-				type(editor, ' ' + i);
-				await delay(50);
-			}
-
 			return steps;
 		};
+
+		let timers = null;
+
+		afterEach(() => {
+			timers?.cleanup();
+			timers = null;
+		});
 
 		it('Should not record the first change of a step on its own', async () => {
 			const editor = getJodit({ history: { timeout: 300 } });
@@ -328,22 +336,36 @@ describe('Undo/Redo behaviors', () => {
 			expect(editor.value).equals('<p>one</p>');
 		});
 
-		it('Should record steady typing as a step every timeout', async () => {
+		it('Should record steady typing as a step every timeout', () => {
+			timers = mockTimers();
 			const editor = getJodit({ history: { timeout: 300 } });
 			editor.value = '<p>one</p>';
 			editor.history.clear();
 
-			await typeSteadily(editor, 750);
-			await delay(400);
+			// Six words, the timeout passes, six more, it passes again, three
+			// more, and it passes once more
+			typeWords(editor, 6);
+			timers.delay(300);
+			typeWords(editor, 6);
+			timers.delay(300);
+			typeWords(editor, 3);
+			timers.delay(300);
+
 			expect(editor.history.length).equals(3);
 		});
 
-		it('Should undo only the open step straight after typing', async () => {
+		it('Should undo only the open step straight after typing', () => {
+			timers = mockTimers();
 			const editor = getJodit({ history: { timeout: 300 } });
 			editor.value = '<p>one</p>';
 			editor.history.clear();
 
-			const steps = await typeSteadily(editor, 750);
+			const steps = watchSteps(editor);
+			typeWords(editor, 6);
+			timers.delay(300);
+			typeWords(editor, 6);
+			timers.delay(300);
+			typeWords(editor, 3);
 			expect(steps.length).equals(2);
 
 			editor.execCommand('undo');
