@@ -194,6 +194,54 @@ describe('Delete at the end of a block next to a list', () => {
 	});
 });
 
+// https://github.com/xdan/jodit/issues/1683
+describe('Backspace with modifiers that macOS binds itself', () => {
+	[
+		['Cmd+Backspace', { metaKey: true }],
+		['Ctrl+Backspace', { ctrlKey: true }],
+		['Ctrl+Option+Backspace', { ctrlKey: true, altKey: true }],
+		['Cmd+Option+Backspace', { metaKey: true, altKey: true }]
+	].forEach(([keys, modifiers]) => {
+		it(`Should leave ${keys} to the browser on macOS, and handle it elsewhere`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = '<p>One two thr|ee four</p>';
+			setCursorToChar(editor);
+
+			const notPrevented = simulateEvent(
+				'keydown',
+				Jodit.KEY_BACKSPACE,
+				editor.editor,
+				() => modifiers
+			);
+
+			expect(notPrevented).equals(Jodit.constants.IS_MAC);
+			expect(editor.value === '<p>One two three four</p>').equals(
+				Jodit.constants.IS_MAC
+			);
+		});
+	});
+
+	it('Should accept an empty list to leave a key to the browser', () => {
+		const editor = getJodit({
+			history: { timeout: 0 },
+			// A plain [] would be merged with the default list
+			delete: { hotkeys: { backspaceWord: Jodit.atom([]) } }
+		});
+		editor.value = '<p>One two thr|ee four</p>';
+		setCursorToChar(editor);
+
+		const notPrevented = simulateEvent(
+			'keydown',
+			Jodit.KEY_BACKSPACE,
+			editor.editor,
+			() => ({ ctrlKey: true })
+		);
+
+		expect(notPrevented).is.true;
+		expect(editor.value).equals('<p>One two three four</p>');
+	});
+});
+
 describe('Backspace/Delete key', function () {
 	let editor, range, area;
 
@@ -540,6 +588,11 @@ describe('Backspace/Delete key', function () {
 
 			describe('With pressed `ctrl/cmd`', function () {
 				it('Should remove previous word before cursor', function () {
+					if (Jodit.constants.IS_MAC) {
+						// macOS leaves Ctrl+Backspace to the browser (#1683)
+						this.skip();
+					}
+
 					editor.value = '<p>Hello evil| world</p>';
 					setCursorToChar(editor);
 
