@@ -1,0 +1,50 @@
+name: Dependabot auto-merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_run:
+    workflows: ['Run tests', 'Statoscope', 'Playwright Tests']
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  # A Dependabot PR without a major bump is marked as safe to merge on its own
+  label:
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+        id: meta
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - if: steps.meta.outputs.update-type != 'version-update:semver-major'
+        run: gh pr edit "$PR" --add-label automerge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.html_url }}
+
+  # Merged once every required workflow has passed on the PR's head commit
+  merge:
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          REQUIRED: Run tests,Statoscope,Playwright Tests
+        run: |
+          pr=$(gh api "repos/$REPO/commits/$HEAD_SHA/pulls" --jq '.[] | select(.state=="open" and .head.sha=="'"$HEAD_SHA"'" and .user.login=="dependabot[bot]") | select(any(.labels[]; .name=="automerge")) | .number' | head -1)
+          if [ -z "$pr" ]; then echo "No open Dependabot PR labelled automerge at $HEAD_SHA"; exit 0; fi
+          runs=$(gh api "repos/$REPO/actions/runs?head_sha=$HEAD_SHA&per_page=100" --jq '[.workflow_runs[] | {name, conclusion, status}]')
+          IFS=,
+          for name in $REQUIRED; do
+            c=$(echo "$runs" | jq -r --arg n "$name" '[.[] | select(.name==$n)][0] | "\(.status)/\(.conclusion)"')
+            echo "$name: $c"
+            [ "$c" = "completed/success" ] || { echo "Waiting for $name"; exit 0; }
+          done
+          gh pr merge "$pr" --repo "$REPO" --squash --delete-branch

@@ -14,7 +14,8 @@ updates:
         patterns:
           - '*'
 
-  # npm dev/runtime dependencies, one PR per week for all of them.
+  # npm dev/runtime dependencies: one weekly PR for minor and patch bumps,
+  # majors come as separate PRs.
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
@@ -31,6 +32,7 @@ updates:
         applies-to: version-updates
         patterns:
           - '*'
+        update-types: ['minor', 'patch']
       npm-security:
         applies-to: security-updates
         patterns:
