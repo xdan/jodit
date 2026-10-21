@@ -62,6 +62,8 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+On macOS the defaults leave out `cmd+backspace`, `ctrl+backspace`, `ctrl+alt+backspace` and `cmd+alt+backspace`, so the browser applies the system's own bindings: Cmd+Backspace deletes to the start of the line, Ctrl+Option+Backspace (like Option+Backspace) deletes the previous word, and Ctrl+Backspace deletes one character.
+
 ## Usage Examples
 
 ### Custom Hotkeys

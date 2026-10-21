@@ -816,7 +816,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				this.o.commandToHotkeys[commandNameOriginal] ||
 				command.hotkeys;
 
-			if (hotkeys) {
+			if (hotkeys && hotkeys.length) {
 				this.registerHotkeyToCommand(
 					hotkeys,
 					commandName,
