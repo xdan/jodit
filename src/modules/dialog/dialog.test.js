@@ -152,6 +152,73 @@ describe('Dialog system tests', function () {
 		});
 	});
 
+	describe('Move dialog (#1698)', function () {
+		const drag = (editor, dialog, dx, dy) => {
+			const header = dialog.container.querySelector(
+				'.jodit-dialog__header'
+			);
+
+			simulateEvent('pointerdown', header, data => {
+				data.clientX = 300;
+				data.clientY = 300;
+			});
+			simulateEvent('pointermove', editor.ow, data => {
+				data.clientX = 300 + dx;
+				data.clientY = 300 + dy;
+			});
+			simulateEvent('pointerup', editor.ow);
+		};
+
+		const panelOf = dialog =>
+			dialog.container.querySelector('.jodit-dialog__panel');
+
+		it('Should keep the size of a dialog with no width of its own at the right edge', function () {
+			const editor = getJodit();
+			const dialog = editor.alert(
+				'Hello world',
+				'A title long enough to wrap in a narrow dialog'
+			);
+			const panel = panelOf(dialog);
+			const header = panel.querySelector('.jodit-dialog__header');
+			const { width } = panel.getBoundingClientRect();
+			const headerHeight = header.offsetHeight;
+
+			drag(editor, dialog, 5000, 0);
+
+			const rect = panel.getBoundingClientRect();
+			expect(rect.width).equals(width);
+			expect(header.offsetHeight).equals(headerHeight);
+			expect(rect.right).is.at.most(
+				editor.od.documentElement.clientWidth
+			);
+
+			dialog.close();
+		});
+
+		it('Should keep the whole dialog inside the window', function () {
+			const editor = getJodit();
+			const dialog = editor.dlg();
+			dialog.setContent('Content').setSize(400, 300).open();
+			const panel = panelOf(dialog);
+			const { clientWidth, clientHeight } = editor.od.documentElement;
+
+			drag(editor, dialog, 5000, 5000);
+
+			let rect = panel.getBoundingClientRect();
+			expect(rect.width).equals(400);
+			expect(Math.round(rect.right)).equals(clientWidth);
+			expect(Math.round(rect.bottom)).equals(clientHeight);
+
+			drag(editor, dialog, -5000, -5000);
+
+			rect = panel.getBoundingClientRect();
+			expect(rect.left).equals(0);
+			expect(rect.top).equals(0);
+
+			dialog.close();
+		});
+	});
+
 	describe('Destruct from afterClose', function () {
 		// A one-shot dialog that destructs itself in `afterClose` must not
 		// break `close()` — it still fires 'joditCloseDialog' afterwards.

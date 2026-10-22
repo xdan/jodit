@@ -43,6 +43,12 @@ import { Config } from 'jodit/config';
 
 import './dialog.less';
 
+/**
+ * A position from 0 up to `max`, or 0 when the panel is larger than the window
+ */
+const clampToWindow = (value: number, max: number): number =>
+	Math.max(0, Math.min(value, max));
+
 declare module 'jodit/config' {
 	interface Config {
 		dialog: IDialogOptions;
@@ -203,6 +209,11 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 		this.startY = e.clientY;
 		this.startPoint.x = css(this.dialog, 'left') as number;
 		this.startPoint.y = css(this.dialog, 'top') as number;
+		// Rounded up: at the right edge a fraction of a pixel less room would
+		// wrap the header of a panel that has no width of its own
+		const { width, height } = this.dialog.getBoundingClientRect();
+		this.startPoint.w = Math.ceil(width);
+		this.startPoint.h = Math.ceil(height);
 
 		this.setMaxZIndex();
 
@@ -226,9 +237,22 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 	@autobind
 	private __onMouseMove(e: MouseEvent): void {
 		if (this.draggable && this.o.draggable) {
+			const { documentElement } = this.od;
+
+			// Keep the whole panel in the window at the size it had when the
+			// drag began. A panel with no width of its own would otherwise
+			// shrink as it neared the right edge, and then leave the window
 			this.setPosition(
-				this.startPoint.x + e.clientX - this.startX,
-				this.startPoint.y + e.clientY - this.startY
+				clampToWindow(
+					this.startPoint.x + e.clientX - this.startX,
+					(documentElement.clientWidth || this.ow.innerWidth) -
+						this.startPoint.w
+				),
+				clampToWindow(
+					this.startPoint.y + e.clientY - this.startY,
+					(documentElement.clientHeight || this.ow.innerHeight) -
+						this.startPoint.h
+				)
 			);
 
 			if (this.e) {
@@ -472,8 +496,8 @@ export class Dialog extends ViewWithToolbar implements IDialog {
 
 		// strings on purpose: `css()` would truncate fractional pixels
 		css(this.dialog, {
-			left: (x || left) + 'px',
-			top: (y || top) + 'px'
+			left: (x ?? left) + 'px',
+			top: (y ?? top) + 'px'
 		});
 
 		return this;
