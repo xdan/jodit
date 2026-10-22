@@ -142,13 +142,14 @@ function getNextInlineSibling(
 	if (!nextSibling && sibling.parentNode && sibling.parentNode !== root) {
 		nextSibling = findMostNestedNeighbor(sibling, !backspace, root, true);
 
-		// Do not cross a list-item boundary. At the start of a list item the
-		// neighbor can be the text of the parent/previous item; deleting a char
-		// there is wrong — the list cases must handle the outdent/merge (#1277).
+		// Do not cross a block boundary. At the start of a list item the
+		// neighbor can be the text of the parent/previous item (#1277), and at
+		// the start of a paragraph the text before it in the same parent
+		// (#1693); deleting a char there is wrong — the join cases handle them.
 		if (
 			nextSibling &&
-			Dom.closest(sibling, 'li', root) !==
-				Dom.closest(nextSibling, 'li', root)
+			Dom.closest(sibling, Dom.isBlock, root) !==
+				Dom.closest(nextSibling, Dom.isBlock, root)
 		) {
 			return null;
 		}
