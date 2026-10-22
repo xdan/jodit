@@ -9,6 +9,15 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.8
+
+#### :bug: Bug Fix
+
+- [#1691](https://github.com/xdan/jodit/issues/1691) Backspace at the start of any list item takes the bullet off and turns the item into a paragraph where it was, as it already did for the first item and as Word does. A split numbered list carries its numbering on with `start`. `delete.disableCases: new Set(['unwrap-list-item'])` restores the old join. Thanks [@brendon](https://github.com/brendon).
+- [#1693](https://github.com/xdan/jodit/issues/1693) Backspace at the start of a paragraph that follows bare text in the same list item, box or quote joins the paragraph to the text instead of deleting its last character, and Delete at the end of such a paragraph pulls the text up. Bare text right after a block joins the block the same way (`<div><p>a</p>|b</div>` gives `<div><p>a|b</p></div>`). Thanks [@brendon](https://github.com/brendon).
+- [#1694](https://github.com/xdan/jodit/issues/1694) Enter in a paragraph inside a blockquote starts a new paragraph in the quote, as it does elsewhere, instead of inserting a line break. Thanks [@brendon](https://github.com/brendon).
+- [#1698](https://github.com/xdan/jodit/issues/1698) A dialog dragged towards the edge of the window stops there at its own size, instead of narrowing, wrapping its title and leaving the window. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.18.7
 
 #### :bug: Bug Fix

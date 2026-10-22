@@ -43,7 +43,7 @@ export function checkBR(
 
 	const isBRMode = jodit.o.enter.toLowerCase() === BR.toLowerCase();
 
-	// if you use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
+	// if you use <br> defaultTag for break line or when was entered SHIFt key or in <td>, <th> or <blockquote> without an inner block
 	if (
 		isBRMode ||
 		isCell ||

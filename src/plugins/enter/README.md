@@ -21,7 +21,7 @@ This is one of the most important core plugins. It normalizes Enter key behavior
 - **Text Wrapping**: Wraps unwrapped text nodes
 - **Special Tags**: Moves cursor out of `<a>` tags
 - **Empty List Handling**: Removes empty list items or unindents
-- **Unsplittable Boxes**: Handles `<td>`, `<th>`, `<blockquote>` specially
+- **Unsplittable Boxes**: Handles `<td>`, `<th>` and bare `<blockquote>` text specially
 
 ## Configuration Options
 
@@ -208,7 +208,7 @@ const editor = Jodit.make('#editor', {
 4. **Check BR Mode**: If BR mode or Shift pressed, inserts `<br>` and exits
 5. **Wrap Text**: If no block wrapper, wraps naked text
 6. **Insert Paragraph**: If still no block, creates new block
-7. **Check Unsplittable**: Handles special boxes (`<td>`, `<th>`, `<blockquote>`)
+7. **Check Unsplittable**: Handles special boxes (`<td>`, `<th>`, bare `<blockquote>` text)
 8. **Empty List Check**: Processes empty list items
 9. **Split Fragment**: Splits block at cursor position
 10. **Cleanup**: Removes fake node, positions cursor
@@ -218,7 +218,8 @@ const editor = Jodit.make('#editor', {
 Conditions for inserting `<br>` instead of splitting:
 - `enter: 'br'` option is set
 - Shift key is pressed
-- Inside `<blockquote>`
+- Inside `<blockquote>` **when the quote holds bare text**. A paragraph inside a
+  quote is split into two paragraphs like anywhere else
 - Inside `<td>` or `<th>` **when the cell has no inner block**. A cell cannot be
   split into two cells, so bare cell content gets a `<br>`. If the cell already
   contains a block (`<p>`, `<h3>`, ...), that block is split as usual.
@@ -409,6 +410,6 @@ When the cell already holds a block, the block is split instead:
 - Shift+Enter always inserts `<br>` regardless of mode
 - Empty list items trigger `enterIsEmptyListLeaf` event
 - Special tags (`<a>`) trigger cursor repositioning
-- Unsplittable boxes (`<blockquote>`, and `<td>`/`<th>` without an inner block) insert `<br>`
+- Unsplittable boxes (`<blockquote>` and `<td>`/`<th>` without an inner block) insert `<br>`
 - Uses helper functions from `./helpers` directory
 - Returns `false` to prevent default browser behavior

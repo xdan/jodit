@@ -23,6 +23,10 @@ export function checkJoinNeighbors(
 	fakeNode: Node,
 	backspace: boolean
 ): boolean {
+	if (checkJoinBareText(jodit, fakeNode, backspace)) {
+		return true;
+	}
+
 	let nextBox: Nullable<Node> = fakeNode,
 		mainClosestBox: Nullable<Node> = nextBox;
 
@@ -246,6 +250,8 @@ function checkJoinInlineSibling(
 		Dom.isBlock(sibling) ||
 		!Dom.isBlock(box) ||
 		Dom.isList(box) ||
+		// The caret's block is nested deeper than the text: `text<div><p>|x</p></div>`
+		box.parentNode !== sibling.parentNode ||
 		Array.from(box.childNodes).some(node => Dom.isBlock(node))
 	) {
 		return false;
@@ -276,6 +282,61 @@ function checkJoinInlineSibling(
 		node = next;
 	}
 
+	return true;
+}
+
+/**
+ * Bare text next to a block in the same parent, as the browsers join them:
+ * Backspace in `<div><p>a</p>|b</div>` gives `<div><p>a|b</p></div>`, Delete
+ * in `<div>a|<p>b</p>c</div>` gives `<div>a|b<br>c</div>`
+ */
+function checkJoinBareText(
+	jodit: IJodit,
+	fakeNode: Node,
+	backspace: boolean
+): boolean {
+	const block = Dom.findNotEmptySibling(fakeNode, backspace);
+
+	if (
+		!Dom.isElement(block) ||
+		!Dom.isBlock(block) ||
+		Dom.isList(block) ||
+		Dom.isTag(block, 'table') ||
+		Dom.isCell(block) ||
+		!Dom.isContentEditable(block, jodit.editor) ||
+		Array.from(block.childNodes).some(node => Dom.isBlock(node))
+	) {
+		return false;
+	}
+
+	const filter = getMoveFilter(jodit);
+
+	if (backspace) {
+		// The caret's line goes to the end of the block before it
+		for (let node: Nullable<Node> = fakeNode; node && !Dom.isBlock(node);) {
+			const next: Nullable<Node> = node.nextSibling;
+
+			if (Dom.isTag(node, 'br')) {
+				Dom.safeRemove(node);
+				break;
+			}
+
+			filter(node) ? Dom.append(block, node) : Dom.safeRemove(node);
+			node = next;
+		}
+	} else {
+		// The block's content joins the caret's line, and text after the
+		// block keeps its own line
+		const next = Dom.findNotEmptySibling(block, false);
+
+		if (next && !Dom.isBlock(next) && !Dom.isTag(next, 'br')) {
+			Dom.after(block, jodit.createInside.element('br'));
+		}
+
+		Dom.unwrap(block);
+	}
+
+	jodit.s.setCursorBefore(fakeNode);
 	return true;
 }
 

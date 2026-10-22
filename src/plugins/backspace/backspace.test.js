@@ -1947,3 +1947,45 @@ describe('Backspace/Delete between a block and bare text in the same parent', ()
 		);
 	});
 });
+
+describe('Bare text next to a block in the same parent', function () {
+	const cases = [
+		['<div><p>a</p>|b</div>', 'backspaceButton', '<div><p>a|b</p></div>'],
+		[
+			'<div><p>a</p>|b<br>c</div>',
+			'backspaceButton',
+			'<div><p>a|b</p>c</div>'
+		],
+		[
+			'<blockquote><p>One</p>|Two</blockquote>',
+			'backspaceButton',
+			'<blockquote><p>One|Two</p></blockquote>'
+		],
+		['<div>a|<p>b</p>c</div>', 'deleteButton', '<div>a|b<br>c</div>'],
+		['<div>a|<p>b</p></div>', 'deleteButton', '<div>a|b</div>'],
+		['text<div><p>|x</p></div>', 'backspaceButton', '<p>text|x</p>']
+	];
+
+	cases.forEach(([html, command, result]) => {
+		it(`Should turn ${html} into ${result} with ${command}`, function () {
+			const editor = getJodit();
+			editor.value = html;
+			setCursorToChar(editor);
+			editor.execCommand(command);
+			replaceCursorToChar(editor);
+			expect(editor.value).equals(result);
+		});
+	});
+
+	it('Should not give the second half of a split list the id of the first', function () {
+		const editor = getJodit();
+		editor.value =
+			'<ol id="x" class="c"><li>One</li><li>|Two</li><li>Three</li></ol>';
+		setCursorToChar(editor);
+		editor.execCommand('backspaceButton');
+		replaceCursorToChar(editor);
+		expect(editor.value).equals(
+			'<ol id="x" class="c"><li>One</li></ol><p>|Two</p><ol class="c" start="2"><li>Three</li></ol>'
+		);
+	});
+});

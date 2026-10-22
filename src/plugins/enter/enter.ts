@@ -101,7 +101,7 @@ export class enter extends Plugin {
 
 			const isLi = Dom.isLeaf(block);
 
-			// if use <br> defaultTag for break line or when was entered SHIFt key or in <td> or <th> or <blockquote>
+			// if use <br> defaultTag for break line or when was entered SHIFt key or in <td>, <th> or <blockquote> without an inner block
 			if (
 				(!isLi || event?.shiftKey) &&
 				checkBR(fake, jodit, event?.shiftKey, block)

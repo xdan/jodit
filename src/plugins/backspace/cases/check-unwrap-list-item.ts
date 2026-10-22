@@ -55,6 +55,8 @@ export function checkUnwrapListItem(
 
 	if (li.nextElementSibling) {
 		const rest = list.cloneNode(false) as HTMLElement;
+		// Two lists cannot share one id
+		rest.removeAttribute('id');
 
 		while (li.nextSibling) {
 			Dom.append(rest, li.nextSibling);
