@@ -21,6 +21,7 @@ import { checkRemoveEmptyParent } from './check-remove-empty-parent';
 import { checkRemoveUnbreakableElement } from './check-remove-unbreakable-element';
 import { checkTableCell } from './check-table-cell';
 import { checkUnwrapFirstListItem } from './check-unwrap-first-list-item';
+import { checkUnwrapListItem } from './check-unwrap-list-item';
 
 // Individual cases narrow `fakeNode` to different node subtypes (Text,
 // Element, …); the dispatcher always passes a Node, so accept `any` here and
@@ -47,6 +48,7 @@ export const casesMap: ReadonlyArray<readonly [string, CaseFn]> = [
 	['remove-empty-parent', checkRemoveEmptyParent],
 	['remove-empty-neighbor', checkRemoveEmptyNeighbor],
 	['join-two-lists', checkJoinTwoLists],
+	['unwrap-list-item', checkUnwrapListItem],
 	['join-neighbors', checkJoinNeighbors],
 	['unwrap-first-list-item', checkUnwrapFirstListItem]
 ];
