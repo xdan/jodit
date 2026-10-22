@@ -72,6 +72,7 @@ export function checkJoinNeighbors(
 			sibling &&
 			(checkPullNextLine(jodit, fakeNode, box, sibling, backspace) ||
 				checkMoveListContent(jodit, box, sibling, backspace) ||
+				checkJoinInlineSibling(jodit, box, sibling, backspace) ||
 				moveContentAndRemoveEmpty(
 					jodit,
 					box,
@@ -224,6 +225,55 @@ function checkPullNextLine(
 		const parent: Nullable<Node> = remove.parentElement;
 		Dom.safeRemove(remove);
 		remove = parent;
+	}
+
+	return true;
+}
+
+/**
+ * A block next to bare text in the same parent joins that text, as the
+ * browsers do: `<li>one<p>|two</p></li>` gives `<li>one|two</li>`, and
+ * `<li><p>one|</p>two</li>` gives `<li><p>one|two</p></li>`
+ * @private
+ */
+function checkJoinInlineSibling(
+	jodit: IJodit,
+	box: Element,
+	sibling: Node,
+	backspace: boolean
+): boolean {
+	if (
+		Dom.isBlock(sibling) ||
+		!Dom.isBlock(box) ||
+		Dom.isList(box) ||
+		Array.from(box.childNodes).some(node => Dom.isBlock(node))
+	) {
+		return false;
+	}
+
+	if (backspace) {
+		// Text after the block keeps its own line
+		const next = Dom.findNotEmptySibling(box, false);
+		if (next && !Dom.isBlock(next) && !Dom.isTag(next, 'br')) {
+			Dom.after(box, jodit.createInside.element('br'));
+		}
+
+		Dom.unwrap(box);
+		return true;
+	}
+
+	const filter = getMoveFilter(jodit);
+
+	for (let node: Nullable<Node> = sibling; node && !Dom.isBlock(node);) {
+		const next: Nullable<Node> = node.nextSibling;
+
+		if (Dom.isTag(node, 'br')) {
+			Dom.safeRemove(node);
+			break;
+		}
+
+		filter(node) ? Dom.append(box, node) : Dom.safeRemove(node);
+		node = next;
 	}
 
 	return true;

@@ -1783,3 +1783,83 @@ describe('Delete by word, as the browsers do on Windows', () => {
 		});
 	});
 });
+
+// https://github.com/xdan/jodit/issues/1693
+describe('Backspace/Delete between a block and bare text in the same parent', () => {
+	[
+		[
+			'Backspace',
+			'<ul><li>One<p>|Two</p></li></ul>',
+			'<ul><li>One|Two</li></ul>'
+		],
+		[
+			'Backspace',
+			'<div class="box">One<p>|Two</p></div>',
+			'<div class="box">One|Two</div>'
+		],
+		[
+			'Backspace',
+			'<blockquote>One<p>|Two</p></blockquote>',
+			'<blockquote>One|Two</blockquote>'
+		],
+		[
+			'Backspace',
+			'<ul><li>One<strong>!</strong><p>|Two</p></li></ul>',
+			'<ul><li>One<strong>!</strong>|Two</li></ul>'
+		],
+		[
+			'Backspace',
+			'<ul><li>One<p>|Two</p><p>Three</p></li></ul>',
+			'<ul><li>One|Two<p>Three</p></li></ul>'
+		],
+		[
+			'Backspace',
+			'<ul><li>One<p>|Two</p>Three</li></ul>',
+			'<ul><li>One|Two<br>Three</li></ul>'
+		],
+		[
+			'Delete',
+			'<ul><li><p>One|</p>Two</li></ul>',
+			'<ul><li><p>One|Two</p></li></ul>'
+		],
+		[
+			'Delete',
+			'<div class="box"><p>One|</p>Two</div>',
+			'<div class="box"><p>One|Two</p></div>'
+		],
+		[
+			'Delete',
+			'<ul><li><p>One|</p>Two<br>Three</li></ul>',
+			'<ul><li><p>One|Two</p>Three</li></ul>'
+		]
+	].forEach(([key, source, result]) => {
+		it(`Should join the text on ${key}: ${source} => ${result}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent(
+				'keydown',
+				key === 'Delete' ? Jodit.KEY_DELETE : Jodit.KEY_BACKSPACE,
+				editor.editor
+			);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(result);
+		});
+	});
+
+	it('Should join a nested first item to its parent on the second Backspace', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		editor.value = '<ul><li>One<ul><li>|Sub</li></ul></li></ul>';
+		setCursorToChar(editor);
+
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+		replaceCursorToChar(editor);
+
+		expect(sortAttributes(editor.value)).equals(
+			'<ul><li>One|Sub</li></ul>'
+		);
+	});
+});
