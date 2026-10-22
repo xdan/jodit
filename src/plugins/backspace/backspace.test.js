@@ -312,7 +312,8 @@ describe('Backspace/Delete key', function () {
 			'<ol><li>ab</li><li>cd|</li></ol> => <ol><li>ab</li></ol><p>cd|</p> => Delete',
 			'<ol><li>ab</li></ol><p>|cd</p> => <ol><li>ab|cd</li></ol>',
 			'<p>ab</p><ol><li>|cd</li></ol> => <p>ab</p><p>|cd</p>',
-			'<ol><li>ab</li><li>|cd</li></ol> => <ol><li>ab|cd</li></ol>',
+			// #1691: a later item loses its bullet, as the first one does
+			'<ol><li>ab</li><li>|cd</li></ol> => <ol><li>ab</li></ol><p>|cd</p>',
 			// #1277: backspace at the start of a nested list item must not delete
 			// a character from the parent item across the list boundary.
 			'<ol><li>power<ol><li>|child</li></ol></li></ol> => <ol><li>power<p>|child</p></li></ol>',
@@ -1686,7 +1687,7 @@ describe('Backspace/Delete key', function () {
 			});
 		});
 
-		it('Should connect this LI with previous', function () {
+		it('Should take the bullet off this LI (#1691)', function () {
 			editor.value = '<ul><li>Test</li><li>Some text</li></ul>';
 
 			range.setStart(
@@ -1698,13 +1699,17 @@ describe('Backspace/Delete key', function () {
 
 			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 
-			expect(editor.value).equals('<ul><li>TestSome text</li></ul>');
+			expect(editor.value).equals(
+				'<ul><li>Test</li></ul><p>Some text</p>'
+			);
 
 			editor.s.insertNode(editor.createInside.text(' a '));
-			expect(editor.value).equals('<ul><li>Test a Some text</li></ul>');
+			expect(editor.value).equals(
+				'<ul><li>Test</li></ul><p> a Some text</p>'
+			);
 		});
 
-		describe('And enter', function () {
+		describe('And a second Backspace, then Enter', function () {
 			it('Should split this LI in two again', function () {
 				editor.value = '<ul><li>Test</li><li>Some text</li></ul>';
 
@@ -1714,6 +1719,8 @@ describe('Backspace/Delete key', function () {
 				);
 				editor.s.selectRange(range);
 
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+				simulateEvent('keyup', Jodit.KEY_BACKSPACE, editor.editor);
 				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 				simulateEvent('keyup', Jodit.KEY_BACKSPACE, editor.editor);
 
@@ -1726,6 +1733,83 @@ describe('Backspace/Delete key', function () {
 				);
 			});
 		});
+	});
+});
+
+// https://github.com/xdan/jodit/issues/1691
+describe('Backspace at the start of a later list item', () => {
+	[
+		[
+			'<ul><li>One</li><li>|Two</li><li>Three</li></ul>',
+			'<ul><li>One</li></ul><p>|Two</p><ul><li>Three</li></ul>'
+		],
+		[
+			'<ul><li>One</li><li>|Two</li></ul>',
+			'<ul><li>One</li></ul><p>|Two</p>'
+		],
+		[
+			'<ol><li>One</li><li>|Two</li><li>Three</li></ol>',
+			'<ol><li>One</li></ol><p>|Two</p><ol start="2"><li>Three</li></ol>'
+		],
+		[
+			'<ol start="5"><li>One</li><li>|Two</li><li>Three</li></ol>',
+			'<ol start="5"><li>One</li></ol><p>|Two</p><ol start="6"><li>Three</li></ol>'
+		],
+		[
+			'<ul class="tasks"><li>One</li><li>|Two</li><li>Three</li></ul>',
+			'<ul class="tasks"><li>One</li></ul><p>|Two</p><ul class="tasks"><li>Three</li></ul>'
+		],
+		[
+			'<ul><li>One</li><li><strong>|Two</strong> three</li></ul>',
+			'<ul><li>One</li></ul><p><strong>|Two</strong> three</p>'
+		],
+		[
+			'<ul><li>One<ul><li>A</li><li>|B</li><li>C</li></ul></li></ul>',
+			'<ul><li>One<ul><li>A</li></ul><p>|B</p><ul><li>C</li></ul></li></ul>'
+		],
+		[
+			'<ul><li>One<ul><li>A</li><li>|B</li></ul></li></ul>',
+			'<ul><li>One<ul><li>A</li></ul><p>|B</p></li></ul>'
+		],
+		['<ul><li>One</li><li>|</li></ul>', '<ul><li>One|</li></ul>']
+	].forEach(([source, result]) => {
+		it(`Should take the bullet off: ${source} => ${result}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(result);
+		});
+	});
+
+	it('Should join the paragraph to the item above on the second Backspace', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		editor.value = '<ol><li>One</li><li>|Two</li><li>Three</li></ol>';
+		setCursorToChar(editor);
+
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+		replaceCursorToChar(editor);
+
+		expect(sortAttributes(editor.value)).equals(
+			'<ol><li>One|Two</li></ol><ol start="2"><li>Three</li></ol>'
+		);
+	});
+
+	it('Should leave Delete at the end of an item alone', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		editor.value = '<ul><li>One|</li><li>Two</li></ul>';
+		setCursorToChar(editor);
+
+		simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+		replaceCursorToChar(editor);
+
+		expect(sortAttributes(editor.value)).equals(
+			'<ul><li>One|Two</li></ul>'
+		);
 	});
 });
 

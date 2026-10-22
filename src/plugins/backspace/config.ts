@@ -33,8 +33,8 @@ declare module 'jodit/config' {
 			 * key, so the plugin no longer applies that particular behavior.
 			 * Available keys: `remove-unbreakable`, `remove-not-editable`,
 			 * `remove-char`, `table-cell`, `remove-empty-parent`,
-			 * `remove-empty-neighbor`, `join-two-lists`, `join-neighbors`,
-			 * `unwrap-first-list-item`.
+			 * `remove-empty-neighbor`, `join-two-lists`, `unwrap-list-item`,
+			 * `join-neighbors`, `unwrap-first-list-item`.
 			 *
 			 * ```javascript
 			 * Jodit.make('#editor', {
