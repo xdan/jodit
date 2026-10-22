@@ -1347,3 +1347,52 @@ describe('Enter behavior Tests', function () {
 		});
 	});
 });
+
+// https://github.com/xdan/jodit/issues/1694
+describe('Enter in a quote', () => {
+	[
+		[
+			'<blockquote><p>One|</p></blockquote>',
+			false,
+			'<blockquote><p>One</p><p>|<br></p></blockquote>'
+		],
+		[
+			'<blockquote><p>One|Two</p></blockquote>',
+			false,
+			'<blockquote><p>One</p><p>|Two</p></blockquote>'
+		],
+		[
+			'<blockquote><p>One</p><p>|<br></p></blockquote>',
+			false,
+			'<blockquote><p>One</p><p><br></p><p>|<br></p></blockquote>'
+		],
+		[
+			'<blockquote><p>One|Two</p></blockquote>',
+			true,
+			'<blockquote><p>One<br>|Two</p></blockquote>'
+		],
+		[
+			'<blockquote>One|</blockquote>',
+			false,
+			'<blockquote>One<br>|<br></blockquote>'
+		]
+	].forEach(([source, shift, result]) => {
+		it(`Should turn ${source} into ${result}${shift ? ' with Shift' : ''}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent(
+				'keydown',
+				Jodit.KEY_ENTER,
+				editor.editor,
+				options => {
+					options.shiftKey = shift;
+				}
+			);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(result);
+		});
+	});
+});

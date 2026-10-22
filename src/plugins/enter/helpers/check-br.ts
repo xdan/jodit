@@ -23,9 +23,13 @@ export function checkBR(
 	shiftKeyPressed?: boolean,
 	block?: Nullable<HTMLElement>
 ): boolean {
-	const isMultiLineBlock = Boolean(
-		Dom.closest(fake, ['pre', 'blockquote'], jodit.editor)
-	);
+	// Text in a <pre>, or bare text in a quote, gets a BR. A real block inside
+	// a quote (<p>, <h3>, ...) is split like anywhere else, as in a cell below.
+	const isMultiLineBlock =
+		Boolean(Dom.closest(fake, 'pre', jodit.editor)) ||
+		(block
+			? Dom.isTag(block, 'blockquote')
+			: Boolean(Dom.closest(fake, 'blockquote', jodit.editor)));
 
 	// A cell itself can't be split into two cells, so bare cell content gets
 	// a BR. But when the cell already holds a real block (<p>, <h3>, ...) that
