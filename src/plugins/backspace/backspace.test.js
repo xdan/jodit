@@ -175,13 +175,73 @@ describe('Delete at the end of a block next to a list', () => {
 		[
 			'<p>Before|</p><ul><li>One<ul><li>Sub</li></ul></li></ul>',
 			'<p>Before|One</p><ul><li><ul><li>Sub</li></ul></li></ul>'
-		],
-		[
-			'<div class="box"><ul><li>One|</li></ul></div><p>Two</p>',
-			'<div class="box"><ul><li>One|Two</li></ul></div>'
 		]
 	].forEach(([source, result]) => {
 		it(`Should pull the next line up: ${source} => ${result}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(result);
+		});
+	});
+});
+
+describe('Delete at the end of a line next to a box, with a list on either side (#1704)', () => {
+	[
+		[
+			'<p>One|</p><div class="box"><ul><li>Two</li><li>Three</li></ul></div>',
+			'<div class="box"><p>One|Two</p><ul><li>Three</li></ul></div>'
+		],
+		[
+			'<ul><li>One|</li></ul><div class="box"><p>Two</p></div>',
+			'<div class="box"><ul><li>One|Two</li></ul></div>'
+		],
+		[
+			'<p>One|</p><blockquote><ul><li>Two</li><li>Three</li></ul></blockquote>',
+			'<blockquote><p>One|Two</p><ul><li>Three</li></ul></blockquote>'
+		],
+		[
+			'<ul><li>One|</li></ul><blockquote><p>Two</p></blockquote>',
+			'<blockquote><ul><li>One|Two</li></ul></blockquote>'
+		],
+		[
+			'<ul><li>One|</li></ul><div class="box"><p>Two</p><p>Three</p></div>',
+			'<div class="box"><ul><li>One|Two</li></ul><p>Three</p></div>'
+		],
+		[
+			'<ul><li>Zero</li><li>One|</li></ul><div class="box"><p>Two</p></div>',
+			'<ul><li>Zero</li></ul><div class="box"><ul><li>One|Two</li></ul></div>'
+		],
+		[
+			'<ol><li>Zero</li><li>One|</li></ol><div class="box"><p>Two</p></div>',
+			'<ol><li>Zero</li></ol><div class="box"><ol start="2"><li>One|Two</li></ol></div>'
+		],
+		[
+			'<ul><li>One|</li></ul><div class="box"><ul><li>Two</li><li>Three</li></ul></div>',
+			'<div class="box"><ul><li>One|Two</li><li>Three</li></ul></div>'
+		],
+		[
+			'<div class="box"><ul><li>One|</li></ul></div><p>Two</p>',
+			'<ul><li>One|Two</li></ul>'
+		],
+		[
+			'<div class="box"><p>Zero</p><ul><li>One|</li></ul></div><p>Two</p>',
+			'<div class="box"><p>Zero</p></div><ul><li>One|Two</li></ul>'
+		],
+		[
+			'<blockquote><p>Before|</p></blockquote><ul><li>One</li><li>Two</li></ul>',
+			'<p>Before|One</p><ul><li>Two</li></ul>'
+		],
+		[
+			'<div class="box"><ul><li>One|</li></ul></div><ul><li>Two</li><li>Three</li></ul>',
+			'<ul><li>One|Two</li><li>Three</li></ul>'
+		]
+	].forEach(([source, result]) => {
+		it(`Should put the joined line where the next line was: ${source} => ${result}`, () => {
 			const editor = getJodit({ history: { timeout: 0 } });
 			editor.value = source;
 			setCursorToChar(editor);
