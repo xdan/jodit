@@ -233,5 +233,6 @@ module.exports = {
 	Controls: '컨트롤',
 	'Start at...': '시작 번호...',
 	'Start numbering at': '번호 매기기 시작 값',
-	'Number for the first item': '첫 번째 항목의 번호'
+	'Number for the first item': '첫 번째 항목의 번호',
+	Close: '닫기'
 };

@@ -233,5 +233,6 @@ module.exports = {
 	Controls: '播放控件',
 	'Start at...': '起始于...',
 	'Start numbering at': '编号起始值',
-	'Number for the first item': '第一项的编号'
+	'Number for the first item': '第一项的编号',
+	Close: '关闭'
 };

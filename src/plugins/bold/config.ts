@@ -13,12 +13,12 @@ import { Config } from 'jodit/config';
 
 Config.prototype.controls.subscript = {
 	tags: ['sub'],
-	tooltip: 'subscript'
+	tooltip: 'Subscript'
 } as IControlType;
 
 Config.prototype.controls.superscript = {
 	tags: ['sup'],
-	tooltip: 'superscript'
+	tooltip: 'Superscript'
 } as IControlType;
 
 Config.prototype.controls.bold = {

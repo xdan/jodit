@@ -75,13 +75,18 @@ export class UiAiAssistant extends UIElement<IJodit> {
 			}
 		};
 
-		this.__submitButton = Button(jodit, 'ai-assistant', '').onAction(
-			onSubmit
-		);
+		this.__submitButton = Button(jodit, {
+			icon: { name: 'ai-assistant' },
+			name: 'ai-assistant',
+			tooltip: 'Submit'
+		}).onAction(onSubmit);
 
-		this.__tryAgainButton = Button(jodit, 'update', '', 'initial').onAction(
-			onSubmit
-		);
+		this.__tryAgainButton = Button(jodit, {
+			icon: { name: 'update' },
+			name: 'update',
+			tooltip: 'Try Again',
+			variant: 'initial'
+		}).onAction(onSubmit);
 
 		this.promptInput = new UITextArea(jodit, {
 			name: 'prompt',

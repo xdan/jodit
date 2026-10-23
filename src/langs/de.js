@@ -241,5 +241,6 @@ module.exports = {
 	Controls: 'Steuerelemente',
 	'Start at...': 'Beginnen bei...',
 	'Start numbering at': 'Nummerierung beginnen bei',
-	'Number for the first item': 'Nummer des ersten Eintrags'
+	'Number for the first item': 'Nummer des ersten Eintrags',
+	Close: 'Schließen'
 };

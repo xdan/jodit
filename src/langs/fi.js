@@ -240,5 +240,6 @@ module.exports = {
 	Controls: 'Säätimet',
 	'Start at...': 'Aloita numerosta...',
 	'Start numbering at': 'Aloita numerointi numerosta',
-	'Number for the first item': 'Ensimmäisen kohdan numero'
+	'Number for the first item': 'Ensimmäisen kohdan numero',
+	Close: 'Sulje'
 };

@@ -234,5 +234,6 @@ module.exports = {
 	Controls: 'کنترل‌ها',
 	'Start at...': 'شروع از...',
 	'Start numbering at': 'شروع شماره‌گذاری از',
-	'Number for the first item': 'شماره‌ی نخستین مورد'
+	'Number for the first item': 'شماره‌ی نخستین مورد',
+	Close: 'بستن'
 };
