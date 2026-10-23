@@ -74,6 +74,13 @@ export function checkJoinNeighbors(
 
 		if (
 			sibling &&
+			moveToNextLine(jodit, fakeNode, box, sibling, backspace)
+		) {
+			return checkJoinNeighbors(jodit, fakeNode, backspace);
+		}
+
+		if (
+			sibling &&
 			(checkPullNextLine(jodit, fakeNode, box, sibling, backspace) ||
 				checkMoveListContent(jodit, box, sibling, backspace) ||
 				checkJoinInlineSibling(jodit, box, sibling, backspace) ||
@@ -169,6 +176,100 @@ function resolveTableSibling(
 		Dom.isCell(node) && cells.push(node);
 	});
 	return cells.length ? cells[backspace ? cells.length - 1 : 0] : null;
+}
+
+/**
+ * On Delete, Word joins two lines where the next one is, inside or outside
+ * its box or quote, and the joined line keeps the caret line's kind, list item
+ * or paragraph. Two paragraphs already join that way. When either line is a
+ * list item, this moves the caret's line beside the next one, and the usual
+ * cases then join them: `<p>one|</p><div><ul><li>two</li></ul></div>` becomes
+ * `<div><p>one|</p><ul><li>two</li></ul></div>`
+ * @private
+ */
+function moveToNextLine(
+	jodit: IJodit,
+	fakeNode: Node,
+	box: Element,
+	sibling: Element,
+	backspace: boolean
+): boolean {
+	if (backspace || Dom.isTag(sibling, 'table')) {
+		return false;
+	}
+
+	const line = Dom.up(fakeNode, Dom.isBlock, box, true);
+	const next = findEdgeBlock(sibling, false, jodit.editor);
+
+	if (
+		!line ||
+		!next ||
+		!(Dom.isLeaf(line) || Dom.isLeaf(next)) ||
+		// A paragraph inside a list item is left as it is
+		Dom.isLeaf(line.parentElement) ||
+		Dom.isLeaf(next.parentElement) ||
+		boxOf(line) === boxOf(next)
+	) {
+		return false;
+	}
+
+	const from = line.parentElement;
+
+	if (Dom.isLeaf(line) && Dom.isLeaf(next)) {
+		Dom.before(next, line);
+	} else if (Dom.isLeaf(line)) {
+		// A list item keeps its bullet, in a list of its own
+		Dom.before(next, ownList(line));
+	} else {
+		// A paragraph can't go inside a list, so it goes in front of it
+		Dom.before(next.parentElement!, line);
+	}
+
+	let remove: Nullable<Node> = from;
+
+	while (remove && remove !== jodit.editor && Dom.isEmpty(remove)) {
+		const parent: Nullable<Node> = remove.parentElement;
+		Dom.safeRemove(remove);
+		remove = parent;
+	}
+
+	return true;
+}
+
+/**
+ * The box or quote a line is in, past its lists
+ */
+function boxOf(line: Element): Nullable<Element> {
+	let box = line.parentElement;
+
+	while (Dom.isList(box) || Dom.isLeaf(box)) {
+		box = box.parentElement;
+	}
+
+	return box;
+}
+
+/**
+ * Moves a list item into a list of its own, which carries on its numbering
+ */
+function ownList(item: HTMLLIElement): HTMLElement {
+	const list = item.parentElement as HTMLElement;
+	const own = list.cloneNode(false) as HTMLElement;
+	const index = Array.from(list.children).indexOf(item);
+
+	if (index) {
+		// Two lists cannot share one id
+		own.removeAttribute('id');
+
+		if (Dom.isTag(list, 'ol')) {
+			const start = parseInt(list.getAttribute('start') || '1', 10) || 1;
+			own.setAttribute('start', String(start + index));
+		}
+	}
+
+	Dom.append(own, item);
+
+	return own;
 }
 
 /**
