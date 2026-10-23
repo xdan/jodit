@@ -23,6 +23,18 @@ export function checkJoinNeighbors(
 	fakeNode: Node,
 	backspace: boolean
 ): boolean {
+	return joinNeighbors(jodit, fakeNode, backspace, false);
+}
+
+/**
+ * `moved` is set on the one re-entrant pass after `moveToNextLine`
+ */
+function joinNeighbors(
+	jodit: IJodit,
+	fakeNode: Node,
+	backspace: boolean,
+	moved: boolean
+): boolean {
 	if (checkJoinBareText(jodit, fakeNode, backspace)) {
 		return true;
 	}
@@ -72,11 +84,18 @@ export function checkJoinNeighbors(
 
 		const box = findCaretBox(fakeNode, mainClosestBox);
 
+		// One pass only: the line now sits beside the next one, so the
+		// cases below join them. The DOM has changed either way
 		if (
+			!moved &&
 			sibling &&
 			moveToNextLine(jodit, fakeNode, box, sibling, backspace)
 		) {
-			return checkJoinNeighbors(jodit, fakeNode, backspace);
+			if (!joinNeighbors(jodit, fakeNode, backspace, true)) {
+				jodit.s.setCursorBefore(fakeNode);
+			}
+
+			return true;
 		}
 
 		if (
@@ -194,7 +213,12 @@ function moveToNextLine(
 	sibling: Element,
 	backspace: boolean
 ): boolean {
-	if (backspace || Dom.isTag(sibling, 'table')) {
+	if (
+		backspace ||
+		Dom.isTag(sibling, 'table') ||
+		Dom.isTag(sibling, INSEPARABLE_TAGS) ||
+		!Dom.isContentEditable(sibling, jodit.editor)
+	) {
 		return false;
 	}
 
@@ -204,6 +228,7 @@ function moveToNextLine(
 	if (
 		!line ||
 		!next ||
+		!Dom.isContentEditable(next, jodit.editor) ||
 		!(Dom.isLeaf(line) || Dom.isLeaf(next)) ||
 		// A paragraph inside a list item is left as it is
 		Dom.isLeaf(line.parentElement) ||

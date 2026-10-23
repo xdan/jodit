@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.10
+
+#### :bug: Bug Fix
+
+- [#1704](https://github.com/xdan/jodit/issues/1704) Delete at the end of a line next to a box or quote, with a list on either side, joins the two lines as Word does: the joined line keeps its kind, list item or paragraph, and goes where the next line was. Before, a paragraph could gain a bullet, and a list item could lose its bullet or move above its list. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.18.9
 
 #### :bug: Bug Fix
