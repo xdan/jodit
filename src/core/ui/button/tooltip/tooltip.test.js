@@ -373,6 +373,74 @@
 				});
 			});
 
+			describe('Labels that are not tooltips (#1700)', () => {
+				const visibleTooltip = () =>
+					document.querySelector('.jodit-ui-tooltip_visible_true');
+
+				// Strings that reach i18n here need translations in every language
+				const openDialog = options =>
+					editor
+						.dlg(options)
+						.setHeader('Image properties')
+						.setContent(document.createElement('div'))
+						.open();
+
+				it("Should not show a dialog's title as a tooltip", () => {
+					const dialog = openDialog();
+
+					simulateEvent('mouseenter', dialog.container);
+					timers.delay(500);
+
+					expect(visibleTooltip()).is.null;
+					dialog.close();
+				});
+
+				it("Should still show the tooltips of a dialog's buttons", () => {
+					const dialog = openDialog({
+						buttons: ['fullsize', 'dialog.close']
+					});
+
+					simulateEvent(
+						'mouseenter',
+						getButton('fullsize', dialog.container).parentElement
+					);
+					timers.delay(500);
+
+					expect(visibleTooltip().textContent).equals(
+						'Open in fullsize'
+					);
+					dialog.close();
+				});
+
+				it("Should keep a file input's tooltip on its button", () => {
+					const fileInput = new Jodit.modules.UIFileInput(editor, {
+						tooltip: 'Upload'
+					});
+					editor.workplace.appendChild(fileInput.container);
+
+					simulateEvent('mouseenter', fileInput.container);
+					simulateEvent(
+						'mouseenter',
+						fileInput.container.querySelector('input[type="file"]')
+					);
+					timers.delay(500);
+
+					const tooltip = visibleTooltip();
+					expect(tooltip.textContent).equals('Upload');
+
+					const button = fileInput.container.getBoundingClientRect();
+					const { left, right } = tooltip.getBoundingClientRect();
+					expect(
+						Math.abs(
+							(left + right) / 2 -
+								(button.left + button.right) / 2
+						)
+					).is.below(3);
+
+					fileInput.destruct();
+				});
+			});
+
 			describe('Inside popup', () => {
 				describe('Hiding popup', () => {
 					it('should hide it tooltip', () => {

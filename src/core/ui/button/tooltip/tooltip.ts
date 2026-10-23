@@ -151,6 +151,16 @@ export class UITooltip extends UIElement {
 			return;
 		}
 
+		// A dialog's `aria-label` is its title and a file input's names its
+		// click target. Neither is a tooltip, and both boxes would put one off
+		// the screen
+		if (
+			attr(e.target, 'role') === 'dialog' ||
+			(Dom.isTag(e.target, 'input') && e.target.type === 'file')
+		) {
+			return;
+		}
+
 		this.__currentTarget = e.target;
 
 		const target = e.target as HTMLElement;
