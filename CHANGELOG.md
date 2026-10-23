@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.9
+
+#### :bug: Bug Fix
+
+- [#1700](https://github.com/xdan/jodit/issues/1700) Hovering a dialog no longer shows its title as a tooltip at the window's left edge, and the file browser's Upload button shows its tooltip under the button again. Thanks [@brendon](https://github.com/brendon).
+- [#1702](https://github.com/xdan/jodit/issues/1702) A dialog's close button shows "Close" as its tooltip, in the editor's language, instead of "close". The AI assistant's icon buttons show "Submit" and "Try Again" instead of "ai-assistant" and "update", and the Subscript and Superscript tooltips are capitalised. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.18.8
 
 #### :bug: Bug Fix
