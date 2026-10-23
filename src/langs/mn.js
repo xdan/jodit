@@ -236,5 +236,6 @@ module.exports = {
 	Controls: 'Удирдлага',
 	'Start at...': 'Эхлэх дугаар...',
 	'Start numbering at': 'Дугаарлалт эхлэх',
-	'Number for the first item': 'Эхний зүйлийн дугаар'
+	'Number for the first item': 'Эхний зүйлийн дугаар',
+	Close: 'Хаах'
 };

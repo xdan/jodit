@@ -234,5 +234,6 @@ module.exports = {
 	Controls: 'Элементы управления',
 	'Start at...': 'Начать с...',
 	'Start numbering at': 'Начать нумерацию с',
-	'Number for the first item': 'Номер первого пункта'
+	'Number for the first item': 'Номер первого пункта',
+	Close: 'Закрыть'
 };

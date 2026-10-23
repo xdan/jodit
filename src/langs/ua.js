@@ -233,5 +233,6 @@ module.exports = {
 	Controls: 'Елементи керування',
 	'Start at...': 'Почати з...',
 	'Start numbering at': 'Почати нумерацію з',
-	'Number for the first item': 'Номер першого пункту'
+	'Number for the first item': 'Номер першого пункту',
+	Close: 'Закрити'
 };

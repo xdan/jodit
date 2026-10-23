@@ -240,5 +240,6 @@ module.exports = {
 	Controls: 'Controlli',
 	'Start at...': 'Inizia da...',
 	'Start numbering at': 'Inizia la numerazione da',
-	'Number for the first item': 'Numero del primo elemento'
+	'Number for the first item': 'Numero del primo elemento',
+	Close: 'Chiudi'
 };

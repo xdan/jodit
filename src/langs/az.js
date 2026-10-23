@@ -246,5 +246,6 @@ module.exports = {
 	Controls: 'İdarəetmə elementləri',
 	'Start at...': 'Başlanğıc nömrəsi...',
 	'Start numbering at': 'Nömrələmənin başlanğıcı',
-	'Number for the first item': 'Birinci bəndin nömrəsi'
+	'Number for the first item': 'Birinci bəndin nömrəsi',
+	Close: 'Bağla'
 };

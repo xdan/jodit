@@ -242,5 +242,6 @@ module.exports = {
 	Controls: 'Kontroller',
 	'Start at...': 'Start på...',
 	'Start numbering at': 'Start nummereringen på',
-	'Number for the first item': 'Nummer for første punkt'
+	'Number for the first item': 'Nummer for første punkt',
+	Close: 'Lukk'
 };

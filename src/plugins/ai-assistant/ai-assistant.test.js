@@ -12,6 +12,8 @@
 	'AI Commands',
 	'ai-commands',
 	'ai-assistant',
+	'Submit',
+	'Try Again',
 	...Object.values(Jodit.defaultOptions.controls['ai-commands'].list)
 ].forEach(key => {
 	excludeI18nKeys.add(key);
@@ -76,6 +78,19 @@ describe('AI Assistant', () => {
 				expect(getButton('ai_assistant', ui).disabled).to.be.true;
 				ui.promptInput.value = 'Hello';
 				expect(getButton('ai_assistant', ui).disabled).to.be.false;
+			});
+
+			it('Should name the icon-only buttons (#1702)', () => {
+				clickButton('ai_assistant', editor);
+				const ui = getOpenedDialog(editor).querySelector(
+					'.jodit-ui-ai-assistant'
+				).component;
+				expect(
+					getButton('ai_assistant', ui).getAttribute('aria-label')
+				).equals('Submit');
+				expect(
+					getButton('update', ui).getAttribute('aria-label')
+				).equals('Try Again');
 			});
 		});
 

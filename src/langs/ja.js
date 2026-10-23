@@ -238,5 +238,6 @@ module.exports = {
 	Controls: 'コントロール',
 	'Start at...': '開始番号...',
 	'Start numbering at': '番号の開始値',
-	'Number for the first item': '最初の項目の番号'
+	'Number for the first item': '最初の項目の番号',
+	Close: '閉じる'
 };

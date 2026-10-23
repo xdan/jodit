@@ -233,5 +233,6 @@ module.exports = {
 	Controls: 'פקדים',
 	'Start at...': 'התחל מ...',
 	'Start numbering at': 'התחל מספור מ',
-	'Number for the first item': 'מספר הפריט הראשון'
+	'Number for the first item': 'מספר הפריט הראשון',
+	Close: 'סגור'
 };

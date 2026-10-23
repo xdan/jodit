@@ -241,5 +241,6 @@ module.exports = {
 	Controls: 'Ovládacie prvky',
 	'Start at...': 'Začať od...',
 	'Start numbering at': 'Začať číslovanie od',
-	'Number for the first item': 'Číslo prvej položky'
+	'Number for the first item': 'Číslo prvej položky',
+	Close: 'Zavrieť'
 };

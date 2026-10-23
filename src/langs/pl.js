@@ -235,5 +235,6 @@ module.exports = {
 	Controls: 'Elementy sterujące',
 	'Start at...': 'Zacznij od...',
 	'Start numbering at': 'Rozpocznij numerowanie od',
-	'Number for the first item': 'Numer pierwszego elementu'
+	'Number for the first item': 'Numer pierwszego elementu',
+	Close: 'Zamknij'
 };

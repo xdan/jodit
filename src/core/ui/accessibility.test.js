@@ -313,5 +313,31 @@ describe('Accessibility', () => {
 
 			dialog.destruct();
 		});
+
+		it("should name the dialog's close button in the dialog's language (#1702)", () => {
+			const closeLabel = language => {
+				const dialog = new Jodit.modules.Dialog({ language });
+				const label = getButton('close', dialog).getAttribute(
+					'aria-label'
+				);
+				dialog.destruct();
+				return label;
+			};
+
+			expect(closeLabel('en')).eq('Close');
+			expect(closeLabel('de')).eq('Schließen');
+		});
+
+		it('should capitalise the Subscript and Superscript names (#1702)', () => {
+			const labels = language => {
+				const editor = getJodit({ language });
+				return ['subscript', 'superscript'].map(name =>
+					getButton(name, editor).getAttribute('aria-label')
+				);
+			};
+
+			expect(labels('en')).deep.equals(['Subscript', 'Superscript']);
+			expect(labels('de')).deep.equals(['Tiefstellen', 'Hochstellen']);
+		});
 	});
 });

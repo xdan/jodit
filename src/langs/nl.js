@@ -235,5 +235,6 @@ module.exports = {
 	Controls: 'Bedieningselementen',
 	'Start at...': 'Beginnen bij...',
 	'Start numbering at': 'Nummering beginnen bij',
-	'Number for the first item': 'Nummer van het eerste item'
+	'Number for the first item': 'Nummer van het eerste item',
+	Close: 'Sluiten'
 };

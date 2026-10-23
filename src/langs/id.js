@@ -234,5 +234,6 @@ module.exports = {
 	Controls: 'Kontrol',
 	'Start at...': 'Mulai dari...',
 	'Start numbering at': 'Mulai penomoran dari',
-	'Number for the first item': 'Nomor untuk item pertama'
+	'Number for the first item': 'Nomor untuk item pertama',
+	Close: 'Tutup'
 };

@@ -234,5 +234,6 @@ module.exports = {
 	Controls: 'Kontroller',
 	'Start at...': 'Başlangıç numarası...',
 	'Start numbering at': 'Numaralandırma başlangıcı',
-	'Number for the first item': 'İlk öğenin numarası'
+	'Number for the first item': 'İlk öğenin numarası',
+	Close: 'Kapat'
 };

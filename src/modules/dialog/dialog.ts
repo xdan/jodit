@@ -79,6 +79,7 @@ Config.prototype.dialog = {
 Config.prototype.controls.dialog = {
 	close: {
 		icon: 'cancel',
+		tooltip: 'Close',
 		exec: dialog => {
 			dialog.close();
 		}

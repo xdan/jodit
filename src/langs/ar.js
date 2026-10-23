@@ -237,5 +237,6 @@ module.exports = {
 	Controls: 'عناصر التحكم',
 	'Start at...': 'البدء من...',
 	'Start numbering at': 'بدء الترقيم من',
-	'Number for the first item': 'رقم العنصر الأول'
+	'Number for the first item': 'رقم العنصر الأول',
+	Close: 'إغلاق'
 };
