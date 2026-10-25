@@ -31,7 +31,8 @@ btn.state.tooltip = 'Insert link'; // -> aria-label="Insert link"
   `defaultTimeout`); a `0` delay shows it immediately.
 - **Smart placement.** Positioned below the target and centered; if it would overflow the
   bottom of the viewport it flips above (a `_above` modifier is set). It is `position: fixed`
-  and compensates for any `transform`ed ancestor (e.g. an editor inside a modal).
+  and compensates for any `transform`ed ancestor (e.g. an editor inside a modal) and for a
+  pinch-zoomed page in Safari.
 - **Auto-hide.** Hidden on `mouseleave`, page scroll, `escape`, editor `change`, dialog
   close, and whenever popups open/close — so it never lingers over stale UI.
 - **Skips disabled elements** and elements without the `jodit` class prefix.
