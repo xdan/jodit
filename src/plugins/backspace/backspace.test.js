@@ -254,6 +254,64 @@ describe('Delete at the end of a line next to a box, with a list on either side 
 	});
 });
 
+describe('Backspace/Delete next to a non-editable block (#1708)', () => {
+	const block = '<div contenteditable="false">X</div>';
+
+	[
+		[`<ul><li>One|</li></ul>${block}`, '<ul><li>One|</li></ul>'],
+		[
+			`<ul><li>One|</li></ul>${block}<p>Two</p>`,
+			'<ul><li>One|Two</li></ul>'
+		],
+		[
+			'<ul><li>One|</li></ul><p contenteditable="false">X</p>',
+			'<ul><li>One|</li></ul>'
+		],
+		[`<p>One|</p>${block}`, '<p>One|</p>'],
+		[`<p>One|</p>${block}<p>Two</p>`, '<p>One|Two</p>'],
+		[
+			`<div class="box"><p>One|</p></div>${block}`,
+			'<div class="box"><p>One|</p></div>'
+		],
+		[
+			'<ul><li>One|</li><li contenteditable="false">X</li><li>Two</li></ul>',
+			'<ul><li>One|Two</li></ul>'
+		],
+		[
+			'<ul><li>One|</li><li contenteditable="false">X</li></ul><p>Two</p>',
+			'<ul><li>One|Two</li></ul>'
+		],
+		[`${block}<p>|Two</p>`, '<p>|Two</p>', Jodit.KEY_BACKSPACE],
+		[
+			`<ul><li>One</li></ul>${block}<p>|Two</p>`,
+			'<ul><li>One|Two</li></ul>',
+			Jodit.KEY_BACKSPACE
+		],
+		[
+			`${block}<div class="box"><p>|Two</p></div>`,
+			'<div class="box"><p>|Two</p></div>',
+			Jodit.KEY_BACKSPACE
+		],
+		// The bullet comes off first, as at the start of any list item
+		[
+			`${block}<ul><li>|Two</li></ul>`,
+			`${block}<p>|Two</p>`,
+			Jodit.KEY_BACKSPACE
+		]
+	].forEach(([source, result, key = Jodit.KEY_DELETE]) => {
+		it(`Should remove the block and join the lines beside it: ${source} => ${result}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent('keydown', key, editor.editor);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(result);
+		});
+	});
+});
+
 // https://github.com/xdan/jodit/issues/1683
 describe('Backspace with modifiers that macOS binds itself', () => {
 	[
@@ -356,7 +414,7 @@ describe('Backspace/Delete key', function () {
 			'<p>ab<img src="tests/artio.jpg">|cd</p> => <p>ab|cd</p>',
 			'<p>ab<span contenteditable="false">test</span>|cd</p> => <p>ab|cd</p>',
 			'<p>ab<span contenteditable="false">test</span><strong>|cd</strong></p> => <p>ab|<strong>cd</strong></p>',
-			'<p>ab</p><div contenteditable="false">test</div><p>|cd</p> => <p>ab|</p><p>cd</p>',
+			'<p>ab</p><div contenteditable="false">test</div><p>|cd</p> => <p>ab|cd</p>',
 			'<p>ab</p>\n <p>|<br></p> => <p>ab|</p>\n ',
 			'<p>ab</p><p>|cd</p> => <p>ab|cd</p>',
 			'<p>ab</p>\n<blockquote>|cd</blockquote> => <p>ab|cd</p>\n',
