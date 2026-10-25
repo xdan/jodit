@@ -14,9 +14,84 @@ import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
 
+import { withContentFonts } from './content-fonts';
 import paragraphIcon from './paragraph.svg';
 
 Icon.set('paragraph', paragraphIcon);
+
+declare module 'jodit/config' {
+	interface Config {
+		formatBlock: {
+			/**
+			 * The CSS properties each preview in the Paragraph list copies from
+			 * how the content shows its tag, so the list looks like the content.
+			 * Lengths become `em`, and size and line height stay with the list.
+			 * An empty list keeps the toolbar's styles.
+			 */
+			previewProperties: string[];
+		};
+	}
+}
+
+Config.prototype.formatBlock = {
+	previewProperties: [
+		'font-family',
+		'font-style',
+		'font-weight',
+		'font-variant',
+		'font-stretch',
+		'color',
+		'letter-spacing',
+		'word-spacing',
+		'text-transform',
+		'text-decoration',
+		'text-shadow',
+		'-webkit-font-smoothing',
+		'-moz-osx-font-smoothing'
+	]
+};
+
+/**
+ * The list is outside the editing area, and in iframe mode outside its
+ * document, so a preview would take the toolbar's styles. This reads how the
+ * content shows a tag from a probe in the editing area
+ */
+function previewStyle(editor: IJodit, tag: string): string {
+	const { previewProperties } = editor.o.formatBlock;
+
+	if (!previewProperties.length) {
+		return '';
+	}
+
+	const probe = editor.createInside.element(tag, { style: 'display: none' });
+	Dom.append(editor.editor, probe);
+
+	const style = editor.ew.getComputedStyle(probe);
+	const size = parseFloat(style.fontSize) || 16;
+	const css = previewProperties
+		.map(prop => {
+			let value = style.getPropertyValue(prop);
+
+			if (value && prop === 'font-family') {
+				value = withContentFonts(editor, value);
+			}
+
+			// Each browser knows only one of the smoothing properties
+			return value
+				? `;${prop}:${value
+						.replace(
+							/(-?[\d.]+)px/g,
+							(_, px) => `${parseFloat(px) / size}em`
+						)
+						.replace(/"/g, "'")}`
+				: '';
+		})
+		.join('');
+
+	Dom.safeRemove(probe);
+
+	return css;
+}
 
 Config.prototype.controls.paragraph = {
 	command: 'formatBlock',
@@ -77,7 +152,7 @@ Config.prototype.controls.paragraph = {
 	},
 
 	childTemplate: (e: IJodit, key: string, value: string) =>
-		`<${key} style="margin:0;padding:0"><span>${e.i18n(
+		`<${key} style="margin:0;padding:0${previewStyle(e, key)}"><span>${e.i18n(
 			value
 		)}</span></${key}>`,
 
