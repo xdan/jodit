@@ -153,6 +153,17 @@ export class backspace extends Plugin {
 	private safeRemoveEmptyNode(fakeNode: Node): void {
 		const { range } = this.j.s;
 
+		// wrap-nodes normalizes the line it wraps, which can merge the text
+		// after the fake node into it: remove only the fake node's own space
+		if (
+			Dom.isText(fakeNode) &&
+			fakeNode.nodeValue !== INVISIBLE_SPACE &&
+			fakeNode.nodeValue?.startsWith(INVISIBLE_SPACE)
+		) {
+			fakeNode.deleteData(0, INVISIBLE_SPACE.length);
+			return;
+		}
+
 		if (range.startContainer === fakeNode) {
 			if (fakeNode.previousSibling) {
 				if (Dom.isText(fakeNode.previousSibling)) {

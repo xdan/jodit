@@ -254,6 +254,22 @@ describe('Delete at the end of a line next to a box, with a list on either side 
 	});
 });
 
+describe('Backspace keeps the text after the caret when wrap-nodes wraps the line (#1722)', () => {
+	it('Should keep the text of the paragraph it joins', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		editor.value =
+			'<p>Before</p><span style="font-family:Tahoma">Intro<p>|Welcome</p></span>';
+		setCursorToChar(editor);
+
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+		replaceCursorToChar(editor);
+
+		expect(sortAttributes(editor.value)).equals(
+			'<p>Before</p><p><span style="font-family:Tahoma">Intro|Welcome</span></p>'
+		);
+	});
+});
+
 // https://github.com/xdan/jodit/issues/1683
 describe('Backspace with modifiers that macOS binds itself', () => {
 	[
