@@ -254,6 +254,42 @@ describe('Delete at the end of a line next to a box, with a list on either side 
 	});
 });
 
+describe('After a join the caret is where typing goes (#1726)', () => {
+	[
+		[
+			'<p>Before</p><p><span style="font-family:Tahoma">|Welcome</span></p>',
+			'<p>BeforeX<span style="font-family:Tahoma">Welcome</span></p>'
+		],
+		[
+			'<p>Before</p><p><strong>|Bold</strong></p>',
+			'<p>BeforeX<strong>Bold</strong></p>'
+		],
+		[
+			'<p><strong>Bold</strong></p><p>|Plain</p>',
+			'<p><strong>BoldX</strong>Plain</p>'
+		],
+		[
+			'<p><a href="/page">Link</a></p><p>|Plain</p>',
+			'<p><a href="/page">Link</a>XPlain</p>'
+		],
+		[
+			'<p>One<span contenteditable="false">N</span></p><p>|Two</p>',
+			'<p>One<span contenteditable="false">N</span>XTwo</p>'
+		]
+	].forEach(([source, result]) => {
+		it(`Should insert there: Backspace in ${source}, then X => ${result}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+			editor.s.insertHTML('X');
+
+			expect(sortAttributes(editor.value)).equals(result);
+		});
+	});
+});
+
 // https://github.com/xdan/jodit/issues/1683
 describe('Backspace with modifiers that macOS binds itself', () => {
 	[
@@ -347,7 +383,7 @@ describe('Backspace/Delete key', function () {
 			// #1282: backspace at the start of a styled run preceded by a <br>
 			// must remove only the line break, not the whole run.
 			'<p>text<br><br><em><strong><u>|Accident History!</u></strong></em></p> => <p>text<br><em><strong><u>|Accident History!</u></strong></em></p>',
-			'<p>a<br><strong>|b</strong></p> => <p>a<strong>|b</strong></p>',
+			'<p>a<br><strong>|b</strong></p> => <p>a|<strong>b</strong></p>',
 			'<p><em>ab</em><em>|cd</em></p> => <p><em>a|</em><em>cd</em></p>',
 			'<table><tbody><tr><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>|ab</td></tr></tbody></table>',
 			'<table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table> => <table><tbody><tr><td>ab</td><td>|ab</td></tr></tbody></table>',
@@ -362,11 +398,11 @@ describe('Backspace/Delete key', function () {
 			'<p>ab</p>\n<blockquote>|cd</blockquote> => <p>ab|cd</p>\n',
 			'<p>ab</p>\n<h1>|cd</h1> => <p>ab|cd</p>\n',
 			'<h1>cd</h1><p>|ab</p> => <h1>cd|ab</h1>',
-			'<p>ab</p>\n\n\n<p><strong>|cd</strong></p> => <p>ab<strong>|cd</strong></p>\n\n\n',
-			'<p>ab</p><p><strong>|cd</strong><em>ef</em></p> => <p>ab<strong>|cd</strong><em>ef</em></p>',
-			'<p><strong>ab</strong></p><p><strong>|cd</strong></p> => <p><strong>ab</strong><strong>|cd</strong></p>',
-			'<p><strong>ab</strong></p><p><strong><em>|cd</em></strong></p> => <p><strong>ab</strong><strong><em>|cd</em></strong></p>',
-			'<p><strong>ab</strong></p><p><strong>|cd</strong><em>e</em></p> => <p><strong>ab</strong><strong>|cd</strong><em>e</em></p>',
+			'<p>ab</p>\n\n\n<p><strong>|cd</strong></p> => <p>ab|<strong>cd</strong></p>\n\n\n',
+			'<p>ab</p><p><strong>|cd</strong><em>ef</em></p> => <p>ab|<strong>cd</strong><em>ef</em></p>',
+			'<p><strong>ab</strong></p><p><strong>|cd</strong></p> => <p><strong>ab|</strong><strong>cd</strong></p>',
+			'<p><strong>ab</strong></p><p><strong><em>|cd</em></strong></p> => <p><strong>ab|</strong><strong><em>cd</em></strong></p>',
+			'<p><strong>ab</strong></p><p><strong>|cd</strong><em>e</em></p> => <p><strong>ab|</strong><strong>cd</strong><em>e</em></p>',
 			'<p><a>ab</a></p><p><strong>|cd</strong><em>e</em></p> => <p><a>ab</a><strong>|cd</strong><em>e</em></p>',
 			'<ol><li>|ab</li><li>cd</li></ol> => <p>|ab</p><ol><li>cd</li></ol>',
 			'<ol><li>ab</li><li>cd|</li></ol> => <ol><li>ab</li></ol><p>cd|</p> => Delete',
@@ -1425,7 +1461,7 @@ describe('Backspace/Delete key', function () {
 
 					editor.s.insertHTML(' a ');
 					expect(sortAttributes(editor.value)).equals(
-						'<div><span style="color:#0000FF">This is</span><span style="color:#0000FF"> a my line</span></div>\n'
+						'<div><span style="color:#0000FF">This is a </span><span style="color:#0000FF">my line</span></div>\n'
 					);
 				});
 			});
@@ -1949,7 +1985,7 @@ describe('Backspace/Delete between a block and bare text in the same parent', ()
 		[
 			'Backspace',
 			'<ul><li>One<strong>!</strong><p>|Two</p></li></ul>',
-			'<ul><li>One<strong>!</strong>|Two</li></ul>'
+			'<ul><li>One<strong>!|</strong>Two</li></ul>'
 		],
 		[
 			'Backspace',

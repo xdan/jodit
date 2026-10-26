@@ -23,6 +23,7 @@ import './config';
 import type { DeleteMode } from './interface';
 import { checkNotCollapsed } from './cases/check-not-collapsed';
 import { casesMap } from './cases';
+import { findMostNestedNeighbor } from './helpers';
 
 export class backspace extends Plugin {
 	static override requires = ['hotkeys'];
@@ -141,10 +142,53 @@ export class backspace extends Plugin {
 			throw e;
 		} finally {
 			jodit.e.fire('backSpaceAfterDelete', backspace, fakeNode);
+			this.moveCaretToTextBefore(fakeNode);
 			this.safeRemoveEmptyNode(fakeNode);
 		}
 
 		return false;
+	}
+
+	/**
+	 * The browser types at the end of the text before the caret on its line,
+	 * in that text's formatting, but not inside a link. Moving the caret there
+	 * too makes a paste and the toolbar agree with what's typed:
+	 * `<p>one</p><p><b>|two</b></p>` joins to `<p>one|<b>two</b></p>`
+	 */
+	private moveCaretToTextBefore(fakeNode: Node): void {
+		const { jodit } = this;
+		const { range } = jodit.s;
+		const around = jodit.ed.createRange();
+		around.selectNode(fakeNode);
+
+		if (
+			!range.collapsed ||
+			!around.isPointInRange(range.startContainer, range.startOffset)
+		) {
+			return;
+		}
+
+		const text = findMostNestedNeighbor(
+			fakeNode,
+			false,
+			jodit.editor,
+			true
+		);
+		const link = Dom.closest(text, 'a', jodit.editor);
+
+		if (
+			!Dom.isText(text) ||
+			!Dom.isContentEditable(text, jodit.editor) ||
+			(link && !Dom.isOrContains(link, fakeNode)) ||
+			Dom.closest(text, Dom.isBlock, jodit.editor) !==
+				Dom.closest(fakeNode, Dom.isBlock, jodit.editor)
+		) {
+			return;
+		}
+
+		range.setStart(text, text.nodeValue?.length ?? 0);
+		range.collapse(true);
+		jodit.s.selectRange(range);
 	}
 
 	/**
