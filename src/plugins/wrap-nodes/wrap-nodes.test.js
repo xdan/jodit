@@ -157,12 +157,39 @@ describe('WrapNodes plugin test', function () {
 	});
 
 	describe('BR', function () {
-		it('Should not wrap them', function () {
+		it('Should keep them with the lines they break', function () {
 			const editor = getJodit();
 			editor.value = 'test <br>test <br>test <br>test <br>';
 			expect(editor.value).equals(
-				'<p>test </p><br><p>test </p><br><p>test </p><br><p>test </p><br>'
+				'<p>test <br>test <br>test <br>test <br></p>'
 			);
+		});
+
+		describe('Loose lines between blocks (#1718)', function () {
+			[
+				[
+					'<p>Before</p>Line one<br>Line two<p>After</p>',
+					'<p>Before</p><p>Line one<br>Line two</p><p>After</p>'
+				],
+				[
+					'<p>Before</p>Line one<br><br>Line three<p>After</p>',
+					'<p>Before</p><p>Line one<br><br>Line three</p><p>After</p>'
+				],
+				[
+					'<p>Before</p>Line one<br><p>After</p>',
+					'<p>Before</p><p>Line one<br></p><p>After</p>'
+				],
+				[
+					'<p>Before</p><br>Line two<p>After</p>',
+					'<p>Before</p><br><p>Line two</p><p>After</p>'
+				]
+			].forEach(([value, expected]) => {
+				it(`Should give ${expected} for ${value}`, function () {
+					const editor = getJodit();
+					editor.value = value;
+					expect(editor.value).equals(expected);
+				});
+			});
 		});
 
 		describe('Several BR without texts', function () {
@@ -203,7 +230,7 @@ describe('WrapNodes plugin test', function () {
 					editor.value =
 						'test <br> <style>*  {color: red} </style> <hr> <img>';
 					expect(editor.value).equals(
-						'<p>test </p><br> <style>*  {color: red} </style> <hr> <p><img></p>'
+						'<p>test <br> </p><style>*  {color: red} </style> <hr> <p><img></p>'
 					);
 				});
 			}
