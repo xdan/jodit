@@ -11,6 +11,7 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
+import { NO_EMPTY_TAGS } from 'jodit/core/constants';
 import { autobind } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
@@ -119,7 +120,11 @@ class wrapNodes extends Plugin {
 	 */
 	private isNotWrapped = (n: Nullable<Node>): n is Element =>
 		Dom.isElement(n) &&
-		!(Dom.isBlock(n) || Dom.isTag(n, this.j.o.wrapNodes.exclude));
+		!(
+			Dom.isBlock(n) ||
+			Dom.isTag(n, this.j.o.wrapNodes.exclude) ||
+			holdsBlock(n)
+		);
 
 	/**
 	 * Process input without parent box
@@ -147,6 +152,20 @@ class wrapNodes extends Plugin {
 		}
 		jodit.e.fire('internalChange');
 	}
+}
+
+/**
+ * A block can't go in a paragraph, so neither can an element that holds one,
+ * such as a `<span>` round a `<p>`. Embedded content such as an `<iframe>` can.
+ */
+function holdsBlock(elm: Element): boolean {
+	for (const node of Dom.eachGen(elm)) {
+		if (Dom.isBlock(node) && !Dom.isTag(node, NO_EMPTY_TAGS)) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 function checkAloneListLeaf(child: Node, jodit: IJodit): Node {
