@@ -9,7 +9,11 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { INSEPARABLE_TAGS, LIST_TAGS } from 'jodit/core/constants';
+import {
+	INSEPARABLE_TAGS,
+	LIST_TAGS,
+	NO_EMPTY_TAGS
+} from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 
 import { getMoveFilter } from 'jodit/plugins/backspace/helpers';
@@ -66,12 +70,7 @@ function joinNeighbors(
 			backspace
 		) as Nullable<Element>;
 
-		// With the inline element inside its blocks, the cases below join the
-		// lines as they join any two, and its styles stay with its text
-		if (
-			moveInlineInside(mainClosestBox, jodit.editor) ||
-			moveInlineInside(sibling, jodit.editor)
-		) {
+		if (moveInlinesInside(jodit, fakeNode, sibling)) {
 			return joinNeighbors(jodit, fakeNode, backspace, moved);
 		}
 
@@ -150,43 +149,90 @@ function findCaretBox(fakeNode: Node, mainClosestBox: Element): Element {
 }
 
 /**
+ * With an inline element round the caret's line or the one it joins moved
+ * inside its blocks, the cases join the lines as they join any two, and its
+ * styles stay with its text. One round both lines is left as it is.
+ */
+function moveInlinesInside(
+	jodit: IJodit,
+	fakeNode: Node,
+	sibling: Nullable<Node>
+): boolean {
+	if (!sibling) {
+		return false;
+	}
+
+	const around = Dom.furthest(
+		fakeNode,
+		node =>
+			Dom.isElement(node) &&
+			!Dom.isBlock(node) &&
+			!Dom.isOrContains(node, sibling),
+		jodit.editor
+	);
+
+	return (
+		moveInlineInside(around, jodit.editor) ||
+		moveInlineInside(sibling, jodit.editor)
+	);
+}
+
+/**
  * Old content can have an inline element round blocks. This moves it inside
- * them: `<span style="…"><p>one</p><p>two</p></span>` becomes
- * `<p><span style="…">one</span></p><p><span style="…">two</span></p>`.
- * An element that holds anything but blocks is left as it is.
+ * them, and gives the text, images and line breaks beside them a copy of
+ * their own: `<span style="…"><p>one</p><br><p>two</p></span>` becomes
+ * `<p><span style="…">one</span></p><span style="…"><br></span><p><span style="…">two</span></p>`
  */
 function moveInlineInside(node: Nullable<Node>, root: HTMLElement): boolean {
 	if (!Dom.isElement(node) || Dom.isBlock(node)) {
 		return false;
 	}
 
+	// Embedded content, such as the `<iframe>` in a video's wrapper, counts
+	// as a block in `Dom.isBlock`, but stays with the text beside it
+	const isBlock = (child: Node): boolean =>
+		Dom.isBlock(child) && !Dom.isTag(child, NO_EMPTY_TAGS);
+
 	// The inner one first: `<span><strong><p>one</p></strong></span>`
 	Array.from(node.childNodes).forEach(child => moveInlineInside(child, root));
 
-	const children = Array.from(node.childNodes).filter(
-		child => !Dom.isEmptyTextNode(child)
-	);
+	const children = Array.from(node.childNodes);
 
-	if (!children.length || !children.every(child => Dom.isBlock(child))) {
+	if (!children.some(isBlock)) {
 		return false;
 	}
 
-	children.forEach(block => {
-		// Nothing goes inside a rule, an embed or a non-editable block
+	let run: Nullable<Node> = null;
+
+	for (const child of children) {
+		if (!isBlock(child)) {
+			// Blank text between blocks stays where it is
+			if (!run && !Dom.isEmptyTextNode(child)) {
+				run = node.cloneNode(false);
+				Dom.before(child, run);
+			}
+
+			run && Dom.append(run, child);
+			continue;
+		}
+
+		run = null;
+
+		// Nothing goes inside a rule or a non-editable block
 		if (
-			Dom.isTag(block, INSEPARABLE_TAGS) ||
-			!Dom.isContentEditable(block, root)
+			Dom.isTag(child, INSEPARABLE_TAGS) ||
+			!Dom.isContentEditable(child, root)
 		) {
-			return;
+			continue;
 		}
 
 		const inner = node.cloneNode(false);
-		Dom.moveContent(block, inner);
-		Dom.append(block, inner);
+		Dom.moveContent(child, inner);
+		Dom.append(child, inner);
 
 		// A list or a table: on down to its items or cells
 		moveInlineInside(inner, root);
-	});
+	}
 
 	Dom.unwrap(node);
 
