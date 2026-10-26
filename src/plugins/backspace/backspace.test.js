@@ -254,6 +254,39 @@ describe('Delete at the end of a line next to a box, with a list on either side 
 	});
 });
 
+describe('Delete or Backspace beside an inline element round a block keeps the block (#1724)', () => {
+	const span = '<span style="font-family:Tahoma">';
+
+	[
+		[`<div>Intro|${span}<p>Welcome</p></span></div>`, 'Delete'],
+		[`<div>${span}<p>Welcome</p></span>|After</div>`, 'Backspace'],
+		[
+			`<table><tbody><tr><td>Intro|${span}<p>Welcome</p></span></td></tr></tbody></table>`,
+			'Delete'
+		],
+		[
+			`<div>Intro|${span}<ul><li>One</li><li>Two</li></ul></span></div>`,
+			'Delete'
+		],
+		['<div>Intro|<strong><p>Bold</p></strong></div>', 'Delete']
+	].forEach(([source, key]) => {
+		it(`Should not delete it: ${key} in ${source}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent(
+				'keydown',
+				key === 'Delete' ? Jodit.KEY_DELETE : Jodit.KEY_BACKSPACE,
+				editor.editor
+			);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(source);
+		});
+	});
+});
+
 // https://github.com/xdan/jodit/issues/1683
 describe('Backspace with modifiers that macOS binds itself', () => {
 	[
