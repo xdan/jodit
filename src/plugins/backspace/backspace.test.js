@@ -254,6 +254,73 @@ describe('Delete at the end of a line next to a box, with a list on either side 
 	});
 });
 
+describe('Joining a line with a paragraph inside an inline element (#1720)', () => {
+	const span = '<span style="font-family:Tahoma">';
+
+	[
+		[
+			`<p>Before|</p>${span}<p>Welcome</p></span><p>After</p>`,
+			'Delete',
+			`<p>Before|${span}Welcome</span></p><p>After</p>`
+		],
+		[
+			`<p>Before|</p>${span}<p>Welcome</p><p>Second</p></span>`,
+			'Delete',
+			`<p>Before|${span}Welcome</span></p><p>${span}Second</span></p>`
+		],
+		[
+			'<p>Before|</p><strong><p>Bold</p></strong>',
+			'Delete',
+			'<p>Before|<strong>Bold</strong></p>'
+		],
+		[
+			`<p>Before|</p>${span}<strong><p>Both</p></strong></span>`,
+			'Delete',
+			`<p>Before|${span}<strong>Both</strong></span></p>`
+		],
+		[
+			`<p>Before|</p>${span}<ul><li>One</li><li>Two</li></ul></span>`,
+			'Delete',
+			`<p>Before|${span}One</span></p><ul><li>${span}Two</span></li></ul>`
+		],
+		[
+			`${span}<p>Welcome|</p></span><p>After</p>`,
+			'Delete',
+			`<p>${span}Welcome|</span>After</p>`
+		],
+		[
+			`<p>Before</p>${span}<p>|Welcome</p></span><p>After</p>`,
+			'Backspace',
+			`<p>Before${span}|Welcome</span></p><p>After</p>`
+		],
+		[
+			`${span}<p>Welcome</p></span><p>|After</p>`,
+			'Backspace',
+			`<p>${span}Welcome</span>|After</p>`
+		],
+		[
+			`${span}<p>One</p><p>|Two</p></span>`,
+			'Backspace',
+			`${span}<p>One|Two</p></span>`
+		]
+	].forEach(([source, key, result]) => {
+		it(`Should keep each line's own styles: ${key} in ${source} => ${result}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent(
+				'keydown',
+				key === 'Delete' ? Jodit.KEY_DELETE : Jodit.KEY_BACKSPACE,
+				editor.editor
+			);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(result);
+		});
+	});
+});
+
 // https://github.com/xdan/jodit/issues/1683
 describe('Backspace with modifiers that macOS binds itself', () => {
 	[

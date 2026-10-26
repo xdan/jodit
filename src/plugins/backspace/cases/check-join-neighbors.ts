@@ -66,6 +66,15 @@ function joinNeighbors(
 			backspace
 		) as Nullable<Element>;
 
+		// With the inline element inside its blocks, the cases below join the
+		// lines as they join any two, and its styles stay with its text
+		if (
+			moveInlineInside(mainClosestBox, jodit.editor) ||
+			moveInlineInside(sibling, jodit.editor)
+		) {
+			return joinNeighbors(jodit, fakeNode, backspace, moved);
+		}
+
 		// A line break before the cursor is a single unit: remove it instead of
 		// merging the current element into the (void) `<br>`, which used to move
 		// the whole element's content into the `<br>` and delete it (#1282).
@@ -138,6 +147,50 @@ function findCaretBox(fakeNode: Node, mainClosestBox: Element): Element {
 	return Dom.isLeaf(block) && block.parentElement
 		? block.parentElement
 		: block;
+}
+
+/**
+ * Old content can have an inline element round blocks. This moves it inside
+ * them: `<span style="…"><p>one</p><p>two</p></span>` becomes
+ * `<p><span style="…">one</span></p><p><span style="…">two</span></p>`.
+ * An element that holds anything but blocks is left as it is.
+ */
+function moveInlineInside(node: Nullable<Node>, root: HTMLElement): boolean {
+	if (!Dom.isElement(node) || Dom.isBlock(node)) {
+		return false;
+	}
+
+	// The inner one first: `<span><strong><p>one</p></strong></span>`
+	Array.from(node.childNodes).forEach(child => moveInlineInside(child, root));
+
+	const children = Array.from(node.childNodes).filter(
+		child => !Dom.isEmptyTextNode(child)
+	);
+
+	if (!children.length || !children.every(child => Dom.isBlock(child))) {
+		return false;
+	}
+
+	children.forEach(block => {
+		// Nothing goes inside a rule, an embed or a non-editable block
+		if (
+			Dom.isTag(block, INSEPARABLE_TAGS) ||
+			!Dom.isContentEditable(block, root)
+		) {
+			return;
+		}
+
+		const inner = node.cloneNode(false);
+		Dom.moveContent(block, inner);
+		Dom.append(block, inner);
+
+		// A list or a table: on down to its items or cells
+		moveInlineInside(inner, root);
+	});
+
+	Dom.unwrap(node);
+
+	return true;
 }
 
 /**
