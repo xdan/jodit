@@ -479,9 +479,8 @@ export class Async implements IAsync {
 
 		this.__controllers.forEach(controller => controller.abort());
 
-		this.timers.forEach(key =>
-			clearTimeout(this.timers.get(key) as number)
-		);
+		// A labelled timer is kept under its label, so clear by the value
+		this.timers.forEach(timer => clearTimeout(timer));
 
 		this.timers.clear();
 		this.promisesRejections.forEach(reject => reject());

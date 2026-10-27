@@ -27,6 +27,13 @@ interface RejectablePromise<T> extends Promise<T> {
 export interface IAsync extends IDestructible {
 	delay(timeout: number | IAsyncParams): Promise<void>;
 
+	/**
+	 * Calls `callback` after `timeout` milliseconds, unless the view is
+	 * destroyed first. A timeout of 0, or none, calls it at once, before
+	 * returning, where `window.setTimeout(callback, 0)` would wait for the
+	 * current event to finish. To run after the browser has handled an event,
+	 * such as moving the caret on a keydown, use a timeout of at least 1.
+	 */
 	setTimeout<T = any>(
 		callback: (...args: T[]) => void,
 		timeout: number | IAsyncParams,
