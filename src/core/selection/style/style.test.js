@@ -61,7 +61,7 @@ describe('Apply style', () => {
 						[
 							'<ol><li>ordered</li><li>|list</li><li>pop</li></ol>',
 							{ element: 'ul' },
-							'<ol><li>ordered</li></ol><ul><li>|list</li></ul><ol><li>pop</li></ol>'
+							'<ul><li>ordered</li><li>|list</li><li>pop</li></ul>'
 						],
 						[
 							'<ol><li>|ordered</li><li>list</li></ol><p>test|</p>',
@@ -206,7 +206,7 @@ describe('Apply style', () => {
 						[
 							'<ol><li>test</li><li>ord|ered</li><li>list</li></ol>',
 							{ element: 'ol' },
-							'<ol><li>test</li></ol><p>ord|ered</p><ol><li>list</li></ol>'
+							'<ol><li>test</li></ol><p>ord|ered</p><ol start="2"><li>list</li></ol>'
 						],
 						[
 							'<ol><li>|test</li><li>ordered</li><li>list|</li></ol>',

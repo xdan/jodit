@@ -202,6 +202,87 @@ describe('Test orderedList plugin', () => {
 		});
 	});
 
+	describe('Changing the list type, as Word does (#1733)', () => {
+		[
+			// With just a caret, the whole list changes
+			[
+				'insertOrderedList',
+				'<ul><li>On|e</li><li>Two</li><li>Three</li></ul>',
+				'<ol><li>On|e</li><li>Two</li><li>Three</li></ol>'
+			],
+			[
+				'insertOrderedList',
+				'<ul><li>One</li><li>Tw|o</li><li>Three</li></ul>',
+				'<ol><li>One</li><li>Tw|o</li><li>Three</li></ol>'
+			],
+			[
+				'insertUnorderedList',
+				'<ol><li>On|e</li><li>Two</li></ol>',
+				'<ul><li>On|e</li><li>Two</li></ul>'
+			],
+			[
+				'insertOrderedList',
+				'<ul><li>One<ul><li>Su|b</li><li>Sub2</li></ul></li><li>Two</li></ul>',
+				'<ul><li>One<ol><li>Su|b</li><li>Sub2</li></ol></li><li>Two</li></ul>'
+			],
+			[
+				'insertOrderedList',
+				'<ul><li>On|e</li><li>Two</li></ul>',
+				'<ol style="list-style-type:lower-roman"><li>On|e</li><li>Two</li></ol>',
+				'lower-roman'
+			],
+			// With a selection, only those items, and the numbering carries on
+			[
+				'insertOrderedList',
+				'<ul><li>One</li><li>|Two|</li><li>Three</li></ul>',
+				'<ul><li>One</li></ul><ol><li>|Two|</li></ol><ul><li>Three</li></ul>'
+			],
+			[
+				'insertUnorderedList',
+				'<ol><li>One</li><li>|Two|</li><li>Three</li><li>Four</li></ol>',
+				'<ol><li>One</li></ol><ul><li>|Two|</li></ul><ol start="2"><li>Three</li><li>Four</li></ol>'
+			],
+			[
+				'insertUnorderedList',
+				'<ol start="3"><li>One</li><li>|Two|</li><li>Three</li></ol>',
+				'<ol start="3"><li>One</li></ol><ul><li>|Two|</li></ul><ol start="4"><li>Three</li></ol>'
+			],
+			[
+				'insertUnorderedList',
+				'<ol><li>One</li><li>|Two</li><li>Three|</li><li>Four</li></ol>',
+				'<ol><li>One</li></ol><ul><li>|Two</li><li>Three|</li></ul><ol start="2"><li>Four</li></ol>'
+			],
+			[
+				'insertUnorderedList',
+				'<ol><li>|One|</li><li>Two</li></ol>',
+				'<ul><li>|One|</li></ul><ol><li>Two</li></ol>'
+			],
+			// Taking an item out of a numbered list carries the numbering on too
+			[
+				'insertOrderedList',
+				'<ol><li>One</li><li>|Two|</li><li>Three</li></ol>',
+				'<ol><li>One</li></ol><p>|Two|</p><ol start="2"><li>Three</li></ol>'
+			],
+			// A caret in a list of the same type still takes its item out
+			[
+				'insertUnorderedList',
+				'<ul><li>On|e</li><li>Two</li></ul>',
+				'<p>On|e</p><ul><li>Two</li></ul>'
+			]
+		].forEach(([command, source, result, style]) => {
+			it(`Should give ${result} for ${command}${style ? ' ' + style : ''} in ${source}`, () => {
+				const editor = getJodit();
+				editor.value = source;
+				setCursorToChar(editor);
+
+				editor.execCommand(command, false, style);
+				replaceCursorToChar(editor);
+
+				expect(sortAttributes(editor.value)).equals(result);
+			});
+		});
+	});
+
 	describe('UI', () => {
 		describe('Click on unordered list button', () => {
 			describe('when selection is collapsed', () => {

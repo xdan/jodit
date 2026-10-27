@@ -29,7 +29,8 @@ export function toggleOrderedList(
 	commitStyle: ICommitStyle,
 	li: HTMLElement,
 	jodit: IJodit,
-	mode: CommitMode
+	mode: CommitMode,
+	collapsed: boolean = false
 ): CommitMode {
 	if (!li) {
 		return mode;
@@ -85,17 +86,64 @@ export function toggleOrderedList(
 
 		// ul => ol, ol => ul or ul => ul.class1
 		if (mode === REPLACE || isChangeMode || !isSameList) {
-			const wrapper = unwrapList(REPLACE, list, li, jodit, commitStyle);
-			const newList = wrapList(commitStyle, wrapper, jodit);
+			// With just a caret, Word converts the whole list
+			const items =
+				collapsed && !isSameList
+					? Array.from((list as HTMLElement).children).filter(item =>
+							Dom.isLeaf(item)
+						)
+					: [li];
+
+			let newList!: HTMLElement;
+
+			for (const item of items) {
+				newList = keepNumbering(item, itemList =>
+					wrapList(
+						commitStyle,
+						unwrapList(REPLACE, itemList, item, jodit, commitStyle),
+						jodit
+					)
+				);
+			}
+
 			hook(REPLACE, newList, commitStyle);
 			return REPLACE;
 		}
 	}
 
-	const wrapper = unwrapList(UNWRAP, list, li, jodit, commitStyle);
+	const wrapper = keepNumbering(li, itemList =>
+		unwrapList(UNWRAP, itemList, li, jodit, commitStyle)
+	);
 	hook(UNWRAP, wrapper, commitStyle);
 
 	return UNWRAP;
+}
+
+/**
+ * Takes `item` out of its list with `takeOut`, and carries a numbered list's
+ * count on past it, as Word does: 1, a bullet, then 2
+ */
+function keepNumbering<T>(
+	item: HTMLElement,
+	takeOut: (list: HTMLElement) => T
+): T {
+	const list = item.parentElement as HTMLElement;
+	const rest = item.nextElementSibling;
+	const next = Dom.isTag(list, 'ol')
+		? (parseInt(list.getAttribute('start') || '1', 10) || 1) +
+			Array.from(list.children).indexOf(item)
+		: 0;
+
+	const result = takeOut(list);
+	const restList = rest?.parentElement;
+
+	if (next && Dom.isTag(restList, 'ol')) {
+		next > 1
+			? restList.setAttribute('start', String(next))
+			: restList.removeAttribute('start');
+	}
+
+	return result;
 }
 
 /**
