@@ -82,6 +82,14 @@ function joinNeighbors(
 			return true;
 		}
 
+		// A non-editable sibling is removed by remove-not-editable, never joined
+		if (
+			Dom.isElement(sibling) &&
+			!Dom.isContentEditable(sibling, jodit.editor)
+		) {
+			return false;
+		}
+
 		const box = findCaretBox(fakeNode, mainClosestBox);
 
 		// One pass only: the line now sits beside the next one, so the

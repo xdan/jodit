@@ -8,7 +8,7 @@
  * @module plugins/backspace
  */
 
-import type { IJodit } from 'jodit/types';
+import type { IJodit, Nullable } from 'jodit/types';
 import { Dom } from 'jodit/core/dom';
 import { call } from 'jodit/core/helpers';
 import { moveNodeInsideStart } from 'jodit/core/selection/helpers';
@@ -38,22 +38,28 @@ export function checkRemoveContentNotEditable(
 		!Dom.isCell(node.parentElement)
 	) {
 		node = node.parentElement;
+		neighbor = Dom.findSibling(node, backspace);
 
-		// At the start of a list item, Backspace takes the bullet off first
-		if (backspace && Dom.isLeaf(node)) {
+		// At the start of a list item, Backspace takes the bullet off first,
+		// unless the item before it is a non-editable one to remove
+		if (
+			backspace &&
+			Dom.isLeaf(node) &&
+			!(Dom.isLeaf(neighbor) && isNotEditable(jodit, neighbor))
+		) {
 			return false;
 		}
-
-		neighbor = Dom.findSibling(node, backspace);
 	}
 
-	if (
-		Dom.isElement(neighbor) &&
-		!Dom.isContentEditable(neighbor, jodit.editor)
-	) {
+	if (isNotEditable(jodit, neighbor)) {
 		if (Dom.isBlock(neighbor)) {
+			const joinLines = !Dom.isLeaf(neighbor);
 			Dom.safeRemove(neighbor);
-			checkJoinNeighbors(jodit, fakeNode, backspace);
+
+			// Items either side of a removed list item stay apart
+			if (joinLines) {
+				checkJoinNeighbors(jodit, fakeNode, backspace);
+			}
 		} else {
 			call(backspace ? Dom.before : Dom.after, neighbor, fakeNode);
 			Dom.safeRemove(neighbor);
@@ -69,4 +75,8 @@ export function checkRemoveContentNotEditable(
 	}
 
 	return false;
+}
+
+function isNotEditable(jodit: IJodit, node: Nullable<Node>): node is Element {
+	return Dom.isElement(node) && !Dom.isContentEditable(node, jodit.editor);
 }

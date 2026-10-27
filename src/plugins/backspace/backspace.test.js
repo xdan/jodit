@@ -2107,3 +2107,39 @@ describe('Bare text next to a block in the same parent', function () {
 		);
 	});
 });
+
+describe('Non-editable neighbours, follow-ups to #1708', function () {
+	const cases = [
+		[
+			'<p>a|</p><div contenteditable="false">1</div><div contenteditable="false">2</div><p>b</p>',
+			'deleteButton',
+			'<p>a|</p><div contenteditable="false">2</div><p>b</p>'
+		],
+		[
+			'<p>a</p><div contenteditable="false">1</div><div contenteditable="false">2</div><p>|b</p>',
+			'backspaceButton',
+			'<p>a</p><div contenteditable="false">1</div><p>|b</p>'
+		],
+		[
+			'<ul><li>A</li><li contenteditable="false">X</li><li>|B</li></ul>',
+			'backspaceButton',
+			'<ul><li>A</li><li>|B</li></ul>'
+		],
+		[
+			'<ul><li>A|</li><li contenteditable="false">X</li><li>B</li></ul>',
+			'deleteButton',
+			'<ul><li>A|</li><li>B</li></ul>'
+		]
+	];
+
+	cases.forEach(([html, command, result]) => {
+		it(`Should turn ${html} into ${result} with ${command}`, function () {
+			const editor = getJodit();
+			editor.value = html;
+			setCursorToChar(editor);
+			editor.execCommand(command);
+			replaceCursorToChar(editor);
+			expect(editor.value).equals(result);
+		});
+	});
+});
