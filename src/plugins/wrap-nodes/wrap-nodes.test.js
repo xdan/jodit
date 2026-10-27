@@ -124,6 +124,38 @@ describe('WrapNodes plugin test', function () {
 		});
 	});
 
+	describe('Inline elements that hold blocks (#1716)', function () {
+		[
+			'<p>Before</p><span style="font-family: Tahoma;"><p>Welcome</p></span><p>After</p>',
+			'<strong><p>Bold</p></strong>',
+			'<a href="/page"><div>Linked</div></a>',
+			'<font face="Verdana"><table><tbody><tr><td>Cell</td></tr></tbody></table></font>',
+			'<span style="font-size: 18pt;"><hr></span>'
+		].forEach(value => {
+			it(`Should leave ${value} as it is`, function () {
+				const editor = getJodit();
+				editor.value = value;
+				expect(editor.value).equals(value);
+			});
+		});
+
+		it('Should end a run of text before one', function () {
+			const editor = getJodit();
+			editor.value = 'Before<span><p>Inside</p></span>After';
+			expect(editor.value).equals(
+				'<p>Before</p><span><p>Inside</p></span><p>After</p>'
+			);
+		});
+
+		it('Should still wrap one that holds embedded content', function () {
+			const editor = getJodit();
+			editor.value = 'Watch <span><iframe></iframe></span>';
+			expect(editor.value).equals(
+				'<p>Watch <span><iframe></iframe></span></p>'
+			);
+		});
+	});
+
 	describe('BR', function () {
 		it('Should not wrap them', function () {
 			const editor = getJodit();
