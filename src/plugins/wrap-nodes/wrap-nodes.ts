@@ -76,7 +76,11 @@ class wrapNodes extends Plugin {
 
 				Dom.before(child, box);
 
-				while (child && this.isSuitable(child)) {
+				// `exclude` keeps a <br> from starting a box, but one between loose lines stays with them
+				while (
+					child &&
+					(this.isSuitable(child) || Dom.isTag(child, 'br'))
+				) {
 					const next: Nullable<Node> = child.nextSibling;
 					Dom.append(box, child);
 					child = next;
