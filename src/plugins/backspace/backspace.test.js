@@ -300,6 +300,34 @@ describe('Backspace/Delete next to a non-editable block (#1708)', () => {
 		]
 	].forEach(([source, result, key = Jodit.KEY_DELETE]) => {
 		it(`Should remove the block and join the lines beside it: ${source} => ${result}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent('keydown', key, editor.editor);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(result);
+		});
+	});
+});
+
+describe('Backspace keeps the text after the caret when wrap-nodes wraps the line (#1722)', () => {
+	it('Should keep the text of the paragraph it joins', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		editor.value =
+			'<p>Before</p><span style="font-family:Tahoma">Intro<p>|Welcome</p></span>';
+		setCursorToChar(editor);
+
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+		replaceCursorToChar(editor);
+
+		expect(sortAttributes(editor.value)).equals(
+			'<p>Before</p><p><span style="font-family:Tahoma">Intro|Welcome</span></p>'
+		);
+	});
+});
+
 describe('Delete or Backspace beside an inline element round a block keeps the block (#1724)', () => {
 	const span = '<span style="font-family:Tahoma">';
 
@@ -316,28 +344,23 @@ describe('Delete or Backspace beside an inline element round a block keeps the b
 		],
 		['<div>Intro|<strong><p>Bold</p></strong></div>', 'Delete']
 	].forEach(([source, key]) => {
-		it(`Should not delete it: ${key} in ${source}`, () => {			const editor = getJodit({ history: { timeout: 0 } });
+		it(`Should not delete it: ${key} in ${source}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
 			editor.value = source;
 			setCursorToChar(editor);
 
-			simulateEvent('keydown', key, editor.editor);
+			simulateEvent(
+				'keydown',
+				key === 'Delete' ? Jodit.KEY_DELETE : Jodit.KEY_BACKSPACE,
+				editor.editor
+			);
 			replaceCursorToChar(editor);
 
-			expect(sortAttributes(editor.value)).equals(result);
+			expect(sortAttributes(editor.value)).equals(source);
 		});
-describe('Backspace keeps the text after the caret when wrap-nodes wraps the line (#1722)', () => {
-	it('Should keep the text of the paragraph it joins', () => {
-		const editor = getJodit({ history: { timeout: 0 } });
-		editor.value =
-			'<p>Before</p><span style="font-family:Tahoma">Intro<p>|Welcome</p></span>';
-		setCursorToChar(editor);
+	});
+});
 
-		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
-		replaceCursorToChar(editor);
-
-		expect(sortAttributes(editor.value)).equals(
-			'<p>Before</p><p><span style="font-family:Tahoma">Intro|Welcome</span></p>'
-		);	});
 describe('Joining a line with a paragraph inside an inline element (#1720)', () => {
 	const span = '<span style="font-family:Tahoma">';
 
@@ -375,12 +398,12 @@ describe('Joining a line with a paragraph inside an inline element (#1720)', () 
 		[
 			`<p>Before</p>${span}<p>|Welcome</p></span><p>After</p>`,
 			'Backspace',
-			`<p>Before${span}|Welcome</span></p><p>After</p>`
+			`<p>Before|${span}Welcome</span></p><p>After</p>`
 		],
 		[
 			`${span}<p>Welcome</p></span><p>|After</p>`,
 			'Backspace',
-			`<p>${span}Welcome</span>|After</p>`
+			`<p>${span}Welcome|</span>After</p>`
 		],
 		[
 			`${span}<p>One</p><p>|Two</p></span>`,
@@ -400,7 +423,7 @@ describe('Joining a line with a paragraph inside an inline element (#1720)', () 
 		[
 			`<p>Before</p><div>${span}<p>|Welcome</p></span></div>`,
 			'Backspace',
-			`<p>Before${span}|Welcome</span></p>`
+			`<p>Before|${span}Welcome</span></p>`
 		],
 		[
 			'<div><p>Before|</p><span class="fr-video"><iframe src="about:blank"></iframe></span></div>',
@@ -412,6 +435,7 @@ describe('Joining a line with a paragraph inside an inline element (#1720)', () 
 			const editor = getJodit({ history: { timeout: 0 } });
 			editor.value = source;
 			setCursorToChar(editor);
+
 			simulateEvent(
 				'keydown',
 				key === 'Delete' ? Jodit.KEY_DELETE : Jodit.KEY_BACKSPACE,
@@ -419,9 +443,11 @@ describe('Joining a line with a paragraph inside an inline element (#1720)', () 
 			);
 			replaceCursorToChar(editor);
 
-			expect(sortAttributes(editor.value)).equals(source);
+			expect(sortAttributes(editor.value)).equals(result);
 		});
-	});});
+	});
+});
+
 describe('After a join the caret is where typing goes (#1726)', () => {
 	[
 		[
@@ -452,6 +478,7 @@ describe('After a join the caret is where typing goes (#1726)', () => {
 
 			simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
 			editor.s.insertHTML('X');
+
 			expect(sortAttributes(editor.value)).equals(result);
 		});
 	});
@@ -2273,7 +2300,7 @@ describe('Non-editable neighbours, follow-ups to #1708', function () {
 		[
 			'<ul><li>A|</li><li contenteditable="false">X</li><li>B</li></ul>',
 			'deleteButton',
-			'<ul><li>A|</li><li>B</li></ul>'
+			'<ul><li>A|B</li></ul>'
 		]
 	];
 

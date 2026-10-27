@@ -53,10 +53,11 @@ export function checkRemoveContentNotEditable(
 
 	if (isNotEditable(jodit, neighbor)) {
 		if (Dom.isBlock(neighbor)) {
-			const joinLines = !Dom.isLeaf(neighbor);
+			// Backspace after a removed list item leaves the items apart: the
+			// next press takes the bullet off, as for any later item
+			const joinLines = !(backspace && Dom.isLeaf(neighbor));
 			Dom.safeRemove(neighbor);
 
-			// Items either side of a removed list item stay apart
 			if (joinLines) {
 				checkJoinNeighbors(jodit, fakeNode, backspace);
 			}

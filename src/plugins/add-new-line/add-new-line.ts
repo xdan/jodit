@@ -190,6 +190,8 @@ export class addNewLine extends Plugin {
 
 		if (
 			!editor.o.addNewLine ||
+			editor.o.readonly ||
+			editor.isLocked ||
 			e.shiftKey ||
 			!(forward || e.key === KEY_UP || e.key === KEY_LEFT) ||
 			!editor.s.isCollapsed()

@@ -9,6 +9,21 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.11
+
+#### :bug: Bug Fix
+
+- [#1708](https://github.com/xdan/jodit/issues/1708) Backspace and Delete next to a non-editable block remove the block whole and join the lines either side of it, as the spec's tests do. Before, Delete at the end of a list item pulled the block's text into the item, a line in a box could move into the block, and the caret could be left outside any block. Adjacent non-editable blocks go one per key press, and a non-editable list item is removed before the bullet comes off the next one. Thanks [@brendon](https://github.com/brendon).
+- [#1716](https://github.com/xdan/jodit/issues/1716) `wrap-nodes` no longer puts an inline element that holds a block, such as a `<span>` round a `<p>`, inside a paragraph, so the value stays the same when it is parsed again. Thanks [@brendon](https://github.com/brendon).
+- [#1718](https://github.com/xdan/jodit/issues/1718) `wrap-nodes` keeps a `<br>` with the loose lines it breaks instead of turning them into separate paragraphs with a blank line between. Thanks [@brendon](https://github.com/brendon).
+- [#1720](https://github.com/xdan/jodit/issues/1720) Delete or Backspace next to a paragraph inside an inline element, such as `<span style="…"><p>…</p></span>`, joins the lines and keeps each line's styles, instead of nesting one paragraph in the other or dropping the styles. Thanks [@brendon](https://github.com/brendon).
+- [#1722](https://github.com/xdan/jodit/issues/1722) Backspace no longer deletes the text after the caret when `wrap-nodes` wraps the line it joins. Thanks [@brendon](https://github.com/brendon).
+- [#1724](https://github.com/xdan/jodit/issues/1724) Delete or Backspace beside an inline element that holds a block no longer deletes the whole block as if it were a character. Thanks [@brendon](https://github.com/brendon).
+- [#1726](https://github.com/xdan/jodit/issues/1726) After Backspace or Delete the caret goes where the browser types, at the end of the text before it on its line, so a paste and the toolbar agree with what is typed. Thanks [@brendon](https://github.com/brendon).
+- [#1729](https://github.com/xdan/jodit/issues/1729) The arrow keys can take the caret past an embed that ends the content, or before one that starts it: a new line is added there. Thanks [@brendon](https://github.com/brendon).
+- [#1731](https://github.com/xdan/jodit/issues/1731) `Async.clear()` and `destruct()` now clear timeouts set with a label (and debounced or throttled ones), so they no longer run after the editor is destroyed. Thanks [@brendon](https://github.com/brendon).
+- [#1222](https://github.com/xdan/jodit/issues/1222) Popups and tooltips stay at their target in pinch-zoomed Safari. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.18.10
 
 #### :bug: Bug Fix

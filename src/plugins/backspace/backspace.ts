@@ -158,6 +158,12 @@ export class backspace extends Plugin {
 	private moveCaretToTextBefore(fakeNode: Node): void {
 		const { jodit } = this;
 		const { range } = jodit.s;
+
+		// A case may have merged the fake node away (#1722)
+		if (!fakeNode.parentNode) {
+			return;
+		}
+
 		const around = jodit.ed.createRange();
 		around.selectNode(fakeNode);
 
