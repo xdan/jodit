@@ -51,6 +51,16 @@ describe('Test Async module', () => {
 				expect(callCount).equals(0);
 			});
 
+			it('Should not call a timeout set with a label (#1731)', async () => {
+				asyncM.setTimeout(callSpy('timeout'), {
+					timeout: 100,
+					label: 'test'
+				});
+				asyncM.destruct();
+				await delay(200);
+				expect(callCount).equals(0);
+			});
+
 			describe('Jodit instance', () => {
 				it('Should work the same way', async () => {
 					const editor = getJodit();
@@ -131,6 +141,19 @@ describe('Test Async module', () => {
 				asyncM.clearTimeout(id);
 				await delay(200);
 				expect(callCount).equals(0);
+			});
+
+			describe('All, with clear()', () => {
+				it('Should clear a timeout set with a label (#1731)', async () => {
+					asyncM.setTimeout(callSpy('timeout'), {
+						timeout: 100,
+						label: 'test'
+					});
+					asyncM.setTimeout(callSpy('timeout'), 100);
+					asyncM.clear();
+					await delay(200);
+					expect(callCount).equals(0);
+				});
 			});
 
 			describe('With label', () => {
