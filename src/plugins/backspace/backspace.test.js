@@ -386,6 +386,26 @@ describe('Joining a line with a paragraph inside an inline element (#1720)', () 
 			`${span}<p>One</p><p>|Two</p></span>`,
 			'Backspace',
 			`${span}<p>One|Two</p></span>`
+		],
+		[
+			`<p>Before|</p>${span}<p>Welcome</p><br><p>Second</p></span>`,
+			'Delete',
+			`<p>Before|${span}Welcome</span></p><p>${span}<br></span></p><p>${span}Second</span></p>`
+		],
+		[
+			`<p>Before|</p>${span}<img src="a.png"><p>Welcome</p></span>`,
+			'Delete',
+			`<p>Before|${span}<img src="a.png"></span></p><p>${span}Welcome</span></p>`
+		],
+		[
+			`<p>Before</p><div>${span}<p>|Welcome</p></span></div>`,
+			'Backspace',
+			`<p>Before${span}|Welcome</span></p>`
+		],
+		[
+			'<div><p>Before|</p><span class="fr-video"><iframe src="about:blank"></iframe></span></div>',
+			'Delete',
+			'<div><p>Before|<span class="fr-video"><iframe src="about:blank"></iframe></span></p></div>'
 		]
 	].forEach(([source, key, result]) => {
 		it(`Should keep each line's own styles: ${key} in ${source} => ${result}`, () => {
