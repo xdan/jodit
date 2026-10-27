@@ -147,7 +147,8 @@ export const transactions: IStyleTransactions = {
 					value.style,
 					value.element,
 					value.jodit,
-					value.mode
+					value.mode,
+					value.collapsed
 				),
 				next: states.END
 			};
