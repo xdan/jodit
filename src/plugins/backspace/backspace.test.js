@@ -300,7 +300,23 @@ describe('Backspace/Delete next to a non-editable block (#1708)', () => {
 		]
 	].forEach(([source, result, key = Jodit.KEY_DELETE]) => {
 		it(`Should remove the block and join the lines beside it: ${source} => ${result}`, () => {
-			const editor = getJodit({ history: { timeout: 0 } });
+describe('Delete or Backspace beside an inline element round a block keeps the block (#1724)', () => {
+	const span = '<span style="font-family:Tahoma">';
+
+	[
+		[`<div>Intro|${span}<p>Welcome</p></span></div>`, 'Delete'],
+		[`<div>${span}<p>Welcome</p></span>|After</div>`, 'Backspace'],
+		[
+			`<table><tbody><tr><td>Intro|${span}<p>Welcome</p></span></td></tr></tbody></table>`,
+			'Delete'
+		],
+		[
+			`<div>Intro|${span}<ul><li>One</li><li>Two</li></ul></span></div>`,
+			'Delete'
+		],
+		['<div>Intro|<strong><p>Bold</p></strong></div>', 'Delete']
+	].forEach(([source, key]) => {
+		it(`Should not delete it: ${key} in ${source}`, () => {			const editor = getJodit({ history: { timeout: 0 } });
 			editor.value = source;
 			setCursorToChar(editor);
 
@@ -322,7 +338,16 @@ describe('Backspace keeps the text after the caret when wrap-nodes wraps the lin
 		expect(sortAttributes(editor.value)).equals(
 			'<p>Before</p><p><span style="font-family:Tahoma">Intro|Welcome</span></p>'
 		);	});
-});
+			simulateEvent(
+				'keydown',
+				key === 'Delete' ? Jodit.KEY_DELETE : Jodit.KEY_BACKSPACE,
+				editor.editor
+			);
+			replaceCursorToChar(editor);
+
+			expect(sortAttributes(editor.value)).equals(source);
+		});
+	});});
 
 // https://github.com/xdan/jodit/issues/1683
 describe('Backspace with modifiers that macOS binds itself', () => {

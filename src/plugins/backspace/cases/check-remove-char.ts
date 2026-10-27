@@ -58,7 +58,9 @@ export function checkRemoveChar(
 			) as Nullable<Node>;
 		}
 
-		if (!sibling) {
+		// A block inside an inline element, such as the `<p>` in
+		// `<span><p>…</p></span>`, isn't a char: the join cases handle it
+		if (!sibling || Dom.isBlock(sibling)) {
 			break;
 		}
 
