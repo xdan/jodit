@@ -38,8 +38,10 @@ function isContainingBlockForFixed(style: CSSStyleDeclaration): boolean {
  * ancestor's top-left corner. The returned offset should be subtracted from
  * the desired viewport coordinates before applying them.
  *
- * Returns `{ x: 0, y: 0 }` when no such ancestor exists (the common case), so
- * call sites keep their previous behaviour unchanged.
+ * Without such an ancestor the containing block is the layout viewport. Its
+ * offset is `{ x: 0, y: 0 }` in most browsers, but WebKit measures client
+ * rects from the visual viewport, so once the page is pinch-zoomed and panned
+ * the layout viewport starts above and to the left of the client origin.
  */
 export function getFixedPositionOffset(elm: HTMLElement): IPoint {
 	const win = elm.ownerDocument?.defaultView;
@@ -53,6 +55,20 @@ export function getFixedPositionOffset(elm: HTMLElement): IPoint {
 		}
 
 		node = node.parentElement;
+	}
+
+	const vv = win?.visualViewport;
+
+	// WebKit's `scrollX`/`scrollY` follow the visual viewport too (truncated),
+	// where Blink's and Gecko's follow the layout viewport
+	if (
+		win &&
+		vv &&
+		(vv.offsetLeft || vv.offsetTop) &&
+		Math.abs(vv.pageLeft - win.scrollX) < 1 &&
+		Math.abs(vv.pageTop - win.scrollY) < 1
+	) {
+		return { x: -Math.round(vv.offsetLeft), y: -Math.round(vv.offsetTop) };
 	}
 
 	return { x: 0, y: 0 };

@@ -298,6 +298,94 @@
 			});
 		});
 
+		describe('Pinch-zoomed page (#1222)', () => {
+			const originals = {};
+			let popup;
+
+			// The visual viewport is panned 250x150 into a layout viewport at
+			// the top of the page. WebKit reports the visual viewport's
+			// position in `scrollX`/`scrollY`, Blink and Gecko the layout's
+			const fakeViewport = (scrollX, scrollY) => {
+				const fakes = {
+					visualViewport: {
+						offsetLeft: 250,
+						offsetTop: 150,
+						pageLeft: 250,
+						pageTop: 150
+					},
+					scrollX,
+					scrollY
+				};
+
+				Object.keys(fakes).forEach(key => {
+					originals[key] = Object.getOwnPropertyDescriptor(
+						window,
+						key
+					);
+
+					Object.defineProperty(window, key, {
+						configurable: true,
+						get: () => fakes[key]
+					});
+				});
+			};
+
+			const openAt = bound => {
+				popup.setContent('<div>Popup</div>').open(() => bound);
+
+				return {
+					left: parseInt(popup.container.style.left, 10),
+					top: parseInt(popup.container.style.top, 10)
+				};
+			};
+
+			beforeEach(() => {
+				popup = new Jodit.modules.Popup(getJodit());
+			});
+
+			afterEach(() => {
+				popup.destruct();
+
+				Object.keys(originals).forEach(key => {
+					if (originals[key]) {
+						Object.defineProperty(window, key, originals[key]);
+					} else {
+						delete window[key];
+					}
+
+					delete originals[key];
+				});
+			});
+
+			it('Should place the popup in the layout viewport in WebKit', () => {
+				fakeViewport(250, 150);
+
+				const pos = openAt({
+					left: 100,
+					top: 50,
+					width: 20,
+					height: 20
+				});
+
+				expect(pos.left).equals(350);
+				expect(pos.top).equals(220);
+			});
+
+			it('Should keep client coordinates that follow the layout viewport', () => {
+				fakeViewport(0, 0);
+
+				const pos = openAt({
+					left: 100,
+					top: 50,
+					width: 20,
+					height: 20
+				});
+
+				expect(pos.left).equals(100);
+				expect(pos.top).equals(70);
+			});
+		});
+
 		describe('Popup inside <dialog>', () => {
 			it('Should show popup inside dialog', () => {
 				const dialog = document.createElement('dialog');
