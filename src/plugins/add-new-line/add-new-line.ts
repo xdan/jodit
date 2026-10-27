@@ -11,6 +11,7 @@
  */
 
 import type { HTMLTagNames, IJodit, Nullable } from 'jodit/types';
+import { KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from 'jodit/core/constants';
 import { autobind, throttle, watch } from 'jodit/core/decorators';
 import { pluginSystem } from 'jodit/core/global';
 import {
@@ -175,6 +176,61 @@ export class addNewLine extends Plugin {
 
 		e.preventDefault();
 	};
+
+	/**
+	 * A paragraph holding only an embed has no place for the caret, so the
+	 * arrow keys can't get past one that ends the content, or before one that
+	 * starts it. When an arrow key leaves the caret where it was and there is
+	 * content beyond it, a new line goes there, as when the line is clicked.
+	 */
+	@watch(':keydown')
+	protected onArrowKey(e: KeyboardEvent): void {
+		const editor = this.j;
+		const forward = e.key === KEY_DOWN || e.key === KEY_RIGHT;
+
+		if (
+			!editor.o.addNewLine ||
+			e.shiftKey ||
+			!(forward || e.key === KEY_UP || e.key === KEY_LEFT) ||
+			!editor.s.isCollapsed()
+		) {
+			return;
+		}
+
+		const { startContainer, startOffset } = editor.s.range;
+
+		// Once the browser has moved the caret, if it could. With a 0 timeout
+		// Jodit would run this at once, before the browser moves it
+		editor.async.setTimeout(() => {
+			const { range } = editor.s;
+			const block = Dom.closest(
+				startContainer,
+				Dom.isBlock,
+				editor.editor
+			);
+
+			if (
+				e.defaultPrevented ||
+				!editor.s.isInsideArea ||
+				!range.collapsed ||
+				range.startContainer !== startContainer ||
+				range.startOffset !== startOffset ||
+				!block ||
+				!Dom.findNotEmptyNeighbor(block, !forward, editor.editor)
+			) {
+				return;
+			}
+
+			const p = editor.createInside.element(editor.o.enter);
+			forward
+				? Dom.append(editor.editor, p)
+				: Dom.prepend(editor.editor, p);
+
+			editor.s.setCursorIn(p);
+			scrollIntoViewIfNeeded(p, editor.editor, editor.ed);
+			editor.synchronizeValues();
+		}, 1);
+	}
 
 	@watch(':dblclick')
 	protected onDblClickEditor(e: MouseEvent): void {
