@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.18.12
+
+#### :bug: Bug Fix
+
+- [#1733](https://github.com/xdan/jodit/issues/1733) Changing a list's type with just a caret converts the whole list, not only the caret's item, as Word does, and a numbered list carries its numbering on past items taken out of it. Thanks [@brendon](https://github.com/brendon).
+
 ## 4.18.11
 
 #### :bug: Bug Fix
