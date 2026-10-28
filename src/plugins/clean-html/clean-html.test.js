@@ -408,7 +408,7 @@ describe('Clean html plugin', function () {
 				[
 					[
 						'start <span style="background-color: red; color: blue;">test test test|</span>',
-						'start <span style="background-color: red; color: blue;">test test test</span> pop ',
+						'start <span style="background-color: red; color: blue;">test test test pop </span>',
 						' pop '
 					],
 
@@ -432,19 +432,19 @@ describe('Clean html plugin', function () {
 
 					[
 						'start <strong>test test test|</strong>',
-						'start <strong>test test test</strong> pop ',
+						'start <strong>test test test pop </strong>',
 						' pop '
 					],
 
 					[
 						'start <strong><em>test test test|</em></strong>',
-						'start <strong><em>test test test</em></strong> pop ',
+						'start <strong><em>test test test pop </em></strong>',
 						' pop '
 					],
 
 					[
 						'start <strong><em>test test| test</em></strong>',
-						'start <strong><em>test test</em></strong> pop <strong><em> test</em></strong>',
+						'start <strong><em>test test pop  test</em></strong>',
 						' pop '
 					],
 					[
@@ -593,6 +593,64 @@ describe('Clean html plugin', function () {
 							});
 						}
 					);
+				});
+			});
+		});
+
+		describe('With just a caret, as Word does (#1735)', function () {
+			// Inside a word, the whole word is cleared, and the caret stays put
+			[
+				['<p><strong>Bo|ld</strong> text</p>', '<p>BoXld text</p>'],
+				[
+					'<p><strong>Some bo|ld text</strong></p>',
+					'<p><strong>Some </strong>boXld<strong> text</strong></p>'
+				],
+				['<p><strong><em>te|st</em></strong></p>', '<p>teXst</p>'],
+				['<p><span style="color: red;">Re|d</span></p>', '<p>ReXd</p>']
+			].forEach(([source, result]) => {
+				it(`Should clear the word: ${source}`, function () {
+					const editor = getJodit();
+					editor.value = source;
+					setCursorToChar(editor);
+
+					clickButton('eraser', editor);
+					editor.s.insertHTML('X');
+
+					expect(editor.value).equals(result);
+				});
+			});
+
+			it('Should clear the word with the caret between two text nodes', function () {
+				const editor = getJodit();
+				editor.value = '<p><strong>Bold</strong> text</p>';
+				const strong = editor.editor.querySelector('strong');
+				strong.firstChild.splitText(2);
+
+				// As a real click on the button can leave it: (strong, 1)
+				const range = editor.s.createRange();
+				range.setStart(strong, 1);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				clickButton('eraser', editor);
+
+				expect(editor.value).equals('<p>Bold text</p>');
+			});
+
+			// At a word's start or end, or between words, nothing changes
+			[
+				'<p><strong>Bold|</strong> more</p>',
+				'<p>Some <strong>|Bold</strong></p>',
+				'<p><strong>Bold |text</strong></p>'
+			].forEach(source => {
+				it(`Should leave ${source} as it is`, function () {
+					const editor = getJodit();
+					editor.value = source;
+					setCursorToChar(editor);
+
+					clickButton('eraser', editor);
+
+					expect(editor.value).equals(source.replace('|', ''));
 				});
 			});
 		});
