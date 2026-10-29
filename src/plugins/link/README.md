@@ -105,6 +105,52 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+#### `processTypedLink`
+
+**Type:** `boolean`
+
+**Default:** `false`
+
+When `true`, an address becomes a link when the space, Enter or Tab after it is typed, as a pasted one does with `processPastedLink`:
+
+- **What counts:** an address with a scheme (`https://example.com/enrol`), one that starts with `www.` and has a dot after it, which gets `https://` in its `href`, and an email address, which gets `mailto:`.
+- **A bare domain** counts too (`example.com`, `elections.nz`, `bit.ly/enrol`), and gets `https://`. Its ending must be a real top-level domain, from IANA's list (`make tlds` brings it up to date), typed in lower case, and its first part needs a letter. That leaves out a sentence run on (`home.It`), a time or a numbered step (`11.am`), and `Node.js` or `e.g.`, which have no real ending. Endings more often a file's are left out too, as `typedLinkFileEndings` lists them: `photos.zip`, `clip.mov`, `README.md`, `newsletter.pub`, `.py` and `.sh`. A missed space before a real ending, as in `the dog.it`, still links, and Backspace straight after takes the link off.
+- **Punctuation round it** stays outside the link: a full stop, comma, colon, semicolon, `!` or `?` after it, quotes, and brackets the address doesn't open, as in `(www.example.com).` A `)` the address opens, as in `https://en.wikipedia.org/wiki/Kiwi_(bird)`, stays in.
+- **Undo** straight after takes the link off and leaves the text, as the link is a history step of its own. It's made after the space or Enter that ends the address.
+- **Not** inside a link, `<pre>` or `<code>`.
+- The link gets the same `applyLink` event as a pasted one.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    link: {
+        processTypedLink: true
+    }
+});
+```
+
+#### `typedLinkFileEndings`
+
+**Type:** `string[]`
+
+**Default:** `['zip', 'mov', 'md', 'py', 'sh', 'pub']`
+
+With `processTypedLink`, the endings a bare domain doesn't link with, as they're more often a file's, in lower case and without the dot. As with Jodit's other nested lists, a plain list replaces the default one entry by entry from the start, so `['one']` would leave out `zip` and keep the rest. Wrap the list in `Jodit.atom` to replace the whole of it, as below. `Jodit.atom([])` links every real ending.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    link: {
+        processTypedLink: true,
+        // notes.one stays text too
+        typedLinkFileEndings: Jodit.atom([
+            ...Jodit.defaultOptions.link.typedLinkFileEndings,
+            'one'
+        ])
+    }
+});
+```
+
 #### `deriveUrlFromText`
 
 **Type:** `boolean`
@@ -454,6 +500,7 @@ editor.e.on('processPaste.link', (e, text, insert) => {
    - `dblclick.link` (if `followOnDblClick` enabled)
    - `click.link` (for read-only navigation prevention)
    - `processPaste.link` (if `processPastedLink` enabled)
+   - `input.link`, `beforeEnter.link`, `afterEnter.link` and a `keydown` handler without a namespace, so ahead of table navigation (if `processTypedLink` enabled)
    - `generateLinkForm.link` (form customization)
 
 ### Link Dialog Flow
@@ -607,7 +654,7 @@ Fired when link is successfully applied or updated.
 **Parameters:**
 - `jodit`: The Jodit editor instance
 - `elm`: The `<a>` element that was created or modified
-- `form`: The form data object (or `null` when called from paste handler)
+- `form`: The form data object (or `null` when called from the paste handler or for a typed link)
 
 **Example:**
 ```typescript
@@ -674,15 +721,17 @@ editor.e.on('processPaste.link', (e, text, insert) => {
 
 7. **Plain URL Paste**: Plain URLs are automatically wrapped in `<a>` tags when `processPastedLink` is enabled
 
-8. **Read-Only Mode**: Links cannot be edited in read-only mode, and navigation is prevented when `preventReadOnlyNavigation` is true
+8. **Typed Address**: With `processTypedLink`, an address is linked when the space, Enter or Tab after it is typed, and Undo straight after takes the link off. A YouTube or Vimeo address typed this way stays a link and doesn't become an embed, as a pasted one does with `processVideoLink`
 
-9. **Double-Click Navigation**: Only works when `followOnDblClick` is enabled; otherwise, standard text selection occurs
+9. **Read-Only Mode**: Links cannot be edited in read-only mode, and navigation is prevented when `preventReadOnlyNavigation` is true
 
-10. **Nested Elements**: Plugin correctly handles links containing nested elements (spans, images, etc.)
+10. **Double-Click Navigation**: Only works when `followOnDblClick` is enabled; otherwise, standard text selection occurs
 
-11. **Form Refs**: Form fields use refs (`url_input`, `content_input`, `className_input`, etc.) for programmatic access
+11. **Nested Elements**: Plugin correctly handles links containing nested elements (spans, images, etc.)
 
-12. **Unlink Button**: In form, unlink button removes link and closes dialog
+12. **Form Refs**: Form fields use refs (`url_input`, `content_input`, `className_input`, etc.) for programmatic access
+
+13. **Unlink Button**: In form, unlink button removes link and closes dialog
 
 ## Known Issues
 

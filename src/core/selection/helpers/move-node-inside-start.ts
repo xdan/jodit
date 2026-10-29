@@ -9,7 +9,7 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { INSEPARABLE_TAGS } from 'jodit/core/constants';
+import { INSEPARABLE_TAGS, NBSP_SPACE } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 
 /**
@@ -22,8 +22,13 @@ export function moveNodeInsideStart(
 	node: Node,
 	start: boolean
 ): void {
-	let sibling = Dom.findSibling(node, start),
-		anotherSibling = Dom.findSibling(node, !start);
+	// A text node of non-breaking spaces trims to nothing, but it's text the
+	// node mustn't move past
+	const isContent = (n: Node): boolean =>
+		!Dom.isEmptyTextNode(n) || Boolean(n.nodeValue?.includes(NBSP_SPACE));
+
+	let sibling = Dom.findSibling(node, start, isContent),
+		anotherSibling = Dom.findSibling(node, !start, isContent);
 
 	while (
 		Dom.isElement(sibling) &&

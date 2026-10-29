@@ -2077,4 +2077,355 @@ describe('Link plugin', () => {
 			);
 		});
 	});
+	describe('Typed links, with link.processTypedLink (#1712)', () => {
+		// What the browser does for a key that types: keydown, then the
+		// character goes in at the caret, the caret goes after it, and input
+		// fires. A space at the end of a line goes in as a non-breaking one
+		const type = (editor, char) => {
+			simulateEvent('keydown', char, editor.editor);
+
+			const { startContainer: node, startOffset: offset } =
+				editor.s.range;
+			node.insertData(offset, char === ' ' ? '\u00a0' : char);
+
+			const range = editor.ed.createRange();
+			range.setStart(node, offset + char.length);
+			editor.s.selectRange(range);
+
+			simulateEvent('input', editor.editor, () => ({
+				inputType: 'insertText',
+				data: char
+			}));
+		};
+
+		const typed = (
+			value,
+			options = { link: { processTypedLink: true } }
+		) => {
+			const editor = getJodit({ history: { timeout: 0 }, ...options });
+			editor.value = value;
+			setCursorToChar(editor);
+			type(editor, ' ');
+			replaceCursorToChar(editor);
+			return sortAttributes(editor.value);
+		};
+
+		it('Should be off by default', () => {
+			expect(typed('<p>www.example.com|</p>', {})).equals(
+				'<p>www.example.com |</p>'
+			);
+		});
+
+		describe('A space after an address', () => {
+			[
+				[
+					'<p>www.example.com|</p>',
+					'<p><a href="https://www.example.com">www.example.com</a> |</p>'
+				],
+				[
+					'<p>Forms are at https://example.com/enrol?term=1|</p>',
+					'<p>Forms are at <a href="https://example.com/enrol?term=1">https://example.com/enrol?term=1</a> |</p>'
+				],
+				[
+					'<p>Write to office@example.school.nz|</p>',
+					'<p>Write to <a href="mailto:office@example.school.nz">office@example.school.nz</a> |</p>'
+				],
+				[
+					'<p>mailto:office@example.school.nz|</p>',
+					'<p><a href="mailto:office@example.school.nz">mailto:office@example.school.nz</a> |</p>'
+				],
+				[
+					'<p>See www.example.com.|</p>',
+					'<p>See <a href="https://www.example.com">www.example.com</a>. |</p>'
+				],
+				[
+					'<p>(see www.example.com)|</p>',
+					'<p>(see <a href="https://www.example.com">www.example.com</a>) |</p>'
+				],
+				[
+					'<p>(www.example.com),|</p>',
+					'<p>(<a href="https://www.example.com">www.example.com</a>), |</p>'
+				],
+				[
+					'<p>https://en.wikipedia.org/wiki/Kiwi_(bird)|</p>',
+					'<p><a href="https://en.wikipedia.org/wiki/Kiwi_(bird)">https://en.wikipedia.org/wiki/Kiwi_(bird)</a> |</p>'
+				],
+				[
+					'<p>Visit example.com|</p>',
+					'<p>Visit <a href="https://example.com">example.com</a> |</p>'
+				],
+				[
+					'<p>nzqa.govt.nz|</p>',
+					'<p><a href="https://nzqa.govt.nz">nzqa.govt.nz</a> |</p>'
+				],
+				[
+					'<p>bit.ly/enrol|</p>',
+					'<p><a href="https://bit.ly/enrol">bit.ly/enrol</a> |</p>'
+				],
+				[
+					'<p>forms.gle/abc123|</p>',
+					'<p><a href="https://forms.gle/abc123">forms.gle/abc123</a> |</p>'
+				],
+				[
+					'<p>Vote at elections.nz|</p>',
+					'<p>Vote at <a href="https://elections.nz">elections.nz</a> |</p>'
+				],
+				[
+					'<p>Order at popped.app|</p>',
+					'<p>Order at <a href="https://popped.app">popped.app</a> |</p>'
+				],
+				[
+					'<p><strong>www.example.com|</strong></p>',
+					'<p><strong><a href="https://www.example.com">www.example.com</a> |</strong></p>'
+				]
+			].forEach(([value, expected]) => {
+				it(`Should link ${value}`, () => {
+					expect(typed(value)).equals(expected);
+				});
+			});
+
+			[
+				'<p>www.example|</p>',
+				'<p>went home.It|</p>',
+				'<p>at 11.am|</p>',
+				'<p>newsletter.pub|</p>',
+				'<p>photos.zip|</p>',
+				'<p>README.md|</p>',
+				'<p>report.v1.docx|</p>',
+				'<p>e.g.|</p>',
+				'<p>Node.js|</p>',
+				'<p>version 1.5|</p>',
+				'<p>@office|</p>',
+				'<p><a href="https://x.com">www.example.com|</a></p>',
+				'<pre>www.example.com|</pre>',
+				'<p><code>www.example.com|</code></p>'
+			].forEach(value => {
+				it(`Should leave ${value} alone`, () => {
+					expect(typed(value)).equals(value.replace('|', ' |'));
+				});
+			});
+		});
+
+		describe('Option link.typedLinkFileEndings', () => {
+			it('Should leave alone the endings it lists, and link the others', () => {
+				const options = {
+					link: {
+						processTypedLink: true,
+						typedLinkFileEndings: Jodit.atom(['one'])
+					}
+				};
+
+				expect(typed('<p>notes.one|</p>', options)).equals(
+					'<p>notes.one |</p>'
+				);
+				expect(typed('<p>photos.zip|</p>', options)).equals(
+					'<p><a href="https://photos.zip">photos.zip</a> |</p>'
+				);
+			});
+
+			it('Should link every real ending when the list is empty', () => {
+				expect(
+					typed('<p>README.md|</p>', {
+						link: {
+							processTypedLink: true,
+							typedLinkFileEndings: Jodit.atom([])
+						}
+					})
+				).equals('<p><a href="https://README.md">README.md</a> |</p>');
+			});
+		});
+
+		it('Should not link on other input', () => {
+			const editor = getJodit({ link: { processTypedLink: true } });
+			editor.value = '<p>www.example.com&nbsp;|</p>';
+			setCursorToChar(editor);
+
+			simulateEvent('input', editor.editor, () => ({
+				inputType: 'deleteContentBackward'
+			}));
+			replaceCursorToChar(editor);
+
+			expect(editor.value).equals('<p>www.example.com&nbsp;|</p>');
+		});
+
+		it('Should be a step of its own, so Undo takes the link off and leaves the text', () => {
+			const editor = getJodit({
+				link: { processTypedLink: true },
+				history: { timeout: 0 }
+			});
+			editor.value = '<p>www.example.com|</p>';
+			setCursorToChar(editor);
+			type(editor, ' ');
+
+			editor.execCommand('undo');
+			expect(editor.value).equals('<p>www.example.com&nbsp;</p>');
+		});
+
+		it('Should fire applyLink, as a pasted link does', () => {
+			const editor = getJodit({ link: { processTypedLink: true } });
+			editor.e.on('applyLink', (jodit, a) => {
+				a.setAttribute('target', '_blank');
+			});
+			editor.value = '<p>www.example.com|</p>';
+			setCursorToChar(editor);
+			type(editor, ' ');
+
+			expect(sortAttributes(editor.value)).equals(
+				'<p><a href="https://www.example.com" target="_blank">www.example.com</a> </p>'
+			);
+		});
+
+		describe('Backspace straight after', () => {
+			const linked = () => {
+				const editor = getJodit({ link: { processTypedLink: true } });
+				editor.value = '<p>www.example.com|</p>';
+				setCursorToChar(editor);
+				type(editor, ' ');
+				return editor;
+			};
+
+			const backspace = editor =>
+				simulateEvent('keydown', 'Backspace', editor.editor);
+
+			it('Should take the link off and leave the text and the space, as in CKEditor 5', () => {
+				const editor = linked();
+
+				backspace(editor);
+
+				replaceCursorToChar(editor);
+				expect(editor.value).equals('<p>www.example.com&nbsp;|</p>');
+			});
+
+			it('Should delete as usual the next time', () => {
+				const editor = linked();
+
+				backspace(editor);
+				backspace(editor);
+
+				replaceCursorToChar(editor);
+				expect(editor.value).equals('<p>www.example.com|</p>');
+			});
+
+			it('Should delete as usual after another key', () => {
+				const editor = linked();
+
+				type(editor, 'x');
+				backspace(editor);
+
+				replaceCursorToChar(editor);
+				expect(sortAttributes(editor.value)).equals(
+					'<p><a href="https://www.example.com">www.example.com</a> |</p>'
+				);
+			});
+
+			it('Should delete as usual after a click', () => {
+				const editor = linked();
+
+				simulateEvent('mousedown', editor.editor);
+				backspace(editor);
+
+				replaceCursorToChar(editor);
+				expect(sortAttributes(editor.value)).equals(
+					'<p><a href="https://www.example.com">www.example.com</a>|</p>'
+				);
+			});
+
+			it('Should take the link off after Enter, and keep the new line', async () => {
+				const editor = getJodit({ link: { processTypedLink: true } });
+				editor.value = '<p>www.example.com|</p>';
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', 'Enter', editor.editor);
+				await Promise.resolve();
+				backspace(editor);
+
+				replaceCursorToChar(editor);
+				expect(editor.value).equals(
+					'<p>www.example.com</p><p>|<br></p>'
+				);
+			});
+		});
+
+		describe('Enter after an address', () => {
+			[false, true].forEach(shiftKey => {
+				it(`Should link it with ${shiftKey ? 'Shift+Enter' : 'Enter'}`, async () => {
+					const editor = getJodit({
+						link: { processTypedLink: true },
+						history: { timeout: 0 }
+					});
+					editor.value = '<p>www.example.com|</p>';
+					setCursorToChar(editor);
+
+					simulateEvent('keydown', 'Enter', editor.editor, () => ({
+						shiftKey
+					}));
+					await Promise.resolve();
+
+					expect(editor.value).contains(
+						'<a href="https://www.example.com">www.example.com</a>'
+					);
+
+					editor.execCommand('undo');
+					expect(editor.value).does.not.contain('<a ');
+					expect(editor.value).contains('www.example.com');
+				});
+			});
+		});
+
+		describe('The caret after Enter', () => {
+			[
+				[
+					false,
+					'<p><a href="https://www.example.com">www.example.com</a></p><p>next</p>'
+				],
+				[
+					true,
+					'<p><a href="https://www.example.com">www.example.com</a><br>next</p>'
+				]
+			].forEach(([shiftKey, expected]) => {
+				it(`Should stay on the new line after ${shiftKey ? 'Shift+Enter' : 'Enter'}`, async () => {
+					const editor = getJodit({
+						link: { processTypedLink: true }
+					});
+					editor.value = '<p>www.example.com|</p>';
+					setCursorToChar(editor);
+
+					simulateEvent('keydown', 'Enter', editor.editor, () => ({
+						shiftKey
+					}));
+					await Promise.resolve();
+					editor.s.insertHTML('next');
+
+					expect(editor.value).equals(expected);
+				});
+			});
+		});
+
+		describe('Tab after an address', () => {
+			it('Should link it', () => {
+				const editor = getJodit({ link: { processTypedLink: true } });
+				editor.value = '<p>www.example.com|</p>';
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', 'Tab', editor.editor);
+
+				expect(editor.value).equals(
+					'<p><a href="https://www.example.com">www.example.com</a></p>'
+				);
+			});
+
+			it('Should link it in a table cell before the next cell takes the caret', () => {
+				const editor = getJodit({ link: { processTypedLink: true } });
+				editor.value =
+					'<table><tbody><tr><td>www.example.com|</td><td>next</td></tr></tbody></table>';
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', 'Tab', editor.editor);
+
+				expect(editor.value).equals(
+					'<table><tbody><tr><td><a href="https://www.example.com">www.example.com</a></td><td>next</td></tr></tbody></table>'
+				);
+			});
+		});
+	});
 });
