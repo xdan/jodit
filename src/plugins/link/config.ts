@@ -43,6 +43,27 @@ declare module 'jodit/config' {
 			processPastedLink: boolean;
 
 			/**
+			 * Link an address when the space, Enter or Tab after it is typed:
+			 * one with a scheme (`https://…`), one that starts with `www.` or a
+			 * bare domain such as `example.com` or `education.govt.nz`, which
+			 * get `https://`, or an email address, which gets `mailto:`.
+			 * Punctuation that ends a sentence stays outside the link, and
+			 * Backspace or Undo straight after takes the link off. Not inside a
+			 * link, `<pre>` or `<code>`. Default: false.
+			 */
+			processTypedLink: boolean;
+
+			/**
+			 * With `processTypedLink`, the endings a bare domain doesn't link
+			 * with, as they're more often a file's: `photos.zip`, `README.md`.
+			 * In lower case, without the dot. A plain list replaces this one
+			 * entry by entry from the start, so use `Jodit.atom` to replace the
+			 * whole list. `Jodit.atom([])` links every real ending.
+			 * Default: `['zip', 'mov', 'md', 'py', 'sh', 'pub']`.
+			 */
+			typedLinkFileEndings: string[];
+
+			/**
 			 * When opening the link dialog for a new link with an empty URL field,
 			 * pre-fill it from the selected text if that text looks like a URL or
 			 * an email address (`example.com` → `https://example.com`,
@@ -108,6 +129,8 @@ Config.prototype.link = {
 	followOnDblClick: false,
 	processVideoLink: true,
 	processPastedLink: true,
+	processTypedLink: false,
+	typedLinkFileEndings: ['zip', 'mov', 'md', 'py', 'sh', 'pub'],
 	deriveUrlFromText: false,
 	noFollowCheckbox: true,
 	openInNewTabCheckbox: true,

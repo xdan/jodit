@@ -44,6 +44,10 @@ KARMA := @$(TS_NODE_BASE) $(NODE_MODULES_BIN)/karma start
 update:
 	@npm update
 
+.PHONY: tlds
+tlds:
+	@$(TS_NODE_BASE) $(cwd)tools/update-tlds.ts
+
 .PHONY: version
 version:
 	@echo $(version)

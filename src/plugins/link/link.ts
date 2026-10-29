@@ -12,6 +12,7 @@
 
 import type { IDictionary, IJodit, IUIForm, Nullable } from 'jodit/types';
 import type { UIForm } from 'jodit/core/ui/form/form';
+import { KEY_BACKSPACE, KEY_TAB } from 'jodit/core/constants';
 import { autobind } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
@@ -28,6 +29,8 @@ import {
 import { Plugin } from 'jodit/core/plugin';
 
 import './config';
+
+import { EMAIL, findTypedLink } from './typed-link';
 
 /**
  * Process link. Insert, dblclick or remove format
@@ -51,6 +54,22 @@ export class link extends Plugin {
 
 		if (jodit.o.link.processPastedLink) {
 			jodit.e.on('processPaste.link', this.onProcessPasteLink);
+		}
+
+		if (jodit.o.link.processTypedLink) {
+			this.__linkAfterEnter = jodit.async.microDebounce(this.__linkTyped);
+
+			jodit.e
+				.on('input.link', this.__onTypedSpace)
+				.on('beforeEnter.link', this.__onBeforeEnter)
+				.on('afterEnter.link', this.__onAfterEnter)
+				.on(
+					'mousedown.link blur.link beforeCommand.link',
+					this.__forgetLink
+				)
+				// Without a namespace it runs ahead of table navigation,
+				// which moves the caret on Tab, and of the backspace plugin
+				.on('keydown', this.__onKeyDown, { top: true });
 		}
 
 		jodit.e.on('generateLinkForm.link', this.__generateForm);
@@ -399,7 +418,158 @@ export class link extends Plugin {
 			.off('generateLinkForm.link', this.__generateForm)
 			.off('dblclick.link', this.__onDblClickOnLink)
 			.off(jodit.editor, 'click.link', this.__onClickReadOnlyLink)
-			.off('processPaste.link', this.onProcessPasteLink);
+			.off('processPaste.link', this.onProcessPasteLink)
+			.off('input.link', this.__onTypedSpace)
+			.off('beforeEnter.link', this.__onBeforeEnter)
+			.off('afterEnter.link', this.__onAfterEnter)
+			.off(
+				'mousedown.link blur.link beforeCommand.link',
+				this.__forgetLink
+			)
+			.off('keydown', this.__onKeyDown);
+	}
+
+	@autobind
+	private __onTypedSpace(event: InputEvent): void {
+		const { range } = this.j.s;
+
+		if (
+			event.inputType === 'insertText' &&
+			event.data &&
+			!/\S/.test(event.data) &&
+			range.collapsed
+		) {
+			this.__linkTyped(
+				range.startContainer,
+				range.startOffset - event.data.length
+			);
+		}
+	}
+
+	/**
+	 * Where the caret was when Enter was pressed. Enter splits the line in a
+	 * history transaction, so the link waits until it's over
+	 */
+	private __enteredAt: Nullable<[Node, number]> = null;
+
+	private __linkAfterEnter: (node: Node, end: number) => void = () => {};
+
+	@autobind
+	private __onBeforeEnter(): void {
+		const { range } = this.j.s;
+
+		this.__enteredAt = range.collapsed
+			? [range.startContainer, range.startOffset]
+			: null;
+	}
+
+	@autobind
+	private __onAfterEnter(): void {
+		if (this.__enteredAt) {
+			this.__linkAfterEnter(...this.__enteredAt);
+			this.__enteredAt = null;
+		}
+	}
+
+	/**
+	 * The link just made, which Backspace straight after takes off again, as
+	 * in CKEditor 5. Any other key but a modifier, a click or a command
+	 * forgets it
+	 */
+	private __justLinked: Nullable<HTMLAnchorElement> = null;
+
+	@autobind
+	private __forgetLink(): void {
+		this.__justLinked = null;
+	}
+
+	@autobind
+	private __onKeyDown(event: KeyboardEvent): false | void {
+		const { jodit } = this;
+		const link = this.__justLinked;
+		const modified = event.ctrlKey || event.metaKey || event.altKey;
+
+		if (!MODIFIER_KEYS.has(event.key)) {
+			this.__justLinked = null;
+		}
+
+		if (event.key === KEY_BACKSPACE && !modified && link?.isConnected) {
+			this.__recordStep();
+			jodit.s.save();
+			Dom.unwrap(link);
+			jodit.s.restore();
+			this.__recordStep();
+
+			// Or the backspace plugin takes a character too
+			jodit.e.stopPropagation('keydown');
+			return false;
+		}
+
+		const { range } = jodit.s;
+
+		if (event.key === KEY_TAB && !modified && range.collapsed) {
+			this.__linkTyped(range.startContainer, range.startOffset);
+		}
+	}
+
+	/**
+	 * Links the address that ends at `end` in a text node, as a step of its
+	 * own in the history, so Undo straight after takes the link off and
+	 * leaves the text
+	 */
+	@autobind
+	private __linkTyped(node: Node, end: number): void {
+		const { jodit } = this;
+
+		if (
+			!Dom.isText(node) ||
+			!node.isConnected ||
+			end < 0 ||
+			end > node.length ||
+			Dom.closest(node, NO_TYPED_LINKS, jodit.editor)
+		) {
+			return;
+		}
+
+		const found = findTypedLink(
+			node.data,
+			end,
+			jodit.o.link.typedLinkFileEndings
+		);
+
+		if (!found) {
+			return;
+		}
+
+		const [start, stop, href] = found;
+
+		this.__recordStep();
+
+		// The text round the caret splits, and WebKit doesn't keep the caret
+		// where it was
+		jodit.s.save();
+
+		const range = jodit.ed.createRange();
+		range.setStart(node, start);
+		range.setEnd(node, stop);
+
+		const a = jodit.createInside.element('a');
+		attr(a, 'href', href);
+		range.surroundContents(a);
+
+		jodit.s.restore();
+		jodit.e.fire('applyLink', jodit, a, null);
+
+		this.__recordStep();
+		this.__justLinked = a;
+	}
+
+	/**
+	 * Reports what's changed and makes it a history step of its own
+	 */
+	private __recordStep(): void {
+		this.j.setEditorValue();
+		this.j.e.fire('internalChange');
 	}
 
 	@autobind
@@ -415,6 +585,9 @@ export class link extends Plugin {
 		}
 	}
 }
+
+const NO_TYPED_LINKS = new Set(['a', 'pre', 'code'] as const);
+const MODIFIER_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'CapsLock']);
 
 pluginSystem.add('link', link);
 
@@ -436,7 +609,7 @@ function guessUrlFromText(text: string): string {
 	}
 
 	// email address -> mailto:
-	if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+	if (EMAIL.test(value)) {
 		return `mailto:${value}`;
 	}
 

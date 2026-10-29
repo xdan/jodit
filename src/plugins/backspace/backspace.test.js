@@ -484,6 +484,41 @@ describe('After a join the caret is where typing goes (#1726)', () => {
 	});
 });
 
+describe('A non-breaking space after an inline element at the end of a line', () => {
+	[
+		[
+			'Backspace',
+			'<p><a href="https://x.com">Link</a>&nbsp;|</p>',
+			'<p><a href="https://x.com">Link</a>|</p>'
+		],
+		[
+			'Backspace',
+			'<p><strong>Bold</strong>&nbsp;|</p>',
+			'<p><strong>Bold|</strong></p>'
+		],
+		[
+			'Delete',
+			'<p>|&nbsp;<a href="https://x.com">Link</a></p>',
+			'<p>|<a href="https://x.com">Link</a></p>'
+		]
+	].forEach(([key, source, result]) => {
+		it(`Should be what ${key} removes in ${source}, not a letter of the element`, () => {
+			const editor = getJodit();
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent(
+				'keydown',
+				key === 'Backspace' ? Jodit.KEY_BACKSPACE : Jodit.KEY_DELETE,
+				editor.editor
+			);
+
+			replaceCursorToChar(editor);
+			expect(editor.value).equals(result);
+		});
+	});
+});
+
 // https://github.com/xdan/jodit/issues/1683
 describe('Backspace with modifiers that macOS binds itself', () => {
 	[
