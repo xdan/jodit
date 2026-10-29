@@ -498,6 +498,78 @@ describe('After a join the caret is where typing goes (#1726)', () => {
 	});
 });
 
+// moveNodeInsideStart puts the caret into the element first, but not past
+// a non-breaking space, which is text
+describe('Backspace and Delete beside an inline element', () => {
+	[
+		[
+			'Backspace',
+			'<p><a href="https://x.com">Link</a>&nbsp;|</p>',
+			'<p><a href="https://x.com">Link</a>|</p>'
+		],
+		[
+			'Backspace',
+			'<p><strong>Bold</strong>&nbsp;|</p>',
+			'<p><strong>Bold|</strong></p>'
+		],
+		[
+			'Delete',
+			'<p>|&nbsp;<a href="https://x.com">Link</a></p>',
+			'<p>|<a href="https://x.com">Link</a></p>'
+		],
+		[
+			'Backspace',
+			'<p><strong>Bold</strong>&nbsp;<span contenteditable="false">X</span>|</p>',
+			'<p><strong>Bold</strong>&nbsp;|</p>'
+		],
+		[
+			'Delete',
+			'<p>|<span contenteditable="false">X</span>&nbsp;<strong>Bold</strong></p>',
+			'<p>|&nbsp;<strong>Bold</strong></p>'
+		],
+		[
+			'Backspace',
+			'<p><strong>Bold</strong><span contenteditable="false">X</span>|</p>',
+			'<p><strong>Bold|</strong></p>'
+		],
+		[
+			'Backspace',
+			'<p><strong>Bold</strong>|</p>',
+			'<p><strong>Bol|</strong></p>'
+		],
+		[
+			'Backspace',
+			`<p><strong>Bold</strong>${Jodit.INVISIBLE_SPACE}|</p>`,
+			'<p><strong>Bol|</strong></p>'
+		],
+		[
+			'Backspace',
+			'<p><strong>Bold</strong> |</p>',
+			'<p><strong>Bol|</strong> </p>'
+		],
+		[
+			'Delete',
+			'<p>|<strong>Bold</strong></p>',
+			'<p><strong>|old</strong></p>'
+		]
+	].forEach(([key, source, result]) => {
+		it(`Should give ${result} after ${key} in ${source}`, () => {
+			const editor = getJodit();
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent(
+				'keydown',
+				key === 'Backspace' ? Jodit.KEY_BACKSPACE : Jodit.KEY_DELETE,
+				editor.editor
+			);
+
+			replaceCursorToChar(editor);
+			expect(editor.value).equals(result);
+		});
+	});
+});
+
 // https://github.com/xdan/jodit/issues/1683
 describe('Backspace with modifiers that macOS binds itself', () => {
 	[
