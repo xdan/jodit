@@ -18,7 +18,9 @@ import { assert } from 'jodit/core/helpers/utils/assert';
  * @private
  */
 export function onTabInsideLi(jodit: IJodit, shift: boolean = false): boolean {
-	if (!jodit.o.tab.tabInsideLiInsertNewList) {
+	// Focused with no range, as WebKit can leave it, there's no caret to
+	// mark
+	if (!jodit.o.tab.tabInsideLiInsertNewList || !jodit.s.isInsideArea) {
 		return false;
 	}
 

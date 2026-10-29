@@ -14,7 +14,10 @@ import { INVISIBLE_SPACE, NBSP_SPACE } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { call, isVoid, toArray, trimInv } from 'jodit/core/helpers';
 
-import { findMostNestedNeighbor } from 'jodit/plugins/backspace/helpers';
+import {
+	addBRInsideEmptyBlock,
+	findMostNestedNeighbor
+} from 'jodit/plugins/backspace/helpers';
 
 /**
  * Check possibility the char can be removed
@@ -175,19 +178,6 @@ function removeEmptyForParent(node: Node, tags: HTMLTagNames): void {
 		}
 
 		parent = p;
-	}
-}
-
-/**
- * Helper add BR element inside empty block element
- */
-function addBRInsideEmptyBlock(jodit: IJodit, node: Node): void {
-	if (
-		node.parentElement !== jodit.editor &&
-		Dom.isBlock(node.parentElement) &&
-		Dom.each(node.parentElement, Dom.isEmptyTextNode)
-	) {
-		Dom.after(node, jodit.createInside.element('br'));
 	}
 }
 

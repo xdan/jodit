@@ -9,3 +9,4 @@
  */
 
 export * from './on-tab-inside-li';
+export * from './tab-spaces';

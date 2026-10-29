@@ -164,6 +164,7 @@ The `isEditorEmpty()` function checks if editor is empty:
 3. **Tables**: Returns `false` if first child is table
 4. **Text Node**: Checks if text node is empty (only whitespace)
 5. **Element Check**: Recursively checks if all children are empty or `<br>` tags
+6. **Non-breaking Spaces**: Returns `false` if the text has a non-breaking space, as only typing puts one there, such as Tab with `tab.spaces`
 
 ### Show/Hide Logic
 
