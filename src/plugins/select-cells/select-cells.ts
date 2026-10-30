@@ -67,19 +67,23 @@ export class selectCells extends Plugin {
 				this.onStartSelection
 			)
 			// For `clickEditor` correct working. Because `mousedown` on first cell
-			// and mouseup on another cell call `click` only for `TR` element.
-			.on('clickTr clickTbody', (): void | false => {
-				const cellsCount =
-					this.__tableModule.getAllSelectedCells().length;
+			// and mouseup on another cell call `click` only for their common
+			// ancestor: the row, the section, or the table across sections
+			.on(
+				'clickTr clickTbody clickThead clickTfoot clickTable',
+				(): void | false => {
+					const cellsCount =
+						this.__tableModule.getAllSelectedCells().length;
 
-				if (cellsCount) {
-					if (cellsCount > 1) {
-						this.j.s.sel?.removeAllRanges();
+					if (cellsCount) {
+						if (cellsCount > 1) {
+							this.j.s.sel?.removeAllRanges();
+						}
+
+						return false;
 					}
-
-					return false;
 				}
-			});
+			);
 	}
 
 	/**
@@ -507,7 +511,7 @@ export class selectCells extends Plugin {
 		}
 
 		if (
-			/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/.test(
+			/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow|headerrow)/.test(
 				command
 			)
 		) {
@@ -630,6 +634,10 @@ export class selectCells extends Plugin {
 							command === 'addrowafter'
 						);
 						break;
+
+					case 'headerrow':
+						this.__toggleHeaderRow(table, cells);
+						break;
 				}
 
 				if (
@@ -642,6 +650,35 @@ export class selectCells extends Plugin {
 
 			return false;
 		}
+	}
+
+	/**
+	 * Turns the table's header row on or off. The caret and the marked cells
+	 * move to the cells that replace them
+	 */
+	private __toggleHeaderRow(
+		table: HTMLTableElement,
+		cells: HTMLTableCellElement[]
+	): void {
+		const module = this.__tableModule;
+
+		this.j.s.save();
+		const replaced = module.toggleHeaderRow(table);
+		this.j.s.restore();
+
+		cells.forEach(cell => {
+			const next = replaced.get(cell);
+
+			if (next) {
+				module.removeSelection(cell);
+				module.addSelection(next);
+			}
+		});
+
+		// As after the click that marked it, the command's own change keeps
+		// the marks, so the popup can stay open for another toggle
+		const anchor = this.__selectedCell ?? cells[0];
+		this.__selectedCell = replaced.get(anchor) ?? anchor;
 	}
 
 	/**

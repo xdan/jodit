@@ -112,6 +112,7 @@ module.exports = {
 	'Insert column after': 'Spalte danach einfügen',
 	'Insert row above': 'Zeile oberhalb einfügen',
 	'Insert row below': 'Zeile unterhalb einfügen',
+	'Header row': 'Kopfzeile',
 	'Delete table': 'Tabelle löschen',
 	'Delete row': 'Zeile löschen',
 	'Delete column': 'Spalte löschen',

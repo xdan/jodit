@@ -112,6 +112,7 @@ module.exports = {
 	'Insert column after': 'Ард нь багана нэмэх',
 	'Insert row above': 'Дээр нь мөр нэмэх',
 	'Insert row below': 'Доор нь мөр нэмэх',
+	'Header row': 'Толгой мөр',
 	'Delete table': 'Хүснэгт устгах',
 	'Delete row': 'Мөр устгах',
 	'Delete column': 'Багана устгах',

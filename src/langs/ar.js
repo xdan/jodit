@@ -101,6 +101,7 @@ module.exports = {
 	'Insert column after': 'إدراج عمود بعد',
 	'Insert row above': 'إدراج صف أعلى',
 	'Insert row below': 'إدراج صف أسفل',
+	'Header row': 'صف الرأس',
 	'Delete table': 'حذف الجدول',
 	'Delete row': 'حذف الصف',
 	'Delete column': 'حذف العمود',

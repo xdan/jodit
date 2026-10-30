@@ -110,6 +110,7 @@ module.exports = {
 	'Insert column after': '插入右方欄',
 	'Insert row above': '插入上方列',
 	'Insert row below': '插入下方列',
+	'Header row': '標題列',
 	'Delete table': '刪除表格',
 	'Delete row': '刪除整列',
 	'Delete column': '刪除整欄',

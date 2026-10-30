@@ -10,7 +10,7 @@
  * @module modules/table
  */
 
-import type { ICreate, IDictionary, IJodit, Prettify } from 'jodit/types';
+import type { ICreate, IDictionary, IJodit } from 'jodit/types';
 import { ViewComponent } from 'jodit/core/component';
 import * as consts from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
@@ -24,6 +24,8 @@ import {
 	trim
 } from 'jodit/core/helpers/';
 import { cssInline } from 'jodit/core/helpers/utils/css';
+
+const SECTIONS = new Set(['thead', 'tbody', 'tfoot'] as const);
 
 const markedValue = new WeakMap<
 	HTMLElement,
@@ -282,7 +284,7 @@ export class Table extends ViewComponent<IJodit> {
 		table: HTMLTableElement,
 		line: false | HTMLTableRowElement,
 		after: boolean,
-		create: Prettify<Pick<ICreate, 'element'>>
+		create: ICreate
 	): void {
 		let row: HTMLTableRowElement;
 
@@ -320,7 +322,19 @@ export class Table extends ViewComponent<IJodit> {
 			});
 		}
 
-		if (after && line && line.nextSibling) {
+		const section = line && line.parentElement;
+
+		// Below the header rows, a row is a body row
+		if (
+			after &&
+			line &&
+			!line.nextElementSibling &&
+			Dom.isTag(section, 'thead')
+		) {
+			const body = Table.__bodyOf(table, section, create);
+			body.insertBefore(row, body.firstChild);
+			Table.__setCellsTag(row, 'td', create);
+		} else if (after && line && line.nextSibling) {
 			Dom.after(line, row);
 		} else if (!after && line) {
 			Dom.before(line, row);
@@ -330,6 +344,116 @@ export class Table extends ViewComponent<IJodit> {
 				row
 			);
 		}
+	}
+
+	/**
+	 * The table's first `<tbody>`, made after `head` when there's none
+	 */
+	private static __bodyOf(
+		table: HTMLTableElement,
+		head: HTMLTableSectionElement,
+		create: ICreate
+	): HTMLTableSectionElement {
+		let body = table.tBodies[0];
+
+		if (!body) {
+			body = create.element('tbody');
+			Dom.after(head, body);
+		}
+
+		return body;
+	}
+
+	/**
+	 * Makes the row's cells `<td>`, or `<th>` with a column scope unless they
+	 * have one, keeping their content and attributes. The cells it replaces
+	 * go in `replaced`, with their replacements
+	 */
+	private static __setCellsTag(
+		row: HTMLTableRowElement,
+		tag: 'td' | 'th',
+		create: ICreate,
+		replaced?: Map<HTMLTableCellElement, HTMLTableCellElement>
+	): void {
+		toArray(row.cells).forEach(cell => {
+			const next = Dom.isTag(cell, tag)
+				? cell
+				: Dom.replace<HTMLTableCellElement>(cell, tag, create, true);
+
+			if (next !== cell) {
+				replaced?.set(cell, next);
+			}
+
+			if (tag === 'td') {
+				attr(next, 'scope', null);
+			} else if (!next.hasAttribute('scope')) {
+				attr(next, 'scope', 'col');
+			}
+		});
+	}
+
+	/**
+	 * The table has a header row: a `<thead>` with a row in it
+	 */
+	hasHeaderRow(table: HTMLTableElement): boolean {
+		return Boolean(table.tHead?.rows.length);
+	}
+
+	/**
+	 * Header rows can always go back into the body. The first row can become
+	 * one unless a cell in it spans into the next, as a span can't cross from
+	 * the `<thead>` into the `<tbody>`
+	 */
+	canToggleHeaderRow(table: HTMLTableElement): boolean {
+		const [row] = toArray(table.rows);
+
+		return (
+			this.hasHeaderRow(table) ||
+			Boolean(row && toArray(row.cells).every(cell => cell.rowSpan < 2))
+		);
+	}
+
+	/**
+	 * Moves the first row into a `<thead>`, its cells becoming
+	 * `<th scope="col">`, or the header rows back to the start of the
+	 * `<tbody>` as `<td>`. Their content, attributes and spans stay. Returns
+	 * the cells it replaced, with their replacements
+	 */
+	toggleHeaderRow(
+		table: HTMLTableElement
+	): Map<HTMLTableCellElement, HTMLTableCellElement> {
+		const replaced = new Map<HTMLTableCellElement, HTMLTableCellElement>();
+		const create = this.j.createInside;
+		const head = table.tHead;
+
+		if (!this.canToggleHeaderRow(table)) {
+			return replaced;
+		}
+
+		if (head && this.hasHeaderRow(table)) {
+			const body = Table.__bodyOf(table, head, create);
+			const first = body.firstChild;
+
+			toArray(head.rows).forEach(row => {
+				body.insertBefore(row, first);
+				Table.__setCellsTag(row, 'td', create, replaced);
+			});
+
+			Dom.safeRemove(head);
+		} else {
+			const [row] = toArray(table.rows);
+			const thead = head || create.element('thead');
+
+			if (!head) {
+				// Setting it puts it after a caption and column groups
+				table.tHead = thead;
+			}
+
+			Dom.append(thead, row);
+			Table.__setCellsTag(row, 'th', create, replaced);
+		}
+
+		return replaced;
 	}
 
 	/**
@@ -419,7 +543,15 @@ export class Table extends ViewComponent<IJodit> {
 			}
 		});
 
+		const section = row.parentElement;
+
 		Dom.safeRemove(row);
+
+		// A section left without rows goes too, so a table whose header row
+		// was deleted has no `<thead>`
+		if (Dom.isTag(section, SECTIONS) && !section.rows.length) {
+			Dom.safeRemove(section);
+		}
 	}
 
 	/**

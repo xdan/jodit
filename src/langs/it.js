@@ -111,6 +111,7 @@ module.exports = {
 	'Insert column after': 'Inserisci la colonna dopo',
 	'Insert row above': 'Inserisci la riga sopra',
 	'Insert row below': 'Inserisci la riga sotto',
+	'Header row': 'Riga di intestazione',
 	'Delete table': 'Elimina tabella',
 	'Delete row': 'Elimina riga',
 	'Delete column': 'Elimina colonna',

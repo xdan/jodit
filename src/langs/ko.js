@@ -109,6 +109,7 @@ module.exports = {
 	'Insert column after': '다음 열에 삽입',
 	'Insert row above': '위 행에 삽입',
 	'Insert row below': '아래 행에 삽입',
+	'Header row': '머리글 행',
 	'Delete table': '테이블 삭제',
 	'Delete row': '행 삭제',
 	'Delete column': '열 삭제',

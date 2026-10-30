@@ -110,6 +110,7 @@ module.exports = {
 	'Insert column after': 'Sonrasına kolon ekle',
 	'Insert row above': 'Üstüne satır ekle',
 	'Insert row below': 'Altına satır ekle',
+	'Header row': 'Başlık satırı',
 	'Delete table': 'Tabloyu sil',
 	'Delete row': 'Satırı sil',
 	'Delete column': 'Kolonu sil',

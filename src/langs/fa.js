@@ -111,6 +111,7 @@ module.exports = {
 	'Insert column after': 'افزودن ستون بعد از',
 	'Insert row above': 'افزودن خط قبل از',
 	'Insert row below': 'افزودن خط بعد از',
+	'Header row': 'خط سرآیند',
 	'Delete table': 'حذف جدول',
 	'Delete row': 'حذف خط',
 	'Delete column': 'حذف ستون',

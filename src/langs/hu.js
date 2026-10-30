@@ -112,6 +112,7 @@ module.exports = {
 	'Insert column after': 'Oszlop beszúrás utána',
 	'Insert row above': 'Sor beszúrás fölé',
 	'Insert row below': 'Sor beszúrás alá',
+	'Header row': 'Fejlécsor',
 	'Delete table': 'Táblázat törlése',
 	'Delete row': 'Sor törlése',
 	'Delete column': 'Oszlop törlése',

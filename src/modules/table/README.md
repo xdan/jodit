@@ -27,6 +27,18 @@ const jodit = Jodit.make('#editor');
 jodit.getInstance('Table').appendRow(table, table.rows[1], false);
 ```
 
+A header row works the same way:
+
+```js
+const tableModule = jodit.getInstance('Table');
+tableModule.toggleHeaderRow(table); // The first row is in a <thead>, as <th scope="col">
+console.log(tableModule.hasHeaderRow(table)); // true
+tableModule.toggleHeaderRow(table); // Back at the start of the <tbody>, as <td>
+```
+
+`canToggleHeaderRow(table)` is false while a cell in the first row spans into
+the next, as a span can't cross from the `<thead>` into the `<tbody>`.
+
 ## Methods
 
 Module methods are available through the `Jodit.modules.Table` property;

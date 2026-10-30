@@ -112,6 +112,7 @@ module.exports = {
 	'Insert column after': 'Interar columna después',
 	'Insert row above': 'Insertar fila arriba',
 	'Insert row below': 'Insertar fila debajo',
+	'Header row': 'Fila de encabezado',
 	'Delete table': 'Borrar tabla',
 	'Delete row': 'Borrar fila',
 	'Delete column': 'Borrar columna',
