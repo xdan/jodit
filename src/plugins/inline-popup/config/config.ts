@@ -21,6 +21,7 @@ import toolbar from './items/toolbar';
 
 import * as addcolumn from 'jodit/plugins/inline-popup/icons/addcolumn.svg';
 import * as addrow from 'jodit/plugins/inline-popup/icons/addrow.svg';
+import * as headerrow from 'jodit/plugins/inline-popup/icons/headerrow.svg';
 import * as merge from 'jodit/plugins/inline-popup/icons/merge.svg';
 import * as splitg from 'jodit/plugins/inline-popup/icons/splitg.svg';
 import * as splitv from 'jodit/plugins/inline-popup/icons/splitv.svg';
@@ -71,6 +72,7 @@ Config.prototype.toolbarInlineDisabledButtons = ['source'];
 
 Icon.set('addcolumn', addcolumn.default)
 	.set('addrow', addrow.default)
+	.set('headerrow', headerrow.default)
 	.set('merge', merge.default)
 	.set('th', th.default)
 	.set('splitg', splitg.default)

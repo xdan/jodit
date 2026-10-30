@@ -110,6 +110,7 @@ module.exports = {
 	'Insert column after': 'Inserir coluna depois',
 	'Insert row above': 'Inserir linha acima',
 	'Insert row below': 'Inserir linha abaixo',
+	'Header row': 'Linha de cabeçalho',
 	'Delete table': 'Excluir tabela',
 	'Delete row': 'Excluir linha',
 	'Delete column': 'Excluir coluna',

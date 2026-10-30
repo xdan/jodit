@@ -112,6 +112,7 @@ module.exports = {
 	'Insert column after': 'Vložit sloupec za',
 	'Insert row above': 'Vložit řádek nad',
 	'Insert row below': 'Vložit řádek pod',
+	'Header row': 'Řádek záhlaví',
 	'Delete table': 'Vymazat tabulku',
 	'Delete row': 'Vymazat řádku',
 	'Delete column': 'Vymazat sloupec',

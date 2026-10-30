@@ -2192,4 +2192,211 @@ describe('Tables Jodit Editor Tests', () => {
 			});
 		});
 	});
+
+	describe('Header row (#1713)', () => {
+		const body =
+			'<tr><td>1</td><td>2</td></tr><tr><td>3</td><td>4</td></tr>';
+		const plain = '<table><tbody>' + body + '</tbody></table>';
+		const withHeader =
+			'<table>' +
+			'<thead><tr><th scope="col">1</th><th scope="col">2</th></tr></thead>' +
+			'<tbody><tr><td>3</td><td>4</td></tr></tbody>' +
+			'</table>';
+
+		const run = (value, command = 'tableheaderrow', cell = 0) => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = value;
+			selectCells(editor, [cell]);
+			editor.execCommand(command);
+			return editor;
+		};
+
+		it('Should move the first row into a <thead>, its cells becoming <th scope="col">', () => {
+			expect(run(plain).value).equals(withHeader);
+		});
+
+		it('Should keep the cells’ content, attributes and spans', () => {
+			expect(
+				sortAttributes(
+					run(
+						'<table><tbody>' +
+							'<tr><td colspan="2" style="color: red;"><strong>Name</strong></td></tr>' +
+							'<tr><td>1</td><td>2</td></tr>' +
+							'</tbody></table>'
+					).value
+				)
+			).equals(
+				'<table>' +
+					'<thead><tr><th colspan="2" scope="col" style="color:red"><strong>Name</strong></th></tr></thead>' +
+					'<tbody><tr><td>1</td><td>2</td></tr></tbody>' +
+					'</table>'
+			);
+		});
+
+		it('Should put the <thead> after a caption and a column group', () => {
+			expect(
+				run(
+					'<table><caption>Scores</caption><colgroup><col><col></colgroup>' +
+						'<tbody>' +
+						body +
+						'</tbody></table>'
+				).value
+			).equals(
+				'<table><caption>Scores</caption><colgroup><col><col></colgroup>' +
+					'<thead><tr><th scope="col">1</th><th scope="col">2</th></tr></thead>' +
+					'<tbody><tr><td>3</td><td>4</td></tr></tbody>' +
+					'</table>'
+			);
+		});
+
+		it('Should keep a <th> already in the first row, and its scope', () => {
+			expect(
+				sortAttributes(
+					run(
+						'<table><tbody>' +
+							'<tr><th>1</th><th colspan="2" scope="colgroup">2</th></tr>' +
+							'<tr><td>3</td><td>4</td><td>5</td></tr>' +
+							'</tbody></table>'
+					).value
+				)
+			).equals(
+				'<table>' +
+					'<thead><tr><th scope="col">1</th><th colspan="2" scope="colgroup">2</th></tr></thead>' +
+					'<tbody><tr><td>3</td><td>4</td><td>5</td></tr></tbody>' +
+					'</table>'
+			);
+		});
+
+		it('Should turn the header rows back into body rows, at the start of the <tbody>', () => {
+			expect(
+				run(
+					'<table>' +
+						'<thead><tr><th scope="col">1</th><th scope="col">2</th></tr><tr><th>a</th><th>b</th></tr></thead>' +
+						'<tbody><tr><td>3</td><td>4</td></tr></tbody>' +
+						'</table>'
+				).value
+			).equals(
+				'<table><tbody>' +
+					'<tr><td>1</td><td>2</td></tr><tr><td>a</td><td>b</td></tr><tr><td>3</td><td>4</td></tr>' +
+					'</tbody></table>'
+			);
+		});
+
+		it('Should give a table with only a header row a <tbody>', () => {
+			expect(
+				run(
+					'<table><thead><tr><th scope="col">1</th></tr></thead></table>'
+				).value
+			).equals('<table><tbody><tr><td>1</td></tr></tbody></table>');
+		});
+
+		it('Should do nothing while a cell in the first row spans into the next', () => {
+			const value =
+				'<table><tbody>' +
+				'<tr><td rowspan="2">1</td><td>2</td></tr><tr><td>4</td></tr>' +
+				'</tbody></table>';
+
+			expect(run(value).value).equals(value);
+		});
+
+		it('Should be one step in the history', () => {
+			const editor = run(plain);
+
+			editor.execCommand('undo');
+			expect(editor.value).equals(plain);
+
+			editor.execCommand('redo');
+			expect(editor.value).equals(withHeader);
+		});
+
+		it('Should keep the caret in its cell', () => {
+			const editor = getJodit();
+			editor.value =
+				'<table><tbody>' +
+				'<tr><td>Na|me</td><td>2</td></tr><tr><td>3</td><td>4</td></tr>' +
+				'</tbody></table>';
+			setCursorToChar(editor);
+			selectCells(editor, [0]);
+
+			editor.execCommand('tableheaderrow');
+			replaceCursorToChar(editor);
+
+			expect(editor.value).equals(
+				'<table>' +
+					'<thead><tr><th scope="col">Na|me</th><th scope="col">2</th></tr></thead>' +
+					'<tbody><tr><td>3</td><td>4</td></tr></tbody>' +
+					'</table>'
+			);
+		});
+
+		it('Should keep the cells marked after a drag from a header cell into a body cell', () => {
+			const editor = getJodit();
+			editor.value = withHeader;
+
+			const th = editor.editor.querySelector('th'),
+				td = editor.editor.querySelector('td');
+
+			const at = cell => e => {
+				const pos = Jodit.modules.Helpers.position(cell, editor);
+				Object.assign(e, {
+					clientX: pos.left + pos.width / 2,
+					clientY: pos.top + pos.height / 2
+				});
+			};
+
+			simulateEvent('mousedown', th, at(th));
+			simulateEvent(['mousemove', 'mouseup'], td, at(td));
+
+			// A drag between two sections clicks the table, their common ancestor
+			simulateEvent(
+				'click',
+				editor.editor.querySelector('table'),
+				at(td)
+			);
+
+			expect(
+				editor.getInstance('Table', editor.o).getAllSelectedCells()
+			).deep.equals([th, td]);
+		});
+
+		describe('Rows added and deleted', () => {
+			it('Should add a header row above a header row', () => {
+				expect(run(withHeader, 'tableaddrowbefore').value).equals(
+					'<table><thead>' +
+						'<tr><th scope="col"><br></th><th scope="col"><br></th></tr>' +
+						'<tr><th scope="col">1</th><th scope="col">2</th></tr>' +
+						'</thead><tbody><tr><td>3</td><td>4</td></tr></tbody></table>'
+				);
+			});
+
+			it('Should add a body row below the last header row, at the start of the <tbody>', () => {
+				expect(run(withHeader, 'tableaddrowafter').value).equals(
+					'<table>' +
+						'<thead><tr><th scope="col">1</th><th scope="col">2</th></tr></thead>' +
+						'<tbody><tr><td><br></td><td><br></td></tr><tr><td>3</td><td>4</td></tr></tbody>' +
+						'</table>'
+				);
+			});
+
+			it('Should give a table with only a header row a <tbody> for the row added below it', () => {
+				expect(
+					run(
+						'<table><thead><tr><th scope="col">1</th></tr></thead></table>',
+						'tableaddrowafter'
+					).value
+				).equals(
+					'<table>' +
+						'<thead><tr><th scope="col">1</th></tr></thead>' +
+						'<tbody><tr><td><br></td></tr></tbody>' +
+						'</table>'
+				);
+			});
+
+			it('Should remove the <thead> with its last row', () => {
+				expect(run(withHeader, 'tablebinrow').value).equals(
+					'<table><tbody><tr><td>3</td><td>4</td></tr></tbody></table>'
+				);
+			});
+		});
+	});
 });

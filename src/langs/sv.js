@@ -113,6 +113,7 @@ module.exports = {
 	'Insert column after': 'Infoga kolumn efter',
 	'Insert row above': 'Infoga rad ovanför',
 	'Insert row below': 'Infoga rad nedanför',
+	'Header row': 'Rubrikrad',
 	'Delete table': 'Radera tabell',
 	'Delete row': 'Radera rad',
 	'Delete column': 'Radera kolumn',

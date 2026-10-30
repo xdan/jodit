@@ -111,6 +111,7 @@ module.exports = {
 	'Insert column after': 'Vložiť stĺpec za',
 	'Insert row above': 'Vložiť riadok nad',
 	'Insert row below': 'Vložiť riadok pod',
+	'Header row': 'Riadok hlavičky',
 	'Delete table': 'Odstrániť tabuľku',
 	'Delete row': 'Odstrániť riadok',
 	'Delete column': 'Odstrániť stĺpec',

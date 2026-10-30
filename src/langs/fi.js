@@ -112,6 +112,7 @@ module.exports = {
 	'Insert column after': 'Lisää sarake jälkeen',
 	'Insert row above': 'Lisää rivi ylös',
 	'Insert row below': 'Lisää rivi alle',
+	'Header row': 'Otsikkorivi',
 	'Delete table': 'Poista taulukko',
 	'Delete row': 'Poista rivi',
 	'Delete column': 'Poista sarake',

@@ -115,9 +115,10 @@ Plugin intercepts table commands when cells selected:
 - `tablebinrow` - Delete rows containing selected cells, and put the cursor in the next row (or the previous one)
 - `tablebincolumn` - Delete columns containing selected cells, and put the cursor in the next column (or the previous one)
 - `tableaddcolumnafter/before` - Add column
-- `tableaddrowafter/before` - Add row
+- `tableaddrowafter/before` - Add row. One added above a header row is a header row, and one added below the last header row is a body row, at the start of the `<tbody>`
+- `tableheaderrow` - Turn the first row into a header row: it moves into a `<thead>` and its cells become `<th scope="col">`. Run again, the header rows move back to the start of the `<tbody>` as `<td>`. The cells keep their content, attributes and spans, and the caret and the marks move to the new cells. It does nothing while a cell in the first row spans into the next
 
-Deleting the last row or column deletes the table. A deleted table leaves the cursor at the start of what followed it, or at the end of what preceded it.
+A `<thead>` or `<tbody>` goes with its last row. Deleting the last row or column deletes the table. A deleted table leaves the cursor at the start of what followed it, or at the end of what preceded it.
 
 ### Justify Commands
 
@@ -174,6 +175,7 @@ Plugin intercepts these commands when cells are selected:
 - `tableaddcolumnbefore` - Add column before
 - `tableaddrowafter` - Add row after
 - `tableaddrowbefore` - Add row before
+- `tableheaderrow` - Toggle the header row
 - `justifyLeft/Right/Center/Full` - Align cells
 
 ## Edge Cases
@@ -208,9 +210,9 @@ Plugin intercepts these commands when cells are selected:
 - The plugin properly cleans up event listeners on destruction
 - Mouse move uses async throttle with custom label
 - Listens to `clickEditor`, `mousedownTd/Th`, `touchstartTd/Th` events
-- Special handling for `clickTr` and `clickTbody` to prevent default
+- Special handling for `clickTr`, `clickTbody`, `clickThead`, `clickTfoot` and `clickTable`, the common ancestor a drag from one cell to another clicks, so it doesn't deselect the cells
 - The `unselectCells()` method removes selection from all cells
-- Command regex: `/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow)/`
+- Command regex: `/table(splitv|splitg|merge|empty|bin|binrow|bincolumn|addcolumn|addrow|headerrow)/`
 - Justify regex: `/^justify/`
 - Cell emptying uses `Dom.detach()` to remove children
 - Row deletion collects unique rows via Set

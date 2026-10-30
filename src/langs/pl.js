@@ -112,6 +112,7 @@ module.exports = {
 	'Insert column after': 'Wstaw kolumnę po',
 	'Insert row above': 'Wstaw wiersz przed',
 	'Insert row below': 'Wstaw wiersz po',
+	'Header row': 'Wiersz nagłówka',
 	'Delete table': 'Usuń tabelę',
 	'Delete row': 'Usuń wiersz',
 	'Delete column': 'Usuń kolumnę',

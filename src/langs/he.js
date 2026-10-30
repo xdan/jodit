@@ -110,6 +110,7 @@ module.exports = {
 	'Insert column after': 'הכנס עמודה אחרי',
 	'Insert row above': 'הכנס שורה מעל',
 	'Insert row below': 'הכנס שורה מתחת',
+	'Header row': 'שורת כותרת',
 	'Delete table': 'מחק טבלה',
 	'Delete row': 'מחק שורה',
 	'Delete column': 'מחק עמודה',

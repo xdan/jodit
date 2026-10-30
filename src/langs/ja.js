@@ -109,6 +109,7 @@ module.exports = {
 	'Insert column after': '右に列を挿入',
 	'Insert row above': '上に行を挿入',
 	'Insert row below': '下に行を挿入',
+	'Header row': 'ヘッダー行',
 	'Delete table': '表を削除',
 	'Delete row': '行を削除',
 	'Delete column': '列を削除',

@@ -110,6 +110,7 @@ module.exports = {
 	'Insert column after': 'Вставить столбец после',
 	'Insert row above': 'Вставить ряд выше',
 	'Insert row below': 'Вставить ряд ниже',
+	'Header row': 'Строка заголовка',
 	'Delete table': 'Удалить таблицу',
 	'Delete row': 'Удалять ряд',
 	'Delete column': 'Удалить столбец',

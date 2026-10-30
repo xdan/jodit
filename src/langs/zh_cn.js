@@ -111,6 +111,7 @@ module.exports = {
 	'Insert column after': '在之后插入列',
 	'Insert row above': '在之前插入行',
 	'Insert row below': '在之后插入行',
+	'Header row': '标题行',
 	'Delete table': '删除表格',
 	'Delete row': '删除行',
 	'Delete column': '删除列',

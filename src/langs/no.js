@@ -112,6 +112,7 @@ module.exports = {
 	'Insert column after': 'Sett inn kolonne etter',
 	'Insert row above': 'Sett inn rad over',
 	'Insert row below': 'Sett inn rad under',
+	'Header row': 'Overskriftsrad',
 	'Delete table': 'Slett tabell',
 	'Delete row': 'Slett rad',
 	'Delete column': 'Slett kolonne',
