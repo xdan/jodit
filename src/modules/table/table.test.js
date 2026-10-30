@@ -2080,9 +2080,9 @@ describe('Tables Jodit Editor Tests', () => {
 					await delay(0);
 
 					expect(writes).equals(1);
-					expect(style.innerHTML.split(',').length).equals(
-						cells.length
-					);
+					expect(
+						style.innerHTML.split('{')[0].split(',').length
+					).equals(cells.length);
 				});
 
 				describe('For iframe mode', () => {
@@ -2190,6 +2190,55 @@ describe('Tables Jodit Editor Tests', () => {
 					editor.getInstance('Table', editor.o).selected.size
 				).equals(8);
 			});
+		});
+	});
+
+	describe('Marking cells by dragging', () => {
+		const value =
+			'<table><tbody>' +
+			'<tr><td>1</td><td>2</td></tr><tr><td>3</td><td>4</td></tr>' +
+			'</tbody></table>';
+
+		const at = (editor, cell) => e => {
+			const pos = Jodit.modules.Helpers.position(cell, editor);
+			Object.assign(e, {
+				clientX: pos.left + pos.width / 2,
+				clientY: pos.top + pos.height / 2
+			});
+		};
+
+		// With a timeout, as the content once changed until a timer ran
+		it('Should leave the content alone', () => {
+			const editor = getJodit({ defaultTimeout: 100 });
+			editor.value = value;
+
+			const [first, second] = editor.editor.querySelectorAll('td');
+			const html = editor.editor.innerHTML;
+
+			simulateEvent('mousedown', first, at(editor, first));
+			simulateEvent('mousemove', second, at(editor, second));
+
+			expect(
+				editor.getInstance('Table', editor.o).getAllSelectedCells()
+			).deep.equals([first, second]);
+			expect(editor.editor.innerHTML).equals(html);
+		});
+
+		it('Should hide the text selection in the cells once more than one is marked', async () => {
+			const editor = getJodit();
+			editor.value = value;
+
+			const [first, second] = editor.editor.querySelectorAll('td');
+			const shown = () =>
+				getComputedStyle(first, '::selection').backgroundColor;
+
+			simulateEvent('mousedown', first, at(editor, first));
+			await Promise.resolve();
+			expect(shown()).does.not.equal('rgba(0, 0, 0, 0)');
+
+			simulateEvent('mousemove', second, at(editor, second));
+			await Promise.resolve();
+			expect(shown()).equals('rgba(0, 0, 0, 0)');
 		});
 	});
 });
