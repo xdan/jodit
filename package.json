@@ -93,7 +93,7 @@
 		"eslint-plugin-prettier": "^5.5.7",
 		"eslint-plugin-simple-import-sort": "^14.0.0",
 		"eslint-plugin-tsdoc": "^0.5.2",
-		"glob": "^13.0.6",
+		"glob": "^14.0.2",
 		"globals": "^17.13.0",
 		"karma": "^6.4.4",
 		"karma-chrome-launcher": "^3.2.0",
