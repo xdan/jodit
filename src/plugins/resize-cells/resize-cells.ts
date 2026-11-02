@@ -10,13 +10,14 @@
  * @module plugins/resize-cells
  */
 
-import type { IBound, IJodit } from 'jodit/types';
+import type { IBound, IJodit, Nullable } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { autobind } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import {
 	$$,
+	attr,
 	call,
 	dataBind,
 	getContentWidth,
@@ -30,6 +31,12 @@ import './config';
 import './resize-cells.less';
 
 const key = 'table_processor_observer-resize';
+
+/**
+ * How near the top or bottom of what a row scrolls in the pointer starts
+ * scrolling it, as the editor's iframe passes on no moves outside it
+ */
+const SCROLL_EDGE = 20;
 
 /**
  * Process tables in editor
@@ -62,7 +69,11 @@ export class resizeCells extends Plugin {
 	private hideResizeHandle(): void {
 		this.hideTimeout = this.j.async.setTimeout(
 			() => {
-				Dom.safeRemove(this.resizeHandler);
+				// A late move from inside the cell can come once the pointer
+				// is on the handle, which covers the border
+				if (!this.resizeHandler.matches(':hover')) {
+					Dom.safeRemove(this.resizeHandler);
+				}
 			},
 			{
 				timeout: this.j.defaultTimeout,
@@ -83,6 +94,11 @@ export class resizeCells extends Plugin {
 				)
 				.on(this.resizeHandler, 'mouseenter.table', () => {
 					this.j.async.clearTimeout(this.hideTimeout);
+				})
+				.on(this.resizeHandler, 'mouseleave.table', () => {
+					if (!this.drag) {
+						this.hideResizeHandle();
+					}
 				});
 		}
 	};
@@ -99,6 +115,33 @@ export class resizeCells extends Plugin {
 	private maxX: number = 0;
 
 	private startX: number = 0;
+
+	/**
+	 * The table's and its cells' styles as a column drag started, put back
+	 * before each new width
+	 */
+	private startStyles: Array<[HTMLElement, Nullable<string>]> = [];
+	private startLeft: number = 0;
+	private startEdge: number = 0;
+
+	/**
+	 * The row whose height the handle sets, or null while it sets a width
+	 */
+	private workRow: Nullable<HTMLTableRowElement> = null;
+
+	private startY: number = 0;
+	private startHeight: number = 0;
+	private rowStyle: Nullable<string> = null;
+
+	/**
+	 * The boxes that scroll the row, with their styles, as a row drag turns
+	 * off their scroll anchoring, which would move the border off the pointer
+	 */
+	private anchored: Array<[HTMLElement, Nullable<string>]> = [];
+
+	private scrolled: number = 0;
+	private scrollFrame: number = 0;
+	private pointerY: number = 0;
 
 	/**
 	 * Click on resize handle
@@ -123,6 +166,25 @@ export class resizeCells extends Plugin {
 
 		this.j.lock(key);
 		this.resizeHandler.classList.add('jodit-table-resizer_moved');
+
+		if (this.workRow) {
+			this.startY = event.clientY;
+			this.startHeight = this.workRow.offsetHeight;
+			this.rowStyle = attr(this.workRow, 'style');
+			this.scrolled = 0;
+			this.anchored = scrollersOf(this.workRow).map(elm => {
+				const style = attr(elm, 'style');
+				css(elm, 'overflowAnchor', 'none');
+				return [elm, style];
+			});
+			return false;
+		}
+
+		this.startStyles = [this.workTable, ...$$('td,th', this.workTable)].map(
+			elm => [elm, attr(elm, 'style')]
+		);
+		this.startLeft = parseFloat(this.resizeHandler.style.left);
+		this.startEdge = this.columnEdge();
 
 		let box: ClientRect;
 
@@ -189,6 +251,19 @@ export class resizeCells extends Plugin {
 			true
 		);
 
+		if (this.workRow) {
+			const view = scrollViewOf(this.workRow);
+
+			this.pointerY =
+				Math.min(Math.max(event.clientY, view.top), view.bottom) +
+				(!this.j.o.iframe ? 0 : workplacePosition.top);
+			this.resizeRow(this.workRow);
+			this.scrollAlong(view, event.clientY);
+
+			this.j.s.sel?.removeAllRanges();
+			return;
+		}
+
 		if (x < this.minX) {
 			x = this.minX;
 		}
@@ -200,11 +275,16 @@ export class resizeCells extends Plugin {
 		this.resizeDelta =
 			x - this.startX + (!this.j.o.iframe ? 0 : workplacePosition.left);
 
-		css(
-			this.resizeHandler,
-			'left',
-			x - (this.j.o.iframe ? 0 : workplacePosition.left) + 'px'
-		);
+		this.restoreStyles();
+		this.resizeColumnsOrTable();
+
+		const tableBox: IBound = offset(this.workTable, this.j, this.j.ed);
+
+		Object.assign(this.resizeHandler.style, {
+			left: this.startLeft + this.columnEdge() - this.startEdge + 'px',
+			top: tableBox.top - workplacePosition.top + 'px',
+			height: tableBox.height + 'px'
+		});
 
 		const sel = this.j.s.sel;
 
@@ -235,17 +315,134 @@ export class resizeCells extends Plugin {
 
 		this.resizeHandler.classList.remove('jodit-table-resizer_moved');
 
-		if (this.startX !== e.clientX) {
-			// resize column
-			if (this.wholeTable == null) {
-				this.resizeColumns();
+		if (this.workRow) {
+			this.j.async.cancelAnimationFrame(this.scrollFrame);
+			this.anchored.forEach(([elm, style]) => attr(elm, 'style', style));
+			this.anchored = [];
+
+			const height = this.workRow.offsetHeight;
+
+			if (height !== this.startHeight) {
+				css(this.workRow, 'height', height + 'px');
 			} else {
-				this.resizeTable();
+				attr(this.workRow, 'style', this.rowStyle);
+			}
+		} else {
+			this.restoreStyles();
+
+			if (this.startX !== e.clientX) {
+				this.resizeColumnsOrTable();
 			}
 		}
 
 		this.j.synchronizeValues();
 		this.j.s.focus();
+	}
+
+	private resizeColumnsOrTable(): void {
+		if (this.wholeTable == null) {
+			this.resizeColumns();
+		} else {
+			this.resizeTable();
+		}
+	}
+
+	private restoreStyles(): void {
+		this.startStyles.forEach(([elm, style]) => attr(elm, 'style', style));
+	}
+
+	/**
+	 * Where the border the handle is on lies: the work cell's left side
+	 * for the table's left edge, otherwise its right side
+	 */
+	private columnEdge(): number {
+		const { left, right } = this.workCell.getBoundingClientRect();
+		return this.wholeTable === true ? left : right;
+	}
+
+	/**
+	 * Sets the row's height from where the pointer is, and how far the drag
+	 * has scrolled. The browser keeps the row as tall as its content
+	 */
+	private resizeRow(row: HTMLTableRowElement): boolean {
+		const height = Math.max(
+			0,
+			Math.round(
+				this.startHeight + this.pointerY - this.startY + this.scrolled
+			)
+		);
+
+		css(row, 'height', height + 'px');
+		this.placeRowHandle(row);
+
+		return row.offsetHeight === height;
+	}
+
+	/**
+	 * While the pointer is near or past the top or bottom of the part of the
+	 * row's scroller in view, scrolls it on, and the row's border with it
+	 */
+	private scrollAlong(view: ScrollView, clientY: number): void {
+		this.j.async.cancelAnimationFrame(this.scrollFrame);
+
+		const past =
+			clientY < view.top + SCROLL_EDGE
+				? clientY - view.top - SCROLL_EDGE
+				: clientY > view.bottom - SCROLL_EDGE
+					? clientY - view.bottom + SCROLL_EDGE
+					: 0;
+
+		if (!past) {
+			return;
+		}
+
+		const { scroller } = view;
+		const step =
+			Math.sign(past) * Math.min(Math.ceil(Math.abs(past) / 2), 20);
+
+		const scroll = (): void => {
+			const { workRow } = this;
+
+			if (!workRow) {
+				return;
+			}
+
+			const scrollTop = scroller.scrollTop;
+
+			if (step > 0) {
+				// Growing the row first makes the room to scroll down into
+				this.scrolled += step;
+				this.resizeRow(workRow);
+				scroller.scrollTop = scrollTop + step;
+
+				const missed = step - (scroller.scrollTop - scrollTop);
+
+				if (missed > 0.5) {
+					this.scrolled -= missed;
+					this.resizeRow(workRow);
+					return;
+				}
+
+				this.placeRowHandle(workRow);
+			} else {
+				scroller.scrollTop = scrollTop + step;
+
+				const moved = scroller.scrollTop - scrollTop;
+				this.scrolled += moved;
+
+				// A row at its content's height can't follow the pointer up
+				if (!moved || !this.resizeRow(workRow)) {
+					scroller.scrollTop = scrollTop;
+					this.scrolled -= moved;
+					this.resizeRow(workRow);
+					return;
+				}
+			}
+
+			this.scrollFrame = this.j.async.requestAnimationFrame(scroll);
+		};
+
+		this.scrollFrame = this.j.async.requestAnimationFrame(scroll);
 	}
 
 	/**
@@ -352,14 +549,21 @@ export class resizeCells extends Plugin {
 		table: HTMLTableElement,
 		cell: HTMLTableCellElement,
 		offsetX: number = 0,
-		delta: number = 0
+		delta: number = 0,
+		clientY: number = NaN
 	): void {
 		const box = offset(cell, this.j, this.j.ed);
 
 		if (offsetX > consts.NEARBY && offsetX < box.width - consts.NEARBY) {
-			this.hideResizeHandle();
+			if (!this.calcRowHandlePosition(cell, clientY)) {
+				this.hideResizeHandle();
+			}
+
 			return;
 		}
+
+		this.workRow = null;
+		this.resizeHandler.classList.remove('jodit-table-resizer_row');
 
 		const workplacePosition: IBound = offset(
 				this.j.workplace,
@@ -379,6 +583,7 @@ export class resizeCells extends Plugin {
 		);
 
 		Object.assign(this.resizeHandler.style, {
+			width: '',
 			height: parentBox.height + 'px',
 			top: parentBox.top - workplacePosition.top + 'px'
 		});
@@ -406,6 +611,64 @@ export class resizeCells extends Plugin {
 		}
 	}
 
+	/**
+	 * Shows the handle across the table on the border below a row, near the
+	 * cell's bottom or near its top, which is the bottom of the row above.
+	 * The table's top edge has no row above it
+	 */
+	private calcRowHandlePosition(
+		cell: HTMLTableCellElement,
+		clientY: number
+	): boolean {
+		const { top, bottom } = cell.getBoundingClientRect();
+		const table = Dom.up(
+			cell,
+			(elm: Node | null) => Dom.isTag(elm, 'table'),
+			this.j.editor
+		) as HTMLTableElement;
+		const index = (cell.parentNode as HTMLTableRowElement).rowIndex;
+
+		const row =
+			Math.abs(bottom - clientY) <= consts.NEARBY
+				? table.rows[index + cell.rowSpan - 1]
+				: Math.abs(clientY - top) <= consts.NEARBY
+					? table.rows[index - 1]
+					: null;
+
+		if (!row) {
+			return false;
+		}
+
+		this.workRow = row;
+		this.workTable = table;
+		this.resizeHandler.classList.add('jodit-table-resizer_row');
+		this.placeRowHandle(row);
+		this.showResizeHandle();
+
+		return true;
+	}
+
+	/**
+	 * Lays the handle across the table on the border below the row
+	 */
+	private placeRowHandle(row: HTMLTableRowElement): void {
+		const workplacePosition: IBound = offset(
+				this.j.workplace,
+				this.j,
+				this.j.od,
+				true
+			),
+			tableBox: IBound = offset(this.workTable, this.j, this.j.ed),
+			rowBox: IBound = offset(row, this.j, this.j.ed);
+
+		Object.assign(this.resizeHandler.style, {
+			left: tableBox.left - workplacePosition.left + 'px',
+			width: tableBox.width + 'px',
+			height: '',
+			top: rowBox.top + rowBox.height - workplacePosition.top + 'px'
+		});
+	}
+
 	/** @override */
 	afterInit(editor: IJodit): void {
 		if (!editor.o.tableAllowCellResize) {
@@ -422,7 +685,7 @@ export class resizeCells extends Plugin {
 				}
 			)
 			.on(this.j.ow, 'scroll.resize-cells', () => {
-				if (!this.drag) {
+				if (!this.drag || this.workRow) {
 					return;
 				}
 
@@ -466,6 +729,7 @@ export class resizeCells extends Plugin {
 		this.j.e
 			.on(table, 'mouseleave.resize-cells', (e: MouseEvent) => {
 				if (
+					!this.drag &&
 					this.resizeHandler &&
 					this.resizeHandler !== e.relatedTarget
 				) {
@@ -491,7 +755,13 @@ export class resizeCells extends Plugin {
 							return;
 						}
 
-						this.calcHandlePosition(table, cell, event.offsetX);
+						this.calcHandlePosition(
+							table,
+							cell,
+							event.offsetX,
+							0,
+							event.clientY
+						);
 					},
 					{
 						timeout: this.j.defaultTimeout
@@ -508,6 +778,58 @@ export class resizeCells extends Plugin {
 			jodit.e.off('.resize-cells');
 		}
 	}
+}
+
+interface ScrollView {
+	scroller: HTMLElement;
+	top: number;
+	bottom: number;
+}
+
+/**
+ * The boxes around the row that can scroll it, nearest first, and its
+ * document's
+ */
+function scrollersOf(row: HTMLTableRowElement): HTMLElement[] {
+	const doc = row.ownerDocument;
+	const root = (doc.scrollingElement || doc.documentElement) as HTMLElement;
+	const scrollers: HTMLElement[] = [];
+
+	for (
+		let elm = row.parentElement;
+		elm && elm !== root;
+		elm = elm.parentElement
+	) {
+		if (/auto|scroll|overlay/.test(String(css(elm, 'overflowY')))) {
+			scrollers.push(elm);
+		}
+	}
+
+	return [...scrollers, root];
+}
+
+/**
+ * What scrolls the row up and down, the nearest box around it with more
+ * than it shows or else its document, and the part of it in the window's view
+ */
+function scrollViewOf(row: HTMLTableRowElement): ScrollView {
+	const height = row.ownerDocument.defaultView?.innerHeight ?? 0;
+	const scrollers = scrollersOf(row);
+	const scroller =
+		scrollers.find(elm => elm.scrollHeight > elm.clientHeight) ??
+		scrollers[scrollers.length - 1];
+
+	if (scroller === scrollers[scrollers.length - 1]) {
+		return { scroller, top: 0, bottom: height };
+	}
+
+	const top = scroller.getBoundingClientRect().top + scroller.clientTop;
+
+	return {
+		scroller,
+		top: Math.max(top, 0),
+		bottom: Math.min(top + scroller.clientHeight, height)
+	};
 }
 
 pluginSystem.add('resizeCells', resizeCells);

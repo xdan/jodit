@@ -1,17 +1,18 @@
 ---
 title: Resize Cells Plugin
-description: Lets users resize table columns and whole tables by dragging visual handles near cell borders, with RTL support and proportional width calculations.
-keywords: jodit, resize cells plugin, table resize, column resize, drag handles, table width
+description: Lets users resize table columns, rows and whole tables by dragging visual handles near cell borders, with RTL support and proportional width calculations.
+keywords: jodit, resize cells plugin, table resize, column resize, row resize, row height, drag handles, table width
 ---
 
 # Resize Cells Plugin
 
-Enables interactive resizing of table columns and entire tables by dragging visual resize handles that appear near cell borders. This plugin provides intuitive drag-and-drop functionality for adjusting table dimensions.
+Enables interactive resizing of table columns, rows and entire tables by dragging visual resize handles that appear near cell borders. This plugin provides intuitive drag-and-drop functionality for adjusting table dimensions.
 
 ## Features
 
 - Visual resize handles on cell borders
 - Drag-to-resize table columns
+- Drag-to-resize table rows, with the height on the `<tr>`
 - Drag-to-resize entire table width
 - Left and right table edge resizing
 - RTL (right-to-left) language support
@@ -106,7 +107,7 @@ const editor = Jodit.make('#editor', {
 
 When hovering over table cells:
 
-1. **Proximity Detection**: Checks if mouse is within `NEARBY` pixels (5px) of cell border
+1. **Proximity Detection**: Checks if mouse is within `NEARBY` pixels (5px) of a cell's side, or else of its top or bottom
 2. **Handle Creation**: Creates `.jodit-table-resizer` div element
 3. **Position Calculation**: Positions handle at cell border (left or right edge)
 4. **Height Setting**: Sets handle height to match table height
@@ -137,16 +138,28 @@ Hovering on leftmost cell border (or rightmost in RTL):
 - Adjusts left/right margin to maintain position
 - Reduces table width from opposite side
 
+#### 4. Row Resize (Row Border)
+
+Hovering within `NEARBY` pixels of the border below a row, away from the cells' sides:
+- Shows a handle across the table, with the `jodit-table-resizer_row` class and a `row-resize` cursor
+- The border below the last row is the table's bottom edge; the table's top edge has no handle
+- Near a cell's top, the handle is for the row above; near the bottom of a cell spanning rows, for the last row it spans
+- Dragging sets the row's height as a `height` in pixels in the `<tr>`'s style while the pointer moves, and the handle follows the row's border. A drag is one history step, and a drag that ends at the height it started from leaves the row's style as it was
+- The cells are left as they are, so a height on a cell, as pasted from Word, still holds the row open
+- At a corner, the column's handle comes first
+
 ### Drag Operation
 
 When dragging resize handle:
 
 1. **Lock Editor**: Prevents editing during resize (`editor.lock(key)`)
-2. **Track Position**: Records `startX` and calculates `resizeDelta`
+2. **Track Position**: Records `startX` (`startY` for a row) and calculates `resizeDelta`
 3. **Constrain Movement**: Enforces `minX` and `maxX` boundaries
 4. **Visual Feedback**: Adds `jodit-table-resizer_moved` class
-5. **Update Position**: Moves handle with mouse in real-time
-6. **Clear Selection**: Removes text selection during drag
+5. **Resize Live**: Sets the new widths, or the row's height, as the pointer moves, and keeps the handle on the border. Before each new width, the table's and its cells' styles are put back as the drag found them, so every width is worked out from the same start
+6. **Scroll Along**: For a row, when the pointer is within 20px of the top or bottom of what scrolls it, or past them, that scrolls on, and the border stays in view at the pointer or the edge. Scroll anchoring is off around the row during the drag
+7. **Clear Selection**: Removes text selection during drag
+8. **Release**: A drag that ends where it started leaves the table as it was
 
 ### Column Resizing
 
@@ -267,11 +280,19 @@ editor.e.on(editor.ow, 'scroll', () => {
 
 9. **Multiple Tables**: Each table gets independent observers and handlers
 
-10. **Handle Reuse**: Same handle element reused for all resize operations
+10. **Handle Reuse**: Same handle element reused for all resize operations, rows included
 
 11. **Mode Change**: Selections cleared and tables normalized before mode switch
 
 12. **Table Mutations**: New tables automatically observed on content changes
+
+13. **Minimum Height**: A row can't be dragged shorter than its content, or than a height set on its cells, as browsers keep it at least that tall. The handle stops there with the border, and the height the row is shown at is the one saved
+
+14. **Handle Under the Pointer**: The handle stays while the pointer is on it, as a move from inside the cell that the throttle passes on late could otherwise hide it, and hides once the pointer leaves it. During a drag it stays, even once the pointer leaves the table
+
+15. **Scrolled to the End**: A row dragged shorter with the editor scrolled to the end of its content takes the scroll back with it, so the rows above move down and the border stays where it was rather than following the pointer
+
+16. **Iframe Edges**: In iframe mode, a drag sees no moves outside the iframe, so a row's drag starts scrolling 20px inside its top and bottom
 
 ## Notes
 
